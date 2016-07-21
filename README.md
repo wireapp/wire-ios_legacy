@@ -4,7 +4,7 @@
 
 This repository is part of the source code of Wire. You can find more information at [wire.com](https://wire.com) or by contacting opensource@wire.com.
 
-You can find the published source code at [github.com/wireapp/wire](https://github.com/wireapp/wire). 
+You can find the published source code and the terms of use at [github.com/wireapp/wire](https://github.com/wireapp/wire). 
 
 For licensing information, see the attached LICENSE file and the list of third-party licenses at [wire.com/legal/licenses/](https://wire.com/legal/licenses/).
 
@@ -12,10 +12,10 @@ For licensing information, see the attached LICENSE file and the list of third-p
 
 ## What is included in the open source client
 
-The project in this repository contains the Wire iOS client project. You can build the project yourself. However, there are some differences with the official Wire iOS client available on the App Store. 
+The project in this repository contains the Wire iOS client project. You can build the project yourself. However, there are some differences with the binary Wire iOS client available on the App Store. 
 These differences are:
 - the open source project does not include the API keys of Vimeo, Localytics, HockeyApp and other 3rd party services.
-- the open source project links agains the open source Wire audio-video-signaling (AVS) library. The official client links against a version which contains proprietary improvements for the call quality.
+- the open source project links agains the open source Wire audio-video-signaling (AVS) library. The binary App Store client links against an AVS version that contains proprietary improvements for the call quality.
 
 ## Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
