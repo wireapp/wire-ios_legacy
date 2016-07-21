@@ -15,7 +15,7 @@ For licensing information, see the attached LICENSE file and the list of third-p
 The project in this repository contains the Wire iOS client project. You can build the project yourself. However, there are some differences with the official Wire iOS client available on the App Store. 
 These differences are:
 - the open source project is missing some assets (images and audio files) included in the official client.
-- the open source project links agains the open source Wire audio-video codecs library. The official client links agains a version with improved audio-video codecs.
+- the open source project links agains the open source Wire audio-video-signaling (AVS) library. The official client links against a version which contains proprietary improvements for the call quality.
 
 ## Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
