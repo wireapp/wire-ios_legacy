@@ -10,7 +10,7 @@ For licensing information, see the attached LICENSE file and the list of third-p
 
 # How to build the open source client
 
-## What is in the open source client
+## What is included in the open source client
 
 The project in this repository contains the Wire iOS client project. You can build the project yourself. However, there are some differences with the official Wire iOS client available on the App Store. 
 These differences are:
