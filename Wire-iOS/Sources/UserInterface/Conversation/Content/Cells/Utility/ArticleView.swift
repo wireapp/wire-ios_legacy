@@ -227,6 +227,7 @@ extension ArticleView : UIGestureRecognizerDelegate {
 
 extension LinkPreview {
 
+    /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
     var validURL: NSURL? {
         let application = UIApplication.sharedApplication()
 
