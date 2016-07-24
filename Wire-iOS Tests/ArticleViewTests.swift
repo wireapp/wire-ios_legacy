@@ -57,8 +57,8 @@ class ArticleViewTests: ZMSnapshotTestCase {
     }
     
     func articleWithLongURL() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/verylooooooooooooooooooooooooooooooooooooongpath/article/1",
-                              permamentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1", offset: 0)
+        let article = Article(originalURLString: "https://www.example.com/verylooooooooooooooooooooooooooooooooooooongpath/article/1/",
+                              permamentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/", offset: 0)
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         

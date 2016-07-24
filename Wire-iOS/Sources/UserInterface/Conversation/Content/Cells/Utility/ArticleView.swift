@@ -23,7 +23,7 @@ import ZMCLinkPreview
 import TTTAttributedLabel
 
 @objc protocol ArticleViewDelegate: class {
-    func articleViewDidTapView(articleView: ArticleView)
+    func articleViewWantsToOpenURL(articleView: ArticleView, url: NSURL)
     func articleViewDidLongPressView(articleView: ArticleView)
 }
 
@@ -42,7 +42,8 @@ class ArticleView: UIView {
     let messageLabel = TTTAttributedLabel(frame: CGRectZero)
     let authorLabel = UILabel()
     let imageView = UIImageView()
-    var loadingView : ThreeDotsLoadingView?
+    var loadingView: ThreeDotsLoadingView?
+    var linkPreview: LinkPreview?
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
@@ -135,9 +136,10 @@ class ArticleView: UIView {
     }
     
     func formatURL(URL: NSURL) -> NSAttributedString {
-        let displayString = URL.absoluteString.stringByReplacingOccurrencesOfString(URL.scheme + "://", withString: "")
-        
-        if let host = URL.host {
+        let urlWithoutScheme = URL.absoluteString.stringByRemovingURLScheme(URL.scheme)
+        let displayString = urlWithoutScheme.stringByRemovingPrefixWWW().stringByRemovingTrailingForwardSlash()
+
+        if let host = URL.host?.stringByRemovingPrefixWWW() {
             return displayString.attributedString.addAttributes(authorHighlightAttributes, toSubstring: host)
         } else {
             return displayString.attributedString
@@ -154,7 +156,8 @@ class ArticleView: UIView {
     
     func configure(withTextMessageData textMessageData: ZMTextMessageData) {
         guard let linkPreview = textMessageData.linkPreview else { return }
-        
+        self.linkPreview = linkPreview
+
         if let article = linkPreview as? Article {
             configure(withArticle: article)
         }
@@ -180,10 +183,8 @@ class ArticleView: UIView {
     }
     
     func configure(withArticle article: Article) {
-        if let permanentURL = article.permanentURL {
-            authorLabel.attributedText = formatURL(permanentURL)
-        } else if let originalURL = NSURL(string: article.originalURLString) {
-            authorLabel.attributedText = formatURL(originalURL)
+        if let url = article.validURL {
+            authorLabel.attributedText = formatURL(url)
         } else {
             authorLabel.text = article.originalURLString
         }
@@ -198,7 +199,8 @@ class ArticleView: UIView {
     }
     
     func viewTapped(sender: UITapGestureRecognizer) {
-        delegate?.articleViewDidTapView(self)
+        guard let url = linkPreview?.validURL else { return }
+        delegate?.articleViewWantsToOpenURL(self, url: url)
     }
     
     func viewLongPressed(sender: UILongPressGestureRecognizer) {
@@ -220,5 +222,39 @@ extension ArticleView : UIGestureRecognizerDelegate {
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         return !messageLabel.containslinkAtPoint(touch.locationInView(messageLabel))
     }
-    
+
+}
+
+extension LinkPreview {
+
+    var validURL: NSURL? {
+        let application = UIApplication.sharedApplication()
+
+        if let permanentURL = permanentURL where application.canOpenURL(permanentURL) {
+            return permanentURL
+        } else if let originalURL = NSURL(string: originalURLString) where application.canOpenURL(originalURL) {
+            return originalURL
+        }
+
+        return nil
+    }
+
+}
+
+// MARK: - URL Formatting
+
+private extension String {
+
+    func stringByRemovingPrefixWWW() -> String {
+        return stringByReplacingOccurrencesOfString("www.", withString: "", options: .AnchoredSearch, range: nil)
+    }
+
+    func stringByRemovingTrailingForwardSlash() -> String {
+        return stringByReplacingOccurrencesOfString("/", withString: "", options: [.AnchoredSearch, .BackwardsSearch], range: nil)
+    }
+
+    func stringByRemovingURLScheme(scheme: String) -> String {
+        return stringByReplacingOccurrencesOfString(scheme + "://", withString: "", options: .AnchoredSearch, range: nil)
+    }
+
 }

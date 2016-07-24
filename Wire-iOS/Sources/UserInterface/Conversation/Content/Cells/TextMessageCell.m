@@ -420,12 +420,10 @@
 
 @implementation TextMessageCell (ArticleView)
 
-- (void)articleViewDidTapView:(ArticleView *)articleView
+- (void)articleViewWantsToOpenURL:(ArticleView *)articleView url:(NSURL *)url
 {
-    LinkPreview *preview = self.message.textMessageData.linkPreview;
-    
-    if (nil != preview && nil != preview.permanentURL) {
-        [UIApplication.sharedApplication openURL:preview.permanentURL];
+    if (! [UIApplication.sharedApplication openURL:url]) {
+        DDLogError(@"Unable to open URL: %@", url);
     }
 }
 
@@ -433,6 +431,5 @@
 {
     [self showMenu];
 }
-
 
 @end
