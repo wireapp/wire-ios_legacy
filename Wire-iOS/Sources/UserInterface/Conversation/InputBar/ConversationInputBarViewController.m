@@ -247,7 +247,6 @@
     self.photoButton = [[IconButton alloc] init];
     self.photoButton.hitAreaPadding = CGSizeZero;
     self.photoButton.accessibilityIdentifier = @"photoButton";
-    [self.photoButton setTitle:NSLocalizedString(@"conversation.input_bar.new", "") forState:UIControlStateNormal];
     [self.photoButton setIcon:ZetaIconTypeCameraLens withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.photoButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
 
