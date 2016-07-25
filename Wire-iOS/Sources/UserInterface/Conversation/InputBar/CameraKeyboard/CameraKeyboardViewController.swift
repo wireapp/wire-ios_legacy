@@ -20,9 +20,11 @@
 import Foundation
 import Photos
 import Cartography
+import WireExtensionComponents
+import CocoaLumberjackSwift
 
 @objc public protocol CameraKeyboardViewControllerDelegate: NSObjectProtocol {
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectAsset: PHAsset)
+    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: AVURLAsset)
     func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController)
@@ -35,15 +37,15 @@ public class CameraKeyboardViewController: UIViewController {
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
     
-    private let leftSidebarView = UIView()
     private let goBackButton = IconButton()
-    private let rightSidebarView = UIView()
     private let cameraRollButton = IconButton()
     private var lastLayoutSize = CGSizeZero
-
-    private var leftSidebarRevealed: Bool = false {
+    
+    private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin")) / 2) - (UIImage.sizeForZetaIconSize(.Tiny) / 2)
+    
+    private var goBackButtonRevealed: Bool = false {
         didSet {
-            self.leftSidebarView.hidden = !self.leftSidebarRevealed
+            self.goBackButton.hidden = !self.goBackButtonRevealed
         }
     }
     
@@ -84,58 +86,45 @@ public class CameraKeyboardViewController: UIViewController {
         
         self.createCollectionView()
         
-        self.view.backgroundColor = UIColor.blackColor()
-        self.view.addSubview(self.collectionView)
-        
-        self.leftSidebarView.translatesAutoresizingMaskIntoConstraints = false
-        self.leftSidebarView.backgroundColor = UIColor(white: 0, alpha: 0.88)
-        self.view.addSubview(self.leftSidebarView)
+        self.view.backgroundColor = UIColor.whiteColor()
         
         self.goBackButton.translatesAutoresizingMaskIntoConstraints = false
+        self.goBackButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
+        self.goBackButton.circular = true
         self.goBackButton.setIcon(.BackArrow, withSize: .Tiny, forState: .Normal)
         self.goBackButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
         self.goBackButton.accessibilityIdentifier = "goBackButton"
         self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), forControlEvents: .TouchUpInside)
-        self.leftSidebarView.addSubview(self.goBackButton)
-        
-        self.rightSidebarView.translatesAutoresizingMaskIntoConstraints = false
-        self.rightSidebarView.backgroundColor = UIColor(white: 0, alpha: 0.88)
-        self.view.addSubview(self.rightSidebarView)
         
         self.cameraRollButton.translatesAutoresizingMaskIntoConstraints = false
+        self.cameraRollButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
+        self.cameraRollButton.circular = true
         self.cameraRollButton.setIcon(.Photo, withSize: .Tiny, forState: .Normal)
         self.cameraRollButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
         self.cameraRollButton.accessibilityIdentifier = "cameraRollButton"
         self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), forControlEvents: .TouchUpInside)
-        self.rightSidebarView.addSubview(self.cameraRollButton)
         
-        constrain(self.view, self.collectionView, self.leftSidebarView, self.rightSidebarView) { view, collectionView, leftSidebarView, rightSidebarView in
+        [self.collectionView, self.goBackButton, self.cameraRollButton].forEach(self.view.addSubview)
+        
+        constrain(self.view, self.collectionView, self.goBackButton, self.cameraRollButton) { view, collectionView, goBackButton, cameraRollButton in
             collectionView.edges == view.edges
             
-            leftSidebarView.left == view.left
-            leftSidebarView.top == view.top
-            leftSidebarView.bottom == view.bottom
-            leftSidebarView.width == 48
+            goBackButton.width == 32
+            goBackButton.height == goBackButton.width
+            goBackButton.left == view.left + self.margin
+            goBackButton.bottom == view.bottom - self.margin
             
-            rightSidebarView.right == view.right
-            rightSidebarView.top == view.top
-            rightSidebarView.bottom == view.bottom
-            rightSidebarView.width == 48
-        }
-        
-        constrain(self.leftSidebarView, self.goBackButton) { leftSidebarView, goBackButton in
-            goBackButton.edges == leftSidebarView.edges
-        }
-        
-        constrain(self.rightSidebarView, self.cameraRollButton) { rightSidebarView, cameraRollButton in
-            cameraRollButton.edges == rightSidebarView.edges
+            cameraRollButton.width == 32
+            cameraRollButton.height == goBackButton.width
+            cameraRollButton.right == view.right - self.margin
+            cameraRollButton.centerY == goBackButton.centerY
         }
     }
     
     private func createCollectionView() {
         self.collectionViewLayout.scrollDirection = .Horizontal
-        self.collectionViewLayout.minimumLineSpacing = 0
-        self.collectionViewLayout.minimumInteritemSpacing = 0
+        self.collectionViewLayout.minimumLineSpacing = 1
+        self.collectionViewLayout.minimumInteritemSpacing = 0.5
         self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
         self.collectionView.registerClass(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
@@ -203,26 +192,90 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
                 return CGSizeMake(self.splitLayoutObservable.leftViewControllerWidth, self.view.bounds.size.height)
             }
         case .Photos:
-            let photoSize = self.view.bounds.size.height / 3
+            let photoSize = self.view.bounds.size.height / 2 - 0.5
             return CGSizeMake(photoSize, photoSize)
         }
     }
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let asset = try! assetLibrary.asset(atIndex: UInt(indexPath.row))
         
-        self.delegate?.cameraKeyboardViewController(self, didSelectAsset: asset)
+        switch CameraKeyboardSection(rawValue: UInt(indexPath.section))! {
+        case .Camera:
+            break
+        case .Photos:
+            let asset = try! assetLibrary.asset(atIndex: UInt(indexPath.row))
+            
+            
+            let manager = PHImageManager.defaultManager()
+            switch asset.mediaType {
+            case .Video:
+                let options = PHVideoRequestOptions()
+                options.deliveryMode = .HighQualityFormat
+                options.networkAccessAllowed = true
+                
+                self.showLoadingView = true
+                manager.requestAVAssetForVideo(asset, options: options, resultHandler: { videoAsset, audioMix, info in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.showLoadingView = false
+                        guard let videoAsset = videoAsset as? AVURLAsset else {
+                            return
+                        }
+                        
+                        self.delegate?.cameraKeyboardViewController(self, didSelectVideo: videoAsset)
+                    })
+                })
+            case .Image:
+                
+                let options = PHImageRequestOptions()
+                options.deliveryMode = .HighQualityFormat
+                options.networkAccessAllowed = false
+                options.synchronous = false
+                manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
+                    guard let data = data else {
+                        let options = PHImageRequestOptions()
+                        options.deliveryMode = .HighQualityFormat
+                        options.networkAccessAllowed = true
+                        options.synchronous = false
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.showLoadingView = true
+                        })
+                        
+                        manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.showLoadingView = false
+                            })
+                            guard let data = data else {
+                                DDLogError("Failure: cannot fetch image")
+                                return
+                            }
+                            
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                            })
+                        })
+                        
+                        return
+                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                    })
+                })
+            default:
+                // not supported
+                break;
+            }
+        }
     }
     
     public func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         if cell is CameraCell {
-            self.leftSidebarRevealed = true
+            self.goBackButtonRevealed = true
         }
     }
     
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         if cell is CameraCell {
-            self.leftSidebarRevealed = false
+            self.goBackButtonRevealed = false
         }
     }
 }

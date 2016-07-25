@@ -303,7 +303,7 @@
 		871BC2261D34F8F800DF0793 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1381D34F8F800DF0793 /* BrowserViewController.m */; };
 		871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13A1D34F8F800DF0793 /* CameraAccessMessageViewController.m */; };
 		871BC2281D34F8F800DF0793 /* CameraAccessMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 871BC13B1D34F8F800DF0793 /* CameraAccessMessageViewController.xib */; };
-		871BC2291D34F8F800DF0793 /* ConfirmImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmImageViewController.m */; };
+		871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */; };
 		871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */; };
 		871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */; };
 		871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */; };
@@ -1252,8 +1252,8 @@
 		871BC1391D34F8F800DF0793 /* CameraAccessMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraAccessMessageViewController.h; sourceTree = "<group>"; };
 		871BC13A1D34F8F800DF0793 /* CameraAccessMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraAccessMessageViewController.m; sourceTree = "<group>"; };
 		871BC13B1D34F8F800DF0793 /* CameraAccessMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraAccessMessageViewController.xib; sourceTree = "<group>"; };
-		871BC13C1D34F8F800DF0793 /* ConfirmImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmImageViewController.h; sourceTree = "<group>"; };
-		871BC13D1D34F8F800DF0793 /* ConfirmImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmImageViewController.m; sourceTree = "<group>"; };
+		871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAssetViewController.h; sourceTree = "<group>"; };
+		871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAssetViewController.m; sourceTree = "<group>"; };
 		871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+PullToDismiss.h"; sourceTree = "<group>"; };
 		871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FullscreenImageViewController+PullToDismiss.m"; sourceTree = "<group>"; };
 		871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenImageViewController.h; sourceTree = "<group>"; };
@@ -2849,8 +2849,8 @@
 				871BC1391D34F8F800DF0793 /* CameraAccessMessageViewController.h */,
 				871BC13A1D34F8F800DF0793 /* CameraAccessMessageViewController.m */,
 				871BC13B1D34F8F800DF0793 /* CameraAccessMessageViewController.xib */,
-				871BC13C1D34F8F800DF0793 /* ConfirmImageViewController.h */,
-				871BC13D1D34F8F800DF0793 /* ConfirmImageViewController.m */,
+				871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */,
+				871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */,
 				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
 				871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */,
 				871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */,
@@ -5098,7 +5098,7 @@
 				BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */,
 				87DCF4911D34E9BA00BB420F /* ContactsViewController+InvitationStatus.m in Sources */,
 				162CFAA71AE500C10078FB87 /* AddPhoneNumberViewController.m in Sources */,
-				871BC2291D34F8F800DF0793 /* ConfirmImageViewController.m in Sources */,
+				871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */,
 				1E6579981B8F3632002E0869 /* UIImage+ZetaIconsNeue.m in Sources */,
 				871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */,
 				87FDFFD41C3EC4B70072A8AE /* ProfileSelfDetailsViewController.m in Sources */,

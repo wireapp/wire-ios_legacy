@@ -62,10 +62,13 @@
 #import "NotificationWindowRootViewController.h"
 #import "VoiceChannelController.h"
 #import "SplitViewController.h"
+#import "ConfirmAssetViewController.h"
+#import "SketchViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
 #import "PopTransition.h"
+#import "MediaAsset.h"
 
 // Utils
 #import "UIFont+MagicAccess.h"

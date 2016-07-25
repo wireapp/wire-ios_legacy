@@ -38,6 +38,7 @@ NSString * const UserDefaultLastViewedConversation = @"LastViewedConversation";
 NSString * const UserDefaultColorScheme = @"ColorScheme";
 NSString * const UserDefaultLastViewedScreen = @"LastViewedScreen";
 NSString * const UserDefaultPreferredCameraFlashMode = @"PreferredCameraFlashMode";
+NSString * const UserDefaultPreferredCamera = @"PreferredCamera";
 NSString * const AVSMediaManagerPersistentIntensity = @"AVSMediaManagerPersistentIntensity";
 NSString * const UserDefaultLastUserLocation = @"LastUserLocation";
 
@@ -97,7 +98,8 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
              UserDefaultDisableUI,
              UserDefaultDisableHockey,
              UserDefaultDisableAnalytics,
-             UserDefaultLastUserLocation
+             UserDefaultLastUserLocation,
+             UserDefaultPreferredCamera
              ];
 }
 
@@ -282,6 +284,16 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 {
     [self.defaults setInteger:preferredFlashMode forKey:UserDefaultPreferredCameraFlashMode];
     [self.defaults synchronize];
+}
+
+- (CameraControllerCamera)preferredCamera
+{
+    return [self.defaults integerForKey:UserDefaultPreferredCamera];
+}
+
+- (void)setPreferredCamera:(CameraControllerCamera)preferredCamera
+{
+    [self.defaults setInteger:preferredCamera forKey:UserDefaultPreferredCamera];
 }
 
 - (BOOL)cursorTutorialCompleted

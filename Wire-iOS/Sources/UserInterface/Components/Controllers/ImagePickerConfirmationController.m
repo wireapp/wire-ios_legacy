@@ -23,7 +23,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "Constants.h"
-#import "ConfirmImageViewController.h"
+#import "ConfirmAssetViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "UIImagePickerController+GetImage.h"
 #import "FLAnimatedImage.h"
@@ -53,7 +53,7 @@
         @weakify(self);
         
         if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-            ConfirmImageViewController *confirmImageViewController = [[ConfirmImageViewController alloc] init];
+            ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
             confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             confirmImageViewController.image = image;
             confirmImageViewController.previewTitle = self.previewTitle;
@@ -132,7 +132,7 @@
     [self.presentingPickerController dismissViewControllerAnimated:YES completion:^{
         @strongify(self);
         
-        ConfirmImageViewController *confirmImageViewController = [[ConfirmImageViewController alloc] init];
+        ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
         confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         confirmImageViewController.image = image;
         confirmImageViewController.previewTitle = self.previewTitle;

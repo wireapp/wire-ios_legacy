@@ -21,10 +21,11 @@
 
 @protocol MediaAsset;
 
-@interface ConfirmImageViewController : UIViewController
+@interface ConfirmAssetViewController : UIViewController
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic) id<MediaAsset> image;
+@property (nonatomic) NSURL *videoURL;
 @property (nonatomic, copy) void (^onConfirm)();
 @property (nonatomic, copy) void (^onCancel)();
 @property (nonatomic, getter=isEditButtonVisible) BOOL editButtonVisible;

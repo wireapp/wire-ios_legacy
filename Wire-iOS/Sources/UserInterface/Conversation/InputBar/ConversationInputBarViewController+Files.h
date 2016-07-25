@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+FOUNDATION_EXPORT NSTimeInterval const ConversationUploadMaxVideoDuration;
+
 @interface ConversationInputBarViewController (Files) <UIDocumentMenuDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (void)docUploadPressed:(id)sender;

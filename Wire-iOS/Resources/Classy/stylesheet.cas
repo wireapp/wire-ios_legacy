@@ -845,7 +845,7 @@ ConversationInputBarViewController {
 
 /* Image confirmer */
 
-ConfirmImageViewController {
+ConfirmAssetViewController {
     view: @{
         backgroundColor: $color-background;
     }

@@ -27,7 +27,7 @@
 #import "Analytics+Events.h"
 #import "UIAlertView+Zeta.h"
 #import <WireExtensionComponents/WireExtensionComponents.h>
-#import "ConfirmImageViewController.h"
+#import "ConfirmAssetViewController.h"
 #import "TextView.h"
 #import "TypingConversationView.h"
 #import "CameraViewController.h"
@@ -70,6 +70,7 @@
 
 @interface ConversationInputBarViewController (CameraViewController)
 - (void)cameraButtonPressed:(id)sender;
+- (void)videoButtonPressed:(id)sender;
 @end
 
 @interface ConversationInputBarViewController (Ping)
@@ -119,6 +120,7 @@
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic) IconButton *audioButton;
+@property (nonatomic) IconButton *videoButton;
 @property (nonatomic) IconButton *photoButton;
 @property (nonatomic) IconButton *uploadFileButton;
 @property (nonatomic) IconButton *sketchButton;
@@ -194,6 +196,7 @@
     [self configureAudioButton:self.audioButton];
     
     [self.photoButton addTarget:self action:@selector(cameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.videoButton addTarget:self action:@selector(videoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.sketchButton addTarget:self action:@selector(sketchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.uploadFileButton addTarget:self action:@selector(docUploadPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.pingButton addTarget:self action:@selector(pingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -236,9 +239,15 @@
     [self.audioButton setIcon:ZetaIconTypeMicrophone withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.audioButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
 
+    self.videoButton = [[IconButton alloc] init];
+    self.videoButton.hitAreaPadding = CGSizeZero;
+    self.videoButton.accessibilityIdentifier = @"videoButton";
+    [self.videoButton setIcon:ZetaIconTypeVideoMessage withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    
     self.photoButton = [[IconButton alloc] init];
     self.photoButton.hitAreaPadding = CGSizeZero;
     self.photoButton.accessibilityIdentifier = @"photoButton";
+    [self.photoButton setTitle:NSLocalizedString(@"conversation.input_bar.new", "") forState:UIControlStateNormal];
     [self.photoButton setIcon:ZetaIconTypeCameraLens withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.photoButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
 
@@ -263,7 +272,7 @@
     [self.locationButton setIcon:ZetaIconTypeLocationPin withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
 
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.sketchButton, self.locationButton, self.audioButton, self.pingButton, self.uploadFileButton]];
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.locationButton, self.audioButton, self.pingButton, self.uploadFileButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     
@@ -359,6 +368,11 @@
     [self.inputBar.leftAccessoryView addSubview:self.typingView];
     [self.typingView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.typingView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:14];
+}
+
+- (void)updateNewButtonTitleLabel
+{
+    self.photoButton.titleLabel.hidden = self.inputBar.textView.isFirstResponder;
 }
 
 - (void)updateLeftAccessoryView
@@ -565,6 +579,7 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     [self updateAccessoryViews];
+    [self updateNewButtonTitleLabel];
     [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
 }
 
@@ -588,7 +603,7 @@
 
 - (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image
 {
-    ConfirmImageViewController *confirmImageViewController = [[ConfirmImageViewController alloc] init];
+    ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
     confirmImageViewController.image = image;
     confirmImageViewController.previewTitle = [self.conversation.displayName uppercaseStringWithCurrentLocale];
     
@@ -611,6 +626,7 @@
 - (void)textView:(UITextView *)textView firstResponderChanged:(NSNumber *)resigned
 {
     [self updateAccessoryViews];
+    [self updateNewButtonTitleLabel];
 }
 
 - (void)postImage:(id<MediaAsset>)image
@@ -642,6 +658,12 @@
             }];
         }];
     }
+}
+
+- (void)videoButtonPressed:(IconButton *)sender
+{
+    [Analytics.shared tagMediaAction:ConversationMediaActionVideoMessage inConversation:self.conversation];
+    [self presentImagePickerSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie]];
 }
 
 #pragma mark - Video save callback

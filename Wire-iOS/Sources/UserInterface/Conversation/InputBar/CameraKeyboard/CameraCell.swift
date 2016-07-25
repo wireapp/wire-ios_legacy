@@ -45,6 +45,8 @@ public class CameraCell: UICollectionViewCell {
         super.init(frame: frame)
         
         self.cameraController.previewLayer.frame = self.contentView.bounds
+        self.cameraController.currentCamera = Settings.sharedSettings().preferredCamera
+            
         self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = UIColor.blackColor()
         
@@ -213,5 +215,6 @@ public class CameraCell: UICollectionViewCell {
     
     func changeCameraPressed(sender: AnyObject) {
         self.cameraController.currentCamera = self.cameraController.currentCamera == .Front ? .Back : .Front
+        Settings.sharedSettings().preferredCamera = self.cameraController.currentCamera
     }
 }

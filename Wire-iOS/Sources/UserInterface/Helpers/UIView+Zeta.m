@@ -41,9 +41,10 @@ static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboa
     CGRect keyboardFrame = [self keyboardFrameInView:view forKeyboardNotification:notification];
     
     UIResponder *currentFirstResponder = [UIResponder wr_currentFirstResponder];
-    CGSize keyboardSize = CGSizeMake(keyboardFrame.size.width, keyboardFrame.size.height - currentFirstResponder.inputAccessoryView.bounds.size.height);
-
-    [self wr_setLastKeyboardSize:keyboardSize];
+    if (currentFirstResponder != nil) {
+        CGSize keyboardSize = CGSizeMake(keyboardFrame.size.width, keyboardFrame.size.height - currentFirstResponder.inputAccessoryView.bounds.size.height);
+        [self wr_setLastKeyboardSize:keyboardSize];
+    }
     
     NSDictionary *userInfo = notification.userInfo;
     double animationLength = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];

@@ -29,7 +29,7 @@
 #import "Wire-Swift.h"
 
 const static unsigned long long ConversationUploadMaxFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
-const static NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
+const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
 
 @implementation ConversationInputBarViewController (Files)
 
@@ -138,13 +138,13 @@ const static NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; /
     }
     
     [self executeWithVideoPermissions:^{
-        UIImagePickerController* videoPicker = [[UIImagePickerController alloc] init];
-        videoPicker.sourceType = sourceType;
-        videoPicker.delegate = self;
-        videoPicker.allowsEditing = (sourceType != UIImagePickerControllerSourceTypeCamera);
-        videoPicker.mediaTypes = mediaTypes;
-        videoPicker.videoMaximumDuration = ConversationUploadMaxVideoDuration;
-        [self.parentViewController presentViewController:videoPicker animated:YES completion:nil];
+        UIImagePickerController* pickerController = [[UIImagePickerController alloc] init];
+        pickerController.sourceType = sourceType;
+        pickerController.delegate = self;
+        pickerController.allowsEditing = (sourceType != UIImagePickerControllerSourceTypeCamera);
+        pickerController.mediaTypes = mediaTypes;
+        pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration;
+        [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
     }];
 }
 
