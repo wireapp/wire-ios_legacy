@@ -50,7 +50,11 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         }
         else {
+            controller.showLoadingView = true
+
             self.convertVideoAtPath(videoURLAsset.URL.path!) { (success, resultPath, duration) in
+                controller.showLoadingView = false
+
                 guard let path = resultPath where success else {
                     return
                 }
@@ -156,12 +160,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             filename = "video.mp4"
         }
         
-        self.showLoadingView = true
-        
         let videoURLAsset = AVURLAsset(URL: NSURL(fileURLWithPath: inputPath))
         
         videoURLAsset.wr_convertWithCompletion({ URL, videoAsset, error in
-            self.showLoadingView = false
             guard let resultURL = URL where error == .None else {
                 completion(success: false, resultPath: .None, duration: 0)
                 return
@@ -180,7 +181,11 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
     public func videoEditorController(editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
         editor.dismissViewControllerAnimated(true, completion: .None)
         
+        editor.showLoadingView = true
+
         self.convertVideoAtPath(editedVideoPath) { (success, resultPath, duration) in
+            editor.showLoadingView = false
+
             guard let path = resultPath where success else {
                 return
             }
