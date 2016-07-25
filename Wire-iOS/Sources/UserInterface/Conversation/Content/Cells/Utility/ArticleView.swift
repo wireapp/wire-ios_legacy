@@ -183,7 +183,7 @@ class ArticleView: UIView {
     }
     
     func configure(withArticle article: Article) {
-        if let url = article.validURL {
+        if let url = article.openableURL {
             authorLabel.attributedText = formatURL(url)
         } else {
             authorLabel.text = article.originalURLString
@@ -199,7 +199,7 @@ class ArticleView: UIView {
     }
     
     func viewTapped(sender: UITapGestureRecognizer) {
-        guard let url = linkPreview?.validURL else { return }
+        guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url)
     }
     
@@ -228,7 +228,7 @@ extension ArticleView : UIGestureRecognizerDelegate {
 extension LinkPreview {
 
     /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
-    var validURL: NSURL? {
+    var openableURL: NSURL? {
         let application = UIApplication.sharedApplication()
 
         if let permanentURL = permanentURL where application.canOpenURL(permanentURL) {
