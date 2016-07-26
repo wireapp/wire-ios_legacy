@@ -83,6 +83,8 @@ static const CGFloat MarginInset = 24;
     [self createEditButton];
     
     [self updateViewConstraints];
+    
+    [[CASStyler defaultStyler] styleItem:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations

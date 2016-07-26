@@ -28,6 +28,7 @@
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
+
 const static unsigned long long ConversationUploadMaxFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
 const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
 
@@ -106,14 +107,14 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                                 image:[UIImage imageForIcon:ZetaIconTypeMovie iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
-                                  [self presentImagePickerSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie]];
+                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true];
                               }];
     
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.take_video", @"")
                                 image:[UIImage imageForIcon:ZetaIconTypeCameraShutter iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
-                                  [self presentImagePickerSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie]];
+                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
                               }];
     
     UIPopoverPresentationController* popover = docController.popoverPresentationController;
@@ -125,7 +126,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
     }];
 }
 
-- (void)presentImagePickerSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes allowsEditing:(BOOL)allowsEditing
 {
     if (! [UIImagePickerController isSourceTypeAvailable:sourceType]) {
 #if (TARGET_OS_SIMULATOR)
@@ -141,7 +142,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         UIImagePickerController* pickerController = [[UIImagePickerController alloc] init];
         pickerController.sourceType = sourceType;
         pickerController.delegate = self;
-        pickerController.allowsEditing = (sourceType != UIImagePickerControllerSourceTypeCamera);
+        pickerController.allowsEditing = allowsEditing;
         pickerController.mediaTypes = mediaTypes;
         pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration;
         [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
@@ -345,7 +346,14 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     // Workaround http://stackoverflow.com/questions/26651355/
     [[AVAudioSession sharedInstance] setActive:NO error:nil];
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.parentViewController dismissViewControllerAnimated:YES completion:^() {
+        
+        if (self.shouldRefocusKeyboardAfterImagePickerDismiss) {
+            self.shouldRefocusKeyboardAfterImagePickerDismiss = NO;
+            self.mode = ConversationInputBarViewControllerModeCamera;
+            [self.inputBar.textView becomeFirstResponder];
+        }
+    }];
 }
 
 #pragma mark - UIDocumentMenuDelegate

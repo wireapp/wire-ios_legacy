@@ -41,11 +41,18 @@ public class CameraKeyboardViewController: UIViewController {
     private let cameraRollButton = IconButton()
     private var lastLayoutSize = CGSizeZero
     
-    private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin")) / 2) - (UIImage.sizeForZetaIconSize(.Tiny) / 2)
+    private let margin: CGFloat = 24
     
     private var goBackButtonRevealed: Bool = false {
         didSet {
-            self.goBackButton.hidden = !self.goBackButtonRevealed
+            if goBackButtonRevealed {
+                UIView.animateWithDuration(0.35) {
+                    self.goBackButton.alpha = self.goBackButtonRevealed ? 1 : 0
+                }
+            }
+            else {
+                self.goBackButton.alpha = 0
+            }
         }
     }
     
@@ -109,23 +116,29 @@ public class CameraKeyboardViewController: UIViewController {
         constrain(self.view, self.collectionView, self.goBackButton, self.cameraRollButton) { view, collectionView, goBackButton, cameraRollButton in
             collectionView.edges == view.edges
             
-            goBackButton.width == 32
+            goBackButton.width == 36
             goBackButton.height == goBackButton.width
             goBackButton.left == view.left + self.margin
             goBackButton.bottom == view.bottom - self.margin
             
-            cameraRollButton.width == 32
+            cameraRollButton.width == 36
             cameraRollButton.height == goBackButton.width
             cameraRollButton.right == view.right - self.margin
             cameraRollButton.centerY == goBackButton.centerY
         }
     }
     
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.collectionViewLayout.invalidateLayout()
+        self.collectionView.reloadData()
+    }
+    
     private func createCollectionView() {
         self.collectionViewLayout.scrollDirection = .Horizontal
         self.collectionViewLayout.minimumLineSpacing = 1
         self.collectionViewLayout.minimumInteritemSpacing = 0.5
-        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 1)
         self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
         self.collectionView.registerClass(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
         self.collectionView.registerClass(AssetCell.self, forCellWithReuseIdentifier: AssetCell.reuseIdentifier)
@@ -149,6 +162,65 @@ public class CameraKeyboardViewController: UIViewController {
     @objc func splitLayoutChanged(notification: NSNotification!) {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
+    }
+    
+    private func forwardSelectedPhotoAsset(asset: PHAsset) {
+        let manager = PHImageManager.defaultManager()
+
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .HighQualityFormat
+        options.networkAccessAllowed = false
+        options.synchronous = false
+        manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
+            guard let data = data else {
+                let options = PHImageRequestOptions()
+                options.deliveryMode = .HighQualityFormat
+                options.networkAccessAllowed = true
+                options.synchronous = false
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showLoadingView = true
+                })
+                
+                manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.showLoadingView = false
+                    })
+                    guard let data = data else {
+                        DDLogError("Failure: cannot fetch image")
+                        return
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                    })
+                })
+                
+                return
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+            })
+        })
+    }
+    
+    private func forwardSelectedVideoAsset(asset: PHAsset) {
+        let manager = PHImageManager.defaultManager()
+
+        let options = PHVideoRequestOptions()
+        options.deliveryMode = .HighQualityFormat
+        options.networkAccessAllowed = true
+        
+        self.showLoadingView = true
+        manager.requestAVAssetForVideo(asset, options: options, resultHandler: { videoAsset, audioMix, info in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.showLoadingView = false
+                guard let videoAsset = videoAsset as? AVURLAsset else {
+                    return
+                }
+                
+                self.delegate?.cameraKeyboardViewController(self, didSelectVideo: videoAsset)
+            })
+        })
     }
 }
 
@@ -205,61 +277,13 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         case .Photos:
             let asset = try! assetLibrary.asset(atIndex: UInt(indexPath.row))
             
-            
-            let manager = PHImageManager.defaultManager()
             switch asset.mediaType {
             case .Video:
-                let options = PHVideoRequestOptions()
-                options.deliveryMode = .HighQualityFormat
-                options.networkAccessAllowed = true
-                
-                self.showLoadingView = true
-                manager.requestAVAssetForVideo(asset, options: options, resultHandler: { videoAsset, audioMix, info in
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.showLoadingView = false
-                        guard let videoAsset = videoAsset as? AVURLAsset else {
-                            return
-                        }
-                        
-                        self.delegate?.cameraKeyboardViewController(self, didSelectVideo: videoAsset)
-                    })
-                })
+                self.forwardSelectedVideoAsset(asset)
+            
             case .Image:
                 
-                let options = PHImageRequestOptions()
-                options.deliveryMode = .HighQualityFormat
-                options.networkAccessAllowed = false
-                options.synchronous = false
-                manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
-                    guard let data = data else {
-                        let options = PHImageRequestOptions()
-                        options.deliveryMode = .HighQualityFormat
-                        options.networkAccessAllowed = true
-                        options.synchronous = false
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.showLoadingView = true
-                        })
-                        
-                        manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.showLoadingView = false
-                            })
-                            guard let data = data else {
-                                DDLogError("Failure: cannot fetch image")
-                                return
-                            }
-                            
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
-                            })
-                        })
-                        
-                        return
-                    }
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
-                    })
-                })
+                self.forwardSelectedPhotoAsset(asset)
             default:
                 // not supported
                 break;

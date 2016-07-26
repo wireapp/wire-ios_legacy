@@ -662,7 +662,7 @@
 - (void)videoButtonPressed:(IconButton *)sender
 {
     [Analytics.shared tagMediaAction:ConversationMediaActionVideoMessage inConversation:self.conversation];
-    [self presentImagePickerSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie]];
+    [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
 }
 
 #pragma mark - Video save callback

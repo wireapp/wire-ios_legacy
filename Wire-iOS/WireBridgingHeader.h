@@ -68,6 +68,9 @@
 // Helper objects
 #import "PushTransition.h"
 #import "PopTransition.h"
+#import "ZoomTransition.h"
+#import "CrossfadeTransition.h"
+#import "VerticalTransition.h"
 #import "MediaAsset.h"
 
 // Utils

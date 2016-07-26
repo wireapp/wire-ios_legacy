@@ -84,8 +84,8 @@ public class CameraCell: UICollectionViewCell {
         [self.takePictureButton, self.expandButton, self.changeCameraButton].forEach { button in
             button.layer.shadowColor = UIColor.blackColor().CGColor
             button.layer.shadowOffset = CGSizeMake(0.5, 0.5)
-            button.layer.shadowRadius = 1
-            button.layer.shadowOpacity = 0.75
+            button.layer.shadowRadius = 0.5
+            button.layer.shadowOpacity = 0.5
         }
         
         constrain(self.contentView, self.expandButton, self.takePictureButton, self.changeCameraButton) { contentView, expandButton, takePictureButton, changeCameraButton in
