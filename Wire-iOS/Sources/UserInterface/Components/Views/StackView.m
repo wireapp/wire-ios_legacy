@@ -120,13 +120,13 @@
             if (self.direction == StackViewDirectionHorizontal) {
                 subview.frame = CGRectMake(offset, self.contentInset.top, subview.frame.size.width, subview.frame.size.height);
                 contentSize.height = MAX(contentSize.height, subview.frame.size.height + self.contentInset.top + self.contentInset.bottom);
+                offset+= self.spacing + subview.frame.size.width;
             }
             else {
                 subview.frame = CGRectMake(self.contentInset.left, offset, subview.frame.size.width, subview.frame.size.height);
                 contentSize.width = MAX(contentSize.width, subview.frame.size.width + self.contentInset.left + self.contentInset.right);
+                offset+= self.spacing + subview.frame.size.height;
             }
-            
-            offset+= self.spacing + subview.frame.size.width;
         }
     }];
     
