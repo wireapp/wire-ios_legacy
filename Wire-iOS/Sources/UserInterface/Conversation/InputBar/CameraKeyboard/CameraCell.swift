@@ -83,7 +83,7 @@ public class CameraCell: UICollectionViewCell {
         
         [self.takePictureButton, self.expandButton, self.changeCameraButton].forEach { button in
             button.layer.shadowColor = UIColor.blackColor().CGColor
-            button.layer.shadowOffset = CGSizeMake(0.5, 0.5)
+            button.layer.shadowOffset = CGSizeMake(0, 0)
             button.layer.shadowRadius = 0.5
             button.layer.shadowOpacity = 0.5
         }
@@ -92,17 +92,17 @@ public class CameraCell: UICollectionViewCell {
             expandButton.width == 40
             expandButton.height == expandButton.width
             expandButton.right == contentView.right - 12
-            expandButton.top == contentView.top + 12
+            expandButton.top == contentView.top + 10
             
             takePictureButton.width == 60
             takePictureButton.height == takePictureButton.width
-            takePictureButton.bottom == contentView.bottom
+            takePictureButton.bottom == contentView.bottom - 6
             takePictureButton.centerX == contentView.centerX
             
             changeCameraButton.width == 40
             changeCameraButton.height == changeCameraButton.width
             changeCameraButton.left == contentView.left + 12
-            changeCameraButton.top == contentView.top + 12
+            changeCameraButton.top == contentView.top + 10
         }
     }
     

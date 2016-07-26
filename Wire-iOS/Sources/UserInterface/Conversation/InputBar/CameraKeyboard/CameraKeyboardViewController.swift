@@ -45,7 +45,7 @@ public class CameraKeyboardViewController: UIViewController {
     private let cameraRollButton = IconButton()
     private var lastLayoutSize = CGSizeZero
     
-    private let margin: CGFloat = 12
+    private let sideMargin: CGFloat = 14
     
     private var goBackButtonRevealed: Bool = false {
         didSet {
@@ -122,12 +122,12 @@ public class CameraKeyboardViewController: UIViewController {
             
             goBackButton.width == 36
             goBackButton.height == goBackButton.width
-            goBackButton.left == view.left + self.margin
-            goBackButton.bottom == view.bottom - self.margin
+            goBackButton.left == view.left + self.sideMargin
+            goBackButton.bottom == view.bottom - 18
             
             cameraRollButton.width == 36
             cameraRollButton.height == goBackButton.width
-            cameraRollButton.right == view.right - self.margin
+            cameraRollButton.right == view.right - self.sideMargin
             cameraRollButton.centerY == goBackButton.centerY
         }
     }

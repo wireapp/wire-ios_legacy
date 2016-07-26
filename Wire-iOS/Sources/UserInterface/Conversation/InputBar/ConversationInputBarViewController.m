@@ -442,6 +442,12 @@
             self.photoButton.selected = NO;
             break;
         case ConversationInputBarViewControllerModeAudioRecord:
+            if (nil != [UITextInputAssistantItem class]) {
+                UITextInputAssistantItem* item = self.inputBar.textView.inputAssistantItem;
+                item.leadingBarButtonGroups = @[];
+                item.trailingBarButtonGroups = @[];
+            }
+            
             if (self.inputController == nil || self.inputController != self.audioRecordKeyboardViewController) {
                 if (self.audioRecordKeyboardViewController == nil) {
                     self.audioRecordKeyboardViewController = [[AudioRecordKeyboardViewController alloc] init];
@@ -457,6 +463,11 @@
             self.photoButton.selected = NO;
             break;
         case ConversationInputBarViewControllerModeCamera:
+            if (nil != [UITextInputAssistantItem class]) {
+                UITextInputAssistantItem* item = self.inputBar.textView.inputAssistantItem;
+                item.leadingBarButtonGroups = @[];
+                item.trailingBarButtonGroups = @[];
+            }
             
             if (self.inputController == nil || self.inputController != self.cameraKeyboardViewController) {
                 if (self.cameraKeyboardViewController == nil) {
@@ -651,7 +662,7 @@
     }
     else {
         [self executeWithVideoPermissions:^{
-            [self executeWithCameraRollPermission:^{
+            [self executeWithCameraRollPermission:^(BOOL success){
                 self.mode = ConversationInputBarViewControllerModeCamera;
                 [self.inputBar.textView becomeFirstResponder];
             }];

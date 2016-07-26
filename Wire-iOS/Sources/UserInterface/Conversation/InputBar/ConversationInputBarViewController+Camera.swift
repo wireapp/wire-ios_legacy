@@ -101,6 +101,30 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, source: CameraKeyboardSource) {
         
+        self.showConfirmationForImage(imageData, source: source)
+    }
+    
+    @objc private func image(image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+        if let error = error {
+            DDLogError("didFinishSavingWithError: \(error)")
+        }
+    }
+    
+    public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController) {
+        self.hideCameraKeyboardViewController {
+            self.shouldRefocusKeyboardAfterImagePickerDismiss = true
+            self.presentImagePickerWithSourceType(.Camera, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+        }
+    }
+    
+    public func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController) {
+        self.hideCameraKeyboardViewController {
+            self.shouldRefocusKeyboardAfterImagePickerDismiss = true
+            self.presentImagePickerWithSourceType(.PhotoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+        }
+    }
+    
+    @objc public func showConfirmationForImage(imageData: NSData, source: CameraKeyboardSource) {
         let image = UIImage(data: imageData)
         
         let confirmImageViewController = ConfirmAssetViewController()
@@ -142,35 +166,16 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    @objc private func image(image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
-        if let error = error {
-            DDLogError("didFinishSavingWithError: \(error)")
-        }
-    }
-    
-    public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController) {
-        self.hideCameraKeyboardViewController {
-            self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePickerWithSourceType(.Camera, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: true)
-        }
-    }
-    
-    public func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController) {
-        self.hideCameraKeyboardViewController {
-            self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePickerWithSourceType(.PhotoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: true)
-        }
-    }
-    
-    @objc public func executeWithCameraRollPermission(closure: ()->()) {
+    @objc public func executeWithCameraRollPermission(closure: (success: Bool)->()) {
         PHPhotoLibrary.requestAuthorization { status in
+            dispatch_async(dispatch_get_main_queue()) {
             switch status {
             case .Authorized:
-                dispatch_async(dispatch_get_main_queue(), closure)
-                
+                closure(success: true)
             default:
-                // place for .NotDetermined - in this callback status is already determined so should never get here
+                closure(success: false)
                 break
+            }
             }
         }
     }
