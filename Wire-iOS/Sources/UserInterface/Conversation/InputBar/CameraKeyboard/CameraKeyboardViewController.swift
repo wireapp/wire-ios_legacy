@@ -23,9 +23,13 @@ import Cartography
 import WireExtensionComponents
 import CocoaLumberjackSwift
 
+@objc public enum CameraKeyboardSource: UInt {
+    case Library, Camera
+}
+
 @objc public protocol CameraKeyboardViewControllerDelegate: NSObjectProtocol {
     func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: AVURLAsset)
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData)
+    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, source: CameraKeyboardSource)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController)
 }
@@ -41,7 +45,7 @@ public class CameraKeyboardViewController: UIViewController {
     private let cameraRollButton = IconButton()
     private var lastLayoutSize = CGSizeZero
     
-    private let margin: CGFloat = 24
+    private let margin: CGFloat = 12
     
     private var goBackButtonRevealed: Bool = false {
         didSet {
@@ -191,14 +195,14 @@ public class CameraKeyboardViewController: UIViewController {
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .Library)
                     })
                 })
                 
                 return
             }
             dispatch_async(dispatch_get_main_queue(), {
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .Library)
             })
         })
     }
@@ -311,7 +315,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(cameraCell: CameraCell, didPickImageData imageData: NSData) {
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData)
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, source: .Camera)
     }
 }
 

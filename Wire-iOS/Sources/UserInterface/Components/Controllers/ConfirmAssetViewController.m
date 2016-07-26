@@ -36,7 +36,7 @@
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 
-static const CGFloat TopBarHeight = 56;
+static const CGFloat TopBarHeight = 64;
 static const CGFloat BottomBarMinHeight = 88;
 static const CGFloat MarginInset = 24;
 
@@ -102,7 +102,20 @@ static const CGFloat MarginInset = 24;
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    switch ([ColorScheme defaultColorScheme].variant) {
+        case ColorSchemeVariantLight:
+            return UIStatusBarStyleDefault;
+            break;
+            
+        case ColorSchemeVariantDark:
+            return UIStatusBarStyleLightContent;
+            break;
+    }
 }
 
 #pragma mark - View Creation
@@ -188,7 +201,8 @@ static const CGFloat MarginInset = 24;
         [self.topPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
         self.topBarHeightConstraint = [self.topPanel autoSetDimension:ALDimensionHeight toSize:TopBarHeight];
         
-        [self.titleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.topPanel];
+        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
+        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
         
         // Bottom panel

@@ -76,7 +76,8 @@
 
 @implementation AVPlayerViewControllerWithoutStatusBar
 
-- (BOOL)prefersStatusBarHidden {
+- (BOOL)prefersStatusBarHidden
+{
     return YES;
 }
 

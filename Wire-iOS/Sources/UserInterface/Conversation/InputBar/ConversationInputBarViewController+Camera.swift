@@ -99,7 +99,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData) {
+    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, source: CameraKeyboardSource) {
         
         let image = UIImage(data: imageData)
         
@@ -112,8 +112,11 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.dismissViewControllerAnimated(true, completion: .None)
             
             self.sendController.sendMessageWithImageData(imageData, completion: .None)
-            let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-            UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, self, selector, nil)        }
+            if source == .Camera {
+                let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
+                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, self, selector, nil)
+            }
+        }
         
         confirmImageViewController.onCancel = { [unowned self] in
             self.dismissViewControllerAnimated(true) {

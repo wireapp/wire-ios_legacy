@@ -28,7 +28,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
-
 const static unsigned long long ConversationUploadMaxFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
 const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
 
@@ -145,6 +144,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         pickerController.allowsEditing = allowsEditing;
         pickerController.mediaTypes = mediaTypes;
         pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration;
+        pickerController.transitioningDelegate = [FastTransitioningDelegate sharedDelegate];
         [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
     }];
 }
