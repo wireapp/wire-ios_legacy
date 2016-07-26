@@ -4608,6 +4608,7 @@
 				8795A5D21D34D1A50024101B /* EmbedBuildInfo */,
 				8F42C535199244A700288E4D /* Frameworks */,
 				8F42C536199244A700288E4D /* Resources */,
+				160EABBA1D47BD7200F83CA7 /* Copy Extra Audio Notifications */,
 				4DFF5716E7324BEEA41AB599 /* [CP] Copy Pods Resources */,
 				DBB1CF591A88C15600912518 /* Copy Frameworks and DSYMs */,
 				1EE85C681B5F96FC008E084B /* Embed Frameworks */,
@@ -4813,6 +4814,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		160EABBA1D47BD7200F83CA7 /* Copy Extra Audio Notifications */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Extra Audio Notifications";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
+		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
