@@ -402,7 +402,7 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
 - (void)setSnapshotVideoOrientation:(AVCaptureVideoOrientation)snapshotVideoOrientation
 {
     [self performConfiguration:^{
-            AVCaptureConnection *connection = self.snapshotConnection;
+        AVCaptureConnection *connection = self.snapshotConnection;
         if ([connection isVideoOrientationSupported]) {
             connection.videoOrientation = snapshotVideoOrientation;
         }

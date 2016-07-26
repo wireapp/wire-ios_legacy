@@ -136,6 +136,13 @@ public class CameraKeyboardViewController: UIViewController {
         super.viewWillAppear(animated)
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
+        DeviceOrientationObserver.sharedInstance().startMonitoringDeviceOrientation()
+
+    }
+    
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        DeviceOrientationObserver.sharedInstance().stopMonitoringDeviceOrientation()
     }
     
     private func createCollectionView() {

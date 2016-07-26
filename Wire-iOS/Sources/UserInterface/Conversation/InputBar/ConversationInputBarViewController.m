@@ -144,6 +144,8 @@
 @property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
 
 @property (nonatomic) UIViewController *inputController;
+
+@property (nonatomic) BOOL inRotation;
 @end
 
 
@@ -223,6 +225,17 @@
     [super viewDidDisappear:animated];
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    self.inRotation = YES;
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.inRotation = NO;
+    }];
 }
 
 - (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
@@ -518,7 +531,9 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
-    self.mode = ConversationInputBarViewControllerModeTextInput;
+    if (!self.inRotation) {
+        self.mode = ConversationInputBarViewControllerModeTextInput;
+    }
 }
 
 @end

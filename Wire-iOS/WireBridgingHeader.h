@@ -99,6 +99,7 @@
 #import "Message+Formatting.h"
 #import "ImageCache.h"
 #import "AVAsset+VideoConvert.h"
+#import "DeviceOrientationObserver.h"
 
 // Camera
 #import "CameraController.h"
