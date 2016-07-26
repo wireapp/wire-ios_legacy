@@ -16,12 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+#import "SketchViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class AudioRecordKeyboardViewController;
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
+
 
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
@@ -33,5 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)createAudioRecordViewController;
 @end
+
+
+@interface ConversationInputBarViewController (Sketch) <SketchViewControllerDelegate>
+- (void)sketchButtonPressed:(nullable id)sender;
+@end
+
 
 NS_ASSUME_NONNULL_END

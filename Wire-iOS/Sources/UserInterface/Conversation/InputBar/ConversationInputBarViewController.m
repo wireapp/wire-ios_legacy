@@ -79,12 +79,6 @@
 
 @end
 
-@interface ConversationInputBarViewController (Sketch) <SketchViewControllerDelegate>
-
-- (void)sketchButtonPressed:(id)sender;
-
-@end
-
 @interface ConversationInputBarViewController (Location) <LocationSelectionViewControllerDelegate>
 
 - (void)locationButtonPressed:(IconButton *)sender;

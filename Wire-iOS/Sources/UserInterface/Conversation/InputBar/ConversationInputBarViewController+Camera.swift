@@ -230,15 +230,3 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
         DDLogError("Video editor failed with error: \(error)")
     }
 }
-
-extension ConversationInputBarViewController: SketchViewControllerDelegate {
-    public func sketchViewController(controller: SketchViewController!, didSketchImage image: UIImage!) {
-        controller.dismissViewControllerAnimated(true, completion: .None)
-
-        self.sendController.sendMessageWithImageData(UIImagePNGRepresentation(image), completion: .None)
-    }
-    
-    public func sketchViewControllerDidCancel(controller: SketchViewController!) {
-        controller.dismissViewControllerAnimated(true, completion: .None)
-    }
-}
