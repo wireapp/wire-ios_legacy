@@ -77,6 +77,7 @@ public class CameraKeyboardViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: SplitLayoutObservableDidChangeToLayoutSizeNotification, object: self.splitLayoutObservable)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -90,6 +91,10 @@ public class CameraKeyboardViewController: UIViewController {
             self.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
         }
+    }
+    
+    @objc public func applicationDidBecomeActive(notification: NSNotification!) {
+        self.assetLibrary.refetchAssets()
     }
     
     override public func viewDidLoad() {
@@ -137,7 +142,7 @@ public class CameraKeyboardViewController: UIViewController {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
         DeviceOrientationObserver.sharedInstance().startMonitoringDeviceOrientation()
-
+        self.assetLibrary.refetchAssets()
     }
     
     public override func viewWillDisappear(animated: Bool) {
