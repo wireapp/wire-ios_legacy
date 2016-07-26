@@ -650,7 +650,7 @@
 {
     if (! self.contentViewController.isScrolledToBottom) {
         [self.contentViewController scrollToBottomAnimated:YES];
-        return controller.inputBar.textView.text.length != 0;
+        return YES;
     }
 
     return YES;
