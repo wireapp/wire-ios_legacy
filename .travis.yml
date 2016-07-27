@@ -1,7 +1,8 @@
 language: objective-c
 osx_image: xcode7.3
+cache: cocoapods
 
-script: 
+script:
 - set pipefail
 - ./setup.sh
 - xcodebuild test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | xcpretty
