@@ -698,6 +698,10 @@
 
 - (void)showPushPermissionDeniedDialogIfNeeded
 {
+    if (AutomationHelper.skipFirstLoginAlerts) {
+        return;
+    }
+    
     BOOL pushAlertHappenedMoreThan1DayBefore = [[Settings sharedSettings] lastPushAlertDate] == nil ||
     fabs([[[Settings sharedSettings] lastPushAlertDate] timeIntervalSinceNow]) > 60 * 60 * 24;
     

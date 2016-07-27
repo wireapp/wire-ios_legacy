@@ -442,8 +442,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)authenticationDidSucceed
 {
     self.seState = AppSEStateAuthenticated;
-    
-    [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
+    if (!AutomationHelper.skipFirstLoginAlerts) {
+        [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
+    }
     [self loadAppropriateController];
 }
 

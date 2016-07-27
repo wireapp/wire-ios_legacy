@@ -22,24 +22,13 @@
 #import "Analytics+iOS.h"
 #import "Application+runDuration.h"
 #import "Settings.h"
-
+#import "Wire-Swift.h"
 
 @implementation AppDelegate (Hockey)
 
 - (void)setupHockeyWithCompletion:(dispatch_block_t)completed
 {
-    NSNumber *commandLineHockey = [[NSUserDefaults standardUserDefaults] objectForKey:@"UseHockey"];
-
-    BOOL userDefaultsConfigureHockey = NO;
-    BOOL userDefaultsEnableHockey = NO;
-
-    if (commandLineHockey != nil) {
-        userDefaultsConfigureHockey = YES;
-        userDefaultsEnableHockey = [commandLineHockey boolValue];
-    }
-
-
-    if (((userDefaultsConfigureHockey && userDefaultsEnableHockey) || (! userDefaultsConfigureHockey && USE_HOCKEY)) && ![[Settings sharedSettings] disableHockey]) {
+    if ((AutomationHelper.useHockey || (!AutomationHelper.useHockey && USE_HOCKEY)) && ![[Settings sharedSettings] disableHockey]) {
         // see https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kBITExcludeApplicationSupportFromBackup"];
         

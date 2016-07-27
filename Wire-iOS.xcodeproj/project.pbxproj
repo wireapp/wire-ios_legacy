@@ -711,6 +711,7 @@
 		BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */; };
 		BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */; };
 		BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */; };
+		BF4A15D21D4900930051E8BA /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		BF5127161CC9119400F23DEA /* ZMSnapshotTestCase+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */; };
 		BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF52C1561CAEB9E10037331F /* ArchivedListViewController.swift */; };
 		BF52C1591CAEBD8D0037331F /* ArchivedNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF52C1581CAEBD8D0037331F /* ArchivedNavigationBar.swift */; };
@@ -1968,6 +1969,7 @@
 		BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioButtonOverlayTests.swift; sourceTree = "<group>"; };
 		BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTitleView.swift; sourceTree = "<group>"; };
 		BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingMessagesCell.swift; sourceTree = "<group>"; };
+		BF4A15D11D4900930051E8BA /* AutomationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomationHelper.swift; sourceTree = "<group>"; };
 		BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+Swift.swift"; sourceTree = "<group>"; };
 		BF52C1561CAEB9E10037331F /* ArchivedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArchivedListViewController.swift; path = ../Conversation/ArchivedListViewController.swift; sourceTree = "<group>"; };
 		BF52C1581CAEBD8D0037331F /* ArchivedNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedNavigationBar.swift; sourceTree = "<group>"; };
@@ -2423,6 +2425,7 @@
 				878607091D33E3FF00971A19 /* NetworkStatus.m */,
 				8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */,
 				8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */,
+				BF4A15D11D4900930051E8BA /* AutomationHelper.swift */,
 				878607161D33E3FF00971A19 /* weakify */,
 				1EB9BF361BC7ED3D002EF0F3 /* SharedAnalytics */,
 				871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */,
@@ -5040,6 +5043,7 @@
 				1E5E0CFC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
 				1EE9DCC01B5F9A6D00E347DF /* PageControl.m in Sources */,
+				BF4A15D21D4900930051E8BA /* AutomationHelper.swift in Sources */,
 				1E5E0D031B6B8EDB003B0CAC /* UIColor+Mixing.m in Sources */,
 				1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */,
 				16F9EB351BCBB0270021EF39 /* CheckBoxButton.m in Sources */,
