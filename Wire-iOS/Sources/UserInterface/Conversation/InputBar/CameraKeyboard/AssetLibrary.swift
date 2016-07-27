@@ -27,7 +27,6 @@ public protocol AssetLibraryDelegate: class {
 public class AssetLibrary {
     public weak var delegate: AssetLibraryDelegate?
     private var fetchingAssets = false
-    public let synchronous: Bool
     
     public var count: UInt {
         guard let fetch = self.fetch else {
@@ -51,7 +50,7 @@ public class AssetLibrary {
         return fetch.objectAtIndex(Int(index)) as! PHAsset
     }
     
-    public func refetchAssets(synchronous synchronous: Bool = false) {
+    public func refetchAssets() {
         guard !self.fetchingAssets else {
             return
         }
@@ -68,26 +67,15 @@ public class AssetLibrary {
                 self.fetchingAssets = false
             }
             
-            if synchronous {
-                completion()
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), completion)
-            }
+            dispatch_async(dispatch_get_main_queue(), completion)
         }
         
-        if synchronous {
-            syncOperation()
-        }
-        else {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), syncOperation)
-        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), syncOperation)
     }
     
     private var fetch: PHFetchResult?
     
-    init(synchronous: Bool = false) {
-        self.synchronous = synchronous
-        self.refetchAssets(synchronous: synchronous)
+    init() {
+        self.refetchAssets()
     }
 }
