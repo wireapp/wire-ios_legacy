@@ -35,5 +35,10 @@ import Foundation
     class var skipFirstLoginAlerts: Bool {
         return defaults.boolForKey("SkipLoginAlerts")
     }
+    
+    ///  - returns: The value specified for the `DisableAutoCorrection` argument on the command line
+    class var disableAutoCorrection: Bool {
+        return defaults.boolForKey("DisableAutoCorrection")
+    }
 
 }

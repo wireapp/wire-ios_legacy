@@ -25,6 +25,7 @@
 #import <PureLayout/PureLayout.h>
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import Classy;
 
 @interface TextView ()
@@ -80,6 +81,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
     self.placeholderTextColor = [UIColor lightGrayColor];
     self.placeholderTextContainerInset = self.textContainerInset;
+    
+    if ([AutomationHelper disableAutoCorrection]) {
+        self.autocorrectionType = UITextAutocorrectionTypeNo;
+    }
 }
 
 - (void)dealloc
