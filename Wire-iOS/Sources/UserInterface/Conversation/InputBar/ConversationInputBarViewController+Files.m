@@ -343,12 +343,20 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         }
         
         if (image != nil) {
-            picker.showLoadingView = YES;
+            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                picker.showLoadingView = YES;
+                
+                [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9) completion:^{
+                    picker.showLoadingView = NO;
+                    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                }];
+            }
+            else {
+                [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) source:picker.sourceType];
+                }];
+            }
             
-            [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9) completion:^{
-                picker.showLoadingView = NO;
-                [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-            }];
         }
     }
     else {
