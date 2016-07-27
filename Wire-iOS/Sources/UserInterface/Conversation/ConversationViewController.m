@@ -650,7 +650,6 @@
 {
     if (! self.contentViewController.isScrolledToBottom) {
         [self.contentViewController scrollToBottomAnimated:YES];
-        return YES;
     }
 
     return YES;
