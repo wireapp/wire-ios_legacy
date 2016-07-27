@@ -87,8 +87,19 @@ static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboa
     else {
         CGSize keyboardSize = CGSizeFromString(currentLastValue);
         
+        // If keyboardSize value is clearly off we need to pull default value
         if (keyboardSize.height < 150) {
-            keyboardSize.height = 216;
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+                if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+                    keyboardSize.height = 264;
+                }
+                else {
+                    keyboardSize.height = 352;
+                }
+            }
+            else {
+                keyboardSize.height = 216;
+            }
         }
         
         return keyboardSize;
