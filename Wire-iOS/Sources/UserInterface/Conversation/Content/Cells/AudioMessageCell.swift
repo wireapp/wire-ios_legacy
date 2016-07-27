@@ -167,7 +167,7 @@ import CocoaLumberjackSwift
         self.configureVisibleViews(forFileMessageData: fileMessageData, initialConfiguration: initialConfiguration)
         self.updateTimeLabel()
         
-        if self.isTrackPlayingInAudioPlayer() {
+        if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayerProgressAnimated(false)
             self.updateActivePlayButton()
         }
@@ -220,7 +220,7 @@ import CocoaLumberjackSwift
     private func updateTimeLabel() {
         var duration: Int? = .None
         
-        if self.isTrackPlayingInAudioPlayer() {
+        if self.isOwnTrackPlayingInAudioPlayer() {
             duration = Int(self.audioTrackPlayer().elapsedTime)
         }
         else {
@@ -297,27 +297,9 @@ import CocoaLumberjackSwift
             return
         }
 
+        self.proximityListener.stateChanged = proximityStateDidChange
+        
         let audioTrackPlayer = self.audioTrackPlayer()
-        self.proximityListener.stateChanged = { raisedToEar in
-            do {
-                if raisedToEar {
-                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
-            
-                    AVSMediaManager.sharedInstance().playbackRoute = AVSPlaybackRoute.BuiltIn
-                }
-                else {
-                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                    
-                    AVSMediaManager.sharedInstance().playbackRoute = AVSPlaybackRoute.Speaker
-                }
-            }
-            catch let error {
-                DDLogError("Cannot set AVAudioSession category: \(error)")
-            }
-        }
-        
-        self.proximityListener.startListening()
-        
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage != nil && audioTrackPlayer.sourceMessage.isEqual(self.message)
         
         if let track = self.message.audioTrack() where !audioTrackPlayingSame {
@@ -342,7 +324,7 @@ import CocoaLumberjackSwift
         }
     }
     
-    func isTrackPlayingInAudioPlayer() -> Bool {
+    func isOwnTrackPlayingInAudioPlayer() -> Bool {
         let audioTrackPlayer = self.audioTrackPlayer()
         guard let message = self.message,
             let audioTrack = message.audioTrack() else {
@@ -385,22 +367,47 @@ import CocoaLumberjackSwift
     // MARK: - Audio state observer
     
     func audioProgressChanged(change: NSDictionary) {
-        if self.isTrackPlayingInAudioPlayer() {
+        if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayerProgressAnimated(false)
             self.updateTimeLabel()
         }
     }
     
     func audioPlayerStateChanged(change: NSDictionary) {
-        if self.isTrackPlayingInAudioPlayer() {
+        if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayButton()
             self.updateActivePlayerProgressAnimated(false)
             self.updateTimeLabel()
         }
         else {
-            self.proximityListener.stopListening()
             self.updateInactivePlayer()
             self.updateTimeLabel()
+        }
+        
+        updateProximityObserverState()
+    }
+    
+    // MARK: - Proximity Listener
+    
+    func updateProximityObserverState() {
+        if audioTrackPlayer().playing && isOwnTrackPlayingInAudioPlayer() {
+            proximityListener.startListening()
+        } else {
+            proximityListener.stopListening()
+        }
+    }
+    
+    func proximityStateDidChange(raisedToEar: Bool) {
+        do {
+            if raisedToEar {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
+                AVSMediaManager.sharedInstance().playbackRoute = .BuiltIn
+            } else {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                AVSMediaManager.sharedInstance().playbackRoute = .Speaker
+            }
+        } catch {
+            DDLogError("Cannot set AVAudioSession category: \(error)")
         }
     }
     
