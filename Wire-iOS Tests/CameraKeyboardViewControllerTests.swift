@@ -100,20 +100,6 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(self.sut.collectionView.numberOfItemsInSection(0), 1)
     }
     
-    func testThatSecondSectionContainsCameraRollElements() {
-        // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
-        self.sut.delegate = self.delegateMock
-        self.prepareForSnapshot()
-        
-        // when
-        let itemCell = self.sut.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1))
-        
-        // then
-        XCTAssertTrue(itemCell is AssetCell)
-        XCTAssertEqual(self.sut.collectionView.numberOfSections(), 2)
-    }
-    
     func testInitialStateLayoutSizeCompact() {
         // given
         self.splitView?.layoutSize = .Compact
