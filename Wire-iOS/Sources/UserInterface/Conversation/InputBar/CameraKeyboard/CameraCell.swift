@@ -139,6 +139,11 @@ public class CameraCell: UICollectionViewCell {
     
     private func updateVideoOrientation() {
         let statusBarOrientation = AVCaptureVideoOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)!
+        
+        if let connection = self.cameraController.previewLayer.connection where connection.supportsVideoOrientation {
+            connection.videoOrientation = statusBarOrientation
+        }
+        
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             self.cameraController.snapshotVideoOrientation = statusBarOrientation
         }
