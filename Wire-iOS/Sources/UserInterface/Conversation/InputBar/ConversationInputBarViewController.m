@@ -478,8 +478,7 @@
             
             if (self.inputController == nil || self.inputController != self.cameraKeyboardViewController) {
                 if (self.cameraKeyboardViewController == nil) {
-                    self.cameraKeyboardViewController = [[CameraKeyboardViewController alloc] initWithSplitLayoutObservable:[ZClientViewController sharedZClientViewController].splitViewController];
-                    self.cameraKeyboardViewController.delegate = self;
+                    [self createCameraKeyboardViewController];
                 }
                 self.audioRecordViewController = nil;
                 self.inputController = self.cameraKeyboardViewController;
