@@ -162,6 +162,10 @@
 {
     return @[];
 }
+    
+- (BOOL)isPendingApproval {
+    return false;
+}
 
 - (BOOL)isKindOfClass:(Class)aClass
 {
