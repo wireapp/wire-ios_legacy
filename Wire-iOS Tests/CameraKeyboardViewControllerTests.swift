@@ -121,7 +121,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
-        self.verify(view: self.prepareForSnapshot())
+        self.verify(view: self.prepareForSnapshot(), tolerance: 0.05)
     }
     
     func testInitialStateLayoutSizeRegularPortrait() {
@@ -131,7 +131,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
-        self.verify(view: self.prepareForSnapshot(CGSizeMake(768, 264)))
+        self.verify(view: self.prepareForSnapshot(CGSizeMake(768, 264)), tolerance: 0.05)
     }
     
     func testInitialStateLayoutSizeRegularLandscape() {
@@ -141,7 +141,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
-        self.verify(view: self.prepareForSnapshot(CGSizeMake(1024, 352)))
+        self.verify(view: self.prepareForSnapshot(CGSizeMake(1024, 352)), tolerance: 0.05)
     }
     
     func testCameraScrolledHorisontallySomePercent() {
@@ -152,7 +152,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         // when
         self.sut.collectionView.scrollRectToVisible(CGRectMake(300, 0, 160, 10), animated: false)
         // then
-        self.verify(view: self.prepareForSnapshot())
+        self.verify(view: self.prepareForSnapshot(), tolerance: 0.05)
     }
     
     func testCameraScrolledHorisontallyAwayPercent() {
@@ -163,7 +163,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         // when
         self.sut.collectionView.scrollRectToVisible(CGRectMake(320, 0, 160, 10), animated: false)
         // then
-        self.verify(view: self.prepareForSnapshot())
+        self.verify(view: self.prepareForSnapshot(), tolerance: 0.05)
     }
     
     func testThatItCallsDelegateCameraRollWhenCameraRollButtonPressed() {

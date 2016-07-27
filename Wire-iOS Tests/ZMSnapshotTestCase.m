@@ -116,11 +116,16 @@ static NSSet *phoneWidths(void) {
 
 - (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line
 {
+    [self verifyView:view tolerance:0 file:file line:line];
+}
+
+- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line
+{
     UIView *container = [self containerViewWithView:view];
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }
-    FBSnapshotVerifyView(container, NSStringFromCGSize(view.bounds.size));
+    FBSnapshotVerifyViewWithOptions(container, NSStringFromCGSize(view.bounds.size), FBSnapshotTestCaseDefaultSuffixes(), tolerance);
     [self assertAmbigousLayout:container file:file line:line];
 }
 
