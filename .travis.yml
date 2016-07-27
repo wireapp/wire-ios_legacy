@@ -1,6 +1,9 @@
 language: objective-c
 osx_image: xcode7.3
-cache: cocoapods
+
+cache:
+  - bundler
+  - cocoapods
 
 script:
 - set pipefail
