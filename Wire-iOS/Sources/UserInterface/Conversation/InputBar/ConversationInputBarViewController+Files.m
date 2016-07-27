@@ -148,6 +148,16 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         pickerController.mediaTypes = mediaTypes;
         pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration;
         pickerController.transitioningDelegate = [FastTransitioningDelegate sharedDelegate];
+        if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+            switch ([Settings sharedSettings].preferredCamera) {
+                case CameraControllerCameraBack:
+                    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+                    break;
+                case CameraControllerCameraFront:
+                    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+                    break;
+            }
+        }
         [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
     }];
 }
