@@ -127,6 +127,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     func testInitialStateLayoutSizeRegularPortrait() {
         // given
         self.splitView?.layoutSize = .RegularPortrait
+        self.splitView?.leftViewControllerWidth = 216
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
@@ -136,19 +137,20 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     func testInitialStateLayoutSizeRegularLandscape() {
         // given
         self.splitView?.layoutSize = .RegularLandscape
+        self.splitView?.leftViewControllerWidth = 216
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
         self.verify(view: self.prepareForSnapshot(CGSizeMake(1024, 352)))
     }
     
-    func testCameraScrolledHorisontallyHalfPercent() {
+    func testCameraScrolledHorisontallySomePercent() {
         // given
         self.splitView?.layoutSize = .Compact
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.prepareForSnapshot()
         // when
-        self.sut.collectionView.scrollRectToVisible(CGRectMake(160, 0, 160, 10), animated: false)
+        self.sut.collectionView.scrollRectToVisible(CGRectMake(300, 0, 160, 10), animated: false)
         // then
         self.verify(view: self.prepareForSnapshot())
     }
