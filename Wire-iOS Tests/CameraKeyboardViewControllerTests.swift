@@ -57,6 +57,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     var sut: CameraKeyboardViewController!
     var splitView: SplitLayoutObservableMock!
     var delegateMock: CameraKeyboardViewControllerDelegateMock!
+    let assetLibrary = AssetLibrary(synchronous: true)
     
     override func setUp() {
         super.setUp()
@@ -87,7 +88,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testThatFirstSectionContainsCameraCellOnly() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -99,12 +100,26 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(self.sut.collectionView.numberOfSections(), 2)
         XCTAssertEqual(self.sut.collectionView.numberOfItemsInSection(0), 1)
     }
+
+    func testThatSecondSectionContainsCameraRollElements() {
+        // given
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        self.sut.delegate = self.delegateMock
+        self.prepareForSnapshot()
+        
+        // when
+        let itemCell = self.sut.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1))
+        
+        // then
+        XCTAssertTrue(itemCell is AssetCell)
+        XCTAssertEqual(self.sut.collectionView.numberOfSections(), 2)
+    }
     
     func testInitialStateLayoutSizeCompact() {
         // given
         self.splitView?.layoutSize = .Compact
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
         self.verify(view: self.prepareForSnapshot())
     }
@@ -114,7 +129,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         self.splitView?.layoutSize = .RegularPortrait
         self.splitView?.leftViewControllerWidth = 216
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
         self.verify(view: self.prepareForSnapshot(CGSizeMake(768, 264)))
     }
@@ -124,7 +139,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         self.splitView?.layoutSize = .RegularLandscape
         self.splitView?.leftViewControllerWidth = 216
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
         self.verify(view: self.prepareForSnapshot(CGSizeMake(1024, 352)))
     }
@@ -132,7 +147,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     func testCameraScrolledHorisontallySomePercent() {
         // given
         self.splitView?.layoutSize = .Compact
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.prepareForSnapshot()
         // when
         self.sut.collectionView.scrollRectToVisible(CGRectMake(300, 0, 160, 10), animated: false)
@@ -143,7 +158,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     func testCameraScrolledHorisontallyAwayPercent() {
         // given
         self.splitView?.layoutSize = .Compact
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.prepareForSnapshot()
         // when
         self.sut.collectionView.scrollRectToVisible(CGRectMake(320, 0, 160, 10), animated: false)
@@ -153,7 +168,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItCallsDelegateCameraRollWhenCameraRollButtonPressed() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -169,7 +184,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItCallsDelegateWhenWantsToOpenFullScreenCamera() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
