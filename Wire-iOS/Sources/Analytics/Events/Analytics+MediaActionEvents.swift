@@ -116,7 +116,7 @@ public extension Analytics {
     @objc public func tagMediaActionCompleted(action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = ["action": action.attributeValue]
         if let typeAttribute = conversationTypeAttribute(conversation) {
-    
+            attributes["with_otto"] = conversation.firstActiveParticipantOtherThanSelf().isOtto ? "true" : "false";
             attributes["conversation_type"] = typeAttribute
         }
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
