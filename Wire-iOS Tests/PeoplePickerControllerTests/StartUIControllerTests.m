@@ -104,10 +104,6 @@
     
     OCMStub([self.usersInDirectorySectionPartialMock setSuggestions:[OCMArg any]]).andCall(self, @selector(setSearchResultUsersInDirectory:));
     
-    id userMock = OCMClassMock([ZMUser class]);
-    OCMStub([[userMock classMethod] selfUser]).andReturn(OCMOCK_ANY);
-    OCMStub([[userMock stub] addUserObserver:[OCMArg any] forUsers:[OCMArg any] inUserSession:[OCMArg any]]).andReturn(nil);
-    
     (void)self.controller.view;
     self.collectionView = OCMClassMock([UICollectionView class]);
     
@@ -160,6 +156,7 @@
     self.numberOfItemsDeletedForSection = [NSMutableDictionary new];
     self.numberOfItemsMovedInForSection = [NSMutableDictionary new];
     self.numberOfItemsMovedOutForSection = [NSMutableDictionary new];
+    
 }
 
 - (void)tearDown

@@ -153,6 +153,16 @@
     return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:1.0];
 }
 
+- (id)observableKeys
+{
+    return @[];
+}
+
+- (id)clients
+{
+    return @[];
+}
+
 - (BOOL)isKindOfClass:(Class)aClass
 {
     if ([aClass isSubclassOfClass:[ZMUser class]]) {
