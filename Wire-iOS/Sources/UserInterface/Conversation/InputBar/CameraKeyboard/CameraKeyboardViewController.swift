@@ -228,11 +228,13 @@ public class CameraKeyboardViewController: UIViewController {
         let options = PHVideoRequestOptions()
         options.deliveryMode = .HighQualityFormat
         options.networkAccessAllowed = true
-        
+        options.version = .Original
+
         self.showLoadingView = true
         manager.requestAVAssetForVideo(asset, options: options, resultHandler: { videoAsset, audioMix, info in
             dispatch_async(dispatch_get_main_queue(), {
                 self.showLoadingView = false
+
                 guard let videoAsset = videoAsset as? AVURLAsset else {
                     return
                 }
