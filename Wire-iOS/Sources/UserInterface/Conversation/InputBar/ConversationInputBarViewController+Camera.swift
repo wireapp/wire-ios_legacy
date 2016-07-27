@@ -49,6 +49,13 @@ class StatusBarVideoEditorController: UIVideoEditorController {
 
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
     
+    @objc public func createCameraKeyboardViewController() {
+        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: ZClientViewController.sharedZClientViewController().splitViewController)
+        cameraKeyboardViewController.delegate = self
+        
+        self.cameraKeyboardViewController = cameraKeyboardViewController
+    }
+    
     public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo videoURLAsset: AVURLAsset) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
         if CMTimeGetSeconds(videoURLAsset.duration) > ConversationUploadMaxVideoDuration {
@@ -99,7 +106,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, source: CameraKeyboardSource) {
+    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, source: UIImagePickerControllerSourceType) {
         
         self.showConfirmationForImage(imageData, source: source)
     }
@@ -124,7 +131,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    @objc public func showConfirmationForImage(imageData: NSData, source: CameraKeyboardSource) {
+    @objc public func showConfirmationForImage(imageData: NSData, source: UIImagePickerControllerSourceType) {
         let image = UIImage(data: imageData)
         
         let confirmImageViewController = ConfirmAssetViewController()

@@ -28,5 +28,6 @@
 #import "ZMSnapshotTestCase.h"
 #import "MockUser.h"
 #import "MockMessage+Creation.h"
+#import "SplitViewController.h"
 #import "WAZUIMagicIOS.h"
 #import <AVSAudioEffect.h>

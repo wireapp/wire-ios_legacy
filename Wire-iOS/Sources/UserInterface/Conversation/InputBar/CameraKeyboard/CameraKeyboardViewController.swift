@@ -22,27 +22,24 @@ import Photos
 import Cartography
 import WireExtensionComponents
 import CocoaLumberjackSwift
+import AVFoundation
 
-@objc public enum CameraKeyboardSource: UInt {
-    case Library, Camera
-}
-
-@objc public protocol CameraKeyboardViewControllerDelegate: NSObjectProtocol {
+public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: AVURLAsset)
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, source: CameraKeyboardSource)
+    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, source: UIImagePickerControllerSourceType)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController)
 }
 
 
 public class CameraKeyboardViewController: UIViewController {
-    private let assetLibrary = AssetLibrary()
+    internal let assetLibrary: AssetLibrary
     
     private let collectionViewLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
+    internal var collectionView: UICollectionView!
     
-    private let goBackButton = IconButton()
-    private let cameraRollButton = IconButton()
+    internal let goBackButton = IconButton()
+    internal let cameraRollButton = IconButton()
     private var lastLayoutSize = CGSizeZero
     
     private let sideMargin: CGFloat = 14
@@ -72,8 +69,9 @@ public class CameraKeyboardViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    @objc init(splitLayoutObservable: SplitLayoutObservable) {
+    init(splitLayoutObservable: SplitLayoutObservable, assetLibrary: AssetLibrary = AssetLibrary()) {
         self.splitLayoutObservable = splitLayoutObservable
+        self.assetLibrary = assetLibrary
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: SplitLayoutObservableDidChangeToLayoutSizeNotification, object: self.splitLayoutObservable)
@@ -207,14 +205,14 @@ public class CameraKeyboardViewController: UIViewController {
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .Library)
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .PhotoLibrary)
                     })
                 })
                 
                 return
             }
             dispatch_async(dispatch_get_main_queue(), {
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .Library)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .PhotoLibrary)
             })
         })
     }
@@ -298,8 +296,8 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
                 self.forwardSelectedVideoAsset(asset)
             
             case .Image:
-                
                 self.forwardSelectedPhotoAsset(asset)
+                
             default:
                 // not supported
                 break;
