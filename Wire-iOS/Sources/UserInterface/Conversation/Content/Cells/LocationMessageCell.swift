@@ -69,7 +69,7 @@ import AddressBook
     private func createConstraints() {
         constrain(messageContentView, containerView, authorLabel, mapView) { contentView, container, authorLabel, mapView in
             container.left == authorLabel.left
-            container.right == contentView.right - 16
+            container.right == contentView.rightMargin
             container.top == contentView.top
             container.bottom == contentView.bottom
             container.height == 160

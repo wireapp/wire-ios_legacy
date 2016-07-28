@@ -78,7 +78,7 @@ public class FileTransferCell: ConversationCell {
     public func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.authorLabel, self.topLabel, self.actionButton) { messageContentView, containerView, authorLabel, topLabel, actionButton in
             containerView.left == authorLabel.left
-            containerView.right == messageContentView.right - 16
+            containerView.right == messageContentView.rightMargin
             containerView.top == messageContentView.top
             containerView.bottom  == messageContentView.bottom
             containerView.height == 56 ~ 100
