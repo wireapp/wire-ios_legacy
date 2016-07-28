@@ -65,6 +65,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @property (nonatomic) SearchViewController *searchViewController;
 @property (nonatomic) ZMSearchDirectory *searchDirectory;
+@property (nonatomic) Class searchDirectoryClass;
 @property (nonatomic) PeopleSelection *selection;
 @property (nonatomic) SearchTokenStore *searchTokenStore;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
@@ -83,10 +84,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchDirectory tearDown];
 }
 
-- (instancetype)init
+- (instancetype)initWithSearchDirectoryClass:(Class)searchDirectoryClass
 {
     self = [super init];
     if (self) {
+        _searchDirectoryClass = searchDirectoryClass;
         _mode = StartUIModeNotSet;
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:@"people_picker"];
         
@@ -105,9 +107,14 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         
         self.groupConversationsSection = [GroupConversationsSection new];
         self.groupConversationsSection.delegate = self;
-        
-        
+
     }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [self initWithSearchDirectoryClass:[ZMSearchDirectory class]];
     return self;
 }
 
@@ -223,8 +230,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchDirectory tearDown];
     self.searchDirectory = nil;
     
-    ZMSearchDirectory *newDirectory = [[ZMSearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]
-                                                            maxTopConversationsCount:24];
+    ZMSearchDirectory *newDirectory = [[self.searchDirectoryClass alloc] initWithUserSession:[ZMUserSession sharedSession]
+                                                                    maxTopConversationsCount:24];
     self.searchDirectory = newDirectory;
     
     [self.searchDirectory addSearchResultObserver:self];
@@ -371,6 +378,10 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 
     ZMSearchToken searchToken = searchBlock();
+    if (searchToken == nil) {
+        return;
+    }
+    
     [self.searchTokenStore searchStarted:searchType withToken:searchToken];
     @weakify(self);
     

@@ -34,6 +34,7 @@ public class AssetCell: UICollectionViewCell {
         self.contentView.clipsToBounds = true
         
         self.imageView.contentMode = .ScaleAspectFill
+        self.imageView.backgroundColor = UIColor(white: 0, alpha: 0.1)
         self.contentView.addSubview(self.imageView)
         
         self.durationView.textAlignment = .Center

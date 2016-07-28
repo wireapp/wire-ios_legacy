@@ -84,14 +84,14 @@
     self.searchResultGroupConversations = [MockLoader mockObjectsOfClass:[MockConversation class]
                                                                 fromFile:@"conversations-01.json"];
     
-    self.controller = [[StartUIViewController alloc] init];
+    self.controller = [[StartUIViewController alloc] initWithSearchDirectoryClass:nil];
     self.controllerPartialMock = OCMPartialMock(self.controller);
     
     self.topPeopleLineSectionPartialMock = OCMPartialMock(self.controller.topPeopleLineSection);
     self.usersInContactsSectionPartialMock = OCMPartialMock(self.controller.usersInContactsSection);
     self.usersInDirectorySectionPartialMock = OCMPartialMock(self.controller.usersInDirectorySection);
     self.groupConversationsSectionPartialMock = OCMPartialMock(self.controller.groupConversationsSection);
-    
+        
     OCMStub([self.controllerPartialMock topPeopleLineSection]).andReturn(self.topPeopleLineSectionPartialMock);
     OCMStub([self.controllerPartialMock usersInContactsSection]).andReturn(self.usersInContactsSectionPartialMock);
     OCMStub([self.controllerPartialMock usersInDirectorySection]).andReturn(self.usersInDirectorySectionPartialMock);
@@ -163,6 +163,10 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    self.controller = nil;
+    
+    [(id)self.collectionView stopMocking];
+    [(id)self.controllerPartialMock stopMocking];
 }
 
 #pragma mark - UICollectionView Batch Updates
