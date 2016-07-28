@@ -860,7 +860,7 @@ ConfirmAssetViewController {
     }
     
     editButton: @{
-        backgroundColor: white;
+        backgroundColor: $color-accent-current;
     }
 }
 
