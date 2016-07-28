@@ -39,8 +39,8 @@ import zmessaging
     ///  - returns: The `ZMEmailCredentials` specified with the `--loginemail=` and --`loginpassword=` arguments on the command line
     private(set) var automationEmailCredentials: ZMEmailCredentials? = nil
     
-    ///  - returns: The value specified for the `DisableAutoCorrection` argument on the command line
-    private(set) var disableAutoCorrection = false
+    ///  - returns: The value specified for the `--disable-autocorrection` argument on the command line
+    private(set) var disableAutocorrection = false
     
     override init() {
         super.init()
@@ -65,7 +65,7 @@ import zmessaging
             }
             
             if arg == AutomationKey.DisableAutocorrection.rawValue {
-                disableAutoCorrection = true
+                disableAutocorrection = true
             }
             
             let emailKey = AutomationKey.Email.rawValue
