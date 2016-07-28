@@ -260,6 +260,7 @@
     self.rootNavigationController.showLoadingView = NO;
     
     if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
+        [self.delegate registrationViewControllerDidSignIn];
         return;
     }
     
