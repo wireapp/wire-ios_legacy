@@ -28,6 +28,7 @@ import Cartography
     public let titleLabel = UILabel()
     public let dismissButton = IconButton()
     public let separatorView = UIView()
+    private let showsStatusBar: Bool
     weak var delegate: ModalTopBarDelegate?
     
     var title: String? {
@@ -36,7 +37,8 @@ import Cartography
         }
     }
     
-    required public init() {
+    required public init(forUseWithStatusBar statusBar: Bool = true) {
+        showsStatusBar = statusBar
         super.init(frame: CGRectZero)
         configureViews()
         createConstraints()
@@ -51,15 +53,15 @@ import Cartography
         dismissButton.setIcon(.Cancel, withSize: .Tiny, forState: .Normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), forControlEvents: .TouchUpInside)
     }
-    
+
     private func createConstraints() {
         constrain(self, titleLabel, dismissButton, separatorView) { view, label, button, separator in
             label.centerX == view.centerX
-            label.top == view.top + 20
+            label.top == view.top + (showsStatusBar ? 20 : 0)
             label.bottom == view.bottom
             label.trailing <= button.leading - 12
             button.trailing == view.trailing - 12
-            button.centerY == view.centerY + 10
+            button.centerY == label.centerY
             separator.leading == view.leading
             separator.trailing == view.trailing
             separator.bottom == view.bottom
@@ -75,7 +77,7 @@ import Cartography
     }
     
     public override func intrinsicContentSize() -> CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 64)
+        return CGSize(width: UIViewNoIntrinsicMetric, height: showsStatusBar ? 64 : 44)
     }
     
 }

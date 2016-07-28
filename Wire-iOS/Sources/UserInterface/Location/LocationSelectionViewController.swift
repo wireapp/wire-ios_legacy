@@ -33,7 +33,7 @@ import CoreLocation
     public let locationButton = IconButton()
     public let locationButtonContainer = UIView()
     private let mapView = MKMapView()
-    private let toolBar = ModalTopBar()
+    private let toolBar: ModalTopBar
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     private let sendViewController = LocationSendViewController()
@@ -47,6 +47,15 @@ import CoreLocation
         return status == .AuthorizedAlways || status == .AuthorizedWhenInUse
     }
     
+    public init(forPopoverPresentation popover: Bool) {
+        toolBar = ModalTopBar(forUseWithStatusBar: !popover)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented, user 'init(forPopoverPresentation:)'")
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self

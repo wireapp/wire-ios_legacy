@@ -740,7 +740,11 @@
 {
     [[Analytics shared] tagMediaAction:ConversationMediaActionLocation inConversation:self.conversation];
     
-    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] init];
+    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] initForPopoverPresentation:IS_IPAD];
+    locationSelectionViewController.modalPresentationStyle = UIModalPresentationPopover;
+    UIPopoverPresentationController* popoverPresentationController = locationSelectionViewController.popoverPresentationController;
+    popoverPresentationController.sourceView = sender.superview;
+    popoverPresentationController.sourceRect = sender.frame;
     locationSelectionViewController.title = self.conversation.displayName;
     locationSelectionViewController.delegate = self;
     [self.parentViewController presentViewController:locationSelectionViewController animated:YES completion:nil];
