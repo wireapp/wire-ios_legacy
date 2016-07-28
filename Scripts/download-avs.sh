@@ -97,7 +97,11 @@ else
 	echo "ℹ️  Downloading ${AVS_RELEASE_TAG_PATH}..."
 	
 	# Get tag json: need to parse json to get assed URL
-	ASSET_URL=`curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	TEMP_FILE=`mktemp`
+	curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}"
+	cat "${TEMP_FILE}"
+	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
 		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"
 	fi
