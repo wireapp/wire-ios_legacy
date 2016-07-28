@@ -29,7 +29,7 @@ APPSTORE_AVS_VERSION=2.7.21
 ##################################
 # prepare credentials if needed
 if [[ -n "${GITHUB_ACCESS_TOKEN}" ]]; then
-	ACCESS_TOKEN_QUERY="?access_token=${GITHUB_TOKEN}"
+	ACCESS_TOKEN_QUERY="?access_token=${GITHUB_ACCESS_TOKEN}"
 fi
 
 ##################################
@@ -99,7 +99,6 @@ else
 	# Get tag json: need to parse json to get assed URL
 	TEMP_FILE=`mktemp`
 	curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}"
-	cat "${TEMP_FILE}"
 	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
