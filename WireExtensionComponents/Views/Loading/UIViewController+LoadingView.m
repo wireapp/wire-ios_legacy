@@ -51,9 +51,11 @@ const NSString *LoadingViewKey = @"loadingView";
 {
     self.loadingView.hidden = ! shouldShow;
     if (shouldShow) {
+        self.activityIndicator.hidden = NO;
         [self.activityIndicator startAnimation:nil];
     }
     else {
+        self.activityIndicator.hidden = YES;
         [self.activityIndicator stopAnimation:nil];
     }
 }
@@ -73,6 +75,7 @@ const NSString *LoadingViewKey = @"loadingView";
 
         self.activityIndicator = [[ProgressSpinner alloc] init];
         self.activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+        self.activityIndicator.hidesWhenStopped = NO;
         [_loadingView addSubview:self.activityIndicator];
         [self.activityIndicator addConstraintsCenteringToView:_loadingView];
 
