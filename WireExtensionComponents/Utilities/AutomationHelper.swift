@@ -51,7 +51,7 @@ import zmessaging
         case Email = "--loginemail="
         case Password = "--loginpassword="
         case LogNetwork = "--debug-log-network"
-        case DisableAutocorrection = "--disableautocorrection"
+        case DisableAutocorrection = "--disable-autocorrection"
     }
     
     private func checkCommandLineArguments() {
