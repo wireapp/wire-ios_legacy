@@ -772,6 +772,12 @@ VideoMessageCell {
     }
 }
 
+ImageMessageCell {
+    imageViewContainer: @{
+        backgroundColor: $color-placeholder-background;
+    }
+}
+
 AudioMessageCell {
     ProgressView {
         backgroundColor: $color-separator;

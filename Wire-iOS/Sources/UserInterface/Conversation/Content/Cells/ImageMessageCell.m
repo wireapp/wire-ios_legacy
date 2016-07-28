@@ -30,12 +30,11 @@
 #import "UIColor+WAZExtensions.h"
 #import "FLAnimatedImageView.h"
 #import "FLAnimatedImage.h"
-#import "CircularPixelationImageView.h"
-#import "GapLoadingBar.h"
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 #import "Analytics+iOS.h"
+#import "Wire-Swift.h"
 
 #import "UIView+Borders.h"
 
@@ -68,8 +67,7 @@
 @interface ImageMessageCell ()
 
 @property (nonatomic, strong) FLAnimatedImageView *fullImageView;
-@property (nonatomic, strong) CircularPixelationImageView *previewImageView;
-@property (nonatomic, strong) GapLoadingBar *progressBar;
+@property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
 @property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) IconButton *resendButton;
 @property (nonatomic, strong) UIView *resendButtonContainer;
@@ -77,7 +75,6 @@
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic, strong) id<MediaAsset> image;
-@property (nonatomic, strong) UIImage *previewImage;
 
 @property (nonatomic, strong) NSLayoutConstraint *imageWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *imageAspectConstraint;
@@ -88,19 +85,6 @@
 @end
 
 @implementation ImageMessageCell
-
-static ImageCache *previewImageCache(void)
-{
-    static ImageCache *cache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [[ImageCache alloc] initWithName:@"ConversationImageTableCell.previewCache"];
-        cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = 1024 * 1024 * 10; // 10 MB
-        cache.qualityOfService = NSQualityOfServiceUtility;
-    });
-    return cache;
-}
 
 static ImageCache *imageCache(void)
 {
@@ -171,8 +155,7 @@ static ImageCache *imageCache(void)
     self.originalImageSize = CGSizeZero;
     
     self.image = nil;
-    self.previewImage = nil;
-    
+
     if (self.imageAspectConstraint) {
         [self.imageViewContainer removeConstraint:self.imageAspectConstraint];
         self.imageAspectConstraint = nil;
@@ -198,17 +181,9 @@ static ImageCache *imageCache(void)
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
-    
-    self.previewImageView = [[CircularPixelationImageView alloc] init];
-    self.previewImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.previewImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.previewImageView.clipsToBounds = YES;
-    [self.imageViewContainer addSubview:self.previewImageView];
 
-    self.progressBar = [GapLoadingBar barWithDefaultGapSizeAndAnimationDuration];
-    self.progressBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.progressBar.backgroundColor = [UIColor accentColor];
-    [self.imageViewContainer addSubview:self.progressBar];
+    self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
+    [self.imageViewContainer addSubview:self.loadingView];
     
     self.resendButtonContainer = [[UIView alloc] initForAutoLayout];
     self.resendButtonContainer.backgroundColor = UIColor.whiteColor;
@@ -223,7 +198,7 @@ static ImageCache *imageCache(void)
     
     self.accessibilityIdentifier = @"ImageCell";
     
-    self.progressBar.hidden = NO;
+    self.loadingView.hidden = NO;
 }
 
 - (void)layoutSubviews
@@ -235,11 +210,8 @@ static ImageCache *imageCache(void)
 - (void)createConstraints
 {
     [self.fullImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.previewImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    [self.progressBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.progressBar autoSetDimension:ALDimensionHeight toSize:2];
-    
+    [self.loadingView autoCenterInSuperview];
+
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
     [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
@@ -309,7 +281,6 @@ static ImageCache *imageCache(void)
     
     [self updateImageMessageConstraintConstants];
     
-    NSData *previewData = imageMessageData.previewData;
     NSData *imageData = imageMessageData.imageData;
     
     // If medium image is present, use the medium image
@@ -345,9 +316,7 @@ static ImageCache *imageCache(void)
             @strongify(self);
             
             // Double check that our cell's current image is still the same one
-            
             if (image != nil && self.message != nil && cacheKey != nil && [cacheKey isEqualToString: [Message nonNilImageDataIdentifier:self.message]]) {
-                self.previewImage = nil;
                 self.image = image;
             }
             else {
@@ -355,19 +324,10 @@ static ImageCache *imageCache(void)
             }
         }];
     }
-    else if (imageMessageData.previewData.length > 0) {
-        @weakify (self)
-        [previewImageCache() imageForData:previewData cacheKey:imageMessageData.imagePreviewDataIdentifier withCompletion:^(UIImage *image, NSString *cacheKey) {
-            @strongify(self)
-            // Double check that our current image is still the same one
-            if (self.message != nil && cacheKey != nil && [cacheKey isEqualToString:self.message.imageMessageData.imagePreviewDataIdentifier]) {
-                self.previewImage = image;
-                self.image = nil;
-            }
-        }];
-    }
-    else if (previewData == nil && imageData == nil) {
-        DDLogWarn(@"ZMConversationMessage previewData and imageData are nil!");
+    else {
+        // We did not download the medium image yet, start the progress animation
+        [self.loadingView startProgressAnimation];
+        self.loadingView.hidden = NO;
     }
 }
 
@@ -378,7 +338,8 @@ static ImageCache *imageCache(void)
     }
     _image = image;
     if (image != nil) {
-        self.progressBar.animating = NO;
+        self.loadingView.hidden = YES;
+        [self.loadingView stopProgressAnimation];
         [self.fullImageView setMediaAsset:image];
         [self showImageView:self.fullImageView];
     } else {
@@ -386,33 +347,14 @@ static ImageCache *imageCache(void)
     }
 }
 
-- (void)setPreviewImage:(UIImage *)image
-{
-    if (_previewImage == image) {
-        return;
-    }
-    _previewImage = image;
-    
-    if (image != nil) {
-        self.progressBar.animating = YES;
-        
-        self.previewImageView.image = image;
-        [self showImageView:self.previewImageView];
-    } else {
-        self.previewImageView.image = nil;
-    }
-}
-
 - (void)showImageView:(UIView *)imageView
 {
     self.fullImageView.hidden = imageView != self.fullImageView;
-    self.previewImageView.hidden = imageView != self.previewImageView;
 }
 
 - (void)recycleImage
 {
     self.image = nil;
-    self.previewImage = nil;
 }
 
 #pragma mark - Message updates

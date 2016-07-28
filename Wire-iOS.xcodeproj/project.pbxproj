@@ -350,10 +350,6 @@
 		871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */; };
 		871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */; };
 		871BC2661D34F8F800DF0793 /* UserBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */; };
-		871BC2671D34F8F800DF0793 /* CircularPixelation.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 871BC1C41D34F8F800DF0793 /* CircularPixelation.fsh */; };
-		871BC2681D34F8F800DF0793 /* CircularPixelation.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 871BC1C51D34F8F800DF0793 /* CircularPixelation.vsh */; };
-		871BC2691D34F8F800DF0793 /* CircularPixelationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C71D34F8F800DF0793 /* CircularPixelationImageView.m */; };
-		871BC26A1D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C91D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m */; };
 		871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CB1D34F8F800DF0793 /* GapLayer.m */; };
 		871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */; };
 		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
@@ -1356,12 +1352,6 @@
 		871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundViewImageProcessor.m; sourceTree = "<group>"; };
 		871BC1C11D34F8F800DF0793 /* UserBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserBackgroundView.h; sourceTree = "<group>"; };
 		871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserBackgroundView.m; sourceTree = "<group>"; };
-		871BC1C41D34F8F800DF0793 /* CircularPixelation.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CircularPixelation.fsh; sourceTree = "<group>"; };
-		871BC1C51D34F8F800DF0793 /* CircularPixelation.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CircularPixelation.vsh; sourceTree = "<group>"; };
-		871BC1C61D34F8F800DF0793 /* CircularPixelationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularPixelationImageView.h; sourceTree = "<group>"; };
-		871BC1C71D34F8F800DF0793 /* CircularPixelationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularPixelationImageView.m; sourceTree = "<group>"; };
-		871BC1C81D34F8F800DF0793 /* CircularPixelationImageViewBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularPixelationImageViewBuilder.h; sourceTree = "<group>"; };
-		871BC1C91D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularPixelationImageViewBuilder.m; sourceTree = "<group>"; };
 		871BC1CA1D34F8F800DF0793 /* GapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLayer.h; sourceTree = "<group>"; };
 		871BC1CB1D34F8F800DF0793 /* GapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLayer.m; sourceTree = "<group>"; };
 		871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLoadingBar.h; sourceTree = "<group>"; };
@@ -2997,7 +2987,6 @@
 			children = (
 				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
 				871BC1BA1D34F8F800DF0793 /* BackgroundView */,
-				871BC1C31D34F8F800DF0793 /* CircularPixelationImageView */,
 				871BC1CA1D34F8F800DF0793 /* GapLayer.h */,
 				871BC1CB1D34F8F800DF0793 /* GapLayer.m */,
 				871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */,
@@ -3060,19 +3049,6 @@
 				871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */,
 			);
 			path = BackgroundView;
-			sourceTree = "<group>";
-		};
-		871BC1C31D34F8F800DF0793 /* CircularPixelationImageView */ = {
-			isa = PBXGroup;
-			children = (
-				871BC1C41D34F8F800DF0793 /* CircularPixelation.fsh */,
-				871BC1C51D34F8F800DF0793 /* CircularPixelation.vsh */,
-				871BC1C61D34F8F800DF0793 /* CircularPixelationImageView.h */,
-				871BC1C71D34F8F800DF0793 /* CircularPixelationImageView.m */,
-				871BC1C81D34F8F800DF0793 /* CircularPixelationImageViewBuilder.h */,
-				871BC1C91D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m */,
-			);
-			path = CircularPixelationImageView;
 			sourceTree = "<group>";
 		};
 		871BC1DC1D34F8F800DF0793 /* UserImageView */ = {
@@ -4759,7 +4735,6 @@
 				8773160B1B970A82007BA779 /* list.plist in Resources */,
 				16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */,
 				877316121B970A82007BA779 /* tutorial.plist in Resources */,
-				871BC2681D34F8F800DF0793 /* CircularPixelation.vsh in Resources */,
 				8FC853D7199245770008B66B /* Settings.bundle in Resources */,
 				8FC853A6199245770008B66B /* sending_complete.json in Resources */,
 				877316081B970A82007BA779 /* ipad.plist in Resources */,
@@ -4772,7 +4747,6 @@
 				8773160F1B970A82007BA779 /* profile.plist in Resources */,
 				1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */,
 				16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */,
-				871BC2671D34F8F800DF0793 /* CircularPixelation.fsh in Resources */,
 				8773160C1B970A82007BA779 /* misc.plist in Resources */,
 				871BC2281D34F8F800DF0793 /* CameraAccessMessageViewController.xib in Resources */,
 				8FC853A8199245770008B66B /* sending_pending.json in Resources */,
@@ -5195,7 +5169,6 @@
 				871BC2351D34F8F800DF0793 /* GiphyNavigationBar.m in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
-				871BC2691D34F8F800DF0793 /* CircularPixelationImageView.m in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
 				16284DB01C86FF8D00F90A09 /* EmptyCell.m in Sources */,
 				871BC2701D34F8F800DF0793 /* StackView.m in Sources */,
@@ -5384,7 +5357,6 @@
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				871BC2541D34F8F800DF0793 /* ActionSheetTransition.m in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
-				871BC26A1D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m in Sources */,
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */,
 				871BC01C1D34F56300DF0793 /* AnalyticsTracker+Invitations.m in Sources */,
