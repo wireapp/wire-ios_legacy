@@ -82,7 +82,7 @@
     self.placeholderTextColor = [UIColor lightGrayColor];
     self.placeholderTextContainerInset = self.textContainerInset;
     
-    if ([AutomationHelper disableAutoCorrection]) {
+    if ([AutomationHelper.sharedHelper disableAutoCorrection]) {
         self.autocorrectionType = UITextAutocorrectionTypeNo;
     }
 }

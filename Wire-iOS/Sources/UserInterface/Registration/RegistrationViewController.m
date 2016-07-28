@@ -259,7 +259,7 @@
 {
     self.rootNavigationController.showLoadingView = NO;
     
-    if (AutomationHelper.skipFirstLoginAlerts) {
+    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
         return;
     }
     

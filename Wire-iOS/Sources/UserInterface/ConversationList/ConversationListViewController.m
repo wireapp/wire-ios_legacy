@@ -698,7 +698,7 @@
 
 - (void)showPushPermissionDeniedDialogIfNeeded
 {
-    if (AutomationHelper.skipFirstLoginAlerts) {
+    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
         return;
     }
     

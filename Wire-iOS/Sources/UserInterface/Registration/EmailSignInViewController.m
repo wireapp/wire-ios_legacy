@@ -96,8 +96,8 @@
         self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
     }
     
-    if([[Settings sharedSettings] automationTestEmailCredentials] != nil) {
-        ZMEmailCredentials *emailCredentials = [[Settings sharedSettings] automationTestEmailCredentials];
+    if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+        ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
         self.emailField.text = emailCredentials.email;
         self.passwordField.text = emailCredentials.password;
         [self.passwordField.confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];

@@ -94,7 +94,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     [self setupViews];
     [self setupLayout];
     
-    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !AutomationHelper.skipFirstLoginAlerts) {
+    BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts;
+    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
         [self presentShareContactsStepViewController];
     }
     
