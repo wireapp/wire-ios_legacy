@@ -19,17 +19,64 @@
 #
 
 
-export AVS_VERSION=24
-export AVS_PATH="https://github.com/wireapp/avs-binaries/releases/download"
-export AVS_LIBNAME=wire-avs-ios
-export AVS_BASENAME=$AVS_LIBNAME.$AVS_VERSION
-export AVS_FILENAME=$AVS_BASENAME.tar.bz2
-export AVS_RESOLVED_PATH=$AVS_PATH/$AVS_VERSION/$AVS_FILENAME
+set -e
 
-export LIBS_PATH=./Libraries
+OPEN_SOURCE_AVS_VERSION=24
+APPSTORE_AVS_VERSION=2.7.21
 
-echo "Resolved path: "
-echo $AVS_RESOLVED_PATH
+##################################
+# CREDENTIALS
+##################################
+# prepare credentials if needed
+if [[ -n "${GITHUB_USER}" && -n "${GITHUB_TOKEN}" ]]; then
+	AUTH_TOKEN=`echo -n ${GITHUB_USER}:${GITHUB_TOKEN} | base64`
+	AUTH_HEADER="Authorization: Basic ${AUTH_TOKEN}"
+	ACCESS_TOKEN_QUERY="?access_token=${GITHUB_TOKEN}"
+fi
+
+##################################
+# SET UP PATHS
+##################################
+AVS_LOCAL_PATH="wire-avs-ios"
+
+if [ -z "${AVS_REPO}" ]; then
+	echo "ℹ️  Using wire open source iOS binary"
+	AVS_REPO="wireapp/avs-ios-binaries"
+	AVS_LIBNAME="wire-avs-ios"
+	if [ -z "${AVS_VERSION}" ]; then
+		AVS_VERSION="${OPEN_SOURCE_AVS_VERSION}"
+	fi
+else 
+	echo "ℹ️  Using custom AVS binary"
+	AVS_VERSION="${AVS_CUSTOM_VERSION}"
+	AVS_LIBNAME="avs-ios"
+	if [ -z "${AVS_VERSION}" ]; then
+		AVS_VERSION="${APPSTORE_AVS_VERSION}"
+	fi
+fi
+
+##################################
+# VERSIONS TO DOWNLOAD
+##################################
+# if version is not specified, get the latest
+if [ -z "${AVS_VERSION}" ]; then
+	LATEST_VERSION_PATH="https://api.github.com/repos/${AVS_REPO}/releases/latest"
+	# need to get tag of last version
+	AVS_VERSION=`curl -sLJ "${LATEST_VERSION_PATH}" -H "${AUTH_HEADER}" | python -c 'import json; import sys; print json.load(sys.stdin)["tag_name"]'`
+	if [ -z "${AVS_VERSION}" ]; then
+		echo "❌  Can't find latest version for ${LATEST_VERSION_PATH} ⚠️"
+		exit 1
+	fi
+	echo "ℹ️  Latest version is ${AVS_VERSION}"
+fi
+
+AVS_FILENAME="${AVS_LIBNAME}.${AVS_VERSION}.tar.bz2"
+AVS_RELEASE_TAG_PATH="https://api.github.com/repos/${AVS_REPO}/releases/tags/${AVS_VERSION}"
+	
+##################################
+# SET UP FOLDERS
+##################################
+LIBS_PATH=./Libraries
 
 if [ ! -e $LIBS_PATH ]
 then
@@ -38,17 +85,46 @@ fi
 
 pushd $LIBS_PATH > /dev/null
 
-if [ -e $AVS_LIBNAME ] 
-then 
-    echo "Existing AVS used"
+# remove previous, will unzip new
+rm -fr $AVS_LIBNAME > /dev/null
+
+##################################
+# DOWNLOAD
+##################################
+if [ -e "${AVS_FILENAME}" ]; then
+	# file already there? Just unzip it 
+	echo "ℹ️  Existing archive ${AVS_FILENAME} found, skipping download"
 else
-    echo "Downloading AVS..."
-    rm $AVS_FILENAME 2> /dev/null
-    rm -rf $AVS_LIBNAME 2> /dev/null
-    curl -L -o $AVS_FILENAME $AVS_RESOLVED_PATH
-    mkdir $AVS_LIBNAME
-    tar -xvzf $AVS_FILENAME -C $AVS_LIBNAME
-    
+	# DOWNLOAD
+	echo "ℹ️  Downloading ${AVS_RELEASE_TAG_PATH}..."
+	
+	# Get tag json: need to parse json to get assed URL
+	ASSET_URL=`curl -sLJ "${AVS_RELEASE_TAG_PATH}" -H "${AUTH_HEADER}" | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	if [ -z "${ASSET_URL}" ]; then
+		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"
+	fi
+	# get file
+	TEMP_FILE=`mktemp`
+	echo "Redirected to ${ASSET_URL}..."
+	curl -LJ "${ASSET_URL}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}" -H "Accept: application/octet-stream"
+	if [ ! -f "${TEMP_FILE}" ]; then
+		echo "❌  Failed to download ${ASSET_URL} ⚠️"
+		exit 1
+	fi
+	mv "${TEMP_FILE}" "${AVS_FILENAME}" > /dev/null
+	echo "✅  Done downloading!"
 fi
+
+##################################
+# UNPACK
+##################################
+echo "ℹ️  Installing in ${LIBS_PATH}/${AVS_LIBNAME}..."
+mkdir $AVS_LIBNAME
+if ! tar -xvzf $AVS_FILENAME -C $AVS_LIBNAME > /dev/null; then
+	rm -fr $AVS_FILENAME
+	echo "❌  Failed to install, is the downloaded file valid? ⚠️"
+	exit 1
+fi
+echo "✅  Done"
 
 popd  > /dev/null
