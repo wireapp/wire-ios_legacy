@@ -216,7 +216,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     cameraViewController.defaultCamera = CameraViewControllerCameraFront;
     cameraViewController.preferedPreviewSize = CameraViewControllerPreviewSizeFullscreen;
     cameraViewController.analyticsTracker = self.analyticsTracker;
-    
+    cameraViewController.disableSketch = YES;
     cameraViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
     [self presentViewController:cameraViewController animated:YES completion:nil];

@@ -433,7 +433,9 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     self.imagePreviewView.image = [UIImage imageFromData:imageData withMaxSize:MAX(CGRectGetWidth(UIScreen.mainScreen.nativeBounds), CGRectGetHeight(UIScreen.mainScreen.nativeBounds))];
     self.imagePreviewView.transform = CGAffineTransformMakeScale(mirror ? -1 : 1, 1);
  
-    self.editButton.hidden = NO;
+    if (!self.disableSketch) {
+        self.editButton.hidden = NO;
+    }
     
     // FLAnimatedImageView doesn't draw the normal background color so we need set it on the layer.
     self.imagePreviewView.layer.backgroundColor = UIColor.blackColor.CGColor;
