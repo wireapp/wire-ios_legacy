@@ -28,9 +28,7 @@ APPSTORE_AVS_VERSION=2.7.21
 # CREDENTIALS
 ##################################
 # prepare credentials if needed
-if [[ -n "${GITHUB_USER}" && -n "${GITHUB_TOKEN}" ]]; then
-	AUTH_TOKEN=`echo -n ${GITHUB_USER}:${GITHUB_TOKEN} | base64`
-	AUTH_HEADER="Authorization: Basic ${AUTH_TOKEN}"
+if [[ -n "${GITHUB_ACCESS_TOKEN}" ]]; then
 	ACCESS_TOKEN_QUERY="?access_token=${GITHUB_TOKEN}"
 fi
 
@@ -62,7 +60,7 @@ fi
 if [ -z "${AVS_VERSION}" ]; then
 	LATEST_VERSION_PATH="https://api.github.com/repos/${AVS_REPO}/releases/latest"
 	# need to get tag of last version
-	AVS_VERSION=`curl -sLJ "${LATEST_VERSION_PATH}" -H "${AUTH_HEADER}" | python -c 'import json; import sys; print json.load(sys.stdin)["tag_name"]'`
+	AVS_VERSION=`curl -sLJ "${LATEST_VERSION_PATH}${ACCESS_TOKEN_QUERY}" | python -c 'import json; import sys; print json.load(sys.stdin)["tag_name"]'`
 	if [ -z "${AVS_VERSION}" ]; then
 		echo "❌  Can't find latest version for ${LATEST_VERSION_PATH} ⚠️"
 		exit 1
@@ -99,7 +97,7 @@ else
 	echo "ℹ️  Downloading ${AVS_RELEASE_TAG_PATH}..."
 	
 	# Get tag json: need to parse json to get assed URL
-	ASSET_URL=`curl -sLJ "${AVS_RELEASE_TAG_PATH}" -H "${AUTH_HEADER}" | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	ASSET_URL=`curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
 	if [ -z "${ASSET_URL}" ]; then
 		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"
 	fi
