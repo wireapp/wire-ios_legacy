@@ -58,14 +58,6 @@ private extension UIViewController {
     func prepareForSnapshot() -> UIView {
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
-        
-        let snapshotView = view
-        
-        constrain(snapshotView) { view in
-            view.height == 667
-            view.width == 375
-        }
-        
-        return snapshotView
+        return view
     }
 }
