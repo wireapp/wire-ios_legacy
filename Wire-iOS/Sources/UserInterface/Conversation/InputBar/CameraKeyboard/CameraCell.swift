@@ -174,7 +174,11 @@ public class CameraCell: UICollectionViewCell {
     }
     
     func cameraControllerWillChangeCurrentCamera(notification: NSNotification!) {
-        let snapshotImage = self.cameraController.videoSnapshot.imageScaledWithFactor(0.5)
+        
+        guard let _ = self.window,
+                let snapshotImage = self.cameraController.videoSnapshot.imageScaledWithFactor(0.5) else {
+            return
+        }
     
         let blurredSnapshotImage = snapshotImage.blurredImageWithContext(self.dynamicType.ciContext, blurRadius: 12)
         
