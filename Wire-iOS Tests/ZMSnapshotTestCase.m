@@ -183,7 +183,9 @@ static NSSet *phoneWidths(void) {
                configurationBlock:(void (^)(UIView * view))configuration;
 {
     [self verifyView:view inSizes:phoneSizes() file:file line:line configuration:^(UIView *view,__unused BOOL isPad) {
-        configuration(view);
+        if (nil != configuration) {
+            configuration(view);
+        }
     }];
 }
 

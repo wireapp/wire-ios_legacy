@@ -861,6 +861,9 @@ ConfirmAssetViewController {
     
     editButton: @{
         backgroundColor: $color-accent-current;
+        titleLabel: @{
+            font: $font-small;
+        }
     }
 }
 

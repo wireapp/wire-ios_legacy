@@ -27,14 +27,29 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ConfirmAssetViewController()
         snapshotBackgroundColor = .whiteColor()
-        accentColor = .StrongLimeGreen
     }
 
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
+        accentColor = .StrongLimeGreen
         sut.image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
         sut.editButtonVisible = true
         sut.previewTitle = "Matterhorn"
-        verify(view: sut.prepareForSnapshot())
+        verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatItRendersTheAssetViewControllerWithLandscapeImage_WithoutEditButton() {
+        accentColor = .SoftPink
+        sut.image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
+        sut.previewTitle = "Matterhorn"
+        verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatItRendersTheAssetViewControllerWithPortraitImage() {
+        accentColor = .VividRed
+        sut.image = imageInTestBundleNamed("unsplash_burger.jpg")
+        sut.editButtonVisible = true
+        sut.previewTitle = "Burger & Beer"
+        verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
     }
 
 }

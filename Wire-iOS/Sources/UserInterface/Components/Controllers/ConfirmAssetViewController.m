@@ -84,6 +84,12 @@ static const CGFloat MarginInset = 24;
     [[CASStyler defaultStyler] styleItem:self];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    self.editButton.layer.cornerRadius = CGRectGetHeight(self.editButton.bounds) / 2;
+    [super viewDidLayoutSubviews];
+}
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return [self.class wr_supportedInterfaceOrientations];
@@ -153,9 +159,11 @@ static const CGFloat MarginInset = 24;
 
 - (void)createEditButton
 {
-    self.editButton = IconButton.iconButtonDefault;
-    [self.editButton setTitleImageSpacing:12];
-    [self.editButton setTitle:@"Sketch something!" forState:UIControlStateNormal];
+    self.editButton = [IconButton iconButtonCircularLight];
+    [self.editButton setTitleImageSpacing:12 horizontalMargin:12];
+    
+    NSString *editButtonTitle = NSLocalizedString(@"image.add_sketch", @"").uppercaseString;
+    [self.editButton setTitle:editButtonTitle forState:UIControlStateNormal];
     
     [self.editButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     self.editButton.accessibilityIdentifier = @"editNotConfirmedImageButton";
