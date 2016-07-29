@@ -728,6 +728,8 @@
 		BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
 		BF9453321CE5CF4C0024E00C /* FileMetaDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9453311CE5CF4C0024E00C /* FileMetaDataGenerator.swift */; };
 		BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */; };
+		BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */; };
+		BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
@@ -1986,6 +1988,8 @@
 		BF9453311CE5CF4C0024E00C /* FileMetaDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMetaDataGenerator.swift; sourceTree = "<group>"; };
 		BF999B5E1C0C984C008D5414 /* ProfileDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDevicesViewController.h; sourceTree = "<group>"; };
 		BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDevicesViewController.m; sourceTree = "<group>"; };
+		BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageCellTests.swift; sourceTree = "<group>"; };
+		BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_small.jpg; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
@@ -4373,6 +4377,7 @@
 				87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */,
 				164565F71CA2E79E00EE5504 /* ParticipantsChangedViewTests.m */,
 				87071CC31CB6A3790039388A /* FileTransferCellTests.swift */,
+				BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */,
 				CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */,
 				BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */,
 				BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */,
@@ -4424,6 +4429,7 @@
 			isa = PBXGroup;
 			children = (
 				BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */,
+				BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */,
 				BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */,
 			);
 			name = Resources;
@@ -4788,6 +4794,7 @@
 				16A202751B6772DB0095BBD1 /* soundcloud-track3.json in Resources */,
 				BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */,
 				16A202681B66A0040095BBD1 /* soundcloud-track1.json in Resources */,
+				BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */,
 				16A202671B66A0040095BBD1 /* soundcloud-playlist1.json in Resources */,
 				1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */,
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
@@ -5602,6 +5609,7 @@
 				16A2026B1B66A0040095BBD1 /* SoundcloudServiceTests.m in Sources */,
 				BF606D731CAA9EEE002BAC94 /* ConversationListBottomBarTests.m in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
+				BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				164565F81CA2E79E00EE5504 /* ParticipantsChangedViewTests.m in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
