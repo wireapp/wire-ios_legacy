@@ -5,6 +5,11 @@ notifications:
     on_success: never
     on_failure: always
 
+branches:
+  only:
+    - develop
+    - master
+
 cache:
   - bundler
   - cocoapods
