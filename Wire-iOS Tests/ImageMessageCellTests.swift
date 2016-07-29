@@ -46,7 +46,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         let image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image)
 
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.5))
+        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
 
@@ -54,7 +54,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         let image = imageInTestBundleNamed("unsplash_small.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image)
 
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.5))
+        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
 
@@ -62,7 +62,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         let image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
 
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.5))
+        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
     
@@ -70,7 +70,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         let image = imageInTestBundleNamed("unsplash_small.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
 
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.5))
+        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
 
