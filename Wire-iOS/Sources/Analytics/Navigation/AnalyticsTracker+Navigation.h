@@ -26,10 +26,7 @@
 - (void)tagNavigationViewExited:(NSString *)navigationView;
 - (void)tagNavigationViewSkipped:(NSString *)navigationView;
 
-
 - (void)tagEnteredOSSettings;
-- (void)tagEnteredFindFriends;
-
 
 - (NSDictionary *)attributesForNavigationEventEntered:(NSDictionary *) attributes;
 - (NSDictionary *)attributesForNavigationEventExited:(NSDictionary *) attributes;

@@ -20,11 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "AnalyticsBase.h"
 
-typedef NS_ENUM(NSUInteger, CursorMethod) {
-    CursorMethodSwipe,
-    CursorMethodTap
-};
-
 typedef NS_ENUM(NSUInteger, SelectionType) {
     SelectionTypeSingle,
     SelectionTypeMulti
@@ -52,8 +47,6 @@ typedef NS_ENUM(NSUInteger, ConversationType) {
 
 @interface Analytics (ConversationEvents)
 
-- (void)tagCursorOpenWithMethod:(CursorMethod)method;
-- (void)tagCursorClosedWithMethod:(CursorMethod)method;
 - (void)tagArchivedConversation;
 - (void)tagUnarchivedConversation;
 - (void)tagOpenedPeoplePickerGroupAction;

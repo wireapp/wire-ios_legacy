@@ -34,35 +34,6 @@ NSString *ApplicationLaunchTypeToString(ApplicationLaunchType type);
     [self tagEvent:@"appLaunch" attributes:@{@"mechanism" : ApplicationLaunchTypeToString(type)}];
 }
 
-- (void)tagSignInTapped
-{
-    [self tagEvent:@"manualSignIn"];
-}
-
-- (void)tagSignInFailedWithReason:(NSString *)reason
-{
-    NSString *prepared = @"Unknown";
-    if (0 < reason.length) {
-        prepared = reason;
-    }
-    [self tagEvent:@"manualSignInFailed" attributes:@{@"reason" : prepared}];
-}
-
-- (void)tagAuthenticationSucceeded
-{
-    [self tagEvent:@"signIn"];
-}
-
-- (void)tagAuthenticationFailedWithReason:(NSString *)reason
-{
-    NSString *prepared = @"Unknown";
-    if (0 < reason.length) {
-        prepared = reason;
-    }
-    
-    [self tagEvent:@"signInFailed" attributes:@{@"reason" : prepared}];
-}
-
 - (void)tagApplicationError:(NSString *)error timeInSession:(NSTimeInterval)time
 {
     [self tagEvent:@"App Error" attributes:@{@"error" : error,
@@ -110,4 +81,3 @@ NSString *ApplicationLaunchTypeToString(ApplicationLaunchType type) {
     }
     return trackedLaunchMechanism;
 }
-

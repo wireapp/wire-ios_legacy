@@ -22,10 +22,6 @@
 
 
 
-typedef enum DownloadType {
-    DownloadOnlyWifi,
-    DownloadAlwaysDownload
-} DownloadType;
 
 typedef enum ResetPasswordType {
     ResetFromProfile,
@@ -53,24 +49,17 @@ NSString *PictureUploadTypeToString(PictureUploadType uploadType);
 
 @interface Analytics (ProfileEvents)
 
-- (void)tagAllowedAddressBook:(BOOL)allowed;
-
 - (void)tagResetPassword:(BOOL)reset fromType:(ResetPasswordType)type;
-- (void)tagDownloadPreference:(DownloadType)type;
 - (void)tagSoundIntensityPreference:(SoundIntensityType)type;
 - (void)tagHelp;
 - (void)tagAbout;
 - (void)tagSignOut;
-- (void)tagOnlyConnectedPeopleChange;
-- (void)tagShareContactsChangedInSettings;
 - (void)tagProfilePictureFromSource:(PictureUploadType)type;
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type;
 - (void)tagViewedPrivacyPolicy;
 - (void)tagViewedLicenseInformation;
 - (void)tagViewedFingerprintLearnMore;
-- (void)tagAddedPictureFromSource:(PictureUploadType)type;
 - (void)tagSendInviteViaMethod:(NSString *)method;
 - (void)tagSendInviteCanceled;
-
 
 @end
