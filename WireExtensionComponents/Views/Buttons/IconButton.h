@@ -38,5 +38,6 @@
 - (void)setIconColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
+- (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;
 
 @end

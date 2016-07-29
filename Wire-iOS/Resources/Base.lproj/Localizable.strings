@@ -178,7 +178,7 @@
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
-
+"image.add_sketch" = "Add a sketch";
 "image.edit_image" = "Edit image";
 
 // Camera access

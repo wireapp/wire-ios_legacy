@@ -730,6 +730,8 @@
 		BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */; };
 		BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */; };
 		BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */; };
+		BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */; };
+		BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
@@ -1990,6 +1992,8 @@
 		BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDevicesViewController.m; sourceTree = "<group>"; };
 		BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageCellTests.swift; sourceTree = "<group>"; };
 		BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_small.jpg; sourceTree = "<group>"; };
+		BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAssetViewControllerTests.swift; sourceTree = "<group>"; };
+		BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_burger.jpg; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
@@ -4392,6 +4396,7 @@
 				8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */,
 				87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */,
 				873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */,
+				BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */,
 				1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -4430,6 +4435,7 @@
 			children = (
 				BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */,
 				BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */,
+				BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */,
 				BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */,
 			);
 			name = Resources;
@@ -4789,6 +4795,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */,
 				16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */,
 				1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */,
 				16A202751B6772DB0095BBD1 /* soundcloud-track3.json in Resources */,
@@ -5610,6 +5617,7 @@
 				BF606D731CAA9EEE002BAC94 /* ConversationListBottomBarTests.m in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
 				BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */,
+				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				164565F81CA2E79E00EE5504 /* ParticipantsChangedViewTests.m in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,

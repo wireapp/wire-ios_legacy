@@ -1,5 +1,9 @@
 language: objective-c
 osx_image: xcode7.3
+notifications:
+  email:
+    on_success: never
+    on_failure: always
 
 cache:
   - bundler

@@ -31,4 +31,8 @@ extension ZMSnapshotTestCase {
     func verifyInAllTabletWidths(view view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyViewInAllTabletWidths(view, file: UnsafePointer<Int8>(file.utf8Start), line: line)
     }
+    
+    func verifyInAllIPhoneSizes(view view: UIView, file: StaticString = #file, line: UInt = #line) {
+        verifyViewInAllPhoneSizes(view, file: UnsafePointer<Int8>(file.utf8Start), line: line, configurationBlock: nil)
+    }
 }
