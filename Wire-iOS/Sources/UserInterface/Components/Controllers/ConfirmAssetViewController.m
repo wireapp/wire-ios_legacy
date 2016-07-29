@@ -84,12 +84,6 @@ static const CGFloat MarginInset = 24;
     [[CASStyler defaultStyler] styleItem:self];
 }
 
-- (void)viewDidLayoutSubviews
-{
-    self.editButton.layer.cornerRadius = CGRectGetHeight(self.editButton.bounds) / 2;
-    [super viewDidLayoutSubviews];
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return [self.class wr_supportedInterfaceOrientations];
