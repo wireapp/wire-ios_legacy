@@ -23,6 +23,7 @@ set -e
 
 OPEN_SOURCE_AVS_VERSION=24
 APPSTORE_AVS_VERSION=2.7.21
+AVS_SEARCH_PATH="wire-avs-ios"
 
 ##################################
 # CREDENTIALS
@@ -84,7 +85,7 @@ fi
 pushd $LIBS_PATH > /dev/null
 
 # remove previous, will unzip new
-rm -fr $AVS_LIBNAME > /dev/null
+rm -fr $AVS_SEARCH_PATH > /dev/null
 
 ##################################
 # DOWNLOAD
@@ -120,9 +121,9 @@ fi
 # UNPACK
 ##################################
 echo "ℹ️  Installing in ${LIBS_PATH}/${AVS_LIBNAME}..."
-mkdir $AVS_LIBNAME
-if ! tar -xvzf $AVS_FILENAME -C $AVS_LIBNAME > /dev/null; then
-	rm -fr $AVS_FILENAME
+mkdir "${AVS_SEARCH_PATH}"
+if ! tar -xvzf "${AVS_FILENAME}" -C "${AVS_SEARCH_PATH}" > /dev/null; then
+	rm -fr "${AVS_FILENAME}"
 	echo "❌  Failed to install, is the downloaded file valid? ⚠️"
 	exit 1
 fi
