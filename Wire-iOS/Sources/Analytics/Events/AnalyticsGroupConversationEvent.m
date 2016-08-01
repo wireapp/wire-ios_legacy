@@ -27,8 +27,7 @@ typedef NS_ENUM(NSUInteger, GroupAction)
     GroupActionAddedParticipant,
     GroupActionCreated,
     GroupActionLeave,
-    GroupActionDelete,
-    GroupActionRemoveParticipant
+    GroupActionDelete
 };
 
 
@@ -37,7 +36,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
 
 @property (assign, nonatomic) GroupAction actionType;
 @property (assign, nonatomic, readwrite) CreatedGroupContext createdGroupContext;
-@property (assign, nonatomic, readwrite) RemoveContactAction removed;
 @property (assign, nonatomic, readwrite) LeaveGroupAction leave;
 @property (assign, nonatomic, readwrite) NSUInteger numberOfParticipants;
 @property (assign, nonatomic, readwrite) NSUInteger newMembers;
@@ -48,11 +46,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
 
 
 @implementation AnalyticsGroupConversationEvent
-
-+ (instancetype)eventForRemoveAction:(RemoveContactAction)removeAction participantCount:(NSUInteger)participantCount
-{
-    return [[AnalyticsGroupConversationEvent alloc] initForConversationRemoveAction:removeAction participantCount:participantCount];
-}
 
 + (instancetype)eventForLeaveAction:(LeaveGroupAction)leaveAction participantCount:(NSUInteger)participantCount
 {
@@ -78,17 +71,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
     return [[AnalyticsGroupConversationEvent alloc] initForConversationCreatedGroupWithContext:context participantCount:participantCount];
 }
 
-- (instancetype)initForConversationRemoveAction:(RemoveContactAction)removeAction participantCount:(NSUInteger)participantCount
-{
-    self = [super init];
-    if (self) {
-        self.actionType = GroupActionRemoveParticipant;
-        self.removed = removeAction;
-        self.numberOfParticipants = participantCount;
-    }
-    return self;
-}
-
 - (NSString *)eventTag
 {
     NSString *result = nil;
@@ -108,10 +90,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
             
         case GroupActionLeave:
             result = @"leaveGroupConversation";
-            break;
-            
-        case GroupActionRemoveParticipant:
-            result = @"removedContact";
             break;
     }
     
@@ -156,10 +134,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
         case GroupActionAddedParticipant:
             return [self attributesDumpForAddParticipant];
             break;
-        
-        case GroupActionRemoveParticipant:
-            return [self attributesDumpForRemoveFromConv];
-            break;
             
         case GroupActionLeave:
             return [self attributesDumpForLeaveFromConv];
@@ -199,16 +173,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
     return result;
 }
 
-- (NSDictionary *)attributesDumpForRemoveFromConv
-{
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:6];
-    [self dumpIntegerClusterizedValueForKey:NSStringFromSelector(@selector(numberOfParticipants)) toDictionary:result];
-    NSString *contactActionString = [[self class] removeContactActionToString:self.removed];
-    
-    [result setObject:contactActionString forKey:NSStringFromSelector(@selector(removed))];
-    return result;
-}
-
 - (NSDictionary *)attributesDumpForLeaveFromConv
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:6];
@@ -227,19 +191,6 @@ typedef NS_ENUM(NSUInteger, GroupAction)
         [result setObject:deleteActionString forKey:NSStringFromSelector(@selector(leave))];
     }
     return result;
-}
-
-+ (NSString *)removeContactActionToString:(RemoveContactAction) action
-{
-    switch (action) {
-        case RemoveContactActionRemove:
-            return @"remove";
-            break;
-            
-        case RemoveContactActionCancel:
-            return @"cancel";
-            break;
-    }
 }
 
 + (NSString *)leaveGroupActionToString:(LeaveGroupAction) action

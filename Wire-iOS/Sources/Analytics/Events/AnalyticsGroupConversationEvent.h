@@ -21,11 +21,6 @@
 #import "AnalyticsEvent.h"
 
 
-typedef NS_ENUM (NSUInteger, RemoveContactAction)
-{
-    RemoveContactActionRemove,
-    RemoveContactActionCancel,
-};
 
 typedef NS_ENUM (NSUInteger, LeaveGroupAction)
 {
@@ -44,16 +39,14 @@ typedef NS_ENUM (NSUInteger, CreatedGroupContext)
 @interface AnalyticsGroupConversationEvent : AnalyticsEvent
 
 @property (assign, nonatomic, readonly) CreatedGroupContext createdGroupContext;
-@property (assign, nonatomic, readonly) RemoveContactAction removed;
 @property (assign, nonatomic, readonly) LeaveGroupAction leave;
 @property (assign, nonatomic, readonly) NSUInteger numberOfParticipants;
 @property (assign, nonatomic, readonly) NSUInteger newMembers;
 @property (nonatomic, copy, readonly) NSString *action;
 
 + (instancetype)eventForCreatedGroupWithContext:(CreatedGroupContext)context participantCount:(NSUInteger)participantCount;
-+ (instancetype)eventForAddParticipantsWithCount:(NSUInteger)newMembersCount;
 
-+ (instancetype)eventForRemoveAction:(RemoveContactAction)removeAction participantCount:(NSUInteger)participantCount;
++ (instancetype)eventForAddParticipantsWithCount:(NSUInteger)newMembersCount;
 
 + (instancetype)eventForLeaveAction:(LeaveGroupAction)leaveAction participantCount:(NSUInteger)participantCount;
 

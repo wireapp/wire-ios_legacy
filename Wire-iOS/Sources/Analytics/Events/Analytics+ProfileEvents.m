@@ -39,11 +39,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
     [self tagEvent:@"about"];
 }
 
-- (void)tagSignOut
-{
-    [self tagEvent:@"signOut"];
-}
-
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type
 {
     [self tagEvent:@"viewedTOS" attributes:@{@"source" : TOSOpenedFromTypeToString(type)}];
@@ -62,11 +57,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
 - (void)tagViewedFingerprintLearnMore
 {
     [self tagEvent:@"viewedFingerprintLearnMore"];
-}
-
-- (void)tagSetAccentColor
-{
-    [self tagEvent:@"setAccentColor"];
 }
 
 - (void)tagResetPassword:(BOOL)reset fromType:(ResetPasswordType)type

@@ -49,7 +49,6 @@ NSString *const AnalyticsEventTypeEditSelfUser = @"EditSelfUser";
 NSString *const AnalyticsEventTypeNavigation = @"Navigation";
 NSString *const AnalyticsEventTypePermissions = @"PermissionRequested";
 NSString *const AnalyticsEventTypePictureTaken = @"PictureTaken";
-NSString *const AnalyticsEventTypeMessage = @"Message";
 NSString *const AnalyticsEventTypeMedia = @"Media";
 
 #pragma mark - AnalyticsEventTypeEditSelfUser

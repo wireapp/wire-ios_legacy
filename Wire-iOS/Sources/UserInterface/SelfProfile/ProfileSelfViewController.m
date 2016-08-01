@@ -693,7 +693,6 @@
 
 - (void)signOut
 {
-    [[Analytics shared] tagSignOut];
     if (ENABLE_SIGNOUT) {
         [ZMUserSession resetStateAndExit];
     }

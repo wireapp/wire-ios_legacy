@@ -38,16 +38,4 @@ static NSString *const AnalyticsTrackerNavigationSketchpad = @"sketchpad";
     [self tagNavigationViewSkipped:AnalyticsTrackerNavigationSketchpad];
 }
 
-/// User did sketch an image and uploaded the image
-- (void)tagSketchpadSent
-{
-    NSString *safeContext = self.context == nil ? @"": self.context;
-    NSDictionary *attributes = @{ AnalyticsEventTypeMessageKeyState: @"sent",
-                                  AnalyticsEventTypeMessageKeyKind: @"sketch",
-                                  @"context": safeContext,
-                                  AnalyticsEventTypeMessageKeySource: @"user"};
-    
-    [self tagEvent:AnalyticsEventTypeMessage attributes:attributes];
-}
-
 @end

@@ -22,7 +22,6 @@
 
 
 
-
 typedef enum ResetPasswordType {
     ResetFromProfile,
     ResetFromSignIn
@@ -53,7 +52,6 @@ NSString *PictureUploadTypeToString(PictureUploadType uploadType);
 - (void)tagSoundIntensityPreference:(SoundIntensityType)type;
 - (void)tagHelp;
 - (void)tagAbout;
-- (void)tagSignOut;
 - (void)tagProfilePictureFromSource:(PictureUploadType)type;
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type;
 - (void)tagViewedPrivacyPolicy;
