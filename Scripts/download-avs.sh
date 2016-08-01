@@ -20,9 +20,10 @@
 
 
 set -e
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/..
 
-OPEN_SOURCE_AVS_VERSION=24
-APPSTORE_AVS_VERSION=2.7.21
+source avs-versions
 AVS_SEARCH_PATH="wire-avs-ios"
 
 ##################################
