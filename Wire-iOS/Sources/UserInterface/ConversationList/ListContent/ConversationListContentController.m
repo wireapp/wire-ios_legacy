@@ -138,9 +138,9 @@ static NSString * const CellReuseIdConversation = @"CellId";
     [self.collectionView registerClass:[ConversationListCell class] forCellWithReuseIdentifier:CellReuseIdConversation];
     
     self.collectionView.backgroundColor = [UIColor clearColor];
-//    self.collectionView.alwaysBounceVertical = YES;
-//    self.collectionView.allowsSelection = YES;
-//    self.collectionView.allowsMultipleSelection = NO;
+    self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.allowsSelection = YES;
+    self.collectionView.allowsMultipleSelection = NO;
     self.clearsSelectionOnViewWillAppear = NO;
     
     self.initialSyncSpinner = [[ProgressSpinner alloc] initForAutoLayout];
