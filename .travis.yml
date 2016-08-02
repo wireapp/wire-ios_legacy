@@ -10,6 +10,10 @@ branches:
     - develop
     - master
 
+addons:
+  artifacts: true
+    paths: build_log.log
+
 cache:
   bundler: true
   cocoapods: true
@@ -23,6 +27,6 @@ install:
 
 script:
   - set -o pipefail
-  - xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build_log.txt >(xcpretty -s)
+  - xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build_log.log >(xcpretty -s)
   - ./Scripts/print_logs.sh
   - bundle exec danger
