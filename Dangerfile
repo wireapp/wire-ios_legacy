@@ -1,25 +1,13 @@
 
-copyright_header = "//
-// Wire
-// Copyright (C) 2016 Wire Swiss GmbH
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see http://www.gnu.org/licenses/.
-//"
+# Warn if touched files are missing the copyright header
+copyright_header = "////Wire//Copyright(C)2016WireSwissGmbH////Thisprogramisfreesoftware:youcanredistributeitand/ormodify//itunderthetermsoftheGNUGeneralPublicLicenseaspublishedby//theFreeSoftwareFoundation,eitherversion3oftheLicense,or//(atyouroption)anylaterversion.////Thisprogramisdistributedinthehopethatitwillbeuseful,//butWITHOUTANYWARRANTY;withouteventheimpliedwarrantyof//MERCHANTABILITYorFITNESSFORAPARTICULARPURPOSE.Seethe//GNUGeneralPublicLicenseformoredetails.////YoushouldhavereceivedacopyoftheGNUGeneralPublicLicense//alongwiththisprogram.Ifnot,seehttp://www.gnu.org/licenses/.//"
 
 touched = git.added_files | git.modified_files
 paths = touched.select { |f| f.end_with? ".h", ".m", ".swift", ".mm" }
-missing = paths.map { |p| File.read(p).start_with? copyright_header }
+paths.each do |p|
+  content = File.read(p).delete("\s").delete("\n")
+  warn "Missing copyright headers in #{p.split('/').last}" unless content.include? copyright_header
+end
 
-warn "Missing copyright headers" if missing.include? true
+# Warn if there are no labels attached to the PR
 warn "Please add labels to this PR" if github.pr_labels.count == 0
