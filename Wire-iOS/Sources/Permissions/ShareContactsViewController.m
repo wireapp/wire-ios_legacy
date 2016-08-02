@@ -25,6 +25,7 @@
 #import "AddressBookHelper.h"
 #import "AnalyticsTracker+Permissions.h"
 #import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 
 #import <PureLayout/PureLayout.h>
@@ -180,10 +181,12 @@
 
 - (IBAction)shareContacts:(id)sender
 {
-    [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
+    [self.analyticsTracker tagAddressBookPreflightPermissions:YES];
+
+    [AddressBookHelper.sharedHelper requestPermissions:^(BOOL success) {
+        [self.analyticsTracker tagAddressBookSystemPermissions:success];
+
         if (success) {
-            [self.analyticsTracker tagAddressBookPermissions:YES];
-            
             if (self.uploadAddressBookImmediately) {
                 [[AddressBookHelper sharedHelper] forceUploadAddressBook];
             }
@@ -193,7 +196,6 @@
             
             [self.formStepDelegate didCompleteFormStep:self];
         } else {
-            [self.analyticsTracker tagAddressBookPermissions:NO];
             [self displayContactsAccessDeniedMessageAnimated:YES];
         }
     }];
@@ -201,6 +203,7 @@
 
 - (IBAction)shareContactsLater:(id)sender
 {
+    [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
     [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
     [self.formStepDelegate didSkipFormStep:self];
 }

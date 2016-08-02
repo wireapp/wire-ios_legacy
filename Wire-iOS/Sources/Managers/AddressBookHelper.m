@@ -106,7 +106,7 @@ static NSString * const UserDefaultsKeyAddressBookExportDate = @"UserDefaultsKey
 
 - (void)internalUploadAddressBook
 {
-    self.addressBookUploadWasPosponed = NO;
+    self.addressBookUploadWasPostponed = NO;
     self.addressBookWasUploaded = YES;
 #if !TARGET_IPHONE_SIMULATOR
     [[ZMUserSession sharedSession] uploadAddressBook];
@@ -124,9 +124,9 @@ static NSString * const UserDefaultsKeyAddressBookExportDate = @"UserDefaultsKey
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"AddressBookWasUploaded"];
 }
 
-- (void)setAddressBookUploadWasPosponed:(BOOL)addressBookUploadWasPosponed
+- (void)setAddressBookUploadWasPostponed:(BOOL)addressBookUploadWasPostponed
 {
-    [[NSUserDefaults standardUserDefaults] setBool:addressBookUploadWasPosponed forKey:@"AddressBookUploadWasPosponed"];
+    [[NSUserDefaults standardUserDefaults] setBool:addressBookUploadWasPostponed forKey:@"AddressBookUploadWasPosponed"];
 }
 
 - (BOOL)addressBookUploadWasPostponed

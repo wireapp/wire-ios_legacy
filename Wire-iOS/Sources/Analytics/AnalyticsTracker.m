@@ -99,7 +99,6 @@ NSString *const AnalyticsEventTypePermissionsStateKey = @"state";
 
 NSString *const AnalyticsEventTypePermissionsCategoryCamera = @"camera";
 NSString *const AnalyticsEventTypePermissionsCategoryPhotoLibrary = @"photoLibrary";
-NSString *const AnalyticsEventTypePermissionsCategoryAddressBook = @"addressBook";
 NSString *const AnalyticsEventTypePermissionsCategoryPushNotifications = @"pushNotifications";
 
 NSString *const AnalyticsEventTypePermissionsStateAllowed = @"allowed";
@@ -153,7 +152,7 @@ NSString *const AnalyticsEventAcceptedGenericInvite = @"connect.accepted_generic
 
 @implementation AnalyticsTracker
 
-+(instancetype)analyticsTrackerWithContext:(NSString *)context
++ (instancetype)analyticsTrackerWithContext:(NSString *)context
 {
     id tracker = [[self alloc] initWithContext:context];
     return tracker;

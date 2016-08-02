@@ -53,6 +53,7 @@
 #import "Constants.h"
 #import "UIView+PopoverBorder.h"
 #import "UIViewController+WR_Invite.h"
+#import "Wire-Swift.h"
 
 
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
@@ -186,7 +187,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Analytics shared]tagScreen:@"PEOPLE_PICKER"];
+    [[Analytics shared] tagScreen:@"PEOPLE_PICKER"];
 }
 
 - (void)handleUploadAddressBookLogicIfNeeded
@@ -206,6 +207,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if ([[AddressBookHelper sharedHelper] isAddressBookAccessUnknown]) {
         [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
+            [self.analyticsTracker tagAddressBookSystemPermissions:success];
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[AddressBookHelper sharedHelper] uploadAddressBook];

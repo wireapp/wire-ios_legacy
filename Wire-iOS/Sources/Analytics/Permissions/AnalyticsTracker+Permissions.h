@@ -22,7 +22,6 @@
 @interface AnalyticsTracker (Permissions)
 
 - (void)tagCameraPermissions:(BOOL)allowed;
-- (void)tagAddressBookPermissions:(BOOL)allowed;
 - (void)tagPushNotificationsPermissions:(BOOL)allowed;
 
 
