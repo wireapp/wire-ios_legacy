@@ -8,7 +8,7 @@ def ios_pods
     pod 'NSObject-ObjectMap', :git => 'https://github.com/wireapp/NSObject-ObjectMap', :tag => 'v2.3.1'
     pod 'AFNetworking', :git => 'https://github.com/wireapp/AFNetworking', :tag => '2.6.3'
     pod 'PureLayout', :git => 'https://github.com/wireapp/PureLayout', :tag => 'v3.0.0'
-    pod 'VIMNetworking', :git => 'https://github.com/wireapp/VIMNetworking', :tag => '6.0.0'
+    pod 'VIMNetworking', :git => 'https://github.com/wireapp/VIMNetworking', :tag => '6.0.2-wire'
     pod 'RBBAnimation', :git => 'https://github.com/wireapp/RBBAnimation', :commit => '7dd8d9a3cf610be5f7c1e4459692d555d70704c7'
     pod 'ARCollectionViewMasonryLayout', :git => 'https://github.com/wireapp/ARCollectionViewMasonryLayout', :tag => '2.3.0'
     pod 'SCSiriWaveformView', :git => 'https://github.com/wireapp/SCSiriWaveformView', :tag => 'v1.0.3'
