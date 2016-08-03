@@ -21,7 +21,6 @@ import XCTest
 import Photos
 import Cartography
 import AVFoundation
-import JPSimulatorHackFramework
 @testable import Wire
 
 
@@ -62,7 +61,6 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        JPSimulatorHacks.grantAccessToPhotos()
         self.assetLibrary = AssetLibrary(synchronous: true)
         self.splitView = SplitLayoutObservableMock()
         self.delegateMock = CameraKeyboardViewControllerDelegateMock()
