@@ -178,7 +178,7 @@
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Abbrechen";
-
+"image.add_sketch" = "Skizze hinzufügen";
 "image.edit_image" = "Bild bearbeiten";
 
 // Camera access
