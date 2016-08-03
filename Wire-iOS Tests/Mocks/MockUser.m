@@ -186,12 +186,6 @@
     // no-op
 }
 
-- (id)forwardingTargetForSelector:(SEL)aSelector
-{
-    NSLog(@"%@", NSThread.callStackSymbols);
-    return self;
-}
-
 #pragma mark - ZMBareUserConnection
 
 @synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
