@@ -19,8 +19,7 @@
 
 @import MobileCoreServices;
 
-#import "ImageMessageCell.h"
-
+#import "ImageMessageCell+Internal.h"
 #import <PureLayout/PureLayout.h>
 #import <zmessaging/zmessaging.h>
 

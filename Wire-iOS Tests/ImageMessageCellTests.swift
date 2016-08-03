@@ -45,32 +45,24 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
     func testThatItRendersImageMessageWhenImageIsSet() {
         let image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image)
-
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
 
     func testThatItRendersImageMessageWhenImageIsSet_SmallImage() {
         let image = imageInTestBundleNamed("unsplash_small.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image)
-
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
 
     func testThatItRendersImageMessageWithResendButton() {
         let image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
-
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
     
     func testThatItRendersImageMessageWithResendButton_SmallImage() {
         let image = imageInTestBundleNamed("unsplash_small.jpg")
         let cell = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
-
-        NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 1))
         verify(view: cell)
     }
 
@@ -88,14 +80,14 @@ private extension ImageMessageCell {
         message.deliveryState = failedToSend ? .FailedToSend : .Delivered
         let imageMessageData = message.imageMessageData as! MockImageMessageData
         imageMessageData.mockOriginalSize = imageSize
-        if let imageData = image?.data() {
-            imageMessageData.mockImageData = imageData
-            imageMessageData.mockImageDataIdentifier = NSUUID().UUIDString
-        }
 
         prepareForReuse()
         configureForMessage(message, layoutProperties: layoutProperties)
         layoutIfNeeded()
+        
+        if let image = image {
+            setImage(image)
+        }
 
         let size = systemLayoutSizeFittingSize(
             CGSize(width: 320, height: 0),

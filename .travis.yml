@@ -17,12 +17,12 @@ cache:
   - Carthage
   - Libraries
 install:
-- open -b com.apple.iphonesimulator
-- ./setup.sh
+  - xcrun simctl erase all
+  - open -b com.apple.iphonesimulator
+  - ./setup.sh
 script:
 - set -o pipefail
-- xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination
-  'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build_log.log >(xcpretty -s)
+- xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build_log.log >(xcpretty -s)
 - bundle exec danger
 env:
   global:

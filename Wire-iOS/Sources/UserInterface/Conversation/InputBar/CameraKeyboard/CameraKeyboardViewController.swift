@@ -268,7 +268,9 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             return cell
         case .Photos:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AssetCell.reuseIdentifier, forIndexPath: indexPath) as! AssetCell
-            cell.asset = try! assetLibrary.asset(atIndex: UInt(indexPath.row))
+            if let asset = try? assetLibrary.asset(atIndex: UInt(indexPath.row)) {
+                cell.asset = asset
+            }
             return cell
         }
     }

@@ -21,7 +21,6 @@ import XCTest
 import Photos
 import Cartography
 import AVFoundation
-import JPSimulatorHackFramework
 @testable import Wire
 
 
@@ -54,6 +53,14 @@ class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDele
     @objc var leftViewControllerWidth: CGFloat = 0
 }
 
+private final class MockAssetLibrary: AssetLibrary {
+    private override var count: UInt { return 5 }
+    
+    private override func refetchAssets(synchronous synchronous: Bool) {
+        // no op
+    }
+}
+
 final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     var sut: CameraKeyboardViewController!
     var splitView: SplitLayoutObservableMock!
@@ -62,8 +69,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        JPSimulatorHacks.grantAccessToPhotos()
-        self.assetLibrary = AssetLibrary(synchronous: true)
+        self.assetLibrary = MockAssetLibrary()
         self.splitView = SplitLayoutObservableMock()
         self.delegateMock = CameraKeyboardViewControllerDelegateMock()
     }

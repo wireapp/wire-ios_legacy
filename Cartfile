@@ -1,4 +1,3 @@
-github "wireapp/JPSimulatorHacks" ~> 1.3.0
 github "wireapp/wire-ios-ziphy" ~> 3.0
 github "wireapp/SmoothLineView" "0.1.12-wire-ft"
 github "wireapp/TSMarkdownParser" ~> 1.0.17
