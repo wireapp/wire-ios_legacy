@@ -8,8 +8,6 @@ branches:
   only:
   - develop
   - master
-addons:
-  artifacts: true
 cache:
   bundler: true
   cocoapods: true
@@ -22,10 +20,7 @@ install:
   - ./setup.sh
 script:
 - set -o pipefail
-- xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build_log.log >(xcpretty -s)
+- xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build.log >(xcpretty -s)
 - bundle exec danger
-env:
-  global:
-  - secure: GdUFq+N5jFc5q4wU2+jKYUH5bX6BeK53eX9x6rE/A+5+zSbVG6MQVFF8UIQURW/HcfBcJ1kPXJgBQ04twUyaApebS4fp2cFT5hWmTxEtyarxN7FjxAOPvar9GhQUmYVePVObW4eKijhbpEr9/qvwrozvOzeM3DdgqAysB3J/nlgJMZjYKAweyXf6DCChTwuCeQ0/7Ygxb7zfNiG8a5B0uoyFMK3th3FsD8Azp3iN++WKdV5hOcwXEmBs5AK7bj0T0Knp07uCFXdMvzxnKUa6n2OrW5IDWGqz16AACKncnFMXcDcxuH5Wjodiy9Asa/rntBwW7w4BE9FIDfagaD+YNFTBJyjL6wERPIMNAu8aR5iPRw1S+IejJ4+SJ/KZas6e8DFHwdRUfgnDanLQAMxw1QRFZTiCdw4bXR2ooBKwASYvW1UCUpBZsNjZilIHQ3gkCDjQ+tHDwWUDfk+WDmKpdWxfkxY7DK2rBTFt7M5f+kVr4jr5sJnPpx83QRBt/FLXejDlpQ4vl/GRGNzw1UTsuA0otdm2KzA7RMrNQVPrUDGMUjUY759lHHdF3/p8GdUzI8N+yI9UbBWtBvuTr5Dm6xLNy4bBbaZ4VKIz55bu1O7yfdAQoqO5W8JtBDswdbSwuLG9m0u4FfGy6P10GBm026f+70oU9D2rm5I1KCrTB3U=
-  - secure: rn+HEoKb15y+RxYKnqxARSz2HMeN99EZpswGd5eGa65RLqStungUR/Bz8026yCAUy9gI3dnJKI6AHjxpWwZSoOdSE3+cyB6cgwEadqIwoPgG3YReBkxPNyjRJeEE9RQ3zcJmEoxdahd77v4kxIRn8fs3ALQCcgWJ+fjTv5it8GH70c19aGM9MLcVBdOGF3jMHpdRQyp2u1JZfbhxqI6FbiiceaBDdPbvnVdXqGlfctREbaZRynA3JpnkwW+xCpTCjN5cUypSrDWM7dHS0ZNiF2d4Q6n6D/YCbPiiNNZ+5uIRlZ28sL3bzh8y9p1hlfe0D3LCitz5HEkaKFynWKGKVZqOp1d8iNM5DIJVP3dReLmIumaZHzMc7nRcZBrqqEkv8r6Hnl+9DD0ECBZetr8qw/poiNX4JtHjAuzsQqROMER0YpehVYKtlwuJ/vDQBdg3Z5OABxQDvoZqSCVY+MPkOpVjOxnfzocTbV7MuAyAX5EZvPYTKhCqsrATM60/fLPiLteOsg9N233zCm2X1VetPwhtlAhtDFZV2G1OmGj+GwNz13RTZNf5EW0QEQvoDlj+wBstWguwx8j90kAfbfDKYthHvjj8bOHBKqzV4GINVOLZ1nJuTuFOUZ3T9a7SUiKX51aiDr1drC3Vb0sQpkLePLhIIHDnJygg8DKm3H0k+Xk=
-  - secure: cDAhUz1SaznjERFt71aD4CFOX+43v/C7onWYHnQOcJn6uc5BQ1NKGP8nwSbhhHVCBlyIH48zd9U55pS8CUBMMccoLkPgW60ojHmi/4qtgfbgCkoKzDVSfD0uJZC77QZw8R/ph4UEPYHTpWI0P7/GQuthNMCsmAagRHZ7Db27LbUeA5Zxp6aKABoV8hLrFlYciiZYWCniPi6kWJ3PqLomUFS0yCoUYKT8ej2ao3MSn9YePfMtroyWzeCvxPcjAY6aSJG4MiGLtPI1zs+8vkqoUeEm3mpaNW5P83m2fBMwfvPn9FV2pDI2HAliEwrqFEwq0pJ3Cl3DSjB7/YlytMKRyvMJ+jFTyh8yERU3j7ouM/ajbtSr9rnNtTNAcLrG2V9fUgsAvU24Ko6Pgd8AdWQpaorasxw8fIVMhUekh2t2h+HySerX7Q8yP2nYQHbixT8SdpUVOzZcbf38PfPbXtgJ5qcXiTegpgO+jRMbxq5abjPgDoxcAb0ZPV0FVncAlPoyAGxnK21iMOVqyLfJUS/4DjZIM7ran9OYSgnAMmPJX4T+ZESAMxQgZ4FJtEaiYbQz/qPt+GEpbT2V/JJVmHyjkq6TWSRp2ENlCFEToFHarvtw3sd8E6Vz4naeBIzMB43kQ5hFymtX/1D1qKWP1JA0DCRCO9xmXWhX0Z2pCN/rt2I=
+after_failure:
+  - tail -n 500 build.log
