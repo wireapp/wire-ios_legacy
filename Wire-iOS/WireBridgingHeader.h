@@ -45,6 +45,7 @@
 #import "InvisibleInputAccessoryView.h"
 #import <SCSiriWaveformView/SCSiriWaveformView.h>
 #import "ConversationInputBarSendController.h"
+#import "ConversationContentViewController.h"
 
 // View Controllers
 #import "ZClientViewController.h"

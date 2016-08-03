@@ -46,6 +46,7 @@
 #import "ConversationListCell.h"
 
 #import "ConversationContentViewController.h"
+#import "Wire-Swift.h"
 
 static NSString * const CellReuseIdConversation = @"CellId";
 
@@ -564,23 +565,22 @@ static NSString * const CellReuseIdConversation = @"CellId";
     }
     
     previewingContext.sourceRect = layoutAttributes.frame;
+    ConversationPreviewViewController *previewViewController = [[ConversationPreviewViewController alloc] initWithConversation:conversation];
     
-    ConversationContentViewController *contentViewController = [[ConversationContentViewController alloc] initWithConversation:conversation];
-    
-    return contentViewController;
+    return previewViewController;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit
 {
-    if (![viewControllerToCommit isKindOfClass:[ConversationContentViewController class]]) {
+    if (![viewControllerToCommit isKindOfClass:[ConversationPreviewViewController class]]) {
         return;
     }
     
-    ConversationContentViewController *conversationController = (ConversationContentViewController*)viewControllerToCommit;
+    ConversationPreviewViewController *previewViewController = (ConversationPreviewViewController*)viewControllerToCommit;
     
     self.focusOnNextSelection = YES;
     self.animateNextSelection = YES;
-    [self selectModelItem:conversationController.conversation];
+    [self selectModelItem:previewViewController.conversation];
 }
 
 @end
