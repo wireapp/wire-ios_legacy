@@ -27,16 +27,6 @@
 @interface Analytics (SessionEvents)
 
 - (void)tagAppLaunchWithType:(ApplicationLaunchType)type;
-
-/// Tags manual sign in event
-- (void)tagSignInTapped;
-
-/// Tags manual sign in failure
-- (void)tagSignInFailedWithReason:(NSString *)reason;
-
-- (void)tagAuthenticationSucceeded;
-- (void)tagAuthenticationFailedWithReason:(NSString *)reason;
-
 - (void)tagApplicationError:(NSString *)error timeInSession:(NSTimeInterval)time;
 - (void)tagAppException:(NSString *)error screen:(NSString *)screen timeInSession:(NSTimeInterval)time;
 

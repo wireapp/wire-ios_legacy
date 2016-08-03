@@ -31,3 +31,4 @@
 #import "SplitViewController.h"
 #import "WAZUIMagicIOS.h"
 #import <AVSAudioEffect.h>
+#import "ImageMessageCell.h"

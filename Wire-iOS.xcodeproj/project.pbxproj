@@ -350,10 +350,6 @@
 		871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */; };
 		871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */; };
 		871BC2661D34F8F800DF0793 /* UserBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */; };
-		871BC2671D34F8F800DF0793 /* CircularPixelation.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 871BC1C41D34F8F800DF0793 /* CircularPixelation.fsh */; };
-		871BC2681D34F8F800DF0793 /* CircularPixelation.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 871BC1C51D34F8F800DF0793 /* CircularPixelation.vsh */; };
-		871BC2691D34F8F800DF0793 /* CircularPixelationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C71D34F8F800DF0793 /* CircularPixelationImageView.m */; };
-		871BC26A1D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C91D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m */; };
 		871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CB1D34F8F800DF0793 /* GapLayer.m */; };
 		871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */; };
 		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
@@ -711,6 +707,7 @@
 		BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */; };
 		BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74721CEB4882002608BF /* AudioButtonOverlay.swift */; };
 		BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */; };
+		BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF381FDE1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift */; };
 		BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */; };
 		BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */; };
 		BF4A15D21D4900930051E8BA /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
@@ -732,6 +729,10 @@
 		BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
 		BF9453321CE5CF4C0024E00C /* FileMetaDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9453311CE5CF4C0024E00C /* FileMetaDataGenerator.swift */; };
 		BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */; };
+		BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */; };
+		BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */; };
+		BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */; };
+		BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
@@ -1356,12 +1357,6 @@
 		871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundViewImageProcessor.m; sourceTree = "<group>"; };
 		871BC1C11D34F8F800DF0793 /* UserBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserBackgroundView.h; sourceTree = "<group>"; };
 		871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserBackgroundView.m; sourceTree = "<group>"; };
-		871BC1C41D34F8F800DF0793 /* CircularPixelation.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CircularPixelation.fsh; sourceTree = "<group>"; };
-		871BC1C51D34F8F800DF0793 /* CircularPixelation.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CircularPixelation.vsh; sourceTree = "<group>"; };
-		871BC1C61D34F8F800DF0793 /* CircularPixelationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularPixelationImageView.h; sourceTree = "<group>"; };
-		871BC1C71D34F8F800DF0793 /* CircularPixelationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularPixelationImageView.m; sourceTree = "<group>"; };
-		871BC1C81D34F8F800DF0793 /* CircularPixelationImageViewBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularPixelationImageViewBuilder.h; sourceTree = "<group>"; };
-		871BC1C91D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularPixelationImageViewBuilder.m; sourceTree = "<group>"; };
 		871BC1CA1D34F8F800DF0793 /* GapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLayer.h; sourceTree = "<group>"; };
 		871BC1CB1D34F8F800DF0793 /* GapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLayer.m; sourceTree = "<group>"; };
 		871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLoadingBar.h; sourceTree = "<group>"; };
@@ -1971,6 +1966,7 @@
 		BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Audio.swift"; sourceTree = "<group>"; };
 		BF2A74721CEB4882002608BF /* AudioButtonOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioButtonOverlay.swift; sourceTree = "<group>"; };
 		BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioButtonOverlayTests.swift; sourceTree = "<group>"; };
+		BF381FDE1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracker+AddressBookPermissions.swift"; sourceTree = "<group>"; };
 		BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTitleView.swift; sourceTree = "<group>"; };
 		BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingMessagesCell.swift; sourceTree = "<group>"; };
 		BF4A15D11D4900930051E8BA /* AutomationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomationHelper.swift; sourceTree = "<group>"; };
@@ -1996,6 +1992,10 @@
 		BF9453311CE5CF4C0024E00C /* FileMetaDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMetaDataGenerator.swift; sourceTree = "<group>"; };
 		BF999B5E1C0C984C008D5414 /* ProfileDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDevicesViewController.h; sourceTree = "<group>"; };
 		BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDevicesViewController.m; sourceTree = "<group>"; };
+		BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageCellTests.swift; sourceTree = "<group>"; };
+		BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_small.jpg; sourceTree = "<group>"; };
+		BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAssetViewControllerTests.swift; sourceTree = "<group>"; };
+		BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_burger.jpg; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
@@ -2797,6 +2797,7 @@
 			children = (
 				871BBFF21D34F56300DF0793 /* AnalyticsTracker+Permissions.h */,
 				871BBFF31D34F56300DF0793 /* AnalyticsTracker+Permissions.m */,
+				BF381FDE1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift */,
 			);
 			path = Permissions;
 			sourceTree = "<group>";
@@ -2997,7 +2998,6 @@
 			children = (
 				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
 				871BC1BA1D34F8F800DF0793 /* BackgroundView */,
-				871BC1C31D34F8F800DF0793 /* CircularPixelationImageView */,
 				871BC1CA1D34F8F800DF0793 /* GapLayer.h */,
 				871BC1CB1D34F8F800DF0793 /* GapLayer.m */,
 				871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */,
@@ -3060,19 +3060,6 @@
 				871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */,
 			);
 			path = BackgroundView;
-			sourceTree = "<group>";
-		};
-		871BC1C31D34F8F800DF0793 /* CircularPixelationImageView */ = {
-			isa = PBXGroup;
-			children = (
-				871BC1C41D34F8F800DF0793 /* CircularPixelation.fsh */,
-				871BC1C51D34F8F800DF0793 /* CircularPixelation.vsh */,
-				871BC1C61D34F8F800DF0793 /* CircularPixelationImageView.h */,
-				871BC1C71D34F8F800DF0793 /* CircularPixelationImageView.m */,
-				871BC1C81D34F8F800DF0793 /* CircularPixelationImageViewBuilder.h */,
-				871BC1C91D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m */,
-			);
-			path = CircularPixelationImageView;
 			sourceTree = "<group>";
 		};
 		871BC1DC1D34F8F800DF0793 /* UserImageView */ = {
@@ -4397,6 +4384,7 @@
 				87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */,
 				164565F71CA2E79E00EE5504 /* ParticipantsChangedViewTests.m */,
 				87071CC31CB6A3790039388A /* FileTransferCellTests.swift */,
+				BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */,
 				CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */,
 				BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */,
 				BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */,
@@ -4411,6 +4399,7 @@
 				8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */,
 				87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */,
 				873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */,
+				BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */,
 				1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -4448,6 +4437,8 @@
 			isa = PBXGroup;
 			children = (
 				BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */,
+				BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */,
+				BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */,
 				BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */,
 			);
 			name = Resources;
@@ -4759,7 +4750,6 @@
 				8773160B1B970A82007BA779 /* list.plist in Resources */,
 				16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */,
 				877316121B970A82007BA779 /* tutorial.plist in Resources */,
-				871BC2681D34F8F800DF0793 /* CircularPixelation.vsh in Resources */,
 				8FC853D7199245770008B66B /* Settings.bundle in Resources */,
 				8FC853A6199245770008B66B /* sending_complete.json in Resources */,
 				877316081B970A82007BA779 /* ipad.plist in Resources */,
@@ -4772,7 +4762,6 @@
 				8773160F1B970A82007BA779 /* profile.plist in Resources */,
 				1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */,
 				16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */,
-				871BC2671D34F8F800DF0793 /* CircularPixelation.fsh in Resources */,
 				8773160C1B970A82007BA779 /* misc.plist in Resources */,
 				871BC2281D34F8F800DF0793 /* CameraAccessMessageViewController.xib in Resources */,
 				8FC853A8199245770008B66B /* sending_pending.json in Resources */,
@@ -4809,11 +4798,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */,
 				16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */,
 				1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */,
 				16A202751B6772DB0095BBD1 /* soundcloud-track3.json in Resources */,
 				BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */,
 				16A202681B66A0040095BBD1 /* soundcloud-track1.json in Resources */,
+				BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */,
 				16A202671B66A0040095BBD1 /* soundcloud-playlist1.json in Resources */,
 				1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */,
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
@@ -5158,6 +5149,7 @@
 				BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */,
 				8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */,
 				168634E51ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m in Sources */,
+				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
 				871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */,
 				871BC00C1D34F56300DF0793 /* Analytics+ConversationEvents.m in Sources */,
 				16063CFF1BDA60C10097F62C /* ConnectionStatusHeader.m in Sources */,
@@ -5195,7 +5187,6 @@
 				871BC2351D34F8F800DF0793 /* GiphyNavigationBar.m in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
-				871BC2691D34F8F800DF0793 /* CircularPixelationImageView.m in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
 				16284DB01C86FF8D00F90A09 /* EmptyCell.m in Sources */,
 				871BC2701D34F8F800DF0793 /* StackView.m in Sources */,
@@ -5384,7 +5375,6 @@
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				871BC2541D34F8F800DF0793 /* ActionSheetTransition.m in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
-				871BC26A1D34F8F800DF0793 /* CircularPixelationImageViewBuilder.m in Sources */,
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */,
 				871BC01C1D34F56300DF0793 /* AnalyticsTracker+Invitations.m in Sources */,
@@ -5630,6 +5620,8 @@
 				16A2026B1B66A0040095BBD1 /* SoundcloudServiceTests.m in Sources */,
 				BF606D731CAA9EEE002BAC94 /* ConversationListBottomBarTests.m in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
+				BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */,
+				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				164565F81CA2E79E00EE5504 /* ParticipantsChangedViewTests.m in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,

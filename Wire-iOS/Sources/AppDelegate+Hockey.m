@@ -28,7 +28,8 @@
 
 - (void)setupHockeyWithCompletion:(dispatch_block_t)completed
 {
-    if ((AutomationHelper.useHockey || (!AutomationHelper.useHockey && USE_HOCKEY)) && ![[Settings sharedSettings] disableHockey]) {
+    BOOL userDefaultsUseHockey = AutomationHelper.sharedHelper.useHockey;
+    if ((userDefaultsUseHockey || (!userDefaultsUseHockey && USE_HOCKEY)) && ![[Settings sharedSettings] disableHockey]) {
         // see https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kBITExcludeApplicationSupportFromBackup"];
         

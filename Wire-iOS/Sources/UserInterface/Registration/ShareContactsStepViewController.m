@@ -29,6 +29,7 @@
 #import "RegistrationFormController.h"
 #import "ShareContactsViewController.h"
 #import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 @interface ShareContactsStepViewController () <FormStepDelegate>
 
@@ -92,6 +93,9 @@
 
 - (IBAction)shareContactsLater:(id)sender
 {
+    // We use a ShareContactsViewController but our own `later` button,
+    // that's why we need to track the tap manually here.
+    [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
     [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
     [self.formStepDelegate didSkipFormStep:self];
 }

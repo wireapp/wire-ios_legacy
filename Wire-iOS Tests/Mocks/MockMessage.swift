@@ -79,19 +79,20 @@ import ZMCLinkPreview
 }
 
 @objc class MockImageMessageData : NSObject, ZMImageMessageData {
+    var mockOriginalSize: CGSize = .zero
+    var mockImageData = NSData()
+    var mockImageDataIdentifier = String()
+    
     var mediumData: NSData! = NSData()
-    
-    var imageData: NSData! = NSData()
-    var imageDataIdentifier: String! = String()
-    
-    
     var previewData: NSData! = NSData()
     var imagePreviewDataIdentifier: String! = String()
     
     var isAnimatedGIF: Bool = false
     var imageType: String! = String()
     
-    var originalSize: CGSize = CGSize.zero
+    var imageData: NSData { return mockImageData }
+    var imageDataIdentifier: String { return mockImageDataIdentifier }
+    var originalSize: CGSize { return mockOriginalSize }
 }
 
 @objc class MockLocationMessageData: NSObject, ZMLocationMessageData {

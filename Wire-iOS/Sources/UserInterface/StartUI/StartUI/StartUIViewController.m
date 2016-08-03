@@ -53,6 +53,7 @@
 #import "Constants.h"
 #import "UIView+PopoverBorder.h"
 #import "UIViewController+WR_Invite.h"
+#import "Wire-Swift.h"
 
 
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
@@ -65,6 +66,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @property (nonatomic) SearchViewController *searchViewController;
 @property (nonatomic) ZMSearchDirectory *searchDirectory;
+@property (nonatomic) Class searchDirectoryClass;
 @property (nonatomic) PeopleSelection *selection;
 @property (nonatomic) SearchTokenStore *searchTokenStore;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
@@ -83,10 +85,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchDirectory tearDown];
 }
 
-- (instancetype)init
+- (instancetype)initWithSearchDirectoryClass:(Class)searchDirectoryClass
 {
     self = [super init];
     if (self) {
+        _searchDirectoryClass = searchDirectoryClass;
         _mode = StartUIModeNotSet;
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:@"people_picker"];
         
@@ -105,9 +108,14 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         
         self.groupConversationsSection = [GroupConversationsSection new];
         self.groupConversationsSection.delegate = self;
-        
-        
+
     }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [self initWithSearchDirectoryClass:[ZMSearchDirectory class]];
     return self;
 }
 
@@ -179,7 +187,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Analytics shared]tagScreen:@"PEOPLE_PICKER"];
+    [[Analytics shared] tagScreen:@"PEOPLE_PICKER"];
 }
 
 - (void)handleUploadAddressBookLogicIfNeeded
@@ -199,6 +207,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if ([[AddressBookHelper sharedHelper] isAddressBookAccessUnknown]) {
         [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
+            [self.analyticsTracker tagAddressBookSystemPermissions:success];
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[AddressBookHelper sharedHelper] uploadAddressBook];
@@ -223,8 +232,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchDirectory tearDown];
     self.searchDirectory = nil;
     
-    ZMSearchDirectory *newDirectory = [[ZMSearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]
-                                                            maxTopConversationsCount:24];
+    ZMSearchDirectory *newDirectory = [[self.searchDirectoryClass alloc] initWithUserSession:[ZMUserSession sharedSession]
+                                                                    maxTopConversationsCount:24];
     self.searchDirectory = newDirectory;
     
     [self.searchDirectory addSearchResultObserver:self];
@@ -371,6 +380,10 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 
     ZMSearchToken searchToken = searchBlock();
+    if (searchToken == nil) {
+        return;
+    }
+    
     [self.searchTokenStore searchStarted:searchType withToken:searchToken];
     @weakify(self);
     

@@ -38,4 +38,16 @@ class ModalTopBarTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut)
     }
     
+    func testThatItRendersCorrectly_ShortTitle_WithoutStatusBar() {
+        sut = ModalTopBar(forUseWithStatusBar: false)
+        sut.title = "Tim Cook"
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersCorrectly_LongTitle_WithoutStatusBar() {
+        sut = ModalTopBar(forUseWithStatusBar: false)
+        sut.title = "Adrian Hardacre, Amelia Henderson & Dylan Parsons"
+        verifyInAllPhoneWidths(view: sut)
+    }
+    
 }

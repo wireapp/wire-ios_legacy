@@ -98,7 +98,6 @@ FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsStateKey;
 
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryCamera;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryPhotoLibrary;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryAddressBook;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryPushNotifications;
 
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsStateAllowed;

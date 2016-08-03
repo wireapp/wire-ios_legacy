@@ -96,7 +96,7 @@ import CocoaLumberjackSwift
     public func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.playButton, self.timeLabel, self.authorLabel) { messageContentView, containerView, playButton, timeLabel, authorLabel in
             containerView.left == authorLabel.left
-            containerView.right == messageContentView.right - 16
+            containerView.right == messageContentView.rightMargin
             containerView.top == messageContentView.top
             containerView.bottom == messageContentView.bottom
             containerView.height == 56

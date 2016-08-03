@@ -27,18 +27,6 @@
     [self tagPermissionEventWithAttributes:attributes];
 }
 
-- (void)tagPhotoLibraryPermissions:(BOOL)allowed
-{
-    NSDictionary *attributes = [self attributesForCategory:AnalyticsEventTypePermissionsCategoryPhotoLibrary allowed:allowed];
-    [self tagPermissionEventWithAttributes:attributes];
-}
-
-- (void)tagAddressBookPermissions:(BOOL)allowed
-{
-    NSDictionary *attributes = [self attributesForCategory:AnalyticsEventTypePermissionsCategoryAddressBook allowed:allowed];
-    [self tagPermissionEventWithAttributes:attributes];
-}
-
 - (void)tagPushNotificationsPermissions:(BOOL)allowed
 {
     NSDictionary *attributes = [self attributesForCategory:AnalyticsEventTypePermissionsCategoryPushNotifications allowed:allowed];

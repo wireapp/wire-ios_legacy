@@ -435,6 +435,11 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     return NO;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;

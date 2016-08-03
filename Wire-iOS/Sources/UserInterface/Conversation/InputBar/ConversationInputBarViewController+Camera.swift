@@ -158,13 +158,15 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         
         confirmImageViewController.onEdit = { [unowned self] in
             self.dismissViewControllerAnimated(true) {
-                let sketchViewController = SketchViewController()
-                sketchViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-                sketchViewController.sketchTitle = "image.edit_image".localized
-                sketchViewController.delegate = self
-                
-                self.presentViewController(sketchViewController, animated: true, completion: .None)
-                sketchViewController.canvasBackgroundImage = image
+                delay(0.01){
+                    let sketchViewController = SketchViewController()
+                    sketchViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
+                    sketchViewController.sketchTitle = "image.edit_image".localized
+                    sketchViewController.delegate = self
+                    
+                    self.presentViewController(sketchViewController, animated: true, completion: .None)
+                    sketchViewController.canvasBackgroundImage = image
+                }
             }
         }
         

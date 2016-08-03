@@ -141,5 +141,16 @@ class Message_FormattingTests: XCTestCase {
         // then
         XCTAssertEqual(formattedText.string, "")
     }
+    
+    func testTextWithInvalidLinkAttachment() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "hello:{preview-url}") // NSDataDetector gets confused by this text
+        
+        // when
+        let formattedText = Message.formattedTextWithLinkAttachments(Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        
+        // then
+        XCTAssertEqual(formattedText.string, "hello:")
+    }
 
 }

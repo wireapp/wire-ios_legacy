@@ -114,9 +114,21 @@ static inline NSDataDetector *linkDataDetector(void)
                                                                                          attributes:attributes];
     
     [attributedString beginEditing];
+    
+    NSMutableArray *invalidLinkAttachments = [NSMutableArray array];
     for (LinkAttachment *linkAttachment in linkAttachments) {
-        [attributedString addAttribute:NSLinkAttributeName value:linkAttachment.URL range:linkAttachment.range];
+        if (attributedString.length >= NSMaxRange(linkAttachment.range)) {
+            [attributedString addAttribute:NSLinkAttributeName value:linkAttachment.URL range:linkAttachment.range];
+        } else {
+            // We can end up with invalid attachments if a link preview's characterOffsetInText doesn't
+            // match up with the linkAttachment.range provided by the URL data detector.
+            [invalidLinkAttachments addObject:linkAttachment];
+        }
     }
+    
+    NSMutableArray *mutableLinkAttachments = linkAttachments.mutableCopy;
+    [mutableLinkAttachments removeObjectsInArray:invalidLinkAttachments];
+    linkAttachments = mutableLinkAttachments;
     
     // Emoticon substitution should not be performed on URLs.
     // 1. Get ranges with no URLs inside each range.

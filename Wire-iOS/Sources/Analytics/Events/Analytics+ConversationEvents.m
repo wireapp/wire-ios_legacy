@@ -20,22 +20,6 @@
 #import "Analytics+ConversationEvents.h"
 
 
-NSString *NSStringFromCursorMethod(CursorMethod method);
-
-NSString *NSStringFromCursorMethod(CursorMethod method)
-{
-    switch (method) {
-        case CursorMethodTap:
-            return @"tap";
-            break;
-        case CursorMethodSwipe:
-            return @"swipe";
-            break;
-        default:
-            return @"unknown";
-            break;
-    }
-}
 
 NSString *NSStringFromSelectionType(SelectionType selectionType);
 NSString *NSStringFromSelectionType(SelectionType selectionType)
@@ -92,16 +76,6 @@ NSString *NSStringFromConversationType(ConversationType conversationType)
 }
 
 @implementation Analytics (ConversationEvents)
-
-- (void)tagCursorOpenWithMethod:(CursorMethod)method
-{
-    [self tagEvent:@"cursorSwipeOpen" attributes:@{@"method": NSStringFromCursorMethod(method)}];
-}
-
-- (void)tagCursorClosedWithMethod:(CursorMethod)method
-{
-    [self tagEvent:@"cursorSwipeClosed" attributes:@{@"method": NSStringFromCursorMethod(method)}];
-}
 
 - (void)tagArchivedConversation
 {

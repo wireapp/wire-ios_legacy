@@ -18,26 +18,12 @@
 
 
 #import <Foundation/Foundation.h>
-
 #import "Analytics.h"
+
 
 
 @interface Analytics (Screens)
 
-- (void)tagScreenSignIn;
-- (void)tagScreenWelcome;
-- (void)tagScreenRegistrationPhoto;
-- (void)tagScreenRegistrationUserDetails;
-- (void)tagScreenRegistrationEmailVerification;
-- (void)tagScreenRegistrationError;
-- (void)tagScreenSelfProfile;
-- (void)tagScreenSettings;
-- (void)tagScreenSendConnect;
-- (void)tagScreenConversationParticipants;
-- (void)tagScreenPeoplePickerAddParticipants;
-- (void)tagScreenPeoplePickerSearch;
-- (void)tagScreenSelfIsCalling;
-- (void)tagScreenOtherIsCalling;
 - (void)tagScreenInviteContactList;
 - (void)tagScreenGenericInvite;
 

@@ -772,6 +772,12 @@ VideoMessageCell {
     }
 }
 
+ImageMessageCell {
+    imageViewContainer: @{
+        backgroundColor: $color-placeholder-background;
+    }
+}
+
 AudioMessageCell {
     ProgressView {
         backgroundColor: $color-separator;
@@ -860,7 +866,10 @@ ConfirmAssetViewController {
     }
     
     editButton: @{
-        backgroundColor: white;
+        backgroundColor: $color-accent-current;
+        titleLabel: @{
+            font: $font-small;
+        }
     }
 }
 

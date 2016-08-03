@@ -20,7 +20,6 @@
 #import "Analytics+ProfileEvents.h"
 
 
-NSString *DownloadTypeToString(DownloadType downloadType);
 NSString *ResetPasswordTypeToString(ResetPasswordType resetType);
 NSString *SoundIntensityTypeToString(SoundIntensityType soundType);
 NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
@@ -29,10 +28,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
 
 @implementation Analytics (ProfileEvents)
 
-- (void)tagAllowedAddressBook:(BOOL)allowed
-{
-    [self tagEvent:@"allowedAddressBook" attributes:@{@"allowed" : @(allowed)}];
-}
 
 - (void)tagHelp
 {
@@ -42,11 +37,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
 - (void)tagAbout
 {
     [self tagEvent:@"about"];
-}
-
-- (void)tagSignOut
-{
-    [self tagEvent:@"signOut"];
 }
 
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type
@@ -69,24 +59,9 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
     [self tagEvent:@"viewedFingerprintLearnMore"];
 }
 
-- (void)tagAddedPictureFromSource:(PictureUploadType)type
-{
-    [self tagEvent:@"addedPicture" attributes:@{@"addedPicture" : PictureUploadTypeToString(type)}];
-}
-
-- (void)tagSetAccentColor
-{
-    [self tagEvent:@"setAccentColor"];
-}
-
 - (void)tagResetPassword:(BOOL)reset fromType:(ResetPasswordType)type
 {
     [self tagEvent:@"resetPassword" attributes:@{@"reset" : @(reset), @"resetLocation" : ResetPasswordTypeToString(type)}];
-}
-
-- (void)tagDownloadPreference:(DownloadType)type
-{
-    [self tagEvent:@"downloadPreference" attributes:@{@"downloadPreference" : DownloadTypeToString(type)}];
 }
 
 - (void)tagSoundIntensityPreference:(SoundIntensityType)type
@@ -97,16 +72,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
 - (void)tagProfilePictureFromSource:(PictureUploadType)type
 {
     [self tagEvent:@"profilePicture" attributes:@{@"addedPicture" : PictureUploadTypeToString(type)}];
-}
-
-- (void)tagOnlyConnectedPeopleChange
-{
-    [self tagEvent:@"onlyConnectedPeopleChanged"];
-}
-
-- (void)tagShareContactsChangedInSettings
-{
-    [self tagEvent:@"shareContactsChangedInSettings"];
 }
 
 - (void)tagSendInviteViaMethod:(NSString *)method
@@ -134,20 +99,6 @@ NSString *PictureUploadTypeToString(PictureUploadType type)
             
         case PictureUploadPhotoLibrary:
             return @"fromPhotoLibrary";
-            break;
-            
-    }
-}
-
-NSString *DownloadTypeToString(DownloadType type)
-{
-    switch (type) {
-        case DownloadOnlyWifi:
-            return @"wifiOnly";
-            break;
-            
-        case DownloadAlwaysDownload:
-            return @"alwaysDownload";
             break;
             
     }

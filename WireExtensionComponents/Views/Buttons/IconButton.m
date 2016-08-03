@@ -169,12 +169,19 @@
 
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing
 {
+    [self setTitleImageSpacing:titleImageSpacing horizontalMargin:0];
+}
+
+- (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin
+{
     _titleImageSpacing = titleImageSpacing;
     
     CGFloat inset = titleImageSpacing / 2.0f;
     self.imageEdgeInsets = UIEdgeInsetsMake(self.imageEdgeInsets.top, -inset, self.imageEdgeInsets.bottom, inset);
     self.titleEdgeInsets = UIEdgeInsetsMake(self.titleEdgeInsets.top, inset, self.titleEdgeInsets.bottom, -inset);
-    self.contentEdgeInsets = UIEdgeInsetsMake(self.contentEdgeInsets.top, inset, self.contentEdgeInsets.bottom, inset);
+
+    CGFloat horizontal = inset + horizontalMargin;
+    self.contentEdgeInsets = UIEdgeInsetsMake(self.contentEdgeInsets.top, horizontal, self.contentEdgeInsets.bottom, horizontal);
 }
 
 - (void)setTitleColor:(UIColor *)color forState:(UIControlState)state

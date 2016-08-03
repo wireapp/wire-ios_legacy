@@ -21,7 +21,7 @@
 #import "MediaPreviewView.h"
 #import "MediaPreviewData+Vimeo.h"
 
-#import <VIMNetworking/VIMNetworking.h>
+#import <VIMNetworking/VIMSession.h>
 #import <VIMNetworking/VIMAccount.h>
 #import <VIMNetworking/VIMVideo.h>
 
@@ -47,8 +47,14 @@ static const NSUInteger MaxRetryCount = 3;
     static VimeoService *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithClientKey:@STRINGIZE(VIMEO_API_KEY)
-                                            clientSecret:@STRINGIZE(VIMEO_API_SECRET)];
+        
+        NSString *clientKey = @STRINGIZE(VIMEO_API_KEY);
+        NSString *secret = @STRINGIZE(VIMEO_API_SECRET);
+        
+        if (clientKey.length > 0 && secret.length > 0) {
+            sharedInstance = [[self alloc] initWithClientKey:clientKey
+                                                clientSecret:secret];
+        }
     });
     
     return sharedInstance;

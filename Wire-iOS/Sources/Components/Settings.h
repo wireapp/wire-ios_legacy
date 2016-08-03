@@ -108,9 +108,6 @@ extern NSString * const UserDefaultDisableAnalytics;
 /// when true, send the next message 500 times (!)
 @property (nonatomic) BOOL shouldSend500Messages;
 
-/// Credentials used by automation tests
-@property (nonatomic, readonly) ZMEmailCredentials *automationTestEmailCredentials;
-
 // Max audio recording duration in seconds
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
 

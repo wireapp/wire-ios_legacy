@@ -119,8 +119,6 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
     self = [super init];
     if (self) {
         [self restoreLastUsedIntensityLevel];
-        
-        [self checkCommandLineArguments];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
@@ -130,36 +128,6 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)checkCommandLineArguments
-{
-    NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-    
-    NSString *automationEmail = nil;
-    NSString *automationEmailKey = @"--loginemail=";
-    NSString *automationPassword = nil;
-    NSString *automationPasswordKey = @"--loginpassword=";
-
-    
-    for(NSString *arg in arguments) {
-        // Log level
-        if([arg isEqualToString:@"--debug-log-network"]) {
-            ZMLogSetLevelForTag(ZMLogLevelDebug, "Network");
-        }
-        // Prefilled user
-        if([arg hasPrefix:automationEmailKey]) {
-            automationEmail = [arg substringFromIndex:automationEmailKey.length];
-        }
-        // Prefilled password
-        if([arg hasPrefix:automationPasswordKey]) {
-            automationPassword = [arg substringFromIndex:automationPasswordKey.length];
-        }
-    }
-    
-    if(automationEmail != nil && automationPassword != nil) {
-        self.automationTestEmailCredentials = [ZMEmailCredentials credentialsWithEmail:automationEmail password:automationPassword];
-    }
 }
 
 - (NSUserDefaults *)defaults

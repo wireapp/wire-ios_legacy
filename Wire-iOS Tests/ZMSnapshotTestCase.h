@@ -52,13 +52,15 @@ do { \
 } while(0)
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ZMSnapshotTestCase : FBSnapshotTestCase
 
 @property (nonatomic) NSManagedObjectContext *uiMOC;
 
 /// The color of the container view in which the view to
 /// be snapshot will be placed, defaults to UIColor.lightGrayColor
-@property (nonatomic) UIColor *snapshotBackgroundColor;
+@property (nonatomic, nullable) UIColor *snapshotBackgroundColor;
 
 /// If this is set the accent color will be overriden for the tests
 @property (nonatomic) ZMAccentColor accentColor;
@@ -78,17 +80,17 @@ do { \
 - (void)verifyViewInAllPhoneSizes:(UIView *)view
                              file:(const char[])file
                              line:(NSUInteger)line
-               configurationBlock:(void (^)(UIView * view))configuration;
+               configurationBlock:(nullable void (^)(UIView * view))configuration;
 
 - (void)verifyViewInAllDeviceSizes:(UIView *)view
                               file:(const char[])file
                               line:(NSUInteger)line
-                configurationBlock:(void (^)(UIView * view, BOOL isPad))configuration;
+                configurationBlock:(nullable void (^)(UIView *view, BOOL isPad))configuration;
 
 #pragma mark - Helper
 
 - (UIImage *)imageInTestBundleNamed:(NSString *)name;
-- (NSURL *)URLForResourceInTestBundleNamed:(NSString *)name;
-
 
 @end
+
+NS_ASSUME_NONNULL_END

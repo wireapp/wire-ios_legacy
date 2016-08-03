@@ -18,27 +18,70 @@
 
 
 import Foundation
+import ZMCSystem
+import zmessaging
 
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.
 @objc final class AutomationHelper: NSObject {
-
-    private static let defaults = NSUserDefaults.standardUserDefaults()
-
-    ///  - returns: The value specified for the `UseHockey` argument on the command line
-    class var useHockey: Bool {
-        return defaults.boolForKey("UseHockey")
-    }
-
-    ///  - returns: The value specified for the `SkipLoginAlerts` argument on the command line
-    class var skipFirstLoginAlerts: Bool {
-        return defaults.boolForKey("SkipLoginAlerts")
+    
+    static let sharedHelper = AutomationHelper()
+    
+    ///  - returns: The value specified for the `UseHockey` key in `NSUserDefaults`
+    var useHockey: Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("UseHockey")
     }
     
-    ///  - returns: The value specified for the `DisableAutoCorrection` argument on the command line
-    class var disableAutoCorrection: Bool {
-        return defaults.boolForKey("DisableAutoCorrection")
+    ///  - returns: `true` if values for `--loginemail=` and --`loginpassword=` have been provided on the command line
+    private(set) var skipFirstLoginAlerts = false
+    
+    ///  - returns: The `ZMEmailCredentials` specified with the `--loginemail=` and --`loginpassword=` arguments on the command line
+    private(set) var automationEmailCredentials: ZMEmailCredentials? = nil
+    
+    ///  - returns: The value specified for the `--disable-autocorrection` argument on the command line
+    private(set) var disableAutocorrection = false
+    
+    override init() {
+        super.init()
+        checkCommandLineArguments()
     }
-
+    
+    private enum AutomationKey: String {
+        case Email = "--loginemail="
+        case Password = "--loginpassword="
+        case LogNetwork = "--debug-log-network"
+        case DisableAutocorrection = "--disable-autocorrection"
+    }
+    
+    private func checkCommandLineArguments() {
+        let arguments = NSProcessInfo.processInfo().arguments
+        var email: String?
+        var password: String?
+        
+        arguments.forEach { arg in
+            if arg == AutomationKey.LogNetwork.rawValue {
+                ZMLogSetLevelForTag(.Debug, "Network")
+            }
+            
+            if arg == AutomationKey.DisableAutocorrection.rawValue {
+                disableAutocorrection = true
+            }
+            
+            let emailKey = AutomationKey.Email.rawValue
+            if arg.hasPrefix(emailKey) {
+                email = arg.substringFromIndex(emailKey.startIndex.advancedBy(emailKey.characters.count))
+            }
+            
+            let passwordKey = AutomationKey.Password.rawValue
+            if arg.hasPrefix(passwordKey) {
+                password = arg.substringFromIndex(passwordKey.startIndex.advancedBy(passwordKey.characters.count))
+            }
+        }
+        
+        guard let mail = email, secret = password else { return }
+        skipFirstLoginAlerts = true
+        automationEmailCredentials = ZMEmailCredentials(email: mail, password: secret)
+    }
+    
 }
