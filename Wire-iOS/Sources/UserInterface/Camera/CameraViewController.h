@@ -24,7 +24,7 @@
 @class CameraController;
 @class CameraViewController;
 @class AnalyticsTracker;
-
+@class ImageMetadata;
 
 
 typedef NS_ENUM(NSInteger, CameraViewControllerCamera) {
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, CameraViewControllerPreviewSize) {
 @protocol CameraViewControllerDelegate <NSObject>
 
 - (void)cameraViewControllerDidCancel:(CameraViewController *)cameraViewController;
-- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData;
+- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata;
 
 @end
 

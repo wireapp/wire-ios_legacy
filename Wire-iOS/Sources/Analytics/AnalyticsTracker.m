@@ -48,7 +48,6 @@ NSString *const AnalyticsTriggerTypeButton = @"button";
 NSString *const AnalyticsEventTypeEditSelfUser = @"EditSelfUser";
 NSString *const AnalyticsEventTypeNavigation = @"Navigation";
 NSString *const AnalyticsEventTypePermissions = @"PermissionRequested";
-NSString *const AnalyticsEventTypePictureTaken = @"PictureTaken";
 NSString *const AnalyticsEventTypeMedia = @"Media";
 
 #pragma mark - AnalyticsEventTypeEditSelfUser
@@ -103,16 +102,6 @@ NSString *const AnalyticsEventTypePermissionsCategoryPushNotifications = @"pushN
 
 NSString *const AnalyticsEventTypePermissionsStateAllowed = @"allowed";
 NSString *const AnalyticsEventTypePermissionsStateDenied = @"denied";
-
-
-#pragma mark - AnalyticsEventTypePictureTaken;
-
-NSString *const AnalyticsEventTypePictureTakenSourceKey = @"source";
-NSString *const AnalyticsEventTypePicutreTakenSourceCamera = @"camera";
-NSString *const AnalyticsEventTypePictureTakenSourcePhotoLibrary = @"photoLibrary";
-NSString *const AnalyticsEventTypePictureTakenSourceGiphy = @"giphy";
-NSString *const AnalyticsEventTypePictureTakenSourceSketch = @"sketch";
-
 
 #pragma mark - AnalyticsEventTypeMedia
 

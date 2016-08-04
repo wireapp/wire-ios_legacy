@@ -174,7 +174,7 @@
     
 }
 
-- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData
+- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
 {
     [self dismissViewControllerAnimated:YES completion:^() {
         [self dismissPeoplePickerWithCompletionBlock:^{
@@ -186,6 +186,8 @@
                     [user.oneToOneConversation appendMessageWithImageData:imageData];
                 } completionHandler:^{
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:user.oneToOneConversation];
+                    
+                    [[Analytics shared] tagMediaSentPictureInConversation:user.oneToOneConversation metadata:metadata];
                     [[ZClientViewController sharedZClientViewController] selectConversation:user.oneToOneConversation
                                                                                 focusOnView:YES
                                                                                    animated:YES];

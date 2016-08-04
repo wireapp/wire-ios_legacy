@@ -19,13 +19,13 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class ImageMetadata;
 
 /// Shows a confirmation dialog after picking an image in UIImagePickerController. If the user accepts
 /// the image the imagePickedBlock is called.
 @interface ImagePickerConfirmationController : NSObject <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, copy) NSString *previewTitle;
-@property (nonatomic, copy) void (^imagePickedBlock)(NSData *imageData);
+@property (nonatomic, copy) void (^imagePickedBlock)(NSData *imageData, ImageMetadata *metadata);
 
 @end

@@ -26,7 +26,7 @@ import AVFoundation
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: AVURLAsset)
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, source: UIImagePickerControllerSourceType)
+    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, metadata: ImageMetadata)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController)
 }
@@ -210,14 +210,27 @@ public class CameraKeyboardViewController: UIViewController {
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .PhotoLibrary)
+                        let metadata = ImageMetadata()
+                        metadata.camera = .None
+                        metadata.method = ConversationMediaPictureTakeMethod.Keyboard
+                        metadata.source = ConversationMediaPictureSource.Gallery
+                        metadata.sketchSource = .None
+                        
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
                     })
                 })
                 
                 return
             }
             dispatch_async(dispatch_get_main_queue(), {
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, source: .PhotoLibrary)
+                
+                let metadata = ImageMetadata()
+                metadata.camera = .None
+                metadata.method = ConversationMediaPictureTakeMethod.Keyboard
+                metadata.source = ConversationMediaPictureSource.Gallery
+                metadata.sketchSource = .None
+                
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
             })
         })
     }
@@ -334,7 +347,17 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(cameraCell: CameraCell, didPickImageData imageData: NSData) {
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, source: .Camera)
+        let isFrontCamera = cameraCell.cameraController.currentCamera == .Front
+        
+        let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.Front : ConversationMediaPictureCamera.Back
+        
+        let metadata = ImageMetadata()
+        metadata.camera = camera
+        metadata.method = ConversationMediaPictureTakeMethod.Keyboard
+        metadata.source = ConversationMediaPictureSource.Camera
+        metadata.sketchSource = .None
+        
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
     }
 }
 

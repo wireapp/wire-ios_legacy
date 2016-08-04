@@ -31,6 +31,8 @@
 #import "SketchViewController.h"
 #import "MediaAsset.h"
 
+#import "Wire-Swift.h"
+
 
 
 @interface ImagePickerConfirmationController ()
@@ -72,7 +74,12 @@
                 
                 [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
                     if (imageData != nil) {
-                        self.imagePickedBlock(imageData);
+                        ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                        metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
+                        metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                        metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+                        
+                        self.imagePickedBlock(imageData, metadata);
                     }
                 }];
             };
@@ -83,6 +90,7 @@
                 SketchViewController *sketchViewController = [[SketchViewController alloc] init];
                 sketchViewController.sketchTitle = NSLocalizedString(@"image.edit_image", @"");
                 sketchViewController.delegate = self;
+                sketchViewController.source = ConversationMediaSketchSourceCameraGallery;
                 
                 [picker presentViewController:sketchViewController animated:YES completion:^{
                     sketchViewController.canvasBackgroundImage = image;
@@ -146,7 +154,12 @@
         };
         
         confirmImageViewController.onConfirm = ^{
-            self.imagePickedBlock(UIImagePNGRepresentation(image));
+            ImageMetadata *metadata = [[ImageMetadata alloc] init];
+            metadata.source = ConversationMediaPictureSourceSketch;
+            metadata.sketchSource = ConversationMediaSketchSourceCameraGallery;
+            metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+            
+            self.imagePickedBlock(UIImagePNGRepresentation(image), metadata);
         };
         
         [self.presentingPickerController presentViewController:confirmImageViewController animated:YES completion:nil];

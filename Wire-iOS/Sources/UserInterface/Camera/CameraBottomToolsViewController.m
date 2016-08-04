@@ -31,6 +31,7 @@
 #import "Analytics+iOS.h"
 #import "DeviceOrientationObserver.h"
 #import "WRFunctions.h"
+#import "Wire-Swift.h"
 
 
 
@@ -58,9 +59,10 @@
         _imagePickerConfirmationController = [[ImagePickerConfirmationController alloc] init];
         
         @weakify(self);
-        self.imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData) {
+        self.imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData, ImageMetadata *metadata) {
             @strongify(self);
-            [self.delegate cameraBottomToolsViewController:self didPickImageData:imageData];
+            
+            [self.delegate cameraBottomToolsViewController:self didPickImageData:imageData imageMetadata:metadata];
         };
     }
     
@@ -168,8 +170,13 @@
 - (IBAction)takePicture:(id)sender
 {
     [self.cameraController captureStillImageWithCompletionHandler:^(NSData *imageData, NSDictionary *metaData, NSError *error) {
-        if ([self.delegate respondsToSelector:@selector(cameraBottomToolsViewController:didCaptureImageData:)]) {
-            [self.delegate cameraBottomToolsViewController:self didCaptureImageData:imageData];
+        if ([self.delegate respondsToSelector:@selector(cameraBottomToolsViewController:didCaptureImageData:imageMetadata:)]) {
+            ImageMetadata *metadata = [[ImageMetadata alloc] init];
+            metadata.method = ConversationMediaPictureTakeMethodFullFromKeyboard;
+            metadata.source = ConversationMediaPictureSourceCamera;
+            metadata.camera = self.cameraController.currentCamera == CameraControllerCameraFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+            
+            [self.delegate cameraBottomToolsViewController:self didCaptureImageData:imageData imageMetadata:metadata];
         }
     }];
 }

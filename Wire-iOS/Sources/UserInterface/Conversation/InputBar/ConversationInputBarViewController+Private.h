@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 
+@property (nonatomic)           NSUInteger videoSendContext;
 - (void)createAudioRecordViewController;
 @end
 

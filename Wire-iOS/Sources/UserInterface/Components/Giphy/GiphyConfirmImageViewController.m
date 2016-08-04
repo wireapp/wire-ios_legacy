@@ -43,7 +43,6 @@
 
 
 #import "Analytics+iOS.h"
-#import "AnalyticsTracker+Camera.h"
 
 
 
@@ -390,8 +389,6 @@ static const CGFloat BottomMarginInset = 24;
         self.loadingIndicatorViewController.showLoadingView == NO &&
         self.imageData) {
         
-        [self.analyticsTracker tagPictureTakenWithSource:AnalyticsEventTypePictureTakenSourceGiphy
-                                    additionalAttributes:@{AnalyticsTriggerKey : AnalyticsTriggerTypeButton}];
         [Analytics shared].sessionSummary.imagesSent++;
         
         self.onConfirm();

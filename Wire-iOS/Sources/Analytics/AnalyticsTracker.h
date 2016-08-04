@@ -45,7 +45,6 @@ FOUNDATION_EXTERN NSString *const AnalyticsTriggerTypeButton;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUser;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigation;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissions;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePictureTaken;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMessage;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMedia;
 
@@ -102,16 +101,6 @@ FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryPushNotif
 
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsStateAllowed;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsStateDenied;
-
-
-#pragma mark - AnalyticsEventTypePictureTaken;
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePictureTakenSourceKey;
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePicutreTakenSourceCamera;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePictureTakenSourcePhotoLibrary;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePictureTakenSourceGiphy;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePictureTakenSourceSketch;
 
 #pragma mark - AnalyticsEventTypeLinkVisit
 

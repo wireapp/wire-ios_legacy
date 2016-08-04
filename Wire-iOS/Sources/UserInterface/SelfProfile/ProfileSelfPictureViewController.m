@@ -98,7 +98,7 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
         self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         
         @weakify(self);
-        _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData) {
+        _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData, ImageMetadata *metadata) {
             @strongify(self);
             [[AppDelegate sharedAppDelegate].window.rootViewController dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
@@ -252,7 +252,7 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 
 #pragma mark - CameraViewControllerDelegate
 
-- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData
+- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
 {
     [[AppDelegate sharedAppDelegate].window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     

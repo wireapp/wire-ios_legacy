@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -37,6 +37,89 @@
     }
 }
 
+@objc public enum ConversationMediaPictureSource: UInt {
+    case Gallery, Camera, Sketch, Giphy, Sharing, Clip, Paste
+    
+    static let attributeName = "source"
+    
+    var attributeValue: String {
+        switch self {
+        case .Gallery:  return "gallery"
+        case .Camera:   return "camera"
+        case .Sketch:   return "sketch"
+        case .Giphy:    return "giphy"
+        case .Sharing:  return "sharing"
+        case .Clip:     return "clip"
+        case .Paste:    return "paste"
+        }
+    }
+}
+
+@objc public enum ConversationMediaPictureTakeMethod: UInt {
+    case None, Keyboard, FullFromKeyboard, QuickMenu
+    
+    static let attributeName = "method"
+    
+    var attributeValue: String {
+        switch self {
+        case .None:             return ""
+        case .Keyboard:         return "keyboard"
+        case .FullFromKeyboard: return "full_screen"
+        case .QuickMenu:        return "quick_menu"
+        }
+    }
+}
+
+public extension ConversationMediaSketchSource {
+    static let attributeName = "sketch_source"
+    
+    var attributeValue: String {
+        switch self {
+        case .None:          return ""
+        case .SketchButton:  return "sketch_button"
+        case .CameraGallery: return "camera_gallery"
+        case .ImageFullView: return "image_full_view"
+        }
+    }
+}
+
+@objc public enum ConversationMediaPictureCamera: UInt {
+    case None, Front, Back
+    
+    static let attributeName = "camera"
+    
+    init (camera: UIImagePickerControllerCameraDevice) {
+        switch camera {
+        case .Front:
+            self = .Front
+        case .Rear:
+            self = .Back
+        }
+    }
+    
+    var attributeValue: String {
+        switch self {
+        case .None:  return ""
+        case .Front: return "front"
+        case .Back:  return "back"
+        }
+    }
+}
+
+@objc public enum ConversationMediaVideoContext: UInt {
+    case CursorButton, FullCameraKeyboard, CameraKeyboard
+    
+    static let attributeName = "context"
+    
+    var attributeValue: String {
+        switch self {
+        case .CursorButton:         return "cursor_button"
+        case .FullCameraKeyboard:   return "full_screen"
+        case .CameraKeyboard:       return "gallery"
+        }
+    }
+}
+
 @objc public enum ConversationMediaOpenEvent: UInt {
     case Location
     
@@ -64,6 +147,13 @@
     }
 }
 
+@objc public class ImageMetadata: NSObject { // could be struct in swift-only environment
+    var source: ConversationMediaPictureSource = .Gallery
+    var method: ConversationMediaPictureTakeMethod = .None
+    var sketchSource: ConversationMediaSketchSource = .None
+    var camera: ConversationMediaPictureCamera = .None
+}
+
 extension AudioMessageContext {
     static let keyName = "context"
     
@@ -85,6 +175,7 @@ let conversationMediaCancelledRecordingAudioMessageEventName = "media.cancelled_
 let conversationMediaPreviewedAudioMessageEventName          = "media.previewed_audio_message"
 let conversationMediaSentAudioMessageEventName               = "media.sent_audio_message"
 let conversationMediaPlayedAudioMessageEventName             = "media.played_audio_message"
+let conversationMediaSentPictureEventName                    = "media.sent_picture"
 
 let videoDurationClusterizer: TimeIntervalClusterizer = {
     return TimeIntervalClusterizer.videoDurationClusterizer()
@@ -121,6 +212,49 @@ public extension Analytics {
         }
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
+
+    @objc public func tagMediaSentPictureSourceCamera(inConversation conversation: ZMConversation, method: ConversationMediaPictureTakeMethod, camera: ConversationMediaPictureCamera) {
+        self.tagMediaSentPicture(inConversation: conversation, source: .Camera, method: method, sketchSource: .None, camera: camera)
+    }
+    
+    @objc public func tagMediaSentPictureSourceSketch(inConversation conversation: ZMConversation, sketchSource: ConversationMediaSketchSource) {
+        self.tagMediaSentPicture(inConversation: conversation, source: .Sketch, method: .None, sketchSource: sketchSource, camera: .None)
+    }
+    
+    @objc public func tagMediaSentPictureSourceOther(inConversation conversation: ZMConversation, source: ConversationMediaPictureSource) {
+        self.tagMediaSentPicture(inConversation: conversation, source: source, method: .None, sketchSource: .None, camera: .None)
+    }
+    
+    private func tagMediaSentPicture(inConversation conversation: ZMConversation, source: ConversationMediaPictureSource, method: ConversationMediaPictureTakeMethod, sketchSource: ConversationMediaSketchSource, camera: ConversationMediaPictureCamera) {
+        let metadata = ImageMetadata()
+        metadata.source = source
+        metadata.method = method
+        metadata.sketchSource = sketchSource
+        metadata.camera = camera
+        self.tagMediaSentPicture(inConversation: conversation, metadata: metadata)
+    }
+    
+    @objc public func tagMediaSentPicture(inConversation conversation: ZMConversation, metadata: ImageMetadata) {
+        var attributes = [String: String]()
+        if let typeAttribute = conversationTypeAttribute(conversation) {
+            attributes["conversation_type"] = typeAttribute
+        }
+        
+        attributes[ConversationMediaPictureSource.attributeName] = metadata.source.attributeValue
+        if metadata.method != .None {
+            attributes[ConversationMediaPictureTakeMethod.attributeName] = metadata.method.attributeValue
+        }
+        
+        if metadata.source == .Sketch {
+            attributes[ConversationMediaSketchSource.attributeName] = metadata.sketchSource.attributeValue
+        }
+        else if metadata.source == .Camera {
+            attributes[ConversationMediaPictureCamera.attributeName] = metadata.camera.attributeValue
+        }
+        
+        tagEvent(conversationMediaSentPictureEventName, attributes: attributes)
+    }
+    
     @objc public func tagMediaOpened(event: ConversationMediaOpenEvent, inConversation conversation: ZMConversation, sentBySelf: Bool) {
         var attributes = ["user": sentBySelf ? "sender" : "receiver"]
         if let typeAttribute = conversationTypeAttribute(conversation) {
@@ -134,9 +268,16 @@ public extension Analytics {
     }
     
     /// User uploads video message
-    @objc public func tagSentVideoMessage(duration: NSTimeInterval) {
-        let attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
+    @objc public func tagSentVideoMessage(inConversation conversation: ZMConversation, context: ConversationMediaVideoContext, duration: NSTimeInterval) {
+        var attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
                           "duration_actual": self.dynamicType.stringFromTimeInterval(duration)]
+        
+        if let typeAttribute = conversationTypeAttribute(conversation) {
+            attributes["conversation_type"] = typeAttribute
+        }
+        
+        attributes[ConversationMediaVideoContext.attributeName] = context.attributeValue
+        
         tagEvent(conversationMediaSentVideoMessageEventName, attributes: attributes)
     }
 

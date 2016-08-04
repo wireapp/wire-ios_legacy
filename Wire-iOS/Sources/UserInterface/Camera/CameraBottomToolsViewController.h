@@ -22,13 +22,13 @@
 
 
 @class CameraController;
-
+@class ImageMetadata;
 
 
 @protocol CameraBottomToolsViewControllerDelegate <NSObject>
 
-- (void)cameraBottomToolsViewController:(id)controller didPickImageData:(NSData *)imageData;
-- (void)cameraBottomToolsViewController:(id)controller didCaptureImageData:(NSData *)imageData;
+- (void)cameraBottomToolsViewController:(id)controller didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata;
+- (void)cameraBottomToolsViewController:(id)controller didCaptureImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata;
 - (void)cameraBottomToolsViewControllerDidCancel:(id)controller;
 
 @end

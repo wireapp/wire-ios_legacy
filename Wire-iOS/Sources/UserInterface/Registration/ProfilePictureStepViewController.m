@@ -35,6 +35,8 @@
 #import "RegistrationFormController.h"
 @import WireExtensionComponents;
 
+#import "Wire-Swift.h"
+
 
 NSString * const UnsplashRandomImageHiQualityURL = @"https://source.unsplash.com/800x800/?landscape";
 #if TARGET_IPHONE_SIMULATOR
@@ -306,10 +308,10 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 #pragma mark - CameraViewControllerDelegate
 
-- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData
+- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.photoSource = AnalyticsPhotoSourceCamera;
+    self.photoSource = metadata.source == ConversationMediaPictureSourceCamera ? AnalyticsPhotoSourceCamera : AnalyticsPhotoSourceCameraRoll;
     [self setPictureImageData:imageData];
 }
 

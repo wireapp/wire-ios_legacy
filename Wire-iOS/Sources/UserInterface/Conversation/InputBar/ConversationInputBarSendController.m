@@ -107,6 +107,7 @@
         [Analytics shared].sessionSummary.imagesSent++;
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
+        [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
         [self tagExternalLinkPostEventsForMessage:textMessage];
     }];
 }

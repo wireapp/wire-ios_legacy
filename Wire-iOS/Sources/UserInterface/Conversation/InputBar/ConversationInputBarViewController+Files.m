@@ -326,7 +326,9 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         picker.showLoadingView = YES;
         [AVAsset wr_convertVideoAtURL:videoTempURL toUploadFormatWithCompletion:^(NSURL *resultURL, AVAsset *asset, NSError *error) {
             if (error == nil && resultURL != nil) {
-                [Analytics.shared tagSentVideoMessage:CMTimeGetSeconds(asset.duration)];
+                [[Analytics shared] tagSentVideoMessageInConversation:self.conversation
+                                                              context:self.videoSendContext
+                                                             duration:CMTimeGetSeconds(asset.duration)];
                 [self uploadFileAtURL:resultURL];
             }
             
@@ -343,8 +345,13 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         }
         
         if (image != nil) {
+            // In this case the completion was shown already by image picker
             if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
                 picker.showLoadingView = YES;
+                
+                ConversationMediaPictureCamera camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                
+                [Analytics.shared tagMediaSentPictureSourceCameraInConversation:self.conversation method:ConversationMediaPictureTakeMethodFullFromKeyboard camera:camera];
                 
                 [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9) completion:^{
                     picker.showLoadingView = NO;
@@ -353,7 +360,11 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             }
             else {
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) source:picker.sourceType];
+                    ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                    metadata.method = ConversationMediaPictureTakeMethodFullFromKeyboard;
+                    metadata.source = ConversationMediaPictureSourceGallery;
+                    
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) metadata:metadata];
                 }];
             }
             

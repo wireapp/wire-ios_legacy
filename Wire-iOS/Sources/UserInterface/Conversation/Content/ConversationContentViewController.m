@@ -65,7 +65,6 @@
 
 #import "SketchViewController.h"
 #import "AnalyticsTracker+Sketchpad.h"
-#import "AnalyticsTracker+Camera.h"
 #import "AnalyticsTracker+FileTransfer.h"
 
 #import "Wire-Swift.h"
@@ -514,6 +513,7 @@
     SketchViewController *viewController = [[SketchViewController alloc] init];
     viewController.sketchTitle = message.conversation.displayName;
     viewController.delegate = self;
+    viewController.source = ConversationMediaSketchSourceImageFullView;
     
     ZMUser *lastSender = message.conversation.lastMessageSender;
     [self.parentViewController presentViewController:viewController animated:YES completion:^{
@@ -537,8 +537,8 @@
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
-            [self.analyticsTracker tagPictureTakenWithSource:AnalyticsEventTypePictureTakenSourceSketch];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionSketch inConversation:self.conversation];
+            [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:controller.source];
             [Analytics shared].sessionSummary.imagesSent++;
         }];
     }
