@@ -25,7 +25,7 @@ import CocoaLumberjackSwift
 import AVFoundation
 
 public protocol CameraKeyboardViewControllerDelegate: class {
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: AVURLAsset)
+    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: NSURL, duration: NSTimeInterval)
     func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, source: UIImagePickerControllerSourceType)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController)
@@ -228,20 +228,42 @@ public class CameraKeyboardViewController: UIViewController {
         let options = PHVideoRequestOptions()
         options.deliveryMode = .HighQualityFormat
         options.networkAccessAllowed = true
-        options.version = .Original
+        options.version = .Current
 
         self.showLoadingView = true
-        manager.requestAVAssetForVideo(asset, options: options, resultHandler: { videoAsset, audioMix, info in
+        manager.requestExportSessionForVideo(asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
+            
             dispatch_async(dispatch_get_main_queue(), {
-                self.showLoadingView = false
-
-                guard let videoAsset = videoAsset as? AVURLAsset else {
+            
+                guard let exportSession = exportSession else {
+                    self.showLoadingView = false
                     return
                 }
                 
-                self.delegate?.cameraKeyboardViewController(self, didSelectVideo: videoAsset)
+                let exportURL = NSURL(fileURLWithPath: (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("video-export.mp4"))
+                
+                if NSFileManager.defaultManager().fileExistsAtPath(exportURL.path!) {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtURL(exportURL)
+                    }
+                    catch let error {
+                        DDLogError("Cannot remove \(exportURL): \(error)")
+                    }
+                }
+                
+                exportSession.outputURL = exportURL
+                exportSession.outputFileType = AVFileTypeQuickTimeMovie
+                exportSession.shouldOptimizeForNetworkUse = true
+                exportSession.outputFileType = AVFileTypeMPEG4
+
+                exportSession.exportAsynchronouslyWithCompletionHandler {
+                    self.showLoadingView = false
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
+                    })
+                }
             })
-        })
+        }
     }
 }
 

@@ -56,14 +56,14 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         self.cameraKeyboardViewController = cameraKeyboardViewController
     }
     
-    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo videoURLAsset: AVURLAsset) {
+    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo videoURL: NSURL, duration: NSTimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
-        if CMTimeGetSeconds(videoURLAsset.duration) > ConversationUploadMaxVideoDuration {
+        if duration > ConversationUploadMaxVideoDuration {
             let videoEditor = StatusBarVideoEditorController()
             videoEditor.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             videoEditor.delegate = self
             videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
-            videoEditor.videoPath = videoURLAsset.URL.path!
+            videoEditor.videoPath = videoURL.path!
             videoEditor.videoQuality = UIImagePickerControllerQualityType.TypeMedium
             
             self.presentViewController(videoEditor, animated: true) {
@@ -71,37 +71,27 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         }
         else {
-            controller.showLoadingView = true
-
-            self.convertVideoAtPath(videoURLAsset.URL.path!) { (success, resultPath, duration) in
-                controller.showLoadingView = false
-
-                guard let path = resultPath where success else {
-                    return
-                }
+            let confirmVideoViewController = ConfirmAssetViewController()
+            confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
+            confirmVideoViewController.videoURL = videoURL
+            confirmVideoViewController.previewTitle = self.conversation.displayName.uppercaseString
+            confirmVideoViewController.editButtonVisible = false
+            confirmVideoViewController.onConfirm = { [unowned self] in
+                self.dismissViewControllerAnimated(true, completion: .None)
                 
-                let confirmVideoViewController = ConfirmAssetViewController()
-                confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-                confirmVideoViewController.videoURL = NSURL(fileURLWithPath: path)
-                confirmVideoViewController.previewTitle = self.conversation.displayName.uppercaseString
-                confirmVideoViewController.editButtonVisible = false
-                confirmVideoViewController.onConfirm = { [unowned self] in
-                    self.dismissViewControllerAnimated(true, completion: .None)
-                    
-                    Analytics.shared()?.tagSentVideoMessage(duration)
-                    self.uploadFileAtURL(NSURL(fileURLWithPath: path))
+                Analytics.shared()?.tagSentVideoMessage(duration)
+                self.uploadFileAtURL(videoURL)
+            }
+            
+            confirmVideoViewController.onCancel = { [unowned self] in
+                self.dismissViewControllerAnimated(true) {
+                    self.mode = .Camera
+                    self.inputBar.textView.becomeFirstResponder()
                 }
-                
-                confirmVideoViewController.onCancel = { [unowned self] in
-                    self.dismissViewControllerAnimated(true) {
-                        self.mode = .Camera
-                        self.inputBar.textView.becomeFirstResponder()
-                    }
-                }
-                
-                self.presentViewController(confirmVideoViewController, animated: true) {
-                    UIApplication.sharedApplication().wr_updateStatusBarForCurrentControllerAnimated(true)
-                }
+            }
+            
+            self.presentViewController(confirmVideoViewController, animated: true) {
+                UIApplication.sharedApplication().wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
     }
