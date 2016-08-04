@@ -32,6 +32,7 @@
 @property (nonatomic) UIImage *canvasBackgroundImage;
 @property (nonatomic, weak) id <SketchViewControllerDelegate> delegate;
 @property (nonatomic, copy) NSString *sketchTitle;
+@property (nonatomic) BOOL confirmsWithoutSketch;
 
 @end
 

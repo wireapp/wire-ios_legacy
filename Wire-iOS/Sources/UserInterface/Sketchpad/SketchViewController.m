@@ -412,9 +412,8 @@ static const CGFloat SketchBrushWidthThin = 6;
 - (void)confirmButtonPressed:(id)sender
 {
     // Has anything been drew check
-    if (! [self.sketchView canUndo]) {
+    if (! [self.sketchView canUndo] && !self.confirmsWithoutSketch) {
         [self cancelButtonPressed:nil];
-        
         return;
     }
 
