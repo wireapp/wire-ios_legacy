@@ -107,8 +107,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     }
     
     public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, source: UIImagePickerControllerSourceType) {
-        
-        self.showConfirmationForImage(imageData, source: source)
+        hideCameraKeyboardViewController {
+            self.showConfirmationForImage(imageData, source: source)
+        }
     }
     
     @objc private func image(image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
@@ -159,13 +160,15 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         confirmImageViewController.onEdit = { [unowned self] in
             self.dismissViewControllerAnimated(true) {
                 delay(0.01){
-                    let sketchViewController = SketchViewController()
-                    sketchViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-                    sketchViewController.sketchTitle = "image.edit_image".localized
-                    sketchViewController.delegate = self
-                    
-                    self.presentViewController(sketchViewController, animated: true, completion: .None)
-                    sketchViewController.canvasBackgroundImage = image
+                    self.hideCameraKeyboardViewController {
+                        let sketchViewController = SketchViewController()
+                        sketchViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
+                        sketchViewController.sketchTitle = "image.edit_image".localized
+                        sketchViewController.delegate = self
+                        
+                        self.presentViewController(sketchViewController, animated: true, completion: .None)
+                        sketchViewController.canvasBackgroundImage = image
+                    }
                 }
             }
         }

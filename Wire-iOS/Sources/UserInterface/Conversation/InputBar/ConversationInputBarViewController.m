@@ -722,14 +722,17 @@
 
 - (void)sketchViewController:(SketchViewController *)controller didSketchImage:(UIImage *)image
 {
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-    if (image) {
-        
-        NSData *imageData = UIImagePNGRepresentation(image);
-        [self.sendController sendMessageWithImageData:imageData completion:^{
-            [self.analyticsTracker tagPictureTakenWithSource:AnalyticsEventTypePictureTakenSourceSketch];
-        }];
-    }
+    @weakify(self);
+    [self hideCameraKeyboardViewController:^{
+        @strongify(self);
+        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+        if (image) {
+            NSData *imageData = UIImagePNGRepresentation(image);
+            [self.sendController sendMessageWithImageData:imageData completion:^{
+                [self.analyticsTracker tagPictureTakenWithSource:AnalyticsEventTypePictureTakenSourceSketch];
+            }];
+        }
+    }];
 }
 
 @end
