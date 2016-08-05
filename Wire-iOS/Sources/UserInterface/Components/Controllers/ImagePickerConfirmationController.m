@@ -76,7 +76,9 @@
                     if (imageData != nil) {
                         ImageMetadata *metadata = [[ImageMetadata alloc] init];
                         metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
-                        metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                            metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                        }
                         metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
                         
                         self.imagePickedBlock(imageData, metadata);
