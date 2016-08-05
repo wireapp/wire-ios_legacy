@@ -135,6 +135,7 @@
 
     [self.backgroundViewController.view addConstraintsFittingToView:self.view];
 
+    [self.backgroundViewController setForceFullScreen:NO animated:NO];
     [self.backgroundViewController setUser:[ZMUser selfUser] animated:YES];
 
     [self setupChildViewControllers];
