@@ -22,7 +22,7 @@ private enum PermissionsType: String {
 
 private enum PermissionEvent: String {
     case Preflight = "onboarding.proceeded_from_contacts_screen"
-    case System = "onboarding.changed_contacts_permssion"
+    case System = "onboarding.changed_contacts_permission"
 }
 
 private enum PermissionKey: String {
