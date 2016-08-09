@@ -21,26 +21,24 @@
 
 @protocol ZMConversationMessage;
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ZMConversation (Additions)
 
 - (NSUInteger)participantsCount;
-- (id<ZMConversationMessage>)firstTextMessage;
-- (id<ZMConversationMessage>)lastTextMessage;
+- (nullable id<ZMConversationMessage>)firstTextMessage;
+- (nullable id<ZMConversationMessage>)lastTextMessage;
 
 /// Convenience method for easier access of the last active user in the conversation. This method also contains the logic of selecting the other user in case its of a 1:1 conversation. Might return @c nil
-- (ZMUser *)lastMessageSender;
-
-- (ZMUser *)participantWithObjectIDString:(NSString *)objectIDString;
+- (nullable ZMUser *)lastMessageSender;
 
 /// YES = this message is the first in a burst, and UI should present a burst separator (timestamp header) with it.
 - (BOOL)shouldShowBurstSeparatorForMessage:(id<ZMConversationMessage>)message;
 
 - (BOOL)selfUserIsActiveParticipant;
 
-- (ZMUser *)firstActiveParticipantOtherThanSelf;
-- (ZMUser *)firstActiveCallingParticipantOtherThanSelf;
+- (nullable ZMUser *)firstActiveParticipantOtherThanSelf;
+- (nullable ZMUser *)firstActiveCallingParticipantOtherThanSelf;
 
 - (ZMConversation *)addParticipants:(NSSet *)participants;
 - (void)removeParticipants:(NSArray *)participants;
@@ -51,7 +49,9 @@
 - (BOOL)isCallingSupported;
 
 - (void)acceptIncomingCall;
-- (void)startAudioCallWithCompletionHandler:(void(^)(BOOL joined))completion;
-- (void)startVideoCallWithCompletionHandler:(void(^)(BOOL joined))completion;
+- (void)startAudioCallWithCompletionHandler:(nullable void(^)(BOOL joined))completion;
+- (void)startVideoCallWithCompletionHandler:(nullable void(^)(BOOL joined))completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

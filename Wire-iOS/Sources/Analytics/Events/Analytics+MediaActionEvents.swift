@@ -207,7 +207,9 @@ public extension Analytics {
     @objc public func tagMediaActionCompleted(action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = ["action": action.attributeValue]
         if let typeAttribute = conversationTypeAttribute(conversation) {
-            attributes["with_bot"] = conversation.firstActiveParticipantOtherThanSelf().isBot ? "true" : "false";
+            if let otherParticipant = conversation.firstActiveParticipantOtherThanSelf() {
+                attributes["with_bot"] = otherParticipant.isBot ? "true" : "false";
+            }
             attributes["conversation_type"] = typeAttribute
         }
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
