@@ -53,6 +53,7 @@ static NSString *const ConversationVideoMessageCellId       = @"conversationVide
 static NSString *const ConversationAudioMessageCellId       = @"conversationAudioMessageCellId";
 static NSString *const ConversationParticipantsCellId       = @"conversationParticipantsCellId";
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
+static NSString *const ConversationMessageDeletedCellId    = @"conversationMessageDeletedCellId";
 
 
 
@@ -266,6 +267,9 @@ static NSString *const ConversationLocationMessageCellId    = @"conversationLoca
             case ZMSystemMessageTypeNewConversation:
                 cellIdentifier = ConversationParticipantsCellId;
                 
+            case ZMSystemMessageTypeMessageDeletedForEveryone:
+                cellIdentifier = ConversationMessageDeletedCellId;
+
             default:
                 break;
         }
@@ -315,6 +319,7 @@ static NSString *const ConversationLocationMessageCellId    = @"conversationLoca
     [self.tableView registerClass:[AudioMessageCell class] forCellReuseIdentifier:ConversationAudioMessageCellId];
     [self.tableView registerClass:[ConversationParticipantsCell class] forCellReuseIdentifier:ConversationParticipantsCellId];
     [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
+    [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
 
     // unknown message types
     [self.tableView registerClass:[EmptyCell class] forCellReuseIdentifier:ConversationUnknownCellId];

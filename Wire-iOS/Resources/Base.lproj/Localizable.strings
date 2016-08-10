@@ -390,10 +390,12 @@
 "profile.block_dialog.button_block" = "Block";
 
 // Delete message dialog
-"message.delete_dialog.title" = "Delete message";
-"message.delete_dialog.message" = "The message will only be removed from your view of the conversation. This cannot be undone.";
-"message.delete_dialog.button_cancel" = "Cancel";
-"message.delete_dialog.button_delete" = "Delete";
+"message.delete_dialog.message" = "This cannot be undone.";
+"message.delete_dialog.action.cancel" = "Cancel";
+"message.delete_dialog.action.hide" = "Delete only for me";
+"message.delete_dialog.action.delete" = "Delete for everyone";
+
+
 
 // Accept connection request
 "profile.connection_request_dialog.title" = "Accept?";

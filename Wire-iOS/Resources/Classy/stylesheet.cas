@@ -804,6 +804,10 @@ LocationMessageCell {
     containerColor: $color-placeholder-background;
 }
 
+MessageDeletedCell {
+    trashColor: $color-icon-normal;
+}
+
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
@@ -828,8 +832,8 @@ InputBar: {
     backgroundColor: $color-text-background;
     
     IconButton {
-        iconColor[state:normal] $color-icon-normal;
-        iconColor[state:highlighted] $color-icon-highlighted;
+        iconColor[state:normal]: $color-icon-normal;
+        iconColor[state:highlighted]: $color-icon-highlighted;
     }
     
     textView: @{

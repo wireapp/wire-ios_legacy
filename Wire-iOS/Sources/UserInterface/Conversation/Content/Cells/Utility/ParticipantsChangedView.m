@@ -42,7 +42,7 @@ static CGFloat const MaxVisibleUserViewsIPad    = 5;
 
 @property (nonatomic, strong) NSParagraphStyle *subtitleParagraphStyle;
 
-@property (nonatomic, strong) NSMutableArray *userViews;
+@property (nonatomic, strong) NSMutableArray <BadgeUserImageView *> *userViews;
 @property (nonatomic, strong) NSArray *userViewSpacingConstraints;
 @property (nonatomic, strong) NSArray *userViewWidthConstraints;
 

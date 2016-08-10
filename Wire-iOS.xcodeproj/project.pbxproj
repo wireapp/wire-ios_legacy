@@ -743,6 +743,9 @@
 		BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB81CEDE82400780537 /* NumberHelper.swift */; };
 		BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914911D1814AF001F068B /* LocationMessageCell.swift */; };
 		BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */; };
+		BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */; };
+		BFE08C1E1D5B6F34002367F6 /* MessageDeletedCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */; };
+		BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */; };
 		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
@@ -2006,6 +2009,9 @@
 		BFAF4CB81CEDE82400780537 /* NumberHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
 		BFC914911D1814AF001F068B /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
 		BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCellTests.swift; sourceTree = "<group>"; };
+		BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCell.swift; sourceTree = "<group>"; };
+		BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCellTests.swift; sourceTree = "<group>"; };
+		BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MessageDeletion.swift"; sourceTree = "<group>"; };
 		BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FingerprintTests.m"; sourceTree = "<group>"; };
 		BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImageMessageCell+Internal.h"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
@@ -4054,6 +4060,7 @@
 				8FC851AB199245760008B66B /* ConversationContentViewControllerDelegate.h */,
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
 				8FC851AA199245760008B66B /* ConversationContentViewController.m */,
+				BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */,
 				BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */,
 				8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */,
 				8FC851A7199245760008B66B /* ConversationContentViewController+Scrolling.h */,
@@ -4091,6 +4098,7 @@
 				874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */,
 				874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */,
 				BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */,
+				BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */,
 				CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */,
 				870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */,
 				87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */,
@@ -4380,6 +4388,7 @@
 				874B5DB11CEDF7B80010474C /* AudioMessageCellTests.swift */,
 				BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */,
 				162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */,
+				BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */,
 				16BEBC3E1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift */,
 				BF58ABEC1D23F00000D5FF14 /* LocationSendViewControllerTests.swift */,
 				BF58ABEE1D23F3CD00D5FF14 /* ModalTopBarTests.swift */,
@@ -5466,6 +5475,7 @@
 				871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */,
 				87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */,
 				871BC01D1D34F56300DF0793 /* AnalyticsTracker+Media.m in Sources */,
+				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				DB0782221B00E98F00C6B140 /* FormFlowViewController.m in Sources */,
 				871BC0531D34F60700DF0793 /* AudioProcessing.swift in Sources */,
@@ -5536,6 +5546,7 @@
 				165B47ED1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
 				871BC2781D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m in Sources */,
+				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				164B65BE1CB41A3D00D882D8 /* RegistrationRootViewController.m in Sources */,
 				163B5F011B4D4109009B4629 /* TitleBarViewController.m in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
@@ -5597,6 +5608,7 @@
 				8751A93C1C737D7200C72324 /* IconSystemCellTests.m in Sources */,
 				BF5127161CC9119400F23DEA /* ZMSnapshotTestCase+Swift.swift in Sources */,
 				BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */,
+				BFE08C1E1D5B6F34002367F6 /* MessageDeletedCellTests.swift in Sources */,
 				87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */,
 				BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
