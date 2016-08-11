@@ -69,3 +69,7 @@ The setup script will automatically check for you that you satisfy these require
 These steps allow you to build only the Wire umbrella project, pulling in all other Wire frameworks with Carthage. If you want to modify the source/debug other Wire frameworks, you can open the `Carthage/Checkouts` subfolder and open the individual projects for each dependency there.
 
 You can then use `carthage build --platform ios` to rebuild the dependency and use it in the umbrella project.
+
+### Known limitations
+
+Notifications send through Apple Push Notification service can only be received by the App Store Wire client, which is code signed with Wire's own certificate. This is a security feature enforced by Apple, as documented in Apple's [Local and Remote Notification Programming Guide](https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW3). Any client build from source will not be able to receive notifications.
