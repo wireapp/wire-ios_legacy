@@ -35,6 +35,12 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
 
+    func testThatItRendersMessageDeletedCellCorrect_Selected() {
+        sut.setSelected(true, animated: false)
+        configure(cell: sut)
+        verify(view: sut)
+    }
+
 }
 
 extension MessageDeletedCellTests {
@@ -50,7 +56,8 @@ extension MessageDeletedCellTests {
                                              0, CGFloat(WAZUIMagic.floatForIdentifier("content.right_margin")))
         cell.configureForMessage(message, layoutProperties: layoutProperties)
         
-        let size = cell.systemLayoutSizeFittingSize(CGSizeMake(320.0, 0.0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        
+        let size = cell.systemLayoutSizeFittingSize(CGSize(width: 375, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
         cell.bounds = CGRectMake(0.0, 0.0, size.width, size.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()

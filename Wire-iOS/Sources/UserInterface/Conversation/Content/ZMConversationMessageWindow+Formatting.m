@@ -91,7 +91,8 @@
                 systemMessage.systemMessageType != ZMSystemMessageTypeConversationIsSecure &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeReactivatedDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeNewConversation &&
-                systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice&& systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone;
+                systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice &&
+                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone;
     }
     
     if ([Message isKnockMessage:message]) {

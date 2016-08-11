@@ -46,6 +46,7 @@
 #import <SCSiriWaveformView/SCSiriWaveformView.h>
 #import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController.h"
+#import "MessageTimestampView.h"
 
 // View Controllers
 #import "ZClientViewController.h"

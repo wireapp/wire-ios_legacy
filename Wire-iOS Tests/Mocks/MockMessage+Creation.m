@@ -72,7 +72,7 @@
     MockSystemMessageData *mockSystemMessageData = [[MockSystemMessageData alloc] initWithSystemMessageType:systemMessageType];
     
     message.conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
-    message.serverTimestamp = [NSDate date];
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:12345678564];
 
     message.sender = (id)[MockUser mockSelfUser];
     mockSystemMessageData.users = [[MockUser mockUsers] subarrayWithRange:NSMakeRange(0, numUsers)].set;

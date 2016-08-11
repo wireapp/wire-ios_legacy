@@ -53,7 +53,7 @@ static NSString *const ConversationVideoMessageCellId       = @"conversationVide
 static NSString *const ConversationAudioMessageCellId       = @"conversationAudioMessageCellId";
 static NSString *const ConversationParticipantsCellId       = @"conversationParticipantsCellId";
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
-static NSString *const ConversationMessageDeletedCellId    = @"conversationMessageDeletedCellId";
+static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
 
 
 
