@@ -122,7 +122,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
         [self.tableView beginUpdates];
         
         if (change.deletedIndexes.count) {
-            [self.tableView deleteRowsAtIndexPaths:[change.deletedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:[change.deletedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
         }
         
         if (change.insertedIndexes.count) {
