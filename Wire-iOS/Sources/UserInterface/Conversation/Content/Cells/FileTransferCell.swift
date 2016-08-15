@@ -240,12 +240,14 @@ public class FileTransferCell: ConversationCell {
         self.actionButton.layer.cornerRadius = self.actionButton.bounds.size.width / 2.0
     }
     
+    // MARK: - Selection
+    
     public override var selectionView: UIView! {
-        return messageContentView
+        return containerView
     }
     
     public override var selectionRect: CGRect {
-        return messageContentView.bounds
+        return containerView.bounds
     }
 
     // MARK: - Actions
