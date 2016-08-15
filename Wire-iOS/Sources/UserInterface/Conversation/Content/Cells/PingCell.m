@@ -138,11 +138,21 @@ typedef void (^AnimationBlock)(id, NSInteger);
     return needsLayout;
 }
 
+- (UIView *)selectionView
+{
+    return self.authorLabel;
+}
+
+- (CGRect)selectionRect
+{
+    return self.authorLabel.bounds;
+}
+
 - (MenuConfigurationProperties *)menuConfigurationProperties;
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
-    properties.targetRect = self.authorLabel.bounds;
-    properties.targetView = self.authorLabel;
+    properties.targetRect = self.selectionRect;
+    properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };

@@ -288,6 +288,16 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 #pragma mark - Long press management
 
+- (UIView *)selectionView
+{
+    return self;
+}
+
+- (CGRect)selectionRect
+{
+    return self.frame;
+}
+
 - (BOOL)canBecomeFirstResponder;
 {
     return YES;

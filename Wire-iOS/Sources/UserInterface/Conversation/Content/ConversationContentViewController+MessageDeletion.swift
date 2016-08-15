@@ -33,6 +33,11 @@ extension ConversationContentViewController {
             self?.dismissViewControllerAnimated(true, completion: nil)
         }
 
+        if let presentationController = alert.popoverPresentationController,
+            cell = cellForMessage(message) as? ConversationCell {
+            presentationController.sourceView = cell.selectionView
+            presentationController.sourceRect = cell.selectionRect
+        }
         presentViewController(alert, animated: true, completion: nil)
     }
 
