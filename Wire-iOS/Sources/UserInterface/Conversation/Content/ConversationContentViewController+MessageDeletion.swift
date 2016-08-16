@@ -20,7 +20,7 @@
 extension ConversationContentViewController {
 
     func presentDeletionAlertController(forMessage message: ZMConversationMessage) {
-        let showDelete = message.sender?.isSelfUser ?? false && conversation.isSelfAnActiveMember
+        let showDelete = (message.sender?.isSelfUser ?? false) && conversation.isSelfAnActiveMember
         let alert = UIAlertController.alertControllerForMessageDeletion(showDelete) { [weak self] action in
             ZMUserSession.sharedSession().enqueueChanges {
                 switch action {
