@@ -371,7 +371,7 @@
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         self.beingEdited = YES;
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionEdit];
-        // TODO: Add tracking
+        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeEdit];
     }
 }
 

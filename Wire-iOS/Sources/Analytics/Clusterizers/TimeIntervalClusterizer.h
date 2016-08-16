@@ -27,6 +27,7 @@ FOUNDATION_EXPORT RangeSet DefaultTimeIntervalRanges;
 
 + (instancetype)defaultClusterizer;
 + (instancetype)videoDurationClusterizer;
++ (instancetype)messageEditDurationClusterizer;
 
 - (NSString *)clusterizeTimeInterval:(NSTimeInterval)ti;
 @end

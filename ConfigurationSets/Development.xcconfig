@@ -18,7 +18,7 @@
 
 
 #include "Base.xcconfig"
-#include "Private/Development_private.xcconfig"
+#include "Development_private.xcconfig"
 
 
 // Code Signing

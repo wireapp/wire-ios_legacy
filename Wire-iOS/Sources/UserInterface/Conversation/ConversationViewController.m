@@ -673,11 +673,15 @@
 - (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message withText:(NSString *)newText
 {
     [self.contentViewController didFinishEditingMessage:message];
-
+    ConversationType conversationType = (self.conversation.conversationType == ZMConversationTypeGroup) ? ConversationTypeGroup : ConversationTypeOneToOne;
+    MessageType messageType = [Message messageType:message];
+    NSTimeInterval elapsedTime = 0 - [message.serverTimestamp timeIntervalSinceNow];
     [[ZMUserSession sharedSession] enqueueChanges:^{
         if (newText == nil || [newText isEqualToString:@""]) {
+            [[Analytics shared] tagDeletedMessage:messageType messageDeletionType:MessageDeletionTypeEverywhere conversationType:conversationType timeElapsed:elapsedTime];
             [ZMMessage deleteForEveryone:message];
         } else {
+            [[Analytics shared] tagEditedMessageConversationType:conversationType timeElapsed:elapsedTime];
             [ZMMessage edit:message newText:newText];
         }
     }];
