@@ -427,11 +427,21 @@ static ImageCache *imageCache(void)
     }
 }
 
+- (CGRect)selectionRect
+{
+    return self.imageViewContainer.bounds;
+}
+
+- (UIView *)selectionView
+{
+    return self.imageViewContainer;
+}
+
 - (MenuConfigurationProperties *)menuConfigurationProperties;
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
-    properties.targetRect = self.imageViewContainer.bounds;
-    properties.targetView = self.imageViewContainer;
+    properties.targetRect = self.selectionRect;
+    properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };
