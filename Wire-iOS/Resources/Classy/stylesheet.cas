@@ -829,7 +829,8 @@ UILabel.conversationVerifiedLabel {
 }
 
 InputBar: {
-    backgroundColor: $color-text-background;
+    barBackgroundColor: $color-text-background;
+    editingBackgroundColor: $color-accent-yellow;
     
     IconButton {
         iconColor[state:normal]: $color-icon-normal;
@@ -840,8 +841,15 @@ InputBar: {
         font: $font-normal-light;
         placeholderFont: $font-small-light;
         textColor: $color-text-foreground;
-        backgroundColor: $color-text-background;
+        backgroundColor: clear;
         placeholderTextColor: $color-text-placeholder;
+    }
+}
+
+InputBarEditView: {
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal;
+        iconColor[state:highlighted]: $color-icon-highlighted;
     }
 }
 

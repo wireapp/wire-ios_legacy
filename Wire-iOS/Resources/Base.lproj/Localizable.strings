@@ -223,6 +223,7 @@
 "content.system.pending_message_timestamp" = "Sending…";
 "content.system.failedtosend_message_timestamp" = "Unsent message.";
 "content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
+"content.system.edited_message_prefix_timestamp" = "Edited on %@";
 "content.system.connecting_to" = "Connecting to %@.\nStart a conversation";
 "content.system.connected_to" = "Connected to %@\nStart a conversation";
 "content.system.other_wanted_to_talk" = "%@ called";
@@ -396,7 +397,8 @@
 "message.delete_dialog.action.hide" = "Delete only for me";
 "message.delete_dialog.action.delete" = "Delete for everyone";
 
-
+// Edit message
+"message.menu.edit.title" = "Edit";
 
 // Accept connection request
 "profile.connection_request_dialog.title" = "Accept?";

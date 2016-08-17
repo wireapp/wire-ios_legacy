@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, ConversationCellAction) {
     ConversationCellActionDelete,
     ConversationCellActionPresent,
     ConversationCellActionSave,
+    ConversationCellActionEdit
 };
 
 extern const CGFloat ConversationCellSelectedOpacity;
@@ -47,6 +48,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) CGRect targetRect;
 @property (nonatomic) UIView *targetView;
 @property (nonatomic) SelectedMenuBlock selectedMenuBlock;
+@property (nonatomic) NSArray <UIMenuItem *> *additionalItems;
 
 @end
 
@@ -68,12 +70,13 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view;
 - (void)conversationCell:(ConversationCell *)cell resendMessageTapped:(ZMMessage *)message;
 - (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId;
+- (void)conversationCell:(ConversationCell *)cell willOpenMenuForCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
 
 @end
 
 
-@interface ConversationCell : UITableViewCell <UserImageViewDelegate>
+@interface ConversationCell : UITableViewCell <UserImageViewDelegate, UIKeyInput>
 
 @property (nonatomic, readonly) ConversationCellLayoutProperties *layoutProperties;
 
@@ -85,6 +88,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
 @property (nonatomic) BOOL showsMenu;
+@property (nonatomic) BOOL beingEdited;
 
 @property (nonatomic, weak) id<ConversationCellDelegate> delegate;
 

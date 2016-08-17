@@ -28,6 +28,7 @@
 
 @property (nonatomic) ZMMessage *lastUnreadMessage;
 @property (nonatomic) ZMMessage *selectedMessage;
+@property (nonatomic) ZMMessage *editingMessage;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) id<ConversationCellDelegate> conversationCellDelegate;
 

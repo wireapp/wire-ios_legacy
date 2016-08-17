@@ -24,12 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
 
-
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) AudioRecordKeyboardViewController *audioRecordKeyboardViewController;
 @property (nonatomic, nullable) CameraKeyboardViewController *cameraKeyboardViewController;
 @property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
+@property (nonatomic, nullable) id <ZMConversationMessage> editingMessage;
 
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 

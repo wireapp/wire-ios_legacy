@@ -46,3 +46,9 @@
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message;
 
 @end
+
+@interface ConversationContentViewController (EditMessages)
+
+- (void)didFinishEditingMessage:(id<ZMConversationMessage>)message;
+
+@end

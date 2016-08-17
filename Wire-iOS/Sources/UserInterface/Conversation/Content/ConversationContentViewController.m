@@ -113,6 +113,7 @@
 @property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
 @property (nonatomic) BOOL waitingForFileDownload;
 @property (nonatomic) UIDocumentInteractionController *documentInteractionController;
+
 @end
 
 
@@ -796,7 +797,18 @@
             [self openDocumentControllerForMessage:cell.message atIndexPath:[self.tableView indexPathForCell:cell] withPreview:NO];
         }
             break;
+        case ConversationCellActionEdit:
+        {
+            self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
+            [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
+        }
+            break;
     }
+}
+
+- (void)conversationCell:(ConversationCell *)cell willOpenMenuForCellType:(MessageType)messageType;
+{
+    [ConversationInputBarViewController endEditingMessage];
 }
 
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
@@ -810,6 +822,15 @@
 
 @end
 
+
+@implementation ConversationContentViewController (EditMessages)
+
+- (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
+{
+    self.conversationMessageWindowTableViewAdapter.editingMessage = nil;
+}
+
+@end
 
 
 @implementation ConversationContentViewController (MessageWindow)

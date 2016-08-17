@@ -110,6 +110,8 @@
 
 @end
 
+
+
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic) IconButton *audioButton;
@@ -216,7 +218,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
+    [self endEditingMessageIfNeeded];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
@@ -283,6 +285,7 @@
     
     [self.view addSubview:self.inputBar];
     [self.inputBar autoPinEdgesToSuperviewEdges];
+    self.inputBar.editingView.delegate = self;
 }
 
 - (void)createSingleTapGestureRecognizer
@@ -303,7 +306,7 @@
     
     [self addChildViewController:self.audioRecordViewController];
     [self.inputBar addSubview:self.audioRecordViewController.view];
-    [self.audioRecordViewController.view autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonRowBox];
+    [self.audioRecordViewController.view autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonContainer];
     
     CGRect recordButtonFrame = [self.inputBar convertRect:self.audioButton.bounds fromView:self.audioButton];
     CGFloat width = CGRectGetMaxX(recordButtonFrame) + 60;
@@ -388,8 +391,7 @@
 - (void)updateRightAccessoryView
 {
     const NSUInteger textLength = self.inputBar.textView.text.length;
-    
-    self.gifButton.hidden = ! (textLength > 0 && textLength < 20);
+    self.gifButton.hidden = ! (textLength > 0 && textLength < 20) || self.inputBar.isEditing;
     self.verifiedShieldButton.hidden = self.conversation.securityLevel != ZMConversationSecurityLevelSecure || self.inputBar.textView.isFirstResponder || textLength > 0;
 }
 
@@ -423,7 +425,6 @@
     }
 }
 
-
 #pragma mark - Input views handling
 
 - (void)onSingleTap:(UITapGestureRecognizer *)recognier
@@ -439,7 +440,7 @@
         return;
     }
     _mode = mode;
-    
+
     switch (mode) {
         case ConversationInputBarViewControllerModeTextInput:
             self.inputController = nil;
@@ -447,6 +448,7 @@
             self.audioButton.selected = NO;
             self.photoButton.selected = NO;
             break;
+    
         case ConversationInputBarViewControllerModeAudioRecord:
             if (nil != [UITextInputAssistantItem class]) {
                 UITextInputAssistantItem* item = self.inputBar.textView.inputAssistantItem;
@@ -468,6 +470,7 @@
             self.audioButton.selected = YES;
             self.photoButton.selected = NO;
             break;
+            
         case ConversationInputBarViewControllerModeCamera:
             if (nil != [UITextInputAssistantItem class]) {
                 UITextInputAssistantItem* item = self.inputBar.textView.inputAssistantItem;
@@ -487,7 +490,6 @@
             self.audioButton.selected = NO;
             self.photoButton.selected = YES;
             break;
-            
     }
 }
 
@@ -566,8 +568,10 @@
             
             NSArray *args = candidateText.args;
             if(args.count > 0) {
-                
                 [self runCommand:args];
+            }
+            else if (self.inputBar.isEditing && nil != self.editingMessage) {
+                [self sendEditedMessageAndUpdateStateWithText:candidateText];
             }
             else {
                 [self.sendController sendTextMessage:candidateText];
@@ -948,7 +952,7 @@
         return;
     }
     
-    [self.sendController  sendTextMessage:[NSString stringWithFormat:@"/%@", [args componentsJoinedByString:@" "]]];
+    [self.sendController sendTextMessage:[NSString stringWithFormat:@"/%@", [args componentsJoinedByString:@" "]]];
 }
 
 @end
@@ -993,5 +997,3 @@
 }
 
 @end
-
-

@@ -28,17 +28,25 @@
 
 + (MockMessage *)textMessageIncludingRichMedia:(BOOL)shouldIncludeRichMedia;
 {
+    return [self textMessageWithText:@"Just a random text message" includingRichMedia:shouldIncludeRichMedia];
+}
+
++ (MockMessage *)textMessageWithText:(NSString *)text;
+{
+    return [self textMessageWithText:text includingRichMedia:NO];
+}
+
++ (MockMessage *)textMessageWithText:(NSString *)text includingRichMedia:(BOOL)shouldIncludeRichMedia;
+{
     MockMessage *message = [[MockMessage alloc] init];
-    
     message.conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.serverTimestamp = [NSDate date];
     message.sender = (id)[MockUser mockSelfUser];
     MockTextMessageData *textMessageData = [[MockTextMessageData alloc] init];
-    textMessageData.messageText = shouldIncludeRichMedia ? @"Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : @"Just a random text message";
+    textMessageData.messageText = shouldIncludeRichMedia ? @"Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text;
     message.backingTextMessageData = textMessageData;
     
     return message;
-
 }
 
 + (MockMessage *)pingMessage;

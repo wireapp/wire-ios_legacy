@@ -33,3 +33,6 @@
 #import <AVSAudioEffect.h>
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
+#import "TextMessageCell.h"
+#import "Message+Private.h"
+

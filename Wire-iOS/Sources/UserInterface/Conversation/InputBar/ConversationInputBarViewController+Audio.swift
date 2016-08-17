@@ -59,7 +59,7 @@ extension ConversationInputBarViewController {
             if let audioRecordViewController = self.audioRecordViewController where showAudioRecordViewControllerIfGrantedAccess() {
                 audioRecordViewController.setRecordingState(.Recording, animated: false)
                 audioRecordViewController.beginRecording()
-                self.inputBar.buttonRowBox.hidden = true
+                self.inputBar.buttonContainer.hidden = true
             }
         case .Changed:
             if let audioRecordViewController = self.audioRecordViewController {
@@ -124,7 +124,7 @@ extension ConversationInputBarViewController {
     }
     
     @objc private func hideInlineAudioRecordViewController() {
-        self.inputBar.buttonRowBox.hidden = false
+        self.inputBar.buttonContainer.hidden = false
         guard let audioRecordViewController = self.audioRecordViewController else {
             return
         }

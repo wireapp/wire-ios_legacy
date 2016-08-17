@@ -146,6 +146,12 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     }
 }
 
+- (void)setEditingMessage:(ZMMessage *)editingMessage
+{
+    _editingMessage = editingMessage;
+    [self reconfigureVisibleCells];
+}
+
 - (void)reconfigureVisibleCells
 {
     for (ConversationCell *cell in self.tableView.visibleCells) {
@@ -299,6 +305,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     ConversationCellLayoutProperties *layoutProperties = [self.messageWindow layoutPropertiesForMessage:message lastUnreadMessage:self.lastUnreadMessage];
     
     conversationCell.selected = [message isEqual:self.selectedMessage];
+    conversationCell.beingEdited = [message isEqual:self.editingMessage];
     [conversationCell configureForMessage:message layoutProperties:layoutProperties];
 }
 

@@ -27,10 +27,7 @@
 - (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(ZMMessage *)lastUnreadMessage
 {
     ConversationCellLayoutProperties *layoutProperties = [[ConversationCellLayoutProperties alloc] init];
-    
-    
     layoutProperties.showSender = [self shouldShowSenderForMessage:message];
-    
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
     layoutProperties.topPadding = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
@@ -76,7 +73,7 @@
     }
     
     if (!systemMessage) {
-        return ![self isPreviousSenderSameForMessage:message];
+        return ![self isPreviousSenderSameForMessage:message] || message.updatedAt != nil;
     }
     
     return NO;

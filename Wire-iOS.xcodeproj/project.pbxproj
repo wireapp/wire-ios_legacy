@@ -725,6 +725,9 @@
 		BF74EE4C1CD249B000D626CB /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF74EE4B1CD249B000D626CB /* HockeySDK.framework */; };
 		BF8042271BFC741F004CD789 /* NSURL+WireURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */; };
 		BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
+		BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */; };
+		BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */; };
+		BF8EE55A1D636F4600B0D6D7 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
 		BF9453321CE5CF4C0024E00C /* FileMetaDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9453311CE5CF4C0024E00C /* FileMetaDataGenerator.swift */; };
 		BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */; };
 		BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */; };
@@ -741,6 +744,8 @@
 		BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB41CECEF3C00780537 /* WaveFormView.swift */; };
 		BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB61CEDB9FC00780537 /* AudioButtonOverlayState.swift */; };
 		BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB81CEDE82400780537 /* NumberHelper.swift */; };
+		BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */; };
+		BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */; };
 		BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914911D1814AF001F068B /* LocationMessageCell.swift */; };
 		BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */; };
 		BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */; };
@@ -1988,6 +1993,10 @@
 		BF8042251BFC741F004CD789 /* NSURL+WireURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+WireURLs.h"; sourceTree = "<group>"; };
 		BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+WireURLs.m"; sourceTree = "<group>"; };
 		BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserClient+Fingerprint.swift"; sourceTree = "<group>"; };
+		BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Editing.swift"; sourceTree = "<group>"; };
+		BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarEditViewTests.swift; sourceTree = "<group>"; };
+		BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCellTests.swift; sourceTree = "<group>"; };
+		BF8EE55B1D64576400B0D6D7 /* Message+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+Private.h"; sourceTree = "<group>"; };
 		BF9453311CE5CF4C0024E00C /* FileMetaDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMetaDataGenerator.swift; sourceTree = "<group>"; };
 		BF999B5E1C0C984C008D5414 /* ProfileDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDevicesViewController.h; sourceTree = "<group>"; };
 		BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDevicesViewController.m; sourceTree = "<group>"; };
@@ -2007,6 +2016,8 @@
 		BFAF4CB41CECEF3C00780537 /* WaveFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveFormView.swift; sourceTree = "<group>"; };
 		BFAF4CB61CEDB9FC00780537 /* AudioButtonOverlayState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioButtonOverlayState.swift; sourceTree = "<group>"; };
 		BFAF4CB81CEDE82400780537 /* NumberHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
+		BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarButtonsView.swift; sourceTree = "<group>"; };
+		BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarEditView.swift; sourceTree = "<group>"; };
 		BFC914911D1814AF001F068B /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
 		BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCellTests.swift; sourceTree = "<group>"; };
 		BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCell.swift; sourceTree = "<group>"; };
@@ -3930,8 +3941,9 @@
 			children = (
 				8F41CFC4199297C600E3B032 /* ZMConversation+Additions.h */,
 				8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */,
-				8F41CFC7199297C600E3B032 /* Message.m */,
 				8F41CFC6199297C600E3B032 /* Message.h */,
+				BF8EE55B1D64576400B0D6D7 /* Message+Private.h */,
+				8F41CFC7199297C600E3B032 /* Message.m */,
 				8F41CFC119926B7A00E3B032 /* ZMUser+Additions.h */,
 				8F41CFC219926B7A00E3B032 /* ZMUser+Additions.m */,
 				8FC856B019925B680008B66B /* zmessaging+iOS.h */,
@@ -4116,6 +4128,8 @@
 			children = (
 				87BEB03A1D3E44BA00DE9575 /* CameraKeyboard */,
 				16B2DE2D1CCFB3B0000D7C30 /* InputBar.swift */,
+				BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */,
+				BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */,
 				BF2A74721CEB4882002608BF /* AudioButtonOverlay.swift */,
 				BFAF4CB61CEDB9FC00780537 /* AudioButtonOverlayState.swift */,
 				BFAF4CAC1CEB670F00780537 /* AudioRecordViewController.swift */,
@@ -4132,6 +4146,7 @@
 				8FC851B8199245760008B66B /* ConversationInputBarViewController.h */,
 				87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */,
 				8FC851B9199245760008B66B /* ConversationInputBarViewController.m */,
+				BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */,
 				BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */,
 				874D0EB21D3E6D77003DF418 /* ConversationInputBarViewController+Camera.swift */,
 				87AAD74D1CF2E4FF002760FF /* ConversationInputBarViewController+Files.h */,
@@ -4381,6 +4396,7 @@
 				164565F71CA2E79E00EE5504 /* ParticipantsChangedViewTests.m */,
 				87071CC31CB6A3790039388A /* FileTransferCellTests.swift */,
 				BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */,
+				BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */,
 				CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */,
 				BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */,
 				BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */,
@@ -4486,6 +4502,7 @@
 			children = (
 				DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */,
 				16B2DE2F1CCFB845000D7C30 /* InputBarTests.swift */,
+				BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */,
 			);
 			path = InputBar;
 			sourceTree = "<group>";
@@ -5173,6 +5190,7 @@
 				871BBFFE1D34F56300DF0793 /* Analytics+Metrics.m in Sources */,
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
+				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
 				872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */,
 				871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */,
 				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
@@ -5221,6 +5239,7 @@
 				871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */,
 				DB888FBB1ADD195F00CE9A88 /* EmailStepViewController.m in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
+				BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */,
 				871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */,
 				871BC24C1D34F8F800DF0793 /* WAZUIMagic.m in Sources */,
 				F95E08B41D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift in Sources */,
@@ -5425,6 +5444,7 @@
 				871BC27B1D34F8F800DF0793 /* AttributedStringOperators.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
+				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
 				160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */,
 				8F0EE70A1A667F9A0070E1E8 /* NameChangedCell.m in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
@@ -5629,6 +5649,7 @@
 				87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */,
 				87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
+				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
 				BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */,
 				CE3FBF1E1CE22B4900ED087A /* DeleteMessageTests.m in Sources */,
 				1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */,
@@ -5649,6 +5670,7 @@
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
 				876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */,
 				16EB9B3A1CE1DBB400883FCF /* VideoMessageCellTests.swift in Sources */,
+				BF8EE55A1D636F4600B0D6D7 /* TextMessageCellTests.swift in Sources */,
 				BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */,
 				1E12C04C1BFA6342001A8A26 /* ContactsDataSource+Testing.m in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,

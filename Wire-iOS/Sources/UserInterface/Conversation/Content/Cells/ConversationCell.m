@@ -184,6 +184,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.topMarginConstraint.constant = 0;
     self.authorImageTopMarginConstraint.constant = 0;
     self.message = nil;
+    self.beingEdited = NO;
 }
 
 - (void)willDisplayInTableView
@@ -326,13 +327,29 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.showsMenu = NO;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (self.menuConfigurationProperties.selectedMenuBlock != nil ) {
+    if (self.menuConfigurationProperties.selectedMenuBlock != nil && !self.beingEdited) {
         self.menuConfigurationProperties.selectedMenuBlock(NO, YES);
+    }
+}
+
+- (void)setBeingEdited:(BOOL)beingEdited
+{
+    if (_beingEdited == beingEdited) {
+        return;
+    }
+    
+    _beingEdited = beingEdited;
+    
+    if (self.menuConfigurationProperties.selectedMenuBlock != nil) {
+        self.menuConfigurationProperties.selectedMenuBlock(beingEdited, YES);
     }
 }
 
 - (void)showMenu;
 {
+    if ([self.delegate respondsToSelector:@selector(conversationCell:willOpenMenuForCellType:)]) {
+        [self.delegate conversationCell:self willOpenMenuForCellType:[self messageType]];
+    }
     
     MenuConfigurationProperties *menuConfigurationProperties = [self menuConfigurationProperties];
     if (!menuConfigurationProperties) {
@@ -358,6 +375,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self becomeFirstResponder];
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
+    menuController.menuItems = menuConfigurationProperties.additionalItems;
     [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
     [menuController setMenuVisible:YES animated:YES];
     
@@ -422,5 +440,27 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     return NO;
 }
+
+#pragma mark - UIKeyInput
+
+// We need to conform the cell to UIKeyInput to avoid the keyboard being dismissed
+// when showing the UIMenuController, we might want to forward the calls to the text input field
+// or post a notification to make it first responder again.
+
+- (void)insertText:(NSString *)text
+{
+ // no-op
+}
+
+- (void)deleteBackward
+{
+    // no-op
+}
+
+- (BOOL)hasText
+{
+    return NO;
+}
+
 
 @end

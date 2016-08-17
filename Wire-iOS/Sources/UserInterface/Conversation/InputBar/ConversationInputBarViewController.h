@@ -24,11 +24,12 @@
 @class ConversationInputBarViewController;
 @class AnalyticsTracker;
 @class AudioRecordViewController;
+@protocol ZMConversationMessage;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeTextInput,
     ConversationInputBarViewControllerModeAudioRecord,
-    ConversationInputBarViewControllerModeCamera,
+    ConversationInputBarViewControllerModeCamera
 };
 
 
@@ -38,6 +39,8 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller;
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller;
 - (void)conversationInputBarViewControllerDidNotSendMessageConversationDegraded:(ConversationInputBarViewController *)controller;
+- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText;
+- (void)conversationInputBarViewControllerDidCancelEditingMessage:(id <ZMConversationMessage>)message;
 
 @end
 

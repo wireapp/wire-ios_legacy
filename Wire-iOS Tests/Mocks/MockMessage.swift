@@ -110,6 +110,7 @@ import ZMCLinkPreview
     var isPlainText: Bool = true
     var sender: ZMUser? = .None
     var serverTimestamp: NSDate? = .None
+    var updatedAt: NSDate? = .None
     var conversation: ZMConversation? = .None
     var deliveryState: ZMDeliveryState = .Delivered
     var imageMessageData: ZMImageMessageData? = .None

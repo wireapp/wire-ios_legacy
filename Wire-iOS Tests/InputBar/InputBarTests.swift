@@ -52,7 +52,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
-        
+        inputBar.updateFakeCursorVisibility()
         CASStyler.defaultStyler().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
@@ -63,7 +63,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = shortText
         inputBar.layer.speed = 0
-        
+        inputBar.updateFakeCursorVisibility()
         CASStyler.defaultStyler().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
@@ -74,7 +74,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = longText
         inputBar.layer.speed = 0
-        
+        inputBar.updateFakeCursorVisibility()
         CASStyler.defaultStyler().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
@@ -93,7 +93,7 @@ class InputBarTests: ZMSnapshotTestCase {
         let inputBar = InputBar(buttons: buttonsWithText)
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.layer.speed = 0
-        
+        inputBar.updateFakeCursorVisibility()
         CASStyler.defaultStyler().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
@@ -104,11 +104,32 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
-        
-        
+        inputBar.updateFakeCursorVisibility()
         CASStyler.defaultStyler().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
     }
+
+    // Disabled until we figure out the `[MockUser conversationType]` crash after resetting the simulator / on CI
+    func disabled_testThatItRendersCorrectlyInEditState() {
+        let sut = InputBar(buttons: buttons())
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.layer.speed = 0
+        sut.updateInputBar(withState: .Editing(originalText: "This text is being edited"), animated: false)
+        sut.updateFakeCursorVisibility()
+        CASStyler.defaultStyler().styleItem(sut)
+        verifyInAllPhoneWidths(view: sut)
+    }
     
+    func disabled_testThatItRendersCorrectlyInEditState_LongText() {
+        let sut = InputBar(buttons: buttons())
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.layer.speed = 0
+        sut.updateInputBar(withState: .Editing(originalText: longText), animated: false)
+
+        sut.updateFakeCursorVisibility()
+        CASStyler.defaultStyler().styleItem(sut)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
 }
