@@ -26,11 +26,11 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConfirmAssetViewController()
-        snapshotBackgroundColor = .yellowColor()
+        snapshotBackgroundColor = .whiteColor()
     }
 
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
-        accentColor = .StrongLimeGreen
+        accentColor = .StrongBlue
         sut.image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
         sut.editButtonVisible = true
         sut.previewTitle = "Matterhorn"
