@@ -443,26 +443,4 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     return NO;
 }
 
-#pragma mark - UIKeyInput
-
-// We need to conform the cell to UIKeyInput to avoid the keyboard being dismissed
-// when showing the UIMenuController, we might want to forward the calls to the text input field
-// or post a notification to make it first responder again.
-
-- (void)insertText:(NSString *)text
-{
- // no-op
-}
-
-- (void)deleteBackward
-{
-    // no-op
-}
-
-- (BOOL)hasText
-{
-    return NO;
-}
-
-
 @end
