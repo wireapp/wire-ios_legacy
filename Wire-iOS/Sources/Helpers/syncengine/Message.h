@@ -37,6 +37,7 @@
 
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message;
 + (NSString *)formattedReceivedDateLongVersion:(id<ZMConversationMessage>)message;
++ (NSString *)formattedDeletedDateForMessage:(id <ZMConversationMessage>)message;
 
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message;
 

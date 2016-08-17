@@ -357,20 +357,30 @@
     }
 }
 
+- (CGRect)selectionRect
+{
+    if (self.message.textMessageData.linkPreview && self.linkAttachmentView) {
+        return self.messageTextView.bounds;
+    } else {
+        return [self.messageTextView.layoutManager usedRectForTextContainer:self.messageTextView.textContainer];
+    }
+}
+
+- (UIView *)selectionView
+{
+    return self.messageTextView;
+}
+
 - (MenuConfigurationProperties *)menuConfigurationProperties
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
-    if (self.message.textMessageData.linkPreview && self.linkAttachmentView) {
-        properties.targetRect = self.messageTextView.bounds;
-    } else {
-        properties.targetRect = [self.messageTextView.layoutManager usedRectForTextContainer:self.messageTextView.textContainer];
-    }
-
-    properties.targetView = self.messageTextView;
+    properties.targetRect = self.selectionRect;
+    properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };
+
     return properties;
 }
 

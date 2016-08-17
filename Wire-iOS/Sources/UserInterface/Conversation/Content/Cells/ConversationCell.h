@@ -80,6 +80,8 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) id<ZMConversationMessage>message;
 @property (nonatomic, readonly) UILabel *authorLabel;
 @property (nonatomic, readonly) UIView *messageContentView;
+@property (nonatomic, strong, readonly) UIView *selectionView;
+@property (nonatomic, readonly) CGRect selectionRect;
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
 @property (nonatomic) BOOL showsMenu;

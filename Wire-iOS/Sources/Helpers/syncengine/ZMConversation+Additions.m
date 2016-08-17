@@ -158,19 +158,6 @@
     return message;
 }
 
-- (ZMUser *)participantWithObjectIDString:(NSString *)objectIDString
-{
-    ZMUser *user = nil;
-    NSManagedObjectID *moid = [ZMConversation objectIDForURIRepresentation:[NSURL URLWithString:objectIDString] inUserSession:[ZMUserSession sharedSession]];
-    for (ZMUser *current in self.allParticipants) {
-        if ([current.objectID isEqual:moid]) {
-            user = current;
-            break;
-        }
-    }
-    return user;
-}
-
 - (BOOL)shouldShowBurstSeparatorForMessage:(id<ZMConversationMessage>)message
 {
     // Missed calls should always show timestamp

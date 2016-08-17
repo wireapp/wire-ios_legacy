@@ -7,6 +7,6 @@ github "wireapp/Cartography" "z0.6.1"
 github "wireapp/TTTAttributedLabel" "1.13.4"
 github "wireapp/ZipArchive" ~> 1.3
 github "wireapp/HockeySDK-iOS" "4.0.1"
-github "wireapp/wire-ios-sync-engine" "50.1.5"
+github "wireapp/wire-ios-sync-engine" "51.0.0"
 github "wireapp/onepassword-app-extension" "framework/1.8.2"
 github "wireapp/FormatterKit" ~> 1.8.1

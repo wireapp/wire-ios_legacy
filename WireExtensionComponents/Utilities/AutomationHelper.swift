@@ -28,23 +28,36 @@ import zmessaging
     
     static let sharedHelper = AutomationHelper()
     
-    ///  - returns: The value specified for the `UseHockey` key in `NSUserDefaults`
+    ///  Whether Hockeyapp should be used
     var useHockey: Bool {
         return NSUserDefaults.standardUserDefaults().boolForKey("UseHockey")
     }
     
-    ///  - returns: `true` if values for `--loginemail=` and --`loginpassword=` have been provided on the command line
-    private(set) var skipFirstLoginAlerts = false
+    /// Whether to skip the first login alert
+    var skipFirstLoginAlerts : Bool {
+        return self.automationEmailCredentials != nil
+    }
     
-    ///  - returns: The `ZMEmailCredentials` specified with the `--loginemail=` and --`loginpassword=` arguments on the command line
-    private(set) var automationEmailCredentials: ZMEmailCredentials? = nil
+    /// The login credentials provides by command line
+    let automationEmailCredentials: ZMEmailCredentials?
     
-    ///  - returns: The value specified for the `--disable-autocorrection` argument on the command line
-    private(set) var disableAutocorrection = false
+    /// Whether autocorrection is disabled
+    let disableAutocorrection : Bool
+    
+    /// Whether address book upload is enabled on simulator
+    let uploadAddressbookOnSimulator : Bool
     
     override init() {
+        let arguments = Set(NSProcessInfo.processInfo().arguments)
+        
+        self.disableAutocorrection = arguments.contains(AutomationKey.DisableAutocorrection.rawValue)
+        self.uploadAddressbookOnSimulator = arguments.contains(AutomationKey.EnableAddressBookOnSimulator.rawValue)
+        self.automationEmailCredentials = AutomationHelper.credentialsFromCommandLine()
+        if arguments.contains(AutomationKey.LogNetwork.rawValue) {
+            ZMLogSetLevelForTag(.Debug, "Network")
+        }
+        
         super.init()
-        checkCommandLineArguments()
     }
     
     private enum AutomationKey: String {
@@ -52,22 +65,17 @@ import zmessaging
         case Password = "--loginpassword="
         case LogNetwork = "--debug-log-network"
         case DisableAutocorrection = "--disable-autocorrection"
+        case EnableAddressBookOnSimulator = "--addressbook-on-simulator"
     }
     
-    private func checkCommandLineArguments() {
+    /// Gets the login email and password from command line arguments
+    /// - returns: the credentials, or nil if credentials were not found
+    private static func credentialsFromCommandLine() -> ZMEmailCredentials? {
         let arguments = NSProcessInfo.processInfo().arguments
         var email: String?
         var password: String?
         
         arguments.forEach { arg in
-            if arg == AutomationKey.LogNetwork.rawValue {
-                ZMLogSetLevelForTag(.Debug, "Network")
-            }
-            
-            if arg == AutomationKey.DisableAutocorrection.rawValue {
-                disableAutocorrection = true
-            }
-            
             let emailKey = AutomationKey.Email.rawValue
             if arg.hasPrefix(emailKey) {
                 email = arg.substringFromIndex(emailKey.startIndex.advancedBy(emailKey.characters.count))
@@ -79,9 +87,7 @@ import zmessaging
             }
         }
         
-        guard let mail = email, secret = password else { return }
-        skipFirstLoginAlerts = true
-        automationEmailCredentials = ZMEmailCredentials(email: mail, password: secret)
+        guard let mail = email, secret = password else { return nil }
+        return ZMEmailCredentials(email: mail, password: secret)
     }
-    
 }

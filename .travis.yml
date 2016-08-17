@@ -1,26 +1,38 @@
+env:
+  global:
+    - secure: DUTI6xnk6emxAGtabSBfFH5QO6jxkRgjCWZp6fnXGrT125ZJ1Gdmf7+O9Gm/qfv9g2zUwjAnptgXUPvPT3xkdB256Ev7eLok9yTwErRd4vubbmxxu7+EqavYg1kQtdb6UStZ5c1Yz/S2mlqOxG5KMQxom80WU9Cfdq096q8hfeJ25hsNdoKBs1EN4Dyb8VxDdTRBHbADE8prqEDtNEprLEYBKzNkH9EbvR/1sPpZ6tsWFKG5mLNifaV/BDfogoFhsgex5EAibpUhXgC4L9zsJMk0Xh8iUOXNkxp7dsOxMeazEtfnUxB26nXUaH2aSopnahmznEtmsKWxLrUheKVKX8rms5fAWTvC8O7p5KYmijzckWGsLK02xRa2lFd71Muw73ZTHL3fLwRJKF7JuU1Aw9bWcVBVjh6rRVaXJloyvJ5rlqvlCWLbUmAJp3QeBJC8MYDenT2G0RIfGEAitNI91IleJrRkX9jmgdzTwa0q+37imIk/H0F4joG4RxXYIx/OU7a95cYvR2pZ9I7jmaRYMlK9jR9huykoP4J2HdsKvkIZhvaIc/wh37B2Pe+tm42vZtcpu3Axym078T5oBs2NDrBYKX0QEpG+eFNA7nshpcPkKvSh2BJN/GFEPgbuSbuzFPYUTmhGOEsM7g1vIsds+rb3zs5/wf48tTiBhPBYh00=
+    - secure: vruKxjbwc+5rYxnxWlskv2V8igoW/tYScxH8raJBEGh6ZRhfdUJUGEv5JDrXVvH/bj50oY31U3XkZf/CyfwHnqPbTWWTclTf7EV5SWRI0tU7Lf6hLahSs6EXJv3DWZKjvAq3wxxO/2pPmSynj8nzXh9FaHuw7WixCMNGB0cobb/EdY9ObUsABh/8Wk5v9vCcXShbpUuqzhOQfUj4TERVjX/P77JNFZ+U5zYVcCmRLufLSnxmeOVYnz8b1Ni4ol+0cWowEoCxBjAkGDW1CBKwWWy5l/q+gKRDTLORAQtAiEuXJBaNNGG+s93kkzjfCixALEBPwG3AgyTamkoMkYk6vyD6qhBjF4+aOAVYuiCPa64RyIxxHekTJG6Q6vV0kbZpAHPNuSkK2SYdU8vhtd3+hb9vjyYzpo0Pg2kefpu4i/0bdT82bLWjidCqswI3TzCur3THHdrUzo4K0pxU8UlLPQg4z1KDD4ltQDeLm3+oqumyp0tPRT+LlxY7pzHyWwRsRT0701z5Yuc1pPwX176lg8QDEl93CXoMoeLf6uMgXxeSKf5cogXTi4Ju/WkInW5APitRu1GWhZAQrH0bGGibzg9u9Uu35DQnCq8Sy0HwCwUA64+ISa2gNyGdPC55K7XGjQoW5XJ8JmVpXis3xx7k4Ah0O/P61o92D6qd/JNYV68=
+
 language: objective-c
 osx_image: xcode7.3
+
 notifications:
   email:
     on_success: never
     on_failure: always
+
 branches:
   only:
-  - develop
-  - master
+    - develop
+    - master
+
 cache:
   bundler: true
   cocoapods: true
   directories:
-  - Carthage
-  - Libraries
+    - Carthage
+    - Libraries
+
 install:
   - xcrun simctl erase all
   - open -b com.apple.iphonesimulator
+  - curl -O https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Dangerfile
   - ./setup.sh
+
 script:
-- set -o pipefail
-- xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build.log >(xcpretty -s)
-- bundle exec danger
+  - set -o pipefail
+  - xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | tee >build.log >(xcpretty -s)
+  - bundle exec danger
+
 after_failure:
   - tail -n 500 build.log

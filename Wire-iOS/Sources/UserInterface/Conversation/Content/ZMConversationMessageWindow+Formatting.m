@@ -28,9 +28,8 @@
 {
     ConversationCellLayoutProperties *layoutProperties = [[ConversationCellLayoutProperties alloc] init];
     
-    if (! [Message isSystemMessage:message]) {
-        layoutProperties.showSender = ! [self isPreviousSenderSameForMessage:message];
-    }
+    
+    layoutProperties.showSender = [self shouldShowSenderForMessage:message];
     
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
@@ -68,6 +67,21 @@
     return NO;
 }
 
+- (BOOL)shouldShowSenderForMessage:(id<ZMConversationMessage>)message
+{
+    BOOL systemMessage = [Message isSystemMessage:message];
+    if (systemMessage && [(ZMSystemMessage *)message systemMessageType] == ZMSystemMessageTypeMessageDeletedForEveryone) {
+        // Message Deleted system messages always show the sender image
+        return YES;
+    }
+    
+    if (!systemMessage) {
+        return ![self isPreviousSenderSameForMessage:message];
+    }
+    
+    return NO;
+}
+
 - (BOOL)shouldShowBurstSeparatorForMessage:(id<ZMConversationMessage>)message
 {
     if ([Message isSystemMessage:message]) {
@@ -77,7 +91,8 @@
                 systemMessage.systemMessageType != ZMSystemMessageTypeConversationIsSecure &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeReactivatedDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeNewConversation &&
-                systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice;
+                systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice &&
+                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone;
     }
     
     if ([Message isKnockMessage:message]) {

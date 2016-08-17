@@ -128,6 +128,13 @@
     return timestampString;
 }
 
++ (NSString *)formattedDeletedDateForMessage:(id <ZMConversationMessage>)message
+{
+    NSString *receivedDate = [self formattedReceivedDateLongVersion:message];
+    NSString *localizedDeletedFormat = NSLocalizedString(@"content.system.deleted_message_prefix_timestamp", @"");
+    return [NSString stringWithFormat:localizedDeletedFormat, receivedDate];
+}
+
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message
 {
     BOOL isChatHeadsDisabled = [[Settings sharedSettings] chatHeadsDisabled];

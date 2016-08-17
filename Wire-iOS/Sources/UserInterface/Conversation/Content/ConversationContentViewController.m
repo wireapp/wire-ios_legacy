@@ -343,7 +343,7 @@
     UITableViewCell *cell = [self cellForMessage:message];
     
     // If the user tapped on a file or image and the menu controller is currently visible,
-    // we do not want to show the detail but isntead hide the menu controller first.
+    // we do not want to show the detail but instead hide the menu controller first.
     if ([cell isKindOfClass:ConversationCell.class] && [(ConversationCell *)cell showsMenu]) {
         [self removeHighlightsAndMenu];
         return;
@@ -781,23 +781,7 @@
         
         case ConversationCellActionDelete:
         {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"message.delete_dialog.title", nil)
-                                                                                     message:NSLocalizedString(@"message.delete_dialog.message", nil)
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"message.delete_dialog.button_cancel", nil)
-                                                                   style:UIAlertActionStyleCancel handler:nil];
-            UIAlertAction *deleteMessageAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"message.delete_dialog.button_delete", nil)
-                                                                          style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-            {
-                [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [ZMMessage deleteMessage:cell.message];
-                }];
-                [[Analytics shared] tagDeletedMessage];
-            }];
-            [alertController addAction:cancelAction];
-            [alertController addAction:deleteMessageAction];
-            [self presentViewController:alertController animated:YES completion:nil];
+            [self presentDeletionAlertControllerForMessage:cell.message];
         }
             break;
         case ConversationCellActionPresent:

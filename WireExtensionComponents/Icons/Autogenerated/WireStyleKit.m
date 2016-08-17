@@ -2679,6 +2679,38 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
 }
 
++ (void)drawIcon_0x186_32ptWithColor: (UIColor*)color
+{
+    
+    //// Delete Drawing
+    UIBezierPath* deletePath = [UIBezierPath bezierPath];
+    [deletePath moveToPoint: CGPointMake(24, 8)];
+    [deletePath addLineToPoint: CGPointMake(8.03, 8)];
+    [deletePath addCurveToPoint: CGPointMake(4, 12) controlPoint1: CGPointMake(5.8, 8) controlPoint2: CGPointMake(4, 9.79)];
+    [deletePath addLineToPoint: CGPointMake(4, 16)];
+    [deletePath addLineToPoint: CGPointMake(60, 16)];
+    [deletePath addLineToPoint: CGPointMake(60, 12)];
+    [deletePath addCurveToPoint: CGPointMake(55.97, 8) controlPoint1: CGPointMake(60, 9.78) controlPoint2: CGPointMake(58.2, 8)];
+    [deletePath addLineToPoint: CGPointMake(40, 8)];
+    [deletePath addCurveToPoint: CGPointMake(32, 0) controlPoint1: CGPointMake(40, 3.55) controlPoint2: CGPointMake(36.42, 0)];
+    [deletePath addCurveToPoint: CGPointMake(24, 8) controlPoint1: CGPointMake(27.55, 0) controlPoint2: CGPointMake(24, 3.58)];
+    [deletePath addLineToPoint: CGPointMake(24, 8)];
+    [deletePath closePath];
+    [deletePath moveToPoint: CGPointMake(8, 24)];
+    [deletePath addLineToPoint: CGPointMake(56, 24)];
+    [deletePath addLineToPoint: CGPointMake(52.8, 56)];
+    [deletePath addCurveToPoint: CGPointMake(44, 64) controlPoint1: CGPointMake(52.36, 60.42) controlPoint2: CGPointMake(48.45, 64)];
+    [deletePath addLineToPoint: CGPointMake(20, 64)];
+    [deletePath addCurveToPoint: CGPointMake(11.2, 56) controlPoint1: CGPointMake(15.58, 64) controlPoint2: CGPointMake(11.65, 60.45)];
+    [deletePath addLineToPoint: CGPointMake(8, 24)];
+    [deletePath addLineToPoint: CGPointMake(8, 24)];
+    [deletePath closePath];
+    deletePath.usesEvenOddFillRule = YES;
+    
+    [color setFill];
+    [deletePath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations

@@ -19,6 +19,7 @@
 
 #import "AddressBookHelper.h"
 #import "zmessaging+iOS.h"
+#import "Wire-Swift.h"
 
 @import AddressBook;
 
@@ -108,9 +109,9 @@ static NSString * const UserDefaultsKeyAddressBookExportDate = @"UserDefaultsKey
 {
     self.addressBookUploadWasPostponed = NO;
     self.addressBookWasUploaded = YES;
-#if !TARGET_IPHONE_SIMULATOR
-    [[ZMUserSession sharedSession] uploadAddressBook];
-#endif
+    if (!TARGET_IPHONE_SIMULATOR || AutomationHelper.sharedHelper.uploadAddressbookOnSimulator) {
+        [[ZMUserSession sharedSession] uploadAddressBook];
+    }
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:UserDefaultsKeyAddressBookExportDate];
 }
 

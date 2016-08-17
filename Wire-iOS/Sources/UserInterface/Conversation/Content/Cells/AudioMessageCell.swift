@@ -426,10 +426,18 @@ import CocoaLumberjackSwift
         }
     }
     
+    public override var selectionRect: CGRect {
+        return containerView.bounds
+    }
+    
+    public override var selectionView: UIView! {
+        return containerView
+    }
+    
     override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
-        properties.targetRect = self.containerView.bounds
-        properties.targetView = self.containerView
+        properties.targetRect = selectionRect
+        properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
         
         return properties

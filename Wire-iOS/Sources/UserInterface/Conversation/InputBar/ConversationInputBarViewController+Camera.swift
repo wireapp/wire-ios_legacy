@@ -158,6 +158,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                         sketchViewController.sketchTitle = "image.edit_image".localized
                         sketchViewController.delegate = self
                         sketchViewController.confirmsWithoutSketch = true
+                        sketchViewController.source = .CameraGallery
                         
                         self.presentViewController(sketchViewController, animated: true, completion: .None)
                         sketchViewController.canvasBackgroundImage = image

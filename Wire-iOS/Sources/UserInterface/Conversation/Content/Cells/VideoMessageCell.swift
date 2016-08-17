@@ -220,6 +220,16 @@ extension ZMConversationMessage {
         }
     }
 
+    // MARK: - Selection
+    
+    public override var selectionView: UIView! {
+        return previewImageView
+    }
+    
+    public override var selectionRect: CGRect {
+        return previewImageView.bounds
+    }
+    
     // MARK: - Menu
     
     public func setSelectedByMenu(selected: Bool, animated: Bool) {
@@ -237,8 +247,8 @@ extension ZMConversationMessage {
     
     override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
-        properties.targetRect = self.previewImageView.bounds
-        properties.targetView = self.previewImageView
+        properties.targetRect = selectionRect
+        properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
         
         return properties

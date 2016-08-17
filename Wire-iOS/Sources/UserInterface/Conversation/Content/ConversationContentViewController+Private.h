@@ -34,6 +34,7 @@
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
 
 - (void)removeHighlightsAndMenu;
+- (UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message;
 
 @end
 

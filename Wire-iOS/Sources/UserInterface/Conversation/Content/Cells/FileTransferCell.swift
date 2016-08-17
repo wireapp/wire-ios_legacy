@@ -240,6 +240,16 @@ public class FileTransferCell: ConversationCell {
         self.actionButton.layer.cornerRadius = self.actionButton.bounds.size.width / 2.0
     }
     
+    // MARK: - Selection
+    
+    public override var selectionView: UIView! {
+        return containerView
+    }
+    
+    public override var selectionRect: CGRect {
+        return containerView.bounds
+    }
+
     // MARK: - Actions
     
     public func onActionButtonPressed(sender: UIButton) {
@@ -266,8 +276,8 @@ public class FileTransferCell: ConversationCell {
     
     override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
-        properties.targetRect = self.messageContentView.bounds
-        properties.targetView = self.messageContentView
+        properties.targetRect = selectionRect
+        properties.targetView = selectionView
         properties.selectedMenuBlock = { [weak self] selected, animated in
             UIView.animateWithDuration(animated ? ConversationCellSelectionAnimationDuration : 0) {
                 self?.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0

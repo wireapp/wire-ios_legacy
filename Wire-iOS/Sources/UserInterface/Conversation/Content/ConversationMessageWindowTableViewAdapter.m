@@ -53,6 +53,7 @@ static NSString *const ConversationVideoMessageCellId       = @"conversationVide
 static NSString *const ConversationAudioMessageCellId       = @"conversationAudioMessageCellId";
 static NSString *const ConversationParticipantsCellId       = @"conversationParticipantsCellId";
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
+static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
 
 
 
@@ -121,7 +122,7 @@ static NSString *const ConversationLocationMessageCellId    = @"conversationLoca
         [self.tableView beginUpdates];
         
         if (change.deletedIndexes.count) {
-            [self.tableView deleteRowsAtIndexPaths:[change.deletedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:[change.deletedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
         }
         
         if (change.insertedIndexes.count) {
@@ -265,7 +266,11 @@ static NSString *const ConversationLocationMessageCellId    = @"conversationLoca
             case ZMSystemMessageTypeParticipantsRemoved:
             case ZMSystemMessageTypeNewConversation:
                 cellIdentifier = ConversationParticipantsCellId;
+                break;
                 
+            case ZMSystemMessageTypeMessageDeletedForEveryone:
+                cellIdentifier = ConversationMessageDeletedCellId;
+
             default:
                 break;
         }
@@ -315,6 +320,7 @@ static NSString *const ConversationLocationMessageCellId    = @"conversationLoca
     [self.tableView registerClass:[AudioMessageCell class] forCellReuseIdentifier:ConversationAudioMessageCellId];
     [self.tableView registerClass:[ConversationParticipantsCell class] forCellReuseIdentifier:ConversationParticipantsCellId];
     [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
+    [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
 
     // unknown message types
     [self.tableView registerClass:[EmptyCell class] forCellReuseIdentifier:ConversationUnknownCellId];
