@@ -54,7 +54,7 @@ public final class InputBarEditView: UIView {
         
         undoButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressUndoButton)))
         undoButton.setIcon(.Undo, withSize: .Tiny, forState: .Normal)
-        confirmButton.setIcon(.Checkmark, withSize: .Small, forState: .Normal)
+        confirmButton.setIcon(.Checkmark, withSize: .Medium, forState: .Normal)
         cancelButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
         undoButton.enabled = false
         confirmButton.enabled = false
