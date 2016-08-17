@@ -371,18 +371,20 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
      */
     [self.window makeKeyWindow];
     [self.window becomeFirstResponder];
-    
+
     [self becomeFirstResponder];
-    
+
     UIMenuController *menuController = [UIMenuController sharedMenuController];
-    menuController.menuItems = menuConfigurationProperties.additionalItems;
+    UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
+    NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
+    menuController.menuItems = [items arrayByAddingObject:deleteItem];
     [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
     [menuController setMenuVisible:YES animated:YES];
-    
+
     if ([self.delegate respondsToSelector:@selector(conversationCell:didOpenMenuForCellType:)]) {
         [self.delegate conversationCell:self didOpenMenuForCellType:[self messageType]];
     }
-    
+
 }
 
 
@@ -402,14 +404,14 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender;
 {
-    if (action == @selector(delete:) && self.message.canBeDeleted) {
+    if (action == @selector(deleteMessage:) && self.message.canBeDeleted) {
         return YES;
     }
     
     return [super canPerformAction:action withSender:sender];
 }
 
-- (void)delete:(id)sender;
+- (void)deleteMessage:(id)sender;
 {
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionDelete];

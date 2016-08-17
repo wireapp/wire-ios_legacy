@@ -266,6 +266,8 @@
 "content.file.save_video" = "Save";
 "content.file.save_audio" = "Save";
 
+"content.message.delete" = "Delete";
+
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
 "content.ping.text" = "%1$@ PINGED";

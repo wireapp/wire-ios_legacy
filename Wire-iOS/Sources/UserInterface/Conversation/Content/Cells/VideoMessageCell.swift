@@ -250,22 +250,17 @@ extension ZMConversationMessage {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
-        
+
+        if message.videoCanBeSavedToCameraRoll() {
+            let menuItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
+            properties.additionalItems = [menuItem]
+        } else {
+            properties.additionalItems = []
+        }
+
         return properties
     }
-    
-    override public func showMenu() {
-        if self.message.videoCanBeSavedToCameraRoll() {
-            
-            let menuItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
-            UIMenuController.sharedMenuController().menuItems = [menuItem]
-        }
-        else {
-            UIMenuController.sharedMenuController().menuItems = nil
-        }
-        super.showMenu()
-    }
-    
+
     override public func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
         if action == #selector(wr_saveVideo) {
             if self.message.videoCanBeSavedToCameraRoll() {
