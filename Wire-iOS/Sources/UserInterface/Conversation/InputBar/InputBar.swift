@@ -280,8 +280,7 @@ private struct InputBarConstants {
             case .Writing:
                 self.textView.text = nil
             case .Editing(let text):
-                self.textView.text = text
-                self.textView.setContentOffset(.zero, animated: false)
+                self.setInputBarText(text)
             }
         }
         
@@ -315,6 +314,14 @@ private struct InputBarConstants {
     }
 
     // MARK: – Editing View State
+
+    
+    public func setInputBarText(text: String) {
+        textView.text = text
+        textView.setContentOffset(.zero, animated: false)
+        textView.undoManager?.removeAllActions()
+        updateEditViewState()
+    }
 
     public func undo() {
         guard inputBarState != .Writing else { return }

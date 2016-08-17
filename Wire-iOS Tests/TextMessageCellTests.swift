@@ -39,6 +39,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.layer.speed = 0
         [Message.longVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
             $0.locale = NSLocale(localeIdentifier: "en_US")
+            $0.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         }
     }
     
@@ -95,7 +96,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     func mockMessage(text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .Delivered) -> MockMessage {
         let message = MockMessageFactory.textMessageWithText(text)
         message.deliveryState = state
-        message.serverTimestamp = NSDate(timeIntervalSince1970: 1234567890)
+        message.serverTimestamp = NSDate(timeIntervalSince1970: 1234567230)
         message.updatedAt = edited ? NSDate(timeIntervalSince1970: 0) : nil
         return message
     }
