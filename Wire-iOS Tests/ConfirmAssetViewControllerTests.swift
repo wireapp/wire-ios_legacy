@@ -26,7 +26,7 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConfirmAssetViewController()
-        snapshotBackgroundColor = .whiteColor()
+        snapshotBackgroundColor = .yellowColor()
     }
 
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
