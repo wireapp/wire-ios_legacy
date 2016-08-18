@@ -148,7 +148,7 @@ private struct InputBarConstants {
         textView.accessibilityIdentifier = "inputField"
         textView.placeholder = "conversation.input_bar.placeholder".localized
         textView.lineFragmentPadding = 0
-        textView.textContainerInset = UIEdgeInsetsMake(17, 0, 17, constants.contentRightMargin)
+        textView.textContainerInset = UIEdgeInsetsMake(17, 0, 17, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
         textView.keyboardType = .Default;
         textView.returnKeyType = .Send;
@@ -174,7 +174,7 @@ private struct InputBarConstants {
             buttonRow.top == textView.bottom
             textView.top == textView.superview!.top
             textView.leading == leftAccessoryView.trailing
-            textView.trailing == textView.superview!.trailing
+            textView.trailing == rightAccessoryView.leading
             textView.height >= 56
             textView.height <= 120 ~ 750
 
