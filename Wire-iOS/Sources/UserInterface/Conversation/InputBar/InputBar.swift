@@ -23,7 +23,6 @@ import Classy
 import WireExtensionComponents
 
 
-
 public enum InputBarState: Equatable {
     case Writing
     case Editing(originalText: String)
@@ -192,20 +191,20 @@ private struct InputBarConstants {
             editRow.height == constants.buttonsBarHeight
             
             buttonRow.leading == container.leading
-            buttonRow.trailing == container.trailing
+            buttonRow.trailing <= container.trailing
             buttonRow.bottom == container.bottom
+            buttonRow.width == 414 ~ 750
         }
         
-        constrain(buttonContainer, buttonInnerContainer)  { buttonBox, container in
-            buttonBox.bottom == buttonBox.superview!.bottom
-            buttonBox.left == buttonBox.superview!.left
-            buttonBox.right <= buttonBox.superview!.right
-            buttonBox.height == constants.buttonsBarHeight
-            buttonBox.width == 414 ~ 750
+        constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
+            container.bottom == container.superview!.bottom
+            container.left == container.superview!.left
+            container.right == container.superview!.right
+            container.height == constants.buttonsBarHeight
 
-            container.leading == buttonBox.leading
-            container.trailing == buttonBox.trailing
-            self.rowTopInsetConstraint = container.top == buttonBox.top - constants.buttonsBarHeight
+            innerContainer.leading == container.leading
+            innerContainer.trailing == container.trailing
+            self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
         
         constrain(inputBarSeparator) { inputBarSeparator in
