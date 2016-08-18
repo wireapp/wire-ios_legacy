@@ -586,14 +586,11 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    BOOL isEditing = (nil != self.editingMessage);
-    
     if (self.mode == ConversationInputBarViewControllerModeAudioRecord) {
         return YES;
     }
-    else if (!isEditing && [self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:)]) {
-        // This call scrolls to the bottom of the conversation, we don't want this behaviour if we are editing a message
-        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self];
+    else if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:isEditingMessage:)]) {
+        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self isEditingMessage:(nil != self.editingMessage)];
     }
     else {
         return YES;
