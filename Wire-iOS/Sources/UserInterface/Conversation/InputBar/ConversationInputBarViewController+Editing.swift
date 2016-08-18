@@ -48,6 +48,9 @@ extension ConversationInputBarViewController {
         guard nil != editingMessage else { return }
         delegate.conversationInputBarViewControllerDidCancelEditingMessage?(editingMessage)
         editingMessage = nil
+        ZMUserSession.sharedSession().enqueueChanges {
+            self.conversation.draftMessageText = ""
+        }
         inputBar.inputBarState = .Writing
         NSNotificationCenter.defaultCenter().removeObserver(
             self,
@@ -69,7 +72,7 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
         switch buttonType {
         case .Undo: inputBar.undo()
         case .Cancel: endEditingMessageIfNeeded()
-        case .Confirm: sendEditedMessageAndUpdateState(withText: inputBar.textView.text)
+        case .Confirm: sendOrEditText(inputBar.textView.text)
         }
     }
     
