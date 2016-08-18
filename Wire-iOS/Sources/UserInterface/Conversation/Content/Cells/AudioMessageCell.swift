@@ -439,19 +439,14 @@ import CocoaLumberjackSwift
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
+        if message.audioCanBeSaved() {
+            let menuItem = UIMenuItem(title:"content.file.save_audio".localized, action:#selector(wr_saveAudio))
+            properties.additionalItems = [menuItem]
+        } else {
+            properties.additionalItems = []
+        }
         
         return properties
-    }
-    
-    override public func showMenu() {
-        if self.message.audioCanBeSaved() {
-            let menuItem = UIMenuItem(title:"content.file.save_audio".localized, action:#selector(wr_saveAudio))
-            UIMenuController.sharedMenuController().menuItems = [menuItem]
-        }
-        else {
-            UIMenuController.sharedMenuController().menuItems = nil
-        }
-        super.showMenu()
     }
     
     override public func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {

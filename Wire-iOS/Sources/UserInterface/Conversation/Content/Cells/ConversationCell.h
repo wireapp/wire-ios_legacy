@@ -76,7 +76,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @end
 
 
-@interface ConversationCell : UITableViewCell <UserImageViewDelegate, UIKeyInput>
+@interface ConversationCell : UITableViewCell <UserImageViewDelegate>
 
 @property (nonatomic, readonly) ConversationCellLayoutProperties *layoutProperties;
 

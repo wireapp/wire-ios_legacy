@@ -70,6 +70,7 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
 - (void)close;
 
 /// Resume the current session and restore metadata if the session hasn't expired
+/// If the session is already open, this call will have no effect
 - (void)resume;
 
 /// Upload the tracked data

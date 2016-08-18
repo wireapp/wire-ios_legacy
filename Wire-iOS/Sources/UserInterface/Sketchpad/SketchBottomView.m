@@ -78,7 +78,7 @@ static CGFloat SketchBottomViewHeight = 80.0;
     IconButton *confirmButton = [IconButton iconButtonCircular];
     confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.confirmButton = confirmButton;
-    [confirmButton setIcon:ZetaIconTypeCheckmark withSize:ZetaIconSizeLarge forState:UIControlStateNormal];
+    [confirmButton setIcon:ZetaIconTypeCheckmark withSize:ZetaIconSizeMedium forState:UIControlStateNormal];
     [self addSubview:self.confirmButton];
     self.confirmButton.accessibilityIdentifier = @"SketchConfirmButton";
 }

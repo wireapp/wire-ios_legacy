@@ -66,7 +66,9 @@
 #endif
 
     [Localytics integrate:@STRINGIZE(ANALYTICS_API_KEY)];
-    [Localytics openSession];
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        [Localytics openSession];
+    }
 }
 
 - (void)setCustomerID:(NSString *)customerID

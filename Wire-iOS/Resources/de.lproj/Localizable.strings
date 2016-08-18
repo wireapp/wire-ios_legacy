@@ -264,6 +264,8 @@
 "content.file.save_video" = "Speichern";
 "content.file.save_audio" = "Speichern";
 
+"content.message.delete" = "Löschen";
+
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
 // Someone pinged
 "content.ping.text" = "%1$@ HAT GEPINGT";

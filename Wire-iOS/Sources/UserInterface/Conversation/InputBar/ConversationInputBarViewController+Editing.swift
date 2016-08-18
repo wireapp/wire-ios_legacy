@@ -72,5 +72,10 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
         case .Confirm: sendEditedMessageAndUpdateState(withText: inputBar.textView.text)
         }
     }
+    
+    public func inputBarEditViewDidLongPressUndoButton(editView: InputBarEditView) {
+        guard let text = editingMessage?.textMessageData?.messageText else { return }
+        inputBar.setInputBarText(text)
+    }
 
 }

@@ -15,6 +15,7 @@ branches:
   only:
     - develop
     - master
+    - /^release\/.*/
 
 cache:
   bundler: true

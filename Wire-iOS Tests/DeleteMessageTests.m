@@ -144,24 +144,31 @@ typedef NS_ENUM(NSUInteger, ConversationCellType) {
 
 - (void)testThatTheExpectedCellsCanBeDeleted;
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+
     // can perform action decides if the action will be present in menu, therefor be deletable
     ConversationCell *textMessageCell = [self conversationCellForType:ConversationCellTypeText];
-    XCTAssertTrue([textMessageCell canPerformAction:@selector(delete:) withSender:nil]);
+    XCTAssertTrue([textMessageCell canPerformAction:@selector(deleteMessage:) withSender:nil]);
+    XCTAssertFalse([textMessageCell canPerformAction:@selector(delete:) withSender:nil]);
 
     ConversationCell *richMediaMessageCell = [self conversationCellForType:ConversationCellTypeTextWithRichMedia];
-    XCTAssertTrue([richMediaMessageCell canPerformAction:@selector(delete:) withSender:nil]);
+    XCTAssertTrue([richMediaMessageCell canPerformAction:@selector(deleteMessage:) withSender:nil]);
+    XCTAssertFalse([richMediaMessageCell canPerformAction:@selector(delete:) withSender:nil]);
     
     ConversationCell *fileMessageCell = [self conversationCellForType:ConversationCellTypeFileTransfer];
-    XCTAssertTrue([fileMessageCell canPerformAction:@selector(delete:) withSender:nil]);
+    XCTAssertTrue([fileMessageCell canPerformAction:@selector(deleteMessage:) withSender:nil]);
+    XCTAssertFalse([fileMessageCell canPerformAction:@selector(delete:) withSender:nil]);
     
     ConversationCell *pingMessageCell = [self conversationCellForType:ConversationCellTypePing];
-    XCTAssertTrue([pingMessageCell canPerformAction:@selector(delete:) withSender:nil]);
+    XCTAssertTrue([pingMessageCell canPerformAction:@selector(deleteMessage:) withSender:nil]);
+    XCTAssertFalse([pingMessageCell canPerformAction:@selector(delete:) withSender:nil]);
     
     ConversationCell *imageMessageCell = [self conversationCellForType:ConversationCellTypeImage];
-    XCTAssertTrue([imageMessageCell canPerformAction:@selector(delete:) withSender:nil]);
-    
-    ConversationCell *systemMessageCell = [self conversationCellForType:ConversationCellTypeSystemMessage];
-    XCTAssertFalse([systemMessageCell canPerformAction:@selector(delete:) withSender:nil]);
+    XCTAssertTrue([imageMessageCell canPerformAction:@selector(deleteMessage:) withSender:nil]);
+    XCTAssertFalse([imageMessageCell canPerformAction:@selector(delete:) withSender:nil]);
+
+#pragma clang diagnostic pop
 }
 
 @end

@@ -24,6 +24,7 @@ import Cartography
 
 @objc public protocol InputBarEditViewDelegate: class {
     func inputBarEditView(editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
+    func inputBarEditViewDidLongPressUndoButton(editView: InputBarEditView)
 }
 
 public final class InputBarEditView: UIView {
@@ -51,8 +52,9 @@ public final class InputBarEditView: UIView {
             $0.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
         }
         
+        undoButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressUndoButton)))
         undoButton.setIcon(.Undo, withSize: .Tiny, forState: .Normal)
-        confirmButton.setIcon(.Checkmark, withSize: .Small, forState: .Normal)
+        confirmButton.setIcon(.Checkmark, withSize: .Medium, forState: .Normal)
         cancelButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
         undoButton.enabled = false
         confirmButton.enabled = false
@@ -78,6 +80,11 @@ public final class InputBarEditView: UIView {
         let typeBySender = [undoButton: EditButtonType.Undo, confirmButton: .Confirm, cancelButton: .Cancel]
         guard let type = typeBySender[sender] else { return }
         delegate?.inputBarEditView(self, didTapButtonWithType: type)
+    }
+    
+    @objc func didLongPressUndoButton(sender: UILongPressGestureRecognizer) {
+        guard sender.state == .Began else { return }
+        delegate?.inputBarEditViewDidLongPressUndoButton(self)
     }
     
 }
