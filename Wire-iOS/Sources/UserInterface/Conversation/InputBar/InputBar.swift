@@ -337,7 +337,8 @@ private struct InputBarConstants {
 
             // We do not want to enable the confirm button when
             // the text is the same as the original message
-            let hasChanges = text != textView.text && canUndo
+            let trimmedText = textView.text.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let hasChanges = text != trimmedText && canUndo
             editingView.confirmButton.enabled = hasChanges
         }
     }

@@ -561,10 +561,11 @@
 
         NSString *candidateText = textView.text;
         candidateText = [candidateText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        BOOL conversationWasNotDeleted  = self.conversation.managedObjectContext != nil;
+        BOOL conversationWasNotDeleted = self.conversation.managedObjectContext != nil;
 
         if (self.inputBar.isEditing && nil != self.editingMessage) {
-            if (![candidateText isEqualToString:self.editingMessage.textMessageData.messageText]) {
+            NSString *previousText = [self.editingMessage.textMessageData.messageText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+            if (![candidateText isEqualToString:previousText]) {
                 [self sendEditedMessageAndUpdateStateWithText:candidateText];
             }
    
