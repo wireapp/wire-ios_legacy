@@ -409,7 +409,8 @@
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
-    if ([self.message.conversation isSelfAnActiveMember]) {
+    BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && self.message.deliveryState == ZMDeliveryStateDelivered;
+    if (isEditableMessage) {
         properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     }
 
