@@ -408,8 +408,11 @@
 - (MenuConfigurationProperties *)menuConfigurationProperties
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
-    properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     
+    if ([self.message.conversation isSelfAnActiveMember]) {
+        properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
+    }
+
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
