@@ -23,7 +23,6 @@ import Classy
 import WireExtensionComponents
 
 
-
 public enum InputBarState: Equatable {
     case Writing
     case Editing(originalText: String)
@@ -48,7 +47,10 @@ private struct InputBarConstants {
     public let textView: TextView = ResizingTextView()
     public let leftAccessoryView  = UIView()
     public let rightAccessoryView = UIView()
+    
+    // Contains and clips the buttonInnerContainer
     public let buttonContainer = UIView()
+    
     public let editingView = InputBarEditView()
     public let buttonsView: InputBarButtonsView
     
@@ -58,6 +60,7 @@ private struct InputBarConstants {
     private var contentSizeObserver: NSObject? = nil
     private var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
+    // Contains the editingView and buttonsView
     private let buttonInnerContainer = UIView()
     private let fakeCursor = UIView()
     private let inputBarSeparator = UIView()
@@ -160,53 +163,53 @@ private struct InputBarConstants {
     }
     
     private func createConstraints() {
-
-        constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { buttonRow, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
+        
+        constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
             leftAccessoryView.leading == leftAccessoryView.superview!.leading
             leftAccessoryView.top == leftAccessoryView.superview!.top
-            leftAccessoryView.bottom == buttonRow.top
+            leftAccessoryView.bottom == buttonContainer.top
             leftAccessoryView.width == constants.contentLeftMargin
             
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing - 16
             rightAccessoryView.top == rightAccessoryView.superview!.top
-            rightAccessoryView.bottom == buttonRow.top
             rightAccessoryView.width == 0 ~ 750
+            rightAccessoryView.bottom == buttonContainer.top
             
-            buttonRow.top == textView.bottom
+            buttonContainer.top == textView.bottom
             textView.top == textView.superview!.top
             textView.leading == leftAccessoryView.trailing
             textView.right == rightAccessoryView.left
             textView.height >= 56
             textView.height <= 120 ~ 750
 
-            buttonRowSeparator.top == buttonRow.top
+            buttonRowSeparator.top == buttonContainer.top
             buttonRowSeparator.left == buttonRowSeparator.superview!.left + 16
             buttonRowSeparator.right == buttonRowSeparator.superview!.right - 16
             buttonRowSeparator.height == 0.5
         }
         
-        constrain(editingView, buttonsView, buttonInnerContainer) { editRow, buttonRow, container in
-            editRow.top == container.top
-            editRow.leading == container.leading
-            editRow.trailing == container.trailing
-            editRow.bottom == buttonRow.top
-            editRow.height == constants.buttonsBarHeight
+        constrain(editingView, buttonsView, buttonInnerContainer) { editingView, buttonsView, buttonInnerContainer in
+            editingView.top == buttonInnerContainer.top
+            editingView.leading == buttonInnerContainer.leading
+            editingView.trailing == buttonInnerContainer.trailing
+            editingView.bottom == buttonsView.top
+            editingView.height == constants.buttonsBarHeight
             
-            buttonRow.leading == container.leading
-            buttonRow.trailing == container.trailing
-            buttonRow.bottom == container.bottom
+            buttonsView.leading == buttonInnerContainer.leading
+            buttonsView.trailing <= buttonInnerContainer.trailing
+            buttonsView.bottom == buttonInnerContainer.bottom
+            buttonsView.width == 414 ~ 750
         }
         
-        constrain(buttonContainer, buttonInnerContainer)  { buttonBox, container in
-            buttonBox.bottom == buttonBox.superview!.bottom
-            buttonBox.left == buttonBox.superview!.left
-            buttonBox.right <= buttonBox.superview!.right
-            buttonBox.height == constants.buttonsBarHeight
-            buttonBox.width == 414 ~ 750
+        constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
+            container.bottom == container.superview!.bottom
+            container.left == container.superview!.left
+            container.right == container.superview!.right
+            container.height == constants.buttonsBarHeight
 
-            container.leading == buttonBox.leading
-            container.trailing == buttonBox.trailing
-            self.rowTopInsetConstraint = container.top == buttonBox.top - constants.buttonsBarHeight
+            innerContainer.leading == container.leading
+            innerContainer.trailing == container.trailing
+            self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
         
         constrain(inputBarSeparator) { inputBarSeparator in

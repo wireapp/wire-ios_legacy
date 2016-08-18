@@ -589,8 +589,8 @@
     if (self.mode == ConversationInputBarViewControllerModeAudioRecord) {
         return YES;
     }
-    else if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:)]) {
-        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self];
+    else if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:isEditingMessage:)]) {
+        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self isEditingMessage:(nil != self.editingMessage)];
     }
     else {
         return YES;

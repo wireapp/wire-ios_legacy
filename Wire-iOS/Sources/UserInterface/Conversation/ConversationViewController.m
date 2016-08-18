@@ -656,9 +656,9 @@
 
 @implementation ConversationViewController (InputBar)
 
-- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
+- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing
 {
-    if (! self.contentViewController.isScrolledToBottom) {
+    if (! self.contentViewController.isScrolledToBottom && !isEditing) {
         [self.contentViewController scrollToBottomAnimated:YES];
     }
 
