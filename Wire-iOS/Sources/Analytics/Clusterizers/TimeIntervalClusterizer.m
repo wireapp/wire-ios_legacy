@@ -26,6 +26,10 @@ RangeSet DefaultTimeIntervalRanges = {DefaultTimeIntervalRangesRanges, 15};
 IntRange VideoMessageTimeIntervalRangesRanges[] = {{0,0}, {1, 10}, {11, 30}, {31, 60}, {61, 300}, {301, 900}, {901, 1800}};
 RangeSet VideoMessageTimeIntervalRanges = {VideoMessageTimeIntervalRangesRanges, 7};
 
+IntRange MessageEditTimeIntervalRangesRanges[] = {{0,0}, {1, 60}, {61, 300}, {601, 1800}, {1801, 3600}, {3601, 86400}};
+RangeSet MessageEditTimeIntervalRanges = {MessageEditTimeIntervalRangesRanges, 6};
+
+
 @implementation TimeIntervalClusterizer
 
 + (instancetype)defaultClusterizer
@@ -47,6 +51,18 @@ RangeSet VideoMessageTimeIntervalRanges = {VideoMessageTimeIntervalRangesRanges,
     dispatch_once(&onceToken, ^{
         clusterizer = [TimeIntervalClusterizer new];
         clusterizer.rangeSet = VideoMessageTimeIntervalRanges;
+    });
+    
+    return clusterizer;
+}
+
++ (instancetype)messageEditDurationClusterizer
+{
+    static TimeIntervalClusterizer *clusterizer = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        clusterizer = [TimeIntervalClusterizer new];
+        clusterizer.rangeSet = MessageEditTimeIntervalRanges;
     });
     
     return clusterizer;

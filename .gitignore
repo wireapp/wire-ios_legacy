@@ -21,3 +21,4 @@ Carthage/
 Wire-iOS/ComponentsVersions.plist
 /Libraries
 /ConfigurationSets/Private
+/ConfigurationSets/Development_private.xcconfig
