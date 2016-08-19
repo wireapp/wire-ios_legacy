@@ -229,6 +229,7 @@
 		8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815891BF4EADE00D321BC /* SettingsNavigationController.swift */; };
 		870912031BF9DA5A00153CA7 /* ZMUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBA8C721B74EAB10089CC44 /* ZMUtilities.framework */; };
 		870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A8C6A1CF719C400874B16 /* RecordingDotView.swift */; };
+		870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */; };
 		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */; };
 		870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */; };
 		8710673C1C0DC5570035603B /* SettingsButtonCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067361C0DC5570035603B /* SettingsButtonCellDescriptor.swift */; };
@@ -1129,6 +1130,8 @@
 		870815871BF4EAD100D321BC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		870815891BF4EADE00D321BC /* SettingsNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavigationController.swift; sourceTree = "<group>"; };
 		870A8C6A1CF719C400874B16 /* RecordingDotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingDotView.swift; sourceTree = "<group>"; };
+		870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextResponderTextView.m; sourceTree = "<group>"; };
+		870C97C41D670CA700F6FD7D /* NextResponderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NextResponderTextView.h; sourceTree = "<group>"; };
 		870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVSLogObserver.h; sourceTree = "<group>"; };
 		870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVSLogObserver.m; sourceTree = "<group>"; };
 		870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CannotDecryptCell.swift; sourceTree = "<group>"; };
@@ -3011,6 +3014,8 @@
 				871BC1D11D34F8F800DF0793 /* PassthroughWindow.m */,
 				871BC1D21D34F8F800DF0793 /* ResizingTextView.h */,
 				871BC1D31D34F8F800DF0793 /* ResizingTextView.m */,
+				870C97C41D670CA700F6FD7D /* NextResponderTextView.h */,
+				870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */,
 				871BC1D41D34F8F800DF0793 /* StackView.h */,
 				871BC1D51D34F8F800DF0793 /* StackView.m */,
 				871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */,
@@ -5464,6 +5469,7 @@
 				87DCF49D1D34E9E600BB420F /* MapKit+Helper.swift in Sources */,
 				8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */,
 				874448811C22F64900E7B947 /* IconSystemCell.swift in Sources */,
+				870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */,
 				875A230F1ADEA1A200111C88 /* Country.m in Sources */,
 				874448851C22FC6200E7B947 /* ConversationVerifiedCell.swift in Sources */,
 				874D0EB31D3E6D77003DF418 /* ConversationInputBarViewController+Camera.swift in Sources */,
