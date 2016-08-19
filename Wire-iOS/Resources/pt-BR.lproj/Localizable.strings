@@ -222,6 +222,8 @@
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
 "content.system.pending_message_timestamp" = "Enviando…";
 "content.system.failedtosend_message_timestamp" = "Mensagem não enviada.";
+"content.system.deleted_message_prefix_timestamp" = "Excluído em %@";
+"content.system.edited_message_prefix_timestamp" = "Edited on %@";
 "content.system.connecting_to" = "Conectando-se a %@. \nInciar uma conversa";
 "content.system.connected_to" = "Conectado a %@ \niniciar uma conversa";
 "content.system.other_wanted_to_talk" = "%@ ligou";
@@ -263,6 +265,8 @@
 
 "content.file.save_video" = "Salvar";
 "content.file.save_audio" = "Salvar";
+
+"content.message.delete" = "Apagar";
 
 "content.file.too_big" = "Você pode enviar arquivos de até %@";
 // Someone pinged
@@ -390,10 +394,13 @@
 "profile.block_dialog.button_block" = "Bloquear";
 
 // Delete message dialog
-"message.delete_dialog.title" = "Apagar mensagem";
-"message.delete_dialog.message" = "A mensagem apenas será removida da sua visualização da conversa. Isto não pode ser desfeito.";
-"message.delete_dialog.button_cancel" = "Cancelar";
-"message.delete_dialog.button_delete" = "Apagar";
+"message.delete_dialog.message" = "Isto não pode ser desfeito.";
+"message.delete_dialog.action.cancel" = "Cancelar";
+"message.delete_dialog.action.hide" = "Excluir apenas para mim";
+"message.delete_dialog.action.delete" = "Excluir para todos";
+
+// Edit message
+"message.menu.edit.title" = "Editar";
 
 // Accept connection request
 "profile.connection_request_dialog.title" = "Aceitar?";
