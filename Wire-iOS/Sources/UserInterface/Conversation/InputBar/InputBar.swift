@@ -44,7 +44,7 @@ private struct InputBarConstants {
 
 @objc public class InputBar: UIView {
     
-    public let textView: TextView = ResizingTextView()
+    public let textView: NextResponderTextView = NextResponderTextView()
     public let leftAccessoryView  = UIView()
     public let rightAccessoryView = UIView()
     

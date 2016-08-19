@@ -808,6 +808,9 @@
 
 - (void)conversationCell:(ConversationCell *)cell willOpenMenuForCellType:(MessageType)messageType;
 {
+    if ([self.delegate respondsToSelector:@selector(conversationContentViewController:didShowMenuFromCell:)]) {
+        [self.delegate conversationContentViewController:self didShowMenuFromCell:cell];
+    }
     [ConversationInputBarViewController endEditingMessage];
 }
 

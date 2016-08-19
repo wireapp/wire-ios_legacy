@@ -48,6 +48,8 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(ZMMessage *)message;
 
+- (void)conversationContentViewController:(ConversationContentViewController *)controller didShowMenuFromCell:(UITableViewCell *)cell;
+
 @optional
 
 - (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view;

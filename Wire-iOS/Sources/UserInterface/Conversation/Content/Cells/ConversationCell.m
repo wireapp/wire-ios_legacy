@@ -372,8 +372,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.window makeKeyWindow];
     [self.window becomeFirstResponder];
 
-    [self becomeFirstResponder];
-
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
     NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
