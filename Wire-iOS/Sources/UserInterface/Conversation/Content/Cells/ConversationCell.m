@@ -30,6 +30,7 @@
 #import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics+iOS.h"
+#import "UIResponder+FirstResponder.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -372,6 +373,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.window makeKeyWindow];
     [self.window becomeFirstResponder];
 
+    if ([UIResponder wr_currentFirstResponder] == nil) {
+        [self becomeFirstResponder];
+    }
+    
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
     NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
