@@ -100,12 +100,13 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         let sectionDescriptor = group.visibleItems[indexPath.section]
         let cellDescriptor = sectionDescriptor.visibleCellDescriptors[indexPath.row]
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier(cellDescriptor.dynamicType.cellType.reuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
-            cell.descriptor = cellDescriptor
-            cellDescriptor.featureCell(cell)
-            return cell
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(cellDescriptor.dynamicType.cellType.reuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell else {
+            fatalError("Cannot dequeue cell for index path \(indexPath) and cellDescriptor \(cellDescriptor)")
         }
-        fatalError("Cannot dequeue cell for index path \(indexPath) and cellDescriptor \(cellDescriptor)")
+        
+        cell.descriptor = cellDescriptor
+        cellDescriptor.featureCell(cell)
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
