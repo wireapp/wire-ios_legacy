@@ -21,15 +21,15 @@ import UIKit
 import Cartography
 
 class SettingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let group: SettingsInternalGroupCellDescriptorType
+    private let group: SettingsInternalGroupCellDescriptorType
     
-    var tableView: UITableView?
+    private var tableView: UITableView?
     
     required init(group: SettingsInternalGroupCellDescriptorType) {
         self.group = group
 
         super.init(nibName: nil, bundle: nil)
-        self.title = group.title
+        title = group.title
         
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
@@ -47,20 +47,20 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func viewDidLoad() {
-        self.createTableView()
-        self.createConstraints()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
+        createTableView()
+        createConstraints()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
         super.viewDidLoad()
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.tableView?.reloadData()
+        tableView?.reloadData()
     }
     
     func createTableView() {
-        let tableView = UITableView(frame: self.view.bounds, style: self.group.style == .Plain ? .Plain : .Grouped)
+        let tableView = UITableView(frame: self.view.bounds, style: group.style == .Plain ? .Plain : .Grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -75,30 +75,29 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func createConstraints() {
-        if let tableView = self.tableView {
-            constrain(self.view, tableView) { selfView, aTableView in
-                aTableView.edges == selfView.edges
-            }
+        guard let tableView = tableView else { return }
+        constrain(view, tableView) { selfView, aTableView in
+            aTableView.edges == selfView.edges
         }
     }
     
     func dismissRootNavigation(sender: AnyObject) {
-        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
+        navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
     }
     
     // MARK: - UITableViewDelegate & UITableViewDelegate
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.group.visibleItems.count
+        return group.visibleItems.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionDescriptor = self.group.visibleItems[section]
+        let sectionDescriptor = group.visibleItems[section]
         return sectionDescriptor.visibleCellDescriptors.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let sectionDescriptor = self.group.visibleItems[indexPath.section]
+        let sectionDescriptor = group.visibleItems[indexPath.section]
         let cellDescriptor = sectionDescriptor.visibleCellDescriptors[indexPath.row]
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(cellDescriptor.dynamicType.cellType.reuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
@@ -122,12 +121,12 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionDescriptor = self.group.visibleItems[section]
+        let sectionDescriptor = group.visibleItems[section]
         return sectionDescriptor.header
     }
     
     func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        let sectionDescriptor = self.group.visibleItems[section]
+        let sectionDescriptor = group.visibleItems[section]
         return sectionDescriptor.footer
     }
 }

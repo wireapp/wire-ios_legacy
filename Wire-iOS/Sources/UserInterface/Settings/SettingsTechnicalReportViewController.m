@@ -78,8 +78,6 @@ static NSString * TechnicalReportCellReuseIdentifier = @"TechnicalReportCellReus
     self.includeVoiceLogCell.textLabel.text = NSLocalizedString(@"self.settings.technical_report.include_log", nil);
     
     self.technicalReports = [self lastCallSessionReports];
-    
-    
 }
 
 - (NSArray *)lastCallSessionReports
