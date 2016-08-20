@@ -46,8 +46,6 @@ static NSString * TechnicalReportCellReuseIdentifier = @"TechnicalReportCellReus
 
 @end
 
-
-
 @interface SettingsTechnicalReportViewController () <MFMailComposeViewControllerDelegate>
 
 @property (nonatomic) UITableViewCell *reportCell;

@@ -517,7 +517,7 @@
 		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
-		878893641D49113600086646 /* JPSimulatorHackFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 878893621D490EB600086646 /* JPSimulatorHackFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		878893641D49113600086646 /* (null) in CopyFiles */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		878C21A01AE4F45600CB9FC4 /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */; };
 		878D65C71C84664A0067E3D9 /* zmessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* zmessaging.framework */; };
 		878F85B419F6635A0020F2F1 /* AddressBookHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 878F85B319F6635A0020F2F1 /* AddressBookHelper.m */; };
@@ -784,6 +784,7 @@
 		F517A3BE1B31340700073990 /* SmoothLineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F517A3BD1B31340700073990 /* SmoothLineView.framework */; };
 		F5EAB12B1B120665008DB66A /* SketchBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EAB12A1B120665008DB66A /* SketchBottomView.m */; };
 		F5F52F721B11D7050053F1C8 /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F52F711B11D7050053F1C8 /* SketchViewController.m */; };
+		F6727E351D68AA9700A05A4B /* SettingsTechReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6727E341D68AA9700A05A4B /* SettingsTechReportViewController.swift */; };
 		F95E08B41D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */; };
 /* End PBXBuildFile section */
 
@@ -832,7 +833,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				878893641D49113600086646 /* JPSimulatorHackFramework.framework in CopyFiles */,
+				878893641D49113600086646 /* (null) in CopyFiles */,
 				871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in CopyFiles */,
 				871BE95E1CD0C459002267E8 /* OCMock.framework in CopyFiles */,
 			);
@@ -2081,6 +2082,7 @@
 		F5EAB12A1B120665008DB66A /* SketchBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchBottomView.m; path = Sketchpad/SketchBottomView.m; sourceTree = "<group>"; };
 		F5F52F701B11D7050053F1C8 /* SketchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchViewController.h; path = Sketchpad/SketchViewController.h; sourceTree = "<group>"; };
 		F5F52F711B11D7050053F1C8 /* SketchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchViewController.m; path = Sketchpad/SketchViewController.m; sourceTree = "<group>"; };
+		F6727E341D68AA9700A05A4B /* SettingsTechReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTechReportViewController.swift; sourceTree = "<group>"; };
 		F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TTTAttributedLabel+Links.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -4297,6 +4299,7 @@
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
+				F6727E341D68AA9700A05A4B /* SettingsTechReportViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -5482,6 +5485,7 @@
 				871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */,
 				8744489D1C22FCE500E7B947 /* LinkAttachmentCache.m in Sources */,
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
+				F6727E351D68AA9700A05A4B /* SettingsTechReportViewController.swift in Sources */,
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
 				874448A01C22FCE500E7B947 /* MessageStatusIndicator.m in Sources */,
 				16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */,
