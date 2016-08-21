@@ -53,7 +53,6 @@
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
 #import "NavigationController.h"
-#import "SettingsTechnicalReportViewController.h"
 #import "DevOptionsController.h"
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
