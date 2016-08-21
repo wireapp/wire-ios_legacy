@@ -102,6 +102,7 @@
 #import "ImageCache.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
+#import "AppDelegate+Logging.h"
 
 // Camera
 #import "CameraController.h"
