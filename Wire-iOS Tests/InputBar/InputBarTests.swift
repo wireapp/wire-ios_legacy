@@ -30,6 +30,7 @@ class InputBarTests: ZMSnapshotTestCase {
     
     let shortText = "Lorem ipsum dolor"
     let longText = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est"
+    let LTRText = "ناك حقيقة مثبتة منذ"
     
     let buttons = { () -> [UIButton] in
         let b1 = IconButton()
@@ -73,6 +74,19 @@ class InputBarTests: ZMSnapshotTestCase {
         let inputBar = InputBar(buttons: buttons())
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = longText
+        inputBar.layer.speed = 0
+        inputBar.updateFakeCursorVisibility()
+        CASStyler.defaultStyler().styleItem(inputBar)
+        
+        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllTabletWidths(view: inputBar)
+    }
+    
+    func testRTLText() {
+        let inputBar = InputBar(buttons: buttons())
+        inputBar.translatesAutoresizingMaskIntoConstraints = false
+        inputBar.textView.text = LTRText
+        inputBar.textView.textAlignment = .Right
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
         CASStyler.defaultStyler().styleItem(inputBar)

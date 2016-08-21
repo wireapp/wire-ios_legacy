@@ -20,4 +20,4 @@ Carthage/
 *.xcscmblueprint
 Wire-iOS/ComponentsVersions.plist
 /Libraries
-/ConfigurationSets/Private
+/wire-ios-build-assets

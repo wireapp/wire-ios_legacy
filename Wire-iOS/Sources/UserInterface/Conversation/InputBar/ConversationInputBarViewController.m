@@ -530,6 +530,34 @@
     }
 }
 
+- (void)sendOrEditText:(NSString *)text
+{
+    NSString *candidateText = [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    BOOL conversationWasNotDeleted = self.conversation.managedObjectContext != nil;
+    
+    if (self.inputBar.isEditing && nil != self.editingMessage) {
+        NSString *previousText = [self.editingMessage.textMessageData.messageText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+        if (![candidateText isEqualToString:previousText]) {
+            [self sendEditedMessageAndUpdateStateWithText:candidateText];
+        }
+        
+        return;
+    }
+    
+    if (candidateText.length && conversationWasNotDeleted) {
+        
+        [self clearInputBar];
+        
+        NSArray *args = candidateText.args;
+        if(args.count > 0) {
+            [self runCommand:args];
+        }
+        else {
+            [self.sendController sendTextMessage:candidateText];
+        }
+    }
+}
+
 @end
 
 #pragma mark - Categories
@@ -558,26 +586,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
-        
-        NSString *candidateText = textView.text;
-        candidateText = [candidateText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        BOOL conversationWasNotDeleted  = self.conversation.managedObjectContext != nil;
-        if (candidateText.length && conversationWasNotDeleted) {
-            
-            [self clearInputBar];
-            
-            NSArray *args = candidateText.args;
-            if(args.count > 0) {
-                [self runCommand:args];
-            }
-            else if (self.inputBar.isEditing && nil != self.editingMessage) {
-                [self sendEditedMessageAndUpdateStateWithText:candidateText];
-            }
-            else {
-                [self.sendController sendTextMessage:candidateText];
-            }
-        }
-
+        [self sendOrEditText:textView.text];
         return NO;
     }
     
@@ -589,8 +598,8 @@
     if (self.mode == ConversationInputBarViewControllerModeAudioRecord) {
         return YES;
     }
-    else if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:)]) {
-        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self];
+    else if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:isEditingMessage:)]) {
+        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self isEditingMessage:(nil != self.editingMessage)];
     }
     else {
         return YES;

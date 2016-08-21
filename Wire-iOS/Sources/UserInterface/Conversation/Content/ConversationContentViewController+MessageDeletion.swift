@@ -16,20 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import ZMCDataModel
 
 extension ConversationContentViewController {
 
     func presentDeletionAlertController(forMessage message: ZMConversationMessage) {
         let showDelete = (message.sender?.isSelfUser ?? false) && conversation.isSelfAnActiveMember
         let alert = UIAlertController.alertControllerForMessageDeletion(showDelete) { [weak self] action in
+            
+            // Tracking needs to be called before performing the action, since the content of the message is cleared
+            self?.trackDelete(message, deleteAction:action)
+            
             ZMUserSession.sharedSession().enqueueChanges {
                 switch action {
-                case .Hide: ZMMessage.hideMessage(message)
-                case .Delete: ZMMessage.deleteForEveryone(message)
+                case .Hide:
+                    ZMMessage.hideMessage(message)
+                case .Delete:
+                    ZMMessage.deleteForEveryone(message)
                 }
             }
 
-            // TODO: Add tracking
             self?.dismissViewControllerAnimated(true, completion: nil)
         }
 
@@ -39,6 +45,20 @@ extension ConversationContentViewController {
             presentationController.sourceRect = cell.selectionRect
         }
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    private func trackDelete(message: ZMConversationMessage, deleteAction: DeleteAction) {
+        var deletionType : MessageDeletionType!
+        switch deleteAction {
+        case .Hide:
+            deletionType = .Local
+        case .Delete:
+            deletionType = .Everywhere
+        }
+        let conversationType : ConversationType = (self.conversation.conversationType == .Group) ? .Group : .OneToOne
+        let messageType = Message.messageType(message)
+        let timeElapsed = message.serverTimestamp?.timeIntervalSinceNow ?? 0
+        Analytics.shared()?.tagDeletedMessage(messageType, messageDeletionType: deletionType, conversationType:conversationType, timeElapsed: 0 - timeElapsed)
     }
 
 }

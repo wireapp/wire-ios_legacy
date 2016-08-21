@@ -371,7 +371,7 @@
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         self.beingEdited = YES;
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionEdit];
-        // TODO: Add tracking
+        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeEdit];
     }
 }
 
@@ -408,8 +408,12 @@
 - (MenuConfigurationProperties *)menuConfigurationProperties
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
-    properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     
+    BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && self.message.deliveryState == ZMDeliveryStateDelivered;
+    if (isEditableMessage) {
+        properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
+    }
+
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {

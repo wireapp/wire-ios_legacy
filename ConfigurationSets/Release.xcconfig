@@ -18,7 +18,7 @@
 
 
 #include "Base.xcconfig"
-#include "Private/Release_private.xcconfig"
+#include "../wire-ios-build-assets/Release_private.xcconfig"
 
 
 //Code Signature
@@ -26,7 +26,7 @@
 CODE_SIGN_IDENTITY = iPhone Distribution: Wire Swiss GmbH (EDF3JCE8BC)
 CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Distribution: Wire Swiss GmbH (EDF3JCE8BC)
 
-PROVISIONING_PROFILE_APP = 83d1e4d3-446b-4c31-bc8c-13ed0cf70f71  //ZClient App Store iOS with APNS
+PROVISIONING_PROFILE_APP = 3df3141a-6ce4-48fd-b84e-a15eadaa0666  //ZClient App Store iOS with APNS
 PROVISIONING_PROFILE_FMWK =
 PROVISIONING_PROFILE_SHARE_EXT = 76547409-ab85-461a-b329-15910fcae9aa
 

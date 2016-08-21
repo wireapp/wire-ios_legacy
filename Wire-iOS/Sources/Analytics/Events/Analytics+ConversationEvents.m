@@ -18,7 +18,7 @@
 
 
 #import "Analytics+ConversationEvents.h"
-
+#import "TimeIntervalClusterizer.h"
 
 
 NSString *NSStringFromSelectionType(SelectionType selectionType);
@@ -40,6 +40,8 @@ NSString *NSStringFromMessageActionType(MessageActionType actionType)
             return @"copy";
         case MessageActionTypeDelete:
             return @"delete";
+        case MessageActionTypeEdit:
+            return @"edit";
     }
 }
 
@@ -47,10 +49,16 @@ NSString *NSStringFromMessageType(MessageType messageType);
 NSString *NSStringFromMessageType(MessageType messageType)
 {
     switch (messageType) {
+        case MessageTypeUnknown:
+            return @"unknown";
         case MessageTypeText:
             return @"text";
         case MessageTypeImage :
             return @"image";
+        case MessageTypeAudio :
+            return @"audio";
+        case MessageTypeVideo :
+            return @"video";
         case MessageTypeRichMedia:
             return @"rich_media";
         case MessageTypePing:
@@ -75,6 +83,17 @@ NSString *NSStringFromConversationType(ConversationType conversationType)
     }
 }
 
+NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionType);
+NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionType)
+{
+    switch (messageDeletionType) {
+        case MessageDeletionTypeLocal:
+            return @"local";
+        case MessageDeletionTypeEverywhere:
+            return @"everywhere";
+    }
+}
+
 @implementation Analytics (ConversationEvents)
 
 - (void)tagArchivedConversation
@@ -94,7 +113,11 @@ NSString *NSStringFromConversationType(ConversationType conversationType)
 
 - (void)tagSelectedMessage:(SelectionType)type conversationType:(ConversationType)conversationType messageType:(MessageType)messageType;
 {
-    [self tagEvent:@"conversation.selected_message" attributes:@{@"context" : NSStringFromSelectionType(type), @"type": NSStringFromMessageType(messageType), @"conversation_type" : NSStringFromConversationType(conversationType)}];
+    [self tagEvent:@"conversation.selected_message" attributes:
+        @{@"context"           : NSStringFromSelectionType(type),
+          @"type"              : NSStringFromMessageType(messageType),
+          @"conversation_type" : NSStringFromConversationType(conversationType)}
+     ];
 }
 
 - (void)tagOpenedMessageAction:(MessageActionType)actionType;
@@ -102,9 +125,28 @@ NSString *NSStringFromConversationType(ConversationType conversationType)
     [self tagEvent:@"conversation.opened_message_action" attributes:@{@"action" : NSStringFromMessageActionType(actionType)}];
 }
 
-- (void)tagDeletedMessage;
+- (void)tagDeletedMessage:(MessageType)messageType messageDeletionType:(MessageDeletionType)messageDeletionType conversationType:(ConversationType)conversationType timeElapsed:(NSTimeInterval)timeElapsed;
 {
-    [self tagEvent:@"conversation.deleted_message"];
+    
+    [self tagEvent:@"conversation.deleted_message" attributes:
+        @{@"method"               : NSStringFromMessageDeletionType(messageDeletionType),
+          @"type"                 : NSStringFromMessageType(messageType),
+          @"conversation_type"    : NSStringFromConversationType(conversationType),
+          @"time_elapsed_action"  : [[NSNumber numberWithDouble:timeElapsed] stringValue],
+          @"time_elapsed"         : [[TimeIntervalClusterizer messageEditDurationClusterizer] clusterizeTimeInterval:timeElapsed]
+          }
+    ];
+}
+
+- (void)tagEditedMessageConversationType:(ConversationType)conversationType timeElapsed:(NSTimeInterval)timeElapsed;
+{
+    
+    [self tagEvent:@"conversation.edited_message" attributes:
+        @{@"conversation_type"    : NSStringFromConversationType(conversationType),
+          @"time_elapsed_action"  : [[NSNumber numberWithDouble:timeElapsed] stringValue],
+          @"time_elapsed"         : [[TimeIntervalClusterizer messageEditDurationClusterizer] clusterizeTimeInterval:timeElapsed]
+       }
+     ];
 }
 
 - (void)tagMessageCopy;

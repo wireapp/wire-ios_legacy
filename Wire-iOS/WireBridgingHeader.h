@@ -28,6 +28,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
+#import "Message.h"
 
 // UI
 @import WireExtensionComponents;
@@ -102,6 +103,7 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "AppDelegate+Logging.h"
+#import "Analytics+ConversationEvents.h"
 
 // Camera
 #import "CameraController.h"
