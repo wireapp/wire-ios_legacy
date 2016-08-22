@@ -137,7 +137,7 @@
     NSError *error = nil;
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
-    if (error != nil) {
+    if (error != nil || ![JSON isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
     
