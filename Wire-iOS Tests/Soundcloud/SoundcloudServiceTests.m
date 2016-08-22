@@ -21,6 +21,7 @@
 #import <XCTest/XCTest.h>
 
 #import "SoundcloudService.h"
+#import "SoundcloudService+Testing.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "OCMock/OCMock.h"
 
@@ -58,7 +59,19 @@
     OCMVerifyAll(self.sessionMock);
 }
 
-
+- (void)testThatItIgnoresInconsistentResponse
+{
+    // given
+    NSArray *responseStructure = @[@"some", @"test", @{@"some": @1}];
+    NSData *jsonResponseData = [NSJSONSerialization dataWithJSONObject:responseStructure options:NSJSONWritingPrettyPrinted error:NULL];
+    
+    // when
+    id result = [self.service audioObjectFromData:jsonResponseData response:nil];
+    
+    // then
+    // No crash happened and
+    XCTAssertNil(result);
+}
 
 
 @end

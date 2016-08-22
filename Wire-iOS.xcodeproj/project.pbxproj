@@ -518,7 +518,7 @@
 		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
-		878893641D49113600086646 /* JPSimulatorHackFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 878893621D490EB600086646 /* JPSimulatorHackFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		878893641D49113600086646 /* (null) in CopyFiles */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		878C21A01AE4F45600CB9FC4 /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */; };
 		878D65C71C84664A0067E3D9 /* zmessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* zmessaging.framework */; };
 		878F85B419F6635A0020F2F1 /* AddressBookHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 878F85B319F6635A0020F2F1 /* AddressBookHelper.m */; };
@@ -833,7 +833,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				878893641D49113600086646 /* JPSimulatorHackFramework.framework in CopyFiles */,
+				878893641D49113600086646 /* (null) in CopyFiles */,
 				871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in CopyFiles */,
 				871BE95E1CD0C459002267E8 /* OCMock.framework in CopyFiles */,
 			);
@@ -1695,6 +1695,7 @@
 		87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileClientViewController.swift; sourceTree = "<group>"; };
 		87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClientFingerprintTests.swift; sourceTree = "<group>"; };
 		87D5E4411C3E79C600EB8289 /* NSData+Fingerprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Fingerprint.swift"; sourceTree = "<group>"; };
+		87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundcloudService+Testing.h"; sourceTree = "<group>"; };
 		87DCF4751D34E95B00BB420F /* PermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionDeniedViewController.h; sourceTree = "<group>"; };
 		87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionDeniedViewController.m; sourceTree = "<group>"; };
 		87DCF4771D34E95B00BB420F /* ShareContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareContactsViewController.h; sourceTree = "<group>"; };
@@ -3215,6 +3216,7 @@
 				871BC33F1D34F94200DF0793 /* SoundcloudAudioTrack.h */,
 				871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */,
 				871BC3411D34F94200DF0793 /* SoundcloudService.h */,
+				87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */,
 				871BC3421D34F94200DF0793 /* SoundcloudService.m */,
 			);
 			path = Soundcloud;
