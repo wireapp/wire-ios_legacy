@@ -223,7 +223,7 @@
 "content.system.pending_message_timestamp" = "Enviando…";
 "content.system.failedtosend_message_timestamp" = "Mensagem não enviada.";
 "content.system.deleted_message_prefix_timestamp" = "Excluído em %@";
-"content.system.edited_message_prefix_timestamp" = "Edited on %@";
+"content.system.edited_message_prefix_timestamp" = "Editado em %@";
 "content.system.connecting_to" = "Conectando-se a %@. \nInciar uma conversa";
 "content.system.connected_to" = "Conectado a %@ \niniciar uma conversa";
 "content.system.other_wanted_to_talk" = "%@ ligou";
