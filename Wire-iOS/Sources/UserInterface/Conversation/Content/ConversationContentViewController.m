@@ -806,12 +806,14 @@
     }
 }
 
-- (void)conversationCell:(ConversationCell *)cell willOpenMenuForCellType:(MessageType)messageType;
+- (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 {
-    if ([self.delegate respondsToSelector:@selector(conversationContentViewController:didShowMenuFromCell:)]) {
-        [self.delegate conversationContentViewController:self didShowMenuFromCell:cell];
+    BOOL shouldBecomeFirstResponder = YES;
+    if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
+        shouldBecomeFirstResponder = [self.delegate conversationContentViewController:self shouldBecomeFirstResponderWhenShowMenuFromCell:cell];
     }
     [ConversationInputBarViewController endEditingMessage];
+    return shouldBecomeFirstResponder;
 }
 
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;

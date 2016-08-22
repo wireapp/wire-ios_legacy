@@ -348,8 +348,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)showMenu;
 {
-    if ([self.delegate respondsToSelector:@selector(conversationCell:willOpenMenuForCellType:)]) {
-        [self.delegate conversationCell:self willOpenMenuForCellType:[self messageType]];
+    BOOL shouldBecomeFirstResponder = YES;
+    if ([self.delegate respondsToSelector:@selector(conversationCell:shouldBecomeFirstResponderWhenShowMenuWithCellType:)]) {
+        shouldBecomeFirstResponder = [self.delegate conversationCell:self shouldBecomeFirstResponderWhenShowMenuWithCellType:[self messageType]];
     }
     
     MenuConfigurationProperties *menuConfigurationProperties = [self menuConfigurationProperties];
@@ -373,7 +374,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.window makeKeyWindow];
     [self.window becomeFirstResponder];
 
-    if ([UIResponder wr_currentFirstResponder] == nil) {
+    if (shouldBecomeFirstResponder) {
         [self becomeFirstResponder];
     }
     

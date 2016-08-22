@@ -48,7 +48,7 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(ZMMessage *)message;
 
-- (void)conversationContentViewController:(ConversationContentViewController *)controller didShowMenuFromCell:(UITableViewCell *)cell;
+- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell;
 
 @optional
 
