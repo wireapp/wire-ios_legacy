@@ -413,6 +413,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)deleteMessage:(id)sender;
 {
+    self.beingEdited = YES;
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionDelete];
         [[Analytics shared] tagOpenedMessageAction:MessageActionTypeDelete];
