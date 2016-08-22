@@ -95,8 +95,11 @@
 {
     // We use a ShareContactsViewController but our own `later` button,
     // that's why we need to track the tap manually here.
-    [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
-    [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
+    if (!self.shareContactsViewController.showingAddressBookAccessDeniedViewController) {
+        [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
+        [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
+    }
+    
     [self.formStepDelegate didSkipFormStep:self];
 }
 

@@ -30,5 +30,6 @@
 @property (nonatomic) BOOL backgroundBlurDisabled;
 @property (nonatomic) BOOL notNowButtonHidden;
 @property (nonatomic) BOOL monochromeStyle;
+@property (nonatomic, readonly) BOOL showingAddressBookAccessDeniedViewController;
 
 @end
