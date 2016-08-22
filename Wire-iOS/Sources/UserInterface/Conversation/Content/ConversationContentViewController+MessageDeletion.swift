@@ -22,13 +22,12 @@ extension ConversationContentViewController {
 
     /**
      Presents a `UIAlertController` of type action sheet with the options to delete a message everywhere, locally
-     or to cancel. An optional completion block can be provided to get notified if the message has been deleted.
+     or to cancel. An optional completion block can be provided to get notified when an action has been selected.
      The delete everywhere option is only shown if this action is allowed for the input message.
      
      - parameter message:    The message for which the alert controller should be shown
-     - parameter completion: An optional completion block with a boolean parameter indicating deletion (`true`) or cancellation
      */
-    func presentDeletionAlertController(forMessage message: ZMConversationMessage, completion: (Bool -> Void)?) {
+    func presentDeletionAlertController(forMessage message: ZMConversationMessage, completion: (() -> Void)?) {
         let showDelete = (message.sender?.isSelfUser ?? false) && conversation.isSelfAnActiveMember
         let alert = UIAlertController.alertControllerForMessageDeletion(showDelete) { [weak self] action in
             
@@ -46,7 +45,7 @@ extension ConversationContentViewController {
                 }
             }
 
-            completion?(action != .Cancel)
+            completion?()
             self?.dismissViewControllerAnimated(true, completion: nil)
         }
 
@@ -59,7 +58,7 @@ extension ConversationContentViewController {
     }
     
     private func trackDelete(message: ZMConversationMessage, deletionType: AlertAction.DeletionType) {
-        let conversationType : ConversationType = (self.conversation.conversationType == .Group) ? .Group : .OneToOne
+        let conversationType: ConversationType = (conversation.conversationType == .Group) ? .Group : .OneToOne
         let messageType = Message.messageType(message)
         let timeElapsed = message.serverTimestamp?.timeIntervalSinceNow ?? 0
         Analytics.shared()?.tagDeletedMessage(messageType, messageDeletionType: deletionType.analyticsType, conversationType:conversationType, timeElapsed: 0 - timeElapsed)
@@ -67,7 +66,7 @@ extension ConversationContentViewController {
 
 }
 
-private enum AlertAction: Equatable {
+private enum AlertAction {
     enum DeletionType {
         case Local
         case Everywhere
@@ -81,14 +80,6 @@ private enum AlertAction: Equatable {
     }
     
     case Delete(DeletionType), Cancel
-}
-
-private func ==(lhs: AlertAction, rhs: AlertAction) -> Bool {
-    switch (lhs, rhs) {
-    case (.Cancel, .Cancel): return true
-    case (.Delete(let left), .Delete(let right)): return left == right
-    default: return false
-    }
 }
 
 private extension UIAlertController {

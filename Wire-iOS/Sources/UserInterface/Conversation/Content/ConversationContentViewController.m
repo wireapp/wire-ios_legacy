@@ -782,10 +782,8 @@
         
         case ConversationCellActionDelete:
         {
-            [self presentDeletionAlertControllerForMessage:cell.message completion: ^(BOOL deleted){
-                if (!deleted) {
-                    cell.beingEdited = NO;
-                }
+            [self presentDeletionAlertControllerForMessage:cell.message completion:^{
+                cell.beingEdited = NO;
             }];
         }
             break;
