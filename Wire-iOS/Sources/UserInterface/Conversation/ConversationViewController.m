@@ -593,12 +593,21 @@
     }
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)controller didShowMenuFromCell:(UITableViewCell *)cell
+- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell
 {
-    self.inputBarController.inputBar.textView.overrideNextResponder = cell;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidHide:) name:UIMenuControllerDidHideMenuNotification object:nil];
-    
+    if ([self.inputBarController.inputBar.textView isFirstResponder]) {
+        self.inputBarController.inputBar.textView.overrideNextResponder = cell;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(menuDidHide:)
+                                                     name:UIMenuControllerDidHideMenuNotification
+                                                   object:nil];
+        
+        return NO;
+    }
+    else {
+        return YES;
+    }
 }
 
 @end
