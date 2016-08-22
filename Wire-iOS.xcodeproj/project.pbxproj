@@ -204,7 +204,6 @@
 		1EE9DCCD1B5F9D0000E347DF /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		1EE9DCD61B5FA4AD00E347DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850A0199245760008B66B /* Images.xcassets */; };
 		1EE9DCD91B5FA4B200E347DF /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
-		1EE9DCE41B5FC34A00E347DF /* (null) in Resources */ = {isa = PBXBuildFile; };
 		1EE9DCED1B5FC4A100E347DF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1EE9DCEC1B5FC4A100E347DF /* Localizable.strings */; };
 		1EE9DCF21B5FCA5E00E347DF /* UIColor+Accent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCF11B5FCA5E00E347DF /* UIColor+Accent.swift */; };
 		1EE9DCFB1B5FE76600E347DF /* UIAlertController+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCFA1B5FE76600E347DF /* UIAlertController+NSError.swift */; };
@@ -518,7 +517,6 @@
 		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
-		878893641D49113600086646 /* (null) in CopyFiles */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		878C21A01AE4F45600CB9FC4 /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */; };
 		878D65C71C84664A0067E3D9 /* zmessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* zmessaging.framework */; };
 		878F85B419F6635A0020F2F1 /* AddressBookHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 878F85B319F6635A0020F2F1 /* AddressBookHelper.m */; };
@@ -770,7 +768,6 @@
 		DB888FB61ADD18B400CE9A88 /* RegistrationEmailFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB888FB51ADD18B400CE9A88 /* RegistrationEmailFlowViewController.m */; };
 		DB888FBB1ADD195F00CE9A88 /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB888FBA1ADD195F00CE9A88 /* EmailStepViewController.m */; };
 		DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBACFF781B3C96E1004062E0 /* MentionsBubbleView.m */; };
-		DBB45F371B53CA9A0010053C /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DBB45F3B1B53F8DE0010053C /* NSString+MentionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB45F3A1B53F8DE0010053C /* NSString+MentionsTests.m */; };
 		DBBC190F1B5E3C5D00E84607 /* StopWatch.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBC190E1B5E3C5D00E84607 /* StopWatch.m */; };
 		DBBFBCB919D2CBCB00557444 /* TitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBFBCB819D2CBCB00557444 /* TitleBar.m */; };
@@ -833,7 +830,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				878893641D49113600086646 /* (null) in CopyFiles */,
 				871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in CopyFiles */,
 				871BE95E1CD0C459002267E8 /* OCMock.framework in CopyFiles */,
 			);
@@ -4753,7 +4749,6 @@
 				1EE9DCD61B5FA4AD00E347DF /* Images.xcassets in Resources */,
 				1EE9DCED1B5FC4A100E347DF /* Localizable.strings in Resources */,
 				1EBA8C691B70C15D0089CC44 /* common-controls.cas in Resources */,
-				1EE9DCE41B5FC34A00E347DF /* (null) in Resources */,
 				1EBA8C6D1B70CCB10089CC44 /* stylesheet-share-ext.cas in Resources */,
 				1EE9DC8A1B5F991900E347DF /* Media.xcassets in Resources */,
 				1E5E0D0C1B6B9A33003B0CAC /* colors.cas in Resources */,
@@ -5191,7 +5186,6 @@
 				8FC8549C199245770008B66B /* NetworkStatusViewController.m in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */,
-				DBB45F371B53CA9A0010053C /* (null) in Sources */,
 				1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
 				871BBFFE1D34F56300DF0793 /* Analytics+Metrics.m in Sources */,
