@@ -21,7 +21,7 @@
 #import "ZMUserSession+RequestProxy.h"
 #import "SoundcloudService.h"
 #import "SoundcloudAudioTrack.h"
-
+#import "SoundcloudService+Testing.h"
 
 
 @interface SoundcloudService ()
