@@ -139,9 +139,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     self.tapToDismissEditingGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackgroundTap:)];
     self.tapToDismissEditingGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:self.tapToDismissEditingGestureRecognizer];
-    
-    // Do any additional setup after loading the view.
-    
+
     self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
     self.collectionViewLayout.itemSize = [self itemSizeForMagicPrefix:@"participants"];
     self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(self.insetMargin, self.insetMargin, self.insetMargin, self.insetMargin);
@@ -291,13 +289,14 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         self.conversationObserverToken = [conversation addConversationObserver:self];
     }
     
-    self.participants = [self.conversation.otherActiveParticipants array];
+    self.participants = self.conversation.sortedOtherActiveParticipants;
     
     [self.collectionView reloadData];
 }
 
 - (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     self.footerView.separatorLine.hidden = ! self.collectionView.isContentOverflowing;
 }
 
@@ -378,14 +377,11 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         // when user has committed editing, we resign first responder and do async dispatch,
         // so that in next run loop, the text field is no longer first responder
         // and thus name can be updated
-        
         @weakify(self);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             @strongify(self);
-            
-            self.participants = [self.conversation.otherActiveParticipants array];
+            self.participants = self.conversation.sortedOtherActiveParticipants;
             [self reloadUI];
             [self.collectionView reloadData];
             
