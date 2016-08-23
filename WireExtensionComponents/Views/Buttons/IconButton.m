@@ -17,7 +17,7 @@
 // 
 
 
-#import <Classy/Classy.h>
+@import Classy;
 
 #import "IconButton.h"
 #import "UIImage+ZetaIconsNeue.h"

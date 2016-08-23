@@ -1,5 +1,5 @@
 github "wireapp/Cartography" "z0.6.1"
-github "ClassyKit/Classy" "v0.2.5"
+github "wireapp/Classy" "v0.2.6"
 github "wireapp/CocoaLumberjack" "2.2.1-wire"
 github "wireapp/FormatterKit" "1.8.1"
 github "wireapp/HockeySDK-iOS" "4.0.1"

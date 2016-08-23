@@ -26,6 +26,32 @@
 
 @implementation UIFont (MagicAccess)
 
++ (CGFloat)wr_fontWeightFromWeightString:(NSString *)weightString
+{
+    static NSDictionary *mapping = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        mapping = @{@"black":       @(UIFontWeightBlack),
+                    @"heavy":       @(UIFontWeightHeavy),
+                    @"bold":        @(UIFontWeightBold),
+                    @"semibold":    @(UIFontWeightSemibold),
+                    @"medium":      @(UIFontWeightMedium),
+                    @"regular":     @(UIFontWeightRegular),
+                    @"thin":        @(UIFontWeightThin),
+                    @"light":       @(UIFontWeightLight),
+                    @"ultralight":  @(UIFontWeightUltraLight)};
+    });
+    
+    CGFloat weight = UIFontWeightRegular;
+    NSNumber *weightNumber = mapping[[weightString lowercaseString]];
+    
+    if (weightNumber != nil) {
+        weight = [weightNumber floatValue];
+    }
+    
+    return weight;
+}
+
 + (UIFont *)fontWithMagicIdentifier:(NSString *)identifier
 {
     static NSMutableDictionary *fontCache;
@@ -62,10 +88,22 @@
                                            UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)}];
         }
         
-        UIFont *systemFont = [UIFont systemFontOfSize:fontSizeFloat];
-        UIFontDescriptor *descriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:@{UIFontDescriptorFaceAttribute: weightString, 
-                                                                                            UIFontDescriptorFamilyAttribute: systemFont.familyName,
-                                                                                            UIFontDescriptorFeatureSettingsAttribute: featureAttributes}];
+        UIFont *systemFont = nil;
+        UIFontDescriptor *descriptor = nil;
+        
+        if ([[UIFont class] respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+            systemFont = [UIFont systemFontOfSize:fontSizeFloat weight:[self wr_fontWeightFromWeightString:weightString]];
+            descriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:@{UIFontDescriptorNameAttribute: systemFont.fontName,
+                                                                              UIFontDescriptorFeatureSettingsAttribute: featureAttributes}];
+        }
+        else {
+            systemFont = [UIFont systemFontOfSize:fontSizeFloat];
+            descriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:@{UIFontDescriptorFaceAttribute: weightString,
+                                                                              UIFontDescriptorFamilyAttribute: systemFont.familyName,
+                                                                              UIFontDescriptorFeatureSettingsAttribute: featureAttributes}];
+        }
+        
+        
         UIFont *font = [UIFont fontWithDescriptor:descriptor size:fontSizeFloat];
         fontCache[identifier] = font;
         return font;

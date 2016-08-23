@@ -1,7 +1,7 @@
 github "wireapp/wire-ios-ziphy" ~> 3.0
 github "wireapp/SmoothLineView" "0.1.12-wire-ft"
 github "wireapp/TSMarkdownParser" ~> 1.0.17
-github "ClassyKit/Classy" "v0.2.5"
+github "wireapp/Classy" "v0.2.6"
 github "wireapp/CocoaLumberjack" "2.2.1-wire"
 github "wireapp/Cartography" "z0.6.1"
 github "wireapp/TTTAttributedLabel" "1.13.4"
