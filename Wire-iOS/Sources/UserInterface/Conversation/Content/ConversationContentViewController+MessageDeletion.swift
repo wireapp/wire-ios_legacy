@@ -85,8 +85,8 @@ private enum AlertAction {
 private extension UIAlertController {
 
     static func alertControllerForMessageDeletion(showDelete: Bool, selectedAction: AlertAction -> Void) -> UIAlertController {
-        let alertMessage = "message.delete_dialog.message".localized
-        let alert = UIAlertController(title: nil, message: alertMessage, preferredStyle: .ActionSheet)
+        let alertTitle = "message.delete_dialog.message".localized
+        let alert = UIAlertController(title: alertTitle, message: nil, preferredStyle: .ActionSheet)
 
         let hideTitle = "message.delete_dialog.action.hide".localized
         let hideAction = UIAlertAction(title: hideTitle, style: .Default, handler: { _ in selectedAction(.Delete(.Local)) })
