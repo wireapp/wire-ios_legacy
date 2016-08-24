@@ -396,8 +396,8 @@
 // Delete message dialog
 "message.delete_dialog.message" = "This cannot be undone.";
 "message.delete_dialog.action.cancel" = "Cancel";
-"message.delete_dialog.action.hide" = "Delete only for me";
-"message.delete_dialog.action.delete" = "Delete for everyone";
+"message.delete_dialog.action.hide" = "Delete for Me";
+"message.delete_dialog.action.delete" = "Delete for Everyone";
 
 // Edit message
 "message.menu.edit.title" = "Edit";
