@@ -94,6 +94,7 @@
                                  initiatedCall:self.initiatedCall
                                       duration:-[self.callEstablishedDate timeIntervalSinceNow]
                                         reason:note.reason];
+    self.callEstablishedDate = nil;
 }
 
 @end
