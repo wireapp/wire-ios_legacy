@@ -459,7 +459,6 @@
 		8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */; };
 		8744489F1C22FCE500E7B947 /* Message+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448921C22FCE500E7B947 /* Message+Formatting.m */; };
 		874448A01C22FCE500E7B947 /* MessageStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448941C22FCE500E7B947 /* MessageStatusIndicator.m */; };
-		874448A11C22FCE500E7B947 /* MessageTimestampView.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448961C22FCE500E7B947 /* MessageTimestampView.m */; };
 		874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448981C22FCE500E7B947 /* ParticipantsChangedView.m */; };
 		874448A31C22FCE500E7B947 /* TSMarkdownParser+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744489A1C22FCE500E7B947 /* TSMarkdownParser+Wire.m */; };
 		8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */; };
@@ -486,6 +485,8 @@
 		875A23171ADEA1AD00111C88 /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 875A23161ADEA1AD00111C88 /* CountryCodeView.m */; };
 		875B6B461C5953E2007C61E5 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875B6B441C5953DA007C61E5 /* VideoToolbox.framework */; };
 		875D48D11A6D087F00BB17B5 /* ConversationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */; };
+		875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */; };
+		875F89141D6DD6D000D8748E /* LikesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89131D6DD6D000D8748E /* LikesView.swift */; };
 		876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 876AE75F1C159A9C00E3E743 /* NSStringFingerprintTests.m */; };
 		876BF8121AEFDA7900A3810F /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BF8101AEFDA7900A3810F /* SignInViewController.m */; };
 		876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */; };
@@ -1551,8 +1552,6 @@
 		874448921C22FCE500E7B947 /* Message+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+Formatting.m"; sourceTree = "<group>"; };
 		874448931C22FCE500E7B947 /* MessageStatusIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageStatusIndicator.h; sourceTree = "<group>"; };
 		874448941C22FCE500E7B947 /* MessageStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageStatusIndicator.m; sourceTree = "<group>"; };
-		874448951C22FCE500E7B947 /* MessageTimestampView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTimestampView.h; sourceTree = "<group>"; };
-		874448961C22FCE500E7B947 /* MessageTimestampView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTimestampView.m; sourceTree = "<group>"; };
 		874448971C22FCE500E7B947 /* ParticipantsChangedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsChangedView.h; sourceTree = "<group>"; };
 		874448981C22FCE500E7B947 /* ParticipantsChangedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsChangedView.m; sourceTree = "<group>"; };
 		874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TSMarkdownParser+Wire.h"; sourceTree = "<group>"; };
@@ -1592,6 +1591,8 @@
 		875B6B441C5953DA007C61E5 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewController.h; sourceTree = "<group>"; };
 		875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListViewController.m; sourceTree = "<group>"; };
+		875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageToolboxView.swift; sourceTree = "<group>"; };
+		875F89131D6DD6D000D8748E /* LikesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesView.swift; sourceTree = "<group>"; };
 		876513521D66F06C00D1D77E /* wire-ios-build-assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "wire-ios-build-assets"; sourceTree = SOURCE_ROOT; };
 		876AE75F1C159A9C00E3E743 /* NSStringFingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringFingerprintTests.m; sourceTree = "<group>"; };
 		876BF80F1AEFDA7900A3810F /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -3305,8 +3306,6 @@
 				874448921C22FCE500E7B947 /* Message+Formatting.m */,
 				874448931C22FCE500E7B947 /* MessageStatusIndicator.h */,
 				874448941C22FCE500E7B947 /* MessageStatusIndicator.m */,
-				874448951C22FCE500E7B947 /* MessageTimestampView.h */,
-				874448961C22FCE500E7B947 /* MessageTimestampView.m */,
 				874448971C22FCE500E7B947 /* ParticipantsChangedView.h */,
 				874448981C22FCE500E7B947 /* ParticipantsChangedView.m */,
 				874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */,
@@ -3319,6 +3318,8 @@
 				16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */,
 				16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */,
 				87DE06B01D256CF50009411F /* DeviceProximityListener.swift */,
+				875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */,
+				875F89131D6DD6D000D8748E /* LikesView.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -5238,6 +5239,7 @@
 				874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */,
 				162CFAA11AE4FA7D0078FB87 /* PhoneSignInViewController.m in Sources */,
 				871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */,
+				875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */,
 				DB888FBB1ADD195F00CE9A88 /* EmailStepViewController.m in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
 				BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */,
@@ -5470,6 +5472,7 @@
 				874448851C22FC6200E7B947 /* ConversationVerifiedCell.swift in Sources */,
 				874D0EB31D3E6D77003DF418 /* ConversationInputBarViewController+Camera.swift in Sources */,
 				871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */,
+				875F89141D6DD6D000D8748E /* LikesView.swift in Sources */,
 				87DCF4F41D34EA4500BB420F /* StartUIView.m in Sources */,
 				871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */,
 				8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */,
@@ -5510,7 +5513,6 @@
 				8F17CD141A0520010077DC1B /* SessionObjectCache.m in Sources */,
 				BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */,
 				DBBFBCB919D2CBCB00557444 /* TitleBar.m in Sources */,
-				874448A11C22FCE500E7B947 /* MessageTimestampView.m in Sources */,
 				876BF8121AEFDA7900A3810F /* SignInViewController.m in Sources */,
 				16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */,
 				87DCF4EA1D34EA4500BB420F /* CollectionViewSectionAggregator.m in Sources */,

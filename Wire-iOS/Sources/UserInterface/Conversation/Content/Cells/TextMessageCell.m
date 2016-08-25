@@ -28,7 +28,6 @@
 #import "TextViewWithDataDetectorWorkaround.h"
 #import "Message+Formatting.h"
 #import "MessageStatusIndicator.h"
-#import "MessageTimestampView.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
 #import "AnalyticsTracker+Media.h"
@@ -58,14 +57,12 @@
 @property (nonatomic, strong) UIImageView *editedImageView;
 @property (nonatomic, strong) LinkAttachment *linkAttachment;
 @property (nonatomic, strong) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
-@property (nonatomic, strong) MessageTimestampView *messageTimestampView;
 
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerLeftMarginConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerRightMarginConstraint;
 @property (nonatomic, strong) UIView *linkAttachmentView;
 
-@property (nonatomic) NSLayoutConstraint *timestampHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 
 @end
@@ -123,10 +120,6 @@
     [self.messageStatusIndicator setResendButtonTarget:self action:@selector(resendButtonPressed:)];
     [self.messageContentView addSubview:self.messageStatusIndicator];
     
-    self.messageTimestampView = [[MessageTimestampView alloc] init];
-    self.messageTimestampView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.messageContentView addSubview:self.messageTimestampView];
-    
     self.editedImageView = [[UIImageView alloc] init];
     self.editedImageView.image = [UIImage imageForIcon:ZetaIconTypePencil
                                               iconSize:ZetaIconSizeMessageStatus
@@ -153,27 +146,11 @@
     [self.messageStatusIndicator autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:4];
     [self.messageStatusIndicator autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.messageTextView withOffset:-5];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.timestampHeightConstraint = [self.messageTimestampView autoSetDimension:ALDimensionHeight toSize:0];
-    }];
-    
-    [self.messageTimestampView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.linkAttachmentContainer];
-    [self.messageTimestampView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.messageTimestampView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.messageTimestampView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
+    
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    self.timestampHeightConstraint.active = !self.selected;
-    [UIView animateWithDuration:0.35 animations:^{
-        self.messageTimestampView.alpha = self.selected ? 1 : 0;
-    }];
 }
 
 - (void)updateTextMessageConstraintConstants
@@ -184,9 +161,6 @@
     if (hasLinkAttachment && hasContentBeforeAttachment) {
         self.mediaPlayerTopMarginConstraint.constant = 12;
     }
-    
-    self.timestampHeightConstraint.active = !self.selected;
-    self.messageTimestampView.alpha = self.selected ? 1 : 0;
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
@@ -208,7 +182,6 @@
                                                                                   isGiphy:isGiphy];
     self.messageTextView.attributedText = attributedMessageText;
     [self.messageTextView layoutIfNeeded];
-    self.messageTimestampView.timestampLabel.text = [Message formattedReceivedDateLongVersion:self.message];
     self.textViewHeightConstraint.active = attributedMessageText.length == 0;
     self.editedImageView.hidden = (nil == self.message.updatedAt);
 
@@ -257,7 +230,6 @@
         self.messageStatusIndicator.deliveryState = message.deliveryState;
     }
     
-    [self updateTimestampLabel];
     [self updateTextMessageConstraintConstants];
 }
 
@@ -292,7 +264,6 @@
     // If a text message changes, the only thing that can change at the moment is its delivery state
     if (change.deliveryStateChanged) {
         self.messageStatusIndicator.deliveryState = change.message.deliveryState;
-        [self updateTimestampLabel];
     }
     
     if (change.linkPreviewChanged && self.linkAttachmentView == nil) {
@@ -315,15 +286,6 @@
     }
     
     return needsLayout;
-}
-
-- (void)updateTimestampLabel
-{
-    if (nil != self.message.updatedAt) {
-        self.messageTimestampView.timestampLabel.text = [Message formattedEditedDateForMessage:self.message];
-    } else {
-        self.messageTimestampView.timestampLabel.text = [Message formattedReceivedDateLongVersion:self.message];
-    }
 }
 
 

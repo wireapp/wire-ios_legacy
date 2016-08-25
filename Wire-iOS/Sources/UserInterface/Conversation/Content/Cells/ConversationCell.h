@@ -25,7 +25,7 @@
 #import "Analytics+iOS.h"
 
 @class ConversationCell;
-@class MessageTimestampView;
+@class MessageToolboxView;
 @class AnalyticsTracker;
 
 

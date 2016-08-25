@@ -718,11 +718,14 @@ GroupConversationHeader {
     }
 }
 
-MessageTimestampView {
+MessageToolboxView {
     timestampLabel: @{
         font: $font-small-light;
+        backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
+    backgroundColor: clear;
+    clipsToBounds: true;
 }
 
 ^ConversationCell {
