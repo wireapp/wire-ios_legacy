@@ -86,7 +86,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 @end
 
+@interface ConversationCell (MessageToolboxViewDelegate) <MessageToolboxViewDelegate>
 
+@end
 
 @implementation ConversationCell
 
@@ -121,6 +123,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
         // here until we re-factor the the ConversationCell
         self.messageContentView.layoutMargins = layoutMargins;
+        self.messageToolboxView.layoutMargins = layoutMargins;
     }
     
     return self;
@@ -139,6 +142,38 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         self.burstTimestampTimer = nil;
     }
 }
+
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+//    // To make like button easier to interact with we need to alter the cell hit areas
+//    // The cells that show the like / timestamp area should have bigger touch area, the cells that have no menu open
+//    // should have a smaller hit area.
+//    const CGFloat touchAreaDelta = 20;
+//    if (self.layoutProperties.showToolbox) {
+//        CGRect increasedRect = CGRectInset(self.bounds, 0, -touchAreaDelta);
+//        
+//        if (CGRectContainsPoint(increasedRect, point)) {
+//            if (CGRectContainsPoint(self.bounds, point)) {
+//                return [super hitTest:point withEvent:event];
+//            }
+//            else {
+//                return [self.messageToolboxView hitTest:[self convertPoint:point toView:self.messageToolboxView] withEvent:event]
+//            }
+//        }
+//        else {
+//            return nil;
+//        }
+//    }
+//    else {
+////        CGRect decreasedRect = CGRectInset(self.bounds, 0, touchAreaDelta);
+////        
+////        if (CGRectContainsPoint(decreasedRect, point)) {
+//            return [super hitTest:point withEvent:event];
+////        }
+////        else {
+////            return nil;
+////        }
+//    }
+//}
 
 - (void)createViews
 {
@@ -252,23 +287,23 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     self.timestampHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
-    [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.messageContentBottomMarginConstraint = [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 }
 
 - (void)updateConstraintConstants
 {
-    self.unreadDotHeightConstraint.active = ! self.layoutProperties.showUnreadMarker;
-    self.authorImageHeightConstraint.active = ! self.layoutProperties.showSender;
-    self.authorImageTopMarginConstraint.constant = self.layoutProperties.showBurstTimestamp ? self.burstTimestampSpacing : 0;
-    self.topMarginConstraint.constant = self.layoutProperties.topPadding;
-    self.authorHeightConstraint.active = ! self.layoutProperties.showSender;
-    self.authorLabel.hidden = ! self.layoutProperties.showSender;
-    self.authorImageContainer.hidden = ! self.layoutProperties.showSender;
-    self.burstTimestampHeightConstraint.active = ! self.layoutProperties.showBurstTimestamp;
-    self.timestampHeightConstraint.active = ! self.selected;
-    self.messageToolboxView.alpha = self.selected ? 1 : 0;
+    self.unreadDotHeightConstraint.active        = ! self.layoutProperties.showUnreadMarker;
+    self.authorImageHeightConstraint.active      = ! self.layoutProperties.showSender;
+    self.authorImageTopMarginConstraint.constant =   self.layoutProperties.showBurstTimestamp ? self.burstTimestampSpacing : 0;
+    self.topMarginConstraint.constant            =   self.layoutProperties.topPadding;
+    self.authorHeightConstraint.active           = ! self.layoutProperties.showSender;
+    self.authorLabel.hidden                      = ! self.layoutProperties.showSender;
+    self.authorImageContainer.hidden             = ! self.layoutProperties.showSender;
+    self.burstTimestampHeightConstraint.active   = ! self.layoutProperties.showBurstTimestamp;
+    
+    [self updateToolboxVisibilityAnimated:NO];
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
@@ -287,6 +322,22 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     [self.messageToolboxView configureForMessage:message];
     [self updateConstraintConstants];
+}
+
+- (void)updateToolboxVisibilityAnimated:(BOOL)animated
+{
+    BOOL shouldBeVisible = self.selected || self.layoutProperties.showToolbox;
+    
+    self.timestampHeightConstraint.active = ! shouldBeVisible;
+    
+    if (animated) {
+        [UIView animateWithDuration:0.35 animations:^{
+            self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
+        }];
+    }
+    else {
+        self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
+    }
 }
 
 - (void)updateSenderAndSenderImage:(id<ZMConversationMessage>)message
@@ -444,10 +495,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     [super setSelected:selected animated:animated];
     
-    self.timestampHeightConstraint.active = !self.selected;
-    [UIView animateWithDuration:0.35 animations:^{
-        self.messageToolboxView.alpha = self.selected ? 1 : 0;
-    }];
+    [self updateToolboxVisibilityAnimated:animated];
 }
 
 #pragma mark - UserImageView delegate
@@ -477,6 +525,15 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
     
     return NO;
+}
+
+@end
+
+@implementation ConversationCell (MessageToolboxViewDelegate)
+
+- (void)messageToolboxViewDidSelectReactions:(MessageToolboxView *)messageToolboxView
+{
+    
 }
 
 @end

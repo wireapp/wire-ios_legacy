@@ -27,10 +27,11 @@
 - (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(ZMMessage *)lastUnreadMessage
 {
     ConversationCellLayoutProperties *layoutProperties = [[ConversationCellLayoutProperties alloc] init];
-    layoutProperties.showSender = [self shouldShowSenderForMessage:message];
+    layoutProperties.showSender       = [self shouldShowSenderForMessage:message];
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
-    layoutProperties.topPadding = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
+    layoutProperties.topPadding       = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
+    layoutProperties.showToolbox      = [self shouldShowToolboxForMessage:message];
     
     if ([Message isTextMessage:message]) {
         layoutProperties.linkAttachments = [Message linkAttachments:message.textMessageData];
@@ -62,6 +63,19 @@
     }
     
     return NO;
+}
+
+- (BOOL)shouldShowToolboxForMessage:(id<ZMConversationMessage>)message
+{
+    if (message.conversation.messages.lastObject == message) {
+        return YES;
+    }
+    
+    if ((message.deliveryState == ZMDeliveryStatePending) || (message.deliveryState == ZMDeliveryStateFailedToSend)) {
+        return YES;
+    }
+    
+    return NO;//message.isLiked
 }
 
 - (BOOL)shouldShowSenderForMessage:(id<ZMConversationMessage>)message

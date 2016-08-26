@@ -221,6 +221,7 @@
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
 "content.system.pending_message_timestamp" = "Sending…";
+"content.system.message_sent_timestamp" = "Sent";
 "content.system.failedtosend_message_timestamp" = "Unsent message.";
 "content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
 "content.system.edited_message_prefix_timestamp" = "Edited on %@";

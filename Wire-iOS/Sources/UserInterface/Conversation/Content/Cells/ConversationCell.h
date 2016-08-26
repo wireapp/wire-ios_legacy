@@ -56,6 +56,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @property (nonatomic, assign) BOOL showSender;
 @property (nonatomic, assign) BOOL showBurstTimestamp;
+@property (nonatomic, assign) BOOL showToolbox;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
 @property (nonatomic, strong) NSArray *linkAttachments;
@@ -72,7 +73,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-
+- (void)conversationCell:(ConversationCell *)cell openReactionsPressed:(ZMMessage *)message;
 @end
 
 

@@ -719,7 +719,7 @@ GroupConversationHeader {
 }
 
 MessageToolboxView {
-    timestampLabel: @{
+    statusLabel: @{
         font: $font-small-light;
         backgroundColor: clear;
         textColor: $color-text-dimmed;

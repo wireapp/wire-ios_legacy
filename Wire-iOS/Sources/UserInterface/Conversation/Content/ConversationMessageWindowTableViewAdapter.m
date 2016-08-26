@@ -138,7 +138,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
         // Unless a message was appended to the bottom of the conversation we need re-configure the cells
         // since they might (not) need to display an name & avatar after the insertion/deletion/move.
         BOOL messageWasInsertedAtBottom = change.insertedIndexes.count == 1 && change.insertedIndexes.firstIndex == 0;
-        if (! messageWasInsertedAtBottom || change.deletedIndexes.count > 0 || change.movedIndexPairs.count > 0) {
+        if (messageWasInsertedAtBottom || change.deletedIndexes.count > 0 || change.movedIndexPairs.count > 0) {
             [self reconfigureVisibleCells];
         }
         
