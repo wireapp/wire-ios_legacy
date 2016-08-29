@@ -22,7 +22,11 @@ import MessageUI
 typealias TechReport = [String: String]
 
 class SettingsTechReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-
+    private enum TechReportSection: Int {
+        case Reports = 0
+        case Options = 1
+    }
+    
     private let techReportTitle = "TechnicalReportTitleKey"
     private let technicalReportData = "TechnicalReportDataKey"
     private let technicalReportReuseIdentifier = "TechnicalReportCellReuseIdentifier"
@@ -101,20 +105,23 @@ class SettingsTechReportViewController: UITableViewController, MFMailComposeView
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == 0 else {
+        guard section == TechReportSection.Reports.rawValue else {
             return 2
         }
         return lastCallSessionReports.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard indexPath.section == 0 else {
+        switch indexPath.section {
+        case TechReportSection.Options.rawValue:
             return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
+        default:
+            let cell = tableView.dequeueReusableCellWithIdentifier(technicalReportReuseIdentifier, forIndexPath: indexPath)
+            let techReport = lastCallSessionReports[indexPath.row]
+            cell.detailTextLabel?.text = techReport[technicalReportData]
+            return cell
+            
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(technicalReportReuseIdentifier, forIndexPath: indexPath)
-        let techReport = lastCallSessionReports[indexPath.row]
-        cell.detailTextLabel?.text = techReport[technicalReportData]
-        return cell
     }
     
     override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
