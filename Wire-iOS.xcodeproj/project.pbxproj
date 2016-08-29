@@ -453,7 +453,6 @@
 		874448811C22F64900E7B947 /* IconSystemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448801C22F64900E7B947 /* IconSystemCell.swift */; };
 		874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */; };
 		874448851C22FC6200E7B947 /* ConversationVerifiedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */; };
-		8744489B1C22FCE500E7B947 /* CachingFrameAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448891C22FCE500E7B947 /* CachingFrameAnimationView.m */; };
 		8744489C1C22FCE500E7B947 /* LinkAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744488B1C22FCE500E7B947 /* LinkAttachment.m */; };
 		8744489D1C22FCE500E7B947 /* LinkAttachmentCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744488D1C22FCE500E7B947 /* LinkAttachmentCache.m */; };
 		8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */; };
@@ -505,8 +504,6 @@
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
 		8785CA5C1C567FCD00FD671C /* IconLabelButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 8785CA5A1C567FCD00FD671C /* IconLabelButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8785CA5B1C567FCD00FD671C /* IconLabelButton.m */; };
-		878606DF1D33C79400971A19 /* FrameAnimationView.h in Headers */ = {isa = PBXBuildFile; fileRef = 878606DD1D33C79400971A19 /* FrameAnimationView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		878606E01D33C79400971A19 /* FrameAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878606DE1D33C79400971A19 /* FrameAnimationView.m */; };
 		8786071B1D33E3FF00971A19 /* Geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607021D33E3FF00971A19 /* Geometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071C1D33E3FF00971A19 /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607031D33E3FF00971A19 /* Geometry.m */; };
 		8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607041D33E3FF00971A19 /* KeyValueObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1535,8 +1532,6 @@
 		874448801C22F64900E7B947 /* IconSystemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSystemCell.swift; sourceTree = "<group>"; };
 		874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationNewDeviceCell.swift; sourceTree = "<group>"; };
 		874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationVerifiedCell.swift; sourceTree = "<group>"; };
-		874448881C22FCE500E7B947 /* CachingFrameAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachingFrameAnimationView.h; sourceTree = "<group>"; };
-		874448891C22FCE500E7B947 /* CachingFrameAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachingFrameAnimationView.m; sourceTree = "<group>"; };
 		8744488A1C22FCE500E7B947 /* LinkAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkAttachment.h; sourceTree = "<group>"; };
 		8744488B1C22FCE500E7B947 /* LinkAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachment.m; sourceTree = "<group>"; };
 		8744488C1C22FCE500E7B947 /* LinkAttachmentCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkAttachmentCache.h; sourceTree = "<group>"; };
@@ -1610,8 +1605,6 @@
 		8774F0C61B4AB2DD002256A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8785CA5A1C567FCD00FD671C /* IconLabelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconLabelButton.h; sourceTree = "<group>"; };
 		8785CA5B1C567FCD00FD671C /* IconLabelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconLabelButton.m; sourceTree = "<group>"; };
-		878606DD1D33C79400971A19 /* FrameAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameAnimationView.h; sourceTree = "<group>"; };
-		878606DE1D33C79400971A19 /* FrameAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrameAnimationView.m; sourceTree = "<group>"; };
 		878607021D33E3FF00971A19 /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
 		878607031D33E3FF00971A19 /* Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geometry.m; sourceTree = "<group>"; };
 		878607041D33E3FF00971A19 /* KeyValueObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyValueObserver.h; sourceTree = "<group>"; };
@@ -2531,7 +2524,6 @@
 		1EE9DCA51B5F9A6D00E347DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				878606DC1D33C79400971A19 /* FrameAnimation */,
 				16AACE701C0CAC6300E62C43 /* TabBar */,
 				1E5E0CAB1B6B83C6003B0CAC /* Buttons */,
 				1EE9DCAA1B5F9A6D00E347DF /* TokenField */,
@@ -3284,8 +3276,6 @@
 			isa = PBXGroup;
 			children = (
 				1651F9B61D352B7B00A9FAE8 /* ArticleView.swift */,
-				874448881C22FCE500E7B947 /* CachingFrameAnimationView.h */,
-				874448891C22FCE500E7B947 /* CachingFrameAnimationView.m */,
 				8744488A1C22FCE500E7B947 /* LinkAttachment.h */,
 				8744488B1C22FCE500E7B947 /* LinkAttachment.m */,
 				8744488C1C22FCE500E7B947 /* LinkAttachmentCache.h */,
@@ -3371,15 +3361,6 @@
 				87A4DA9C1D34FEF400105D44 /* audio-notifications */,
 			);
 			path = Sounds;
-			sourceTree = "<group>";
-		};
-		878606DC1D33C79400971A19 /* FrameAnimation */ = {
-			isa = PBXGroup;
-			children = (
-				878606DD1D33C79400971A19 /* FrameAnimationView.h */,
-				878606DE1D33C79400971A19 /* FrameAnimationView.m */,
-			);
-			path = FrameAnimation;
 			sourceTree = "<group>";
 		};
 		878607161D33E3FF00971A19 /* weakify */ = {
@@ -4558,7 +4539,6 @@
 				8795A5CC1D34D09E0024101B /* VoiceGainLayer.h in Headers */,
 				878607301D33E3FF00971A19 /* weakify.h in Headers */,
 				8786071B1D33E3FF00971A19 /* Geometry.h in Headers */,
-				878606DF1D33C79400971A19 /* FrameAnimationView.h in Headers */,
 				878607211D33E3FF00971A19 /* NetworkStatus.h in Headers */,
 				1EE9DCC91B5F9A6D00E347DF /* TokenizedTextView.h in Headers */,
 				1EE9DCC71B5F9A6D00E347DF /* TokenTextAttachment.h in Headers */,
@@ -5059,7 +5039,6 @@
 				8795A5CF1D34D09E0024101B /* VoiceIndicatorLayer.m in Sources */,
 				1EBA8C711B70F9620089CC44 /* CASStyler+Variables.m in Sources */,
 				8786071C1D33E3FF00971A19 /* Geometry.m in Sources */,
-				878606E01D33C79400971A19 /* FrameAnimationView.m in Sources */,
 				1E3FA0541B78B22100A9743D /* AvatarImageView.m in Sources */,
 				1E8C253B1BBC279B00FC373F /* ProgressSpinner.m in Sources */,
 				1EF2BE641BDA966000E287B9 /* UITextView+TextTransform.m in Sources */,
@@ -5579,7 +5558,6 @@
 				871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */,
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				871BC0171D34F56300DF0793 /* AnalyticsGroupConversationEvent.m in Sources */,
-				8744489B1C22FCE500E7B947 /* CachingFrameAnimationView.m in Sources */,
 				871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */,
 				DB1D4F051A7282EF004CB7B2 /* TypingUserView.m in Sources */,
 				871BC2661D34F8F800DF0793 /* UserBackgroundView.m in Sources */,
