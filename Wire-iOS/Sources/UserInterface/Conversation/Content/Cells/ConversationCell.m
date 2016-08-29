@@ -123,7 +123,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
         // here until we re-factor the the ConversationCell
         self.messageContentView.layoutMargins = layoutMargins;
-        self.messageToolboxView.layoutMargins = layoutMargins;
     }
     
     return self;
@@ -145,6 +144,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)createViews
 {
+    self.clipsToBounds = NO;
+    self.contentView.clipsToBounds = NO;
+    
     self.messageContentView = [[UIView alloc] init];
     self.messageContentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.messageContentView];
@@ -188,6 +190,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.messageToolboxView.delegate = self;
     self.messageToolboxView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.messageToolboxView];
+    
+    [self createLikeButton];
 }
 
 - (void)prepareForReuse
@@ -205,6 +209,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     if (self.layoutProperties.showBurstTimestamp) {
         self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
     }
+    
+    [self.contentView bringSubviewToFront:self.likeButton];
 }
 
 - (void)didEndDisplayingInTableView
@@ -257,8 +263,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
     self.messageContentBottomMarginConstraint = [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    
+    [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.messageToolboxView];
+    [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
 }
 
 - (void)updateConstraintConstants
@@ -302,7 +311,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
-    
+    self.likeButton.alpha = shouldBeVisible ? 1 : 0;
+
     if (animated) {
         [UIView animateWithDuration:0.35 animations:^{
             self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
@@ -506,7 +516,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)messageToolboxViewDidSelectReactions:(MessageToolboxView *)messageToolboxView
 {
-    // TODO LIKE:
+    [self.delegate conversationCell:self openReactionsPressed:self.message];
 }
 
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView

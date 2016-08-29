@@ -138,6 +138,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {
     ZetaIconSizeMessageStatus, // 8
+    ZetaIconSizeLike, // 12
     ZetaIconSizeSearchBar, // 14
     ZetaIconSizeTiny,   // 16
     ZetaIconSizeSmall,  // 20

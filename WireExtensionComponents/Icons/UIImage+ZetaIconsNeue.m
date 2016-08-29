@@ -133,6 +133,9 @@ static NSParagraphStyle *cachedParagraphStyle;
         case ZetaIconSizeMessageStatus:
             size = 8.0;
             break;
+        case ZetaIconSizeLike:
+            size = 12;
+            break;
         case ZetaIconSizeSearchBar:
             size = 14;
             break;

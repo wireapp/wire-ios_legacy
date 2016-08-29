@@ -27,6 +27,7 @@
 @class ConversationCell;
 @class MessageToolboxView;
 @class AnalyticsTracker;
+@class LikeButton;
 
 
 typedef NS_ENUM(NSUInteger, ConversationCellAction) {
@@ -84,6 +85,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) id<ZMConversationMessage>message;
 @property (nonatomic, readonly) UILabel *authorLabel;
 @property (nonatomic, readonly) UIView *messageContentView;
+@property (nonatomic) LikeButton *likeButton;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
 

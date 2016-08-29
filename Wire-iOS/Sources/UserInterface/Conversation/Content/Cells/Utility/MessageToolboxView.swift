@@ -50,9 +50,8 @@ extension ZMMessage {
     private static let resendLink = NSURL(string: "settings://resend-message")!
     
     public let statusLabel = TTTAttributedLabel(frame: CGRectZero)
-    public let likeButton = IconButton()
     public let reactionsView = ReactionsView()
-    //    private var tapGestureRecogniser: UITapGestureRecognizer! // TODO LIKE:
+    private var tapGestureRecogniser: UITapGestureRecognizer!
     
     public weak var delegate: MessageToolboxViewDelegate?
 
@@ -63,7 +62,6 @@ extension ZMMessage {
         
         reactionsView.translatesAutoresizingMaskIntoConstraints = false
         reactionsView.accessibilityIdentifier = "reactionsView"
-        reactionsView.hidden = true // TODO LIKE:
         self.addSubview(reactionsView)
     
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -79,18 +77,7 @@ extension ZMMessage {
         
         self.addSubview(statusLabel)
         
-        self.likeButton.translatesAutoresizingMaskIntoConstraints = false
-        self.likeButton.accessibilityIdentifier = "likeButton"
-        self.likeButton.addTarget(self, action: #selector(MessageToolboxView.onLikePressed(_:)), forControlEvents: .TouchUpInside)
-        self.likeButton.setIcon(.Like, withSize: .MessageStatus, forState: .Normal)
-        self.likeButton.setIconColor(UIColor.grayColor(), forState: .Normal)
-        self.likeButton.setIcon(.Liked, withSize: .MessageStatus, forState: .Selected)
-        self.likeButton.setIconColor(UIColor(forZMAccentColor: .VividRed), forState: .Selected)
-        self.likeButton.hitAreaPadding = CGSizeMake(20, 20)
-        self.likeButton.hidden = true // TODO LIKE:
-        self.addSubview(self.likeButton)
-        
-        constrain(self, self.reactionsView, self.statusLabel, self.likeButton) { selfView, reactionsView, statusLabel, likeButton in
+        constrain(self, self.reactionsView, self.statusLabel) { selfView, reactionsView, statusLabel in
             statusLabel.top == selfView.top + 4
             statusLabel.left == selfView.leftMargin
             statusLabel.right == selfView.rightMargin
@@ -98,16 +85,12 @@ extension ZMMessage {
             
             reactionsView.right == selfView.rightMargin
             reactionsView.centerY == selfView.centerY
-            
-            likeButton.left == selfView.left
-            likeButton.right == selfView.leftMargin
-            likeButton.centerY == selfView.centerY
         }
         
-//        TODO LIKE: tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
-//        tapGestureRecogniser.delegate = self
-//        
-//        self.addGestureRecognizer(tapGestureRecogniser)
+        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
+        tapGestureRecogniser.delegate = self
+        
+        self.addGestureRecognizer(tapGestureRecogniser)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -184,14 +167,6 @@ extension ZMMessage {
     
     // MARK: - Events
     
-    @objc func onLikePressed(button: UIButton!) {
-        ZMUserSession.sharedSession().performChanges {
-            // message.liked = !message.liked // TODO LIKE:
-        }
-        
-        self.likeButton.selected = !self.likeButton.selected;
-    }
-    
     @objc func onTapContent(button: UIButton!) {
         self.delegate?.messageToolboxViewDidSelectReactions(self)
     }
@@ -209,8 +184,8 @@ extension MessageToolboxView: TTTAttributedLabelDelegate {
     }
 }
 
-// TODO LIKE: extension MessageToolboxView: UIGestureRecognizerDelegate {
-//    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return gestureRecognizer.isEqual(self.tapGestureRecogniser)
-//    }
-//}
+extension MessageToolboxView: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizer.isEqual(self.tapGestureRecogniser)
+    }
+}

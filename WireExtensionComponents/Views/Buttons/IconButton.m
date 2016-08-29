@@ -251,6 +251,18 @@
     [self updateTintColor];
 }
 
+- (ZetaIconType)iconTypeForState:(UIControlState)state
+{
+    IconDefinition *definition = self.iconDefinitionsByState[@(state)];
+    
+    if (nil != definition) {
+        return definition.iconType;
+    }
+    else {
+        return ZetaIconTypeNone;
+    }
+}
+
 - (UIColor *)iconColorForState:(UIControlState)state
 {
     UIColor *iconColor = self.iconColorsByState[@(state)];

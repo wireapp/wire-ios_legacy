@@ -553,6 +553,8 @@
 		87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0DF1C734DA60094BFE9 /* MockLoader.m */; };
 		87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E11C734DB60094BFE9 /* MockMessage.swift */; };
 		87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */; };
+		87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36B91D74782B007AB4E5 /* LikeButton.swift */; };
+		87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */; };
 		87D0F8631C6DF0910071769E /* CameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D0F8621C6DF0910071769E /* CameraPreviewView.m */; };
 		87D482AF1B8C7DBC004ED174 /* soundcloud@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87D482AE1B8C7DBC004ED174 /* soundcloud@3x.png */; };
 		87D553681C86F0450026573C /* MockUserClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D553671C86F0450026573C /* MockUserClient.m */; };
@@ -1673,6 +1675,8 @@
 		87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Dev.entitlements"; path = "Wire-iOS/Entitlements-Dev.entitlements"; sourceTree = "<group>"; };
 		87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Prod.entitlements"; path = "Wire-iOS/Entitlements-Prod.entitlements"; sourceTree = "<group>"; };
 		87CA49EC1C467A710013A2A9 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		87CB36B91D74782B007AB4E5 /* LikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
+		87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Like.swift"; sourceTree = "<group>"; };
 		87D0F8611C6DF0910071769E /* CameraPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraPreviewView.h; sourceTree = "<group>"; };
 		87D0F8621C6DF0910071769E /* CameraPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraPreviewView.m; sourceTree = "<group>"; };
 		87D482AE1B8C7DBC004ED174 /* soundcloud@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundcloud@3x.png"; sourceTree = "<group>"; };
@@ -3299,6 +3303,7 @@
 				87DE06B01D256CF50009411F /* DeviceProximityListener.swift */,
 				875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */,
 				875F89131D6DD6D000D8748E /* ReactionsView.swift */,
+				87CB36B91D74782B007AB4E5 /* LikeButton.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -4063,6 +4068,7 @@
 				16E311C11A5FEA2B00FF2C9E /* ConversationCell.h */,
 				16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */,
 				161C539C1D06C99C00277D6B /* ConversationCell+Animations.swift */,
+				87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */,
 				16E311C71A5FEAE200FF2C9E /* TextMessageCell.h */,
 				16E311C81A5FEAE200FF2C9E /* TextMessageCell.m */,
 				16E311D61A6024F400FF2C9E /* ImageMessageCell.h */,
@@ -5108,6 +5114,7 @@
 				163B5EF21B4C209C009B4629 /* MediaBarViewController.m in Sources */,
 				8F41CFC319926B7A00E3B032 /* ZMUser+Additions.m in Sources */,
 				871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */,
+				87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */,
 				8FC85471199245770008B66B /* ZClientViewController.m in Sources */,
 				8795322E1A8A141000EB495B /* ContrastUserImageView.m in Sources */,
 				8FC8541F199245770008B66B /* ZMUserSession+iOS.m in Sources */,
@@ -5463,6 +5470,7 @@
 				871BC01D1D34F56300DF0793 /* AnalyticsTracker+Media.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
+				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				DB0782221B00E98F00C6B140 /* FormFlowViewController.m in Sources */,
 				871BC0531D34F60700DF0793 /* AudioProcessing.swift in Sources */,
 				8F8914161A9F287E0056AB0C /* ConversationListIndicator.m in Sources */,
