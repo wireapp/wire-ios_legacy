@@ -157,3 +157,22 @@ import ZMCLinkPreview
     
     var hasBeenDeleted = false
 }
+
+extension MockMessage {
+    func formattedReceivedDate() -> String? {
+        guard let timestamp = self.serverTimestamp else {
+            return .None
+        }
+        let timeString = Message.longVersionTimeFormatter().stringFromDate(timestamp)
+        let oneDayInSeconds = 24.0 * 60.0 * 60.0
+        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - NSDate().timeIntervalSinceReferenceDate) > oneDayInSeconds
+        
+        if shouldShowDate {
+            let dateString = Message.shortVersionDateFormatter().stringFromDate(timestamp)
+            return dateString + " " + timeString
+        }
+        else {
+            return timeString
+        }
+    }
+}
