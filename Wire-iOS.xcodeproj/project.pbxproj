@@ -4321,6 +4321,7 @@
 		8FC85543199246EF0008B66B /* ConfigurationSets */ = {
 			isa = PBXGroup;
 			children = (
+				876513521D66F06C00D1D77E /* wire-ios-build-assets */,
 				8FC8554C199246EF0008B66B /* Warnings.xcconfig */,
 				1E8666E21BE21BC3000B013E /* Version.xcconfig */,
 				8FC8554B199246EF0008B66B /* Base.xcconfig */,
