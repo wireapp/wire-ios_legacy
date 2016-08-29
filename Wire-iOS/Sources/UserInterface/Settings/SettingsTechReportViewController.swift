@@ -23,8 +23,8 @@ typealias TechReport = [String: String]
 
 class SettingsTechReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
-    private let techReportTitle = "TechnicalReportTitle"
-    private let technicalReportData = "TechnicalReportData"
+    private let techReportTitle = "TechnicalReportTitleKey"
+    private let technicalReportData = "TechnicalReportDataKey"
     private let technicalReportReuseIdentifier = "TechnicalReportCellReuseIdentifier"
     
     private let includedVoiceLogCell: UITableViewCell
