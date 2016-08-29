@@ -730,7 +730,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self presentDetailsForMessageAtIndexPath:indexPath];
+    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    BOOL isFile = [Message isFileTransferMessage:message];
+    
+    if (! isFile) {
+        [self presentDetailsForMessageAtIndexPath:indexPath];
+    }
     
     // Make table view to update cells with animation
     [tableView beginUpdates];
