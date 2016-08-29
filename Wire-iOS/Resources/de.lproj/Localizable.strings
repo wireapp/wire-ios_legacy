@@ -222,6 +222,8 @@
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
 "content.system.pending_message_timestamp" = "Senden…";
 "content.system.failedtosend_message_timestamp" = "Nicht gesendete Nachricht.";
+"content.system.deleted_message_prefix_timestamp" = "Gelöscht am %@";
+"content.system.edited_message_prefix_timestamp" = "Bearbeitet am %@";
 "content.system.connecting_to" = "Warte auf Bestätigung deiner Kontaktanfrage an %@";
 "content.system.connected_to" = "Verbunden mit %@. Beginne eine Unterhaltung.";
 "content.system.other_wanted_to_talk" = "%@ hat versucht dich anzurufen";
@@ -392,10 +394,13 @@
 "profile.block_dialog.button_block" = "Blockieren";
 
 // Delete message dialog
-"message.delete_dialog.title" = "Nachricht löschen";
-"message.delete_dialog.message" = "Die Nachricht wird nur auf deiner Seite der Unterhaltung gelöscht. Dies kann nicht rückgängig gemacht werden.";
-"message.delete_dialog.button_cancel" = "Abbrechen";
-"message.delete_dialog.button_delete" = "Löschen";
+"message.delete_dialog.message" = "Dies kann nicht rückgängig gemacht werden.";
+"message.delete_dialog.action.cancel" = "Abbrechen";
+"message.delete_dialog.action.hide" = "Nur für mich löschen";
+"message.delete_dialog.action.delete" = "Für alle löschen";
+
+// Edit message
+"message.menu.edit.title" = "Bearbeiten";
 
 // Accept connection request
 "profile.connection_request_dialog.title" = "Annehmen?";

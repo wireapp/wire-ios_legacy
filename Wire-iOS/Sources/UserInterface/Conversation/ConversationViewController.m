@@ -503,6 +503,12 @@
     [self.parentViewController.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
 }
 
+- (void)menuDidHide:(NSNotification *)notification
+{
+    self.inputBarController.inputBar.textView.overrideNextResponder = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+}
+
 @end
 
 
@@ -584,6 +590,23 @@
     
     if (nil != text) {
         [self.inputBarController editMessage:message];
+    }
+}
+
+- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell
+{
+    if ([self.inputBarController.inputBar.textView isFirstResponder]) {
+        self.inputBarController.inputBar.textView.overrideNextResponder = cell;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(menuDidHide:)
+                                                     name:UIMenuControllerDidHideMenuNotification
+                                                   object:nil];
+        
+        return NO;
+    }
+    else {
+        return YES;
     }
 }
 

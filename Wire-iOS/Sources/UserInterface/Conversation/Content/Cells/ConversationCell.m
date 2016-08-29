@@ -30,6 +30,7 @@
 #import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics+iOS.h"
+#import "UIResponder+FirstResponder.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -347,8 +348,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)showMenu;
 {
-    if ([self.delegate respondsToSelector:@selector(conversationCell:willOpenMenuForCellType:)]) {
-        [self.delegate conversationCell:self willOpenMenuForCellType:[self messageType]];
+    BOOL shouldBecomeFirstResponder = YES;
+    if ([self.delegate respondsToSelector:@selector(conversationCell:shouldBecomeFirstResponderWhenShowMenuWithCellType:)]) {
+        shouldBecomeFirstResponder = [self.delegate conversationCell:self shouldBecomeFirstResponderWhenShowMenuWithCellType:[self messageType]];
     }
     
     MenuConfigurationProperties *menuConfigurationProperties = [self menuConfigurationProperties];
@@ -372,8 +374,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.window makeKeyWindow];
     [self.window becomeFirstResponder];
 
-    [self becomeFirstResponder];
-
+    if (shouldBecomeFirstResponder) {
+        [self becomeFirstResponder];
+    }
+    
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
     NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
@@ -413,6 +417,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)deleteMessage:(id)sender;
 {
+    self.beingEdited = YES;
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionDelete];
         [[Analytics shared] tagOpenedMessageAction:MessageActionTypeDelete];

@@ -67,7 +67,7 @@ ZMUser *BareUserToUser(id bareUser) {
 
 - (ZMAddressBookContact *)contact
 {
-    return [self contactInUserSession:[ZMUserSession sharedSession]];
+    return [self matchingContact:[ZMUserSession sharedSession]];
 }
 
 + (instancetype)selfUser

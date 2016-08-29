@@ -38,6 +38,7 @@
 @property (nonatomic) UIView *shareContactsContainerView;
 @property (nonatomic) PermissionDeniedViewController *addressBookAccessDeniedViewController;
 @property (nonatomic) UIVisualEffectView *backgroundBlurView;
+@property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
 
 @end
 
@@ -153,6 +154,8 @@
 
 - (void)displayContactsAccessDeniedMessageAnimated:(BOOL)animated
 {
+    self.showingAddressBookAccessDeniedViewController = YES;
+
     if (animated) {
         [UIView transitionFromView:self.shareContactsContainerView
                             toView:self.addressBookAccessDeniedViewController.view
@@ -203,7 +206,10 @@
 
 - (IBAction)shareContactsLater:(id)sender
 {
-    [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
+    if (!self.showingAddressBookAccessDeniedViewController) {
+        [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
+    }
+
     [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
     [self.formStepDelegate didSkipFormStep:self];
 }

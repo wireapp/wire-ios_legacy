@@ -782,7 +782,9 @@
         
         case ConversationCellActionDelete:
         {
-            [self presentDeletionAlertControllerForMessage:cell.message];
+            [self presentDeletionAlertControllerForMessage:cell.message completion:^{
+                cell.beingEdited = NO;
+            }];
         }
             break;
         case ConversationCellActionPresent:
@@ -806,9 +808,14 @@
     }
 }
 
-- (void)conversationCell:(ConversationCell *)cell willOpenMenuForCellType:(MessageType)messageType;
+- (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 {
+    BOOL shouldBecomeFirstResponder = YES;
+    if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
+        shouldBecomeFirstResponder = [self.delegate conversationContentViewController:self shouldBecomeFirstResponderWhenShowMenuFromCell:cell];
+    }
     [ConversationInputBarViewController endEditingMessage];
+    return shouldBecomeFirstResponder;
 }
 
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;

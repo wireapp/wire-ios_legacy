@@ -79,7 +79,7 @@
         self.initiatedCall = (previousState == ZMVoiceChannelStateOutgoingCall || previousState == ZMVoiceChannelStateOutgoingCallInactive);
         [self.analytics tagJoinedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall];
     }
-    else if (currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel) {
+    else if (currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel && nil == self.callEstablishedDate) {
         self.callEstablishedDate = [NSDate date];
         [self.analytics tagEstablishedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall];
     }
@@ -94,6 +94,7 @@
                                  initiatedCall:self.initiatedCall
                                       duration:-[self.callEstablishedDate timeIntervalSinceNow]
                                         reason:note.reason];
+    self.callEstablishedDate = nil;
 }
 
 @end
