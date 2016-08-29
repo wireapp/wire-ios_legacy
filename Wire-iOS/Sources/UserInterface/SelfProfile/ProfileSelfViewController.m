@@ -58,7 +58,6 @@
 #import "NSLayoutConstraint+Helpers.h"
 #import "NSString+Wire.h"
 #import <PureLayout.h>
-#import "AddressBookHelper.h"
 
 @import MessageUI;
 
@@ -540,7 +539,7 @@
         
         UIAlertAction *uploadAddresBookAction = [UIAlertAction actionWithTitle:@"Force upload address book"
                                                                style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                                   [AddressBookHelper.sharedHelper forceUploadAddressBook];
+                                                                   [AddressBookHelper.sharedHelper startRemoteSearch:false];
                                                                    [debugOptionsController dismissViewControllerAnimated:YES completion:nil];
                                                                }];
         

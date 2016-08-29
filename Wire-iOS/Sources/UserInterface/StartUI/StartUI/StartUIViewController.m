@@ -36,7 +36,6 @@
 #import "IconButton.h"
 
 #import "SearchTokenStore.h"
-#import "AddressBookHelper.h"
 #import "ShareItemProvider.h"
 #import "ActionSheetController.h"
 #import "PeoplePickerEmptyResultsView.h"
@@ -198,19 +197,16 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     
     self.addressBookUploadLogicHandled = YES;
     
-    if (! [[AddressBookHelper sharedHelper] isAddressBookSupported]) {
-        return;
-    }
-    else if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
-        // Re-check if we need to re-upload the AB
-        [[AddressBookHelper sharedHelper] uploadAddressBook];
+    if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
+        // Re-check if we need to start AB search
+        [[AddressBookHelper sharedHelper] startRemoteSearch:true];
     }
     else if ([[AddressBookHelper sharedHelper] isAddressBookAccessUnknown]) {
         [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
             [self.analyticsTracker tagAddressBookSystemPermissions:success];
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[AddressBookHelper sharedHelper] uploadAddressBook];
+                    [[AddressBookHelper sharedHelper] startRemoteSearch:true];
                 });
             }
         }];
@@ -303,7 +299,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (BOOL)shouldShowShareContacts
 {
     AddressBookHelper *helper = [AddressBookHelper sharedHelper];
-    return (helper.isAddressBookSupported && ! helper.isAddressBookAccessDisabled && ! helper.addressBookWasUploaded);
+    return (! helper.isAddressBookAccessDisabled && ! helper.addressBookSearchPerformedAtLeastOnce);
 }
 
 - (BOOL)hasSearchResults
@@ -324,7 +320,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else {
         
-        if (searchType == StartUISearchTypeUnknown && [AddressBookHelper sharedHelper].addressBookWasUploaded) {
+        if (searchType == StartUISearchTypeUnknown && [AddressBookHelper sharedHelper].addressBookSearchPerformedAtLeastOnce) {
             
             [self.startUIView showEmptySearchResultsAfterAddressBookUpload];
         }

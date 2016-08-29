@@ -24,70 +24,112 @@ import zmessaging
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.
-@objc final class AutomationHelper: NSObject {
+@objc public final class AutomationHelper: NSObject {
     
-    static let sharedHelper = AutomationHelper()
+    static public let sharedHelper = AutomationHelper()
     
     ///  Whether Hockeyapp should be used
-    var useHockey: Bool {
+    public var useHockey: Bool {
         return NSUserDefaults.standardUserDefaults().boolForKey("UseHockey")
     }
     
     /// Whether to skip the first login alert
-    var skipFirstLoginAlerts : Bool {
+    public var skipFirstLoginAlerts : Bool {
         return self.automationEmailCredentials != nil
     }
     
     /// The login credentials provides by command line
-    let automationEmailCredentials: ZMEmailCredentials?
+    public let automationEmailCredentials: ZMEmailCredentials?
     
     /// Whether autocorrection is disabled
-    let disableAutocorrection : Bool
+    public let disableAutocorrection : Bool
     
     /// Whether address book upload is enabled on simulator
-    let uploadAddressbookOnSimulator : Bool
+    public let uploadAddressbookOnSimulator : Bool
+    
+    /// Delay in address book remote search override
+    public let delayInAddressBookRemoteSearch : NSTimeInterval?
     
     override init() {
-        let arguments = Set(NSProcessInfo.processInfo().arguments)
+        let arguments = Arguments()
         
-        self.disableAutocorrection = arguments.contains(AutomationKey.DisableAutocorrection.rawValue)
-        self.uploadAddressbookOnSimulator = arguments.contains(AutomationKey.EnableAddressBookOnSimulator.rawValue)
-        self.automationEmailCredentials = AutomationHelper.credentialsFromCommandLine()
-        if arguments.contains(AutomationKey.LogNetwork.rawValue) {
+        self.disableAutocorrection = arguments.hasFlag(AutomationKey.DisableAutocorrection.rawValue)
+        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.EnableAddressBookOnSimulator.rawValue)
+        self.automationEmailCredentials = AutomationHelper.credentials(arguments)
+        if arguments.hasFlag(AutomationKey.LogNetwork.rawValue) {
             ZMLogSetLevelForTag(.Debug, "Network")
         }
-        
+        self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
     }
     
     private enum AutomationKey: String {
-        case Email = "--loginemail="
-        case Password = "--loginpassword="
-        case LogNetwork = "--debug-log-network"
-        case DisableAutocorrection = "--disable-autocorrection"
-        case EnableAddressBookOnSimulator = "--addressbook-on-simulator"
+        case Email = "loginemail"
+        case Password = "loginpassword"
+        case LogNetwork = "debug-log-network"
+        case DisableAutocorrection = "disable-autocorrection"
+        case EnableAddressBookOnSimulator = "addressbook-on-simulator"
+        case AddressBookRemoteSearchDelay = "addressbook-search-delay"
     }
     
-    /// Gets the login email and password from command line arguments
-    /// - returns: the credentials, or nil if credentials were not found
-    private static func credentialsFromCommandLine() -> ZMEmailCredentials? {
-        let arguments = NSProcessInfo.processInfo().arguments
-        var email: String?
-        var password: String?
-        
-        arguments.forEach { arg in
-            let emailKey = AutomationKey.Email.rawValue
-            if arg.hasPrefix(emailKey) {
-                email = arg.substringFromIndex(emailKey.startIndex.advancedBy(emailKey.characters.count))
-            }
-            
-            let passwordKey = AutomationKey.Password.rawValue
-            if arg.hasPrefix(passwordKey) {
-                password = arg.substringFromIndex(passwordKey.startIndex.advancedBy(passwordKey.characters.count))
+    /// Returns the login email and password credentials if set in the given arguments
+    private static func credentials(arguments: Arguments) -> ZMEmailCredentials? {
+        guard let email = arguments.flagValueIfPresent(AutomationKey.Email.rawValue),
+            let password = arguments.flagValueIfPresent(AutomationKey.Password.rawValue) else {
+            return nil
+        }
+        return ZMEmailCredentials(email: email, password: password)
+    }
+    
+    /// Returns the custom time interval for address book search delay if it set in the given arguments
+    private static func addressBookSearchDelay(arguments: Arguments) -> NSTimeInterval? {
+        guard let delayString = arguments.flagValueIfPresent(AutomationKey.AddressBookRemoteSearchDelay.rawValue),
+            let delay = Int(delayString) else {
+                return nil
+        }
+        return NSTimeInterval(delay)
+    }
+}
+
+// MARK: - Helpers
+extension String {
+    
+    /// Returns the value of the command line argument if it is in the form of "--ARGUMENT=VALUE"
+    func valueIfPresent(commandLineArgument: String) -> String? {
+        let searchString = "--" + commandLineArgument + "="
+        if self.hasPrefix(searchString) {
+            return self.substringFromIndex(searchString.startIndex.advancedBy(searchString.characters.count))
+        } else {
+            return nil
+        }
+    }
+}
+
+/// Command line arguments
+private struct Arguments {
+    
+    let flagPrefix = "--"
+    
+    /// Argument strings
+    let commandLineArguments : Set<String>
+    
+    /// Returns whether the flag is set
+    func hasFlag(name: String) -> Bool {
+        return self.commandLineArguments.contains(flagPrefix + name)
+    }
+    
+    /// Returns the value of a flag, if present
+    func flagValueIfPresent(commandLineArgument: String) -> String? {
+        for argument in self.commandLineArguments {
+            let searchString = "--" + commandLineArgument + "="
+            if argument.hasPrefix(searchString) {
+                return argument.substringFromIndex(searchString.startIndex.advancedBy(searchString.characters.count))
             }
         }
-        
-        guard let mail = email, secret = password else { return nil }
-        return ZMEmailCredentials(email: mail, password: secret)
+        return nil
+    }
+    
+    init() {
+        self.commandLineArguments = Set(NSProcessInfo.processInfo().arguments)
     }
 }
