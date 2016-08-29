@@ -264,7 +264,7 @@ import Foundation
         let troubleshootingTitle = "self.settings.advanced.troubleshooting.submit_debug.title".localized
         let troubleshootingSectionSubtitle = "self.settings.advanced.troubleshooting.submit_debug.subtitle".localized
         let troubleshootingButton = SettingsExternalScreenCellDescriptor(title: troubleshootingTitle) { () -> (UIViewController?) in
-            return SettingsTechReportViewController()
+            return SettingsTechnicalReportViewController()
         }
         
         let troubleshootingSection = SettingsSectionDescriptor(cellDescriptors: [troubleshootingButton], header: troubleshootingSectionTitle, footer: troubleshootingSectionSubtitle)

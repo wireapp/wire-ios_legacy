@@ -19,16 +19,16 @@
 import UIKit
 import MessageUI
 
-typealias TechReport = [String: String]
+typealias TechnicalReport = [String: String]
 
-class SettingsTechReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-    private enum TechReportSection: Int {
+class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+    private enum TechnicalReportSection: Int {
         case Reports = 0
         case Options = 1
     }
     
-    private let techReportTitle = "TechnicalReportTitleKey"
-    private let technicalReportData = "TechnicalReportDataKey"
+    static private let technicalReportTitle = "TechnicalReportTitleKey"
+    static private let technicalReportData = "TechnicalReportDataKey"
     private let technicalReportReuseIdentifier = "TechnicalReportCellReuseIdentifier"
     
     private let includedVoiceLogCell: UITableViewCell
@@ -57,21 +57,21 @@ class SettingsTechReportViewController: UITableViewController, MFMailComposeView
         tableView.registerClass(TechInfoCell.self, forCellReuseIdentifier: technicalReportReuseIdentifier)
     }
     
-    private var lastCallSessionReports: [TechReport] {
+    lazy private var lastCallSessionReports: [TechnicalReport] = {
         let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         let reportStrings = voiceChannelDebugString.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
         
-        return reportStrings.reduce([TechReport](), combine: { (reports, report) -> [TechReport] in
+        return reportStrings.reduce([TechnicalReport](), combine: { (reports, report) -> [TechnicalReport] in
             var mutableReports = reports
             if let separatorRange = report.rangeOfString(":") {
                 let title = report.substringToIndex(separatorRange.startIndex)
                 let data = report.substringFromIndex(separatorRange.startIndex.advancedBy(1))
-                mutableReports.append([techReportTitle: title, technicalReportData: data])
+                mutableReports.append([SettingsTechnicalReportViewController.technicalReportTitle: title, SettingsTechnicalReportViewController.technicalReportData: data])
             }
             
             return mutableReports
         })
-    }
+    }()
     
     func sendReport() {
         let report = ZMVoiceChannel.voiceChannelDebugInformation()
@@ -105,7 +105,7 @@ class SettingsTechReportViewController: UITableViewController, MFMailComposeView
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == TechReportSection.Reports.rawValue else {
+        guard section == TechnicalReportSection.Reports.rawValue else {
             return 2
         }
         return lastCallSessionReports.count
@@ -113,12 +113,12 @@ class SettingsTechReportViewController: UITableViewController, MFMailComposeView
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case TechReportSection.Options.rawValue:
+        case TechnicalReportSection.Options.rawValue:
             return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier(technicalReportReuseIdentifier, forIndexPath: indexPath)
-            let techReport = lastCallSessionReports[indexPath.row]
-            cell.detailTextLabel?.text = techReport[technicalReportData]
+            let TechnicalReport = lastCallSessionReports[indexPath.row]
+            cell.detailTextLabel?.text = TechnicalReport[SettingsTechnicalReportViewController.technicalReportData]
             return cell
             
         }
