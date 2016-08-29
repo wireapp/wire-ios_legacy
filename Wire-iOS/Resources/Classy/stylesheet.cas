@@ -723,6 +723,7 @@ MessageToolboxView {
         font: $font-small-light;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
+        textContainerInset: 0, 0, 0, 0;
     }
     backgroundColor: clear;
     clipsToBounds: true;

@@ -21,7 +21,6 @@
 #import "zmessaging+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIView+MTAnimation.h"
-#import "MessageStatusIndicator.h"
 
 #import "UIView+Borders.h"
 
@@ -35,7 +34,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
 
 @interface PingCell ()
 
-@property (nonatomic, strong) MessageStatusIndicator *messageStatusIndicator;
 @property (nonatomic, strong) UIImageView *pingImageView;
 @property (nonatomic, assign) BOOL initialPingCellConstraintsCreated;
 @property (nonatomic, strong) AnimationBlock pingAnimationBlock;
@@ -65,12 +63,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self.pingImageView = [[UIImageView alloc] init];
     self.pingImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    self.messageStatusIndicator = [[MessageStatusIndicator alloc] init];
-    self.messageStatusIndicator.translatesAutoresizingMaskIntoConstraints = NO;
-    self.messageStatusIndicator.darkStyle = YES;
-    [self.messageStatusIndicator setResendButtonTarget:self action:@selector(resendButtonPressed:)];
-    [self.contentView addSubview:self.messageStatusIndicator];
-    
     [self.contentView addSubview:self.pingImageView];
 }
 
@@ -78,9 +70,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
 {
     [self.pingImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
     [self.pingImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
-    
-    [self.messageStatusIndicator autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.pingImageView];
-    [self.messageStatusIndicator autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:13];
 }
 
 - (void)prepareForReuse
@@ -106,36 +95,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self.authorLabel.text = pingText;
     
     self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:self.message.sender.accentColor];
-    
-    ZMDeliveryState deliveryState = message.deliveryState;
-    if (deliveryState == ZMDeliveryStatePending) {
-        NSTimeInterval elapsedTime = [NSDate timeIntervalSinceReferenceDate] - [self.message.serverTimestamp timeIntervalSinceReferenceDate];
-        [self.messageStatusIndicator setPendingStatusWithElapsedTime:elapsedTime];
-    }
-    else {
-        self.messageStatusIndicator.deliveryState = message.deliveryState;
-    }
-
-}
-
-- (void)resendButtonPressed:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:resendMessageTapped:)]) {
-        [self.delegate conversationCell:self resendMessageTapped:self.message];
-    }
-}
-
-/// Overriden from the super class cell
-- (BOOL)updateForMessage:(MessageChangeInfo *)change
-{
-    BOOL needsLayout = [super updateForMessage:change];
-    
-    // If a text message changes, the only thing that can change at the moment is its delivery state
-    if (change.deliveryStateChanged) {
-        self.messageStatusIndicator.deliveryState = change.message.deliveryState;
-    }
-    
-    return needsLayout;
 }
 
 - (UIView *)selectionView

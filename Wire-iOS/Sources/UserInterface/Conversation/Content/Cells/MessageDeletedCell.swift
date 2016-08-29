@@ -24,7 +24,6 @@ import Cartography
 class MessageDeletedCell: ConversationCell {
     
     let trashImageView = UIImageView()
-    let timestampView = MessageToolboxView()
     
     var trashColor: UIColor?
     
@@ -44,24 +43,12 @@ class MessageDeletedCell: ConversationCell {
             UIImage(forIcon: .Trash, iconSize: .MessageStatus, color: $0)
         }
         contentView.addSubview(trashImageView)
-        messageContentView.addSubview(timestampView)
     }
     
     func createConstraints() {
-        constrain(authorLabel, trashImageView, timestampView, messageContentView) { authorLabel, imageView, timestamp, messageContent in
+        constrain(authorLabel, trashImageView, messageContentView) { authorLabel, imageView, messageContent in
             imageView.centerY == authorLabel.centerY
             imageView.left == authorLabel.right + 8
-            timestamp.right == messageContent.rightMargin
-            timestamp.left == messageContent.leftMargin
-            timestamp.bottom == messageContent.bottom
-            timestamp.top == messageContent.top
-        }
-    }
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        UIView.animateWithDuration(0.35) {
-            self.timestampView.alpha = selected ? 1 : 0
         }
     }
 }

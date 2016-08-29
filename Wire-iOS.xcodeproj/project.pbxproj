@@ -458,7 +458,6 @@
 		8744489D1C22FCE500E7B947 /* LinkAttachmentCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744488D1C22FCE500E7B947 /* LinkAttachmentCache.m */; };
 		8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */; };
 		8744489F1C22FCE500E7B947 /* Message+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448921C22FCE500E7B947 /* Message+Formatting.m */; };
-		874448A01C22FCE500E7B947 /* MessageStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448941C22FCE500E7B947 /* MessageStatusIndicator.m */; };
 		874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448981C22FCE500E7B947 /* ParticipantsChangedView.m */; };
 		874448A31C22FCE500E7B947 /* TSMarkdownParser+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744489A1C22FCE500E7B947 /* TSMarkdownParser+Wire.m */; };
 		8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */; };
@@ -644,10 +643,6 @@
 		8F9E3B8A19D04CAC00FD427A /* SoundEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9E3B8919D04CAC00FD427A /* SoundEventListener.m */; };
 		8FC1EFDF19DED50C0092488D /* ZMVoiceChannel+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC1EFDE19DED50C0092488D /* ZMVoiceChannel+Additions.m */; };
 		8FC853A5199245770008B66B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85082199245760008B66B /* main.m */; };
-		8FC853A6199245770008B66B /* sending_complete.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FC85085199245760008B66B /* sending_complete.json */; };
-		8FC853A7199245770008B66B /* sending_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FC85086199245760008B66B /* sending_complete.png */; };
-		8FC853A8199245770008B66B /* sending_pending.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FC85087199245760008B66B /* sending_pending.json */; };
-		8FC853A9199245770008B66B /* sending_pending.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FC85088199245760008B66B /* sending_pending.png */; };
 		8FC853BF199245770008B66B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850A0199245760008B66B /* Images.xcassets */; };
 		8FC853D7199245770008B66B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850BA199245760008B66B /* Settings.bundle */; };
 		8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC850F4199245760008B66B /* AppDelegate+Hockey.m */; };
@@ -1551,8 +1546,6 @@
 		874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentViewControllerFactory.m; sourceTree = "<group>"; };
 		874448911C22FCE500E7B947 /* Message+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+Formatting.h"; sourceTree = "<group>"; };
 		874448921C22FCE500E7B947 /* Message+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+Formatting.m"; sourceTree = "<group>"; };
-		874448931C22FCE500E7B947 /* MessageStatusIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageStatusIndicator.h; sourceTree = "<group>"; };
-		874448941C22FCE500E7B947 /* MessageStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageStatusIndicator.m; sourceTree = "<group>"; };
 		874448971C22FCE500E7B947 /* ParticipantsChangedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsChangedView.h; sourceTree = "<group>"; };
 		874448981C22FCE500E7B947 /* ParticipantsChangedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsChangedView.m; sourceTree = "<group>"; };
 		874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TSMarkdownParser+Wire.h"; sourceTree = "<group>"; };
@@ -1847,10 +1840,6 @@
 		8FC1EFDD19DED50C0092488D /* ZMVoiceChannel+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMVoiceChannel+Additions.h"; sourceTree = "<group>"; };
 		8FC1EFDE19DED50C0092488D /* ZMVoiceChannel+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMVoiceChannel+Additions.m"; sourceTree = "<group>"; };
 		8FC85082199245760008B66B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Wire-iOS/main.m"; sourceTree = "<group>"; };
-		8FC85085199245760008B66B /* sending_complete.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sending_complete.json; sourceTree = "<group>"; };
-		8FC85086199245760008B66B /* sending_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sending_complete.png; sourceTree = "<group>"; };
-		8FC85087199245760008B66B /* sending_pending.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sending_pending.json; sourceTree = "<group>"; };
-		8FC85088199245760008B66B /* sending_pending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sending_pending.png; sourceTree = "<group>"; };
 		8FC850A0199245760008B66B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8FC850BA199245760008B66B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8FC850F3199245760008B66B /* AppDelegate+Hockey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Hockey.h"; sourceTree = "<group>"; };
@@ -3306,8 +3295,6 @@
 				874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */,
 				874448911C22FCE500E7B947 /* Message+Formatting.h */,
 				874448921C22FCE500E7B947 /* Message+Formatting.m */,
-				874448931C22FCE500E7B947 /* MessageStatusIndicator.h */,
-				874448941C22FCE500E7B947 /* MessageStatusIndicator.m */,
 				874448971C22FCE500E7B947 /* ParticipantsChangedView.h */,
 				874448981C22FCE500E7B947 /* ParticipantsChangedView.m */,
 				874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */,
@@ -3796,24 +3783,12 @@
 				848DE12A1A83D20000E154B1 /* emoticons.min.json */,
 				876F99061D070F6700CA2788 /* Sounds */,
 				1EF42D441B1889BE00A3145D /* Classy */,
-				8FC85084199245760008B66B /* Animations */,
 				8FC85089199245760008B66B /* Images */,
 				8FC850B2199245760008B66B /* Magic */,
 				8FC850BA199245760008B66B /* Settings.bundle */,
 			);
 			name = Resources;
 			path = "Wire-iOS/Resources";
-			sourceTree = "<group>";
-		};
-		8FC85084199245760008B66B /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				8FC85085199245760008B66B /* sending_complete.json */,
-				8FC85086199245760008B66B /* sending_complete.png */,
-				8FC85087199245760008B66B /* sending_pending.json */,
-				8FC85088199245760008B66B /* sending_pending.png */,
-			);
-			path = Animations;
 			sourceTree = "<group>";
 		};
 		8FC85089199245760008B66B /* Images */ = {
@@ -4779,27 +4754,23 @@
 				16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */,
 				877316121B970A82007BA779 /* tutorial.plist in Resources */,
 				8FC853D7199245770008B66B /* Settings.bundle in Resources */,
-				8FC853A6199245770008B66B /* sending_complete.json in Resources */,
 				877316081B970A82007BA779 /* ipad.plist in Resources */,
 				1ED28CD71A94E26D00B96189 /* group-icon.png in Resources */,
 				1658D2031D3E742A00249609 /* new_message_apns.caf in Resources */,
 				877316061B970A82007BA779 /* framework.plist in Resources */,
 				87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */,
-				8FC853A9199245770008B66B /* sending_pending.png in Resources */,
 				8773160E1B970A82007BA779 /* people_picker.plist in Resources */,
 				8773160F1B970A82007BA779 /* profile.plist in Resources */,
 				1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */,
 				16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */,
 				8773160C1B970A82007BA779 /* misc.plist in Resources */,
 				871BC2281D34F8F800DF0793 /* CameraAccessMessageViewController.xib in Resources */,
-				8FC853A8199245770008B66B /* sending_pending.json in Resources */,
 				874C09361B4A8EF40077393B /* InfoPlist.strings in Resources */,
 				875A23121ADEA1A200111C88 /* CountryCodes.plist in Resources */,
 				877316071B970A82007BA779 /* ipad_landscape.plist in Resources */,
 				DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */,
 				87D482AF1B8C7DBC004ED174 /* soundcloud@3x.png in Resources */,
 				87DCF4E31D34EA4500BB420F /* PeoplePickerEmptyResultsView.xib in Resources */,
-				8FC853A7199245770008B66B /* sending_complete.png in Resources */,
 				1EBA8C681B70C15D0089CC44 /* common-controls.cas in Resources */,
 				8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */,
 				877316091B970A82007BA779 /* iphone4.plist in Resources */,
@@ -5500,7 +5471,6 @@
 				8744489D1C22FCE500E7B947 /* LinkAttachmentCache.m in Sources */,
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
-				874448A01C22FCE500E7B947 /* MessageStatusIndicator.m in Sources */,
 				16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */,
 				871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */,
 				874A02541D1D325C00D0D74A /* AudioEffect.swift in Sources */,

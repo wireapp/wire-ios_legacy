@@ -67,15 +67,19 @@
 
 - (BOOL)shouldShowToolboxForMessage:(id<ZMConversationMessage>)message
 {
+    if (! [Message shouldShowTimestamp:message]) {
+        return NO;
+    }
+    
     if (message.conversation.messages.lastObject == message) {
         return YES;
     }
     
-    if ((message.deliveryState == ZMDeliveryStatePending) || (message.deliveryState == ZMDeliveryStateFailedToSend)) {
+    if (message.deliveryState == ZMDeliveryStateFailedToSend) {
         return YES;
     }
     
-    return NO;//message.isLiked
+    return NO;// TODO LIKE: message.isLiked
 }
 
 - (BOOL)shouldShowSenderForMessage:(id<ZMConversationMessage>)message

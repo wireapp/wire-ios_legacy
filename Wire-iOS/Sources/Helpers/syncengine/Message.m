@@ -132,17 +132,28 @@
     return [serverTimestamp wr_formattedDate];
 }
 
-+ (NSDateFormatter *)longVersionDateFormatter
++ (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message
 {
-    static NSDateFormatter *longVersionDateFormatter = nil;
+    BOOL allowedType =  [Message isTextMessage:message] ||
+                        [Message isImageMessage:message] ||
+                        [Message isFileTransferMessage:message] ||
+                        [Message isKnockMessage:message] ||
+                        [Message isLocationMessage:message];
+    
+    return allowedType;
+}
+
++ (NSDateFormatter *)shortVersionDateFormatter
+{
+    static NSDateFormatter *shortVersionDateFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        longVersionDateFormatter = [[NSDateFormatter alloc] init];
-        [longVersionDateFormatter setDateStyle:NSDateFormatterFullStyle];
-        [longVersionDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        shortVersionDateFormatter = [[NSDateFormatter alloc] init];
+        [shortVersionDateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [shortVersionDateFormatter setTimeStyle:NSDateFormatterNoStyle];
     });
     
-    return longVersionDateFormatter;
+    return shortVersionDateFormatter;
 }
 
 + (NSDateFormatter *)longVersionTimeFormatter

@@ -82,7 +82,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic) NSLayoutConstraint *unreadDotHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *messageContentBottomMarginConstraint;
 
-@property (nonatomic) NSLayoutConstraint *timestampHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *toolboxHeightConstraint;
 
 @end
 
@@ -185,6 +185,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.contentView addSubview:self.unreadDotView];
     
     self.messageToolboxView = [[MessageToolboxView alloc] init];
+    self.messageToolboxView.delegate = self;
     self.messageToolboxView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.messageToolboxView];
 }
@@ -253,7 +254,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self.authorImageView autoSetDimension:ALDimensionHeight toSize:authorImageDiameter];
     }];
     
-    self.timestampHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
+    self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
@@ -296,7 +297,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     BOOL shouldBeVisible = self.selected || self.layoutProperties.showToolbox;
     
-    self.timestampHeightConstraint.active = ! shouldBeVisible;
+    if (! [Message shouldShowTimestamp:self.message]) {
+        shouldBeVisible = NO;
+    }
+    
+    self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
     if (animated) {
         [UIView animateWithDuration:0.35 animations:^{
@@ -501,7 +506,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)messageToolboxViewDidSelectReactions:(MessageToolboxView *)messageToolboxView
 {
-    
+    // TODO LIKE:
+}
+
+- (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView
+{
+    [self.delegate conversationCell:self resendMessageTapped:self.message];
 }
 
 @end

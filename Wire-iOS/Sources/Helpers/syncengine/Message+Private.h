@@ -20,7 +20,7 @@
 
 @interface Message (Private)
 
-+ (NSDateFormatter *)longVersionDateFormatter;
++ (NSDateFormatter *)shortVersionDateFormatter;
 + (NSDateFormatter *)longVersionTimeFormatter;
 
 @end

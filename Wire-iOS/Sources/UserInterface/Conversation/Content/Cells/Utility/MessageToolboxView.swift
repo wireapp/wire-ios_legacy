@@ -20,6 +20,7 @@ import Foundation
 import zmessaging
 import Cartography
 import Classy
+import TTTAttributedLabel
 
 extension ZMMessage {
     func formattedReceivedDate() -> String? {
@@ -31,7 +32,7 @@ extension ZMMessage {
         let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - NSDate().timeIntervalSinceReferenceDate) > oneDayInSeconds
         
         if shouldShowDate {
-            let dateString = Message.longVersionDateFormatter().stringFromDate(timestamp)
+            let dateString = Message.shortVersionDateFormatter().stringFromDate(timestamp)
             return dateString + " " + timeString
         }
         else {
@@ -42,26 +43,40 @@ extension ZMMessage {
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectReactions(messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectResend(messageToolboxView: MessageToolboxView)
 }
 
 @objc public class MessageToolboxView: UIView {
-    public let statusLabel = UILabel()
+    private static let resendLink = NSURL(string: "settings://resend-message")!
+    
+    public let statusLabel = TTTAttributedLabel(frame: CGRectZero)
     public let likeButton = IconButton()
     public let reactionsView = ReactionsView()
+    //    private var tapGestureRecogniser: UITapGestureRecognizer! // TODO LIKE:
     
     public weak var delegate: MessageToolboxViewDelegate?
 
     override init(frame: CGRect) {
+        
         super.init(frame: frame)
         CASStyler.defaultStyler().styleItem(self)
         
         reactionsView.translatesAutoresizingMaskIntoConstraints = false
         reactionsView.accessibilityIdentifier = "reactionsView"
-        reactionsView.hidden = true
+        reactionsView.hidden = true // TODO LIKE:
         self.addSubview(reactionsView)
     
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.accessibilityIdentifier = "statusLabel"
+        statusLabel.delegate = self
+        statusLabel.extendsLinkTouchArea = true
+        statusLabel.userInteractionEnabled = true
+        statusLabel.lineBreakMode = NSLineBreakMode.ByTruncatingMiddle
+        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue,
+                                      NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
+        
+        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue,
+                                            NSForegroundColorAttributeName: ZMUser.selfUser().accentColor.colorWithAlphaComponent(0.5)]
+        
         self.addSubview(statusLabel)
         
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +87,7 @@ extension ZMMessage {
         self.likeButton.setIcon(.Liked, withSize: .MessageStatus, forState: .Selected)
         self.likeButton.setIconColor(UIColor(forZMAccentColor: .VividRed), forState: .Selected)
         self.likeButton.hitAreaPadding = CGSizeMake(20, 20)
-        self.likeButton.hidden = true
+        self.likeButton.hidden = true // TODO LIKE:
         self.addSubview(self.likeButton)
         
         constrain(self, self.reactionsView, self.statusLabel, self.likeButton) { selfView, reactionsView, statusLabel, likeButton in
@@ -89,8 +104,10 @@ extension ZMMessage {
             likeButton.centerY == selfView.centerY
         }
         
-        let tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
-        self.addGestureRecognizer(tapGestureRecogniser)
+//        TODO LIKE: tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
+//        tapGestureRecogniser.delegate = self
+//        
+//        self.addGestureRecognizer(tapGestureRecogniser)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -103,14 +120,14 @@ extension ZMMessage {
     }
     
     private func configureLikedState(message: ZMMessage) {
-        //self.likesView.reactions = message.reactions
+        // TODO LIKE: self.likesView.reactions = message.reactions
         //self.reactionsView.likers = message.reactions
         
         //let liked = message.isLiked
         //self.likeButton.selected = liked
     }
     
-    private func configureTimestamp(message: ZMMessage) {
+    private func timestampString(message: ZMMessage) -> String? {
         let timestampString: String?
         
         if let dateTimeString = message.formattedReceivedDate() {
@@ -128,32 +145,48 @@ extension ZMMessage {
             timestampString = .None
         }
         
+        return timestampString
+    }
+    
+    private func configureTimestamp(message: ZMMessage) {       
         var deliveryStateString: String? = .None
         
         switch message.deliveryState {
         case .Delivered:
             deliveryStateString = "content.system.message_sent_timestamp".localized
         case .FailedToSend:
-            deliveryStateString = "content.system.failedtosend_message_timestamp".localized
+            deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
         case .Pending:
             deliveryStateString = "content.system.pending_message_timestamp".localized
         default:
             deliveryStateString = .None
         }
         
-        if let timestampString = timestampString {
-            statusLabel.text = timestampString + " • " + (deliveryStateString ?? "")
+        let finalText: String
+        
+        if let timestampString = self.timestampString(message) where message.deliveryState == .Delivered {
+            finalText = timestampString + " • " + (deliveryStateString ?? "")
         }
         else {
-            statusLabel.text = (deliveryStateString ?? "")
+            finalText = (deliveryStateString ?? "")
         }
+        
+        let attributedText = NSMutableAttributedString(attributedString: finalText && [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor])
+        
+        if message.deliveryState == .FailedToSend {
+            let linkRange = (finalText as NSString).rangeOfString("content.system.failedtosend_message_timestamp_resend".localized)
+            attributedText.addAttributes([NSLinkAttributeName: self.dynamicType.resendLink], range: linkRange)
+        }
+        statusLabel.attributedText = attributedText
+        statusLabel.accessibilityLabel = statusLabel.attributedText.string
+        statusLabel.addLinks()
     }
     
     // MARK: - Events
     
     @objc func onLikePressed(button: UIButton!) {
         ZMUserSession.sharedSession().performChanges {
-            // message.liked = !message.liked
+            // message.liked = !message.liked // TODO LIKE:
         }
         
         self.likeButton.selected = !self.likeButton.selected;
@@ -162,6 +195,22 @@ extension ZMMessage {
     @objc func onTapContent(button: UIButton!) {
         self.delegate?.messageToolboxViewDidSelectReactions(self)
     }
-    
 }
 
+
+extension MessageToolboxView: TTTAttributedLabelDelegate {
+    
+    // MARK: - TTTAttributedLabelDelegate
+    
+    public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL URL: NSURL!) {
+        if URL.isEqual(self.dynamicType.resendLink) {
+            self.delegate?.messageToolboxViewDidSelectResend(self)
+        }
+    }
+}
+
+// TODO LIKE: extension MessageToolboxView: UIGestureRecognizerDelegate {
+//    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return gestureRecognizer.isEqual(self.tapGestureRecogniser)
+//    }
+//}
