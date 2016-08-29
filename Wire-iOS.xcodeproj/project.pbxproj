@@ -781,7 +781,7 @@
 		F517A3BE1B31340700073990 /* SmoothLineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F517A3BD1B31340700073990 /* SmoothLineView.framework */; };
 		F5EAB12B1B120665008DB66A /* SketchBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EAB12A1B120665008DB66A /* SketchBottomView.m */; };
 		F5F52F721B11D7050053F1C8 /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F52F711B11D7050053F1C8 /* SketchViewController.m */; };
-		F649BDB61D696946002CFD7B /* SettingsTechReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F649BDB51D696946002CFD7B /* SettingsTechReportViewController.swift */; };
+		F649BDB61D696946002CFD7B /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F649BDB51D696946002CFD7B /* SettingsTechnicalReportViewController.swift */; };
 		F95E08B41D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */; };
 /* End PBXBuildFile section */
 
@@ -2078,7 +2078,7 @@
 		F5EAB12A1B120665008DB66A /* SketchBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchBottomView.m; path = Sketchpad/SketchBottomView.m; sourceTree = "<group>"; };
 		F5F52F701B11D7050053F1C8 /* SketchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchViewController.h; path = Sketchpad/SketchViewController.h; sourceTree = "<group>"; };
 		F5F52F711B11D7050053F1C8 /* SketchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchViewController.m; path = Sketchpad/SketchViewController.m; sourceTree = "<group>"; };
-		F649BDB51D696946002CFD7B /* SettingsTechReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTechReportViewController.swift; sourceTree = "<group>"; };
+		F649BDB51D696946002CFD7B /* SettingsTechnicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTechnicalReportViewController.swift; sourceTree = "<group>"; };
 		F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TTTAttributedLabel+Links.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -4294,7 +4294,7 @@
 				870815851BF4E76A00D321BC /* SettingsCell.swift */,
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
-				F649BDB51D696946002CFD7B /* SettingsTechReportViewController.swift */,
+				F649BDB51D696946002CFD7B /* SettingsTechnicalReportViewController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
 			);
 			path = Settings;
@@ -4321,7 +4321,6 @@
 		8FC85543199246EF0008B66B /* ConfigurationSets */ = {
 			isa = PBXGroup;
 			children = (
-				876513521D66F06C00D1D77E /* wire-ios-build-assets */,
 				8FC8554C199246EF0008B66B /* Warnings.xcconfig */,
 				1E8666E21BE21BC3000B013E /* Version.xcconfig */,
 				8FC8554B199246EF0008B66B /* Base.xcconfig */,
@@ -5114,7 +5113,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F649BDB61D696946002CFD7B /* SettingsTechReportViewController.swift in Sources */,
+				F649BDB61D696946002CFD7B /* SettingsTechnicalReportViewController.swift in Sources */,
 				162ACDD11A696F21009025B3 /* ConnectionRequestCell.m in Sources */,
 				8F8914381A9F2A510056AB0C /* TopItemsController.m in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
