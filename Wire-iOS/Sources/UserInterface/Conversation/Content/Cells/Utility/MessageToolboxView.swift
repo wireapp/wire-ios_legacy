@@ -26,10 +26,17 @@ extension ZMMessage {
         guard let timestamp = self.serverTimestamp else {
             return .None
         }
-//        let dateString = Message.longVersionDateFormatter().stringFromDate(timestamp)
         let timeString = Message.longVersionTimeFormatter().stringFromDate(timestamp)
+        let oneDayInSeconds = 24.0 * 60.0 * 60.0
+        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - NSDate().timeIntervalSinceReferenceDate) > oneDayInSeconds
         
-        return /*dateString + " " + */timeString
+        if shouldShowDate {
+            let dateString = Message.longVersionDateFormatter().stringFromDate(timestamp)
+            return dateString + " " + timeString
+        }
+        else {
+            return timeString
+        }
     }
 }
 
@@ -50,6 +57,7 @@ extension ZMMessage {
         
         reactionsView.translatesAutoresizingMaskIntoConstraints = false
         reactionsView.accessibilityIdentifier = "reactionsView"
+        reactionsView.hidden = true
         self.addSubview(reactionsView)
     
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +71,8 @@ extension ZMMessage {
         self.likeButton.setIconColor(UIColor.grayColor(), forState: .Normal)
         self.likeButton.setIcon(.Liked, withSize: .MessageStatus, forState: .Selected)
         self.likeButton.setIconColor(UIColor(forZMAccentColor: .VividRed), forState: .Selected)
-        self.likeButton.hitAreaPadding = CGSizeMake(20, 20);
+        self.likeButton.hitAreaPadding = CGSizeMake(20, 20)
+        self.likeButton.hidden = true
         self.addSubview(self.likeButton)
         
         constrain(self, self.reactionsView, self.statusLabel, self.likeButton) { selfView, reactionsView, statusLabel, likeButton in
@@ -94,11 +103,11 @@ extension ZMMessage {
     }
     
     private func configureLikedState(message: ZMMessage) {
-//        self.likesView.likers = message.likers
-        self.reactionsView.likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
+        //self.likesView.reactions = message.reactions
+        //self.reactionsView.likers = message.reactions
         
-        let liked = false // message.isLiked
-        self.likeButton.selected = liked
+        //let liked = message.isLiked
+        //self.likeButton.selected = liked
     }
     
     private func configureTimestamp(message: ZMMessage) {
@@ -139,10 +148,6 @@ extension ZMMessage {
             statusLabel.text = (deliveryStateString ?? "")
         }
     }
-    
-//    public override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-//        return CGRectContainsPoint(CGRectInset(self.bounds, 0, 20), point)
-//    }
     
     // MARK: - Events
     

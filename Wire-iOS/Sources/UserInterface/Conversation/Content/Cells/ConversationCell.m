@@ -143,38 +143,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
 }
 
-//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-//    // To make like button easier to interact with we need to alter the cell hit areas
-//    // The cells that show the like / timestamp area should have bigger touch area, the cells that have no menu open
-//    // should have a smaller hit area.
-//    const CGFloat touchAreaDelta = 20;
-//    if (self.layoutProperties.showToolbox) {
-//        CGRect increasedRect = CGRectInset(self.bounds, 0, -touchAreaDelta);
-//        
-//        if (CGRectContainsPoint(increasedRect, point)) {
-//            if (CGRectContainsPoint(self.bounds, point)) {
-//                return [super hitTest:point withEvent:event];
-//            }
-//            else {
-//                return [self.messageToolboxView hitTest:[self convertPoint:point toView:self.messageToolboxView] withEvent:event]
-//            }
-//        }
-//        else {
-//            return nil;
-//        }
-//    }
-//    else {
-////        CGRect decreasedRect = CGRectInset(self.bounds, 0, touchAreaDelta);
-////        
-////        if (CGRectContainsPoint(decreasedRect, point)) {
-//            return [super hitTest:point withEvent:event];
-////        }
-////        else {
-////            return nil;
-////        }
-//    }
-//}
-
 - (void)createViews
 {
     self.messageContentView = [[UIView alloc] init];
