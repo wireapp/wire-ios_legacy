@@ -26,24 +26,25 @@ public class LikeButton: IconButton {
                 return
             }
             
-            let currentState: UIControlState
+            let prevState: UIControlState
             if self.selected {
-                currentState = .Normal
+                prevState = .Selected
             }
             else {
-                currentState = .Selected
+                prevState = .Normal
             }
 
-            let fakeImageView = UIImageView(image: imageView.image)
+            let fakeImageView = UIImageView(image: UIImage.init(forIcon: self.iconTypeForState(prevState), iconSize: .Large, color: self.iconColorForState(prevState)))
             fakeImageView.frame = imageView.frame
+            
             imageView.superview!.addSubview(fakeImageView)
 
-            let image = UIImage.init(forIcon: self.iconTypeForState(currentState), iconSize: .Large, color: self.iconColorForState(currentState))
+            let image = UIImage.init(forIcon: self.iconTypeForState(.Selected), iconSize: .Large, color: self.iconColorForState(.Selected))
             let animationImageView = UIImageView(image: image)
             animationImageView.frame = imageView.frame
             imageView.superview!.addSubview(animationImageView)
 
-            imageView.hidden = true
+            imageView.alpha = 0
             
             if newValue { // gets like
                 animationImageView.alpha = 0.0
@@ -58,21 +59,21 @@ public class LikeButton: IconButton {
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()
                         fakeImageView.removeFromSuperview()
-                        imageView.hidden = false
+                        imageView.alpha = 1
                     })
             }
             else {
-//                
-//                UIView.wr_animateWithEasing(RBBEasingFunctionEaseInExpo, duration: 0.35, animations: {
-//                    animationImageView.transform = CGAffineTransformMakeScale(6.3, 6.3)
-//                })
+                
+                UIView.wr_animateWithEasing(RBBEasingFunctionEaseInExpo, duration: 0.35, animations: {
+                    animationImageView.transform = CGAffineTransformMakeScale(6.3, 6.3)
+                })
                 
                 UIView.wr_animateWithEasing(RBBEasingFunctionEaseInQuart, duration: 0.35, animations: {
                     animationImageView.alpha = 0.0
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()
                         fakeImageView.removeFromSuperview()
-                        imageView.hidden = false
+                        imageView.alpha = 1
                     })
             }
             
