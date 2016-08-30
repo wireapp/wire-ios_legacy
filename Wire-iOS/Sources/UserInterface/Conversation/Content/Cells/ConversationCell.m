@@ -65,6 +65,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 @property (nonatomic) AccentColorChangeHandler *accentColorChangeHandler;
 
+@property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
+
 @property (nonatomic, readwrite) ConversationCellLayoutProperties *layoutProperties;
 
 #pragma mark - Constraints
@@ -192,6 +194,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.contentView addSubview:self.messageToolboxView];
     
     [self createLikeButton];
+    
+    self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+    self.doubleTapGestureRecognizer.delaysTouchesBegan = YES;
+    [self.contentView addGestureRecognizer:self.doubleTapGestureRecognizer];
 }
 
 - (void)prepareForReuse
@@ -430,10 +437,23 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
-    NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
+    NSMutableArray <UIMenuItem *> *items = [[NSMutableArray<UIMenuItem *> alloc] init];
+//    if (1) {// TODO LIKE
+        UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.like", @"") action:@selector(likeMessage:)];
+        [items addObject:likeItem];
+//    }
+//    else {
+//        UIMenuItem *unlikeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.unlike", @"") action:@selector(likeMessage:)];
+//        [items addObject:unlikeItem];
+//    }
+    [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
+    
     if (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent) {
-        menuController.menuItems = [items arrayByAddingObject:deleteItem];
+        [items addObject:deleteItem];
     }
+    
+    menuController.menuItems = items;
+    
     [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
     [menuController setMenuVisible:YES animated:YES];
 
@@ -443,6 +463,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 }
 
+- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTap
+{
+    // TODO LIKE :
+    self.likeButton.selected = !self.likeButton.selected;
+}
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer;
 {
@@ -464,6 +489,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         return YES;
     }
     
+    if (action == @selector(likeMessage:)) {
+        return YES;
+    }
+    
     return [super canPerformAction:action withSender:sender];
 }
 
@@ -474,6 +503,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionDelete];
         [[Analytics shared] tagOpenedMessageAction:MessageActionTypeDelete];
     }
+}
+
+- (void)likeMessage:(id)sender
+{
+    // TODO LIKE
+    self.likeButton.selected = !self.likeButton.selected;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

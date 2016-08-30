@@ -124,8 +124,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeRecordDot                       = 0x229,
     ZetaIconTypeStopRecording                   = 0x230,
     
-    ZetaIconTypeLike                            = 0x231,
-    ZetaIconTypeLiked                           = 0x232,
+    ZetaIconTypeLike                            = 0x183,
+    ZetaIconTypeLiked                           = 0x184,
     
     ZetaIconTypeEffectBallon                    = 0x240,
     ZetaIconTypeEffectJellyfish                 = 0x242,
