@@ -55,6 +55,8 @@ extension ZMMessage {
     
     public weak var delegate: MessageToolboxViewDelegate?
 
+    private(set) weak var message: ZMMessage?
+    
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -78,12 +80,13 @@ extension ZMMessage {
         
         constrain(self, self.reactionsView, self.statusLabel) { selfView, reactionsView, statusLabel in
             statusLabel.top == selfView.top + 4
-            statusLabel.left == selfView.leftMargin
-            statusLabel.right == selfView.rightMargin
+            statusLabel.left == selfView.left
+            statusLabel.right <= selfView.rightMargin
             selfView.height == 20 ~ 750
             
+            reactionsView.left >= statusLabel.right
             reactionsView.right == selfView.rightMargin
-            reactionsView.centerY == selfView.centerY
+            reactionsView.centerY == statusLabel.centerY
         }
         
         tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
@@ -97,6 +100,7 @@ extension ZMMessage {
     }
     
     public func configureForMessage(message: ZMMessage) {
+        self.message = message
         self.configureTimestamp(message)
         self.configureLikedState(message)
     }
@@ -104,7 +108,7 @@ extension ZMMessage {
     private func configureLikedState(message: ZMMessage) {
         // TODO LIKE: self.likesView.reactions = message.reactions
         //self.reactionsView.likers = message.reactions
-        
+        self.reactionsView.likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
         //let liked = message.isLiked
         //self.likeButton.selected = liked
     }
@@ -174,7 +178,9 @@ extension ZMMessage {
     // MARK: - Events
     
     @objc func onTapContent(button: UIButton!) {
-        self.delegate?.messageToolboxViewDidSelectReactions(self)
+//       TODO LIKE: if let message = self.message where message.reactions.count > 0 {
+            self.delegate?.messageToolboxViewDidSelectReactions(self)
+//        }
     }
 }
 

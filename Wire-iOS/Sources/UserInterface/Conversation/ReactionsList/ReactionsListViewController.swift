@@ -31,6 +31,7 @@ import Cartography
         ///self.reactionsUsers = self.message.likers
         self.reactionsUsers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
         super.init(nibName: .None, bundle: .None)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(ReactionsListViewController.donePressed(_:)))
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -51,6 +52,10 @@ import Cartography
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
         self.collectionView.backgroundColor = UIColor.clearColor()
+    }
+    
+    @objc public func donePressed(button: AnyObject!) {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: .None)
     }
 }
 

@@ -18,6 +18,7 @@
 
 import Foundation
 import zmessaging
+import Cartography
 
 @objc public class ReactionsView: UIView {
     let avatarStack = StackView()
@@ -57,6 +58,10 @@ import zmessaging
         super.init(frame: frame)
         self.avatarStack.direction = .Horizontal
         self.avatarStack.spacing = 4
+        self.addSubview(self.avatarStack)
+        constrain(self, self.avatarStack) { selfView, avatarStack in
+            avatarStack.edges == selfView.edges
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
