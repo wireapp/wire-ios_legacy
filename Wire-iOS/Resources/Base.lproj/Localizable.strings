@@ -303,7 +303,7 @@
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
-"meta.degraded.degradation_reason_message.plural" = "%@ started using a new devices.";
+"meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
 "meta.degraded.show_device_button" = "Show device";
 "meta.degraded.send_anyway_button" = "Send anyway";
