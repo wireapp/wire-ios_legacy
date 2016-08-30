@@ -129,16 +129,16 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        defer {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch indexPath.section {
+        case TechnicalReportSection.Reports.rawValue where indexPath.row == 0:
+            includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .None ? .Checkmark : .None
+        case TechnicalReportSection.Options.rawValue where indexPath.row == 1:
+            sendReport()
+        default:
+            break
         }
         
-        guard indexPath.section == 1 && indexPath.row == 1 else {
-            guard indexPath.section == 0 && indexPath.row == 0 else { return }
-            includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .None ? .Checkmark : .None
-            return
-        }
-        sendReport()
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     // MARK: Mail Delegate
