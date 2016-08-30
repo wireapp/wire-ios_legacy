@@ -155,6 +155,8 @@ import ZMCLinkPreview
         return false
     }
     
+    var usersReaction: [String : [ZMUser]] = [:]
+    
     var hasBeenDeleted = false
 }
 
