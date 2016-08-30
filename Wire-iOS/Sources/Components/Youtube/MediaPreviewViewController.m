@@ -55,9 +55,7 @@
     
     [self.mediaPreviewView.playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.view withMultiplier:(9.f / 16.f)];
-    }];
+    [self.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.view withMultiplier:(9.f / 16.f)];
 }
 
 - (void)tearDown;

@@ -71,7 +71,7 @@
         return NO;
     }
     
-    if (message.conversation.messages.lastObject == message) {
+    if (message.conversation.messages.lastObject == message && message.sender.isSelfUser) {
         return YES;
     }
     

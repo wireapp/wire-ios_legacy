@@ -135,8 +135,9 @@
     self.mediaPlayerRightMarginConstraint = [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
-    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+        [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    }];
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
@@ -401,9 +402,7 @@
 
 - (void)articleViewWantsToOpenURL:(ArticleView *)articleView url:(NSURL *)url
 {
-    if (! [UIApplication.sharedApplication openURL:url]) {
-        DDLogError(@"Unable to open URL: %@", url);
-    }
+    [self.delegate conversationCell:self didSelectURL:url];
 }
 
 - (void)articleViewDidLongPressView:(ArticleView *)articleView
