@@ -189,7 +189,7 @@
         [self.analyticsTracker tagAddressBookSystemPermissions:success];
 
         if (success) {
-            [[AddressBookHelper sharedHelper] startRemoteSearch:self.uploadAddressBookImmediately];
+            [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:self.uploadAddressBookImmediately];
             [self.formStepDelegate didCompleteFormStep:self];
         } else {
             [self displayContactsAccessDeniedMessageAnimated:YES];
@@ -221,7 +221,7 @@
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
     if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
-        [[AddressBookHelper sharedHelper] startRemoteSearch:true];
+        [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }

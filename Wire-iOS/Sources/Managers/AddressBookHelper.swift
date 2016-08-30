@@ -109,7 +109,7 @@ extension AddressBookHelper {
 extension AddressBookHelper {
     
     /// Starts an address book search, if enough time has passed since last search
-    public func startRemoteSearch(onlyIfEnoughTimeSinceLast: Bool) {
+    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:) public func startRemoteSearch(onlyIfEnoughTimeSinceLast: Bool) {
         guard self.isAddressBookAccessGranted && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {
             return
         }

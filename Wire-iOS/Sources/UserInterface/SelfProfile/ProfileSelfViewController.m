@@ -539,7 +539,7 @@
         
         UIAlertAction *uploadAddresBookAction = [UIAlertAction actionWithTitle:@"Force upload address book"
                                                                style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                                   [AddressBookHelper.sharedHelper startRemoteSearch:false];
+                                                                   [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:NO];
                                                                    [debugOptionsController dismissViewControllerAnimated:YES completion:nil];
                                                                }];
         

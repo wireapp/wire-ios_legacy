@@ -199,14 +199,14 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     
     if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
         // Re-check if we need to start AB search
-        [[AddressBookHelper sharedHelper] startRemoteSearch:true];
+        [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
     }
     else if ([[AddressBookHelper sharedHelper] isAddressBookAccessUnknown]) {
         [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
             [self.analyticsTracker tagAddressBookSystemPermissions:success];
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[AddressBookHelper sharedHelper] startRemoteSearch:true];
+                    [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
                 });
             }
         }];
