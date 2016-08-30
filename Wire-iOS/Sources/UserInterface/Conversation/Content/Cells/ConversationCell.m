@@ -303,6 +303,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
+    [UIView performWithoutAnimation:^{
+        [self layoutIfNeeded];
+    }];
+    
     if (animated) {
         [UIView animateWithDuration:0.35 animations:^{
             self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
@@ -421,7 +425,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
     NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
-    menuController.menuItems = [items arrayByAddingObject:deleteItem];
+    if (self.message.deliveryState == ZMDeliveryStateDelivered) {
+        menuController.menuItems = [items arrayByAddingObject:deleteItem];
+    }
     [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
     [menuController setMenuVisible:YES animated:YES];
 
@@ -468,7 +474,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     [super setSelected:selected animated:animated];
     
-    [self updateToolboxVisibilityAnimated:animated];
+    [self updateToolboxVisibilityAnimated:YES];
 }
 
 #pragma mark - UserImageView delegate

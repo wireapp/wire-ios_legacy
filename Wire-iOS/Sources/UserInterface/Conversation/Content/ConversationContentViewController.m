@@ -707,11 +707,7 @@
     ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.row];
     NSIndexPath *selectedIndexPath = nil;
     
-    if (![Message isVideoMessage:message] &&
-        ![Message isFileTransferMessage:message] &&
-        ![Message isImageMessage:message] &&
-        ![Message isLocationMessage:message] &&
-        [message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
+    if ([message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
         
         // If this cell is already selected, deselect it.
         self.conversationMessageWindowTableViewAdapter.selectedMessage  = nil;
@@ -811,6 +807,19 @@
         }
             break;
     }
+}
+
+- (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url
+{
+    [self.tableView selectRowAtIndexPath:[self.tableView indexPathForCell:cell] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+
+    if (! [UIApplication.sharedApplication openURL:url]) {
+        DDLogError(@"Unable to open URL: %@", url);
+    }
+    
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;

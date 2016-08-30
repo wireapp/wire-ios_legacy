@@ -80,17 +80,17 @@ public class FileTransferCell: ConversationCell {
             containerView.left == authorLabel.left
             containerView.right == messageContentView.rightMargin
             containerView.top == messageContentView.top
-            containerView.bottom  == messageContentView.bottom
-            containerView.height == 56 ~ 100
+            containerView.bottom == messageContentView.bottom ~ 100
+            containerView.height == 56
             
             topLabel.top == containerView.top + 12
             topLabel.left == actionButton.right + 12
             topLabel.right == containerView.right - 12
         }
         
-        constrain(self.fileTypeIconView, self.actionButton) { fileTypeIconView, actionButton in
-            actionButton.centerY == actionButton.superview!.centerY
-            actionButton.left == actionButton.superview!.left + 12
+        constrain(self.fileTypeIconView, self.actionButton, self.containerView) { fileTypeIconView, actionButton, containerView in
+            actionButton.centerY == containerView.centerY
+            actionButton.left == containerView.left + 12
             actionButton.height == 32
             actionButton.width == 32
             

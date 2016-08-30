@@ -71,11 +71,10 @@ extension ZMMessage {
         statusLabel.extendsLinkTouchArea = true
         statusLabel.userInteractionEnabled = true
         statusLabel.lineBreakMode = NSLineBreakMode.ByTruncatingMiddle
-        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue,
-                                      NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
-        
-        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue,
-                                            NSForegroundColorAttributeName: ZMUser.selfUser().accentColor.colorWithAlphaComponent(0.5)]
+        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+                                      NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed)]
+        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+                                            NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed).colorWithAlphaComponent(0.5)]
         
         self.addSubview(statusLabel)
         
@@ -151,21 +150,28 @@ extension ZMMessage {
     private func configureTimestamp(message: ZMMessage) {       
         var deliveryStateString: String? = .None
         
-        switch message.deliveryState {
-        case .Delivered:
-            deliveryStateString = "content.system.message_sent_timestamp".localized
-        case .FailedToSend:
-            deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
-        case .Pending:
-            deliveryStateString = "content.system.pending_message_timestamp".localized
-        default:
-            deliveryStateString = .None
+        if let sender = message.sender where sender.isSelfUser {
+            switch message.deliveryState {
+            case .Delivered:
+                deliveryStateString = "content.system.message_sent_timestamp".localized
+            case .FailedToSend:
+                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
+            case .Pending:
+                deliveryStateString = "content.system.pending_message_timestamp".localized
+            default:
+                deliveryStateString = .None
+            }
         }
-        
+    
         let finalText: String
         
         if let timestampString = self.timestampString(message) where message.deliveryState == .Delivered {
-            finalText = timestampString + " • " + (deliveryStateString ?? "")
+            if let deliveryStateString = deliveryStateString {
+                finalText = timestampString + " ・ " + deliveryStateString
+            }
+            else {
+                finalText = timestampString
+            }
         }
         else {
             finalText = (deliveryStateString ?? "")
