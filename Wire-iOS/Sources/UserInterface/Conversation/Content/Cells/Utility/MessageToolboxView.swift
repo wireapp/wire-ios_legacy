@@ -152,12 +152,14 @@ extension ZMMessage {
         
         if let sender = message.sender where sender.isSelfUser {
             switch message.deliveryState {
-            case .Delivered:
-                deliveryStateString = "content.system.message_sent_timestamp".localized
-            case .FailedToSend:
-                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
             case .Pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
+            case .Sent:
+                deliveryStateString = "content.system.message_sent_timestamp".localized
+            case .Delivered:
+                deliveryStateString = "content.system.message_delivered_timestamp".localized
+            case .FailedToSend:
+                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
             default:
                 deliveryStateString = .None
             }
@@ -165,7 +167,7 @@ extension ZMMessage {
     
         let finalText: String
         
-        if let timestampString = self.timestampString(message) where message.deliveryState == .Delivered {
+        if let timestampString = self.timestampString(message) where message.deliveryState == .Delivered || message.deliveryState == .Sent {
             if let deliveryStateString = deliveryStateString {
                 finalText = timestampString + " ・ " + deliveryStateString
             }

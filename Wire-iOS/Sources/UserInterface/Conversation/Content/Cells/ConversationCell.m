@@ -421,7 +421,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
     NSArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems ?: @[];
-    if (self.message.deliveryState == ZMDeliveryStateDelivered) {
+    if (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent) {
         menuController.menuItems = [items arrayByAddingObject:deleteItem];
     }
     [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
