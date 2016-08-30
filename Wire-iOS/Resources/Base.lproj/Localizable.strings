@@ -17,16 +17,9 @@
 // 
 
 
-
 "general.ok" = "OK";
 "general.cancel" = "Cancel";
 "general.open_settings" = "Open Wire Settings";
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Alert View - Version verification
-"version.outofdate.alert.title" = "Important Update";
-"version.outofdate.alert.message" = "Please install the latest version of Wire.";
-"version.outofdate.alert.downloadbutton" = "Download";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,22 +50,8 @@
 /*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "share contacts";
 
-"peoplepicker.all_search_results_added" = "Everyone you’re connected to is already in this conversation.";
-
-"peoplepicker.share_contacts_dialog.title" = "Share Contacts";
-"peoplepicker.share_contacts_dialog.message_short" = "We use your contact data to connect you with others.";
-"peoplepicker.share_contacts_dialog.message_long" = "We anonymize the email addresses and phone numbers and match the results to suggest connections. We don’t share this information with anyone else.";
-"peoplepicker.share_contacts_dialog.action_more" = "Tell me more";
-"peoplepicker.share_contacts_dialog.action_maybe_later" = "Maybe later";
-
-"peoplepicker.share_contacts_dialog.share" = "Share";
-
-
-"peoplepicker.share_contacts_dialog.short_title" = "SHARE YOUR CONTACTS";
-
 "peoplepicker.share_contacts.no_results.title" = "Find people by name or email address";
 
-"peoplepicker.send_invitation.title" = "Send an invitation";
 "peoplepicker.send_invitation.dialog.title" = "Invitation sent";
 "peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
 "peoplepicker.send_invitation.dialog.ok" = "OK";
@@ -88,14 +67,9 @@
 "contacts_ui.connection_request" = "Requested to connect";
 "contacts_ui.action_button.invite" = "Invite";
 "contacts_ui.action_button.open" = "Open";
-"contacts_ui.action_button.add" = "Add";
-"contacts_ui.invite_sheet.resend_title" = "Resend invitation?";
 "contacts_ui.invite_sheet.cancel_button_title" = "Cancel";
 "contacts_ui.notification.invitation_sent" = "Invitation sent";
 "contacts_ui.notification.invitation_failed" = "Failed to send invitation";
-"contacts_ui.invite_sheet.resend_unable.title" = "%@ is already on Wire";
-"contacts_ui.invite_sheet.resend_unable.message" = "Connection request sent.";
-"contacts_ui.invite_sheet.resend_unable.ok_button_title" = "OK";
 "contacts_ui.title" = "Invite people";
 
 "contacts_ui.no_contact.title" = "No active conversations\n";
@@ -121,7 +95,6 @@
 "send_invitation.text" = "I’m on Wire. Search for %@\nor visit https://get.wire.com to connect with me.";
 "send_invitation_no_email.text" = "I’m on Wire. Visit https://get.wire.com to connect with me.";
 
-
 "send_personal_invitation.text" = "I’m on Wire, talk to you there. https://get.wire.com";
 
 
@@ -136,36 +109,23 @@
 "notifications.in_conversation" = "%@ - %@";
 "notifications.this_conversation" = "%@ in this conversation";
 
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.start_conversation" = "Start a Conversation";
-"list.tutorial.pull_up" = "Pull to open archive";
 "list.archived_conversations" = "ARCHIVE";
-"list.archive_menu_item" = "ARCHIVE";
-"list.archive_menu_item_progress" = "ARCHIVING…";
-"list.release_to_load_archived_conversations" = "Release to load";
 "list.archived_conversations_close" = "Close archive";
-"list.release_to_close_archived_conversations" = "Release to close";
-"list.empty_message" = "Find people by name or email address, or send an invitation";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
-
 "conversation.invite_more_people.title" = "Spread the word!";
 "conversation.invite_more_people.description" = "Add people to this conversation";
-"conversation.invite_more_people.explanation" = "How does this work?";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
 "conversation.invite_more_people.button_title" = "Add People";
 
-// Conversation names
-"conversation.displayname.emptygroup" = "Empty group conversation";
-"conversation.displayname.onepersonleft" = "%@ - group";
-
 "conversation.input_bar.verified" = "Verified";
 "conversation.input_bar.placeholder" = "Type a message";
-"conversation.input_bar.new" = "New";
 
-"conversation.input_bar.audio_message.tooltip.longpress" = "Tap and hold to send an audio message";
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe up to send";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tap to send";
 "conversation.input_bar.audio_message.too_long.title" = "Recording Stopped";
@@ -238,7 +198,7 @@
 "content.system.started_using" = "started using";
 "content.system.is_verified" = "All fingerprints are verified";
 
-"content.system.unverified" = "%@ unverified one of %@"; //exemple "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule's devices"
 "content.system.your_devices" = "your devices";
 "content.system.other_devices" = "%@'s devices";
 
@@ -259,7 +219,6 @@
 "content.file.downloading" = "Downloading…";
 "content.file.upload_failed" = "Upload failed";
 "content.file.upload_cancelled" = "Upload cancelled";
-"content.file.download_failed" = "Download failed";
 "content.file.upload_video" = "Videos";
 "content.file.take_video" = "Record a video";
 
@@ -275,40 +234,26 @@
 // Current user pinged
 "content.ping.you.text" = "YOU PINGED";
 
-//Inline Player
+// Inline Player
 "content.player.unable_to_play" = "UNABLE TO PLAY TRACK";
-
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Connect to %@"; //check UPPERCASE implementation in code
-"connection_request.default_text" = "Write your first message to ask %@ to connect.";
 "missive.connection_request.default_message" = "Hi %@,\nLet’s connect on Wire.\n%@";
-"missive.connection_request.invitation_from_link_message" = "Hi,\nThanks for the invitation. Let’s connect.\n%@";
 
 "connection_request.send_button_title" = "Connect";
-// MISSING: "missive.cancel_button_title" = Cancel;
 "inbox.connection_request.connect_button_title" = "Connect";
-// MISSING: "inbox.connection_request.block_button_title" = Block;
 "inbox.connection_request.ignore_button_title" = "Ignore";
-"connection_request.pending_dialog_button_ok" = "OK";
-"connection_request.pending_dialog_message" = "You can’t send messages and pictures, or call until you are connected to %@.";
-"connection_request.pending_dialog_title" = "Pending";
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@\nCalling";
-"voice.status.one_to_one.incoming_video" = "%@\nVideo Calling";
 "voice.status.group_call.incoming" = "%@\nRinging";
 "voice.status.one_to_one.outgoing" = "%@\nRinging";
 "voice.status.joining" = "%@\nConnecting";
-"voice.status.connected" = "%@\n%@";
 "voice.status.video_not_available" = "Video turned off";
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
 "voice.network_error.body" = "You must be online to call. Check your connection and try again.";
-"voice.alert.end_current_call.title" = "Answer call?";
-"voice.alert.end_current_call.message" = "Your current call will end.";
-"voice.alert.end_current_call.cancel" = "Cancel";
-"voice.alert.end_current_call.accept" = "Answer";
 "voice.alert.call_in_progress.title" = "Call in progress";
 "voice.alert.call_in_progress.message" = "Another of your devices is already participating in the call";
 "voice.alert.call_in_progress.confirm" = "Ok";
@@ -325,22 +270,13 @@
 "voice.alert.camera_warning.title" = "Wire needs access to the Camera.";
 "voice.alert.camera_warning.explanation" = "Go to Settings and allow Wire to access the camera.";
 
-//Animated gif limit size dialog
-//MISSING"conversation.gif_limit_size.title" = "This picture is too large";
-//MISSING"conversation.gif_limit_size.message" = "You can upload files up to 5 MB";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"meta.group_name" = "Group name"; //NOT USED
-
 "participants.add_people_button_title" = "Add people";
 
-// Pull down/up labels
-"meta.bottom_options" = "Options";
-
-//Meta Menu
+// Meta Menu
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave";
 "meta.menu.archive" = "Archive";
@@ -352,16 +288,13 @@
 "meta.menu.cancel_connection_request" = "Cancel Request";
 
 // Delete conversation
-
 "meta.menu.delete_content.dialog_title" = "Delete content?";
 "meta.menu.delete_content.dialog_message" = "This will clear the conversation history and remove it from the list.";
 "meta.menu.delete_content.leave_as_well_message" = "Also leave the conversation";
 "meta.menu.delete_content.button_cancel" = "Cancel";
 "meta.menu.delete_content.button_delete" = "Delete";
 
-
 // Leave conversation
-
 "meta.leave_conversation_dialog_title" = "Leave conversation?";
 "meta.leave_conversation_dialog_message" = "The participants will be notified and the conversation will be removed from your list.";
 "meta.leave_conversation.delete_content_as_well_message" = "Also delete the content";
@@ -373,13 +306,7 @@
 "meta.degraded.degradation_reason_message.plural" = "%@ started using a new devices.";
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
 "meta.degraded.show_device_button" = "Show device";
-"meta.degraded.show_people_button" = "Show people";
 "meta.degraded.send_anyway_button" = "Send anyway";
-
-// You left this conversation dialogue (not visible in UI right now)
-"profile.left_conversation_dialog_title" = "Not available";
-"profile.left_conversation_dialog_message" = "You can’t participate in this conversation unless someone invites you back.";
-"profile.left_conversation_dialog_button_ok" = "OK";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Remove?";
@@ -445,17 +372,9 @@
 // General strings
 "general.confirm" = "OK";
 
-// Error when trying to create group conv. from one-to-one with someone who blocked you
-// MISSING: "profile.add_blocked_error_dialog.title" = "Not available";
-// MISSING: "profile.add_blocked_error_dialog.message" = "%@ does not want to be added to group conversations.";
-// MISSING: "profile.add_blocked_error_dialog.button" = "Continue";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
-
-// Firs-time tutorial/discoverability
-"self.tutorial.bottom_prompt" = "Pull for options"; //NOT USED
 
 // Options menu contents
 "self.settings" = "Settings";
@@ -467,10 +386,6 @@
 "self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
 
-// Remove picture dialog
-"self.remove_pic.cancel" = "Cancel";
-"self.remove_pic.remove" = "Remove";
-
 // About screen
 "about.tos.title"="Terms of Use";
 "about.privacy.title"="Privacy Policy";
@@ -479,7 +394,6 @@
 "about.copyright.title"="© %d Wire Swiss GmbH";
 
 // Self new devices
-
 "self.new_device_alert.title" = "You have connected %@ to your Wire account";
 "self.new_device_alert.title_prefix.tablet" = "a tablet";
 "self.new_device_alert.title_prefix.phone" = "a phone";
@@ -490,7 +404,6 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - Account details
-
 "self.settings.account_section" = "Account";
 
 "self.settings.account_details_group.title" = "Account Details";
@@ -520,15 +433,12 @@
 
 
 // Chat alerts
-
 "self.settings.notifications.push_notification.title" = "Notifications";
 "self.settings.notifications.push_notification.toogle" = "Message previews";
 "self.settings.notifications.push_notification.footer" = "Sender name and message on the lock screen and in Notification Center.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Message banners";
 "self.settings.notifications.chat_alerts.footer" = "New messages in other conversations.";
-
-
 
 "self.settings.sound_menu.sounds.title" = "Sounds";
 "self.settings.sound_menu.ringtone.title" = "Ringtone";
@@ -543,9 +453,6 @@
 
 "self.settings.sound_menu.group.title" = "Sounds & Alerts";
 
-"self.settings.conversation.title" = "Chat";
-"self.settings.conversation.disable_big_emoji" = "Disable big emoji";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sound Alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";
@@ -556,32 +463,17 @@
 "self.settings.developer_options.title" = "Developer Options";
 "self.settings.apns_logging.title" = "APNS Logging";
 
-// Download options (TO BE UPDPATED)
-"self.settings.download_strategy_menu.title" = "Download Pictures";
-"self.settings.download_strategy_menu.all.title" = "Always";
-"self.settings.download_strategy_menu.wifionly.title" = "Wi-Fi only";
-
 // Privacy (visibility) options
 "self.settings.privacy_menu.title" = "Privacy & Security";
 
 "self.settings.privacy_contacts_section.title" = "Contacts";
-"self.settings.privacy_contacts_menu.button.title" = "Share";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open contacts settings";
-"self.settings.privacy_contacts_menu.description.title" = "This will help you find people you know. We anonymize all information and do not share it with anyone else.";
-"self.settings.privacy_contacts_menu.description_enabled.title" = "You have chosen to share your contacts. We anonymize all information and do not share it with anyone else.";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Sharing your contacts helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
-
-// PLaceholder strings
-//    "self.settings.privacy_email_section.title" = "Email searchability";
-//    "self.settings.privacy_email_menu.button.title" = "Let people find me by email";
-//    "self.settings.privacy_email_menu.everyone.description" = "Choose if people can find you by entering your email address in the Search field.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 "self.settings.privacy_analytics_menu.devices_button.title" = "Manage devices";
 
 "self.settings.privacy_analytics_section.title" = "Usage and crash reports";
-"self.settings.privacy_analytics_menu.title.allow" = "Send data to Wire";
-"self.settings.privacy_analytics_menu.title.disabled" = "Don’t allow";
 "self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
 
 "self.settings.privacy.clear_history.title" = "Clear History";
@@ -610,41 +502,18 @@
 "self.settings.tip.change_picture" = "Tap to change picture";
 "self.settings.tip.change_color" = "Slide to change color";
 
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "No Internet";
 "system_status_bar.no_internet.explanation" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
-//MISSING"system_status_dialog.no_changes_applied" = "We couldn’t apply your changes. Please make sure your connection works and try again.";
 "system_status_bar.poor_connectivity.title" = "Slow Internet, can’t call now";
-//MISSING"system_status_dialog.no_changes_applied_discard_button" = "Discard";
-//MISSING"system_status_dialog.no_changes_applied_try_button" = "Try again";
-//MISSING"system_status_dialog.no_internet_generic_error" = "Something went wrong. Please make sure your connection works and try again.";
 "system_status_bar.poor_connectivity.explanation" = "We can’t guarantee voice quality. Connect to Wi-Fi or try changing your location.";
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// App Map
-"tutorial.map.header" = "Wire is really simple.";
-"tutorial.map.description_start" = "Start or find conversations";
-"tutorial.map.description_groups" = "Create groups";
-"tutorial.map.description_conversation" = "Do things in conversation";
-"tutorial.map.confirm_button_title" = "Thanks, got it";
-
+// Common connections on profile view
 "profile_other.common_connections" = "You both know";
-"profile_other.common_connections_other" = "Others";
-
-"meta.add_people" = "Add people"; //not used
-"meta.add_people_release" = "Release to add"; //not used
-"meta.bottom_options_release" = "Release for options"; //not used
-
-"meta.menu_leave_conversation" = "Leave conversation";
 
 // View user profile and options menu
-"profile.in_conversation_name" = "In “%@”"; //NOT VISIBLE IN UI CURRENTLY
-"profile.menu_send_message" = "Message";
-"profile.menu_call" = "Call";
-"profile.menu_connect" = "Connect";
-"profile.menu_remove_from_conversation" = "Remove";
-
 "name.placeholder" = "Your full name";
 "name.guidance.tooshort" = "At least 2 characters";
 "name.guidance.toolong" = "Too many characters";
@@ -660,9 +529,6 @@
 "registration.close_email_invitation_button.phone_title" = "Register by phone";
 "registration.close_phone_invitation_button.email_title" = "Register by email";
 "registration.close_phone_invitation_button.phone_title" = "Use another phone";
-"registration.check_invitation_button.title" = "I have an invitation";
-
-"registration.enter_phone_number.hero" = "Create an account";
 
 "registration.enter_phone_number.title" = "Edit phone number";
 "registration.enter_phone_number.placeholder" = "Phone number";
@@ -675,7 +541,6 @@
 "registration.verify_email.resend.instructions" = "Didn't get the message?";
 "registration.verify_email.resend.button_title" = "Re-send";
 
-"registration.select_picture.hero" = "Hello, %@.";
 "registration.select_picture.subtitle" = "Wire is so much nicer with a picture.";
 "registration.select_picture.button_title" = "Choose your own";
 "registration.keep_picture.button_title" = "Keep this one";
@@ -748,12 +613,10 @@
 "registration.email_invitation.title" = "Invitation";
 "registration.email_invitation.hero.title" = "Hello, %@";
 "registration.email_invitation.hero.paragraph" = "Choose a password to create your account.";
-"registration.email_invitation.continue_button.title" = "Continue";
 
 "registration.phone_invitation.title" = "Invitation";
 "registration.phone_invitation.hero.title" = "Hello, %@";
 "registration.phone_invitation.hero.paragraph" = "You are one step away from creating your account.";
-"registration.phone_invitation.continue_button.title" = "Continue";
 
 "error.name_and_email" = "Please enter your full name and a valid email address";
 "error.full_name" = "Please enter your full name";
@@ -762,6 +625,7 @@
 "error.input.too_short" = "Input too short";
 "error.email.invalid" = "Please enter a valid email address";
 "error.phone.invalid" = "Please enter a valid phone number";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
@@ -777,10 +641,9 @@
 "error.user.registration_unknown_error" = "Something went wrong. Please try again.";
 "error.user.device_deleted_remotely" = "You have been logged out from another device.";
 
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.incorrect_verification_code" = "Please enter a valid code";
-"error.updating_email" = "The email address you provided has already been registered. Please try again.";
 "error.updating_password" = "Couldn't update your password.";
 
 "error.group_call.too_many_members_in_conversation.title" = "Too many people to call";
@@ -798,14 +661,9 @@
 "error.invite.no_email_provider" = "Please configure your email client to be able to send the invites via email";
 "error.invite.no_messaging_provider" = "Please configure your SMS to be able to send the invites via SMS";
 
-
 "sketchpad.initial_hint" = "Tap color to change brush size\nPress and hold to fill an area\nShake to remove a photo";
 
 "migration.please_wait_message" = "One moment, please";
-
-"video.vimeo.open_in_browser" = "Open in browser";
-"video.vimeo.default_title" = "Vimeo Video";
-"video.youtube.default_title" = "Youtube Video";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -927,13 +785,11 @@
 
 
 //Force Update
-
 "force.update.title" = "Update necessary";
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
 "force.update.ok_button" = "Go to App Store";
 
 // Third Party
-
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
 "giphy.error.no_more_results" = "no more gifs";
@@ -941,7 +797,6 @@
 
 "giphy.confirm" = "send";
 "giphy.try_another" = "try another";
-"giphy.cancel" = "cancel";
 
 "invite_banner.title" = "Bring your friends to Wire!";
 "invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";
