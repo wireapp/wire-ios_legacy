@@ -711,7 +711,7 @@
         
         // If this cell is already selected, deselect it.
         self.conversationMessageWindowTableViewAdapter.selectedMessage  = nil;
-        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         // Make table view to update cells with animation
         [tableView beginUpdates];

@@ -68,8 +68,6 @@
 @property (nonatomic, strong) FLAnimatedImageView *fullImageView;
 @property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
 @property (nonatomic, strong) UIView *imageViewContainer;
-@property (nonatomic, strong) IconButton *resendButton;
-@property (nonatomic, strong) UIView *resendButtonContainer;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
 
 /// Can either be UIImage or FLAnimatedImage
@@ -183,27 +181,10 @@ static ImageCache *imageCache(void)
 
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.loadingView];
-    
-    self.resendButtonContainer = [[UIView alloc] initForAutoLayout];
-    self.resendButtonContainer.backgroundColor = UIColor.whiteColor;
-    [self addSubview:self.resendButtonContainer];
-    
-    self.resendButton = [[IconButton alloc] init];
-    self.resendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.resendButton.cas_styleClass = @"resend-button";
-    [self.resendButton setIcon:ZetaIconTypeRedo withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
-    [self.resendButton addTarget:self action:@selector(resendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.resendButtonContainer addSubview:self.resendButton];
-    
+  
     self.accessibilityIdentifier = @"ImageCell";
     
     self.loadingView.hidden = NO;
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.resendButtonContainer.layer.cornerRadius = CGRectGetWidth(self.resendButtonContainer.bounds) / 2;
 }
 
 - (void)createConstraints
@@ -214,18 +195,11 @@ static ImageCache *imageCache(void)
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
     [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [NSLayoutConstraint autoSetPriority:ALLayoutPriorityDefaultHigh + 1 forConstraints:^{
+        [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         self.imageWidthConstraint = [self.imageViewContainer autoSetDimension:ALDimensionWidth toSize:0];
     }];
-    
-    [self.resendButtonContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:13];
-    [self.resendButtonContainer autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    [self.resendButtonContainer autoSetDimension:ALDimensionWidth toSize:24];
-    [self.resendButtonContainer autoConstrainAttribute:ALAttributeHeight toAttribute:ALAttributeWidth ofView:self.resendButtonContainer];
-    
-    [self.resendButton autoCenterInSuperview];
 }
 
  - (void)updateImageMessageConstraintConstants
@@ -248,17 +222,10 @@ static ImageCache *imageCache(void)
         
         if (! self.imageAspectConstraint) {
             CGFloat aspectRatio = self.originalImageSize.height / self.originalImageSize.width;
-            [NSLayoutConstraint autoSetPriority:ALLayoutPriorityDefaultHigh + 1 forConstraints:^{
+            [NSLayoutConstraint autoSetPriority:ALLayoutPriorityRequired forConstraints:^{
                 self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imageViewContainer withMultiplier:aspectRatio];
             }];
         }
-    }
-}
-
-- (void)resendButtonPressed:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:resendMessageTapped:)]) {
-        [self.delegate conversationCell:self resendMessageTapped:self.message];
     }
 }
 
@@ -268,8 +235,6 @@ static ImageCache *imageCache(void)
         return;
     }
     id<ZMImageMessageData> imageMessageData = convMessage.imageMessageData;
-
-    self.resendButtonContainer.hidden = convMessage.deliveryState != ZMDeliveryStateFailedToSend;
     
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
@@ -365,13 +330,6 @@ static ImageCache *imageCache(void)
     
     if (change.imageChanged) {
         [self configureForMessage:self.message layoutProperties:self.layoutProperties];
-    }
-    
-    if (change.deliveryStateChanged) {
-        BOOL hidden = change.message.deliveryState != ZMDeliveryStateFailedToSend;
-        [UIView animateWithDuration:0.2 animations:^{
-            self.resendButtonContainer.hidden = hidden;
-        }];
     }
     
     return needsLayout;
