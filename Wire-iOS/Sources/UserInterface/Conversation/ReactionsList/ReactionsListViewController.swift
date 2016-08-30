@@ -25,15 +25,16 @@ import Cartography
     public let reactionsUsers: [ZMUser]
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
+    private let topBar = UIView()
+    private let backButton = IconButton.iconButtonDefault()
+    private let titleLabel = UILabel()
     
     public init(message: ZMMessage) {
         self.message = message
         ///self.reactionsUsers = self.message.likers
         self.reactionsUsers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
         super.init(nibName: .None, bundle: .None)
-        self.title = "content.reactions_list.likers".localized
-        let leftArrowImage = UIImage(forIcon: .LeftArrow, iconSize: .Small, color: ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorIconNormal))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftArrowImage, style: .Plain, target: self, action: #selector(ReactionsListViewController.backPressed(_:)))
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -42,6 +43,17 @@ import Cartography
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "content.reactions_list.likers".localized
+        self.titleLabel.text = self.title
+        
+        backButton.setIcon(.LeftArrow, withSize: .Tiny, forState: .Normal)
+        backButton.addTarget(self, action: #selector(ReactionsListViewController.backPressed(_:)), forControlEvents: .TouchUpInside)
+        backButton.frame = CGRectMake(0, 0, 16, 16)
+        backButton.accessibilityIdentifier = "BackButton"
+        self.navigationItem.leftItemsSupplementBackButton = true
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        
         self.collectionViewLayout.scrollDirection = .Vertical
         self.collectionViewLayout.minimumLineSpacing = 0
         self.collectionViewLayout.minimumInteritemSpacing = 0
@@ -76,7 +88,7 @@ extension ReactionsListViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ReactionCell.reuseIdentifier, forIndexPath: indexPath) as! ReactionCell
         cell.user = self.reactionsUsers[indexPath.item]
         return cell
     }
@@ -87,6 +99,5 @@ extension ReactionsListViewController: UICollectionViewDelegate, UICollectionVie
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-
     }
 }

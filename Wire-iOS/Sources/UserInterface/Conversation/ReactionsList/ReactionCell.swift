@@ -39,8 +39,18 @@ public class ReactionCell: UICollectionViewCell {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.contentView.addSubview(self.userNameLabel)
+        self.contentView.addSubview(self.userImageView)
+        
         constrain(self.contentView, self.userImageView, self.userNameLabel) { contentView, userImageView, userNameLabel in
+            userImageView.left == contentView.left + 24
+            userImageView.width == userImageView.height
+            userImageView.top == contentView.top + 4
+            userImageView.bottom == contentView.bottom - 4
             
+            userNameLabel.left == userImageView.right + 24
+            userNameLabel.centerY == userImageView.centerY
+            userNameLabel.right <= contentView.right - 24
         }
     }
     
