@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -90,8 +90,8 @@ import Foundation
         let shareContactsDisabledSettingsButton = SettingsButtonCellDescriptor(title: shareButtonTitleDisabled, isDestructive: false, selectAction: { (descriptor: SettingsCellDescriptorType) -> () in
                 UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
             }) { (descriptor: SettingsCellDescriptorType) -> (Bool) in
-                if AddressBookHelper.sharedHelper().addressBookWasUploaded {
-                    if AddressBookHelper.sharedHelper().isAddressBookAccessDisabled() || AddressBookHelper.sharedHelper().isAddressBookAccessUnknown() {
+                if AddressBookHelper.sharedHelper.addressBookSearchPerformedAtLeastOnce {
+                    if AddressBookHelper.sharedHelper.isAddressBookAccessDisabled || AddressBookHelper.sharedHelper.isAddressBookAccessUnknown {
                         return true
                     }
                     else {
@@ -106,7 +106,7 @@ import Foundation
         let shareFooterDisabledText = "self.settings.privacy_contacts_menu.description_disabled.title".localized
         
         let shareContactsDisabledSection = SettingsSectionDescriptor(cellDescriptors: [shareContactsDisabledSettingsButton], header: headerText, footer: shareFooterDisabledText) { (descriptor: SettingsSectionDescriptorType) -> (Bool) in
-            return AddressBookHelper.sharedHelper().isAddressBookAccessDisabled()
+            return AddressBookHelper.sharedHelper.isAddressBookAccessDisabled
         }
 
         let devicesSectionTitle = "self.settings.privacy_analytics_menu.devices.title".localized

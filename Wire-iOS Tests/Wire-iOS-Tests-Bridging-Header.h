@@ -23,7 +23,6 @@
 
 #import "Analytics.h"
 #import "Analytics+iOS.h"
-#import "AddressBookHelper.h"
 #import "NSString+Fingerprint.h"
 #import "ZMSnapshotTestCase.h"
 #import "MockUser.h"

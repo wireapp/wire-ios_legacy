@@ -25,7 +25,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "Analytics+iOS.h"
 
-#import "AddressBookHelper.h"
 #import "RegistrationFormController.h"
 #import "ShareContactsViewController.h"
 #import "NSString+Wire.h"
@@ -97,7 +96,7 @@
     // that's why we need to track the tap manually here.
     if (!self.shareContactsViewController.showingAddressBookAccessDeniedViewController) {
         [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
-        [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
+        [[AddressBookHelper sharedHelper] addressBookSearchWasProposed];
     }
     
     [self.formStepDelegate didSkipFormStep:self];

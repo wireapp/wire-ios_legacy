@@ -82,7 +82,6 @@
 #import "UIColor+MagicAccess.h"
 #import "Analytics.h"
 #import "Analytics+iOS.h"
-#import "AddressBookHelper.h"
 #import "NSURL+WireURLs.h"
 #import "NSURL+WireLocale.h"
 #import "Analytics+ProfileEvents.h"

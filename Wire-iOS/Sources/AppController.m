@@ -380,6 +380,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
     [self executeQueuedBlocksIfNeeded];
+    
+    // Singletons
+    AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
 }
 
 #pragma mark - User Session block queueing

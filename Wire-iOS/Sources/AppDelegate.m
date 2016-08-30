@@ -21,6 +21,7 @@
 
 #import "zmessaging+iOS.h"
 #import "ZMUserSession+Additions.h"
+#import "Wire-Swift.h"
 
 #import "Settings.h"
 #import "ColorScheme.h"
@@ -37,7 +38,6 @@
 #import "Constants.h"
 #import <AdSupport/AdSupport.h>
 #import "AppDelegate+Hockey.h"
-#import "AppDelegate+AddressBook.h"
 #import "Application+runDuration.h"
 
 #import "AppDelegate+Logging.h"
@@ -423,7 +423,7 @@
         [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
             if (note.networkState == ZMNetworkStateOnline && isLoggedIn && self.addressBookUploadShouldBeChecked) {
                 self.addressBookUploadShouldBeChecked = NO;
-                [self checkAndUploadAddressBookIfNeeded];
+                [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
             }
         }];
     });
