@@ -31,7 +31,6 @@
 #import "UIView+Zeta.h"
 #import "Constants.h"
 #import "ColorScheme.h"
-#import "AddressBookHelper.h"
 #import "UITableView+RowCount.h"
 #import "ContactsEmptyResultView.h"
 #import "Analytics+iOS.h"

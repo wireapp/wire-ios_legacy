@@ -75,7 +75,8 @@ private extension ImageMessageCell {
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
-
+        layoutProperties.showToolbox = failedToSend
+        
         let message = MockMessageFactory.imageMessage()
         message.deliveryState = failedToSend ? .FailedToSend : .Delivered
         let imageMessageData = message.imageMessageData as! MockImageMessageData

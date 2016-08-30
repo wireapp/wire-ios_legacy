@@ -22,7 +22,6 @@
 #import "Button.h"
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "AddressBookHelper.h"
 #import "AnalyticsTracker+Permissions.h"
 #import "NSString+Wire.h"
 #import "Wire-Swift.h"
@@ -190,13 +189,7 @@
         [self.analyticsTracker tagAddressBookSystemPermissions:success];
 
         if (success) {
-            if (self.uploadAddressBookImmediately) {
-                [[AddressBookHelper sharedHelper] forceUploadAddressBook];
-            }
-            else {
-                [[AddressBookHelper sharedHelper] uploadAddressBook];
-            }
-            
+            [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:self.uploadAddressBookImmediately];
             [self.formStepDelegate didCompleteFormStep:self];
         } else {
             [self displayContactsAccessDeniedMessageAnimated:YES];
@@ -210,7 +203,7 @@
         [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
     }
 
-    [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
+    [[AddressBookHelper sharedHelper] addressBookSearchWasProposed];
     [self.formStepDelegate didSkipFormStep:self];
 }
 
@@ -219,7 +212,7 @@
 
 - (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController
 {
-    [[AddressBookHelper sharedHelper] addressBookUploadWasProposed];
+    [[AddressBookHelper sharedHelper] addressBookSearchWasProposed];
     [self.formStepDelegate didSkipFormStep:self];
 }
 
@@ -228,7 +221,7 @@
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
     if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
-        [[AddressBookHelper sharedHelper] uploadAddressBook];
+        [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }

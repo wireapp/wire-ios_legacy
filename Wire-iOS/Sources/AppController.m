@@ -365,9 +365,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
 
+    NSString *wireGroupID = [@"group." stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] valueForKey:@"WireGroupId"]];
     _zetaUserSession = [[ZMUserSession alloc] initWithMediaManager:(id)AVSProvider.shared.mediaManager
                                                          analytics:Analytics.shared
-                                                        appVersion:appVersion];
+                                                        appVersion:appVersion
+                                                appGroupIdentifier:wireGroupID];
     
     // Cache conversation lists etc.
     self.sessionObjectCache = [[SessionObjectCache alloc] initWithUserSession:[ZMUserSession sharedSession]];
@@ -377,6 +379,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
     [self executeQueuedBlocksIfNeeded];
+    
+    // Singletons
+    AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
 }
 
 #pragma mark - User Session block queueing
