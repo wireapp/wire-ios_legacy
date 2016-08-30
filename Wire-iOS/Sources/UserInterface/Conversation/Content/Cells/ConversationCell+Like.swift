@@ -24,8 +24,8 @@ public extension ConversationCell {
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
         self.likeButton.addTarget(self, action: #selector(ConversationCell.onLikePressed(_:)), forControlEvents: .TouchUpInside)
-        self.likeButton.setIcon(.Like, withSize: .Like, forState: .Normal)
-        self.likeButton.setIconColor(UIColor.grayColor(), forState: .Normal)
+        self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Normal)
+        self.likeButton.setIconColor(ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextDimmed), forState: .Normal)
         self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Selected)
         self.likeButton.setIconColor(UIColor(forZMAccentColor: .VividRed), forState: .Selected)
         self.likeButton.hitAreaPadding = CGSizeMake(20, 20)

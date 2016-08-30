@@ -478,7 +478,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     [super setSelected:selected animated:animated];
     
-    [self updateToolboxVisibilityAnimated:animated];
+    [self updateToolboxVisibilityAnimated:YES];
 }
 
 #pragma mark - UserImageView delegate
