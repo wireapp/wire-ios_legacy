@@ -439,6 +439,7 @@
 		872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */; };
 		87302F4B1B15D6E6001F478C /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87302F4A1B15D6E6001F478C /* SearchViewController.m */; };
 		87302F4E1B15F3B0001F478C /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87302F4D1B15F3B0001F478C /* SearchView.m */; };
+		873151111D75D0C000284C1F /* ReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873151101D75D0C000284C1F /* ReactionCell.swift */; };
 		8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */; };
 		873313111D2137350082B8F7 /* AVAsset+VideoConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873313101D2137350082B8F7 /* AVAsset+VideoConvert.swift */; };
 		873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 873478061D34EE5100CB200F /* libstdc++.tbd */; };
@@ -1517,6 +1518,7 @@
 		87302F4A1B15D6E6001F478C /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		87302F4C1B15F3B0001F478C /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
 		87302F4D1B15F3B0001F478C /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
+		873151101D75D0C000284C1F /* ReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionCell.swift; sourceTree = "<group>"; };
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873313101D2137350082B8F7 /* AVAsset+VideoConvert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAsset+VideoConvert.swift"; sourceTree = "<group>"; };
 		873478061D34EE5100CB200F /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -3347,6 +3349,7 @@
 			isa = PBXGroup;
 			children = (
 				875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */,
+				873151101D75D0C000284C1F /* ReactionCell.swift */,
 			);
 			path = ReactionsList;
 			sourceTree = "<group>";
@@ -5348,6 +5351,7 @@
 				871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
 				8F89141A1A9F287E0056AB0C /* UnsentIndicatorLayer.m in Sources */,
+				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
 				16EBBEFF1BEBBCF40087DA60 /* InvitationStatusController.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,

@@ -31,7 +31,9 @@ import Cartography
         ///self.reactionsUsers = self.message.likers
         self.reactionsUsers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
         super.init(nibName: .None, bundle: .None)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(ReactionsListViewController.donePressed(_:)))
+        self.title = "content.reactions_list.likers".localized
+        let leftArrowImage = UIImage(forIcon: .LeftArrow, iconSize: .Small, color: ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorIconNormal))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftArrowImage, style: .Plain, target: self, action: #selector(ReactionsListViewController.backPressed(_:)))
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -45,16 +47,21 @@ import Cartography
         self.collectionViewLayout.minimumInteritemSpacing = 0
         self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
-        self.collectionView.registerClass(SearchResultCell.self, forCellWithReuseIdentifier: "SearchResultCell")
+        self.collectionView.registerClass(ReactionCell.self, forCellWithReuseIdentifier: ReactionCell.reuseIdentifier)
+        self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
         self.collectionView.backgroundColor = UIColor.clearColor()
+        self.view.addSubview(self.collectionView)
+        constrain(self.view, self.collectionView) { selfView, collectionView in
+            collectionView.edges == selfView.edges
+        }
     }
     
-    @objc public func donePressed(button: AnyObject!) {
+    @objc public func backPressed(button: AnyObject!) {
         self.navigationController?.dismissViewControllerAnimated(true, completion: .None)
     }
 }

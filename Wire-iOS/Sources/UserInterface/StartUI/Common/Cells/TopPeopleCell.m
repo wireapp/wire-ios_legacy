@@ -80,7 +80,7 @@
 {
     [self.badgeUserImageView removeFromSuperview];
 
-    self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:self.magicModePrefix];
+    self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.top_conversations_mode"];
     self.badgeUserImageView.suggestedImageSize = UserImageViewSizeSmall;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.userInteractionEnabled = NO;
@@ -121,14 +121,14 @@
 
 - (void)updateForContext
 {
-    self.nameLabel.font = [UIFont fontWithMagicIdentifier:[self.magicModePrefix stringByAppendingString:@".name_label_font"]];
-    self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:[self.magicPrefix stringByAppendingString:@".name_label_font_color"]];
+    self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.top_conversations_mode.name_label_font"];
+    self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.name_label_font_color"];
 
-    CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:[self.magicModePrefix stringByAppendingString:@".tile_image_diameter"]];
+    CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.top_conversations_mode.tile_image_diameter"];
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
     
-    self.badgeUserImageView.badgeColor = [UIColor colorWithMagicIdentifier:[self.magicPrefix stringByAppendingString:@".badge_icon_color"]];
+    self.badgeUserImageView.badgeColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.badge_icon_color"];
 }
 
 - (void)prepareForReuse
@@ -179,7 +179,7 @@
 
     _displayName = [displayName copy];
 
-    self.nameLabel.text = [_displayName transformStringWithMagicKey:[self.magicModePrefix stringByAppendingString:@".name_label_text_transform"]];
+    self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.top_conversations_mode.name_label_text_transform"];
 }
 
 - (void)setSelected:(BOOL)selected
@@ -191,16 +191,6 @@
     } else {
         self.badgeUserImageView.badge = nil;
     }
-}
-
-- (NSString *)magicPrefix
-{
-    return @"people_picker.top_conversations_mode.context_add_people";
-}
-
-- (NSString *)magicModePrefix
-{
-    return @"people_picker.top_conversations_mode";
 }
 
 @end

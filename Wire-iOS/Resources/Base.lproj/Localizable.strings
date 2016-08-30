@@ -274,6 +274,8 @@
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
 
+"content.reactions_list.likers" = "Likers";
+
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
 "content.ping.text" = "%1$@ PINGED";
