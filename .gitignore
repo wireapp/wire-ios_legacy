@@ -13,7 +13,6 @@ xcuserdata
 *.moved-aside
 .idea/
 Pods
-Podfile.lock
 contents.xcworkspacedata
 Carthage/
 *.xcuserstate
