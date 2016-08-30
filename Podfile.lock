@@ -39,31 +39,25 @@ PODS:
   - PureLayout (3.0.0)
   - RBBAnimation (0.4.0)
   - SCSiriWaveformView (1.0.3)
-  - VIMNetworking (6.0.0):
-    - VIMNetworking/AFNetworking (= 6.0.0)
-    - VIMNetworking/Cache (= 6.0.0)
-    - VIMNetworking/Keychain (= 6.0.0)
-    - VIMNetworking/Model (= 6.0.0)
-    - VIMNetworking/Networking (= 6.0.0)
-    - VIMNetworking/Private (= 6.0.0)
-    - VIMNetworking/VIMObjectMapper (= 6.0.0)
-  - VIMNetworking/AFNetworking (6.0.0):
+  - VIMNetworking (6.0.4):
     - AFNetworking (= 2.6.3)
-  - VIMNetworking/Cache (6.0.0)
-  - VIMNetworking/Keychain (6.0.0)
-  - VIMNetworking/Model (6.0.0):
-    - VIMObjectMapper (= 6.0.0)
-  - VIMNetworking/Networking (6.0.0):
+    - VIMNetworking/Cache (= 6.0.4)
+    - VIMNetworking/Keychain (= 6.0.4)
+    - VIMNetworking/Model (= 6.0.4)
+    - VIMNetworking/ObjectMapper (= 6.0.4)
+    - VIMNetworking/Private (= 6.0.4)
+  - VIMNetworking/Cache (6.0.4):
     - AFNetworking (= 2.6.3)
-    - VIMNetworking/Cache
-    - VIMNetworking/Keychain
+  - VIMNetworking/Keychain (6.0.4):
+    - AFNetworking (= 2.6.3)
+  - VIMNetworking/Model (6.0.4):
+    - AFNetworking (= 2.6.3)
+    - VIMNetworking/ObjectMapper
+  - VIMNetworking/ObjectMapper (6.0.4):
+    - AFNetworking (= 2.6.3)
+  - VIMNetworking/Private (6.0.4):
+    - AFNetworking (= 2.6.3)
     - VIMNetworking/Model
-    - VIMNetworking/Private
-  - VIMNetworking/Private (6.0.0):
-    - VIMNetworking/Model
-  - VIMNetworking/VIMObjectMapper (6.0.0):
-    - VIMObjectMapper (= 6.0.0)
-  - VIMObjectMapper (6.0.0)
 
 DEPENDENCIES:
   - AFNetworking (from `https://github.com/wireapp/AFNetworking`, tag `2.6.3`)
@@ -77,7 +71,7 @@ DEPENDENCIES:
   - PureLayout (from `https://github.com/wireapp/PureLayout`, tag `v3.0.0`)
   - RBBAnimation (from `https://github.com/wireapp/RBBAnimation`, commit `7dd8d9a3cf610be5f7c1e4459692d555d70704c7`)
   - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
-  - VIMNetworking (from `https://github.com/wireapp/VIMNetworking`, tag `6.0.0`)
+  - VIMNetworking (from `https://github.com/wireapp/VIMNetworking`, tag `6.0.2-wire`)
 
 EXTERNAL SOURCES:
   AFNetworking:
@@ -106,7 +100,7 @@ EXTERNAL SOURCES:
     :tag: v1.0.3
   VIMNetworking:
     :git: https://github.com/wireapp/VIMNetworking
-    :tag: 6.0.0
+    :tag: 6.0.2-wire
 
 CHECKOUT OPTIONS:
   AFNetworking:
@@ -135,7 +129,7 @@ CHECKOUT OPTIONS:
     :tag: v1.0.3
   VIMNetworking:
     :git: https://github.com/wireapp/VIMNetworking
-    :tag: 6.0.0
+    :tag: 6.0.2-wire
 
 SPEC CHECKSUMS:
   AFNetworking: 4e7e2ee63993f6aa0bbad6f8bb7641d9bfa85652
@@ -150,9 +144,8 @@ SPEC CHECKSUMS:
   PureLayout: 270dfee2236f697ab1d5e2771c2e5c248495fa0d
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
-  VIMNetworking: cf489ba6e516e9974c8910931f8c29871d7dd00d
-  VIMObjectMapper: 7dd7bb8aeb72f8a54711d1688c2a4d06b152f479
+  VIMNetworking: 0f21c1cee2d8feb91150362f659a5e819b1c2a8e
 
-PODFILE CHECKSUM: bdfd6427632be7422517ed9f52c223111902c7b4
+PODFILE CHECKSUM: 50b20aa9b90dfac8ebf34fdc0a8af5cda1bcae8c
 
 COCOAPODS: 1.0.1
