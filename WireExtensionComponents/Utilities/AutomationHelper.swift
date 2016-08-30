@@ -92,18 +92,6 @@ import zmessaging
 }
 
 // MARK: - Helpers
-extension String {
-    
-    /// Returns the value of the command line argument if it is in the form of "--ARGUMENT=VALUE"
-    func valueIfPresent(commandLineArgument: String) -> String? {
-        let searchString = "--" + commandLineArgument + "="
-        if self.hasPrefix(searchString) {
-            return self.substringFromIndex(searchString.startIndex.advancedBy(searchString.characters.count))
-        } else {
-            return nil
-        }
-    }
-}
 
 /// Command line arguments
 private struct Arguments {
