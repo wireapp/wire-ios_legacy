@@ -303,10 +303,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
-    [UIView performWithoutAnimation:^{
-        [self layoutIfNeeded];
-    }];
-    
     if (animated) {
         [UIView animateWithDuration:0.35 animations:^{
             self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
