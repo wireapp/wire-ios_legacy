@@ -108,7 +108,7 @@ extension ZMMessage {
     private func configureLikedState(message: ZMMessage) {
         // TODO LIKE: self.likesView.reactions = message.reactions
         //self.reactionsView.likers = message.reactions
-        self.reactionsView.likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
+        self.reactionsView.likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
         //let liked = message.isLiked
         //self.likeButton.selected = liked
     }

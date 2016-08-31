@@ -35,7 +35,7 @@ import Cartography
         ///self.reactionsUsers = self.message.likers
         self.reactionsUsers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
         super.init(nibName: .None, bundle: .None)
-        
+        self.modalPresentationStyle = UIModalPresentationStyle.FormSheet
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -45,7 +45,7 @@ import Cartography
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "content.reactions_list.likers".localized
+        self.title = "content.reactions_list.likers".localized.uppercaseString
         self.titleLabel.text = self.title
         
         self.separatorView.cas_styleClass = "separator"
@@ -64,12 +64,13 @@ import Cartography
         self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
         self.collectionView.registerClass(ReactionCell.self, forCellWithReuseIdentifier: ReactionCell.reuseIdentifier)
-        self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.scrollEnabled = true
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.collectionView)
         
@@ -100,7 +101,7 @@ import Cartography
             titleLabel.left >= backButton.right + 4
             
             backButton.centerY == topBar.centerY
-            backButton.left == topBar.left + 8
+            backButton.left == topBar.left + 16
         }
         
         CASStyler.defaultStyler().styleItem(self)
@@ -127,7 +128,7 @@ extension ReactionsListViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(collectionView.bounds.width, 44)
+        return CGSizeMake(collectionView.bounds.width, 52)
     }
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

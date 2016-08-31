@@ -43,12 +43,21 @@ import Cartography
             for user in likersToDisplay {
                 let userImage = UserImageView(magicPrefix: "content.author_image")
                 userImage.user = user
+                constrain(userImage) { userImage in
+                    userImage.width == userImage.height
+                    userImage.width == 16
+                }
                 self.avatarStack.addSubview(userImage)
             }
             
             if shouldDisplayEllipsis {
                 let iconColor = ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextForeground)
-                let imageView = UIImageView(image: UIImage(forIcon: .Elipsis, iconSize: .Tiny, color:iconColor))
+                let imageView = UIImageView(image: UIImage(forIcon: .Elipsis, iconSize: .Like, color:iconColor))
+                imageView.contentMode = .Center
+                constrain(imageView) { imageView in
+                    imageView.width == imageView.height
+                    imageView.width == 16
+                }
                 self.avatarStack.addSubview(imageView)
             }
         }

@@ -46,8 +46,8 @@ import Classy
         constrain(self.contentView, self.userImageView, self.userNameLabel) { contentView, userImageView, userNameLabel in
             userImageView.left == contentView.left + 24
             userImageView.width == userImageView.height
-            userImageView.top == contentView.top + 4
-            userImageView.bottom == contentView.bottom - 4
+            userImageView.top == contentView.top + 8
+            userImageView.bottom == contentView.bottom - 8
             
             userNameLabel.left == userImageView.right + 24
             userNameLabel.centerY == userImageView.centerY
