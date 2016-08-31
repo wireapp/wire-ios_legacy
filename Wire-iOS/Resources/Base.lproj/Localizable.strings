@@ -184,7 +184,7 @@
 "content.system.message_sent_timestamp" = "Sent";
 "content.system.message_delivered_timestamp" = "Delivered";
 "content.system.failedtosend_message_timestamp" = "Sending failed.";
-"content.system.failedtosend_message_timestamp_resend" = "Resend?";
+"content.system.failedtosend_message_timestamp_resend" = "Resend";
 "content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
 "content.system.edited_message_prefix_timestamp" = "Edited on %@";
 "content.system.connecting_to" = "Connecting to %@.\nStart a conversation";
@@ -234,6 +234,8 @@
 "content.message.unlike" = "Unlike";
 
 "content.reactions_list.likers" = "Likers";
+
+"content.system.message_likes_count" = "%d people";
 
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
