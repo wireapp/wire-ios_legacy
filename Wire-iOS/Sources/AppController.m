@@ -363,14 +363,15 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     (void)[Settings sharedSettings];
     
-    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
-
-    NSString *wireGroupID = [@"group." stringByAppendingString:[[[NSBundle mainBundle] infoDictionary] valueForKey:@"WireGroupId"]];
+    NSBundle *bundle = NSBundle.mainBundle;
+    NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
+    NSString *groupIdentifier = [NSString stringWithFormat:@"group.%@", bundle.bundleIdentifier];
+    
     _zetaUserSession = [[ZMUserSession alloc] initWithMediaManager:(id)AVSProvider.shared.mediaManager
                                                          analytics:Analytics.shared
                                                         appVersion:appVersion
-                                                appGroupIdentifier:wireGroupID];
-    
+                                                appGroupIdentifier:groupIdentifier];
+
     // Cache conversation lists etc.
     self.sessionObjectCache = [[SessionObjectCache alloc] initWithUserSession:[ZMUserSession sharedSession]];
         
