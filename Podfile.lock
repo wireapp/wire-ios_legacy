@@ -39,25 +39,6 @@ PODS:
   - PureLayout (3.0.0)
   - RBBAnimation (0.4.0)
   - SCSiriWaveformView (1.0.3)
-  - VIMNetworking (6.0.4):
-    - AFNetworking (= 2.6.3)
-    - VIMNetworking/Cache (= 6.0.4)
-    - VIMNetworking/Keychain (= 6.0.4)
-    - VIMNetworking/Model (= 6.0.4)
-    - VIMNetworking/ObjectMapper (= 6.0.4)
-    - VIMNetworking/Private (= 6.0.4)
-  - VIMNetworking/Cache (6.0.4):
-    - AFNetworking (= 2.6.3)
-  - VIMNetworking/Keychain (6.0.4):
-    - AFNetworking (= 2.6.3)
-  - VIMNetworking/Model (6.0.4):
-    - AFNetworking (= 2.6.3)
-    - VIMNetworking/ObjectMapper
-  - VIMNetworking/ObjectMapper (6.0.4):
-    - AFNetworking (= 2.6.3)
-  - VIMNetworking/Private (6.0.4):
-    - AFNetworking (= 2.6.3)
-    - VIMNetworking/Model
 
 DEPENDENCIES:
   - AFNetworking (from `https://github.com/wireapp/AFNetworking`, tag `2.6.3`)
@@ -71,7 +52,6 @@ DEPENDENCIES:
   - PureLayout (from `https://github.com/wireapp/PureLayout`, tag `v3.0.0`)
   - RBBAnimation (from `https://github.com/wireapp/RBBAnimation`, commit `7dd8d9a3cf610be5f7c1e4459692d555d70704c7`)
   - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
-  - VIMNetworking (from `https://github.com/wireapp/VIMNetworking`, tag `6.0.2-wire`)
 
 EXTERNAL SOURCES:
   AFNetworking:
@@ -98,9 +78,6 @@ EXTERNAL SOURCES:
   SCSiriWaveformView:
     :git: https://github.com/wireapp/SCSiriWaveformView
     :tag: v1.0.3
-  VIMNetworking:
-    :git: https://github.com/wireapp/VIMNetworking
-    :tag: 6.0.2-wire
 
 CHECKOUT OPTIONS:
   AFNetworking:
@@ -127,9 +104,6 @@ CHECKOUT OPTIONS:
   SCSiriWaveformView:
     :git: https://github.com/wireapp/SCSiriWaveformView
     :tag: v1.0.3
-  VIMNetworking:
-    :git: https://github.com/wireapp/VIMNetworking
-    :tag: 6.0.2-wire
 
 SPEC CHECKSUMS:
   AFNetworking: 4e7e2ee63993f6aa0bbad6f8bb7641d9bfa85652
@@ -144,8 +118,7 @@ SPEC CHECKSUMS:
   PureLayout: 270dfee2236f697ab1d5e2771c2e5c248495fa0d
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
-  VIMNetworking: 0f21c1cee2d8feb91150362f659a5e819b1c2a8e
 
-PODFILE CHECKSUM: 50b20aa9b90dfac8ebf34fdc0a8af5cda1bcae8c
+PODFILE CHECKSUM: a0db7a615a74c805eb37ad6db7cfe28c688413b0
 
 COCOAPODS: 1.0.1

@@ -18,7 +18,7 @@
 
 
 #import "NetworkConditionHelper.h"
-#import <VIMReachability.h>
+@import VIMNetworkingFramework;
 @import CoreTelephony;
 
 

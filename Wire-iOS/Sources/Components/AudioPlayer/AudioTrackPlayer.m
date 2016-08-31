@@ -22,7 +22,7 @@
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
 @import WireExtensionComponents;
-#import <VIMReachability.h>
+@import VIMNetworkingFramework;
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;

@@ -19,9 +19,7 @@
 
 #import "MediaPreviewData+Vimeo.h"
 #import "MediaThumbnail.h"
-#import <VIMNetworking/VIMVideo.h>
-#import <VIMNetworking/VIMPicture.h>
-#import <VIMNetworking/VIMPictureCollection.h>
+@import VIMNetworkingFramework;
 
 
 @interface MediaThumbnail (Vimeo)
