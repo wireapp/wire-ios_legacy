@@ -19,10 +19,11 @@
 import Foundation
 import zmessaging
 import Cartography
+import Classy
 
-public class ReactionCell: UICollectionViewCell {
-    private let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
-    private let userNameLabel = UILabel()
+@objc public class ReactionCell: UICollectionViewCell {
+    public let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
+    public let userNameLabel = UILabel()
     
     public var user: ZMUser? {
         didSet {
@@ -52,6 +53,8 @@ public class ReactionCell: UICollectionViewCell {
             userNameLabel.centerY == userImageView.centerY
             userNameLabel.right <= contentView.right - 24
         }
+        
+        CASStyler.defaultStyler().styleItem(self)
     }
     
     required public init?(coder aDecoder: NSCoder) {

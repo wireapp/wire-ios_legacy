@@ -1313,3 +1313,27 @@ NoHistoryViewController {
 UIView.status-bar-overlay {
     backgroundColor: $color-background;
 }
+
+/* Reactions list */
+
+ReactionsListViewController {
+    view: @{
+        backgroundColor: $color-text-background;
+    }
+    
+    titleLabel: @{
+        font: $font-normal;
+        textColor: $color-text-foreground;
+    }
+}
+
+ReactionCell {
+    contentView: @{
+        backgroundColor: $color-text-background;
+    }
+    userNameLabel: @{
+        font: $font-small;
+        textColor: $color-text-foreground;
+    }
+}
+

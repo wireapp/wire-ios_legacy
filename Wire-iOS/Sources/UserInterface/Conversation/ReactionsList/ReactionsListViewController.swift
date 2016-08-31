@@ -25,9 +25,10 @@ import Cartography
     public let reactionsUsers: [ZMUser]
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
-    private let topBar = UIView()
-    private let backButton = IconButton.iconButtonDefault()
-    private let titleLabel = UILabel()
+    public let topBar = UIView()
+    public let separatorView = UIView()
+    public let backButton = IconButton.iconButtonDefault()
+    public let titleLabel = UILabel()
     
     public init(message: ZMMessage) {
         self.message = message
@@ -46,6 +47,8 @@ import Cartography
         
         self.title = "content.reactions_list.likers".localized
         self.titleLabel.text = self.title
+        
+        self.separatorView.cas_styleClass = "separator"
         
         backButton.setIcon(.LeftArrow, withSize: .Tiny, forState: .Normal)
         backButton.addTarget(self, action: #selector(ReactionsListViewController.backPressed(_:)), forControlEvents: .TouchUpInside)
@@ -68,13 +71,42 @@ import Cartography
         self.collectionView.allowsSelection = true
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.collectionView)
-        constrain(self.view, self.collectionView) { selfView, collectionView in
-            collectionView.edges == selfView.edges
+        
+        self.topBar.addSubview(titleLabel)
+        self.topBar.addSubview(separatorView)
+        self.topBar.addSubview(backButton)
+        self.view.addSubview(self.topBar)
+        
+        constrain(self.view, self.collectionView, self.topBar) { selfView, collectionView, topBar in
+            topBar.top == selfView.top
+            topBar.left == selfView.left
+            topBar.right == selfView.right
+            topBar.height == 44
+        
+            collectionView.left == selfView.left
+            collectionView.right == selfView.right
+            collectionView.bottom == selfView.bottom
+            collectionView.top == topBar.bottom
         }
+        
+        constrain(self.topBar, self.titleLabel, self.backButton, self.separatorView) { topBar, titleLabel, backButton, separatorView in
+            separatorView.bottom == topBar.bottom
+            separatorView.right == topBar.right
+            separatorView.left == topBar.left
+            separatorView.height == 1
+            
+            titleLabel.center == topBar.center
+            titleLabel.left >= backButton.right + 4
+            
+            backButton.centerY == topBar.centerY
+            backButton.left == topBar.left + 8
+        }
+        
+        CASStyler.defaultStyler().styleItem(self)
     }
     
     @objc public func backPressed(button: AnyObject!) {
-        self.navigationController?.dismissViewControllerAnimated(true, completion: .None)
+        self.dismissViewControllerAnimated(true, completion: .None)
     }
 }
 

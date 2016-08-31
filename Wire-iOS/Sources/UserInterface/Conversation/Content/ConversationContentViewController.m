@@ -844,8 +844,7 @@
 - (void)conversationCell:(ConversationCell *)cell openReactionsPressed:(ZMMessage *)message
 {
     ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message];
-    UINavigationController *wrapNavigationController = [[UINavigationController alloc] initWithRootViewController:reactionsListController];
-    [self.parentViewController presentViewController:wrapNavigationController animated:YES completion:nil];
+    [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
 }
 
 @end
