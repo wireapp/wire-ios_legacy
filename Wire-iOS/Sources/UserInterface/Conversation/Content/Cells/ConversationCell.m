@@ -307,6 +307,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
     
     [self.messageToolboxView configureForMessage:message];
+    self.messageToolboxView.forceShowTimestamp = self.selected;
     [self updateConstraintConstants];
 }
 
@@ -516,7 +517,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
+    self.messageToolboxView.forceShowTimestamp = selected;
     [self updateToolboxVisibilityAnimated:YES];
 }
 

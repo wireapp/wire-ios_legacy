@@ -56,6 +56,14 @@ extension ZMMessage {
     public weak var delegate: MessageToolboxViewDelegate?
 
     private(set) weak var message: ZMMessage?
+    public var forceShowTimestamp: Bool = false {
+        didSet {
+            guard let message = self.message else {
+                return
+            }
+            self.configureForMessage(message)
+        }
+    }
     
     override init(frame: CGRect) {
         
@@ -101,7 +109,7 @@ extension ZMMessage {
     
     public func configureForMessage(message: ZMMessage) {
         self.message = message
-        self.configureTimestamp(message)
+        self.configureInfoLabel(message)
         self.configureLikedState(message)
     }
     
@@ -134,7 +142,37 @@ extension ZMMessage {
         return timestampString
     }
     
-    private func configureTimestamp(message: ZMMessage) {       
+    private func configureInfoLabel(message: ZMMessage) {
+        if !self.forceShowTimestamp { //  message.reactions.count > 0
+             self.configureReactions(message)
+        }
+        else {
+            self.configureTimestamp(message)
+        }
+    }
+    
+    private func configureReactions(message: ZMMessage) {
+        let likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()] // TODO LIKE
+        
+        let likersNames = likers.map { user in
+            return user.displayName
+        }.joinWithSeparator(", ")
+        
+        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor]
+        
+        let labelSize = (likersNames as NSString).sizeWithAttributes(attributes)
+        if labelSize.width > statusLabel.bounds.size.width {
+            let likersCount = String(format: "content.system.message_likes_count".localized, likers.count)
+            statusLabel.attributedText = likersCount && attributes
+        }
+        else {
+            statusLabel.attributedText = likersNames && attributes
+        }
+        
+        statusLabel.accessibilityLabel = statusLabel.attributedText.string
+    }
+    
+    private func configureTimestamp(message: ZMMessage) {
         var deliveryStateString: String? = .None
         
         if let sender = message.sender where sender.isSelfUser {
@@ -151,7 +189,7 @@ extension ZMMessage {
                 deliveryStateString = .None
             }
         }
-    
+        
         let finalText: String
         
         if let timestampString = self.timestampString(message) where message.deliveryState == .Delivered || message.deliveryState == .Sent {
