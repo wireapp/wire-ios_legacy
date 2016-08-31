@@ -155,9 +155,7 @@ import ZMCLinkPreview
     var canBeDeleted: Bool {
         return systemMessageData == nil
     }
-    
-    var usersReaction: [String : [ZMUser]] = [:]
-    
+
     var hasBeenDeleted = false
 }
 

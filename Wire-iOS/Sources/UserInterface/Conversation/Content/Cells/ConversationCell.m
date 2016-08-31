@@ -270,6 +270,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+
     [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
     self.messageContentBottomMarginConstraint = [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
@@ -437,6 +438,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
+
     NSMutableArray <UIMenuItem *> *items = [[NSMutableArray<UIMenuItem *> alloc] init];
 //    if (1) {// TODO LIKE
         UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.like", @"") action:@selector(likeMessage:)];
