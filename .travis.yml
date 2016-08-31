@@ -35,7 +35,7 @@ install:
 
 script:
   - set -o pipefail
-  - xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | second_curtain | tee >build.log >(xcpretty -s)
+  - xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | bundle exec second_curtain | tee >build.log >(xcpretty -s)
   - bundle exec danger
 
 after_failure:
