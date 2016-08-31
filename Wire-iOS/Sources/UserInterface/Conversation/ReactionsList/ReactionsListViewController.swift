@@ -50,10 +50,11 @@ import Cartography
         
         self.separatorView.cas_styleClass = "separator"
         
-        backButton.setIcon(.LeftArrow, withSize: .Tiny, forState: .Normal)
+        backButton.setIcon(.BackArrow, withSize: .Tiny, forState: .Normal)
         backButton.addTarget(self, action: #selector(ReactionsListViewController.backPressed(_:)), forControlEvents: .TouchUpInside)
-        backButton.frame = CGRectMake(0, 0, 16, 16)
         backButton.accessibilityIdentifier = "BackButton"
+        backButton.hitAreaPadding = CGSizeMake(20, 20)
+        
         self.navigationItem.leftItemsSupplementBackButton = true
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         
@@ -78,7 +79,7 @@ import Cartography
         self.view.addSubview(self.topBar)
         
         constrain(self.view, self.collectionView, self.topBar) { selfView, collectionView, topBar in
-            topBar.top == selfView.top
+            topBar.top == selfView.top + 20
             topBar.left == selfView.left
             topBar.right == selfView.right
             topBar.height == 44

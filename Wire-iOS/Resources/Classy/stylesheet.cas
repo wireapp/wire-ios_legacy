@@ -1322,7 +1322,7 @@ ReactionsListViewController {
     }
     
     titleLabel: @{
-        font: $font-normal;
+        font: $font-small-medium;
         textColor: $color-text-foreground;
     }
 }
@@ -1332,7 +1332,7 @@ ReactionCell {
         backgroundColor: $color-text-background;
     }
     userNameLabel: @{
-        font: $font-small;
+        font: $font-normal;
         textColor: $color-text-foreground;
     }
 }
