@@ -1,25 +1,4 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
   - ARCollectionViewMasonryLayout (2.3.0)
   - CocoaSecurity (1.2.4)
   - FLAnimatedImage (1.0.11)
@@ -39,34 +18,8 @@ PODS:
   - PureLayout (3.0.0)
   - RBBAnimation (0.4.0)
   - SCSiriWaveformView (1.0.3)
-  - VIMNetworking (6.0.0):
-    - VIMNetworking/AFNetworking (= 6.0.0)
-    - VIMNetworking/Cache (= 6.0.0)
-    - VIMNetworking/Keychain (= 6.0.0)
-    - VIMNetworking/Model (= 6.0.0)
-    - VIMNetworking/Networking (= 6.0.0)
-    - VIMNetworking/Private (= 6.0.0)
-    - VIMNetworking/VIMObjectMapper (= 6.0.0)
-  - VIMNetworking/AFNetworking (6.0.0):
-    - AFNetworking (= 2.6.3)
-  - VIMNetworking/Cache (6.0.0)
-  - VIMNetworking/Keychain (6.0.0)
-  - VIMNetworking/Model (6.0.0):
-    - VIMObjectMapper (= 6.0.0)
-  - VIMNetworking/Networking (6.0.0):
-    - AFNetworking (= 2.6.3)
-    - VIMNetworking/Cache
-    - VIMNetworking/Keychain
-    - VIMNetworking/Model
-    - VIMNetworking/Private
-  - VIMNetworking/Private (6.0.0):
-    - VIMNetworking/Model
-  - VIMNetworking/VIMObjectMapper (6.0.0):
-    - VIMObjectMapper (= 6.0.0)
-  - VIMObjectMapper (6.0.0)
 
 DEPENDENCIES:
-  - AFNetworking (from `https://github.com/wireapp/AFNetworking`, tag `2.6.3`)
   - ARCollectionViewMasonryLayout (from `https://github.com/wireapp/ARCollectionViewMasonryLayout`, tag `2.3.0`)
   - CocoaSecurity (= 1.2.4)
   - FLAnimatedImage (from `https://github.com/wireapp/FLAnimatedImage`, tag `1.0.12`)
@@ -77,12 +30,8 @@ DEPENDENCIES:
   - PureLayout (from `https://github.com/wireapp/PureLayout`, tag `v3.0.0`)
   - RBBAnimation (from `https://github.com/wireapp/RBBAnimation`, commit `7dd8d9a3cf610be5f7c1e4459692d555d70704c7`)
   - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
-  - VIMNetworking (from `https://github.com/wireapp/VIMNetworking`, tag `6.0.0`)
 
 EXTERNAL SOURCES:
-  AFNetworking:
-    :git: https://github.com/wireapp/AFNetworking
-    :tag: 2.6.3
   ARCollectionViewMasonryLayout:
     :git: https://github.com/wireapp/ARCollectionViewMasonryLayout
     :tag: 2.3.0
@@ -104,14 +53,8 @@ EXTERNAL SOURCES:
   SCSiriWaveformView:
     :git: https://github.com/wireapp/SCSiriWaveformView
     :tag: v1.0.3
-  VIMNetworking:
-    :git: https://github.com/wireapp/VIMNetworking
-    :tag: 6.0.0
 
 CHECKOUT OPTIONS:
-  AFNetworking:
-    :git: https://github.com/wireapp/AFNetworking
-    :tag: 2.6.3
   ARCollectionViewMasonryLayout:
     :git: https://github.com/wireapp/ARCollectionViewMasonryLayout
     :tag: 2.3.0
@@ -133,12 +76,8 @@ CHECKOUT OPTIONS:
   SCSiriWaveformView:
     :git: https://github.com/wireapp/SCSiriWaveformView
     :tag: v1.0.3
-  VIMNetworking:
-    :git: https://github.com/wireapp/VIMNetworking
-    :tag: 6.0.0
 
 SPEC CHECKSUMS:
-  AFNetworking: 4e7e2ee63993f6aa0bbad6f8bb7641d9bfa85652
   ARCollectionViewMasonryLayout: 97cb468434b546b79a98c7c0908447ff803eb85e
   CocoaSecurity: d288a6f87e0f363823d2cb83e753814a6944f71a
   FLAnimatedImage: 8c79566df04f8ff07438076cea43839f7dcd261c
@@ -150,9 +89,7 @@ SPEC CHECKSUMS:
   PureLayout: 270dfee2236f697ab1d5e2771c2e5c248495fa0d
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
-  VIMNetworking: cf489ba6e516e9974c8910931f8c29871d7dd00d
-  VIMObjectMapper: 7dd7bb8aeb72f8a54711d1688c2a4d06b152f479
 
-PODFILE CHECKSUM: bdfd6427632be7422517ed9f52c223111902c7b4
+PODFILE CHECKSUM: 8fb57feab6c9928537b6f32a9ecc371343ca0765
 
 COCOAPODS: 1.0.1
