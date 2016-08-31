@@ -105,6 +105,8 @@ import ZMCLinkPreview
 
 @objc class MockMessage: NSObject, ZMConversationMessage {
     
+    typealias UsersByReaction = Dictionary<String, [ZMUser]>
+    
     // MARK: - ZMConversationMessage
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
@@ -116,24 +118,24 @@ import ZMCLinkPreview
     var imageMessageData: ZMImageMessageData? = .None
     var systemMessageData: ZMSystemMessageData? = .None
     var knockMessageData: ZMKnockMessageData? = .None
+
     var fileMessageData: ZMFileMessageData? {
-        get {
-            return backingFileMessageData
-        }
+        return backingFileMessageData
     }
     
     var locationMessageData: ZMLocationMessageData? {
-        get {
-            return backingLocationMessageData
-        }
+        return backingLocationMessageData
+    }
+    
+    var usersReaction: UsersByReaction {
+        return backingUsersReaction
     }
     
     var textMessageData: ZMTextMessageData? {
-        get {
-            return backingTextMessageData
-        }
+        return backingTextMessageData
     }
     
+    var backingUsersReaction: UsersByReaction! = .None
     var backingTextMessageData: MockTextMessageData! = .None
     var backingFileMessageData: MockFileMessageData! = .None
     var backingLocationMessageData: MockLocationMessageData! = .None
@@ -151,8 +153,7 @@ import ZMCLinkPreview
     }
     
     var canBeDeleted: Bool {
-        guard (self.systemMessageData) != nil else { return true }
-        return false
+        return systemMessageData == nil
     }
     
     var usersReaction: [String : [ZMUser]] = [:]
