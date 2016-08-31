@@ -55,6 +55,8 @@ extension ZMMessage {
     
     public weak var delegate: MessageToolboxViewDelegate?
 
+    private var previousLayoutBounds: CGRect = CGRectZero
+    
     private(set) weak var message: ZMMessage?
     public var forceShowTimestamp: Bool = false {
         didSet {
@@ -152,7 +154,7 @@ extension ZMMessage {
     }
     
     private func configureReactions(message: ZMMessage) {
-        let likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()] // TODO LIKE
+        let likers = [ZMUser.selfUser(), ZMUser.selfUser()] // TODO LIKE
         
         let likersNames = likers.map { user in
             return user.displayName
@@ -161,7 +163,7 @@ extension ZMMessage {
         let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor]
         
         let labelSize = (likersNames as NSString).sizeWithAttributes(attributes)
-        if labelSize.width > statusLabel.bounds.size.width {
+        if labelSize.width > self.bounds.size.width {
             let likersCount = String(format: "content.system.message_likes_count".localized, likers.count)
             statusLabel.attributedText = likersCount && attributes
         }
@@ -213,6 +215,17 @@ extension ZMMessage {
         statusLabel.attributedText = attributedText
         statusLabel.accessibilityLabel = statusLabel.attributedText.string
         statusLabel.addLinks()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let message = self.message where CGRectEqualToRect(self.bounds, self.previousLayoutBounds) else {
+            return
+        }
+        
+        self.previousLayoutBounds = self.bounds
+        
+        self.configureInfoLabel(message)
     }
     
     // MARK: - Events
