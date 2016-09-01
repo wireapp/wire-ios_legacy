@@ -42,6 +42,7 @@
 + (BOOL)isNormalMessage:(id<ZMConversationMessage>)message;
 + (BOOL)isConnectionRequestMessage:(id<ZMConversationMessage>)message;
 + (BOOL)isMissedCallMessage:(id<ZMConversationMessage>)message;
++ (BOOL)isDeletedMessage:(id<ZMConversationMessage>)message;
 
 + (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message;
 

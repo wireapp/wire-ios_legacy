@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)participantsCount;
 - (nullable id<ZMConversationMessage>)firstTextMessage;
 - (nullable id<ZMConversationMessage>)lastTextMessage;
+- (nullable id<ZMConversationMessage>)lastMessageSentByUser:(ZMUser *)user limit:(NSUInteger)limit;
 
 /// Convenience method for easier access of the last active user in the conversation. This method also contains the logic of selecting the other user in case its of a 1:1 conversation. Might return @c nil
 - (nullable ZMUser *)lastMessageSender;

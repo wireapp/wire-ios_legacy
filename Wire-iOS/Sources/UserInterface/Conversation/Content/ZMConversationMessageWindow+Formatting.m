@@ -72,8 +72,11 @@
         return NO;
     }
     
-    if (message.conversation.messages.lastObject == message && message.sender.isSelfUser) {
-        return YES;
+    // Loop back and check if this was last message sent by us
+    if (message.sender.isSelfUser && message.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        if ([message.conversation lastMessageSentByUser:[ZMUser selfUser] limit:10] == message) {
+            return YES;
+        }
     }
     
     if (message.deliveryState == ZMDeliveryStateFailedToSend) {

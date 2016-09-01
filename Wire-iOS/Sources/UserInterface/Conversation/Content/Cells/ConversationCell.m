@@ -306,6 +306,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self updateBurstTimestamp];
     }
     
+    [self configureReactionsForMessage:message];
+    
     [self.messageToolboxView configureForMessage:message];
     self.messageToolboxView.forceShowTimestamp = self.selected;
     [self updateConstraintConstants];
@@ -531,7 +533,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self.messageToolboxView configureForMessage:change.message];
     }
     
-    [self configureReactionsForMessage:change.message];
+    if (change.reactionChangeInfo != nil) {
+        [self configureReactionsForMessage:change.message];
+    }
     
     if (change.userChangeInfo.nameChanged || change.senderChanged) {
         [self updateSenderAndSenderImage:change.message];

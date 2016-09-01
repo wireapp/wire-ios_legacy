@@ -119,6 +119,11 @@
     return NO;
 }
 
++ (BOOL)isDeletedMessage:(id<ZMConversationMessage>)message
+{
+    return [Message isSystemMessage:message] && ((ZMSystemMessage *)message).systemMessageType == ZMSystemMessageTypeMessageDeletedForEveryone;
+}
+
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message
 {
     // Today's date
@@ -138,7 +143,8 @@
                         [Message isImageMessage:message] ||
                         [Message isFileTransferMessage:message] ||
                         [Message isKnockMessage:message] ||
-                        [Message isLocationMessage:message];
+                        [Message isLocationMessage:message] ||
+                        [Message isDeletedMessage:message];
     
     return allowedType;
 }

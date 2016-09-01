@@ -21,7 +21,7 @@ extension ZMConversationMessage {
                 ZMMessage.addReaction(ZMMessgeReaction.Like.rawValue, toMessage: self)
             }
             else {
-                ZMMessage.removeReaction(onMessage: self)
+                ZMMessage.addReaction(.None, toMessage: self)
             }
         }
         get {

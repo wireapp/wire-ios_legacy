@@ -33,13 +33,15 @@ public extension ConversationCell {
     }
     
     @objc public func configureReactionsForMessage(message: ZMMessage) {
-        self.likeButton.selected = message.liked
+        self.likeButton.setSelected(message.liked, animated: false)
     }
     
     @objc public func likeMessage(button: AnyObject!) {
         ZMUserSession.sharedSession().performChanges {
             self.message.liked = !self.message.liked
         }
+        
+        self.likeButton.setSelected(self.message.liked, animated: true)
     }
     
 }

@@ -20,8 +20,8 @@ import Foundation
 import Cartography
 
 public class LikeButton: IconButton {
-    override public var selected: Bool {
-        willSet {
+    public func setSelected(selected: Bool, animated: Bool) {
+        if animated {
             guard let imageView = self.imageView else {
                 return
             }
@@ -46,7 +46,7 @@ public class LikeButton: IconButton {
 
             imageView.alpha = 0
             
-            if newValue { // gets like
+            if selected { // gets like
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransformMakeScale(6.3, 6.3)
                 
@@ -60,6 +60,7 @@ public class LikeButton: IconButton {
                         animationImageView.removeFromSuperview()
                         fakeImageView.removeFromSuperview()
                         imageView.alpha = 1
+                        self.selected = selected
                     })
             }
             else {
@@ -74,9 +75,12 @@ public class LikeButton: IconButton {
                         animationImageView.removeFromSuperview()
                         fakeImageView.removeFromSuperview()
                         imageView.alpha = 1
+                        self.selected = selected
                     })
             }
-            
+        }
+        else {
+            self.selected = selected
         }
     }
 }

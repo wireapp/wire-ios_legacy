@@ -142,8 +142,8 @@ extension ZMMessage {
     }
     
     private func configureInfoLabel(message: ZMMessage) {
-        if !self.forceShowTimestamp { //  message.reactions.count > 0
-             self.configureReactions(message)
+        if !self.forceShowTimestamp && message.usersReaction.count > 0 {
+            self.configureReactions(message)
         }
         else {
             self.configureTimestamp(message)
