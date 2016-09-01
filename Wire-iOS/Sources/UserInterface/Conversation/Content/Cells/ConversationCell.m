@@ -565,12 +565,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)messageToolboxViewDidSelectReactions:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCell:self openReactionsPressed:self.message];
+    [self.delegate conversationCellDidTapOpenReactions:self];
 }
 
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCell:self resendMessageTapped:self.message];
+    [self.delegate conversationCellDidTapResendMessage:self];
 }
 
 @end

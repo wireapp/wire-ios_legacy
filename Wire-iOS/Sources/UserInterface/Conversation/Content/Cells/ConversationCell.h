@@ -36,7 +36,8 @@ typedef NS_ENUM(NSUInteger, ConversationCellAction) {
     ConversationCellActionDelete,
     ConversationCellActionPresent,
     ConversationCellActionSave,
-    ConversationCellActionEdit
+    ConversationCellActionEdit,
+    ConversationCellActionSketch
 };
 
 extern const CGFloat ConversationCellSelectedOpacity;
@@ -70,12 +71,12 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @optional
 /// Called on touch up inside event on the user image (@c fromImage)
 - (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view;
-- (void)conversationCell:(ConversationCell *)cell resendMessageTapped:(ZMMessage *)message;
+- (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
 - (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-- (void)conversationCell:(ConversationCell *)cell openReactionsPressed:(ZMMessage *)message;
+- (void)conversationCellDidTapOpenReactions:(ConversationCell *)cell;
 @end
 
 
