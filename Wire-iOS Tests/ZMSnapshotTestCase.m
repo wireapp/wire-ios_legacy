@@ -77,7 +77,7 @@ static NSSet *phoneWidths(void) {
     [NSManagedObjectContext setUseInMemoryStore:YES];
     [NSManagedObjectContext resetUserInterfaceContext];
     [NSManagedObjectContext resetSharedPersistentStoreCoordinator];
-    self.uiMOC = [NSManagedObjectContext createUserInterfaceContext];
+    self.uiMOC = [NSManagedObjectContext createUserInterfaceContextWithStoreDirectory:[[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil]];
 }
 
 - (void)tearDown
