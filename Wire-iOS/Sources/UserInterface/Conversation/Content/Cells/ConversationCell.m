@@ -195,7 +195,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     [self createLikeButton];
     
-    self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeMessage:)];
     self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     self.doubleTapGestureRecognizer.delaysTouchesBegan = YES;
     [self.contentView addGestureRecognizer:self.doubleTapGestureRecognizer];
@@ -441,14 +441,14 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
 
     NSMutableArray <UIMenuItem *> *items = [[NSMutableArray<UIMenuItem *> alloc] init];
-//    if (1) {// TODO LIKE
+    if ([Message isLikedMessage:self.message]) {
+        UIMenuItem *unlikeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.unlike", @"") action:@selector(likeMessage:)];
+        [items addObject:unlikeItem];
+    }
+    else {
         UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.like", @"") action:@selector(likeMessage:)];
         [items addObject:likeItem];
-//    }
-//    else {
-//        UIMenuItem *unlikeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.unlike", @"") action:@selector(likeMessage:)];
-//        [items addObject:unlikeItem];
-//    }
+    }
     [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
     
     if (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent) {
@@ -464,12 +464,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self.delegate conversationCell:self didOpenMenuForCellType:[self messageType]];
     }
 
-}
-
-- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTap
-{
-    // TODO LIKE :
-    self.likeButton.selected = !self.likeButton.selected;
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer;
@@ -508,12 +502,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
 }
 
-- (void)likeMessage:(id)sender
-{
-    // TODO LIKE
-    self.likeButton.selected = !self.likeButton.selected;
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -539,9 +527,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
     // If a text message changes, the only thing that can change at the moment is its delivery state
-    if (change.deliveryStateChanged) {
+    if (change.deliveryStateChanged || change.reactionChangeInfo != nil) {
         [self.messageToolboxView configureForMessage:change.message];
     }
+    
+    [self configureReactionsForMessage:change.message];
     
     if (change.userChangeInfo.nameChanged || change.senderChanged) {
         [self updateSenderAndSenderImage:change.message];

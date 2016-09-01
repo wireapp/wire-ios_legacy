@@ -21,6 +21,7 @@
 #import "Message.h"
 #import "Message+Formatting.h"
 #import "ConversationCell.h"
+#import "Wire-Swift.h"
 
 @implementation ZMConversationMessageWindow (Formatting)
 
@@ -79,7 +80,7 @@
         return YES;
     }
     
-    return NO;// TODO LIKE: message.isLiked
+    return [Message hasReactions:message];
 }
 
 - (BOOL)shouldShowSenderForMessage:(id<ZMConversationMessage>)message

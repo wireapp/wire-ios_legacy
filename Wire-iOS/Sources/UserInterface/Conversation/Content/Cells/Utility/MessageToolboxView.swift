@@ -70,6 +70,7 @@ extension ZMMessage {
     override init(frame: CGRect) {
         
         super.init(frame: frame)
+        self.accessibilityIdentifier = "MessageToolbox"
         CASStyler.defaultStyler().styleItem(self)
         
         reactionsView.translatesAutoresizingMaskIntoConstraints = false
@@ -116,11 +117,7 @@ extension ZMMessage {
     }
     
     private func configureLikedState(message: ZMMessage) {
-        // TODO LIKE: self.likesView.reactions = message.reactions
-        //self.reactionsView.likers = message.reactions
-        self.reactionsView.likers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
-        //let liked = message.isLiked
-        //self.likeButton.selected = liked
+        self.reactionsView.likers = message.likers()
     }
     
     private func timestampString(message: ZMMessage) -> String? {
@@ -154,7 +151,7 @@ extension ZMMessage {
     }
     
     private func configureReactions(message: ZMMessage) {
-        let likers = [ZMUser.selfUser(), ZMUser.selfUser()] // TODO LIKE
+        let likers = message.likers()
         
         let likersNames = likers.map { user in
             return user.displayName
@@ -230,10 +227,10 @@ extension ZMMessage {
     
     // MARK: - Events
     
-    @objc func onTapContent(button: UIButton!) {
-//       TODO LIKE: if let message = self.message where message.reactions.count > 0 {
+    @objc func onTapContent(button: UIButton!) {        
+        if let message = self.message where message.usersReaction.count > 0 {
             self.delegate?.messageToolboxViewDidSelectReactions(self)
-//        }
+        }
     }
 }
 

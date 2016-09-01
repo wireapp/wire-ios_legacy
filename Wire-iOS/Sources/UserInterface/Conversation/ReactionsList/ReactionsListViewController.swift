@@ -32,8 +32,8 @@ import Cartography
     
     public init(message: ZMMessage) {
         self.message = message
-        ///self.reactionsUsers = self.message.likers
-        self.reactionsUsers = [ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser(), ZMUser.selfUser()]
+
+        self.reactionsUsers = self.message.likers()
         super.init(nibName: .None, bundle: .None)
         self.modalPresentationStyle = UIModalPresentationStyle.FormSheet
     }

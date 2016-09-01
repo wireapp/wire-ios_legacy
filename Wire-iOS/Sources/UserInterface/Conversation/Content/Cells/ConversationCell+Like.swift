@@ -23,7 +23,7 @@ public extension ConversationCell {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
-        self.likeButton.addTarget(self, action: #selector(ConversationCell.onLikePressed(_:)), forControlEvents: .TouchUpInside)
+        self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), forControlEvents: .TouchUpInside)
         self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Normal)
         self.likeButton.setIconColor(ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextDimmed), forState: .Normal)
         self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Selected)
@@ -32,12 +32,14 @@ public extension ConversationCell {
         self.addSubview(self.likeButton)
     }
     
-    @objc func onLikePressed(button: UIButton!) {
+    @objc public func configureReactionsForMessage(message: ZMMessage) {
+        self.likeButton.selected = message.liked
+    }
+    
+    @objc public func likeMessage(button: AnyObject!) {
         ZMUserSession.sharedSession().performChanges {
-            // message.liked = !message.liked // TODO LIKE:
+            self.message.liked = !self.message.liked
         }
-        
-        self.likeButton.selected = !self.likeButton.selected;
     }
     
 }
