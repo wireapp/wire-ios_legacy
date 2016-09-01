@@ -44,8 +44,13 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         }
     }
     
-    func testThatItRendersATextMessage() {
-        sut.configureForMessage(mockMessage(), layoutProperties: layoutProperties)
+    func testThatItRendersATextMessage_Sent() {
+        sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatItRendersATextMessage_Delivered() {
+        sut.configureForMessage(mockMessage(state: .Delivered), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
@@ -91,7 +96,42 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.setSelected(true, animated: false)
         verify(view: sut.prepareForSnapshot())
     }
-    
+    // TODO LIKE
+//    func testThatItRendersATextMessage_LikedReceiver() {
+//        let message = mockMessage(state: .Sent)
+//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: [MockUser.mockUsers().first as! ZMUser]]
+//        sut.configureForMessage(message, layoutProperties: layoutProperties)
+//        verify(view: sut.prepareForSnapshot())
+//    }
+//    
+//    func testThatItRendersATextMessage_LikedSender() {
+//        let message = mockMessage(state: .Sent)
+//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: [MockUser.mockSelfUser() as! ZMUser]]
+//        sut.configureForMessage(message, layoutProperties: layoutProperties)
+//        verify(view: sut.prepareForSnapshot())
+//    }
+//    
+//    func testThatItRendersATextMessage_LikedSelected() {
+//        let message = mockMessage(state: .Sent)
+//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: []]
+//        sut.configureForMessage(, layoutProperties: layoutProperties)
+//        verify(view: sut.prepareForSnapshot())
+//    }
+//    
+//    func testThatItRendersATextMessage_LikedByTwoPeople() {
+//        let message = mockMessage(state: .Sent)
+//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: []]
+//        sut.configureForMessage(, layoutProperties: layoutProperties)
+//        verify(view: sut.prepareForSnapshot())
+//    }
+//    
+//    func testThatItRendersATextMessage_LikedByALotOfPeople() {
+//        let message = mockMessage(state: .Sent)
+//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: []]
+//        sut.configureForMessage(, layoutProperties: layoutProperties)
+//        verify(view: sut.prepareForSnapshot())
+//    }
+//    
     // MARK: - Helper
     
     func mockMessage(text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .Delivered) -> MockMessage {

@@ -127,7 +127,7 @@ import ZMCLinkPreview
         return backingLocationMessageData
     }
     
-    var usersReaction: UsersByReaction {
+    var usersReaction: [String: [ZMUser]] {
         return backingUsersReaction
     }
     
@@ -135,7 +135,7 @@ import ZMCLinkPreview
         return backingTextMessageData
     }
     
-    var backingUsersReaction: UsersByReaction! = .None
+    var backingUsersReaction: UsersByReaction! = [:]
     var backingTextMessageData: MockTextMessageData! = .None
     var backingFileMessageData: MockFileMessageData! = .None
     var backingLocationMessageData: MockLocationMessageData! = .None
@@ -157,6 +157,8 @@ import ZMCLinkPreview
     }
 
     var hasBeenDeleted = false
+    
+    var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.Invalid
 }
 
 extension MockMessage {
