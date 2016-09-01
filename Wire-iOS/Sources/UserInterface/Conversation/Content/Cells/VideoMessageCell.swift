@@ -110,6 +110,8 @@ extension ZMConversationMessage {
             sizeLabel.centerY == bottomGradientView.centerY
             loadingView.center == previewImageView.center
         }
+        
+        self.toolboxTopOffsetConstraint.constant = 8
     }
     
     public override func updateForMessage(changeInfo: MessageChangeInfo!) -> Bool {

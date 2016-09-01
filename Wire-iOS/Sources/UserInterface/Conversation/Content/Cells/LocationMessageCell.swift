@@ -83,6 +83,8 @@ import AddressBook
             addressLabel.edges == inset(addressContainer.edges, 12, 0)
             addressContainer.height == 42
         }
+        
+        self.toolboxTopOffsetConstraint.constant = 8
     }
     
     public override func configureForMessage(message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {

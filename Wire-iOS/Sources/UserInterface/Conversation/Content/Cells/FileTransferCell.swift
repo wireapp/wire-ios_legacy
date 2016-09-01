@@ -111,6 +111,8 @@ public class FileTransferCell: ConversationCell {
             bottomLabel.right == topLabel.right
             loadingView.center == loadingView.superview!.center
         }
+        
+        self.toolboxTopOffsetConstraint.constant = 8
     }
     
     public override func updateForMessage(changeInfo: MessageChangeInfo!) -> Bool {

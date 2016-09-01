@@ -200,6 +200,8 @@ static ImageCache *imageCache(void)
         [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         self.imageWidthConstraint = [self.imageViewContainer autoSetDimension:ALDimensionWidth toSize:0];
     }];
+    
+    self.toolboxTopOffsetConstraint.constant = 8;
 }
 
  - (void)updateImageMessageConstraintConstants

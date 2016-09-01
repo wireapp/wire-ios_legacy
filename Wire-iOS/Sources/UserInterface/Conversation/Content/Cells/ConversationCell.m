@@ -85,6 +85,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic) NSLayoutConstraint *messageContentBottomMarginConstraint;
 
 @property (nonatomic) NSLayoutConstraint *toolboxHeightConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *toolboxTopOffsetConstraint;
 
 @end
 
@@ -192,7 +193,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.messageToolboxView.delegate = self;
     self.messageToolboxView.translatesAutoresizingMaskIntoConstraints = NO;
     self.messageToolboxView.isAccessibilityElement = YES;
-    self.messageToolboxView.accessibilityIdentifier = "MessageToolbox"
+    self.messageToolboxView.accessibilityIdentifier = @"MessageToolbox";
     [self.contentView addSubview:self.messageToolboxView];
     
     [self createLikeButton];
@@ -270,7 +271,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }];
     
     self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
-    [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
+    self.toolboxTopOffsetConstraint = [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
     [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeRight];
 
     [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
@@ -324,15 +325,27 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
-    self.likeButton.alpha = shouldBeVisible ? 1 : 0;
     
     if (animated) {
-        [UIView animateWithDuration:0.35 animations:^{
-            self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
-        }];
+        if (shouldBeVisible) {
+            [UIView animateWithDuration:0.35 animations:^{
+                self.messageToolboxView.alpha = 1;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.15 animations:^{
+                    self.likeButton.alpha = 1;
+                }];
+            }];
+        }
+        else {
+            self.likeButton.alpha = 0;
+            [UIView animateWithDuration:0.35 animations:^{
+                self.messageToolboxView.alpha = 0;
+            }];
+        }
     }
     else {
         self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
+        self.likeButton.alpha = shouldBeVisible ? 1 : 0;
     }
 }
 
@@ -531,8 +544,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     // If a text message changes, the only thing that can change at the moment is its delivery state
     if (change.deliveryStateChanged || change.reactionChangeInfo != nil) {
-        [self.messageToolboxView configureForMessage:change.message];
         self.messageToolboxView.forceShowTimestamp = NO;
+        [self.messageToolboxView configureForMessage:change.message];
     }
     
     if (change.reactionChangeInfo != nil) {

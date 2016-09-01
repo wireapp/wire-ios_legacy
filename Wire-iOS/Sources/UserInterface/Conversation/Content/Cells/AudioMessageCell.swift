@@ -130,6 +130,8 @@ import CocoaLumberjackSwift
             
             loadingView.center == containerView.center
         }
+        
+        self.toolboxTopOffsetConstraint.constant = 8
     }
     
     public override func updateForMessage(changeInfo: MessageChangeInfo!) -> Bool {

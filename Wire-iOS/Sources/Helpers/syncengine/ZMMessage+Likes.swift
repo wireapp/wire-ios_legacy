@@ -39,6 +39,12 @@ extension ZMConversationMessage {
         }
     }
     
+    func hasReactions() -> Bool {
+        return self.usersReaction.map { (_, users) in
+                return users.count
+            }.reduce(0, combine: +) > 0
+    }
+    
     func likers() -> [ZMUser] {
         return usersReaction.filter { (reaction, _) -> Bool in
             reaction == ZMMessgeReaction.Like.rawValue
@@ -54,6 +60,6 @@ extension Message {
     }
     
     @objc public static func hasReactions(message: ZMMessage) -> Bool {
-        return message.usersReaction.count > 0
+        return message.hasReactions()
     }
 }
