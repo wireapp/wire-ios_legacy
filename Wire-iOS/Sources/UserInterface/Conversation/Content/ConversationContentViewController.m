@@ -843,8 +843,10 @@
 
 - (void)conversationCell:(ConversationCell *)cell openReactionsPressed:(ZMMessage *)message
 {
-    ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message];
-    [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
+    if ([Message hasReactions:message]) {
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message];
+        [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
+    }
 }
 
 @end

@@ -476,7 +476,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         gestureRecognizer.enabled = YES;
     }
     
-    
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self showMenu];
     }
@@ -531,6 +530,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     // If a text message changes, the only thing that can change at the moment is its delivery state
     if (change.deliveryStateChanged || change.reactionChangeInfo != nil) {
         [self.messageToolboxView configureForMessage:change.message];
+        self.messageToolboxView.forceShowTimestamp = NO;
     }
     
     if (change.reactionChangeInfo != nil) {
