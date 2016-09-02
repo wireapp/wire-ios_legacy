@@ -552,13 +552,14 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
+    
     // If a text message changes, the only thing that can change at the moment is its delivery state
-    if (change.deliveryStateChanged || change.reactionChangeInfo != nil) {
+    if (change.deliveryStateChanged || change.reactionsChanged) {
         self.messageToolboxView.forceShowTimestamp = NO;
         [self.messageToolboxView configureForMessage:change.message];
     }
     
-    if (change.reactionChangeInfo != nil) {
+    if (change.reactionsChanged) {
         [self configureReactionsForMessage:change.message];
     }
     
