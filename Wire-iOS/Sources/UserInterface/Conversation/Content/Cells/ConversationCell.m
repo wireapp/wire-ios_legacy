@@ -324,7 +324,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         shouldBeVisible = NO;
     }
     
-    BOOL showLikeButton = [ZMMessage messageCanBeLiked:self.message];
+    BOOL showLikeButton = [Message messageCanBeLiked:self.message];
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
