@@ -28,11 +28,9 @@ extension ZMConversationMessage {
     
     var liked: Bool {
         set {
-            if newValue {
-                ZMMessage.addReaction(ZMMessageReaction.Like.rawValue, toMessage: self)
-            }
-            else {
-                ZMMessage.addReaction(.None, toMessage: self)
+            let reaction: String? = newValue ? ZMMessageReaction.Like.rawValue : .None
+            ZMUserSession.sharedSession().enqueueChanges {
+                ZMMessage.addReaction(reaction, toMessage: self)
             }
         }
         get {

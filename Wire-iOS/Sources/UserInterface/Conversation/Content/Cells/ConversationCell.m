@@ -568,7 +568,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self updateSenderAndSenderImage:change.message];
     }
     
-    return (change.reactionChangeInfo != nil) || (change.deliveryStateChanged);
+    return change.reactionsChanged || (change.deliveryStateChanged);
 }
 
 @end
