@@ -90,15 +90,12 @@ extension ZMMessage {
         self.addSubview(statusLabel)
         
         constrain(self, self.reactionsView, self.statusLabel) { selfView, reactionsView, statusLabel in
-            statusLabel.top >= selfView.top
             statusLabel.left <= selfView.left
             statusLabel.centerY == selfView.centerY
-            statusLabel.right <= selfView.rightMargin
-            selfView.height == 20 ~ 750
-            selfView.height <= 20
+            statusLabel.right <= selfView.right
             
             reactionsView.left >= statusLabel.right
-            reactionsView.right == selfView.rightMargin
+            reactionsView.right == selfView.right
             reactionsView.centerY == selfView.centerY
         }
         
@@ -110,6 +107,10 @@ extension ZMMessage {
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func intrinsicContentSize() -> CGSize {
+        return CGSizeMake(UIViewNoIntrinsicMetric, 28)
     }
     
     public func configureForMessage(message: ZMMessage) {

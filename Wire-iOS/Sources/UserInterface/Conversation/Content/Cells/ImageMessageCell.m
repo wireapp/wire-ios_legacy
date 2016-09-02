@@ -224,8 +224,6 @@ static ImageCache *imageCache(void)
     [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
     [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
     [self.fullScreenButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
-    
-    self.toolboxTopOffsetConstraint.constant = 8;
 }
 
  - (void)updateImageMessageConstraintConstants
