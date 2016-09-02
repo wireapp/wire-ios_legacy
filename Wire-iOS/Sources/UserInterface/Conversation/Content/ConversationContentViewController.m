@@ -852,9 +852,9 @@
                                messageType:messageType];
 }
 
-- (void)conversationCellDidTapOpenReactions:(ConversationCell *)cell
+- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
 {
-    if ([Message hasReactions:cell.message]) {
+    if ([Message hasLikers:cell.message]) {
         ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }

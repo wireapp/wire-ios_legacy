@@ -42,7 +42,7 @@ extension ZMMessage {
 }
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
-    func messageToolboxViewDidSelectReactions(messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectLikers(messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectResend(messageToolboxView: MessageToolboxView)
 }
 
@@ -233,8 +233,8 @@ extension ZMMessage {
     // MARK: - Events
     
     @objc func onTapContent(button: UIButton!) {        
-        if let message = self.message where message.hasReactions() {
-            self.delegate?.messageToolboxViewDidSelectReactions(self)
+        if let message = self.message where !message.likers().isEmpty {
+            self.delegate?.messageToolboxViewDidSelectLikers(self)
         }
     }
 }

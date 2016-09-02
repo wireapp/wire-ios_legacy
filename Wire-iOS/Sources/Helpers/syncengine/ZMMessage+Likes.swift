@@ -25,27 +25,21 @@ public enum ZMMessageReaction: String {
 }
 
 extension ZMConversationMessage {
-    
+
+    var canBeLiked: Bool {
+        return [ZMDeliveryState.Sent, .Delivered].contains(deliveryState)
+    }
+
     var liked: Bool {
         set {
             let reaction: String? = newValue ? ZMMessageReaction.Like.rawValue : .None
             ZMMessage.addReaction(reaction, toMessage: self)
         }
         get {
-            let onlyLikes = self.usersReaction.filter { (reaction, users) in
-                reaction == ZMMessageReaction.Like.rawValue
-            }
-            
-            for (_, users) in onlyLikes {
-                if users.contains(ZMUser.selfUser()) {
-                    return true
-                }
-            }
-            
-            return false
+            return likers().contains(.selfUser())
         }
     }
-    
+
     func hasReactions() -> Bool {
         return self.usersReaction.map { (_, users) in
                 return users.count
@@ -59,14 +53,25 @@ extension ZMConversationMessage {
                 return users
             }.first ?? []
     }
+
 }
 
-extension Message {
-    @objc public static func isLikedMessage(message: ZMMessage) -> Bool {
+public extension Message {
+
+    @objc static func isLikedMessage(message: ZMMessage) -> Bool {
         return message.liked
     }
     
-    @objc public static func hasReactions(message: ZMMessage) -> Bool {
+    @objc static func hasReactions(message: ZMMessage) -> Bool {
         return message.hasReactions()
     }
+    
+    @objc static func hasLikers(message: ZMMessage) -> Bool {
+        return !message.likers().isEmpty
+    }
+
+    class func messageCanBeLiked(message: ZMMessage) -> Bool {
+        return message.canBeLiked
+    }
+
 }

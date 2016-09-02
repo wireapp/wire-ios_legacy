@@ -328,6 +328,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         shouldBeVisible = NO;
     }
     
+    BOOL showLikeButton = [Message messageCanBeLiked:self.message];
+    
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
     if (animated) {
@@ -337,9 +339,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
                 self.messageToolboxView.alpha = 1;
             } completion:^(BOOL finished) {
                 if (self.messageToolboxView.alpha == 1) {
-                    [UIView animateWithDuration:0.15 animations:^{
-                        self.likeButton.alpha = 1;
-                    }];
+                    if (showLikeButton) {
+                        [UIView animateWithDuration:0.15 animations:^{
+                            self.likeButton.alpha = 1;
+                        }];
+                    }
                 }
             }];
         }
@@ -354,7 +358,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self.messageToolboxView.layer removeAllAnimations];
         [self.likeButton.layer removeAllAnimations];
         self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
-        self.likeButton.alpha = shouldBeVisible ? 1 : 0;
+        self.likeButton.alpha = shouldBeVisible && showLikeButton ? 1 : 0;
     }
 }
 
@@ -463,33 +467,25 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self becomeFirstResponder];
     }
     
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
+    UIMenuController *menuController = UIMenuController.sharedMenuController;
+    NSMutableArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems.mutableCopy;
 
-    NSMutableArray <UIMenuItem *> *items = [[NSMutableArray<UIMenuItem *> alloc] init];
-    if ([Message isLikedMessage:self.message]) {
-        UIMenuItem *unlikeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.unlike", @"") action:@selector(likeMessage:)];
-        [items addObject:unlikeItem];
-    }
-    else {
-        UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.like", @"") action:@selector(likeMessage:)];
-        [items addObject:likeItem];
-    }
-    [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
-    
     if (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent) {
+        NSString *likeTitleKey = [Message isLikedMessage:self.message] ? @"content.message.unlike" : @"content.message.like";
+        UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(likeTitleKey, @"") action:@selector(likeMessage:)];
+        [items insertObject:likeItem atIndex:0];
+
+        UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.delete", @"") action:@selector(deleteMessage:)];
         [items addObject:deleteItem];
     }
-    
+
     menuController.menuItems = items;
-    
     [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
     [menuController setMenuVisible:YES animated:YES];
 
     if ([self.delegate respondsToSelector:@selector(conversationCell:didOpenMenuForCellType:)]) {
         [self.delegate conversationCell:self didOpenMenuForCellType:[self messageType]];
     }
-
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer;
@@ -551,7 +547,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
-    // If a text message changes, the only thing that can change at the moment is its delivery state
     if (change.deliveryStateChanged || change.reactionsChanged) {
         self.messageToolboxView.forceShowTimestamp = NO;
         [self.messageToolboxView configureForMessage:change.message];
@@ -574,9 +569,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 @implementation ConversationCell (MessageToolboxViewDelegate)
 
-- (void)messageToolboxViewDidSelectReactions:(MessageToolboxView *)messageToolboxView
+- (void)messageToolboxViewDidSelectLikers:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCellDidTapOpenReactions:self];
+    [self.delegate conversationCellDidTapOpenLikers:self];
 }
 
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView
