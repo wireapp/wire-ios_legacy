@@ -334,6 +334,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     if (animated) {
         if (shouldBeVisible) {
+            [self.messageToolboxView configureForMessage:self.message];
             [UIView animateWithDuration:0.35 animations:^{
                 self.messageToolboxView.alpha = 1;
             } completion:^(BOOL finished) {
