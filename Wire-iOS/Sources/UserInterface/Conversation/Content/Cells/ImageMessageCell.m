@@ -403,7 +403,7 @@ static ImageCache *imageCache(void)
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:)) {
+    else if (action == @selector(copy:) || action == @selector(saveImage)) {
         return self.fullImageView.image != nil;
     }
     else if (action == @selector(paste:)) {
@@ -454,10 +454,22 @@ static ImageCache *imageCache(void)
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
+    UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
+    properties.additionalItems = @[saveItem];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };
     return properties;
+}
+
+- (void)saveImage
+{
+    NSData *data = [self.message imageMessageData].mediumData;
+    SavableImage *savableImage = [[SavableImage alloc] initWithData:data
+                                                        orientation:self.fullImageView.image.imageOrientation
+                                                         completion:nil];
+
+    [savableImage saveToLibrary];
 }
 
 - (MessageType)messageType;

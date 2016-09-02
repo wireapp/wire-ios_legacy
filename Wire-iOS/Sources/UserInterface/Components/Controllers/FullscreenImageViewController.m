@@ -53,6 +53,8 @@
 
 // model
 #import "zmessaging+iOS.h"
+#import "Wire-Swift.h"
+
 
 @interface FirstReponderView : UIView
 @end
@@ -80,15 +82,11 @@
 @property (nonatomic, strong, readwrite) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIView *topOverlay;
-@property (nonatomic, strong) UIView *bottomOverlay;
 @property (nonatomic, strong) CALayer *highlightLayer;
 
 @property (nonatomic, strong) UILabel *senderLabel;
 @property (nonatomic, strong) UILabel *timestampLabel;
 @property (nonatomic, strong) IconButton *closeButton;
-
-@property (nonatomic, strong) IconButton *bottomLeftActionButton;
-@property (nonatomic, strong) IconButton *bottomRightActionButton;
 
 @property (nonatomic, strong, readwrite) UIImageView *imageView;
 
@@ -101,15 +99,11 @@
 @property (nonatomic, assign) BOOL isShowingChrome;
 @property (nonatomic, assign) BOOL assetWriteInProgress;
 
-@property (strong, nonatomic) ALAssetsLibrary *assetLibrary;
-
 @property (nonatomic) CGFloat lastZoomScale;
 
 @property (nonatomic, assign) BOOL forcePortraitMode;
 
 @property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-
-@property (nonatomic, strong) UIButton *sketchButton;
 
 @end
 
@@ -141,7 +135,6 @@
     [self setupSnapshotBackgroundView];
     [self setupScrollView];
     [self setupTopOverlay];
-    [self setupBottomOverlay];
     [self loadImageAndSetupImageView];
 }
 
@@ -159,8 +152,6 @@
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
-
-    self.assetLibrary = [[ALAssetsLibrary alloc] init];
 
     self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
 }
@@ -317,54 +308,10 @@
     [self.timestampLabel addConstraintForBottomMargin:0 relativeToView:authorContainer];
 }
 
-- (void)setupBottomOverlay
-{
-    self.bottomOverlay = [[UIView alloc] init];
-    self.bottomOverlay.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.bottomOverlay];
-
-    [self.bottomOverlay addConstraintForRightMargin:0 relativeToView:self.view];
-    [self.bottomOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
-    [self.bottomOverlay addConstraintForBottomMargin:0 relativeToView:self.view];
-    [self.bottomOverlay addConstraintForHeight:[WAZUIMagic floatForIdentifier:@"one_message.bottom_gradient_height"]];
-
-
-    IconButton *saveButton = [IconButton iconButtonCircular];
-    saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [saveButton setIcon:ZetaIconTypeSave withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [saveButton addTarget:self action:@selector(saveButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
-    IconButton *sketchButton = [IconButton iconButtonCircular];
-    sketchButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [sketchButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    self.sketchButton = sketchButton;
-    [self.sketchButton addTarget:self action:@selector(editImageTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.sketchButton.accessibilityIdentifier = @"sketchButton";
-    
-
-    self.bottomLeftActionButton = saveButton;
-    self.bottomRightActionButton = sketchButton;
-
-    [self.bottomOverlay addSubview:self.bottomLeftActionButton];
-    [self.bottomLeftActionButton addConstraintForLeftMargin:[WAZUIMagic cgFloatForIdentifier:@"one_message.overlay_left_margin"] relativeToView:self.bottomOverlay];
-    [self.bottomLeftActionButton addConstraintForAligningVerticallyWithView:self.bottomOverlay];
-    [self.bottomLeftActionButton autoSetDimension:ALDimensionWidth toSize:32];
-    [self.bottomLeftActionButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.bottomLeftActionButton];
-    
-    [self.bottomOverlay addSubview:self.bottomRightActionButton];
-    [self.bottomRightActionButton addConstraintForRightMargin:[WAZUIMagic cgFloatForIdentifier:@"one_message.overlay_right_margin"] relativeToView:self.bottomOverlay];
-    [self.bottomRightActionButton addConstraintForAligningVerticallyWithView:self.bottomOverlay];
-    [self.bottomRightActionButton autoSetDimension:ALDimensionWidth toSize:32];
-    [self.bottomRightActionButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.bottomRightActionButton];
-    
-    self.bottomLeftActionButton.accessibilityIdentifier = @"fullScreenDownloadButton";
-}
-
 - (void)showChrome:(BOOL)shouldShow
 {
     self.isShowingChrome = shouldShow;
     self.topOverlay.hidden = !shouldShow;
-    self.bottomOverlay.hidden = !shouldShow;
 }
 
 - (void)setupGestureRecognizers
@@ -429,82 +376,6 @@
     if ([self.delegate respondsToSelector:@selector(fullscreenImageViewController:wantsEditImageMessage:)]) {
         [self.delegate fullscreenImageViewController:self wantsEditImageMessage:self.message];
     }
-}
-
-- (void)saveButtonTapped:(id)sender
-{
-    if (self.assetWriteInProgress) {return;}
-
-    BOOL didShowSaveAnimation = NO;
-
-    // If authorized to save, run the animation right away.
-    // The actual saving should happen concurrently with this.
-    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized) {
-        [self performSaveImageAnimationFromSaveButton:sender];
-        didShowSaveAnimation = YES;
-    }
-
-    __weak __typeof(self) weakSelf = self;
-
-    NSData *imageData = self.message.imageMessageData.imageData;
-
-    self.assetWriteInProgress = YES;
-
-    [self.assetLibrary writeImageDataToSavedPhotosAlbum:imageData
-                                               metadata:[self metadataWithImageOrientation:self.imageView.image.imageOrientation]
-                                        completionBlock:^(NSURL *assetURL, NSError *error)
-            {
-                weakSelf.assetWriteInProgress = NO;
-                if (!didShowSaveAnimation && ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)) {
-                    // This situation will occur if the user just authorized Wire for photos.
-                    // We then run the save animation after user has tapped the button to authorize the app.
-                    [weakSelf performSaveImageAnimationFromSaveButton:sender];
-                }
-            }];
-}
-
-- (NSDictionary *)metadataWithImageOrientation:(UIImageOrientation)orientation
-{
-    int orientationEXIF = 0;
-
-    // Reference:
-    // http://sylvana.net/jpegcrop/exif_orientation.html
-    // http://www.altdev.co/2011/05/11/adding-metadata-to-ios-images-the-easy-way/
-    switch (orientation) {
-        case UIImageOrientationUp:
-            orientationEXIF = 1;
-            break;
-
-        case UIImageOrientationDown:
-            orientationEXIF = 3;
-            break;
-
-        case UIImageOrientationLeft:
-            orientationEXIF = 8;
-            break;
-
-        case UIImageOrientationRight:
-            orientationEXIF = 6;
-            break;
-
-        case UIImageOrientationUpMirrored:
-            orientationEXIF = 2;
-            break;
-
-        case UIImageOrientationDownMirrored:
-            orientationEXIF = 4;
-            break;
-
-        case UIImageOrientationLeftMirrored:
-            orientationEXIF = 5;
-            break;
-
-        case UIImageOrientationRightMirrored:
-            orientationEXIF = 7;
-            break;
-    }
-
-    return @{ALAssetPropertyOrientation : @(orientationEXIF)};
 }
 
 - (void)updateZoom
@@ -577,10 +448,8 @@
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
 {
-
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
-
 
     CGPoint point = [doubleTapper locationInView:doubleTapper.view];
 
@@ -610,6 +479,8 @@
         [self.view becomeFirstResponder];
         [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
         [menuController setMenuVisible:YES animated:YES];
+        UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
+        menuController.menuItems = @[saveItem];
         [self setSelectedByMenu:YES animated:YES];
     }
 }
@@ -623,7 +494,7 @@
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:)) {
+    else if (action == @selector(copy:) || action == @selector(saveImage)) {
         return YES;
     }
     else if (action == @selector(paste:)) {
@@ -643,6 +514,13 @@
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.imageView mediaAsset]];
 }
 
+- (void)saveImage
+{
+    NSData *imageData = self.message.imageMessageData.imageData;
+    SavableImage *savableImage = [[SavableImage alloc] initWithData:imageData orientation:self.imageView.image.imageOrientation completion:nil];
+    [savableImage saveToLibrary];
+}
+
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
     DDLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
@@ -654,73 +532,39 @@
         [self.imageView.layer insertSublayer:self.highlightLayer atIndex:0];
 
         if (animated) {
-
             [UIView animateWithDuration:0.33 animations:^{
-
                 self.highlightLayer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4].CGColor;
-
             }];
-        }
-        else {
-
+        } else {
             self.highlightLayer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4].CGColor;
         }
     }
     else {
-
         if (animated) {
-
             [UIView animateWithDuration:0.33 animations:^{
-
                 self.highlightLayer.backgroundColor = [UIColor clearColor].CGColor;;
-
-            }                completion:^(BOOL finished){
-
+            } completion:^(BOOL finished){
                 if (finished) {
-
                     [self.highlightLayer removeFromSuperlayer];
                 }
             }];
         }
         else {
-
             self.highlightLayer.backgroundColor = [UIColor clearColor].CGColor;
             [self.highlightLayer removeFromSuperlayer];
-
         }
     }
 }
 
 - (void)menuDidHide:(NSNotification *)notification
 {
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerDidHideMenuNotification object:nil];
-
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [self setSelectedByMenu:NO animated:YES];
 }
 
 
 #pragma mark - Utilities, custom UI
 
-- (void)performSaveImageAnimationFromSaveButton:(UIButton *)saveButton
-{
-    UIImageView *ghostImageView = [[UIImageView alloc] initWithImage:self.imageView.image];
-    ghostImageView.contentMode = UIViewContentModeScaleAspectFit;
-    ghostImageView.translatesAutoresizingMaskIntoConstraints = YES;
-    CGRect initialFrame = [self.view convertRect:self.imageView.frame fromView:self.imageView.superview];
-    [self.view addSubview:ghostImageView];
-    ghostImageView.frame = initialFrame;
-    CGPoint targetCenter = [self.view convertPoint:saveButton.center fromView:saveButton.superview];
-
-    [UIView mt_animateWithViews:@[ghostImageView] duration:0.55 timingFunction:kMTEaseInExpo animations:^{
-        ghostImageView.center = targetCenter;
-        ghostImageView.alpha = 0;
-        ghostImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    }                completion:^{
-        [ghostImageView removeFromSuperview];
-    }];
-}
 
 /// Special check in case we get an incoming voice call and we are looking at this view in ipad landscape
 - (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change

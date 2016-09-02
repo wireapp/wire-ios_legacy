@@ -227,6 +227,7 @@
 
 "content.file.save_video" = "Save";
 "content.file.save_audio" = "Save";
+"content.image.save_image" = "Save";
 
 "content.message.delete" = "Delete";
 
