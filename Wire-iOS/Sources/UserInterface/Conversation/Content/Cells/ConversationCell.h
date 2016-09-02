@@ -76,7 +76,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-- (void)conversationCellDidTapOpenReactions:(ConversationCell *)cell;
+- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
 @end
 
 

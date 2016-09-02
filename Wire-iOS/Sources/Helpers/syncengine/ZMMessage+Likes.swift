@@ -69,4 +69,8 @@ extension Message {
     @objc public static func hasReactions(message: ZMMessage) -> Bool {
         return message.hasReactions()
     }
+    
+    @objc public static func hasLikers(message: ZMMessage) -> Bool {
+        return !message.likers().isEmpty
+    }
 }

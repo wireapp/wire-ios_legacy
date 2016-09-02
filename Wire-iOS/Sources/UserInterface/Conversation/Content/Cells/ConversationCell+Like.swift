@@ -18,7 +18,9 @@
 
 import Foundation
 
+
 public extension ConversationCell {
+
     public func createLikeButton() {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +39,8 @@ public extension ConversationCell {
     }
     
     @objc public func likeMessage(button: AnyObject!) {
+        guard message.canBeLiked else { return }
+
         ZMUserSession.sharedSession().performChanges {
             self.message.liked = !self.message.liked
         }
