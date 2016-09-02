@@ -337,9 +337,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
             [UIView animateWithDuration:0.35 animations:^{
                 self.messageToolboxView.alpha = 1;
             } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.15 animations:^{
-                    self.likeButton.alpha = 1;
-                }];
+                if (self.messageToolboxView.alpha == 1) {
+                    [UIView animateWithDuration:0.15 animations:^{
+                        self.likeButton.alpha = 1;
+                    }];
+                }
             }];
         }
         else {
@@ -350,6 +352,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         }
     }
     else {
+        [self.messageToolboxView.layer removeAllAnimations];
+        [self.likeButton.layer removeAllAnimations];
         self.messageToolboxView.alpha = shouldBeVisible ? 1 : 0;
         self.likeButton.alpha = shouldBeVisible ? 1 : 0;
     }
@@ -562,7 +566,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self updateSenderAndSenderImage:change.message];
     }
     
-    return NO;
+    return (change.reactionChangeInfo != nil) || (change.deliveryStateChanged);
 }
 
 @end

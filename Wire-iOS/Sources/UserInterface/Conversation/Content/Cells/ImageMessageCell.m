@@ -192,14 +192,14 @@ static ImageCache *imageCache(void)
     [self.sketchButton addTarget:self action:@selector(onSketchPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.sketchButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.sketchButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
-    self.sketchButton.hidden = !self.selected;
+    self.sketchButton.alpha = self.selected ? 1 : 0;
     [self.imageViewContainer addSubview:self.sketchButton];
     
     self.fullScreenButton = [IconButton iconButtonCircularLight];
     [self.fullScreenButton addTarget:self action:@selector(onFullScreenPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.fullScreenButton setIcon:ZetaIconTypeFullScreen withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.fullScreenButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
-    self.fullScreenButton.hidden = !self.selected;
+    self.fullScreenButton.alpha = self.selected ? 1 : 0;
     [self.imageViewContainer addSubview:self.fullScreenButton];
 }
 
@@ -340,8 +340,19 @@ static ImageCache *imageCache(void)
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    self.sketchButton.hidden = !self.selected;
-    self.fullScreenButton.hidden = !self.selected;
+    
+    dispatch_block_t changeBlock = ^{
+        self.sketchButton.alpha = self.selected ? 1 : 0;
+        self.fullScreenButton.alpha = self.selected ? 1 : 0;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.15 animations:changeBlock completion:nil];
+    }
+    else {
+        changeBlock();
+    }
+    
 }
 
 - (void)showImageView:(UIView *)imageView

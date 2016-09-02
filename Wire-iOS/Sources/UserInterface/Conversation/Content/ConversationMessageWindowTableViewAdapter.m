@@ -178,6 +178,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     }
     
     if (needsToLayoutCells) {
+        [self reconfigureVisibleCells];
         // Make table view to update cells with animation
         [self.tableView beginUpdates];
         [self.tableView endUpdates];

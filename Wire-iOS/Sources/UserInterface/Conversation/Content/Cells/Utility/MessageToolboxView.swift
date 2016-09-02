@@ -80,6 +80,7 @@ extension ZMMessage {
         statusLabel.delegate = self
         statusLabel.extendsLinkTouchArea = true
         statusLabel.userInteractionEnabled = true
+        statusLabel.verticalAlignment = .Center
         statusLabel.lineBreakMode = NSLineBreakMode.ByTruncatingMiddle
         statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
                                       NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed)]
@@ -89,14 +90,16 @@ extension ZMMessage {
         self.addSubview(statusLabel)
         
         constrain(self, self.reactionsView, self.statusLabel) { selfView, reactionsView, statusLabel in
-            statusLabel.top == selfView.top + 4
-            statusLabel.left == selfView.left
+            statusLabel.top >= selfView.top
+            statusLabel.left <= selfView.left
+            statusLabel.centerY == selfView.centerY
             statusLabel.right <= selfView.rightMargin
             selfView.height == 20 ~ 750
+            selfView.height <= 20
             
             reactionsView.left >= statusLabel.right
             reactionsView.right == selfView.rightMargin
-            reactionsView.centerY == statusLabel.centerY
+            reactionsView.centerY == selfView.centerY
         }
         
         tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
@@ -162,7 +165,7 @@ extension ZMMessage {
         
         let labelSize = (likersNames as NSString).sizeWithAttributes(attributes)
         if labelSize.width > self.bounds.size.width {
-            let likersCount = String(format: "content.system.message_likes_count".localized, likers.count)
+            let likersCount = String(format: "participants.people.count".localized, likers.count)
             statusLabel.attributedText = likersCount && attributes
         }
         else {

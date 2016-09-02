@@ -233,9 +233,7 @@
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
 
-"content.reactions_list.likers" = "Likers";
-
-"content.system.message_likes_count" = "%d people";
+"content.reactions_list.likers" = "Liked By";
 
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
