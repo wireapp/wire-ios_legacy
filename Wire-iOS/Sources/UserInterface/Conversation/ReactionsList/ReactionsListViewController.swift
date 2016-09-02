@@ -27,7 +27,7 @@ import Cartography
     private var collectionView: UICollectionView!
     public let topBar = UIView()
     public let separatorView = UIView()
-    public let backButton = IconButton.iconButtonDefault()
+    public let dismissButton = IconButton.iconButtonDefault()
     public let titleLabel = UILabel()
     
     public init(message: ZMMessage) {
@@ -50,13 +50,10 @@ import Cartography
         
         self.separatorView.cas_styleClass = "separator"
         
-        backButton.setIcon(.BackArrow, withSize: .Tiny, forState: .Normal)
-        backButton.addTarget(self, action: #selector(ReactionsListViewController.backPressed(_:)), forControlEvents: .TouchUpInside)
-        backButton.accessibilityIdentifier = "BackButton"
-        backButton.hitAreaPadding = CGSizeMake(20, 20)
-        
-        self.navigationItem.leftItemsSupplementBackButton = true
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        dismissButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
+        dismissButton.addTarget(self, action: #selector(dismissPressed), forControlEvents: .TouchUpInside)
+        dismissButton.accessibilityIdentifier = "BackButton"
+        dismissButton.hitAreaPadding = CGSizeMake(20, 20)
         
         self.collectionViewLayout.scrollDirection = .Vertical
         self.collectionViewLayout.minimumLineSpacing = 0
@@ -76,7 +73,7 @@ import Cartography
         
         self.topBar.addSubview(titleLabel)
         self.topBar.addSubview(separatorView)
-        self.topBar.addSubview(backButton)
+        self.topBar.addSubview(dismissButton)
         self.view.addSubview(self.topBar)
         
         constrain(self.view, self.collectionView, self.topBar) { selfView, collectionView, topBar in
@@ -91,23 +88,23 @@ import Cartography
             collectionView.top == topBar.bottom
         }
         
-        constrain(self.topBar, self.titleLabel, self.backButton, self.separatorView) { topBar, titleLabel, backButton, separatorView in
+        constrain(self.topBar, self.titleLabel, self.dismissButton, self.separatorView) { topBar, titleLabel, dismissButton, separatorView in
             separatorView.bottom == topBar.bottom
             separatorView.right == topBar.right
             separatorView.left == topBar.left
             separatorView.height == 1
-            
+
             titleLabel.center == topBar.center
-            titleLabel.left >= backButton.right + 4
+            titleLabel.trailing <= dismissButton.leading - 4
             
-            backButton.centerY == topBar.centerY
-            backButton.left == topBar.left + 16
+            dismissButton.centerY == topBar.centerY
+            dismissButton.trailing == topBar.trailing - 16
         }
         
         CASStyler.defaultStyler().styleItem(self)
     }
     
-    @objc public func backPressed(button: AnyObject!) {
+    @objc public func dismissPressed(button: AnyObject!) {
         self.dismissViewControllerAnimated(true, completion: .None)
     }
 }
