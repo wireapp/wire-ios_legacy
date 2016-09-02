@@ -32,7 +32,7 @@
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
     layoutProperties.topPadding       = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
-    layoutProperties.showToolbox      = [self shouldShowToolboxForMessage:message];
+    layoutProperties.alwaysShowDeliveryState = [self shouldShowAlwaysDeliveryStateForMessage:message];
     
     if ([Message isTextMessage:message]) {
         layoutProperties.linkAttachments = [Message linkAttachments:message.textMessageData];
@@ -66,12 +66,8 @@
     return NO;
 }
 
-- (BOOL)shouldShowToolboxForMessage:(id<ZMConversationMessage>)message
+- (BOOL)shouldShowAlwaysDeliveryStateForMessage:(id<ZMConversationMessage>)message
 {
-    if (! [Message shouldShowTimestamp:message]) {
-        return NO;
-    }
-    
     // Loop back and check if this was last message sent by us
     if (message.sender.isSelfUser && message.conversation.conversationType == ZMConversationTypeOneOnOne) {
         if ([message.conversation lastMessageSentByUser:[ZMUser selfUser] limit:10] == message) {
@@ -79,11 +75,7 @@
         }
     }
     
-    if (message.deliveryState == ZMDeliveryStateFailedToSend) {
-        return YES;
-    }
-    
-    return [Message hasReactions:message];
+    return NO;
 }
 
 - (BOOL)shouldShowSenderForMessage:(id<ZMConversationMessage>)message
