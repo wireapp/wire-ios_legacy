@@ -21,7 +21,7 @@ import Foundation
 import zmessaging
 
 public enum ZMMessageReaction: String {
-    case Like = "❤️"
+    case Like = "💖"
 }
 
 extension ZMConversationMessage {
