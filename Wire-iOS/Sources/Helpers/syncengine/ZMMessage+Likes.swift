@@ -29,9 +29,7 @@ extension ZMConversationMessage {
     var liked: Bool {
         set {
             let reaction: String? = newValue ? ZMMessageReaction.Like.rawValue : .None
-            ZMUserSession.sharedSession().enqueueChanges {
-                ZMMessage.addReaction(reaction, toMessage: self)
-            }
+            ZMMessage.addReaction(reaction, toMessage: self)
         }
         get {
             let onlyLikes = self.usersReaction.filter { (reaction, users) in
