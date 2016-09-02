@@ -272,6 +272,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     self.toolboxTopOffsetConstraint = [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
+    self.toolboxTopOffsetConstraint.active = NO;
+    // Backup 0-inset constraint
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
+       [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
+    }];
     [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeRight];
 
     [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
@@ -325,6 +330,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
+    self.toolboxTopOffsetConstraint.active = shouldBeVisible;
     
     if (animated) {
         if (shouldBeVisible) {
