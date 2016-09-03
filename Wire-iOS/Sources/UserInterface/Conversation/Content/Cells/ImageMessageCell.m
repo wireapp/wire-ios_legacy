@@ -462,10 +462,11 @@ static ImageCache *imageCache(void)
 
 - (void)saveImage
 {
-    NSData *data = [self.message imageMessageData].mediumData;
-    SavableImage *savableImage = [[SavableImage alloc] initWithData:data
-                                                        orientation:self.fullImageView.image.imageOrientation
-                                                         completion:nil];
+    NSData *data = self.message.imageMessageData.mediumData;
+    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
+    SavableImage *savableImage = [[SavableImage alloc] initWithData:data orientation:orientation completion:^{
+        [NSNotificationCenter.defaultCenter postNotificationName:@"BounceCameraIcon" object:nil];
+    }];
 
     [savableImage saveToLibrary];
 }

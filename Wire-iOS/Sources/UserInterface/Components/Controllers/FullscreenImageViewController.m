@@ -84,8 +84,6 @@
 @property (nonatomic, strong) UIView *topOverlay;
 @property (nonatomic, strong) CALayer *highlightLayer;
 
-@property (nonatomic, strong) UILabel *senderLabel;
-@property (nonatomic, strong) UILabel *timestampLabel;
 @property (nonatomic, strong) IconButton *closeButton;
 
 @property (nonatomic, strong, readwrite) UIImageView *imageView;
@@ -245,67 +243,24 @@
     self.topOverlay.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.topOverlay];
 
-    UIView *authorContainer = [[UIView alloc] init];
-    authorContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.topOverlay addSubview:authorContainer];
-
-    // Sender name
-
-    self.senderLabel = [[UILabel alloc] init];
-    self.senderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.senderLabel setContentHuggingPriority:UILayoutPriorityFittingSizeLevel forAxis:UILayoutConstraintAxisHorizontal];
-    [authorContainer addSubview:self.senderLabel];
-
-    self.senderLabel.accessibilityIdentifier = @"fullScreenSenderName";
-    self.senderLabel.attributedText = [self attributedNameStringForDisplayName:self.message.sender.displayName];
-
-    // Timestamp
-
-    self.timestampLabel = [[UILabel alloc] init];
-    self.timestampLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.timestampLabel setContentHuggingPriority:UILayoutPriorityFittingSizeLevel forAxis:UILayoutConstraintAxisHorizontal];
-    [authorContainer addSubview:self.timestampLabel];
-
-    self.timestampLabel.text = [self.message.serverTimestamp extendedFormat];
-    self.timestampLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
-    self.timestampLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
-    self.timestampLabel.accessibilityIdentifier = @"fullScreenTimeStamp";
-    
     // Close button
-    
     self.closeButton = [IconButton iconButtonCircular];
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.topOverlay addSubview:self.closeButton];
-        
     [self.closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
     self.closeButton.accessibilityIdentifier = @"fullScreenCloseButton";
     
     // Constraints
-    
     [self.topOverlay addConstraintForRightMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForTopMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForHeight:[WAZUIMagic floatForIdentifier:@"one_message.top_gradient_height"]];
-    
-    [authorContainer addConstraintForLeftMargin:[WAZUIMagic cgFloatForIdentifier:@"one_message.overlay_left_margin"] relativeToView:self.topOverlay];
-    [authorContainer addConstraintForAligningRightToLeftOfView:self.closeButton distance:0];
-    [authorContainer addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
-    
+
     [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
     [self.closeButton addConstraintForRightMargin:[WAZUIMagic cgFloatForIdentifier:@"one_message.overlay_right_margin"] relativeToView:self.topOverlay];
     [self.closeButton autoSetDimension:ALDimensionWidth toSize:32];
     [self.closeButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.closeButton];
-    
-    [self.senderLabel addConstraintForLeftMargin:0 relativeToView:authorContainer];
-    [self.senderLabel addConstraintForRightMargin:0 relativeToView:authorContainer];
-    [self.senderLabel addConstraintForTopMargin:0 relativeToView:authorContainer];
-    
-    [self.timestampLabel addConstraintForAligningTopToBottomOfView:self.senderLabel distance:0];
-    [self.timestampLabel addConstraintForRightMargin:0 relativeToView:authorContainer];
-    [self.timestampLabel addConstraintForLeftMargin:0 relativeToView:authorContainer];
-    [self.timestampLabel addConstraintForBottomMargin:0 relativeToView:authorContainer];
 }
 
 - (void)showChrome:(BOOL)shouldShow

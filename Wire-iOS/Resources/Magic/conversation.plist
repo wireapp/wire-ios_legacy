@@ -255,7 +255,7 @@
 		<key>bottom_gradient_height</key>
 		<integer>68</integer>
 		<key>top_gradient_height</key>
-		<integer>88</integer>
+		<integer>60</integer>
 		<key>button_color</key>
 		<array>
 			<integer>0</integer>

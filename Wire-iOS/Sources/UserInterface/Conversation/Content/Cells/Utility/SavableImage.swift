@@ -41,8 +41,8 @@ import AssetsLibrary
         writeInProgess = true
         
         let metadata: [String: NSObject] = [ALAssetPropertyOrientation: imageOrientation.exifOrientiation]
-        library.writeImageDataToSavedPhotosAlbum(imageData, metadata: metadata) { [weak self] _, _ in
-            self?.saveCompletion?()
+        library.writeImageDataToSavedPhotosAlbum(imageData, metadata: metadata) { _, _ in
+            self.saveCompletion?()
         }
     }
 
