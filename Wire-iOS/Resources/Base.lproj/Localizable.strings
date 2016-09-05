@@ -1,20 +1,20 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 
 "general.ok" = "OK";
@@ -183,7 +183,7 @@
 "content.system.pending_message_timestamp" = "Sending…";
 "content.system.message_sent_timestamp" = "Sent";
 "content.system.message_delivered_timestamp" = "Delivered";
-"content.system.failedtosend_message_timestamp" = "Sending failed.";
+"content.system.failedtosend_message_timestamp" = "Sending failed";
 "content.system.failedtosend_message_timestamp_resend" = "Resend";
 "content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
 "content.system.edited_message_prefix_timestamp" = "Edited on %@";
@@ -234,7 +234,7 @@
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
 
-"content.reactions_list.likers" = "Liked By";
+"content.reactions_list.likers" = "Liked by";
 
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
@@ -345,7 +345,7 @@
 "profile.connection_request_dialog.button_connect" = "Connect";
 
 // Cancel connection request
-"profile.cancel_connection_request_dialog.title" = "Cancel Request?"; 
+"profile.cancel_connection_request_dialog.title" = "Cancel Request?";
 "profile.cancel_connection_request_dialog.message" = "Remove connection request to %@.";
 "profile.cancel_connection_request_dialog.button_no" = "No";
 "profile.cancel_connection_request_dialog.button_yes" = "Yes";
