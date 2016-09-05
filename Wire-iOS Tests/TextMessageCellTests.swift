@@ -28,7 +28,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
-        layoutProperties.alwaysShowDeliveryState = true
         return layoutProperties
     }
 
@@ -45,11 +44,13 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersATextMessage_Sent() {
+        sut.setSelected(true, animated: false)
         sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_Delivered() {
+        sut.setSelected(true, animated: false)
         sut.configureForMessage(mockMessage(state: .Delivered), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
@@ -60,14 +61,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersATextMessage_Selected() {
-        sut.configureForMessage(mockMessage(), layoutProperties: layoutProperties)
         sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_Pending_Selected() {
-        sut.configureForMessage(mockMessage(state: .Pending), layoutProperties: layoutProperties)
         sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(state: .Pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
@@ -78,24 +79,40 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersEditedTimestampCorrectly_Selected() {
-        sut.configureForMessage(mockMessage(edited: true), layoutProperties: layoutProperties)
         sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
         let text = "".stringByPaddingToLength(70, withString: "Hello ", startingAtIndex: 0)
-        sut.configureForMessage(mockMessage(text, edited: true), layoutProperties: layoutProperties)
         sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(text, edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText_Pending() {
         let text = "".stringByPaddingToLength(70, withString: "Hello ", startingAtIndex: 0)
-        sut.configureForMessage(mockMessage(text, edited: true, state: .Pending), layoutProperties: layoutProperties)
         sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(text, edited: true, state: .Pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
+    
+    func testThatRenderLastSentMessageWithoutLikeIcon() {
+        let layoutProperties = self.layoutProperties
+        layoutProperties.alwaysShowDeliveryState = true
+        sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatRenderLastSentMessageWithLikeIcon_whenSelected() {
+        let layoutProperties = self.layoutProperties
+        layoutProperties.alwaysShowDeliveryState = true
+        sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
     // TODO LIKE
 //    func testThatItRendersATextMessage_LikedReceiver() {
 //        let message = mockMessage(state: .Sent)
