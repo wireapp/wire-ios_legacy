@@ -313,7 +313,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     [self configureReactionsForMessage:message];
     
-    [self.messageToolboxView configureForMessage:message];
+    [self.messageToolboxView configureForMessage:message animated:NO];
     self.messageToolboxView.forceShowTimestamp = self.selected;
     [self updateConstraintConstants];
 }
@@ -336,7 +336,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     if (animated) {
         if (shouldBeVisible) {
-            [self.messageToolboxView configureForMessage:self.message];
+            [self.messageToolboxView configureForMessage:self.message animated:NO];
             [UIView animateWithDuration:0.35 animations:^{
                 self.messageToolboxView.alpha = 1;
             } completion:^(BOOL finished) {
@@ -551,7 +551,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     if (change.deliveryStateChanged || change.reactionsChanged) {
         self.messageToolboxView.forceShowTimestamp = NO;
-        [self.messageToolboxView configureForMessage:change.message];
     }
     
     if (change.reactionsChanged) {

@@ -46,6 +46,7 @@ public extension ConversationCell {
         }
         
         self.likeButton.setSelected(self.message.liked, animated: true)
+        self.messageToolboxView.configureForMessage(self.message, animated: true)
     }
     
 }

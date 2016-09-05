@@ -173,6 +173,7 @@ static ImageCache *imageCache(void)
 {
     self.imageViewContainer = [[UIView alloc] init];
     self.imageViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageViewContainer.isAccessibilityElement = YES;
     [self.messageContentView addSubview:self.imageViewContainer];
         
     self.fullImageView = [[FLAnimatedImageView alloc] init];
@@ -194,6 +195,7 @@ static ImageCache *imageCache(void)
     [self.sketchButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
     self.sketchButton.alpha = self.selected ? 1 : 0;
     self.sketchButton.accessibilityIdentifier = @"sketchOnImageButton";
+    self.sketchButton.isAccessibilityElement = YES;
     [self.imageViewContainer addSubview:self.sketchButton];
     
     self.fullScreenButton = [IconButton iconButtonCircularLight];
@@ -202,6 +204,7 @@ static ImageCache *imageCache(void)
     [self.fullScreenButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
     self.fullScreenButton.alpha = self.selected ? 1 : 0;
     self.fullScreenButton.accessibilityIdentifier = @"openFullScreenButton";
+    self.fullScreenButton.isAccessibilityElement = YES;
     [self.imageViewContainer addSubview:self.fullScreenButton];
 }
 

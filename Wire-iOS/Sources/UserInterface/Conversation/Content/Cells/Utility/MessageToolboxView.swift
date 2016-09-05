@@ -22,7 +22,7 @@ import Cartography
 import Classy
 import TTTAttributedLabel
 
-extension ZMMessage {
+extension ZMConversationMessage {
     func formattedReceivedDate() -> String? {
         guard let timestamp = self.serverTimestamp else {
             return .None
@@ -51,13 +51,14 @@ extension ZMMessage {
     
     public let statusLabel = TTTAttributedLabel(frame: CGRectZero)
     public let reactionsView = ReactionsView()
+    private let labelClipView = UIView()
     private var tapGestureRecogniser: UITapGestureRecognizer!
     
     public weak var delegate: MessageToolboxViewDelegate?
 
     private var previousLayoutBounds: CGRect = CGRectZero
     
-    private(set) weak var message: ZMMessage?
+    private(set) weak var message: ZMConversationMessage?
     
     public var forceShowTimestamp: Bool = false {
         didSet {
@@ -77,6 +78,11 @@ extension ZMMessage {
         reactionsView.accessibilityIdentifier = "reactionsView"
         self.addSubview(reactionsView)
     
+        labelClipView.clipsToBounds = true
+        labelClipView.isAccessibilityElement = true
+        labelClipView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(labelClipView)
+        
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.delegate = self
         statusLabel.extendsLinkTouchArea = true
@@ -88,12 +94,14 @@ extension ZMMessage {
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
                                             NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed).colorWithAlphaComponent(0.5)]
         
-        self.addSubview(statusLabel)
+        labelClipView.addSubview(statusLabel)
         
-        constrain(self, self.reactionsView, self.statusLabel) { selfView, reactionsView, statusLabel in
-            statusLabel.left <= selfView.left
-            statusLabel.centerY == selfView.centerY
-            statusLabel.right == selfView.right
+        constrain(self, self.reactionsView, self.statusLabel, self.labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
+            labelClipView.left <= selfView.left
+            labelClipView.centerY == selfView.centerY
+            labelClipView.right == selfView.right
+            
+            statusLabel.edges == labelClipView.edges
             
             reactionsView.right == selfView.right
             reactionsView.centerY == selfView.centerY
@@ -113,16 +121,26 @@ extension ZMMessage {
         return CGSizeMake(UIViewNoIntrinsicMetric, 28)
     }
     
-    public func configureForMessage(message: ZMMessage) {
+    public func configureForMessage(message: ZMConversationMessage, animated: Bool = false) {
         self.message = message
-        self.configureInfoLabel(message)
+        if !self.forceShowTimestamp && message.hasReactions() {
+            self.reactionsView.hidden = false
+            self.configureLikedState(message)
+            self.layoutIfNeeded()
+            self.configureReactions(message, animated: animated)
+        }
+        else {
+            self.reactionsView.hidden = true
+            self.layoutIfNeeded()
+            self.configureTimestamp(message, animated: animated)
+        }
     }
     
-    private func configureLikedState(message: ZMMessage) {
+    private func configureLikedState(message: ZMConversationMessage) {
         self.reactionsView.likers = message.likers()
     }
     
-    private func timestampString(message: ZMMessage) -> String? {
+    private func timestampString(message: ZMConversationMessage) -> String? {
         let timestampString: String?
         
         if let dateTimeString = message.formattedReceivedDate() {
@@ -143,21 +161,7 @@ extension ZMMessage {
         return timestampString
     }
     
-    private func configureInfoLabel(message: ZMMessage) {
-        if !self.forceShowTimestamp && message.hasReactions() {
-            self.reactionsView.hidden = false
-            self.configureLikedState(message)
-            self.layoutIfNeeded()
-            self.configureReactions(message)
-        }
-        else {
-            self.reactionsView.hidden = true
-            self.layoutIfNeeded()
-            self.configureTimestamp(message)
-        }
-    }
-    
-    private func configureReactions(message: ZMMessage) {
+    private func configureReactions(message: ZMConversationMessage, animated: Bool = false) {
         guard !CGRectEqualToRect(self.bounds, CGRectZero) else {
             return
         }
@@ -175,18 +179,34 @@ extension ZMMessage {
         let targetSize = CGSizeMake(10000, CGFloat.max)
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
         
+        let attributedText: NSAttributedString
+        
         if labelSize.width > self.statusLabel.bounds.size.width - self.reactionsView.bounds.size.width {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
-            statusLabel.attributedText = likersCount && attributes
+            attributedText = likersCount && attributes
         }
         else {
-            statusLabel.attributedText = likersNamesAttributedString
+            attributedText = likersNamesAttributedString
+        }
+
+        if let currentText = self.statusLabel.attributedText where currentText.string == attributedText.string {
+            return
         }
         
-        statusLabel.accessibilityLabel = statusLabel.attributedText.string
+        let changeBlock = {
+            self.statusLabel.attributedText = attributedText
+            self.statusLabel.accessibilityLabel = self.statusLabel.attributedText.string
+        }
+        
+        if animated {
+            statusLabel.wr_animateTo(newState: changeBlock)
+        }
+        else {
+            changeBlock()
+        }
     }
     
-    private func configureTimestamp(message: ZMMessage) {
+    private func configureTimestamp(message: ZMConversationMessage, animated: Bool = false) {
         var deliveryStateString: String? = .None
         
         if let sender = message.sender where sender.isSelfUser {
@@ -224,9 +244,23 @@ extension ZMMessage {
             let linkRange = (finalText as NSString).rangeOfString("content.system.failedtosend_message_timestamp_resend".localized)
             attributedText.addAttributes([NSLinkAttributeName: self.dynamicType.resendLink], range: linkRange)
         }
-        statusLabel.attributedText = attributedText
-        statusLabel.accessibilityLabel = statusLabel.attributedText.string
-        statusLabel.addLinks()
+        
+        if let currentText = self.statusLabel.attributedText where currentText.string == attributedText.string {
+            return
+        }
+        
+        let changeBlock =  {
+            self.statusLabel.attributedText = attributedText
+            self.statusLabel.accessibilityLabel = self.statusLabel.attributedText.string
+            self.statusLabel.addLinks()
+        }
+        
+        if animated {
+            statusLabel.wr_animateTo(newState: changeBlock)
+        }
+        else {
+            changeBlock()
+        }
     }
     
     public override func layoutSubviews() {
@@ -237,7 +271,7 @@ extension ZMMessage {
         
         self.previousLayoutBounds = self.bounds
         
-        self.configureInfoLabel(message)
+        self.configureForMessage(message)
     }
     
     // MARK: - Events
