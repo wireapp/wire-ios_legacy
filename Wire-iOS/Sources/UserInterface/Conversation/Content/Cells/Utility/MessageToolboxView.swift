@@ -241,8 +241,9 @@ extension ZMMessage {
     }
     
     // MARK: - Events
-    
-    @objc func onTapContent(button: UIButton!) {        
+
+    @objc func onTapContent(sender: UITapGestureRecognizer!) {
+        guard !forceShowTimestamp else { return }
         if let message = self.message where !message.likers().isEmpty {
             self.delegate?.messageToolboxViewDidSelectLikers(self)
         }
