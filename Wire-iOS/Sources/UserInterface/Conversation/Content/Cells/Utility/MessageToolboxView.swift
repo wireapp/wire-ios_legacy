@@ -60,13 +60,14 @@ extension ZMConversationMessage {
     
     private(set) weak var message: ZMConversationMessage?
     
-    public var forceShowTimestamp: Bool = false {
-        didSet {
-            guard let message = self.message else {
-                return
-            }
-            self.configureForMessage(message)
+    private var forceShowTimestamp: Bool = false
+    
+    @objc public func setForceShowTimestamp(forceShowTimestamp: Bool, animated: Bool) {
+        guard let message = self.message else {
+            return
         }
+        self.forceShowTimestamp = forceShowTimestamp
+        self.configureForMessage(message, animated: animated)
     }
     
     override init(frame: CGRect) {

@@ -40,7 +40,7 @@ public extension ConversationCell {
     
     @objc public func likeMessage(button: AnyObject!) {
         guard message.canBeLiked else { return }
-        self.messageToolboxView.forceShowTimestamp = false
+        self.messageToolboxView.setForceShowTimestamp(false, animated: false)
 
         ZMUserSession.sharedSession().performChanges {
             self.message.liked = !self.message.liked
