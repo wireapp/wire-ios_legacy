@@ -24,7 +24,7 @@ public enum SlideDirection: UInt {
 }
 
 public extension UIView {
-    func wr_animateTo(direction: SlideDirection = .Down, newState: ()->()) {
+    func wr_animateSlideTo(direction: SlideDirection = .Down, newState: ()->()) {
         guard let superview = self.superview else {
             return
         }

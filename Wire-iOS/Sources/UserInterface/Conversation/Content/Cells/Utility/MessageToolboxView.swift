@@ -199,7 +199,7 @@ extension ZMConversationMessage {
         }
         
         if animated {
-            statusLabel.wr_animateTo(newState: changeBlock)
+            statusLabel.wr_animateSlideTo(newState: changeBlock)
         }
         else {
             changeBlock()
@@ -256,7 +256,7 @@ extension ZMConversationMessage {
         }
         
         if animated {
-            statusLabel.wr_animateTo(newState: changeBlock)
+            statusLabel.wr_animateSlideTo(newState: changeBlock)
         }
         else {
             changeBlock()
