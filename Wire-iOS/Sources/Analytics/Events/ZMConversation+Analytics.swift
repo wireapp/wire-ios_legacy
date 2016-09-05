@@ -20,7 +20,7 @@ import Foundation
 
 
 extension ConversationType {
-    var analyticsAttribute : String {
+    var analyticsTypeString : String {
         switch  self {
         case .OneToOne:     return "one_to_one"
         case .Group:        return "group"
@@ -41,12 +41,12 @@ extension ConversationType {
 
 extension ZMConversation {
     
-    public func analyticsAttribute() -> String? {
-        return ConversationType.type(self)?.analyticsAttribute
+    public func analyticsTypeString() -> String? {
+        return ConversationType.type(self)?.analyticsTypeString
     }
     
-    public class func analyticsAttribute(withConversationType conversationType: ConversationType) -> String {
-        return conversationType.analyticsAttribute
+    public class func analyticsTypeString(withConversationType conversationType: ConversationType) -> String {
+        return conversationType.analyticsTypeString
     }
     
     public var isBotConversation : Bool {

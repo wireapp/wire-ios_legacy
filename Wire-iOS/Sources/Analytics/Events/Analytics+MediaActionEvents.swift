@@ -186,7 +186,7 @@ public extension Analytics {
     /// User clicked on any action in cursor, giphy button or audio / video call button from toolbar.
     @objc public func tagMediaAction(action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = ["action": action.attributeValue]
-        if let typeAttribute = conversation.analyticsAttribute() {
+        if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
         }
         tagEvent(conversationMediaActionEventName, attributes: attributes)
@@ -194,7 +194,7 @@ public extension Analytics {
     
     @objc public func tagMediaActionCompleted(action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = ["action": action.attributeValue]
-        if let typeAttribute = conversation.analyticsAttribute() {
+        if let typeAttribute = conversation.analyticsTypeString() {
             attributes["with_bot"] = conversation.isBotConversation ? "true" : "false";
             attributes["conversation_type"] = typeAttribute
         }
@@ -224,7 +224,7 @@ public extension Analytics {
     
     @objc public func tagMediaSentPicture(inConversation conversation: ZMConversation, metadata: ImageMetadata) {
         var attributes = [String: String]()
-        if let typeAttribute = conversation.analyticsAttribute() {
+        if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
         }
         
@@ -245,7 +245,7 @@ public extension Analytics {
     
     @objc public func tagMediaOpened(event: ConversationMediaOpenEvent, inConversation conversation: ZMConversation, sentBySelf: Bool) {
         var attributes = ["user": sentBySelf ? "sender" : "receiver"]
-        if let typeAttribute = conversation.analyticsAttribute() {
+        if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
         }
         tagEvent(event.name, attributes: attributes)
@@ -260,7 +260,7 @@ public extension Analytics {
         var attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
                           "duration_actual": self.dynamicType.stringFromTimeInterval(duration)]
         
-        if let typeAttribute = conversation.analyticsAttribute() {
+        if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
         }
         
@@ -279,7 +279,7 @@ public extension Analytics {
     // User starts recording the audio message
     @objc public func tagStartedAudioMessageRecording(inConversation conversation: ZMConversation, type: ConversationMediaRecordingType) {
         var attributes = ["state": type.description]
-        if let typeAttribute = conversation.analyticsAttribute() {
+        if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
         }
         tagEvent(conversationMediaStartedRecordingAudioEventName, attributes: attributes)

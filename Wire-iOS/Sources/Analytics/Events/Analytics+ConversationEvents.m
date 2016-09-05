@@ -78,8 +78,8 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
 {
     [self tagEvent:@"conversation.selected_message" attributes:
         @{@"context"           : NSStringFromSelectionType(type),
-          @"type"              : [ZMMessage analyticsAttributeWithMessageType:messageType],
-          @"conversation_type" : [ZMConversation analyticsAttributeWithConversationType: conversationType]}
+          @"type"              : [ZMMessage analyticsTypeStringWithMessageType:messageType],
+          @"conversation_type" : [ZMConversation analyticsTypeStringWithConversationType: conversationType]}
      ];
 }
 
@@ -93,8 +93,8 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
     
     [self tagEvent:@"conversation.deleted_message" attributes:
         @{@"method"               : NSStringFromMessageDeletionType(messageDeletionType),
-          @"type"                 : [ZMMessage analyticsAttributeWithMessageType:messageType],
-          @"conversation_type"    : [ZMConversation analyticsAttributeWithConversationType: conversationType],
+          @"type"                 : [ZMMessage analyticsTypeStringWithMessageType:messageType],
+          @"conversation_type"    : [ZMConversation analyticsTypeStringWithConversationType: conversationType],
           @"time_elapsed_action"  : [[NSNumber numberWithDouble:timeElapsed] stringValue],
           @"time_elapsed"         : [[TimeIntervalClusterizer messageEditDurationClusterizer] clusterizeTimeInterval:timeElapsed]
           }
@@ -105,7 +105,7 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
 {
     
     [self tagEvent:@"conversation.edited_message" attributes:
-        @{@"conversation_type"    : [ZMConversation analyticsAttributeWithConversationType: conversationType],
+        @{@"conversation_type"    : [ZMConversation analyticsTypeStringWithConversationType: conversationType],
           @"time_elapsed_action"  : [[NSNumber numberWithDouble:timeElapsed] stringValue],
           @"time_elapsed"         : [[TimeIntervalClusterizer messageEditDurationClusterizer] clusterizeTimeInterval:timeElapsed]
        }

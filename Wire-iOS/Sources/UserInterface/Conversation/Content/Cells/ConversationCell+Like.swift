@@ -44,9 +44,8 @@ public extension ConversationCell {
         let reactionType : ReactionType = message.liked ? .Unlike : .Like
         trackReaction(sender, reaction: reactionType)
 
-        ZMUserSession.sharedSession().performChanges { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.message.liked = !strongSelf.message.liked
+        ZMUserSession.sharedSession().performChanges {
+            self.message.liked = !self.message.liked
         }
         
         self.likeButton.setSelected(self.message.liked, animated: true)

@@ -20,7 +20,7 @@ import Foundation
 
 
 extension MessageType {
-    var analyticsAttribute : String {
+    var analyticsTypeString : String {
         switch self {
         case .Unknown:      return "unknown"
         case .Text:         return "text"
@@ -38,13 +38,13 @@ extension MessageType {
 
 extension ZMMessage {
     
-    public class func analyticsAttribute(message: ZMConversationMessage) -> String {
+    public class func analyticsTypeString(message: ZMConversationMessage) -> String {
         let messageType = Message.messageType(message)
-        return analyticsAttribute(withMessageType: messageType)
+        return analyticsTypeString(withMessageType: messageType)
     }
     
-    public class func analyticsAttribute(withMessageType messageType: MessageType) -> String {
-        return messageType.analyticsAttribute
+    public class func analyticsTypeString(withMessageType messageType: MessageType) -> String {
+        return messageType.analyticsTypeString
     }
 }
 

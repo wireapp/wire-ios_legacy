@@ -21,7 +21,7 @@ import Foundation
 import zmessaging
 
 public extension ReactionType {
-    var analyticsAttribute : String {
+    var analyticsTypeString : String {
         switch self {
         case .Undefined:    return "undefined"
         case .Like:         return "like"
@@ -31,7 +31,7 @@ public extension ReactionType {
 }
 
 public extension InteractionMethod {
-    var analyticsAttribute : String {
+    var analyticsTypeString : String {
         switch self {
         case .Undefined:    return "undefined"
         case .Button:       return "button"
@@ -50,14 +50,14 @@ public extension Analytics {
               let zmMessage = message as? ZMMessage
         else { return }
 
-        var attributes = ["type"                       : Message.messageType(message).analyticsAttribute,
-                          "action"                     : reactionType.analyticsAttribute,
-                          "method"                     : method.analyticsAttribute,
+        var attributes = ["type"                       : Message.messageType(message).analyticsTypeString,
+                          "action"                     : reactionType.analyticsTypeString,
+                          "method"                     : method.analyticsTypeString,
                           "with_bot"                   : (conversation.isBotConversation    ? "true"   : "false"),
                           "user"                       : (sender.isSelfUser                 ? "sender" : "receiver"),
                           "reacted_to_last_message"    : (lastMessage == zmMessage          ? "true"   : "false")]
         if let convType = ConversationType.type(conversation) {
-            attributes["conversation_type"] = convType.analyticsAttribute
+            attributes["conversation_type"] = convType.analyticsTypeString
         }
         
         tagEvent("conversation.reacted_to_message", attributes:attributes)
