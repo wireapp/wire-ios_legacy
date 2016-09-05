@@ -97,7 +97,7 @@ extension ZMConversationMessage {
         labelClipView.addSubview(statusLabel)
         
         constrain(self, self.reactionsView, self.statusLabel, self.labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
-            labelClipView.left <= selfView.left
+            labelClipView.left == selfView.left
             labelClipView.centerY == selfView.centerY
             labelClipView.right == selfView.right
             
