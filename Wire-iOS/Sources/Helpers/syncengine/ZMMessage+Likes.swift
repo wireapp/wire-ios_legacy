@@ -28,7 +28,7 @@ extension ZMConversationMessage {
 
     var canBeLiked: Bool {
         let sentOrDelivered = [ZMDeliveryState.Sent, .Delivered].contains(deliveryState)
-        let likableType = Message.isNormalMessage(self)
+        let likableType = Message.isNormalMessage(self) && !Message.isKnockMessage(self)
         return sentOrDelivered && likableType
     }
 
