@@ -92,7 +92,7 @@ import Cartography
             separatorView.bottom == topBar.bottom
             separatorView.right == topBar.right
             separatorView.left == topBar.left
-            separatorView.height == 1
+            separatorView.height == 0.5
 
             titleLabel.center == topBar.center
             titleLabel.trailing <= dismissButton.leading - 4
