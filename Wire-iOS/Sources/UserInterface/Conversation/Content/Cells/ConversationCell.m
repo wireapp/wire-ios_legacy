@@ -330,7 +330,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         shouldBeVisible = NO;
     }
     
-    BOOL showLikeButton = [Message messageCanBeLiked:self.message];
+    BOOL hideLikeButton = !([Message hasLikers:self.message] || self.selected) && self.layoutProperties.alwaysShowDeliveryState;
+    BOOL showLikeButton = [Message messageCanBeLiked:self.message] && !hideLikeButton;
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
@@ -341,11 +342,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
                 self.messageToolboxView.alpha = 1;
             } completion:^(BOOL finished) {
                 if (self.messageToolboxView.alpha == 1) {
-                    if (showLikeButton) {
-                        [UIView animateWithDuration:0.15 animations:^{
-                            self.likeButton.alpha = 1;
-                        }];
-                    }
+                    [UIView animateWithDuration:0.15 animations:^{
+                        self.likeButton.alpha = showLikeButton ? 1 : 0;
+                    }];
                 }
             }];
         }
