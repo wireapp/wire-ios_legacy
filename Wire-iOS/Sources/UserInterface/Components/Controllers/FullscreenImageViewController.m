@@ -473,7 +473,7 @@
 {
     NSData *imageData = self.message.imageMessageData.imageData;
     SavableImage *savableImage = [[SavableImage alloc] initWithData:imageData orientation:self.imageView.image.imageOrientation];
-    [savableImage saveToLibrary:nil];
+    [savableImage saveToLibraryWithCompletion:nil];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated

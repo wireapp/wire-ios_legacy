@@ -34,7 +34,7 @@ import AssetsLibrary
         super.init()
     }
     
-    public func saveToLibrary(completion: ImageSaveCompletion?) {
+    public func saveToLibrary(withCompletion completion: ImageSaveCompletion?) {
         guard !writeInProgess else { return }
         writeInProgess = true
 

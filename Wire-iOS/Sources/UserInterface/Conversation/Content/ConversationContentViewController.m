@@ -510,7 +510,7 @@
 
 - (void)saveImage:(SavableImage *)savableImage
 {
-    [savableImage saveToLibrary:^{
+    [savableImage saveToLibraryWithCompletion:^{
         [self.delegate conversationContentViewControllerDidSaveImage:self];
     }];
 }
