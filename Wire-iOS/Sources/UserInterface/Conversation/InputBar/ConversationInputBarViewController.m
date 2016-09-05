@@ -563,7 +563,7 @@
 
 - (void)bounceCameraIcon;
 {
-    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.2, 1.2);
+    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.3, 1.3);
     
     dispatch_block_t scaleUp = ^{
         self.photoButton.transform = scaleTransform;
