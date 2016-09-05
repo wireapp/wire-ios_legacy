@@ -335,8 +335,8 @@
 {
     id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
     BOOL isFile = [Message isFileTransferMessage:message],
-        isImage = [Message isImageMessage:message],
-        isLocation = [Message isLocationMessage:message];
+         isImage = [Message isImageMessage:message],
+         isLocation = [Message isLocationMessage:message];
     
     if (! isFile && ! isImage && ! isLocation) {
         return;
@@ -738,15 +738,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
-    BOOL isFile = [Message isFileTransferMessage:message];
-    BOOL isImage = [Message isImageMessage:message];
-    
-    if (! isFile && ! isImage) {
-        [self presentDetailsForMessageAtIndexPath:indexPath];
-    }
-    
+{    
     // Make table view to update cells with animation
     [tableView beginUpdates];
     [tableView endUpdates];
