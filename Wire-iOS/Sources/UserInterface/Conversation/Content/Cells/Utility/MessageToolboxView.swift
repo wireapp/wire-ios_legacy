@@ -81,6 +81,7 @@ extension ZMConversationMessage {
         labelClipView.clipsToBounds = true
         labelClipView.isAccessibilityElement = true
         labelClipView.translatesAutoresizingMaskIntoConstraints = false
+        labelClipView.userInteractionEnabled = true
         self.addSubview(labelClipView)
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +94,6 @@ extension ZMConversationMessage {
                                       NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed)]
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
                                             NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed).colorWithAlphaComponent(0.5)]
-        
         labelClipView.addSubview(statusLabel)
         
         constrain(self, self.reactionsView, self.statusLabel, self.labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
@@ -128,11 +128,13 @@ extension ZMConversationMessage {
             self.configureLikedState(message)
             self.layoutIfNeeded()
             self.configureReactions(message, animated: animated)
+            self.tapGestureRecogniser.enabled = true
         }
         else {
             self.reactionsView.hidden = true
             self.layoutIfNeeded()
             self.configureTimestamp(message, animated: animated)
+            self.tapGestureRecogniser.enabled = false
         }
     }
     
