@@ -38,6 +38,8 @@
 #import "UIView+Borders.h"
 
 
+NSString * const ImageMessageCellDidSaveImageNotificationName = @"ImageMessageCellDidSaveImageNotificationName";
+
 
 @interface Message (DataIdentifier)
 
@@ -71,6 +73,7 @@
 @property (nonatomic, strong) IconButton *fullScreenButton;
 @property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@property (nonatomic) SavableImage *savableImage;
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic, strong) id<MediaAsset> image;
@@ -330,9 +333,18 @@ static ImageCache *imageCache(void)
         [self.loadingView stopProgressAnimation];
         [self.fullImageView setMediaAsset:image];
         [self showImageView:self.fullImageView];
+        [self updateSavableImage];
     } else {
+        self.savableImage = nil;
         [self.fullImageView setMediaAsset:nil];
     }
+}
+
+- (void)updateSavableImage
+{
+    NSData *data = self.message.imageMessageData.mediumData;
+    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
+    self.savableImage = [[SavableImage alloc] initWithData:data orientation:orientation];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -462,13 +474,9 @@ static ImageCache *imageCache(void)
 
 - (void)saveImage
 {
-    NSData *data = self.message.imageMessageData.mediumData;
-    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
-    SavableImage *savableImage = [[SavableImage alloc] initWithData:data orientation:orientation completion:^{
-        [NSNotificationCenter.defaultCenter postNotificationName:@"BounceCameraIcon" object:nil];
-    }];
-
-    [savableImage saveToLibrary];
+    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
+        [self.delegate conversationCell:self didSelectAction:ConversationCellActionSave];
+    }
 }
 
 - (MessageType)messageType;

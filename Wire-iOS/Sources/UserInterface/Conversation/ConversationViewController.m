@@ -610,6 +610,11 @@
     }
 }
 
+- (void)conversationContentViewControllerDidSaveImage:(ConversationContentViewController *)contentViewController
+{
+    [self.inputBarController bounceCameraIcon];
+}
+
 @end
 
 

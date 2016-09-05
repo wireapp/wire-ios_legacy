@@ -48,6 +48,8 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(ZMMessage *)message;
 
+- (void)conversationContentViewControllerDidSaveImage:(ConversationContentViewController *)contentViewController;
+
 - (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell;
 
 @optional

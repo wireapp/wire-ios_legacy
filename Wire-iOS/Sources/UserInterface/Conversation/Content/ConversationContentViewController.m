@@ -62,6 +62,7 @@
 #import "TextMessageCell.h"
 #import "PingCell.h"
 #import "StopWatch.h"
+#import "ImageMessageCell.h"
 
 #import "SketchViewController.h"
 #import "AnalyticsTracker+Sketchpad.h"
@@ -507,6 +508,13 @@
     [Analytics shared].sessionSummary.imageContentsClicks++;
 }
 
+- (void)saveImage:(SavableImage *)savableImage
+{
+    [savableImage saveToLibrary:^{
+        [self.delegate conversationContentViewControllerDidSaveImage:self];
+    }];
+}
+
 - (void)fullscreenImageViewController:(FullscreenImageViewController *)controller wantsEditImageMessage:(id<ZMConversationMessage>)message
 {
     [controller dismissViewControllerAnimated:NO completion:nil];
@@ -802,8 +810,12 @@
             break;
         case ConversationCellActionSave:
         {
-            self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
-            [self openDocumentControllerForMessage:cell.message atIndexPath:[self.tableView indexPathForCell:cell] withPreview:NO];
+            if ([cell isKindOfClass:ImageMessageCell.class]) {
+                [self saveImage:[(ImageMessageCell *)cell savableImage]];
+            } else {
+                self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                [self openDocumentControllerForMessage:cell.message atIndexPath:[self.tableView indexPathForCell:cell] withPreview:NO];
+            }
         }
             break;
         case ConversationCellActionEdit:

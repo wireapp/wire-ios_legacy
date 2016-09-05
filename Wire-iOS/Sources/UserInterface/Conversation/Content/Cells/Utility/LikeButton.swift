@@ -45,7 +45,6 @@ public class LikeButton: IconButton {
             imageView.superview!.addSubview(animationImageView)
 
             imageView.alpha = 0
-            
             if selected { // gets like
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransformMakeScale(6.3, 6.3)

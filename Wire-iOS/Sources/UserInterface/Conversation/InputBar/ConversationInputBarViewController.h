@@ -55,5 +55,6 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, readonly) UIViewController *inputController;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
+- (void)bounceCameraIcon;
 
 @end
