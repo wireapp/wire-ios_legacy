@@ -269,7 +269,8 @@ public class FileTransferCell: ConversationCell {
             self.delegate?.conversationCell?(self, didSelectAction: .Present)
         case .Downloaded:
             self.delegate?.conversationCell?(self, didSelectAction: .Present)
-        default:
+        case .Uploaded:
+            self.delegate?.conversationCell?(self, didSelectAction: .Present)
             break
         }
     }

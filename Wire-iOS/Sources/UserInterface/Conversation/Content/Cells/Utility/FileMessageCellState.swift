@@ -117,6 +117,7 @@ public enum FileMessageCellState {
         [.Uploading:               (.Determ,   .Cancel, normalColor),
          .Downloading:             (.Determ,   .Cancel, normalColor),
          .Downloaded:              (.None,     .None,   clearColor),
+         .Uploaded:                (.None,     .None,   clearColor),
          .FailedUpload:            (.None,     .Redo,   failureColor),
          .CancelledUpload:         (.None,     .Redo,   normalColor),
          .FailedDownload:          (.None,     .Save,   failureColor),]
