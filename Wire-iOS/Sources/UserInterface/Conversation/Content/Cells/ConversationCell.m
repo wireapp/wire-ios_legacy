@@ -469,7 +469,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
     
     UIMenuController *menuController = UIMenuController.sharedMenuController;
-    NSMutableArray <UIMenuItem *> *items = menuConfigurationProperties.additionalItems.mutableCopy;
+    
+    NSMutableArray <UIMenuItem *> *items = [NSMutableArray array];
+    [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
 
     if ([Message messageCanBeLiked:self.message]) {
         NSString *likeTitleKey = [Message isLikedMessage:self.message] ? @"content.message.unlike" : @"content.message.like";
