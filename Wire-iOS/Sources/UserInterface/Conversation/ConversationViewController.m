@@ -65,7 +65,6 @@
 #import "AddContactsViewController.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
-#import "UIView+MTAnimation.h"
 
 #import "UIColor+WAZExtensions.h"
 #import "KeyboardFrameObserver+iOS.h"
@@ -611,7 +610,9 @@
     }
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController performImageSaveAnimation:(UIView *)snapshotView sourceRect:(CGRect)sourceRect
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
+                performImageSaveAnimation:(UIView *)snapshotView
+                               sourceRect:(CGRect)sourceRect
 {
     [self.view addSubview:snapshotView];
     snapshotView.frame = [self.view convertRect:sourceRect fromView:contentViewController.view];
@@ -619,11 +620,11 @@
     UIView *targetView = self.inputBarController.photoButton;
     CGPoint targetCenter = [self.view convertPoint:targetView.center fromView:targetView.superview];
     
-    [UIView mt_animateWithViews:@[snapshotView] duration:0.55 timingFunction:kMTEaseInExpo animations:^{
+    [UIView animateWithDuration:0.33 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         snapshotView.center = targetCenter;
         snapshotView.alpha = 0;
         snapshotView.transform = CGAffineTransformConcat(snapshotView.transform, CGAffineTransformMakeScale(0.01, 0.01));
-    } completion:^{
+    } completion:^(__unused BOOL finished) {
         [snapshotView removeFromSuperview];
         [self.inputBarController bounceCameraIcon];
     }];
