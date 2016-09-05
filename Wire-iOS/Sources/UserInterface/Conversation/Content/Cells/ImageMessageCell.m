@@ -38,7 +38,6 @@
 #import "UIView+Borders.h"
 
 
-NSString * const ImageMessageCellDidSaveImageNotificationName = @"ImageMessageCellDidSaveImageNotificationName";
 
 
 @interface Message (DataIdentifier)
