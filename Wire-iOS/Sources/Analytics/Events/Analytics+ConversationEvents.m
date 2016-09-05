@@ -19,6 +19,7 @@
 
 #import "Analytics+ConversationEvents.h"
 #import "TimeIntervalClusterizer.h"
+#import "Wire-Swift.h"
 
 
 NSString *NSStringFromSelectionType(SelectionType selectionType);
@@ -42,44 +43,6 @@ NSString *NSStringFromMessageActionType(MessageActionType actionType)
             return @"delete";
         case MessageActionTypeEdit:
             return @"edit";
-    }
-}
-
-NSString *NSStringFromMessageType(MessageType messageType);
-NSString *NSStringFromMessageType(MessageType messageType)
-{
-    switch (messageType) {
-        case MessageTypeUnknown:
-            return @"unknown";
-        case MessageTypeText:
-            return @"text";
-        case MessageTypeImage :
-            return @"image";
-        case MessageTypeAudio :
-            return @"audio";
-        case MessageTypeVideo :
-            return @"video";
-        case MessageTypeRichMedia:
-            return @"rich_media";
-        case MessageTypePing:
-            return @"ping";
-        case MessageTypeFile:
-            return @"file";
-        case MessageTypeSystem:
-            return @"system";
-        case MessageTypeLocation:
-            return @"location";
-    }
-}
-
-NSString *NSStringFromConversationType(ConversationType conversationType);
-NSString *NSStringFromConversationType(ConversationType conversationType)
-{
-    switch (conversationType) {
-        case ConversationTypeOneToOne:
-            return @"one_to_one";
-        case ConversationTypeGroup:
-            return @"group";
     }
 }
 
@@ -115,8 +78,8 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
 {
     [self tagEvent:@"conversation.selected_message" attributes:
         @{@"context"           : NSStringFromSelectionType(type),
-          @"type"              : NSStringFromMessageType(messageType),
-          @"conversation_type" : NSStringFromConversationType(conversationType)}
+          @"type"              : [ZMMessage analyticsAttributeWithMessageType:messageType],
+          @"conversation_type" : [ZMConversation analyticsAttributeWithConversationType: conversationType]}
      ];
 }
 
@@ -130,8 +93,8 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
     
     [self tagEvent:@"conversation.deleted_message" attributes:
         @{@"method"               : NSStringFromMessageDeletionType(messageDeletionType),
-          @"type"                 : NSStringFromMessageType(messageType),
-          @"conversation_type"    : NSStringFromConversationType(conversationType),
+          @"type"                 : [ZMMessage analyticsAttributeWithMessageType:messageType],
+          @"conversation_type"    : [ZMConversation analyticsAttributeWithConversationType: conversationType],
           @"time_elapsed_action"  : [[NSNumber numberWithDouble:timeElapsed] stringValue],
           @"time_elapsed"         : [[TimeIntervalClusterizer messageEditDurationClusterizer] clusterizeTimeInterval:timeElapsed]
           }
@@ -142,7 +105,7 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
 {
     
     [self tagEvent:@"conversation.edited_message" attributes:
-        @{@"conversation_type"    : NSStringFromConversationType(conversationType),
+        @{@"conversation_type"    : [ZMConversation analyticsAttributeWithConversationType: conversationType],
           @"time_elapsed_action"  : [[NSNumber numberWithDouble:timeElapsed] stringValue],
           @"time_elapsed"         : [[TimeIntervalClusterizer messageEditDurationClusterizer] clusterizeTimeInterval:timeElapsed]
        }

@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
 
 public extension ConversationCell {
@@ -38,16 +38,32 @@ public extension ConversationCell {
         self.likeButton.setSelected(message.liked, animated: false)
     }
     
-    @objc public func likeMessage(button: AnyObject!) {
+    @objc public func likeMessage(sender: AnyObject!) {
         guard message.canBeLiked else { return }
         self.messageToolboxView.forceShowTimestamp = false
+        let reactionType : ReactionType = message.liked ? .Unlike : .Like
+        trackReaction(sender, reaction: reactionType)
 
-        ZMUserSession.sharedSession().performChanges {
-            self.message.liked = !self.message.liked
+        ZMUserSession.sharedSession().performChanges { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.message.liked = !strongSelf.message.liked
         }
         
         self.likeButton.setSelected(self.message.liked, animated: true)
         self.messageToolboxView.configureForMessage(self.message, animated: true)
     }
     
+    func trackReaction(sender: AnyObject, reaction: ReactionType){
+        var interactionMethod = InteractionMethod.Undefined
+        if sender is LikeButton {
+            interactionMethod = .Button
+        }
+        if sender is UIMenuItem {
+            interactionMethod = .Menu
+        }
+        if sender is UITapGestureRecognizer {
+            interactionMethod = .DoubleTap
+        }
+        Analytics.shared()?.tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
+    }
 }
