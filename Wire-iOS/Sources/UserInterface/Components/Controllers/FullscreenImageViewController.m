@@ -258,7 +258,7 @@
     [self.topOverlay addConstraintForHeight:[WAZUIMagic floatForIdentifier:@"one_message.top_gradient_height"]];
 
     [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
-    [self.closeButton addConstraintForRightMargin:[WAZUIMagic cgFloatForIdentifier:@"one_message.overlay_right_margin"] relativeToView:self.topOverlay];
+    [self.closeButton addConstraintForRightMargin:8 relativeToView:self.topOverlay];
     [self.closeButton autoSetDimension:ALDimensionWidth toSize:32];
     [self.closeButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.closeButton];
 }
