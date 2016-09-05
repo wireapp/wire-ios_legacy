@@ -205,11 +205,13 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)prepareForReuse
 {
+    self.message = nil;
+    [self.messageToolboxView prepareForReuse];
+    
     [super prepareForReuse];
     
     self.topMarginConstraint.constant = 0;
     self.authorImageTopMarginConstraint.constant = 0;
-    self.message = nil;
     self.beingEdited = NO;
 }
 

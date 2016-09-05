@@ -58,6 +58,7 @@ extension ZMMessage {
     private var previousLayoutBounds: CGRect = CGRectZero
     
     private(set) weak var message: ZMMessage?
+    
     public var forceShowTimestamp: Bool = false {
         didSet {
             guard let message = self.message else {
@@ -236,6 +237,10 @@ extension ZMMessage {
         if let message = self.message where !message.likers().isEmpty {
             self.delegate?.messageToolboxViewDidSelectLikers(self)
         }
+    }
+    
+    @objc func prepareForReuse() {
+        self.message = nil
     }
 }
 
