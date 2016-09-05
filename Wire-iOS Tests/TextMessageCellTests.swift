@@ -112,43 +112,50 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
+
+    func testThatItRendersATextMessage_LikedReceiver() {
+        let message = mockMessage(state: .Sent)
+        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [otherUsers.first!]]
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersATextMessage_LikedSender() {
+        let message = mockMessage(state: .Sent)
+        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersATextMessage_LikedSelected() {
+        let message = mockMessage(state: .Sent)
+        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.setSelected(true, animated: false)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersATextMessage_LikedByTwoPeople() {
+        let message = mockMessage(state: .Sent)
+        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: Array(otherUsers[0..<2])]
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
     
-    // TODO LIKE
-//    func testThatItRendersATextMessage_LikedReceiver() {
-//        let message = mockMessage(state: .Sent)
-//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: [MockUser.mockUsers().first as! ZMUser]]
-//        sut.configureForMessage(message, layoutProperties: layoutProperties)
-//        verify(view: sut.prepareForSnapshot())
-//    }
-//    
-//    func testThatItRendersATextMessage_LikedSender() {
-//        let message = mockMessage(state: .Sent)
-//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: [MockUser.mockSelfUser() as! ZMUser]]
-//        sut.configureForMessage(message, layoutProperties: layoutProperties)
-//        verify(view: sut.prepareForSnapshot())
-//    }
-//    
-//    func testThatItRendersATextMessage_LikedSelected() {
-//        let message = mockMessage(state: .Sent)
-//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: []]
-//        sut.configureForMessage(, layoutProperties: layoutProperties)
-//        verify(view: sut.prepareForSnapshot())
-//    }
-//    
-//    func testThatItRendersATextMessage_LikedByTwoPeople() {
-//        let message = mockMessage(state: .Sent)
-//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: []]
-//        sut.configureForMessage(, layoutProperties: layoutProperties)
-//        verify(view: sut.prepareForSnapshot())
-//    }
-//    
-//    func testThatItRendersATextMessage_LikedByALotOfPeople() {
-//        let message = mockMessage(state: .Sent)
-//        message.backingUsersReaction = [ZMMessgeReaction.Like.rawValue: []]
-//        sut.configureForMessage(, layoutProperties: layoutProperties)
-//        verify(view: sut.prepareForSnapshot())
-//    }
-//    
+    func testThatItRendersATextMessage_LikedByTwoPeopleIncludingSelf() {
+        let message = mockMessage(state: .Sent)
+        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + [otherUsers.first!]]
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersATextMessage_LikedByALotOfPeople() {
+        let message = mockMessage(state: .Sent)
+        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + otherUsers]
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
     // MARK: - Helper
     
     func mockMessage(text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .Delivered) -> MockMessage {
@@ -157,6 +164,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         message.serverTimestamp = NSDate(timeIntervalSince1970: 1234567230)
         message.updatedAt = edited ? NSDate(timeIntervalSince1970: 0) : nil
         return message
+    }
+    
+    var selfUser: ZMUser {
+        return (MockUser.mockSelfUser() as AnyObject) as! ZMUser
+    }
+
+    var otherUsers: [ZMUser] {
+        return MockUser.mockUsers().map { $0 as! ZMUser }
     }
 
 }
