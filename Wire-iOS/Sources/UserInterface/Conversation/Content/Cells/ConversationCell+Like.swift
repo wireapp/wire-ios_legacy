@@ -34,20 +34,21 @@ public extension ConversationCell {
         self.addSubview(self.likeButton)
     }
     
-    @objc public func configureReactionsForMessage(message: ZMMessage) {
+    @objc public func configureLikeButtonForMessage(message: ZMMessage) {
         self.likeButton.setSelected(message.liked, animated: false)
     }
     
     @objc public func likeMessage(sender: AnyObject!) {
         guard message.canBeLiked else { return }
+        
         let reactionType : ReactionType = message.liked ? .Unlike : .Like
         trackReaction(sender, reaction: reactionType)
-        self.messageToolboxView.setForceShowTimestamp(false, animated: false)
 
         ZMUserSession.sharedSession().performChanges {
-            self.message.liked = !self.message.liked
+            let liked = !self.message.liked
+            self.message.liked = liked
+            self.selected = !liked
             self.likeButton.setSelected(self.message.liked, animated: true)
-            self.messageToolboxView.configureForMessage(self.message, animated: true)
         }
     }
     

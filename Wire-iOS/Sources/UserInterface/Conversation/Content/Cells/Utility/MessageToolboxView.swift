@@ -62,14 +62,6 @@ extension ZMConversationMessage {
     
     private var forceShowTimestamp: Bool = false
     
-    @objc public func setForceShowTimestamp(forceShowTimestamp: Bool, animated: Bool) {
-        guard let message = self.message else {
-            return
-        }
-        self.forceShowTimestamp = forceShowTimestamp
-        self.configureForMessage(message, animated: animated)
-    }
-    
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -122,7 +114,8 @@ extension ZMConversationMessage {
         return CGSizeMake(UIViewNoIntrinsicMetric, 28)
     }
     
-    public func configureForMessage(message: ZMConversationMessage, animated: Bool = false) {
+    public func configureForMessage(message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
+        self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         if !self.forceShowTimestamp && message.hasReactions() {
             self.reactionsView.hidden = false
@@ -274,7 +267,7 @@ extension ZMConversationMessage {
         
         self.previousLayoutBounds = self.bounds
         
-        self.configureForMessage(message)
+        self.configureForMessage(message, forceShowTimestamp: self.forceShowTimestamp)
     }
     
     // MARK: - Events
