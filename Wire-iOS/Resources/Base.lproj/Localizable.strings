@@ -123,6 +123,9 @@
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
 "conversation.invite_more_people.button_title" = "Add People";
 
+// Conversation names
+"conversation.displayname.emptygroup" = "Empty group conversation";
+
 "conversation.input_bar.verified" = "Verified";
 "conversation.input_bar.placeholder" = "Type a message";
 
