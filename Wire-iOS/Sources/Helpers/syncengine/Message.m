@@ -100,7 +100,7 @@
 
 + (BOOL)isNormalMessage:(id<ZMConversationMessage>)message
 {
-    return [self isTextMessage:message] || [self isImageMessage:message] || [self isKnockMessage:message] || [self isFileTransferMessage:message] || [self isVideoMessage:message] || [self isAudioMessage:message] || [self isLocationMessage:message] ;
+    return [self isTextMessage:message] || [self isImageMessage:message] || [self isKnockMessage:message] || [self isFileTransferMessage:message] || [self isVideoMessage:message] || [self isAudioMessage:message] || [self isLocationMessage:message];
 }
 
 + (BOOL)isConnectionRequestMessage:(id<ZMConversationMessage>)message

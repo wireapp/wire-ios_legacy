@@ -27,7 +27,9 @@ public enum ZMMessageReaction: String {
 extension ZMConversationMessage {
 
     var canBeLiked: Bool {
-        return [ZMDeliveryState.Sent, .Delivered].contains(deliveryState)
+        let sentOrDelivered = [ZMDeliveryState.Sent, .Delivered].contains(deliveryState)
+        let likableType = Message.isNormalMessage(self)
+        return sentOrDelivered && likableType
     }
 
     var liked: Bool {
