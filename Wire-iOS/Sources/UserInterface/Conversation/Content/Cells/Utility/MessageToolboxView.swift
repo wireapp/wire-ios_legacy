@@ -92,9 +92,8 @@ extension ZMMessage {
         constrain(self, self.reactionsView, self.statusLabel) { selfView, reactionsView, statusLabel in
             statusLabel.left <= selfView.left
             statusLabel.centerY == selfView.centerY
-            statusLabel.right <= selfView.right
+            statusLabel.right == selfView.right
             
-            reactionsView.left >= statusLabel.right
             reactionsView.right == selfView.right
             reactionsView.centerY == selfView.centerY
         }
@@ -145,17 +144,23 @@ extension ZMMessage {
     
     private func configureInfoLabel(message: ZMMessage) {
         if !self.forceShowTimestamp && message.hasReactions() {
-            self.configureReactions(message)
-            self.configureLikedState(message)
             self.reactionsView.hidden = false
+            self.configureLikedState(message)
+            self.layoutIfNeeded()
+            self.configureReactions(message)
         }
         else {
-            self.configureTimestamp(message)
             self.reactionsView.hidden = true
+            self.layoutIfNeeded()
+            self.configureTimestamp(message)
         }
     }
     
     private func configureReactions(message: ZMMessage) {
+        guard !CGRectEqualToRect(self.bounds, CGRectZero) else {
+            return
+        }
+        
         let likers = message.likers()
         
         let likersNames = likers.map { user in
@@ -163,14 +168,18 @@ extension ZMMessage {
         }.joinWithSeparator(", ")
         
         let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor]
+        let likersNamesAttributedString = likersNames && attributes
+
+        let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
+        let targetSize = CGSizeMake(10000, CGFloat.max)
+        let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
         
-        let labelSize = (likersNames as NSString).sizeWithAttributes(attributes)
-        if labelSize.width > self.bounds.size.width {
+        if labelSize.width > self.statusLabel.bounds.size.width - self.reactionsView.bounds.size.width {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             statusLabel.attributedText = likersCount && attributes
         }
         else {
-            statusLabel.attributedText = likersNames && attributes
+            statusLabel.attributedText = likersNamesAttributedString
         }
         
         statusLabel.accessibilityLabel = statusLabel.attributedText.string
@@ -221,7 +230,7 @@ extension ZMMessage {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        guard let message = self.message where CGRectEqualToRect(self.bounds, self.previousLayoutBounds) else {
+        guard let message = self.message where !CGRectEqualToRect(self.bounds, self.previousLayoutBounds) else {
             return
         }
         
