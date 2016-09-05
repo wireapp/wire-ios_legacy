@@ -10,7 +10,7 @@ def ios_pods
     pod 'ARCollectionViewMasonryLayout', :git => 'https://github.com/wireapp/ARCollectionViewMasonryLayout', :tag => '2.3.0'
     pod 'SCSiriWaveformView', :git => 'https://github.com/wireapp/SCSiriWaveformView', :tag => 'v1.0.3'
     pod 'FLAnimatedImage', :git => 'https://github.com/wireapp/FLAnimatedImage', :tag => '1.0.12'
-    pod 'MTAnimation', :git => 'https://github.com/wireapp/MTAnimation', :tag => '1.2.2-wire'
+    pod 'MTAnimation', :git => 'https://github.com/wireapp/MTAnimation', :tag => '1.2.2-crash-fix'
 end
     
     
