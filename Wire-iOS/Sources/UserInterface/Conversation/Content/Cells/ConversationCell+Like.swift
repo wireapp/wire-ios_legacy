@@ -40,16 +40,15 @@ public extension ConversationCell {
     
     @objc public func likeMessage(sender: AnyObject!) {
         guard message.canBeLiked else { return }
-        self.messageToolboxView.forceShowTimestamp = false
         let reactionType : ReactionType = message.liked ? .Unlike : .Like
         trackReaction(sender, reaction: reactionType)
+        self.messageToolboxView.setForceShowTimestamp(false, animated: false)
 
         ZMUserSession.sharedSession().performChanges {
             self.message.liked = !self.message.liked
+            self.likeButton.setSelected(self.message.liked, animated: true)
+            self.messageToolboxView.configureForMessage(self.message, animated: true)
         }
-        
-        self.likeButton.setSelected(self.message.liked, animated: true)
-        self.messageToolboxView.configureForMessage(self.message, animated: true)
     }
     
     func trackReaction(sender: AnyObject, reaction: ReactionType){

@@ -60,13 +60,14 @@ extension ZMConversationMessage {
     
     private(set) weak var message: ZMConversationMessage?
     
-    public var forceShowTimestamp: Bool = false {
-        didSet {
-            guard let message = self.message else {
-                return
-            }
-            self.configureForMessage(message)
+    private var forceShowTimestamp: Bool = false
+    
+    @objc public func setForceShowTimestamp(forceShowTimestamp: Bool, animated: Bool) {
+        guard let message = self.message else {
+            return
         }
+        self.forceShowTimestamp = forceShowTimestamp
+        self.configureForMessage(message, animated: animated)
     }
     
     override init(frame: CGRect) {
@@ -97,7 +98,7 @@ extension ZMConversationMessage {
         labelClipView.addSubview(statusLabel)
         
         constrain(self, self.reactionsView, self.statusLabel, self.labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
-            labelClipView.left <= selfView.left
+            labelClipView.left == selfView.left
             labelClipView.centerY == selfView.centerY
             labelClipView.right == selfView.right
             
