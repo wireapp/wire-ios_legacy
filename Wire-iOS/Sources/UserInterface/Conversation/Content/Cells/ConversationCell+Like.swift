@@ -44,10 +44,9 @@ public extension ConversationCell {
 
         ZMUserSession.sharedSession().performChanges {
             self.message.liked = !self.message.liked
+            self.likeButton.setSelected(self.message.liked, animated: true)
+            self.messageToolboxView.configureForMessage(self.message, animated: true)
         }
-        
-        self.likeButton.setSelected(self.message.liked, animated: true)
-        self.messageToolboxView.configureForMessage(self.message, animated: true)
     }
     
 }
