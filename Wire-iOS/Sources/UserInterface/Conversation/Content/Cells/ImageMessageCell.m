@@ -176,6 +176,7 @@ static ImageCache *imageCache(void)
     self.imageViewContainer = [[UIView alloc] init];
     self.imageViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
     self.imageViewContainer.isAccessibilityElement = YES;
+    self.imageViewContainer.accessibilityTraits = UIAccessibilityTraitImage;
     [self.messageContentView addSubview:self.imageViewContainer];
         
     self.fullImageView = [[FLAnimatedImageView alloc] init];
@@ -188,7 +189,6 @@ static ImageCache *imageCache(void)
     [self.imageViewContainer addSubview:self.loadingView];
   
     self.accessibilityIdentifier = @"ImageCell";
-    
     self.loadingView.hidden = NO;
     
     self.sketchButton = [IconButton iconButtonCircularLight];
@@ -354,7 +354,8 @@ static ImageCache *imageCache(void)
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
+    [self updateAccessibilityElements];
+
     dispatch_block_t changeBlock = ^{
         self.sketchButton.alpha = self.selected ? 1 : 0;
         self.fullScreenButton.alpha = self.selected ? 1 : 0;
@@ -377,6 +378,16 @@ static ImageCache *imageCache(void)
 - (void)recycleImage
 {
     self.image = nil;
+}
+
+- (void)updateAccessibilityElements
+{
+    NSMutableArray *elements = @[self.imageViewContainer].mutableCopy;
+    if (self.selected) {
+        [elements addObjectsFromArray:@[self.sketchButton, self.fullScreenButton, self.imageViewContainer]];
+    }
+
+    self.accessibilityElements = elements;
 }
 
 #pragma mark - Actions
