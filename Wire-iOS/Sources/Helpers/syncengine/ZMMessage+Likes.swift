@@ -21,7 +21,7 @@ import Foundation
 import zmessaging
 
 public enum ZMMessageReaction: String {
-    case Like = "💖"
+    case Like = "❤️"
 }
 
 extension ZMConversationMessage {
@@ -39,8 +39,12 @@ extension ZMConversationMessage {
 
     var liked: Bool {
         set {
-            let reaction: String? = newValue ? ZMMessageReaction.Like.rawValue : .None
-            ZMMessage.addReaction(reaction, toMessage: self)
+            if newValue {
+                ZMMessage.addReaction(ZMMessageReaction.Like.rawValue, toMessage: self)
+            }
+            else {
+                ZMMessage.removeReaction(onMessage: self)
+            }
         }
         get {
             return likers().contains(.selfUser())
