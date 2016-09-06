@@ -840,7 +840,7 @@
                     }
                 } else {
                     // Select if necessary to prevent message from collapsing
-                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message) {
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message && ![Message hasReactions:cell.message]) {
                         [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                     }
