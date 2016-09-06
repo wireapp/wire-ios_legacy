@@ -513,7 +513,6 @@
     [cell.savableImage saveToLibraryWithCompletion:^{
         UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
         snapshot.translatesAutoresizingMaskIntoConstraints = YES;
-        snapshot.transform = CGAffineTransformInvert(self.tableView.transform); // UpsideDownTableView
         CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
         [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
     }];
