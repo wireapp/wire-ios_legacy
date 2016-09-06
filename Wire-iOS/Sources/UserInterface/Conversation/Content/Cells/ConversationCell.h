@@ -37,7 +37,8 @@ typedef NS_ENUM(NSUInteger, ConversationCellAction) {
     ConversationCellActionPresent,
     ConversationCellActionSave,
     ConversationCellActionEdit,
-    ConversationCellActionSketch
+    ConversationCellActionSketch,
+    ConversationCellActionLike
 };
 
 extern const CGFloat ConversationCellSelectedOpacity;

@@ -623,7 +623,7 @@
     [UIView animateWithDuration:0.33 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         snapshotView.center = targetCenter;
         snapshotView.alpha = 0;
-        snapshotView.transform = CGAffineTransformConcat(snapshotView.transform, CGAffineTransformMakeScale(0.01, 0.01));
+        snapshotView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(__unused BOOL finished) {
         [snapshotView removeFromSuperview];
         [self.inputBarController bounceCameraIcon];

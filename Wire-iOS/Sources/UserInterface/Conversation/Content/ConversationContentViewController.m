@@ -513,7 +513,6 @@
     [cell.savableImage saveToLibraryWithCompletion:^{
         UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
         snapshot.translatesAutoresizingMaskIntoConstraints = YES;
-        snapshot.transform = CGAffineTransformInvert(self.tableView.transform); // UpsideDownTableView
         CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
         [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
     }];
@@ -823,6 +822,30 @@
         case ConversationCellActionSketch:
         {
             [self openSketchForMessage:cell.message];
+        }
+            break;
+        case ConversationCellActionLike:
+        {
+            BOOL liked = ![Message isLikedMessage:cell.message];
+            
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                [Message setLikedMessage:cell.message liked:liked];
+                
+                if (liked) {
+                    // Deselect if necessary to show list of likers
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                    }
+                } else {
+                    // Select if necessary to prevent message from collapsing
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    }
+                }
+            }];
         }
             break;
     }

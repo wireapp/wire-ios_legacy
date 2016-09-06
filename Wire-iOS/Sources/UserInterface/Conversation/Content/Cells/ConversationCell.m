@@ -294,8 +294,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.authorLabel.hidden                      = ! self.layoutProperties.showSender;
     self.authorImageContainer.hidden             = ! self.layoutProperties.showSender;
     self.burstTimestampHeightConstraint.active   = ! self.layoutProperties.showBurstTimestamp;
-    
-    [self updateToolboxVisibilityAnimated:NO];
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
@@ -312,11 +310,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self updateBurstTimestamp];
     }
     
-    [self configureReactionsForMessage:message];
+    [self configureLikeButtonForMessage:message];
     
-    [self.messageToolboxView configureForMessage:message animated:NO];
-    [self.messageToolboxView setForceShowTimestamp:self.selected animated:NO];
     [self updateConstraintConstants];
+    [self updateToolboxVisibilityAnimated:NO];
 }
 
 - (void)updateToolboxVisibilityAnimated:(BOOL)animated
@@ -337,9 +334,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     self.toolboxHeightConstraint.active = ! shouldBeVisible;
     
+    if (shouldBeVisible) {
+        [self.messageToolboxView configureForMessage:self.message forceShowTimestamp:self.selected animated:animated];
+    }
+    
     if (animated) {
         if (shouldBeVisible) {
-            [self.messageToolboxView configureForMessage:self.message animated:NO];
             [UIView animateWithDuration:0.35 animations:^{
                 self.messageToolboxView.alpha = 1;
             } completion:^(BOOL finished) {
@@ -531,7 +531,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    [self.messageToolboxView setForceShowTimestamp:selected animated:YES];
     [self updateToolboxVisibilityAnimated:YES];
 }
 
@@ -552,21 +551,17 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
-    if (change.deliveryStateChanged || change.reactionsChanged) {
-        [self.messageToolboxView setForceShowTimestamp:NO animated:NO];
-    }
-    
     if (change.reactionsChanged) {
-        [self configureReactionsForMessage:change.message];
+        [self configureLikeButtonForMessage:change.message];
     }
     
     if (change.userChangeInfo.nameChanged || change.senderChanged) {
         [self updateSenderAndSenderImage:change.message];
     }
     
-    [self updateToolboxVisibilityAnimated:YES];
+    [self updateToolboxVisibilityAnimated:change.reactionsChanged];
     
-    return change.reactionsChanged || (change.deliveryStateChanged);
+    return change.reactionsChanged || change.deliveryStateChanged;
 }
 
 @end

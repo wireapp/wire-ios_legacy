@@ -131,8 +131,8 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     func testThatItRendersATextMessage_LikedSelected() {
         let message = mockMessage(state: .Sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
         sut.setSelected(true, animated: false)
+        sut.configureForMessage(message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
