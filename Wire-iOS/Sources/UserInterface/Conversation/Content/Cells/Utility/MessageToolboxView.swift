@@ -164,9 +164,7 @@ extension ZMConversationMessage {
             self.reactionsView.alpha = show ? 1 : 0
         }
 
-        guard animated else { return animations() }
-
-        UIView.animateWithDuration(0.2, animations: animations) { _ in
+        UIView.animateWithDuration(animated ? 0.2 : 0, animations: animations) { _ in
             self.reactionsView.hidden = !show
         }
     }
