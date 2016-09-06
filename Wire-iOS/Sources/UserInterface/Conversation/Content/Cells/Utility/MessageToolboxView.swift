@@ -53,7 +53,7 @@ extension ZMConversationMessage {
     public let reactionsView = ReactionsView()
     private let labelClipView = UIView()
     private var tapGestureRecogniser: UITapGestureRecognizer!
-    private let likeTooltipArrow = UIImageView()
+    public let likeTooltipArrow = UILabel()
     
     public weak var delegate: MessageToolboxViewDelegate?
 
@@ -100,7 +100,7 @@ extension ZMConversationMessage {
         
         likeTooltipArrow.translatesAutoresizingMaskIntoConstraints = false
         likeTooltipArrow.accessibilityIdentifier = "likeTooltipArrow"
-        likeTooltipArrow.image = UIImage(forIcon: .ChevronLeft, iconSize: .MessageStatus, color: ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextDimmed))
+        likeTooltipArrow.text = "←"
         self.addSubview(likeTooltipArrow)
         
         constrain(self, self.reactionsView, self.statusLabel, self.labelClipView, self.likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in

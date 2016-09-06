@@ -725,6 +725,11 @@ MessageToolboxView {
         textColor: $color-text-dimmed;
         textContainerInset: 0, 0, 0, 0;
     }
+    likeTooltipArrow: @{
+        font: $font-small-light;
+        backgroundColor: clear;
+        textColor: $color-text-dimmed;
+    }
     backgroundColor: clear;
     clipsToBounds: true;
 }
