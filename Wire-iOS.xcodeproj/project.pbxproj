@@ -1936,6 +1936,15 @@
 		B4446E1E1CFDF115005C83A7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B4446E1F1CFDF115005C83A7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		B4446E201CFDF116005C83A7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B4D37F981D7EEDD800D0C1BC /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B4D37F991D7EEDD800D0C1BC /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B4D37F9A1D7EEDD800D0C1BC /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B4D37F9B1D7EEDE300D0C1BC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B4D37F9C1D7EEDE300D0C1BC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = es; path = es.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B4D37F9D1D7EEDE300D0C1BC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B4D37F9E1D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B4D37F9F1D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B4D37FA01D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B9CC3BACA5F83DE94F1D4A0A /* Pods-Wire-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS/Pods-Wire-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BA79B0A31B6284D900F23AFB /* SoundEventRulesWatchDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEventRulesWatchDog.h; sourceTree = "<group>"; };
 		BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventRulesWatchDog.m; sourceTree = "<group>"; };
@@ -4720,6 +4729,9 @@
 				Base,
 				de,
 				"pt-BR",
+				uk,
+				es,
+				ru,
 			);
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
@@ -5720,6 +5732,9 @@
 				1EFB23DD1ACEDE5400244571 /* Base */,
 				BAECFF591B3D7BB70027C5ED /* de */,
 				B4446E1F1CFDF115005C83A7 /* pt-BR */,
+				B4D37F991D7EEDD800D0C1BC /* uk */,
+				B4D37F9C1D7EEDE300D0C1BC /* es */,
+				B4D37F9F1D7EEDEB00D0C1BC /* ru */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -5730,6 +5745,9 @@
 				874C09391B4A8EF50077393B /* de */,
 				8774F0C61B4AB2DD002256A6 /* Base */,
 				B4446E201CFDF116005C83A7 /* pt-BR */,
+				B4D37F9A1D7EEDD800D0C1BC /* uk */,
+				B4D37F9D1D7EEDE300D0C1BC /* es */,
+				B4D37FA01D7EEDEB00D0C1BC /* ru */,
 			);
 			name = InfoPlist.strings;
 			path = "Wire-iOS/Resources";
@@ -5741,6 +5759,9 @@
 				8FC8563F19924CBA0008B66B /* Base */,
 				BAECFF581B3D7BB70027C5ED /* de */,
 				B4446E1E1CFDF115005C83A7 /* pt-BR */,
+				B4D37F981D7EEDD800D0C1BC /* uk */,
+				B4D37F9B1D7EEDE300D0C1BC /* es */,
+				B4D37F9E1D7EEDEB00D0C1BC /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
