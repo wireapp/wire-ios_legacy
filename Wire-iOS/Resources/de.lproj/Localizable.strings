@@ -188,6 +188,7 @@
 "content.system.message_delivered_timestamp" = "Zugestellt";
 "content.system.failedtosend_message_timestamp" = "Senden fehlgeschlagen.";
 "content.system.failedtosend_message_timestamp_resend" = "Erneut senden";
+"content.system.like_tooltip" = "Gefällt mir";
 "content.system.deleted_message_prefix_timestamp" = "Gelöscht am %@";
 "content.system.edited_message_prefix_timestamp" = "Bearbeitet am %@";
 "content.system.connecting_to" = "Warte auf Bestätigung deiner Kontaktanfrage an %@";
