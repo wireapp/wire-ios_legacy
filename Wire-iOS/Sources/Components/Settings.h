@@ -42,7 +42,7 @@ extern NSString * const SettingsColorSchemeChangedNotification;
 extern NSString * const UserDefaultExtras;
 extern NSString * const UserDefaultMarkdown;
 extern NSString * const UserDefaultChatHeadsDisabled;
-extern NSString * const UserDefaultCursorTutorialCompleted;
+extern NSString * const UserDefaultLikeTutorialCompleted;
 extern NSString * const UserDefaultLastPushAlertDate;
 extern NSString * const UserDefaultContactTipWasDisplayed;
 
@@ -73,7 +73,7 @@ extern NSString * const UserDefaultDisableAnalytics;
 @property (nonatomic) BOOL chatHeadsDisabled;
 @property (nonatomic) BOOL contactTipWasDisplayed;
 @property (nonatomic, getter=isGroupCallsEnabled) BOOL groupCallsEnabled;
-@property (nonatomic) BOOL cursorTutorialCompleted;
+@property (nonatomic) BOOL likeTutorialCompleted;
 @property (nonatomic) BOOL enableMarkdown;
 @property (nonatomic) BOOL shouldRegisterForVoIPNotificationsOnly;
 

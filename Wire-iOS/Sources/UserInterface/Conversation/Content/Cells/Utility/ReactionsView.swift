@@ -41,7 +41,7 @@ import Cartography
             }
             
             for user in likersToDisplay {
-                let userImage = UserImageView(magicPrefix: "content.author_image")
+                let userImage = UserImageView(magicPrefix: "content.reaction")
                 userImage.user = user
                 constrain(userImage) { userImage in
                     userImage.width == userImage.height

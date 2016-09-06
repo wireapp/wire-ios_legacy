@@ -41,6 +41,8 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = NSLocale(localeIdentifier: "en_US")
             $0.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         }
+        
+        Settings.sharedSettings().likeTutorialCompleted = true
     }
     
     func testThatItRendersATextMessage_Sent() {
@@ -153,6 +155,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         let message = mockMessage(state: .Sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + otherUsers]
         sut.configureForMessage(message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatItRendersATextMessage_LikeTooltip() {
+        Settings.sharedSettings().likeTutorialCompleted = false
+        
+        sut.setSelected(true, animated: false)
+        sut.configureForMessage(mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     

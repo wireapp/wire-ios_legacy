@@ -29,7 +29,7 @@ NSString * const SettingsColorSchemeChangedNotification = @"SettingsColorSchemeC
 NSString * const UserDefaultExtras = @"ZDevOptionExtras";
 NSString * const UserDefaultMarkdown = @"UserDefaultMarkdown";
 NSString * const UserDefaultChatHeadsDisabled = @"ZDevOptionChatHeadsDisabled";
-NSString * const UserDefaultCursorTutorialCompleted = @"CursorTutorialCompleted";
+NSString * const UserDefaultLikeTutorialCompleted = @"LikeTutorialCompleted";
 NSString * const UserDefaultLastPushAlertDate = @"LastPushAlertDate";
 NSString * const UserDefaultVoIPNotificationsOnly = @"VoIPNotificationsOnly";
 
@@ -82,7 +82,7 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 {
     return @[UserDefaultMarkdown,
              UserDefaultChatHeadsDisabled,
-             UserDefaultCursorTutorialCompleted,
+             UserDefaultLikeTutorialCompleted,
              UserDefaultLastViewedConversation,
              UserDefaultLastViewedScreen,
              AVSMediaManagerPersistentIntensity,
@@ -264,14 +264,14 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
     [self.defaults setInteger:preferredCamera forKey:UserDefaultPreferredCamera];
 }
 
-- (BOOL)cursorTutorialCompleted
+- (BOOL)likeTutorialCompleted
 {
-    return [self.defaults boolForKey:UserDefaultCursorTutorialCompleted];
+    return [self.defaults boolForKey:UserDefaultLikeTutorialCompleted];
 }
 
-- (void)setCursorTutorialCompleted:(BOOL)cursorTutorialCompleted
+- (void)setLikeTutorialCompleted:(BOOL)likeTutorialCompleted
 {
-    [self.defaults setBool:cursorTutorialCompleted forKey:UserDefaultCursorTutorialCompleted];
+    [self.defaults setBool:likeTutorialCompleted forKey:UserDefaultLikeTutorialCompleted];
     [self.defaults synchronize];
 }
 

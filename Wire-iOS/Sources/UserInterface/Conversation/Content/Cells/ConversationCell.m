@@ -125,6 +125,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
         // here until we re-factor the the ConversationCell
         self.messageContentView.layoutMargins = layoutMargins;
+        self.messageToolboxView.layoutMargins = layoutMargins;
     }
     
     return self;
@@ -275,8 +276,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
-    [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.messageToolboxView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.messageContentBottomMarginConstraint = [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.messageToolboxView];
