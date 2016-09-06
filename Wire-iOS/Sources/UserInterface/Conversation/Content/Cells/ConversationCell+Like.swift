@@ -31,7 +31,7 @@ public extension ConversationCell {
         self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Selected)
         self.likeButton.setIconColor(UIColor(forZMAccentColor: .VividRed), forState: .Selected)
         self.likeButton.hitAreaPadding = CGSizeMake(20, 20)
-        self.addSubview(self.likeButton)
+        self.contentView.addSubview(self.likeButton)
     }
     
     @objc public func configureLikeButtonForMessage(message: ZMMessage) {

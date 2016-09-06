@@ -1,0 +1,704 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+
+"general.ok" = "OK";
+"general.cancel" = "Скасувати";
+"general.open_settings" = "Відкрити налаштування Wire";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// People picker/start UI
+"peoplepicker.search_placeholder" = "Шукайте за ім'ям або email";
+"peoplepicker.header.top_people" = "Топ-контакти";
+"peoplepicker.button.create_conversation" = "Створити групу";
+"peoplepicker.button.add_to_conversation" = "Додати";
+"peoplepicker.header.conversations" = "Групи";
+"peoplepicker.header.send_invitation" = "Запросити";
+"peoplepicker.header.contacts" = "Контакти";
+"peoplepicker.header.directory" = "Додати в контакти";
+"peoplepicker.title.create_conversation" = "Створити групу";
+"peoplepicker.title.add_to_conversation" = "Додати людей";
+
+"peoplepicker.no_contacts_title" = "Контактів немає.";
+
+"peoplepicker.no_matching_results_title" = "Нічого не знайдено.";
+"peoplepicker.no_matching_results_message" = "Введіть адресу електронної пошти.";
+
+"peoplepicker.no_matching_results.action.send_invite" = "Надіслати запрошення";
+"peoplepicker.no_matching_results.action.share_contacts" = "Поділитись контактами";
+
+"peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "Нічого не знайдено.";
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
+/*  */
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "поділіться контактами";
+
+"peoplepicker.share_contacts.no_results.title" = "Знайти людей за іменем або email";
+
+"peoplepicker.send_invitation.dialog.title" = "Запрошення надіслано";
+"peoplepicker.send_invitation.dialog.message" = "Воно дійсне протягом 2 тижнів. Надішліть нове запрошення, якщо термін дії цього закінчиться.";
+"peoplepicker.send_invitation.dialog.ok" = "OK";
+
+"peoplepicker.invite_more_people" = "Запросити більше людей";
+"peoplepicker.quick-action.open-conversation" = "Вiдкрити";
+"peoplepicker.quick-action.create-conversation" = "Створити групу";
+
+// Contacts UI
+"contacts_ui.search_placeholder" = "Пошук за іменем";
+"contacts_ui.invite_others" = "Запросити інших користувачів";
+"contacts_ui.name_in_contacts" = "%@ в Адресній книзі";
+"contacts_ui.connection_request" = "Надіслав(-ла) запит на додавання до контактів";
+"contacts_ui.action_button.invite" = "Запросити";
+"contacts_ui.action_button.open" = "Вiдкрити";
+"contacts_ui.invite_sheet.cancel_button_title" = "Скасувати";
+"contacts_ui.notification.invitation_sent" = "Запрошення надіслано";
+"contacts_ui.notification.invitation_failed" = "Не вдалося надіслати запрошення";
+"contacts_ui.title" = "Запросити людей";
+
+"contacts_ui.no_contact.title" = "Немає активних розмов\n";
+"contacts_ui.no_contact.message" = "Натисніть 'КОНТАКТИ', щоб почати розмову";
+
+// Conversation List Bottom Bar
+"bottom_bar.contacts_button.title" = "контакти";
+
+// Archived List
+"archived_list.title" = "архів";
+
+// Add contact tool tip
+"tool_tip.contacts.title" = "Розмови починаються тут";
+"tool_tip.contacts.message" = "Почніть розмову або запросіть більше людей приєднатися. Дзвінки, повідомлення та багато іншого — приватно або в групі.";
+
+// "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
+"peoplepicker.suggested.knows_one" = "Знайомий(-а) з %@";
+"peoplepicker.suggested.knows_two" = "Знайомий(-а) з %@ та %@";
+"peoplepicker.hide_search_result" = "Сховати";
+"peoplepicker.hide_search_result_progress" = "Приховування…";
+
+"send_invitation.subject" = "Додай мене в Wire";
+"send_invitation.text" = "Я уже в Wire. Шукайте %@\nабо відвідайте https://get.wire.com, щоб додати мене.";
+"send_invitation_no_email.text" = "Я уже в Wire. Відвідайте https://get.wire.com, щоб додати мене.";
+
+"send_personal_invitation.text" = "Я уже в Wire, порозмовляємо там. https://get.wire.com";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++x
+// In-app notifications (chat heads)
+"notifications.shared_a_photo" = "поділився(-лась) картинкою";
+"notifications.pinged" = "відправив(-ла) пінг";
+"notifications.sent_file" = "поділився(-лась) файлом";
+"notifications.sent_location" = "поділився(-лась) розташуванням";
+"notifications.sent_video" = "поділився(-лась) відео";
+"notifications.sent_audio" = "поділився(-лась) аудіо";
+"notifications.in_conversation" = "%@ - %@";
+"notifications.this_conversation" = "%@ в цій розмові";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// List (labels) - Needs to be revised with updated guidance
+"list.archived_conversations" = "АРХІВ";
+"list.archived_conversations_close" = "Закрити архів";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Conversation
+"conversation.invite_more_people.title" = "Поділіться з друзями!";
+"conversation.invite_more_people.description" = "Додати учасників до цієї розмови";
+"conversation.invite_more_people.explanation_url" = "https://support.wire.com";
+"conversation.invite_more_people.button_title" = "Додати учасників";
+
+// Conversation names
+"conversation.displayname.emptygroup" = "Групова розмова без учасників";
+
+"conversation.input_bar.verified" = "Верифікована";
+"conversation.input_bar.placeholder" = "Напишіть повідомлення";
+
+"conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть пальцем вверх для надсилання";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
+"conversation.input_bar.audio_message.too_long.title" = "Запис зупинено";
+"conversation.input_bar.audio_message.too_long.message" = "Аудіоповідомлення обмежені розміром %@. Надіслати це повідомлення?";
+"conversation.input_bar.audio_message.send" = "Надіслати";
+
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Торкніться, щоб почати запис\nВи можете %@ після цього";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "Змінити фільтр вище";
+
+// Image confirmation dialogue
+"image_confirmer.confirm" = "OK";
+"image_confirmer.cancel" = "Скасувати";
+"image.add_sketch" = "Додати зарисовку";
+"image.edit_image" = "Редагувати картинку";
+
+// Camera access
+"camera_access.denied" = "Wire потребує доступу до камери.";
+"camera_access.denied.instruction" = "";
+"camera_access.denied.open_settings" = "Дозвольте доступ до камери в налаштуваннях Wire";
+
+// Camera Controls
+"camera_controls.aeaf_lock" = "Фіксація експозиції/фокусу";
+
+// Location
+"location.send_button.title" = "Надіслати";
+"location.unauthorized_alert.title" = "Увімкніть службу розташування";
+"location.unauthorized_alert.message" = "Щоб поділитись вашим розташуванням, увімкніть Службу Розташування та надайте для Wire доступ до визначення розташування.";
+"location.unauthorized_alert.cancel" = "Скасувати";
+"location.unauthorized_alert.settings" = "Налаштування";
+
+// Twitter
+"twitter_status.on_twitter" = "%@ в Twitter";
+
+// System messages
+"content.system.continued_conversation" = "Почати розмову з %@";
+
+"content.system.other_started_conversation" = "%@ почав(-ла) розмову з %@";
+"content.system.you_started_conversation" = "Ви почали розмову з %@";
+
+"content.system.you_added_participant" = "Ви додали %@";
+"content.system.other_added_participant" = "%@ додав(-ла) %@";
+"content.system.other_added_you" = "%@ додав(-ла) вас";
+
+"content.system.participants_you" = "Ви";
+"content.system.participants_1_other" = "%@ та %@";
+"content.system.other_left" = "%@ вийшов(-ла)";
+"content.system.you_left" = "Ви вийшли";
+"content.system.other_removed_other" = "%@ видалив(-ла) %@";
+"content.system.other_removed_you" = "%@ видалив(-ла) вас";
+"content.system.you_removed_other" = "Ви видалили %@";
+"content.system.other_renamed_conv" = "%@ перейменував(-ла) розмову";
+"content.system.you_renamed_conv" = "Ви перейменували розмову";
+"content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
+"content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
+"content.system.pending_message_timestamp" = "Надсилання…";
+"content.system.message_sent_timestamp" = "Надісл";
+"content.system.message_delivered_timestamp" = "Доставлене";
+"content.system.failedtosend_message_timestamp" = "Помилка надсилання.";
+"content.system.failedtosend_message_timestamp_resend" = "Надіслати ще раз";
+"content.system.like_tooltip" = "Торкніться, якщо сподобалося";
+"content.system.deleted_message_prefix_timestamp" = "Видалено %@";
+"content.system.edited_message_prefix_timestamp" = "Відредаговано %@";
+"content.system.connecting_to" = "%@ доданий(-на) до контактів.\nМожете починати розмову";
+"content.system.connected_to" = "%@ доданий(-на) до контактів\nМожете починати розмову";
+"content.system.other_wanted_to_talk" = "%@ дзвонив";
+"content.system.you_wanted_to_talk" = "Ви дзвонили";
+
+"content.system.you_started" = "Ви";
+"content.system.this_device" = "цей пристрій";
+
+"content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут";
+
+"content.system.new_device" = "новий пристрій";
+"content.system.started_using" = "почав(-ла) використовувати";
+"content.system.is_verified" = "Всі ідентифікатори були верифіковані";
+
+"content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule's devices"
+"content.system.your_devices" = "ваші пристрої";
+"content.system.other_devices" = "пристрої, які належать %@";
+
+"content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом періоду часу. Деякі повідомлення можуть не відображатися тут.";
+"content.system.missing_messages.subtitle_start" = "Тим часом";
+
+"content.system.cannot_decrypt" = "Повідомлення від %@ не було отримане.";
+
+"content.system.cannot_decrypt.you_part" = "ви";
+"content.system.cannot_decrypt.why_part" = "Чому?";
+
+"content.system.cannot_decrypt.identity" = "%@ ідентифікатор пристрою змінився. Повідомлення не доставлено.";
+"content.system.cannot_decrypt.identity.you_part" = "Ваш";
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.why_part" = "Дізнатися більше";
+
+"content.file.uploading" = "Завантаження…";
+"content.file.downloading" = "Скачування…";
+"content.file.upload_failed" = "Не вдалося завантажити";
+"content.file.upload_cancelled" = "Завантаження скасовано";
+"content.file.upload_video" = "Відео";
+"content.file.take_video" = "Записати відео";
+
+"content.file.save_video" = "Зберегти";
+"content.file.save_audio" = "Зберегти";
+"content.image.save_image" = "Зберегти";
+
+"content.message.delete" = "Видалити";
+
+"content.message.like" = "Подобається";
+"content.message.unlike" = "Не подобається";
+
+"content.reactions_list.likers" = "Сподобалося";
+
+"content.file.too_big" = "Ви можете надсилати файли до %@";
+// Someone pinged
+"content.ping.text" = "%1$@ ВІДПРАВИВ(-ЛА) ПІНГ";
+
+// Current user pinged
+"content.ping.you.text" = "ВИ ВІДПРАВИЛИ ПІНГ";
+
+// Inline Player
+"content.player.unable_to_play" = "НЕМОЖЛИВО ВІДТВОРИТИ ТРЕК";
+
+// Connecting (NEW IMPLEMENTATION, REVIEW LATER)
+"connection_request.title" = "Додати %@ до контактів"; // check UPPERCASE implementation in code
+"missive.connection_request.default_message" = "Привіт %@,\nдавай спілкуватися в Wire.\n%@";
+
+"connection_request.send_button_title" = "Додати до контактів";
+"inbox.connection_request.connect_button_title" = "Додати до контактів";
+"inbox.connection_request.ignore_button_title" = "Ігнорувати";
+
+// Voice
+"voice.status.one_to_one.incoming" = "%@\nДзвонить";
+"voice.status.group_call.incoming" = "%@\nДзвонить";
+"voice.status.one_to_one.outgoing" = "%@\nДзвонить";
+"voice.status.joining" = "%@\nПід'єднується";
+"voice.status.video_not_available" = "Відео вимкнено";
+"voice.status.low_connection" = "Поганий зв'язок";
+"voice.network_error.title" = "Немає з'єднання з Інтернетом";
+"voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
+"voice.alert.call_in_progress.title" = "Активний дзвінок";
+"voice.alert.call_in_progress.message" = "Один з ваших пристроїв уже бере участь у даному дзвінку";
+"voice.alert.call_in_progress.confirm" = "ОК";
+"voice.accept_button.title" = "Прийняти";
+"voice.decline_button.title" = "Скасувати";
+"voice.hang_up_button.title" = "Завершити";
+"voice.mute_button.title" = "Вимкнути звук";
+"voice.video_button.title" = "Відео";
+"voice.speaker_button.title" = "Гучномовець";
+
+"voice.alert.microphone_warning.title" = "Wire необхідний доступ до мікрофона.";
+"voice.alert.microphone_warning.explanation" = "Дозвольте доступ до мікрофона в налаштуваннях Wire.";
+
+"voice.alert.camera_warning.title" = "Wire потребує доступу до камери.";
+"voice.alert.camera_warning.explanation" = "Відкрийте налаштування та дозвольте Wire доступ до камери.";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Profile and Participants
+
+"participants.add_people_button_title" = "Додати людей";
+
+// Meta Menu
+"meta.menu.rename" = "Переіменувати";
+"meta.menu.leave" = "Вийти";
+"meta.menu.archive" = "Архівувати";
+"meta.menu.unarchive" = "Розархівувати";
+"meta.menu.delete" = "Видалити";
+"meta.menu.silence.mute" = "Вимкнути звук";
+"meta.menu.silence.unmute" = "Увімкнути звук";
+"meta.menu.cancel" = "Скасувати";
+"meta.menu.cancel_connection_request" = "Скасувати запит";
+
+// Delete conversation
+"meta.menu.delete_content.dialog_title" = "Видалити вміст?";
+"meta.menu.delete_content.dialog_message" = "Це зітре історію розмови і видалить її зі списку.";
+"meta.menu.delete_content.leave_as_well_message" = "Також вийти з розмови";
+"meta.menu.delete_content.button_cancel" = "Скасувати";
+"meta.menu.delete_content.button_delete" = "Видалити";
+
+// Leave conversation
+"meta.leave_conversation_dialog_title" = "Вийти з розмови?";
+"meta.leave_conversation_dialog_message" = "Учасники будуть повідомлені, і розмову буде видалено з вашого списку.";
+"meta.leave_conversation.delete_content_as_well_message" = "Також видалити вміст";
+"meta.leave_conversation_button_cancel" = "Скасувати";
+"meta.leave_conversation_button_leave" = "Вийти";
+
+// Conversation Degraded (security level lowered)
+"meta.degraded.degradation_reason_message.singular" = "%@ почав(-ла) використовувати новий пристрій.";
+"meta.degraded.degradation_reason_message.plural" = "%@ почав(-ла) використовувати нові пристрої.";
+"meta.degraded.dialog_message" = "Усе одно надіслати ваше повідомлення?";
+"meta.degraded.show_device_button" = "Показати пристрій";
+"meta.degraded.send_anyway_button" = "Все одно надіслати";
+
+// Remove from conversation dialogue
+"profile.remove_dialog_title" = "Видалити?";
+"profile.remove_dialog_message" = "%@ більше не зможе надсилати або отримувати повідомлення в цій розмові.";
+"profile.remove_dialog_button_cancel" = "Скасувати";
+"profile.remove_dialog_button_remove" = "Видалити";
+
+// Block dialog
+"profile.block_dialog.title" = "Блокувати?";
+"profile.block_dialog.message" = "%@ більше не зможе знайти вас або зв'язатися з вами у Wire.";
+"profile.block_dialog.button_cancel" = "Скасувати";
+"profile.block_dialog.button_block" = "Заблокувати";
+
+// Delete message dialog
+"message.delete_dialog.message" = "Цю дію неможливо скасувати.";
+"message.delete_dialog.action.cancel" = "Скасувати";
+"message.delete_dialog.action.hide" = "Видалити для мене";
+"message.delete_dialog.action.delete" = "Видалити для всіх";
+
+// Edit message
+"message.menu.edit.title" = "Редагувати";
+
+// Accept connection request
+"profile.connection_request_dialog.title" = "Прийняти?";
+"profile.connection_request_dialog.message" = "Це додасть %@ до ваших контактів та відкриє розмову.";
+"profile.connection_request_dialog.button_cancel" = "Ігнорувати";
+"profile.connection_request_dialog.button_connect" = "Додати до контактів";
+
+// Cancel connection request
+"profile.cancel_connection_request_dialog.title" = "Скасувати запит?";
+"profile.cancel_connection_request_dialog.message" = "Видалити запит на додавання до %@.";
+"profile.cancel_connection_request_dialog.button_no" = "Ні";
+"profile.cancel_connection_request_dialog.button_yes" = "Так";
+
+// Unblock button
+"profile.unblock_button_title" = "Розблокувати";
+
+"profile.cancel_connection_button_title" = "СКАСУВАТИ ЗАПИТ";
+"profile.connection_request_state.blocked" = "ЗАБЛОКОВАНИЙ(-А)";
+"profile.create_conversation_button_title" = "Створити групу";
+"profile.open_conversation_button_title" = "Відкрити розмову";
+
+// User Details
+"profile.details.title" = "Подробиці";
+
+// Device list
+"profile.devices.title" = "Пристрої";
+"profile.devices.fingerprint_message_unencrypted" = "%@ використовує стару версію Wire, тому не показується жоден пристрій.";
+"profile.devices.fingerprint_message" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівнюйте їх з %@ та верифікуйте свої розмови. Навіщо верифікувати розмови?";
+"profile.devices.fingerprint_message.link" = "Навіщо верифікувати розмови?";
+
+// Device detail
+"profile.devices.detail.verify_message" = "Переконайтеся, що цей ідентифікатор співпадає з ідентифікатором на пристрої контакту %@.";
+"profile.devices.detail.verify_message.link" = "Як це зробити?";
+"profile.devices.detail.show_my_device.title" = "Показати ідентифікатор мого пристрою";
+"device.verified" = "Верифікована";
+"device.not_verified" = "Не верифікований";
+"device.class.desktop" = "Настільний ПК";
+"device.class.tablet" = "Планшет";
+"device.class.phone" = "Телефон";
+"profile.devices.detail.reset_session.title" = "Скидання сесії";
+
+// General strings
+"general.confirm" = "OK";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Self profile
+// Options menu contents
+
+"self.settings" = "Налаштування";
+"self.help_center" = "Допомога";
+"self.about" = "Про программу";
+"self.sign_out" = "Вихід";
+"self.report_abuse" = "Надіслати звіт про зловживання";
+
+"self.add_phone_number" = "Додати номер телефону";
+"self.add_email_password" = "Додайте email та пароль";
+
+// About screen
+"about.tos.title" = "Умови використання";
+"about.privacy.title" = "Політика конфіденційності";
+"about.license.title" = "Відомості про ліцензію";
+"about.website.title" = "wire.com";
+"about.copyright.title" = "© %d Wire Swiss GmbH";
+
+// Self new devices
+"self.new_device_alert.title" = "Ви під'єднали пристрій %@ до вашого акаунту в Wire";
+"self.new_device_alert.title_prefix.tablet" = "планшет";
+"self.new_device_alert.title_prefix.phone" = "телефон";
+"self.new_device_alert.title_prefix.devices" = "%d пристроїв";
+"self.new_device_alert.message" = "%@\n\nЯкщо ви не робили цього, видаліть пристрій і змініть пароль.";
+"self.new_device_alert.message_plural" = "%@\n\nЯкщо ви не робили цього, видаліть ці пристрої та змініть пароль.";
+"self.new_device_alert.manage_devices" = "Керування пристроями";
+"self.new_device_alert.trust_devices" = "OK";
+
+// Settings - Account details
+"self.settings.account_section" = "Акаунт";
+
+"self.settings.account_details_group.title" = "Подробиці акаунта";
+
+"self.settings.account_section.name.title" = "Ім’я";
+"self.settings.account_section.email.title" = "Email";
+"self.settings.account_section.phone.title" = "Номер телефону";
+
+"self.settings.account_details_group.footer" = "Ваші дані будуть зашифровані, і тому ми будемо не в змозі прочитати їх, але інші люди отримають можливість знайти вас в Wire.";
+
+"self.settings.account_details.remove_device.title" = "Видалити пристрій";
+"self.settings.account_details.key_fingerprint.title" = "Ідентифікатор";
+"self.settings.account_details.remove_device.message" = "Для видалення пристрою необхідно ввести ваш пароль";
+"self.settings.account_details.remove_device.password" = "Пароль";
+"self.settings.account_details.remove_device.password.error" = "Невірний пароль";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівнюйте ідентикатори, щоб верифікувати ваші пристрої та розмови.";
+"self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не співпадають, виконайте скидання вашої захищеної сесії, щоб упевнитись, що ідентифікатори правильно відображаються на всіх пристроях.";
+"self.settings.device_details.remove_device.subtitle" = "Ви автоматично вийдете з цього пристрою.";
+"self.settings.device_details.reset_session.success" = "Сессія була скинута";
+
+"self.settings.account_details.delete_account.title" = "Видалити акаунт";
+"self.settings.account_details.delete_account.footer" = "Це виконає скидання всіх налаштувань та видалить історію всіх ваших розмов, ваші дані та контакти.";
+
+"self.settings.account_details.delete_account.alert.title" = "Видалити акаунт";
+"self.settings.account_details.delete_account.alert.message" = "Ми надішлемо вам повідомлення електронною поштою або через SMS. Перейдіть за посиланням, щоб остаточно видалити свій акаунт.";
+
+
+// Chat alerts
+"self.settings.notifications.push_notification.title" = "Нотифікації";
+"self.settings.notifications.push_notification.toogle" = "Попередній перегляд повідомлення";
+"self.settings.notifications.push_notification.footer" = "Ім'я відправника та повідомлення на екрані блокування та в Центрі нотифікацій.";
+
+"self.settings.notifications.chat_alerts.toggle" = "Заголовки повідомлень";
+"self.settings.notifications.chat_alerts.footer" = "Нові повідомлення в інших розмовах.";
+
+"self.settings.sound_menu.sounds.title" = "Звуки";
+"self.settings.sound_menu.ringtone.title" = "Рингтон";
+"self.settings.sound_menu.message.title" = "Звук текстового повідомлення";
+"self.settings.sound_menu.ping.title" = "Пінг";
+"self.settings.sound_menu.ringtones.title" = "Рингтони";
+"self.settings.sound_menu.sounds.wire_sound" = "Wire";
+
+"self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
+"self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
+"self.settings.sound_menu.sounds.wire_ping" = "Пінг у Wire";
+
+"self.settings.sound_menu.group.title" = "Звуки та нотифікації";
+
+// Sound alerts (TO BE UPDPATED)
+"self.settings.sound_menu.title" = "Звукові нотифікації";
+"self.settings.sound_menu.no_sounds.title" = "Все вимкнено";
+"self.settings.sound_menu.all_sounds.title" = "Всі";
+"self.settings.sound_menu.mute_while_talking.title" = "Перше повідомлення, пінг, дзвінок";
+
+// Developer options
+"self.settings.developer_options.title" = "Налаштування розробника";
+"self.settings.apns_logging.title" = "Ведення журналу APNS";
+
+// Privacy (visibility) options
+"self.settings.privacy_menu.title" = "Конфіденційність та безпека";
+
+"self.settings.privacy_contacts_section.title" = "Контакти";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Поділіться контактами - це допоможе вам знайти людей, яких ви знаєте. Ми анонімізуємо всю інформацію та не передаємо її третім особам. Надайте доступ в меню Налаштування > Конфіденціальність > Контакти.";
+
+"self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
+"self.settings.privacy_analytics_menu.devices_button.title" = "Керування пристроями";
+
+"self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
+"self.settings.privacy_analytics_menu.description.title" = "Зробіть Wire кращим, відправляючи анонімну інформацію.\n";
+
+"self.settings.privacy.clear_history.title" = "Очистити Історію";
+"self.settings.privacy.clear_history.subtitle" = "Це назавжди зітре історію всіх ваших розмов.";
+
+"self.settings.advanced.title" = "Розширені налаштування";
+"self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Відправити звіт для відлагодження";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ця інформація допомагає службі підтримки Wire діагностувати проблеми.\nЯкщо у вас є будь-які проблеми з дзвінками, будь ласка, опишіть кроки, необхідні для відтворення проблеми, додайте скріншоти, якщо це можливо, та надішліть цей лист.";
+"self.settings.advanced.reset_push_token.title" = "Оновити Push-маркер для нотифікацій";
+"self.settings.advanced.reset_push_token.subtitle" = "Техпідтримка Wire може попросити вас виконати скидання цього токену, якщо у вас виникнуть проблеми з push-нотифікаціями.";
+"self.settings.advanced.reset_push_token_alert.title" = "Push-маркер був оновлений";
+"self.settings.advanced.reset_push_token_alert.message" = "Нотифікації будуть відновлені за декілька секунд.";
+
+// Technical Report
+"self.settings.technical_report_section.title" = "Технічний звіт";
+"self.settings.technical_report.send_report" = "Надіслати звіт до Wire";
+"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
+"self.settings.technical_report.mail.subject" = "Звіт про дзвінки";
+"self.settings.technical_report.include_log" = "Включити детальний журнал логів";
+
+// Password reset
+"self.settings.password_reset_menu.title" = "Скинути пароль";
+
+// Tips
+"self.settings.tip.change_picture" = "Торкніться, щоб змінити фото";
+"self.settings.tip.change_color" = "Потягніть, щоб змінити колір";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// System status
+"system_status_bar.no_internet.title" = "Немає Інтернету";
+"system_status_bar.no_internet.explanation" = "Схоже, що є проблема з підключенням до інтернету. Будь ласка, переконайтесь, що із з'єднанням все в порядку.";
+"system_status_bar.poor_connectivity.title" = "Повільний інтернет, не вдається додзвонитись";
+"system_status_bar.poor_connectivity.explanation" = "Ми не в змозі гарантувати якість передачі голосу. Спробуйте підключитись до мережі Wi-Fi або змінити ваше місце розташування.";
+
+// Common connections on profile view
+"profile_other.common_connections" = "Ви обидва знайомі з";
+
+// View user profile and options menu
+"name.placeholder" = "Ваше повне ім'я";
+"name.guidance.tooshort" = "Не менше 2 символів";
+"name.guidance.toolong" = "Занадто багато символів";
+
+"email.placeholder" = "Email";
+
+"password.placeholder" = "Пароль";
+"password.guidance.tooshort" = "Не менше 8 символів";
+"password.guidance.toolong" = "Занадто багато символів";
+
+"registration.title" = "Реєстрація";
+"registration.close_email_invitation_button.email_title" = "Використати інший email";
+"registration.close_email_invitation_button.phone_title" = "Зареєструватися за номером телефону";
+"registration.close_phone_invitation_button.email_title" = "Реєстрація з Email";
+"registration.close_phone_invitation_button.phone_title" = "За допомогою іншого телефону";
+
+"registration.enter_phone_number.title" = "Редагувати номер телефону";
+"registration.enter_phone_number.placeholder" = "Номер телефону";
+
+"registration.verify_phone_number.instructions" = "Введіть код, який ми вислали на %@";
+"registration.verify_phone_number.resend" = "Надіслати ще раз";
+"registration.verify_phone_number.resend_placeholder" = "Код не показується?\nВи можете надіслати запит на новий через %.0f секунд";
+
+"registration.verify_email.instructions" = "Ми відправили email на %@.\n Перейдіть за посиланням для підтвердження адреси.";
+"registration.verify_email.resend.instructions" = "Не прийшло повідомлення?";
+"registration.verify_email.resend.button_title" = "Надіслати ще раз";
+
+"registration.select_picture.subtitle" = "Wire виглядає краще з вашою фотографією.";
+"registration.select_picture.button_title" = "Вибрати власне фото";
+"registration.keep_picture.button_title" = "Залишити це";
+"registration.camera_action.title" = "Сфотографувати";
+"registration.photo_gallery_action.title" = "Вибрати фото";
+"registration.cancel_action.title" = "Скасувати";
+
+"registration.no_history.hero" = "Це перший раз, коли ви використовуєте Wire на цьому пристрої.";
+"registration.no_history.subtitle" = "З міркувань конфіденційності, історія ваших розмов тут не показується.";
+"registration.no_history.got_it" = "OK";
+
+"registration.no_history.logged_out.hero" = "Ви уже використовували Wire на цьому пристрої раніше.";
+"registration.no_history.logged_out.subtitle" = "Повідомлення, надіслані в той час, коли ви вийшли з Wire, не відображатимуться.";
+"registration.no_history.logged_out.got_it" = "OK";
+
+"registration.enter_name.title" = "Редагувати ім'я";
+"registration.enter_name.hero" = "Як ми можемо до Вас звертатися?";
+"registration.enter_name.placeholder" = "Ваше повне ім'я";
+
+"registration.terms_of_use.title" = "Ласкаво просимо до Wire.";
+"registration.terms_of_use.terms" = "Продовжуючи, ви погоджуєтесь з Умовами користування Wire.";
+"registration.terms_of_use.terms.link" = "Умови використання";
+"registration.terms_of_use.agree" = "Я згоден";
+
+"registration.email_flow.title" = "Реєстрація з Email";
+"registration.email_flow.email_step.title" = "Редагувати деталі";
+
+"registration.country_select.title" = "Країна";
+
+"registration.share_contacts.hero.title" = "Пошук людей в Wire";
+"registration.share_contacts.hero.paragraph" = "Поділіться своїми контактами, щоб ми могли знайти людей, яких ви знаєте. Ми анонімізуємо всю інформацію та не передаємо її третім особам.";
+"registration.share_contacts.find_friends_button.title" = "Поділитись контактами";
+"registration.share_contacts.skip_button.title" = "Не зараз";
+
+"registration.address_book_access_denied.hero.title" = "Wire не має доступу до ваших контактів.";
+"registration.address_book_access_denied.hero.paragraph1" = "Wire допоможе вам знайти ваших друзів, якщо ви поділитесь контактами.";
+"registration.address_book_access_denied.hero.paragraph2" = "Щоб дозволити доступ перейдіть в Налаштування та торкніться до переключателя біля пункту Контакти.";
+"registration.address_book_access_denied.settings_button.title" = "Налаштування";
+"registration.address_book_access_denied.maybe_later_button.title" = "Можливо, пізніше";
+
+"registration.push_access_denied.hero.title" = "Не пропустіть жодного дзвінка або повідомлення.";
+"registration.push_access_denied.hero.paragraph1" = "Увімкніть нотифікації в налаштуваннях.";
+"registration.push_access_denied.settings_button.title" = "Перейти до налаштувань";
+"registration.push_access_denied.maybe_later_button.title" = "Можливо, пізніше";
+
+"registration.signin.title" = "Увійти";
+"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.subtitle" = "Видаліть один з ваших пристроїв, щоб почати використовувати Wire на цьому.";
+"registration.signin.too_many_devices.manage_button.title" = "Керування пристроями";
+"registration.signin.too_many_devices.sign_out_button.title" = "Вийти";
+"registration.signin.email_button.title" = "Email";
+"registration.signin.phone_button.title" = "Телефон";
+
+"registration.devices.title" = "Пристрої";
+"registration.devices.active_list_header" = "Активні";
+"registration.devices.current_list_header" = "Поточний";
+"registration.devices.active_list_subtitle" = "Якщо ви не впізнаєте пристрій вище, видаліть його і скиньте пароль в меню Налаштування > Акаунт.";
+"registration.devices.activated_in" = "Активований:";
+"registration.devices.id" = "ID:";
+
+"signin.forgot_password" = "Забули пароль?";
+
+"registration.add_phone_number.hero.title" = "Додати номер телефону";
+"registration.add_phone_number.hero.paragraph" = "Це допомагає нам знайти людей, яких ви, можливо, знаєте. Ми ніколи не ділимося ні з ким цими даними.";
+"registration.add_phone_number.skip_button.title" = "Не зараз";
+
+"registration.add_email_password.hero.title" = "Додайте ваш email та пароль.";
+"registration.add_email_password.hero.paragraph" = "Це дасть вам можливість використовувати Wire на різних пристроях.";
+
+"registration.email_invitation.title" = "Запрошення";
+"registration.email_invitation.hero.title" = "Привіт, %@";
+"registration.email_invitation.hero.paragraph" = "Виберіть пароль для створення акаунту.";
+
+"registration.phone_invitation.title" = "Запрошення";
+"registration.phone_invitation.hero.title" = "Привіт, %@";
+"registration.phone_invitation.hero.paragraph" = "Ви за один крок від створення свого акаунту.";
+
+"error.name_and_email" = "Будь ласка, введіть своє ім'я та email";
+"error.full_name" = "Будь ласка, введіть своє ім’я";
+"error.email" = "Будь ласка, введіть актуальну адресу електронної пошти";
+"error.input.too_long" = "Введений текст задовгий";
+"error.input.too_short" = "Введений текст закороткий";
+"error.email.invalid" = "Будь ласка, введіть актуальну адресу електронної пошти";
+"error.phone.invalid" = "Будь ласка, введіть правильний номер телефону";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ZMUserSessionErrorCode mapping. Used during registration and profile edit
+"error.user.unkown_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
+"error.user.needs_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
+"error.user.invalid_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
+"error.user.account_pending_activation" = "Акаунт, який ви намагаєтесь використовувати, очікує активації. Будь ласка, перевірте ваші дані.";
+"error.user.network_error" = "Спостерігаються тимчасові проблеми з вашою мережею. Будь ласка, спробуйте знову пізніше.";
+"error.user.email_is_taken" = "Такий email вже зареєстрований. Будь ласка, спробуйте інший.";
+"error.user.phone_is_taken" = "Такий номер телефону вже зареєстрований. Будь ласка, спробуйте інший.";
+"error.user.phone_code_invalid" = "Будь ласка, введіть правильний код";
+"error.user.phone_code_too_many" = "Ми вже надіслали SMS з кодом. Щоб отримати новий код, натисніть \"Надіслати ще раз\" через 10 хвилин.";
+"error.user.registration_unknown_error" = "Щось пішло не так. Будь ласка спробуйте ще раз.";
+"error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
+"error.updating_password" = "Не вдалося оновити ваш пароль.";
+
+"error.group_call.too_many_members_in_conversation.title" = "Забагато учасників для здійснення дзвінка";
+"error.group_call.too_many_members_in_conversation" = "Дзвінки можливі в розмовах до %d людей.";
+"error.group_call.too_many_participants_in_the_call.title" = "Забагато людей в дзвінку";
+"error.group_call.too_many_participants_in_the_call" = "Тут залишилось місце тільки для %d учасників.";
+"error.call.gsm_ongoing.title" = "Стільниковий дзвінок";
+"error.call.gsm_ongoing" = "Будь ласка, завершіть стільниковий дзвінок перед тим, як дзвонити з Wire.";
+"error.call.general.title" = "Помилка дзвінка";
+"error.call.general" = "Будь ласка, спробуйте подзвонити знову через кілька хвилин.";
+"error.call.slow_connection.title" = "Повільне з'єднання";
+"error.call.slow_connection" = "Можуть виникнути проблеми під час дзвінка";
+"error.call.slow_connection.call_anyway" = "Подзвонити все одно";
+
+"error.invite.no_email_provider" = "Будь ласка, налаштуйте ваш поштовий клієнт, щоб надсилати запрошення через email";
+"error.invite.no_messaging_provider" = "Будь ласка, налаштуйте службу надсилання SMS, щоб запрошувати людей через SMS";
+
+"sketchpad.initial_hint" = "Торкніться кольору для зміни розміру пензля\nНатисніть та утримуйте, щоб замалювати фон\nПотрусіть, щоб видалити фонове фото";
+
+"migration.please_wait_message" = "Будь ласка, зачекайте";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are used by the backend to localize APNS
+"push.notification.new_user" = "%@ приєднався до Wire";
+"push.notification.new_message" = "Нове повідомлення";
+
+
+// Force Update
+"force.update.title" = "Необхідне оновлення";
+"force.update.message" = "Не пропустіть нові функції.\nОтримайте найновішу версію Wire з App Store.";
+"force.update.ok_button" = "Перейти в App Store";
+
+// Third Party
+"giphy.conversation.message" = "%@ · через giphy.com";
+"giphy.conversation.random_message" = "через giphy.com";
+"giphy.error.no_more_results" = "більше немає анімацій";
+"giphy.error.no_result" = "анімацій не знайдено";
+
+"giphy.confirm" = "надіслати";
+"giphy.try_another" = "спробувати іншу";
+
+"invite_banner.title" = "Запросіть ваших друзів до Wire!";
+"invite_banner.message" = "Насолоджуйтесь дзвінками, повідомленнями, зарисовками, GIF-анімаціями приватно або в групах.";
+"invite_banner.invite_button_title" = "Запросити більше людей";

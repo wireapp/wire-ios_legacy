@@ -46,12 +46,12 @@ import CocoaLumberjackSwift
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
         self.containerView.cas_styleClass = "container-view"
-        
+
         self.playButton.translatesAutoresizingMaskIntoConstraints = false
         self.playButton.addTarget(self, action: #selector(AudioMessageCell.onActionButtonPressed(_:)), forControlEvents: .TouchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
-        
+
         self.downloadProgressView.translatesAutoresizingMaskIntoConstraints = false
         self.downloadProgressView.userInteractionEnabled = false
         self.downloadProgressView.accessibilityLabel = "AudioProgressView"
@@ -60,7 +60,7 @@ import CocoaLumberjackSwift
         self.timeLabel.numberOfLines = 1
         self.timeLabel.textAlignment = .Center
         self.timeLabel.accessibilityLabel = "AudioTimeLabel"
-        
+
         self.playerProgressView.setDeterministic(true, animated: false)
         self.playerProgressView.accessibilityLabel = "PlayerProgressView"
         
@@ -76,6 +76,8 @@ import CocoaLumberjackSwift
         self.timeLabel.font = self.timeLabel.font.monospacedFont()
 
         self.createConstraints()
+        
+        self.accessibilityElements = [self.playButton, self.timeLabel]
         
         let audioTrackPlayer = self.audioTrackPlayer()
         

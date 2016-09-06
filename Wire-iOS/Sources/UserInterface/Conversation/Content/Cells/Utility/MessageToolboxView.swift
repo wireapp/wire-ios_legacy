@@ -127,8 +127,10 @@ extension ZMConversationMessage {
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         
+        let canShowTooltip = !Settings.sharedSettings().likeTutorialCompleted && !message.hasReactions() && message.canBeLiked
+        
         // Show like tip
-        if let sender = message.sender where !Settings.sharedSettings().likeTutorialCompleted && !sender.isSelfUser && !message.hasReactions() {
+        if let sender = message.sender where !sender.isSelfUser && canShowTooltip {
             showReactionsView(message.hasReactions(), animated: false)
             self.likeTooltipArrow.hidden = false
             self.tapGestureRecogniser.enabled = message.hasReactions()

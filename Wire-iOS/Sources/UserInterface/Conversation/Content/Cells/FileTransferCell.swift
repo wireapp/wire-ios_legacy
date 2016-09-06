@@ -46,15 +46,16 @@ public class FileTransferCell: ConversationCell {
         self.topLabel.numberOfLines = 1
         self.topLabel.lineBreakMode = .ByTruncatingMiddle
         self.topLabel.accessibilityLabel = "FileTransferTopLabel"
+
         self.bottomLabel.numberOfLines = 1
         self.bottomLabel.accessibilityLabel = "FileTransferBottomLabel"
-        
+
         self.fileTypeIconView.accessibilityLabel = "FileTransferFileTypeIcon"
 
         self.actionButton.contentMode = .ScaleAspectFit
         self.actionButton.addTarget(self, action: #selector(FileTransferCell.onActionButtonPressed(_:)), forControlEvents: .TouchUpInside)
         self.actionButton.accessibilityLabel = "FileTransferActionButton"
-        
+
         self.progressView.accessibilityLabel = "FileTransferProgressView"
         self.progressView.userInteractionEnabled = false
         
@@ -69,6 +70,8 @@ public class FileTransferCell: ConversationCell {
         CASStyler.defaultStyler().styleItem(self)
         
         self.createConstraints()
+        
+        self.accessibilityElements = [topLabel, bottomLabel, fileTypeIconView, actionButton]
     }
     
     public required init?(coder aDecoder: NSCoder) {
