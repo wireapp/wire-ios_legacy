@@ -188,6 +188,7 @@
 "content.system.message_delivered_timestamp" = "Доставлено";
 "content.system.failedtosend_message_timestamp" = "Отправка не удалась.";
 "content.system.failedtosend_message_timestamp_resend" = "Отправить повторно";
+"content.system.like_tooltip" = "Нажмите, чтобы лайкнуть";
 "content.system.deleted_message_prefix_timestamp" = "Удалено %@";
 "content.system.edited_message_prefix_timestamp" = "Отредактировано %@";
 "content.system.connecting_to" = "Подключение к %@.\nНачните разговор";
