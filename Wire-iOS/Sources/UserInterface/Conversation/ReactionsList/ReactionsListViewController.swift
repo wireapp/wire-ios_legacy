@@ -21,7 +21,7 @@ import zmessaging
 import Cartography
 
 @objc public class ReactionsListViewController: UIViewController {
-    public let message: ZMMessage
+    public let message: ZMConversationMessage
     public let reactionsUsers: [ZMUser]
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
@@ -30,7 +30,7 @@ import Cartography
     public let dismissButton = IconButton.iconButtonDefault()
     public let titleLabel = UILabel()
     
-    public init(message: ZMMessage) {
+    public init(message: ZMConversationMessage) {
         self.message = message
 
         self.reactionsUsers = self.message.likers()
@@ -92,7 +92,7 @@ import Cartography
             separatorView.bottom == topBar.bottom
             separatorView.right == topBar.right
             separatorView.left == topBar.left
-            separatorView.height == 1
+            separatorView.height == 0.5
 
             titleLabel.center == topBar.center
             titleLabel.trailing <= dismissButton.leading - 4

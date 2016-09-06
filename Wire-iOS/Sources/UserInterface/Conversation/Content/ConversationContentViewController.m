@@ -508,10 +508,14 @@
     [Analytics shared].sessionSummary.imageContentsClicks++;
 }
 
-- (void)saveImage:(SavableImage *)savableImage
+- (void)saveImageFromCell:(ImageMessageCell *)cell
 {
-    [savableImage saveToLibraryWithCompletion:^{
-        [self.delegate conversationContentViewControllerDidSaveImage:self];
+    [cell.savableImage saveToLibraryWithCompletion:^{
+        UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
+        snapshot.translatesAutoresizingMaskIntoConstraints = YES;
+        snapshot.transform = CGAffineTransformInvert(self.tableView.transform); // UpsideDownTableView
+        CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
+        [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
     }];
 }
 
@@ -803,7 +807,7 @@
         case ConversationCellActionSave:
         {
             if ([cell isKindOfClass:ImageMessageCell.class]) {
-                [self saveImage:[(ImageMessageCell *)cell savableImage]];
+                [self saveImageFromCell:(ImageMessageCell *)cell];
             } else {
                 self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
                 [self openDocumentControllerForMessage:cell.message atIndexPath:[self.tableView indexPathForCell:cell] withPreview:NO];
