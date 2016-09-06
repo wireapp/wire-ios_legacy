@@ -64,6 +64,10 @@ extension ZMConversationMessage {
 }
 
 public extension Message {
+    
+    @objc static func setLikedMessage(message: ZMMessage, liked: Bool) {
+        return message.liked = liked
+    }
 
     @objc static func isLikedMessage(message: ZMMessage) -> Bool {
         return message.liked

@@ -825,6 +825,30 @@
             [self openSketchForMessage:cell.message];
         }
             break;
+        case ConversationCellActionLike:
+        {
+            BOOL liked = ![Message isLikedMessage:cell.message];
+            
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                [Message setLikedMessage:cell.message liked:liked];
+                
+                if (liked) {
+                    // Deselect if necessary to show list of likers
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                    }
+                } else {
+                    // Select if necessary to prevent message from collapsing
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    }
+                }
+            }];
+        }
+            break;
     }
 }
 
