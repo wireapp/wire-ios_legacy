@@ -886,7 +886,7 @@
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
 {
     if ([Message hasLikers:cell.message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message];
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
 }

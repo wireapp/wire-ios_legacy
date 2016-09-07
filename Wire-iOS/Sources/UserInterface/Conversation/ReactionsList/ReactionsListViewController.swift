@@ -25,17 +25,17 @@ import Cartography
     public let reactionsUsers: [ZMUser]
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
-    public let topBar = UIView()
-    public let separatorView = UIView()
+    private let topBar: ModalTopBar
     public let dismissButton = IconButton.iconButtonDefault()
     public let titleLabel = UILabel()
     
-    public init(message: ZMConversationMessage) {
+    public init(message: ZMConversationMessage, showsStatusBar: Bool) {
         self.message = message
-
+        topBar = ModalTopBar(forUseWithStatusBar: showsStatusBar)
         self.reactionsUsers = self.message.likers()
         super.init(nibName: .None, bundle: .None)
-        self.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+        self.modalPresentationStyle = .FormSheet
+        topBar.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -46,14 +46,7 @@ import Cartography
         super.viewDidLoad()
         
         self.title = "content.reactions_list.likers".localized.uppercaseString
-        self.titleLabel.text = self.title
-        
-        self.separatorView.cas_styleClass = "separator"
-        
-        dismissButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
-        dismissButton.addTarget(self, action: #selector(dismissPressed), forControlEvents: .TouchUpInside)
-        dismissButton.accessibilityIdentifier = "BackButton"
-        dismissButton.hitAreaPadding = CGSizeMake(20, 20)
+        self.topBar.title = self.title
         
         self.collectionViewLayout.scrollDirection = .Vertical
         self.collectionViewLayout.minimumLineSpacing = 0
@@ -70,42 +63,26 @@ import Cartography
         self.collectionView.scrollEnabled = true
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.collectionView)
-        
-        self.topBar.addSubview(titleLabel)
-        self.topBar.addSubview(separatorView)
-        self.topBar.addSubview(dismissButton)
         self.view.addSubview(self.topBar)
         
         constrain(self.view, self.collectionView, self.topBar) { selfView, collectionView, topBar in
-            topBar.top == selfView.top + 20
+            topBar.top == selfView.top
             topBar.left == selfView.left
             topBar.right == selfView.right
-            topBar.height == 44
-        
+
             collectionView.left == selfView.left
             collectionView.right == selfView.right
             collectionView.bottom == selfView.bottom
             collectionView.top == topBar.bottom
         }
-        
-        constrain(self.topBar, self.titleLabel, self.dismissButton, self.separatorView) { topBar, titleLabel, dismissButton, separatorView in
-            separatorView.bottom == topBar.bottom
-            separatorView.right == topBar.right
-            separatorView.left == topBar.left
-            separatorView.height == 0.5
 
-            titleLabel.center == topBar.center
-            titleLabel.trailing <= dismissButton.leading - 4
-            
-            dismissButton.centerY == topBar.centerY
-            dismissButton.trailing == topBar.trailing - 16
-        }
-        
         CASStyler.defaultStyler().styleItem(self)
     }
-    
-    @objc public func dismissPressed(button: AnyObject!) {
-        self.dismissViewControllerAnimated(true, completion: .None)
+}
+
+extension ReactionsListViewController: ModalTopBarDelegate {
+    public func modelTopBarWantsToBeDismissed(topBar: ModalTopBar) {
+        dismissViewControllerAnimated(true, completion: .None)
     }
 }
 
