@@ -55,7 +55,7 @@ public extension ConversationCell {
         if sender is LikeButton {
             interactionMethod = .Button
         }
-        if sender is UIMenuItem {
+        if sender is UIMenuController {
             interactionMethod = .Menu
         }
         if sender is UITapGestureRecognizer {
