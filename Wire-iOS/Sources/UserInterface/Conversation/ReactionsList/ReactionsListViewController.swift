@@ -78,6 +78,10 @@ import Cartography
 
         CASStyler.defaultStyler().styleItem(self)
     }
+    
+    override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return self.dynamicType.wr_supportedInterfaceOrientations()
+    }
 }
 
 extension ReactionsListViewController: ModalTopBarDelegate {
