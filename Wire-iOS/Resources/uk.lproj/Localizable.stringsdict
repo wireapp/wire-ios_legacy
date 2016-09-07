@@ -85,7 +85,7 @@
 		<key>list.connect_request.people_waiting</key>
 		<dict>
 			<key>NSStringLocalizedFormatKey</key>
-			<string>%#@d_number_of_people@ очікують</string>
+			<string>%#@d_number_of_people@ очікує</string>
 			<key>d_number_of_people</key>
 			<dict>
 				<key>NSStringFormatSpecTypeKey</key>
@@ -95,13 +95,13 @@
 				<key>zero</key>
 				<string></string>
 				<key>one</key>
-				<string>Один учасник</string>
+				<string>Одна людина</string>
 				<key>few</key>
-				<string>%d учасники</string>
+				<string>%d людей</string>
 				<key>many</key>
-				<string>%d учасників</string>
+				<string>%d людей</string>
 				<key>other</key>
-				<string>%d учасників</string>
+				<string>%d людей</string>
 			</dict>
 		</dict>
 		<key>content.system.participants_n_others</key>
