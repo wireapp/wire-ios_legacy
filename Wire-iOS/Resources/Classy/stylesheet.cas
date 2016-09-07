@@ -1325,11 +1325,6 @@ ReactionsListViewController {
     view: @{
         backgroundColor: $color-text-background;
     }
-    
-    titleLabel: @{
-        font: $font-small-medium;
-        textColor: $color-text-foreground;
-    }
 }
 
 ReactionCell {

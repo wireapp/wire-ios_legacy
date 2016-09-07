@@ -30,7 +30,14 @@ class ReactionsListViewControllerTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersReactionsListViewController() {
-        let sut = ReactionsListViewController(message: message)
+        let sut = ReactionsListViewController(message: message, showsStatusBar: true)
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersReactionsListViewController_NoStatusBar() {
+        let sut = ReactionsListViewController(message: message, showsStatusBar: false)
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         verify(view: sut.view)
