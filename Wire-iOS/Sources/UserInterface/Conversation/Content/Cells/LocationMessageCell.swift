@@ -56,6 +56,7 @@ import AddressBook
         mapView.showsPointsOfInterest = true
         mapView.showsBuildings = true
         mapView.userInteractionEnabled = false
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openInMaps)))
         messageContentView.addSubview(containerView)
         [mapView, addressContainerView].forEach(containerView.addSubview)
         addressContainerView.addSubview(addressLabel)

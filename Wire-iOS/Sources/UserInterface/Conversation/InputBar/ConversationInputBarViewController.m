@@ -55,6 +55,7 @@
 #import "Wire-Swift.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Borders.h"
+#import "ImageMessageCell.h"
 
 #import "Wire-Swift.h"
 
@@ -556,6 +557,25 @@
             [self.sendController sendTextMessage:candidateText];
         }
     }
+}
+
+#pragma mark - Animations
+
+- (void)bounceCameraIcon;
+{
+    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.3, 1.3);
+    
+    dispatch_block_t scaleUp = ^{
+        self.photoButton.transform = scaleTransform;
+    };
+    
+    dispatch_block_t scaleDown = ^{
+        self.photoButton.transform = CGAffineTransformIdentity;
+    };
+
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:scaleUp completion:^(__unused BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:scaleDown completion:nil];
+    }];
 }
 
 @end

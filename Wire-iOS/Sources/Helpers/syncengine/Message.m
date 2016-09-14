@@ -100,7 +100,7 @@
 
 + (BOOL)isNormalMessage:(id<ZMConversationMessage>)message
 {
-    return [self isTextMessage:message] || [self isImageMessage:message] || [self isKnockMessage:message] || [self isFileTransferMessage:message] || [self isVideoMessage:message] || [self isAudioMessage:message] || [self isLocationMessage:message] ;
+    return [self isTextMessage:message] || [self isImageMessage:message] || [self isKnockMessage:message] || [self isFileTransferMessage:message] || [self isVideoMessage:message] || [self isAudioMessage:message] || [self isLocationMessage:message];
 }
 
 + (BOOL)isConnectionRequestMessage:(id<ZMConversationMessage>)message
@@ -119,6 +119,11 @@
     return NO;
 }
 
++ (BOOL)isDeletedMessage:(id<ZMConversationMessage>)message
+{
+    return [Message isSystemMessage:message] && ((ZMSystemMessage *)message).systemMessageType == ZMSystemMessageTypeMessageDeletedForEveryone;
+}
+
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message
 {
     // Today's date
@@ -132,17 +137,29 @@
     return [serverTimestamp wr_formattedDate];
 }
 
-+ (NSDateFormatter *)longVersionDateFormatter
++ (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message
 {
-    static NSDateFormatter *longVersionDateFormatter = nil;
+    BOOL allowedType =  [Message isTextMessage:message] ||
+                        [Message isImageMessage:message] ||
+                        [Message isFileTransferMessage:message] ||
+                        [Message isKnockMessage:message] ||
+                        [Message isLocationMessage:message] ||
+                        [Message isDeletedMessage:message];
+    
+    return allowedType;
+}
+
++ (NSDateFormatter *)shortVersionDateFormatter
+{
+    static NSDateFormatter *shortVersionDateFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        longVersionDateFormatter = [[NSDateFormatter alloc] init];
-        [longVersionDateFormatter setDateStyle:NSDateFormatterFullStyle];
-        [longVersionDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        shortVersionDateFormatter = [[NSDateFormatter alloc] init];
+        [shortVersionDateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [shortVersionDateFormatter setTimeStyle:NSDateFormatterNoStyle];
     });
     
-    return longVersionDateFormatter;
+    return shortVersionDateFormatter;
 }
 
 + (NSDateFormatter *)longVersionTimeFormatter
@@ -156,39 +173,6 @@
     });
     
     return longVersionTimeFormatter;
-}
-
-+ (NSString *)formattedTimestampStringLongVersion:(NSDate *)timestamp
-{
-    NSString *dateString = [self.longVersionDateFormatter stringFromDate:timestamp];
-    NSString *timeString = [self.longVersionTimeFormatter stringFromDate:timestamp];
-
-    return [NSString stringWithFormat:@"%@ ∙ %@", dateString, timeString];
-}
-
-+ (NSString *)formattedReceivedDateLongVersion:(id<ZMConversationMessage>)message
-{
-    if (message.deliveryState == ZMDeliveryStateDelivered) {
-        return [self formattedTimestampStringLongVersion:message.serverTimestamp];
-    } else if (message.deliveryState == ZMDeliveryStatePending) {
-        return NSLocalizedString(@"content.system.pending_message_timestamp", @"");
-    } else {
-        return NSLocalizedString(@"content.system.failedtosend_message_timestamp", @"");
-    }
-}
-
-+ (NSString *)formattedDeletedDateForMessage:(id <ZMConversationMessage>)message
-{
-    NSString *receivedDate = [self formattedTimestampStringLongVersion:message.serverTimestamp];
-    NSString *localizedDeletedFormat = NSLocalizedString(@"content.system.deleted_message_prefix_timestamp", @"");
-    return [NSString stringWithFormat:localizedDeletedFormat, receivedDate];
-}
-
-+ (NSString *)formattedEditedDateForMessage:(id <ZMConversationMessage>)message
-{
-    NSString *receivedDate = [self formattedTimestampStringLongVersion:message.updatedAt];
-    NSString *localizedEditedFormat = NSLocalizedString(@"content.system.edited_message_prefix_timestamp", @"");
-    return [NSString stringWithFormat:localizedEditedFormat, receivedDate];
 }
 
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message

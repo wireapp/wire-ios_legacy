@@ -25,8 +25,9 @@
 #import "Analytics+iOS.h"
 
 @class ConversationCell;
-@class MessageTimestampView;
+@class MessageToolboxView;
 @class AnalyticsTracker;
+@class LikeButton;
 
 
 typedef NS_ENUM(NSUInteger, ConversationCellAction) {
@@ -35,7 +36,9 @@ typedef NS_ENUM(NSUInteger, ConversationCellAction) {
     ConversationCellActionDelete,
     ConversationCellActionPresent,
     ConversationCellActionSave,
-    ConversationCellActionEdit
+    ConversationCellActionEdit,
+    ConversationCellActionSketch,
+    ConversationCellActionLike
 };
 
 extern const CGFloat ConversationCellSelectedOpacity;
@@ -56,6 +59,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @property (nonatomic, assign) BOOL showSender;
 @property (nonatomic, assign) BOOL showBurstTimestamp;
+@property (nonatomic, assign) BOOL alwaysShowDeliveryState;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
 @property (nonatomic, strong) NSArray *linkAttachments;
@@ -68,11 +72,12 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @optional
 /// Called on touch up inside event on the user image (@c fromImage)
 - (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view;
-- (void)conversationCell:(ConversationCell *)cell resendMessageTapped:(ZMMessage *)message;
+- (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
 - (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId;
+- (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-
+- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
 @end
 
 
@@ -83,6 +88,8 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) id<ZMConversationMessage>message;
 @property (nonatomic, readonly) UILabel *authorLabel;
 @property (nonatomic, readonly) UIView *messageContentView;
+@property (nonatomic) LikeButton *likeButton;
+@property (nonatomic, readonly) MessageToolboxView *messageToolboxView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
 

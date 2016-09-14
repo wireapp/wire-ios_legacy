@@ -39,6 +39,7 @@
 
 
 
+
 @interface Message (DataIdentifier)
 
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message;
@@ -67,10 +68,11 @@
 
 @property (nonatomic, strong) FLAnimatedImageView *fullImageView;
 @property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
+@property (nonatomic, strong) IconButton *sketchButton;
+@property (nonatomic, strong) IconButton *fullScreenButton;
 @property (nonatomic, strong) UIView *imageViewContainer;
-@property (nonatomic, strong) IconButton *resendButton;
-@property (nonatomic, strong) UIView *resendButtonContainer;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@property (nonatomic) SavableImage *savableImage;
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic, strong) id<MediaAsset> image;
@@ -173,6 +175,8 @@ static ImageCache *imageCache(void)
 {
     self.imageViewContainer = [[UIView alloc] init];
     self.imageViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageViewContainer.isAccessibilityElement = YES;
+    self.imageViewContainer.accessibilityTraits = UIAccessibilityTraitImage;
     [self.messageContentView addSubview:self.imageViewContainer];
         
     self.fullImageView = [[FLAnimatedImageView alloc] init];
@@ -183,27 +187,27 @@ static ImageCache *imageCache(void)
 
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.loadingView];
-    
-    self.resendButtonContainer = [[UIView alloc] initForAutoLayout];
-    self.resendButtonContainer.backgroundColor = UIColor.whiteColor;
-    [self addSubview:self.resendButtonContainer];
-    
-    self.resendButton = [[IconButton alloc] init];
-    self.resendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.resendButton.cas_styleClass = @"resend-button";
-    [self.resendButton setIcon:ZetaIconTypeRedo withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
-    [self.resendButton addTarget:self action:@selector(resendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.resendButtonContainer addSubview:self.resendButton];
-    
+  
     self.accessibilityIdentifier = @"ImageCell";
-    
     self.loadingView.hidden = NO;
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.resendButtonContainer.layer.cornerRadius = CGRectGetWidth(self.resendButtonContainer.bounds) / 2;
+    
+    self.sketchButton = [IconButton iconButtonCircularLight];
+    [self.sketchButton addTarget:self action:@selector(onSketchPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sketchButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.sketchButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    self.sketchButton.alpha = self.selected ? 1 : 0;
+    self.sketchButton.accessibilityIdentifier = @"sketchOnImageButton";
+    self.sketchButton.isAccessibilityElement = YES;
+    [self.imageViewContainer addSubview:self.sketchButton];
+    
+    self.fullScreenButton = [IconButton iconButtonCircularLight];
+    [self.fullScreenButton addTarget:self action:@selector(onFullScreenPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.fullScreenButton setIcon:ZetaIconTypeFullScreen withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.fullScreenButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    self.fullScreenButton.alpha = self.selected ? 1 : 0;
+    self.fullScreenButton.accessibilityIdentifier = @"openFullScreenButton";
+    self.fullScreenButton.isAccessibilityElement = YES;
+    [self.imageViewContainer addSubview:self.fullScreenButton];
 }
 
 - (void)createConstraints
@@ -214,18 +218,19 @@ static ImageCache *imageCache(void)
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
     [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [NSLayoutConstraint autoSetPriority:ALLayoutPriorityDefaultHigh + 1 forConstraints:^{
+        [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         self.imageWidthConstraint = [self.imageViewContainer autoSetDimension:ALDimensionWidth toSize:0];
     }];
     
-    [self.resendButtonContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:13];
-    [self.resendButtonContainer autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    [self.resendButtonContainer autoSetDimension:ALDimensionWidth toSize:24];
-    [self.resendButtonContainer autoConstrainAttribute:ALAttributeHeight toAttribute:ALAttributeWidth ofView:self.resendButtonContainer];
+    [self.sketchButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:16];
+    [self.sketchButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
+    [self.sketchButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
     
-    [self.resendButton autoCenterInSuperview];
+    [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
+    [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
+    [self.fullScreenButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
 }
 
  - (void)updateImageMessageConstraintConstants
@@ -248,17 +253,10 @@ static ImageCache *imageCache(void)
         
         if (! self.imageAspectConstraint) {
             CGFloat aspectRatio = self.originalImageSize.height / self.originalImageSize.width;
-            [NSLayoutConstraint autoSetPriority:ALLayoutPriorityDefaultHigh + 1 forConstraints:^{
+            [NSLayoutConstraint autoSetPriority:ALLayoutPriorityRequired forConstraints:^{
                 self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imageViewContainer withMultiplier:aspectRatio];
             }];
         }
-    }
-}
-
-- (void)resendButtonPressed:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:resendMessageTapped:)]) {
-        [self.delegate conversationCell:self resendMessageTapped:self.message];
     }
 }
 
@@ -268,8 +266,6 @@ static ImageCache *imageCache(void)
         return;
     }
     id<ZMImageMessageData> imageMessageData = convMessage.imageMessageData;
-
-    self.resendButtonContainer.hidden = convMessage.deliveryState != ZMDeliveryStateFailedToSend;
     
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
@@ -341,9 +337,37 @@ static ImageCache *imageCache(void)
         [self.loadingView stopProgressAnimation];
         [self.fullImageView setMediaAsset:image];
         [self showImageView:self.fullImageView];
+        [self updateSavableImage];
     } else {
+        self.savableImage = nil;
         [self.fullImageView setMediaAsset:nil];
     }
+}
+
+- (void)updateSavableImage
+{
+    NSData *data = self.message.imageMessageData.mediumData;
+    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
+    self.savableImage = [[SavableImage alloc] initWithData:data orientation:orientation];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    [self updateAccessibilityElements];
+
+    dispatch_block_t changeBlock = ^{
+        self.sketchButton.alpha = self.selected ? 1 : 0;
+        self.fullScreenButton.alpha = self.selected ? 1 : 0;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.15 animations:changeBlock completion:nil];
+    }
+    else {
+        changeBlock();
+    }
+    
 }
 
 - (void)showImageView:(UIView *)imageView
@@ -356,6 +380,26 @@ static ImageCache *imageCache(void)
     self.image = nil;
 }
 
+- (void)updateAccessibilityElements
+{
+    NSMutableArray *elements = @[self.imageViewContainer].mutableCopy;
+    if (self.selected) {
+        [elements addObjectsFromArray:@[self.sketchButton, self.fullScreenButton, self.imageViewContainer]];
+    }
+
+    self.accessibilityElements = elements;
+}
+
+#pragma mark - Actions
+
+- (void)onFullScreenPressed:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:ConversationCellActionPresent];
+}
+
+- (void)onSketchPressed:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketch];
+}
+
 #pragma mark - Message updates
 
 /// Overriden from the super class cell
@@ -365,13 +409,6 @@ static ImageCache *imageCache(void)
     
     if (change.imageChanged) {
         [self configureForMessage:self.message layoutProperties:self.layoutProperties];
-    }
-    
-    if (change.deliveryStateChanged) {
-        BOOL hidden = change.message.deliveryState != ZMDeliveryStateFailedToSend;
-        [UIView animateWithDuration:0.2 animations:^{
-            self.resendButtonContainer.hidden = hidden;
-        }];
     }
     
     return needsLayout;
@@ -391,7 +428,7 @@ static ImageCache *imageCache(void)
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:)) {
+    else if (action == @selector(copy:) || action == @selector(saveImage)) {
         return self.fullImageView.image != nil;
     }
     else if (action == @selector(paste:)) {
@@ -442,10 +479,19 @@ static ImageCache *imageCache(void)
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
+    UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
+    properties.additionalItems = @[saveItem];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };
     return properties;
+}
+
+- (void)saveImage
+{
+    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
+        [self.delegate conversationCell:self didSelectAction:ConversationCellActionSave];
+    }
 }
 
 - (MessageType)messageType;

@@ -718,11 +718,20 @@ GroupConversationHeader {
     }
 }
 
-MessageTimestampView {
-    timestampLabel: @{
+MessageToolboxView {
+    statusLabel: @{
         font: $font-small-light;
+        backgroundColor: clear;
+        textColor: $color-text-dimmed;
+        textContainerInset: 0, 0, 0, 0;
+    }
+    likeTooltipArrow: @{
+        font: $font-small-light;
+        backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
+    backgroundColor: clear;
+    clipsToBounds: true;
 }
 
 ^ConversationCell {
@@ -1309,3 +1318,22 @@ NoHistoryViewController {
 UIView.status-bar-overlay {
     backgroundColor: $color-background;
 }
+
+/* Reactions list */
+
+ReactionsListViewController {
+    view: @{
+        backgroundColor: $color-text-background;
+    }
+}
+
+ReactionCell {
+    contentView: @{
+        backgroundColor: $color-text-background;
+    }
+    userNameLabel: @{
+        font: $font-normal;
+        textColor: $color-text-foreground;
+    }
+}
+

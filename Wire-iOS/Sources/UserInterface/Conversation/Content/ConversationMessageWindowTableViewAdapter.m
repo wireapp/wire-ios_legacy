@@ -135,11 +135,11 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
             [self.tableView moveRowAtIndexPath:from toIndexPath:to];
         }];
         
-        // Unless a message was appended to the bottom of the conversation we need re-configure the cells
-        // since they might (not) need to display an name & avatar after the insertion/deletion/move.
-        BOOL messageWasInsertedAtBottom = change.insertedIndexes.count == 1 && change.insertedIndexes.firstIndex == 0;
-        if (! messageWasInsertedAtBottom || change.deletedIndexes.count > 0 || change.movedIndexPairs.count > 0) {
-            [self reconfigureVisibleCells];
+        if (change.insertedIndexes.count > 0 || change.deletedIndexes.count > 0 || change.movedIndexPairs.count > 0) {
+            // deleted index paths need to be passed in because this method is called before `endUpdates`, when
+            // the cells have not yet been removed from the view but the messages they refer to can not be
+            // materialized anymore
+            [self reconfigureVisibleCellsWithDeletedIndexPaths:[NSSet setWithArray:[change.deletedIndexes indexPaths]]];
         }
         
         [self.tableView endUpdates];
@@ -149,15 +149,24 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 - (void)setEditingMessage:(ZMMessage *)editingMessage
 {
     _editingMessage = editingMessage;
-    [self reconfigureVisibleCells];
+    [self reconfigureVisibleCellsWithDeletedIndexPaths:nil];
 }
 
-- (void)reconfigureVisibleCells
+- (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths
 {
     for (ConversationCell *cell in self.tableView.visibleCells) {
         
         if (! [cell isKindOfClass:ConversationCell.class]) {
             continue;
+        }
+        
+        // ignore deleted cells, or it will configure them, which might be
+        // unsafe if the original message was deleted
+        if (deletedIndexPaths != nil) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            if ([deletedIndexPaths containsObject:indexPath]) {
+                continue;
+            }
         }
         
         [self configureConversationCell:cell withMessage:cell.message];

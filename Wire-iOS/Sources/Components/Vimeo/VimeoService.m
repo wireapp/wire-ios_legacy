@@ -21,9 +21,7 @@
 #import "MediaPreviewView.h"
 #import "MediaPreviewData+Vimeo.h"
 
-#import <VIMNetworking/VIMSession.h>
-#import <VIMNetworking/VIMAccount.h>
-#import <VIMNetworking/VIMVideo.h>
+@import VIMNetworkingFramework;
 
 
 

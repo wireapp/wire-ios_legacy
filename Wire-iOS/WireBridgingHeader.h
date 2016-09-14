@@ -29,6 +29,7 @@
 #import "Settings.h"
 #import "AppDelegate.h"
 #import "Message.h"
+#import "Message+Private.h"
 
 // UI
 @import WireExtensionComponents;
@@ -48,7 +49,8 @@
 #import <SCSiriWaveformView/SCSiriWaveformView.h>
 #import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController+Private.h"
-#import "MessageTimestampView.h"
+#import "StackView.h"
+#import "SearchResultCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -81,7 +83,6 @@
 #import "UIColor+MagicAccess.h"
 #import "Analytics.h"
 #import "Analytics+iOS.h"
-#import "AddressBookHelper.h"
 #import "NSURL+WireURLs.h"
 #import "NSURL+WireLocale.h"
 #import "Analytics+ProfileEvents.h"

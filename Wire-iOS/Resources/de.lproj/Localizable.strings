@@ -17,16 +17,9 @@
 //
 
 
-
 "general.ok" = "OK";
 "general.cancel" = "Abbrechen";
 "general.open_settings" = "Wire-Einstellungen öffnen";
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Alert View - Version verification
-"version.outofdate.alert.title" = "Wichtiges Update";
-"version.outofdate.alert.message" = "Bitte installiere die neueste Version von Wire.";
-"version.outofdate.alert.downloadbutton" = "Download";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,22 +50,8 @@
 /*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "Kontakte teilen";
 
-"peoplepicker.all_search_results_added" = "Alle deine Kontakte sind bereits in dieser Unterhaltung";
-
-"peoplepicker.share_contacts_dialog.title" = "Kontakte teilen";
-"peoplepicker.share_contacts_dialog.message_short" = "Wir verwenden deine Kontaktdaten, um dich mit anderen zu verbinden";
-"peoplepicker.share_contacts_dialog.message_long" = "Wir anonymisieren die E-Mail-Adressen und Telefonnummern und ordnen sie den empfohlenen Kontakten zu. Wir geben diese Informationen nicht an andere weiter.";
-"peoplepicker.share_contacts_dialog.action_more" = "Mehr";
-"peoplepicker.share_contacts_dialog.action_maybe_later" = "Vielleicht später";
-
-"peoplepicker.share_contacts_dialog.share" = "Teilen";
-
-
-"peoplepicker.share_contacts_dialog.short_title" = "Teile deine Kontakte";
-
 "peoplepicker.share_contacts.no_results.title" = "Finde andere mit ihrem Namen oder ihrer E-Mail";
 
-"peoplepicker.send_invitation.title" = "Einladung versenden";
 "peoplepicker.send_invitation.dialog.title" = "Einladung versendet";
 "peoplepicker.send_invitation.dialog.message" = "Diese Einladung ist 2 Wochen gültig. Sende eine neue, wenn diese abläuft.";
 "peoplepicker.send_invitation.dialog.ok" = "OK";
@@ -88,14 +67,9 @@
 "contacts_ui.connection_request" = "Kontaktanfrage erhalten";
 "contacts_ui.action_button.invite" = "Einladen";
 "contacts_ui.action_button.open" = "Öffnen";
-"contacts_ui.action_button.add" = "Hinzufügen";
-"contacts_ui.invite_sheet.resend_title" = "Einladung erneut senden?";
 "contacts_ui.invite_sheet.cancel_button_title" = "Abbrechen";
 "contacts_ui.notification.invitation_sent" = "Einladung gesendet";
 "contacts_ui.notification.invitation_failed" = "Einladung senden fehlgeschlagen";
-"contacts_ui.invite_sheet.resend_unable.title" = "%@ ist bereits bei Wire";
-"contacts_ui.invite_sheet.resend_unable.message" = "Kontaktanfrage gesendet";
-"contacts_ui.invite_sheet.resend_unable.ok_button_title" = "OK";
 "contacts_ui.title" = "Freunde einladen";
 
 "contacts_ui.no_contact.title" = "Keine aktiven Unterhaltungen\n";
@@ -121,7 +95,6 @@
 "send_invitation.text" = "Ich bin bei Wire. Suche nach %@ \noder gehe auf https://get.wire.com, um mich als Kontakt hinzuzufügen.";
 "send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf https://get.wire.com, um mich als Kontakt hinzuzufügen.";
 
-
 "send_personal_invitation.text" = "Lass uns zu Wire wechseln: https://get.wire.com";
 
 
@@ -136,36 +109,26 @@
 "notifications.in_conversation" = "%@ - %@";
 "notifications.this_conversation" = "%@ in dieser Unterhaltung";
 
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.start_conversation" = "Unterhaltung beginnen";
-"list.tutorial.pull_up" = "Ziehen, um Archiv zu öffnen";
 "list.archived_conversations" = "Archiv";
-"list.archive_menu_item" = "Archivieren";
-"list.archive_menu_item_progress" = "Archiviere…";
-"list.release_to_load_archived_conversations" = "Zum Laden loslassen";
 "list.archived_conversations_close" = "Archiv schliessen";
-"list.release_to_close_archived_conversations" = "Zum Schließen loslassen";
-"list.empty_message" = "Finde andere mit ihrem Namen oder E-Mail, oder sende eine Einladung";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
-
 "conversation.invite_more_people.title" = "Sag es weiter!";
 "conversation.invite_more_people.description" = "Personen zur Unterhaltung hinzufügen";
-"conversation.invite_more_people.explanation" = "Wie funktioniert das?";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
 "conversation.invite_more_people.button_title" = "Personen hinzufügen";
 
 // Conversation names
-"conversation.displayname.emptygroup" = "Leere Unterhaltung";
-"conversation.displayname.onepersonleft" = "%@ - Gruppe";
+"conversation.displayname.emptygroup" = "Leere Gruppe - Gespräch";
 
 "conversation.input_bar.verified" = "Überprüft";
 "conversation.input_bar.placeholder" = "Schreibe eine Nachricht";
-"conversation.input_bar.new" = "Neu";
 
-"conversation.input_bar.audio_message.tooltip.longpress" = "Zum Senden von Audio, tippe und halte";
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Zum Senden nach oben Wischen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tippe, um zu senden";
 "conversation.input_bar.audio_message.too_long.title" = "Die Aufnahme wurde beendet";
@@ -221,7 +184,11 @@
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
 "content.system.pending_message_timestamp" = "Senden…";
-"content.system.failedtosend_message_timestamp" = "Nicht gesendete Nachricht.";
+"content.system.message_sent_timestamp" = "Gesendet";
+"content.system.message_delivered_timestamp" = "Zugestellt";
+"content.system.failedtosend_message_timestamp" = "Senden fehlgeschlagen.";
+"content.system.failedtosend_message_timestamp_resend" = "Erneut senden";
+"content.system.like_tooltip" = "Gefällt mir";
 "content.system.deleted_message_prefix_timestamp" = "Gelöscht am %@";
 "content.system.edited_message_prefix_timestamp" = "Bearbeitet am %@";
 "content.system.connecting_to" = "Warte auf Bestätigung deiner Kontaktanfrage an %@";
@@ -238,7 +205,7 @@
 "content.system.started_using" = "benutzt";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
-"content.system.unverified" = "%@ hast die Überprüfung für ein Gerät von %@ widerrufen"; // exemple "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ hast die Überprüfung für ein Gerät von %@ widerrufen"; // example "You unverified one of Jule's devices"
 "content.system.your_devices" = "deine Geräte";
 "content.system.other_devices" = "%@s Geräte";
 
@@ -259,14 +226,19 @@
 "content.file.downloading" = "Herunterladen…";
 "content.file.upload_failed" = "Hochladen fehlgeschlagen";
 "content.file.upload_cancelled" = "Hochladen abgebrochen";
-"content.file.download_failed" = "Herunterladen fehlgeschlagen";
 "content.file.upload_video" = "Videos";
 "content.file.take_video" = "Video aufnehmen und hochladen";
 
 "content.file.save_video" = "Speichern";
 "content.file.save_audio" = "Speichern";
+"content.image.save_image" = "Speichern";
 
 "content.message.delete" = "Löschen";
+
+"content.message.like" = "Gefällt mir";
+"content.message.unlike" = "Gefällt mir nicht mehr";
+
+"content.reactions_list.likers" = "Gefällt";
 
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
 // Someone pinged
@@ -278,37 +250,23 @@
 // Inline Player
 "content.player.unable_to_play" = "MUSIK NICHT ABSPIELBAR";
 
-
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Füge %@ als Kontakt hinzu"; // check UPPERCASE implementation in code
-"connection_request.default_text" = "Schreibe eine Nachricht, um %@ als Kontakt hinzuzufügen.";
 "missive.connection_request.default_message" = "Hallo %@,\nbitte füge mich als Kontakt hinzu.\n%@";
-"missive.connection_request.invitation_from_link_message" = "Hallo,\ndanke für die Einladung. Bitte füge mich als Kontakt hinzu.\n%@";
 
 "connection_request.send_button_title" = "Kontaktanfrage";
-// MISSING: "missive.cancel_button_title" = Cancel;
 "inbox.connection_request.connect_button_title" = "Akzeptieren";
-// MISSING: "inbox.connection_request.block_button_title" = Block;
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
-"connection_request.pending_dialog_button_ok" = "OK";
-"connection_request.pending_dialog_message" = "Bitte verbinde dich mit %@, um Nachrichten und Bilder zu teilen";
-"connection_request.pending_dialog_title" = "Ausstehend";
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@\nAnruf";
-"voice.status.one_to_one.incoming_video" = "%@\nVideoanruf";
 "voice.status.group_call.incoming" = "%@\nAnruf";
 "voice.status.one_to_one.outgoing" = "%@\nAnruf";
 "voice.status.joining" = "%@\nVerbinden";
-"voice.status.connected" = "%@\n%@";
 "voice.status.video_not_available" = "Video deaktiviert";
 "voice.status.low_connection" = "Schlechte Verbindung";
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.network_error.body" = "Du brauchst eine Internetverbindung, um anzurufen. Überprüfe die Verbindung und versuche es erneut.";
-"voice.alert.end_current_call.title" = "Anruf annehmen?";
-"voice.alert.end_current_call.message" = "Dein aktueller Anruf wird beendet.";
-"voice.alert.end_current_call.cancel" = "Abbrechen";
-"voice.alert.end_current_call.accept" = "Annehmen";
 "voice.alert.call_in_progress.title" = "Laufendes Gespräch";
 "voice.alert.call_in_progress.message" = "Ein anderes deiner Geräte nimmt bereits an diesem Gespräch teil";
 "voice.alert.call_in_progress.confirm" = "Ok";
@@ -325,20 +283,11 @@
 "voice.alert.camera_warning.title" = "Wire benötigt Zugriff auf die Kamera.";
 "voice.alert.camera_warning.explanation" = "Gehe zu den Einstellungen und erlaube Wire Zugriff auf die Kamera.";
 
-// Animated gif limit size dialog
-// MISSING"conversation.gif_limit_size.title" = "This picture is too large";
-// MISSING"conversation.gif_limit_size.message" = "You can upload files up to 5 MB";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-
-
-"meta.group_name" = "Gruppenname"; // NOT USED
-
 "participants.add_people_button_title" = "Kontakte hinzufügen";
-
-// Pull down/up labels
-"meta.bottom_options" = "Optionen";
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";
@@ -352,16 +301,13 @@
 "meta.menu.cancel_connection_request" = "Kontaktanfrage abbrechen";
 
 // Delete conversation
-
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
 "meta.menu.delete_content.dialog_message" = "Der Verlauf wird geleert und die Unterhaltung aus der Liste entfernt.";
 "meta.menu.delete_content.leave_as_well_message" = "Unterhaltung verlassen";
 "meta.menu.delete_content.button_cancel" = "Abbrechen";
 "meta.menu.delete_content.button_delete" = "Löschen";
 
-
 // Leave conversation
-
 "meta.leave_conversation_dialog_title" = "Unterhaltung verlassen?";
 "meta.leave_conversation_dialog_message" = "Andere Teilnehmer werden benachrichtigt und die Unterhaltung aus der Liste entfernt.";
 "meta.leave_conversation.delete_content_as_well_message" = "Unterhaltungsverlauf löschen";
@@ -373,13 +319,7 @@
 "meta.degraded.degradation_reason_message.plural" = "%@ haben neue Geräte hinzugefügt.";
 "meta.degraded.dialog_message" = "Möchtest du die Nachricht noch senden?";
 "meta.degraded.show_device_button" = "Gerät anzeigen";
-"meta.degraded.show_people_button" = "Personen anzeigen";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
-
-// You left this conversation dialogue (not visible in UI right now)
-"profile.left_conversation_dialog_title" = "Nicht verfügbar";
-"profile.left_conversation_dialog_message" = "Du kannst an dieser Unterhaltung nicht teilnehmen, wenn du nicht eingeladen wirst";
-"profile.left_conversation_dialog_button_ok" = "OK";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Entfernen?";
@@ -396,7 +336,7 @@
 // Delete message dialog
 "message.delete_dialog.message" = "Dies kann nicht rückgängig gemacht werden.";
 "message.delete_dialog.action.cancel" = "Abbrechen";
-"message.delete_dialog.action.hide" = "Nur für mich löschen";
+"message.delete_dialog.action.hide" = "Für mich löschen";
 "message.delete_dialog.action.delete" = "Für alle löschen";
 
 // Edit message
@@ -445,19 +385,11 @@
 // General strings
 "general.confirm" = "OK";
 
-// Error when trying to create group conv. from one-to-one with someone who blocked you
-// MISSING: "profile.add_blocked_error_dialog.title" = "Not available";
-// MISSING: "profile.add_blocked_error_dialog.message" = "%@ does not want to be added to group conversations.";
-// MISSING: "profile.add_blocked_error_dialog.button" = "Continue";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
-// Firs-time tutorial/discoverability
-
-
-
-"self.tutorial.bottom_prompt" = "Ziehen für Optionen"; // NOT USED
-
 // Options menu contents
+
 "self.settings" = "Einstellungen";
 "self.help_center" = "Hilfe";
 "self.about" = "Über Wire";
@@ -467,10 +399,6 @@
 "self.add_phone_number" = "Telefonnummer hinzufügen";
 "self.add_email_password" = "E-Mail und Passwort hinzufügen";
 
-// Remove picture dialog
-"self.remove_pic.cancel" = "Abbrechen";
-"self.remove_pic.remove" = "Entfernen";
-
 // About screen
 "about.tos.title" = "Nutzungsbedingungen";
 "about.privacy.title" = "Datenschutzrichtlinie";
@@ -479,7 +407,6 @@
 "about.copyright.title" = "© %d Wire Swiss GmbH";
 
 // Self new devices
-
 "self.new_device_alert.title" = "Du hast %@ zu deinem Account hinzugefügt";
 "self.new_device_alert.title_prefix.tablet" = "ein Tablet";
 "self.new_device_alert.title_prefix.phone" = "ein Telefon";
@@ -490,7 +417,6 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - Account details
-
 "self.settings.account_section" = "Benutzerkonto";
 
 "self.settings.account_details_group.title" = "Kontodetails";
@@ -520,15 +446,12 @@
 
 
 // Chat alerts
-
 "self.settings.notifications.push_notification.title" = "Benachrichtigungen";
 "self.settings.notifications.push_notification.toogle" = "Nachrichtenvorschau";
 "self.settings.notifications.push_notification.footer" = "Absendername und Nachricht auf dem Sperrbildschirm und in der Mitteilungszentrale.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Nachrichten-Banner";
 "self.settings.notifications.chat_alerts.footer" = "Neue Nachrichten in anderen Unterhaltungen.";
-
-
 
 "self.settings.sound_menu.sounds.title" = "Töne";
 "self.settings.sound_menu.ringtone.title" = "Klingeltöne";
@@ -543,9 +466,6 @@
 
 "self.settings.sound_menu.group.title" = "Benachrichtigungen & Töne";
 
-"self.settings.conversation.title" = "Chat";
-"self.settings.conversation.disable_big_emoji" = "Große Emoji deaktivieren";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Benachrichtigungen";
 "self.settings.sound_menu.no_sounds.title" = "Keine";
@@ -556,32 +476,17 @@
 "self.settings.developer_options.title" = "Entwickleroptionen";
 "self.settings.apns_logging.title" = "APNS Protokollierung";
 
-// Download options (TO BE UPDPATED)
-"self.settings.download_strategy_menu.title" = "Bilder herunterladen";
-"self.settings.download_strategy_menu.all.title" = "Immer";
-"self.settings.download_strategy_menu.wifionly.title" = "Nur Wi-Fi";
-
 // Privacy (visibility) options
 "self.settings.privacy_menu.title" = "Datenschutz & Sicherheit";
 
 "self.settings.privacy_contacts_section.title" = "Kontakte";
-"self.settings.privacy_contacts_menu.button.title" = "Teilen";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Öffne Kontakteinstellungen";
-"self.settings.privacy_contacts_menu.description.title" = "Dies hilft dir, Leute zu finden, die du kennst. Wir anonymisieren alle Informationen und teilen sie mit niemand anderem.";
-"self.settings.privacy_contacts_menu.description_enabled.title" = "Wir anonymisieren alle Informationen und teilen sie mit niemand anderem.";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
-
-// PLaceholder strings
-// "self.settings.privacy_email_section.title" = "Email searchability";
-// "self.settings.privacy_email_menu.button.title" = "Let people find me by email";
-// "self.settings.privacy_email_menu.everyone.description" = "Choose if people can find you by entering your email address in the Search field.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
 "self.settings.privacy_analytics_menu.devices_button.title" = "Geräte verwalten";
 
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
-"self.settings.privacy_analytics_menu.title.allow" = "Sende Informationen an Wire";
-"self.settings.privacy_analytics_menu.title.disabled" = "Nicht erlauben";
 "self.settings.privacy_analytics_menu.description.title" = "Durch das Senden anonymisierter Informationen hilfst du uns, Wire zu verbessern.";
 
 "self.settings.privacy.clear_history.title" = "Verlauf löschen";
@@ -610,41 +515,18 @@
 "self.settings.tip.change_picture" = "Tippen, um das Bild zu ändern";
 "self.settings.tip.change_color" = "Bewegen, um die Farbe zu ändern";
 
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Keine Internetverbindung";
 "system_status_bar.no_internet.explanation" = "Es scheint ein Problem mit deiner Internetverbindung zu geben. Bitte stelle sicher, dass sie funktioniert.";
-// MISSING"system_status_dialog.no_changes_applied" = "We couldn’t apply your changes. Please make sure your connection works and try again.";
 "system_status_bar.poor_connectivity.title" = "Schlechte Internetverbindung, Anrufen derzeit nicht möglich";
-// MISSING"system_status_dialog.no_changes_applied_discard_button" = "Discard";
-// MISSING"system_status_dialog.no_changes_applied_try_button" = "Try again";
-// MISSING"system_status_dialog.no_internet_generic_error" = "Something went wrong. Please make sure your connection works and try again.";
 "system_status_bar.poor_connectivity.explanation" = "Wir können keine gute Sprachqualität garantieren. Verbinde dich mit Wi-Fi oder gehe an einen anderen Ort.";
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// App Map
-"tutorial.map.header" = "Wire ist einfach.";
-"tutorial.map.description_start" = "Starten oder Unterhaltungen finden";
-"tutorial.map.description_groups" = "Erstelle Gruppen";
-"tutorial.map.description_conversation" = "Das Gespräch ist der Rahmen";
-"tutorial.map.confirm_button_title" = "Danke, verstanden";
-
+// Common connections on profile view
 "profile_other.common_connections" = "Ihr beide kennt";
-"profile_other.common_connections_other" = "Andere";
-
-"meta.add_people" = "Personen hinzufügen"; // not used
-"meta.add_people_release" = "Zum Hinzufügen loslassen"; // not used
-"meta.bottom_options_release" = "Loslassen für Optionen"; // not used
-
-"meta.menu_leave_conversation" = "Unterhaltung verlassen";
 
 // View user profile and options menu
-"profile.in_conversation_name" = "In Unterhaltung “%@”"; // NOT VISIBLE IN UI CURRENTLY
-"profile.menu_send_message" = "Nachricht";
-"profile.menu_call" = "Anruf";
-"profile.menu_connect" = "Hinzufügen";
-"profile.menu_remove_from_conversation" = "Entfernen";
-
 "name.placeholder" = "Dein vollständiger Name";
 "name.guidance.tooshort" = "Mindestens 2 Zeichen";
 "name.guidance.toolong" = "Zu viele Zeichen";
@@ -660,9 +542,6 @@
 "registration.close_email_invitation_button.phone_title" = "Mit Tel.-Nr. registrieren";
 "registration.close_phone_invitation_button.email_title" = "Mit E-Mail registrieren";
 "registration.close_phone_invitation_button.phone_title" = "Andere Tel.-Nr. verwenden";
-"registration.check_invitation_button.title" = "Ich habe eine Einladung";
-
-"registration.enter_phone_number.hero" = "Ein Konto erstellen";
 
 "registration.enter_phone_number.title" = "Telefonnummer bearbeiten";
 "registration.enter_phone_number.placeholder" = "Telefonnummer";
@@ -675,7 +554,6 @@
 "registration.verify_email.resend.instructions" = "Nachricht nicht bekommen?";
 "registration.verify_email.resend.button_title" = "Erneut senden";
 
-"registration.select_picture.hero" = "Hallo, %@.";
 "registration.select_picture.subtitle" = "Wire ist so viel netter mit einem Bild.";
 "registration.select_picture.button_title" = "Wähle dein eigenes";
 "registration.keep_picture.button_title" = "Behalte dieses";
@@ -748,12 +626,10 @@
 "registration.email_invitation.title" = "Einladung";
 "registration.email_invitation.hero.title" = "Hallo, %@";
 "registration.email_invitation.hero.paragraph" = "Wähle ein Passwort, um ein Benutzerkonto zu erstellen.";
-"registration.email_invitation.continue_button.title" = "Weiter";
 
 "registration.phone_invitation.title" = "Einladung";
 "registration.phone_invitation.hero.title" = "Hallo, %@";
 "registration.phone_invitation.hero.paragraph" = "Du bist nur einen Schritt davon entfernt dein Konto zu erstellen.";
-"registration.phone_invitation.continue_button.title" = "Weiter";
 
 "error.name_and_email" = "Bitte gib deinen Namen und eine gültige E-Mail-Adresse ein";
 "error.full_name" = "Bitte gib deinen vollständigen Namen ein";
@@ -762,6 +638,7 @@
 "error.input.too_short" = "Eingabe zu kurz";
 "error.email.invalid" = "Bitte gib eine gültige \nE-Mail-Adresse ein";
 "error.phone.invalid" = "Bitte gib eine gültige \nTelefonnummer ein";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
@@ -777,10 +654,9 @@
 "error.user.registration_unknown_error" = "Ein Fehler ist aufgetreten, bitte versuche es erneut.";
 "error.user.device_deleted_remotely" = "Du wurdest durch ein anderes Gerät abgemeldet.";
 
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.incorrect_verification_code" = "Bitte gib einen gültigen Code ein";
-"error.updating_email" = "Die eingegebene E-Mail-Adresse wurde bereits registriert. Bitte versuche eine andere E-Mail-Adresse.";
 "error.updating_password" = "Dein Passwort konnte nicht zurückgesetzt werden.";
 
 "error.group_call.too_many_members_in_conversation.title" = "Zu viele Teilnehmer";
@@ -798,142 +674,23 @@
 "error.invite.no_email_provider" = "Bitte konfiguriere deinen E-Mail-Client, um Einladungen per E-Mail zu senden";
 "error.invite.no_messaging_provider" = "Bitte konfiguriere iMessage, um Einladungen per SMS senden zu können";
 
-
 "sketchpad.initial_hint" = "Tippen Sie auf die Farbe um die Pinselgröße zu ändern\nDrücken und halten, um den Bereich zu füllen \nSchütteln, um ein Foto zu entfernen";
 
 "migration.please_wait_message" = "Einen Moment bitte";
 
-"video.vimeo.open_in_browser" = "Im Browser öffnen";
-"video.vimeo.default_title" = "Vimeo Video";
-"video.youtube.default_title" = "Youtube Video";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are used by the backend to localize APNS
-"push.notification.add.message.group" = "%1$@ in %2$@: %3$@";
-"push.notification.add.message.group.nousername" = "Neue Nachricht in %1$@: %2$@";
-"push.notification.add.message.group.nousername.noconversationname" = "Neue Nachricht: %1$@";
-"push.notification.add.message.group.noconversationname" = "%1$@ in einer Unterhaltung: %2$@";
-
-"push.notification.add.message.oneonone" = "%1$@: %2$@";
-"push.notification.add.message.oneonone.nousername" = "Neue Nachricht: %1$@";
-
-"push.notification.add.image.group" = "%1$@ hat ein Bild in %2$@ geteilt";
-"push.notification.add.image.group.nousername" = "Jemand hat ein Bild in %1$@ geteilt";
-"push.notification.add.image.group.nousername.noconversationname" = "Jemand hat ein Bild in einer Unterhaltung geteilt";
-"push.notification.add.image.group.noconversationname" = "%1$@ hat ein Bild in einer Unterhaltung geteilt";
-
-"push.notification.add.image.oneonone" = "%1$@ hat ein Bild geteilt";
-"push.notification.add.image.oneonone.nousername" = "Jemand hat ein Bild in einer Unterhaltung geteilt";
-
-"push.notification.add.video.group" = "%1$@ hat ein Video in %2$@ geteilt";
-"push.notification.add.video.group.nousername" = "Jemand hat ein Video in %1$@ geteilt";
-"push.notification.add.video.group.nousername.noconversationname" = "Jemand hat ein Video in einer Unterhaltung geteilt";
-"push.notification.add.video.group.noconversationname" = "%1$@ hat ein Video in einer Unterhaltung geteilt";
-
-"push.notification.add.video.oneonone" = "%1$@ hat ein Video geteilt";
-"push.notification.add.video.oneonone.nousername" = "Jemand hat ein Video in einer Unterhaltung geteilt";
-
-"push.notification.add.audio.group" = "%1$@ teilte eine Audio-Nachricht in %2$@";
-"push.notification.add.audio.group.nousername" = "Neue Audio-Nachricht in %1$@";
-"push.notification.add.audio.group.nousername.noconversationname" = "Neue Audio-Nachricht in einer Unterhaltung";
-"push.notification.add.audio.group.noconversationname" = "%1$@ hat eine Audio-Nachricht in einer Unterhaltung geteilt";
-
-"push.notification.add.audio.oneonone" = "%1$@ hat eine Audio-Nachricht geteilt";
-"push.notification.add.audio.oneonone.nousername" = "Neue Audio-Nachricht in einer Unterhaltung";
-
-"push.notification.add.file.group" = "%1$@ hat ein File in %2$@ geteilt";
-"push.notification.add.file.group.nousername" = "Jemand hat ein File in %1$@ geteilt";
-"push.notification.add.file.group.nousername.noconversationname" = "Jemand hat ein File in einer Unterhaltung geteilt";
-"push.notification.add.file.group.noconversationname" = "%1$@ hat ein File in einer Unterhaltung geteilt";
-
-"push.notification.add.file.oneonone" = "%1$@ hat ein File geteilt";
-"push.notification.add.file.oneonone.nousername" = "Jemand hat ein File in einer Unterhaltung geteilt";
-
-"push.notification.member.join" = "%1$@ hat %3$@ zu %2$@ hinzugefügt";
-"push.notification.member.join.noconversationname" = "%1$@ hat %2$@ zu einer Unterhaltung hinzugefügt";
-"push.notification.member.join.nousername.noconversationname" = "Jemand wurde zu einer Unterhaltung hinzugefügt";
-"push.notification.member.join.nousername" = "Jemand wurde zu %1$@ hinzugefügt";
-
-"push.notification.member.join.self" = "%1$@ hat %2$@ hinzugefügt";
-"push.notification.member.join.self.noconversationname" = "%1$@ hat dich zu einer Unterhaltung hinzugefügt";
-"push.notification.member.join.self.nousername.noconversationname" = "Du wurdest zu einer Unterhaltung hinzugefügt";
-"push.notification.member.join.self.nousername" = "Du wurdest zu %1$@ hinzugefügt";
-
-"push.notification.member.join.nootherusername" = "%1$@ hat Kontakte zu %2$@ hinzugefügt";
-"push.notification.member.join.nootherusername.noconversationname" = "%1$@ hat Kontakte zu einer Unterhaltung hinzugefügt";
-"push.notification.member.join.nootherusername.nousername.noconversationname" = "Neue Teilnehmer wurden zu einer Unterhaltung hinzugefügt";
-"push.notification.member.join.nootherusername.nousername" = "Neue Teilnehmer wurden zu %1$@ hinzugefügt";
-
-"push.notification.member.leave" = "%1$@ hat %3$@ aus %2$@ entfernt";
-"push.notification.member.leave.noconversationname" = "%1$@ hat %2$@ aus einer Unterhaltung entfernt";
-"push.notification.member.leave.nousername.noconversationname" = "%1$@ wurde aus einer Unterhaltung entfernt";
-"push.notification.member.leave.nousername" = "%2$@ wurde aus %1$@ entfernt";
-
-"push.notification.member.leave.self" = "%1$@ hat dich aus %2$@ entfernt";
-"push.notification.member.leave.self.noconversationname" = "%1$@ hat dich aus einer Unterhaltung entfernt";
-"push.notification.member.leave.self.nousername.noconversationname" = "Du wurdest aus einer Unterhaltung entfernt";
-"push.notification.member.leave.self.nousername" = "Du wurdest aus %1$@ entfernt";
-
-"push.notification.member.leave.sender.nootherusername" = "%1$@ hat %2$@ verlassen";
-"push.notification.member.leave.sender.nootherusername.noconversationname" = "%1$@ hat eine Unterhaltung verlassen";
-"push.notification.member.leave.sender.nootherusername.nousername.noconversationname" = "Jemand hat die Unterhaltung verlassen";
-"push.notification.member.leave.sender.nootherusername.nousername" = "Jemand hat %1$@ verlassen";
-
-"push.notification.member.leave.many.nootherusername" = "%1$@ hat Teilnehmer aus %2$@ entfernt";
-"push.notification.member.leave.many.nootherusername.noconversationname" = "%1$@ hat Teilnehmer aus einer Unterhaltung entfernt";
-"push.notification.member.leave.many.nootherusername.nousername" = "Mehrere Teilnehmer wurden aus %1$@ entfernt";
-"push.notification.member.leave.many.nootherusername.nousername.noconversationname" = "Teilnehmer wurden aus einer Unterhaltung entfernt";
-
-"push.notification.call.oneonone.started" = "%1$@ ruft an";
-"push.notification.call.oneonone.started.nousername" = "Jemand ruft an";
-
-"push.notification.call.group.started" = "%1$@ ruft in %2$@ an";
-"push.notification.call.group.started.nousername" = "%1$@ ruft in einer Unterhaltung an";
-"push.notification.call.group.started.noconversationname" = "%1$@ ruft in einer Unterhaltung an";
-"push.notification.call.group.started.nousername.noconversationname" = "Jemand ruft in %1$@ an";
-
-"push.notification.call.oneonone.missed" = "%1$@ hat versucht dich anzurufen";
-"push.notification.call.oneonone.missed.nousername" = "Jemand hat versucht dich anzurufen";
-
-"push.notification.call.group.missed" = "%1$@ hat versucht in %2$@ anzurufen";
-"push.notification.call.group.missed.nousername" = "Jemand hat versucht dich anzurufen";
-
-"push.notification.call.group.missed.noconversationname" = "%1$@ hat versucht in einer Unterhaltung anzurufen";
-"push.notification.call.group.missed.nousername.noconversationname" = "Jemand hat versucht in einer Unterhaltung anzurufen";
-
-"push.notification.knock.oneonone" = "%1$@ hat gepingt";
-"push.notification.knock.oneonone.nousername" = "Jemand hat gepingt";
-
-"push.notification.knock.group" = "%1$@ hat in %2$@ gepingt";
-"push.notification.knock.group.nousername" = "Jemand hat in %2$@ gepingt";
-"push.notification.knock.group.noconversationname" = "%1$@ hat in einer Unterhaltung gepingt";
-"push.notification.knock.group.nousername.noconversationname" = "Jemand hat in einer Unterhaltung gepingt";
-
-"push.notification.conversation.create" = "%1$@ hat eine Gruppenunterhaltung mit dir begonnen";
-"push.notification.conversation.create.nousername" = "Jemand hat eine Gruppenunterhaltung mit dir begonnen";
-
-"push.notification.conversation.rename" = "%1$@ hat die Unterhaltung in %2$@ umbenannt";
-"push.notification.conversation.rename.nousername" = "Eine Unterhaltung wurde in %1$@ umbenannt";
-
-"push.notification.connection.request" = "%@ möchte sich mit dir verbinden";
-"push.notification.connection.request.nousername" = "%@"; // uses message text
-
-"push.notification.connection.accepted" = "Du und %@ seid jetzt verbunden";
-"push.notification.connection.accepted.nousername" = "Neuer Kontakt";
-
 "push.notification.new_user" = "%@ ist jetzt auch bei Wire";
 "push.notification.new_message" = "Neue Nachricht";
 
 
 // Force Update
-
 "force.update.title" = "Update ist notwendig";
 "force.update.message" = "Du verpasst neue Funktionen von Wire.\nHol dir die neueste Version im App Store.";
 "force.update.ok_button" = "Zum App Store";
 
 // Third Party
-
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
 "giphy.error.no_more_results" = "keine weiteren gifs";
@@ -941,7 +698,6 @@
 
 "giphy.confirm" = "senden";
 "giphy.try_another" = "Nächstes";
-"giphy.cancel" = "abbrechen";
 
 "invite_banner.title" = "Hole deine Freunde zu Wire!";
 "invite_banner.message" = "Anrufen, Bilder teilen, Musik, GIFs\nund vieles mehr in persönlichen und Gruppenunterhaltungen.";

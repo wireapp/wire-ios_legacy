@@ -100,6 +100,25 @@
     return nil;
 }
 
+- (nullable id<ZMConversationMessage>)lastMessageSentByUser:(ZMUser *)user limit:(NSUInteger)limit
+{
+    ZMMessage *lastUserMessage = nil;
+    
+    NSUInteger index = 0;
+    for (ZMMessage *enumeratedMessage in self.messages.reverseObjectEnumerator) {
+        if (index > limit) {
+            break;
+        }
+        if (enumeratedMessage.sender == user) {
+            lastUserMessage = enumeratedMessage;
+            break;
+        }
+        index++;
+    }
+    
+    return lastUserMessage;
+}
+
 - (void)removeParticipants:(NSArray *)participants
 {
     for (ZMUser *user in participants) {

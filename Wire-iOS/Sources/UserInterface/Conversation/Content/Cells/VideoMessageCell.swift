@@ -83,6 +83,9 @@ extension ZMConversationMessage {
         CASStyler.defaultStyler().styleItem(self)
         
         self.createConstraints()
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.appendContentsOf([previewImageView, playButton, timeLabel, progressView, likeButton, messageToolboxView])
+        self.accessibilityElements = currentElements
     }
     
     public required init?(coder aDecoder: NSCoder) {

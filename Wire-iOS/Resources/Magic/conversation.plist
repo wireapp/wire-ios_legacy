@@ -30,9 +30,35 @@
 		<key>left_margin</key>
 		<integer>64</integer>
 		<key>right_margin</key>
-		<integer>34</integer>
+		<integer>24</integer>
 		<key>line_height</key>
 		<integer>22</integer>
+		<key>reaction</key>
+		<dict>
+			<key>user_initials_font</key>
+			<dict>
+				<key>font</key>
+				<string>System-Light</string>
+				<key>size</key>
+				<integer>8</integer>
+			</dict>
+			<key>user_initials_font_color</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<key>stroke_width</key>
+			<integer>0</integer>
+			<key>stroke_color</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
 		<key>voice_button_pulser</key>
 		<dict>
 			<key>circles</key>
@@ -255,7 +281,7 @@
 		<key>bottom_gradient_height</key>
 		<integer>68</integer>
 		<key>top_gradient_height</key>
-		<integer>88</integer>
+		<integer>60</integer>
 		<key>button_color</key>
 		<array>
 			<integer>0</integer>

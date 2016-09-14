@@ -27,8 +27,6 @@
 #import "WAZUIMagicIOS.h"
 #import "TextViewWithDataDetectorWorkaround.h"
 #import "Message+Formatting.h"
-#import "MessageStatusIndicator.h"
-#import "MessageTimestampView.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
 #import "AnalyticsTracker+Media.h"
@@ -52,20 +50,17 @@
 
 @property (nonatomic, assign) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic, strong) MessageStatusIndicator *messageStatusIndicator;
 @property (nonatomic, strong) TextViewWithDataDetectorWorkaround *messageTextView;
 @property (nonatomic, strong) UIView *linkAttachmentContainer;
 @property (nonatomic, strong) UIImageView *editedImageView;
 @property (nonatomic, strong) LinkAttachment *linkAttachment;
 @property (nonatomic, strong) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
-@property (nonatomic, strong) MessageTimestampView *messageTimestampView;
 
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerLeftMarginConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerRightMarginConstraint;
 @property (nonatomic, strong) UIView *linkAttachmentView;
 
-@property (nonatomic) NSLayoutConstraint *timestampHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 
 @end
@@ -117,16 +112,6 @@
     self.linkAttachmentContainer.preservesSuperviewLayoutMargins = YES;
     [self.messageContentView addSubview:self.linkAttachmentContainer];
     
-    self.messageStatusIndicator = [[MessageStatusIndicator alloc] init];
-    self.messageStatusIndicator.translatesAutoresizingMaskIntoConstraints = NO;
-    self.messageStatusIndicator.darkStyle = YES;
-    [self.messageStatusIndicator setResendButtonTarget:self action:@selector(resendButtonPressed:)];
-    [self.messageContentView addSubview:self.messageStatusIndicator];
-    
-    self.messageTimestampView = [[MessageTimestampView alloc] init];
-    self.messageTimestampView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.messageContentView addSubview:self.messageTimestampView];
-    
     self.editedImageView = [[UIImageView alloc] init];
     self.editedImageView.image = [UIImage imageForIcon:ZetaIconTypePencil
                                               iconSize:ZetaIconSizeMessageStatus
@@ -150,30 +135,12 @@
     self.mediaPlayerRightMarginConstraint = [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
-    [self.messageStatusIndicator autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:4];
-    [self.messageStatusIndicator autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.messageTextView withOffset:-5];
-    
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.timestampHeightConstraint = [self.messageTimestampView autoSetDimension:ALDimensionHeight toSize:0];
+        [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     }];
     
-    [self.messageTimestampView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.linkAttachmentContainer];
-    [self.messageTimestampView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.messageTimestampView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.messageTimestampView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    self.timestampHeightConstraint.active = !self.selected;
-    [UIView animateWithDuration:0.35 animations:^{
-        self.messageTimestampView.alpha = self.selected ? 1 : 0;
-    }];
 }
 
 - (void)updateTextMessageConstraintConstants
@@ -184,9 +151,6 @@
     if (hasLinkAttachment && hasContentBeforeAttachment) {
         self.mediaPlayerTopMarginConstraint.constant = 12;
     }
-    
-    self.timestampHeightConstraint.active = !self.selected;
-    self.messageTimestampView.alpha = self.selected ? 1 : 0;
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
@@ -208,7 +172,6 @@
                                                                                   isGiphy:isGiphy];
     self.messageTextView.attributedText = attributedMessageText;
     [self.messageTextView layoutIfNeeded];
-    self.messageTimestampView.timestampLabel.text = [Message formattedReceivedDateLongVersion:self.message];
     self.textViewHeightConstraint.active = attributedMessageText.length == 0;
     self.editedImageView.hidden = (nil == self.message.updatedAt);
 
@@ -247,17 +210,7 @@
         }
     
     [self.linkAttachmentViewController fetchAttachment];
-    
-    ZMDeliveryState deliveryState = message.deliveryState;
-    if (deliveryState == ZMDeliveryStatePending) {
-        NSTimeInterval elapsedTime = [NSDate timeIntervalSinceReferenceDate] - [self.message.serverTimestamp timeIntervalSinceReferenceDate];
-        [self.messageStatusIndicator setPendingStatusWithElapsedTime:elapsedTime];
-    }
-    else {
-        self.messageStatusIndicator.deliveryState = message.deliveryState;
-    }
-    
-    [self updateTimestampLabel];
+
     [self updateTextMessageConstraintConstants];
 }
 
@@ -275,26 +228,13 @@
     return result;
 }
 
-- (void)resendButtonPressed:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:resendMessageTapped:)]) {
-        [self.delegate conversationCell:self resendMessageTapped:self.message];
-    }
-}
-
 #pragma mark - Message updates
 
 /// Overriden from the super class cell
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
     BOOL needsLayout = [super updateForMessage:change];
-    
-    // If a text message changes, the only thing that can change at the moment is its delivery state
-    if (change.deliveryStateChanged) {
-        self.messageStatusIndicator.deliveryState = change.message.deliveryState;
-        [self updateTimestampLabel];
-    }
-    
+
     if (change.linkPreviewChanged && self.linkAttachmentView == nil) {
         [self configureForMessage:change.message layoutProperties:self.layoutProperties];
         
@@ -315,15 +255,6 @@
     }
     
     return needsLayout;
-}
-
-- (void)updateTimestampLabel
-{
-    if (nil != self.message.updatedAt) {
-        self.messageTimestampView.timestampLabel.text = [Message formattedEditedDateForMessage:self.message];
-    } else {
-        self.messageTimestampView.timestampLabel.text = [Message formattedReceivedDateLongVersion:self.message];
-    }
 }
 
 
@@ -409,7 +340,7 @@
 {
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
-    BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && self.message.deliveryState == ZMDeliveryStateDelivered;
+    BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent);
     if (isEditableMessage) {
         properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     }
@@ -471,9 +402,7 @@
 
 - (void)articleViewWantsToOpenURL:(ArticleView *)articleView url:(NSURL *)url
 {
-    if (! [UIApplication.sharedApplication openURL:url]) {
-        DDLogError(@"Unable to open URL: %@", url);
-    }
+    [self.delegate conversationCell:self didSelectURL:url];
 }
 
 - (void)articleViewDidLongPressView:(ArticleView *)articleView

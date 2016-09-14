@@ -54,6 +54,20 @@ typedef NS_ENUM(NSUInteger, MessageDeletionType) {
     MessageDeletionTypeEverywhere
 };
 
+typedef NS_ENUM(NSUInteger, ReactionType) {
+    ReactionTypeUndefined,
+    ReactionTypeLike,
+    ReactionTypeUnlike
+};
+
+typedef NS_ENUM(NSUInteger, InteractionMethod) {
+    InteractionMethodUndefined,
+    InteractionMethodButton,
+    InteractionMethodMenu,
+    InteractionMethodDoubleTap
+};
+
+
 @interface Analytics (ConversationEvents)
 
 - (void)tagArchivedConversation;

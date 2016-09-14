@@ -20,6 +20,7 @@
 #import "UIApplication+Permissions.h"
 #import "AppDelegate.h"
 #import "UIAlertController+Wire.h"
+#import "UIResponder+FirstResponder.h"
 
 #import <AVFoundation/AVFoundation.h>
 
@@ -42,22 +43,43 @@
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (! granted) {
-                [self wr_warnAboutCameraPermission];
+                [self wr_warnAboutCameraPermissionWithCompletion:^{
+                    if (grantedHandler != nil) grantedHandler(granted);
+                }];
             }
-            if (grantedHandler != nil) grantedHandler(granted);
+            else {
+                if (grantedHandler != nil) grantedHandler(granted);
+            }
         });
     }];
 }
 
-+ (void)wr_warnAboutCameraPermission
++ (void)wr_warnAboutCameraPermissionWithCompletion:(dispatch_block_t)completion
 {
-    UIAlertController *noVideoAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.camera_warning.title", nil)
-                                                                          message:NSLocalizedString(@"voice.alert.camera_warning.explanation", nil)
-                                                                cancelButtonTitle:NSLocalizedString(@"general.ok", nil)];
+    [[UIResponder wr_currentFirstResponder] endEditing:YES];
     
-    [noVideoAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *noVideoAlert =
+    [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.camera_warning.title", nil)
+                                        message:NSLocalizedString(@"voice.alert.camera_warning.explanation", nil)
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil)
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }]];
+        if (nil != completion) completion();
+    }];
+    
+    [noVideoAlert addAction:actionSettings];
+    
+    UIAlertAction *actionOK = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil)
+                                                       style:UIAlertActionStyleCancel
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+         [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+         if (nil != completion) completion();
+                                                     }];
+    
+    [noVideoAlert addAction:actionOK];
     
     [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noVideoAlert animated:YES completion:nil];
 }

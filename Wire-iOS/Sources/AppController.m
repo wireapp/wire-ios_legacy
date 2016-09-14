@@ -60,6 +60,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) SessionObjectCache *sessionObjectCache;
 @property (nonatomic) AVSLogObserver *logObserver;
+@property (nonatomic) NSString *groupIdentifier;
 
 @property (nonatomic) NSMutableArray <dispatch_block_t> *blocksToExecute;
 
@@ -88,6 +89,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         self.blocksToExecute = [NSMutableArray array];
         self.logObserver = [[AVSLogObserver alloc] init];
         self.classyCache = [[ClassyCache alloc] init];
+        self.groupIdentifier = [NSString stringWithFormat:@"group.%@", NSBundle.mainBundle.bundleIdentifier];
     }
     return self;
 }
@@ -318,13 +320,13 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     };
     
     
-    if ([ZMUserSession needsToPrepareLocalStore]) {
+    if ([ZMUserSession needsToPrepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier]) {
         self.seState = AppSEStateMigration;
         [self.launchImageViewController showLoadingScreen];
         
         DDLogInfo(@"Database migration required, performing migration now:");
         NSTimeInterval timeStart = [NSDate timeIntervalSinceReferenceDate];
-        [ZMUserSession prepareLocalStore:^{
+        [ZMUserSession prepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier completion:^{
             NSTimeInterval timeEnd = [NSDate timeIntervalSinceReferenceDate];
             DDLogInfo(@"Database migration DONE: %.02f sec", timeEnd - timeStart);
             configuration();
@@ -363,12 +365,15 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     (void)[Settings sharedSettings];
     
-    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
-
+    NSBundle *bundle = NSBundle.mainBundle;
+    NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
+    NSString *groupIdentifier = [NSString stringWithFormat:@"group.%@", bundle.bundleIdentifier];
+    
     _zetaUserSession = [[ZMUserSession alloc] initWithMediaManager:(id)AVSProvider.shared.mediaManager
                                                          analytics:Analytics.shared
-                                                        appVersion:appVersion];
-    
+                                                        appVersion:appVersion
+                                                appGroupIdentifier:groupIdentifier];
+
     // Cache conversation lists etc.
     self.sessionObjectCache = [[SessionObjectCache alloc] initWithUserSession:[ZMUserSession sharedSession]];
         
@@ -377,6 +382,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
     [self executeQueuedBlocksIfNeeded];
+    
+    // Singletons
+    AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
 }
 
 #pragma mark - User Session block queueing

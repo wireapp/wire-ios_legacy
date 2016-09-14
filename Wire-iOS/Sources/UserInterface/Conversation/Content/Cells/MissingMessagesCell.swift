@@ -18,11 +18,12 @@
 
 
 import Foundation
-
+import TTTAttributedLabel
 
 
 class MissingMessagesCell: IconSystemCell {
-    
+    static private let userClientLink: NSURL = NSURL(string: "settings://user-client")!
+
     private let exclamationColor = UIColor(forZMAccentColor: .VividRed)
     
     override func configureForMessage(message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
@@ -74,13 +75,25 @@ class MissingMessagesCell: IconSystemCell {
     
     
     func configureForReactivatedClientOfSelfUser(font: UIFont, color: UIColor){
-        let userClientLink: NSURL = NSURL(string: "settings://user-client")!
         let deviceString = NSLocalizedString("content.system.this_device", comment: "").uppercaseString
         var fullString  = NSString(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString).uppercaseString && font && color
         
-        fullString = fullString.setAttributes([NSLinkAttributeName: userClientLink, NSFontAttributeName: font], toSubstring: deviceString)
+        fullString = fullString.setAttributes([NSLinkAttributeName: self.dynamicType.userClientLink, NSFontAttributeName: font], toSubstring: deviceString)
         
         self.labelView.attributedText = fullString
         self.labelView.addLinks()
+    }
+    
+    // MARK: - TTTAttributedLabelDelegate
+    
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL URL: NSURL!) {
+        if URL.isEqual(self.dynamicType.userClientLink) {
+            if let systemMessageData = message.systemMessageData,
+                let user = systemMessageData.users.first where systemMessageData.users.count == 1 {
+                ZClientViewController.sharedZClientViewController().openClientListScreenForUser(user)
+            } else if let conversation = message.conversation {
+                ZClientViewController.sharedZClientViewController().openDetailScreenForConversation(conversation)
+            }
+        }
     }
 }

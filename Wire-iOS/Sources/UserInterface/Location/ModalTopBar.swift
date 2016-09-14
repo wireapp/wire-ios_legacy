@@ -52,6 +52,7 @@ import Cartography
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
         dismissButton.setIcon(.Cancel, withSize: .Tiny, forState: .Normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), forControlEvents: .TouchUpInside)
+        dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }
 
     private func createConstraints() {
@@ -60,7 +61,7 @@ import Cartography
             label.top == view.top + (showsStatusBar ? 20 : 0)
             label.bottom == view.bottom
             label.trailing <= button.leading - 12
-            button.trailing == view.trailing - 12
+            button.trailing == view.trailing - 16
             button.centerY == label.centerY
             separator.leading == view.leading
             separator.trailing == view.trailing

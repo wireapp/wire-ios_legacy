@@ -41,7 +41,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/FlexibleNavigationBar.h>
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
-#import <WireExtensionComponents/FrameAnimationView.h>
 #import <WireExtensionComponents/TokenTextAttachment.h>
 #import <WireExtensionComponents/TokenizedTextView.h>
 

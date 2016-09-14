@@ -18,7 +18,12 @@
 
 
 #import "ConversationCell.h"
+@class SavableImage;
+@class FLAnimatedImageView;
 
 @interface ImageMessageCell : ConversationCell
+
+@property (nonatomic, readonly) FLAnimatedImageView *fullImageView;
+@property (nonatomic, readonly) SavableImage *savableImage;
 
 @end
