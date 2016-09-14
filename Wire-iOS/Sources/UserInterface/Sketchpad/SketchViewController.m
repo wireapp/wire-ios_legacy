@@ -26,7 +26,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "SketchBottomView.h"
 #import "SketchTopView.h"
-#import "ColorPickerController+AccentColors.h"
 #import "UIColor+WAZExtensions.h"
 #import <PureLayout/PureLayout.h>
 #import <SmoothLineView/SmoothLineView.h>

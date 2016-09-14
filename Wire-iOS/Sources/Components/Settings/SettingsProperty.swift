@@ -43,13 +43,15 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case SkipFirstTimeUseChecks = "SkipFirstTimeUseChecks"
     
     case PreferredFlashMode = "PreferredFlashMode"
-    case ColorScheme = "ColorScheme"
+    
+    case DarkMode = "DarkMode"
     
     // Profile
     case ProfileName = "ProfileName"
     case ProfileEmail = "ProfileEmail"
     case ProfilePhone = "ProfilePhone"
-        
+    case AccentColor = "AccentColor"
+    
     // AVS
     case SoundAlerts = "SoundAlerts"
     

@@ -433,6 +433,12 @@
 "self.settings.account_details.remove_device.password" = "Password";
 "self.settings.account_details.remove_device.password.error" = "Wrong password";
 
+"self.settings.account_appearance_group.title" = "Appearance";
+"self.settings.account_picture_group.picture" = "Picture";
+"self.settings.account_picture_group.color" = "Color";
+
+"self.settings.account_picture_group.theme" = "Dark Theme";
+
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare fingerprints to verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset your secure session to make sure that the correct fingerprints are shown on all devices.";
 "self.settings.device_details.remove_device.subtitle" = "You will be automatically logged out of that device.";
@@ -510,11 +516,6 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Reset Password";
-
-// Tips
-"self.settings.tip.change_picture" = "Tap to change picture";
-"self.settings.tip.change_color" = "Slide to change color";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status

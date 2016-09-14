@@ -511,10 +511,6 @@
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
 
-// Tips
-"self.settings.tip.change_picture" = "Торкніться, щоб змінити фото";
-"self.settings.tip.change_color" = "Потягніть, щоб змінити колір";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status

@@ -511,11 +511,6 @@
 // Password reset
 "self.settings.password_reset_menu.title" = "Passwort zurücksetzen";
 
-// Tips
-"self.settings.tip.change_picture" = "Tippen, um das Bild zu ändern";
-"self.settings.tip.change_color" = "Bewegen, um die Farbe zu ändern";
-
-
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Keine Internetverbindung";

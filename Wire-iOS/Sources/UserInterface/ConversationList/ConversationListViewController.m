@@ -56,7 +56,6 @@
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 
-#import "ProfileSelfViewController.h"
 #import "UIViewController+Orientation.h"
 
 #import "ActionSheetController.h"
@@ -64,6 +63,7 @@
 
 #import "InviteBannerViewController.h"
 
+#import "Wire-Swift.h"
 
 @interface ConversationListViewController (Content) <ConversationListContentDelegate>
 
@@ -879,9 +879,16 @@
             break;
             
         case ConversationListButtonTypeSettings:
-            [[ZClientViewController sharedZClientViewController] openSelfProfileAnimated:YES];
-            break;
+        {
+            SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
             
+            if (IS_IPAD) {
+                settingsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+            }
+            
+            [self presentViewController:settingsViewController animated:YES completion:nil];
+            break;
+        }
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
             [Analytics.shared tagArchiveOpened];

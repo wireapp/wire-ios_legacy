@@ -33,8 +33,7 @@ typedef NS_ENUM(NSUInteger, SettingsColorScheme) {
 typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
     SettingsLastScreenNone = 0,
     SettingsLastScreenList,
-    SettingsLastScreenConversation,
-    SettingsLastScreenSelfProfile
+    SettingsLastScreenConversation
 };
 
 extern NSString * const SettingsColorSchemeChangedNotification;

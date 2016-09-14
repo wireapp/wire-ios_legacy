@@ -20,16 +20,25 @@
 import UIKit
 import Cartography
 
+enum SettingsCellPreview {
+    case None
+    case Text(String)
+    case Image(UIImage)
+    case Color(UIColor)
+}
+
 protocol SettingsCellType: class {
     var titleText: String {get set}
-    var valueText: String {get set}
+    var preview: SettingsCellPreview {get set}
     var titleColor: UIColor {get set}
+    var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
     var cellNameLabel: UILabel = UILabel(frame: CGRectZero)
     var valueLabel: UILabel = UILabel(frame: CGRectZero)
+    var imagePreview: UIImageView = UIImageView(frame: CGRectZero)
     
     var titleText: String = "" {
         didSet {
@@ -37,15 +46,42 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
     
-    var valueText: String = "" {
+    var preview: SettingsCellPreview = .None {
         didSet {
-            self.valueLabel.text = self.valueText
+            
+            switch self.preview {
+            case .Text(let string):
+                self.valueLabel.text = string
+                self.imagePreview.image = .None
+                self.imagePreview.backgroundColor = UIColor.clearColor()
+
+            case .Image(let image):
+                self.valueLabel.text = ""
+                self.imagePreview.image = image
+                self.imagePreview.backgroundColor = UIColor.clearColor()
+                
+            case .Color(let color):
+                self.valueLabel.text = ""
+                self.imagePreview.image = .None
+                self.imagePreview.backgroundColor = color
+                
+            case .None:
+                self.valueLabel.text = ""
+                self.imagePreview.image = .None
+                self.imagePreview.backgroundColor = UIColor.clearColor()
+            }
         }
     }
     
     var titleColor: UIColor = UIColor.darkTextColor() {
         didSet {
             self.cellNameLabel.textColor = self.titleColor
+        }
+    }
+    
+    var cellColor: UIColor? {
+        didSet {
+            self.backgroundColor = self.cellColor
         }
     }
     
@@ -96,6 +132,22 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             valueLabel.left == cellNameLabel.right + 8
             valueLabel.right == contentView.right - 16
         }
+        
+        self.imagePreview.clipsToBounds = true
+        self.imagePreview.contentMode = .ScaleAspectFill
+        self.contentView.addSubview(self.imagePreview)
+        
+        constrain(self.contentView, self.imagePreview) { contentView, imagePreview in
+            imagePreview.width == imagePreview.height
+            imagePreview.height == 24
+            imagePreview.right == contentView.right - 16
+            imagePreview.centerY == contentView.centerY
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.imagePreview.layer.cornerRadius = self.imagePreview.bounds.size.width / 2
     }
 }
 

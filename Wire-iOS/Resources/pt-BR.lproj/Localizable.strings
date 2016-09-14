@@ -511,11 +511,6 @@
 // Password reset
 "self.settings.password_reset_menu.title" = "Redefinir senha";
 
-// Tips
-"self.settings.tip.change_picture" = "Toque para alterar a imagem";
-"self.settings.tip.change_color" = "Deslize para mudar de cor";
-
-
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Sem Internet";

@@ -34,6 +34,8 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     weak var group: SettingsGroupCellDescriptorType?
     weak var viewController: UIViewController?
     
+    let previewGenerator: PreviewGeneratorType?
+
     let presentationAction: () -> (UIViewController?)
     
     init(title: String, presentationAction: () -> (UIViewController?)) {
@@ -42,22 +44,25 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         self.presentationStyle = .Navigation
         self.presentationAction = presentationAction
         self.identifier = .None
+        self.previewGenerator = .None
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: () -> (UIViewController?)) {
+    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .None) {
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
         self.identifier = .None
+        self.previewGenerator = previewGenerator
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String, presentationAction: () -> (UIViewController?)) {
+    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String, presentationAction: () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .None) {
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
         self.identifier = identifier
+        self.previewGenerator = previewGenerator
     }
     
     func select(value: SettingsPropertyValue?) {
@@ -84,7 +89,10 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         else {
             cell.titleColor = UIColor.darkTextColor()
         }
-        
+        if let previewGenerator = self.previewGenerator {
+            let preview = previewGenerator(self)
+            cell.preview = preview
+        }
         if let groupCell = cell as? SettingsGroupCell {
             if self.presentationStyle == .Modal {
                 groupCell.accessoryType = .None

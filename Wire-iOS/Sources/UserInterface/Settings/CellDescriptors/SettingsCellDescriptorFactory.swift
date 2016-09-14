@@ -43,12 +43,47 @@ import Foundation
         let nameElement = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfileName))
         let nameSection = SettingsSectionDescriptor(cellDescriptors: [nameElement])
         
+        /*
+         self.add_phone_number
+         self.add_email_password
+         name.guidance.toolong
+         name.guidance.tooshort
+         
+         
+         name.placeholder
+         
+         self.about
+         self.settings
+         self.help_center
+ */
         let phoneLabel = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfilePhone))
         let emailLabel = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfileEmail))
         
         let headerText = "self.settings.account_details_group.title".localized
         let footerText = "self.settings.account_details_group.footer".localized
         let detailsSection = SettingsSectionDescriptor(cellDescriptors: [phoneLabel, emailLabel], header: headerText, footer: footerText) { (_) -> (Bool) in return false }
+        
+        let pictureText = "self.settings.account_picture_group.picture".localized
+        let pictureElement = SettingsExternalScreenCellDescriptor(title: pictureText, isDestructive: false, presentationStyle: PresentationStyle.Modal, presentationAction: { () -> (UIViewController?) in
+            return ProfileSelfPictureViewController() as UIViewController
+            }, previewGenerator: { (cell) -> SettingsCellPreview in
+                guard let profileImageData = ZMUser.selfUser().imageSmallProfileData,
+                let image = UIImage(data: profileImageData) else {
+                    return .None
+                }
+                return .Image(image)
+        })
+        
+        let colorText = "self.settings.account_picture_group.color".localized
+        let colorElement = SettingsGroupCellDescriptor(items: [self.colorsSubgroup()], title: colorText, style: .Grouped, identifier: .None) { (cell) -> SettingsCellPreview in
+            return .Color(ZMUser.selfUser().accentColor)
+        }
+        
+        let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
+        
+        let appearanceSectionTitle = "self.settings.account_appearance_group.title".localized
+        let appearanceSection = SettingsSectionDescriptor(cellDescriptors: [pictureElement, colorElement, darkThemeElement], header: appearanceSectionTitle)
+        
         
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         let resetPassword = SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
@@ -63,7 +98,7 @@ import Foundation
         }
         let signOutSection = SettingsSectionDescriptor(cellDescriptors: [signOutButton], header: .None, footer: .None) { (_) -> (Bool) in return false }
 
-        let deleteAccountButton = SettingsExternalScreenCellDescriptor(title: "self.settings.account_details.delete_account.title".localized, isDestructive: true, presentationStyle: .Modal) { () -> (UIViewController?) in
+        let deleteAccountButton = SettingsExternalScreenCellDescriptor(title: "self.settings.account_details.delete_account.title".localized, isDestructive: true, presentationStyle: .Modal, presentationAction: { () -> (UIViewController?) in
             let alert = UIAlertController(title: "self.settings.account_details.delete_account.alert.title".localized, message: "self.settings.account_details.delete_account.alert.message".localized, preferredStyle: .Alert)
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .Cancel, handler: { (alertAction: UIAlertAction) -> Void in
                 
@@ -77,12 +112,12 @@ import Foundation
             alert.addAction(actionDelete)
             
             return alert
-        }
+        })
         
         let deleteSubtitle = "self.settings.account_details.delete_account.footer".localized
         let deleteSection = SettingsSectionDescriptor(cellDescriptors: [deleteAccountButton], header: .None, footer: deleteSubtitle)
 
-        return SettingsGroupCellDescriptor(items: [nameSection, detailsSection, resetPasswordSection, signOutSection, deleteSection], title: "self.settings.account_section".localized)
+        return SettingsGroupCellDescriptor(items: [nameSection, detailsSection, appearanceSection, resetPasswordSection, signOutSection, deleteSection], title: "self.settings.account_section".localized)
     }
     
     func privacyAndSecurityGroup() -> SettingsCellDescriptorType {
@@ -132,10 +167,11 @@ import Foundation
         return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices_button.title".localized,
             isDestructive: false,
             presentationStyle: PresentationStyle.Navigation,
-            identifier: self.dynamicType.settingsDevicesCellIdentifier) { () -> (UIViewController?) in
+            identifier: self.dynamicType.settingsDevicesCellIdentifier,
+            presentationAction: { () -> (UIViewController?) in
                 Analytics.shared()?.tagSelfDeviceList()
                 return ClientListViewController(clientsList: .None, credentials: .None, detailedView: true)
-        }
+        })
     }
     
     func alertsGroup() -> SettingsCellDescriptorType {
@@ -150,7 +186,7 @@ import Foundation
         let chatHeadsFooter = "self.settings.notifications.chat_alerts.footer".localized
         let chatHeadsSection = SettingsSectionDescriptor(cellDescriptors: [chatHeads], header: nil, footer: chatHeadsFooter)
         
-        let soundAlert : SettingsCellDescriptorType =  {
+        let soundAlert : SettingsCellDescriptorType = {
             let titleLabel = "self.settings.sound_menu.title".localized
             
             let soundAlertProperty = self.settingsPropertyFactory.property(.SoundAlerts)
@@ -169,18 +205,18 @@ import Foundation
             
             let alertsSection = SettingsSectionDescriptor(cellDescriptors: [allAlerts, someAlerts, noneAlerts], header: titleLabel, footer: .None)
             
-            let alertPreviewGenerator : SettingsGroupCellDescriptor.PreviewGeneratorType = {
+            let alertPreviewGenerator : PreviewGeneratorType = {
                 let value = soundAlertProperty.propertyValue
                 guard let rawValue = value.value() as? UInt,
-                    let intensityLevel = AVSIntensityLevel(rawValue: rawValue) else { return $0.title }
+                    let intensityLevel = AVSIntensityLevel(rawValue: rawValue) else { return .Text($0.title) }
                 
                 switch intensityLevel {
                 case .Full:
-                    return "self.settings.sound_menu.all_sounds.title".localized
+                    return .Text("self.settings.sound_menu.all_sounds.title".localized)
                 case .Some:
-                    return "self.settings.sound_menu.mute_while_talking.title".localized
+                    return .Text("self.settings.sound_menu.mute_while_talking.title".localized)
                 case .None:
-                    return "self.settings.sound_menu.no_sounds.title".localized
+                    return .Text("self.settings.sound_menu.no_sounds.title".localized)
                 }
                 
             }
@@ -235,15 +271,15 @@ import Foundation
         
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: "self.settings.sound_menu.ringtones.title".localized)
         
-        let previewGenerator: SettingsGroupCellDescriptor.PreviewGeneratorType = { cellDescriptor in
+        let previewGenerator: PreviewGeneratorType = { cellDescriptor in
             let value = settingsProperty.propertyValue
             
             if let stringValue = value.value() as? String,
                 let enumValue = ZMSound(rawValue: stringValue) {
-                return enumValue.description
+                return .Text(enumValue.description)
             }
             else {
-                return defaultSoundTitle
+                return .Text(defaultSoundTitle)
             }
         }
         
@@ -272,7 +308,7 @@ import Foundation
         let pushTitle = "self.settings.advanced.reset_push_token.title".localized
         let pushSectionSubtitle = "self.settings.advanced.reset_push_token.subtitle".localized
         
-        let pushButton = SettingsExternalScreenCellDescriptor(title: pushTitle, isDestructive: false, presentationStyle: PresentationStyle.Modal) { () -> (UIViewController?) in
+        let pushButton = SettingsExternalScreenCellDescriptor(title: pushTitle, isDestructive: false, presentationStyle: PresentationStyle.Modal, presentationAction: { () -> (UIViewController?) in
             ZMUserSession.sharedSession().resetPushTokens()
             let alert = UIAlertController(title: "self.settings.advanced.reset_push_token_alert.title".localized, message: "self.settings.advanced.reset_push_token_alert.message".localized, preferredStyle: .Alert)
             weak var weakAlert = alert;
@@ -282,7 +318,7 @@ import Foundation
                 }
             }));
             return alert
-        }
+        })
         
         let pushSection = SettingsSectionDescriptor(cellDescriptors: [pushButton], header: .None, footer: pushSectionSubtitle)  { (_) -> (Bool) in
             return true
@@ -313,5 +349,18 @@ import Foundation
             let storyboard = UIStoryboard(name: "DeveloperAPNS", bundle:NSBundle(forClass: self.dynamicType))
             return storyboard.instantiateInitialViewController()
         }
+    }
+    
+    // MARK: Subgroups
+    
+    func colorsSubgroup() -> SettingsSectionDescriptorType {
+        let cellDescriptors = ZMAccentColor.all().map { (color) -> SettingsCellDescriptorType in
+            let value = SettingsPropertyValue.Number(value: Int(color.rawValue))
+            return SettingsPropertySelectValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.AccentColor), value: value, title: "", identifier: .None, selectAction: { _ in
+                
+                }, backgroundColor: color.color) as SettingsCellDescriptorType
+        }
+        let colorsSection = SettingsSectionDescriptor(cellDescriptors: cellDescriptors)
+        return colorsSection
     }
 }

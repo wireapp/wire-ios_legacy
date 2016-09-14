@@ -58,6 +58,8 @@ func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> 
     }
 }
 
+typealias PreviewGeneratorType = (SettingsGroupCellDescriptorType) -> SettingsCellPreview
+
 protocol SettingsGroupCellDescriptorType: SettingsCellDescriptorType {
     weak var viewController: UIViewController? {get set}
 }
@@ -139,6 +141,7 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
     }
 }
 
+
 class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
@@ -147,7 +150,6 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
     
-    typealias PreviewGeneratorType = (SettingsGroupCellDescriptorType) -> (String?)
     let previewGenerator: PreviewGeneratorType?
     
     weak var group: SettingsGroupCellDescriptorType?
@@ -170,9 +172,9 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     
     func featureCell(cell: SettingsCellType) {
         cell.titleText = self.title
-        if let previewGenerator = self.previewGenerator,
-            let preview = previewGenerator(self) {
-            cell.valueText = preview
+        if let previewGenerator = self.previewGenerator {
+            let preview = previewGenerator(self)
+            cell.preview = preview
         }
     }
     
@@ -193,7 +195,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
 func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
     switch (name) {
     case .ChatHeadsDisabled:
-        return NSLocalizedString("self.settings.notifications.chat_alerts.toggle", comment: "")
+        return "self.settings.notifications.chat_alerts.toggle".localized
     case .NotificationContentVisible:
         return "self.settings.notifications.push_notification.toogle".localized
     case .Markdown:
@@ -204,23 +206,23 @@ func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
         
     case .PreferredFlashMode:
         return "Flash Mode"
-    case .ColorScheme:
-        return "Color Scheme"
+    case .DarkMode:
+        return "self.settings.account_picture_group.theme".localized
         // Profile
     case .ProfileName:
-        return NSLocalizedString("self.settings.account_section.name.title", comment: "")
+        return "self.settings.account_section.name.title".localized
     case .ProfileEmail:
-        return NSLocalizedString("self.settings.account_section.email.title", comment: "")
+        return "self.settings.account_section.email.title".localized
     case .ProfilePhone:
-        return NSLocalizedString("self.settings.account_section.phone.title", comment: "")
+        return "self.settings.account_section.phone.title".localized
         
         // AVS
     case .SoundAlerts:
-        return NSLocalizedString("self.settings.sound_menu.title", comment: "")
+        return "self.settings.sound_menu.title".localized
         
         // Analytics
     case .AnalyticsOptOut:
-        return NSLocalizedString("self.settings.privacy_analytics_section.title", comment: "")
+        return "self.settings.privacy_analytics_section.title".localized
         
     case .DisableUI:
         return "Disable UI (Restart needed)"
@@ -236,6 +238,8 @@ func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
         return "self.settings.sound_menu.ringtone.title".localized
     case .PingSoundName:
         return "self.settings.sound_menu.ping.title".localized
+    case .AccentColor:
+        return "self.settings.account_picture_group.color".localized
     }
 }
 

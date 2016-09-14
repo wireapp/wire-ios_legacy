@@ -25,6 +25,22 @@
 
 + (UIAlertController *)alertControllerForNewSelfClients:(NSSet<UserClient *> *)clients
 {
+    /*
+     UIAlertController *newLoginAlertController = [UIAlertController alertControllerForNewSelfClients:clients];
+     
+     [newLoginAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"self.new_device_alert.manage_devices", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+     SettingsNavigationController *settingsController = [self presentSettingsWithExtraSettings:NO completion:nil];
+     [settingsController openControllerForCellWithIdentifier:[SettingsCellDescriptorFactory settingsDevicesCellIdentifier]];
+     }]];
+     
+     [newLoginAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"self.new_device_alert.trust_devices", nil) style:UIAlertActionStyleDefault handler:nil]];
+     
+     [self presentViewController:newLoginAlertController animated:YES completion:nil];
+     
+     [[ZMUserSession sharedSession] enqueueChanges:^{
+     [self confirmClients:clients];
+     }];
+     */
     NSMutableArray *deviceNamesAndDates = [NSMutableArray array];
     
     for (UserClient *userClient in clients) {

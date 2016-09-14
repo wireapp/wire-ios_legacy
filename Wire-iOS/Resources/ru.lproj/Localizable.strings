@@ -511,11 +511,6 @@
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
 
-// Tips
-"self.settings.tip.change_picture" = "Нажмите, чтобы изменить изображение";
-"self.settings.tip.change_color" = "Потяните, чтобы изменить цвет";
-
-
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Нет доступа к интернету";

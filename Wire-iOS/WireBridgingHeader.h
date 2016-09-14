@@ -70,6 +70,7 @@
 #import "SplitViewController.h"
 #import "ConfirmAssetViewController.h"
 #import "SketchViewController.h"
+#import "ProfileSelfPictureViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
