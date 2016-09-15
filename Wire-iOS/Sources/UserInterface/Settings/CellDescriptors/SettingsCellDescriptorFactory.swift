@@ -75,9 +75,11 @@ import Foundation
         })
         
         let colorText = "self.settings.account_picture_group.color".localized
-        let colorElement = SettingsGroupCellDescriptor(items: [self.colorsSubgroup()], title: colorText, style: .Grouped, identifier: .None) { (cell) -> SettingsCellPreview in
-            return .Color(ZMUser.selfUser().accentColor)
-        }
+        let colorElement = SettingsExternalScreenCellDescriptor(title: colorText, isDestructive: false, presentationStyle: PresentationStyle.Modal, presentationAction: { () -> (UIViewController?) in
+            return AccentColorPickerController()
+            }, previewGenerator: { (cell) -> SettingsCellPreview in
+                return .Color(ZMUser.selfUser().accentColor)
+        })
         
         let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
         

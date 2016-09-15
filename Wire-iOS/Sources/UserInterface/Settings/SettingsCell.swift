@@ -134,6 +134,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
         
         self.imagePreview.clipsToBounds = true
+        self.imagePreview.layer.cornerRadius = 12
         self.imagePreview.contentMode = .ScaleAspectFill
         self.contentView.addSubview(self.imagePreview)
         
@@ -143,11 +144,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             imagePreview.right == contentView.right - 16
             imagePreview.centerY == contentView.centerY
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.imagePreview.layer.cornerRadius = self.imagePreview.bounds.size.width / 2
+        
     }
 }
 

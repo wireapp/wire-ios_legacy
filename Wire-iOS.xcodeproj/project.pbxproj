@@ -559,6 +559,7 @@
 		87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36B91D74782B007AB4E5 /* LikeButton.swift */; };
 		87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */; };
 		87D0F8631C6DF0910071769E /* CameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D0F8621C6DF0910071769E /* CameraPreviewView.m */; };
+		87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */; };
 		87D482AF1B8C7DBC004ED174 /* soundcloud@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87D482AE1B8C7DBC004ED174 /* soundcloud@3x.png */; };
 		87D553681C86F0450026573C /* MockUserClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D553671C86F0450026573C /* MockUserClient.m */; };
 		87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */; };
@@ -1683,6 +1684,7 @@
 		87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Like.swift"; sourceTree = "<group>"; };
 		87D0F8611C6DF0910071769E /* CameraPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraPreviewView.h; sourceTree = "<group>"; };
 		87D0F8621C6DF0910071769E /* CameraPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraPreviewView.m; sourceTree = "<group>"; };
+		87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentColorPickerController.swift; sourceTree = "<group>"; };
 		87D482AE1B8C7DBC004ED174 /* soundcloud@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundcloud@3x.png"; sourceTree = "<group>"; };
 		87D553661C86F0450026573C /* MockUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockUserClient.h; sourceTree = "<group>"; };
 		87D553671C86F0450026573C /* MockUserClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockUserClient.m; sourceTree = "<group>"; };
@@ -4270,6 +4272,7 @@
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
 				8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */,
+				87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -5524,6 +5527,7 @@
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
 				871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */,
 				87DCF4F21D34EA4500BB420F /* SearchTokenStore.m in Sources */,
+				87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */,
 				875D48D11A6D087F00BB17B5 /* ConversationListViewController.m in Sources */,
 				871BC0221D34F56300DF0793 /* AnalyticsTracker+Registration.m in Sources */,
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,

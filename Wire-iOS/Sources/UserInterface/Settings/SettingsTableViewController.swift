@@ -22,6 +22,7 @@ import Cartography
 
 class SettingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let group: SettingsInternalGroupCellDescriptorType
+    private var selfUserObserver: AnyObject!
     
     var tableView: UITableView?
     
@@ -36,6 +37,8 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
                 groupDescriptor.viewController = self
             }
         }
+        
+        self.selfUserObserver = ZMUser.addUserObserver(self, forUsers: [ZMUser.selfUser()], inUserSession: ZMUserSession.sharedSession())
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -129,5 +132,13 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let sectionDescriptor = self.group.visibleItems[section]
         return sectionDescriptor.footer
+    }
+}
+
+extension SettingsTableViewController: ZMUserObserver {
+    func userDidChange(note: UserChangeInfo!) {
+        if note.accentColorValueChanged {
+            self.tableView?.reloadData()
+        }
     }
 }
