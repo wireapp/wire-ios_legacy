@@ -24,8 +24,17 @@
 + (BOOL)developerMenuEnabled {
 #if ENABLE_DEVELOPER_MENU == 1
     return YES;
-#endif
+#else
     return NO;
+#endif
+}
+
++ (BOOL)signOutEnabled {
+#if ENABLE_SIGNOUT == 1
+    return YES;
+#else
+    return NO;
+#endif
 }
 
 @end

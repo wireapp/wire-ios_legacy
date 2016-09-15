@@ -71,6 +71,9 @@
 #import "ConfirmAssetViewController.h"
 #import "SketchViewController.h"
 #import "ProfileSelfPictureViewController.h"
+#import "AddEmailPasswordViewController.h"
+#import "AddPhoneNumberViewController.h"
+#import "AboutViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

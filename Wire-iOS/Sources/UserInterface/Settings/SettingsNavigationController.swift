@@ -22,6 +22,10 @@ import Foundation
 @objc class SettingsNavigationController: UINavigationController {
     let rootGroup: protocol<SettingsControllerGeneratorType, SettingsInternalGroupCellDescriptorType>
     let settingsPropertyFactory: SettingsPropertyFactory
+    
+    private let pushTransition = PushTransition()
+    private let popTransition = PopTransition()
+    
     static func settingsNavigationController() -> SettingsNavigationController {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: NSUserDefaults.standardUserDefaults(),
             analytics: Analytics.shared(),
@@ -39,7 +43,7 @@ import Foundation
         self.rootGroup = rootGroup
         self.settingsPropertyFactory = settingsPropertyFactory
         super.init(nibName: nil, bundle: nil)
-        
+        self.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
     }
     
@@ -104,5 +108,22 @@ import Foundation
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return [.Portrait]
+    }
+
+}
+
+extension SettingsNavigationController: UINavigationControllerDelegate {
+    func navigationController(navigationController: UINavigationController,
+         animationControllerForOperation operation: UINavigationControllerOperation,
+                         fromViewController fromVC: UIViewController,
+                             toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        switch operation {
+        case .Push:
+            return self.pushTransition
+        case .Pop:
+            return self.popTransition
+        default:
+            fatalError()
+        }
     }
 }

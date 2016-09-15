@@ -58,7 +58,7 @@ func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> 
     }
 }
 
-typealias PreviewGeneratorType = (SettingsGroupCellDescriptorType) -> SettingsCellPreview
+typealias PreviewGeneratorType = (SettingsCellDescriptorType) -> SettingsCellPreview
 
 protocol SettingsGroupCellDescriptorType: SettingsCellDescriptorType {
     weak var viewController: UIViewController? {get set}
@@ -211,10 +211,6 @@ func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
         // Profile
     case .ProfileName:
         return "self.settings.account_section.name.title".localized
-    case .ProfileEmail:
-        return "self.settings.account_section.email.title".localized
-    case .ProfilePhone:
-        return "self.settings.account_section.phone.title".localized
         
         // AVS
     case .SoundAlerts:

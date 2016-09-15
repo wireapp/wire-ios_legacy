@@ -68,7 +68,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         
-        let allCellTypes: [SettingsTableCell.Type] = [SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
+        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
         
         for aClass in allCellTypes {
             tableView.registerClass(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)

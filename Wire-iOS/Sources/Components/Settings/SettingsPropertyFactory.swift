@@ -90,42 +90,6 @@ class SettingsPropertyFactory {
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
-        case .ProfileEmail:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.String(value: self.selfUser.emailAddress)
-            }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) in
-                switch(value) {
-                case .String:
-                    let block : dispatch_block_t = {
-                        //self.selfUser.emailAddress = stringValue
-                    }
-                    self.userSession.enqueueChanges(block)
-                    
-                default:
-                    fatalError("Incorrect type \(value) for key \(propertyName)")
-                }
-            }
-            
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
-        case .ProfilePhone:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.String(value: self.selfUser.phoneNumber)
-            }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) in
-                switch(value) {
-                case .String:
-                    let block : dispatch_block_t = {
-//                        self.selfUser.phoneNumber = stringValue
-                    }
-                    self.userSession.enqueueChanges(block)
-                    
-                default:
-                    fatalError("Incorrect type \(value) for key \(propertyName)")
-                }
-            }
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
-            // AVS
 
         case .AccentColor:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in

@@ -28,7 +28,7 @@ import Foundation
     }
     
     func rootSettingsGroup() -> protocol<SettingsControllerGeneratorType, SettingsInternalGroupCellDescriptorType> {
-        var topLevelElements = [self.accountGroup(), self.privacyAndSecurityGroup(), self.alertsGroup(), self.advancedGroup()]
+        var topLevelElements = [self.accountGroup(), self.privacyAndSecurityGroup(), self.alertsGroup(), self.advancedGroup(), self.aboutSection(), self.helpSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements = topLevelElements + [self.developerGroup(), self.APSGroup()]
@@ -41,28 +41,37 @@ import Foundation
     
     func accountGroup() -> SettingsCellDescriptorType {
         let nameElement = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfileName))
-        let nameSection = SettingsSectionDescriptor(cellDescriptors: [nameElement])
         
-        /*
-         self.add_phone_number
-         self.add_email_password
-         name.guidance.toolong
-         name.guidance.tooshort
-         
-         
-         name.placeholder
-         
-         self.about
-         self.settings
-         self.help_center
- */
-        let phoneLabel = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfilePhone))
-        let emailLabel = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfileEmail))
+        let phoneElement: SettingsCellDescriptorType
+        
+        if let phoneNumber = ZMUser.selfUser().phoneNumber where !phoneNumber.isEmpty {
+            phoneElement = SettingsInfoCellDescriptor(title: "self.settings.account_section.phone.title".localized, previewGenerator: { _ in
+                return .Text(ZMUser.selfUser().phoneNumber)
+            })
+        }
+        else {
+            phoneElement = SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
+                return AddPhoneNumberViewController()
+            }
+        }
+        
+        
+        let emailElement: SettingsCellDescriptorType
+        
+        if let emailAddress = ZMUser.selfUser().emailAddress where !emailAddress.isEmpty {
+            emailElement = SettingsInfoCellDescriptor(title: "self.settings.account_section.email.title".localized, previewGenerator: { _ in
+                return .Text(ZMUser.selfUser().emailAddress)
+            })
+        }
+        else {
+            emailElement = SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
+                return AddEmailPasswordViewController()
+            }
+        }
         
         let headerText = "self.settings.account_details_group.title".localized
         let footerText = "self.settings.account_details_group.footer".localized
-        let detailsSection = SettingsSectionDescriptor(cellDescriptors: [phoneLabel, emailLabel], header: headerText, footer: footerText) { (_) -> (Bool) in return false }
-        
+        let nameAndDetailsSection = SettingsSectionDescriptor(cellDescriptors: [nameElement, phoneElement, emailElement], header: headerText, footer: footerText)
         let pictureText = "self.settings.account_picture_group.picture".localized
         let pictureElement = SettingsExternalScreenCellDescriptor(title: pictureText, isDestructive: false, presentationStyle: PresentationStyle.Modal, presentationAction: { () -> (UIViewController?) in
             return ProfileSelfPictureViewController() as UIViewController
@@ -95,11 +104,17 @@ import Foundation
         
         let resetPasswordSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword])
         
-        let signOutButton = SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
-            // sign out is not supported yet
+        var signOutSection: SettingsSectionDescriptor?
+        if DeveloperMenuState.signOutEnabled() {
+            let signOutButton = SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
+                Settings.sharedSettings().reset()
+                ZMUserSession.resetStateAndExit()
+                exit(0)
+            }
+            signOutSection = SettingsSectionDescriptor(cellDescriptors: [signOutButton], header: .None, footer: .None)
         }
-        let signOutSection = SettingsSectionDescriptor(cellDescriptors: [signOutButton], header: .None, footer: .None) { (_) -> (Bool) in return false }
-
+        
+        
         let deleteAccountButton = SettingsExternalScreenCellDescriptor(title: "self.settings.account_details.delete_account.title".localized, isDestructive: true, presentationStyle: .Modal, presentationAction: { () -> (UIViewController?) in
             let alert = UIAlertController(title: "self.settings.account_details.delete_account.alert.title".localized, message: "self.settings.account_details.delete_account.alert.message".localized, preferredStyle: .Alert)
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .Cancel, handler: { (alertAction: UIAlertAction) -> Void in
@@ -119,7 +134,15 @@ import Foundation
         let deleteSubtitle = "self.settings.account_details.delete_account.footer".localized
         let deleteSection = SettingsSectionDescriptor(cellDescriptors: [deleteAccountButton], header: .None, footer: deleteSubtitle)
 
-        return SettingsGroupCellDescriptor(items: [nameSection, detailsSection, appearanceSection, resetPasswordSection, signOutSection, deleteSection], title: "self.settings.account_section".localized)
+        let items: [SettingsSectionDescriptorType]
+        if let signOutSection = signOutSection {
+            items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, signOutSection, deleteSection]
+        }
+        else {
+            items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, deleteSection]
+        }
+                
+        return SettingsGroupCellDescriptor(items: items, title: "self.settings.account_section".localized)
     }
     
     func privacyAndSecurityGroup() -> SettingsCellDescriptorType {
@@ -351,6 +374,28 @@ import Foundation
             let storyboard = UIStoryboard(name: "DeveloperAPNS", bundle:NSBundle(forClass: self.dynamicType))
             return storyboard.instantiateInitialViewController()
         }
+    }
+    
+    func aboutSection() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.about".localized, presentationAction: { () -> (UIViewController?) in
+            Analytics.shared()?.tagAbout()
+            let aboutViewController = AboutViewController()
+            
+            aboutViewController.backAction = { [unowned aboutViewController] in
+                aboutViewController.navigationController?.popViewControllerAnimated(true)
+            }
+            
+            return aboutViewController
+        })
+    }
+    
+    func helpSection() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.help_center".localized, presentationAction: { () -> (UIViewController?) in
+            Analytics.shared()?.tagHelp()
+            UIApplication.sharedApplication().openURL(NSURL.wr_supportURL().wr_URLByAppendingLocaleParameter())
+
+            return .None
+        })
     }
     
     // MARK: Subgroups
