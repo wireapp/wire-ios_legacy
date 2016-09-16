@@ -32,7 +32,8 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
 
         super.init(nibName: nil, bundle: nil)
         self.title = group.title
-        
+        self.edgesForExtendedLayout = UIRectEdge.None
+
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
                 groupDescriptor.viewController = self
@@ -71,6 +72,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.backgroundColor = .clearColor()
+        tableView.clipsToBounds = true
         
         let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
         
@@ -78,13 +80,17 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
             tableView.registerClass(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
         self.tableView = tableView
+        
         self.view.addSubview(tableView)
     }
 
     func createConstraints() {
         if let tableView = self.tableView {
             constrain(self.view, tableView) { selfView, aTableView in
-                aTableView.edges == selfView.edges
+                aTableView.left == selfView.left
+                aTableView.right == selfView.right
+                aTableView.top == selfView.top
+                aTableView.bottom == selfView.bottom
             }
         }
     }

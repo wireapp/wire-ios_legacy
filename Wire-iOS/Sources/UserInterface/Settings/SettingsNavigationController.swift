@@ -127,7 +127,7 @@ import Foundation
             }
         }
         
-        self.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0, alpha: 0.5), andSize: CGSizeMake(1, 1)), forBarMetrics:.Default)
+        self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics:.Default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.translucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]

@@ -47,6 +47,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         self.userClient = userClient
         
         super.init(nibName: nil, bundle: nil)
+        self.edgesForExtendedLayout = UIRectEdge.None
 
         self.userClientToken = userClient.addObserver(self)
         if userClient.fingerprint == .None {

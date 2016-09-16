@@ -66,10 +66,11 @@ import CocoaLumberjackSwift
     required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .None, detailedView: Bool = false) {
         self.selfClient = ZMUserSession.sharedSession().selfUserClient()
         self.detailedView = detailedView
+        self.credentials = credentials
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("registration.devices.title", comment:"")
-        self.credentials = credentials
-        
+        self.edgesForExtendedLayout = UIRectEdge.None
+
         let filteredClients = clientsList?.filter { $0 != selfClient } ?? []
         self.initalizeProperties(filteredClients)
 
