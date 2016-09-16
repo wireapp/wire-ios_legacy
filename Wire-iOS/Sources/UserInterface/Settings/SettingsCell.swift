@@ -41,6 +41,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     var cellNameLabel = UILabel()
     var valueLabel = UILabel()
     var imagePreview = UIImageView()
+    var cellNameLabelToIconInset: NSLayoutConstraint!
     
     var titleText: String = "" {
         didSet {
@@ -79,9 +80,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         didSet {
             if icon == .None {
                 self.iconImageView.image = .None
+                self.cellNameLabelToIconInset.active = false
             }
             else {
                 self.iconImageView.image = UIImage(forIcon: icon, iconSize: .Tiny, color: .blackColor())
+                self.cellNameLabelToIconInset.active = true
             }
         }
     }
@@ -125,7 +128,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.contentView.addSubview(self.iconImageView)
         
         constrain(self.contentView, self.iconImageView) { contentView, iconImageView in
-            iconImageView.left == contentView.left + 10
+            iconImageView.left == contentView.left + 24
             iconImageView.width == 16
             iconImageView.height == iconImageView.height
             iconImageView.centerY == contentView.centerY
@@ -137,11 +140,13 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.contentView.addSubview(self.cellNameLabel)
         
         constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
-            cellNameLabel.left == iconImageView.right + 10
-            cellNameLabel.left == contentView.right + 36 ~ 750
+            self.cellNameLabelToIconInset = cellNameLabel.left == iconImageView.right + 24
+            cellNameLabel.left == contentView.left + 16 ~ 750
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }
+        
+        self.cellNameLabelToIconInset.active = false
         
         self.valueLabel.textColor = UIColor.grayColor()
         self.valueLabel.font = UIFont.systemFontOfSize(17)

@@ -51,6 +51,16 @@ import Foundation
         var resultViewController: UIViewController? = .None
         // Let's assume for the moment that menu is only 2 levels deep
         self.rootGroup.allCellDescriptors().forEach({ (topCellDescriptor: SettingsCellDescriptorType) -> () in
+            
+            if let cellIdentifier = topCellDescriptor.identifier,
+                let cellGroupDescriptor = topCellDescriptor as? SettingsControllerGeneratorType,
+                let viewController = cellGroupDescriptor.generateViewController()
+                where cellIdentifier == identifier
+            {
+                self.pushViewController(viewController, animated: false)
+                resultViewController = viewController
+            }
+            
             if let topCellGroupDescriptor = topCellDescriptor as? protocol<SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType> {
                 topCellGroupDescriptor.allCellDescriptors().forEach({ (cellDescriptor: SettingsCellDescriptorType) -> () in
                     if let cellIdentifier = cellDescriptor.identifier,
@@ -65,6 +75,7 @@ import Foundation
                     }
                 })
             }
+            
         })
         return resultViewController
     }
@@ -103,6 +114,44 @@ import Foundation
             Analytics.shared()?.tagScreen("SETTINGS")
             
             self.pushViewController(rootViewController, animated: false)
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presentNewLoginAlertControllerIfNeeded()
+    }
+    
+    private func presentNewLoginAlertControllerIfNeeded() {
+        let clientsRequiringUserAttention = ZMUser.selfUser().clientsRequiringUserAttention
+        
+        delay(5) {
+            self.openControllerForCellWithIdentifier(SettingsCellDescriptorFactory.settingsDevicesCellIdentifier)
+        }
+        if clientsRequiringUserAttention.count > 0 {
+            self.presentNewLoginAlertController(clientsRequiringUserAttention)
+        }
+    }
+    
+    private func presentNewLoginAlertController(clients: Set<UserClient>) {
+        let newLoginAlertController = UIAlertController(forNewSelfClients: clients)
+        
+        let actionManageDevices = UIAlertAction(title: "self.new_device_alert.manage_devices".localized, style:.Default) { _ in
+            self.openControllerForCellWithIdentifier(SettingsCellDescriptorFactory.settingsDevicesCellIdentifier)
+        }
+        
+        newLoginAlertController.addAction(actionManageDevices)
+        
+        let actionTrustDevices = UIAlertAction(title:"self.new_device_alert.trust_devices".localized, style:.Default, handler:.None)
+        
+        newLoginAlertController.addAction(actionTrustDevices)
+        
+        self.presentViewController(newLoginAlertController, animated:true, completion:.None)
+        
+        ZMUserSession.sharedSession().enqueueChanges {
+            clients.forEach {
+                $0.needsToNotifyUser = false
+            }
         }
     }
     

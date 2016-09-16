@@ -31,7 +31,7 @@ import Foundation
         var topLevelElements = [self.accountGroup(), self.devicesGroup(), self.optionsGroup(), self.advancedGroup(), self.aboutSection(), self.helpSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
-            topLevelElements = topLevelElements + [self.developerGroup(), self.APSGroup()]
+            topLevelElements = topLevelElements + [self.developerGroup()]
         }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)
@@ -169,9 +169,6 @@ import Foundation
             return AddressBookHelper.sharedHelper.isAddressBookAccessDisabled
         }
 
-        let devicesSectionTitle = "self.settings.privacy_analytics_menu.devices.title".localized
-        let devicesSection = SettingsSectionDescriptor(cellDescriptors: [self.devicesGroup()], header: devicesSectionTitle, footer: .None)
-
         let reportButton = SettingsButtonCellDescriptor(title: "self.report_abuse".localized, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
             UIApplication.sharedApplication().openURL(NSURL.wr_reportAbuseURL().wr_URLByAppendingLocaleParameter())
         }
@@ -248,11 +245,11 @@ import Foundation
         
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, devicesSection, reportSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, reportSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices_button.title".localized,
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices.title".localized,
             isDestructive: false,
             presentationStyle: PresentationStyle.Navigation,
             identifier: self.dynamicType.settingsDevicesCellIdentifier,
@@ -356,15 +353,6 @@ import Foundation
         let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableAnalytics))
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title)
-    }
-    
-    func APSGroup() -> SettingsCellDescriptorType {
-        let title = "self.settings.apns_logging.title".localized
-        
-        return SettingsExternalScreenCellDescriptor(title: title) { () -> (UIViewController?) in
-            let storyboard = UIStoryboard(name: "DeveloperAPNS", bundle:NSBundle(forClass: self.dynamicType))
-            return storyboard.instantiateInitialViewController()
-        }
     }
     
     func aboutSection() -> SettingsCellDescriptorType {

@@ -51,6 +51,7 @@
 #import "ConversationContentViewController+Private.h"
 #import "StackView.h"
 #import "SearchResultCell.h"
+#import "UIAlertController+NewSelfClients.h"
 
 // View Controllers
 #import "ZClientViewController.h"

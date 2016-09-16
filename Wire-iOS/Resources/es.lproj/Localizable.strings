@@ -482,7 +482,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos te ayuda a conectar con los demás. Toda la información es anónima y no la compartiremos con nadie más. Permite el acceso a través de Ajustes > Privacidad > Contactos.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Administrar dispositivos";
 
 "self.settings.privacy_analytics_section.title" = "Reportes de uso y fallas";
 "self.settings.privacy_analytics_menu.description.title" = "Ayuda a mejorar Wire enviando información anónima.\n";

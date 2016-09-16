@@ -488,7 +488,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Sharing your contacts helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Manage devices";
 
 "self.settings.privacy_analytics_section.title" = "Usage and crash reports";
 "self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";

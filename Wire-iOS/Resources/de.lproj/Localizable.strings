@@ -482,7 +482,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Geräte verwalten";
 
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
 "self.settings.privacy_analytics_menu.description.title" = "Durch das Senden anonymisierter Informationen hilfst du uns, Wire zu verbessern.";

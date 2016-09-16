@@ -482,7 +482,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Поділіться контактами - це допоможе вам знайти людей, яких ви знаєте. Ми анонімізуємо всю інформацію та не передаємо її третім особам. Надайте доступ в меню Налаштування > Конфіденціальність > Контакти.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Керування пристроями";
 
 "self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
 "self.settings.privacy_analytics_menu.description.title" = "Зробіть Wire кращим, відправляючи анонімну інформацію.\n";
