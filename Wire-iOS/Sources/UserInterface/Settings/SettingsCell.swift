@@ -33,12 +33,14 @@ protocol SettingsCellType: class {
     var titleColor: UIColor {get set}
     var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
+    var icon: ZetaIconType {get set}
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
-    var cellNameLabel: UILabel = UILabel(frame: CGRectZero)
-    var valueLabel: UILabel = UILabel(frame: CGRectZero)
-    var imagePreview: UIImageView = UIImageView(frame: CGRectZero)
+    var iconImageView = UIImageView()
+    var cellNameLabel = UILabel()
+    var valueLabel = UILabel()
+    var imagePreview = UIImageView()
     
     var titleText: String = "" {
         didSet {
@@ -69,6 +71,17 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 self.valueLabel.text = ""
                 self.imagePreview.image = .None
                 self.imagePreview.backgroundColor = UIColor.clearColor()
+            }
+        }
+    }
+    
+    var icon: ZetaIconType = .None {
+        didSet {
+            if icon == .None {
+                self.iconImageView.image = .None
+            }
+            else {
+                self.iconImageView.image = UIImage(forIcon: icon, iconSize: .Tiny, color: .blackColor())
             }
         }
     }
@@ -108,13 +121,24 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     func setup() {
+        self.iconImageView.contentMode = .Center
+        self.contentView.addSubview(self.iconImageView)
+        
+        constrain(self.contentView, self.iconImageView) { contentView, iconImageView in
+            iconImageView.left == contentView.left + 10
+            iconImageView.width == 16
+            iconImageView.height == iconImageView.height
+            iconImageView.centerY == contentView.centerY
+        }
+        
         self.cellNameLabel.font = UIFont.systemFontOfSize(17)
         self.cellNameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, forAxis: .Horizontal)
         self.contentView.addSubview(self.cellNameLabel)
         
-        constrain(self.contentView, self.cellNameLabel) { contentView, cellNameLabel in
-            cellNameLabel.left == contentView.left + 20
+        constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
+            cellNameLabel.left == iconImageView.right + 10
+            cellNameLabel.left == contentView.right + 36 ~ 750
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }

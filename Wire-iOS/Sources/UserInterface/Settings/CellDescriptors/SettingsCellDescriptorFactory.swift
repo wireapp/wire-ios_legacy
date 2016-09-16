@@ -28,7 +28,7 @@ import Foundation
     }
     
     func rootSettingsGroup() -> protocol<SettingsControllerGeneratorType, SettingsInternalGroupCellDescriptorType> {
-        var topLevelElements = [self.accountGroup(), self.privacyAndSecurityGroup(), self.alertsGroup(), self.advancedGroup(), self.aboutSection(), self.helpSection()]
+        var topLevelElements = [self.accountGroup(), self.devicesGroup(), self.optionsGroup(), self.advancedGroup(), self.aboutSection(), self.helpSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements = topLevelElements + [self.developerGroup(), self.APSGroup()]
@@ -141,11 +141,11 @@ import Foundation
         else {
             items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, deleteSection]
         }
-                
-        return SettingsGroupCellDescriptor(items: items, title: "self.settings.account_section".localized)
+        
+        return SettingsGroupCellDescriptor(items: items, title: "self.settings.account_section".localized, icon: .SettingsAccount)
     }
     
-    func privacyAndSecurityGroup() -> SettingsCellDescriptorType {
+    func optionsGroup() -> SettingsCellDescriptorType {
         let shareButtonTitleDisabled = "self.settings.privacy_contacts_menu.settings_button.title".localized
         let shareContactsDisabledSettingsButton = SettingsButtonCellDescriptor(title: shareButtonTitleDisabled, isDestructive: false, selectAction: { (descriptor: SettingsCellDescriptorType) -> () in
                 UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
@@ -185,27 +185,11 @@ import Foundation
         
         let clearHistorySection = SettingsSectionDescriptor(cellDescriptors: [clearHistoryButton], header: .None, footer: subtitleText)  { (_) -> (Bool) in return false }
         
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, devicesSection, reportSection, clearHistorySection], title: "self.settings.privacy_menu.title".localized)
-    }
-    
-    func devicesGroup() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices_button.title".localized,
-            isDestructive: false,
-            presentationStyle: PresentationStyle.Navigation,
-            identifier: self.dynamicType.settingsDevicesCellIdentifier,
-            presentationAction: { () -> (UIViewController?) in
-                Analytics.shared()?.tagSelfDeviceList()
-                return ClientListViewController(clientsList: .None, credentials: .None, detailedView: true)
-        })
-    }
-    
-    func alertsGroup() -> SettingsCellDescriptorType {
-        
         let notificationHeader = "self.settings.notifications.push_notification.title".localized
         let notification = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.NotificationContentVisible), inverse: true)
         let notificationFooter = "self.settings.notifications.push_notification.footer".localized
         let notificationVisibleSection = SettingsSectionDescriptor(cellDescriptors: [notification], header: notificationHeader, footer: notificationFooter)
-
+        
         
         let chatHeads = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ChatHeadsDisabled), inverse: true)
         let chatHeadsFooter = "self.settings.notifications.chat_alerts.footer".localized
@@ -249,7 +233,7 @@ import Foundation
         }()
         
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
-
+        
         
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
         
@@ -263,8 +247,19 @@ import Foundation
         let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: SettingsPropertyLabelText(pingSoundProperty.propertyName), callSound: false, fallbackSoundName: MediaManagerSoundIncomingKnockSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_ping".localized)
         
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
-
-        return SettingsGroupCellDescriptor(items: [notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.sound_menu.group.title".localized)
+        
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, devicesSection, reportSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
+    }
+    
+    func devicesGroup() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices_button.title".localized,
+            isDestructive: false,
+            presentationStyle: PresentationStyle.Navigation,
+            identifier: self.dynamicType.settingsDevicesCellIdentifier,
+            presentationAction: { () -> (UIViewController?) in
+                Analytics.shared()?.tagSelfDeviceList()
+                return ClientListViewController(clientsList: .None, credentials: .None, detailedView: true)
+        }, icon: .SettingsDevices)
     }
     
     func soundGroupForSetting(settingsProperty: SettingsProperty, title: String, callSound: Bool, fallbackSoundName: String, defaultSoundTitle : String = "self.settings.sound_menu.sounds.wire_sound".localized) -> SettingsCellDescriptorType {
@@ -311,10 +306,6 @@ import Foundation
         return SettingsGroupCellDescriptor(items: [section], title: title, identifier: .None, previewGenerator: previewGenerator)
     }
     
-    func minionsGroup() -> SettingsCellDescriptorType {
-        return SettingsGroupCellDescriptor(items: [], title: "Minions")
-    }
-    
     func advancedGroup() -> SettingsCellDescriptorType {
         let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.AnalyticsOptOut), inverse: true)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized
@@ -349,7 +340,7 @@ import Foundation
             return true
         }
         
-        return SettingsGroupCellDescriptor(items: [sendUsageSection, troubleshootingSection, pushSection], title: "self.settings.advanced.title".localized)
+        return SettingsGroupCellDescriptor(items: [sendUsageSection, troubleshootingSection, pushSection], title: "self.settings.advanced.title".localized, icon: .SettingsAdvanced)
     }
     
     func developerGroup() -> SettingsCellDescriptorType {
@@ -377,7 +368,7 @@ import Foundation
     }
     
     func aboutSection() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.about".localized, presentationAction: { () -> (UIViewController?) in
+        return SettingsExternalScreenCellDescriptor(title: "self.about".localized, isDestructive: false, presentationStyle: .Navigation, presentationAction: { () -> (UIViewController?) in
             Analytics.shared()?.tagAbout()
             let aboutViewController = AboutViewController()
             
@@ -386,16 +377,16 @@ import Foundation
             }
             
             return aboutViewController
-        })
+        }, previewGenerator: .None, icon:.WireLogo)
     }
     
     func helpSection() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.help_center".localized, presentationAction: { () -> (UIViewController?) in
+        return SettingsExternalScreenCellDescriptor(title: "self.help_center".localized, isDestructive: false, presentationStyle: .Navigation, presentationAction: { () -> (UIViewController?) in
             Analytics.shared()?.tagHelp()
             UIApplication.sharedApplication().openURL(NSURL.wr_supportURL().wr_URLByAppendingLocaleParameter())
 
             return .None
-        })
+            }, previewGenerator: .None, icon: .SettingsSupport)
     }
     
     // MARK: Subgroups

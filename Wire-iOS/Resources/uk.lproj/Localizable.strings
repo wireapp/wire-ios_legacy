@@ -464,8 +464,6 @@
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пінг у Wire";
 
-"self.settings.sound_menu.group.title" = "Звуки та нотифікації";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звукові нотифікації";
 "self.settings.sound_menu.no_sounds.title" = "Все вимкнено";

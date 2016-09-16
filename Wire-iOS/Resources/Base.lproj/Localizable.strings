@@ -470,8 +470,6 @@
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
-"self.settings.sound_menu.group.title" = "Sounds & Alerts";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sound Alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";

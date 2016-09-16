@@ -464,8 +464,6 @@
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пинг Wire";
 
-"self.settings.sound_menu.group.title" = "Звуки и оповещения";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звуковые уведомления";
 "self.settings.sound_menu.no_sounds.title" = "Отключены";

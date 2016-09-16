@@ -130,8 +130,8 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
     }
     let visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))?
 
-    var header: String?
-    var footer: String?
+    let header: String?
+    let footer: String?
     
     init(cellDescriptors: [SettingsCellDescriptorType], header: String? = .None, footer: String? = .None, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .None) {
         self.cellDescriptors = cellDescriptors
@@ -149,6 +149,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     let style: InternalScreenStyle
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
+    let icon: ZetaIconType
     
     let previewGenerator: PreviewGeneratorType?
     
@@ -162,12 +163,13 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     
     weak var viewController: UIViewController?
     
-    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .Grouped, identifier: String? = .None, previewGenerator: PreviewGeneratorType? = .None) {
+    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .Grouped, identifier: String? = .None, previewGenerator: PreviewGeneratorType? = .None, icon: ZetaIconType = .None) {
         self.items = items
         self.title = title
         self.style = style
         self.identifier = identifier
         self.previewGenerator = previewGenerator
+        self.icon = icon
     }
     
     func featureCell(cell: SettingsCellType) {
@@ -176,6 +178,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
             let preview = previewGenerator(self)
             cell.preview = preview
         }
+        cell.icon = self.icon
     }
     
     func select(value: SettingsPropertyValue?) {

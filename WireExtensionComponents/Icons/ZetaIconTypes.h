@@ -71,7 +71,6 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeRedo                            = 0x117,
     ZetaIconTypeLocation                        = 0x149,
     
-    ZetaIconTypeZetaLogo                        = 0x202,
     ZetaIconTypeLeave                           = 0x205,
     ZetaIconTypeConvMetaAddPerson               = 0x215,
     ZetaIconTypePhone                           = 0x211,
@@ -127,6 +126,13 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeLike                            = 0x183,
     ZetaIconTypeLiked                           = 0x184,
     
+    ZetaIconTypeSettingsAccount                 = 0x187,
+    ZetaIconTypeSettingsDevices                 = 0x188,
+    ZetaIconTypeSettingsOptions                 = 0x135,
+    ZetaIconTypeSettingsAdvanced                = 0x134,
+    ZetaIconTypeSettingsSupport                 = 0x127,
+    ZetaIconTypeWireLogo                        = 0x202,
+
     ZetaIconTypeEffectBallon                    = 0x240,
     ZetaIconTypeEffectJellyfish                 = 0x242,
     ZetaIconTypeEffectRabbit                    = 0x243,
@@ -134,6 +140,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeEffectAlien                     = 0x245,
     ZetaIconTypeEffectRobot                     = 0x246,
     ZetaIconTypeEffectReverse                   = 0x247,
+    
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {
