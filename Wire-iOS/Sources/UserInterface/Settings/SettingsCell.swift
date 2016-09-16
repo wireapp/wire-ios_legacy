@@ -101,6 +101,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
     
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(selected, animated: animated)
+        self.backgroundColor = highlighted ? UIColor(white: 0, alpha: 0.2) : UIColor.clearColor()
+    }
+    
     var descriptor: SettingsCellDescriptorType?
     
     override var reuseIdentifier: String {

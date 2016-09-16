@@ -28,7 +28,7 @@
 typedef NS_ENUM(NSUInteger, ConversationListState) {
     ConversationListStateConversationList,
     ConversationListStatePeoplePicker,
-    ConversationListStateArchived
+    ConversationListStateArchived,
 };
 
 

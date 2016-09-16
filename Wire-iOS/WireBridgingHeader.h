@@ -52,6 +52,7 @@
 #import "StackView.h"
 #import "SearchResultCell.h"
 #import "UIAlertController+NewSelfClients.h"
+#import "SwizzleTransition.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -111,6 +112,7 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
+#import "UIView+UIAppearanceSwift.h"
 
 // Camera
 #import "CameraController.h"

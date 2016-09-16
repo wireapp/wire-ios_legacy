@@ -28,7 +28,7 @@ import Foundation
     }
     
     func rootSettingsGroup() -> protocol<SettingsControllerGeneratorType, SettingsInternalGroupCellDescriptorType> {
-        var topLevelElements = [self.accountGroup(), self.devicesGroup(), self.optionsGroup(), self.advancedGroup(), self.aboutSection(), self.helpSection()]
+        var topLevelElements = [self.accountGroup(), self.devicesGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements = topLevelElements + [self.developerGroup()]
@@ -352,7 +352,7 @@ import Foundation
         let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableHockey))
         let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableAnalytics))
         
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title)
+        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title, icon: .EffectRobot)
     }
     
     func aboutSection() -> SettingsCellDescriptorType {

@@ -73,7 +73,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.backgroundColor = .clearColor()
         tableView.clipsToBounds = true
-        
+        tableView.tableFooterView = UIView()
         let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
         
         for aClass in allCellTypes {
@@ -132,7 +132,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44
+        return 56
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

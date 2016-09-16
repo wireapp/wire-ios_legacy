@@ -27,8 +27,6 @@ import Foundation
     private let pushTransition = PushTransition()
     private let popTransition = PopTransition()
     
-    private let crossDissolveTransition = CrossfadeTransition()
-    
     static func settingsNavigationController() -> SettingsNavigationController {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: NSUserDefaults.standardUserDefaults(),
             analytics: Analytics.shared(),
@@ -121,7 +119,7 @@ import Foundation
             
             self.pushViewController(rootViewController, animated: false)
             if let settingsTableController = rootViewController as? SettingsTableViewController {
-                settingsTableController.dismissAction = { _ in
+                settingsTableController.dismissAction = { [unowned self] _ in
                     self.dismissAction?(self)
                 }
             }
@@ -130,7 +128,12 @@ import Foundation
         self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics:.Default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.translucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold").allCaps()]
+        
+        let navButtonAppearance = UIBarButtonItem.wr_appearanceWhenContainedIn(UINavigationBar.self)
+
+        navButtonAppearance.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec")], forState: UIControlState.Normal)
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -192,10 +195,14 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
 
 extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return self.crossDissolveTransition
+        let transition = SwizzleTransition()
+        transition.direction = .Vertical
+        return transition
     }
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return self.crossDissolveTransition
+        let transition = SwizzleTransition()
+        transition.direction = .Vertical
+        return transition
     }
 }

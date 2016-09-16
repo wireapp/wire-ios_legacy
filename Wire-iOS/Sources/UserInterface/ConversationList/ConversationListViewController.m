@@ -265,6 +265,13 @@
     return startUIViewController;
 }
 
+- (SettingsNavigationController *)createSettingsViewController
+{
+    SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
+
+    return settingsViewController;
+}
+
 - (void)createTopItemsController
 {
     self.topItemsController = [[TopItemsController alloc] init];
@@ -404,6 +411,7 @@
                 }
             }];
         }
+            break;
         default:
             break;
     }
@@ -880,7 +888,7 @@
             
         case ConversationListButtonTypeSettings:
         {
-            SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
+            SettingsNavigationController *settingsViewController = [self createSettingsViewController];
             
             if (IS_IPAD) {
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
@@ -891,7 +899,6 @@
                 [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
             }
             else {
-                
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
                     [self dismissViewControllerAnimated:YES completion:nil];
                     [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
@@ -900,7 +907,6 @@
                 settingsViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
                 [self presentViewController:settingsViewController animated:YES completion:nil];
             }
-            
             break;
         }
         case ConversationListButtonTypeArchive:

@@ -391,7 +391,7 @@
 
 // Options menu contents
 "self.settings" = "Settings";
-"self.help_center" = "Help";
+"self.help_center" = "Support";
 "self.about" = "About";
 "self.sign_out" = "Log Out";
 "self.report_abuse" = "Report Misuse";

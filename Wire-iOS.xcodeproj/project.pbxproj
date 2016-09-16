@@ -222,6 +222,7 @@
 		7A27B7986757069DCFB89168 /* libPods-WireExtensionComponents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
+		87066FAC1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m in Sources */ = {isa = PBXBuildFile; fileRef = 87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */; };
 		87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CBF1CB68BDA0039388A /* ProgressView.swift */; };
 		87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CC31CB6A3790039388A /* FileTransferCellTests.swift */; };
 		870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815851BF4E76A00D321BC /* SettingsCell.swift */; };
@@ -1119,6 +1120,8 @@
 		848DE12A1A83D20000E154B1 /* emoticons.min.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emoticons.min.json; path = ../Sources/emoticons.min.json; sourceTree = "<group>"; };
 		8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WireExtensionComponents.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87023D7A1D76E4E2007B667E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		87066FAA1D8C1AA90085F48B /* UIView+UIAppearanceSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIAppearanceSwift.h"; sourceTree = "<group>"; };
+		87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIAppearanceSwift.m"; sourceTree = "<group>"; };
 		87071CBF1CB68BDA0039388A /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		87071CC31CB6A3790039388A /* FileTransferCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferCellTests.swift; sourceTree = "<group>"; };
 		870815851BF4E76A00D321BC /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -3922,6 +3925,8 @@
 				871BC03B1D34F60700DF0793 /* NSString+Wire.h */,
 				871BC03C1D34F60700DF0793 /* NSString+Wire.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
+				87066FAA1D8C1AA90085F48B /* UIView+UIAppearanceSwift.h */,
+				87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -5261,6 +5266,7 @@
 				871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */,
 				8744489C1C22FCE500E7B947 /* LinkAttachment.m in Sources */,
 				871BC0581D34F60700DF0793 /* NSAttributedString+Wire.m in Sources */,
+				87066FAC1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m in Sources */,
 				CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */,
 				87DCF4EB1D34EA4500BB420F /* GroupConversationsSection.m in Sources */,
 				87DCF4E81D34EA4500BB420F /* PeopleSelection.m in Sources */,
