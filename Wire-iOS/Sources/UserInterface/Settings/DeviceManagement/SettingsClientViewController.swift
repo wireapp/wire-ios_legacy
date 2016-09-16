@@ -68,6 +68,9 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .clearColor()
+        
         self.createTableView()
         
         if let navController = self.navigationController
@@ -83,6 +86,8 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
+        tableView.backgroundColor = .clearColor()
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.registerClass(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.registerClass(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.registerClass(SettingsTableCell.self, forCellReuseIdentifier: self.dynamicType.deleteCellReuseIdentifier)

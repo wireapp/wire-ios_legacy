@@ -23,6 +23,7 @@ import Cartography
 class SettingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let group: SettingsInternalGroupCellDescriptorType
     private var selfUserObserver: AnyObject!
+    @objc var dismissAction: ((SettingsTableViewController) -> ())? = .None
     
     var tableView: UITableView?
     
@@ -52,6 +53,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         self.createTableView()
         self.createConstraints()
+        self.view.backgroundColor = .clearColor()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
         super.viewDidLoad()
     }
@@ -67,6 +69,8 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
+        tableView.backgroundColor = .clearColor()
         
         let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
         
@@ -86,7 +90,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func dismissRootNavigation(sender: AnyObject) {
-        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
+       self.dismissAction?(self)
     }
     
     // MARK: - UITableViewDelegate & UITableViewDelegate
@@ -106,6 +110,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(cellDescriptor.dynamicType.cellType.reuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
             cell.descriptor = cellDescriptor
+            cell.backgroundColor = tableView.style == .Grouped ? UIColor(white: 0, alpha: 0.1) : UIColor.clearColor()
             cellDescriptor.featureCell(cell)
             return cell
         }

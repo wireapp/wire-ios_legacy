@@ -107,6 +107,8 @@ import CocoaLumberjackSwift
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = .clearColor()
+        
         self.createTableView()
         self.createConstraints()
         
@@ -141,6 +143,8 @@ import CocoaLumberjackSwift
         tableView.estimatedRowHeight = 80
         tableView.registerClass(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.editing = self.editingList
+        tableView.backgroundColor = .clearColor()
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }

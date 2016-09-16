@@ -883,10 +883,24 @@
             SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
             
             if (IS_IPAD) {
+                settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
+                    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                };
                 settingsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                settingsViewController.view.backgroundColor = [UIColor blackColor];
+                [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
+            }
+            else {
+                
+                settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
+                };
+                [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
+                settingsViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                [self presentViewController:settingsViewController animated:YES completion:nil];
             }
             
-            [self presentViewController:settingsViewController animated:YES completion:nil];
             break;
         }
         case ConversationListButtonTypeArchive:

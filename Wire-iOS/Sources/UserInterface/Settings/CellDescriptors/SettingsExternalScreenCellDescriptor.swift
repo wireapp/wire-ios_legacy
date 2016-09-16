@@ -71,8 +71,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     }
     
     func select(value: SettingsPropertyValue?) {
-        guard let controllerToShow = self.generateViewController() else
-        {
+        guard let controllerToShow = self.generateViewController() else {
             return
         }
         
@@ -92,7 +91,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             cell.titleColor = UIColor.redColor()
         }
         else {
-            cell.titleColor = UIColor.darkTextColor()
+            cell.titleColor = UIColor.whiteColor()
         }
         if let previewGenerator = self.previewGenerator {
             let preview = previewGenerator(self)

@@ -37,14 +37,13 @@
 #import "NSURL+WireURLs.h"
 #import "NSURL+WireLocale.h"
 #import "NSLayoutConstraint+Helpers.h"
-
+#import "UIImage+ZetaIconsNeue.h"
 
 
 @interface AboutViewController () <ZMUserObserver>
 
 @property (nonatomic, strong) UIView *containerView;
 
-@property (nonatomic, strong) IconButton *closeButton;
 @property (nonatomic, strong) UIImageView *companyWordmark;
 @property (nonatomic, strong) UILabel *companyNameLabel;
 @property (nonatomic, strong) UILabel *buildInfoLabel;
@@ -67,6 +66,20 @@
     [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        UIImage *backImage = [[UIImage imageForIcon:ZetaIconTypeChevronLeft iconSize:ZetaIconSizeTiny color:[UIColor whiteColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [backButton setImage:backImage forState:UIControlStateNormal];
+        [backButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        backButton.frame = CGRectMake(0, 0, 20, 20);
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -77,7 +90,6 @@
 
     [self setupContainerView];
 
-    [self setupCloseButton];
     [self setupCompanyWordmark];
     [self setupCopyrightInfo];
     [self setupLicenseInformationButton];
@@ -109,29 +121,6 @@
     NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[container]-(>=0)-|"
                                                                    options:0 metrics:0 views:@{@"container":self.containerView}];
     [self.view addConstraints:constraints];
-}
-
-- (void)setupCloseButton
-{
-
-    self.closeButton = [[IconButton alloc] init];
-    self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.closeButton.accessibilityIdentifier = @"aboutCloseButton";
-    [self.view addSubview:self.closeButton];
-
-    //Cosmetics
-    [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    [self.closeButton setIconColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-    //Layout
-
-    [self.closeButton addConstraintForTopMargin:14 relativeToView:self.view];
-    [self.closeButton addConstraintForRightMargin:18 relativeToView:self.view];
-
-    //Target
-
-    [self.closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-
 }
 
 - (void)setupCompanyWordmark

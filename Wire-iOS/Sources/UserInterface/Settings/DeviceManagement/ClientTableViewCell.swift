@@ -147,6 +147,9 @@ class ClientTableViewCell: UITableViewCell {
         }
         
         CASStyler.defaultStyler().styleItem(self)
+        self.backgroundColor = UIColor(white: 0, alpha: 0.1)
+        self.backgroundView = UIView()
+        self.selectedBackgroundView = UIView()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -183,8 +186,8 @@ class ClientTableViewCell: UITableViewCell {
             where userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintLabelMonoFont],
-                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont],
+                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
+                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
                     uppercase: true
                 )
         }

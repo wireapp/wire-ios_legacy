@@ -169,12 +169,6 @@ import Foundation
             return AddressBookHelper.sharedHelper.isAddressBookAccessDisabled
         }
 
-        let reportButton = SettingsButtonCellDescriptor(title: "self.report_abuse".localized, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
-            UIApplication.sharedApplication().openURL(NSURL.wr_reportAbuseURL().wr_URLByAppendingLocaleParameter())
-        }
-        
-        let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
-        
         let clearHistoryButton = SettingsButtonCellDescriptor(title: "self.settings.privacy.clear_history.title".localized, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
             // erase history is not supported yet
         }
@@ -245,7 +239,13 @@ import Foundation
         
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, reportSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
+        let reportButton = SettingsButtonCellDescriptor(title: "self.report_abuse".localized, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
+            UIApplication.sharedApplication().openURL(NSURL.wr_reportAbuseURL().wr_URLByAppendingLocaleParameter())
+        }
+        
+        let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
+        
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection, reportSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {

@@ -102,7 +102,7 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
             cell.titleColor = UIColor.redColor()
         }
         else {
-            cell.titleColor = UIColor.darkTextColor()
+            cell.titleColor = UIColor.whiteColor()
         }
     }
     

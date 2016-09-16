@@ -22,9 +22,12 @@ import Foundation
 @objc class SettingsNavigationController: UINavigationController {
     let rootGroup: protocol<SettingsControllerGeneratorType, SettingsInternalGroupCellDescriptorType>
     let settingsPropertyFactory: SettingsPropertyFactory
+    @objc var dismissAction: ((SettingsNavigationController) -> ())? = .None
     
     private let pushTransition = PushTransition()
     private let popTransition = PopTransition()
+    
+    private let crossDissolveTransition = CrossfadeTransition()
     
     static func settingsNavigationController() -> SettingsNavigationController {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: NSUserDefaults.standardUserDefaults(),
@@ -44,6 +47,8 @@ import Foundation
         self.settingsPropertyFactory = settingsPropertyFactory
         super.init(nibName: nil, bundle: nil)
         self.delegate = self
+        
+        self.transitioningDelegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
     }
     
@@ -109,12 +114,23 @@ import Foundation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = .clearColor()
+        
         if let rootViewController = self.rootGroup.generateViewController() {
             Analytics.shared()?.tagScreen("SETTINGS")
             
             self.pushViewController(rootViewController, animated: false)
+            if let settingsTableController = rootViewController as? SettingsTableViewController {
+                settingsTableController.dismissAction = { _ in
+                    self.dismissAction?(self)
+                }
+            }
         }
+        
+        self.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0, alpha: 0.5), andSize: CGSizeMake(1, 1)), forBarMetrics:.Default)
+        self.navigationBar.shadowImage = UIImage()
+        self.navigationBar.translucent = true
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -125,9 +141,6 @@ import Foundation
     private func presentNewLoginAlertControllerIfNeeded() {
         let clientsRequiringUserAttention = ZMUser.selfUser().clientsRequiringUserAttention
         
-        delay(5) {
-            self.openControllerForCellWithIdentifier(SettingsCellDescriptorFactory.settingsDevicesCellIdentifier)
-        }
         if clientsRequiringUserAttention.count > 0 {
             self.presentNewLoginAlertController(clientsRequiringUserAttention)
         }
@@ -174,5 +187,15 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
         default:
             fatalError()
         }
+    }
+}
+
+extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self.crossDissolveTransition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self.crossDissolveTransition
     }
 }
