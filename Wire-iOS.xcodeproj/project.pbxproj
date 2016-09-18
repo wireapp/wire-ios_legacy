@@ -699,7 +699,7 @@
 		BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */; };
 		BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */; };
 		BAFE919E1B5E92E000E08D2A /* SketchTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFE919D1B5E92E000E08D2A /* SketchTopView.m */; };
-		BD979D2C1D8F3AF700E8E3CB /* SettingsTechReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechReportVC.swift */; };
+		BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
 		BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */; };
 		BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */; };
@@ -1973,7 +1973,7 @@
 		BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedListMenuView.m; sourceTree = "<group>"; };
 		BAFE919C1B5E92E000E08D2A /* SketchTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchTopView.h; path = Sketchpad/SketchTopView.h; sourceTree = "<group>"; };
 		BAFE919D1B5E92E000E08D2A /* SketchTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchTopView.m; path = Sketchpad/SketchTopView.m; sourceTree = "<group>"; };
-		BD979D2B1D8F3AF700E8E3CB /* SettingsTechReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTechReportVC.swift; sourceTree = "<group>"; };
+		BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTechnicalReportViewController.swift; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
 		BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRootViewController.swift; sourceTree = "<group>"; };
 		BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMSnapshotTestCase.h; sourceTree = "<group>"; };
@@ -4307,7 +4307,7 @@
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
-				BD979D2B1D8F3AF700E8E3CB /* SettingsTechReportVC.swift */,
+				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -5477,7 +5477,7 @@
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.m in Sources */,
-				BD979D2C1D8F3AF700E8E3CB /* SettingsTechReportVC.swift in Sources */,
+				BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */,
 				16BCF4311A0A457900A2D3D6 /* GuidanceLabel.m in Sources */,
 				87DCF49D1D34E9E600BB420F /* MapKit+Helper.swift in Sources */,
 				8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */,
