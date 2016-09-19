@@ -392,6 +392,8 @@
 // Options menu contents
 "self.settings" = "Settings";
 "self.help_center" = "Support";
+"self.help_center.support_website" = "Wire Support Website";
+"self.help_center.contact_support" = "Contact Support";
 "self.about" = "About";
 "self.sign_out" = "Log Out";
 "self.report_abuse" = "Report Misuse";

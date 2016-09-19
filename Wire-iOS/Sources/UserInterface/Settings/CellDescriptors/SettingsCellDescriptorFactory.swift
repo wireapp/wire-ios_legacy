@@ -22,6 +22,7 @@ import Foundation
 @objc class SettingsCellDescriptorFactory: NSObject {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
+    static private var versionTapCount: UInt = 0
     
     init(settingsPropertyFactory: SettingsPropertyFactory) {
         self.settingsPropertyFactory = settingsPropertyFactory
@@ -239,13 +240,8 @@ import Foundation
         
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         
-        let reportButton = SettingsButtonCellDescriptor(title: "self.report_abuse".localized, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
-            UIApplication.sharedApplication().openURL(NSURL.wr_reportAbuseURL().wr_URLByAppendingLocaleParameter())
-        }
         
-        let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
-        
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection, reportSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .SettingsOptions)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {
@@ -355,26 +351,77 @@ import Foundation
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title, icon: .EffectRobot)
     }
     
-    func aboutSection() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.about".localized, isDestructive: false, presentationStyle: .Navigation, presentationAction: { () -> (UIViewController?) in
-            Analytics.shared()?.tagAbout()
-            let aboutViewController = AboutViewController()
-            
-            aboutViewController.backAction = { [unowned aboutViewController] in
-                aboutViewController.navigationController?.popViewControllerAnimated(true)
-            }
-            
-            return aboutViewController
-        }, previewGenerator: .None, icon:.WireLogo)
+    func helpSection() -> SettingsCellDescriptorType {
+        
+        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .Modal, presentationAction: { _ in
+            Analytics.shared()?.tagHelp()
+            return BrowserViewController(URL: NSURL.wr_supportURL().wr_URLByAppendingLocaleParameter())
+        }, previewGenerator: .None)
+        
+        let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .Modal, presentationAction: { _ in
+            return BrowserViewController(URL: NSURL.wr_askSupportURL().wr_URLByAppendingLocaleParameter())
+        }, previewGenerator: .None)
+        
+        let helpSection = SettingsSectionDescriptor(cellDescriptors: [supportButton, contactButton])
+        
+        let reportButton = SettingsExternalScreenCellDescriptor(title: "self.report_abuse".localized, isDestructive: false, presentationStyle: .Modal, presentationAction: { _ in
+            return BrowserViewController(URL: NSURL.wr_reportAbuseURL().wr_URLByAppendingLocaleParameter())
+        }, previewGenerator: .None)
+        
+        let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
+        
+        return SettingsGroupCellDescriptor(items: [helpSection, reportSection], title: "self.help_center".localized, style: .Grouped, identifier: .None, previewGenerator: .None, icon:  .SettingsSupport)
     }
     
-    func helpSection() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.help_center".localized, isDestructive: false, presentationStyle: .Navigation, presentationAction: { () -> (UIViewController?) in
-            Analytics.shared()?.tagHelp()
-            UIApplication.sharedApplication().openURL(NSURL.wr_supportURL().wr_URLByAppendingLocaleParameter())
+    func aboutSection() -> SettingsCellDescriptorType {
 
-            return .None
-            }, previewGenerator: .None, icon: .SettingsSupport)
+        let websiteButton = SettingsButtonCellDescriptor(title: "about.website.title".localized, isDestructive: false) { _ in
+            UIApplication.sharedApplication().openURL(NSURL.wr_websiteURL().wr_URLByAppendingLocaleParameter())
+        }
+        
+        let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
+        
+        let privacyPolicyButton = SettingsExternalScreenCellDescriptor(title: "about.privacy.title".localized, isDestructive: false, presentationStyle: .Modal, presentationAction: { _ in
+            return BrowserViewController(URL: NSURL.wr_privacyPolicyURL().wr_URLByAppendingLocaleParameter())
+        }, previewGenerator: .None)
+        let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .Modal, presentationAction: { _ in
+            return BrowserViewController(URL: NSURL.wr_termsOfServicesURL().wr_URLByAppendingLocaleParameter())
+        }, previewGenerator: .None)
+        let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .Modal, presentationAction: { _ in
+            return BrowserViewController(URL: NSURL.wr_licenseInformationURL().wr_URLByAppendingLocaleParameter())
+        }, previewGenerator: .None)
+
+        let linksSection = SettingsSectionDescriptor(cellDescriptors: [privacyPolicyButton, tosButton, licenseButton])
+        
+        
+        let shortVersion = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let buildNumber = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
+        let version = String(format: "Version %@ (%@)", shortVersion, buildNumber)
+
+        let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
+            SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
+            
+            if SettingsCellDescriptorFactory.versionTapCount == 3 {
+                let versionInfo = VersionInfoViewController()
+                
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionInfo, animated: true, completion: .None)
+            }
+        }
+        let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
+        
+        let currentDate = NSDate()
+        var currentYear = NSCalendar.currentCalendar().component(.Year, fromDate:currentDate)
+        if currentYear < 2014 {
+            currentYear = 2014
+        }
+        
+        let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
+        
+        let copyrightCell = SettingsInfoCellDescriptor(title: copyrightInfo)
+        let copyrightGroup = SettingsSectionDescriptor(cellDescriptors: [copyrightCell])
+        
+        return SettingsGroupCellDescriptor(items: [websiteSection, linksSection, infoSection, copyrightGroup], title: "self.about".localized, style: .Grouped, identifier: .None, previewGenerator: .None, icon:  .WireLogo)
+
     }
     
     // MARK: Subgroups

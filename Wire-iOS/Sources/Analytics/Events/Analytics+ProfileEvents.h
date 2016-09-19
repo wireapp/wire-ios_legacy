@@ -51,7 +51,6 @@ NSString *PictureUploadTypeToString(PictureUploadType uploadType);
 - (void)tagResetPassword:(BOOL)reset fromType:(ResetPasswordType)type;
 - (void)tagSoundIntensityPreference:(SoundIntensityType)type;
 - (void)tagHelp;
-- (void)tagAbout;
 - (void)tagProfilePictureFromSource:(PictureUploadType)type;
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type;
 - (void)tagViewedPrivacyPolicy;

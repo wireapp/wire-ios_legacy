@@ -75,7 +75,8 @@
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
-#import "AboutViewController.h"
+#import "VersionInfoViewController.h"
+#import "BrowserViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
