@@ -134,6 +134,7 @@ import Foundation
                 
         navButtonAppearance.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], forState: UIControlState.Normal)
 
+        self.interactivePopGestureRecognizer!.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -194,6 +195,7 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
 }
 
 extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
+   
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
         transition.direction = .Vertical
@@ -204,5 +206,15 @@ extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
         let transition = SwizzleTransition()
         transition.direction = .Vertical
         return transition
+    }
+}
+
+extension SettingsNavigationController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
