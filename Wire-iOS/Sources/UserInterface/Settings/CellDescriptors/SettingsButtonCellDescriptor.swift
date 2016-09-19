@@ -45,7 +45,18 @@ class SettingsInfoCellDescriptor: SettingsCellDescriptorType {
     }
     
     func select(value: SettingsPropertyValue?) {
-
+        guard let previewGenerator = self.previewGenerator else {
+            return
+        }
+        
+        let preview = previewGenerator(self)
+        
+        switch preview {
+        case .Text(let previewString):
+            let pasteBoard = UIPasteboard.generalPasteboard()
+            pasteBoard.string = previewString
+        default: break
+        }
     }
 }
 

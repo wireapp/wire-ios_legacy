@@ -187,7 +187,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     func updateBackgroundColor() {
-        if self.highlighted {
+        if self.highlighted && self.selectionStyle != .None {
             self.backgroundColor = UIColor(white: 0, alpha: 0.2)
         }
         else {
