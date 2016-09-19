@@ -42,6 +42,7 @@
 #import "ConversationListInteractiveItem.h"
 #import "TopItemsController.h"
 #import "StartUIViewController.h"
+#import "KeyboardAvoidingViewController.h"
 
 // helpers
 
@@ -899,13 +900,18 @@
                 [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
             }
             else {
+                KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
+                @weakify(keyboardAvoidingWrapperController);
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                    @strongify(keyboardAvoidingWrapperController);
+                    [keyboardAvoidingWrapperController dismissViewControllerAnimated:YES completion:nil];
                     [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
                 };
                 [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
-                settingsViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                [self presentViewController:settingsViewController animated:YES completion:nil];
+
+                keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                keyboardAvoidingWrapperController.transitioningDelegate = settingsViewController;
+                [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
             }
             break;
         }

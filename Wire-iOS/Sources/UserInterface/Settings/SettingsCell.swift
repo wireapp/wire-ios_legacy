@@ -34,6 +34,7 @@ protocol SettingsCellType: class {
     var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
     var icon: ZetaIconType {get set}
+    var isGrouped: Bool {get set}
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
@@ -95,6 +96,12 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
     
+    var isGrouped: Bool = false {
+        didSet {
+            self.updateBackgroundColor()
+        }
+    }
+    
     var cellColor: UIColor? {
         didSet {
             self.backgroundColor = self.cellColor
@@ -102,8 +109,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     override func setHighlighted(highlighted: Bool, animated: Bool) {
-        super.setHighlighted(selected, animated: animated)
-        self.backgroundColor = highlighted ? UIColor(white: 0, alpha: 0.2) : UIColor.clearColor()
+        super.setHighlighted(highlighted, animated: animated)
+        self.updateBackgroundColor()
     }
     
     var descriptor: SettingsCellDescriptorType?
@@ -184,6 +191,20 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             imagePreview.centerY == contentView.centerY
         }
         
+    }
+    
+    func updateBackgroundColor() {
+        if self.highlighted {
+            self.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        }
+        else {
+            if self.isGrouped {
+                self.backgroundColor = UIColor(white: 0, alpha: 0.1)
+            }
+            else {
+                self.backgroundColor = UIColor.clearColor()
+            }
+        }
     }
 }
 

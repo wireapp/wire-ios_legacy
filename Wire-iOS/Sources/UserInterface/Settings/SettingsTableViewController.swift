@@ -116,7 +116,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(cellDescriptor.dynamicType.cellType.reuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
             cell.descriptor = cellDescriptor
-            cell.backgroundColor = tableView.style == .Grouped ? UIColor(white: 0, alpha: 0.1) : UIColor.clearColor()
+            cell.isGrouped = tableView.style == .Grouped
             cellDescriptor.featureCell(cell)
             return cell
         }
@@ -143,6 +143,18 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let sectionDescriptor = self.group.visibleItems[section]
         return sectionDescriptor.footer
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
     }
 }
 
