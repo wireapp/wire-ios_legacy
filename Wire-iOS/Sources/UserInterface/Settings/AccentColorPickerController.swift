@@ -114,6 +114,10 @@ public protocol ColorPickerControllerDelegate {
         self.tableView.separatorStyle = .None
     }
     
+    public override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     private class PickerCell: UITableViewCell {
         private let checkmarkView = UIImageView()
         private let colorView = UIView()
