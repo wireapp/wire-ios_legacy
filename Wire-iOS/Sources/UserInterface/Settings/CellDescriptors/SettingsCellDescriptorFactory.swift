@@ -391,21 +391,11 @@ import Foundation
             UIApplication.sharedApplication().openURL(NSURL.wr_websiteURL().wr_URLByAppendingLocaleParameter())
         }
         
-        let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
         
         let shortVersion = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         let buildNumber = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
         let version = String(format: "Version %@ (%@)", shortVersion, buildNumber)
 
-        let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
-            SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
-            
-            if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
-                let versionInfo = VersionInfoViewController()
-                
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionInfo, animated: true, completion: .None)
-            }
-        }
         let currentDate = NSDate()
         var currentYear = NSCalendar.currentCalendar().component(.Year, fromDate:currentDate)
         if currentYear < 2014 {
@@ -413,10 +403,29 @@ import Foundation
         }
         
         let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
+
+        let items: [SettingsSectionDescriptorType]
+        if DeveloperMenuState.developerMenuEnabled() {
+            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
+            let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
+                SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
+                
+                if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
+                    let versionInfo = VersionInfoViewController()
+                    
+                    UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionInfo, animated: true, completion: .None)
+                }
+            }
+            
+            let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .None, footer: copyrightInfo)
+            items = [linksSection, websiteSection, infoSection]
+        }
+        else {
+            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton], header: .None, footer: version + " " + copyrightInfo)
+            items = [linksSection, websiteSection]
+        }
         
-        let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .None, footer: copyrightInfo)
-        
-        return SettingsGroupCellDescriptor(items: [linksSection, websiteSection, infoSection], title: "self.about".localized, style: .Grouped, identifier: .None, previewGenerator: .None, icon:  .WireLogo)
+        return SettingsGroupCellDescriptor(items: items, title: "self.about".localized, style: .Grouped, identifier: .None, previewGenerator: .None, icon:  .WireLogo)
 
     }
     
