@@ -278,6 +278,18 @@ import CocoaLumberjackSwift
         }
     }
     
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier(ClientTableViewCell.zm_reuseIdentifier, forIndexPath: indexPath) as? ClientTableViewCell {
             cell.selectionStyle = .None
