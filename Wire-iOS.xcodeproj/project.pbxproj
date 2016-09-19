@@ -700,6 +700,7 @@
 		BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */; };
 		BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */; };
 		BAFE919E1B5E92E000E08D2A /* SketchTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFE919D1B5E92E000E08D2A /* SketchTopView.m */; };
+		BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
 		BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */; };
 		BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */; };
@@ -1975,6 +1976,7 @@
 		BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedListMenuView.m; sourceTree = "<group>"; };
 		BAFE919C1B5E92E000E08D2A /* SketchTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchTopView.h; path = Sketchpad/SketchTopView.h; sourceTree = "<group>"; };
 		BAFE919D1B5E92E000E08D2A /* SketchTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchTopView.m; path = Sketchpad/SketchTopView.m; sourceTree = "<group>"; };
+		BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WireLocales.swift"; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
 		BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRootViewController.swift; sourceTree = "<group>"; };
 		BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMSnapshotTestCase.h; sourceTree = "<group>"; };
@@ -3943,6 +3945,7 @@
 				871BC03B1D34F60700DF0793 /* NSString+Wire.h */,
 				871BC03C1D34F60700DF0793 /* NSString+Wire.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
+				BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -5496,6 +5499,7 @@
 				87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				DB888FB61ADD18B400CE9A88 /* RegistrationEmailFlowViewController.m in Sources */,
+				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				16A761341AD55ED800A999D0 /* RegistrationViewController.m in Sources */,
 				87DCF4EC1D34EA4500BB420F /* UsersInDirectorySection.m in Sources */,
 				871BC3661D34F94200DF0793 /* VimeoService.m in Sources */,
