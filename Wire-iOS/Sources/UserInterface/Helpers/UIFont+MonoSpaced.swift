@@ -28,18 +28,18 @@ private let monospaceAttribute = [
     UIFontDescriptorFeatureSettingsAttribute: [monospacedFeatureSettingsAttribute]
 ]
 
-private let allCapsGeatureSettingsAttributeLowerCase = [
+private let allCapsFeatureSettingsAttributeLowerCase = [
     UIFontFeatureTypeIdentifierKey: kLowerCaseType,
     UIFontFeatureSelectorIdentifierKey: kLowerCaseSmallCapsSelector,
 ]
 
-private let allCapsGeatureSettingsAttributeUpperCase = [
+private let allCapsFeatureSettingsAttributeUpperCase = [
     UIFontFeatureTypeIdentifierKey: kUpperCaseType,
     UIFontFeatureSelectorIdentifierKey: kUpperCaseSmallCapsSelector,
 ]
 
 private let allCapsAttribute = [
-    UIFontDescriptorFeatureSettingsAttribute: [allCapsGeatureSettingsAttributeLowerCase, allCapsGeatureSettingsAttributeUpperCase]
+    UIFontDescriptorFeatureSettingsAttribute: [allCapsFeatureSettingsAttributeLowerCase, allCapsFeatureSettingsAttributeUpperCase]
 ]
 
 extension UIFont {
