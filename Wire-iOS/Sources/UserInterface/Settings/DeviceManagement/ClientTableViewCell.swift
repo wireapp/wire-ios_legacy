@@ -147,7 +147,7 @@ class ClientTableViewCell: UITableViewCell {
         }
         
         CASStyler.defaultStyler().styleItem(self)
-        self.backgroundColor = UIColor(white: 0, alpha: 0.1)
+        self.backgroundColor = UIColor.clearColor()
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
     }

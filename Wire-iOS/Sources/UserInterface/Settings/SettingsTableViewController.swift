@@ -116,7 +116,6 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(cellDescriptor.dynamicType.cellType.reuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
             cell.descriptor = cellDescriptor
-            cell.isGrouped = tableView.style == .Grouped
             cellDescriptor.featureCell(cell)
             return cell
         }

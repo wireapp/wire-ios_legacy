@@ -4252,8 +4252,6 @@
 			children = (
 				873C5FE21C10426A00D5132A /* DeviceManagement */,
 				871067351C0DC5570035603B /* CellDescriptors */,
-				1611DF9F1AB9AEF8000562B3 /* SettingsTechnicalReportViewController.h */,
-				1611DFA01AB9AEF8000562B3 /* SettingsTechnicalReportViewController.m */,
 				870815851BF4E76A00D321BC /* SettingsCell.swift */,
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
@@ -4265,6 +4263,8 @@
 				87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */,
 				87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.h */,
 				87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */,
+				1611DF9F1AB9AEF8000562B3 /* SettingsTechnicalReportViewController.h */,
+				1611DFA01AB9AEF8000562B3 /* SettingsTechnicalReportViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";

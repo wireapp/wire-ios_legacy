@@ -128,11 +128,11 @@ import Foundation
         self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics:.Default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.translucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold").allCaps()]
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()]
         
         let navButtonAppearance = UIBarButtonItem.wr_appearanceWhenContainedIn(UINavigationBar.self)
-
-        navButtonAppearance.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec")], forState: UIControlState.Normal)
+                
+        navButtonAppearance.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], forState: UIControlState.Normal)
 
     }
     

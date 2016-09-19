@@ -34,7 +34,6 @@ protocol SettingsCellType: class {
     var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
     var icon: ZetaIconType {get set}
-    var isGrouped: Bool {get set}
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
@@ -93,12 +92,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     var titleColor: UIColor = UIColor.whiteColor() {
         didSet {
             self.cellNameLabel.textColor = self.titleColor
-        }
-    }
-    
-    var isGrouped: Bool = false {
-        didSet {
-            self.updateBackgroundColor()
         }
     }
     
@@ -198,12 +191,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             self.backgroundColor = UIColor(white: 0, alpha: 0.2)
         }
         else {
-            if self.isGrouped {
-                self.backgroundColor = UIColor(white: 0, alpha: 0.1)
-            }
-            else {
-                self.backgroundColor = UIColor.clearColor()
-            }
+            self.backgroundColor = UIColor.clearColor()
         }
     }
 }
