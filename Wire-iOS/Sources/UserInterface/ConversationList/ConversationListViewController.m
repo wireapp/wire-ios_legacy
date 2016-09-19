@@ -901,6 +901,7 @@
             }
             else {
                 KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
+                keyboardAvoidingWrapperController.topInset = 20;
                 @weakify(keyboardAvoidingWrapperController);
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
                     @strongify(keyboardAvoidingWrapperController);

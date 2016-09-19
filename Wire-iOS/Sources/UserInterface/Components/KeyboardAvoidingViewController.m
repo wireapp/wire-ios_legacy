@@ -30,6 +30,7 @@
 @interface KeyboardAvoidingViewController ()
 
 @property (nonatomic, readwrite) UIViewController *viewController;
+@property (nonatomic) NSLayoutConstraint *topEdgeConstraint;
 @property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
 
 @end
@@ -37,11 +38,6 @@
 
 
 @implementation KeyboardAvoidingViewController
-
-+ (instancetype)registrationFormControllerWithViewController:(UIViewController *)viewController
-{
-    return [[self alloc ] initWithViewController:viewController];
-}
 
 - (instancetype)initWithViewController:(UIViewController *)viewController
 {
@@ -77,7 +73,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.view.opaque = NO;
     [self addChildViewController:self.viewController];
     [self.view addSubview:self.viewController.view];
@@ -96,8 +91,17 @@
 
 - (void)createInitialConstraints
 {
-    [self.viewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    self.topEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:self.topInset];
     self.bottomEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+}
+
+- (void)setTopInset:(CGFloat)topInset
+{
+    _topInset = topInset;
+    self.topEdgeConstraint.constant = topInset;
+    [self.view setNeedsLayout];
 }
 
 - (NSString *)title

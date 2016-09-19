@@ -23,6 +23,8 @@
 
 @property (nonatomic, readonly) UIViewController *viewController;
 
+@property (nonatomic) CGFloat topInset;
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithViewController:(UIViewController *)viewController NS_DESIGNATED_INITIALIZER;
