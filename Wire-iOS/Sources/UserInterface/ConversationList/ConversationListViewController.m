@@ -891,15 +891,7 @@
         {
             SettingsNavigationController *settingsViewController = [self createSettingsViewController];
             
-            if (IS_IPAD) {
-                settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
-                    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-                };
-                settingsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-                settingsViewController.view.backgroundColor = [UIColor blackColor];
-                [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
-            }
-            else {
+            if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
                 KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
                 keyboardAvoidingWrapperController.topInset = 20;
                 @weakify(keyboardAvoidingWrapperController);
@@ -909,10 +901,18 @@
                     [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
                 };
                 [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
-
+                
                 keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
                 keyboardAvoidingWrapperController.transitioningDelegate = settingsViewController;
                 [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
+            }
+            else {
+                settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
+                    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                };
+                settingsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                settingsViewController.view.backgroundColor = [UIColor blackColor];
+                [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
             }
             break;
         }

@@ -131,6 +131,7 @@ import CocoaLumberjackSwift
     func openDetailsOfClient(client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
+            clientViewController.view.backgroundColor = self.view.backgroundColor
             navigationController.pushViewController(clientViewController, animated: true)
         }
     }

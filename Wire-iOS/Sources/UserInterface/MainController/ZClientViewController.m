@@ -389,6 +389,8 @@
 {
     if (user.isSelfUser) {
         ClientListViewController *clientListViewController = [[ClientListViewController alloc] initWithClientsList:user.clients.allObjects credentials:nil detailedView:YES];
+        clientListViewController.view.backgroundColor = [UIColor blackColor];
+        clientListViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissClientListController:)];
         UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:clientListViewController];
         navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentViewController:navWrapperController animated:YES completion:nil];
@@ -406,6 +408,10 @@
 
 }
 
+- (void)dismissClientListController:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Animated conversation switch
 
