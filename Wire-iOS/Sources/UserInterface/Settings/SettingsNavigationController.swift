@@ -195,7 +195,11 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
 }
 
 extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
-   
+    
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return .None
+    }
+
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
         transition.direction = .Vertical
