@@ -22,7 +22,6 @@
 		160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECDF1AB3347B000FB575 /* CameraExposureSlider.m */; };
 		160E72391AEA842000F86648 /* EmailFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160E72381AEA842000F86648 /* EmailFormViewController.m */; };
 		160E723E1AEE40B600F86648 /* AddEmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160E723D1AEE40B600F86648 /* AddEmailStepViewController.m */; };
-		1611DFA11AB9AEF8000562B3 /* SettingsTechnicalReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1611DFA01AB9AEF8000562B3 /* SettingsTechnicalReportViewController.m */; };
 		161C539D1D06C99C00277D6B /* ConversationCell+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161C539C1D06C99C00277D6B /* ConversationCell+Animations.swift */; };
 		16258EE51AD6D1150076B75F /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16258EE41AD6D1150076B75F /* NavigationController.m */; };
 		16258EE81AD7CEBF0076B75F /* PhoneVerificationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16258EE71AD7CEBF0076B75F /* PhoneVerificationStepViewController.m */; };
@@ -695,6 +694,7 @@
 		BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */; };
 		BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */; };
 		BAFE919E1B5E92E000E08D2A /* SketchTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFE919D1B5E92E000E08D2A /* SketchTopView.m */; };
+		BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
 		BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */; };
 		BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */; };
@@ -864,8 +864,6 @@
 		160E72381AEA842000F86648 /* EmailFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailFormViewController.m; sourceTree = "<group>"; };
 		160E723C1AEE40B600F86648 /* AddEmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailStepViewController.h; sourceTree = "<group>"; };
 		160E723D1AEE40B600F86648 /* AddEmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddEmailStepViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		1611DF9F1AB9AEF8000562B3 /* SettingsTechnicalReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTechnicalReportViewController.h; sourceTree = "<group>"; };
-		1611DFA01AB9AEF8000562B3 /* SettingsTechnicalReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTechnicalReportViewController.m; sourceTree = "<group>"; };
 		1613C76C1C3D2E7400B1FB8A /* ProfileDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDetailsViewController.h; sourceTree = "<group>"; };
 		1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDetailsViewController.m; sourceTree = "<group>"; };
 		161C539C1D06C99C00277D6B /* ConversationCell+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Animations.swift"; sourceTree = "<group>"; };
@@ -1958,6 +1956,7 @@
 		BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedListMenuView.m; sourceTree = "<group>"; };
 		BAFE919C1B5E92E000E08D2A /* SketchTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchTopView.h; path = Sketchpad/SketchTopView.h; sourceTree = "<group>"; };
 		BAFE919D1B5E92E000E08D2A /* SketchTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchTopView.m; path = Sketchpad/SketchTopView.m; sourceTree = "<group>"; };
+		BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTechnicalReportViewController.swift; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
 		BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRootViewController.swift; sourceTree = "<group>"; };
 		BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMSnapshotTestCase.h; sourceTree = "<group>"; };
@@ -4256,6 +4255,7 @@
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
+				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
@@ -5232,7 +5232,6 @@
 				168DDD041AFA81820056A5EF /* CheckmarkViewController.m in Sources */,
 				871BC2761D34F8F800DF0793 /* UserImageView.m in Sources */,
 				87302F4B1B15D6E6001F478C /* SearchViewController.m in Sources */,
-				1611DFA11AB9AEF8000562B3 /* SettingsTechnicalReportViewController.m in Sources */,
 				871BC2311D34F8F800DF0793 /* Guidance.m in Sources */,
 				DBDA83911ADFB3F2000AD57D /* RegistrationPhoneFlowViewController.m in Sources */,
 				DB29BD411AE1094E00DCEF6D /* EmailSignInViewController.m in Sources */,
@@ -5432,6 +5431,7 @@
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.m in Sources */,
+				BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */,
 				16BCF4311A0A457900A2D3D6 /* GuidanceLabel.m in Sources */,
 				87DCF49D1D34E9E600BB420F /* MapKit+Helper.swift in Sources */,
 				8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */,

@@ -59,7 +59,6 @@
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
 #import "NavigationController.h"
-#import "SettingsTechnicalReportViewController.h"
 #import "DevOptionsController.h"
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
@@ -113,6 +112,7 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
+#import "AppDelegate+Logging.h"
 #import "UIView+UIAppearanceSwift.h"
 
 // Camera
