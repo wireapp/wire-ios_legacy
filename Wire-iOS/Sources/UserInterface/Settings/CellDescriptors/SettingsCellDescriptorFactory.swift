@@ -91,10 +91,18 @@ import Foundation
                 return .Color(ZMUser.selfUser().accentColor)
         })
         
-        let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
+        let appearanceCells: [SettingsCellDescriptorType]
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            appearanceCells = [pictureElement, colorElement]
+        }
+        else {
+            let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
+            appearanceCells = [pictureElement, colorElement, darkThemeElement]
+        }
         
         let appearanceSectionTitle = "self.settings.account_appearance_group.title".localized
-        let appearanceSection = SettingsSectionDescriptor(cellDescriptors: [pictureElement, colorElement, darkThemeElement], header: appearanceSectionTitle)
+        let appearanceSection = SettingsSectionDescriptor(cellDescriptors: appearanceCells, header: appearanceSectionTitle)
         
         
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
