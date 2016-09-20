@@ -117,8 +117,9 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
             return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier(technicalReportReuseIdentifier, forIndexPath: indexPath)
-            let TechnicalReport = lastCallSessionReports[indexPath.row]
-            cell.detailTextLabel?.text = TechnicalReport[SettingsTechnicalReportViewController.technicalReportData]
+            let technicalReport = lastCallSessionReports[indexPath.row]
+            cell.detailTextLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportData]
+            cell.textLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportTitle]
             return cell
             
         }
