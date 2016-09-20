@@ -26,6 +26,7 @@ import CocoaLumberjackSwift
 
 @objc class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
     var clientsTableView: UITableView?
+    let topSeparator = OverflowSeparatorView()
 
     var editingList: Bool = false {
         didSet {
@@ -111,6 +112,7 @@ import CocoaLumberjackSwift
         self.view.backgroundColor = .clearColor()
         
         self.createTableView()
+        self.view.addSubview(self.topSeparator)
         self.createConstraints()
         
         if self.traitCollection.userInterfaceIdiom == .Pad {
@@ -153,8 +155,12 @@ import CocoaLumberjackSwift
     
     private func createConstraints() {
         if let clientsTableView = self.clientsTableView {
-            constrain(self.view, clientsTableView) { selfView, clientsTableView in
+            constrain(self.view, clientsTableView, self.topSeparator) { selfView, clientsTableView, topSeparator in
                 clientsTableView.edges == selfView.edges
+                
+                topSeparator.left == clientsTableView.left
+                topSeparator.right == clientsTableView.right
+                topSeparator.top == clientsTableView.top
             }
         }
     }
@@ -377,6 +383,10 @@ import CocoaLumberjackSwift
             break;
         }
 
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.topSeparator.scrollViewDidScroll(scrollView)
     }
 }
 

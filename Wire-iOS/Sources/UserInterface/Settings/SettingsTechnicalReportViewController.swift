@@ -36,11 +36,20 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     
     init() {
         sendReportCell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+        sendReportCell.backgroundColor = UIColor.clearColor()
         sendReportCell.textLabel?.text = NSLocalizedString("self.settings.technical_report.send_report", comment: "")
         sendReportCell.textLabel?.textColor = UIColor.accentColor()
+        sendReportCell.backgroundColor = UIColor.clearColor()
+        sendReportCell.backgroundView = UIView()
+        sendReportCell.selectedBackgroundView = UIView()
+        
         includedVoiceLogCell = UITableViewCell(style: .Default, reuseIdentifier: nil)
         includedVoiceLogCell.accessoryType = .Checkmark
         includedVoiceLogCell.textLabel?.text = NSLocalizedString("self.settings.technical_report.include_log", comment: "")
+        includedVoiceLogCell.textLabel?.textColor = .whiteColor()
+        includedVoiceLogCell.backgroundColor = UIColor.clearColor()
+        includedVoiceLogCell.backgroundView = UIView()
+        includedVoiceLogCell.selectedBackgroundView = UIView()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,7 +62,9 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         super.viewDidLoad()
         
         title = NSLocalizedString("self.settings.technical_report_section.title", comment: "")
+        tableView.backgroundColor = .clearColor()
         tableView.scrollEnabled = false
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.registerClass(TechInfoCell.self, forCellReuseIdentifier: technicalReportReuseIdentifier)
     }
     
@@ -81,7 +92,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
             activityViewController.popoverPresentationController?.sourceView = sendReportCell.textLabel
             guard let bounds = sendReportCell.textLabel?.bounds else { return }
             activityViewController.popoverPresentationController?.sourceRect = bounds
-            navigationController?.presentViewController(activityViewController, animated: true, completion: nil)
+            self.presentViewController(activityViewController, animated: true, completion: nil)
             return
         }
         
@@ -96,7 +107,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         }
         
         mailComposeViewController.setMessageBody(report.string, isHTML: false)
-        navigationController?.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        self.presentViewController(mailComposeViewController, animated: true, completion: nil)
     }
     
     // MARK TableView Delegates
@@ -144,13 +155,18 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     
     // MARK: Mail Delegate
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        controller.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
 private class TechInfoCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = UIColor.clearColor()
+        self.backgroundView = UIView()
+        self.selectedBackgroundView = UIView()
+        self.textLabel?.textColor = .whiteColor()
+        self.detailTextLabel?.textColor = UIColor(white: 1, alpha: 0.4)
     }
     
     required init?(coder aDecoder: NSCoder) {

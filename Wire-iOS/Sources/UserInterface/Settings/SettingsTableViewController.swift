@@ -26,6 +26,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     @objc var dismissAction: ((SettingsTableViewController) -> ())? = .None
     
     var tableView: UITableView?
+    let topSeparator = OverflowSeparatorView()
     
     required init(group: SettingsInternalGroupCellDescriptorType) {
         self.group = group
@@ -53,6 +54,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         self.createTableView()
+        self.view.addSubview(self.topSeparator)
         self.createConstraints()
         self.view.backgroundColor = .clearColor()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
@@ -83,14 +85,18 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.view.addSubview(tableView)
     }
-
+    
     func createConstraints() {
         if let tableView = self.tableView {
-            constrain(self.view, tableView) { selfView, aTableView in
+            constrain(self.view, tableView, self.topSeparator) { selfView, aTableView, topSeparator in
                 aTableView.left == selfView.left
                 aTableView.right == selfView.right
                 aTableView.top == selfView.top
                 aTableView.bottom == selfView.bottom
+                
+                topSeparator.left == aTableView.left
+                topSeparator.right == aTableView.right
+                topSeparator.top == aTableView.top
             }
         }
     }
@@ -154,6 +160,10 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
         }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.topSeparator.scrollViewDidScroll(scrollView)
     }
 }
 
