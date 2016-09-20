@@ -20,6 +20,8 @@
 import Foundation
 
 @objc class SettingsNavigationController: UINavigationController {
+    static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
+    
     let rootGroup: protocol<SettingsControllerGeneratorType, SettingsInternalGroupCellDescriptorType>
     let settingsPropertyFactory: SettingsPropertyFactory
     @objc var dismissAction: ((SettingsNavigationController) -> ())? = .None
@@ -48,6 +50,7 @@ import Foundation
         
         self.transitioningDelegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: self.dynamicType.dismissNotificationName, object: nil)
     }
     
     func openControllerForCellWithIdentifier(identifier: String) -> UIViewController? {
@@ -108,6 +111,10 @@ import Foundation
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeNever)
             }
         }
+    }
+    
+    func dismissNotification(notification: NSNotification) {
+        self.dismissAction?(self)
     }
     
     override func viewDidLoad() {

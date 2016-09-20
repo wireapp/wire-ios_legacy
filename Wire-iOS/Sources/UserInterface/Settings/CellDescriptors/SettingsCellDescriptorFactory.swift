@@ -24,6 +24,14 @@ import Foundation
     let settingsPropertyFactory: SettingsPropertyFactory
     static private var versionTapCount: UInt = 0
     
+    class DismissStepDelegate: NSObject, FormStepDelegate {
+        var strongCapture: DismissStepDelegate?
+        @objc func didCompleteFormStep(viewController: UIViewController!) {
+            NSNotificationCenter.defaultCenter().postNotificationName(SettingsNavigationController.dismissNotificationName, object: nil)
+            self.strongCapture = nil
+        }
+    }
+    
     init(settingsPropertyFactory: SettingsPropertyFactory) {
         self.settingsPropertyFactory = settingsPropertyFactory
     }
@@ -52,7 +60,13 @@ import Foundation
         }
         else {
             phoneElement = SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
-                return AddPhoneNumberViewController()
+                let addController = AddPhoneNumberViewController()
+                
+                let stepDelegate = DismissStepDelegate()
+                stepDelegate.strongCapture = stepDelegate
+                
+                addController.formStepDelegate = stepDelegate
+                return addController
             }
         }
         
@@ -66,7 +80,14 @@ import Foundation
         }
         else {
             emailElement = SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
-                return AddEmailPasswordViewController()
+                let addEmailController = AddEmailPasswordViewController()
+                
+                let stepDelegate = DismissStepDelegate()
+                stepDelegate.strongCapture = stepDelegate
+                
+                addEmailController.formStepDelegate = stepDelegate
+                
+                return addEmailController
             }
         }
         
