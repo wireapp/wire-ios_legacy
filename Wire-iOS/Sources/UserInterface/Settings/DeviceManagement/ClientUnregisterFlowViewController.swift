@@ -129,7 +129,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     func didCompleteFormStep(viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials)
-        
+        clientsListController.view.backgroundColor = UIColor.blackColor()
         if self.traitCollection.userInterfaceIdiom == .Pad {
             let navigationController = UINavigationController(rootViewController: clientsListController)
             navigationController.modalPresentationStyle = UIModalPresentationStyle.FormSheet

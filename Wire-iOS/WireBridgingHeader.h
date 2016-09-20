@@ -51,6 +51,8 @@
 #import "ConversationContentViewController+Private.h"
 #import "StackView.h"
 #import "SearchResultCell.h"
+#import "UIAlertController+NewSelfClients.h"
+#import "SwizzleTransition.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -69,6 +71,11 @@
 #import "SplitViewController.h"
 #import "ConfirmAssetViewController.h"
 #import "SketchViewController.h"
+#import "ProfileSelfPictureViewController.h"
+#import "AddEmailPasswordViewController.h"
+#import "AddPhoneNumberViewController.h"
+#import "VersionInfoViewController.h"
+#import "BrowserViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -106,6 +113,7 @@
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
 #import "AppDelegate+Logging.h"
+#import "UIView+UIAppearanceSwift.h"
 
 // Camera
 #import "CameraController.h"

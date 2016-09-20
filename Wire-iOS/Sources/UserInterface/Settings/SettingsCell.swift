@@ -20,16 +20,28 @@
 import UIKit
 import Cartography
 
+enum SettingsCellPreview {
+    case None
+    case Text(String)
+    case Image(UIImage)
+    case Color(UIColor)
+}
+
 protocol SettingsCellType: class {
     var titleText: String {get set}
-    var valueText: String {get set}
+    var preview: SettingsCellPreview {get set}
     var titleColor: UIColor {get set}
+    var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
+    var icon: ZetaIconType {get set}
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
-    var cellNameLabel: UILabel = UILabel(frame: CGRectZero)
-    var valueLabel: UILabel = UILabel(frame: CGRectZero)
+    var iconImageView = UIImageView()
+    var cellNameLabel = UILabel()
+    var valueLabel = UILabel()
+    var imagePreview = UIImageView()
+    var cellNameLabelToIconInset: NSLayoutConstraint!
     
     var titleText: String = "" {
         didSet {
@@ -37,16 +49,61 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
     
-    var valueText: String = "" {
+    var preview: SettingsCellPreview = .None {
         didSet {
-            self.valueLabel.text = self.valueText
+            
+            switch self.preview {
+            case .Text(let string):
+                self.valueLabel.text = string
+                self.imagePreview.image = .None
+                self.imagePreview.backgroundColor = UIColor.clearColor()
+
+            case .Image(let image):
+                self.valueLabel.text = ""
+                self.imagePreview.image = image
+                self.imagePreview.backgroundColor = UIColor.clearColor()
+                
+            case .Color(let color):
+                self.valueLabel.text = ""
+                self.imagePreview.image = .None
+                self.imagePreview.backgroundColor = color
+                
+            case .None:
+                self.valueLabel.text = ""
+                self.imagePreview.image = .None
+                self.imagePreview.backgroundColor = UIColor.clearColor()
+            }
         }
     }
     
-    var titleColor: UIColor = UIColor.darkTextColor() {
+    var icon: ZetaIconType = .None {
+        didSet {
+            if icon == .None {
+                self.iconImageView.image = .None
+                self.cellNameLabelToIconInset.active = false
+            }
+            else {
+                self.iconImageView.image = UIImage(forIcon: icon, iconSize: .Tiny, color: .whiteColor())
+                self.cellNameLabelToIconInset.active = true
+            }
+        }
+    }
+    
+    var titleColor: UIColor = UIColor.whiteColor() {
         didSet {
             self.cellNameLabel.textColor = self.titleColor
         }
+    }
+    
+    var cellColor: UIColor? {
+        didSet {
+            self.backgroundColor = self.cellColor
+        }
+    }
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        self.updateBackgroundColor()
     }
     
     var descriptor: SettingsCellDescriptorType?
@@ -72,18 +129,36 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     func setup() {
+        self.backgroundColor = .clearColor()
+        self.backgroundView = UIView()
+        self.selectedBackgroundView = UIView()
+        
+        self.iconImageView.contentMode = .Center
+        self.contentView.addSubview(self.iconImageView)
+        
+        constrain(self.contentView, self.iconImageView) { contentView, iconImageView in
+            iconImageView.left == contentView.left + 24
+            iconImageView.width == 16
+            iconImageView.height == iconImageView.height
+            iconImageView.centerY == contentView.centerY
+        }
+        
         self.cellNameLabel.font = UIFont.systemFontOfSize(17)
         self.cellNameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, forAxis: .Horizontal)
+        self.cellNameLabel.textColor = .whiteColor()
         self.contentView.addSubview(self.cellNameLabel)
         
-        constrain(self.contentView, self.cellNameLabel) { contentView, cellNameLabel in
-            cellNameLabel.left == contentView.left + 20
+        constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
+            self.cellNameLabelToIconInset = cellNameLabel.left == iconImageView.right + 24
+            cellNameLabel.left == contentView.left + 16 ~ 750
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }
         
-        self.valueLabel.textColor = UIColor.grayColor()
+        self.cellNameLabelToIconInset.active = false
+        
+        self.valueLabel.textColor = .lightGrayColor()
         self.valueLabel.font = UIFont.systemFontOfSize(17)
         self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
         self.valueLabel.textAlignment = .Right
@@ -95,6 +170,28 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             valueLabel.bottom == contentView.bottom + 8
             valueLabel.left == cellNameLabel.right + 8
             valueLabel.right == contentView.right - 16
+        }
+        
+        self.imagePreview.clipsToBounds = true
+        self.imagePreview.layer.cornerRadius = 12
+        self.imagePreview.contentMode = .ScaleAspectFill
+        self.contentView.addSubview(self.imagePreview)
+        
+        constrain(self.contentView, self.imagePreview) { contentView, imagePreview in
+            imagePreview.width == imagePreview.height
+            imagePreview.height == 24
+            imagePreview.right == contentView.right - 16
+            imagePreview.centerY == contentView.centerY
+        }
+        
+    }
+    
+    func updateBackgroundColor() {
+        if self.highlighted {
+            self.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        }
+        else {
+            self.backgroundColor = UIColor.clearColor()
         }
     }
 }
@@ -177,7 +274,7 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         self.textInput.translatesAutoresizingMaskIntoConstraints = false
         self.textInput.delegate = self
         self.textInput.textAlignment = .Right
-
+        self.textInput.textColor = .lightGrayColor()
         self.contentView.addSubview(self.textInput)
         
         constrain(self.contentView, self.cellNameLabel, self.textInput) { contentView, cellNameLabel, textInput in

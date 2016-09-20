@@ -31,9 +31,13 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     let destructive: Bool
     let presentationStyle: PresentationStyle
     let identifier: String?
+    let icon: ZetaIconType
+
     weak var group: SettingsGroupCellDescriptorType?
     weak var viewController: UIViewController?
     
+    let previewGenerator: PreviewGeneratorType?
+
     let presentationAction: () -> (UIViewController?)
     
     init(title: String, presentationAction: () -> (UIViewController?)) {
@@ -42,27 +46,32 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         self.presentationStyle = .Navigation
         self.presentationAction = presentationAction
         self.identifier = .None
+        self.previewGenerator = .None
+        self.icon = .None
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: () -> (UIViewController?)) {
+    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .None, icon: ZetaIconType = .None) {
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
         self.identifier = .None
+        self.previewGenerator = previewGenerator
+        self.icon = icon
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String, presentationAction: () -> (UIViewController?)) {
+    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String, presentationAction: () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .None, icon: ZetaIconType = .None) {
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
         self.identifier = identifier
+        self.previewGenerator = previewGenerator
+        self.icon = icon
     }
     
     func select(value: SettingsPropertyValue?) {
-        guard let controllerToShow = self.generateViewController() else
-        {
+        guard let controllerToShow = self.generateViewController() else {
             return
         }
         
@@ -82,9 +91,13 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             cell.titleColor = UIColor.redColor()
         }
         else {
-            cell.titleColor = UIColor.darkTextColor()
+            cell.titleColor = UIColor.whiteColor()
         }
-        
+        if let previewGenerator = self.previewGenerator {
+            let preview = previewGenerator(self)
+            cell.preview = preview
+        }
+        cell.icon = self.icon
         if let groupCell = cell as? SettingsGroupCell {
             if self.presentationStyle == .Modal {
                 groupCell.accessoryType = .None

@@ -11,4 +11,4 @@ github "wireapp/wire-ios-sync-engine" ~> 52.7.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2"
 github "wireapp/FormatterKit" ~> 1.8.1
 github "wireapp/VIMNetworking" "v6.0.2-wire-carthage-2"
-github "wireapp/AFNetworking" "2.6.3-carthage-3"
+github "wireapp/AFNetworking" "2.6.3-iOS8"

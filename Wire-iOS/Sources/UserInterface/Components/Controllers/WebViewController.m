@@ -52,6 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     self.webView = [[WKWebView alloc] initForAutoLayout];
     self.webView.navigationDelegate = self;

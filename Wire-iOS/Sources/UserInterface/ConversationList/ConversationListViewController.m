@@ -42,6 +42,7 @@
 #import "ConversationListInteractiveItem.h"
 #import "TopItemsController.h"
 #import "StartUIViewController.h"
+#import "KeyboardAvoidingViewController.h"
 
 // helpers
 
@@ -56,7 +57,6 @@
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 
-#import "ProfileSelfViewController.h"
 #import "UIViewController+Orientation.h"
 
 #import "ActionSheetController.h"
@@ -64,6 +64,7 @@
 
 #import "InviteBannerViewController.h"
 
+#import "Wire-Swift.h"
 
 @interface ConversationListViewController (Content) <ConversationListContentDelegate>
 
@@ -265,6 +266,13 @@
     return startUIViewController;
 }
 
+- (SettingsNavigationController *)createSettingsViewController
+{
+    SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
+
+    return settingsViewController;
+}
+
 - (void)createTopItemsController
 {
     self.topItemsController = [[TopItemsController alloc] init];
@@ -404,6 +412,7 @@
                 }
             }];
         }
+            break;
         default:
             break;
     }
@@ -879,9 +888,34 @@
             break;
             
         case ConversationListButtonTypeSettings:
-            [[ZClientViewController sharedZClientViewController] openSelfProfileAnimated:YES];
-            break;
+        {
+            SettingsNavigationController *settingsViewController = [self createSettingsViewController];
             
+            if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+                KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
+                keyboardAvoidingWrapperController.topInset = 20;
+                @weakify(keyboardAvoidingWrapperController);
+                settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
+                    @strongify(keyboardAvoidingWrapperController);
+                    [keyboardAvoidingWrapperController dismissViewControllerAnimated:YES completion:nil];
+                    [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
+                };
+                [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
+                
+                keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                keyboardAvoidingWrapperController.transitioningDelegate = settingsViewController;
+                [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
+            }
+            else {
+                settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
+                    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                };
+                settingsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                settingsViewController.view.backgroundColor = [UIColor blackColor];
+                [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
+            }
+            break;
+        }
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
             [Analytics.shared tagArchiveOpened];

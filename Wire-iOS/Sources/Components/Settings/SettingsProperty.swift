@@ -25,10 +25,8 @@ Available settings
 - Markdown:               Enable markdown formatter for messages
 - SkipFirstTimeUseChecks: Temporarily skip firts time checks
 - PreferredFlashMode:     Flash mode for internal camera UI
-- ColorScheme:            Current color scheme
+- DarkMode:               Dark mode for conversation
 - PriofileName:           User name
-- ProfileEmail:           User email
-- ProfilePhone:           User phone
 - SoundAlerts:            Sound alerts level
 - AnalyticsOptOut:        Opt-Out analytics
 - Disable(.*):            Disable some app features (debug)
@@ -43,13 +41,13 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case SkipFirstTimeUseChecks = "SkipFirstTimeUseChecks"
     
     case PreferredFlashMode = "PreferredFlashMode"
-    case ColorScheme = "ColorScheme"
+    
+    case DarkMode = "DarkMode"
     
     // Profile
     case ProfileName = "ProfileName"
-    case ProfileEmail = "ProfileEmail"
-    case ProfilePhone = "ProfilePhone"
-        
+    case AccentColor = "AccentColor"
+    
     // AVS
     case SoundAlerts = "SoundAlerts"
     

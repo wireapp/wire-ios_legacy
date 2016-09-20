@@ -47,6 +47,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         self.userClient = userClient
         
         super.init(nibName: nil, bundle: nil)
+        self.edgesForExtendedLayout = UIRectEdge.None
 
         self.userClientToken = userClient.addObserver(self)
         if userClient.fingerprint == .None {
@@ -68,6 +69,9 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .clearColor()
+        
         self.createTableView()
         
         if let navController = self.navigationController
@@ -83,6 +87,8 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
+        tableView.backgroundColor = .clearColor()
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.registerClass(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.registerClass(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.registerClass(SettingsTableCell.self, forCellReuseIdentifier: self.dynamicType.deleteCellReuseIdentifier)
@@ -266,7 +272,18 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         default:
             return .None
         }
-        
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
     }
     
     // MARK: - UserClientObserver

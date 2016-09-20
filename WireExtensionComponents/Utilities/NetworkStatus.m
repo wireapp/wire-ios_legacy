@@ -155,7 +155,7 @@ void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachability
     [self sharedStatus];
     
     [[NSNotificationCenter defaultCenter] addObserver:observer
-                                             selector:@selector(networkStatusDidChange:)
+                                             selector:@selector(wr_networkStatusDidChange:)
                                                  name:NetworkStatusNotificationName
                                                object:nil];
 }

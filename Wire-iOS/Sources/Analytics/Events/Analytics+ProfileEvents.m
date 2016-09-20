@@ -34,11 +34,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
     [self tagEvent:@"help"];
 }
 
-- (void)tagAbout
-{
-    [self tagEvent:@"about"];
-}
-
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type
 {
     [self tagEvent:@"viewedTOS" attributes:@{@"source" : TOSOpenedFromTypeToString(type)}];

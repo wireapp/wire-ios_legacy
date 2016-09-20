@@ -58,6 +58,8 @@ func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> 
     }
 }
 
+typealias PreviewGeneratorType = (SettingsCellDescriptorType) -> SettingsCellPreview
+
 protocol SettingsGroupCellDescriptorType: SettingsCellDescriptorType {
     weak var viewController: UIViewController? {get set}
 }
@@ -128,8 +130,8 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
     }
     let visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))?
 
-    var header: String?
-    var footer: String?
+    let header: String?
+    let footer: String?
     
     init(cellDescriptors: [SettingsCellDescriptorType], header: String? = .None, footer: String? = .None, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .None) {
         self.cellDescriptors = cellDescriptors
@@ -139,6 +141,7 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
     }
 }
 
+
 class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
@@ -146,8 +149,8 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     let style: InternalScreenStyle
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
+    let icon: ZetaIconType
     
-    typealias PreviewGeneratorType = (SettingsGroupCellDescriptorType) -> (String?)
     let previewGenerator: PreviewGeneratorType?
     
     weak var group: SettingsGroupCellDescriptorType?
@@ -160,26 +163,35 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     
     weak var viewController: UIViewController?
     
-    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .Grouped, identifier: String? = .None, previewGenerator: PreviewGeneratorType? = .None) {
+    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .Grouped, identifier: String? = .None, previewGenerator: PreviewGeneratorType? = .None, icon: ZetaIconType = .None) {
         self.items = items
         self.title = title
         self.style = style
         self.identifier = identifier
         self.previewGenerator = previewGenerator
+        self.icon = icon
     }
     
     func featureCell(cell: SettingsCellType) {
         cell.titleText = self.title
-        if let previewGenerator = self.previewGenerator,
-            let preview = previewGenerator(self) {
-            cell.valueText = preview
+        if let previewGenerator = self.previewGenerator {
+            let preview = previewGenerator(self)
+            cell.preview = preview
         }
+        cell.icon = self.icon
     }
     
     func select(value: SettingsPropertyValue?) {
         if let navigationController = self.viewController?.navigationController,
            let controllerToPush = self.generateViewController() {
             navigationController.pushViewController(controllerToPush, animated: true)
+            
+            if let settingsTableController = controllerToPush as? SettingsTableViewController,
+                let settingsNavigationController = navigationController as? SettingsNavigationController {
+                settingsTableController.dismissAction = { [unowned settingsNavigationController]  _ in
+                    settingsNavigationController.dismissAction?(settingsNavigationController)
+                }
+            }
         }
     }
     
@@ -193,7 +205,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
 func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
     switch (name) {
     case .ChatHeadsDisabled:
-        return NSLocalizedString("self.settings.notifications.chat_alerts.toggle", comment: "")
+        return "self.settings.notifications.chat_alerts.toggle".localized
     case .NotificationContentVisible:
         return "self.settings.notifications.push_notification.toogle".localized
     case .Markdown:
@@ -204,23 +216,19 @@ func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
         
     case .PreferredFlashMode:
         return "Flash Mode"
-    case .ColorScheme:
-        return "Color Scheme"
+    case .DarkMode:
+        return "self.settings.account_picture_group.theme".localized
         // Profile
     case .ProfileName:
-        return NSLocalizedString("self.settings.account_section.name.title", comment: "")
-    case .ProfileEmail:
-        return NSLocalizedString("self.settings.account_section.email.title", comment: "")
-    case .ProfilePhone:
-        return NSLocalizedString("self.settings.account_section.phone.title", comment: "")
+        return "self.settings.account_section.name.title".localized
         
         // AVS
     case .SoundAlerts:
-        return NSLocalizedString("self.settings.sound_menu.title", comment: "")
+        return "self.settings.sound_menu.title".localized
         
         // Analytics
     case .AnalyticsOptOut:
-        return NSLocalizedString("self.settings.privacy_analytics_section.title", comment: "")
+        return "self.settings.privacy_analytics_section.title".localized
         
     case .DisableUI:
         return "Disable UI (Restart needed)"
@@ -236,6 +244,8 @@ func SettingsPropertyLabelText(name: SettingsPropertyName) -> String {
         return "self.settings.sound_menu.ringtone.title".localized
     case .PingSoundName:
         return "self.settings.sound_menu.ping.title".localized
+    case .AccentColor:
+        return "self.settings.account_picture_group.color".localized
     }
 }
 

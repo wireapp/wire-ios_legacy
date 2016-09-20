@@ -22,6 +22,8 @@ import Cartography
 
 class SettingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let group: SettingsInternalGroupCellDescriptorType
+    private var selfUserObserver: AnyObject!
+    @objc var dismissAction: ((SettingsTableViewController) -> ())? = .None
     
     var tableView: UITableView?
     
@@ -30,12 +32,15 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
 
         super.init(nibName: nil, bundle: nil)
         self.title = group.title
-        
+        self.edgesForExtendedLayout = UIRectEdge.None
+
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
                 groupDescriptor.viewController = self
             }
         }
+        
+        self.selfUserObserver = ZMUser.addUserObserver(self, forUsers: [ZMUser.selfUser()], inUserSession: ZMUserSession.sharedSession())
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +54,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         self.createTableView()
         self.createConstraints()
+        self.view.backgroundColor = .clearColor()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
         super.viewDidLoad()
     }
@@ -64,26 +70,33 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        
-        let allCellTypes: [SettingsTableCell.Type] = [SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
+        tableView.backgroundColor = .clearColor()
+        tableView.clipsToBounds = true
+        tableView.tableFooterView = UIView()
+        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
         
         for aClass in allCellTypes {
             tableView.registerClass(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
         self.tableView = tableView
+        
         self.view.addSubview(tableView)
     }
 
     func createConstraints() {
         if let tableView = self.tableView {
             constrain(self.view, tableView) { selfView, aTableView in
-                aTableView.edges == selfView.edges
+                aTableView.left == selfView.left
+                aTableView.right == selfView.right
+                aTableView.top == selfView.top
+                aTableView.bottom == selfView.bottom
             }
         }
     }
     
     func dismissRootNavigation(sender: AnyObject) {
-        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
+       self.dismissAction?(self)
     }
     
     // MARK: - UITableViewDelegate & UITableViewDelegate
@@ -118,7 +131,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44
+        return 56
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -129,5 +142,25 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let sectionDescriptor = self.group.visibleItems[section]
         return sectionDescriptor.footer
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+}
+
+extension SettingsTableViewController: ZMUserObserver {
+    func userDidChange(note: UserChangeInfo!) {
+        if note.accentColorValueChanged {
+            self.tableView?.reloadData()
+        }
     }
 }

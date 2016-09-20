@@ -66,10 +66,11 @@ import CocoaLumberjackSwift
     required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .None, detailedView: Bool = false) {
         self.selfClient = ZMUserSession.sharedSession().selfUserClient()
         self.detailedView = detailedView
+        self.credentials = credentials
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("registration.devices.title", comment:"")
-        self.credentials = credentials
-        
+        self.edgesForExtendedLayout = UIRectEdge.None
+
         let filteredClients = clientsList?.filter { $0 != selfClient } ?? []
         self.initalizeProperties(filteredClients)
 
@@ -107,6 +108,8 @@ import CocoaLumberjackSwift
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = .clearColor()
+        
         self.createTableView()
         self.createConstraints()
         
@@ -128,6 +131,7 @@ import CocoaLumberjackSwift
     func openDetailsOfClient(client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
+            clientViewController.view.backgroundColor = self.view.backgroundColor
             navigationController.pushViewController(clientViewController, animated: true)
         }
     }
@@ -141,6 +145,8 @@ import CocoaLumberjackSwift
         tableView.estimatedRowHeight = 80
         tableView.registerClass(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.editing = self.editingList
+        tableView.backgroundColor = .clearColor()
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }
@@ -270,6 +276,18 @@ import CocoaLumberjackSwift
                 return NSLocalizedString("registration.devices.active_list_subtitle", comment:"")
             default:
                 return nil
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
         }
     }
     

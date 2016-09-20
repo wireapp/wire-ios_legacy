@@ -25,7 +25,6 @@
 @class ZMUserSession;
 @class ConversationViewController;
 @class ConversationListViewController;
-@class ProfileSelfViewController;
 @class ZMConversation;
 @class ZMVoiceChannel;
 @class SplitViewController;
@@ -60,15 +59,6 @@
                focusOnView:(BOOL)focus
                   animated:(BOOL)animated
                 completion:(dispatch_block_t)completion;
-
-/**
- * Select the self profile and move focus to it.
- */
-
-- (ProfileSelfViewController* )openSelfProfileAnimated:(BOOL)animated;
-- (ProfileSelfViewController *)openSelfProfileAnimated:(BOOL)animated completion:(void(^)(ProfileSelfViewController *))completion;
-
-- (void)dismissSelfProfileAnimated:(BOOL)animated;
 
 /**
  * Open the user clients detail screen

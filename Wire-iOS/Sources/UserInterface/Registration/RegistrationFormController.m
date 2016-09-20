@@ -36,7 +36,7 @@
 
 + (instancetype)registrationFormControllerWithViewController:(UIViewController *)viewController
 {
-    return [[self alloc ] initWithViewController:viewController];
+    return [[self alloc] initWithViewController:viewController];
 }
 
 - (instancetype)initWithViewController:(UIViewController *)viewController

@@ -34,7 +34,7 @@
 /// Sets the blur percent visibility.  Not animated.
 @property (nonatomic, assign) CGFloat blurPercent;
 
-/// Disables the blur.  Animated.
+/// Disables the blur. Animated.
 @property (nonatomic, assign) BOOL blurDisabled;
 
 - (void)setForceFullScreen:(BOOL)forceFullScreen animated:(BOOL)animated;

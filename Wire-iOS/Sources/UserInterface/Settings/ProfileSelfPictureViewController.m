@@ -20,8 +20,10 @@
 
 #import "ProfileSelfPictureViewController.h"
 
-#import <MobileCoreServices/MobileCoreServices.h>
-#import <AssetsLibrary/AssetsLibrary.h>
+@import MobileCoreServices;
+@import AssetsLibrary;
+
+#import <PureLayout/PureLayout.h>
 
 #import "zmessaging+iOS.h"
 
@@ -34,41 +36,14 @@
 #import "CameraViewController.h"
 #import "Analytics+iOS.h"
 #import "ZMUserSession+Additions.h"
-#import "ZClientViewController.h"
 #import "Constants.h"
+#import "UserImageView.h"
 #import "AppDelegate.h"
-#import "ProfileSelfCameraTransition.h"
 
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+SelfUser.h"
 
 static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
-
-
-
-@interface DefaultProfileSelfPictureTransitioningDelegate : NSObject<UIViewControllerTransitioningDelegate>
-
-@end
-
-
-@implementation DefaultProfileSelfPictureTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
-{
-    NSAssert([presented isKindOfClass:[ProfileSelfPictureViewController class]], @"DefaultProfileSelfPictureTransitioningDelegate can only present a ProfileSelfPictureViewController");
-    
-    [presented view]; // Make sure view is loaded
-    return [[ProfileSelfCameraTransition alloc] initWithBottomBarView:((ProfileSelfPictureViewController *)presented).bottomOverlayView reverse:NO];
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    NSAssert([dismissed isKindOfClass:[ProfileSelfPictureViewController class]], @"DefaultProfileSelfPictureTransitioningDelegate can only present a ProfileSelfPictureViewController");
-    
-    return [[ProfileSelfCameraTransition alloc] initWithBottomBarView:((ProfileSelfPictureViewController *)dismissed).bottomOverlayView reverse:YES];
-}
-
-@end
 
 
 
@@ -78,10 +53,14 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 @property (nonatomic) ButtonWithLargerHitArea *libraryButton;
 
 @property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
-@property (nonatomic) DefaultProfileSelfPictureTransitioningDelegate *defaultTransitioningDelegate;
-
+@property (nonatomic) UIImageView *selfUserImageView;
+@property (nonatomic) id userObserverToken;
 @end
 
+
+@interface ProfileSelfPictureViewController (ZMUserObserver) <ZMUserObserver>
+
+@end
 
 
 @implementation ProfileSelfPictureViewController
@@ -91,31 +70,19 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
     self = [super init];
     
     if (self) {
-        _defaultTransitioningDelegate = [[DefaultProfileSelfPictureTransitioningDelegate alloc] init];
         _imagePickerConfirmationController = [[ImagePickerConfirmationController alloc] init];
-        
-        self.transitioningDelegate = self.defaultTransitioningDelegate;
-        self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         
         @weakify(self);
         _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData, ImageMetadata *metadata) {
             @strongify(self);
-            [[AppDelegate sharedAppDelegate].window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
         };
+        
+        self.userObserverToken = [[ZMUser selfUser].class addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
     }
     
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
 }
 
 - (void)addCameraButton
@@ -189,6 +156,22 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
     [self.libraryButton addTarget:self action:@selector(libraryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)addCloseButton
+{
+    ButtonWithLargerHitArea *closeButton = [[ButtonWithLargerHitArea alloc] initForAutoLayout];
+    closeButton.accessibilityIdentifier = @"CloseButton";
+
+    [self.bottomOverlayView addSubview:closeButton];
+    
+    [closeButton addConstraintsForSize:CGSizeMake(32, 32)];
+    [closeButton addConstraintForAligningVerticallyWithView:self.cameraButton];
+    [closeButton addConstraintForRightMargin:24 relativeToView:self.bottomOverlayView];
+    
+    [closeButton setImage:[UIImage imageForIcon:ZetaIconTypeX iconSize:ZetaIconSizeSmall color:[UIColor whiteColor]] forState:UIControlStateNormal];
+    
+    [closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+}
+
 /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
@@ -217,7 +200,7 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
         popover.backgroundColor = UIColor.whiteColor;
     }
     
-    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:imagePickerController animated:YES completion:nil];
+    [self presentViewController:imagePickerController animated:YES completion:nil];
     [[Analytics shared] tagProfilePictureFromSource:PictureUploadPhotoLibrary];
 }
 
@@ -235,11 +218,27 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
     cameraViewController.defaultCamera = CameraViewControllerCameraFront;
     cameraViewController.preferedPreviewSize = CameraViewControllerPreviewSizeFullscreen;
     cameraViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:cameraViewController animated:YES completion:nil];
+    [self presentViewController:cameraViewController animated:YES completion:nil];
     [[Analytics shared] tagProfilePictureFromSource:PictureUploadCamera];
 }
 
+- (void)closeButtonTapped:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Overrides
+
+- (void)setupTopView
+{
+    [super setupTopView];
+    self.selfUserImageView = [[UIImageView alloc] init];
+    self.selfUserImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.selfUserImageView.image = [UIImage imageWithData:[ZMUser selfUser].imageMediumData];
+
+    [self.topView addSubview:self.selfUserImageView];
+    [self.selfUserImageView autoPinEdgesToSuperviewEdges];
+}
 
 - (void)setupBottomOverlay
 {
@@ -247,14 +246,14 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
     
     [self addCameraButton];
     [self addLibraryButton];
-
+    [self addCloseButton];
 }
 
 #pragma mark - CameraViewControllerDelegate
 
 - (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
 {
-    [[AppDelegate sharedAppDelegate].window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     [self.analyticsTracker tagPictureChanged];
     [self setSelfImageToData:imageData];
@@ -262,7 +261,18 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 
 - (void)cameraViewControllerDidCancel:(CameraViewController *)cameraViewController
 {
-    [[AppDelegate sharedAppDelegate].window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+
+@implementation ProfileSelfPictureViewController (ZMUserObserver)
+
+- (void)userDidChange:(UserChangeInfo *)note
+{
+    if (note.imageMediumDataChanged) {
+        self.selfUserImageView.image = [UIImage imageWithData:note.user.imageMediumData];
+    }
 }
 
 @end

@@ -391,7 +391,9 @@
 
 // Options menu contents
 "self.settings" = "Settings";
-"self.help_center" = "Help";
+"self.help_center" = "Support";
+"self.help_center.support_website" = "Wire Support Website";
+"self.help_center.contact_support" = "Contact Support";
 "self.about" = "About";
 "self.sign_out" = "Log Out";
 "self.report_abuse" = "Report Misuse";
@@ -433,6 +435,12 @@
 "self.settings.account_details.remove_device.password" = "Password";
 "self.settings.account_details.remove_device.password.error" = "Wrong password";
 
+"self.settings.account_appearance_group.title" = "Appearance";
+"self.settings.account_picture_group.picture" = "Picture";
+"self.settings.account_picture_group.color" = "Color";
+
+"self.settings.account_picture_group.theme" = "Dark Theme";
+
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare fingerprints to verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset your secure session to make sure that the correct fingerprints are shown on all devices.";
 "self.settings.device_details.remove_device.subtitle" = "You will be automatically logged out of that device.";
@@ -464,8 +472,6 @@
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
-"self.settings.sound_menu.group.title" = "Sounds & Alerts";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sound Alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";
@@ -484,7 +490,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Sharing your contacts helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Manage devices";
 
 "self.settings.privacy_analytics_section.title" = "Usage and crash reports";
 "self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
@@ -510,11 +515,6 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Reset Password";
-
-// Tips
-"self.settings.tip.change_picture" = "Tap to change picture";
-"self.settings.tip.change_color" = "Slide to change color";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
