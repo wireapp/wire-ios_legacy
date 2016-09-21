@@ -21,12 +21,12 @@ import Foundation
 import CocoaLumberjackSwift
 
 public enum PlayingState: UInt, CustomStringConvertible {
-    case Idle, Playing
+    case idle, playing
     
     public var description: String {
         switch self {
-        case .Idle: return "idle"
-        case .Playing: return "playing"
+        case .idle: return "idle"
+        case .playing: return "playing"
         }
     }
 }
@@ -34,41 +34,41 @@ public enum PlayingState: UInt, CustomStringConvertible {
 public typealias RecordingLevel = Float
 
 public enum AudioRecorderFormat {
-    case M4A, WAV
+    case m4A, wav
     func fileExtension() -> String {
         switch self {
-        case .M4A:
+        case .m4A:
             return "m4a"
-        case .WAV:
+        case .wav:
             return "wav"
         }
     }
     
     func audioFormat() -> AudioFormatID {
         switch self {
-        case .M4A:
+        case .m4A:
             return kAudioFormatMPEG4AAC
-        case .WAV:
+        case .wav:
             return kAudioFormatLinearPCM
         }
     }
 }
 
 public enum AudioRecorderState {
-    case Recording, Playback
+    case recording, playback
 }
 
 public protocol AudioRecorderType: class {
     var format: AudioRecorderFormat { get }
     var state: AudioRecorderState { get set }
-    var fileURL: NSURL? { get }
-    var maxRecordingDuration: NSTimeInterval? { get set }
-    var currentDuration: NSTimeInterval { get }
-    var recordTimerCallback: (NSTimeInterval -> Void)? { get set }
-    var recordLevelCallBack: (RecordingLevel -> Void)? { get set }
-    var playingStateCallback: (PlayingState -> Void)? { get set }
-    var recordStartedCallback: (Void -> Void)? { get set }
-    var recordEndedCallback: (Bool -> Void)? { get set } // recordedToMaxDuration: Bool
+    var fileURL: URL? { get }
+    var maxRecordingDuration: TimeInterval? { get set }
+    var currentDuration: TimeInterval { get }
+    var recordTimerCallback: ((TimeInterval) -> Void)? { get set }
+    var recordLevelCallBack: ((RecordingLevel) -> Void)? { get set }
+    var playingStateCallback: ((PlayingState) -> Void)? { get set }
+    var recordStartedCallback: ((Void) -> Void)? { get set }
+    var recordEndedCallback: ((Bool) -> Void)? { get set } // recordedToMaxDuration: Bool
     
     func startRecording()
     func stopRecording() -> Bool
@@ -76,13 +76,13 @@ public protocol AudioRecorderType: class {
     func playRecording()
     func stopPlaying()
     func levelForCurrentState() -> RecordingLevel
-    func durationForCurrentState() -> NSTimeInterval?
+    func durationForCurrentState() -> TimeInterval?
 }
 
 public final class AudioRecorder: NSObject, AudioRecorderType {
     
     public let format: AudioRecorderFormat
-    public var state: AudioRecorderState = .Recording
+    public var state: AudioRecorderState = .recording
     
     lazy var audioRecorder : AVAudioRecorder? = { [weak self] in
         guard let `self` = self else { return nil }
@@ -97,28 +97,28 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     var displayLink: CADisplayLink?
     var audioPlayer : AVAudioPlayer?
     var audioPlayerDelegate: AudioPlayerDelegate?
-    public var maxRecordingDuration: NSTimeInterval? = .None
-    let fm = NSFileManager.defaultManager()
-    public var currentDuration: NSTimeInterval = 0
-    public var recordTimerCallback: (NSTimeInterval -> Void)?
-    public var recordLevelCallBack: (RecordingLevel -> Void)?
-    public var playingStateCallback: (PlayingState -> Void)?
-    public var recordStartedCallback: (Void -> Void)?
-    public var recordEndedCallback: (Bool -> Void)? // recordedToMaxDuration: Bool
-    public var fileURL: NSURL?
+    public var maxRecordingDuration: TimeInterval? = .none
+    let fm = FileManager.default
+    public var currentDuration: TimeInterval = 0
+    public var recordTimerCallback: ((TimeInterval) -> Void)?
+    public var recordLevelCallBack: ((RecordingLevel) -> Void)?
+    public var playingStateCallback: ((PlayingState) -> Void)?
+    public var recordStartedCallback: ((Void) -> Void)?
+    public var recordEndedCallback: ((Bool) -> Void)? // recordedToMaxDuration: Bool
+    public var fileURL: URL?
     
     override init() {
         fatalError("init() is not implemented for AudioRecorder")
     }
     
-    init?(format: AudioRecorderFormat = .M4A, maxRecordingDuration: NSTimeInterval?) {
+    init?(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?) {
         self.maxRecordingDuration = maxRecordingDuration
         self.format = format
         super.init()
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         removeDisplayLink()
     }
     
@@ -133,7 +133,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             DDLogError("Failed change audio category for recording: \(error)")
         }
         
-        state = .Recording
+        state = .recording
         recordTimerCallback?(0)
         fileURL = nil
         setupDisplayLink()
@@ -152,35 +152,35 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         }
     }
     
-    public func stopRecording() -> Bool {
+    @discardableResult public func stopRecording() -> Bool {
         audioRecorder?.stop()
         recordLevelCallBack?(0)
         removeDisplayLink()
-        guard let filePath = audioRecorder?.url.path where fm.fileExistsAtPath(filePath) else { return false }
+        guard let filePath = audioRecorder?.url.path , fm.fileExistsAtPath(filePath) else { return false }
         fileURL = audioRecorder?.url
         return true
     }
     
     public func deleteRecording() {
         currentDuration = 0
-        if let filePath = audioRecorder?.url.path where NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+        if let filePath = audioRecorder?.url.path , FileManager.defaultManager().fileExistsAtPath(filePath) {
             audioRecorder?.deleteRecording()
         }
     }
     
-    private func setupDisplayLink() {
+    fileprivate func setupDisplayLink() {
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidFire))
-        displayLink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
+        displayLink?.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
     }
     
-    private func removeDisplayLink() {
+    fileprivate func removeDisplayLink() {
         displayLink?.invalidate()
         displayLink = nil
     }
     
-    @objc private func displayLinkDidFire() {
+    @objc fileprivate func displayLinkDidFire() {
         recordLevelCallBack?(levelForCurrentState())
-        guard let duration = durationForCurrentState() where currentDuration != duration else { return }
+        guard let duration = durationForCurrentState() , currentDuration != duration else { return }
         currentDuration = duration
         recordTimerCallback?(currentDuration)
     }
@@ -196,7 +196,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             DDLogError("Failed change audio category for playback: \(error)")
         }
         
-        state = .Playback
+        state = .playback
         setupDisplayLink()
         audioPlayer = try? AVAudioPlayer(contentsOfURL: audioRecorder.url)
         audioPlayer?.meteringEnabled = true
@@ -204,7 +204,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         audioPlayerDelegate = AudioPlayerDelegate { [weak self] _ in
             guard let `self` = self else { return }
             self.removeDisplayLink()
-            self.playingStateCallback?(.Idle)
+            self.playingStateCallback?(.idle)
             self.recordLevelCallBack?(0)
             guard let duration = self.audioPlayer?.duration else { return }
             self.recordTimerCallback?(duration)
@@ -212,20 +212,20 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         
         audioPlayer?.delegate = audioPlayerDelegate
         audioPlayer?.play()
-        playingStateCallback?(.Playing)
+        playingStateCallback?(.playing)
     }
     
     public func stopPlaying() {
         recordLevelCallBack?(0)
         removeDisplayLink()
         audioPlayer?.pause()
-        playingStateCallback?(.Idle)
+        playingStateCallback?(.idle)
     }
     
     // MARK: Leveling & Duration
     
     public func levelForCurrentState() -> RecordingLevel {
-        let powerProvider: PowerProvider? = state == .Recording ? audioRecorder : audioPlayer
+        let powerProvider: PowerProvider? = state == .recording ? audioRecorder : audioPlayer
         powerProvider?.updateMeters()
         let level = powerProvider?.averagePowerForFirstActiveChannel() ?? minimumPower
         // This value is in dB (logarithmic, [-160, 0]) and varies between -160 and 0 so we need to normalize it, see
@@ -233,8 +233,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         return level.normalizedDecibelValue()
     }
     
-    public func durationForCurrentState() -> NSTimeInterval? {
-        if case .Recording = state {
+    public func durationForCurrentState() -> TimeInterval? {
+        if case .recording = state {
             return audioRecorder?.currentTime
         } else {
             return audioPlayer?.currentTime ?? audioRecorder?.currentTime
@@ -245,7 +245,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
 
 
 extension AudioRecorder: AVAudioRecorderDelegate {
-    public func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
+    public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         let recordedToMaxDuration: Bool
         if let maxRecordingDuration = self.maxRecordingDuration {
             recordedToMaxDuration = currentDuration >= maxRecordingDuration
@@ -257,7 +257,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         self.recordEndedCallback?(recordedToMaxDuration)
     }
     
-    public func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder, error: NSError?) {
+    public func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: NSError?) {
         DDLogError("Cannot finish recording: \(error)")
     }
 }
@@ -266,14 +266,14 @@ extension AudioRecorder: AVAudioRecorderDelegate {
 
 final class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate {
     
-    let playerDidFinishClosure: Bool -> Void
+    let playerDidFinishClosure: (Bool) -> Void
     
-    init(playerDidFinishClosure: Bool -> Void) {
+    init(playerDidFinishClosure: @escaping (Bool) -> Void) {
         self.playerDidFinishClosure = playerDidFinishClosure
         super.init()
     }
     
-    @objc func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    @objc func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         playerDidFinishClosure(flag)
     }
 }
@@ -284,7 +284,7 @@ final class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate {
 
 protocol PowerProvider {
     func updateMeters() /* call to refresh meter values */
-    func averagePowerForChannel(channelNumber: Int) -> Float
+    func averagePowerForChannel(_ channelNumber: Int) -> Float
 }
 
 let minimumPower: Float = -160

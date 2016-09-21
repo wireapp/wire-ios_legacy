@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -20,19 +20,19 @@
 import Foundation
 
 extension AVSMediaManager {
-    private func settingsPropertyFactory() -> SettingsPropertyFactory {
-        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: NSUserDefaults.standardUserDefaults(),
+    fileprivate func settingsPropertyFactory() -> SettingsPropertyFactory {
+        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
                                                               analytics: Analytics.shared(),
                                                               mediaManager: AVSProvider.shared.mediaManager,
-                                                              userSession: ZMUserSession.sharedSession(),
+                                                              userSession: ZMUserSession.shared(),
                                                               selfUser: ZMUser.selfUser())
         return settingsPropertyFactory
     }
     
     func observeSoundConfigurationChanges() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: SettingsPropertyName.MessageSoundName.changeNotificationName, object: .None)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: SettingsPropertyName.CallSoundName.changeNotificationName, object: .None)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: SettingsPropertyName.PingSoundName.changeNotificationName, object: .None)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.MessageSoundName.changeNotificationName), object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.CallSoundName.changeNotificationName), object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.PingSoundName.changeNotificationName), object: .none)
     }
     
     func configureCustomSounds() {
@@ -48,7 +48,7 @@ extension AVSMediaManager {
         self.updateCustomSoundForProperty(pingSoundProperty)
     }
     
-    func updateCustomSoundForProperty(property: SettingsProperty) {
+    func updateCustomSoundForProperty(_ property: SettingsProperty) {
         let name = property.propertyName.rawValue
         let value = property.propertyValue.value()
         if let stringValue = value as? String {
@@ -56,23 +56,23 @@ extension AVSMediaManager {
         }
     }
     
-    @objc func updateCustomSoundForName(propertyName: String, propertyValue: String?) {
+    @objc func updateCustomSoundForName(_ propertyName: String, propertyValue: String?) {
         let value = propertyValue
         
-        let soundValue = value == .None ? .None : ZMSound(rawValue: value!)
+        let soundValue = value == .none ? .none : ZMSound(rawValue: value!)
         
         switch propertyName {
         case SettingsPropertyName.MessageSoundName.rawValue:
-            self.registerUrl(soundValue?.fileURL(), forMedia: MediaManagerSoundFirstMessageReceivedSound)
-            self.registerUrl(soundValue?.fileURL(), forMedia: MediaManagerSoundMessageReceivedSound)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundFirstMessageReceivedSound)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundMessageReceivedSound)
             
         case SettingsPropertyName.CallSoundName.rawValue:
-            self.registerUrl(soundValue?.fileURL(), forMedia: MediaManagerSoundRingingFromThemInCallSound)
-            self.registerUrl(soundValue?.fileURL(), forMedia: MediaManagerSoundRingingFromThemSound)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundRingingFromThemInCallSound)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundRingingFromThemSound)
             
         case SettingsPropertyName.PingSoundName.rawValue:
-            self.registerUrl(soundValue?.fileURL(), forMedia: MediaManagerSoundOutgoingKnockSound)
-            self.registerUrl(soundValue?.fileURL(), forMedia: MediaManagerSoundIncomingKnockSound)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundOutgoingKnockSound)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundIncomingKnockSound)
             
         default:
             fatalError("\(propertyName) is not a sound property")
@@ -80,7 +80,7 @@ extension AVSMediaManager {
     }
     
     // MARK: - Notifications
-    func didUpdateSound(notification: NSNotification?) {
+    func didUpdateSound(_ notification: NSNotification?) {
         self.configureSounds()
     }
 }

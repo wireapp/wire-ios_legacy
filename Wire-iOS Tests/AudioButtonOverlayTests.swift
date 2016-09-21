@@ -20,7 +20,7 @@
 @testable import Wire
 import Classy
 
-@objc class AudioButtonOverlayTests: ZMSnapshotTestCase {
+class AudioButtonOverlayTests: ZMSnapshotTestCase {
     
     var sut: AudioButtonOverlay!
     var buttonTapHistory: [AudioButtonOverlay.AudioButtonOverlayButtonType]!
@@ -30,47 +30,47 @@ import Classy
         buttonTapHistory = []
         sut = AudioButtonOverlay()
         sut.buttonHandler = { self.buttonTapHistory.append($0) }
-        CASStyler.defaultStyler().styleItem(sut)
+        CASStyler.default().styleItem(sut)
     }
     
     func testThatItRendersTheButtonOverlayCorrectInitially_Recording() {
-        sut.setOverlayState(.Default)
+        sut.setOverlayState(.default)
         verify(view: sut)
     }
     
     func testThatItRendersTheButtonOverlayCorrectInitially_FinishedRecording() {
-        sut.recordingState = .FinishedRecording
-        sut.setOverlayState(.Default)
+        sut.recordingState = .finishedRecording
+        sut.setOverlayState(.default)
         verify(view: sut)
     }
     
     func testThatItRendersTheButtonOverlayCorrectInitially_FinishedRecording_PlayingAudio() {
-        sut.recordingState = .FinishedRecording
-        sut.playingState = .Playing
-        sut.setOverlayState(.Default)
+        sut.recordingState = .finishedRecording
+        sut.playingState = .playing
+        sut.setOverlayState(.default)
         verify(view: sut)
     }
         
     func testThatItChangesItsSize_Expanded() {
-        sut.setOverlayState(.Expanded(0))
+        sut.setOverlayState(.expanded(0))
         verify(view: sut)
     }
     
     func testThatItChangesItsSize_Expanded_Half() {
-        sut.setOverlayState(.Expanded(0.5))
+        sut.setOverlayState(.expanded(0.5))
         verify(view: sut)
     }
     
     func testThatItChangesItsSize_Expanded_Full() {
-        sut.setOverlayState(.Expanded(1))
+        sut.setOverlayState(.expanded(1))
         verify(view: sut)
     }
     
     func testThatItCallsTheButtonHandlerWithTheCorrectButtonType() {
-        sut.playButton.sendActionsForControlEvents(.TouchUpInside)
+        sut.playButton.sendActions(for: .touchUpInside)
         XCTAssertEqual(buttonTapHistory, [.Play])
         
-        sut.sendButton.sendActionsForControlEvents(.TouchUpInside)
+        sut.sendButton.sendActions(for: .touchUpInside)
         XCTAssertEqual(buttonTapHistory, [.Play, .Send])
     }
     

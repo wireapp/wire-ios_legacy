@@ -20,9 +20,9 @@
 import Foundation
 import Cartography
 
-@objc public class ConversationParticipantsCell : ConversationCell {
+open class ConversationParticipantsCell : ConversationCell {
 
-    private let participantsChangedView = ParticipantsChangedView()
+    fileprivate let participantsChangedView = ParticipantsChangedView()
     
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
@@ -39,14 +39,14 @@ import Cartography
         fatalError("init(coder:) Not implemented")
     }
 
-    private func createConstraints()
+    fileprivate func createConstraints()
     {
         constrain(self.messageContentView, self.participantsChangedView) { contentView, participantsView in
             participantsView.edges == contentView.edges
         }
     }
 
-    public override func configureForMessage(message: ZMConversationMessage, layoutProperties:ConversationCellLayoutProperties)
+    open override func configureForMessage(_ message: ZMConversationMessage, layoutProperties:ConversationCellLayoutProperties)
     {
         super.configureForMessage(message, layoutProperties: layoutProperties)
         

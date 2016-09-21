@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -21,14 +21,14 @@ import Foundation
 
 extension NSString {
     
-    private static let dateFormatter : NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    fileprivate static let dateFormatter : DateFormatter = {
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy MM dd hh.mm.ss"
         return formatter
     }()
     
     static func filenameForSelfUser() -> NSString {
-        let filename = "\(ZMUser.selfUser().name) \(dateFormatter.stringFromDate(NSDate()))"
-        return filename.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        let filename = "\(ZMUser.selfUser().name) \(dateFormatter.string(from: Date()))"
+        return filename.replacingOccurrences(of: " ", with: "-") as NSString
     }
 }

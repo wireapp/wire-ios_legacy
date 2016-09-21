@@ -20,19 +20,19 @@
 import Foundation
 
 extension ZMSnapshotTestCase {
-    func verify(view view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
+    func verify(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
         verifyView(view, tolerance: tolerance, file: UnsafePointer<Int8>(file.utf8Start), line: line)
     }
     
-    func verifyInAllPhoneWidths(view view: UIView, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyViewInAllPhoneWidths(view, file: UnsafePointer<Int8>(file.utf8Start), line: line)
     }
     
-    func verifyInAllTabletWidths(view view: UIView, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyViewInAllTabletWidths(view, file: UnsafePointer<Int8>(file.utf8Start), line: line)
     }
     
-    func verifyInAllIPhoneSizes(view view: UIView, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllIPhoneSizes(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyViewInAllPhoneSizes(view, file: UnsafePointer<Int8>(file.utf8Start), line: line, configurationBlock: nil)
     }
 }

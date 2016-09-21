@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -24,86 +24,86 @@ import WireExtensionComponents
 
 
 public enum InputBarState: Equatable {
-    case Writing
-    case Editing(originalText: String)
+    case writing
+    case editing(originalText: String)
 }
 
 public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
     switch (lhs, rhs) {
-    case (.Writing, .Writing): return true
-    case (.Editing(let lhsText), .Editing(let rhsText)): return lhsText == rhsText
+    case (.writing, .writing): return true
+    case (.editing(let lhsText), .editing(let rhsText)): return lhsText == rhsText
     default: return false
     }
 }
 
 private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
-    let contentLeftMargin = CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin"))
-    let contentRightMargin = CGFloat(WAZUIMagic.floatForIdentifier("content.right_margin"))
+    let contentLeftMargin = CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin"))
+    let contentRightMargin = CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin"))
 }
 
-@objc public class InputBar: UIView {
+@objc open class InputBar: UIView {
     
-    public let textView: NextResponderTextView = NextResponderTextView()
-    public let leftAccessoryView  = UIView()
-    public let rightAccessoryView = UIView()
+    open let textView: NextResponderTextView = NextResponderTextView()
+    open let leftAccessoryView  = UIView()
+    open let rightAccessoryView = UIView()
     
     // Contains and clips the buttonInnerContainer
-    public let buttonContainer = UIView()
+    open let buttonContainer = UIView()
     
-    public let editingView = InputBarEditView()
-    public let buttonsView: InputBarButtonsView
+    open let editingView = InputBarEditView()
+    open let buttonsView: InputBarButtonsView
     
-    public var editingBackgroundColor: UIColor?
-    public var barBackgroundColor: UIColor?
+    open var editingBackgroundColor: UIColor?
+    open var barBackgroundColor: UIColor?
 
-    private var contentSizeObserver: NSObject? = nil
-    private var rowTopInsetConstraint: NSLayoutConstraint? = nil
+    fileprivate var contentSizeObserver: NSObject? = nil
+    fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
     // Contains the editingView and buttonsView
-    private let buttonInnerContainer = UIView()
-    private let fakeCursor = UIView()
-    private let inputBarSeparator = UIView()
-    private let buttonRowSeparator = UIView()
-    private let constants = InputBarConstants()
-    private let notificationCenter = NSNotificationCenter.defaultCenter()
+    fileprivate let buttonInnerContainer = UIView()
+    fileprivate let fakeCursor = UIView()
+    fileprivate let inputBarSeparator = UIView()
+    fileprivate let buttonRowSeparator = UIView()
+    fileprivate let constants = InputBarConstants()
+    fileprivate let notificationCenter = NotificationCenter.default
     
     var isEditing: Bool {
-        if case .Editing(_) = inputBarState { return true }
+        if case .editing(_) = inputBarState { return true }
         return false
     }
     
-    var inputBarState: InputBarState = .Writing {
+    var inputBarState: InputBarState = .writing {
         didSet {
             updateInputBar(withState: inputBarState)
         }
     }
     
-    private var textIsOverflowing = false {
+    fileprivate var textIsOverflowing = false {
         didSet {
             updateTopSeparator() 
         }
     }
     
-    public var separatorEnabled = false {
+    open var separatorEnabled = false {
         didSet {
             updateTopSeparator()
         }
     }
     
-    public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
+    open var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
     
-    override public var bounds: CGRect {
+    override open var bounds: CGRect {
         didSet {
-            invisibleInputAccessoryView?.setIntrinsicContentSize(CGSizeMake(UIViewNoIntrinsicMetric, bounds.height))
+            invisibleInputAccessoryView?.setIntrinsicContentSize(CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height))
         }
     }
         
-    override public func didMoveToWindow() {
+    override open func didMoveToWindow() {
         super.didMoveToWindow()
         startCursorBlinkAnimation()
     }
@@ -115,7 +115,7 @@ private struct InputBarConstants {
 
     required public init(buttons: [UIButton]) {
         buttonsView = InputBarButtonsView(buttons: buttons)
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
                 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         addGestureRecognizer(tapGestureRecognizer)
@@ -126,24 +126,24 @@ private struct InputBarConstants {
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, editingView].forEach(buttonInnerContainer.addSubview)
         textView.addSubview(fakeCursor)
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
 
         setupViews()
         createConstraints()
         updateTopSeparator()
 
-        notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextViewTextDidChangeNotification, object: textView)
-        notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextViewTextDidBeginEditingNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: UITextViewTextDidEndEditingNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
+        notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        fakeCursor.backgroundColor = UIColor.accentColor()
+    fileprivate func setupViews() {
+        fakeCursor.backgroundColor = UIColor.accentColor
         
         buttonRowSeparator.cas_styleClass = "separator"
         inputBarSeparator.cas_styleClass = "separator"
@@ -162,7 +162,7 @@ private struct InputBarConstants {
         updateBackgroundColor()
     }
     
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         
         constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
             leftAccessoryView.leading == leftAccessoryView.superview!.leading
@@ -198,7 +198,7 @@ private struct InputBarConstants {
             buttonsView.leading == buttonInnerContainer.leading
             buttonsView.trailing <= buttonInnerContainer.trailing
             buttonsView.bottom == buttonInnerContainer.bottom
-            buttonsView.width == 414 ~ 750
+            buttonsView.width == 414 ~ LayoutPriority(750)
         }
         
         constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
@@ -227,41 +227,41 @@ private struct InputBarConstants {
         }
     }
     
-    @objc private func didTapBackground(gestureRecognizer: UITapGestureRecognizer!) {
-        guard gestureRecognizer.state == .Recognized else { return }
+    @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
+        guard gestureRecognizer.state == .recognized else { return }
         buttonsView.showRow(0, animated: true)
     }
     
-    private func startCursorBlinkAnimation() {
-        if fakeCursor.layer.animationForKey("blinkAnimation") == nil {
+    fileprivate func startCursorBlinkAnimation() {
+        if fakeCursor.layer.animation(forKey: "blinkAnimation") == nil {
             let animation = CAKeyframeAnimation(keyPath: "opacity")
             animation.values = [1, 1, 0, 0]
             animation.keyTimes = [0, 0.4, 0.7, 0.9]
             animation.duration = 0.64
             animation.autoreverses = true
             animation.repeatCount = FLT_MAX
-            fakeCursor.layer.addAnimation(animation, forKey: "blinkAnimation")
+            fakeCursor.layer.add(animation, forKey: "blinkAnimation")
         }
     }
     
-    private func updateTopSeparator() {
-        inputBarSeparator.hidden = !textIsOverflowing && !separatorEnabled
+    fileprivate func updateTopSeparator() {
+        inputBarSeparator.isHidden = !textIsOverflowing && !separatorEnabled
     }
     
-    func updateFakeCursorVisibility(firstResponder: UIResponder? = nil) {
+    func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
         fakeCursor.hidden = textView.isFirstResponder() || textView.text.characters.count != 0 || firstResponder != nil
     }
     
-    func textViewContentSizeDidChange(notification: NSNotification) {
+    func textViewContentSizeDidChange(_ notification: Notification) {
         textIsOverflowing = textView.contentSize.height > textView.bounds.size.height
     }
 
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
     
-    override public func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if self.textView.isFirstResponder() {
-            if super.pointInside(point, withEvent: event) {
-                let locationInButtonRow = buttonInnerContainer.convertPoint(point, fromView: self)
+            if super.point(inside: point, with: event) {
+                let locationInButtonRow = buttonInnerContainer.convert(point, from: self)
                 return locationInButtonRow.y < buttonInnerContainer.bounds.height / 1.3
             }
             else {
@@ -269,7 +269,7 @@ private struct InputBarConstants {
             }
         }
         else {
-            return super.pointInside(point, withEvent: event)
+            return super.point(inside: point, with: event)
         }
     }
 
@@ -277,19 +277,19 @@ private struct InputBarConstants {
 
     func updateInputBar(withState state: InputBarState, animated: Bool = true) {
         updateEditViewState()
-        rowTopInsetConstraint?.constant = state == .Writing ? -constants.buttonsBarHeight : 0
+        rowTopInsetConstraint?.constant = state == .writing ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {
             switch state {
-            case .Writing:
+            case .writing:
                 self.textView.text = nil
-            case .Editing(let text):
+            case .editing(let text):
                 self.setInputBarText(text)
             }
         }
         
-        let completion: Bool -> Void = { _ in
-            if case .Editing(_) = state {
+        let completion: (Bool) -> Void = { _ in
+            if case .editing(_) = state {
                 self.textView.becomeFirstResponder()
             }
         }
@@ -307,35 +307,35 @@ private struct InputBarConstants {
         }
     }
 
-    private func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
-        guard let writingColor = barBackgroundColor, editingColor = editingBackgroundColor else { return nil }
+    fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
+        guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
         let mixed = writingColor.mix(editingColor, amount: 0.16)
-        return state == .Writing ? writingColor : mixed
+        return state == .writing ? writingColor : mixed
     }
 
-    private func updateBackgroundColor() {
+    fileprivate func updateBackgroundColor() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
     }
 
     // MARK: – Editing View State
 
     
-    public func setInputBarText(text: String) {
+    open func setInputBarText(_ text: String) {
         textView.text = text
         textView.setContentOffset(.zero, animated: false)
         textView.undoManager?.removeAllActions()
         updateEditViewState()
     }
 
-    public func undo() {
-        guard inputBarState != .Writing else { return }
-        guard let undoManager = textView.undoManager where undoManager.canUndo else { return }
+    open func undo() {
+        guard inputBarState != .writing else { return }
+        guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()
     }
 
-    private func updateEditViewState() {
-        if case .Editing(let text) = inputBarState {
+    fileprivate func updateEditViewState() {
+        if case .editing(let text) = inputBarState {
             let canUndo = textView.undoManager?.canUndo ?? false
             editingView.undoButton.enabled = canUndo
 
@@ -350,17 +350,17 @@ private struct InputBarConstants {
 
 extension InputBar {
 
-    func textViewTextDidChange(notification: NSNotification) {
+    func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
     
-    func textViewDidBeginEditing(notification: NSNotification) {
+    func textViewDidBeginEditing(_ notification: Notification) {
         updateFakeCursorVisibility(notification.object as? UIResponder)
         updateEditViewState()
     }
     
-    func textViewDidEndEditing(notification: NSNotification) {
+    func textViewDidEndEditing(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
@@ -368,7 +368,7 @@ extension InputBar {
 }
 
 extension InputBar {
-    func applicationDidBecomeActive(notification: NSNotification) {
+    func applicationDidBecomeActive(_ notification: Notification) {
         startCursorBlinkAnimation()
     }
 }

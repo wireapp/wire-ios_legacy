@@ -20,9 +20,9 @@
 import XCTest
 @testable import Wire
 
-@objc class FileTransferCellTests: ZMSnapshotTestCase {
+class FileTransferCellTests: ZMSnapshotTestCase {
     
-    func cellWithConfig(config: ((MockMessage) -> ())?) -> FileTransferCell {
+    func cellWithConfig(_ config: ((MockMessage) -> ())?) -> FileTransferCell {
     
         let fileMessage = MockMessageFactory.fileTransferMessage()
         
@@ -30,7 +30,7 @@ import XCTest
             config(fileMessage)
         }
         
-        let cell = FileTransferCell(style: .Default, reuseIdentifier: "test")
+        let cell = FileTransferCell(style: .default, reuseIdentifier: "test")
         
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
@@ -38,8 +38,8 @@ import XCTest
         layoutProperties.showUnreadMarker = false
         
         cell.prepareForReuse()
-        cell.bounds = CGRectMake(0.0, 0.0, 320.0, 9999)
-        cell.contentView.bounds = CGRectMake(0.0, 0.0, 320, 9999)
+        cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
+        cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
         cell.layer.speed = 0;
         
         cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin")),
@@ -48,8 +48,8 @@ import XCTest
         cell.configureForMessage(fileMessage, layoutProperties: layoutProperties)
         cell.layoutIfNeeded()
 
-        let size = cell.systemLayoutSizeFittingSize(CGSizeMake(320.0, 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
-        cell.bounds = CGRectMake(0.0, 0.0, size.width, size.height)
+        let size = cell.systemLayoutSizeFittingSize(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         cell.layoutIfNeeded()
         return cell
     }
@@ -62,7 +62,7 @@ import XCTest
     func testUploadedCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -70,7 +70,7 @@ import XCTest
     func testUploadedCell_fromOtherDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -78,7 +78,7 @@ import XCTest
     func testUploadedCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -90,7 +90,7 @@ import XCTest
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
             $0.fileMessageData?.filename = "Etiam lacus elit, tempor at blandit sit amet, faucibus in erat. Mauris faucibus scelerisque mattis.pdf"
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -99,7 +99,7 @@ import XCTest
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
             $0.fileMessageData?.size = 1024 * 1024 * 25
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -108,7 +108,7 @@ import XCTest
     func testUploadingCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploading
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -116,7 +116,7 @@ import XCTest
     func testUploadingCell_fromOtherDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploading
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -124,7 +124,7 @@ import XCTest
     func testUploadingCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploading
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -136,7 +136,7 @@ import XCTest
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloading
             $0.fileMessageData?.progress = 0.75
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -145,7 +145,7 @@ import XCTest
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloading
             $0.fileMessageData?.progress = 0.75
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view:cell)
     }
@@ -153,7 +153,7 @@ import XCTest
     func testDownloadingCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloading
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.fileMessageData?.progress = 0.75
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
@@ -165,7 +165,7 @@ import XCTest
     func testDownloadedCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloaded
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -173,7 +173,7 @@ import XCTest
     func testDownloadedCell_fromOtherDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -181,7 +181,7 @@ import XCTest
     func testDownloadedCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -192,7 +192,7 @@ import XCTest
     func testFailedDownloadCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedDownload
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -200,7 +200,7 @@ import XCTest
     func testFailedDownloadCell_fromOtherDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedDownload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -208,7 +208,7 @@ import XCTest
     func testFailedDownloadCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedDownload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -220,7 +220,7 @@ import XCTest
     func testFailedUploadCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedUpload
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -228,7 +228,7 @@ import XCTest
     func testFailedUploadCell_fromOtherDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedUpload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -236,7 +236,7 @@ import XCTest
     func testFailedUploadCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedUpload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -247,7 +247,7 @@ import XCTest
     func testCancelledUploadCell_fromThisDevice() {
         let cell = cellWithConfig {
             $0.fileMessageData?.transferState = .CancelledUpload
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         }
         
         verify(view: cell)

@@ -20,41 +20,41 @@
 import Foundation
 
 enum Either<TLeft, TRight> {
-    case Left(TLeft)
-    case Right(TRight)
+    case left(TLeft)
+    case right(TRight)
 }
 
 class RequestPasswordViewController: UIAlertController {
     
-    var callback: ((Either<String, NSError>) -> ())? = .None
+    var callback: ((Either<String, NSError>) -> ())? = .none
     
-    var okAction: UIAlertAction? = .None
+    var okAction: UIAlertAction? = .none
     
-    static func requestPasswordController(callback: (Either<String, NSError>) -> ()) -> RequestPasswordViewController {
+    static func requestPasswordController(_ callback: @escaping (Either<String, NSError>) -> ()) -> RequestPasswordViewController {
         
         let title = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
         let message = NSLocalizedString("self.settings.account_details.remove_device.message", comment: "")
         
-        let controller = RequestPasswordViewController(title: title, message: message, preferredStyle: .Alert)
+        let controller = RequestPasswordViewController(title: title, message: message, preferredStyle: .alert)
         controller.callback = callback
         
-        controller.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
+        controller.addTextField { (textField: UITextField) -> Void in
             textField.placeholder = NSLocalizedString("self.settings.account_details.remove_device.password", comment: "")
-            textField.secureTextEntry = true
-            textField.addTarget(controller, action: #selector(RequestPasswordViewController.passwordTextFieldChanged(_:)), forControlEvents: .EditingChanged)
+            textField.isSecureTextEntry = true
+            textField.addTarget(controller, action: #selector(RequestPasswordViewController.passwordTextFieldChanged(_:)), for: .editingChanged)
         }
         
         let okTitle = NSLocalizedString("general.ok", comment: "")
         let cancelTitle = NSLocalizedString("general.cancel", comment: "")
-        let okAction = UIAlertAction(title: okTitle, style: .Default) { [unowned controller] (action: UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned controller] (action: UIAlertAction) -> Void in
             if let passwordField = controller.textFields?[0] {
                 let password = passwordField.text ?? ""
-                controller.callback?(Either.Left(password))
+                controller.callback?(Either.left(password))
             }
         }
         
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .Cancel) { [unowned controller] (action: UIAlertAction) -> Void in
-            controller.callback?(Either.Right(NSError(domain: "\(controller.dynamicType)", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [unowned controller] (action: UIAlertAction) -> Void in
+            controller.callback?(Either.right(NSError(domain: "\(type(of: controller))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
         
         controller.okAction = okAction
@@ -65,9 +65,9 @@ class RequestPasswordViewController: UIAlertController {
         return controller
     }
     
-    func passwordTextFieldChanged(textField: UITextField) {
+    func passwordTextFieldChanged(_ textField: UITextField) {
         if let passwordField = self.textFields?[0] {
-            self.okAction?.enabled = (passwordField.text ?? "").characters.count > 6;
+            self.okAction?.isEnabled = (passwordField.text ?? "").characters.count > 6;
         }
     }
 }

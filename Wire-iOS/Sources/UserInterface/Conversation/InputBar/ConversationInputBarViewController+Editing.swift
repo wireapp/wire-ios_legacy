@@ -26,41 +26,41 @@ private let endEditingNotificationName = "ConversationInputBarViewControllerShou
 extension ConversationInputBarViewController {
 
     func sendEditedMessageAndUpdateState(withText text: String) {
-        delegate.conversationInputBarViewControllerDidFinishEditingMessage?(editingMessage, withText: text)
+        delegate.conversationInputBarViewControllerDidFinishEditing?(editingMessage, withText: text)
         editingMessage = nil
-        inputBar.inputBarState = .Writing
+        inputBar.inputBarState = .writing
     }
     
-    func editMessage(message: ZMConversationMessage) {
+    func editMessage(_ message: ZMConversationMessage) {
         guard let text = message.textMessageData?.messageText else { return }
-        mode = .TextInput
+        mode = .textInput
         editingMessage = message
-        inputBar.inputBarState = .Editing(originalText: text)
-        NSNotificationCenter.defaultCenter().addObserver(
+        inputBar.inputBarState = .editing(originalText: text)
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(endEditingMessageIfNeeded),
-            name: endEditingNotificationName,
+            name: NSNotification.Name(rawValue: endEditingNotificationName),
             object: nil
         )
     }
     
     func endEditingMessageIfNeeded() {
         guard nil != editingMessage else { return }
-        delegate.conversationInputBarViewControllerDidCancelEditingMessage?(editingMessage)
+        delegate.conversationInputBarViewControllerDidCancelEditing?(editingMessage)
         editingMessage = nil
-        ZMUserSession.sharedSession().enqueueChanges {
+        ZMUserSession.shared().enqueueChanges {
             self.conversation.draftMessageText = ""
         }
-        inputBar.inputBarState = .Writing
-        NSNotificationCenter.defaultCenter().removeObserver(
+        inputBar.inputBarState = .writing
+        NotificationCenter.default.removeObserver(
             self,
-            name: endEditingNotificationName,
+            name: NSNotification.Name(rawValue: endEditingNotificationName),
             object: nil
         )
     }
     
     static func endEditingMessage() {
-        NSNotificationCenter.defaultCenter().postNotificationName(endEditingNotificationName, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: endEditingNotificationName), object: nil)
     }
 
 }
@@ -68,15 +68,15 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: InputBarEditViewDelegate {
 
-    public func inputBarEditView(editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType) {
+    public func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType) {
         switch buttonType {
-        case .Undo: inputBar.undo()
-        case .Cancel: endEditingMessageIfNeeded()
-        case .Confirm: sendOrEditText(inputBar.textView.text)
+        case .undo: inputBar.undo()
+        case .cancel: endEditingMessageIfNeeded()
+        case .confirm: sendOrEditText(inputBar.textView.text)
         }
     }
     
-    public func inputBarEditViewDidLongPressUndoButton(editView: InputBarEditView) {
+    public func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView) {
         guard let text = editingMessage?.textMessageData?.messageText else { return }
         inputBar.setInputBarText(text)
     }

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -20,40 +20,40 @@
 import UIKit
 import Cartography
 
-public class ConversationTitleView: UIView {
+open class ConversationTitleView: UIView {
     
     var titleColor, titleColorSelected: UIColor?
     var titleFont: UIFont?
     var titleButton: UIButton!
-    public var tapHandler: (UIButton -> Void)? = nil
+    open var tapHandler: ((UIButton) -> Void)? = nil
     
     init(conversation: ZMConversation) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         createViews(conversation)
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         configure(conversation)
         frame = titleButton.bounds
         createConstraints()
     }
     
-    func createViews(conversation: ZMConversation) {
+    func createViews(_ conversation: ZMConversation) {
         titleButton = UIButton()
-        titleButton.addTarget(self, action: #selector(ConversationTitleView.titleButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        titleButton.addTarget(self, action: #selector(ConversationTitleView.titleButtonTapped(_:)), for: .touchUpInside)
         addSubview(titleButton)
     }
     
-    func configure(conversation: ZMConversation) {
-        guard let font = titleFont, color = titleColor, selectedColor = titleColorSelected else { return }
-        let title = conversation.displayName.uppercaseString && font
+    func configure(_ conversation: ZMConversation) {
+        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
+        let title = conversation.displayName.uppercased() && font
         
-        let titleWithColor: UIColor -> NSAttributedString = {
+        let titleWithColor: (UIColor) -> NSAttributedString = {
             let attachment = NSTextAttachment()
-            attachment.image = UIImage(forIcon: .DownArrow, fontSize: 8, color: $0)
+            attachment.image = UIImage(for: .downArrow, fontSize: 8, color: $0)
             return (title + "  " + NSAttributedString(attachment: attachment)) && $0
         }
         
-        titleButton.setAttributedTitle(titleWithColor(color), forState: .Normal)
-        titleButton.setAttributedTitle(titleWithColor(selectedColor), forState: .Highlighted)
+        titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
+        titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
         titleButton.sizeToFit()
     }
     
@@ -63,7 +63,7 @@ public class ConversationTitleView: UIView {
         }
     }
     
-    func titleButtonTapped(sender: UIButton) {
+    func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
     }
     

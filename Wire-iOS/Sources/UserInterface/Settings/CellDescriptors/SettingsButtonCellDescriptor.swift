@@ -31,20 +31,20 @@ class SettingsInfoCellDescriptor: SettingsCellDescriptorType {
     weak var group: SettingsGroupCellDescriptorType?
     var previewGenerator: PreviewGeneratorType?
     
-    init(title: String, previewGenerator: PreviewGeneratorType? = .None) {
+    init(title: String, previewGenerator: PreviewGeneratorType? = .none) {
         self.title = title
-        self.identifier = .None
+        self.identifier = .none
         self.previewGenerator = previewGenerator
     }
     
-    func featureCell(cell: SettingsCellType) {
+    func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let previewGenerator = self.previewGenerator {
             cell.preview = previewGenerator(self)
         }
     }
     
-    func select(value: SettingsPropertyValue?) {
+    func select(_ value: SettingsPropertyValue?) {
 
     }
 }
@@ -72,23 +72,23 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
     let visibilityAction: ((SettingsCellDescriptorType) -> (Bool))?
     let isDestructive: Bool
     
-    init(title: String, isDestructive: Bool, selectAction: (SettingsCellDescriptorType) -> ()) {
+    init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> ()) {
         self.title = title
         self.isDestructive = isDestructive
         self.selectAction = selectAction
-        self.visibilityAction = .None
-        self.identifier = .None
+        self.visibilityAction = .none
+        self.identifier = .none
     }
     
-    init(title: String, isDestructive: Bool, selectAction: (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .None) {
+    init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
         self.title = title
         self.isDestructive = isDestructive
         self.selectAction = selectAction
         self.visibilityAction = visibilityAction
-        self.identifier = .None
+        self.identifier = .none
     }
     
-    init(title: String, isDestructive: Bool, identifier: String, selectAction: (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .None) {
+    init(title: String, isDestructive: Bool, identifier: String, selectAction: @escaping (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
         self.title = title
         self.isDestructive = isDestructive
         self.selectAction = selectAction
@@ -96,17 +96,17 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
         self.identifier = identifier
     }
     
-    func featureCell(cell: SettingsCellType) {
+    func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if self.isDestructive {
-            cell.titleColor = UIColor.redColor()
+            cell.titleColor = UIColor.red
         }
         else {
-            cell.titleColor = UIColor.whiteColor()
+            cell.titleColor = UIColor.white
         }
     }
     
-    func select(value: SettingsPropertyValue?) {
+    func select(_ value: SettingsPropertyValue?) {
         self.selectAction(self)
     }
 }

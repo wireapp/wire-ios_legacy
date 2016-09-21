@@ -22,17 +22,17 @@ import Cartography
 
 // MARK: Audio Button
 
-let audioRecordTooltipDisplayDuration: NSTimeInterval = 2
+let audioRecordTooltipDisplayDuration: TimeInterval = 2
 
 extension ConversationInputBarViewController {
     
-    func configureAudioButton(button: IconButton) {
+    func configureAudioButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(audioButtonPressed(_:)), forControlEvents: .TouchUpInside)
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         button.addGestureRecognizer(longPressRecognizer)
     }
     
-    func audioButtonPressed(sender: IconButton) {
+    func audioButtonPressed(_ sender: IconButton) {
         if self.mode != .AudioRecord {
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
                 if accepted {
@@ -46,26 +46,26 @@ extension ConversationInputBarViewController {
         }
     }
     
-    func audioButtonLongPressed(sender: UILongPressGestureRecognizer) {
+    func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard self.mode != .AudioRecord else {
             return
         }
         
-        self.dynamicType.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hideInlineAudioRecordViewController), object: nil)
+        type(of: self).cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hideInlineAudioRecordViewController), object: nil)
         
         switch sender.state {
-        case .Began:
+        case .began:
             self.createAudioRecordViewController()
-            if let audioRecordViewController = self.audioRecordViewController where showAudioRecordViewControllerIfGrantedAccess() {
+            if let audioRecordViewController = self.audioRecordViewController , showAudioRecordViewControllerIfGrantedAccess() {
                 audioRecordViewController.setRecordingState(.Recording, animated: false)
                 audioRecordViewController.beginRecording()
                 self.inputBar.buttonContainer.hidden = true
             }
-        case .Changed:
+        case .changed:
             if let audioRecordViewController = self.audioRecordViewController {
                 audioRecordViewController.updateWithChangedRecognizer(sender)
             }
-        case .Ended, .Cancelled, .Failed:
+        case .ended, .cancelled, .failed:
             if let audioRecordViewController = self.audioRecordViewController {
                 audioRecordViewController.finishRecordingIfNeeded(sender)
                 audioRecordViewController.setOverlayState(.Default, animated: true)
@@ -76,7 +76,7 @@ extension ConversationInputBarViewController {
         
     }
     
-    private func showAudioRecordViewControllerIfGrantedAccess() -> Bool {
+    fileprivate func showAudioRecordViewControllerIfGrantedAccess() -> Bool {
         if AVAudioSession.sharedInstance().recordPermission() == .Granted {
             self.showAudioRecordViewController()
             return true
@@ -86,13 +86,13 @@ extension ConversationInputBarViewController {
         }
     }
     
-    private func requestMicrophoneAccess() {
+    fileprivate func requestMicrophoneAccess() {
         UIApplication.wr_requestOrWarnAboutMicrophoneAccess { (granted) in
             guard granted else { return }
         }
     }
     
-    private func showAudioRecordViewController() {
+    fileprivate func showAudioRecordViewController() {
         guard let audioRecordViewController = self.audioRecordViewController else {
             return
         }
@@ -106,7 +106,7 @@ extension ConversationInputBarViewController {
         })
     }
     
-    private func hideAudioRecordViewController() {
+    fileprivate func hideAudioRecordViewController() {
         if self.mode == .AudioRecord {
             hideInKeyboardAudioRecordViewController()
         }
@@ -115,7 +115,7 @@ extension ConversationInputBarViewController {
         }
     }
     
-    private func hideInKeyboardAudioRecordViewController() {
+    fileprivate func hideInKeyboardAudioRecordViewController() {
         self.inputBar.textView.resignFirstResponder()
         self.audioRecordKeyboardViewController = nil
         delay(0.3) {
@@ -123,7 +123,7 @@ extension ConversationInputBarViewController {
         }
     }
     
-    @objc private func hideInlineAudioRecordViewController() {
+    @objc fileprivate func hideInlineAudioRecordViewController() {
         self.inputBar.buttonContainer.hidden = false
         guard let audioRecordViewController = self.audioRecordViewController else {
             return
@@ -134,7 +134,7 @@ extension ConversationInputBarViewController {
             }, completion: nil)
     }
     
-    public func hideCameraKeyboardViewController(completion: ()->()) {
+    public func hideCameraKeyboardViewController(_ completion: @escaping ()->()) {
         self.inputBar.textView.resignFirstResponder()
         self.cameraKeyboardViewController = nil
         delay(0.3) {
@@ -147,11 +147,11 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: AudioRecordViewControllerDelegate {
     
-    public func audioRecordViewControllerDidCancel(audioRecordViewController: AudioRecordBaseViewController) {
+    public func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
         self.hideAudioRecordViewController()
     }
     
-    public func audioRecordViewControllerDidStartRecording(audioRecordViewController: AudioRecordBaseViewController) {
+    public func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .Keyboard : .Minimised
         
         if type == .Minimised {
@@ -161,7 +161,7 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
         Analytics.shared()?.tagStartedAudioMessageRecording(inConversation: self.conversation, type: type)
     }
     
-    public func audioRecordViewControllerWantsToSendAudio(audioRecordViewController: AudioRecordBaseViewController, recordingURL: NSURL, duration: NSTimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
+    public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: NSURL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .Keyboard : .Minimised
         
         Analytics.shared()?.tagSentAudioMessage(duration, context: context, filter: filter, type: type)

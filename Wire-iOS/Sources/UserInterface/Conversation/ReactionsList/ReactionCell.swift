@@ -21,11 +21,11 @@ import zmessaging
 import Cartography
 import Classy
 
-@objc public class ReactionCell: UICollectionViewCell {
-    public let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
-    public let userNameLabel = UILabel()
+@objc open class ReactionCell: UICollectionViewCell {
+    open let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
+    open let userNameLabel = UILabel()
     
-    public var user: ZMUser? {
+    open var user: ZMUser? {
         didSet {
             guard let user = self.user else {
                 self.userNameLabel.text = ""
@@ -54,23 +54,23 @@ import Classy
             userNameLabel.right <= contentView.right - 24
         }
         
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
-        self.user = .None
+        self.user = .none
     }
     
     static var reuseIdentifier: String {
         return "\(self)"
     }
     
-    override public var reuseIdentifier: String? {
-        return self.dynamicType.reuseIdentifier
+    override open var reuseIdentifier: String? {
+        return type(of: self).reuseIdentifier
     }
 }

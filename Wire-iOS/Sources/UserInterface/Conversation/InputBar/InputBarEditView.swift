@@ -19,12 +19,12 @@
 import Cartography
 
 @objc public enum EditButtonType: UInt {
-    case Undo, Confirm, Cancel
+    case undo, confirm, cancel
 }
 
 @objc public protocol InputBarEditViewDelegate: class {
-    func inputBarEditView(editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
-    func inputBarEditViewDidLongPressUndoButton(editView: InputBarEditView)
+    func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
+    func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }
 
 public final class InputBarEditView: UIView {
@@ -32,7 +32,7 @@ public final class InputBarEditView: UIView {
     let undoButton = IconButton()
     let confirmButton = IconButton()
     let cancelButton = IconButton()
-    let iconSize = UIImage.sizeForZetaIconSize(.Tiny)
+    let iconSize = UIImage.size(for: .tiny)
     
     public weak var delegate: InputBarEditViewDelegate?
     
@@ -46,24 +46,24 @@ public final class InputBarEditView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureViews() {
+    fileprivate func configureViews() {
         [undoButton, confirmButton, cancelButton].forEach {
             addSubview($0)
-            $0.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
         undoButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressUndoButton)))
-        undoButton.setIcon(.Undo, withSize: .Tiny, forState: .Normal)
+        undoButton.setIcon(.undo, with: .tiny, for: UIControlState())
         undoButton.accessibilityIdentifier = "undoButton"
-        confirmButton.setIcon(.Checkmark, withSize: .Medium, forState: .Normal)
+        confirmButton.setIcon(.checkmark, with: .medium, for: UIControlState())
         confirmButton.accessibilityIdentifier = "confirmButton"
-        cancelButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
+        cancelButton.setIcon(.X, with: .tiny, for: UIControlState())
         cancelButton.accessibilityIdentifier = "cancelButton"
-        undoButton.enabled = false
-        confirmButton.enabled = false
+        undoButton.isEnabled = false
+        confirmButton.isEnabled = false
     }
     
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         let margin: CGFloat = 16
         constrain(self, undoButton, confirmButton, cancelButton) { view, undoButton, confirmButton, cancelButton in
             align(top: view, undoButton, confirmButton, cancelButton)
@@ -79,14 +79,14 @@ public final class InputBarEditView: UIView {
         }
     }
     
-    @objc func buttonTapped(sender: IconButton) {
-        let typeBySender = [undoButton: EditButtonType.Undo, confirmButton: .Confirm, cancelButton: .Cancel]
+    @objc func buttonTapped(_ sender: IconButton) {
+        let typeBySender = [undoButton: EditButtonType.undo, confirmButton: .confirm, cancelButton: .cancel]
         guard let type = typeBySender[sender] else { return }
         delegate?.inputBarEditView(self, didTapButtonWithType: type)
     }
     
-    @objc func didLongPressUndoButton(sender: UILongPressGestureRecognizer) {
-        guard sender.state == .Began else { return }
+    @objc func didLongPressUndoButton(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began else { return }
         delegate?.inputBarEditViewDidLongPressUndoButton(self)
     }
     

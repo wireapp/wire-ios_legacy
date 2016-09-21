@@ -23,8 +23,8 @@ import MapKit
 import CoreLocation
 
 @objc protocol LocationSelectionViewControllerDelegate: class {
-    func locationSelectionViewController(viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData)
-    func locationSelectionViewControllerDidCancel(viewController: LocationSelectionViewController)
+    func locationSelectionViewController(_ viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData)
+    func locationSelectionViewControllerDidCancel(_ viewController: LocationSelectionViewController)
 }
 
 @objc final public class LocationSelectionViewController: UIViewController {
@@ -32,19 +32,19 @@ import CoreLocation
     weak var delegate: LocationSelectionViewControllerDelegate?
     public let locationButton = IconButton()
     public let locationButtonContainer = UIView()
-    private let mapView = MKMapView()
-    private let toolBar: ModalTopBar
-    private let locationManager = CLLocationManager()
-    private let geocoder = CLGeocoder()
-    private let sendViewController = LocationSendViewController()
-    private let pointAnnotation = MKPointAnnotation()
-    private var annotationView: MKPinAnnotationView! = nil
-    private var userShowedInitially = false
-    private var mapDidRender = false
+    fileprivate let mapView = MKMapView()
+    fileprivate let toolBar: ModalTopBar
+    fileprivate let locationManager = CLLocationManager()
+    fileprivate let geocoder = CLGeocoder()
+    fileprivate let sendViewController = LocationSendViewController()
+    fileprivate let pointAnnotation = MKPointAnnotation()
+    fileprivate var annotationView: MKPinAnnotationView! = nil
+    fileprivate var userShowedInitially = false
+    fileprivate var mapDidRender = false
 
-    private var userLocationAuthorized: Bool {
+    fileprivate var userLocationAuthorized: Bool {
         let status = CLLocationManager.authorizationStatus()
-        return status == .AuthorizedAlways || status == .AuthorizedWhenInUse
+        return status == .authorizedAlways || status == .authorizedWhenInUse
     }
     
     public init(forPopoverPresentation popover: Bool) {
@@ -66,35 +66,35 @@ import CoreLocation
         createConstraints()
     }
     
-    public override func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !userLocationAuthorized { mapView.restoreLocation(animated: true) }
         locationManager.requestWhenInUseAuthorization()
         updateUserLocation()
     }
     
-    public override func viewWillDisappear(animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         locationManager.stopUpdatingHeading()
         mapView.storeLocation()
     }
     
-    private func configureViews() {
+    fileprivate func configureViews() {
         addChildViewController(sendViewController)
-        sendViewController.didMoveToParentViewController(self)
+        sendViewController.didMove(toParentViewController: self)
         [mapView, sendViewController.view, toolBar, locationButton].forEach(view.addSubview)
-        locationButton.addTarget(self, action: #selector(locationButtonTapped), forControlEvents: .TouchUpInside)
-        locationButton.setIcon(.Location, withSize: .Tiny, forState: .Normal)
+        locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        locationButton.setIcon(.location, with: .tiny, for: UIControlState())
         locationButton.cas_styleClass = "back-button"
-        mapView.rotateEnabled = false
-        mapView.pitchEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.isPitchEnabled = false
         toolBar.title = title
         pointAnnotation.coordinate = mapView.centerCoordinate
-        annotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: String(self.dynamicType))
+        annotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: String(describing: type(of: self)))
         mapView.addSubview(annotationView)
     }
 
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         constrain(view, mapView, sendViewController.view, annotationView, toolBar) { view, mapView, sendController, pin, toolBar in
             mapView.edges == view.edges
             sendController.leading == view.leading
@@ -118,45 +118,45 @@ import CoreLocation
         }
     }
     
-    @objc private func locationButtonTapped(sender: IconButton) {
+    @objc fileprivate func locationButtonTapped(_ sender: IconButton) {
         zoomToUserLocation(true)
     }
     
-    private func updateUserLocation() {
+    fileprivate func updateUserLocation() {
         mapView.showsUserLocation = userLocationAuthorized
         if userLocationAuthorized {
             locationManager.startUpdatingLocation()
         }
     }
     
-    private func zoomToUserLocation(animated: Bool) {
+    fileprivate func zoomToUserLocation(_ animated: Bool) {
         guard userLocationAuthorized else { return presentUnauthorizedAlert() }
         let region = MKCoordinateRegionMakeWithDistance(mapView.userLocation.coordinate, 50, 50)
         mapView.setRegion(region, animated: animated)
     }
     
-    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    public override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return UIViewController.wr_supportedInterfaceOrientations()
     }
     
-    private func presentUnauthorizedAlert() {
-        let localize: String -> String = { ("location.unauthorized_alert." + $0).localized }
-        let alertController = UIAlertController(title: localize("title"), message: localize("message"), preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: localize("cancel"), style: .Cancel , handler: nil)
-        let settingsAction = UIAlertAction(title: localize("settings"), style: .Default) { _ in
-            guard let url = NSURL(string: UIApplicationOpenSettingsURLString) else { return }
-            UIApplication.sharedApplication().openURL(url)
+    fileprivate func presentUnauthorizedAlert() {
+        let localize: (String) -> String = { ("location.unauthorized_alert." + $0).localized }
+        let alertController = UIAlertController(title: localize("title"), message: localize("message"), preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: localize("cancel"), style: .cancel , handler: nil)
+        let settingsAction = UIAlertAction(title: localize("settings"), style: .default) { _ in
+            guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
+            UIApplication.shared.openURL(url)
         }
         
         [cancelAction, settingsAction].forEach(alertController.addAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
-    private func formatAndUpdateAddress() {
+    fileprivate func formatAndUpdateAddress() {
         guard mapDidRender else { return }
         geocoder.reverseGeocodeLocation(mapView.centerCoordinate.location) { [weak self] placemarks, error in
             guard nil == error, let placemark = placemarks?.first else { return }
-            if let address = placemark.formattedAddress(false) where !address.isEmpty {
+            if let address = placemark.formattedAddress(false) , !address.isEmpty {
                 self?.sendViewController.address = address
             } else {
                 self?.sendViewController.address = nil
@@ -166,16 +166,16 @@ import CoreLocation
 }
 
 extension LocationSelectionViewController: LocationSendViewControllerDelegate {
-    public func locationSendViewControllerSendButtonTapped(viewController: LocationSendViewController) {
+    public func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController) {
         let locationData = mapView.locationData(name: viewController.address)
         delegate?.locationSelectionViewController(self, didSelectLocationWithData: locationData)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
 extension LocationSelectionViewController: ModalTopBarDelegate {
     
-    public func modelTopBarWantsToBeDismissed(topBar: ModalTopBar) {
+    public func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
         delegate?.locationSelectionViewControllerDidCancel(self)
     }
     
@@ -183,7 +183,7 @@ extension LocationSelectionViewController: ModalTopBarDelegate {
 
 extension LocationSelectionViewController: CLLocationManagerDelegate {
     
-    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         updateUserLocation()
     }
     
@@ -191,16 +191,16 @@ extension LocationSelectionViewController: CLLocationManagerDelegate {
 
 extension LocationSelectionViewController: MKMapViewDelegate {
     
-    public func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
+    public func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         mapDidRender = true
         formatAndUpdateAddress()
     }
     
-    public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         formatAndUpdateAddress()
     }
     
-    public func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+    public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if !userShowedInitially {
             userShowedInitially = true
             zoomToUserLocation(true)

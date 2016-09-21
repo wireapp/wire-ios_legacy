@@ -23,52 +23,52 @@ import Cartography
 import Classy
 
 public protocol ColorPickerControllerDelegate {
-    func colorPicker(colorPicker: ColorPickerController, didSelectColor color: UIColor)
-    func colorPickerWantsToDismiss(colotPicker: ColorPickerController)
+    func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor)
+    func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
 
-@objc public class ColorPickerController: UIViewController {
-    public let overlayView = UIView()
-    public let contentView = UIView()
-    public let tableView = UITableView()
-    public let headerView = UIView()
-    public let titleLabel = UILabel()
-    public let closeButton = IconButton()
+@objc open class ColorPickerController: UIViewController {
+    open let overlayView = UIView()
+    open let contentView = UIView()
+    open let tableView = UITableView()
+    open let headerView = UIView()
+    open let titleLabel = UILabel()
+    open let closeButton = IconButton()
 
-    static private let rowHeight: CGFloat = 44
+    static fileprivate let rowHeight: CGFloat = 44
     
-    public let colors: [UIColor]
-    public var currentColor: UIColor?
-    public var delegate: ColorPickerControllerDelegate?
+    open let colors: [UIColor]
+    open var currentColor: UIColor?
+    open var delegate: ColorPickerControllerDelegate?
     
     public init(colors: [UIColor]) {
         self.colors = colors
         super.init(nibName: nil, bundle: nil)
         
-        self.modalPresentationStyle = .Custom
+        self.modalPresentationStyle = .custom
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var title: String? {
+    override open var title: String? {
         didSet {
             self.titleLabel.text = self.title
         }
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(self.contentView)
         
         self.contentView.layer.cornerRadius = 10
         self.contentView.clipsToBounds = true
-        self.contentView.backgroundColor = .whiteColor()
+        self.contentView.backgroundColor = .white()
         
-        self.closeButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
-        self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), forControlEvents: .TouchUpInside)
+        self.closeButton.setIcon(.X, with: .tiny, for: UIControlState())
+        self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
         
         self.titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         
@@ -105,28 +105,28 @@ public protocol ColorPickerControllerDelegate {
         constrain(self.view, self.contentView, self.headerView) { view, contentView, headerView in
             contentView.center == view.center
             contentView.width == 300
-            contentView.height == headerView.height + self.dynamicType.rowHeight * CGFloat(self.colors.count)
+            contentView.height == headerView.height + type(of: self).rowHeight * CGFloat(self.colors.count)
         }
         
-        self.tableView.registerClass(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
+        self.tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorStyle = .none
     }
     
-    private class PickerCell: UITableViewCell {
-        private let checkmarkView = UIImageView()
-        private let colorView = UIView()
+    fileprivate class PickerCell: UITableViewCell {
+        fileprivate let checkmarkView = UIImageView()
+        fileprivate let colorView = UIView()
         
         override var reuseIdentifier: String? {
             get {
-                return self.dynamicType.reuseIdentifier
+                return type(of: self).reuseIdentifier
             }
         }
         
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
-            self.selectionStyle = .None
+            self.selectionStyle = .none
             
             self.contentView.addSubview(self.colorView)
             self.contentView.addSubview(self.checkmarkView)
@@ -136,8 +136,8 @@ public protocol ColorPickerControllerDelegate {
                 checkmarkView.center == contentView.center
             }
             
-            self.checkmarkView.image = UIImage(forIcon: .Checkmark, iconSize: .Small, color: .whiteColor())
-            self.checkmarkView.hidden = true
+            self.checkmarkView.image = UIImage(for: .checkmark, iconSize: .small, color: .white())
+            self.checkmarkView.isHidden = true
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -156,68 +156,68 @@ public protocol ColorPickerControllerDelegate {
             }
         }
 
-        override func setSelected(selected: Bool, animated: Bool) {
+        override func setSelected(_ selected: Bool, animated: Bool) {
             super.setSelected(selected, animated: animated)
-            self.checkmarkView.hidden = !selected
+            self.checkmarkView.isHidden = !selected
         }
         
         override func prepareForReuse() {
             super.prepareForReuse()
-            self.colorView.backgroundColor = .clearColor()
-            self.checkmarkView.hidden = true
+            self.colorView.backgroundColor = .clear()
+            self.checkmarkView.isHidden = true
         }
         
     }
     
-    @objc public func didPressDismiss(sender: AnyObject?) {
+    @objc open func didPressDismiss(_ sender: AnyObject?) {
         self.delegate?.colorPickerWantsToDismiss(self)
     }
 }
 
 extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.colors.count
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.dynamicType.rowHeight
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return type(of: self).rowHeight
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = self.tableView.dequeueReusableCellWithIdentifier(PickerCell.reuseIdentifier) as? PickerCell else {
+        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: PickerCell.reuseIdentifier) as? PickerCell else {
             fatal("Cannot create cell")
         }
         
-        cell.color = self.colors[indexPath.row]
-        cell.selected = cell.color == self.currentColor
-        if cell.selected {
-            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        cell.color = self.colors[(indexPath as NSIndexPath).row]
+        cell.isSelected = cell.color == self.currentColor
+        if cell.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
         return cell
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.delegate?.colorPicker(self, didSelectColor: self.colors[indexPath.row])
-        self.currentColor = self.colors[indexPath.row]
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.delegate?.colorPicker(self, didSelectColor: self.colors[(indexPath as NSIndexPath).row])
+        self.currentColor = self.colors[(indexPath as NSIndexPath).row]
     }
 }
 
 
 
-public class AccentColorPickerController: ColorPickerController {
+open class AccentColorPickerController: ColorPickerController {
     public init() {
         super.init(colors: ZMAccentColor.all().map { $0.color })
-        self.title = "self.settings.account_picture_group.color".localized.uppercaseString
+        self.title = "self.settings.account_picture_group.color".localized.uppercased()
         if let currentColorIndex = ZMAccentColor.all().indexOf(ZMUser.selfUser().accentColorValue) {
             self.currentColor = self.colors[currentColorIndex]
         }
         self.delegate = self
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.scrollEnabled = false
+        self.tableView.isScrollEnabled = false
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -226,8 +226,8 @@ public class AccentColorPickerController: ColorPickerController {
 }
 
 extension AccentColorPickerController: ColorPickerControllerDelegate {
-    public func colorPicker(colorPicker: ColorPickerController, didSelectColor color: UIColor) {
-        guard let colorIndex = self.colors.indexOf(color) else {
+    public func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor) {
+        guard let colorIndex = self.colors.index(of: color) else {
             return
         }
         
@@ -236,8 +236,8 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         }
     }
 
-    public func colorPickerWantsToDismiss(colotPicker: ColorPickerController) {
-        self.dismissViewControllerAnimated(true, completion: .None)
+    public func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController) {
+        self.dismiss(animated: true, completion: .none)
     }
 }
 

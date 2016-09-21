@@ -22,15 +22,15 @@ import CoreMotion
 
 class DeviceProximityListener: NSObject {
     
-    private(set) var raisedToEar: Bool = false {
+    fileprivate(set) var raisedToEar: Bool = false {
         didSet {
             if oldValue != self.raisedToEar {
-                self.stateChanged?(raisedToEar: self.raisedToEar)
+                self.stateChanged?(self.raisedToEar)
             }
         }
     }
     
-    typealias RaisedToEarHandler = (raisedToEar: Bool) -> Void
+    typealias RaisedToEarHandler = (_ raisedToEar: Bool) -> Void
     
     var stateChanged: RaisedToEarHandler? = nil
     var listening: Bool = false
@@ -41,10 +41,10 @@ class DeviceProximityListener: NSObject {
         }
 
         self.listening = true
-        UIDevice.currentDevice().proximityMonitoringEnabled = true
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        UIDevice.current.isProximityMonitoringEnabled = true
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleProximityChange),
-                                                   name: UIDeviceProximityStateDidChangeNotification,
+                                                   name: NSNotification.Name.UIDeviceProximityStateDidChange,
                                                  object: nil)
     }
     
@@ -53,12 +53,12 @@ class DeviceProximityListener: NSObject {
             return
         }
         self.listening = false
-        UIDevice.currentDevice().proximityMonitoringEnabled = false
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        UIDevice.current.isProximityMonitoringEnabled = false
+        NotificationCenter.default.removeObserver(self)
     }
     
-    func handleProximityChange(notification: NSNotification) {
-        self.raisedToEar = UIDevice.currentDevice().proximityState
+    func handleProximityChange(_ notification: Notification) {
+        self.raisedToEar = UIDevice.current.proximityState
     }
     
     deinit {

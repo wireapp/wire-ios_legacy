@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -25,15 +25,15 @@ class ThreeDotsLoadingView: UIView {
     
     let loadingAnimationKey = "loading"
     let dotRadius = 2
-    let activeColor = UIColor.wr_colorFromColorScheme(ColorSchemeColorLoadingDotActive)
-    let inactiveColor = UIColor.wr_colorFromColorScheme(ColorSchemeColorLoadingDotInactive)
+    let activeColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLoadingDotActive)
+    let inactiveColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLoadingDotInactive)
     
     let dot1 = UIView()
     let dot2 = UIView()
     let dot3 = UIView()
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override init(frame: CGRect) {
@@ -47,7 +47,7 @@ class ThreeDotsLoadingView: UIView {
         setupConstraints()
         startProgressAnimation()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ThreeDotsLoadingView.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ThreeDotsLoadingView.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,14 +82,14 @@ class ThreeDotsLoadingView: UIView {
         }
     }
     
-    override var hidden: Bool{
+    override var isHidden: Bool{
         didSet {
             updateLoadingAnimation()
         }
     }
     
     func updateLoadingAnimation() {
-        if (hidden) {
+        if (isHidden) {
             stopProgressAnimation()
         } else {
             startProgressAnimation()
@@ -99,7 +99,7 @@ class ThreeDotsLoadingView: UIView {
     func startProgressAnimation() {
         let stepDuration = 0.350
         let colorShift = CAKeyframeAnimation(keyPath: "backgroundColor")
-        colorShift.values = [activeColor.CGColor, inactiveColor.CGColor, inactiveColor.CGColor, activeColor.CGColor]
+        colorShift.values = [activeColor.cgColor, inactiveColor.cgColor, inactiveColor.cgColor, activeColor.cgColor]
         colorShift.keyTimes = [0, 0.33, 0.66, 1]
         colorShift.duration = 4 * stepDuration
         colorShift.repeatCount = Float.infinity
@@ -108,25 +108,25 @@ class ThreeDotsLoadingView: UIView {
         
         let colorShift1 = colorShift.copy() as! CAKeyframeAnimation
         colorShift1.timeOffset = 0
-        dot1.layer.addAnimation(colorShift1, forKey: loadingAnimationKey)
+        dot1.layer.add(colorShift1, forKey: loadingAnimationKey)
         
         let colorShift2 = colorShift.copy()  as! CAKeyframeAnimation
         colorShift2.timeOffset = 1 * stepDuration
-        dot2.layer.addAnimation(colorShift2, forKey: loadingAnimationKey)
+        dot2.layer.add(colorShift2, forKey: loadingAnimationKey)
         
         let colorShift3 = colorShift.copy()  as! CAKeyframeAnimation
         colorShift3.timeOffset = 2 * stepDuration
-        dot3.layer.addAnimation(colorShift3, forKey: loadingAnimationKey)
+        dot3.layer.add(colorShift3, forKey: loadingAnimationKey)
     }
     
     func stopProgressAnimation() {
-        [dot1, dot2, dot3].forEach { $0.layer.removeAnimationForKey(loadingAnimationKey) }
+        [dot1, dot2, dot3].forEach { $0.layer.removeAnimation(forKey: loadingAnimationKey) }
     }
 
 }
 
 extension ThreeDotsLoadingView {
-    func applicationDidBecomeActive(notification : NSNotification) {
+    func applicationDidBecomeActive(_ notification : Notification) {
         updateLoadingAnimation()
     }
 }

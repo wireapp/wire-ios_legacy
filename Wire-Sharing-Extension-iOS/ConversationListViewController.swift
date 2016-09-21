@@ -26,15 +26,15 @@ import Classy
 
 
 @objc protocol ConversationListViewControllerDelegate {
-    optional func conversationList(conversationList: ConversationListViewController, didSelectConversation conversation:Conversation)
+    optional func conversationList(_ conversationList: ConversationListViewController, didSelectConversation conversation:Conversation)
 }
 
 
 
 class ConversationListViewController: UITableViewController {
     
-    @IBOutlet private weak var backButton: IconButton!
-    @IBOutlet private weak var cancelButton: IconButton!
+    @IBOutlet fileprivate weak var backButton: IconButton!
+    @IBOutlet fileprivate weak var cancelButton: IconButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,31 +42,31 @@ class ConversationListViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 52.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
 
-        let image = UIImage(forLogoWithColor: UIColor.accentColor, iconSize: .Medium)
+        let image = UIImage(forLogoWith: UIColor.accentColor, iconSize: .medium)
         self.navigationItem.titleView = UIImageView(image: image)
         
-        self.cancelButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
-        self.backButton.setIcon(.ChevronLeft, withSize: .Tiny, forState: .Normal)
+        self.cancelButton.setIcon(.X, with: .tiny, for: UIControlState())
+        self.backButton.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
         
-        let barButtonOffset: CGFloat = (self.traitCollection.userInterfaceIdiom == .Phone) ? 8 : 4
+        let barButtonOffset: CGFloat = (self.traitCollection.userInterfaceIdiom == .phone) ? 8 : 4
         if let leftItem = self.navigationItem.leftBarButtonItem {
-            let leftSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+            let leftSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
             leftSpacer.width = barButtonOffset
             self.navigationItem.leftBarButtonItems = [leftSpacer, leftItem]
         }
         
         if let rightItem = self.navigationItem.rightBarButtonItem {
-            let rightSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+            let rightSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
             rightSpacer.width = barButtonOffset
             self.navigationItem.rightBarButtonItems = [rightSpacer, rightItem]
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // Following manual Classy update is a workarround for a bug:
@@ -89,8 +89,8 @@ class ConversationListViewController: UITableViewController {
     var searchTerm: String = "" {
         didSet {
             self.tableView.reloadData()
-            if (self.tableView.numberOfRowsInSection(0) > 0) {
-                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+            if (self.tableView.numberOfRows(inSection: 0) > 0) {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         }
     }
@@ -98,20 +98,20 @@ class ConversationListViewController: UITableViewController {
     var excludedConversations: Array<Conversation> = [] {
         didSet {
             self.tableView.reloadData()
-            if (self.tableView.numberOfRowsInSection(0) > 0) {
-                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+            if (self.tableView.numberOfRows(inSection: 0) > 0) {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         }
     }
     
     // MARK: - Actions
     
-    @IBAction func backButtonPressed(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonPressed(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func cancelPressed(sender: AnyObject) {
-        self.extensionContext!.cancelRequestWithError(NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil))
+    @IBAction func cancelPressed(_ sender: AnyObject) {
+        self.extensionContext!.cancelRequest(withError: NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil))
     }
     
     // MARK: - API
@@ -158,16 +158,16 @@ class ConversationListViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredModel.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ConversationListCell", forIndexPath: indexPath) as! ConversationListCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationListCell", for: indexPath) as! ConversationListCell
 
         let conversation = self.filteredModel[indexPath.row]
         cell.conversation = conversation
@@ -182,7 +182,7 @@ class ConversationListViewController: UITableViewController {
     
     // MARK: - Table view delegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.conversationList?(self, didSelectConversation: self.filteredModel[indexPath.row])
     }
     

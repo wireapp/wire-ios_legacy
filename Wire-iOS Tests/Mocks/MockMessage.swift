@@ -23,7 +23,7 @@ import ZMCLinkPreview
 @objc class MockTextMessageData : NSObject, ZMTextMessageData {
     var messageText: String = ""
     var linkPreview: LinkPreview? = nil
-    var imageData: NSData? = nil
+    var imageData: Data? = nil
     var hasImageData: Bool = false
     var imageDataIdentifier: String? = nil
 }
@@ -49,12 +49,12 @@ import ZMCLinkPreview
     var transferState: ZMFileTransferState = .Uploaded
     var filename: String! = "TestFile.pdf"
     var progress: Float = 0
-    var fileURL: NSURL? = .None
-    var previewData: NSData? = nil
+    var fileURL: URL? = .none
+    var previewData: Data? = nil
     var thumbnailAssetID : String? = ""
     var imagePreviewDataIdentifier: String! = "preview-identifier-123"
     var durationMilliseconds: UInt = 233000
-    var videoDimensions: CGSize = CGSizeZero
+    var videoDimensions: CGSize = CGSize.zero
     var normalizedLoudness: [NSNumber]! = []
     
     func isVideo() -> Bool {
@@ -80,17 +80,17 @@ import ZMCLinkPreview
 
 @objc class MockImageMessageData : NSObject, ZMImageMessageData {
     var mockOriginalSize: CGSize = .zero
-    var mockImageData = NSData()
+    var mockImageData = Data()
     var mockImageDataIdentifier = String()
     
-    var mediumData: NSData! = NSData()
-    var previewData: NSData! = NSData()
+    var mediumData: Data! = Data()
+    var previewData: Data! = Data()
     var imagePreviewDataIdentifier: String! = String()
     
     var isAnimatedGIF: Bool = false
     var imageType: String! = String()
     
-    var imageData: NSData { return mockImageData }
+    var imageData: Data { return mockImageData }
     var imageDataIdentifier: String { return mockImageDataIdentifier }
     var originalSize: CGSize { return mockOriginalSize }
 }
@@ -111,8 +111,8 @@ import ZMCLinkPreview
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
     var sender: ZMUser? = .None
-    var serverTimestamp: NSDate? = .None
-    var updatedAt: NSDate? = .None
+    var serverTimestamp: Date? = .none
+    var updatedAt: Date? = .none
     var conversation: ZMConversation? = .None
     var deliveryState: ZMDeliveryState = .Delivered
     var imageMessageData: ZMImageMessageData? = .None
@@ -136,9 +136,9 @@ import ZMCLinkPreview
     }
     
     var backingUsersReaction: UsersByReaction! = [:]
-    var backingTextMessageData: MockTextMessageData! = .None
-    var backingFileMessageData: MockFileMessageData! = .None
-    var backingLocationMessageData: MockLocationMessageData! = .None
+    var backingTextMessageData: MockTextMessageData! = .none
+    var backingFileMessageData: MockFileMessageData! = .none
+    var backingLocationMessageData: MockLocationMessageData! = .none
     
     func requestFileDownload() {
         // no-op
@@ -164,11 +164,11 @@ import ZMCLinkPreview
 extension MockMessage {
     func formattedReceivedDate() -> String? {
         guard let timestamp = self.serverTimestamp else {
-            return .None
+            return .none
         }
         let timeString = Message.longVersionTimeFormatter().stringFromDate(timestamp)
         let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - NSDate().timeIntervalSinceReferenceDate) > oneDayInSeconds
+        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
         
         if shouldShowDate {
             let dateString = Message.shortVersionDateFormatter().stringFromDate(timestamp)

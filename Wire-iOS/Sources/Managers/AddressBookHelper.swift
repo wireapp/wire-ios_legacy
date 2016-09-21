@@ -19,49 +19,69 @@
 
 import Foundation
 import AddressBook
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 /// Allows access to address book for search
-@objc public class AddressBookHelper : NSObject {
+@objc open class AddressBookHelper : NSObject {
     
     /// Time to wait between searches
-    let searchTimeInterval : NSTimeInterval = 60 * 60 * 24 // 24h
+    let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
     
     /// Singleton
-    public static let sharedHelper : AddressBookHelper = AddressBookHelper()
+    open static let sharedHelper : AddressBookHelper = AddressBookHelper()
     
     /// Configuration override (used for testing)
-    public var configuration : AddressBookHelperConfiguration!
+    open var configuration : AddressBookHelperConfiguration!
 }
 
 // MARK: - Permissions
 extension AddressBookHelper {
     
     public var isAddressBookAccessUnknown : Bool {
-        return ABAddressBookGetAuthorizationStatus() == .NotDetermined
+        return ABAddressBookGetAuthorizationStatus() == .notDetermined
     }
     
     public var isAddressBookAccessGranted : Bool {
-        return ABAddressBookGetAuthorizationStatus() == .Authorized
+        return ABAddressBookGetAuthorizationStatus() == .authorized
     }
     
     public var isAddressBookAccessDisabled : Bool {
-        return ABAddressBookGetAuthorizationStatus() == .Denied
+        return ABAddressBookGetAuthorizationStatus() == .denied
     }
     
     /// Request access to the user. Will asynchronously invoke the callback passing as argument
     /// whether access was granted.
-    public func requestPermissions(callback: ((Bool)->())?) {
-        dispatch_async(addressBookIsolationQueue) {
+    public func requestPermissions(_ callback: ((Bool)->())?) {
+        addressBookIsolationQueue.async {
             
             guard let addressBookRef = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     callback?(false)
                 }
                 return
             }
             
             ABAddressBookRequestAccessWithCompletion(addressBookRef) { (granted, error) in
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     callback?(granted)
                 }
             }
@@ -69,14 +89,14 @@ extension AddressBookHelper {
     }
     
     /// Whether enough time has passed since last search to request a new search
-    private var enoughTimeHasPassedForSearch : Bool {
-        guard let lastSearchDate = NSUserDefaults.standardUserDefaults().objectForKey(addressBookLastSearchDate) as? NSDate else {
+    fileprivate var enoughTimeHasPassedForSearch : Bool {
+        guard let lastSearchDate = UserDefaults.standard.object(forKey: addressBookLastSearchDate) as? Date else {
             return true
         }
         // Date check
-        let timeSinceLastSearch = NSDate().timeIntervalSinceDate(lastSearchDate)
-        let customTimeLimit : NSTimeInterval?
-        if let timeLimitInConfiguration = self.configuration?.addressBookRemoteSearchTimeInterval where timeLimitInConfiguration > 0 {
+        let timeSinceLastSearch = Date().timeIntervalSince(lastSearchDate)
+        let customTimeLimit : TimeInterval?
+        if let timeLimitInConfiguration = self.configuration?.addressBookRemoteSearchTimeInterval , timeLimitInConfiguration > 0 {
             customTimeLimit = timeLimitInConfiguration
         } else {
             customTimeLimit = self.searchTimeInterval
@@ -87,20 +107,20 @@ extension AddressBookHelper {
     /// Whether the address book search was performed at least once
     public var addressBookSearchPerformedAtLeastOnce : Bool {
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(addressBookSearchPerfomedAtLeastOnceKey)
+            return UserDefaults.standard.bool(forKey: addressBookSearchPerfomedAtLeastOnceKey)
         }
         set {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: addressBookSearchPerfomedAtLeastOnceKey)
+            UserDefaults.standard.set(newValue, forKey: addressBookSearchPerfomedAtLeastOnceKey)
         }
     }
     
     /// Whether the user was asked to perform address book search
     public var addressBookSearchWasProposed : Bool {
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(addressBookSearchWasProposedKey)
+            return UserDefaults.standard.bool(forKey: addressBookSearchWasProposedKey)
         }
         set {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: addressBookSearchWasProposedKey)
+            UserDefaults.standard.set(newValue, forKey: addressBookSearchWasProposedKey)
         }
     }
 }
@@ -109,7 +129,7 @@ extension AddressBookHelper {
 extension AddressBookHelper {
     
     /// Starts an address book search, if enough time has passed since last search
-    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:) public func startRemoteSearch(onlyIfEnoughTimeSinceLast: Bool) {
+    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:) public func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
         guard self.isAddressBookAccessGranted && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {
             return
         }
@@ -117,9 +137,9 @@ extension AddressBookHelper {
         self.addressBookSearchPerformedAtLeastOnce = true;
         
         if TARGET_OS_SIMULATOR == 0 || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
-            ZMUserSession.sharedSession().uploadAddressBook()
+            ZMUserSession.shared().uploadAddressBook()
         }
-        NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: addressBookLastSearchDate)
+        UserDefaults.standard.set(Date(), forKey: addressBookLastSearchDate)
     }
 }
 
@@ -129,7 +149,7 @@ private let addressBookLastSearchDate = "UserDefaultsKeyAddressBookExportDate"
 private let addressBookSearchPerfomedAtLeastOnceKey = "AddressBookWasUploaded"
 private let addressBookSearchWasProposedKey = "AddressBookUploadWasProposed"
 
-private let addressBookIsolationQueue = dispatch_queue_create("Address book helper", DISPATCH_QUEUE_SERIAL)
+private let addressBookIsolationQueue = DispatchQueue(label: "Address book helper", attributes: [])
 
 // MARK: - Testing
 @objc public protocol AddressBookHelperConfiguration : NSObjectProtocol {
@@ -138,6 +158,6 @@ private let addressBookIsolationQueue = dispatch_queue_create("Address book help
     var shouldPerformAddressBookRemoteSearchEvenOnSimulator : Bool { get }
     
     /// Overriding interval between remote search
-    var addressBookRemoteSearchTimeInterval : NSTimeInterval { get }
+    var addressBookRemoteSearchTimeInterval : TimeInterval { get }
 }
 

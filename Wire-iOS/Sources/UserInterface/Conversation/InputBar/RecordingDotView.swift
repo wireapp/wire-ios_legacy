@@ -19,13 +19,13 @@
 
 import UIKit
 
-@objc public class RecordingDotView: UIView {
-    public override func layoutSubviews() {
+@objc open class RecordingDotView: UIView {
+    open override func layoutSubviews() {
         super.layoutSubviews()
-        self.layer.cornerRadius = CGRectGetWidth(self.bounds) / 2
+        self.layer.cornerRadius = self.bounds.width / 2
     }
     
-    public var animating: Bool = false {
+    open var animating: Bool = false {
         didSet {
             if oldValue == animating {
                 return
@@ -40,16 +40,16 @@ import UIKit
         }
     }
     
-    private func startAnimation() {
+    fileprivate func startAnimation() {
         self.alpha = 0
         delay(0.15) { 
-            UIView.animateWithDuration(0.55, delay: 0, options: [.Autoreverse, .Repeat, .CurveEaseInOut], animations: {
+            UIView.animate(withDuration: 0.55, delay: 0, options: [.autoreverse, .repeat], animations: {
                 self.alpha = 1
-                }, completion: .None)
+                }, completion: .none)
         }
     }
     
-    private func stopAnimation() {
+    fileprivate func stopAnimation() {
         self.layer.removeAllAnimations()
         self.alpha = 1
     }

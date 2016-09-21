@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageCache : NSObject
 
@@ -29,22 +29,22 @@
 @property (nonatomic, assign) NSQualityOfService qualityOfService;
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(nullable NSString *)name NS_DESIGNATED_INITIALIZER;
 
 /// Either creates the image in the background and caches it with the supplied cache key,
 /// or retrieves it from the cache.
 - (void)imageForData:(NSData *)imageData
             cacheKey:(NSString *)cacheKey
-      withCompletion:(void (^)(UIImage *image, NSString *cacheKey))completion;
+      withCompletion:(nullable void (^)(UIImage *image, NSString *cacheKey))completion;
 
 /// Either creates the image in the background and caches it with the supplied cache key,
 /// or retrieves it from the cache.  Takes a block that actually creates the image from the
 /// passed in data.
 - (void)imageForData:(NSData *)imageData cacheKey:(NSString *)cacheKey
        creationBlock:(id (^)(NSData *data)) creation
-          completion:(void (^)(id image, NSString *cacheKey)) completion;
+          completion:(nullable void (^)(id image, NSString *cacheKey)) completion;
 
-- (UIImage *)imageForCacheKey:(NSString *)cacheKey;
+- (nullable UIImage *)imageForCacheKey:(NSString *)cacheKey;
 
 - (void)setImage:(UIImage *)image forCacheKey:(NSString *)cacheKey;
 - (void)removeImageForCacheKey:(NSString *)cacheKey;
@@ -52,3 +52,5 @@
 
 
 @end
+
+NS_ASSUME_NONNULL_END

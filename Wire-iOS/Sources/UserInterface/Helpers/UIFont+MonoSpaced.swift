@@ -45,14 +45,14 @@ private let allCapsAttribute = [
 extension UIFont {
     
     func monospacedFont() -> UIFont {
-        let descriptor = fontDescriptor()
-        let monospaceFontDescriptor = descriptor.fontDescriptorByAddingAttributes(monospaceAttribute)
+        let descriptor = fontDescriptor
+        let monospaceFontDescriptor = descriptor.addingAttributes(monospaceAttribute)
         return UIFont(descriptor: monospaceFontDescriptor, size: 0.0)
     }
     
     func allCaps() -> UIFont {
-        let descriptor = fontDescriptor()
-        let allCapsDescriptor = descriptor.fontDescriptorByAddingAttributes(allCapsAttribute)
+        let descriptor = fontDescriptor
+        let allCapsDescriptor = descriptor.addingAttributes(allCapsAttribute)
         return UIFont(descriptor: allCapsDescriptor, size: 0.0)
     }
     

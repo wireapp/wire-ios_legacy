@@ -24,32 +24,32 @@ import CocoaLumberjackSwift
 
 @objc final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     enum State {
-        case Ready, Recording, Effects
+        case ready, recording, effects
     }
     
-    private let topContainer = UIView()
-    private let topSeparator = UIView()
-    private let bottomToolbar = UIView()
+    fileprivate let topContainer = UIView()
+    fileprivate let topSeparator = UIView()
+    fileprivate let bottomToolbar = UIView()
     
-    private let tipLabel = UILabel()
-    private var recordTapGestureRecognizer: UITapGestureRecognizer!
+    fileprivate let tipLabel = UILabel()
+    fileprivate var recordTapGestureRecognizer: UITapGestureRecognizer!
     internal let recordButton = IconButton()
     internal let stopRecordButton = IconButton()
 
-    private let audioPreviewView = WaveFormView()
-    private let timeLabel = UILabel()
+    fileprivate let audioPreviewView = WaveFormView()
+    fileprivate let timeLabel = UILabel()
     
     internal let confirmButton = IconButton()
     internal let redoButton = IconButton()
     internal let cancelButton = IconButton()
 
-    private var accentColorChangeHandler: AccentColorChangeHandler?
-    private var effectPickerViewController: AudioEffectsPickerViewController?
+    fileprivate var accentColorChangeHandler: AccentColorChangeHandler?
+    fileprivate var effectPickerViewController: AudioEffectsPickerViewController?
     
-    private var currentEffect: AVSAudioEffectType = .None
-    private var currentEffectFilePath: String?
+    fileprivate var currentEffect: AVSAudioEffectType = .None
+    fileprivate var currentEffectFilePath: String?
     
-    private(set) var state: State = .Ready {
+    fileprivate(set) var state: State = .ready {
         didSet {
             if oldValue != state {
                 updateRecordingState(self.state)
@@ -64,7 +64,7 @@ import CocoaLumberjackSwift
     }
     
     @objc convenience init() {
-        self.init(audioRecorder: AudioRecorder(format: .WAV, maxRecordingDuration: 25.0 * 60.0)!)
+        self.init(audioRecorder: AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)!)
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -79,7 +79,7 @@ import CocoaLumberjackSwift
         }
     }
     
-    public override func viewWillDisappear(animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recorder.stopRecording()
     }
@@ -87,9 +87,9 @@ import CocoaLumberjackSwift
     func configureViews() {
         
         let colorScheme = ColorScheme()
-        colorScheme.variant = .Light
+        colorScheme.variant = .light
         
-        self.view.backgroundColor = colorScheme.colorWithName(ColorSchemeColorTextForeground)
+        self.view.backgroundColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
         
         self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed(_:)))
         self.view.addGestureRecognizer(self.recordTapGestureRecognizer)
@@ -101,47 +101,47 @@ import CocoaLumberjackSwift
         [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.tipLabel, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
-        self.audioPreviewView.gradientColor = colorScheme.colorWithName(ColorSchemeColorTextForeground)
+        self.audioPreviewView.gradientColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
         
-        self.topSeparator.backgroundColor = colorScheme.colorWithName(ColorSchemeColorSeparator)
+        self.topSeparator.backgroundColor = colorScheme.color(withName: ColorSchemeColorSeparator)
         
         self.createTipLabel()
         
         self.timeLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
-        self.timeLabel.textColor = colorScheme.colorWithName(ColorSchemeColorTextForeground)
+        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
 
-        self.recordButton.setIcon(.RecordDot, withSize: .Tiny, forState: .Normal)
+        self.recordButton.setIcon(.recordDot, with: .tiny, for: UIControlState())
         self.recordButton.accessibilityLabel = "record"
-        self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        self.recordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .VividRed), forState: .Normal)
-        self.recordButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
+        self.recordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .VividRed), for: .Normal)
+        self.recordButton.setIconColor(UIColor.white, for: UIControlState())
         self.recordButton.layer.masksToBounds = true
 
-        self.stopRecordButton.setIcon(.StopRecording, withSize: .Tiny, forState: .Normal)
+        self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: UIControlState())
         self.stopRecordButton.accessibilityLabel = "stopRecording"
-        self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        self.stopRecordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .VividRed), forState: .Normal)
-        self.stopRecordButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
+        self.stopRecordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .VividRed), for: .Normal)
+        self.stopRecordButton.setIconColor(UIColor.white, for: UIControlState())
         self.stopRecordButton.layer.masksToBounds = true
 
-        self.confirmButton.setIcon(.Checkmark, withSize: .Tiny, forState: .Normal)
+        self.confirmButton.setIcon(.checkmark, with: .tiny, for: UIControlState())
         self.confirmButton.accessibilityLabel = "confirmRecording"
-        self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        self.confirmButton.setBackgroundImageColor(UIColor(forZMAccentColor: .StrongLimeGreen), forState: .Normal)
-        self.confirmButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
+        self.confirmButton.setBackgroundImageColor(UIColor(forZMAccentColor: .StrongLimeGreen), for: .Normal)
+        self.confirmButton.setIconColor(UIColor.white, for: UIControlState())
         self.confirmButton.layer.masksToBounds = true
 
-        self.redoButton.setIcon(.Undo, withSize: .Tiny, forState: .Normal)
+        self.redoButton.setIcon(.undo, with: .tiny, for: UIControlState())
         self.redoButton.accessibilityLabel = "redoRecording"
-        self.redoButton.addTarget(self, action: #selector(redoButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        self.redoButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.redoButton.addTarget(self, action: #selector(redoButtonPressed(_:)), for: .touchUpInside)
+        self.redoButton.setIconColor(UIColor.white, for: UIControlState())
 
-        self.cancelButton.setIcon(.Cancel, withSize: .Tiny, forState: .Normal)
+        self.cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
         self.cancelButton.accessibilityLabel = "cancelRecording"
-        self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        self.cancelButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
+        self.cancelButton.setIconColor(UIColor.white, for: UIControlState())
 
         [self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton].forEach(self.bottomToolbar.addSubview)
         
@@ -154,18 +154,18 @@ import CocoaLumberjackSwift
     
     func createTipLabel() {
         let colorScheme = ColorScheme()
-        colorScheme.variant = .Light
+        colorScheme.variant = .light
         
-        let tipText = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercaseString
+        let tipText = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
         let attributedTipText = NSMutableAttributedString(string: tipText)
-        let atRange = (tipText as NSString).rangeOfString("%@")
+        let atRange = (tipText as NSString).range(of: "%@")
         
         if atRange.location != NSNotFound {
             let suitableEffects = AVSAudioEffectType.displayedEffects.filter {
                 $0 != .None
             }
             
-            let randomEffect = suitableEffects[Int(rand()) % suitableEffects.count]
+            let randomEffect = suitableEffects[Int(arc4random()) % suitableEffects.count]
             let randomEffectImage = UIImage(forIcon: randomEffect.icon, iconSize: .SearchBar, color: colorScheme.colorWithName(ColorSchemeColorTextDimmed))
 
             let tipEffectImageAttachment = NSTextAttachment()
@@ -173,7 +173,7 @@ import CocoaLumberjackSwift
             
             let tipEffectImage = NSAttributedString(attachment: tipEffectImageAttachment)
             
-            attributedTipText.replaceCharactersInRange(atRange, withAttributedString: tipEffectImage)
+            attributedTipText.replaceCharacters(in: atRange, with: tipEffectImage)
         }
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
@@ -182,8 +182,8 @@ import CocoaLumberjackSwift
         self.tipLabel.attributedText = attributedTipText
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
-        self.tipLabel.textColor = colorScheme.colorWithName(ColorSchemeColorTextDimmed)
-        self.tipLabel.textAlignment = .Center
+        self.tipLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextDimmed)
+        self.tipLabel.textAlignment = .center
         
     }
     
@@ -194,9 +194,9 @@ import CocoaLumberjackSwift
             topContainer.top >= view.top + 16
             topContainer.right <= view.right - 16
 
-            topContainer.left == view.left + 16 ~ 750
-            topContainer.top == view.top + 16 ~ 750
-            topContainer.right == view.right - 16 ~ 750
+            topContainer.left == view.left + 16 ~ LayoutPriority(750)
+            topContainer.top == view.top + 16 ~ LayoutPriority(750)
+            topContainer.right == view.right - 16 ~ LayoutPriority(750)
 
             topContainer.width <= 400
             topContainer.centerX == view.centerX
@@ -270,7 +270,7 @@ import CocoaLumberjackSwift
         
         recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
             guard let `self` = self else { return }
-            self.state = .Effects
+            self.state = .effects
             if reachedMaxRecordingDuration {
                 
                 let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
@@ -278,16 +278,16 @@ import CocoaLumberjackSwift
                 
                 let durationLimit = String(format: "%d:%02d", minutes, seconds)
                 
-                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .Alert)
-                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .Cancel, handler: nil)
+                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .alert)
+                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
                 alertController.addAction(actionCancel)
                 
-                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .Default, handler: { action in
-                    self.sendAudioAsIs(.AfterPreview)
+                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .default, handler: { action in
+                    self.sendAudioAsIs(.afterPreview)
                 })
                 alertController.addAction(actionSend)
                 
-                self.presentViewController(alertController, animated: true, completion: .None)
+                self.present(alertController, animated: true, completion: .none)
             }
         }
         
@@ -297,45 +297,45 @@ import CocoaLumberjackSwift
         }
     }
     
-    func updateTimeLabel(durationInSeconds: NSTimeInterval) {
+    func updateTimeLabel(_ durationInSeconds: TimeInterval) {
         let duration = Int(ceil(durationInSeconds))
         let (seconds, minutes) = (duration % 60, duration / 60)
         timeLabel.text = String(format: "%d:%02d", minutes, seconds)
         timeLabel.accessibilityValue = timeLabel.text
     }
     
-    private func visibleViews(forState forState: State) -> [UIView] {
+    fileprivate func visibleViews(forState: State) -> [UIView] {
         var result = [self.topSeparator, self.topContainer, self.bottomToolbar]
         switch state {
-        case .Ready:
-            result.appendContentsOf([self.tipLabel, self.recordButton])
-        case .Recording:
-            result.appendContentsOf([self.audioPreviewView, self.timeLabel, self.stopRecordButton])
-        case .Effects:
-            result.appendContentsOf([self.redoButton, self.confirmButton, self.cancelButton])
+        case .ready:
+            result.append(contentsOf: [self.tipLabel, self.recordButton])
+        case .recording:
+            result.append(contentsOf: [self.audioPreviewView, self.timeLabel, self.stopRecordButton])
+        case .effects:
+            result.append(contentsOf: [self.redoButton, self.confirmButton, self.cancelButton])
         }
         
         return result
     }
     
-    private func updateRecordingState(state: State) {
+    fileprivate func updateRecordingState(_ state: State) {
         let visibleViews = self.visibleViews(forState: state)
         let allViews = Set(view.subviews.flatMap { $0.subviews })
-        let hiddenViews = allViews.subtract(visibleViews)
+        let hiddenViews = allViews.subtracting(visibleViews)
         
-        visibleViews.forEach { $0.hidden = false }
-        hiddenViews.forEach { $0.hidden = true }
+        visibleViews.forEach { $0.isHidden = false }
+        hiddenViews.forEach { $0.isHidden = true }
         
         switch state {
-        case .Ready:
+        case .ready:
             self.closeEffectsPicker(animated: false)
-            self.recordTapGestureRecognizer.enabled = true
-        case .Recording:
+            self.recordTapGestureRecognizer.isEnabled = true
+        case .recording:
             self.closeEffectsPicker(animated: false)
-            self.recordTapGestureRecognizer.enabled = false
-        case .Effects:
+            self.recordTapGestureRecognizer.isEnabled = false
+        case .effects:
             self.openEffectsPicker()
-            self.recordTapGestureRecognizer.enabled = false
+            self.recordTapGestureRecognizer.isEnabled = false
         }
     }
     
@@ -344,17 +344,17 @@ import CocoaLumberjackSwift
         recorder.deleteRecording()
     }
     
-    func sendAudioAsIs(context: AudioMessageContext) {
+    func sendAudioAsIs(_ context: AudioMessageContext) {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to send as audio file") }
         
         delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, context: context, filter: .None)
     }
     
-    private func openEffectsPicker() {
+    fileprivate func openEffectsPicker() {
         guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to add effect to audio file") }
 
-        let noizeReducePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("noize-reduce.wav")
+        let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
         // To apply noize reduction filter
         AVSAudioEffectType.None.apply(url.path!, outPath: noizeReducePath) {
@@ -385,27 +385,27 @@ import CocoaLumberjackSwift
         }
     }
     
-    private func closeEffectsPicker(animated animated: Bool) {
+    fileprivate func closeEffectsPicker(animated: Bool) {
         if let picker = self.effectPickerViewController {
-            picker.willMoveToParentViewController(nil)
+            picker.willMove(toParentViewController: nil)
             picker.removeFromParentViewController()
-            self.effectPickerViewController = .None
+            self.effectPickerViewController = .none
         }
     }
     
     // MARK: - Button actions
     
-    internal func recordButtonPressed(sender: AnyObject!) {
-        self.state = .Recording
+    internal func recordButtonPressed(_ sender: AnyObject!) {
+        self.state = .recording
         self.recorder.startRecording()
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
     }
     
-    func stopRecordButtonPressed(button: UIButton?) {
+    func stopRecordButtonPressed(_ button: UIButton?) {
         self.recorder.stopRecording()
     }
     
-    func confirmButtonPressed(button: UIButton?) {
+    func confirmButtonPressed(_ button: UIButton?) {
         
         guard let audioPath = self.currentEffectFilePath else {
             DDLogError("No file to send")
@@ -421,8 +421,8 @@ import CocoaLumberjackSwift
             effectName = self.currentEffect.description
         }
         
-        let filename = (NSString.filenameForSelfUser().stringByAppendingString("-" + effectName) as NSString).stringByAppendingPathExtension("m4a")!
-        let convertedPath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(filename)
+        let filename = (NSString.filenameForSelfUser().appending("-" + effectName) as NSString).appendingPathExtension("m4a")!
+        let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
         AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { (success) in
@@ -433,17 +433,17 @@ import CocoaLumberjackSwift
         }
     }
     
-    func redoButtonPressed(button: UIButton?) {
-        self.state = .Ready
+    func redoButtonPressed(_ button: UIButton?) {
+        self.state = .ready
     }
     
-    func cancelButtonPressed(button: UIButton?) {
+    func cancelButtonPressed(_ button: UIButton?) {
         self.delegate?.audioRecordViewControllerDidCancel(self)
     }
 }
 
 extension AudioRecordKeyboardViewController: AudioEffectsPickerDelegate {
-    public func audioEffectsPickerDidPickEffect(picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String) {
+    public func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String) {
         self.currentEffectFilePath = resultFilePath
         self.currentEffect = effect
     }

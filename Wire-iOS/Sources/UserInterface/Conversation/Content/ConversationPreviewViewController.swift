@@ -23,8 +23,8 @@ import Cartography
 
 @objc class ConversationPreviewViewController: UIViewController {
 
-    private(set) var conversation: ZMConversation
-    private var contentViewController: ConversationContentViewController
+    fileprivate(set) var conversation: ZMConversation
+    fileprivate var contentViewController: ConversationContentViewController
 
     init(conversation: ZMConversation) {
         self.conversation = conversation

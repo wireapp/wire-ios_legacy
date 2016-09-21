@@ -40,10 +40,10 @@ extension NSExtensionContext {
         return self.providersWithType(kUTTypeImage)
     }
     
-    func providersWithType(type: CFString) -> [NSItemProvider] {
+    func providersWithType(_ type: CFString) -> [NSItemProvider] {
         var providers: [NSItemProvider] = []
         for extensionItem in self.extensionItems {
-            providers.insertContentsOf(extensionItem.providersWithType(type), at: providers.count)
+            providers.insert(extensionItem.providersWithType(type), at: providers.count)
         }
         return providers
     }

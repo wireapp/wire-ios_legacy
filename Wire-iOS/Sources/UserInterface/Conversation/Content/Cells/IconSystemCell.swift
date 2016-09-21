@@ -25,7 +25,7 @@ import TTTAttributedLabel
 // <Icon> Lorem ipsum system message ----
 //        by user A, B, C
 
-public class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
+open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     var leftIconView: UIImageView!
     var leftIconContainer: UIView!
     var labelView: TTTAttributedLabel!
@@ -41,7 +41,7 @@ public class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         self.initialIconConstraintsCreated = false
         
         self.leftIconView = UIImageView(frame: CGRectZero)
-        self.leftIconView.contentMode = .Center
+        self.leftIconView.contentMode = .center
         
         self.labelView = TTTAttributedLabel(frame: CGRectZero)
         self.labelView.extendsLinkTouchArea = true
@@ -67,7 +67,7 @@ public class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func updateConstraints() {
+    open override func updateConstraints() {
         if !self.initialIconConstraintsCreated {
             
             let inset: CGFloat = 16
@@ -99,7 +99,7 @@ public class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         super.updateConstraints()
     }
     
-    public override func canBecomeFirstResponder() -> Bool {
+    open override func canBecomeFirstResponder() -> Bool {
         return false
     }
 }

@@ -37,15 +37,15 @@ enum AnalyticsEventAttribute {
     case cancel(String)
 
     func keyValue() -> (key: String, value: AnyObject) {
-        var keyValue: (String, AnyObject) = ("", 0)
+        var keyValue: (String, AnyObject) = ("", 0 as AnyObject)
         switch self {
-        case .numberOfImages(let value): keyValue = ("numberOfImages", value)
-        case .hasURL(let value): keyValue = ("hasURL", value)
-        case .hasText(let value): keyValue = ("hasText", value)
-        case .numberOfRecipients(let value): keyValue = ("numberOfRecipients", value)
-        case .numberOfGroupRecipients(let value): keyValue = ("numberOfGroupRecipients", value)
-        case .numberOfOneOnOneRecipients(let value): keyValue = ("numberOfOneOnOneRecipients", value)
-        case .cancel(let value): keyValue = ("cancel", value)
+        case .numberOfImages(let value): keyValue = ("numberOfImages", value as AnyObject)
+        case .hasURL(let value): keyValue = ("hasURL", value as AnyObject)
+        case .hasText(let value): keyValue = ("hasText", value as AnyObject)
+        case .numberOfRecipients(let value): keyValue = ("numberOfRecipients", value as AnyObject)
+        case .numberOfGroupRecipients(let value): keyValue = ("numberOfGroupRecipients", value as AnyObject)
+        case .numberOfOneOnOneRecipients(let value): keyValue = ("numberOfOneOnOneRecipients", value as AnyObject)
+        case .cancel(let value): keyValue = ("cancel", value as AnyObject)
         }
         return keyValue
     }
@@ -53,16 +53,16 @@ enum AnalyticsEventAttribute {
 
 extension SharedAnalytics {
     
-    func tagEvent(name: String) {
+    func tagEvent(_ name: String) {
         self.tagEvent(name, attributes: nil)
     }
     
-    func tagEvent(name: String, attributes: [NSObject: AnyObject]?) {
+    func tagEvent(_ name: String, attributes: [AnyHashable: Any]?) {
         self.storeEvent(name, context: ShareExtensionContext, attributes: attributes)
     }
     
-    func tagEvent(event: AnalyticsEvent, attributes: [AnalyticsEventAttribute]) {
-        var attributeDict: [NSObject: AnyObject] = [:]
+    func tagEvent(_ event: AnalyticsEvent, attributes: [AnalyticsEventAttribute]) {
+        var attributeDict: [AnyHashable: Any] = [:]
         for attribute in attributes {
             let keyValue = attribute.keyValue()
             attributeDict[keyValue.key] = keyValue.value

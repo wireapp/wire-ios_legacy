@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -23,51 +23,51 @@ import Cartography
 
 
 @objc public protocol AudioEffectsPickerDelegate: NSObjectProtocol {
-    func audioEffectsPickerDidPickEffect(picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
+    func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
 @objc public final class AudioEffectsPickerViewController: UIViewController {
     
     public let recordingPath: String
-    private let duration: NSTimeInterval
+    fileprivate let duration: TimeInterval
     public weak var delegate: AudioEffectsPickerDelegate?
     
-    private var audioPlayer: AVAudioPlayer? {
+    fileprivate var audioPlayer: AVAudioPlayer? {
         didSet {
-            if self.audioPlayer == .None {
+            if self.audioPlayer == .none {
                 let selector = #selector(AudioEffectsPickerViewController.updatePlayProgressTime)
-                NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: selector, object: .None)
+                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
             }
         }
     }
     
     internal enum State {
-        case None
-        case Tip
-        case Time
-        case Playing
+        case none
+        case tip
+        case time
+        case playing
     }
     
-    internal var state: State = .None
+    internal var state: State = .none
     
-    private let effects: [AVSAudioEffectType] = AVSAudioEffectType.displayedEffects
+    fileprivate let effects: [AVSAudioEffectType] = AVSAudioEffectType.displayedEffects
     internal var normalizedLoudness: [Float] = []
-    private var lastLayoutSize = CGSizeZero
+    fileprivate var lastLayoutSize = CGSize.zero
     
-    internal var selectedAudioEffect: AVSAudioEffectType = .None {
+    internal var selectedAudioEffect: AVSAudioEffectType = .none {
         didSet {
-            if self.selectedAudioEffect == .Reverse {
-                self.progressView.samples = self.normalizedLoudness.reverse()
+            if self.selectedAudioEffect == .reverse {
+                self.progressView.samples = self.normalizedLoudness.reversed() as [NSNumber]
             }
             else {
-                self.progressView.samples = self.normalizedLoudness
+                self.progressView.samples = self.normalizedLoudness as [NSNumber]
             }
             
-            self.setState(.Playing, animated: true)
+            self.setState(.playing, animated: true)
 
-            if self.audioPlayer != .None && oldValue == self.selectedAudioEffect {
+            if self.audioPlayer != .none && oldValue == self.selectedAudioEffect {
                 let player = self.audioPlayer!
-                if player.playing {
+                if player.isPlaying {
                     player.stop()
                 }
                 else {
@@ -78,11 +78,11 @@ import Cartography
                 return
             }
             
-            if self.selectedAudioEffect != .None {
+            if self.selectedAudioEffect != .none {
                 self.audioPlayer?.stop()
                 
                 
-                let effectPath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("effect.wav")
+                let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
                 effectPath.deleteFileAtPath()
                 self.selectedAudioEffect.apply(self.recordingPath, outPath: effectPath) {
                     self.delegate?.audioEffectsPickerDidPickEffect(self, effect: self.selectedAudioEffect, resultFilePath: effectPath)
@@ -96,38 +96,38 @@ import Cartography
         }
     }
     
-    private static let effectRows = 2
-    private static let effectColumns = 4
+    fileprivate static let effectRows = 2
+    fileprivate static let effectColumns = 4
     
     deinit {
         self.audioPlayer?.stop()
-        self.audioPlayer = .None
+        self.audioPlayer = .none
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder) is not implemented")
     }
     
-    public init(recordingPath: String, duration: NSTimeInterval) {
+    public init(recordingPath: String, duration: TimeInterval) {
         self.duration = duration
         self.recordingPath = recordingPath
-        super.init(nibName: .None, bundle: .None)
+        super.init(nibName: .none, bundle: .none)
     }
     
-    private let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
-    private let statusBoxView = UIView()
+    fileprivate let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    fileprivate var collectionView: UICollectionView!
+    fileprivate let statusBoxView = UIView()
     internal let progressView = WaveformProgressView()
-    private let subtitleLabel = UILabel()
+    fileprivate let subtitleLabel = UILabel()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.createCollectionView()
-        self.progressView.barColor = UIColor.whiteColor()
+        self.progressView.barColor = UIColor.white
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.subtitleLabel.textAlignment = .Center
+        self.subtitleLabel.textAlignment = .center
         self.subtitleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.statusBoxView.translatesAutoresizingMaskIntoConstraints = false
@@ -154,55 +154,55 @@ import Cartography
         
         self.loadLevels()
         
-        self.setState(.Time, animated: false)
+        self.setState(.time, animated: false)
     }
     
-    private func createCollectionView() {
-        self.collectionViewLayout.scrollDirection = .Vertical
+    fileprivate func createCollectionView() {
+        self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 0
         self.collectionViewLayout.minimumInteritemSpacing = 0
         self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
-        self.collectionView.registerClass(AudioEffectCell.self, forCellWithReuseIdentifier: AudioEffectCell.reuseIdentifier)
+        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        self.collectionView.register(AudioEffectCell.self, forCellWithReuseIdentifier: AudioEffectCell.reuseIdentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
-        self.collectionView.backgroundColor = UIColor.clearColor()
+        self.collectionView.backgroundColor = UIColor.clear
     }
     
-    private func loadLevels() {
-        let url = NSURL(fileURLWithPath: recordingPath)
+    fileprivate func loadLevels() {
+        let url = URL(fileURLWithPath: recordingPath)
         FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI()) { metadata in
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if let audioMetadata = metadata as? ZMAudioMetadata {
                     self.normalizedLoudness = audioMetadata.normalizedLoudness
-                    self.progressView.samples = audioMetadata.normalizedLoudness
+                    self.progressView.samples = audioMetadata.normalizedLoudness as [NSNumber]
                 }
             })
         }
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.selectCurrentFilter()
         delay(2) {
-            if self.state == .Time {
-                self.setState(.Tip, animated: true)
+            if self.state == .time {
+                self.setState(.tip, animated: true)
             }
         }
     }
     
-    public override func viewDidDisappear(animated: Bool) {
+    public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.audioPlayer?.stop()
-        self.audioPlayer = .None
+        self.audioPlayer = .none
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if !CGSizeEqualToSize(self.lastLayoutSize, self.view.bounds.size) {
+        if !self.lastLayoutSize.equalTo(self.view.bounds.size) {
             self.lastLayoutSize = self.view.bounds.size
             self.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
@@ -210,7 +210,7 @@ import Cartography
         }
     }
     
-    internal func setState(state: State, animated: Bool) {
+    internal func setState(_ state: State, animated: Bool) {
         if self.state == state {
             return
         }
@@ -218,14 +218,14 @@ import Cartography
         self.state = state
         
         let colorScheme = ColorScheme()
-        colorScheme.variant = .Dark
+        colorScheme.variant = .dark
         
         
         switch self.state {
-        case .Tip:
-            self.subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized.uppercaseString
-            self.subtitleLabel.textColor = colorScheme.colorWithName(ColorSchemeColorTextForeground)
-        case .Time:
+        case .tip:
+            self.subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized.uppercased()
+            self.subtitleLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        case .time:
             let duration: Int
             if let player = self.audioPlayer {
                 duration = Int(ceil(player.duration))
@@ -237,83 +237,84 @@ import Cartography
             let (seconds, minutes) = (duration % 60, duration / 60)
             self.subtitleLabel.text = String(format: "%d:%02d", minutes, seconds)
             self.subtitleLabel.accessibilityValue = self.subtitleLabel.text
-            self.subtitleLabel.textColor = colorScheme.colorWithName(ColorSchemeColorTextForeground)
+            self.subtitleLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
         default:
             // no-op
             break
         }
         
         let change = {
-            self.subtitleLabel.hidden = self.state == .Playing
-            self.progressView.hidden = self.state != .Playing
+            self.subtitleLabel.isHidden = self.state == .playing
+            self.progressView.isHidden = self.state != .playing
         }
         
         if animated {
-            let options: UIViewAnimationOptions = (state == .Playing) ? .TransitionFlipFromTop : .TransitionFlipFromBottom
-            UIView.transitionWithView(self.statusBoxView, duration: 0.35, options: options, animations: change, completion: .None)
+            let options: UIViewAnimationOptions = (state == .playing) ? .transitionFlipFromTop : .transitionFlipFromBottom
+            UIView.transition(with: self.statusBoxView, duration: 0.35, options: options, animations: change, completion: .none)
         }
         else {
             change()
         }
     }
     
-    private func selectCurrentFilter() {
-        if let index = self.effects.indexOf({
+    fileprivate func selectCurrentFilter() {
+        if let index = self.effects.index(where: {
             $0 == self.selectedAudioEffect
         }) {
-            self.collectionView.selectItemAtIndexPath(NSIndexPath(forItem:index, inSection:0), animated: false, scrollPosition: .None)
+            let indexPath = IndexPath(item:index, section:0)
+            self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
     }
     
-    private func playMedia(atPath: String) {
-        Analytics.shared()?.tagPreviewedAudioMessageRecording(.Keyboard)
-        self.audioPlayer = try? AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: atPath))
+    fileprivate func playMedia(_ atPath: String) {
+        Analytics.shared()?.tagPreviewedAudioMessageRecording(.keyboard)
+        self.audioPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: atPath))
         self.audioPlayer?.delegate = self
         self.audioPlayer?.play()
         self.updatePlayProgressTime()
     }
     
-    @objc private func updatePlayProgressTime() {
+    @objc fileprivate func updatePlayProgressTime() {
         let selector = #selector(AudioEffectsPickerViewController.updatePlayProgressTime)
         if let player = self.audioPlayer {
             self.progressView.progress = Float(player.currentTime / player.duration)
             
-            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: selector, object: .None)
-            self.performSelector(selector, withObject: .None, afterDelay: 0.05)
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
+            self.perform(selector, with: .none, afterDelay: 0.05)
         }
         else {
-            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: selector, object: .None)
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
         }
     }
 }
 
 extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.effects.count
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AudioEffectCell.reuseIdentifier, forIndexPath: indexPath) as! AudioEffectCell
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AudioEffectCell.reuseIdentifier, for: indexPath) as! AudioEffectCell
         cell.effect = self.effects[indexPath.item]
-        let lastColumn = (indexPath.item % self.dynamicType.effectColumns) == self.dynamicType.effectColumns - 1
-        let lastRow = Int(floorf(Float(indexPath.item) / Float(self.dynamicType.effectColumns))) == self.dynamicType.effectRows - 1
+        let lastColumn = ((indexPath as NSIndexPath).item % type(of: self).effectColumns) == type(of: self).effectColumns - 1
+        let lastRow = Int(floorf(Float((indexPath as NSIndexPath).item) / Float(type(of: self).effectColumns))) == type(of: self).effectRows - 1
 
         cell.borders = (lastColumn ? AudioEffectCellBorders.None : AudioEffectCellBorders.Right).union(lastRow ? [] : [AudioEffectCellBorders.Bottom])
         return cell
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(CGFloat(Int(collectionView.bounds.width) / self.dynamicType.effectColumns),
-                          CGFloat(Int(collectionView.bounds.height) / self.dynamicType.effectRows))
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: CGFloat(Int(collectionView.bounds.width) / type(of: self).effectColumns),
+                          height: CGFloat(Int(collectionView.bounds.height) / type(of: self).effectRows))
     }
     
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard ((try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: .DefaultToSpeaker)) != nil) else {
+        guard ((try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)) != nil) else {
             DDLogError("Cannot set audio session to CategoryPlayAndRecord, speaker")
             return
         }
@@ -323,9 +324,9 @@ extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollecti
 }
 
 extension AudioEffectsPickerViewController: AVAudioPlayerDelegate {
-    public func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if player == self.audioPlayer {
-            self.setState(.Time, animated: true)
+            self.setState(.time, animated: true)
         }
     }
 }

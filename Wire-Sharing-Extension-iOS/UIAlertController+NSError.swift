@@ -22,17 +22,17 @@ import zshare
 
 extension UIAlertController {
 
-    convenience init(error: NSError, context:NSExtensionContext, actionHandler:() -> ()) {
+    convenience init(error: NSError, context:NSExtensionContext, actionHandler:@escaping () -> ()) {
         if let title = error.userInfo[NSLocalizedDescriptionKey] as? String,
-            message = error.userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String {
-                self.init(title: title, message: message, preferredStyle:UIAlertControllerStyle.Alert)
+            let message = error.userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String {
+                self.init(title: title, message: message, preferredStyle:UIAlertControllerStyle.alert)
         } else {
             self.init(title: NSLocalizedString("sharing-ext.login.error.title", comment: ""),
                 message: NSLocalizedString("sharing-ext.login.error.message", comment: ""),
-                preferredStyle:UIAlertControllerStyle.Alert)
+                preferredStyle:UIAlertControllerStyle.alert)
         }
     
-        let cancelAction = UIAlertAction(title: NSLocalizedString("sharing-ext.close", comment: "Close action of error alert"), style: UIAlertActionStyle.Cancel) { (action: UIAlertAction) -> Void in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("sharing-ext.close", comment: "Close action of error alert"), style: UIAlertActionStyle.cancel) { (action: UIAlertAction) -> Void in
             actionHandler()
         }
     

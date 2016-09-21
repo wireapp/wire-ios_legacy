@@ -22,8 +22,8 @@ import Foundation
 extension NSString {
     func containsURL() -> Bool {
         do {
-            let urlDetector = try NSDataDetector(types: NSTextCheckingType.Link.rawValue)
-            let matches = urlDetector.matchesInString(self as String, options: [], range: NSMakeRange(0, self.length))
+            let urlDetector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = urlDetector.matches(in: self as String, options: [], range: NSMakeRange(0, self.length))
             return matches.count > 0
         } catch _ as NSError {
             return false

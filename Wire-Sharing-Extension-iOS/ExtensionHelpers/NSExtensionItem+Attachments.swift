@@ -36,7 +36,7 @@ extension NSExtensionItem {
         return self.providersWithType(kUTTypeImage)
     }
     
-    func providersWithType(type: CFString) -> [NSItemProvider] {
+    func providersWithType(_ type: CFString) -> [NSItemProvider] {
         if let itemProviderAttachments = self.attachments as? [NSItemProvider] {
             return itemProviderAttachments.filter { $0.hasItemConformingToTypeIdentifier(type as String) }
         }

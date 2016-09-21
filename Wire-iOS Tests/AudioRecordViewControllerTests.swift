@@ -26,19 +26,19 @@ import Cartography
     
     var cancelCallCount: UInt = 0
     
-    @objc func audioRecordViewControllerDidCancel(audioRecordViewController: AudioRecordBaseViewController) {
+    @objc func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
         cancelCallCount = cancelCallCount + 1
     }
     
-    @objc func audioRecordViewControllerDidStartRecording(audioRecordViewController: AudioRecordBaseViewController) {}
+    @objc func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {}
 
-    @objc func audioRecordViewControllerWantsToSendAudio(audioRecordViewController: AudioRecordBaseViewController, recordingURL: NSURL, duration: NSTimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {}
+    @objc func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {}
 }
 
-@objc class AudioRecordViewControllerTests: ZMSnapshotTestCase {
+class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     var sut: AudioRecordViewController!
-    private var delegate: MockAudioRecordViewControllerDelegate!
+    fileprivate var delegate: MockAudioRecordViewControllerDelegate!
     
     override func setUp() {
         super.setUp()
@@ -46,9 +46,9 @@ import Cartography
         sut = AudioRecordViewController()
         delegate = MockAudioRecordViewControllerDelegate()
         sut.delegate = delegate
-        CASStyler.defaultStyler().styleItem(sut)
+        CASStyler.default().styleItem(sut)
         sut.updateTimeLabel(123)
-        sut.setOverlayState(.Default, animated: false)
+        sut.setOverlayState(.default, animated: false)
     }
     
     override func tearDown() {
@@ -77,7 +77,7 @@ import Cartography
         XCTAssertEqual(sut.recordingState, AudioRecordState.Recording)
         sut.updateTimeLabel(123)
         sut.audioPreviewView.updateWithLevel(0.2)
-        sut.setOverlayState(.Expanded(0), animated: false)
+        sut.setOverlayState(.expanded(0), animated: false)
         
         // then
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
@@ -88,7 +88,7 @@ import Cartography
         XCTAssertEqual(sut.recordingState, AudioRecordState.Recording)
         sut.updateTimeLabel(123)
         sut.audioPreviewView.updateWithLevel(0.8)
-        sut.setOverlayState(.Expanded(1), animated: false)
+        sut.setOverlayState(.expanded(1), animated: false)
         
         // then
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
@@ -96,7 +96,7 @@ import Cartography
     
     func testThatItRendersViewControllerCorrectlyState_FinishedRecording() {
         // when
-        sut.recordingState = .FinishedRecording
+        sut.recordingState = .finishedRecording
         
         // then
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
@@ -104,8 +104,8 @@ import Cartography
     
     func testThatItRendersViewControllerCorrectlyState_FinishedRecording_Playing() {
         // when
-        sut.recordingState = .FinishedRecording
-        sut.buttonOverlay.playingState = .Playing
+        sut.recordingState = .finishedRecording
+        sut.buttonOverlay.playingState = .playing
         sut.updateTimeLabel(343)
 
         // then
@@ -114,7 +114,7 @@ import Cartography
         
     func testThatItCallsItsDelegateWhenCancelIsPressed() {
         // when
-        sut.cancelButton.sendActionsForControlEvents(.TouchUpInside)
+        sut.cancelButton.sendActions(for: .touchUpInside)
         
         // then
         XCTAssertEqual(delegate.cancelCallCount, 1)
@@ -124,7 +124,7 @@ import Cartography
 
 
 private extension UIViewController {
-    private func prepareForSnapshot() -> UIView {
+    func prepareForSnapshot() -> UIView {
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
         

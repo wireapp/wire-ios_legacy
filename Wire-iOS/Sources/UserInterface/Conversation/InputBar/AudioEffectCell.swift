@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-public struct AudioEffectCellBorders : OptionSetType {
+public struct AudioEffectCellBorders : OptionSet {
     public let rawValue: Int
     
     public init(rawValue: Int) {
@@ -33,9 +33,9 @@ public struct AudioEffectCellBorders : OptionSetType {
 }
 
 @objc public final class AudioEffectCell: UICollectionViewCell {
-    private let iconView = IconButton()
-    private let borderRightView = UIView()
-    private let borderBottomView = UIView()
+    fileprivate let iconView = IconButton()
+    fileprivate let borderRightView = UIView()
+    fileprivate let borderBottomView = UIView()
     
     public var borders: AudioEffectCellBorders = [.None] {
         didSet {
@@ -46,11 +46,11 @@ public struct AudioEffectCellBorders : OptionSetType {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.clearColor()
-        self.contentView.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
         self.clipsToBounds = false
         
-        self.iconView.userInteractionEnabled = false
+        self.iconView.isUserInteractionEnabled = false
         [self.iconView, self.borderRightView, self.borderBottomView].forEach(self.contentView.addSubview)
 
         [self.borderRightView, self.borderBottomView].forEach { v in
@@ -85,23 +85,23 @@ public struct AudioEffectCellBorders : OptionSetType {
     
     public override var reuseIdentifier: String? {
         get {
-            return self.dynamicType.reuseIdentifier
+            return type(of: self).reuseIdentifier
         }
     }
     
-    override public var selected: Bool {
+    override public var isSelected: Bool {
         didSet {
             self.updateForSelectedState()
         }
     }
     
-    private func updateBorders() {
-        self.borderRightView.hidden = !self.borders.contains(.Right)
-        self.borderBottomView.hidden = !self.borders.contains(.Bottom)
+    fileprivate func updateBorders() {
+        self.borderRightView.isHidden = !self.borders.contains(.Right)
+        self.borderBottomView.isHidden = !self.borders.contains(.Bottom)
     }
     
-    private func updateForSelectedState() {
-        self.iconView.setIconColor(self.selected ? UIColor.accentColor() : UIColor.whiteColor(), forState: .Normal)
+    fileprivate func updateForSelectedState() {
+        self.iconView.setIconColor(self.isSelected ? UIColor.accentColor : UIColor.white, for: .normal)
     }
     
     public var effect: AVSAudioEffectType = .None {

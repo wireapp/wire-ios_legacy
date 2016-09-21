@@ -26,7 +26,7 @@ extension AutomationHelper : AddressBookHelperConfiguration {
         return self.uploadAddressbookOnSimulator
     }
 
-    public var addressBookRemoteSearchTimeInterval: NSTimeInterval {
+    public var addressBookRemoteSearchTimeInterval: TimeInterval {
         return self.delayInAddressBookRemoteSearch ?? 0
     }
 }

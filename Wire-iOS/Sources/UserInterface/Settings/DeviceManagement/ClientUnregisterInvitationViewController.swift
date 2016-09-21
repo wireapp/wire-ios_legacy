@@ -38,13 +38,13 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         self.createConstraints()
     }
     
-    private func createContainerView() {
+    fileprivate func createContainerView() {
         let view = UIView()
         self.containerView = view
         self.view?.addSubview(view)
     }
   
-    private func createHeroLabel() {
+    fileprivate func createHeroLabel() {
         let heroLabel = UILabel()
         heroLabel.translatesAutoresizingMaskIntoConstraints = false
         heroLabel.font = UIFont(magicIdentifier: "style.text.large.font_spec_medium")
@@ -56,7 +56,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         self.containerView?.addSubview(heroLabel)
     }
     
-    private func createSubtitleLabel() {
+    fileprivate func createSubtitleLabel() {
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = UIFont(magicIdentifier: "style.text.large.font_spec_light")
@@ -68,24 +68,24 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         self.containerView?.addSubview(subtitleLabel)
     }
     
-    private func createDeleteDevicesButton() {
-        let manageDevicesButton = Button(style: .FullMonochrome)
-        manageDevicesButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.manage_button.title", comment:""), forState: UIControlState.Normal)
-        manageDevicesButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.openManageDevices(_:)), forControlEvents: .TouchUpInside)
+    fileprivate func createDeleteDevicesButton() {
+        let manageDevicesButton = Button(style: .fullMonochrome)
+        manageDevicesButton?.setTitle(NSLocalizedString("registration.signin.too_many_devices.manage_button.title", comment:""), for: UIControlState())
+        manageDevicesButton?.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.openManageDevices(_:)), for: .touchUpInside)
         self.manageDevicesButton = manageDevicesButton
-        self.containerView?.addSubview(manageDevicesButton)
+        self.containerView?.addSubview(manageDevicesButton!)
     }
     
-    private func createSignOutButton() {
+    fileprivate func createSignOutButton() {
         let signOutButton = Button(styleClass: "dialogue-button-empty-monochrome")
-        signOutButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), forState: UIControlState.Normal)
-        signOutButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.signOut(_:)), forControlEvents: .TouchUpInside)
-        signOutButton.hidden = true // for the moment not supported
+        signOutButton?.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), for: UIControlState())
+        signOutButton?.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.signOut(_:)), for: .touchUpInside)
+        signOutButton?.isHidden = true // for the moment not supported
         self.signOutButton = signOutButton
-        self.containerView?.addSubview(signOutButton)
+        self.containerView?.addSubview(signOutButton!)
     }
     
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         if let containerView = self.containerView,
             let subtitleLabel = self.subtitleLabel,
             let heroLabel = self.heroLabel,
@@ -127,13 +127,13 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     
     // MARK: - Actions
     
-    func openManageDevices(sender : UIButton!) {
+    func openManageDevices(_ sender : UIButton!) {
         if let formStepDelegate = self.formStepDelegate {
             formStepDelegate.didCompleteFormStep(self)
         }
     }
     
-    func signOut(sender : UIButton!) {
+    func signOut(_ sender : UIButton!) {
         // for the moment not supported
     }
 }

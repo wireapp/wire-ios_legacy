@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -28,22 +28,22 @@ import MobileCoreServices
 }
 
 @objc public protocol AudioRecordViewControllerDelegate: class {
-    func audioRecordViewControllerDidCancel(audioRecordViewController: AudioRecordBaseViewController)
-    func audioRecordViewControllerDidStartRecording(audioRecordViewController: AudioRecordBaseViewController)
-    func audioRecordViewControllerWantsToSendAudio(audioRecordViewController: AudioRecordBaseViewController, recordingURL: NSURL, duration: NSTimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType)
+    func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController)
+    func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController)
+    func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType)
 }
 
 
 @objc enum AudioRecordState: UInt {
-    case Recording, FinishedRecording
+    case recording, finishedRecording
 }
 
 
 @objc public enum AudioMessageContext: UInt {
-    case AfterSlideUp, AfterPreview, AfterEffect
+    case afterSlideUp, afterPreview, afterEffect
 }
 
-private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin")) / 2) - (UIImage.sizeForZetaIconSize(.Tiny) / 2)
+private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")) / 2) - (UIImage.size(for: .tiny) / 2)
 
 
 @objc public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
@@ -62,15 +62,15 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
     var recordingDotViewVisible: ConstraintGroup?
     var recordingDotViewHidden: ConstraintGroup?
     
-    public let recorder = AudioRecorder(format: .WAV, maxRecordingDuration: 25.0 * 60.0)! // 25 Minutes
+    public let recorder = AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)! // 25 Minutes
     
     weak public var delegate: AudioRecordViewControllerDelegate?
     
-    var recordingState: AudioRecordState = .Recording {
+    var recordingState: AudioRecordState = .recording {
         didSet { updateRecordingState(recordingState) }
     }
     
-    private let localizationBasePath = "conversation.input_bar.audio_message"
+    fileprivate let localizationBasePath = "conversation.input_bar.audio_message"
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -82,8 +82,8 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         configureAudioRecorder()
         createConstraints()
 
-        if DeveloperMenuState.developerMenuEnabled() && Settings.sharedSettings().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.sharedSettings().maxRecordingDurationDebug
+        if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
         }
     }
     
@@ -100,25 +100,25 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         }
     }
     
-    func finishRecordingIfNeeded(sender: UIGestureRecognizer) {
-        let location = sender.locationInView(buttonOverlay)
-        let upperThird = location.y < CGRectGetHeight(buttonOverlay.frame) / 3
-        let shouldSend = upperThird && sender.state == .Ended
+    func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
+        let location = sender.location(in: buttonOverlay)
+        let upperThird = location.y < buttonOverlay.frame.height / 3
+        let shouldSend = upperThird && sender.state == .ended
         
         guard recorder.stopRecording() else { return DDLogWarn("Stopped recording but did not get file URL") }
         
         if shouldSend {
-            sendAudio(.AfterSlideUp)
+            sendAudio(.afterSlideUp)
         }
     }
     
-    func updateWithChangedRecognizer(sender: UIGestureRecognizer) {
+    func updateWithChangedRecognizer(_ sender: UIGestureRecognizer) {
         let height = buttonOverlay.frame.height
         let (topOffset, mixRange) = (height / 4, height / 2)
-        let locationY = sender.locationInView(buttonOverlay).y - topOffset
+        let locationY = sender.location(in: buttonOverlay).y - topOffset
         let offset: CGFloat = locationY < mixRange ? 1 - locationY / mixRange : 0
 
-        setOverlayState(.Expanded(offset.clamp(0, upper: 1)), animated: false)
+        setOverlayState(.expanded(offset.clamp(0, upper: 1)), animated: false)
     }
     
     func configureViews() {
@@ -135,25 +135,25 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         
         timeLabel.accessibilityLabel = "audioRecorderTimeLabel"
         
-        topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercaseString
+        topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercased()
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         
-        cancelButton.setIcon(.Cancel, withSize: .Tiny, forState: .Normal)
-        cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         
         buttonOverlay.buttonHandler = { [weak self] buttonType in
             guard let `self` = self else {
                 return
             }
             switch buttonType {
-            case .Send: self.sendAudio(.AfterPreview)
-            case .Play:
-                Analytics.shared()?.tagPreviewedAudioMessageRecording(.Minimised)
+            case .send: self.sendAudio(.afterPreview)
+            case .play:
+                Analytics.shared()?.tagPreviewedAudioMessageRecording(.minimised)
                 self.recorder.playRecording()
-            case .Stop: self.recorder.stopPlaying()
+            case .stop: self.recorder.stopPlaying()
             }
         }
     }
@@ -238,14 +238,14 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         }
         
         recorder.recordStartedCallback = {
-            AppDelegate.sharedAppDelegate().mediaPlaybackManager.audioTrackPlayer.stop()
+            AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
             guard let `self` = self else {
                 return
             }
-            self.recordingState = .FinishedRecording
+            self.recordingState = .finishedRecording
             if reachedMaxRecordingDuration {
                 
                 let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
@@ -253,16 +253,16 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
                 
                 let durationLimit = String(format: "%d:%02d", minutes, seconds)
                 
-                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .Alert)
-                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .Cancel, handler: nil)
+                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .alert)
+                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
                 alertController.addAction(actionCancel)
                 
-                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .Default, handler: { action in
-                    self.sendAudio(.AfterPreview)
+                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .default, handler: { action in
+                    self.sendAudio(.afterPreview)
                 })
                 alertController.addAction(actionSend)
                 
-                self.presentViewController(alertController, animated: true, completion: .None)
+                self.present(alertController, animated: true, completion: .none)
             }
         }
         
@@ -281,38 +281,38 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         }
     }
     
-    func topContainerTapped(sender: UITapGestureRecognizer) {
+    func topContainerTapped(_ sender: UITapGestureRecognizer) {
         delegate?.audioRecordViewControllerDidCancel(self)
     }
     
-    func setRecordingState(state: AudioRecordState, animated: Bool) {
+    func setRecordingState(_ state: AudioRecordState, animated: Bool) {
         updateRecordingState(state)
         
         if animated {
-            UIView.animateWithDuration(0.2) {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.view.layoutIfNeeded()
-            }
+            }) 
         }
     }
     
-    func updateRecordingState(state: AudioRecordState) {
+    func updateRecordingState(_ state: AudioRecordState) {
         
         let visible = visibleViewsForState(state)
         let allViews = Set(view.subviews.flatMap { $0.subviews }) // Well, 2 levels 'all'
-        let hidden = allViews.subtract(visible)
+        let hidden = allViews.subtracting(visible)
         
-        visible.forEach { $0.hidden = false }
-        hidden.forEach { $0.hidden = true }
+        visible.forEach { $0.isHidden = false }
+        hidden.forEach { $0.isHidden = true }
         
         buttonOverlay.recordingState = state
-        let finished = state == .FinishedRecording
+        let finished = state == .finishedRecording
         
         self.recordingDotView.animating = !finished
         
         let pathComponent = finished ? "tooltip.tap_send" : "tooltip.pull_send"
-        topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized.uppercaseString
+        topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized.uppercased()
         
-        if self.recordingState == .Recording {
+        if self.recordingState == .recording {
             self.recordingDotViewHidden?.active = false
             self.recordingDotViewVisible?.active = true
         }
@@ -322,38 +322,38 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         }
     }
     
-    func updateTimeLabel(durationInSeconds: NSTimeInterval) {
+    func updateTimeLabel(_ durationInSeconds: TimeInterval) {
         let duration = Int(ceil(durationInSeconds))
         let (seconds, minutes) = (duration % 60, duration / 60)
         timeLabel.text = String(format: "%d:%02d", minutes, seconds)
         timeLabel.accessibilityValue = timeLabel.text
     }
     
-    func visibleViewsForState(state: AudioRecordState) -> [UIView] {
+    func visibleViewsForState(_ state: AudioRecordState) -> [UIView] {
         var visibleViews = [bottomContainerView, topContainerView, buttonOverlay, topSeparator, timeLabel, audioPreviewView, topTooltipLabel]
         
         switch state {
-        case .FinishedRecording:
+        case .finishedRecording:
             visibleViews.append(cancelButton)
-        case .Recording:
+        case .recording:
             visibleViews.append(recordingDotView)
         }
         
-        if traitCollection.userInterfaceIdiom == .Pad { visibleViews.append(rightSeparator) }
+        if traitCollection.userInterfaceIdiom == .pad { visibleViews.append(rightSeparator) }
         
         return visibleViews
     }
     
-    func setOverlayState(state: AudioButtonOverlayState, animated: Bool) {
+    func setOverlayState(_ state: AudioButtonOverlayState, animated: Bool) {
         let animations = { self.buttonOverlay.setOverlayState(state) }
         
         if state.animatable && animated {
-            UIView.animateWithDuration(
-                state.duration,
+            UIView.animate(
+                withDuration: state.duration,
                 delay: 0,
                 usingSpringWithDamping: state.springDampening,
                 initialSpringVelocity: state.springVelocity,
-                options: .CurveEaseOut,
+                options: .curveEaseOut,
                 animations: animations,
                 completion: nil
             )
@@ -362,7 +362,7 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         }
     }
     
-    func cancelButtonPressed(sender: IconButton) {
+    func cancelButtonPressed(_ sender: IconButton) {
         Analytics.shared()?.tagCancelledAudioMessageRecording()
         
         recorder.stopPlaying()
@@ -376,26 +376,26 @@ private let margin = (CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin
         recorder.deleteRecording()
     }
     
-    func sendAudio(context: AudioMessageContext) {
+    func sendAudio(_ context: AudioMessageContext) {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to send as audio file") }
         
         
-        let effectPath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("effect.wav")
+        let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
         effectPath.deleteFileAtPath()
         // To apply noize reduction filter
-        AVSAudioEffectType.None.apply(url.path!, outPath: effectPath) {
-            url.path!.deleteFileAtPath()
+        AVSAudioEffectType.none.apply(url.path, outPath: effectPath) {
+            url.path.deleteFileAtPath()
             
-            let filename = (NSString.filenameForSelfUser() as NSString).stringByAppendingPathExtension("m4a")!
-            let convertedPath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(filename)
+            let filename = (NSString.filenameForSelfUser() as NSString).appendingPathExtension("m4a")!
+            let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
             convertedPath.deleteFileAtPath()
             
             AVAsset.wr_convertAudioToUploadFormat(effectPath, outPath: convertedPath) { success in
                 effectPath.deleteFileAtPath()
                 
                 if success {
-                    self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, context: context, filter: .None)
+                    self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, context: context, filter: .none)
                 }
             }
         }

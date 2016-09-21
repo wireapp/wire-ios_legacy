@@ -41,16 +41,16 @@ class TailEditingTextField: UITextField {
     }
     
     func setup() {
-        self.addTarget(self, action: #selector(TailEditingTextField.replaceNormalSpacesWithNonBreakingSpaces), forControlEvents: UIControlEvents.EditingDidBegin)
-        self.addTarget(self, action: #selector(TailEditingTextField.replaceNormalSpacesWithNonBreakingSpaces), forControlEvents: UIControlEvents.EditingChanged)
-        self.addTarget(self, action: #selector(TailEditingTextField.replaceNonBreakingSpacesWithNormalSpaces), forControlEvents: UIControlEvents.EditingDidEnd)
+        self.addTarget(self, action: #selector(TailEditingTextField.replaceNormalSpacesWithNonBreakingSpaces), for: UIControlEvents.editingDidBegin)
+        self.addTarget(self, action: #selector(TailEditingTextField.replaceNormalSpacesWithNonBreakingSpaces), for: UIControlEvents.editingChanged)
+        self.addTarget(self, action: #selector(TailEditingTextField.replaceNonBreakingSpacesWithNormalSpaces), for: UIControlEvents.editingDidEnd)
     }
     
     func replaceNormalSpacesWithNonBreakingSpaces() {
-        self.text = self.text?.stringByReplacingOccurrencesOfString(self.dynamicType.normalSpace, withString: self.dynamicType.nonBreakingSpace)
+        self.text = self.text?.replacingOccurrences(of: type(of: self).normalSpace, with: type(of: self).nonBreakingSpace)
     }
     
     func replaceNonBreakingSpacesWithNormalSpaces() {
-        self.text = self.text?.stringByReplacingOccurrencesOfString(self.dynamicType.nonBreakingSpace, withString: self.dynamicType.normalSpace)
+        self.text = self.text?.replacingOccurrences(of: type(of: self).nonBreakingSpace, with: type(of: self).normalSpace)
     }
 }

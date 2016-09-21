@@ -20,7 +20,7 @@
 import Foundation
 
 enum AudioButtonOverlayState {
-    case Hidden, Expanded(CGFloat), Default
+    case hidden, expanded(CGFloat), `default`
     
     var width: CGFloat {
         return 40
@@ -28,15 +28,15 @@ enum AudioButtonOverlayState {
     
     var height: CGFloat {
         switch self {
-        case .Hidden: return 0
-        case .Default: return 96
-        case .Expanded: return 120
+        case .hidden: return 0
+        case .default: return 96
+        case .expanded: return 120
         }
     }
     
     var alpha: CGFloat {
         switch self {
-        case .Hidden: return 0
+        case .hidden: return 0
         default: return 1
         }
     }
@@ -47,7 +47,7 @@ enum AudioButtonOverlayState {
 extension AudioButtonOverlayState {
     
     var animatable: Bool {
-        if case .Hidden = self {
+        if case .hidden = self {
             return false
         }
         
@@ -56,36 +56,36 @@ extension AudioButtonOverlayState {
     
     var springDampening: CGFloat {
         switch self {
-        case .Expanded: return 0.6
-        case .Default: return 0.7
+        case .expanded: return 0.6
+        case .default: return 0.7
         default: return 0
         }
     }
     
     var springVelocity: CGFloat {
         switch self {
-        case .Expanded: return 0.4
-        case .Default: return 0.3
+        case .expanded: return 0.4
+        case .default: return 0.3
         default: return 0
         }
     }
     
-    var duration: NSTimeInterval {
+    var duration: TimeInterval {
         switch self {
-        case .Expanded, .Default: return 0.3
+        case .expanded, .default: return 0.3
         default: return 0.2
         }
     }
     
     var sendButtonTransform: CGAffineTransform {
         switch self {
-        case .Hidden: return CGAffineTransformMakeRotation(90)
-        default: return CGAffineTransformIdentity
+        case .hidden: return CGAffineTransform(rotationAngle: 90)
+        default: return CGAffineTransform.identity
         }
     }
     
-    func colorWithColors(color: UIColor, highlightedColor: UIColor) -> UIColor {
-        if case .Expanded(let amount) = self {
+    func colorWithColors(_ color: UIColor, highlightedColor: UIColor) -> UIColor {
+        if case .expanded(let amount) = self {
             return color.mix(highlightedColor, amount: Double(amount))
         }
         return color

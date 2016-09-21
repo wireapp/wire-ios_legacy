@@ -20,7 +20,7 @@ import Foundation
 import zmessaging
 import Cartography
 
-@objc public class ReactionsView: UIView {
+@objc open class ReactionsView: UIView {
     let avatarStack = StackView()
     static let maxAvatarsDisplayed = 2
     
@@ -31,8 +31,8 @@ import Cartography
             let likersToDisplay: [ZMUser]
             let shouldDisplayEllipsis: Bool
             
-            if likers.count > self.dynamicType.maxAvatarsDisplayed + 1 {
-                likersToDisplay = Array<ZMUser>(likers.prefix(self.dynamicType.maxAvatarsDisplayed))
+            if likers.count > type(of: self).maxAvatarsDisplayed + 1 {
+                likersToDisplay = Array<ZMUser>(likers.prefix(type(of: self).maxAvatarsDisplayed))
                 shouldDisplayEllipsis = true
             }
             else {
@@ -51,9 +51,9 @@ import Cartography
             }
             
             if shouldDisplayEllipsis {
-                let iconColor = ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextForeground)
-                let imageView = UIImageView(image: UIImage(forIcon: .Elipsis, iconSize: .Like, color:iconColor))
-                imageView.contentMode = .Center
+                let iconColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+                let imageView = UIImageView(image: UIImage(for: .elipsis, iconSize: .like, color:iconColor))
+                imageView.contentMode = .center
                 constrain(imageView) { imageView in
                     imageView.width == imageView.height
                     imageView.width == 16

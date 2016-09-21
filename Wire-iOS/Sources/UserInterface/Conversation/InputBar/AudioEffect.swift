@@ -22,9 +22,9 @@ import CocoaLumberjackSwift
 
 
 extension String {
-    public func deleteFileAtPath() -> Bool {
+    @discardableResult public func deleteFileAtPath() -> Bool {
         do {
-            try NSFileManager.defaultManager().removeItemAtPath(self)
+            try FileManager.default.removeItem(atPath: self)
         }
         catch (let error) {
             DDLogError("Cannot delete file: \(self): \(error)")
@@ -123,7 +123,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
                                                                 .VocoderMed,
                                                                 .Reverse]
     
-    public func apply(inPath: String, outPath: String, completion: (() -> ())? = .None) {
+    public func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
         
         struct Static {
             static var onceToken: dispatch_once_t = 0

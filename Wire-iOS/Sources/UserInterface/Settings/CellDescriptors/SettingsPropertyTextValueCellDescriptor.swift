@@ -31,12 +31,12 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
     
-    init(settingsProperty: SettingsProperty, identifier: String? = .None) {
+    init(settingsProperty: SettingsProperty, identifier: String? = .none) {
         self.settingsProperty = settingsProperty
         self.identifier = identifier
     }
     
-    func featureCell(cell: SettingsCellType) {
+    func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let textCell = cell as? SettingsTextCell,
             let stringValue = self.settingsProperty.propertyValue.value() as? String {
@@ -44,9 +44,9 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         }
     }
     
-    func select(value: SettingsPropertyValue?) {
+    func select(_ value: SettingsPropertyValue?) {
         if let stringValue = value?.value() as? String {
-            self.settingsProperty << SettingsPropertyValue.String(value: stringValue)
+            self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
         }
     }
 }

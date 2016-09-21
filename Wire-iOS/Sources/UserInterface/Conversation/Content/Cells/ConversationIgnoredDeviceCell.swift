@@ -21,9 +21,9 @@ import Foundation
 import TTTAttributedLabel
 
 class ConversationIgnoredDeviceCell : IconSystemCell {
-    private static let deviceListLink = NSURL(string:"setting://device-list")!
+    fileprivate static let deviceListLink = URL(string:"setting://device-list")!
     
-    override func configureForMessage(message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    override func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configureForMessage(message, layoutProperties: layoutProperties)
         
         self.leftIconView.image = WireStyleKit.imageOfShieldnotverified()
@@ -36,29 +36,29 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
             let labelFont = self.labelFont,
             let labelBoldFont = self.labelBoldFont,
             let labelTextColor = self.labelTextColor
-            where systemMessageData.systemMessageType == ZMSystemMessageType.IgnoredClient && systemMessageData.users.count > 0 {
+            , systemMessageData.systemMessageType == ZMSystemMessageType.IgnoredClient && systemMessageData.users.count > 0 {
                 
                 guard let user = systemMessageData.users.first else { return }
                 
-                let youString = "content.system.you_started".localized.uppercaseString
+                let youString = "content.system.you_started".localized.uppercased()
                 let deviceString : String
                 
                 if user.isSelfUser {
-                    deviceString = "content.system.your_devices".localized.uppercaseString
+                    deviceString = "content.system.your_devices".localized.uppercased()
                 } else {
                     deviceString = String(format: "content.system.other_devices".localized, user.displayName).uppercaseString
                 }
                 
                 let baseString = "content.system.unverified".localized
-                let endResult = String(format: baseString, youString, deviceString).uppercaseString
+                let endResult = String(format: baseString, youString, deviceString).uppercased()
 
-                let youRange = (endResult as NSString).rangeOfString(youString)
-                let deviceRange = (endResult as NSString).rangeOfString(deviceString)
+                let youRange = (endResult as NSString).range(of: youString)
+                let deviceRange = (endResult as NSString).range(of: deviceString)
 
                 let attributedString = NSMutableAttributedString(string: endResult)
                 attributedString.addAttributes([NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor], range:NSRange(location: 0, length: endResult.characters.count))
                 attributedString.addAttributes([NSFontAttributeName: labelBoldFont, NSForegroundColorAttributeName: labelTextColor], range: youRange)
-                attributedString.addAttributes([NSFontAttributeName: labelFont, NSLinkAttributeName: self.dynamicType.deviceListLink], range: deviceRange)
+                attributedString.addAttributes([NSFontAttributeName: labelFont, NSLinkAttributeName: type(of: self).deviceListLink], range: deviceRange)
                 
                 self.labelView.attributedText = attributedString
                 self.labelView.addLinks()
@@ -68,8 +68,8 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
     
     // MARK: - TTTAttributedLabelDelegate
     
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL URL: NSURL!) {
-        if URL.isEqual(self.dynamicType.deviceListLink) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
+        if URL.isEqual(type(of: self).deviceListLink) {
             if let systemMessageData = message.systemMessageData,
                 let users = systemMessageData.users,
                 let firstUserClient = users.first

@@ -21,10 +21,10 @@ import UIKit
 import Cartography
 
 enum SettingsCellPreview {
-    case None
-    case Text(String)
-    case Image(UIImage)
-    case Color(UIColor)
+    case none
+    case text(String)
+    case image(UIImage)
+    case color(UIColor)
 }
 
 protocol SettingsCellType: class {
@@ -49,47 +49,47 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
     
-    var preview: SettingsCellPreview = .None {
+    var preview: SettingsCellPreview = .none {
         didSet {
             
             switch self.preview {
-            case .Text(let string):
+            case .text(let string):
                 self.valueLabel.text = string
-                self.imagePreview.image = .None
-                self.imagePreview.backgroundColor = UIColor.clearColor()
+                self.imagePreview.image = .none
+                self.imagePreview.backgroundColor = UIColor.clear
 
-            case .Image(let image):
+            case .image(let image):
                 self.valueLabel.text = ""
                 self.imagePreview.image = image
-                self.imagePreview.backgroundColor = UIColor.clearColor()
+                self.imagePreview.backgroundColor = UIColor.clear
                 
-            case .Color(let color):
+            case .color(let color):
                 self.valueLabel.text = ""
-                self.imagePreview.image = .None
+                self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = color
                 
-            case .None:
+            case .none:
                 self.valueLabel.text = ""
-                self.imagePreview.image = .None
-                self.imagePreview.backgroundColor = UIColor.clearColor()
+                self.imagePreview.image = .none
+                self.imagePreview.backgroundColor = UIColor.clear
             }
         }
     }
     
-    var icon: ZetaIconType = .None {
+    var icon: ZetaIconType = .none {
         didSet {
-            if icon == .None {
-                self.iconImageView.image = .None
-                self.cellNameLabelToIconInset.active = false
+            if icon == .none {
+                self.iconImageView.image = .none
+                self.cellNameLabelToIconInset.isActive = false
             }
             else {
-                self.iconImageView.image = UIImage(forIcon: icon, iconSize: .Tiny, color: .whiteColor())
-                self.cellNameLabelToIconInset.active = true
+                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: .white())
+                self.cellNameLabelToIconInset.isActive = true
             }
         }
     }
     
-    var titleColor: UIColor = UIColor.whiteColor() {
+    var titleColor: UIColor = UIColor.white {
         didSet {
             self.cellNameLabel.textColor = self.titleColor
         }
@@ -101,7 +101,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
     
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         self.updateBackgroundColor()
     }
@@ -110,7 +110,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     
     override var reuseIdentifier: String {
         get {
-            return self.dynamicType.reuseIdentifier
+            return type(of: self).reuseIdentifier
         }
     }
     
@@ -129,11 +129,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     func setup() {
-        self.backgroundColor = .clearColor()
+        self.backgroundColor = UIColor.clear()
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
         
-        self.iconImageView.contentMode = .Center
+        self.iconImageView.contentMode = .center
         self.contentView.addSubview(self.iconImageView)
         
         constrain(self.contentView, self.iconImageView) { contentView, iconImageView in
@@ -143,25 +143,25 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             iconImageView.centerY == contentView.centerY
         }
         
-        self.cellNameLabel.font = UIFont.systemFontOfSize(17)
+        self.cellNameLabel.font = UIFont.systemFont(ofSize: 17)
         self.cellNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, forAxis: .Horizontal)
-        self.cellNameLabel.textColor = .whiteColor()
+        self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        self.cellNameLabel.textColor = UIColor.white()
         self.contentView.addSubview(self.cellNameLabel)
         
         constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
             self.cellNameLabelToIconInset = cellNameLabel.left == iconImageView.right + 24
-            cellNameLabel.left == contentView.left + 16 ~ 750
+            cellNameLabel.left == contentView.left + 16 ~ LayoutPriority(750)
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }
         
-        self.cellNameLabelToIconInset.active = false
+        self.cellNameLabelToIconInset.isActive = false
         
-        self.valueLabel.textColor = .lightGrayColor()
-        self.valueLabel.font = UIFont.systemFontOfSize(17)
+        self.valueLabel.textColor = UIColor.lightGray()
+        self.valueLabel.font = UIFont.systemFont(ofSize: 17)
         self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.valueLabel.textAlignment = .Right
+        self.valueLabel.textAlignment = .right
         
         self.contentView.addSubview(self.valueLabel)
         
@@ -174,7 +174,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         
         self.imagePreview.clipsToBounds = true
         self.imagePreview.layer.cornerRadius = 12
-        self.imagePreview.contentMode = .ScaleAspectFill
+        self.imagePreview.contentMode = .scaleAspectFill
         self.contentView.addSubview(self.imagePreview)
         
         constrain(self.contentView, self.imagePreview) { contentView, imagePreview in
@@ -187,11 +187,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     func updateBackgroundColor() {
-        if self.highlighted {
+        if self.isHighlighted {
             self.backgroundColor = UIColor(white: 0, alpha: 0.2)
         }
         else {
-            self.backgroundColor = UIColor.clearColor()
+            self.backgroundColor = UIColor.clear
         }
     }
 }
@@ -209,14 +209,14 @@ class SettingsGroupCell: SettingsTableCell {
     
     override func setup() {
         super.setup()
-        self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
     }
 }
 
 class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
-        self.cellNameLabel.textColor = UIColor.accentColor()
+        self.cellNameLabel.textColor = UIColor.accent()
     }
 }
 
@@ -226,15 +226,15 @@ class SettingsToggleCell: SettingsTableCell {
     override func setup() {
         super.setup()
         
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         
-        self.switchView = UISwitch(frame: CGRectZero)
-        self.switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), forControlEvents: .ValueChanged)
+        self.switchView = UISwitch(frame: CGRect.zero)
+        self.switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         self.accessoryView = self.switchView
     }
     
-    func onSwitchChanged(sender: UIResponder) {
-        self.descriptor?.select(SettingsPropertyValue.Bool(value: self.switchView.on))
+    func onSwitchChanged(_ sender: UIResponder) {
+        self.descriptor?.select(SettingsPropertyValue.bool(value: self.switchView.isOn))
     }
 }
 
@@ -242,23 +242,23 @@ class SettingsValueCell: SettingsTableCell {
     override var descriptor: SettingsCellDescriptorType?{
         willSet {
             if let propertyDescriptor = self.descriptor as? SettingsPropertyCellDescriptorType {
-                NSNotificationCenter.defaultCenter().removeObserver(self, name: propertyDescriptor.settingsProperty.propertyName.changeNotificationName, object: nil)
+                NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: propertyDescriptor.settingsProperty.propertyName.changeNotificationName), object: nil)
             }
         }
         didSet {
             if let propertyDescriptor = self.descriptor as? SettingsPropertyCellDescriptorType {
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsValueCell.onPropertyChanged(_:)), name: propertyDescriptor.settingsProperty.propertyName.changeNotificationName, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(SettingsValueCell.onPropertyChanged(_:)), name: NSNotification.Name(rawValue: propertyDescriptor.settingsProperty.propertyName.changeNotificationName), object: nil)
             }
         }
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Properties observing
     
-    func onPropertyChanged(notification: NSNotification) {
+    func onPropertyChanged(_ notification: Notification) {
         self.descriptor?.featureCell(self)
     }
 }
@@ -268,13 +268,13 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
 
     override func setup() {
         super.setup()
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         
-        self.textInput = TailEditingTextField(frame: CGRectZero)
+        self.textInput = TailEditingTextField(frame: CGRect.zero)
         self.textInput.translatesAutoresizingMaskIntoConstraints = false
         self.textInput.delegate = self
-        self.textInput.textAlignment = .Right
-        self.textInput.textColor = .lightGrayColor()
+        self.textInput.textAlignment = .right
+        self.textInput.textColor = .lightGray()
         self.contentView.addSubview(self.textInput)
         
         constrain(self.contentView, self.cellNameLabel, self.textInput) { contentView, cellNameLabel, textInput in
@@ -287,8 +287,8 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     
     // MARK: - UITextFieldDelegate
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if string.rangeOfCharacterFromSet(NSCharacterSet.newlineCharacterSet()) != .None {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.rangeOfCharacter(from: CharacterSet.newlines) != .none {
             textField.resignFirstResponder()
             return false
         }
@@ -297,13 +297,13 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = self.textInput.text {
-            self.descriptor?.select(SettingsPropertyValue.String(value: text))
+            self.descriptor?.select(SettingsPropertyValue.string(value: text))
         }
     }
 }

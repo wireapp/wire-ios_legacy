@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -28,7 +28,7 @@ import Cartography
     let dismissButton = IconButton()
     let barHeight: CGFloat = 44
 
-    var dismissButtonHandler: dispatch_block_t?
+    var dismissButtonHandler: ()->()?
     
     var showSeparator: Bool = false {
         didSet {
@@ -36,17 +36,21 @@ import Cartography
         }
     }
     
-    convenience init(title: String) {
-        self.init(frame: CGRectZero)
+    init(title: String) {
+        super.init(frame: CGRect.zero)
         titleLabel.text = title
         createViews()
         createConstraints()
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func createViews() {
-        separatorView.hidden = true
-        dismissButton.setIcon(.Cancel, withSize: .Tiny, forState: .Normal)
-        dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        separatorView.isHidden = true
+        dismissButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
     }
@@ -66,11 +70,11 @@ import Cartography
         }
     }
     
-    func dismissButtonTapped(sender: IconButton) {
-        dismissButtonHandler?()
+    func dismissButtonTapped(_ sender: IconButton) {
+        dismissButtonHandler()
     }
     
-    override func intrinsicContentSize() -> CGSize {
+    override var intrinsicContentSize : CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight)
     }
     

@@ -34,11 +34,11 @@ public extension ConversationCell {
         self.contentView.addSubview(self.likeButton)
     }
     
-    @objc public func configureLikeButtonForMessage(message: ZMMessage) {
+    @objc public func configureLikeButtonForMessage(_ message: ZMMessage) {
         self.likeButton.setSelected(message.liked, animated: false)
     }
     
-    @objc public func likeMessage(sender: AnyObject!) {
+    @objc public func likeMessage(_ sender: AnyObject!) {
         guard message.canBeLiked else { return }
 
         Settings.sharedSettings().likeTutorialCompleted = true
@@ -50,7 +50,7 @@ public extension ConversationCell {
         delegate.conversationCell!(self, didSelectAction: .Like)
     }
     
-    func trackReaction(sender: AnyObject, reaction: ReactionType){
+    func trackReaction(_ sender: AnyObject, reaction: ReactionType){
         var interactionMethod = InteractionMethod.Undefined
         if sender is LikeButton {
             interactionMethod = .Button

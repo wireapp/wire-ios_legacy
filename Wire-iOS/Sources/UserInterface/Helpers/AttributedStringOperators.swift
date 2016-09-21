@@ -26,51 +26,51 @@ infix operator + { associativity left precedence 140 }
 
 func +(left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     let result = NSMutableAttributedString()
-    result.appendAttributedString(left)
-    result.appendAttributedString(right)
+    result.append(left)
+    result.append(right)
     return result
 }
 
 func +(left: String, right: NSAttributedString) -> NSAttributedString {
     var range : NSRange? = NSMakeRange(0, 0)
-    let attributes = right.length > 0 ? right.attributesAtIndex(0, effectiveRange: &range!) : [:]
+    let attributes = right.length > 0 ? right.attributes(at: 0, effectiveRange: &range!) : [:]
 
     let result = NSMutableAttributedString()
-    result.appendAttributedString(NSAttributedString(string: left, attributes: attributes))
+    result.append(NSAttributedString(string: left, attributes: attributes))
 
-    result.appendAttributedString(right)
+    result.append(right)
     return result
 }
 
 func +(left: NSAttributedString, right: String) -> NSAttributedString {
     var range : NSRange? = NSMakeRange(0, 0)
-    let attributes = left.length > 0 ? left.attributesAtIndex(left.length - 1, effectiveRange: &range!) : [:]
+    let attributes = left.length > 0 ? left.attributes(at: left.length - 1, effectiveRange: &range!) : [:]
     
     let result = NSMutableAttributedString()
-    result.appendAttributedString(left)
-    result.appendAttributedString(NSAttributedString(string:right, attributes: attributes))
+    result.append(left)
+    result.append(NSAttributedString(string:right, attributes: attributes))
     return result
 }
 
 // Concats the lhs and rhs and assigns the result to the lhs
 infix operator += { associativity right precedence 90 }
 
-func +=(inout left: NSMutableAttributedString, right: String) -> NSMutableAttributedString {
-    left.appendAttributedString(right.attributedString)
+func +=(left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
+    left.append(right.attributedString)
     return left
 }
 
-func +=(inout left: NSAttributedString, right: String) -> NSAttributedString {
+func +=(left: inout NSAttributedString, right: String) -> NSAttributedString {
     left = left + right
     return left
 }
 
-func +=(inout left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+func +=(left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     left = left + right
     return left
 }
 
-func +=(inout left: NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
+func +=(left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
     guard let rhs = right else { return left }
     return left += rhs
 }
@@ -122,7 +122,7 @@ extension String {
     }
    
     // Used to generate localized strings with plural rules from the stringdict
-    func localized(args args: CVarArgType...) -> String {
+    func localized(args: CVarArg...) -> String {
         return withVaList(args) {
             return NSString(format: self.localized, arguments: $0) as String
         }
@@ -132,15 +132,15 @@ extension String {
 extension NSAttributedString {
     
     // Adds the attribtues to the given substring in self and returns the resulting String
-    func addAttributes(attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    func addAttributes(_ attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
-        mutableSelf.addAttributes(attributes, range: (string as NSString).rangeOfString(substring))
+        mutableSelf.addAttributes(attributes, range: (string as NSString).range(of: substring))
         return mutableSelf
     }
     
-    func setAttributes(attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    func setAttributes(_ attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
-        mutableSelf.setAttributes(attributes, range: (string as NSString).rangeOfString(substring))
+        mutableSelf.setAttributes(attributes, range: (string as NSString).range(of: substring))
         return mutableSelf
     }
 

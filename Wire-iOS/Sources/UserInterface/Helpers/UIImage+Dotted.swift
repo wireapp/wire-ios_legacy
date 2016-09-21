@@ -21,17 +21,17 @@ import Foundation
 
 extension UIImage {
     
-    class func dot(radius: CGFloat) -> UIImage {
+    class func dot(_ radius: CGFloat) -> UIImage {
         
-        let path = UIBezierPath(ovalInRect: CGRectMake(4, 4, radius - 8, radius - 8))
+        let path = UIBezierPath(ovalIn: CGRect(x: 4, y: 4, width: radius - 8, height: radius - 8))
         
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(radius, radius), false, UIScreen.mainScreen().scale)
-        UIColor.whiteColor().setStroke()
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: radius, height: radius), false, UIScreen.main.scale)
+        UIColor.white.setStroke()
         path.stroke()
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
         
     }
 }

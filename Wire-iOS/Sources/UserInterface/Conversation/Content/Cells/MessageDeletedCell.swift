@@ -40,7 +40,7 @@ class MessageDeletedCell: ConversationCell {
     
     func setupViews() {
         trashImageView.image = trashColor.map {
-            UIImage(forIcon: .Trash, iconSize: .MessageStatus, color: $0)
+            UIImage(for: .trash, iconSize: .messageStatus, color: $0)
         }
         contentView.addSubview(trashImageView)
     }

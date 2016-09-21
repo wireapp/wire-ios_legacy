@@ -21,7 +21,7 @@ import Foundation
 import Photos
 import Cartography
 
-public class AssetCell: UICollectionViewCell {
+open class AssetCell: UICollectionViewCell {
     
     let imageView = UIImageView()
     let durationView = UILabel()
@@ -33,13 +33,13 @@ public class AssetCell: UICollectionViewCell {
         
         self.contentView.clipsToBounds = true
         
-        self.imageView.contentMode = .ScaleAspectFill
+        self.imageView.contentMode = .scaleAspectFill
         self.imageView.backgroundColor = UIColor(white: 0, alpha: 0.1)
         self.contentView.addSubview(self.imageView)
         
-        self.durationView.textAlignment = .Center
+        self.durationView.textAlignment = .center
         self.durationView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        self.durationView.textColor = UIColor.whiteColor()
+        self.durationView.textColor = UIColor.white
         self.durationView.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         self.contentView.addSubview(self.durationView)
         
@@ -58,9 +58,9 @@ public class AssetCell: UICollectionViewCell {
     
     static let imageFetchOptions: PHImageRequestOptions = {
         let options: PHImageRequestOptions = PHImageRequestOptions()
-        options.deliveryMode = .Opportunistic
-        options.resizeMode = .Fast
-        options.synchronous = false
+        options.deliveryMode = .opportunistic
+        options.resizeMode = .fast
+        options.isSynchronous = false
         return options
     }()
     
@@ -68,7 +68,7 @@ public class AssetCell: UICollectionViewCell {
         didSet {
             self.imageView.image = nil
 
-            let manager = PHImageManager.defaultManager()
+            let manager = PHImageManager.default()
             
             if self.imageRequestTag != 0 {
                 manager.cancelImageRequest(self.imageRequestTag)
@@ -77,15 +77,15 @@ public class AssetCell: UICollectionViewCell {
             
             guard let asset = self.asset else {
                 self.durationView.text = ""
-                self.durationView.hidden = true
+                self.durationView.isHidden = true
                 return
             }
             
-            let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.sharedApplication().keyWindow!).screen.scale
-            self.imageRequestTag = manager.requestImageForAsset(asset,
-                                                                 targetSize: CGSizeMake(maxDimensionRetina, maxDimensionRetina),
-                                                                 contentMode: .AspectFill,
-                                                                 options: self.dynamicType.imageFetchOptions,
+            let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
+            self.imageRequestTag = manager.requestImage(for: asset,
+                                                                 targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
+                                                                 contentMode: .aspectFill,
+                                                                 options: type(of: self).imageFetchOptions,
                                                                  resultHandler: { [weak self] result, info -> Void in
                                                                     guard let `self` = self,
                                                                         let requesId = info?[PHImageResultRequestIDKey] as? Int
@@ -98,31 +98,31 @@ public class AssetCell: UICollectionViewCell {
                                                                     }
             })
             
-            if asset.mediaType == .Video {
+            if asset.mediaType == .video {
                 let duration = Int(ceil(asset.duration))
                 
                 let (seconds, minutes) = (duration % 60, duration / 60)
                 self.durationView.text = String(format: "%d:%02d", minutes, seconds)
-                self.durationView.hidden = false
+                self.durationView.isHidden = false
             }
             else {
                 self.durationView.text = ""
-                self.durationView.hidden = true
+                self.durationView.isHidden = true
             }
         }
     }
     
-    override public func prepareForReuse() {
+    override open func prepareForReuse() {
         super.prepareForReuse()
         
-        self.asset = .None
+        self.asset = .none
     }
     
     static var reuseIdentifier: String {
         return "\(self)"
     }
     
-    override public var reuseIdentifier: String? {
-        return self.dynamicType.reuseIdentifier
+    override open var reuseIdentifier: String? {
+        return type(of: self).reuseIdentifier
     }
 }

@@ -23,7 +23,7 @@ import CocoaLumberjackSwift
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
-    static func metadataForFileAtURL(url: NSURL, UTI uti: String, completion: (ZMFileMetadata) -> ()) {
+    static func metadataForFileAtURL(_ url: URL, UTI uti: String, completion: (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
             
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
@@ -47,14 +47,14 @@ import CocoaLumberjackSwift
 }
 
 extension AVURLAsset {
-    static func wr_isAudioVisualUTI(UTI: String) -> Bool {
+    static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
         return audiovisualTypes().reduce(false) { (conformsBefore: Bool, compatibleUTI: String) -> Bool in
             conformsBefore || UTTypeConformsTo(UTI, compatibleUTI)
         }
     }
 }
 
-func audioSamplesFromAsset(asset: AVAsset, maxSamples: UInt64) -> [Float]? {
+func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
     let assetTrack = asset.tracksWithMediaType(AVMediaTypeAudio).first
     let reader: AVAssetReader
     do {

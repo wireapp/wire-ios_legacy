@@ -23,10 +23,10 @@ import ImageIO
 import AVFoundation
 import CoreGraphics
 
-extension NSURL {
+extension URL {
     public func UTI() -> String {
         guard let pathExtension = self.pathExtension,
-                let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension, .None),
+                let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension, .none),
                 let UTIString = UTI.takeUnretainedValue() as String? else {
                     return kUTTypeItem as String
         }
@@ -34,38 +34,38 @@ extension NSURL {
     }
 }
 
-func ScaleToAspectFitRectInRect(fit: CGRect, into: CGRect) -> CGFloat
+func ScaleToAspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGFloat
 {
     // first try to match width
-    let s = CGRectGetWidth(into) / CGRectGetWidth(fit)
+    let s = into.width / fit.width
     // if we scale the height to make the widths equal, does it still fit?
-    if (CGRectGetHeight(fit) * s <= CGRectGetHeight(into)) {
+    if (fit.height * s <= into.height) {
         return s
     }
     // no, match height instead
-    return CGRectGetHeight(into) / CGRectGetHeight(fit)
+    return into.height / fit.height
 }
 
-func AspectFitRectInRect(fit: CGRect, into: CGRect) -> CGRect
+func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 {
     let s = ScaleToAspectFitRectInRect(fit, into: into);
-    let w = CGRectGetWidth(fit) * s;
-    let h = CGRectGetHeight(fit) * s;
-    return CGRectMake(0, 0, w, h);
+    let w = fit.width * s;
+    let h = fit.height * s;
+    return CGRect(x: 0, y: 0, width: w, height: h);
 }
 
 @objc public protocol FilePreviewGenerator {
-    var callbackQueue: NSOperationQueue { get }
+    var callbackQueue: OperationQueue { get }
     var thumbnailSize: CGSize { get }
-    func canGeneratePreviewForFile(fileURL: NSURL, UTI: String) -> Bool
-    func generatePreview(fileURL: NSURL, UTI: String, completion: (UIImage?) -> ())
+    func canGeneratePreviewForFile(_ fileURL: URL, UTI: String) -> Bool
+    func generatePreview(_ fileURL: URL, UTI: String, completion: (UIImage?) -> ())
 }
 
-@objc public class SharedPreviewGenerator: NSObject {
+@objc open class SharedPreviewGenerator: NSObject {
     static var generator: AggregateFilePreviewGenerator = {
-        let resultQueue = NSOperationQueue.mainQueue()
-        let thumbnailSizeDefault = CGSizeMake(120, 120)
-        let thumbnailSizeVideo = CGSizeMake(640, 480)
+        let resultQueue = OperationQueue.main
+        let thumbnailSizeDefault = CGSize(width: 120, height: 120)
+        let thumbnailSizeVideo = CGSize(width: 640, height: 480)
         
         let imageGenerator = ImageFilePreviewGenerator(callbackQueue: resultQueue, thumbnailSize: thumbnailSizeDefault)
         let movieGenerator = MovieFilePreviewGenerator(callbackQueue: resultQueue, thumbnailSize: thumbnailSizeVideo)
@@ -75,29 +75,29 @@ func AspectFitRectInRect(fit: CGRect, into: CGRect) -> CGRect
     }()
 }
 
-@objc public class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
+@objc open class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
     let subGenerators: [FilePreviewGenerator]
-    public let thumbnailSize: CGSize
-    public let callbackQueue: NSOperationQueue
+    open let thumbnailSize: CGSize
+    open let callbackQueue: OperationQueue
     
-    init(subGenerators: [FilePreviewGenerator], callbackQueue: NSOperationQueue, thumbnailSize: CGSize) {
+    init(subGenerators: [FilePreviewGenerator], callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.callbackQueue = callbackQueue
         self.thumbnailSize = thumbnailSize
         self.subGenerators = subGenerators
         super.init()
     }
     
-    public func canGeneratePreviewForFile(fileURL: NSURL, UTI uti: String) -> Bool {
+    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
         return self.subGenerators.filter {
             $0.canGeneratePreviewForFile(fileURL, UTI:uti)
         }.count > 0
     }
     
-    public func generatePreview(fileURL: NSURL, UTI uti: String, completion: (UIImage?) -> ()) {
+    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: (UIImage?) -> ()) {
         guard let generator = self.subGenerators.filter({
             $0.canGeneratePreviewForFile(fileURL, UTI: uti)
         }).first else {
-            completion(.None)
+            completion(.none)
             return
         }
         
@@ -106,72 +106,72 @@ func AspectFitRectInRect(fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objc public class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
-    public let thumbnailSize: CGSize
-    public let callbackQueue: NSOperationQueue
+@objc open class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
+    open let thumbnailSize: CGSize
+    open let callbackQueue: OperationQueue
     
-    init(callbackQueue: NSOperationQueue, thumbnailSize: CGSize) {
+    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
     }
     
-    public func canGeneratePreviewForFile(fileURL: NSURL, UTI uti: String) -> Bool {
-        return UTTypeConformsTo(uti, kUTTypeImage)
+    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
+        return UTTypeConformsTo(uti as CFString, kUTTypeImage)
     }
     
-    public func generatePreview(fileURL: NSURL, UTI uti: String, completion: (UIImage?) -> ()) {
-        var result: UIImage? = .None
+    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: @escaping (UIImage?) -> ()) {
+        var result: UIImage? = .none
         
         defer {
-            self.callbackQueue.addOperationWithBlock { 
+            self.callbackQueue.addOperation { 
                 completion(result)
             }
         }
         
-        guard let src = CGImageSourceCreateWithURL(fileURL, nil) else {
+        guard let src = CGImageSourceCreateWithURL(fileURL as CFURL, nil) else {
             return
         }
         
-        let options: [NSObject: AnyObject] = [
-            kCGImageSourceCreateThumbnailWithTransform: true,
-            kCGImageSourceCreateThumbnailFromImageAlways: true,
-            kCGImageSourceThumbnailMaxPixelSize: max(self.thumbnailSize.width, self.thumbnailSize.height)
+        let options: [AnyHashable: Any] = [
+            kCGImageSourceCreateThumbnailWithTransform as AnyHashable: true,
+            kCGImageSourceCreateThumbnailFromImageAlways as AnyHashable: true,
+            kCGImageSourceThumbnailMaxPixelSize as AnyHashable: max(self.thumbnailSize.width, self.thumbnailSize.height)
         ]
         
-        guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(src, 0, options) else {
+        guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(src, 0, options as CFDictionary?) else {
             return
         }
         
-        result = UIImage(CGImage: thumbnail)
+        result = UIImage(cgImage: thumbnail)
     }
 }
 
 
-@objc public class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
-    public let thumbnailSize: CGSize
-    public let callbackQueue: NSOperationQueue
+@objc open class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
+    open let thumbnailSize: CGSize
+    open let callbackQueue: OperationQueue
     
-    init(callbackQueue: NSOperationQueue, thumbnailSize: CGSize) {
+    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
     }
     
-    public func canGeneratePreviewForFile(fileURL: NSURL, UTI uti: String) -> Bool {
+    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
         return AVURLAsset.wr_isAudioVisualUTI(uti)
     }
     
-    public func generatePreview(fileURL: NSURL, UTI uti: String, completion: (UIImage?) -> ()) {
-        var result: UIImage? = .None
+    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: @escaping (UIImage?) -> ()) {
+        var result: UIImage? = .none
         
         defer {
-            self.callbackQueue.addOperationWithBlock {
+            self.callbackQueue.addOperation {
                 completion(result)
             }
         }
         
-        let asset = AVURLAsset(URL: fileURL)
+        let asset = AVURLAsset(url: fileURL)
         
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
@@ -182,67 +182,67 @@ func AspectFitRectInRect(fit: CGRect, into: CGRect) -> CGRect
         
         let time = CMTimeMakeWithSeconds(asset.duration.seconds * 0.1, 60)
         var actualTime = kCMTimeZero
-        guard let cgImage = try? generator.copyCGImageAtTime(time, actualTime:&actualTime) else {
+        guard let cgImage = try? generator.copyCGImage(at: time, actualTime:&actualTime) else {
             return
         }
         
-        let bitsPerComponent = CGImageGetBitsPerComponent(cgImage)
-        let colorSpace = CGImageGetColorSpace(cgImage)
-        let bitmapInfo = CGImageGetBitmapInfo(cgImage)
+        let bitsPerComponent = cgImage.bitsPerComponent
+        let colorSpace = cgImage.colorSpace
+        let bitmapInfo = cgImage.bitmapInfo
         
-        let width = CGImageGetWidth(cgImage)
-        let height = CGImageGetHeight(cgImage)
+        let width = cgImage.width
+        let height = cgImage.height
         
-        let renderRect = AspectFitRectInRect(CGRectMake(0, 0, CGFloat(width), CGFloat(height)), into: CGRectMake(0, 0, self.thumbnailSize.width, self.thumbnailSize.height))
+        let renderRect = AspectFitRectInRect(CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)), into: CGRect(x: 0, y: 0, width: self.thumbnailSize.width, height: self.thumbnailSize.height))
         
-        let context = CGBitmapContextCreate(nil, Int(renderRect.size.width), Int(renderRect.size.height), bitsPerComponent, Int(renderRect.size.width) * 4, colorSpace, bitmapInfo.rawValue)
+        let context = CGContext(data: nil, width: Int(renderRect.size.width), height: Int(renderRect.size.height), bitsPerComponent: bitsPerComponent, bytesPerRow: Int(renderRect.size.width) * 4, space: colorSpace!, bitmapInfo: bitmapInfo.rawValue)
         
-        CGContextSetInterpolationQuality(context, CGInterpolationQuality.High)
-        CGContextDrawImage(context, renderRect, cgImage)
+        context!.interpolationQuality = CGInterpolationQuality.high
+        context?.draw(cgImage, in: renderRect)
         
-        result = CGBitmapContextCreateImage(context).flatMap { UIImage(CGImage: $0) }
+        result = context?.makeImage().flatMap { UIImage(cgImage: $0) }
     }
     
 }
 
 
-@objc public class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
-    public let thumbnailSize: CGSize
-    public let callbackQueue: NSOperationQueue
+@objc open class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
+    open let thumbnailSize: CGSize
+    open let callbackQueue: OperationQueue
     
-    init(callbackQueue: NSOperationQueue, thumbnailSize: CGSize) {
+    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
     }
     
-    public func canGeneratePreviewForFile(fileURL: NSURL, UTI uti: String) -> Bool {
-        return UTTypeConformsTo(uti, kUTTypePDF)
+    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
+        return UTTypeConformsTo(uti as CFString, kUTTypePDF)
     }
     
-    public func generatePreview(fileURL: NSURL, UTI uti: String, completion: (UIImage?) -> ()) {
-        var result: UIImage? = .None
+    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: @escaping (UIImage?) -> ()) {
+        var result: UIImage? = .none
         
         defer {
-            self.callbackQueue.addOperationWithBlock {
+            self.callbackQueue.addOperation {
                 completion(result)
             }
         }
         
         UIGraphicsBeginImageContext(thumbnailSize)
-        let pdfRef = CGPDFDocumentCreateWithProvider(CGDataProviderCreateWithURL(fileURL))
-        let pageRef = CGPDFDocumentGetPage(pdfRef, 1)
+        let pdfRef = CGPDFDocument(CGDataProvider(url: fileURL as CFURL)!)
+        let pageRef = pdfRef?.page(at: 1)
         
         let contextRef = UIGraphicsGetCurrentContext()
-        CGContextSetAllowsAntialiasing(contextRef, true)
+        contextRef?.setAllowsAntialiasing(true)
         
-        let cropBox = CGPDFPageGetBoxRect(pageRef, CGPDFBox.CropBox)
-        let xScale = self.thumbnailSize.width / cropBox.size.width
-        let yScale = self.thumbnailSize.height / cropBox.size.height
+        let cropBox = pageRef?.getBoxRect(CGPDFBox.cropBox)
+        let xScale = self.thumbnailSize.width / (cropBox?.size.width)!
+        let yScale = self.thumbnailSize.height / (cropBox?.size.height)!
         let scaleToApply = xScale < yScale ? xScale : yScale
         
-        CGContextConcatCTM(contextRef, CGAffineTransformMakeScale(scaleToApply, scaleToApply))
-        CGContextDrawPDFPage(contextRef, pageRef)
+        contextRef?.concatenate(CGAffineTransform(scaleX: scaleToApply, y: scaleToApply))
+        contextRef?.drawPDFPage(pageRef!)
 
         result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

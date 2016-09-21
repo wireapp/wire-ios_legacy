@@ -21,21 +21,21 @@ import UIKit
 
 public extension UIApplication {
     
-    @objc public func wr_updateStatusBarForCurrentControllerAnimated(animated: Bool) {
+    @objc public func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         
         if let topContoller = self.wr_topmostController() {
-            statusBarHidden = topContoller.prefersStatusBarHidden()
-            statusBarStyle = topContoller.preferredStatusBarStyle()
+            statusBarHidden = topContoller.prefersStatusBarHidden
+            statusBarStyle = topContoller.preferredStatusBarStyle
         }
         else {
             statusBarHidden = true
-            statusBarStyle = .LightContent
+            statusBarStyle = .lightContent
         }
         
-        if (self.statusBarHidden != statusBarHidden) {
-            self.setStatusBarHidden(statusBarHidden, withAnimation: animated ? .Fade : .None)
+        if (self.isStatusBarHidden != statusBarHidden) {
+            self.setStatusBarHidden(statusBarHidden, with: animated ? .fade : .none)
         }
         
         if self.statusBarStyle != statusBarStyle {
@@ -43,8 +43,8 @@ public extension UIApplication {
         }
     }
     
-    private func wr_topmostController() -> UIViewController? {
-        let orderedWindows = self.windows.sort { win1, win2 in
+    fileprivate func wr_topmostController() -> UIViewController? {
+        let orderedWindows = self.windows.sorted { win1, win2 in
             win1.windowLevel > win2.windowLevel
         }
         
@@ -57,16 +57,16 @@ public extension UIApplication {
                 controller = notificationWindowRootController.voiceChannelController
             }
             
-            return controller.view.hidden == false && controller.view.alpha != 0
+            return controller.view.isHidden == false && controller.view.alpha != 0
         }
         
         guard let window = visibleWindow.last,
             var topController = window.rootViewController else {
-                return .None
+                return .none
         }
         
         while let presentedController = topController.presentedViewController
-                where presentedController.modalPresentationStyle == .FullScreen {
+                , presentedController.modalPresentationStyle == .fullScreen {
             topController = presentedController
         }
         

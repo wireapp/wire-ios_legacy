@@ -23,12 +23,12 @@ import AssetsLibrary
 
     public typealias ImageSaveCompletion = () -> Void
     
-    private let imageData: NSData
-    private let imageOrientation: UIImageOrientation
-    private let library = ALAssetsLibrary()
-    private var writeInProgess = false
+    fileprivate let imageData: Data
+    fileprivate let imageOrientation: UIImageOrientation
+    fileprivate let library = ALAssetsLibrary()
+    fileprivate var writeInProgess = false
 
-    init(data: NSData, orientation: UIImageOrientation) {
+    init(data: Data, orientation: UIImageOrientation) {
         imageData = data
         imageOrientation = orientation
         super.init()
@@ -38,8 +38,8 @@ import AssetsLibrary
         guard !writeInProgess else { return }
         writeInProgess = true
 
-        let metadata: [String: NSObject] = [ALAssetPropertyOrientation: imageOrientation.exifOrientiation]
-        library.writeImageDataToSavedPhotosAlbum(imageData, metadata: metadata) { [weak self] _, _ in
+        let metadata: [String: NSObject] = [ALAssetPropertyOrientation: imageOrientation.exifOrientiation as NSObject]
+        library.writeImageData(toSavedPhotosAlbum: imageData, metadata: metadata) { [weak self] _, _ in
             guard let `self` = self else { return }
             self.writeInProgess = false
             completion?()
@@ -51,14 +51,14 @@ import AssetsLibrary
 extension UIImageOrientation {
     var exifOrientiation: UInt {
         switch self {
-        case .Up: return 1
-        case .Down: return 3
-        case .Left: return 8
-        case .Right: return 6
-        case .UpMirrored: return 2
-        case .DownMirrored: return 4
-        case .LeftMirrored: return 5
-        case .RightMirrored: return 7
+        case .up: return 1
+        case .down: return 3
+        case .left: return 8
+        case .right: return 6
+        case .upMirrored: return 2
+        case .downMirrored: return 4
+        case .leftMirrored: return 5
+        case .rightMirrored: return 7
         }
     }
 }

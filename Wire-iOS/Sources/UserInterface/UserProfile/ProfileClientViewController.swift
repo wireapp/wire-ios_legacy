@@ -42,7 +42,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     var resetButton: ButtonWithLargerHitArea!
     var showBackButton: Bool = true {
         didSet {
-            self.backButton?.hidden = !self.showBackButton
+            self.backButton?.isHidden = !self.showBackButton
         }
     
     }
@@ -87,7 +87,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         self.title = NSLocalizedString("registration.devices.title", comment:"")
     }
     
-    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
     
@@ -95,8 +95,8 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [.Portrait]
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return [.portrait]
     }
     
     deinit {
@@ -106,7 +106,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         
         self.createContentView()
         self.createBackButton()
@@ -133,33 +133,33 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
 
     func createBackButton() {
         let backButton = IconButton.iconButtonCircular()
-        backButton.setIcon(.ChevronLeft, withSize: .Tiny, forState: .Normal)
-        backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), forControlEvents: .TouchUpInside)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.hidden = !self.showBackButton
+        backButton?.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
+        backButton?.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
+        backButton?.translatesAutoresizingMaskIntoConstraints = false
+        backButton?.isHidden = !self.showBackButton
         self.backButton = backButton
-        self.view.addSubview(backButton)
+        self.view.addSubview(backButton!)
     }
     
     func createShowMyDeviceButton() {
         let showMyDeviceButton = ButtonWithLargerHitArea()
         showMyDeviceButton.translatesAutoresizingMaskIntoConstraints = false
-        showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercaseString, forState: .Normal)
-        showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), forControlEvents: .TouchUpInside)
+        showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: UIControlState())
+        showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         self.view.addSubview(showMyDeviceButton)
         self.showMyDeviceButton = showMyDeviceButton
     }
     
     func createReviewInvitationTextView() {
         let reviewInvitationTextView = UITextView()
-        reviewInvitationTextView.scrollEnabled = false
-        reviewInvitationTextView.editable = false
+        reviewInvitationTextView.isScrollEnabled = false
+        reviewInvitationTextView.isEditable = false
         reviewInvitationTextView.delegate = self
         reviewInvitationTextView.translatesAutoresizingMaskIntoConstraints = false
         if let user = self.userClient.user,
-            reviewInvitationTextFont = self.reviewInvitationTextFont {
+            let reviewInvitationTextFont = self.reviewInvitationTextFont {
             reviewInvitationTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && reviewInvitationTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: reviewInvitationTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerifyURL()])
+                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: reviewInvitationTextFont, NSLinkAttributeName: URL.wr_fingerprintHowToVerifyURL()])
         }
         self.contentView.addSubview(reviewInvitationTextView)
         self.reviewInvitationTextView = reviewInvitationTextView
@@ -210,7 +210,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     }
     
     func createSpinner() {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
 
@@ -245,7 +245,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         let verifiedToggle = UISwitch()
         verifiedToggle.translatesAutoresizingMaskIntoConstraints = false
         verifiedToggle.on = self.userClient.verified
-        verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), forControlEvents: .ValueChanged)
+        verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
         self.verifiedToggle = verifiedToggle
     }
@@ -253,7 +253,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     func createVerifiedToggleLabel() {
         let verifiedToggleLabel = UILabel()
         verifiedToggleLabel.translatesAutoresizingMaskIntoConstraints = false
-        verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercaseString
+        verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
         self.verifiedToggleLabel = verifiedToggleLabel
@@ -262,8 +262,8 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     func createResetButton() {
         let resetButton = ButtonWithLargerHitArea()
         resetButton.translatesAutoresizingMaskIntoConstraints = false
-        resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercaseString, forState: .Normal)
-        resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), forControlEvents: .TouchUpInside)
+        resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
+        resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(resetButton)
         self.resetButton = resetButton
     }
@@ -326,21 +326,21 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     // MARK: Actions
     
-    func onBackTapped(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
+    func onBackTapped(_ sender: AnyObject) {
+        self.presentingViewController?.dismiss(animated: true, completion: .none)
     }
     
-    func onShowMyDeviceTapped(sender: AnyObject) {
+    func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.sharedSession().selfUserClient())
         let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
         navigationControllerWrapper.modalPresentationStyle = .CurrentContext
         self.presentViewController(navigationControllerWrapper, animated: true, completion: .None)
     }
     
-    func onTrustChanged(sender: AnyObject) {
+    func onTrustChanged(_ sender: AnyObject) {
         if let verifiedToggle = self.verifiedToggle {
             let selfClient = ZMUserSession.sharedSession().selfUserClient()
-            if(verifiedToggle.on) {
+            if(verifiedToggle.isOn) {
                 selfClient.trustClient(self.userClient)
             } else {
                 selfClient.ignoreClient(self.userClient)
@@ -352,35 +352,35 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         }
     }
     
-    func onResetTapped(sender: AnyObject) {
+    func onResetTapped(_ sender: AnyObject) {
         self.userClient.resetSession()
         self.resetSessionPending = true
     }
     
     // MARK: - UserClientObserver
     
-    func userClientDidChange(changeInfo: UserClientChangeInfo) {
+    func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
         if changeInfo.fingerprintChanged {
             self.updateFingerprintLabel()
         }
         
         // This means the fingerprint is acquired
         if self.resetSessionPending && self.userClient.fingerprint != .None {
-            let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .Default, handler:  { [unowned alert] (_) -> Void in
-                alert.dismissViewControllerAnimated(true, completion: .None)
+            let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
+            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler:  { [unowned alert] (_) -> Void in
+                alert.dismiss(animated: true, completion: .none)
                 })
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: .None)
+            self.present(alert, animated: true, completion: .none)
             self.resetSessionPending = false
         }
     }
     
     // MARK: - UITextViewDelegate
     
-    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        if URL.isEqual(NSURL.wr_fingerprintHowToVerifyURL()) {
-            UIApplication.sharedApplication().openURL(URL)
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        if URL.isEqual(Foundation.URL.wr_fingerprintHowToVerifyURL()) {
+            UIApplication.shared.openURL(URL)
             return true
         }
         else {

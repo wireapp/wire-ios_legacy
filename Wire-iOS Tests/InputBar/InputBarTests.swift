@@ -34,16 +34,16 @@ class InputBarTests: ZMSnapshotTestCase {
     
     let buttons = { () -> [UIButton] in
         let b1 = IconButton()
-        b1.setIcon(.Paperclip, withSize: .Tiny, forState: .Normal)
+        b1.setIcon(.paperclip, with: .tiny, for: UIControlState())
         
         let b2 = IconButton()
-        b2.setIcon(.Photo, withSize: .Tiny, forState: .Normal)
+        b2.setIcon(.photo, with: .tiny, for: UIControlState())
         
         let b3 = IconButton()
-        b3.setIcon(.Brush, withSize: .Tiny, forState: .Normal)
+        b3.setIcon(.brush, with: .tiny, for: UIControlState())
         
         let b4 = IconButton()
-        b4.setIcon(.Ping, withSize: .Tiny, forState: .Normal)
+        b4.setIcon(.ping, with: .tiny, for: UIControlState())
 
         return [b1, b2, b3, b4]
     }
@@ -54,7 +54,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(inputBar)
+        CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -65,7 +65,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.textView.text = shortText
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(inputBar)
+        CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -76,7 +76,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.textView.text = longText
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(inputBar)
+        CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
         verifyInAllTabletWidths(view: inputBar)
@@ -89,7 +89,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.textView.textAlignment = .Right
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(inputBar)
+        CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
         verifyInAllTabletWidths(view: inputBar)
@@ -99,16 +99,16 @@ class InputBarTests: ZMSnapshotTestCase {
         let buttonsWithText = buttons()
         
         for button in buttonsWithText {
-            button.setTitle("NEW", forState: .Normal)
-            button.titleLabel!.font = UIFont.systemFontOfSize(8, weight: UIFontWeightSemibold)
-            button.setTitleColor(UIColor.redColor(), forState: .Normal)
+            button.setTitle("NEW", for: UIControlState())
+            button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: UIFontWeightSemibold)
+            button.setTitleColor(UIColor.red, for: UIControlState())
         }
         
         let inputBar = InputBar(buttons: buttonsWithText)
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(inputBar)
+        CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -119,7 +119,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(inputBar)
+        CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -129,9 +129,9 @@ class InputBarTests: ZMSnapshotTestCase {
         let sut = InputBar(buttons: buttons())
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
-        sut.updateInputBar(withState: .Editing(originalText: "This text is being edited"), animated: false)
+        sut.updateInputBar(withState: .editing(originalText: "This text is being edited"), animated: false)
         sut.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(sut)
+        CASStyler.default().styleItem(sut)
         verifyInAllPhoneWidths(view: sut)
     }
     
@@ -139,10 +139,10 @@ class InputBarTests: ZMSnapshotTestCase {
         let sut = InputBar(buttons: buttons())
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
-        sut.updateInputBar(withState: .Editing(originalText: longText), animated: false)
+        sut.updateInputBar(withState: .editing(originalText: longText), animated: false)
 
         sut.updateFakeCursorVisibility()
-        CASStyler.defaultStyler().styleItem(sut)
+        CASStyler.default().styleItem(sut)
         verifyInAllPhoneWidths(view: sut)
     }
 

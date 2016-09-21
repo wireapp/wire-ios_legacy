@@ -22,58 +22,58 @@ import ImageIO
 
 extension UIImage {
     
-    class func loadPreviewForImageWithURL(imageURL: NSURL, maxPixelSize previewImagePixelSize:Int, completion:(previewImage: UIImage?) -> Void) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            guard let imageSource = CGImageSourceCreateWithURL(imageURL, nil),
-                imagePropertiesRef = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil)
+    class func loadPreviewForImageWithURL(_ imageURL: URL, maxPixelSize previewImagePixelSize:Int, completion:@escaping (_ previewImage: UIImage?) -> Void) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, nil),
+                let imagePropertiesRef = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil)
                 else { return }
             
             let imageProperties = imagePropertiesRef as NSDictionary
             
             guard let imageWidth = (imageProperties[String(kCGImagePropertyPixelWidth)] as? NSNumber)?.floatValue,
-                imageHeight = (imageProperties[String(kCGImagePropertyPixelHeight)] as? NSNumber)?.floatValue
+                let imageHeight = (imageProperties[String(kCGImagePropertyPixelHeight)] as? NSNumber)?.floatValue
                 else { return }
 
             
-            var orientation = UIImageOrientation.Up
-            if let imageCGOrientation = (imageProperties[String(kCGImagePropertyOrientation)] as? NSNumber)?.unsignedIntValue,
-                imagePropertyOrientation = CGImagePropertyOrientation(rawValue: imageCGOrientation),
-                imageUIOrientation = UIImageOrientation.fromCGImageOrientation(imagePropertyOrientation) {
+            var orientation = UIImageOrientation.up
+            if let imageCGOrientation = (imageProperties[String(kCGImagePropertyOrientation)] as? NSNumber)?.uint32Value,
+                let imagePropertyOrientation = CGImagePropertyOrientation(rawValue: imageCGOrientation),
+                let imageUIOrientation = UIImageOrientation.fromCGImageOrientation(imagePropertyOrientation) {
                     orientation = imageUIOrientation
             }
             
             let aspectRatio = (imageWidth > imageHeight) ? imageWidth / imageHeight : imageHeight / imageWidth
             let maxPixelSize = aspectRatio * Float(previewImagePixelSize)
             
-            let options: [NSObject: AnyObject] =
+            let options: [AnyHashable: Any] =
             [
-                kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
-                kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
+                kCGImageSourceThumbnailMaxPixelSize as AnyHashable: maxPixelSize,
+                kCGImageSourceCreateThumbnailFromImageIfAbsent as AnyHashable: true,
             ]
             
-            guard let thumbnailCGImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options)
+            guard let thumbnailCGImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary?)
                 else { return }
             
-            let thumbnailImage = UIImage(CGImage: thumbnailCGImage, scale:1.0, orientation: orientation)
-            dispatch_async(dispatch_get_main_queue()) {
-                completion(previewImage: thumbnailImage)
+            let thumbnailImage = UIImage(cgImage: thumbnailCGImage, scale:1.0, orientation: orientation)
+            DispatchQueue.main.async {
+                completion(thumbnailImage)
             }
         }
     }
 }
 
 extension UIImageOrientation {
-    static func fromCGImageOrientation(orientation:CGImagePropertyOrientation) -> UIImageOrientation? {
+    static func fromCGImageOrientation(_ orientation:CGImagePropertyOrientation) -> UIImageOrientation? {
         let imageOrientationMapping: Dictionary<UInt32, UIImageOrientation> =
         [
-            CGImagePropertyOrientation.Up.rawValue           : UIImageOrientation.Up,
-            CGImagePropertyOrientation.UpMirrored.rawValue   : UIImageOrientation.UpMirrored,
-            CGImagePropertyOrientation.Down.rawValue         : UIImageOrientation.Down,
-            CGImagePropertyOrientation.DownMirrored.rawValue : UIImageOrientation.DownMirrored,
-            CGImagePropertyOrientation.LeftMirrored.rawValue : UIImageOrientation.RightMirrored,
-            CGImagePropertyOrientation.Right.rawValue        : UIImageOrientation.Right,
-            CGImagePropertyOrientation.RightMirrored.rawValue: UIImageOrientation.LeftMirrored,
-            CGImagePropertyOrientation.Left.rawValue         : UIImageOrientation.Left,
+            CGImagePropertyOrientation.up.rawValue           : UIImageOrientation.up,
+            CGImagePropertyOrientation.upMirrored.rawValue   : UIImageOrientation.upMirrored,
+            CGImagePropertyOrientation.down.rawValue         : UIImageOrientation.down,
+            CGImagePropertyOrientation.downMirrored.rawValue : UIImageOrientation.downMirrored,
+            CGImagePropertyOrientation.leftMirrored.rawValue : UIImageOrientation.rightMirrored,
+            CGImagePropertyOrientation.right.rawValue        : UIImageOrientation.right,
+            CGImagePropertyOrientation.rightMirrored.rawValue: UIImageOrientation.leftMirrored,
+            CGImagePropertyOrientation.left.rawValue         : UIImageOrientation.left,
         ]
         return imageOrientationMapping[orientation.rawValue]
     }

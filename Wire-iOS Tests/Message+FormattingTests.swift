@@ -28,15 +28,15 @@ class Message_FormattingTests: XCTestCase {
 
     func createTextMessageData(withMessageTemplate messageTemplate: String) -> MockTextMessageData {
         var text = messageTemplate
-        text = text.stringByReplacingOccurrencesOfString("{preview-url}", withString: previewURL)
-        text = text.stringByReplacingOccurrencesOfString("{regular-url}", withString: regularURL)
+        text = text.replacingOccurrences(of: "{preview-url}", with: previewURL)
+        text = text.replacingOccurrences(of: "{regular-url}", with: regularURL)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = text
-        let range = textMessageData.messageText.rangeOfString(previewURL)!
-        let offset = textMessageData.messageText.startIndex.distanceTo(range.startIndex)
+        let range = textMessageData.messageText.range(of: previewURL)!
+        let offset = textMessageData.messageText.characters.distance(from: textMessageData.messageText.startIndex, to: range.lowerBound)
         
-        if (messageTemplate.containsString("{preview-url}")) {
+        if (messageTemplate.contains("{preview-url}")) {
             textMessageData.linkPreview = Article(originalURLString: previewURL, permamentURLString: previewURL, offset: offset)
         }
         

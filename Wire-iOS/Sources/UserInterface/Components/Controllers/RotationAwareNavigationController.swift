@@ -20,30 +20,30 @@
 import Foundation
 
 class RotationAwareNavigationController: UINavigationController {
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         if let topController = self.viewControllers.last {
-            return topController.shouldAutorotate()
+            return topController.shouldAutorotate
         }
         else {
-            return super.shouldAutorotate()
+            return super.shouldAutorotate
         }
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         if let topController = self.viewControllers.last {
-            return topController.supportedInterfaceOrientations()
+            return topController.supportedInterfaceOrientations
         }
         else {
-            return super.supportedInterfaceOrientations()
+            return super.supportedInterfaceOrientations
         }
     }
     
-    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
         if let topController = self.viewControllers.last {
-            return topController.preferredInterfaceOrientationForPresentation()
+            return topController.preferredInterfaceOrientationForPresentation
         }
         else {
-            return super.preferredInterfaceOrientationForPresentation()
+            return super.preferredInterfaceOrientationForPresentation
         }
     }
 }

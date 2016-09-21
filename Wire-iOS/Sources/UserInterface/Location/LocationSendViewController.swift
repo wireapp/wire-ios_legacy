@@ -21,16 +21,16 @@ import Cartography
 import Classy
 
 @objc public protocol LocationSendViewControllerDelegate: class {
-    func locationSendViewControllerSendButtonTapped(viewController: LocationSendViewController)
+    func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
 }
 
 @objc public final class LocationSendViewController: UIViewController {
     
     public var buttonFont: UIFont? = nil
-    public let sendButton = Button(style: .Full)
+    public let sendButton = Button(style: .full)
     public let addressLabel = UILabel()
     public let separatorView = UIView()
-    private let containerView = UIView()
+    fileprivate let containerView = UIView()
     
     weak var delegate: LocationSendViewControllerDelegate?
     
@@ -42,7 +42,7 @@ import Classy
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
     }
@@ -50,23 +50,23 @@ import Classy
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard let font = buttonFont else { return }
-        sendButton.titleLabel?.font = font
+        sendButton?.titleLabel?.font = font
     }
     
-    private func configureViews() {
-        sendButton.setTitle("location.send_button.title".localized.uppercaseString, forState: .Normal)
-        sendButton.addTarget(self, action: #selector(sendButtonTapped), forControlEvents: .TouchUpInside)
-        sendButton.accessibilityIdentifier = "sendLocation"
+    fileprivate func configureViews() {
+        sendButton?.setTitle("location.send_button.title".localized.uppercased(), for: UIControlState())
+        sendButton?.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        sendButton?.accessibilityIdentifier = "sendLocation"
         addressLabel.accessibilityIdentifier = "selectedAddress"
         view.addSubview(containerView)
-        [addressLabel, sendButton, separatorView].forEach(containerView.addSubview)
+        [addressLabel, sendButton, separatorView].forEach(containerView.addSubview as! (Any) -> Void)
     }
 
-    private func createConstraints() {
-        constrain(view, containerView, separatorView, addressLabel, sendButton) { view, container, separator, label, button in
+    fileprivate func createConstraints() {
+        constrain(view, containerView, separatorView, addressLabel, sendButton!) { view, container, separator, label, button in
             container.edges == inset(view.edges, 24, 0)
             label.leading == container.leading
-            label.trailing <= button.leading - 12 ~ 1000
+            label.trailing <= button.leading - 12 ~ LayoutPriority(1000)
             label.top == container.top
             label.bottom == container.bottom
             button.trailing == container.trailing
@@ -78,11 +78,11 @@ import Classy
             separator.height == 0.5
         }
         
-        sendButton.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
-        addressLabel.setContentCompressionResistancePriority(750, forAxis: .Horizontal)
+        sendButton?.setContentCompressionResistancePriority(1000, for: .horizontal)
+        addressLabel.setContentCompressionResistancePriority(750, for: .horizontal)
     }
     
-    @objc private func sendButtonTapped(sender: Button) {
+    @objc fileprivate func sendButtonTapped(_ sender: Button) {
         delegate?.locationSendViewControllerSendButtonTapped(self)
     }
 }

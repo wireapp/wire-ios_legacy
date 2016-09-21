@@ -20,7 +20,7 @@
 import Cartography
 
 @objc public protocol ModalTopBarDelegate: class {
-    func modelTopBarWantsToBeDismissed(topBar: ModalTopBar)
+    func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
 }
 
 @objc final public class ModalTopBar: UIView {
@@ -28,18 +28,18 @@ import Cartography
     public let titleLabel = UILabel()
     public let dismissButton = IconButton()
     public let separatorView = UIView()
-    private let showsStatusBar: Bool
+    fileprivate let showsStatusBar: Bool
     weak var delegate: ModalTopBarDelegate?
     
     var title: String? {
         didSet {
-            titleLabel.text = title?.uppercaseString
+            titleLabel.text = title?.uppercased()
         }
     }
     
     required public init(forUseWithStatusBar statusBar: Bool = true) {
         showsStatusBar = statusBar
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         configureViews()
         createConstraints()
     }
@@ -48,14 +48,14 @@ import Cartography
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureViews() {
+    fileprivate func configureViews() {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
-        dismissButton.setIcon(.Cancel, withSize: .Tiny, forState: .Normal)
-        dismissButton.addTarget(self, action: #selector(dismissButtonTapped), forControlEvents: .TouchUpInside)
+        dismissButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }
 
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         constrain(self, titleLabel, dismissButton, separatorView) { view, label, button, separator in
             label.centerX == view.centerX
             label.top == view.top + (showsStatusBar ? 20 : 0)
@@ -69,15 +69,15 @@ import Cartography
             separator.height == 0.5
         }
         
-        dismissButton.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
-        titleLabel.setContentCompressionResistancePriority(750, forAxis: .Horizontal)
+        dismissButton.setContentCompressionResistancePriority(1000, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(750, for: .horizontal)
     }
     
-    @objc private func dismissButtonTapped(sender: IconButton) {
+    @objc fileprivate func dismissButtonTapped(_ sender: IconButton) {
         delegate?.modelTopBarWantsToBeDismissed(self)
     }
     
-    public override func intrinsicContentSize() -> CGSize {
+    public override var intrinsicContentSize : CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: showsStatusBar ? 64 : 44)
     }
     

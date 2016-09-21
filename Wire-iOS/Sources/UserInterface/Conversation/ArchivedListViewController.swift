@@ -23,17 +23,17 @@ import Cartography
 // MARK: ArchivedListViewControllerDelegate
 
 @objc protocol ArchivedListViewControllerDelegate: class {
-    func archivedListViewControllerWantsToDismiss(controller: ArchivedListViewController)
-    func archivedListViewController(controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
-    func archivedListViewController(controller: ArchivedListViewController, wantsActionMenuForConversation conversation: ZMConversation)
+    func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController)
+    func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
+    func archivedListViewController(_ controller: ArchivedListViewController, wantsActionMenuForConversation conversation: ZMConversation)
 }
 
 // MARK: - ArchivedListViewController
 
 @objc final class ArchivedListViewController: UIViewController {
     
-    let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: ConversationListCollectionViewLayout())
-    let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercaseString)
+    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: ConversationListCollectionViewLayout())
+    let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
     let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     let swipeIdentifier = "ArchivedList"
     let viewModel = ArchivedListViewModel()
@@ -93,12 +93,12 @@ import Cartography
 // MARK: - CollectionViewDelegate
 
 extension ArchivedListViewController: UICollectionViewDelegate {
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let conversation = viewModel[indexPath.row] else { return }
         delegate?.archivedListViewController(self, didSelectConversation: conversation)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let showSeparator = scrollView.contentOffset.y >= 16
         guard showSeparator != archivedNavigationBar.showSeparator else { return }
         archivedNavigationBar.showSeparator = showSeparator
@@ -109,20 +109,20 @@ extension ArchivedListViewController: UICollectionViewDelegate {
 
 extension ArchivedListViewController: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! ConversationListCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationListCell
         cell.conversation = viewModel[indexPath.row]
         cell.delegate = self
         cell.mutuallyExclusiveSwipeIdentifier = swipeIdentifier
-        cell.autoresizingMask = .FlexibleWidth
+        cell.autoresizingMask = .flexibleWidth
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
@@ -132,7 +132,7 @@ extension ArchivedListViewController: UICollectionViewDataSource {
 
 extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
     
-    func initialSyncCompleted(notification: NSNotification!) {
+    func initialSyncCompleted(_ notification: Notification!) {
         initialSyncCompleted = true
         collectionView.reloadData()
     }
@@ -143,10 +143,10 @@ extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
     
-    func archivedListViewModel(model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: dispatch_block_t) {
+    func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: @escaping ()->()) {
         
         guard initialSyncCompleted else { return }
-        let indexPathForItem: Int -> NSIndexPath = { return NSIndexPath(forItem: $0, inSection: 0) }
+        let indexPathForItem: (Int) -> IndexPath = { return IndexPath(item: $0, section: 0) }
         
         collectionView.performBatchUpdates({
             usingBlock()
@@ -163,7 +163,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
         }, completion: nil)
     }
     
-    func archivedListViewModel(model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
+    func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
         guard initialSyncCompleted else { return }
         guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
             change.unreadCountChanged || change.connectionStateChanged || change.isSilencedChanged else { return }
@@ -177,7 +177,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 // MARK: - ConversationListCellDelegate
 
 extension ArchivedListViewController: ConversationListCellDelegate {
-    func conversationListCellOverscrolled(cell: ConversationListCell!) {
+    func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
         delegate?.archivedListViewController(self, wantsActionMenuForConversation: cell.conversation)
     }
 }

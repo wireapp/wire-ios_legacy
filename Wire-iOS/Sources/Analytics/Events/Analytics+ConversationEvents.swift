@@ -43,7 +43,7 @@ public extension InteractionMethod {
 
 public extension Analytics {
 
-    public func tagReactedOnMessage(message: ZMConversationMessage, reactionType:ReactionType, method: InteractionMethod) {
+    public func tagReactedOnMessage(_ message: ZMConversationMessage, reactionType:ReactionType, method: InteractionMethod) {
         guard let conversation = message.conversation,
               let sender = message.sender,
               let lastMessage = (conversation.messages.lastObject as? ZMMessage),

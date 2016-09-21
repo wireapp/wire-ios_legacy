@@ -26,15 +26,15 @@ extension Analytics: AnalyticsInterface {
 
 protocol AVSMediaManagerInterface {
     var intensityLevel : AVSIntensityLevel {get set}
-    func playMediaByName(name: String!)
+    func playMediaByName(_ name: String!)
 }
 
 extension AVSMediaManager: AVSMediaManagerInterface {
 }
 
 protocol ZMUserSessionInterface {
-    func performChanges(_: dispatch_block_t)
-    func enqueueChanges(_: dispatch_block_t)
+    func performChanges(_: ()->())
+    func enqueueChanges(_: ()->())
     
     var isNotificationContentHidden : Bool { get set }
 }
@@ -43,7 +43,7 @@ extension ZMUserSession: ZMUserSessionInterface {
 }
 
 class SettingsPropertyFactory {
-    let userDefaults: NSUserDefaults
+    let userDefaults: UserDefaults
     var analytics: AnalyticsInterface?
     var mediaManager: AVSMediaManagerInterface?
     var userSession: ZMUserSessionInterface
@@ -62,7 +62,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.DisableAnalytics           : UserDefaultDisableAnalytics,
     ]
     
-    init(userDefaults: NSUserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: ZMEditableUser) {
+    init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: ZMEditableUser) {
         self.userDefaults = userDefaults
         self.analytics = analytics
         self.mediaManager = mediaManager
@@ -70,7 +70,7 @@ class SettingsPropertyFactory {
         self.selfUser = selfUser
     }
     
-    func property(propertyName: SettingsPropertyName) -> SettingsProperty {
+    func property(_ propertyName: SettingsPropertyName) -> SettingsProperty {
         
         switch(propertyName) {
             // Profile
@@ -80,7 +80,7 @@ class SettingsPropertyFactory {
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
-                case .String(let stringValue):
+                case .string(let stringValue):
                     self.userSession.enqueueChanges({
                         self.selfUser.name = stringValue
                     })
@@ -97,7 +97,7 @@ class SettingsPropertyFactory {
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
-                case .Number(let intValue):
+                case .number(let intValue):
                     self.userSession.enqueueChanges({
                         self.selfUser.accentColorValue = ZMAccentColor(rawValue: Int16(intValue))!
                     })
@@ -113,13 +113,13 @@ class SettingsPropertyFactory {
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
-                case .Bool(let boolValue):
+                case .bool(let boolValue):
                     self.userDefaults.setObject(boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
                 default:
                     fatalError("Incorrect type \(value) for key \(propertyName)")
                 }
                 
-                NSNotificationCenter.defaultCenter().postNotificationName(SettingsColorSchemeChangedNotification, object: self)
+                NotificationCenter.defaultCenter().postNotificationName(SettingsColorSchemeChangedNotification, object: self)
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
@@ -129,12 +129,12 @@ class SettingsPropertyFactory {
                     return SettingsPropertyValue.Number(value: Int(mediaManager.intensityLevel.rawValue))
                 }
                 else {
-                    return SettingsPropertyValue.Number(value: 0)
+                    return SettingsPropertyValue.number(value: 0)
                 }
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) in
                 switch(value) {
-                case .Number(let intValue):
+                case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(intValue)),
                         var mediaManager = self.mediaManager {
                         mediaManager.intensityLevel = intensivityLevel
@@ -151,18 +151,18 @@ class SettingsPropertyFactory {
         case .AnalyticsOptOut:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let analytics = self.analytics {
-                    return SettingsPropertyValue.Number(value: Int(analytics.isOptedOut))
+                    return SettingsPropertyValue.number(value: Int(analytics.isOptedOut))
                 }
                 else {
-                    return .Bool(value: false)
+                    return .bool(value: false)
                 }
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) in
                 if var analytics = self.analytics {
                     switch(value) {
-                    case .Number(let intValue):
+                    case .number(let intValue):
                         analytics.isOptedOut = Bool(intValue)
-                    case .Bool(let boolValue):
+                    case .bool(let boolValue):
                         analytics.isOptedOut = boolValue
                     default:
                         fatalError("Incorrect type \(value) for key \(propertyName)")
@@ -173,12 +173,12 @@ class SettingsPropertyFactory {
             
         case .NotificationContentVisible:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return .Bool(value: self.userSession.isNotificationContentHidden)
+                return .bool(value: self.userSession.isNotificationContentHidden)
             }
             
             let setAction : SetAction = { (porperty: SettingsBlockProperty, value: SettingsPropertyValue) in
                 switch value {
-                    case .Bool(let boolValue):
+                    case .bool(let boolValue):
                         self.userSession.performChanges {
                             self.userSession.isNotificationContentHidden = boolValue
                         }
@@ -191,7 +191,7 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
             
         default:
-            if let userDefaultsKey = self.dynamicType.userDefaultsPropertiesToKeys[propertyName] {
+            if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)
             }
         }

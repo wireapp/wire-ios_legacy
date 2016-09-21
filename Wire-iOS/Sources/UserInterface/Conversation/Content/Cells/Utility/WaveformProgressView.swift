@@ -28,7 +28,7 @@ private class WaveformBarsView: UIView {
         }
     }
     
-    var barColor : UIColor = UIColor.grayColor() {
+    var barColor : UIColor = UIColor.gray {
         didSet {
             setNeedsDisplay()
         }
@@ -44,16 +44,16 @@ private class WaveformBarsView: UIView {
         setup()
     }
     
-    private func setup() {
-        self.contentMode = .Redraw;
+    fileprivate func setup() {
+        self.contentMode = .redraw;
     }
     
-    override private func drawRect(rect: CGRect) {
+    override fileprivate func draw(_ rect: CGRect) {
         guard let c = UIGraphicsGetCurrentContext()  else { return }
         
-        CGContextClearRect(c, self.bounds);
+        c.clear(self.bounds);
         self.backgroundColor?.setFill();
-        CGContextFillRect(c, rect);
+        c.fill(rect);
         
         if samples.isEmpty {
             return
@@ -67,61 +67,61 @@ private class WaveformBarsView: UIView {
         
         for i in 0..<numbersOfBars {
             let loudness = samples[Int((Float(i) / Float(numbersOfBars)) * Float(samples.count))].floatValue
-            let rect = CGRectMake(CGFloat(i) * stepSpacing, rect.height / 2, barWidth, max(minHeight, rect.height * CGFloat(loudness) * 0.5))
-            CGContextAddRect(c, rect)
+            let rect = CGRect(x: CGFloat(i) * stepSpacing, y: rect.height / 2, width: barWidth, height: max(minHeight, rect.height * CGFloat(loudness) * 0.5))
+            c.addRect(rect)
         }
         
-        let bars = CGContextCopyPath(c)
+        let bars = c.path
         
-        CGContextTranslateCTM(c, 0, rect.height)
-        CGContextScaleCTM(c, 1, -1)
-        CGContextAddPath(c, bars)
+        c.translateBy(x: 0, y: rect.height)
+        c.scaleBy(x: 1, y: -1)
+        c.addPath(bars!)
         
         barColor.setFill()
-        CGContextFillPath(c)
+        c.fillPath()
     }
 }
 
-public class WaveformProgressView: UIView {
+open class WaveformProgressView: UIView {
     
-    private let backgroundWaveform = WaveformBarsView()
-    private let foregroundWaveform = WaveformBarsView()
-    private var maskShape = CAShapeLayer()
+    fileprivate let backgroundWaveform = WaveformBarsView()
+    fileprivate let foregroundWaveform = WaveformBarsView()
+    fileprivate var maskShape = CAShapeLayer()
     
-    public var samples : [NSNumber] = [] {
+    open var samples : [NSNumber] = [] {
         didSet {
             backgroundWaveform.samples = samples
             foregroundWaveform.samples = samples
         }
     }
     
-    public var barColor : UIColor = UIColor.grayColor() {
+    open var barColor : UIColor = UIColor.gray {
         didSet {
             backgroundWaveform.barColor = barColor
         }
     }
     
-    public var highlightedBarColor : UIColor = UIColor.accentColor() {
+    open var highlightedBarColor : UIColor = UIColor.accentColor {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }
     }
     
-    public var progress : Float = 0.0 {
+    open var progress : Float = 0.0 {
         didSet {
             setProgress(progress, animated: false)
         }
     }
     
-    public override var backgroundColor: UIColor? {
+    open override var backgroundColor: UIColor? {
         didSet {
             backgroundWaveform.backgroundColor = backgroundColor
             foregroundWaveform.backgroundColor = backgroundColor
         }
     }
     
-    public func setProgress(progress: Float, animated: Bool) {
-        let path = UIBezierPath(rect: CGRectMake(0, 0, self.bounds.width * CGFloat(progress), self.bounds.height)).CGPath
+    open func setProgress(_ progress: Float, animated: Bool) {
+        let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         
         if (animated) {
             let animation = CABasicAnimation(keyPath: "path")
@@ -130,27 +130,27 @@ public class WaveformProgressView: UIView {
             animation.duration = 0.25
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
             animation.fillMode = kCAFillModeForwards
-            maskShape.addAnimation(animation, forKey: animation.keyPath)
+            maskShape.add(animation, forKey: animation.keyPath)
         }
         
         maskShape.path = path
     }
     
-    public override var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
-            maskShape.path = UIBezierPath(rect: CGRectMake(0, 0, self.bounds.width * CGFloat(progress), self.bounds.height)).CGPath
+            maskShape.path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         }
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        maskShape.fillColor = UIColor.whiteColor().CGColor
-        backgroundWaveform.backgroundColor = UIColor.clearColor()
-        backgroundWaveform.barColor = UIColor.grayColor()
+        maskShape.fillColor = UIColor.white.cgColor
+        backgroundWaveform.backgroundColor = UIColor.clear
+        backgroundWaveform.barColor = UIColor.gray
         backgroundWaveform.translatesAutoresizingMaskIntoConstraints = false
-        foregroundWaveform.backgroundColor = UIColor.clearColor()
-        foregroundWaveform.barColor = UIColor.accentColor()
+        foregroundWaveform.backgroundColor = UIColor.clear
+        foregroundWaveform.barColor = UIColor.accentColor
         foregroundWaveform.translatesAutoresizingMaskIntoConstraints = false
         foregroundWaveform.layer.mask = maskShape
         

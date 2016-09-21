@@ -45,17 +45,17 @@ private extension Bool {
 public extension AnalyticsTracker {
     
     /// Tracks how the address book upload `preflight` permissions on the `nag screens` was answered
-    @objc public func tagAddressBookSystemPermissions(granted: Bool) {
+    @objc public func tagAddressBookSystemPermissions(_ granted: Bool) {
         tagSystemPermissions(ofType: .AddressBook, granted: granted)
     }
 
     /// Tracks how the address book upload `preflight` permissions on the `nag screens` was answered
-    @objc public  func tagAddressBookPreflightPermissions(shouldAsk: Bool) {
+    @objc public  func tagAddressBookPreflightPermissions(_ shouldAsk: Bool) {
         tagPreflightPermissions(ofType: .AddressBook, shouldAsk: shouldAsk)
     }
     
     /// Used to track the answer of the `nag screens` shown before asking the OS for permissions
-    private func tagPreflightPermissions(ofType type: PermissionsType, shouldAsk: Bool) {
+    fileprivate func tagPreflightPermissions(ofType type: PermissionsType, shouldAsk: Bool) {
         let attributes = [
             PermissionKey.Category.rawValue: type.rawValue,
             PermissionKey.State.rawValue: shouldAsk.preflightDescription
@@ -65,7 +65,7 @@ public extension AnalyticsTracker {
     }
     
     /// Used to track the answer of the `nag screens` shown before asking the OS for permissions
-    private func tagSystemPermissions(ofType type: PermissionsType, granted: Bool) {
+    fileprivate func tagSystemPermissions(ofType type: PermissionsType, granted: Bool) {
         let attributes = [
             PermissionKey.Category.rawValue: type.rawValue,
             PermissionKey.State.rawValue: granted.grantedDescription

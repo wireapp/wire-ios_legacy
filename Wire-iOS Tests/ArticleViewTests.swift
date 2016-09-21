@@ -113,7 +113,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.layer.beginTime = 0
         sut.translatesAutoresizingMaskIntoConstraints = false
         let textMessageData = articleWithPicture()
-        textMessageData.imageData = .None
+        textMessageData.imageData = .none
         sut.configure(withTextMessageData: textMessageData)
         sut.layoutIfNeeded()
         

@@ -27,23 +27,23 @@ import CocoaLumberjackSwift
 @objc class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     static let sharedDelegate = FastTransitioningDelegate()
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return VerticalTransition(offset: -180)
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return VerticalTransition(offset: 180)
     }
 }
 
 
 class StatusBarVideoEditorController: UIVideoEditorController {
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.Default
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.default
     }
 }
 
@@ -56,7 +56,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         self.cameraKeyboardViewController = cameraKeyboardViewController
     }
     
-    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo videoURL: NSURL, duration: NSTimeInterval) {
+    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: NSURL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
         if duration > ConversationUploadMaxVideoDuration {
             let videoEditor = StatusBarVideoEditorController()
@@ -64,7 +64,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             videoEditor.delegate = self
             videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
             videoEditor.videoPath = videoURL.path!
-            videoEditor.videoQuality = UIImagePickerControllerQualityType.TypeMedium
+            videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
             
             self.presentViewController(videoEditor, animated: true) {
                 UIApplication.sharedApplication().wr_updateStatusBarForCurrentControllerAnimated(false)
@@ -97,17 +97,17 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, metadata: ImageMetadata) {
+    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData imageData: NSData, metadata: ImageMetadata) {
         self.showConfirmationForImage(imageData, metadata: metadata)
     }
     
-    @objc private func image(image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    @objc fileprivate func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
             DDLogError("didFinishSavingWithError: \(error)")
         }
     }
     
-    public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController) {
+    public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
             self.videoSendContext = ConversationMediaVideoContext.FullCameraKeyboard.rawValue
@@ -115,15 +115,15 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController) {
+    public func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
             self.presentImagePickerWithSourceType(.PhotoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
         }
     }
     
-    @objc public func showConfirmationForImage(imageData: NSData, metadata: ImageMetadata) {
-        let image = UIImage(data: imageData)
+    @objc public func showConfirmationForImage(_ imageData: NSData, metadata: ImageMetadata) {
+        let image = UIImage(data: imageData as Data)
         
         let confirmImageViewController = ConfirmAssetViewController()
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
@@ -172,34 +172,34 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    @objc public func executeWithCameraRollPermission(closure: (success: Bool)->()) {
+    @objc public func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool)->()) {
         PHPhotoLibrary.requestAuthorization { status in
-            dispatch_async(dispatch_get_main_queue()) {
+            dispatch_get_main_queue().asynchronously(DispatchQueue.main) {
             switch status {
-            case .Authorized:
-                closure(success: true)
+            case .authorized:
+                closure(true)
             default:
-                closure(success: false)
+                closure(false)
                 break
             }
             }
         }
     }
     
-    public func convertVideoAtPath(inputPath: String, completion: (success: Bool, resultPath: String?, duration: NSTimeInterval)->()) {
+    public func convertVideoAtPath(_ inputPath: String, completion: @escaping (_ success: Bool, _ resultPath: String?, _ duration: TimeInterval)->()) {
         var filename: String?
         
         let lastPathComponent = (inputPath as NSString).lastPathComponent
-        filename = ((lastPathComponent as NSString).stringByDeletingPathExtension as NSString).stringByAppendingPathExtension("mp4")
+        filename = ((lastPathComponent as NSString).deletingPathExtension as NSString).appendingPathExtension("mp4")
         
-        if filename == .None {
+        if filename == .none {
             filename = "video.mp4"
         }
         
-        let videoURLAsset = AVURLAsset(URL: NSURL(fileURLWithPath: inputPath))
+        let videoURLAsset = AVURLAsset(url: NSURL(fileURLWithPath: inputPath) as URL)
         
         videoURLAsset.wr_convertWithCompletion({ URL, videoAsset, error in
-            guard let resultURL = URL where error == .None else {
+            guard let resultURL = URL , error == .None else {
                 completion(success: false, resultPath: .None, duration: 0)
                 return
             }
@@ -210,19 +210,19 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 }
 
 extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
-    public func videoEditorControllerDidCancel(editor: UIVideoEditorController) {
-        editor.dismissViewControllerAnimated(true, completion: .None)
+    public func videoEditorControllerDidCancel(_ editor: UIVideoEditorController) {
+        editor.dismiss(animated: true, completion: .none)
     }
     
-    public func videoEditorController(editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
-        editor.dismissViewControllerAnimated(true, completion: .None)
+    public func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
+        editor.dismiss(animated: true, completion: .none)
         
         editor.showLoadingView = true
 
         self.convertVideoAtPath(editedVideoPath) { (success, resultPath, duration) in
             editor.showLoadingView = false
 
-            guard let path = resultPath where success else {
+            guard let path = resultPath , success else {
                 return
             }
             
@@ -231,8 +231,8 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
         }
     }
     
-    public func videoEditorController(editor: UIVideoEditorController, didFailWithError error: NSError) {
-        editor.dismissViewControllerAnimated(true, completion: .None)
+    public func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
+        editor.dismiss(animated: true, completion: .none)
         DDLogError("Video editor failed with error: \(error)")
     }
 }

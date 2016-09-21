@@ -23,7 +23,7 @@ import XCTest
 class UserClientFingerprintTests: XCTestCase {
     func testThatItMapsOctetCorrectly() {
         // given
-        guard let data = NSData(base64EncodedString: "VUhVVQ==", options: []) else {
+        guard let data = Data(base64Encoded: "VUhVVQ==", options: []) else {
             XCTFail()
             return
         } // String "UHUU"
@@ -31,7 +31,7 @@ class UserClientFingerprintTests: XCTestCase {
         // when
         let result = data.mapBytes({ (char: UInt8) -> (String) in
             return String(UnicodeScalar(char))
-        }).joinWithSeparator("")
+        }).joined(separator: "")
         
         // then
         XCTAssertEqual(result, "UHUU")
@@ -39,7 +39,7 @@ class UserClientFingerprintTests: XCTestCase {
     
     func testThatItMapsWordCorrectly() {
         // given
-        guard let data = NSData(base64EncodedString: "VUhVVQ==", options: []) else {
+        guard let data = Data(base64Encoded: "VUhVVQ==", options: []) else {
             XCTFail()
             return
         } // String "UHUU"
@@ -47,7 +47,7 @@ class UserClientFingerprintTests: XCTestCase {
         // when
         let result = data.mapBytes({ (char: UInt16) -> (String) in
             return String(UnicodeScalar(UInt8(truncatingBitPattern: char))) + String(UnicodeScalar(UInt8(truncatingBitPattern: char>>8)))
-        }).joinWithSeparator("")
+        }).joined(separator: "")
         
         // then
         XCTAssertEqual(result, "UHUU")
@@ -57,7 +57,7 @@ class UserClientFingerprintTests: XCTestCase {
         // given
         let longStringAsText = "Maecenas euismod sollicitudin magna. Nullam pharetra ultricies eros, nec tincidunt nisi auctor id. Nullam pharetra ipsum eget gravida ornare. Curabitur finibus purus libero, at imperdiet massa volutpat ac. Aliquam erat volutpat. Integer at enim sit amet tellus euismod sollicitudin eget et ante. Vestibulum ut pretium turpis, in maximus arcu. Vivamus diam mauris, bibendum mollis est egestas, imperdiet viverra nunc. Quisque consequat purus et purus vehicula placerat. Aenean vitae quam ut lacus rhoncus euismod ac vel tellus. Fusce tellus sapien, pellentesque nec faucibus quis, sodales nec enim. Ut non turpis enim. Fusce fermentum leo nec urna faucibus luctus?."
 
-        guard let data = NSData(base64EncodedString: "TWFlY2VuYXMgZXVpc21vZCBzb2xsaWNpdHVkaW4gbWFnbmEuIE51bGxhbSBwaGFyZXRyYSB1bHRyaWNpZXMgZXJvcywgbmVjIHRpbmNpZHVudCBuaXNpIGF1Y3RvciBpZC4gTnVsbGFtIHBoYXJldHJhIGlwc3VtIGVnZXQgZ3JhdmlkYSBvcm5hcmUuIEN1cmFiaXR1ciBmaW5pYnVzIHB1cnVzIGxpYmVybywgYXQgaW1wZXJkaWV0IG1hc3NhIHZvbHV0cGF0IGFjLiBBbGlxdWFtIGVyYXQgdm9sdXRwYXQuIEludGVnZXIgYXQgZW5pbSBzaXQgYW1ldCB0ZWxsdXMgZXVpc21vZCBzb2xsaWNpdHVkaW4gZWdldCBldCBhbnRlLiBWZXN0aWJ1bHVtIHV0IHByZXRpdW0gdHVycGlzLCBpbiBtYXhpbXVzIGFyY3UuIFZpdmFtdXMgZGlhbSBtYXVyaXMsIGJpYmVuZHVtIG1vbGxpcyBlc3QgZWdlc3RhcywgaW1wZXJkaWV0IHZpdmVycmEgbnVuYy4gUXVpc3F1ZSBjb25zZXF1YXQgcHVydXMgZXQgcHVydXMgdmVoaWN1bGEgcGxhY2VyYXQuIEFlbmVhbiB2aXRhZSBxdWFtIHV0IGxhY3VzIHJob25jdXMgZXVpc21vZCBhYyB2ZWwgdGVsbHVzLiBGdXNjZSB0ZWxsdXMgc2FwaWVuLCBwZWxsZW50ZXNxdWUgbmVjIGZhdWNpYnVzIHF1aXMsIHNvZGFsZXMgbmVjIGVuaW0uIFV0IG5vbiB0dXJwaXMgZW5pbS4gRnVzY2UgZmVybWVudHVtIGxlbyBuZWMgdXJuYSBmYXVjaWJ1cyBsdWN0dXM/Lg==", options: []) else {
+        guard let data = Data(base64Encoded: "TWFlY2VuYXMgZXVpc21vZCBzb2xsaWNpdHVkaW4gbWFnbmEuIE51bGxhbSBwaGFyZXRyYSB1bHRyaWNpZXMgZXJvcywgbmVjIHRpbmNpZHVudCBuaXNpIGF1Y3RvciBpZC4gTnVsbGFtIHBoYXJldHJhIGlwc3VtIGVnZXQgZ3JhdmlkYSBvcm5hcmUuIEN1cmFiaXR1ciBmaW5pYnVzIHB1cnVzIGxpYmVybywgYXQgaW1wZXJkaWV0IG1hc3NhIHZvbHV0cGF0IGFjLiBBbGlxdWFtIGVyYXQgdm9sdXRwYXQuIEludGVnZXIgYXQgZW5pbSBzaXQgYW1ldCB0ZWxsdXMgZXVpc21vZCBzb2xsaWNpdHVkaW4gZWdldCBldCBhbnRlLiBWZXN0aWJ1bHVtIHV0IHByZXRpdW0gdHVycGlzLCBpbiBtYXhpbXVzIGFyY3UuIFZpdmFtdXMgZGlhbSBtYXVyaXMsIGJpYmVuZHVtIG1vbGxpcyBlc3QgZWdlc3RhcywgaW1wZXJkaWV0IHZpdmVycmEgbnVuYy4gUXVpc3F1ZSBjb25zZXF1YXQgcHVydXMgZXQgcHVydXMgdmVoaWN1bGEgcGxhY2VyYXQuIEFlbmVhbiB2aXRhZSBxdWFtIHV0IGxhY3VzIHJob25jdXMgZXVpc21vZCBhYyB2ZWwgdGVsbHVzLiBGdXNjZSB0ZWxsdXMgc2FwaWVuLCBwZWxsZW50ZXNxdWUgbmVjIGZhdWNpYnVzIHF1aXMsIHNvZGFsZXMgbmVjIGVuaW0uIFV0IG5vbiB0dXJwaXMgZW5pbS4gRnVzY2UgZmVybWVudHVtIGxlbyBuZWMgdXJuYSBmYXVjaWJ1cyBsdWN0dXM/Lg==", options: []) else {
             XCTFail()
             return
         } // Long String
@@ -77,7 +77,7 @@ class UserClientFingerprintTests: XCTestCase {
             }
             
             return result
-        }).joinWithSeparator("")
+        }).joined(separator: "")
         
         // then
         XCTAssertEqual(result, longStringAsText)

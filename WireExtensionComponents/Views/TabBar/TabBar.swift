@@ -86,8 +86,8 @@ open class TabBar: UIView {
             self.buttonRow.addSubview(button)
         }
         
-        let lineColor = self.style == .Colored ? UIColor.whiteColor() : ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorSeparator, variant: colorSchemeVariant())
-        self.arrowView.image = WireStyleKit.imageOfTabWithColor(lineColor)
+        let lineColor = (self.style == TabBarStyle.colored) ? UIColor.white : ColorScheme.default().color(withName: ColorSchemeColorSeparator, variant: colorSchemeVariant())
+        self.arrowView.image = WireStyleKit.imageOfTab(with: lineColor)
         self.leftLineView.backgroundColor = lineColor
         self.rightLineView.backgroundColor = lineColor
         

@@ -22,17 +22,17 @@ import Foundation
 extension ConversationType {
     var analyticsTypeString : String {
         switch  self {
-        case .OneToOne:     return "one_to_one"
-        case .Group:        return "group"
+        case .oneToOne:     return "one_to_one"
+        case .group:        return "group"
         }
     }
     
-    static func type(conversation: ZMConversation) -> ConversationType? {
+    static func type(_ conversation: ZMConversation) -> ConversationType? {
         switch conversation.conversationType {
-        case .OneOnOne:
-            return .OneToOne
-        case .Group:
-            return .Group
+        case .oneOnOne:
+            return .oneToOne
+        case .group:
+            return .group
         default:
             return nil
         }
@@ -50,8 +50,8 @@ extension ZMConversation {
     }
     
     public var isBotConversation : Bool {
-        guard conversationType == .OneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() where otherUser.isBot
+        guard conversationType == .oneOnOne,
+              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isBot
         else { return false }
         
         return true

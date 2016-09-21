@@ -29,9 +29,9 @@ extension CLLocationCoordinate2D {
 
 extension CLPlacemark {
     
-    func formattedAddress(includeCountry: Bool) -> String? {
+    func formattedAddress(_ includeCountry: Bool) -> String? {
         let lines = addressDictionary?["FormattedAddressLines"] as? [String]
-        return includeCountry ? lines?.joinWithSeparator(", ") : lines?.dropLast().joinWithSeparator(", ")
+        return includeCountry ? lines?.joined(separator: ", ") : lines?.dropLast().joined(separator: ", ")
     }
     
 }
@@ -51,7 +51,7 @@ extension MKMapView {
         }
     }
     
-    func setCenterCoordinate(coordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool = false) {
+    func setCenterCoordinate(_ coordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool = false) {
         guard CLLocationCoordinate2DIsValid(coordinate) else { return }
         let latitudeDelta = min(360 / pow(2, Double(zoomLevel)) * Double(frame.height) / 256, 180)
         let region = MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(latitudeDelta, 0))
@@ -70,7 +70,7 @@ extension LocationData {
 
 extension MKMapView {
     
-    func locationData(name name: String?) -> LocationData {
+    func locationData(name: String?) -> LocationData {
         return .locationData(
             withLatitude: Float(centerCoordinate.latitude),
             longitude: Float(centerCoordinate.longitude),
@@ -84,7 +84,7 @@ extension MKMapView {
         Settings.sharedSettings().lastUserLocation = location
     }
     
-    func restoreLocation(animated animated: Bool) {
+    func restoreLocation(animated: Bool) {
         guard let location = Settings.sharedSettings().lastUserLocation else { return }
         setCenterCoordinate(location.coordinate, zoomLevel: Int(location.zoomLevel), animated: animated)
     }

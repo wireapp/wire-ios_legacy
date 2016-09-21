@@ -22,7 +22,7 @@ import XCTest
 
 class AudioMessageCellTests: ZMSnapshotTestCase {
     
-    func cellWithConfig(config: ((MockMessage) -> ())?) -> AudioMessageCell {
+    func cellWithConfig(_ config: ((MockMessage) -> ())?) -> AudioMessageCell {
         
         let fileMessage = MockMessageFactory.fileTransferMessage()
         fileMessage.backingFileMessageData.mimeType = "audio/x-m4a"
@@ -32,7 +32,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
             config(fileMessage)
         }
         
-        let cell = AudioMessageCell(style: .Default, reuseIdentifier: "test")
+        let cell = AudioMessageCell(style: .default, reuseIdentifier: "test")
         
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
@@ -41,8 +41,8 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         
         cell.prepareForReuse()
         cell.layer.speed = 0 // freeze animations for deterministic tests
-        cell.bounds = CGRectMake(0.0, 0.0, 320.0, 9999)
-        cell.contentView.bounds = CGRectMake(0.0, 0.0, 320, 9999)
+        cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
+        cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
         
         cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin")),
                                               0, CGFloat(WAZUIMagic.floatForIdentifier("content.right_margin")))
@@ -50,8 +50,8 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         cell.configureForMessage(fileMessage, layoutProperties: layoutProperties)
         cell.layoutIfNeeded()
         
-        let size = cell.systemLayoutSizeFittingSize(CGSizeMake(320.0, 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
-        cell.bounds = CGRectMake(0.0, 0.0, size.width, size.height)
+        let size = cell.systemLayoutSizeFittingSize(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         cell.layoutIfNeeded()
         return cell
     }
@@ -66,7 +66,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testUploadedCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -74,7 +74,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testUploadedCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -84,7 +84,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.cellWithConfig({
             $0.backingFileMessageData.previewData = nil
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -94,7 +94,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.cellWithConfig({
             $0.backingFileMessageData.normalizedLoudness = [0.25, 0.5, 1]
             $0.fileMessageData?.transferState = .Uploaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -104,7 +104,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploaded
             $0.fileMessageData?.size = 1024 * 1024 * 25
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)
     }
@@ -116,7 +116,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploading
             $0.fileMessageData?.progress = 0.75
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -125,7 +125,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploading
             $0.backingFileMessageData.previewData = nil
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -134,7 +134,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testUploadingCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Uploading
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -146,7 +146,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloading
             $0.fileMessageData?.progress = 0.75
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -154,7 +154,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testDownloadingCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloading
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.fileMessageData?.progress = 0.75
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
@@ -166,7 +166,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testDownloadedCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloaded
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -174,7 +174,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testDownloadedCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .Downloaded
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -185,7 +185,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testFailedDownloadCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedDownload
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -193,7 +193,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testFailedDownloadCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedDownload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -204,7 +204,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testFailedUploadCell_fromThisDevice() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedUpload
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
     }
@@ -212,7 +212,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testFailedUploadCell_fromOtherUser() {
         let cell = self.cellWithConfig({
             $0.fileMessageData?.transferState = .FailedUpload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         })
         verify(view: cell)
@@ -223,7 +223,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testCancelledUploadCell_fromThisDevice() {
         let cell = cellWithConfig {
             $0.fileMessageData?.transferState = .CancelledUpload
-            $0.backingFileMessageData.fileURL = NSBundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         }
         
         verify(view: cell)
@@ -232,7 +232,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testCancelledUploadCell_fromOtherUser() {
         let cell = cellWithConfig {
             $0.fileMessageData?.transferState = .CancelledUpload
-            $0.backingFileMessageData.fileURL = .None
+            $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
         }
         

@@ -22,11 +22,11 @@ import Cartography
 
 
 @objc enum ConversationListButtonType: UInt {
-    case Contacts, Archive, Settings
+    case contacts, archive, settings
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
-    func conversationListBottomBar(bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
+    func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
 }
 
 
@@ -42,7 +42,7 @@ import Cartography
     let archivedButtonContainer = UIView()
     let separator = UIView()
     let indicator = UIView()
-    let contactsButtonTitle = "bottom_bar.contacts_button.title".localized.uppercaseString
+    let contactsButtonTitle = "bottom_bar.contacts_button.title".localized.uppercased()
     let heightConstant: CGFloat = 56
     let user: ZMUser?
     
@@ -57,21 +57,21 @@ import Cartography
     
     var showSeparator: Bool {
         set { separator.fadeAndHide(!newValue) }
-        get { return !separator.hidden }
+        get { return !separator.isHidden }
     }
     
     var showIndicator: Bool {
         set { indicator.fadeAndHide(!newValue) }
-        get { return !indicator.hidden }
+        get { return !indicator.isHidden }
     }
     
     var showTooltip: Bool = false {
         didSet {
             if self.showTooltip {
-                self.contactsButton.setIconColor(UIColor.accentColor(), forState: .Normal)
+                self.contactsButton.setIconColor(UIColor.accentColor, for: .normal)
             }
             else {
-                self.contactsButton.setIconColor(UIColor.clearColor(), forState: .Normal)
+                self.contactsButton.setIconColor(UIColor.clear, for: UIControlState())
             }
         }
     }
@@ -97,37 +97,37 @@ import Cartography
         accentColorHandler = nil
     }
     
-    private func createViews() {
-        contactsButton.setTitle(contactsButtonTitle, forState: .Normal)
-        contactsButton.setIcon(.ContactsCircle, withSize: .ActionButton, forState: .Normal, renderingMode: .AlwaysOriginal)
-        contactsButton.setIconColor(UIColor.clearColor(), forState: .Normal)
+    fileprivate func createViews() {
+        contactsButton.setTitle(contactsButtonTitle, for: UIControlState())
+        contactsButton.setIcon(.contactsCircle, with: .actionButton, for: UIControlState(), renderingMode: .alwaysOriginal)
+        contactsButton.setIconColor(UIColor.clear, for: UIControlState())
         contactsButton.titleImageSpacing = 18
         contactsButton.adjustsTitleWhenHighlighted = true
-        contactsButton.addTarget(self, action: #selector(ConversationListBottomBarController.contactsButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        contactsButton.addTarget(self, action: #selector(ConversationListBottomBarController.contactsButtonTapped(_:)), for: .touchUpInside)
         contactsButton.accessibilityIdentifier = "bottomBarContactsButton"
         
-        archivedButton.setIcon(.Archive, withSize: .Tiny, forState: .Normal)
-        archivedButton.addTarget(self, action: #selector(ConversationListBottomBarController.archivedButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
+        archivedButton.addTarget(self, action: #selector(ConversationListBottomBarController.archivedButtonTapped(_:)), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
         
-        settingsButton.setIcon(.Gear, withSize: .Tiny, forState: .Normal)
-        settingsButton.addTarget(self, action: #selector(ConversationListBottomBarController.settingsButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
+        settingsButton.addTarget(self, action: #selector(ConversationListBottomBarController.settingsButtonTapped(_:)), for: .touchUpInside)
         settingsButton.accessibilityIdentifier = "bottomBarSettingsButton"
 
         contactsButtonContainer.addSubview(contactsButton)
         archivedButtonContainer.addSubview(archivedButton)
-        [indicator, separator, archivedButton].forEach { $0.hidden = true }
+        [indicator, separator, archivedButton].forEach { $0.isHidden = true }
         [settingsButton, indicator].forEach(settingsButtonContainer.addSubview)
         [settingsButtonContainer, contactsButtonContainer, archivedButtonContainer, separator].forEach(view.addSubview)
         
         accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] color, _ in
-            if let `self` = self where self.showTooltip {
+            if let `self` = self , self.showTooltip {
                 self.contactsButton.setIconColor(color, forState: .Normal)
             }
         }
     }
     
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         constrain(view, contactsButton, separator) { view, contactsButton, separator in
             view.height == heightConstant ~ 750
             
@@ -180,8 +180,8 @@ import Cartography
     }
     
     func updateArchivedVisibility() {
-        contactsButton.setTitle(showArchived ? nil : contactsButtonTitle, forState: .Normal)
-        archivedButton.hidden = !showArchived
+        contactsButton.setTitle(showArchived ? nil : contactsButtonTitle, for: UIControlState())
+        archivedButton.isHidden = !showArchived
     }
     
     func updateIndicator() {
@@ -190,16 +190,16 @@ import Cartography
     
     // MARK: - Target Action
     
-    func contactsButtonTapped(sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .Contacts)
+    func contactsButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .contacts)
     }
     
-    func settingsButtonTapped(sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .Settings)
+    func settingsButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .settings)
     }
     
-    func archivedButtonTapped(sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .Archive)
+    func archivedButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
     
 }
@@ -207,7 +207,7 @@ import Cartography
 // MARK: - User Observer
 
 extension ConversationListBottomBarController: ZMUserObserver {
-    func userDidChange(note: UserChangeInfo!) {
+    func userDidChange(_ note: UserChangeInfo!) {
         guard note.trustLevelChanged || note.clientsChanged else { return }
         updateIndicator()
     }
@@ -216,15 +216,15 @@ extension ConversationListBottomBarController: ZMUserObserver {
 // MARK: - Helper
 
 public extension UIView {
-    func fadeAndHide(hide: Bool, duration: NSTimeInterval = 0.2, options: UIViewAnimationOptions = .CurveEaseInOut) {
+    func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIViewAnimationOptions = UIViewAnimationOptions()) {
         if !hide {
             alpha = 0
-            hidden = false
+            isHidden = false
         }
         
         let animations = { self.alpha = hide ? 0 : 1 }
-        let completion: Bool -> Void = { _ in self.hidden = hide }
-        UIView.animateWithDuration(duration, delay: 0, options: .CurveEaseInOut, animations: animations, completion: completion)
+        let completion: (Bool) -> Void = { _ in self.isHidden = hide }
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: animations, completion: completion)
     }
 }
 

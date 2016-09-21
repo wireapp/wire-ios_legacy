@@ -19,7 +19,7 @@
 
 import Foundation
 
-extension NSData {
+extension Data {
     func wr_MD5Hash() -> String {
         let digestLen = Int(CC_MD5_DIGEST_LENGTH)
         let result = UnsafeMutablePointer<CUnsignedChar>.alloc(digestLen)

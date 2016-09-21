@@ -20,21 +20,21 @@ import Foundation
 import zmessaging
 import Cartography
 
-@objc public class ReactionsListViewController: UIViewController {
-    public let message: ZMConversationMessage
-    public let reactionsUsers: [ZMUser]
-    private let collectionViewLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
-    private let topBar: ModalTopBar
-    public let dismissButton = IconButton.iconButtonDefault()
-    public let titleLabel = UILabel()
+@objc open class ReactionsListViewController: UIViewController {
+    open let message: ZMConversationMessage
+    open let reactionsUsers: [ZMUser]
+    fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
+    fileprivate var collectionView: UICollectionView!
+    fileprivate let topBar: ModalTopBar
+    open let dismissButton = IconButton.iconButtonDefault()
+    open let titleLabel = UILabel()
     
     public init(message: ZMConversationMessage, showsStatusBar: Bool) {
         self.message = message
         topBar = ModalTopBar(forUseWithStatusBar: showsStatusBar)
         self.reactionsUsers = self.message.likers()
-        super.init(nibName: .None, bundle: .None)
-        self.modalPresentationStyle = .FormSheet
+        super.init(nibName: .none, bundle: .none)
+        self.modalPresentationStyle = .formSheet
         topBar.delegate = self
     }
     
@@ -42,26 +42,26 @@ import Cartography
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "content.reactions_list.likers".localized.uppercaseString
+        self.title = "content.reactions_list.likers".localized.uppercased()
         self.topBar.title = self.title
         
-        self.collectionViewLayout.scrollDirection = .Vertical
+        self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 0
         self.collectionViewLayout.minimumInteritemSpacing = 0
         self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
-        self.collectionView.registerClass(ReactionCell.self, forCellWithReuseIdentifier: ReactionCell.reuseIdentifier)
+        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        self.collectionView.register(ReactionCell.self, forCellWithReuseIdentifier: ReactionCell.reuseIdentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
         self.collectionView.alwaysBounceVertical = true
-        self.collectionView.scrollEnabled = true
-        self.collectionView.backgroundColor = UIColor.clearColor()
+        self.collectionView.isScrollEnabled = true
+        self.collectionView.backgroundColor = UIColor.clear
         self.view.addSubview(self.collectionView)
         self.view.addSubview(self.topBar)
         
@@ -76,40 +76,40 @@ import Cartography
             collectionView.top == topBar.bottom
         }
 
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
     }
     
-    override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return self.dynamicType.wr_supportedInterfaceOrientations()
+    override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return type(of: self).wr_supportedInterfaceOrientations()
     }
 }
 
 extension ReactionsListViewController: ModalTopBarDelegate {
-    public func modelTopBarWantsToBeDismissed(topBar: ModalTopBar) {
-        dismissViewControllerAnimated(true, completion: .None)
+    public func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
+        dismiss(animated: true, completion: .none)
     }
 }
 
 extension ReactionsListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.reactionsUsers.count
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ReactionCell.reuseIdentifier, forIndexPath: indexPath) as! ReactionCell
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReactionCell.reuseIdentifier, for: indexPath) as! ReactionCell
         cell.user = self.reactionsUsers[indexPath.item]
         return cell
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(collectionView.bounds.width, 52)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 52)
     }
     
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
 }

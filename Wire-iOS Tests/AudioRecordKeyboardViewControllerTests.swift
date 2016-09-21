@@ -24,32 +24,32 @@ import XCTest
 
 class MockAudioRecordKeyboardDelegate: AudioRecordViewControllerDelegate {
     var didCancelHitCount = 0
-    @objc func audioRecordViewControllerDidCancel(audioRecordViewController: AudioRecordBaseViewController) {
+    @objc func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
         didCancelHitCount = didCancelHitCount + 1
     }
     
     var didStartRecordingHitCount = 0
-    @objc func audioRecordViewControllerDidStartRecording(audioRecordViewController: AudioRecordBaseViewController) {
+    @objc func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
         didStartRecordingHitCount = didStartRecordingHitCount + 1
     }
     
     var wantsToSendAudioHitCount = 0
-    @objc func audioRecordViewControllerWantsToSendAudio(audioRecordViewController: AudioRecordBaseViewController, recordingURL: NSURL, duration: NSTimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
+    @objc func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
         wantsToSendAudioHitCount = wantsToSendAudioHitCount + 1
     }
 }
 
 class MockAudioRecorder: AudioRecorderType {
-    var format: AudioRecorderFormat = .WAV
-    var state: AudioRecorderState = .Recording
-    var fileURL: NSURL? = NSBundle(forClass: MockAudioRecorder.self).URLForResource("audio_sample", withExtension: "m4a")
-    var maxRecordingDuration: NSTimeInterval? = 25 * 60
-    var currentDuration: NSTimeInterval = 0.0
-    var recordTimerCallback: (NSTimeInterval -> Void)?
-    var recordLevelCallBack: (RecordingLevel -> Void)?
-    var playingStateCallback: (PlayingState -> Void)?
-    var recordStartedCallback: (Void -> Void)?
-    var recordEndedCallback: (Bool -> Void)?
+    var format: AudioRecorderFormat = .wav
+    var state: AudioRecorderState = .recording
+    var fileURL: URL? = Bundle(for: MockAudioRecorder.self).url(forResource: "audio_sample", withExtension: "m4a")
+    var maxRecordingDuration: TimeInterval? = 25 * 60
+    var currentDuration: TimeInterval = 0.0
+    var recordTimerCallback: ((TimeInterval) -> Void)?
+    var recordLevelCallBack: ((RecordingLevel) -> Void)?
+    var playingStateCallback: ((PlayingState) -> Void)?
+    var recordStartedCallback: ((Void) -> Void)?
+    var recordEndedCallback: ((Bool) -> Void)?
     
     var startRecordingHitCount = 0
     func startRecording() {
@@ -81,7 +81,7 @@ class MockAudioRecorder: AudioRecorderType {
         return 0
     }
     
-    func durationForCurrentState() -> NSTimeInterval? {
+    func durationForCurrentState() -> TimeInterval? {
         return 0
     }
 }
@@ -100,7 +100,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
     
     func testThatItStartsRecordingWhenClickingRecordButton() {
         // when
-        self.sut.recordButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.recordButton.sendActions(for: .touchUpInside)
         
         // then
         XCTAssertEqual(self.audioRecorder.startRecordingHitCount, 1)
@@ -127,7 +127,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         self.sut.recordButtonPressed(self)
         
         // and when
-        self.sut.stopRecordButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.stopRecordButton.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(self.audioRecorder.startRecordingHitCount, 1)
@@ -139,7 +139,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
     
     func testThatItSwitchesToEffectsScreenAfterRecord() {
         // when
-        self.sut.recordButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.recordButton.sendActions(for: .touchUpInside)
         
         // and when
         self.audioRecorder.recordEndedCallback!(true)
@@ -150,14 +150,14 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
     
     func testThatItSwitchesToRecordingAfterRecordDiscarded() {
         // when
-        self.sut.recordButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.recordButton.sendActions(for: .touchUpInside)
         
         // and when
         self.audioRecorder.recordEndedCallback!(true)
         XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Effects)
 
         // and when
-        self.sut.redoButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.redoButton.sendActions(for: .touchUpInside)
         
         // then
         XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Ready)
@@ -167,14 +167,14 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
 
     func testThatItCallsErrorDelegateCallback() {
         // when
-        self.sut.recordButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.recordButton.sendActions(for: .touchUpInside)
         
         // and when
         self.audioRecorder.recordEndedCallback!(true)
         XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Effects)
         
         // and when
-        self.sut.cancelButton.sendActionsForControlEvents(.TouchUpInside)
+        self.sut.cancelButton.sendActions(for: .touchUpInside)
         
         // then
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)

@@ -32,7 +32,7 @@ extension Dictionary where
     
     func wr_sortedKeyValues() -> [[String: AnyObject]] {
         let sortByKey = NSSortDescriptor(key: "key", ascending:true)
-        return (self.wr_keyValues() as NSArray).sortedArrayUsingDescriptors([sortByKey]) as! [[String: AnyObject]]
+        return (self.wr_keyValues() as NSArray).sortedArray(using: [sortByKey]) as! [[String: AnyObject]]
     }
 }
 
@@ -40,22 +40,22 @@ extension Dictionary where
     
     override init() {
         super.init()
-        let currentAppBuild = self.dynamicType.currentAppBuild
-        let lastAppBuild = self.dynamicType.lastAppBuild
+        let currentAppBuild = type(of: self).currentAppBuild
+        let lastAppBuild = type(of: self).lastAppBuild
         
         if currentAppBuild != lastAppBuild {
             do {
-                try NSFileManager.defaultManager().removeItemAtPath(self.dynamicType.casDirectory as String)
+                try FileManager.default.removeItem(atPath: type(of: self).casDirectory as String)
             }
             catch let error as NSError {
                 DDLogError("Cannot clear CAS cache: \(error)")
             }
-            self.dynamicType.lastAppBuild = currentAppBuild
+            type(of: self).lastAppBuild = currentAppBuild
         }
         
-        if !NSFileManager.defaultManager().fileExistsAtPath(self.dynamicType.casDirectory as String) {
+        if !FileManager.default.fileExists(atPath: type(of: self).casDirectory as String) {
             do {
-                try NSFileManager.defaultManager().createDirectoryAtPath(self.dynamicType.casDirectory as String, withIntermediateDirectories: true, attributes: .None)
+                try FileManager.default.createDirectory(atPath: type(of: self).casDirectory as String, withIntermediateDirectories: true, attributes: .none)
             }
             catch let error as NSError {
                 DDLogError("Cannot create CAS cache: \(error)")
@@ -64,7 +64,7 @@ extension Dictionary where
     }
     
     static let currentAppBuild: String = {
-        guard let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String else {
+        guard let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
             return "999998"
         }
         
@@ -73,7 +73,7 @@ extension Dictionary where
     
     static var lastAppBuild: String {
         get {
-            guard let lastBuild = NSUserDefaults.standardUserDefaults().objectForKey(self.lastAppBuildKey) as? String else {
+            guard let lastBuild = UserDefaults.standard.object(forKey: self.lastAppBuildKey) as? String else {
                 return ""
             }
         
@@ -81,51 +81,51 @@ extension Dictionary where
         }
         
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: self.lastAppBuildKey)
+            UserDefaults.standard.set(newValue, forKey: self.lastAppBuildKey)
         }
     }
     
     static let lastAppBuildKey = "ZMLastUsedBuild"
     
     static let casDirectory: NSString = {
-        let cachePath = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0] as NSString
-        return cachePath.stringByAppendingPathComponent("cas")
+        let cachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
+        return cachePath.appendingPathComponent("cas") as NSString
     }()
     
-    func bcasPath(casPath: String, variables: [NSObject : AnyObject]!) -> String? {
+    func bcasPath(_ casPath: String, variables: [AnyHashable: Any]!) -> String? {
         guard let fileData = NSMutableData(contentsOfFile: casPath),
-            let variablesJSON = try? NSJSONSerialization.dataWithJSONObject(variables.wr_sortedKeyValues(), options: .PrettyPrinted)
+            let variablesJSON = try? JSONSerialization.data(withJSONObject: variables.wr_sortedKeyValues(), options: .prettyPrinted)
             else {
-                return .None
+                return .none
         }
         
-        fileData.appendData(variablesJSON)
+        fileData.append(variablesJSON)
         let casHash = fileData.wr_MD5Hash()
         
-        let casName = ((casPath as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
-        let bcasPath = self.dynamicType.casDirectory.stringByAppendingPathComponent("\(casName)-\(casHash).bcas")
+        let casName = ((casPath as NSString).lastPathComponent as NSString).deletingPathExtension
+        let bcasPath = type(of: self).casDirectory.appendingPathComponent("\(casName)-\(casHash).bcas")
         
         return bcasPath
     }
     
     // MARK: - CASCacheProtocol
     
-    func cacheStyleNodes(styleNodes: [AnyObject]!, fromPath path: String!, variables: [NSObject : AnyObject]!) {
+    func cacheStyleNodes(_ styleNodes: [AnyObject]!, fromPath path: String!, variables: [AnyHashable: Any]!) {
         guard let bcasPath = self.bcasPath(path, variables: variables),
             let styleNodes = styleNodes else {
             return
         }
         
         delay(5) {
-            let data = NSKeyedArchiver.archivedDataWithRootObject(styleNodes)
-            let bcasFolderPath = (bcasPath as NSString).stringByDeletingLastPathComponent
+            let data = NSKeyedArchiver.archivedData(withRootObject: styleNodes)
+            let bcasFolderPath = (bcasPath as NSString).deletingLastPathComponent
             
-            guard ((try? NSFileManager.defaultManager().createDirectoryAtPath(bcasFolderPath, withIntermediateDirectories: true, attributes: .None)) != nil) else {
+            guard ((try? FileManager.default.createDirectory(atPath: bcasFolderPath, withIntermediateDirectories: true, attributes: .none)) != nil) else {
                 DDLogError("Cannot create directory for bcas: " + bcasPath)
                 return
             }
             
-            guard ((try? data.writeToFile(bcasPath, options: .AtomicWrite)) != nil) else {
+            guard ((try? data.write(to: URL(fileURLWithPath: bcasPath), options: .atomicWrite)) != nil) else {
                 DDLogError("bcas cannot be saved to: " + bcasPath)
                 return
             }
@@ -134,29 +134,29 @@ extension Dictionary where
         }
     }
     
-    func cachedStyleNodesFromCASPath(path: String!, withVariables variables: [NSObject : AnyObject]!) -> [AnyObject]! {
+    func cachedStyleNodes(fromCASPath path: String!, withVariables variables: [AnyHashable: Any]!) -> [AnyObject]! {
         guard let bcasPath = self.bcasPath(path, variables: variables) else {
-            return .None
+            return .none
         }
         
-        guard let attributes = try? NSFileManager.defaultManager().attributesOfItemAtPath(bcasPath),
-            let fileSize = attributes[NSFileSize] as? Int
-            where fileSize != 0 else {
+        guard let attributes = try? FileManager.default.attributesOfItem(atPath: bcasPath),
+            let fileSize = attributes[FileAttributeKey.size] as? Int
+            , fileSize != 0 else {
                 DDLogInfo("bcas file not found")
-                return .None
+                return .none
         }
         
         DDLogInfo("Loading bcas file")
         
         
-        if let array = NSKeyedUnarchiver.unarchiveObjectWithFile(bcasPath) as? [AnyObject] {
+        if let array = NSKeyedUnarchiver.unarchiveObject(withFile: bcasPath) as? [AnyObject] {
             return array
         }
         else {
             DDLogError("bcas cannot be decoded")
             // We need to cleanup the archive since we cannot decode it
-            _ = try? NSFileManager.defaultManager().removeItemAtPath(bcasPath)
-            return .None
+            _ = try? FileManager.default.removeItem(atPath: bcasPath)
+            return .none
         }
         
     }}

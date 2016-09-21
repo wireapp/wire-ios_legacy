@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -21,29 +21,29 @@ import Foundation
 
 extension UserClient {
     
-    public func attributedRemoteIdentifier(attributes: [String : AnyObject], boldAttributes: [String : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+    public func attributedRemoteIdentifier(_ attributes: [String : AnyObject], boldAttributes: [String : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
         let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
-        let identifier = uppercase ? displayIdentifier.uppercaseString : displayIdentifier
-        let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintStringWithAttributes(attributes,
+        let identifier = uppercase ? displayIdentifier.uppercased() : displayIdentifier
+        let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes,
             boldAttributes:boldAttributes)
-        identifierString.appendAttributedString(attributedRemoteIdentifier)
+        identifierString.append(attributedRemoteIdentifier!)
         return identifierString
     }
     
     public func localizedDeviceClass() -> String? {
         switch self.deviceClass {
-        case .Some("desktop"):
+        case .some("desktop"):
             return NSLocalizedString("device.class.desktop", comment: "")
 
-        case .Some("phone"):
+        case .some("phone"):
             return NSLocalizedString("device.class.phone", comment: "")
             
-        case .Some("tablet"):
+        case .some("tablet"):
             return NSLocalizedString("device.class.tablet", comment: "")
             
         default:
-            return .None
+            return .none
         }
     }
 }
@@ -55,6 +55,10 @@ extension UserClient {
     /// This should be used when showing the identifier in the UI
     /// We manually add a padding if there was a leading zero
     public var displayIdentifier: String {
+        guard let remoteIdentifier = self.remoteIdentifier else {
+            return ""
+        }
+        
         var paddedIdentifier = remoteIdentifier
         
         while paddedIdentifier.characters.count < UserClientIdentifierMinimumLength {

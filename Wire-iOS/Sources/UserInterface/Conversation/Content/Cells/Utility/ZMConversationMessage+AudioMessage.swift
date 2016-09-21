@@ -24,7 +24,7 @@ extension ZMConversationMessage {
         if let fileMessageData = self.fileMessageData,
             let fileURL = fileMessageData.fileURL,
             let _ = fileURL.path
-            where fileMessageData.isAudio() {
+            , fileMessageData.isAudio() {
             return true
         }
         else {
@@ -34,7 +34,7 @@ extension ZMConversationMessage {
     
     func audioTrack() -> AudioTrack? {
         if let fileMessageData = self.fileMessageData
-            where fileMessageData.isAudio() {
+            , fileMessageData.isAudio() {
             return self as? AudioTrack
         }
         else {
@@ -63,7 +63,7 @@ extension ZMAssetClientMessage: AudioTrack {
         }
     }
     
-    public var duration: NSTimeInterval {
+    public var duration: TimeInterval {
         get {
             guard let fileMessageData = self.fileMessageData else { return 0 }
             

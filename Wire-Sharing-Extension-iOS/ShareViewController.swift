@@ -26,38 +26,111 @@ import Classy
 class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDelegate, TokenFieldDelegate, ConversationListViewControllerDelegate {
 
     
+    private lazy var __once: () = {
+            ShareViewController.sendingStarted = true
+            if let navigationController = ShareViewController.navigationController {
+                navigationController.showLoadingView = true
+            } else {
+                ShareViewController.showLoadingView = true
+            }
+            ShareViewController.messageTextView.resignFirstResponder()
+            ShareViewController.recipientsTokenField.resignFirstResponder()
+            ShareViewController.cancelButton.isEnabled = false
+            
+            var textMessage: TextMessage? = nil
+            if let url = ShareViewController.urlToSend {
+                textMessage = TextMessage(url: url, message: self.messageToSend)
+            } else if let text = ShareViewController.messageToSend {
+                textMessage = TextMessage(text: text)
+            }
+            
+            let storeAnalyticsClosure: () -> () = {
+                let numberOfGroupRecipients = self.recipientList.reduce(0) { (sum: Int, recipient:Conversation) -> Int in
+                    return sum + ((recipient.type == ConversationType.Group) ? 1 : 0)
+                }
+                
+                SharedAnalytics.sharedInstance().tagEvent(AnalyticsEvent.Closed, attributes: [
+                    .numberOfImages(self.imagesToSend.count),
+                    .hasURL(self.urlToSend != nil),
+                    .hasText(self.messageToSend != nil),
+                    .numberOfRecipients(self.recipientList.count),
+                    .numberOfGroupRecipients(numberOfGroupRecipients),
+                    .numberOfOneOnOneRecipients(self.recipientList.count - numberOfGroupRecipients),
+                    .cancel("no")
+                    ]
+                )
+            }
+            
+            let completionClosure: () -> () = {
+                DispatchQueue.main.async {
+                    ShareViewController.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                    ShareViewController.showLoadingView = false
+                }
+            }
+            
+            let sendImagesClosure: (_ completion:()->()) -> () = { (completion:@escaping ()->()) in
+                if self.imagesToSend.count > 0 {
+                    self.shareExtensionAPI.postImages(self.imagesToSend, toConversations: self.recipientList) {
+                        (error: NSError?) -> () in
+                        completion()
+                    }
+                } else {
+                    completion()
+                }
+            } as! (() -> ()) -> ()
+            
+            let sendTextMessageClosure: (_ comletion:()->()) -> () = { (completion:@escaping ()->()) in
+                if let message = textMessage {
+                    self.shareExtensionAPI.postMessage(message, toConversations: self.recipientList) {
+                        (error: NSError?) -> Void in
+                        completion()
+                    }
+                } else {
+                    completion()
+                }
+            } as! (() -> ()) -> ()
+            
+            sendImagesClosure() {
+                sendTextMessageClosure() {
+                    storeAnalyticsClosure()
+                    completionClosure()
+                }
+            }
+        }()
+
+    
     // MARK: - Outlets
-    @IBOutlet private weak var previewImageContainerView: UIView!
-    @IBOutlet private weak var messageTextView: TextView!
-    @IBOutlet private weak var messageTextBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var messageTextHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var urlLabel: UILabel!
-    @IBOutlet private weak var urlContainerView: UIView!
-    @IBOutlet private weak var URLContainerSeparatorView: UIView!
-    @IBOutlet private weak var urlContainerHeight: NSLayoutConstraint!
-    @IBOutlet private weak var imageContainerWidth: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var previewImageContainerView: UIView!
+    @IBOutlet fileprivate weak var messageTextView: TextView!
+    @IBOutlet fileprivate weak var messageTextBottomConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var messageTextHeightConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var urlLabel: UILabel!
+    @IBOutlet fileprivate weak var urlContainerView: UIView!
+    @IBOutlet fileprivate weak var URLContainerSeparatorView: UIView!
+    @IBOutlet fileprivate weak var urlContainerHeight: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var imageContainerWidth: NSLayoutConstraint!
     
-    @IBOutlet private weak var recipientsTokenField : TokenField!
+    @IBOutlet fileprivate weak var recipientsTokenField : TokenField!
     
-    @IBOutlet private weak var searchingView: UIView!
-    @IBOutlet private weak var messageView: UIScrollView!
-    @IBOutlet private weak var doneButton: IconButton!
-    @IBOutlet private weak var cancelButton: IconButton!
+    @IBOutlet fileprivate weak var searchingView: UIView!
+    @IBOutlet fileprivate weak var messageView: UIScrollView!
+    @IBOutlet fileprivate weak var doneButton: IconButton!
+    @IBOutlet fileprivate weak var cancelButton: IconButton!
     
-    private var previewImagesController: PreviewImagesViewController! = nil
-    private var conversationListController: ConversationListViewController! = nil
+    fileprivate var previewImagesController: PreviewImagesViewController! = nil
+    fileprivate var conversationListController: ConversationListViewController! = nil
     
     // MARK: - UIViewController overrides
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var barButtonOffset: CGFloat = 0
-        if self.traitCollection.userInterfaceIdiom == .Pad {
+        if self.traitCollection.userInterfaceIdiom == .pad {
             barButtonOffset = 4
             self.navigationController?.view.layer.cornerRadius = 5
             self.navigationController?.view.clipsToBounds = true
@@ -65,35 +138,35 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
             barButtonOffset = 8
         }
 
-        self.doneButton.setIcon(.Checkmark, withSize: .Tiny, forState: .Normal)
-        self.cancelButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
+        self.doneButton.setIcon(.checkmark, with: .tiny, for: UIControlState())
+        self.cancelButton.setIcon(.X, with: .tiny, for: UIControlState())
         
         if let leftItem = self.navigationItem.leftBarButtonItem {
-            let leftSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+            let leftSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
             leftSpacer.width = barButtonOffset
             self.navigationItem.leftBarButtonItems = [leftSpacer, leftItem]
         }
         
         if let rightItem = self.navigationItem.rightBarButtonItem {
-            let rightSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+            let rightSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
             rightSpacer.width = barButtonOffset
             self.navigationItem.rightBarButtonItems = [rightSpacer, rightItem]
         }
         
         self.navigationItem.backBarButtonItem?.title = ""
         
-        let image = UIImage(forLogoWithColor: UIColor.accentColor, iconSize: .Medium)
+        let image = UIImage(forLogoWith: UIColor.accentColor, iconSize: .medium)
         self.navigationItem.titleView = UIImageView(image: image)
         
-        self.recipientsTokenField.accessoryButton.setImage(UIImage(forIcon: .Plus, iconSize: .Tiny, color: UIColor.blackColor()), forState: .Normal)
+        self.recipientsTokenField.accessoryButton.setImage(UIImage(for: .plus, iconSize: .tiny, color: UIColor.black), for: UIControlState())
         self.recipientsTokenField.accessoryButton.cas_styleClass = "dark"
-        self.recipientsTokenField.accessoryButton.addTarget(self, action: "addRecipientPressed:", forControlEvents: .TouchUpInside)
+        self.recipientsTokenField.accessoryButton.addTarget(self, action: #selector(ShareViewController.addRecipientPressed(_:)), for: .touchUpInside)
         
         self.recipientsTokenField.toLabelText = NSLocalizedString("sharing-ext.toLabelText", comment:"String for 'To:' label in view with recipients bubles")
         self.messageTextView.placeholder = NSLocalizedString("sharing-ext.message.placeholder", comment:"Placeholder text for user message")
 
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateMessageHeight:", name: UIKeyboardDidChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ShareViewController.updateMessageHeight(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
         
         self.imageContainerWidth.constant = self.previewImagesController.previewImageSize
         
@@ -102,9 +175,9 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
         self.setupUIFromContext(self.extensionContext!)
 
         let environment: BackendEnvironment
-        switch NSUserDefaults.sharedUserDefaults().stringForKey("ZMBackendEnvironmentType") {
-        case .Some("staging"): environment = .Staging
-        case .Some("edge"): environment = .Edge
+        switch UserDefaults.shared().string(forKey: "ZMBackendEnvironmentType") {
+        case .some("staging"): environment = .Staging
+        case .some("edge"): environment = .Edge
         default: environment = .Production
         }
 
@@ -128,13 +201,13 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
              .hasText(self.extensionContext?.plainTextItemProvider() != nil)])
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.updateDoneButton()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         self.recipientsTokenField.becomeFirstResponder()
@@ -144,26 +217,26 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
         super.viewDidLayoutSubviews()
         
         if (self.imagesToSend.count > 0) {
-            let rect = self.messageTextView.convertRect(self.previewImageContainerView.frame, fromView: self.previewImageContainerView.superview)
+            let rect = self.messageTextView.convert(self.previewImageContainerView.frame, from: self.previewImageContainerView.superview)
             let path = UIBezierPath(rect: rect)
             self.messageTextView.textContainer.exclusionPaths = [path]
         }
     }
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
     }
     
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
         
         switch newCollection.verticalSizeClass  {
-        case .Compact:
+        case .compact:
             self.recipientsTokenField.cas_styleClass = "compact"
             if let navigationBar = self.navigationController?.navigationBar as? FlexibleNavigationBar {
                 navigationBar.height = 44                
             }
-        case .Regular, .Unspecified:
+        case .regular, .unspecified:
             self.recipientsTokenField.cas_styleClass = "regular"
             if let navigationBar = self.navigationController?.navigationBar as? FlexibleNavigationBar {
                 navigationBar.height = 60
@@ -178,7 +251,7 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
     
     // MARK: - Model
     
-    private var shareExtensionAPI: ShareExtensionAPI! = nil {
+    fileprivate var shareExtensionAPI: ShareExtensionAPI! = nil {
         didSet {
             if let conversationListController = self.conversationListController {
                 conversationListController.shareExtensionAPI = self.shareExtensionAPI
@@ -186,13 +259,13 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
         }
     }
     
-    private var currentUser: User? = nil {
+    fileprivate var currentUser: User? = nil {
         didSet {
             if let accentColor = self.currentUser?.accentColor {
                 UIColor.setAccentColor(accentColor)
-                CASStyler.defaultStyler().applyDefaultColorSchemeWithAccentColor(UIColor.accentColor)
+                CASStyler.default().applyDefaultColorScheme(withAccentColor: UIColor.accentColor)
                 
-                let image = UIImage(forLogoWithColor: UIColor.accentColor, iconSize: .Medium)
+                let image = UIImage(forLogoWith: UIColor.accentColor, iconSize: .medium)
                 self.navigationItem.titleView = UIImageView(image: image)
             
                 self.view.cas_setNeedsUpdateStylingForSubviews()
@@ -203,31 +276,31 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
     
     // MARK: Data
     
-    private var imagesToSend: Array<ImageMessage> = [] {
+    fileprivate var imagesToSend: Array<ImageMessage> = [] {
         didSet {
             self.updateDoneButton()
         }
     }
-    private var messageToSend: String? = nil {
+    fileprivate var messageToSend: String? = nil {
         didSet {
             self.updateDoneButton()
         }
     }
-    private var urlToSend: NSURL? = nil {
+    fileprivate var urlToSend: URL? = nil {
         didSet {
             self.updateDoneButton()
         }
     }
     
-    private var recipientList = Array<Conversation>()
+    fileprivate var recipientList = Array<Conversation>()
     
     // MARK: Recipients
     
     // MARK: State
-    private var isSearching: Bool = false {
+    fileprivate var isSearching: Bool = false {
         didSet {
-            self.messageView.hidden = self.isSearching
-            self.searchingView.hidden = !self.isSearching
+            self.messageView.isHidden = self.isSearching
+            self.searchingView.isHidden = !self.isSearching
         }
     }
     
@@ -241,7 +314,7 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
     
     var sendingStarted: Bool = false
     
-    private func setupUIFromContext(context: NSExtensionContext) {
+    fileprivate func setupUIFromContext(_ context: NSExtensionContext) {
         let imageAttachments = context.imageItemProviders()
         if imageAttachments.count > 0 {
             self.setupViewsForImageAttachmentsWithCount(imageAttachments.count)
@@ -250,9 +323,9 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
             self.hidePreviewImageViews()
         }
         
-        let showURLClosure: Void -> Void = {
+        let showURLClosure: (Void) -> Void = {
             if let urlAttachment = context.urlItemProvider() {
-                urlAttachment.loadURL() { (url: NSURL) -> Void in
+                urlAttachment.loadURL() { (url: URL) -> Void in
                     self.urlToSend = url
                     self.setupViewsForURL(url)
                 }
@@ -278,56 +351,56 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
     }
 
     
-    private func hideURLViews() {
+    fileprivate func hideURLViews() {
         self.urlLabel.text = ""
         self.messageTextHeightConstraint.constant += self.urlContainerHeight.constant
-        self.urlContainerHeight.active = false
-        self.URLContainerSeparatorView.hidden = true
-        self.urlContainerView.hidden = true
+        self.urlContainerHeight.isActive = false
+        self.URLContainerSeparatorView.isHidden = true
+        self.urlContainerView.isHidden = true
     }
     
-    private func hidePreviewImageViews() {
-        self.previewImageContainerView.hidden = true
+    fileprivate func hidePreviewImageViews() {
+        self.previewImageContainerView.isHidden = true
     }
     
-    private func setupViewsForImageAttachmentsWithCount(count:Int) {
+    fileprivate func setupViewsForImageAttachmentsWithCount(_ count:Int) {
         self.previewImagesController.numberOfPreviewImages = count
         
         self.messageTextView.text = ""
-        self.messageTextView.superview?.sendSubviewToBack(self.messageTextView)
+        self.messageTextView.superview?.sendSubview(toBack: self.messageTextView)
         self.view.layoutIfNeeded()
     }
     
-    private func setupViewsForURL(url: NSURL) {
+    fileprivate func setupViewsForURL(_ url: URL) {
         self.messageTextView.text = ""
-        self.messageTextView.superview?.sendSubviewToBack(self.messageTextView)
+        self.messageTextView.superview?.sendSubview(toBack: self.messageTextView)
         self.urlLabel.text = url.absoluteString
         
         self.view.layoutIfNeeded()
     }
     
-    private func setupViewsForText(text: String) {
+    fileprivate func setupViewsForText(_ text: String) {
         let options = [
-            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-            NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding
+            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType as AnyObject,
+            NSCharacterEncodingDocumentAttribute: String.Encoding.utf8 as AnyObject
         ] as [String : AnyObject]
-        if let string = try? NSMutableAttributedString(data: text.dataUsingEncoding(NSUTF8StringEncoding)!, options: options, documentAttributes: nil),
-            font = self.messageTextView.font {
+        if let string = try? NSMutableAttributedString(data: text.data(using: String.Encoding.utf8)!, options: options, documentAttributes: nil),
+            let font = self.messageTextView.font {
                 let attributes = [NSFontAttributeName: font]
                 string.setAttributes(attributes, range: NSMakeRange(0, string.length))
                 self.messageTextView.attributedText = string
         }
     }
     
-    private func loadPreviewImagesForImageAttachments(imageAttachments: Array<NSItemProvider>) {
-        for var i = 0; i < imageAttachments.count; i++ {
+    fileprivate func loadPreviewImagesForImageAttachments(_ imageAttachments: Array<NSItemProvider>) {
+        for i in 0 ..< imageAttachments.count {
             let attachment = imageAttachments[i]
             let index = i
             let imagePixelSize = self.previewImagesController.previewImageSize * self.traitCollection.displayScale
             
             attachment.loadImage() { (object: NSSecureCoding) -> Void in
                 
-                if let imageURL = object as? NSURL {
+                if let imageURL = object as? URL {
                     self.imagesToSend.append(ImageMessage(url:imageURL))
                     self.updateDoneButton()
                     
@@ -335,12 +408,12 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
                         self.previewImagesController.setImage(previewImage, forPreviewAtIndex: index)
                     }
                 } else if let image = object as? UIImage,
-                    imageData = UIImagePNGRepresentation(image) {
+                    let imageData = UIImagePNGRepresentation(image) {
                         self.imagesToSend.append(ImageMessage(data: imageData, imageSize: image.size))
                         
-                        let previewOptions = [NSItemProviderPreferredImageSizeKey: NSValue(CGSize: CGSizeMake(imagePixelSize, imagePixelSize))]
-                        attachment.loadPreviewImageWithOptions(previewOptions) { (object: NSSecureCoding?, error: NSError!) -> Void in
-                            dispatch_async(dispatch_get_main_queue()) {
+                        let previewOptions = [NSItemProviderPreferredImageSizeKey: NSValue(cgSize: CGSize(width: imagePixelSize, height: imagePixelSize))]
+                        attachment.loadPreviewImage(options: previewOptions) { (object: NSSecureCoding?, error: NSError!) -> Void in
+                            DispatchQueue.main.async {
                                 if let previewImage = object as? UIImage {
                                     self.previewImagesController.setImage(previewImage, forPreviewAtIndex: index)
                                 } else {
@@ -353,36 +426,36 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
         }
     }
     
-    private func updateDoneButton() {
-        self.doneButton.enabled = self.isReadyToSend  && !self.sendingStarted
+    fileprivate func updateDoneButton() {
+        self.doneButton.isEnabled = self.isReadyToSend  && !self.sendingStarted
     }
     
-    func updateMessageHeight(note: NSNotification?) {
-        if let frameValue = note?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let rect = self.view.convertRect(frameValue.CGRectValue(), fromView: self.view.window)
-            let value = self.view.frame.height - CGRectGetMinY(rect)
+    func updateMessageHeight(_ note: Notification?) {
+        if let frameValue = (note as NSNotification?)?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let rect = self.view.convert(frameValue.cgRectValue, from: self.view.window)
+            let value = self.view.frame.height - rect.minY
             self.messageTextBottomConstraint.constant = (value > 0) ? value : 0
         }
         
         let messageHeight = self.messageTextView.contentSize.height +
             self.messageTextView.textContainerInset.top + self.messageTextView.textContainerInset.bottom
         self.messageTextHeightConstraint.constant = messageHeight
-        self.messageTextView.contentOffset = CGPointZero
+        self.messageTextView.contentOffset = CGPoint.zero
         self.view.layoutIfNeeded()
         
-        if (self.messageTextView.isFirstResponder() &&
+        if (self.messageTextView.isFirstResponder &&
             self.messageView.contentSize.height > self.messageView.frame.height) {
-            self.messageView.setContentOffset(CGPointMake(0, self.messageView.contentSize.height - self.messageView.frame.height), animated: true)
+            self.messageView.setContentOffset(CGPoint(x: 0, y: self.messageView.contentSize.height - self.messageView.frame.height), animated: true)
         } else {
-            self.messageView.setContentOffset(CGPointZero, animated: false)
+            self.messageView.setContentOffset(CGPoint.zero, animated: false)
         }
     }
     
     // MARK: - Navigation and Actions
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let controller = segue.destinationViewController as? ConversationListViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? ConversationListViewController {
             controller.shareExtensionAPI = self.shareExtensionAPI
             controller.delegate = self
             if segue.identifier == "searchForConversations" {
@@ -392,31 +465,31 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
                 controller.tableView.cas_styleClass = "pushed"
                 controller.excludedConversations = self.recipientList
             }
-        } else if let controller = segue.destinationViewController as? PreviewImagesViewController {
+        } else if let controller = segue.destination as? PreviewImagesViewController {
             if segue.identifier == "embed-preview-images" {
                 self.previewImagesController = controller
             }
         }
     }
     
-    @IBAction func unwindFromSegue(segue: UIStoryboardSegue) {
+    @IBAction func unwindFromSegue(_ segue: UIStoryboardSegue) {
         
     }
     
-    @IBAction func addRecipientPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("modalSearchForConversations", sender: sender)
+    @IBAction func addRecipientPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "modalSearchForConversations", sender: sender)
     }
 
-    @IBAction func cancelPressed(sender: AnyObject) {
+    @IBAction func cancelPressed(_ sender: AnyObject) {
         self.cancelWithError(NSError(domain: ShareDomain, code: NSUserCancelledError, userInfo: nil))
     }
     
-    @IBAction func donePressed(sender: AnyObject) {
+    @IBAction func donePressed(_ sender: AnyObject) {
         self.complete()
         self.updateDoneButton()
     }
     
-    func cancelWithError(error: NSError) {
+    func cancelWithError(_ error: NSError) {
         var cancelReason = ""
         if error.code == NSUserCancelledError {
             cancelReason = "userCanceled"
@@ -433,87 +506,17 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
             ]
         )
         
-        self.extensionContext!.cancelRequestWithError(error)
+        self.extensionContext!.cancelRequest(withError: error)
     }
     
     func complete() {
-        var dispatchOnceToken: dispatch_once_t = 0
-        dispatch_once(&dispatchOnceToken) {
-            self.sendingStarted = true
-            if let navigationController = self.navigationController {
-                navigationController.showLoadingView = true
-            } else {
-                self.showLoadingView = true
-            }
-            self.messageTextView.resignFirstResponder()
-            self.recipientsTokenField.resignFirstResponder()
-            self.cancelButton.enabled = false
-            
-            var textMessage: TextMessage? = nil
-            if let url = self.urlToSend {
-                textMessage = TextMessage(url: url, message: self.messageToSend)
-            } else if let text = self.messageToSend {
-                textMessage = TextMessage(text: text)
-            }
-            
-            let storeAnalyticsClosure: () -> () = {
-                let numberOfGroupRecipients = self.recipientList.reduce(0) { (sum: Int, recipient:Conversation) -> Int in
-                    return sum + ((recipient.type == ConversationType.Group) ? 1 : 0)
-                }
-                
-                SharedAnalytics.sharedInstance().tagEvent(AnalyticsEvent.Closed, attributes: [
-                    .numberOfImages(self.imagesToSend.count),
-                    .hasURL(self.urlToSend != nil),
-                    .hasText(self.messageToSend != nil),
-                    .numberOfRecipients(self.recipientList.count),
-                    .numberOfGroupRecipients(numberOfGroupRecipients),
-                    .numberOfOneOnOneRecipients(self.recipientList.count - numberOfGroupRecipients),
-                    .cancel("no")
-                    ]
-                )
-            }
-            
-            let completionClosure: () -> () = {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.extensionContext?.completeRequestReturningItems([], completionHandler: nil)
-                    self.showLoadingView = false
-                }
-            }
-            
-            let sendImagesClosure: (completion:()->()) -> () = { (completion:()->()) in
-                if self.imagesToSend.count > 0 {
-                    self.shareExtensionAPI.postImages(self.imagesToSend, toConversations: self.recipientList) {
-                        (error: NSError?) -> () in
-                        completion()
-                    }
-                } else {
-                    completion()
-                }
-            }
-            
-            let sendTextMessageClosure: (comletion:()->()) -> () = { (completion:()->()) in
-                if let message = textMessage {
-                    self.shareExtensionAPI.postMessage(message, toConversations: self.recipientList) {
-                        (error: NSError?) -> Void in
-                        completion()
-                    }
-                } else {
-                    completion()
-                }
-            }
-            
-            sendImagesClosure() {
-                sendTextMessageClosure() {
-                    storeAnalyticsClosure()
-                    completionClosure()
-                }
-            }
-        }
+        var dispatchOnceToken: Int = 0
+        _ = self.__once
     }
     
     // MARK: - UITextViewDelegate
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         if textView == self.messageTextView {
             self.recipientsTokenField.resignFirstResponder()
             if (self.recipientList.count > 1) {
@@ -522,7 +525,7 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
         }
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if textView == self.messageTextView {
             self.updateMessageHeight(nil)
             self.messageToSend = textView.text
@@ -531,20 +534,20 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
 
     // MARK: - TokenFieldDelegate
     
-    func tokenField(tokenField: TokenField!, changedTokensTo tokens: [AnyObject]!) {        
+    func tokenField(_ tokenField: TokenField!, changedTokensTo tokens: [AnyObject]!) {        
         self.recipientList = tokens.map { (($0 as! Token).representedObject as! Conversation) }
         self.conversationListController.excludedConversations = self.recipientList
         self.updateDoneButton()
     }
     
-    func tokenField(tokenField: TokenField!, changedFilterTextTo text: String!) {
+    func tokenField(_ tokenField: TokenField!, changedFilterTextTo text: String!) {
         self.isSearching = text.characters.count > 0
         self.conversationListController.searchTerm = text
     }
     
-    func tokenFieldStringForCollapsedState(tokenField: TokenField!) -> String! {
+    func tokenFieldString(forCollapsedState tokenField: TokenField!) -> String! {
         if (self.recipientList.count > 1) {
-            return NSString.localizedStringWithFormat(NSLocalizedString("sharing-ext.recipients-field.collapsed", comment: "Name of first user + number of others more"),
+            return NSString.localizedStringWithFormat(NSLocalizedString("sharing-ext.recipients-field.collapsed", comment: "Name of first user + number of others more") as NSString,
                 self.recipientList[0].displayName, self.recipientList.count-1) as String
         } else if (self.recipientList.count > 0) {
             return self.recipientList[0].displayName
@@ -555,7 +558,7 @@ class ShareViewController: UIViewController, UIScrollViewDelegate, UITextViewDel
 
     // MARK: - ConversationListViewControllerDelegate
     
-    func conversationList(conversationList: ConversationListViewController, didSelectConversation conversation: Conversation) {
+    func conversationList(_ conversationList: ConversationListViewController, didSelectConversation conversation: Conversation) {
         self.recipientList.append(conversation)
         self.recipientsTokenField.addTokenForTitle(conversation.displayName, representedObject: conversation)
         self.isSearching = false

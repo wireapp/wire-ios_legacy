@@ -25,14 +25,14 @@ import TTTAttributedLabel
 extension ZMConversationMessage {
     func formattedReceivedDate() -> String? {
         guard let timestamp = self.serverTimestamp else {
-            return .None
+            return .none
         }
-        let timeString = Message.longVersionTimeFormatter().stringFromDate(timestamp)
+        let timeString = Message.longVersionTimeFormatter().string(from: timestamp)
         let oneDayInSeconds = 24.0 * 60.0 * 60.0
         let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - NSDate().timeIntervalSinceReferenceDate) > oneDayInSeconds
         
         if shouldShowDate {
-            let dateString = Message.shortVersionDateFormatter().stringFromDate(timestamp)
+            let dateString = Message.shortVersionDateFormatter().string(from: timestamp)
             return dateString + " " + timeString
         }
         else {
@@ -42,31 +42,31 @@ extension ZMConversationMessage {
 }
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
-    func messageToolboxViewDidSelectLikers(messageToolboxView: MessageToolboxView)
-    func messageToolboxViewDidSelectResend(messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
 }
 
-@objc public class MessageToolboxView: UIView {
-    private static let resendLink = NSURL(string: "settings://resend-message")!
+@objc open class MessageToolboxView: UIView {
+    fileprivate static let resendLink = URL(string: "settings://resend-message")!
     
-    public let statusLabel = TTTAttributedLabel(frame: CGRectZero)
-    public let reactionsView = ReactionsView()
-    private let labelClipView = UIView()
-    private var tapGestureRecogniser: UITapGestureRecognizer!
-    public let likeTooltipArrow = UILabel()
+    open let statusLabel = TTTAttributedLabel(frame: CGRect.zero)
+    open let reactionsView = ReactionsView()
+    fileprivate let labelClipView = UIView()
+    fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
+    open let likeTooltipArrow = UILabel()
     
-    public weak var delegate: MessageToolboxViewDelegate?
+    open weak var delegate: MessageToolboxViewDelegate?
 
-    private var previousLayoutBounds: CGRect = CGRectZero
+    fileprivate var previousLayoutBounds: CGRect = CGRect.zero
     
-    private(set) weak var message: ZMConversationMessage?
+    fileprivate(set) weak var message: ZMConversationMessage?
     
-    private var forceShowTimestamp: Bool = false
+    fileprivate var forceShowTimestamp: Bool = false
     
     override init(frame: CGRect) {
         
         super.init(frame: frame)
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         
         reactionsView.translatesAutoresizingMaskIntoConstraints = false
         reactionsView.accessibilityIdentifier = "reactionsView"
@@ -75,19 +75,19 @@ extension ZMConversationMessage {
         labelClipView.clipsToBounds = true
         labelClipView.isAccessibilityElement = true
         labelClipView.translatesAutoresizingMaskIntoConstraints = false
-        labelClipView.userInteractionEnabled = true
+        labelClipView.isUserInteractionEnabled = true
         self.addSubview(labelClipView)
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.delegate = self
         statusLabel.extendsLinkTouchArea = true
-        statusLabel.userInteractionEnabled = true
-        statusLabel.verticalAlignment = .Center
-        statusLabel.lineBreakMode = NSLineBreakMode.ByTruncatingMiddle
-        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                                      NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed)]
-        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                                            NSForegroundColorAttributeName: UIColor(forZMAccentColor: .VividRed).colorWithAlphaComponent(0.5)]
+        statusLabel.isUserInteractionEnabled = true
+        statusLabel.verticalAlignment = .center
+        statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                                      NSForegroundColorAttributeName: UIColor(forZMAccentColor: .vividRed)]
+        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                                            NSForegroundColorAttributeName: UIColor(forZMAccentColor: .vividRed).withAlphaComponent(0.5)]
         labelClipView.addSubview(statusLabel)
         
         likeTooltipArrow.translatesAutoresizingMaskIntoConstraints = false
@@ -119,67 +119,67 @@ extension ZMConversationMessage {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func intrinsicContentSize() -> CGSize {
-        return CGSizeMake(UIViewNoIntrinsicMetric, 28)
+    open override var intrinsicContentSize : CGSize {
+        return CGSize(width: UIViewNoIntrinsicMetric, height: 28)
     }
     
-    public func configureForMessage(message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
+    open func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         
-        let canShowTooltip = !Settings.sharedSettings().likeTutorialCompleted && !message.hasReactions() && message.canBeLiked
+        let canShowTooltip = !Settings.shared().likeTutorialCompleted && !message.hasReactions() && message.canBeLiked
         
         // Show like tip
-        if let sender = message.sender where !sender.isSelfUser && canShowTooltip {
+        if let sender = message.sender , !sender.isSelfUser && canShowTooltip {
             showReactionsView(message.hasReactions(), animated: false)
-            self.likeTooltipArrow.hidden = false
-            self.tapGestureRecogniser.enabled = message.hasReactions()
+            self.likeTooltipArrow.isHidden = false
+            self.tapGestureRecogniser.isEnabled = message.hasReactions()
             self.configureLikeTip(message, animated: animated)
         }
         else {
-            self.likeTooltipArrow.hidden = true
+            self.likeTooltipArrow.isHidden = true
             if !self.forceShowTimestamp && message.hasReactions() {
                 self.configureLikedState(message)
                 self.layoutIfNeeded()
                 showReactionsView(true, animated: animated)
                 self.configureReactions(message, animated: animated)
-                self.tapGestureRecogniser.enabled = true
+                self.tapGestureRecogniser.isEnabled = true
             }
             else {
                 self.layoutIfNeeded()
                 showReactionsView(false, animated: animated)
                 self.configureTimestamp(message, animated: animated)
-                self.tapGestureRecogniser.enabled = false
+                self.tapGestureRecogniser.isEnabled = false
             }
         }
     }
     
-    private func showReactionsView(show: Bool, animated: Bool) {
-        guard show == reactionsView.hidden else { return }
+    fileprivate func showReactionsView(_ show: Bool, animated: Bool) {
+        guard show == reactionsView.isHidden else { return }
 
         if show {
             reactionsView.alpha = 0
-            reactionsView.hidden = false
+            reactionsView.isHidden = false
         }
 
         let animations = {
             self.reactionsView.alpha = show ? 1 : 0
         }
 
-        UIView.animateWithDuration(animated ? 0.2 : 0, animations: animations) { _ in
-            self.reactionsView.hidden = !show
-        }
+        UIView.animate(withDuration: animated ? 0.2 : 0, animations: animations, completion: { _ in
+            self.reactionsView.isHidden = !show
+        }) 
     }
     
-    private func configureLikedState(message: ZMConversationMessage) {
+    fileprivate func configureLikedState(_ message: ZMConversationMessage) {
         self.reactionsView.likers = message.likers()
     }
     
-    private func timestampString(message: ZMConversationMessage) -> String? {
+    fileprivate func timestampString(_ message: ZMConversationMessage) -> String? {
         let timestampString: String?
         
         if let dateTimeString = message.formattedReceivedDate() {
-            if let systemMessage = message as? ZMSystemMessage where systemMessage.systemMessageType == .MessageDeletedForEveryone {
+            if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
             }
             else if let _ = message.updatedAt {
@@ -190,14 +190,14 @@ extension ZMConversationMessage {
             }
         }
         else {
-            timestampString = .None
+            timestampString = .none
         }
         
         return timestampString
     }
     
-    private func configureReactions(message: ZMConversationMessage, animated: Bool = false) {
-        guard !CGRectEqualToRect(self.bounds, CGRectZero) else {
+    fileprivate func configureReactions(_ message: ZMConversationMessage, animated: Bool = false) {
+        guard !self.bounds.equalTo(CGRect.zero) else {
             return
         }
         
@@ -205,13 +205,13 @@ extension ZMConversationMessage {
         
         let likersNames = likers.map { user in
             return user.displayName
-        }.joinWithSeparator(", ")
+        }.joined(separator: ", ")
         
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor]
+        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : Any]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
-        let targetSize = CGSizeMake(10000, CGFloat.max)
+        let targetSize = CGSize(width: 10000, height: CGFloat.greatestFiniteMagnitude)
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
         
         let attributedText: NSAttributedString
@@ -224,7 +224,7 @@ extension ZMConversationMessage {
             attributedText = likersNamesAttributedString
         }
 
-        if let currentText = self.statusLabel.attributedText where currentText.string == attributedText.string {
+        if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
             return
         }
         
@@ -234,36 +234,36 @@ extension ZMConversationMessage {
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.Down, newState: changeBlock)
+            statusLabel.wr_animateSlideTo(.down, newState: changeBlock)
         }
         else {
             changeBlock()
         }
     }
     
-    private func configureTimestamp(message: ZMConversationMessage, animated: Bool = false) {
-        var deliveryStateString: String? = .None
+    fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
+        var deliveryStateString: String? = .none
         
-        if let sender = message.sender where sender.isSelfUser {
+        if let sender = message.sender , sender.isSelfUser {
             switch message.deliveryState {
-            case .Pending:
+            case .pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
-            case .Delivered:
+            case .delivered:
                 // Code disabled until the majority would send the delivery receipts
                 // deliveryStateString = "content.system.message_delivered_timestamp".localized
                 fallthrough
-            case .Sent:
+            case .sent:
                 deliveryStateString = "content.system.message_sent_timestamp".localized
-            case .FailedToSend:
+            case .failedToSend:
                 deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
             default:
-                deliveryStateString = .None
+                deliveryStateString = .none
             }
         }
         
         let finalText: String
         
-        if let timestampString = self.timestampString(message) where message.deliveryState == .Delivered || message.deliveryState == .Sent {
+        if let timestampString = self.timestampString(message) , message.deliveryState == .delivered || message.deliveryState == .sent {
             if let deliveryStateString = deliveryStateString {
                 finalText = timestampString + " ・ " + deliveryStateString
             }
@@ -277,12 +277,12 @@ extension ZMConversationMessage {
         
         let attributedText = NSMutableAttributedString(attributedString: finalText && [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor])
         
-        if message.deliveryState == .FailedToSend {
-            let linkRange = (finalText as NSString).rangeOfString("content.system.failedtosend_message_timestamp_resend".localized)
-            attributedText.addAttributes([NSLinkAttributeName: self.dynamicType.resendLink], range: linkRange)
+        if message.deliveryState == .failedToSend {
+            let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
+            attributedText.addAttributes([NSLinkAttributeName: type(of: self).resendLink], range: linkRange)
         }
         
-        if let currentText = self.statusLabel.attributedText where currentText.string == attributedText.string {
+        if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
             return
         }
         
@@ -293,19 +293,19 @@ extension ZMConversationMessage {
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.Up, newState: changeBlock)
+            statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
         }
         else {
             changeBlock()
         }
     }
     
-    private func configureLikeTip(message: ZMConversationMessage, animated: Bool = false) {
+    fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor]
+        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : Any]
         let attributedText = likeTooltipText && attributes
 
-        if let currentText = self.statusLabel.attributedText where currentText.string == attributedText.string {
+        if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
             return
         }
         
@@ -315,16 +315,16 @@ extension ZMConversationMessage {
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.Up, newState: changeBlock)
+            statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
         }
         else {
             changeBlock()
         }
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
-        guard let message = self.message where !CGRectEqualToRect(self.bounds, self.previousLayoutBounds) else {
+        guard let message = self.message , !self.bounds.equalTo(self.previousLayoutBounds) else {
             return
         }
         
@@ -336,9 +336,9 @@ extension ZMConversationMessage {
     
     // MARK: - Events
 
-    @objc func onTapContent(sender: UITapGestureRecognizer!) {
+    @objc func onTapContent(_ sender: UITapGestureRecognizer!) {
         guard !forceShowTimestamp else { return }
-        if let message = self.message where !message.likers().isEmpty {
+        if let message = self.message , !message.likers().isEmpty {
             self.delegate?.messageToolboxViewDidSelectLikers(self)
         }
     }
@@ -353,15 +353,15 @@ extension MessageToolboxView: TTTAttributedLabelDelegate {
     
     // MARK: - TTTAttributedLabelDelegate
     
-    public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL URL: NSURL!) {
-        if URL.isEqual(self.dynamicType.resendLink) {
+    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: Foundation.URL!) {
+        if URL.isEqual(type(of: self).resendLink) {
             self.delegate?.messageToolboxViewDidSelectResend(self)
         }
     }
 }
 
 extension MessageToolboxView: UIGestureRecognizerDelegate {
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer.isEqual(self.tapGestureRecogniser)
     }
 }

@@ -22,7 +22,7 @@ import CocoaLumberjackSwift
 
 extension AVAsset {
 
-    public static func wr_convertAudioToUploadFormat(inPath: String, outPath: String, completion: ((success: Bool) -> ())? = .None) {
+    public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
         let alteredAsset = AVAsset(URL: NSURL(fileURLWithPath: inPath))
 
         let exportSession = AVAssetExportSession(asset: alteredAsset, presetName: AVAssetExportPresetAppleM4A)!

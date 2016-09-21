@@ -20,7 +20,7 @@
 import Foundation
 
 class ConversationVerifiedCell: IconSystemCell {
-    override func configureForMessage(message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    override func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configureForMessage(message, layoutProperties: layoutProperties)
         
         self.leftIconView.image = WireStyleKit.imageOfShieldverified()
@@ -33,9 +33,9 @@ class ConversationVerifiedCell: IconSystemCell {
             let labelFont = self.labelFont,
             let labelTextColor = self.labelTextColor
 
-            where systemMessageData.systemMessageType == ZMSystemMessageType.ConversationIsSecure {
+            , systemMessageData.systemMessageType == ZMSystemMessageType.ConversationIsSecure {
                 
-                self.labelView.attributedText = (NSLocalizedString("content.system.is_verified", comment: "").uppercaseString && [NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor])
+                self.labelView.attributedText = (NSLocalizedString("content.system.is_verified", comment: "").uppercased() && [NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor])
                 self.labelView.accessibilityLabel = self.labelView.attributedText.string
         }
     }

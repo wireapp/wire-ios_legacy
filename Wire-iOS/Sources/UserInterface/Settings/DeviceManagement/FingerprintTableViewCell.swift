@@ -36,21 +36,21 @@ class FingerprintTableViewCell: UITableViewCell {
         }
     }
     
-    var fingerprint: NSData? {
+    var fingerprint: Data? {
         didSet {
             self.updateFingerprint()
         }
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.titleLabel = UILabel(frame: CGRectZero)
+        self.titleLabel = UILabel(frame: CGRect.zero)
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
-        self.fingerprintLabel = UILabel(frame: CGRectZero)
+        self.fingerprintLabel = UILabel(frame: CGRect.zero)
         self.fingerprintLabel.translatesAutoresizingMaskIntoConstraints = false
         self.fingerprintLabel.numberOfLines = 0
         
-        self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         self.spinner.translatesAutoresizingMaskIntoConstraints = false
         self.spinner.hidesWhenStopped = true
         
@@ -75,8 +75,8 @@ class FingerprintTableViewCell: UITableViewCell {
             spinner.bottom <= contentView.bottom - 16
         }
         
-        CASStyler.defaultStyler().styleItem(self)
-        self.backgroundColor = UIColor.clearColor()
+        CASStyler.default().styleItem(self)
+        self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
     }
@@ -90,15 +90,15 @@ class FingerprintTableViewCell: UITableViewCell {
         if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospacedFont(),
             let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospacedFont(),
             let attributedFingerprint = self.fingerprint?.attributedFingerprint(
-                [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
-                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
+                [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.white],
+                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.white],
                 uppercase: false) {
                 
                     self.fingerprintLabel.attributedText = attributedFingerprint
                     self.spinner.stopAnimating()
         }
         else {
-            self.fingerprintLabel.attributedText = .None
+            self.fingerprintLabel.attributedText = .none
             self.spinner.startAnimating()
         }
         self.layoutIfNeeded()

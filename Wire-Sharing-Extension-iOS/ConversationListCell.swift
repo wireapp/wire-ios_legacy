@@ -67,15 +67,15 @@ class ConversationListCell: UITableViewCell {
         }
     }
 
-    @IBOutlet private weak var conversationNameLabel: UILabel!
-    @IBOutlet private weak var conversationAvatarView: AvatarImageView!
+    @IBOutlet fileprivate weak var conversationNameLabel: UILabel!
+    @IBOutlet fileprivate weak var conversationAvatarView: AvatarImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -24,38 +24,38 @@ import MobileCoreServices
 
 extension NSItemProvider {
     
-    func loadText(completion:(String) -> Void) {
+    func loadText(_ completion:@escaping (String) -> Void) {
         self.loadItemForTypeIdentifier(kUTTypePlainText) { (object: NSSecureCoding?, error: NSError!) -> Void in
             if let text = object as? String {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     completion(text)
                 }
             }
-        }
+        } as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void
     }
     
-    func loadURL(completion:(NSURL) -> Void) {
+    func loadURL(_ completion:@escaping (URL) -> Void) {
         self.loadItemForTypeIdentifier(kUTTypeURL) { (object: NSSecureCoding?, error: NSError!) -> Void in
-            if let url = object as? NSURL {
-                dispatch_async(dispatch_get_main_queue()) {
+            if let url = object as? URL {
+                DispatchQueue.main.async {
                     completion(url)
                 }
             }
-        }
+        } as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void
     }
     
-    func loadImage(completion:(object: NSSecureCoding) -> Void) {
+    func loadImage(_ completion:@escaping (_ object: NSSecureCoding) -> Void) {
         self.loadItemForTypeIdentifier(kUTTypeImage) { (object: NSSecureCoding?, error: NSError!) -> Void in
             if let imageObject = object {
-                dispatch_async(dispatch_get_main_queue()) {
-                    completion(object: imageObject)
+                DispatchQueue.main.async {
+                    completion(imageObject)
                 }
             }
-        }
+        } as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void as! (NSSecureCoding?, NSError?) -> Void
     }
 
-    private func loadItemForTypeIdentifier(typeIdentifier: CFString, completion:(object: NSSecureCoding?, error: NSError!) -> Void) {
-        self.loadItemForTypeIdentifier(typeIdentifier as String, options: [:], completionHandler: completion)
+    fileprivate func loadItemForTypeIdentifier(_ typeIdentifier: CFString, completion:@escaping (_ object: NSSecureCoding?, _ error: NSError?) -> Void) {
+        self.loadItem(forTypeIdentifier: typeIdentifier as String, options: [:], completionHandler: completion)
     }
     
 }

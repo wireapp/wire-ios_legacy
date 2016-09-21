@@ -25,12 +25,12 @@ import MessageUI
 class EmailInvitePresenter: NSObject, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     static let sharedInstance: EmailInvitePresenter = EmailInvitePresenter()
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: .None)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: .none)
     }
     
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        controller.dismissViewControllerAnimated(true, completion: .None)
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: .none)
     }
 }
 
@@ -40,10 +40,10 @@ extension ZMAddressBookContact {
         return MFMailComposeViewController.canSendMail()
     }
     
-    public func inviteLocallyWithEmail(email: String) {
+    public func inviteLocallyWithEmail(_ email: String) {
         let composeController = MFMailComposeViewController()
         composeController.mailComposeDelegate = EmailInvitePresenter.sharedInstance
-        composeController.modalPresentationStyle = .FormSheet
+        composeController.modalPresentationStyle = .formSheet
         composeController.setMessageBody("send_personal_invitation.text".localized, isHTML: false)
         composeController.setToRecipients([email])
         ZClientViewController.sharedZClientViewController().presentViewController(composeController, animated: true, completion: .None)
@@ -53,10 +53,10 @@ extension ZMAddressBookContact {
         return MFMessageComposeViewController.canSendText()
     }
     
-    public func inviteLocallyWithPhoneNumber(phoneNumber: String) {
+    public func inviteLocallyWithPhoneNumber(_ phoneNumber: String) {
         let composeController = MFMessageComposeViewController()
         composeController.messageComposeDelegate = EmailInvitePresenter.sharedInstance
-        composeController.modalPresentationStyle = .FormSheet
+        composeController.modalPresentationStyle = .formSheet
         composeController.body = "send_personal_invitation.text".localized
         composeController.recipients = [phoneNumber]
         ZClientViewController.sharedZClientViewController().presentViewController(composeController, animated: true, completion: .None)

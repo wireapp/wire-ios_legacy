@@ -54,7 +54,7 @@ extension ZMConversationMessage {
     func hasReactions() -> Bool {
         return self.usersReaction.map { (_, users) in
                 return users.count
-            }.reduce(0, combine: +) > 0
+            }.reduce(0, +) > 0
     }
     
     func likers() -> [ZMUser] {
@@ -69,23 +69,23 @@ extension ZMConversationMessage {
 
 public extension Message {
     
-    @objc static func setLikedMessage(message: ZMMessage, liked: Bool) {
+    @objc static func setLikedMessage(_ message: ZMMessage, liked: Bool) {
         return message.liked = liked
     }
 
-    @objc static func isLikedMessage(message: ZMMessage) -> Bool {
+    @objc static func isLikedMessage(_ message: ZMMessage) -> Bool {
         return message.liked
     }
     
-    @objc static func hasReactions(message: ZMMessage) -> Bool {
+    @objc static func hasReactions(_ message: ZMMessage) -> Bool {
         return message.hasReactions()
     }
     
-    @objc static func hasLikers(message: ZMMessage) -> Bool {
+    @objc static func hasLikers(_ message: ZMMessage) -> Bool {
         return !message.likers().isEmpty
     }
 
-    class func messageCanBeLiked(message: ZMMessage) -> Bool {
+    class func messageCanBeLiked(_ message: ZMMessage) -> Bool {
         return message.canBeLiked
     }
 

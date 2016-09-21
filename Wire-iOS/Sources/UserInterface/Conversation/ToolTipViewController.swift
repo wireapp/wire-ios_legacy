@@ -21,17 +21,17 @@ import UIKit
 import Cartography
 
 extension UIImage {
-   static func arrowImageWithColor(color: UIColor) -> UIImage {
+   static func arrowImageWithColor(_ color: UIColor) -> UIImage {
         
         let result : UIImage
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 16, height: 8), false, UIScreen.mainScreen().scale) //without this option, default scale is 1
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 16, height: 8), false, UIScreen.main.scale) //without this option, default scale is 1
         
         let bezierPath = UIBezierPath()
-        bezierPath.moveToPoint(CGPoint(x: 0.0, y: 8.0))
-        bezierPath.addLineToPoint(CGPoint(x: 8, y: 0.0))
-        bezierPath.addLineToPoint(CGPoint(x: 16, y: 8.0))
-        bezierPath.closePath()
+        bezierPath.move(to: CGPoint(x: 0.0, y: 8.0))
+        bezierPath.addLine(to: CGPoint(x: 8, y: 0.0))
+        bezierPath.addLine(to: CGPoint(x: 16, y: 8.0))
+        bezierPath.close()
        
         color.setFill()
         color.setStroke()
@@ -39,7 +39,7 @@ extension UIImage {
         bezierPath.stroke()
         bezierPath.fill()
         
-        result = UIGraphicsGetImageFromCurrentImageContext()
+        result = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return result
@@ -49,9 +49,9 @@ extension UIImage {
 @objc final class ToolTip: NSObject {
     
     let title, descriptionText: String
-    let tapHandler: dispatch_block_t?
+    let tapHandler: ()->()?
     
-    init(title: String, description: String,  handler: dispatch_block_t? = nil) {
+    init(title: String, description: String,  handler: @escaping ()->()? = nil) {
         self.title = title
         descriptionText = description
         tapHandler = handler
@@ -67,9 +67,9 @@ extension UIImage {
     var arrowConstraint : Cartography.ConstraintGroup? = nil
     let padding: CGFloat = 5
     
-    private var accentColorChangeHandler : AccentColorChangeHandler? = nil
+    fileprivate var accentColorChangeHandler : AccentColorChangeHandler? = nil
     
-    private var titleColor: UIColor? {
+    fileprivate var titleColor: UIColor? {
         didSet {
             guard let color = titleColor else { return }
             titleLabel.textColor = color
@@ -82,8 +82,8 @@ extension UIImage {
         }
     }
     
-    private lazy var arrowImage : UIImage = {
-        return UIImage.arrowImageWithColor(UIColor.whiteColor())
+    fileprivate lazy var arrowImage : UIImage = {
+        return UIImage.arrowImageWithColor(UIColor.white)
     }()
     
     
@@ -96,7 +96,7 @@ extension UIImage {
         createViews()
         createConstraints()
         createGestureRecognizer()
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         configure(toolTip) // swift does not call didSet/willSet in init, manually configure
     }
     
@@ -109,7 +109,7 @@ extension UIImage {
         [titleLabel, descriptionLabel].forEach { $0.numberOfLines = 0 }
         [contentView, arrowView].forEach(view.addSubview)
         [titleLabel, descriptionLabel].forEach(contentView.addSubview)
-        titleLabel.textColor = UIColor.accentColor()
+        titleLabel.textColor = UIColor.accentColor
     }
     
     func createGestureRecognizer() {
@@ -141,7 +141,7 @@ extension UIImage {
         }
     }
     
-    func makeTipPointToView(view: UIView) {
+    func makeTipPointToView(_ view: UIView) {
         if let arrowConstraint = self.arrowConstraint {
             
             self.arrowConstraint = constrain(arrowView, view, replace: arrowConstraint) { arrowView, view in
@@ -154,13 +154,13 @@ extension UIImage {
         }
     }
     
-    private func configure(toolTip: ToolTip) {
+    fileprivate func configure(_ toolTip: ToolTip) {
         titleLabel.text = toolTip.title
         descriptionLabel.text = toolTip.descriptionText
     }
     
-    func didTapView(recognizer: UITapGestureRecognizer) {
-        toolTip.tapHandler?()
+    func didTapView(_ recognizer: UITapGestureRecognizer) {
+        toolTip.tapHandler()
     }
 }
 

@@ -24,8 +24,8 @@ extension UITableViewCell {
     	return NSStringFromClass(self) + "_ReuseIdentifier"
     }
     
-    static func registerInTableView(tableView: UITableView) {
-        tableView.registerClass(self, forCellReuseIdentifier: zm_reuseIdentifier)
+    static func registerInTableView(_ tableView: UITableView) {
+        tableView.register(self, forCellReuseIdentifier: zm_reuseIdentifier)
     }
 }
  

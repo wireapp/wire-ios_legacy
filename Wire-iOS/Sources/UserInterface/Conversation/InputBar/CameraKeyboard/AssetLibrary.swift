@@ -21,37 +21,37 @@ import Foundation
 import Photos
 
 public protocol AssetLibraryDelegate: class {
-    func assetLibraryDidChange(library: AssetLibrary)
+    func assetLibraryDidChange(_ library: AssetLibrary)
 }
 
-public class AssetLibrary {
-    public weak var delegate: AssetLibraryDelegate?
-    private var fetchingAssets = false
-    public let synchronous: Bool
+open class AssetLibrary {
+    open weak var delegate: AssetLibraryDelegate?
+    fileprivate var fetchingAssets = false
+    open let synchronous: Bool
     
-    public var count: UInt {
+    open var count: UInt {
         guard let fetch = self.fetch else {
             return 0
         }
         return UInt(fetch.count)
     }
     
-    public enum AssetError: ErrorType {
-        case OutOfRange, NotLoadedError
+    public enum AssetError: Error {
+        case outOfRange, notLoadedError
     }
     
-    public func asset(atIndex index: UInt) throws -> PHAsset {
+    open func asset(atIndex index: UInt) throws -> PHAsset {
         guard let fetch = self.fetch else {
-            throw AssetError.NotLoadedError
+            throw AssetError.notLoadedError
         }
         
         if index >= count {
-            throw AssetError.OutOfRange
+            throw AssetError.outOfRange
         }
-        return fetch.objectAtIndex(Int(index)) as! PHAsset
+        return fetch.object(at: Int(index)) as! PHAsset
     }
     
-    public func refetchAssets(synchronous synchronous: Bool = false) {
+    open func refetchAssets(synchronous: Bool = false) {
         guard !self.fetchingAssets else {
             return
         }
@@ -61,7 +61,7 @@ public class AssetLibrary {
         let syncOperation = {
             let options = PHFetchOptions()
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-            self.fetch = PHAsset.fetchAssetsWithOptions(options)
+            self.fetch = PHAsset.fetchAssets(with: options)
             
             let completion = {
                 self.delegate?.assetLibraryDidChange(self)
@@ -72,7 +72,7 @@ public class AssetLibrary {
                 completion()
             }
             else {
-                dispatch_async(dispatch_get_main_queue(), completion)
+                DispatchQueue.main.async(execute: completion)
             }
         }
         
@@ -80,11 +80,11 @@ public class AssetLibrary {
             syncOperation()
         }
         else {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), syncOperation)
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: syncOperation)
         }
     }
     
-    private var fetch: PHFetchResult?
+    fileprivate var fetch: PHFetchResult<AnyObject>?
     
     init(synchronous: Bool = false) {
         self.synchronous = synchronous

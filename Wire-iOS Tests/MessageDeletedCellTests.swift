@@ -27,7 +27,7 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .whiteColor()
-        sut = MessageDeletedCell(style: .Default, reuseIdentifier: nil)
+        sut = MessageDeletedCell(style: .default, reuseIdentifier: nil)
     }
 
     func testThatItRendersMessageDeletedCellCorrect() {
@@ -47,7 +47,7 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
 
 extension MessageDeletedCellTests {
 
-    func configure(cell cell: MessageDeletedCell) -> MessageDeletedCell {
+    func configure(cell: MessageDeletedCell) -> MessageDeletedCell {
         let message = MockMessageFactory.systemMessageWithType(.MessageDeletedForEveryone, users: 0, clients: 0)
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
@@ -60,7 +60,7 @@ extension MessageDeletedCellTests {
         cell.configureForMessage(message, layoutProperties: layoutProperties)
         
         let size = cell.systemLayoutSizeFittingSize(CGSize(width: 375, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
-        cell.bounds = CGRectMake(0.0, 0.0, size.width, size.height)
+        cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         return cell

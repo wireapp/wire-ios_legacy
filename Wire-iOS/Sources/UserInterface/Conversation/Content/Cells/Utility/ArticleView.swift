@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -23,8 +23,8 @@ import ZMCLinkPreview
 import TTTAttributedLabel
 
 @objc protocol ArticleViewDelegate: class {
-    func articleViewWantsToOpenURL(articleView: ArticleView, url: NSURL)
-    func articleViewDidLongPressView(articleView: ArticleView)
+    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
+    func articleViewDidLongPressView(_ articleView: ArticleView)
 }
 
 class ArticleView: UIView {
@@ -35,11 +35,11 @@ class ArticleView: UIView {
     var titleFont: UIFont?
     var authorTextColor: UIColor?
     var authorFont: UIFont?
-    var authorHighlightTextColor: UIColor = UIColor.grayColor()
-    var authorHighlightFont: UIFont = UIFont.boldSystemFontOfSize(14)
+    var authorHighlightTextColor: UIColor = UIColor.gray
+    var authorHighlightFont: UIFont = UIFont.boldSystemFont(ofSize: 14)
     
     /// MARK - Views
-    let messageLabel = TTTAttributedLabel(frame: CGRectZero)
+    let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
     let authorLabel = UILabel()
     let imageView = UIImageView()
     var loadingView: ThreeDotsLoadingView?
@@ -47,9 +47,11 @@ class ArticleView: UIView {
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
 
         [messageLabel, authorLabel, imageView].forEach { view in
+            let view = view as! UIView
+            
             view.translatesAutoresizingMaskIntoConstraints = false
             addSubview(view)
         }
@@ -62,7 +64,7 @@ class ArticleView: UIView {
             self.loadingView = loadingView
         }
         
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         
         setupViews()
         setupConstraints(imagePlaceholder)
@@ -80,21 +82,21 @@ class ArticleView: UIView {
         self.clipsToBounds = true
         accessibilityIdentifier = "linkPreview"
         
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
         authorLabel.font = authorFont
         authorLabel.textColor = authorTextColor
-        authorLabel.lineBreakMode = .ByTruncatingMiddle
+        authorLabel.lineBreakMode = .byTruncatingMiddle
         authorLabel.accessibilityIdentifier = "linkPreviewSource"
         
         messageLabel.font = titleFont
         messageLabel.textColor = titleTextColor
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
-        messageLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
-        messageLabel.linkAttributes = [NSForegroundColorAttributeName : UIColor.accentColor()]
-        messageLabel.activeLinkAttributes = [NSForegroundColorAttributeName : UIColor.accentColor().colorWithAlphaComponent(0.5)]
+        messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+        messageLabel.linkAttributes = [NSForegroundColorAttributeName : UIColor.accent]
+        messageLabel.activeLinkAttributes = [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
         messageLabel.delegate = self
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -103,7 +105,7 @@ class ArticleView: UIView {
         addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(viewLongPressed)))
     }
     
-    func setupConstraints(imagePlaceholder: Bool) {
+    func setupConstraints(_ imagePlaceholder: Bool) {
         let imageHeight : CGFloat = imagePlaceholder ? 144 : 0
         
         constrain(self, messageLabel, authorLabel, imageView) { container, messageLabel, authorLabel, imageView in
@@ -135,8 +137,8 @@ class ArticleView: UIView {
         }
     }
     
-    func formatURL(URL: NSURL) -> NSAttributedString {
-        let urlWithoutScheme = URL.absoluteString.stringByRemovingURLScheme(URL.scheme)
+    func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
+        let urlWithoutScheme = URL.absoluteString.stringByRemovingURLScheme(URL.scheme!)
         let displayString = urlWithoutScheme.stringByRemovingPrefixWWW().stringByRemovingTrailingForwardSlash()
 
         if let host = URL.host?.stringByRemovingPrefixWWW() {
@@ -150,7 +152,7 @@ class ArticleView: UIView {
         let cache = ImageCache(name: "ArticleView.imageCache")
         cache.maxConcurrentOperationCount = 4;
         cache.totalCostLimit = 1024 * 1024 * 10; // 10 MB
-        cache.qualityOfService = .Utility;
+        cache.qualityOfService = .utility;
         return cache
     }()
     
@@ -168,11 +170,11 @@ class ArticleView: UIView {
         
         if let imageData = textMessageData.imageData {
             imageView.image = UIImage(data: imageData)
-            loadingView?.hidden = true
+            loadingView?.isHidden = true
             
-            ArticleView.imageCache.imageForData(imageData, cacheKey: textMessageData.imageDataIdentifier, creationBlock:
+            ArticleView.imageCache.image(for: imageData, cacheKey: textMessageData.imageDataIdentifier, creationBlock:
                 { data -> AnyObject! in
-                    return UIImage.deviceOptimizedImageFromData(data)
+                    return UIImage.deviceOptimizedImage(from: data)
                 }, completion:
                 {[weak self] (image, _) in
                     if let image = image as? UIImage {
@@ -184,7 +186,7 @@ class ArticleView: UIView {
     
     func configure(withArticle article: Article) {
         if let url = article.openableURL {
-            authorLabel.attributedText = formatURL(url)
+            authorLabel.attributedText = formatURL(url as URL)
         } else {
             authorLabel.text = article.originalURLString
         }
@@ -198,13 +200,13 @@ class ArticleView: UIView {
         messageLabel.text = twitterStatus.message
     }
     
-    func viewTapped(sender: UITapGestureRecognizer) {
+    func viewTapped(_ sender: UITapGestureRecognizer) {
         guard let url = linkPreview?.openableURL else { return }
-        delegate?.articleViewWantsToOpenURL(self, url: url)
+        delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
     
-    func viewLongPressed(sender: UILongPressGestureRecognizer) {
-        guard sender.state == .Began else { return }
+    func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began else { return }
         delegate?.articleViewDidLongPressView(self)
     }
     
@@ -212,15 +214,15 @@ class ArticleView: UIView {
 
 extension ArticleView : TTTAttributedLabelDelegate {
     
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        UIApplication.sharedApplication().openURL(url)
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        UIApplication.shared.openURL(url)
     }
 }
 
 extension ArticleView : UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        return !messageLabel.containslinkAtPoint(touch.locationInView(messageLabel))
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return !messageLabel.containslink(at: touch.location(in: messageLabel))
     }
 
 }
@@ -229,11 +231,11 @@ extension LinkPreview {
 
     /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
     var openableURL: NSURL? {
-        let application = UIApplication.sharedApplication()
+        let application = UIApplication.shared
 
-        if let permanentURL = permanentURL where application.canOpenURL(permanentURL) {
-            return permanentURL
-        } else if let originalURL = NSURL(string: originalURLString) where application.canOpenURL(originalURL) {
+        if let permanentURL = permanentURL , application.canOpenURL(permanentURL) {
+            return permanentURL as NSURL?
+        } else if let originalURL = NSURL(string: originalURLString) , application.canOpenURL(originalURL as URL) {
             return originalURL
         }
 
@@ -247,15 +249,15 @@ extension LinkPreview {
 private extension String {
 
     func stringByRemovingPrefixWWW() -> String {
-        return stringByReplacingOccurrencesOfString("www.", withString: "", options: .AnchoredSearch, range: nil)
+        return replacingOccurrences(of: "www.", with: "", options: .anchored, range: nil)
     }
 
     func stringByRemovingTrailingForwardSlash() -> String {
-        return stringByReplacingOccurrencesOfString("/", withString: "", options: [.AnchoredSearch, .BackwardsSearch], range: nil)
+        return replacingOccurrences(of: "/", with: "", options: [.anchored, .backwards], range: nil)
     }
 
-    func stringByRemovingURLScheme(scheme: String) -> String {
-        return stringByReplacingOccurrencesOfString(scheme + "://", withString: "", options: .AnchoredSearch, range: nil)
+    func stringByRemovingURLScheme(_ scheme: String) -> String {
+        return replacingOccurrences(of: scheme + "://", with: "", options: .anchored, range: nil)
     }
 
 }

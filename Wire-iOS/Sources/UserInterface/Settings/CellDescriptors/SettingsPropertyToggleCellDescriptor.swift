@@ -34,13 +34,13 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
     
-    init(settingsProperty: SettingsProperty, inverse: Bool = false, identifier: String? = .None) {
+    init(settingsProperty: SettingsProperty, inverse: Bool = false, identifier: String? = .none) {
         self.settingsProperty = settingsProperty
         self.inverse = inverse
         self.identifier = identifier
     }
     
-    func featureCell(cell: SettingsCellType) {
+    func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let toggleCell = cell as? SettingsToggleCell {
             var boolValue = false
@@ -55,11 +55,11 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
                 boolValue = !boolValue
             }
             
-            toggleCell.switchView.on = boolValue
+            toggleCell.switchView.isOn = boolValue
         }
     }
     
-    func select(value: SettingsPropertyValue?) {
+    func select(_ value: SettingsPropertyValue?) {
         var valueToSet = false
         
         if let intValue = value?.value() as? Int {
@@ -73,6 +73,6 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
             valueToSet = !valueToSet
         }
         
-        self.settingsProperty << SettingsPropertyValue.Bool(value: valueToSet)
+        self.settingsProperty << SettingsPropertyValue.bool(value: valueToSet)
     }
 }

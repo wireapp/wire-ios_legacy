@@ -23,21 +23,21 @@ import WireExtensionComponents
 
 class RootViewController: UIViewController {
 
-    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet fileprivate weak var containerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let colorScheme = ColorScheme.defaultColorScheme()
-        colorScheme.accentColor = UIColor.accentColor
-        CASStyler.defaultStyler().applyColorScheme(colorScheme)
+        let colorScheme = ColorScheme.default()
+        colorScheme?.accentColor = UIColor.accentColor
+        CASStyler.default().apply(colorScheme)
         
         var error: NSError? = nil
-        if let path = NSBundle.mainBundle().pathForResource("stylesheet-share-ext", ofType: "cas") {
-            CASStyler.defaultStyler().setFilePath(path, error: &error)
+        if let path = Bundle.main.path(forResource: "stylesheet-share-ext", ofType: "cas") {
+            CASStyler.default().setFilePath(path, error: &error)
             if self.isCurrentTargetSimulator() == 1 {
-                CASStyler.defaultStyler().watchFilePath =
-                    _CASAbsoluteFilePath(__FILE__, "../Wire-iOS/Resources/Classy/stylesheet-share-ext.cas")
+                CASStyler.default().watchFilePath =
+                    _CASAbsoluteFilePath(#file, "../Wire-iOS/Resources/Classy/stylesheet-share-ext.cas")
             }
         }
     }
@@ -46,10 +46,10 @@ class RootViewController: UIViewController {
         return TARGET_IPHONE_SIMULATOR
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let window = self.view.window {
-            CASStyler.defaultStyler().targetWindows = [window]
+            CASStyler.default().targetWindows = [window]
         }
     }
 

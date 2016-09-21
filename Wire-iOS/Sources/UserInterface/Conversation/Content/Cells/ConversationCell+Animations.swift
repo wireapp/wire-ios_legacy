@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,9 +22,9 @@ import Foundation
 
 extension ConversationCell {
     
-    public func updateVisibleViews(views: [UIView], visibleViews: [UIView], animated: Bool) {
+    public func updateVisibleViews(_ views: [UIView], visibleViews: [UIView], animated: Bool) {
         if (animated) {
-            UIView.transitionWithView(self, duration: 0.35, options: .TransitionCrossDissolve, animations: {
+            UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
                 self.updateVisibleViews(views, visibleViews: visibleViews)
                 }, completion: nil)
         } else {
@@ -32,12 +32,12 @@ extension ConversationCell {
         }
     }
     
-    public func updateVisibleViews(views: [UIView], visibleViews: [UIView]) {
+    public func updateVisibleViews(_ views: [UIView], visibleViews: [UIView]) {
         let allViews = Set(views)
-        let hiddenViews = allViews.subtract(visibleViews)
+        let hiddenViews = allViews.subtracting(visibleViews)
         
-        visibleViews.forEach { $0.hidden = false }
-        hiddenViews.forEach { $0.hidden = true }
+        visibleViews.forEach { $0.isHidden = false }
+        hiddenViews.forEach { $0.isHidden = true }
     }
     
 }

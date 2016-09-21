@@ -44,7 +44,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.authToken = ZMUserSession.sharedSession().addAuthenticationObserver(self)
     }
     
-    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
     
@@ -73,19 +73,19 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.view?.opaque = false
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.dismissViewControllerAnimated(animated, completion: nil)
     }
     
-    private func setupBackgroundImageView() {
+    fileprivate func setupBackgroundImageView() {
         let backgroundImageView = UIImageView(image: UIImage(named: "LaunchImage"))
         self.backgroundImageView = backgroundImageView
         self.view?.addSubview(backgroundImageView)
     }
     
-    private func setupNavigationController() {
+    fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
         invitationController.formStepDelegate = self
         invitationController.view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
@@ -105,7 +105,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.rootNavigationController = rootNavigationController
     }
     
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         if let rootNavigationController = self.rootNavigationController {
             constrain(self.view, rootNavigationController.view) { selfView, navigationControllerView in
                 navigationControllerView.edges == selfView.edges
@@ -127,7 +127,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     // MARK: - FormStepDelegate
     
-    func didCompleteFormStep(viewController: UIViewController!) {
+    func didCompleteFormStep(_ viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials)
         clientsListController.view.backgroundColor = UIColor.blackColor()
         if self.traitCollection.userInterfaceIdiom == .Pad {
@@ -141,18 +141,18 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     // MARK: - UINavigationControllerDelegate
     
-    override func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    override func navigationController(_ navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
-        case .Pop:
+        case .pop:
             return self.popTransition
-        case .Push:
+        case .push:
             return self.pushTransition
         default:
             return nil
         }
     }
     
-    override func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+    override func navigationController(_ navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
         if viewController is ClientListViewController {
             navigationController.setNavigationBarHidden(false, animated: false)
         }

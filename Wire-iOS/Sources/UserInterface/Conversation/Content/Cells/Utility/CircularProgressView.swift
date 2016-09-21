@@ -19,10 +19,10 @@
 
 import Foundation
 
-@objc public class CircularProgressView: UIView {
+@objc open class CircularProgressView: UIView {
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override init(frame: CGRect) {
@@ -35,47 +35,47 @@ import Foundation
         self.setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         setupShapeLayer()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CircularProgressView.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CircularProgressView.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
-    private func setupShapeLayer() {
+    fileprivate func setupShapeLayer() {
         self.createPath()
         self.shapeLayer.lineWidth = 2
         self.shapeLayer.lineCap = kCALineCapSquare
         self.shapeLayer.strokeStart = 0.0
         self.shapeLayer.strokeEnd = CGFloat(self.progress)
-        self.shapeLayer.fillColor = UIColor.clearColor().CGColor
-        self.shapeLayer.strokeColor = self.tintColor.CGColor
+        self.shapeLayer.fillColor = UIColor.clear.cgColor
+        self.shapeLayer.strokeColor = self.tintColor.cgColor
     }
     
-    override public func didMoveToWindow() {
+    override open func didMoveToWindow() {
         updateSpinningAnimation()
     }
     
-    override public var tintColor: UIColor! {
+    override open var tintColor: UIColor! {
         didSet {
-            self.shapeLayer.strokeColor = self.tintColor.CGColor
+            self.shapeLayer.strokeColor = self.tintColor.cgColor
         }
     }
     
-    public var deterministic : Bool = true {
+    open var deterministic : Bool = true {
         didSet {
             updateSpinningAnimation()
         }
     }
     
-    private func createPath() {
-        self.shapeLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: CGRectGetWidth(self.bounds)/2).CGPath
+    fileprivate func createPath() {
+        self.shapeLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.bounds.width/2).cgPath
     }
     
-    override public class func layerClass() -> AnyClass {
+    override open class var layerClass : AnyClass {
         return CAShapeLayer.self
     }
     
-    public var shapeLayer: CAShapeLayer {
+    open var shapeLayer: CAShapeLayer {
         get {
             if let shapeLayer = self.layer as? CAShapeLayer {
                 return shapeLayer
@@ -84,9 +84,9 @@ import Foundation
         }
     }
     
-    public private(set) var progress : Float = 0.0
+    open fileprivate(set) var progress : Float = 0.0
         
-    public func setProgress(progress: Float, animated: Bool) {
+    open func setProgress(_ progress: Float, animated: Bool) {
         self.progress = progress
         
         if (animated) {
@@ -96,11 +96,11 @@ import Foundation
             stroke.duration = 0.35
             stroke.fillMode = kCAFillModeForwards
             
-            self.shapeLayer.addAnimation(stroke, forKey: nil)
+            self.shapeLayer.add(stroke, forKey: nil)
         } else {
             let stroke = CABasicAnimation(keyPath: "strokeEnd")
             stroke.fromValue = CGFloat(progress)
-            self.shapeLayer.addAnimation(stroke, forKey: nil)
+            self.shapeLayer.add(stroke, forKey: nil)
         }
         
         CATransaction.setDisableActions(true)
@@ -108,7 +108,7 @@ import Foundation
         CATransaction.setDisableActions(false)
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         self.setupShapeLayer()
     }
@@ -117,7 +117,7 @@ import Foundation
     
     let SpinningAnimationKey = "com.wire.animations.spin"
     
-    private func updateSpinningAnimation() {
+    fileprivate func updateSpinningAnimation() {
         if !deterministic {
             startSpinningAnimation()
         } else {
@@ -125,25 +125,25 @@ import Foundation
         }
     }
     
-    private func startSpinningAnimation() {
+    fileprivate func startSpinningAnimation() {
         let rotate = CABasicAnimation.init(keyPath: "transform.rotation.z")
         rotate.fillMode = kCAFillModeForwards;
         rotate.toValue = 2 * M_PI
         rotate.repeatCount = .infinity
         rotate.duration = 1.0
-        rotate.cumulative = true
+        rotate.isCumulative = true
         rotate.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionLinear)
         
-        self.shapeLayer.addAnimation(rotate, forKey: SpinningAnimationKey);
+        self.shapeLayer.add(rotate, forKey: SpinningAnimationKey);
     }
     
-    private func stopSpinningAnimation() {
-        self.shapeLayer.removeAnimationForKey(SpinningAnimationKey)
+    fileprivate func stopSpinningAnimation() {
+        self.shapeLayer.removeAnimation(forKey: SpinningAnimationKey)
     }
 }
 
 extension CircularProgressView {
-    func applicationDidBecomeActive(notification : NSNotification) {
+    func applicationDidBecomeActive(_ notification : Notification) {
         updateSpinningAnimation()
     }
 }

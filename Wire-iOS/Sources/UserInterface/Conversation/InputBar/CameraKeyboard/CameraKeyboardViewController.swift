@@ -25,33 +25,33 @@ import CocoaLumberjackSwift
 import AVFoundation
 
 public protocol CameraKeyboardViewControllerDelegate: class {
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectVideo: NSURL, duration: NSTimeInterval)
-    func cameraKeyboardViewController(controller: CameraKeyboardViewController, didSelectImageData: NSData, metadata: ImageMetadata)
-    func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(controller: CameraKeyboardViewController)
-    func cameraKeyboardViewControllerWantsToOpenCameraRoll(controller: CameraKeyboardViewController)
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, metadata: ImageMetadata)
+    func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController)
+    func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
 
 
-public class CameraKeyboardViewController: UIViewController {
+open class CameraKeyboardViewController: UIViewController {
     internal let assetLibrary: AssetLibrary
     
-    private let collectionViewLayout = UICollectionViewFlowLayout()
+    fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     internal var collectionView: UICollectionView!
     
     internal let goBackButton = IconButton()
     internal let cameraRollButton = IconButton()
-    private var lastLayoutSize = CGSizeZero
+    fileprivate var lastLayoutSize = CGSize.zero
     
-    private let sideMargin: CGFloat = 14
+    fileprivate let sideMargin: CGFloat = 14
     
-    private var viewWasHidden: Bool = false
+    fileprivate var viewWasHidden: Bool = false
     
-    private var goBackButtonRevealed: Bool = false {
+    fileprivate var goBackButtonRevealed: Bool = false {
         didSet {
             if goBackButtonRevealed {
-                UIView.animateWithDuration(0.35) {
+                UIView.animate(withDuration: 0.35, animations: {
                     self.goBackButton.alpha = self.goBackButtonRevealed ? 1 : 0
-                }
+                }) 
             }
             else {
                 self.goBackButton.alpha = 0
@@ -59,16 +59,16 @@ public class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    public let splitLayoutObservable: SplitLayoutObservable
+    open let splitLayoutObservable: SplitLayoutObservable
     
-    private enum CameraKeyboardSection: UInt {
-        case Camera = 0, Photos = 1
+    fileprivate enum CameraKeyboardSection: UInt {
+        case camera = 0, photos = 1
     }
 
-    public weak var delegate: CameraKeyboardViewControllerDelegate?
+    open weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     init(splitLayoutObservable: SplitLayoutObservable, assetLibrary: AssetLibrary = AssetLibrary()) {
@@ -84,41 +84,41 @@ public class CameraKeyboardViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if !CGSizeEqualToSize(self.lastLayoutSize, self.view.bounds.size) {
+        if !self.lastLayoutSize.equalTo(self.view.bounds.size) {
             self.lastLayoutSize = self.view.bounds.size
             self.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
         }
     }
     
-    @objc public func applicationDidBecomeActive(notification: NSNotification!) {
+    @objc open func applicationDidBecomeActive(_ notification: Notification!) {
         self.assetLibrary.refetchAssets()
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.createCollectionView()
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         self.goBackButton.translatesAutoresizingMaskIntoConstraints = false
         self.goBackButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.goBackButton.circular = true
-        self.goBackButton.setIcon(.BackArrow, withSize: .Tiny, forState: .Normal)
-        self.goBackButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.goBackButton.setIcon(.backArrow, with: .tiny, for: UIControlState())
+        self.goBackButton.setIconColor(UIColor.white, for: UIControlState())
         self.goBackButton.accessibilityIdentifier = "goBackButton"
-        self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), forControlEvents: .TouchUpInside)
+        self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), for: .touchUpInside)
         
         self.cameraRollButton.translatesAutoresizingMaskIntoConstraints = false
         self.cameraRollButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.cameraRollButton.circular = true
-        self.cameraRollButton.setIcon(.Photo, withSize: .Tiny, forState: .Normal)
-        self.cameraRollButton.setIconColor(UIColor.whiteColor(), forState: .Normal)
+        self.cameraRollButton.setIcon(.photo, with: .tiny, for: UIControlState())
+        self.cameraRollButton.setIconColor(UIColor.white, for: UIControlState())
         self.cameraRollButton.accessibilityIdentifier = "cameraRollButton"
-        self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), forControlEvents: .TouchUpInside)
+        self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), for: .touchUpInside)
         
         [self.collectionView, self.goBackButton, self.cameraRollButton].forEach(self.view.addSubview)
         
@@ -137,7 +137,7 @@ public class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
@@ -147,61 +147,61 @@ public class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    public override func viewWillDisappear(animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewWasHidden = true
         DeviceOrientationObserver.sharedInstance().stopMonitoringDeviceOrientation()
     }
     
-    private func createCollectionView() {
-        self.collectionViewLayout.scrollDirection = .Horizontal
+    fileprivate func createCollectionView() {
+        self.collectionViewLayout.scrollDirection = .horizontal
         self.collectionViewLayout.minimumLineSpacing = 1
         self.collectionViewLayout.minimumInteritemSpacing = 0.5
         self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 1)
-        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
-        self.collectionView.registerClass(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
-        self.collectionView.registerClass(AssetCell.self, forCellWithReuseIdentifier: AssetCell.reuseIdentifier)
+        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        self.collectionView.register(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
+        self.collectionView.register(AssetCell.self, forCellWithReuseIdentifier: AssetCell.reuseIdentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
-        self.collectionView.backgroundColor = UIColor.clearColor()
+        self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.bounces = false
     }
     
-    func goBackPressed(sender: AnyObject) {
-        self.collectionView.scrollRectToVisible(CGRectMake(0, 0, 10, 10), animated: true)
+    func goBackPressed(_ sender: AnyObject) {
+        self.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 10, height: 10), animated: true)
     }
     
-    func openCameraRollPressed(sender: AnyObject) {
+    func openCameraRollPressed(_ sender: AnyObject) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenCameraRoll(self)
     }
     
-    @objc func splitLayoutChanged(notification: NSNotification!) {
+    @objc func splitLayoutChanged(_ notification: Notification!) {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
     
-    private func forwardSelectedPhotoAsset(asset: PHAsset) {
-        let manager = PHImageManager.defaultManager()
+    fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
+        let manager = PHImageManager.default()
 
         let options = PHImageRequestOptions()
-        options.deliveryMode = .HighQualityFormat
-        options.networkAccessAllowed = false
-        options.synchronous = false
-        manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = false
+        options.isSynchronous = false
+        manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
             guard let data = data else {
                 let options = PHImageRequestOptions()
-                options.deliveryMode = .HighQualityFormat
-                options.networkAccessAllowed = true
-                options.synchronous = false
-                dispatch_async(dispatch_get_main_queue(), {
+                options.deliveryMode = .highQualityFormat
+                options.isNetworkAccessAllowed = true
+                options.isSynchronous = false
+                DispatchQueue.main.async(execute: {
                     self.showLoadingView = true
                 })
                 
-                manager.requestImageDataForAsset(asset, options: options, resultHandler: { data, uti, orientation, info in
-                    dispatch_async(dispatch_get_main_queue(), {
+                manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+                    DispatchQueue.main.async(execute: {
                         self.showLoadingView = false
                     })
                     guard let data = data else {
@@ -209,11 +209,11 @@ public class CameraKeyboardViewController: UIViewController {
                         return
                     }
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         let metadata = ImageMetadata()
-                        metadata.camera = .None
-                        metadata.method = ConversationMediaPictureTakeMethod.Keyboard
-                        metadata.source = ConversationMediaPictureSource.Gallery
+                        metadata.camera = .none
+                        metadata.method = ConversationMediaPictureTakeMethod.keyboard
+                        metadata.source = ConversationMediaPictureSource.gallery
                         metadata.sketchSource = .None
                         
                         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
@@ -222,12 +222,12 @@ public class CameraKeyboardViewController: UIViewController {
                 
                 return
             }
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 
                 let metadata = ImageMetadata()
-                metadata.camera = .None
-                metadata.method = ConversationMediaPictureTakeMethod.Keyboard
-                metadata.source = ConversationMediaPictureSource.Gallery
+                metadata.camera = .none
+                metadata.method = ConversationMediaPictureTakeMethod.keyboard
+                metadata.source = ConversationMediaPictureSource.gallery
                 metadata.sketchSource = .None
                 
                 self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
@@ -235,29 +235,29 @@ public class CameraKeyboardViewController: UIViewController {
         })
     }
     
-    private func forwardSelectedVideoAsset(asset: PHAsset) {
-        let manager = PHImageManager.defaultManager()
+    fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
+        let manager = PHImageManager.default()
 
         let options = PHVideoRequestOptions()
-        options.deliveryMode = .HighQualityFormat
-        options.networkAccessAllowed = true
-        options.version = .Current
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        options.version = .current
 
         self.showLoadingView = true
-        manager.requestExportSessionForVideo(asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
+        manager.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
             
                 guard let exportSession = exportSession else {
                     self.showLoadingView = false
                     return
                 }
                 
-                let exportURL = NSURL(fileURLWithPath: (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("video-export.mp4"))
+                let exportURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("video-export.mp4"))
                 
-                if NSFileManager.defaultManager().fileExistsAtPath(exportURL.path!) {
+                if FileManager.default.fileExists(atPath: exportURL.path) {
                     do {
-                        try NSFileManager.defaultManager().removeItemAtURL(exportURL)
+                        try FileManager.default.removeItem(at: exportURL)
                     }
                     catch let error {
                         DDLogError("Cannot remove \(exportURL): \(error)")
@@ -269,9 +269,9 @@ public class CameraKeyboardViewController: UIViewController {
                 exportSession.shouldOptimizeForNetworkUse = true
                 exportSession.outputFileType = AVFileTypeMPEG4
 
-                exportSession.exportAsynchronouslyWithCompletionHandler {
+                exportSession.exportAsynchronously {
                     self.showLoadingView = false
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
                     })
                 }
@@ -282,64 +282,64 @@ public class CameraKeyboardViewController: UIViewController {
 
 
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch CameraKeyboardSection(rawValue: UInt(section))! {
-        case .Camera:
+        case .camera:
             return 1
-        case .Photos:
+        case .photos:
             return Int(assetLibrary.count)
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        switch CameraKeyboardSection(rawValue: UInt(indexPath.section))! {
-        case .Camera:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CameraCell.reuseIdentifier, forIndexPath: indexPath) as! CameraCell
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
+        case .camera:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.reuseIdentifier, for: indexPath) as! CameraCell
             cell.delegate = self
             return cell
-        case .Photos:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AssetCell.reuseIdentifier, forIndexPath: indexPath) as! AssetCell
-            if let asset = try? assetLibrary.asset(atIndex: UInt(indexPath.row)) {
+        case .photos:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
+            if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset
             }
             return cell
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        switch CameraKeyboardSection(rawValue: UInt(indexPath.section))! {
-        case .Camera:
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
+        case .camera:
             switch self.splitLayoutObservable.layoutSize {
             case .Compact:
-                return CGSizeMake(self.view.bounds.size.width / 2, self.view.bounds.size.height)
+                return CGSize(width: self.view.bounds.size.width / 2, height: self.view.bounds.size.height)
             case .RegularPortrait:
                 fallthrough
             case .RegularLandscape:
-                return CGSizeMake(self.splitLayoutObservable.leftViewControllerWidth, self.view.bounds.size.height)
+                return CGSize(width: self.splitLayoutObservable.leftViewControllerWidth, height: self.view.bounds.size.height)
             }
-        case .Photos:
+        case .photos:
             let photoSize = self.view.bounds.size.height / 2 - 0.5
-            return CGSizeMake(photoSize, photoSize)
+            return CGSize(width: photoSize, height: photoSize)
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        switch CameraKeyboardSection(rawValue: UInt(indexPath.section))! {
-        case .Camera:
+        switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
+        case .camera:
             break
-        case .Photos:
-            let asset = try! assetLibrary.asset(atIndex: UInt(indexPath.row))
+        case .photos:
+            let asset = try! assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row))
             
             switch asset.mediaType {
-            case .Video:
+            case .video:
                 self.forwardSelectedVideoAsset(asset)
             
-            case .Image:
+            case .image:
                 self.forwardSelectedPhotoAsset(asset)
                 
             default:
@@ -349,13 +349,13 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell {
             self.goBackButtonRevealed = true
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell {
             self.goBackButtonRevealed = false
         }
@@ -364,19 +364,19 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
 
 
 extension CameraKeyboardViewController: CameraCellDelegate {
-    public func cameraCellWantsToOpenFullCamera(cameraCell: CameraCell) {
+    public func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenFullScreenCamera(self)
     }
     
-    public func cameraCell(cameraCell: CameraCell, didPickImageData imageData: NSData) {
+    public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
         let isFrontCamera = cameraCell.cameraController.currentCamera == .Front
         
         let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.Front : ConversationMediaPictureCamera.Back
         
         let metadata = ImageMetadata()
         metadata.camera = camera
-        metadata.method = ConversationMediaPictureTakeMethod.Keyboard
-        metadata.source = ConversationMediaPictureSource.Camera
+        metadata.method = ConversationMediaPictureTakeMethod.keyboard
+        metadata.source = ConversationMediaPictureSource.camera
         metadata.sketchSource = .None
         
         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
@@ -384,7 +384,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
 }
 
 extension CameraKeyboardViewController: AssetLibraryDelegate {
-    public func assetLibraryDidChange(library: AssetLibrary) {
+    public func assetLibraryDidChange(_ library: AssetLibrary) {
         self.collectionView.reloadData()
     }
 }

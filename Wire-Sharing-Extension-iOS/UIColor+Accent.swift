@@ -28,8 +28,8 @@ extension UIColor {
     
     static var accentColor: UIColor {
         get {
-            if let number = NSUserDefaults.standardUserDefaults().objectForKey(LastUserAccentColorKey) as? NSNumber,
-                accentColor = AccentColor(rawValue: number.integerValue) {
+            if let number = UserDefaults.standard.object(forKey: LastUserAccentColorKey) as? NSNumber,
+                let accentColor = AccentColor(rawValue: number.integerValue) {
                 return self.colorForZMColor(accentColor)
             } else {
                 return self.colorForZMColor(AccentColor.ZMAccentColorStrongBlue)
@@ -37,15 +37,15 @@ extension UIColor {
         }
     }
     
-    class func setAccentColor(color: AccentColor) {
-        NSUserDefaults.standardUserDefaults().setObject(NSNumber(integer: color.rawValue), forKey: LastUserAccentColorKey)
+    class func setAccentColor(_ color: AccentColor) {
+        UserDefaults.standardUserDefaults().setObject(NSNumber(integer: color.rawValue), forKey: LastUserAccentColorKey)
     }
     
-    public class func colorForZMColor(color: AccentColor) -> UIColor! {
+    public class func colorForZMColor(_ color: AccentColor) -> UIColor! {
         return self.colorTable[color]
     }
     
-    private static var colorTable: [AccentColor: UIColor] =
+    fileprivate static var colorTable: [AccentColor: UIColor] =
     [
         AccentColor.ZMAccentColorStrongBlue:        rgb( 36, 146, 211),
         AccentColor.ZMAccentColorStrongLimeGreen:   rgb(  0, 200,   0),
@@ -57,6 +57,6 @@ extension UIColor {
     ]
 }
 
-func rgb(red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> UIColor {
+func rgb(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> UIColor {
     return UIColor(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: 1.0)
 }

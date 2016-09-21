@@ -20,13 +20,13 @@
 import Foundation
 
 extension Float {
-    func clamp(lower: Float, upper: Float) -> Float {
+    func clamp(_ lower: Float, upper: Float) -> Float {
         return max(lower, min(upper, self))
     }
 }
 
 extension CGFloat {
-    func clamp(lower: CGFloat, upper: CGFloat) -> CGFloat {
+    func clamp(_ lower: CGFloat, upper: CGFloat) -> CGFloat {
         return fmax(lower, fmin(upper, self))
     }
 }

@@ -74,7 +74,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersATextMessage_LongText() {
-        let text = "".stringByPaddingToLength(71,  withString: "Hello ", startingAtIndex: 0)
+        let text = "".padding(toLength: 71,  withPad: "Hello ", startingAt: 0)
         sut.configureForMessage(mockMessage(text), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
@@ -86,14 +86,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
-        let text = "".stringByPaddingToLength(70, withString: "Hello ", startingAtIndex: 0)
+        let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configureForMessage(mockMessage(text, edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText_Pending() {
-        let text = "".stringByPaddingToLength(70, withString: "Hello ", startingAtIndex: 0)
+        let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configureForMessage(mockMessage(text, edited: true, state: .Pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -178,11 +178,11 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     
     // MARK: - Helper
     
-    func mockMessage(text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .Delivered) -> MockMessage {
+    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .Delivered) -> MockMessage {
         let message = MockMessageFactory.textMessageWithText(text)
         message.deliveryState = state
-        message.serverTimestamp = NSDate(timeIntervalSince1970: 1234567230)
-        message.updatedAt = edited ? NSDate(timeIntervalSince1970: 0) : nil
+        message.serverTimestamp = Date(timeIntervalSince1970: 1234567230)
+        message.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
         return message
     }
     

@@ -31,16 +31,16 @@ class PreviewImagesViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    internal func setImage(image: UIImage?, forPreviewAtIndex index: Int) {
+    internal func setImage(_ image: UIImage?, forPreviewAtIndex index: Int) {
         self.previewImageViews[index].image = image
     }
     
     /// MARK: - IBOutlets
     
-    @IBOutlet private weak var previewImagesScrollView: UIScrollView!
-    @IBOutlet private weak var previewImagesPageControl: UIPageControl!
+    @IBOutlet fileprivate weak var previewImagesScrollView: UIScrollView!
+    @IBOutlet fileprivate weak var previewImagesPageControl: UIPageControl!
     
-    private var previewImageViews = Array<UIImageView>()
+    fileprivate var previewImageViews = Array<UIImageView>()
 
     /// MARK: - UIViewController
     
@@ -63,25 +63,25 @@ class PreviewImagesViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func rectForPreviewImageAtIndex(index: Int) -> CGRect {
+    fileprivate func rectForPreviewImageAtIndex(_ index: Int) -> CGRect {
         let offset: CGFloat = 2
         let imageSize = self.previewImageSize
         let offsetedImageSize: CGFloat = imageSize - 2.0 * offset
-        return CGRectMake(offset + CGFloat(index) * imageSize, offset, offsetedImageSize, offsetedImageSize)
+        return CGRect(x: offset + CGFloat(index) * imageSize, y: offset, width: offsetedImageSize, height: offsetedImageSize)
     }
     
-    private func setupPreviewImageViewsForPreviewCount(count:Int) {
+    fileprivate func setupPreviewImageViewsForPreviewCount(_ count:Int) {
         for view in self.previewImageViews {
             view.removeFromSuperview()
         }
-        self.previewImageViews.removeAll(keepCapacity: true)
+        self.previewImageViews.removeAll(keepingCapacity: true)
         
         let imageSize = self.previewImageSize
-        self.previewImagesScrollView.contentSize = CGSizeMake(imageSize * CGFloat(count), imageSize)
-        for var i = 0; i < count; i++ {
+        self.previewImagesScrollView.contentSize = CGSize(width: imageSize * CGFloat(count), height: imageSize)
+        for i in 0 ..< count {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = true
-            imageView.contentMode = .ScaleAspectFill
+            imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             self.previewImagesScrollView.addSubview(imageView)
             self.previewImageViews.append(imageView)
@@ -91,12 +91,12 @@ class PreviewImagesViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - IBActions
     
-    @IBAction func pageControllPressed(sender: AnyObject) {
+    @IBAction func pageControllPressed(_ sender: AnyObject) {
         let index = self.previewImagesPageControl.currentPage
         self.previewImagesScrollView.scrollRectToVisible(self.rectForPreviewImageAtIndex(index), animated: true)
     }
     
-    @IBAction func tapToScroll(sender: AnyObject) {
+    @IBAction func tapToScroll(_ sender: AnyObject) {
         let newPage = (self.previewImagesPageControl.currentPage + 1) % self.numberOfPreviewImages
         self.previewImagesScrollView.scrollRectToVisible(self.rectForPreviewImageAtIndex(newPage),
             animated: false)
@@ -104,7 +104,7 @@ class PreviewImagesViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - UIScrollViewDelegate
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView == self.previewImagesScrollView) {
             // + 0.5 makes page to be changed on the middle of transition
             let numberOfPage = Int(CGFloat(self.previewImageViews.count) * (scrollView.contentOffset.x / scrollView.contentSize.width) + 0.5)

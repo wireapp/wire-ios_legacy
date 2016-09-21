@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -27,16 +27,16 @@ public extension LocationData {
 
     func toDictionary() -> [String : AnyObject] {
         return [
-            latitudeKey: latitude,
-            longitudeKey: longitude,
-            zoomLevelKey: Int(zoomLevel)
+            latitudeKey: latitude as AnyObject,
+            longitudeKey: longitude as AnyObject,
+            zoomLevelKey: Int(zoomLevel) as AnyObject
         ]
     }
 
     static func locationData(fromDictionary dict: [String : AnyObject]) -> LocationData? {
         guard let latitude = dict[latitudeKey] as? Float,
-            longitude = dict[longitudeKey] as? Float,
-            zoomLevel = dict[zoomLevelKey] as? Int else { return nil }
+            let longitude = dict[longitudeKey] as? Float,
+            let zoomLevel = dict[zoomLevelKey] as? Int else { return nil }
         return .locationData(withLatitude: latitude, longitude: longitude, name: nil, zoomLevel: Int32(zoomLevel))
     }
     

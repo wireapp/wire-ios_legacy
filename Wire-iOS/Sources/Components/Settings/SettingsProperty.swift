@@ -77,50 +77,50 @@ enum SettingsPropertyName: String, CustomStringConvertible {
 }
 
 enum SettingsPropertyValue: Equatable {
-    case Number(value: Int)
-    case String(value: Swift.String)
-    case Bool(value: Swift.Bool)
-    case None
+    case number(value: Int)
+    case string(value: Swift.String)
+    case bool(value: Swift.Bool)
+    case none
     
-    static func propertyValue(object: AnyObject?) -> SettingsPropertyValue {
+    static func propertyValue(_ object: AnyObject?) -> SettingsPropertyValue {
         switch(object) {
         case let intValue as Int:
-            return SettingsPropertyValue.Number(value: intValue)
+            return SettingsPropertyValue.number(value: intValue)
             
         case let stringValue as Swift.String:
-            return SettingsPropertyValue.String(value: stringValue)
+            return SettingsPropertyValue.string(value: stringValue)
             
         case let boolValue as Swift.Bool:
-            return SettingsPropertyValue.Bool(value: boolValue)
+            return SettingsPropertyValue.bool(value: boolValue)
             
         default:
-            return .None
+            return .none
         }
     }
     
     func value() -> AnyObject? {
         switch (self) {
-        case .Number(let value):
-            return value
-        case .String(let value):
-            return value
-        case .Bool(let value):
-            return value
-        case .None:
-            return .None
+        case .number(let value):
+            return value as AnyObject?
+        case .string(let value):
+            return value as AnyObject?
+        case .bool(let value):
+            return value as AnyObject?
+        case .none:
+            return .none
         }
     }
 }
 
 func ==(a: SettingsPropertyValue, b: SettingsPropertyValue) -> Bool {
     switch (a, b) {
-    case (.String(let a), .String(let b)) where a == b: return true
-    case (.Number(let a), .Number(let b)) where a == b: return true
-    case (.Bool(let a), .Bool(let b)) where a == b: return true
-    case (.None, .None): return true
+    case (.string(let a), .string(let b)) where a == b: return true
+    case (.number(let a), .number(let b)) where a == b: return true
+    case (.bool(let a), .bool(let b)) where a == b: return true
+    case (.none, .none): return true
     
-    case (.Number(let a), .Bool(let b)) where ((a == 0) && (b == false)) || ((a > 0) && (b == true)): return true
-    case (.Bool(let a), .Number(let b)) where ((a == false) && (b == 0)) || ((a == true) && (b > 0)): return true
+    case (.number(let a), .bool(let b)) where ((a == 0) && (b == false)) || ((a > 0) && (b == true)): return true
+    case (.bool(let a), .number(let b)) where ((a == false) && (b == 0)) || ((a == true) && (b > 0)): return true
         
     default: return false
     }
@@ -128,7 +128,7 @@ func ==(a: SettingsPropertyValue, b: SettingsPropertyValue) -> Bool {
 
 // To enable simple Bool creation
 extension Bool {
-    init<T : IntegerType>(_ integer: T){
+    init<T : Integer>(_ integer: T){
         self.init(integer != 0)
     }
 }
@@ -147,7 +147,7 @@ protocol SettingsProperty {
  - parameter property: Property to set the value on
  - parameter expr:     Property value (raw)
  */
-func << (inout property: SettingsProperty, @autoclosure expr: () -> AnyObject) {
+func << (property: inout SettingsProperty, expr: @autoclosure () -> AnyObject) {
     let value = expr()
     
     property.propertyValue = SettingsPropertyValue.propertyValue(value)
@@ -159,7 +159,7 @@ func << (inout property: SettingsProperty, @autoclosure expr: () -> AnyObject) {
  - parameter property: Property to set the value on
  - parameter expr:     Property value
  */
-func << (inout property: SettingsProperty, @autoclosure expr: () -> SettingsPropertyValue) {
+func << (property: inout SettingsProperty, expr: @autoclosure () -> SettingsPropertyValue) {
     let value = expr()
     
     property.propertyValue = value
@@ -171,35 +171,35 @@ func << (inout property: SettingsProperty, @autoclosure expr: () -> SettingsProp
  - parameter value:    Value to assign
  - parameter property: Property to read the value from
  */
-func << (inout value: AnyObject?, let property: SettingsProperty) {
+func << (value: inout AnyObject?, property: SettingsProperty) {
     value = property.propertyValue.value()
 }
 
 /// Generic user defaults property
 class SettingsUserDefaultsProperty : SettingsProperty {
     let propertyName : SettingsPropertyName
-    let userDefaults : NSUserDefaults
+    let userDefaults : UserDefaults
     var propertyValue : SettingsPropertyValue {
         set (newValue) {
-            self.userDefaults.setObject(newValue.value(), forKey: self.userDefaultsKey)
-            NSNotificationCenter.defaultCenter().postNotificationName(self.propertyName.changeNotificationName, object: self)
+            self.userDefaults.set(newValue.value(), forKey: self.userDefaultsKey)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
         }
         get {
-            let value : AnyObject? = self.userDefaults.objectForKey(self.userDefaultsKey)
+            let value : AnyObject? = self.userDefaults.object(forKey: self.userDefaultsKey) as AnyObject?
             if let numberValue : NSNumber = value as? NSNumber {
-                return SettingsPropertyValue.propertyValue(numberValue.integerValue)
+                return SettingsPropertyValue.propertyValue(numberValue.intValue as AnyObject?)
             }
             else if let stringValue : String = value as? String {
-                return SettingsPropertyValue.propertyValue(stringValue)
+                return SettingsPropertyValue.propertyValue(stringValue as AnyObject?)
             }
             else {
-                return .None
+                return .none
             }
         }
     }
     let userDefaultsKey: String
     
-    init(propertyName: SettingsPropertyName, userDefaultsKey: String, userDefaults: NSUserDefaults) {
+    init(propertyName: SettingsPropertyName, userDefaultsKey: String, userDefaults: UserDefaults) {
         self.propertyName = propertyName
         self.userDefaultsKey = userDefaultsKey
         self.userDefaults = userDefaults
@@ -210,21 +210,21 @@ typealias GetAction = (SettingsBlockProperty) -> SettingsPropertyValue
 typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) -> ()
 
 /// Genetic block property
-public class SettingsBlockProperty : SettingsProperty {
+open class SettingsBlockProperty : SettingsProperty {
     let propertyName : SettingsPropertyName
     var propertyValue : SettingsPropertyValue {
         set (newValue) {
             self.setAction(self, newValue)
-            NSNotificationCenter.defaultCenter().postNotificationName(self.propertyName.changeNotificationName, object: self)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
         }
         get {
             return self.getAction(self)
         }
     }
-    private let getAction : GetAction
-    private let setAction : SetAction
+    fileprivate let getAction : GetAction
+    fileprivate let setAction : SetAction
     
-    init(propertyName: SettingsPropertyName, getAction: GetAction, setAction: SetAction) {
+    init(propertyName: SettingsPropertyName, getAction: @escaping GetAction, setAction: @escaping SetAction) {
         self.propertyName = propertyName
         self.getAction = getAction
         self.setAction = setAction

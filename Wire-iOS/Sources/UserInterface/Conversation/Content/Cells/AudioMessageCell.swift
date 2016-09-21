@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,23 +22,23 @@ import Cartography
 import CocoaLumberjackSwift
 
 /// Displays the audio message with different states
-@objc public class AudioMessageCell: ConversationCell {
-    private let containerView = UIView()
+open class AudioMessageCell: ConversationCell {
+    fileprivate let containerView = UIView()
     
-    private let downloadProgressView = CircularProgressView()
-    private let playButton = IconButton()
-    private let timeLabel = UILabel()
-    private let playerProgressView = ProgressView()
-    private let waveformProgressView = WaveformProgressView()
-    private let loadingView = ThreeDotsLoadingView()
+    fileprivate let downloadProgressView = CircularProgressView()
+    fileprivate let playButton = IconButton()
+    fileprivate let timeLabel = UILabel()
+    fileprivate let playerProgressView = ProgressView()
+    fileprivate let waveformProgressView = WaveformProgressView()
+    fileprivate let loadingView = ThreeDotsLoadingView()
 
-    private var audioPlayerProgressObserver: NSObject? = .None
-    private var audioPlayerStateObserver: NSObject? = .None
-    private var allViews : [UIView] = []
+    fileprivate var audioPlayerProgressObserver: NSObject? = .none
+    fileprivate var audioPlayerStateObserver: NSObject? = .none
+    fileprivate var allViews : [UIView] = []
     
-    private var expectingDownload: Bool = false
+    fileprivate var expectingDownload: Bool = false
     
-    private let proximityListener = DeviceProximityListener()
+    fileprivate let proximityListener = DeviceProximityListener()
     
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,44 +48,44 @@ import CocoaLumberjackSwift
         self.containerView.cas_styleClass = "container-view"
 
         self.playButton.translatesAutoresizingMaskIntoConstraints = false
-        self.playButton.addTarget(self, action: #selector(AudioMessageCell.onActionButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        self.playButton.addTarget(self, action: #selector(AudioMessageCell.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
 
         self.downloadProgressView.translatesAutoresizingMaskIntoConstraints = false
-        self.downloadProgressView.userInteractionEnabled = false
+        self.downloadProgressView.isUserInteractionEnabled = false
         self.downloadProgressView.accessibilityLabel = "AudioProgressView"
         
         self.timeLabel.translatesAutoresizingMaskIntoConstraints = false
         self.timeLabel.numberOfLines = 1
-        self.timeLabel.textAlignment = .Center
+        self.timeLabel.textAlignment = .center
         self.timeLabel.accessibilityLabel = "AudioTimeLabel"
 
         self.playerProgressView.setDeterministic(true, animated: false)
         self.playerProgressView.accessibilityLabel = "PlayerProgressView"
         
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
-        self.loadingView.hidden = true
+        self.loadingView.isHidden = true
 
         self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView]
         self.allViews.forEach(self.containerView.addSubview)
         
         self.messageContentView.addSubview(self.containerView)
         
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         self.timeLabel.font = self.timeLabel.font.monospacedFont()
 
         self.createConstraints()
         
         var currentElements = self.accessibilityElements ?? []
-        currentElements.appendContentsOf([playButton, timeLabel, likeButton, messageToolboxView])
+        currentElements.append(contentsOf: [playButton, timeLabel, likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
         
         let audioTrackPlayer = self.audioTrackPlayer()
         
-        self.audioPlayerProgressObserver = KeyValueObserver.observeObject(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.Initial, .New])
+        self.audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
         
-        self.audioPlayerStateObserver = KeyValueObserver.observeObject(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.Initial, .New])
+        self.audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
     }
     
     deinit {
@@ -97,7 +97,7 @@ import CocoaLumberjackSwift
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func createConstraints() {
+    open func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.playButton, self.timeLabel, self.authorLabel) { messageContentView, containerView, playButton, timeLabel, authorLabel in
             containerView.left == authorLabel.left
             containerView.right == messageContentView.rightMargin
@@ -136,13 +136,13 @@ import CocoaLumberjackSwift
         }
     }
     
-    public override func updateForMessage(changeInfo: MessageChangeInfo!) -> Bool {
-        let needsLayout = super.updateForMessage(changeInfo)
+    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+        let needsLayout = super.update(forMessage: changeInfo)
         
         if let fileMessageData = self.message.fileMessageData {
             self.configureForAudioMessage(message, initialConfiguration: false)
             
-            if fileMessageData.transferState == .Downloaded && self.expectingDownload {
+            if fileMessageData.transferState == .downloaded && self.expectingDownload {
                 self.playTrack()
                 self.expectingDownload = false
             }
@@ -151,19 +151,19 @@ import CocoaLumberjackSwift
         return needsLayout
     }
     
-    override public func configureForMessage(message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
+    override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+        super.configure(for: message, layoutProperties: layoutProperties)
         self.expectingDownload = false
         
         if Message.isAudioMessage(message), let _ = message.fileMessageData {
             self.configureForAudioMessage(message, initialConfiguration: true)
         }
         else {
-            fatalError("Wrong message type: \(message.dynamicType): \(message)")
+            fatalError("Wrong message type: \(type(of: message)): \(message)")
         }
     }
     
-    private func configureForAudioMessage(message: ZMConversationMessage, initialConfiguration: Bool) {
+    fileprivate func configureForAudioMessage(_ message: ZMConversationMessage, initialConfiguration: Bool) {
         guard let fileMessageData = message.fileMessageData else {
             return
         }
@@ -181,12 +181,12 @@ import CocoaLumberjackSwift
         }
     }
     
-    public override func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
         self.proximityListener.stopListening()
     }
     
-    private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
+    fileprivate func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
         guard let state = FileMessageCellState.fromConversationMessage(message) else { return }
         
         var visibleViews = [self.playButton, self.timeLabel]
@@ -195,7 +195,7 @@ import CocoaLumberjackSwift
             waveformProgressView.samples = fileMessageData.normalizedLoudness
             if let accentColor = message.sender?.accentColor {
                 waveformProgressView.barColor = accentColor
-                waveformProgressView.highlightedBarColor = UIColor.grayColor()
+                waveformProgressView.highlightedBarColor = UIColor.gray
             }
             visibleViews.append(self.waveformProgressView)
         } else {
@@ -203,9 +203,9 @@ import CocoaLumberjackSwift
         }
         
         switch state {
-        case .Unavailable:
+        case .unavailable:
             visibleViews = [self.loadingView]
-        case .Downloading, .Uploading:
+        case .downloading, .uploading:
             visibleViews.append(self.downloadProgressView)
             self.downloadProgressView.setProgress(fileMessageData.progress, animated: !initialConfiguration)
         default:
@@ -213,16 +213,16 @@ import CocoaLumberjackSwift
         }
         
         if let viewsState = state.viewsStateForAudio() {
-            self.playButton.setIcon(viewsState.playButtonIcon, withSize: .Tiny, forState: .Normal)
+            self.playButton.setIcon(viewsState.playButtonIcon, with: .tiny, for: .normal)
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
-            self.playButton.accessibilityValue = viewsState.playButtonIcon == .Play ? "play" : "pause"
+            self.playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
         }
         
-        updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.hidden)
+        updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
     }
     
-    private func updateTimeLabel() {
-        var duration: Int? = .None
+    fileprivate func updateTimeLabel() {
+        var duration: Int? = .none
         
         if self.isOwnTrackPlayingInAudioPlayer() {
             duration = Int(self.audioTrackPlayer().elapsedTime)
@@ -249,29 +249,29 @@ import CocoaLumberjackSwift
         self.timeLabel.accessibilityValue = self.timeLabel.text
     }
     
-    private func updateActivePlayButton() {
+    fileprivate func updateActivePlayButton() {
         self.playButton.backgroundColor = FileMessageCellState.normalColor
         
-        if self.audioTrackPlayer().playing {
-            self.playButton.setIcon(.Pause, withSize: .Tiny, forState: .Normal)
+        if self.audioTrackPlayer().isPlaying {
+            self.playButton.setIcon(.pause, with: .tiny, for: UIControlState())
             self.playButton.accessibilityValue = "pause"
         }
         else {
-            self.playButton.setIcon(.Play, withSize: .Tiny, forState: .Normal)
+            self.playButton.setIcon(.play, with: .tiny, for: UIControlState())
             self.playButton.accessibilityValue = "play"
         }
     }
     
-    private func updateInactivePlayer() {
+    fileprivate func updateInactivePlayer() {
         self.playButton.backgroundColor = FileMessageCellState.normalColor
-        self.playButton.setIcon(.Play, withSize: .Tiny, forState: .Normal)
+        self.playButton.setIcon(.play, with: .tiny, for: UIControlState())
         self.playButton.accessibilityValue = "play"
 
         self.playerProgressView.setProgress(0, animated: false)
         self.waveformProgressView.setProgress(0, animated: false)
     }
     
-    private func updateActivePlayerProgressAnimated(animated: Bool) {
+    fileprivate func updateActivePlayerProgressAnimated(_ animated: Bool) {
         let progress: Float
         var animated = animated
         
@@ -287,16 +287,16 @@ import CocoaLumberjackSwift
         self.waveformProgressView.setProgress(progress, animated: animated)
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
     
-    private func audioTrackPlayer() -> AudioTrackPlayer {
-        return AppDelegate.sharedAppDelegate().mediaPlaybackManager.audioTrackPlayer
+    fileprivate func audioTrackPlayer() -> AudioTrackPlayer {
+        return AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer
     }
     
-    private func playTrack() {
+    fileprivate func playTrack() {
         guard let fileMessageData = message.fileMessageData else {
             return
         }
@@ -306,10 +306,10 @@ import CocoaLumberjackSwift
         let audioTrackPlayer = self.audioTrackPlayer()
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage != nil && audioTrackPlayer.sourceMessage.isEqual(self.message)
         
-        if let track = self.message.audioTrack() where !audioTrackPlayingSame {
-            audioTrackPlayer.loadTrack(track, sourceMessage: self.message, completionHandler: { success, error in
+        if let track = self.message.audioTrack() , !audioTrackPlayingSame {
+            audioTrackPlayer.load(track, sourceMessage: self.message, completionHandler: { success, error in
                 if success {
-                    let duration = NSTimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
+                    let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
                     
                     Analytics.shared()?.tagPlayedAudioMessage(duration, extensionString: (fileMessageData.filename as NSString).pathExtension)
                     
@@ -320,7 +320,7 @@ import CocoaLumberjackSwift
                 }
             })
         } else {
-            if audioTrackPlayer.playing {
+            if audioTrackPlayer.isPlaying {
                 audioTrackPlayer.pause()
             } else {
                 audioTrackPlayer.play()
@@ -341,43 +341,43 @@ import CocoaLumberjackSwift
     
     // MARK: - Actions
     
-    public func onActionButtonPressed(sender: UIButton) {
+    open func onActionButtonPressed(_ sender: UIButton) {
         
         guard let fileMessageData = self.message.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
-        case .Downloading:
+        case .downloading:
             self.downloadProgressView.setProgress(0, animated: false)
-            self.delegate?.conversationCell?(self, didSelectAction: .Cancel)
-        case .Uploading:
-            if .None != fileMessageData.fileURL {
-                self.delegate?.conversationCell?(self, didSelectAction: .Cancel)
+            self.delegate?.conversationCell?(self, didSelect: .cancel)
+        case .uploading:
+            if .none != fileMessageData.fileURL {
+                self.delegate?.conversationCell?(self, didSelect: .cancel)
             }
-        case .CancelledUpload, .FailedUpload:
-            if .None != fileMessageData.fileURL {
-                self.delegate?.conversationCell?(self, didSelectAction: .Resend)
+        case .cancelledUpload, .failedUpload:
+            if .none != fileMessageData.fileURL {
+                self.delegate?.conversationCell?(self, didSelect: .resend)
             }
-        case .Uploaded, .FailedDownload:
+        case .uploaded, .failedDownload:
             self.expectingDownload = true
-            ZMUserSession.sharedSession().enqueueChanges({
+            ZMUserSession.shared().enqueueChanges({
                 self.message.requestFileDownload()
             })
 
-        case .Downloaded:
+        case .downloaded:
             self.playTrack()
         }
     }
     
     // MARK: - Audio state observer
     
-    func audioProgressChanged(change: NSDictionary) {
+    func audioProgressChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayerProgressAnimated(false)
             self.updateTimeLabel()
         }
     }
     
-    func audioPlayerStateChanged(change: NSDictionary) {
+    func audioPlayerStateChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayButton()
             self.updateActivePlayerProgressAnimated(false)
@@ -394,21 +394,21 @@ import CocoaLumberjackSwift
     // MARK: - Proximity Listener
     
     func updateProximityObserverState() {
-        if audioTrackPlayer().playing && isOwnTrackPlayingInAudioPlayer() {
+        if audioTrackPlayer().isPlaying && isOwnTrackPlayingInAudioPlayer() {
             proximityListener.startListening()
         } else {
             proximityListener.stopListening()
         }
     }
     
-    func proximityStateDidChange(raisedToEar: Bool) {
+    func proximityStateDidChange(_ raisedToEar: Bool) {
         do {
             if raisedToEar {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
-                AVSMediaManager.sharedInstance().playbackRoute = .BuiltIn
+                AVSMediaManager.sharedInstance().playbackRoute = .builtIn
             } else {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                AVSMediaManager.sharedInstance().playbackRoute = .Speaker
+                AVSMediaManager.sharedInstance().playbackRoute = .speaker
             }
         } catch {
             DDLogError("Cannot set AVAudioSession category: \(error)")
@@ -417,28 +417,28 @@ import CocoaLumberjackSwift
     
     // MARK: - Menu
 
-    public func setSelectedByMenu(selected: Bool, animated: Bool) {
+    open func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         let animation = {
             self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
         }
         
         if (animated) {
-            UIView.animateWithDuration(ConversationCellSelectionAnimationDuration, animations: animation)
+            UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animation)
         } else {
             animation()
         }
     }
     
-    public override var selectionRect: CGRect {
+    open override var selectionRect: CGRect {
         return containerView.bounds
     }
     
-    public override var selectionView: UIView! {
+    open override var selectionView: UIView! {
         return containerView
     }
     
-    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
@@ -453,16 +453,16 @@ import CocoaLumberjackSwift
         return properties
     }
     
-    override public func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(wr_saveAudio) && self.message.audioCanBeSaved() {
             return true
         }
         return super.canPerformAction(action, withSender: sender)
     }
     
-    public func wr_saveAudio() {
+    open func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
-            self.delegate?.conversationCell?(self, didSelectAction: .Save)
+            self.delegate?.conversationCell?(self, didSelect: .save)
         }
     }
     

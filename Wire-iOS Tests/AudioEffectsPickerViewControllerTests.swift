@@ -22,7 +22,7 @@ import Cartography
 @testable import Wire
 
 class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
-    var sut: AudioEffectsPickerViewController! = .None
+    var sut: AudioEffectsPickerViewController! = .none
     
     
     override func tearDown() {
@@ -33,10 +33,10 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         
-        let path = NSBundle(forClass: self.dynamicType).pathForResource("audio_sample", ofType: "m4a")!
-        self.sut = AudioEffectsPickerViewController(recordingPath: path, duration: NSTimeInterval(10.0))
+        let path = Bundle(for: type(of: self)).path(forResource: "audio_sample", ofType: "m4a")!
+        self.sut = AudioEffectsPickerViewController(recordingPath: path, duration: TimeInterval(10.0))
         self.sut.normalizedLoudness = (0...100).map { Float($0) / 100.0 }
-        self.sut.progressView.samples = self.sut.normalizedLoudness
+        self.sut.progressView.samples = self.sut.normalizedLoudness as [NSNumber]
     }
     
     func prepareForSnapshot() -> UIView {
@@ -45,7 +45,7 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
         
         let container = UIView()
         container.addSubview(self.sut.view)
-        container.backgroundColor = ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextForeground, variant: .Light)
+        container.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
 
         constrain(self.sut.view, container) { view, container in
             container.height == 216
@@ -67,13 +67,13 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     func testPlayingProgressState() {
         let preparedView = self.prepareForSnapshot()
         
-        self.sut.setState(.Playing, animated: false)
+        self.sut.setState(.playing, animated: false)
         self.verify(view: preparedView)
     }
     
     func testTooltipState() {
         let preparedView = self.prepareForSnapshot()
-        self.sut.setState(.Tip, animated: false)
+        self.sut.setState(.tip, animated: false)
         self.verify(view: preparedView)
     }
     

@@ -70,7 +70,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
 
 private extension ImageMessageCell {
 
-    func prepareForSnapshot(imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false) -> ImageMessageCell {
+    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false) -> ImageMessageCell {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false

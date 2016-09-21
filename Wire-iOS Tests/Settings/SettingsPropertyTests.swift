@@ -26,7 +26,7 @@ import XCTest
     var emailAddress: String! = ""
     var phoneNumber: String! = ""
     
-    var originalProfileImageData: NSData!
+    var originalProfileImageData: Data!
     
     func deleteProfileImage() {
         // no-op
@@ -34,11 +34,11 @@ import XCTest
 }
 
 class MockZMUserSession: ZMUserSessionInterface {
-    func performChanges(block: dispatch_block_t) {
+    func performChanges(_ block: ()->()) {
         block()
     }
     
-    func enqueueChanges(block: dispatch_block_t) {
+    func enqueueChanges(_ block: ()->()) {
         block()
     }
     
@@ -48,7 +48,7 @@ class MockZMUserSession: ZMUserSessionInterface {
 class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     var intensityLevel : AVSIntensityLevel = .None
     
-    func playMediaByName(name: String!) { }
+    func playMediaByName(_ name: String!) { }
 }
 
 class ZMMockAnalytics: AnalyticsInterface {
@@ -57,9 +57,9 @@ class ZMMockAnalytics: AnalyticsInterface {
 
 
 class SettingsPropertyTests: XCTestCase {
-    let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults: UserDefaults = UserDefaults.standard
     
-    func saveAndCheck<T: AnyObject where T: Equatable>( property: SettingsProperty, value : T) -> Bool {
+    func saveAndCheck<T: AnyObject>( _ property: SettingsProperty, value : T) -> Bool where T: Equatable {
         var property = property
         property << value
         if let readValue : T = property.propertyValue.value() as? T {

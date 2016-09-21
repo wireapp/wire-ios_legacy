@@ -19,12 +19,12 @@
 
 import Foundation
 
-@objc public class GradientView: UIView {
-    override public class func layerClass() -> AnyClass {
+@objc open class GradientView: UIView {
+    override open class var layerClass : AnyClass {
         return CAGradientLayer.self;
     }
     
-    public var gradientLayer: CAGradientLayer {
+    open var gradientLayer: CAGradientLayer {
         get {
             if let gradientLayer = self.layer as? CAGradientLayer {
                 return gradientLayer
@@ -33,8 +33,8 @@ import Foundation
         }
     }
     
-    func setStartPoint(startPoint: CGPoint, endPoint: CGPoint, locations: [CGFloat]) {
-        gradientLayer.locations = locations
+    func setStartPoint(_ startPoint: CGPoint, endPoint: CGPoint, locations: [CGFloat]) {
+        gradientLayer.locations = locations as [NSNumber]?
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint
     }
