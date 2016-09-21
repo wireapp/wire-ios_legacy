@@ -464,8 +464,6 @@
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пинг Wire";
 
-"self.settings.sound_menu.group.title" = "Звуки и оповещения";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звуковые уведомления";
 "self.settings.sound_menu.no_sounds.title" = "Отключены";
@@ -484,7 +482,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Поделитесь контактами - это поможет вам общаться с другими людьми. Вся информация анонимна и не передается третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Управление устройствами";
 
 "self.settings.privacy_analytics_section.title" = "Отчеты о сбоях и использовании";
 "self.settings.privacy_analytics_menu.description.title" = "Сделайте Wire лучше, отправляя анонимную информацию.\n";
@@ -510,11 +507,6 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
-
-// Tips
-"self.settings.tip.change_picture" = "Нажмите, чтобы изменить изображение";
-"self.settings.tip.change_color" = "Потяните, чтобы изменить цвет";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status

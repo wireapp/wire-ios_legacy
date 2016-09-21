@@ -39,7 +39,8 @@ typedef NS_ENUM(NSInteger, ServerReachability) {
 @protocol NetworkStatusObserver <NSObject>
 
 /// note.object is the NetworkStatus instance doing the monitoring.
-- (void)networkStatusDidChange:(NSNotification *)note;
+/// Method name @c `-networkStatusDidChange:` conflicts with some apple internal method name.
+- (void)wr_networkStatusDidChange:(NSNotification *)note;
 
 @end
 

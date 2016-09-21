@@ -42,17 +42,34 @@
     }
     
     [toView layoutIfNeeded];
-    toView.layer.transform = CATransform3DMakeTranslation(24.0f, 0.0f, 0.0f);
+    NSTimeInterval durationPhase1 = 0.0f;
+    NSTimeInterval durationPhase2 = 0.0f;
+    if (self.direction == SwizzleTransitionDirectionHorizontal) {
+        toView.layer.transform = CATransform3DMakeTranslation(24.0f, 0.0f, 0.0f);
+        durationPhase1 = 0.15f;
+        durationPhase2 = 0.55f;
+    }
+    else {
+        toView.layer.transform = CATransform3DMakeTranslation(0.0f, 88.0f, 0.0f);
+        durationPhase1 = 0.35f;
+        durationPhase2 = 0.55f;
+    }
     toView.alpha = 0;
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.15 delay:0 animations:^{
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:durationPhase1 delay:0 animations:^{
         fromView.alpha = 0;
-        fromView.layer.transform = CATransform3DMakeTranslation(48.0f, 0.0f, 0.0f);
+        if (self.direction == SwizzleTransitionDirectionHorizontal) {
+            fromView.layer.transform = CATransform3DMakeTranslation(48.0f, 0.0f, 0.0f);
+        }
+        else {
+            fromView.layer.transform = CATransform3DMakeTranslation(0.0f, 88.0f, 0.0f);
+        }
     } completion:^(BOOL finished) {
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55 delay:0 animations:^{
+        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:durationPhase2 delay:0 animations:^{
             toView.layer.transform = CATransform3DIdentity;
             toView.alpha = 1;
         } completion:^(BOOL finished) {
+            fromView.layer.transform = CATransform3DIdentity;
             [transitionContext completeTransition:YES];
         }];
     }];

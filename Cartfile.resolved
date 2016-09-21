@@ -1,4 +1,4 @@
-github "wireapp/AFNetworking" "2.6.3-carthage-3"
+github "wireapp/AFNetworking" "2.6.3-iOS8"
 github "wireapp/Cartography" "z0.6.1"
 github "wireapp/Classy" "v0.2.6"
 github "wireapp/CocoaLumberjack" "2.2.1-wire"

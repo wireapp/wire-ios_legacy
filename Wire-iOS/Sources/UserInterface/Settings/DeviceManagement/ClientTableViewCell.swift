@@ -147,6 +147,9 @@ class ClientTableViewCell: UITableViewCell {
         }
         
         CASStyler.defaultStyler().styleItem(self)
+        self.backgroundColor = UIColor.clearColor()
+        self.backgroundView = UIView()
+        self.selectedBackgroundView = UIView()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -164,12 +167,11 @@ class ClientTableViewCell: UITableViewCell {
             where self.showVerified {
             if userClient.verified {
                 self.verifiedLabel.text = NSLocalizedString("device.verified", comment: "");
-                self.verifiedLabel.textColor = UIColor.blackColor()
             }
             else {
                 self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "");
-                self.verifiedLabel.textColor = UIColor.grayColor()
             }
+            self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
         }
         else {
             self.verifiedLabel.text = ""
@@ -183,8 +185,8 @@ class ClientTableViewCell: UITableViewCell {
             where userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintLabelMonoFont],
-                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont],
+                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
+                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
                     uppercase: true
                 )
         }

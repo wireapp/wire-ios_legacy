@@ -76,6 +76,9 @@ class FingerprintTableViewCell: UITableViewCell {
         }
         
         CASStyler.defaultStyler().styleItem(self)
+        self.backgroundColor = UIColor.clearColor()
+        self.backgroundView = UIView()
+        self.selectedBackgroundView = UIView()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -87,8 +90,8 @@ class FingerprintTableViewCell: UITableViewCell {
         if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospacedFont(),
             let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospacedFont(),
             let attributedFingerprint = self.fingerprint?.attributedFingerprint(
-                [NSFontAttributeName: fingerprintLabelMonoFont],
-                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont],
+                [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
+                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
                 uppercase: false) {
                 
                     self.fingerprintLabel.attributedText = attributedFingerprint

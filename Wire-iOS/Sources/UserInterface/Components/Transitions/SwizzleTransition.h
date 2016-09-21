@@ -19,6 +19,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SwizzleTransition : NSObject <UIViewControllerAnimatedTransitioning>
+typedef NS_ENUM(NSUInteger, SwizzleTransitionDirection) {
+    SwizzleTransitionDirectionHorizontal,
+    SwizzleTransitionDirectionVertical
+};
 
+@interface SwizzleTransition : NSObject <UIViewControllerAnimatedTransitioning>
+@property (nonatomic) SwizzleTransitionDirection direction;
 @end

@@ -23,7 +23,7 @@
 @import "common-controls.cas";
 
 
-UIView.separator {
+^UIView.separator {
     backgroundColor: $color-separator;
 }
 
@@ -1280,21 +1280,25 @@ FingerprintTableViewCell {
     
     titleLabel: @{
         font: $font-small-medium;
-        textColor: darkGray;
+        textColor: white;
+    }
+    fingerprintLabel: @{
+        textColor: white;
     }
 }
 
 ClientTableViewCell {
     nameLabel: @{
         font: $font-normal-medium;
+        textColor: white;
     }
     labelLabel: @{
         font: $font-small-medium;
-        textColor: darkGray;
+        textColor: white;
     }
     activationLabel: @{
         font: $font-small-light;
-        textColor: $color-text-foreground-light;
+        textColor: white;
     }
     verifiedLabel: @{
         font: $font-small;

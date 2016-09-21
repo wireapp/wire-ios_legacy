@@ -27,21 +27,24 @@ class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorT
     
     typealias SelectActionType = (SettingsPropertySelectValueCellDescriptor) -> ()
     let selectAction: SelectActionType?
+    let backgroundColor: UIColor?
     var visible: Bool = true
+
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
     
-    init(settingsProperty: SettingsProperty, value: SettingsPropertyValue, title: String, identifier: String? = .None, selectAction: SelectActionType? = .None) {
+    init(settingsProperty: SettingsProperty, value: SettingsPropertyValue, title: String, identifier: String? = .None, selectAction: SelectActionType? = .None, backgroundColor: UIColor? = .None) {
         self.settingsProperty = settingsProperty
         self.value = value
         self.title = title
         self.identifier = identifier
         self.selectAction = selectAction
+        self.backgroundColor = backgroundColor
     }
     
     func featureCell(cell: SettingsCellType) {
         cell.titleText = self.title
-        
+        cell.cellColor = self.backgroundColor
         if let valueCell = cell as? SettingsValueCell {
             valueCell.accessoryType = self.settingsProperty.propertyValue == self.value ? .Checkmark : .None
         }

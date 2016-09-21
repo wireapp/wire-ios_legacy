@@ -63,7 +63,9 @@
     
     NSString *message = [NSString stringWithFormat:messageFormat, [deviceNamesAndDates componentsJoinedByString:@", "]];
     
-    return [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* newLoginAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    return newLoginAlertController;
 }
 
 @end

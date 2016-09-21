@@ -108,6 +108,11 @@
 + (void)drawIcon_0x186_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x183_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x184_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x188_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x135_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x134_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x127_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x202_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -182,6 +187,7 @@
 + (UIImage*)imageOfIcon_0x139_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x183_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x184_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x202_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

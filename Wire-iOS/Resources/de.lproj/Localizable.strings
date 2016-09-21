@@ -464,8 +464,6 @@
 "self.settings.sound_menu.sounds.wire_message" = "Wire Nachricht";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
-"self.settings.sound_menu.group.title" = "Benachrichtigungen & Töne";
-
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Benachrichtigungen";
 "self.settings.sound_menu.no_sounds.title" = "Keine";
@@ -484,7 +482,6 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
-"self.settings.privacy_analytics_menu.devices_button.title" = "Geräte verwalten";
 
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
 "self.settings.privacy_analytics_menu.description.title" = "Durch das Senden anonymisierter Informationen hilfst du uns, Wire zu verbessern.";
@@ -510,11 +507,6 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Passwort zurücksetzen";
-
-// Tips
-"self.settings.tip.change_picture" = "Tippen, um das Bild zu ändern";
-"self.settings.tip.change_color" = "Bewegen, um die Farbe zu ändern";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status

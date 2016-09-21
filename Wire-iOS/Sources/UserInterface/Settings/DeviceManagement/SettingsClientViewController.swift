@@ -42,11 +42,13 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     var credentials: ZMEmailCredentials?
 
     var tableView: UITableView!
+    let topSeparator = OverflowSeparatorView()
 
     required init(userClient: UserClient, credentials: ZMEmailCredentials? = .None) {
         self.userClient = userClient
         
         super.init(nibName: nil, bundle: nil)
+        self.edgesForExtendedLayout = UIRectEdge.None
 
         self.userClientToken = userClient.addObserver(self)
         if userClient.fingerprint == .None {
@@ -68,7 +70,12 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .clearColor()
+        
+        self.view.addSubview(self.topSeparator)
         self.createTableView()
+        self.createConstraints()
         
         if let navController = self.navigationController
             where navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
@@ -83,6 +90,8 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
+        tableView.backgroundColor = .clearColor()
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.registerClass(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.registerClass(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.registerClass(SettingsTableCell.self, forCellReuseIdentifier: self.dynamicType.deleteCellReuseIdentifier)
@@ -90,8 +99,15 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.registerClass(SettingsToggleCell.self, forCellReuseIdentifier: self.dynamicType.verifiedCellReuseIdentifier)
         self.tableView = tableView
         self.view.addSubview(tableView)
-        constrain(tableView, self.view) { tableView, selfView in
+    }
+    
+    private func createConstraints() {
+        constrain(tableView, self.view, self.topSeparator) { tableView, selfView, topSeparator in
             tableView.edges == selfView.edges
+            
+            topSeparator.left == tableView.left
+            topSeparator.right == tableView.right
+            topSeparator.top == tableView.top
         }
     }
     
@@ -190,7 +206,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .ResetSession:
             if let cell = tableView.dequeueReusableCellWithIdentifier(self.dynamicType.resetCellReuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
-                cell.titleColor = UIColor(colorLiteralRed:0.0, green:122.0/255.0, blue:1.0, alpha:1.0)
                 
                 return cell
             }
@@ -199,7 +214,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .RemoveDevice:
             if let cell = tableView.dequeueReusableCellWithIdentifier(self.dynamicType.deleteCellReuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
-                cell.titleColor = UIColor.redColor()
                 
                 return cell
             }
@@ -266,7 +280,22 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         default:
             return .None
         }
-        
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.topSeparator.scrollViewDidScroll(scrollView)
     }
     
     // MARK: - UserClientObserver

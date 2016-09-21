@@ -39,6 +39,8 @@
 
 + (instancetype)wr_supportURL;
 
++ (instancetype)wr_askSupportURL;
+
 + (instancetype)wr_reportAbuseURL;
 
 + (instancetype)wr_cannotDecryptHelpURL;

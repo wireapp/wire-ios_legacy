@@ -19,6 +19,47 @@
 
 import Foundation
 
+class SettingsInfoCellDescriptor: SettingsCellDescriptorType {
+    static let cellType: SettingsTableCell.Type = SettingsTableCell.self
+    var visible: Bool {
+        get {
+            return true
+        }
+    }
+    var title: String
+    var identifier: String?
+    weak var group: SettingsGroupCellDescriptorType?
+    var previewGenerator: PreviewGeneratorType?
+    
+    init(title: String, previewGenerator: PreviewGeneratorType? = .None) {
+        self.title = title
+        self.identifier = .None
+        self.previewGenerator = previewGenerator
+    }
+    
+    func featureCell(cell: SettingsCellType) {
+        cell.titleText = self.title
+        if let previewGenerator = self.previewGenerator {
+            cell.preview = previewGenerator(self)
+        }
+    }
+    
+    func select(value: SettingsPropertyValue?) {
+        guard let previewGenerator = self.previewGenerator else {
+            return
+        }
+        
+        let preview = previewGenerator(self)
+        
+        switch preview {
+        case .Text(let previewString):
+            let pasteBoard = UIPasteboard.generalPasteboard()
+            pasteBoard.string = previewString
+        default: break
+        }
+    }
+}
+
 /**
  * @abstract Generates the cell that displays one button
  */
@@ -68,12 +109,8 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
     
     func featureCell(cell: SettingsCellType) {
         cell.titleText = self.title
-        if self.isDestructive {
-            cell.titleColor = UIColor.redColor()
-        }
-        else {
-            cell.titleColor = UIColor.darkTextColor()
-        }
+
+        cell.titleColor = UIColor.whiteColor()
     }
     
     func select(value: SettingsPropertyValue?) {
