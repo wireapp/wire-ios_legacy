@@ -23,7 +23,7 @@
 @import "common-controls.cas";
 
 
-UIView.separator {
+^UIView.separator {
     backgroundColor: $color-separator;
 }
 

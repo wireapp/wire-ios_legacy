@@ -405,7 +405,7 @@
 "about.tos.title"="Terms of Use";
 "about.privacy.title"="Privacy Policy";
 "about.license.title" = "License Information";
-"about.website.title"="wire.com";
+"about.website.title"="Wire website";
 "about.copyright.title"="© %d Wire Swiss GmbH";
 
 // Self new devices
@@ -445,6 +445,8 @@
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset your secure session to make sure that the correct fingerprints are shown on all devices.";
 "self.settings.device_details.remove_device.subtitle" = "You will be automatically logged out of that device.";
 "self.settings.device_details.reset_session.success" = "The session has been reset";
+
+"self.settings.account_details.actions.title" = "Actions";
 
 "self.settings.account_details.delete_account.title" = "Delete Account";
 "self.settings.account_details.delete_account.footer" = "This will reset the application and delete all your conversations, content and connections.";

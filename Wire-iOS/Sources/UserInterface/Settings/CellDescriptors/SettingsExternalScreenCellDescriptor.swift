@@ -87,12 +87,8 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
-        if self.destructive {
-            cell.titleColor = UIColor.red
-        }
-        else {
-            cell.titleColor = UIColor.white
-        }
+        cell.titleColor = UIColor.white
+        
         if let previewGenerator = self.previewGenerator {
             let preview = previewGenerator(self)
             cell.preview = preview

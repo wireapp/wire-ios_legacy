@@ -69,6 +69,7 @@ public protocol ColorPickerControllerDelegate {
         
         self.closeButton.setIcon(.X, with: .tiny, for: UIControlState())
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
+        self.closeButton.setIconColor(UIColor.darkGray, forState: .normal)
         
         self.titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         
@@ -113,11 +114,17 @@ public protocol ColorPickerControllerDelegate {
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
     }
-    
+        
     fileprivate class PickerCell: UITableViewCell {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
-        
+
+        override var prefersStatusBarHidden: Bool {
+            get {
+                return true
+            }
+        }
+    
         override var reuseIdentifier: String? {
             get {
                 return type(of: self).reuseIdentifier

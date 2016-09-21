@@ -24,6 +24,14 @@ import Foundation
     let settingsPropertyFactory: SettingsPropertyFactory
     static fileprivate var versionTapCount: UInt = 0
     
+    class DismissStepDelegate: NSObject, FormStepDelegate {
+        var strongCapture: DismissStepDelegate?
+        @objc func didCompleteFormStep(viewController: UIViewController!) {
+            NSNotificationCenter.defaultCenter().postNotificationName(SettingsNavigationController.dismissNotificationName, object: nil)
+            self.strongCapture = nil
+        }
+    }
+    
     init(settingsPropertyFactory: SettingsPropertyFactory) {
         self.settingsPropertyFactory = settingsPropertyFactory
     }
@@ -52,7 +60,13 @@ import Foundation
         }
         else {
             phoneElement = SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
-                return AddPhoneNumberViewController()
+                let addController = AddPhoneNumberViewController()
+                
+                let stepDelegate = DismissStepDelegate()
+                stepDelegate.strongCapture = stepDelegate
+                
+                addController.formStepDelegate = stepDelegate
+                return addController
             }
         }
         
@@ -66,7 +80,14 @@ import Foundation
         }
         else {
             emailElement = SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
-                return AddEmailPasswordViewController()
+                let addEmailController = AddEmailPasswordViewController()
+                
+                let stepDelegate = DismissStepDelegate()
+                stepDelegate.strongCapture = stepDelegate
+                
+                addEmailController.formStepDelegate = stepDelegate
+                
+                return addEmailController
             }
         }
         
@@ -91,10 +112,18 @@ import Foundation
                 return .Color(ZMUser.selfUser().accentColor)
         })
         
-        let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
+        let appearanceCells: [SettingsCellDescriptorType]
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            appearanceCells = [pictureElement, colorElement]
+        }
+        else {
+            let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
+            appearanceCells = [pictureElement, colorElement, darkThemeElement]
+        }
         
         let appearanceSectionTitle = "self.settings.account_appearance_group.title".localized
-        let appearanceSection = SettingsSectionDescriptor(cellDescriptors: [pictureElement, colorElement, darkThemeElement], header: appearanceSectionTitle)
+        let appearanceSection = SettingsSectionDescriptor(cellDescriptors: appearanceCells, header: appearanceSectionTitle)
         
         
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
@@ -103,7 +132,6 @@ import Foundation
             Analytics.shared()?.tagResetPassword(true, from: ResetFromProfile)
         }
         
-        let resetPasswordSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword])
         
         var signOutSection: SettingsSectionDescriptor?
         if DeveloperMenuState.signOutEnabled() {
@@ -132,15 +160,16 @@ import Foundation
             return alert
         })
         
-        let deleteSubtitle = "self.settings.account_details.delete_account.footer".localized
-        let deleteSection = SettingsSectionDescriptor(cellDescriptors: [deleteAccountButton], header: .none, footer: deleteSubtitle)
+        let actionsSubtitle = "self.settings.account_details.delete_account.footer".localized
+        let actionsTitle = "self.settings.account_details.actions.title".localized
+        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: actionsSubtitle)
 
         let items: [SettingsSectionDescriptorType]
         if let signOutSection = signOutSection {
-            items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, signOutSection, deleteSection]
+            items = [nameAndDetailsSection, appearanceSection, actionsSection, signOutSection]
         }
         else {
-            items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, deleteSection]
+            items = [nameAndDetailsSection, appearanceSection, actionsSection]
         }
         
         return SettingsGroupCellDescriptor(items: items, title: "self.settings.account_section".localized, icon: .settingsAccount)
@@ -385,34 +414,46 @@ import Foundation
             return BrowserViewController(URL: URL.wr_licenseInformationURL().wr_URLByAppendingLocaleParameter())
         }, previewGenerator: .None)
 
-        let linksSection = SettingsSectionDescriptor(cellDescriptors: [privacyPolicyButton, tosButton, licenseButton])
+        let linksSection = SettingsSectionDescriptor(cellDescriptors: [tosButton, privacyPolicyButton, licenseButton])
         
         let websiteButton = SettingsButtonCellDescriptor(title: "about.website.title".localized, isDestructive: false) { _ in
             UIApplication.shared.openURL(URL.wr_websiteURL().wr_URLByAppendingLocaleParameter())
         }
         
-        let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
         
         let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         let buildNumber = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
         let version = String(format: "Version %@ (%@)", shortVersion, buildNumber)
 
-        let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
-            SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
-            
-            if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
-                let versionInfo = VersionInfoViewController()
-                
-                UIApplication.sharedApplication.keyWindow?.rootViewController?.presentViewController(versionInfo, animated: true, completion: .None)
-            }
-        }
-        let currentDate = Date()
-        var currentYear = (Calendar.current as NSCalendar).component(.year, from:currentDate)
+        let currentDate = NSDate()
+        var currentYear = NSCalendar.currentCalendar().component(.Year, fromDate:currentDate)
+
         if currentYear < 2014 {
             currentYear = 2014
         }
         
         let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
+
+        let items: [SettingsSectionDescriptorType]
+        if DeveloperMenuState.developerMenuEnabled() {
+            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
+            let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
+                SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
+                
+                if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
+                    let versionInfo = VersionInfoViewController()
+                    
+                    UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(versionInfo, animated: true, completion: .None)
+                }
+            }
+            
+            let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .None, footer: copyrightInfo)
+            items = [websiteSection, linksSection, infoSection]
+        }
+        else {
+            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton], header: .None, footer: version + " " + copyrightInfo)
+            items = [websiteSection, linksSection]
+        }
         
         let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .none, footer: copyrightInfo)
         

@@ -20,7 +20,10 @@
 import Foundation
 
 @objc class SettingsNavigationController: UINavigationController {
+
     let rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType
+    static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
+    
     let settingsPropertyFactory: SettingsPropertyFactory
     @objc var dismissAction: ((SettingsNavigationController) -> ())? = .none
     
@@ -47,7 +50,8 @@ import Foundation
         self.delegate = self
         
         self.transitioningDelegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.SoundAlerts.changeNotificationName), object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: self.dynamicType.dismissNotificationName, object: nil)
     }
     
     func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {
@@ -108,6 +112,10 @@ import Foundation
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeNever)
             }
         }
+    }
+    
+    func dismissNotification(notification: NSNotification) {
+        self.dismissAction?(self)
     }
     
     override func viewDidLoad() {
@@ -195,16 +203,20 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
 }
 
 extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
-   
+
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return .none
+    }
+
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
-        transition.direction = .Vertical
+        transition.direction = .vertical
         return transition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
-        transition.direction = .Vertical
+        transition.direction = .vertical
         return transition
     }
 }

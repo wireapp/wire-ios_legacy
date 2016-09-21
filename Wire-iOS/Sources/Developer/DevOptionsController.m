@@ -59,7 +59,7 @@
     self.view = [[UIView alloc] init];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor clearColor];
     
     self.extrasSwitch = [[UISwitch alloc] init];
     self.extrasSwitch.translatesAutoresizingMaskIntoConstraints = NO;
@@ -69,6 +69,7 @@
     
     self.extrasLabel = [[UILabel alloc] initForAutoLayout];
     self.extrasLabel.text = @"Enable subtitles (will quit)";
+    self.extrasLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:self.extrasLabel];
     
     NSMutableArray *switchesForLogTags = [NSMutableArray array];
@@ -76,6 +77,7 @@
         DevOptionsLabelWithSwitch *labelSwitch = [[DevOptionsLabelWithSwitch alloc] init];
         labelSwitch.tag = tag;
         labelSwitch.label = [[UILabel alloc] initForAutoLayout];
+        labelSwitch.label.textColor = [UIColor whiteColor];
         labelSwitch.label.text = [NSString stringWithFormat:@"Log %@", tag];
         [self.view addSubview:labelSwitch.label];
         

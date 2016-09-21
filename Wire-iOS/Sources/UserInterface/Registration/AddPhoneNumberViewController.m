@@ -125,6 +125,7 @@
     self.rootNavigationController.delegate = self;
     self.rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.rootNavigationController.view.opaque = NO;
+    self.rootNavigationController.navigationBarHidden = self.navigationController != nil;
     
     [self addChildViewController:self.rootNavigationController];
     [self.view addSubview:self.rootNavigationController.view];

@@ -42,6 +42,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     var credentials: ZMEmailCredentials?
 
     var tableView: UITableView!
+    let topSeparator = OverflowSeparatorView()
 
     required init(userClient: UserClient, credentials: ZMEmailCredentials? = .none) {
         self.userClient = userClient
@@ -72,7 +73,9 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         
         self.view.backgroundColor = UIColor.clear
         
+        self.view.addSubview(self.topSeparator)
         self.createTableView()
+        self.createConstraints()
         
         if let navController = self.navigationController
             , navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
@@ -96,8 +99,15 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.register(SettingsToggleCell.self, forCellReuseIdentifier: type(of: self).verifiedCellReuseIdentifier)
         self.tableView = tableView
         self.view.addSubview(tableView)
-        constrain(tableView, self.view) { tableView, selfView in
+    }
+    
+    private func createConstraints() {
+        constrain(tableView, self.view, self.topSeparator) { tableView, selfView, topSeparator in
             tableView.edges == selfView.edges
+            
+            topSeparator.left == tableView.left
+            topSeparator.right == tableView.right
+            topSeparator.top == tableView.top
         }
     }
     
@@ -196,7 +206,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .resetSession:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
-                cell.titleColor = UIColor(colorLiteralRed:0.0, green:122.0/255.0, blue:1.0, alpha:1.0)
                 
                 return cell
             }
@@ -205,7 +214,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .removeDevice:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
-                cell.titleColor = UIColor.red
                 
                 return cell
             }
@@ -284,6 +292,10 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
         }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.topSeparator.scrollViewDidScroll(scrollView)
     }
     
     // MARK: - UserClientObserver
