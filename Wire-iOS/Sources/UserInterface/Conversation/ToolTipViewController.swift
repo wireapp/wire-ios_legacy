@@ -160,7 +160,7 @@ extension UIImage {
     }
     
     func didTapView(_ recognizer: UITapGestureRecognizer) {
-        toolTip.tapHandler()
+        toolTip.tapHandler?()
     }
 }
 

@@ -123,7 +123,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
                                                                 .vocoderMed,
                                                                 .reverse]
     
-    static let wr_convertQueue = DispatchQueue("audioEffectQueue", .serial)
+    static let wr_convertQueue = DispatchQueue(label: "audioEffectQueue")
     
     public func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
         

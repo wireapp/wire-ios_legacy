@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -21,13 +21,11 @@ import Classy
 import Foundation
 import CocoaLumberjackSwift
 
-extension Dictionary where
-    Key : AnyObject,
-    Value: AnyObject
+extension Dictionary
 {
     func wr_keyValues() -> [[String: AnyObject]] {
         return self.keys.map({ ["key":   $0,
-                                "value": self[$0]!] as [String: AnyObject] })
+                                "value": self[$0]! as AnyObject] as [String: AnyObject] })
     }
     
     func wr_sortedKeyValues() -> [[String: AnyObject]] {

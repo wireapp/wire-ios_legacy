@@ -101,7 +101,7 @@ open class WaveformProgressView: UIView {
         }
     }
     
-    open var highlightedBarColor : UIColor = UIColor.accentColor() {
+    open var highlightedBarColor : UIColor = UIColor.accent() {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }

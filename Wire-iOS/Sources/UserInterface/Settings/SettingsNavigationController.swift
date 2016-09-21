@@ -34,7 +34,7 @@ import Foundation
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
             analytics: Analytics.shared(),
             mediaManager: AVSProvider.shared.mediaManager,
-            userSession: ZMUserSession.sharedSession(),
+            userSession: ZMUserSession.shared(),
             selfUser: ZMUser.selfUser())
         
         let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
@@ -50,8 +50,8 @@ import Foundation
         self.delegate = self
         
         self.transitioningDelegate = self
-        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
-        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: type(of: self).dismissNotificationName, object: nil)
+        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.SoundAlerts.changeNotificationName), object: nil)
+        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: NSNotification.Name(rawValue: type(of: self).dismissNotificationName), object: nil)
     }
     
     func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {

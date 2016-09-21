@@ -68,7 +68,7 @@ import Cartography
     var showTooltip: Bool = false {
         didSet {
             if self.showTooltip {
-                self.contactsButton.setIconColor(UIColor.accentColor, for: .normal)
+                self.contactsButton.setIconColor(UIColor.accentColor(), for: .normal)
             }
             else {
                 self.contactsButton.setIconColor(UIColor.clear, for: UIControlState())
@@ -84,7 +84,7 @@ import Cartography
         createConstraints()
         updateIndicator()
         if let user = user {
-            userObserverToken = ZMUser.addUserObserver(self, forUsers: [user], inUserSession: .sharedSession())
+            userObserverToken = ZMUser.add(self, forUsers: [user], in: .sharedSession())
         }
     }
 
@@ -93,7 +93,7 @@ import Cartography
     }
     
     deinit {
-        ZMUser.removeUserObserverForToken(userObserverToken)
+        ZMUser.removeObserver(for: userObserverToken)
         accentColorHandler = nil
     }
     
@@ -122,7 +122,7 @@ import Cartography
         
         accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] color, _ in
             if let `self` = self , self.showTooltip {
-                self.contactsButton.setIconColor(color, forState: .Normal)
+                self.contactsButton.setIconColor(color: color, forState: .normal)
             }
         }
     }
@@ -185,7 +185,11 @@ import Cartography
     }
     
     func updateIndicator() {
-        showIndicator = user?.clientsRequiringUserAttention.count > 0
+        guard let user = user else {
+            showIndicator = false
+            return
+        }
+        showIndicator = user.clientsRequiringUserAttention.count > 0
     }
     
     // MARK: - Target Action

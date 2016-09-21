@@ -98,7 +98,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     }
     
     public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData imageData: Data, metadata: ImageMetadata) {
-        self.showConfirmationForImage(imageData as Data, metadata: metadata)
+        self.showConfirmationForImage(imageData as NSData, metadata: metadata)
     }
     
     @objc fileprivate func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
@@ -199,7 +199,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         let videoURLAsset = AVURLAsset(url: NSURL(fileURLWithPath: inputPath) as URL)
         
         videoURLAsset.wr_convert(completion: { URL, videoAsset, error in
-            guard let resultURL = URL, error == .none else {
+            guard let resultURL = URL, error == nil else {
                 completion(false, .none, 0)
                 return
             }

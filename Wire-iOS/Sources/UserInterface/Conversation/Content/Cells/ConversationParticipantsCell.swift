@@ -29,7 +29,7 @@ open class ConversationParticipantsCell : ConversationCell {
         super.init(style:style , reuseIdentifier:reuseIdentifier)
         
         self.messageContentView.preservesSuperviewLayoutMargins = false
-        self.messageContentView.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.system_message.left_margin")), 0, CGFloat(WAZUIMagic.floatForIdentifier("content.system_message.right_margin")))
+        self.messageContentView.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.system_message.left_margin")), 0, CGFloat(WAZUIMagic.float(forIdentifier: "content.system_message.right_margin")))
         self.participantsChangedView.translatesAutoresizingMaskIntoConstraints = false
         self.messageContentView.addSubview(self.participantsChangedView)
         self.createConstraints()

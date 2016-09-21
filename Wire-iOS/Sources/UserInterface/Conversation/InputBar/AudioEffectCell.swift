@@ -106,7 +106,7 @@ public struct AudioEffectCellBorders : OptionSet {
     
     public var effect: AVSAudioEffectType = .none {
         didSet {
-            self.iconView.setIcon(effect.icon, withSize: .small, forState: .normal)
+            self.iconView.setIcon(icon: effect.icon, with: .small, for: .normal)
             self.accessibilityLabel = effect.description
         }
     }

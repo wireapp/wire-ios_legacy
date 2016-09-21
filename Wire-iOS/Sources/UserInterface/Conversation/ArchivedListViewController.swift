@@ -143,7 +143,7 @@ extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
-    internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: () -> ()) {
+    internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: @escaping () -> ()) {
     
         guard initialSyncCompleted else { return }
         let indexPathForItem: (Int) -> IndexPath = { return IndexPath(item: $0, section: 0) }

@@ -162,10 +162,10 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
 private class TechInfoCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clearColor
+        self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
-        self.textLabel?.textColor = .whiteColor()
+        self.textLabel?.textColor = UIColor.white
         self.detailTextLabel?.textColor = UIColor(white: 1, alpha: 0.4)
     }
     

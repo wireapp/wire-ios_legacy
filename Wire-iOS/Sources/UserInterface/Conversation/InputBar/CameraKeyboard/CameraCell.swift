@@ -235,7 +235,7 @@ open class CameraCell: UICollectionViewCell {
     
     func shutterButtonPressed(_ sender: AnyObject) {
         self.cameraController.captureStillImage { data, meta, error in
-            if error == .none {
+            if error == nil {
                 self.delegate?.cameraCell(self, didPickImageData: data!)
             }
         }

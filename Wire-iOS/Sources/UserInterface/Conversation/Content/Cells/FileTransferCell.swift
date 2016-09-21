@@ -201,7 +201,7 @@ open class FileTransferCell: ConversationCell {
 
         case .failedUpload, .cancelledUpload:
             let statusText = fileMessageData.transferState == .failedUpload ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
-            let attributedStatusText = statusText.uppercased && labelFont && UIColor(forZMAccentColor: .VividRed)
+            let attributedStatusText = statusText.uppercased() && labelFont && UIColor(for: .VividRed)
 
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + attributedStatusText
@@ -233,7 +233,7 @@ open class FileTransferCell: ConversationCell {
         
         if let viewsState = state.viewsStateForFile() {
             visibleViews.append(actionButton)
-            self.actionButton.setIcon(viewsState.playButtonIcon, withforSize: .tiny, forState: .normal)
+            self.actionButton.setIcon(icon: viewsState.playButtonIcon, with: .tiny, for: .normal)
             self.actionButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
         
