@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -60,7 +60,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         self.messageContentView.addSubview(self.labelView)
         self.contentView.addSubview(self.lineView)
         
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
     }
 
     public required init?(coder aDecoder: NSCoder) {

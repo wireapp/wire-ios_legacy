@@ -22,7 +22,7 @@
 #import "zmessaging+iOS.h"
 #import "UIImage+ImageUtilities.h"
 
-
+@import WireExtensionComponents;
 
 static ImageCache *originalImageCache(void);
 static ImageCache *blurredImageCache(void);

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -37,7 +37,7 @@ import Foundation
     
     fileprivate func setup() {
         self.progressView.autoresizingMask = [.flexibleHeight, .flexibleRightMargin]
-        self.spinner.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.spinner.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.progressView.frame = self.bounds
         self.spinner.frame = self.bounds
@@ -95,12 +95,12 @@ import Foundation
     fileprivate func updateForStateAnimated(_ animated: Bool) {
         if let det = self.deterministic , det {
             self.progressView.isHidden = false
-            self.spinner.hidden = true
+            self.spinner.isHidden = true
             self.spinner.animating = false
         }
         else {
             self.progressView.isHidden = true
-            self.spinner.hidden = false
+            self.spinner.isHidden = false
             self.spinner.animating = true
         }
     }

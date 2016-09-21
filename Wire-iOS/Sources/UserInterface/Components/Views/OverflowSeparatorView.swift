@@ -34,12 +34,14 @@ import Classy
     
     private func applyStyle() {
         self.cas_styleClass = "separator"
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         self.alpha = 0
     }
     
-    override public func intrinsicContentSize() -> CGSize {
-        return CGSizeMake(UIViewNoIntrinsicMetric, 0.5)
+    override open var intrinsicContentSize: CGSize {
+        get {
+            return CGSize(width: UIViewNoIntrinsicMetric, height: 0.5)
+        }
     }
     
     public func scrollViewDidScroll(scrollView: UIScrollView!) {

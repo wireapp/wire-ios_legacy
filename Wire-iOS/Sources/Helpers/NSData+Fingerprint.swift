@@ -57,7 +57,15 @@ extension NSData {
         assert(self.length % MemoryLayout<E>.size == 0, "Data size is uneven to enumerated element size")
         var result: [T] = []
         let stepCount = self.length / MemoryLayout<E>.size
-        let buffer = UnsafeBufferPointer<E>(start:UnsafePointer<E>(self.bytes), count: stepCount)
+        
+        let unsafePointer = (self as Data).withUnsafeBytes({ pointer -> UnsafePointer<E> in
+            
+            return pointer.withMemoryRebound(to: E, capacity: 1) {
+                return UnsafePointer($0)
+            }
+        })
+        
+        let buffer = UnsafeBufferPointer<E>(start: unsafePointer, count: stepCount)
         for i in 0..<stepCount {
             result.append(callback(buffer[i]))
         }

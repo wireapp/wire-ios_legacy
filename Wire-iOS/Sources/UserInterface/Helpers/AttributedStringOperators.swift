@@ -22,7 +22,7 @@ import Foundation
 // MARK: - Operators
 
 // Concats the lhs and rhs and returns a NSAttributedString
-infix operator + { associativity left precedence 140 }
+infix operator +: AdditionPrecedence
 
 func +(left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     let result = NSMutableAttributedString()
@@ -53,7 +53,7 @@ func +(left: NSAttributedString, right: String) -> NSAttributedString {
 }
 
 // Concats the lhs and rhs and assigns the result to the lhs
-infix operator += { associativity right precedence 90 }
+infix operator +=: AssignmentPrecedence
 
 func +=(left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
     left.append(right.attributedString)
@@ -76,7 +76,7 @@ func +=(left: inout NSAttributedString, right: NSAttributedString?) -> NSAttribu
 }
 
 // Applies the attributes on the rhs to the string on the lhs
-infix operator && { associativity left precedence 150 }
+infix operator &&: LogicalConjunctionPrecedence
 
 func &&(left: String, right: [String: AnyObject]) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: right)

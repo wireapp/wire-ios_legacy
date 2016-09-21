@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -41,7 +41,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
         
-        self.selfUserObserver = ZMUser.addUserObserver(self, forUsers: [ZMUser.selfUser()], inUserSession: ZMUserSession.sharedSession())
+        self.selfUserObserver = ZMUser.add(self, forUsers: [ZMUser.selfUser()], in: ZMUserSession.shared())
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,7 +56,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         self.createTableView()
         self.view.addSubview(self.topSeparator)
         self.createConstraints()
-        self.view.backgroundColor = .clear()
+        self.view.backgroundColor = UIColor.clear
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
         super.viewDidLoad()
     }
@@ -73,7 +73,7 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
-        tableView.backgroundColor = .clear()
+        tableView.backgroundColor = UIColor.clear
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
@@ -162,8 +162,8 @@ class SettingsTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        self.topSeparator.scrollViewDidScroll(scrollView)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 

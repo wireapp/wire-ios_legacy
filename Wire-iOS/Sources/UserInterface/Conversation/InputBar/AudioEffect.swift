@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -39,24 +39,24 @@ extension AVSAudioEffectType: CustomStringConvertible {
     public var icon: ZetaIconType {
         get {
             switch self {
-            case .None:
-                return .Person
-            case .PitchupInsane:
-                return .EffectBallon // Helium
-            case .PitchdownInsane:
-                return .EffectJellyfish // Jellyfish
-            case .PaceupMed:
-                return .EffectRabbit // Hare
-            case .ReverbMax:
-                return .EffectChurch // Cathedral
-            case .ChorusMax:
-                return .EffectAlien // Alien
-            case .VocoderMed:
-                return .EffectRobot // Robot
-            case .Reverse:
-                return .EffectReverse // UpsideDown
+            case .none:
+                return .person
+            case .pitchupInsane:
+                return .effectBallon // Helium
+            case .pitchdownInsane:
+                return .effectJellyfish // Jellyfish
+            case .paceupMed:
+                return .effectRabbit // Hare
+            case .reverbMax:
+                return .effectChurch // Cathedral
+            case .chorusMax:
+                return .effectAlien // Alien
+            case .vocoderMed:
+                return .effectRobot // Robot
+            case .reverse:
+                return .effectReverse // UpsideDown
             default:
-                return .ExclamationMark
+                return .exclamationMark
             }
         }
     }
@@ -64,49 +64,49 @@ extension AVSAudioEffectType: CustomStringConvertible {
     public var description: String {
         get {
             switch self {
-            case .ChorusMin:
+            case .chorusMin:
                 return "ChorusMin"
-            case .ChorusMax:
+            case .chorusMax:
                 return "Alien"
-            case .ReverbMin:
+            case .reverbMin:
                 return "ReverbMin"
-            case .ReverbMed:
+            case .reverbMed:
                 return "ReverbMed"
-            case .ReverbMax:
+            case .reverbMax:
                 return "Cathedral"
-            case .PitchupMin:
+            case .pitchupMin:
                 return "PitchupMin"
-            case .PitchupMed:
+            case .pitchupMed:
                 return "PitchupMed"
-            case .PitchupMax:
+            case .pitchupMax:
                 return "PitchupMax"
-            case .PitchupInsane:
+            case .pitchupInsane:
                 return "Helium"
-            case .PitchdownMin:
+            case .pitchdownMin:
                 return "PitchdownMin"
-            case .PitchdownMed:
+            case .pitchdownMed:
                 return "PitchdownMed"
-            case .PitchdownMax:
+            case .pitchdownMax:
                 return "PitchdownMax"
-            case .PitchdownInsane:
+            case .pitchdownInsane:
                 return "Jellyfish"
-            case .PaceupMin:
+            case .paceupMin:
                 return "PaceupMin"
-            case .PaceupMed:
+            case .paceupMed:
                 return "Hare"
-            case .PaceupMax:
+            case .paceupMax:
                 return "PaceupMax"
-            case .PacedownMin:
+            case .pacedownMin:
                 return "PacedownMin"
-            case .PacedownMed:
+            case .pacedownMed:
                 return "PacedownMed"
-            case .PacedownMax:
+            case .pacedownMax:
                 return "Turtle"
-            case .Reverse:
+            case .reverse:
                 return "UpsideDown"
-            case .VocoderMed:
+            case .vocoderMed:
                 return "VocoderMed"
-            case .None:
+            case .none:
                 return "None"
             default:
                 return "Unknown"
@@ -114,27 +114,20 @@ extension AVSAudioEffectType: CustomStringConvertible {
         }
     }
     
-    public static let displayedEffects: [AVSAudioEffectType] = [.None,
-                                                                .PitchupInsane,
-                                                                .PitchdownInsane,
-                                                                .PaceupMed,
-                                                                .ReverbMax,
-                                                                .ChorusMax,
-                                                                .VocoderMed,
-                                                                .Reverse]
+    public static let displayedEffects: [AVSAudioEffectType] = [.none,
+                                                                .pitchupInsane,
+                                                                .pitchdownInsane,
+                                                                .paceupMed,
+                                                                .reverbMax,
+                                                                .chorusMax,
+                                                                .vocoderMed,
+                                                                .reverse]
+    
+    static let wr_convertQueue = DispatchQueue("audioEffectQueue", .serial)
     
     public func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
         
-        struct Static {
-            static var onceToken: dispatch_once_t = 0
-            static var convertQueue: dispatch_queue_t? = nil
-        }
-        
-        dispatch_once(&Static.onceToken) {
-            Static.convertQueue = dispatch_queue_create("audioEffectQueue", DISPATCH_QUEUE_SERIAL)
-        }
-        
-        dispatch_async(Static.convertQueue!) {
+        dispatch_async(type(of: self).wr_convertQueue) {
             
             let result = AVSAudioEffect().applyEffectWav(nil, inFile: inPath, outFile: outPath, effect: self, nr_flag: true)
             DDLogInfo("applyEffect \(self) from \(inPath) to \(outPath): \(result)")

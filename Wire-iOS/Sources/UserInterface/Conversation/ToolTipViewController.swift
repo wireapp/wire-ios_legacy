@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -49,9 +49,9 @@ extension UIImage {
 @objc final class ToolTip: NSObject {
     
     let title, descriptionText: String
-    let tapHandler: ()->()?
+    let tapHandler: (()->())?
     
-    init(title: String, description: String,  handler: @escaping ()->()? = nil) {
+    init(title: String, description: String,  handler: @escaping (()->())? = nil) {
         self.title = title
         descriptionText = description
         tapHandler = handler
@@ -109,7 +109,7 @@ extension UIImage {
         [titleLabel, descriptionLabel].forEach { $0.numberOfLines = 0 }
         [contentView, arrowView].forEach(view.addSubview)
         [titleLabel, descriptionLabel].forEach(contentView.addSubview)
-        titleLabel.textColor = UIColor.accentColor
+        titleLabel.textColor = UIColor.accent()
     }
     
     func createGestureRecognizer() {

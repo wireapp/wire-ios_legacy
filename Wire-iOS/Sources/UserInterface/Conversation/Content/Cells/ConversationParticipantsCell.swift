@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -29,7 +29,7 @@ open class ConversationParticipantsCell : ConversationCell {
         super.init(style:style , reuseIdentifier:reuseIdentifier)
         
         self.messageContentView.preservesSuperviewLayoutMargins = false
-        self.messageContentView.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.floatForIdentifier("content.system_message.left_margin")), 0, CGFloat(WAZUIMagic.floatForIdentifier("content.system_message.right_margin")))
+        self.messageContentView.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.system_message.left_margin")), 0, CGFloat(WAZUIMagic.floatForIdentifier("content.system_message.right_margin")))
         self.participantsChangedView.translatesAutoresizingMaskIntoConstraints = false
         self.messageContentView.addSubview(self.participantsChangedView)
         self.createConstraints()
@@ -46,19 +46,19 @@ open class ConversationParticipantsCell : ConversationCell {
         }
     }
 
-    open override func configureForMessage(_ message: ZMConversationMessage, layoutProperties:ConversationCellLayoutProperties)
+    open override func configure(for message: ZMConversationMessage, layoutProperties:ConversationCellLayoutProperties)
     {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
+        super.configure(for: message, layoutProperties: layoutProperties)
         
         if let systemMessage = message.systemMessageData as? ZMSystemMessage {
             
             switch systemMessage.systemMessageType {
-            case .ParticipantsAdded:
-                participantsChangedView.action = .Added
-            case .ParticipantsRemoved:
-                participantsChangedView.action = .Removed
+            case .participantsAdded:
+                participantsChangedView.action = .added
+            case .participantsRemoved:
+                participantsChangedView.action = .removed
             default:
-                participantsChangedView.action = .Started
+                participantsChangedView.action = .started
             }
             
             if let sender = systemMessage.sender {

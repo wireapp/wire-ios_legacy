@@ -257,7 +257,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         self.recordEndedCallback?(recordedToMaxDuration)
     }
     
-    public func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: NSError?) {
+    public func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         DDLogError("Cannot finish recording: \(error)")
     }
 }

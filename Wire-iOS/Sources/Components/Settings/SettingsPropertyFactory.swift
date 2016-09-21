@@ -110,7 +110,7 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
         case .DarkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.bool(value: self.userDefaults.stringForKey(UserDefaultColorScheme) == "dark")
+                return SettingsPropertyValue.bool(value: self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
@@ -120,7 +120,7 @@ class SettingsPropertyFactory {
                     fatalError("Incorrect type \(value) for key \(propertyName)")
                 }
                 
-                NotificationCenter.defaultCenter().postNotificationName(NSNotification.Name.SettingsColorSchemeChanged, object: self)
+                NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self)
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
@@ -152,7 +152,7 @@ class SettingsPropertyFactory {
         case .AnalyticsOptOut:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let analytics = self.analytics {
-                    return SettingsPropertyValue.number(value: Int(analytics.isOptedOut))
+                    return SettingsPropertyValue.number(value: Int(analytics.isOptedOut ? 1 : 0))
                 }
                 else {
                     return .bool(value: false)

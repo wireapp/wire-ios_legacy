@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -104,16 +104,16 @@ public struct AudioEffectCellBorders : OptionSet {
         self.iconView.setIconColor(self.isSelected ? UIColor.accentColor : UIColor.white, for: .normal)
     }
     
-    public var effect: AVSAudioEffectType = .None {
+    public var effect: AVSAudioEffectType = .none {
         didSet {
-            self.iconView.setIcon(effect.icon, withSize: .Small, forState: .Normal)
+            self.iconView.setIcon(effect.icon, withSize: .small, forState: .normal)
             self.accessibilityLabel = effect.description
         }
     }
     
     public override func prepareForReuse() {
         super.prepareForReuse()
-        self.effect = .None
+        self.effect = .none
         self.borders = .None
         self.updateForSelectedState()
     }

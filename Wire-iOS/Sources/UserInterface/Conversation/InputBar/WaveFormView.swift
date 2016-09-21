@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -62,7 +62,7 @@ final class WaveFormView: UIView {
     }
     
     func updateWithLevel(_ level: CGFloat) {
-        visualizationView.updateWithLevel(level)
+        visualizationView.update(withLevel: level)
     }
     
     fileprivate func configureViews() {
@@ -71,12 +71,12 @@ final class WaveFormView: UIView {
         visualizationView.primaryWaveLineWidth = 1
         visualizationView.secondaryWaveLineWidth = 0.5
         visualizationView.numberOfWaves = 4
-        visualizationView.waveColor = .accentColor()
-        visualizationView.backgroundColor = .clearColor()
+        visualizationView.waveColor = .accent()
+        visualizationView.backgroundColor = UIColor.clear
         visualizationView.phaseShift = -0.3
         visualizationView.frequency = 1.7
         visualizationView.density = 10
-        visualizationView.updateWithLevel(0) // Make sure we don't show any waveform
+        visualizationView.update(withLevel: 0) // Make sure we don't show any waveform
         
         let (midLeft, midRight) = (CGPoint(x: 0, y: 0.5), CGPoint(x: 1, y: 0.5))
         leftGradient.setStartPoint(midLeft, endPoint: midRight, locations: [0, 1])

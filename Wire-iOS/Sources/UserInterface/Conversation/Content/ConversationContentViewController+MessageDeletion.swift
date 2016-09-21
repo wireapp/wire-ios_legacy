@@ -32,33 +32,33 @@ extension ConversationContentViewController {
         let alert = UIAlertController.alertControllerForMessageDeletion(showDelete) { [weak self] action in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
-            if case .Delete(let type) = action {
+            if case .delete(let type) = action {
                 self?.trackDelete(message, deletionType:type)
 
-                ZMUserSession.sharedSession().enqueueChanges {
+                ZMUserSession.shared().enqueueChanges {
                     switch type {
-                    case .Local:
+                    case .local:
                         ZMMessage.hideMessage(message)
-                    case .Everywhere:
+                    case .everywhere:
                         ZMMessage.deleteForEveryone(message)
                     }
                 }
             }
 
             completion?()
-            self?.dismissViewControllerAnimated(true, completion: nil)
+            self?.dismiss(animated: true, completion: nil)
         }
 
         if let presentationController = alert.popoverPresentationController,
-            let cell = cellForMessage(message) as? ConversationCell {
+            let cell = cell(for: message) as? ConversationCell {
             presentationController.sourceView = cell.selectionView
             presentationController.sourceRect = cell.selectionRect
         }
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     fileprivate func trackDelete(_ message: ZMConversationMessage, deletionType: AlertAction.DeletionType) {
-        let conversationType: ConversationType = (conversation.conversationType == .Group) ? .Group : .OneToOne
+        let conversationType: ConversationType = (conversation.conversationType == .group) ? .Group : .oneToOne
         let messageType = Message.messageType(message)
         let timeElapsed = message.serverTimestamp?.timeIntervalSinceNow ?? 0
         Analytics.shared()?.tagDeletedMessage(messageType, messageDeletionType: deletionType.analyticsType, conversationType:conversationType, timeElapsed: 0 - timeElapsed)
@@ -73,8 +73,8 @@ private enum AlertAction {
         
         var analyticsType: MessageDeletionType {
             switch self {
-            case .local: return .Local
-            case .everywhere: return .Everywhere
+            case .local: return .local
+            case .everywhere: return .everywhere
             }
         }
     }

@@ -65,11 +65,11 @@ public protocol ColorPickerControllerDelegate {
         
         self.contentView.layer.cornerRadius = 10
         self.contentView.clipsToBounds = true
-        self.contentView.backgroundColor = .white()
+        self.contentView.backgroundColor = UIColor.white
         
         self.closeButton.setIcon(.X, with: .tiny, for: UIControlState())
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
-        self.closeButton.setIconColor(UIColor.darkGray, forState: .normal)
+        self.closeButton.setIconColor(UIColor.darkGray, for: .normal)
         
         self.titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         
@@ -114,16 +114,16 @@ public protocol ColorPickerControllerDelegate {
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
     }
-        
+    
+    override open var prefersStatusBarHidden: Bool {
+        get {
+            return true
+        }
+    }
+    
     fileprivate class PickerCell: UITableViewCell {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
-
-        override var prefersStatusBarHidden: Bool {
-            get {
-                return true
-            }
-        }
     
         override var reuseIdentifier: String? {
             get {
@@ -143,7 +143,7 @@ public protocol ColorPickerControllerDelegate {
                 checkmarkView.center == contentView.center
             }
             
-            self.checkmarkView.image = UIImage(for: .checkmark, iconSize: .small, color: .white())
+            self.checkmarkView.image = UIImage(for: .checkmark, iconSize: .small, color: UIColor.white)
             self.checkmarkView.isHidden = true
         }
         
@@ -170,7 +170,7 @@ public protocol ColorPickerControllerDelegate {
         
         override func prepareForReuse() {
             super.prepareForReuse()
-            self.colorView.backgroundColor = .clear()
+            self.colorView.backgroundColor = UIColor.clear
             self.checkmarkView.isHidden = true
         }
         
@@ -216,7 +216,7 @@ open class AccentColorPickerController: ColorPickerController {
     public init() {
         super.init(colors: ZMAccentColor.all().map { $0.color })
         self.title = "self.settings.account_picture_group.color".localized.uppercased()
-        if let currentColorIndex = ZMAccentColor.all().indexOf(ZMUser.selfUser().accentColorValue) {
+        if let currentColorIndex = ZMAccentColor.all().index(of: ZMUser.selfUser().accentColorValue) {
             self.currentColor = self.colors[currentColorIndex]
         }
         self.delegate = self
@@ -238,7 +238,7 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
             return
         }
         
-        ZMUserSession.sharedSession().performChanges { 
+        ZMUserSession.shared().performChanges { 
             ZMUser.selfUser().accentColorValue = ZMAccentColor.all()[colorIndex]
         }
     }

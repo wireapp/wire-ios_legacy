@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,8 +22,7 @@ import Foundation
 extension ZMConversationMessage {
     public func audioCanBeSaved() -> Bool {
         if let fileMessageData = self.fileMessageData,
-            let fileURL = fileMessageData.fileURL,
-            let _ = fileURL.path
+            let fileURL = fileMessageData.fileURL
             , fileMessageData.isAudio() {
             return true
         }
@@ -38,12 +37,18 @@ extension ZMConversationMessage {
             return self as? AudioTrack
         }
         else {
-            return .None
+            return .none
         }
     }
 }
 
 extension ZMAssetClientMessage: AudioTrack {
+    public var artworkURL: URL! {
+        get {
+            return .none
+        }
+    }
+
     public var title: String? {
         get {
             guard let fileMessageData = self.fileMessageData else { return "" }
@@ -59,7 +64,7 @@ extension ZMAssetClientMessage: AudioTrack {
     
     public var artwork: UIImage? {
         get {
-            return .None
+            return .none
         }
     }
     
@@ -67,34 +72,28 @@ extension ZMAssetClientMessage: AudioTrack {
         get {
             guard let fileMessageData = self.fileMessageData else { return 0 }
             
-            return NSTimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
+            return TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
         }
     }
     
-    public var artworkURL: NSURL? {
-        get {
-            return .None
-        }
-    }
-    
-    public var streamURL: NSURL? {
+    public var streamURL: URL? {
         get {
             guard let fileMessageData = self.fileMessageData,
-                let fileURL = fileMessageData.fileURL else { return .None }
+                let fileURL = fileMessageData.fileURL else { return .none }
             
-            return fileURL
+            return fileURL as URL?
         }
     }
     
-    public var previewStreamURL: NSURL? {
+    public var previewStreamURL: URL? {
         get {
-            return .None
+            return .none
         }
     }
     
-    public var externalURL: NSURL? {
+    public var externalURL: URL? {
         get {
-            return .None
+            return .none
         }
     }
     

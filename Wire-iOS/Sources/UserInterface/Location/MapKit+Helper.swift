@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -81,11 +81,11 @@ extension MKMapView {
     
     func storeLocation() {
         let location = locationData(name: nil)
-        Settings.sharedSettings().lastUserLocation = location
+        Settings.shared().lastUserLocation = location
     }
     
     func restoreLocation(animated: Bool) {
-        guard let location = Settings.sharedSettings().lastUserLocation else { return }
+        guard let location = Settings.shared().lastUserLocation else { return }
         setCenterCoordinate(location.coordinate, zoomLevel: Int(location.zoomLevel), animated: animated)
     }
     

@@ -294,8 +294,8 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        self.topSeparator.scrollViewDidScroll(scrollView)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
     }
     
     // MARK: - UserClientObserver

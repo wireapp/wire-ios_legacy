@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -31,7 +31,7 @@ import Foundation
     fileprivate let popTransition = PopTransition()
     
     static func settingsNavigationController() -> SettingsNavigationController {
-        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standardUserDefaults(),
+        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
             analytics: Analytics.shared(),
             mediaManager: AVSProvider.shared.mediaManager,
             userSession: ZMUserSession.sharedSession(),
@@ -50,8 +50,8 @@ import Foundation
         self.delegate = self
         
         self.transitioningDelegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: self.dynamicType.dismissNotificationName, object: nil)
+        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: SettingsPropertyName.SoundAlerts.changeNotificationName, object: nil)
+        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: type(of: self).dismissNotificationName, object: nil)
     }
     
     func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {
@@ -104,11 +104,11 @@ import Foundation
         
         if let intensivityLevel = soundProperty.propertyValue.value() as? AVSIntensityLevel {
             switch(intensivityLevel) {
-            case .Full:
+            case .full:
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeAlways)
-            case .Some:
+            case .some:
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
-            case .None:
+            case .none:
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeNever)
             }
         }
@@ -120,7 +120,7 @@ import Foundation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .clear()
+        self.view.backgroundColor = UIColor.clear
         
         if let rootViewController = self.rootGroup.generateViewController() {
             Analytics.shared()?.tagScreen("SETTINGS")
@@ -138,9 +138,9 @@ import Foundation
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()]
         
-        let navButtonAppearance = UIBarButtonItem.wr_appearanceWhenContainedIn(UINavigationBar.self)
+        let navButtonAppearance = UIBarButtonItem.wr_appearanceWhenContained(in: UINavigationBar.self)
                 
-        navButtonAppearance.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], forState: UIControlState.Normal)
+        navButtonAppearance?.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], for: UIControlState.Normal)
 
         self.interactivePopGestureRecognizer!.delegate = self
     }
@@ -153,8 +153,8 @@ import Foundation
     fileprivate func presentNewLoginAlertControllerIfNeeded() {
         let clientsRequiringUserAttention = ZMUser.selfUser().clientsRequiringUserAttention
         
-        if clientsRequiringUserAttention.count > 0 {
-            self.presentNewLoginAlertController(clientsRequiringUserAttention)
+        if (clientsRequiringUserAttention?.count)! > 0 {
+            self.presentNewLoginAlertController(clientsRequiringUserAttention!)
         }
     }
     
@@ -165,15 +165,15 @@ import Foundation
             self.openControllerForCellWithIdentifier(SettingsCellDescriptorFactory.settingsDevicesCellIdentifier)
         }
         
-        newLoginAlertController.addAction(actionManageDevices)
+        newLoginAlertController?.addAction(actionManageDevices)
         
         let actionTrustDevices = UIAlertAction(title:"self.new_device_alert.trust_devices".localized, style:.default, handler:.none)
         
-        newLoginAlertController.addAction(actionTrustDevices)
+        newLoginAlertController?.addAction(actionTrustDevices)
         
-        self.presentViewController(newLoginAlertController, animated:true, completion:.None)
+        self.presentViewController(newLoginAlertController!, animated:true, completion:.none)
         
-        ZMUserSession.sharedSession().enqueueChanges {
+        ZMUserSession.shared().enqueueChanges {
             clients.forEach {
                 $0.needsToNotifyUser = false
             }
@@ -204,7 +204,7 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
 
 extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
 
-    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return .none
     }
 

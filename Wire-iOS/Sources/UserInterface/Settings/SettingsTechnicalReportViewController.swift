@@ -35,19 +35,19 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     private let sendReportCell: UITableViewCell
     
     init() {
-        sendReportCell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-        sendReportCell.backgroundColor = UIColor.clearColor()
+        sendReportCell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        sendReportCell.backgroundColor = UIColor.clear
         sendReportCell.textLabel?.text = NSLocalizedString("self.settings.technical_report.send_report", comment: "")
-        sendReportCell.textLabel?.textColor = UIColor.accentColor()
-        sendReportCell.backgroundColor = UIColor.clearColor()
+        sendReportCell.textLabel?.textColor = UIColor.accent()
+        sendReportCell.backgroundColor = UIColor.clear
         sendReportCell.backgroundView = UIView()
         sendReportCell.selectedBackgroundView = UIView()
         
-        includedVoiceLogCell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-        includedVoiceLogCell.accessoryType = .Checkmark
+        includedVoiceLogCell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        includedVoiceLogCell.accessoryType = .checkmark
         includedVoiceLogCell.textLabel?.text = NSLocalizedString("self.settings.technical_report.include_log", comment: "")
-        includedVoiceLogCell.textLabel?.textColor = .whiteColor()
-        includedVoiceLogCell.backgroundColor = UIColor.clearColor()
+        includedVoiceLogCell.textLabel?.textColor = UIColor.white
+        includedVoiceLogCell.backgroundColor = UIColor.clear
         includedVoiceLogCell.backgroundView = UIView()
         includedVoiceLogCell.selectedBackgroundView = UIView()
         
@@ -62,14 +62,14 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         super.viewDidLoad()
         
         title = NSLocalizedString("self.settings.technical_report_section.title", comment: "")
-        tableView.backgroundColor = .clearColor()
-        tableView.scrollEnabled = false
+        tableView.backgroundColor = UIColor.clear
+        tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
-        tableView.registerClass(TechInfoCell.self, forCellReuseIdentifier: technicalReportReuseIdentifier)
+        tableView.register(TechInfoCell.self, forCellReuseIdentifier: technicalReportReuseIdentifier)
     }
     
     lazy private var lastCallSessionReports: [TechnicalReport] = {
-        let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.trimmingCharacters(in: CharacterSet.whitespaces)
         let reportStrings = voiceChannelDebugString.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
         
         return reportStrings.reduce([TechnicalReport](), combine: { (reports, report) -> [TechnicalReport] in
@@ -92,7 +92,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
             activityViewController.popoverPresentationController?.sourceView = sendReportCell.textLabel
             guard let bounds = sendReportCell.textLabel?.bounds else { return }
             activityViewController.popoverPresentationController?.sourceRect = bounds
-            self.presentViewController(activityViewController, animated: true, completion: nil)
+            self.present(activityViewController, animated: true, completion: nil)
             return
         }
         
@@ -100,34 +100,34 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         mailComposeViewController.mailComposeDelegate = self
         mailComposeViewController.setToRecipients([NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")])
         mailComposeViewController.setSubject(NSLocalizedString("self.settings.technical_report.mail.subject", comment: ""))
-        let attachmentData = AppDelegate.sharedAppDelegate().currentVoiceLogData
+        let attachmentData = AppDelegate.shared().currentVoiceLogData
         
-        if attachmentData().length > 0 && includedVoiceLogCell.accessoryType == .Checkmark {
+        if attachmentData().count > 0 && includedVoiceLogCell.accessoryType == .checkmark {
             mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: "voice.log")
         }
         
-        mailComposeViewController.setMessageBody(report.string, isHTML: false)
-        self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        mailComposeViewController.setMessageBody((report?.string)!, isHTML: false)
+        self.present(mailComposeViewController, animated: true, completion: nil)
     }
     
     // MARK TableView Delegates
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard section == TechnicalReportSection.Reports.rawValue else {
             return 2
         }
         return lastCallSessionReports.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case TechnicalReportSection.Options.rawValue:
             return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
         default:
-            let cell = tableView.dequeueReusableCellWithIdentifier(technicalReportReuseIdentifier, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: technicalReportReuseIdentifier, for: indexPath as IndexPath)
             let technicalReport = lastCallSessionReports[indexPath.row]
             cell.detailTextLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportData]
             cell.textLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportTitle]
@@ -136,33 +136,33 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         }
     }
     
-    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return indexPath.section > 0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.section {
         case TechnicalReportSection.Reports.rawValue where indexPath.row == 0:
-            includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .None ? .Checkmark : .None
+            includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .none ? .checkmark : .none
         case TechnicalReportSection.Options.rawValue where indexPath.row == 1:
             sendReport()
         default:
             break
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
     
     // MARK: Mail Delegate
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.presentingViewController!.dismiss(animated: true, completion: nil)
     }
 }
 
 private class TechInfoCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clearColor()
+        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = UIColor.clearColor
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
         self.textLabel?.textColor = .whiteColor()

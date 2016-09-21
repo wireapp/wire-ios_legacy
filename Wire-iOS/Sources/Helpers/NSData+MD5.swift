@@ -37,3 +37,9 @@ extension Data {
         return String(format: hash as String)
     }
 }
+
+extension NSData {
+    func wr_MD5Hash() -> String {
+        return (self as Data).wr_MD5Hash()
+    }
+}

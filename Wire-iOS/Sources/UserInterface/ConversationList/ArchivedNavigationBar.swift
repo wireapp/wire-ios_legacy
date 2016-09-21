@@ -28,7 +28,7 @@ import Cartography
     let dismissButton = IconButton()
     let barHeight: CGFloat = 44
 
-    var dismissButtonHandler: ()->()?
+    var dismissButtonHandler: (()->())? = .none
     
     var showSeparator: Bool = false {
         didSet {
@@ -71,7 +71,7 @@ import Cartography
     }
     
     func dismissButtonTapped(_ sender: IconButton) {
-        dismissButtonHandler()
+        dismissButtonHandler?()
     }
     
     override var intrinsicContentSize : CGSize {

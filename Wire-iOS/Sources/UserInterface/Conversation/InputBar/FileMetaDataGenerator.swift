@@ -49,7 +49,7 @@ import CocoaLumberjackSwift
 extension AVURLAsset {
     static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
         return audiovisualTypes().reduce(false) { (conformsBefore: Bool, compatibleUTI: String) -> Bool in
-            conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI)
+            conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
         }
     }
 }
@@ -79,7 +79,7 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
     for item in (assetTrack?.formatDescriptions)! {
         let formatDescription  = item as! CMFormatDescription
         let basicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
-        sampleCount = UInt64(basicDescription?.memory.mSampleRate * Float64(asset.duration.value)/Float64(asset.duration.timescale));
+        sampleCount = UInt64((basicDescription?.pointee.mSampleRate ?? 0) * Float64(asset.duration.value)/Float64(asset.duration.timescale))
     }
     
     let stride = Int(max(sampleCount / maxSamples, 1))
@@ -108,7 +108,7 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
             var maxAmplitude : Int16 = 0
             
             for buffer in abl {
-                let samples = UnsafeMutableBufferPointer<Int16>(start: UnsafeMutablePointer(buffer.mData), count: Int(buffer.mDataByteSize) / sizeof(Int16))
+                let samples = UnsafeMutableBufferPointer<Int16>(start: buffer.mData, count: Int(buffer.mDataByteSize) / sizeof(Int16))
                 
                 for sample in samples {
                     sampleSkipCounter += 1

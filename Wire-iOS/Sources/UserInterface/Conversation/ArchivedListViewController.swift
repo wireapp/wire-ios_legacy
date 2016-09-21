@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -47,7 +47,7 @@ import Cartography
         viewModel.delegate = self
         createViews()
         createConstraints()
-        if let initialSyncCompleted = ZMUserSession.sharedSession().initialSyncOnceCompleted {
+        if let initialSyncCompleted = ZMUserSession.shared().initialSyncOnceCompleted {
             self.initialSyncCompleted = initialSyncCompleted.boolValue
         }
     }
@@ -63,8 +63,8 @@ import Cartography
     func createViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.registerClass(ConversationListCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
-        collectionView.backgroundColor = .clearColor()
+        collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
+        collectionView.backgroundColor = UIColor.clear
         collectionView.alwaysBounceVertical = true
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
@@ -142,9 +142,9 @@ extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
 // MARK: - ArchivedListViewModelDelegate
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
+
+    internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: () -> ()) {
     
-    func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: @escaping ()->()) {
-        
         guard initialSyncCompleted else { return }
         let indexPathForItem: (Int) -> IndexPath = { return IndexPath(item: $0, section: 0) }
         
@@ -152,13 +152,13 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
             usingBlock()
             
             if change.deletedIndexes.count > 0 {
-                self.collectionView.deleteItemsAtIndexPaths(change.deletedIndexes.map(indexPathForItem))
+                self.collectionView.deleteItems(at: change.deletedIndexes.map(indexPathForItem))
             }
             if change.insertedIndexes.count > 0 {
-                self.collectionView.insertItemsAtIndexPaths(change.insertedIndexes.map(indexPathForItem))
+                self.collectionView.insertItems(at: change.insertedIndexes.map(indexPathForItem))
             }
             change.enumerateMovedIndexes { from, to in
-                self.collectionView.moveItemAtIndexPath(indexPathForItem(Int(from)), toIndexPath: indexPathForItem(Int(to)))
+                self.collectionView.moveItem(at: indexPathForItem(Int(from)), to: indexPathForItem(Int(to)))
             }
         }, completion: nil)
     }
@@ -167,7 +167,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
         guard initialSyncCompleted else { return }
         guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
             change.unreadCountChanged || change.connectionStateChanged || change.isSilencedChanged else { return }
-        for case let cell as ConversationListCell in collectionView.visibleCells() where cell.conversation == change.conversation {
+        for case let cell as ConversationListCell in collectionView.visibleCells where cell.conversation == change.conversation {
             cell.updateAppearance()
         }
     }

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,8 +22,8 @@ import Foundation
 @objc class AVSProvider: NSObject {
     var flowManager: AVSFlowManager? {
         get {
-            if UserDefaults.standardUserDefaults().boolForKey(UserDefaultDisableAVS) {
-                return .None
+            if UserDefaults.standard.bool(forKey: UserDefaultDisableAVS) {
+                return .none
             }
             else {
                 return AVSFlowManager.getInstance()
@@ -33,11 +33,11 @@ import Foundation
     
     var mediaManager: AVSMediaManager? {
         get {
-            if UserDefaults.standardUserDefaults().boolForKey(UserDefaultDisableAVS) {
-                return .None
+            if UserDefaults.standard.bool(forKey: UserDefaultDisableAVS) {
+                return .none
             }
             else {
-                return AVSMediaManager.defaultMediaManager()
+                return AVSMediaManager.default()
             }
         }
     }

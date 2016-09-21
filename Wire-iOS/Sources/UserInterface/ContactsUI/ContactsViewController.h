@@ -18,6 +18,7 @@
 
 
 @import UIKit;
+@import WireExtensionComponents;
 
 #import "ColorScheme.h"
 

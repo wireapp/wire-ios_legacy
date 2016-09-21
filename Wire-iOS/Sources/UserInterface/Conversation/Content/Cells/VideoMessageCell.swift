@@ -210,15 +210,15 @@ open class VideoMessageCell: ConversationCell {
         switch(fileMessageData.transferState) {
         case .downloading:
             self.progressView.setProgress(0, animated: false)
-            self.delegate?.conversationCell?(self, didSelectAction: .cancel)
+            self.delegate?.conversationCell?(self, didSelect: .cancel)
         case .uploading:
             if .none != fileMessageData.fileURL {
-                self.delegate?.conversationCell?(self, didSelectAction: .cancel)
+                self.delegate?.conversationCell?(self, didSelect: .cancel)
             }
         case .cancelledUpload, .failedUpload:
-            self.delegate?.conversationCell?(self, didSelectAction: .resend)
+            self.delegate?.conversationCell?(self, didSelect: .resend)
         case .uploaded, .downloaded, .failedDownload:
-            self.delegate?.conversationCell?(self, didSelectAction: .present)
+            self.delegate?.conversationCell?(self, didSelect: .present)
         }
     }
 

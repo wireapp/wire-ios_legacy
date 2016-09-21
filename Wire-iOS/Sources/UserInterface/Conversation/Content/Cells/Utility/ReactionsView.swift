@@ -65,7 +65,7 @@ import Cartography
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.avatarStack.direction = .Horizontal
+        self.avatarStack.direction = .horizontal
         self.avatarStack.spacing = 4
         self.addSubview(self.avatarStack)
         constrain(self, self.avatarStack) { selfView, avatarStack in

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -45,7 +45,7 @@ open class CameraCell: UICollectionViewCell {
         super.init(frame: frame)
         
         self.cameraController.previewLayer.frame = self.contentView.bounds
-        self.cameraController.currentCamera = Settings.sharedSettings().preferredCamera
+        self.cameraController.currentCamera = Settings.shared().preferredCamera
             
         self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = UIColor.black
@@ -61,7 +61,7 @@ open class CameraCell: UICollectionViewCell {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(_:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: .none)
-        NotificationCenter.defaultCenter().addObserver(self, selector: #selector(cameraControllerWillChangeCurrentCamera(_:)), name: CameraControllerWillChangeCurrentCamera, object: .None)
+        NotificationCenter.default.addObserver(self, selector: #selector(cameraControllerWillChangeCurrentCamera(_:)), name: NSNotification.Name(rawValue: CameraControllerWillChangeCurrentCamera), object: .none)
         
         self.expandButton.setIcon(.fullScreen, with: .tiny, for: UIControlState())
         self.expandButton.setIconColor(UIColor.white, for: UIControlState())
@@ -142,22 +142,22 @@ open class CameraCell: UICollectionViewCell {
         
         switch UIDevice.current.orientation {
         case .portrait:
-            newOrientation = .Portrait;
+            newOrientation = .portrait;
             break;
         case .portraitUpsideDown:
-            newOrientation = .PortraitUpsideDown;
+            newOrientation = .portraitUpsideDown;
             break;
         case .landscapeLeft:
-            newOrientation = .LandscapeRight;
+            newOrientation = .landscapeRight;
             break;
         case .landscapeRight:
-            newOrientation = .LandscapeLeft;
+            newOrientation = .landscapeLeft;
             break;
         default:
-            newOrientation = .Portrait;
+            newOrientation = .portrait;
         }
         
-        if let connection = self.cameraController.previewLayer.connection , connection.supportsVideoOrientation {
+        if let connection = self.cameraController.previewLayer.connection , connection.isVideoOrientationSupported {
             connection.videoOrientation = newOrientation
         }
         
@@ -165,7 +165,7 @@ open class CameraCell: UICollectionViewCell {
             self.cameraController.snapshotVideoOrientation = newOrientation
         }
         else {
-            self.cameraController.snapshotVideoOrientation = .Portrait
+            self.cameraController.snapshotVideoOrientation = .portrait
         }
     }
     
@@ -176,11 +176,11 @@ open class CameraCell: UICollectionViewCell {
     func cameraControllerWillChangeCurrentCamera(_ notification: Notification!) {
         
         guard let _ = self.window,
-                let snapshotImage = self.cameraController.videoSnapshot.imageScaledWithFactor(0.5) else {
+                let snapshotImage = self.cameraController.videoSnapshot.imageScaled(withFactor: 0.5) else {
             return
         }
     
-        let blurredSnapshotImage = snapshotImage.blurredImageWithContext(type(of: self).ciContext, blurRadius: 12)
+        let blurredSnapshotImage = snapshotImage.blurredImage(with: type(of: self).ciContext, blurRadius: 12)
         
         let flipView = UIView()
         flipView.autoresizesSubviews = true
@@ -190,38 +190,38 @@ open class CameraCell: UICollectionViewCell {
         self.contentView.insertSubview(flipView, belowSubview: self.expandButton)
         
         let unblurredImageView = UIImageView(image: snapshotImage)
-        unblurredImageView.contentMode = .ScaleAspectFill
+        unblurredImageView.contentMode = .scaleAspectFill
         unblurredImageView.frame = flipView.bounds
-        unblurredImageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        unblurredImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let blurredImageView = UIImageView(image: blurredSnapshotImage)
-        blurredImageView.contentMode = .ScaleAspectFill
+        blurredImageView.contentMode = .scaleAspectFill
         blurredImageView.frame = flipView.bounds
-        blurredImageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        blurredImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         flipView.addSubview(unblurredImageView)
         
         CATransaction.flush()
         
-        self.cameraController.previewLayer.hidden = true
+        self.cameraController.previewLayer.isHidden = true
         self.expandButton.isHidden = true
         self.takePictureButton.isHidden = true
         self.changeCameraButton.isHidden = true
         
         self.isUserInteractionEnabled = false
         
-        UIView.transitionFromView(unblurredImageView, toView: blurredImageView, duration: 0.35, options: .TransitionFlipFromLeft) { _ in
+        UIView.transition(from: unblurredImageView, to: blurredImageView, duration: 0.35, options: .transitionFlipFromLeft) { _ in
         
-            UIView.animateWithDuration(0.35, delay: 0.35, options: [], animations: {
+            UIView.animate(withDuration: 0.35, delay: 0.35, options: [], animations: {
                     flipView.alpha = 0
-                    self.cameraController.previewLayer.hidden = false
+                    self.cameraController.previewLayer.isHidden = false
                 }, completion: { _ in
                     flipView.removeFromSuperview()
 
-                    self.expandButton.hidden = false
-                    self.takePictureButton.hidden = false
-                    self.changeCameraButton.hidden = false
-                    self.userInteractionEnabled = true
+                    self.expandButton.isHidden = false
+                    self.takePictureButton.isHidden = false
+                    self.changeCameraButton.isHidden = false
+                    self.isUserInteractionEnabled = true
             })
         }
         
@@ -234,15 +234,15 @@ open class CameraCell: UICollectionViewCell {
     }
     
     func shutterButtonPressed(_ sender: AnyObject) {
-        self.cameraController.captureStillImageWithCompletionHandler { data, meta, error in
-            if error == .None {
-                self.delegate?.cameraCell(self, didPickImageData: data)
+        self.cameraController.captureStillImage { data, meta, error in
+            if error == .none {
+                self.delegate?.cameraCell(self, didPickImageData: data!)
             }
         }
     }
     
     func changeCameraPressed(_ sender: AnyObject) {
-        self.cameraController.currentCamera = self.cameraController.currentCamera == .Front ? .Back : .Front
-        Settings.sharedSettings().preferredCamera = self.cameraController.currentCamera
+        self.cameraController.currentCamera = self.cameraController.currentCamera == .front ? .back : .front
+        Settings.shared().preferredCamera = self.cameraController.currentCamera
     }
 }

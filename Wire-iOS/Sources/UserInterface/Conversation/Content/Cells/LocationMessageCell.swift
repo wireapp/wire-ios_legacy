@@ -38,7 +38,7 @@ open class LocationMessageCell: ConversationCell {
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
         containerView.cas_styleClass = "container-view"
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
     }
@@ -86,8 +86,8 @@ open class LocationMessageCell: ConversationCell {
         }
     }
     
-    open override func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
+    open override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+        super.configure(for: message, layoutProperties: layoutProperties)
         guard let locationData = message.locationMessageData else { return }
         
         if let address = locationData.name {
@@ -130,11 +130,11 @@ open class LocationMessageCell: ConversationCell {
         message?.locationMessageData?.openInMaps(withSpan: mapView.region.span)
         guard let conversation = message.conversation else { return }
         let sentBySelf = message.sender?.isSelfUser ?? false
-        Analytics.shared()?.tagMediaOpened(.Location, inConversation: conversation, sentBySelf: sentBySelf)
+        Analytics.shared()?.tagMediaOpened(.location, inConversation: conversation, sentBySelf: sentBySelf)
     }
     
     open override func messageType() -> MessageType {
-        return .Location
+        return .location
     }
     
     // MARK: - Selection
@@ -163,7 +163,7 @@ open class LocationMessageCell: ConversationCell {
     open override func copy(_ sender: AnyObject?) {
         guard let locationMessageData = message.locationMessageData else { return }
         let coordinates = "\(locationMessageData.latitude), \(locationMessageData.longitude)"
-        UIPasteboard.generalPasteboard().string = message.locationMessageData?.name ?? coordinates
+        UIPasteboard.general.string = message.locationMessageData?.name ?? coordinates
     }
     
     open override func menuConfigurationProperties() -> MenuConfigurationProperties! {
@@ -175,7 +175,7 @@ open class LocationMessageCell: ConversationCell {
     }
     
     fileprivate func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        UIView.animateWithDuration(animated ? ConversationCellSelectionAnimationDuration: 0) {
+        UIView.animate(withDuration: animated ? ConversationCellSelectionAnimationDuration: 0) {
             self.containerView.alpha = selected ? ConversationCellSelectedOpacity : 1
         }
     }
@@ -185,16 +185,16 @@ private extension ZMLocationMessageData {
     
     func openInMaps(withSpan span: MKCoordinateSpan) {
         let launchOptions = [
-            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: coordinate),
-            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: span)
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: coordinate),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: span)
         ]
-        mapItem?.openInMapsWithLaunchOptions(launchOptions)
+        mapItem?.openInMaps(launchOptions: launchOptions)
     }
     
     var mapItem: MKMapItem? {
         var addressDictionary: [String : AnyObject]? = nil
         if let name = name {
-            addressDictionary = [String(kABPersonAddressStreetKey): name]
+            addressDictionary = [String(kABPersonAddressStreetKey): name as AnyObject]
         }
         
         let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDictionary)

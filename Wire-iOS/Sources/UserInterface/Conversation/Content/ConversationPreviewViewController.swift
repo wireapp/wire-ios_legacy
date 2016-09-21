@@ -45,7 +45,7 @@ import Cartography
     func createViews() {
         addChildViewController(contentViewController)
         view.addSubview(contentViewController.view)
-        contentViewController.didMoveToParentViewController(self)
+        contentViewController.didMove(toParentViewController: self)
         view.backgroundColor = contentViewController.tableView.backgroundColor
     }
 

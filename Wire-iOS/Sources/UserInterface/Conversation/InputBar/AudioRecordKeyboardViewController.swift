@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -122,7 +122,7 @@ import CocoaLumberjackSwift
         self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: UIControlState())
         self.stopRecordButton.accessibilityLabel = "stopRecording"
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
-        self.stopRecordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .vividRed), for: .normal)
+        self.stopRecordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
         self.stopRecordButton.setIconColor(UIColor.white, for: UIControlState())
         self.stopRecordButton.layer.masksToBounds = true
 
@@ -370,7 +370,7 @@ import CocoaLumberjackSwift
             self.addChildViewController(newEffectPickerViewController)
             newEffectPickerViewController.view.alpha = 0
             
-            UIView.transitionWithView(self.view, duration: 0.35, options: [.curveEaseIn], animations: {
+            UIView.transition(with: self.view, duration: 0.35, options: [.curveEaseIn], animations: {
                 newEffectPickerViewController.view.translatesAutoresizingMaskIntoConstraints = false
                 self.topContainer.addSubview(newEffectPickerViewController.view)
                 constrain(self.topContainer, newEffectPickerViewController.view) { topContainer, newControllerView in

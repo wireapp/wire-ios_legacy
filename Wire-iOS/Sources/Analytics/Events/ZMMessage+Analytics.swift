@@ -22,16 +22,16 @@ import Foundation
 extension MessageType {
     var analyticsTypeString : String {
         switch self {
-        case .Unknown:      return "unknown"
-        case .Text:         return "text"
-        case .Image:        return "image"
-        case .Audio:        return "audio"
-        case .Video:        return "video"
-        case .RichMedia:    return "rich_media"
-        case .Ping:         return "ping"
-        case .File:         return "file"
-        case .System:       return "system"
-        case .Location:     return "location"
+        case .unknown:      return "unknown"
+        case .text:         return "text"
+        case .image:        return "image"
+        case .audio:        return "audio"
+        case .video:        return "video"
+        case .richMedia:    return "rich_media"
+        case .ping:         return "ping"
+        case .file:         return "file"
+        case .system:       return "system"
+        case .location:     return "location"
         }
     }
 }

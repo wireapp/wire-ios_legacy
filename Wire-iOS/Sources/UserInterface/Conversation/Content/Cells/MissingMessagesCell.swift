@@ -24,11 +24,11 @@ import TTTAttributedLabel
 class MissingMessagesCell: IconSystemCell {
     static fileprivate let userClientLink: URL = URL(string: "settings://user-client")!
 
-    fileprivate let exclamationColor = UIColor(for: .VividRed)
+    fileprivate let exclamationColor = UIColor(for: .vividRed)
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
-        leftIconView.image = UIImage(for: .ExclamationMark, fontSize: 16, color: exclamationColor)
+        leftIconView.image = UIImage(for: .exclamationMark, fontSize: 16, color: exclamationColor)
         updateLabel()
     }
     
@@ -55,9 +55,9 @@ class MissingMessagesCell: IconSystemCell {
         let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in
             guard users.count > 0 else { return nil }
             let userNames = users.map { $0.displayName }.joined(separator: ", ")
-            let string = localizationKey.localized(args: userNames + " ", users.count).uppercased + ". "
+            let string = localizationKey.localized(args: userNames + " ", users.count).uppercased() + ". "
                 && font && color
-            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames.uppercased)
+            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames.uppercased())
         }
         
         var title = "content.system.missing_messages.title".localized.uppercased() && font && color
@@ -90,9 +90,9 @@ class MissingMessagesCell: IconSystemCell {
         if URL == type(of: self).userClientLink {
             if let systemMessageData = message.systemMessageData,
                 let user = systemMessageData.users.first , systemMessageData.users.count == 1 {
-                ZClientViewController.shared().openClientListScreenForUser(user)
+                ZClientViewController.shared().openClientListScreen(for: user)
             } else if let conversation = message.conversation {
-                ZClientViewController.sharedZClientViewController().openDetailScreen(for: conversation)
+                ZClientViewController.shared().openDetailScreen(for: conversation)
             }
         }
     }

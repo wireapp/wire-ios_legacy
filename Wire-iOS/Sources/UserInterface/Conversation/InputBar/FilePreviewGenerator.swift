@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -25,8 +25,7 @@ import CoreGraphics
 
 extension URL {
     public func UTI() -> String {
-        guard let pathExtension = self.pathExtension,
-                let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension, .none),
+        guard let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self.pathExtension as CFString, .none),
                 let UTIString = UTI.takeUnretainedValue() as String? else {
                     return kUTTypeItem as String
         }
@@ -93,7 +92,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         }.count > 0
     }
     
-    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: (UIImage?) -> ()) {
+    public func generatePreview(_ fileURL: URL, UTI: String, completion: (UIImage?) -> ()) {
         guard let generator = self.subGenerators.filter({
             $0.canGeneratePreviewForFile(fileURL, UTI: uti)
         }).first else {
@@ -107,6 +106,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 
 @objc open class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
+    
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
@@ -120,7 +120,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         return UTTypeConformsTo(uti as CFString, kUTTypeImage)
     }
     
-    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: @escaping (UIImage?) -> ()) {
+    public func generatePreview(_ fileURL: URL, UTI: String, completion: @escaping @escaping @escaping @escaping (UIImage?) -> ()) {
         var result: UIImage? = .none
         
         defer {
@@ -149,6 +149,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 
 @objc open class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
+
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
@@ -162,7 +163,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         return AVURLAsset.wr_isAudioVisualUTI(uti)
     }
     
-    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: @escaping (UIImage?) -> ()) {
+    public func generatePreview(_ fileURL: URL, UTI: String, completion: @escaping @escaping @escaping @escaping (UIImage?) -> ()) {
         var result: UIImage? = .none
         
         defer {
@@ -207,6 +208,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 
 @objc open class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
+
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
@@ -220,7 +222,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         return UTTypeConformsTo(uti as CFString, kUTTypePDF)
     }
     
-    open func generatePreview(_ fileURL: URL, UTI uti: String, completion: @escaping (UIImage?) -> ()) {
+    public func generatePreview(_ fileURL: URL, UTI: String, completion: @escaping @escaping @escaping @escaping (UIImage?) -> ()) {
         var result: UIImage? = .none
         
         defer {

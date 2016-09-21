@@ -99,7 +99,7 @@ private struct InputBarConstants {
     
     override open var bounds: CGRect {
         didSet {
-            invisibleInputAccessoryView?.intrinsicContentSize(CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height))
+            invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height)
         }
     }
         
@@ -143,7 +143,7 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
-        fakeCursor.backgroundColor = UIColor.accentColor()
+        fakeCursor.backgroundColor = UIColor.accent()
         
         buttonRowSeparator.cas_styleClass = "separator"
         inputBarSeparator.cas_styleClass = "separator"
@@ -249,7 +249,7 @@ private struct InputBarConstants {
     }
     
     func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
-        fakeCursor.hidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
+        fakeCursor.isHidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
     }
     
     func textViewContentSizeDidChange(_ notification: Notification) {
@@ -297,7 +297,7 @@ private struct InputBarConstants {
         if animated {
             UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
-                UIView.animateWithDuration(0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateBackgroundColor, completion: completion)
+                UIView.animate(withDuration: 0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateBackgroundColor, completion: completion)
             }
         } else {
             layoutIfNeeded()
@@ -341,9 +341,9 @@ private struct InputBarConstants {
 
             // We do not want to enable the confirm button when
             // the text is the same as the original message
-            let trimmedText = textView.text.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let trimmedText = textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             let hasChanges = text != trimmedText && canUndo
-            editingView.confirmButton.enabled = hasChanges
+            editingView.confirmButton.isEnabled = hasChanges
         }
     }
 }

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -101,7 +101,7 @@ open class WaveformProgressView: UIView {
         }
     }
     
-    open var highlightedBarColor : UIColor = UIColor.accentColor {
+    open var highlightedBarColor : UIColor = UIColor.accentColor() {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }
@@ -150,7 +150,7 @@ open class WaveformProgressView: UIView {
         backgroundWaveform.barColor = UIColor.gray
         backgroundWaveform.translatesAutoresizingMaskIntoConstraints = false
         foregroundWaveform.backgroundColor = UIColor.clear
-        foregroundWaveform.barColor = UIColor.accentColor
+        foregroundWaveform.barColor = UIColor.accentColor()
         foregroundWaveform.translatesAutoresizingMaskIntoConstraints = false
         foregroundWaveform.layer.mask = maskShape
         

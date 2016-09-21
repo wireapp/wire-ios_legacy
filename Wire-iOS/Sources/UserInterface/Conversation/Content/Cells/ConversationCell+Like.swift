@@ -25,41 +25,41 @@ public extension ConversationCell {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
-        self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), forControlEvents: .TouchUpInside)
-        self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Normal)
-        self.likeButton.setIconColor(ColorScheme.defaultColorScheme().colorWithName(ColorSchemeColorTextDimmed), forState: .Normal)
-        self.likeButton.setIcon(.Liked, withSize: .Like, forState: .Selected)
-        self.likeButton.setIconColor(UIColor(forZMAccentColor: .VividRed), forState: .Selected)
-        self.likeButton.hitAreaPadding = CGSizeMake(20, 20)
+        self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), for: .touchUpInside)
+        self.likeButton.setIcon(.liked, with: .like, for: .normal)
+        self.likeButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextDimmed), for: .normal)
+        self.likeButton.setIcon(.liked, with: .like, for: .selected)
+        self.likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
+        self.likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
         self.contentView.addSubview(self.likeButton)
     }
     
-    @objc public func configureLikeButtonForMessage(_ message: ZMMessage) {
+    @objc public func configureLikeButtonForMessage(_ message: ZMConversationMessage) {
         self.likeButton.setSelected(message.liked, animated: false)
     }
     
     @objc public func likeMessage(_ sender: AnyObject!) {
         guard message.canBeLiked else { return }
 
-        Settings.sharedSettings().likeTutorialCompleted = true
+        Settings.shared().likeTutorialCompleted = true
         
-        let reactionType : ReactionType = message.liked ? .Unlike : .Like
+        let reactionType : ReactionType = message.liked ? .unlike : .like
         trackReaction(sender, reaction: reactionType)
 
         self.likeButton.setSelected(!self.message.liked, animated: true)
-        delegate.conversationCell!(self, didSelectAction: .Like)
+        delegate.conversationCell!(self, didSelect: .like)
     }
     
     func trackReaction(_ sender: AnyObject, reaction: ReactionType){
-        var interactionMethod = InteractionMethod.Undefined
+        var interactionMethod = InteractionMethod.undefined
         if sender is LikeButton {
-            interactionMethod = .Button
+            interactionMethod = .button
         }
         if sender is UIMenuController {
-            interactionMethod = .Menu
+            interactionMethod = .menu
         }
         if sender is UITapGestureRecognizer {
-            interactionMethod = .DoubleTap
+            interactionMethod = .doubleTap
         }
         Analytics.shared()?.tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
     }

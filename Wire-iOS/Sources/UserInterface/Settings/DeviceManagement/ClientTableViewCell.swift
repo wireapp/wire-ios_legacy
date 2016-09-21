@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -71,19 +71,19 @@ class ClientTableViewCell: UITableViewCell {
                     CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
 
                         if let placemark = placemarks?.first,
-                            let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey],
-                            let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey] ,
+                            let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String],
+                            let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String] ,
                             localClient == self.userClient &&
                             error == .None {
                                 
                             self.activationLabel.text = "\(NSLocalizedString("registration.devices.activated_in", comment: "")) \(addressCity), \(addressCountry.uppercaseString) — \(activationDate.wr_formattedDate())"
                         }
-                    })
+                    } as! CLGeocodeCompletionHandler)
                     
-                    self.activationLabel.text = activationDate.wr_formattedDate()
+                    self.activationLabel.text = (activationDate as NSDate).wr_formattedDate()
                 }
                 else if let activationDate = userClient.activationDate {
-                    self.activationLabel.text = activationDate.wr_formattedDate()
+                    self.activationLabel.text = (activationDate as NSDate).wr_formattedDate()
                 }
                 else {
                     self.activationLabel.text = ""
@@ -185,7 +185,7 @@ class ClientTableViewCell: UITableViewCell {
             , userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
+                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor],
                     boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
                     uppercase: true
                 )

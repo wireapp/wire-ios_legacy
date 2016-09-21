@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -52,8 +52,8 @@ class SettingsInfoCellDescriptor: SettingsCellDescriptorType {
         let preview = previewGenerator(self)
         
         switch preview {
-        case .Text(let previewString):
-            let pasteBoard = UIPasteboard.generalPasteboard()
+        case .text(let previewString):
+            let pasteBoard = UIPasteboard.general
             pasteBoard.string = previewString
         default: break
         }

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -41,7 +41,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.credentials = credentials
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        self.authToken = ZMUserSession.sharedSession().addAuthenticationObserver(self)
+        self.authToken = ZMUserSession.shared().add(self)
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -54,7 +54,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     deinit {
         if let token = self.authToken {
-            ZMUserSession.sharedSession().removeAuthenticationObserverForToken(token)
+            ZMUserSession.shared().removeAuthenticationObserver(for: token)
         }
     }
     
@@ -70,13 +70,13 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         
         self.createConstraints()
     
-        self.view?.opaque = false
+        self.view?.isOpaque = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.dismissViewControllerAnimated(animated, completion: nil)
+        self.dismiss(animated: animated, completion: nil)
     }
     
     fileprivate func setupBackgroundImageView() {
@@ -88,19 +88,19 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
         invitationController.formStepDelegate = self
-        invitationController.view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        invitationController.view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         let rootNavigationController = NavigationController(rootViewController: invitationController)
         rootNavigationController.delegate = self
         rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = false
         rootNavigationController.setNavigationBarHidden(true, animated: false)
-        rootNavigationController.navigationBar.barStyle = UIBarStyle.Default
-        rootNavigationController.navigationBar.tintColor = UIColor.accentColor()
+        rootNavigationController.navigationBar.barStyle = UIBarStyle.default
+        rootNavigationController.navigationBar.tintColor = UIColor.accent()
         rootNavigationController.backButtonEnabled = false
         rootNavigationController.rightButtonEnabled = false
         self.addChildViewController(rootNavigationController)
         self.view.addSubview(rootNavigationController.view)
-        rootNavigationController.didMoveToParentViewController(self)
+        rootNavigationController.didMove(toParentViewController: self)
         rootNavigationController.setNavigationBarHidden(true, animated: false)
         self.rootNavigationController = rootNavigationController
     }
@@ -129,11 +129,11 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     func didCompleteFormStep(_ viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials)
-        clientsListController.view.backgroundColor = UIColor.blackColor()
-        if self.traitCollection.userInterfaceIdiom == .Pad {
+        clientsListController.view.backgroundColor = UIColor.black
+        if self.traitCollection.userInterfaceIdiom == .pad {
             let navigationController = UINavigationController(rootViewController: clientsListController)
-            navigationController.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-            self.presentViewController(navigationController, animated: true, completion: nil)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            self.present(navigationController, animated: true, completion: nil)
         } else {
             self.rootNavigationController?.pushViewController(clientsListController, animated: true)
         }
@@ -141,7 +141,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     // MARK: - UINavigationControllerDelegate
     
-    override func navigationController(_ navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    override func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .pop:
             return self.popTransition
@@ -152,7 +152,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         }
     }
     
-    override func navigationController(_ navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+    override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if viewController is ClientListViewController {
             navigationController.setNavigationBarHidden(false, animated: false)
         }

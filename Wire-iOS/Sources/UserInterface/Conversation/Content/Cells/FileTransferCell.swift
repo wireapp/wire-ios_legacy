@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -60,19 +60,19 @@ open class FileTransferCell: ConversationCell {
         self.progressView.isUserInteractionEnabled = false
         
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
-        self.loadingView.hidden = true
+        self.loadingView.isHidden = true
         
         self.messageContentView.addSubview(self.containerView)
         
         self.allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView]
         self.allViews.forEach(self.containerView.addSubview)
         
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         
         self.createConstraints()
         
         var currentElements = self.accessibilityElements ?? []
-        currentElements.appendContentsOf([topLabel, bottomLabel, fileTypeIconView, actionButton, likeButton, messageToolboxView])
+        currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, actionButton, likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
     }
     
@@ -118,14 +118,14 @@ open class FileTransferCell: ConversationCell {
         }
     }
     
-    open override func updateForMessage(_ changeInfo: MessageChangeInfo!) -> Bool {
-        let needsLayout = super.updateForMessage(changeInfo)
+    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+        let needsLayout = super.update(forMessage: changeInfo)
         self.configureForFileTransferMessage(self.message.fileMessageData!, initialConfiguration: false)
         return needsLayout
     }
     
-    override open func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
+    override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+        super.configure(for: message, layoutProperties: layoutProperties)
         
         if Message.isFileTransferMessage(message) {
             self.configureForFileTransferMessage(message.fileMessageData!, initialConfiguration: true)
@@ -148,12 +148,12 @@ open class FileTransferCell: ConversationCell {
         let filepath = fileMessageData.filename as NSString
         let filesize: UInt64 = fileMessageData.size
         
-        let filename = (filepath.lastPathComponent as NSString).stringByDeletingPathExtension
+        let filename = (filepath.lastPathComponent as NSString).deletingPathExtension
         let ext = filepath.pathExtension
         
         let dot = " · " && labelFont && labelTextBlendedColor
-        let fileNameAttributed = filename.uppercaseString && labelBoldFont && labelTextColor
-        let extAttributed = ext.uppercaseString && labelFont && labelTextBlendedColor
+        let fileNameAttributed = filename.uppercased() && labelBoldFont && labelTextColor
+        let extAttributed = ext.uppercased() && labelFont && labelTextBlendedColor
         
         let fileSize = ByteCountFormatter.string(fromByteCount: Int64(filesize), countStyle: .binary)
         let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
@@ -171,13 +171,13 @@ open class FileTransferCell: ConversationCell {
         
         switch fileMessageData.transferState {
             
-        case .Downloaded:
+        case .downloaded:
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + extAttributed
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
             
-        case .Downloading:
+        case .downloading:
             let statusText = "content.file.downloading".localized.uppercased() && labelFont && labelTextBlendedColor
             
             let firstLine = fileNameAttributed
@@ -185,7 +185,7 @@ open class FileTransferCell: ConversationCell {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
             
-        case .Uploading:
+        case .uploading:
             let statusText = "content.file.uploading".localized.uppercased() && labelFont && labelTextBlendedColor
             
             let firstLine = fileNameAttributed
@@ -193,15 +193,15 @@ open class FileTransferCell: ConversationCell {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
         
-        case .Uploaded, .FailedDownload:
+        case .uploaded, .failedDownload:
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + extAttributed
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
 
-        case .FailedUpload, .CancelledUpload:
-            let statusText = fileMessageData.transferState == .FailedUpload ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
-            let attributedStatusText = statusText.uppercaseString && labelFont && UIColor(forZMAccentColor: .VividRed)
+        case .failedUpload, .cancelledUpload:
+            let statusText = fileMessageData.transferState == .failedUpload ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
+            let attributedStatusText = statusText.uppercased && labelFont && UIColor(forZMAccentColor: .VividRed)
 
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + attributedStatusText
@@ -220,12 +220,12 @@ open class FileTransferCell: ConversationCell {
         var visibleViews : [UIView] = [topLabel, bottomLabel]
         
         switch state {
-        case .Unavailable:
+        case .unavailable:
             visibleViews = [loadingView]
-        case .Uploading, .Downloading:
+        case .uploading, .downloading:
             visibleViews.append(progressView)
             self.progressView.setProgress(fileMessageData.progress, animated: !initialConfiguration)
-        case .Uploaded, .Downloaded:
+        case .uploaded, .downloaded:
             visibleViews.append(fileTypeIconView)
         default:
             break
@@ -233,11 +233,11 @@ open class FileTransferCell: ConversationCell {
         
         if let viewsState = state.viewsStateForFile() {
             visibleViews.append(actionButton)
-            self.actionButton.setIcon(viewsState.playButtonIcon, withSize: .Tiny, forState: .Normal)
+            self.actionButton.setIcon(viewsState.playButtonIcon, withforSize: .tiny, forState: .normal)
             self.actionButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
         
-        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.hidden)
+        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
     }
     
     override open func layoutSubviews() {
@@ -259,23 +259,23 @@ open class FileTransferCell: ConversationCell {
     
     open func onActionButtonPressed(_ sender: UIButton) {
         switch(self.message.fileMessageData!.transferState) {
-        case .Downloading:
+        case .downloading:
             self.progressView.setProgress(0, animated: false)
-            self.delegate?.conversationCell?(self, didSelectAction: .Cancel)
-        case .Uploading:
-            if .None != message.fileMessageData!.fileURL {
-                self.delegate?.conversationCell?(self, didSelectAction: .Cancel)
+            self.delegate?.conversationCell?(self, didSelect: .cancel)
+        case .uploading:
+            if .none != message.fileMessageData!.fileURL {
+                self.delegate?.conversationCell?(self, didSelect: .cancel)
             }
-        case .FailedUpload:
+        case .failedUpload:
             fallthrough
-        case .CancelledUpload:
-            self.delegate?.conversationCell?(self, didSelectAction: .Resend)
-        case .FailedDownload:
-            self.delegate?.conversationCell?(self, didSelectAction: .Present)
-        case .Downloaded:
-            self.delegate?.conversationCell?(self, didSelectAction: .Present)
-        case .Uploaded:
-            self.delegate?.conversationCell?(self, didSelectAction: .Present)
+        case .cancelledUpload:
+            self.delegate?.conversationCell?(self, didSelect: .resend)
+        case .failedDownload:
+            self.delegate?.conversationCell?(self, didSelect: .present)
+        case .downloaded:
+            self.delegate?.conversationCell?(self, didSelect: .present)
+        case .uploaded:
+            self.delegate?.conversationCell?(self, didSelect: .present)
             break
         }
     }
@@ -287,7 +287,7 @@ open class FileTransferCell: ConversationCell {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = { [weak self] selected, animated in
-            UIView.animateWithDuration(animated ? ConversationCellSelectionAnimationDuration : 0) {
+            UIView.animate(withDuration: animated ? ConversationCellSelectionAnimationDuration : 0) {
                 self?.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0
             }
         }
@@ -296,6 +296,6 @@ open class FileTransferCell: ConversationCell {
     }
     
     override open func messageType() -> MessageType {
-        return .File
+        return .file
     }
 }

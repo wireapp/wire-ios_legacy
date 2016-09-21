@@ -29,7 +29,7 @@ class MessageDeletedCell: ConversationCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        CASStyler.defaultStyler().styleItem(self)
+        CASStyler.default().styleItem(self)
         setupViews()
         createConstraints()
     }
