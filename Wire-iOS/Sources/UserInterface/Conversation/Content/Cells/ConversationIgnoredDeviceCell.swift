@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -23,8 +23,8 @@ import TTTAttributedLabel
 class ConversationIgnoredDeviceCell : IconSystemCell {
     fileprivate static let deviceListLink = URL(string:"setting://device-list")!
     
-    override func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
+    override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+        super.configure(for: message, layoutProperties: layoutProperties)
         
         self.leftIconView.image = WireStyleKit.imageOfShieldnotverified()
         
@@ -36,7 +36,7 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
             let labelFont = self.labelFont,
             let labelBoldFont = self.labelBoldFont,
             let labelTextColor = self.labelTextColor
-            , systemMessageData.systemMessageType == ZMSystemMessageType.IgnoredClient && systemMessageData.users.count > 0 {
+            , systemMessageData.systemMessageType == ZMSystemMessageType.ignoredClient && systemMessageData.users.count > 0 {
                 
                 guard let user = systemMessageData.users.first else { return }
                 
@@ -46,7 +46,7 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 if user.isSelfUser {
                     deviceString = "content.system.your_devices".localized.uppercased()
                 } else {
-                    deviceString = String(format: "content.system.other_devices".localized, user.displayName).uppercaseString
+                    deviceString = String(format: "content.system.other_devices".localized, user.displayName).uppercased()
                 }
                 
                 let baseString = "content.system.unverified".localized
@@ -69,12 +69,12 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
     // MARK: - TTTAttributedLabelDelegate
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
-        if URL.isEqual(type(of: self).deviceListLink) {
+        if URL == type(of: self).deviceListLink {
             if let systemMessageData = message.systemMessageData,
                 let users = systemMessageData.users,
                 let firstUserClient = users.first
             {
-                ZClientViewController.sharedZClientViewController().openClientListScreenForUser(firstUserClient)
+                ZClientViewController.shared().openClientListScreen(for: firstUserClient)
             }
         }
     }

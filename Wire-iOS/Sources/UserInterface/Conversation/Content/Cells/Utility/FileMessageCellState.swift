@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -48,33 +48,33 @@ public enum FileMessageCellState {
     // Value mapping from message consolidated state (transfer state, previewData, fileURL) to FileMessageCellState
     static func fromConversationMessage(_ message: ZMConversationMessage) -> FileMessageCellState? {
         guard let fileMessageData = message.fileMessageData , Message.isFileTransferMessage(message) else {
-            return .None
+            return .none
         }
         
         switch fileMessageData.transferState {
-        case .Uploaded: return .Uploaded
-        case .Downloaded: return .Downloaded
-        case .Uploading:
+        case .uploaded: return .uploaded
+        case .downloaded: return .downloaded
+        case .uploading:
             if fileMessageData.fileURL != nil {
-                return .Uploading
+                return .uploading
             } else {
-                return .Unavailable
+                return .unavailable
             }
             
-        case .Downloading: return .Downloading
-        case .FailedUpload:
+        case .downloading: return .downloading
+        case .failedUpload:
             if fileMessageData.fileURL != nil {
-                return .FailedUpload
+                return .failedUpload
             } else {
-                return .Unavailable
+                return .unavailable
             }
-        case .CancelledUpload:
+        case .cancelledUpload:
             if fileMessageData.fileURL != nil {
-                return .CancelledUpload
+                return .cancelledUpload
             } else {
-                return .Unavailable
+                return .unavailable
             }
-        case .FailedDownload: return .FailedDownload
+        case .failedDownload: return .failedDownload
         }
     }
     

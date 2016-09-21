@@ -74,8 +74,8 @@ import CocoaLumberjackSwift
         let filteredClients = clientsList?.filter { $0 != selfClient } ?? []
         self.initalizeProperties(filteredClients)
 
-        self.clientsObserverToken = ZMUserSession.shared().addClientUpdateObserver(self)
-        self.userObserverToken = ZMUser.addUserObserver(self, forUsers: [ZMUser.selfUser()], userSession: ZMUserSession.shared())
+        self.clientsObserverToken = ZMUserSession.shared().add(self)
+        self.userObserverToken = ZMUser.add(self, forUsers: [ZMUser.selfUser()], in: ZMUserSession.shared())
         
         if clientsList == nil {
             self.showLoadingView = true
@@ -108,7 +108,7 @@ import CocoaLumberjackSwift
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.clear()
+        self.view.backgroundColor = UIColor.clear
         
         self.createTableView()
         self.createConstraints()
@@ -145,7 +145,7 @@ import CocoaLumberjackSwift
         tableView.estimatedRowHeight = 80
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
-        tableView.backgroundColor = .clear()
+        tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
@@ -184,7 +184,7 @@ import CocoaLumberjackSwift
     
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
         self.showLoadingView = true
-        ZMUserSession.shared().deleteClients([userClient], withCredentials: credentials);
+        ZMUserSession.shared().delete([userClient], with: credentials);
     }
 
     func displayError(_ message: String) {
@@ -385,7 +385,7 @@ extension ClientListViewController : ZMUserObserver {
     func userDidChange(_ note: UserChangeInfo!) {
         if (note.clientsChanged || note.trustLevelChanged) {
             guard let selfClient = ZMUser.selfUser().selfClient() else { return }
-            var clients = ZMUser.selfUser().clients
+            var clients = ZMUser.selfUser().clients ?? Set()
             clients.remove(selfClient)
             self.clients = Array(clients)
         }

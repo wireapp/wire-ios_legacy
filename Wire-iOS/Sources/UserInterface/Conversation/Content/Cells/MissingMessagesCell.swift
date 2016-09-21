@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -24,11 +24,11 @@ import TTTAttributedLabel
 class MissingMessagesCell: IconSystemCell {
     static fileprivate let userClientLink: URL = URL(string: "settings://user-client")!
 
-    fileprivate let exclamationColor = UIColor(forZMAccentColor: .VividRed)
+    fileprivate let exclamationColor = UIColor(for: .VividRed)
     
-    override func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
-        leftIconView.image = UIImage(forIcon: .ExclamationMark, fontSize: 16, color: exclamationColor)
+    override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+        super.configure(for: message, layoutProperties: layoutProperties)
+        leftIconView.image = UIImage(for: .ExclamationMark, fontSize: 16, color: exclamationColor)
         updateLabel()
     }
     
@@ -39,9 +39,9 @@ class MissingMessagesCell: IconSystemCell {
             let labelTextColor = labelTextColor
         else { return }
         
-        if systemMessageData.systemMessageType == .PotentialGap {
+        if systemMessageData.systemMessageType == .potentialGap {
             configureForMissingMessages(systemMessageData, font: labelFont, boldFont: labelBoldFont, color: labelTextColor)
-        } else if systemMessageData.systemMessageType == .ReactivatedDevice {
+        } else if systemMessageData.systemMessageType == .reactivatedDevice {
             configureForReactivatedClientOfSelfUser(labelFont, color: labelTextColor)
         }
         
@@ -54,10 +54,10 @@ class MissingMessagesCell: IconSystemCell {
     func configureForMissingMessages(_ systemMessageData: ZMSystemMessageData, font: UIFont, boldFont: UIFont, color: UIColor) {
         let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in
             guard users.count > 0 else { return nil }
-            let userNames = users.map { $0.displayName }.joinWithSeparator(", ")
-            let string = localizationKey.localized(args: userNames + " ", users.count).uppercaseString + ". "
+            let userNames = users.map { $0.displayName }.joined(separator: ", ")
+            let string = localizationKey.localized(args: userNames + " ", users.count).uppercased + ". "
                 && font && color
-            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames.uppercaseString)
+            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames.uppercased)
         }
         
         var title = "content.system.missing_messages.title".localized.uppercased() && font && color
@@ -66,8 +66,8 @@ class MissingMessagesCell: IconSystemCell {
         let addedOrRemovedUsers = !systemMessageData.addedUsers.isEmpty || !systemMessageData.removedUsers.isEmpty
         if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
             title += "\n\n" + "content.system.missing_messages.subtitle_start".localized.uppercased() + " " && font && color
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", users: systemMessageData.addedUsers)
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", users: systemMessageData.removedUsers)
+            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", systemMessageData.addedUsers)
+            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", systemMessageData.removedUsers)
         }
         
         self.labelView.attributedText = title
@@ -78,7 +78,7 @@ class MissingMessagesCell: IconSystemCell {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "").uppercased()
         var fullString  = NSString(format: NSLocalizedString("content.system.reactivated_device", comment: "") as NSString, deviceString).uppercased && font && color
         
-        fullString = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink, NSFontAttributeName: font], toSubstring: deviceString)
+        fullString = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
         
         self.labelView.attributedText = fullString
         self.labelView.addLinks()
@@ -87,12 +87,12 @@ class MissingMessagesCell: IconSystemCell {
     // MARK: - TTTAttributedLabelDelegate
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
-        if URL.isEqual(type(of: self).userClientLink) {
+        if URL == type(of: self).userClientLink {
             if let systemMessageData = message.systemMessageData,
                 let user = systemMessageData.users.first , systemMessageData.users.count == 1 {
-                ZClientViewController.sharedZClientViewController().openClientListScreenForUser(user)
+                ZClientViewController.shared().openClientListScreenForUser(user)
             } else if let conversation = message.conversation {
-                ZClientViewController.sharedZClientViewController().openDetailScreenForConversation(conversation)
+                ZClientViewController.sharedZClientViewController().openDetailScreen(for: conversation)
             }
         }
     }

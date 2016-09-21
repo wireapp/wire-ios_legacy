@@ -17,9 +17,9 @@
 // 
 
 
-#import <AVFoundation/AVAudioSession.h>
 #import <PureLayout.h>
 @import MobileCoreServices;
+@import AVFoundation;
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"

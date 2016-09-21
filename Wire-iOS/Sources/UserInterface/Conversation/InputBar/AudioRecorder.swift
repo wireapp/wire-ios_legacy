@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -71,7 +71,7 @@ public protocol AudioRecorderType: class {
     var recordEndedCallback: ((Bool) -> Void)? { get set } // recordedToMaxDuration: Bool
     
     func startRecording()
-    func stopRecording() -> Bool
+    @discardableResult func stopRecording() -> Bool
     func deleteRecording()
     func playRecording()
     func stopPlaying()
@@ -86,10 +86,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     lazy var audioRecorder : AVAudioRecorder? = { [weak self] in
         guard let `self` = self else { return nil }
-        let fileName = NSString.filenameForSelfUser().stringByAppendingPathExtension(self.format.fileExtension())!
-        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(fileName)
-        let audioRecorder = try? AVAudioRecorder(URL: fileURL, settings: [AVFormatIDKey : NSNumber(unsignedInt: self.format.audioFormat())])
-        audioRecorder?.meteringEnabled = true
+        let fileName = NSString.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: [AVFormatIDKey : NSNumber(value: self.format.audioFormat())])
+        audioRecorder?.isMeteringEnabled = true
         audioRecorder?.delegate = self
         return audioRecorder
     }()
@@ -138,7 +138,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         fileURL = nil
         setupDisplayLink()
         if let maxDuration = self.maxRecordingDuration {
-            if !audioRecorder.recordForDuration(maxDuration) {
+            if !audioRecorder.record(forDuration: maxDuration) {
                 DDLogError("Failed to start audio recording")
             }
             else {
@@ -156,14 +156,14 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         audioRecorder?.stop()
         recordLevelCallBack?(0)
         removeDisplayLink()
-        guard let filePath = audioRecorder?.url.path , fm.fileExistsAtPath(filePath) else { return false }
+        guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
         fileURL = audioRecorder?.url
         return true
     }
     
     public func deleteRecording() {
         currentDuration = 0
-        if let filePath = audioRecorder?.url.path , FileManager.defaultManager().fileExistsAtPath(filePath) {
+        if let filePath = audioRecorder?.url.path, FileManager.default.fileExists(atPath: filePath) {
             audioRecorder?.deleteRecording()
         }
     }
@@ -198,8 +198,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         
         state = .playback
         setupDisplayLink()
-        audioPlayer = try? AVAudioPlayer(contentsOfURL: audioRecorder.url)
-        audioPlayer?.meteringEnabled = true
+        audioPlayer = try? AVAudioPlayer(contentsOf: audioRecorder.url)
+        audioPlayer?.isMeteringEnabled = true
         
         audioPlayerDelegate = AudioPlayerDelegate { [weak self] _ in
             guard let `self` = self else { return }

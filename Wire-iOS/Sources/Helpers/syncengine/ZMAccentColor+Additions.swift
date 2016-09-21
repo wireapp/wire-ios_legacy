@@ -21,17 +21,17 @@ import Foundation
 extension ZMAccentColor {    
     var color: UIColor {
         get {
-            return UIColor(forZMAccentColor: self)
+            return UIColor(for: self)
         }
     }
     
     static func all() -> [ZMAccentColor] {
-        return [.StrongBlue,
-                .StrongLimeGreen,
-                .BrightYellow,
-                .VividRed,
-                .BrightOrange,
-                .SoftPink,
-                .Violet]
+        return [.strongBlue,
+                .strongLimeGreen,
+                .brightYellow,
+                .vividRed,
+                .brightOrange,
+                .softPink,
+                .violet]
     }
 }

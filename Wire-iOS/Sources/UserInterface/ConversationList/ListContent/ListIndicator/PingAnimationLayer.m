@@ -26,7 +26,7 @@
 
 
 
-@interface PingAnimationLayer ()
+@interface PingAnimationLayer () <CAAnimationDelegate>
 
 @property (nonatomic, strong) CALayer *pingImageLayer;
 

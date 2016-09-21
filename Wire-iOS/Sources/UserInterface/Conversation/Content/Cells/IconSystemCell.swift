@@ -40,17 +40,17 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.initialIconConstraintsCreated = false
         
-        self.leftIconView = UIImageView(frame: CGRectZero)
+        self.leftIconView = UIImageView(frame: CGRect.zero)
         self.leftIconView.contentMode = .center
         
-        self.labelView = TTTAttributedLabel(frame: CGRectZero)
+        self.labelView = TTTAttributedLabel(frame: CGRect.zero)
         self.labelView.extendsLinkTouchArea = true
         self.labelView.numberOfLines = 0
-        self.labelView.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue,
+        self.labelView.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
                                         NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
         
-        self.lineView = UIView(frame: CGRectZero)
-        self.leftIconContainer = UIView(frame: CGRectZero)
+        self.lineView = UIView(frame: CGRect.zero)
+        self.leftIconContainer = UIView(frame: CGRect.zero)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -99,7 +99,9 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         super.updateConstraints()
     }
     
-    open override func canBecomeFirstResponder() -> Bool {
-        return false
+    open override var canResignFirstResponder: Bool {
+        get {
+            return false
+        }
     }
 }

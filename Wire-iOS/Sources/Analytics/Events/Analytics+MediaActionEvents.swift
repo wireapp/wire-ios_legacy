@@ -75,10 +75,10 @@ public extension ConversationMediaSketchSource {
     
     var attributeValue: String {
         switch self {
-        case .None:          return ""
-        case .SketchButton:  return "sketch_button"
-        case .CameraGallery: return "camera_gallery"
-        case .ImageFullView: return "image_full_view"
+        case .none:          return ""
+        case .sketchButton:  return "sketch_button"
+        case .cameraGallery: return "camera_gallery"
+        case .imageFullView: return "image_full_view"
         }
     }
 }
@@ -150,7 +150,7 @@ public extension ConversationMediaSketchSource {
 @objc open class ImageMetadata: NSObject { // could be struct in swift-only environment
     var source: ConversationMediaPictureSource = .gallery
     var method: ConversationMediaPictureTakeMethod = .none
-    var sketchSource: ConversationMediaSketchSource = .None
+    var sketchSource: ConversationMediaSketchSource = .none
     var camera: ConversationMediaPictureCamera = .none
 }
 
@@ -178,7 +178,7 @@ let conversationMediaPlayedAudioMessageEventName             = "media.played_aud
 let conversationMediaSentPictureEventName                    = "media.sent_picture"
 
 let videoDurationClusterizer: TimeIntervalClusterizer = {
-    return TimeIntervalClusterizer.videoDurationClusterizer()
+    return TimeIntervalClusterizer.videoDuration()
 }()
 
 public extension Analytics {
@@ -202,15 +202,15 @@ public extension Analytics {
     }
 
     @objc public func tagMediaSentPictureSourceCamera(inConversation conversation: ZMConversation, method: ConversationMediaPictureTakeMethod, camera: ConversationMediaPictureCamera) {
-        self.tagMediaSentPicture(inConversation: conversation, source: .Camera, method: method, sketchSource: .None, camera: camera)
+        self.tagMediaSentPicture(inConversation: conversation, source: .camera, method: method, sketchSource: .none, camera: camera)
     }
     
     @objc public func tagMediaSentPictureSourceSketch(inConversation conversation: ZMConversation, sketchSource: ConversationMediaSketchSource) {
-        self.tagMediaSentPicture(inConversation: conversation, source: .Sketch, method: .None, sketchSource: sketchSource, camera: .None)
+        self.tagMediaSentPicture(inConversation: conversation, source: .sketch, method: .none, sketchSource: sketchSource, camera: .none)
     }
     
     @objc public func tagMediaSentPictureSourceOther(inConversation conversation: ZMConversation, source: ConversationMediaPictureSource) {
-        self.tagMediaSentPicture(inConversation: conversation, source: source, method: .None, sketchSource: .None, camera: .None)
+        self.tagMediaSentPicture(inConversation: conversation, source: source, method: .none, sketchSource: .none, camera: .none)
     }
     
     fileprivate func tagMediaSentPicture(inConversation conversation: ZMConversation, source: ConversationMediaPictureSource, method: ConversationMediaPictureTakeMethod, sketchSource: ConversationMediaSketchSource, camera: ConversationMediaPictureCamera) {
@@ -233,10 +233,10 @@ public extension Analytics {
             attributes[ConversationMediaPictureTakeMethod.attributeName] = metadata.method.attributeValue
         }
         
-        if metadata.source == .Sketch {
+        if metadata.source == .sketch {
             attributes[ConversationMediaSketchSource.attributeName] = metadata.sketchSource.attributeValue
         }
-        else if metadata.source == .Camera {
+        else if metadata.source == .camera {
             attributes[ConversationMediaPictureCamera.attributeName] = metadata.camera.attributeValue
         }
         
@@ -298,7 +298,7 @@ public extension Analytics {
     
     /// User uploads an audio message
     public func tagSentAudioMessage(_ duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType, type: ConversationMediaRecordingType) {
-        let filterName = filter.description.lowercaseString
+        let filterName = filter.description.lowercased()
         let attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
                           "duration_actual": type(of: self).stringFromTimeInterval(duration),
                           AudioMessageContext.keyName: context.attributeString,

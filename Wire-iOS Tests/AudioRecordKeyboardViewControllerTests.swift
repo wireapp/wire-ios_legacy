@@ -57,7 +57,7 @@ class MockAudioRecorder: AudioRecorderType {
     }
     
     var stopRecordingHitCount = 0
-    func stopRecording() -> Bool {
+    @discardableResult func stopRecording() -> Bool {
         stopRecordingHitCount = stopRecordingHitCount + 1
         return true
     }

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -76,8 +76,8 @@ open class CameraKeyboardViewController: UIViewController {
         self.assetLibrary = assetLibrary
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: SplitLayoutObservableDidChangeToLayoutSizeNotification, object: self.splitLayoutObservable)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: NSNotification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self.splitLayoutObservable)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -214,7 +214,7 @@ open class CameraKeyboardViewController: UIViewController {
                         metadata.camera = .none
                         metadata.method = ConversationMediaPictureTakeMethod.keyboard
                         metadata.source = ConversationMediaPictureSource.gallery
-                        metadata.sketchSource = .None
+                        metadata.sketchSource = .none
                         
                         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
                     })
@@ -228,7 +228,7 @@ open class CameraKeyboardViewController: UIViewController {
                 metadata.camera = .none
                 metadata.method = ConversationMediaPictureTakeMethod.keyboard
                 metadata.source = ConversationMediaPictureSource.gallery
-                metadata.sketchSource = .None
+                metadata.sketchSource = .none
                 
                 self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
             })
@@ -314,11 +314,11 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera:
             switch self.splitLayoutObservable.layoutSize {
-            case .Compact:
+            case .compact:
                 return CGSize(width: self.view.bounds.size.width / 2, height: self.view.bounds.size.height)
-            case .RegularPortrait:
+            case .regularPortrait:
                 fallthrough
-            case .RegularLandscape:
+            case .regularLandscape:
                 return CGSize(width: self.splitLayoutObservable.leftViewControllerWidth, height: self.view.bounds.size.height)
             }
         case .photos:
@@ -369,15 +369,15 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        let isFrontCamera = cameraCell.cameraController.currentCamera == .Front
+        let isFrontCamera = cameraCell.cameraController.currentCamera == .front
         
-        let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.Front : ConversationMediaPictureCamera.Back
+        let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.front : ConversationMediaPictureCamera.back
         
         let metadata = ImageMetadata()
         metadata.camera = camera
         metadata.method = ConversationMediaPictureTakeMethod.keyboard
         metadata.source = ConversationMediaPictureSource.camera
-        metadata.sketchSource = .None
+        metadata.sketchSource = .none
         
         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
     }

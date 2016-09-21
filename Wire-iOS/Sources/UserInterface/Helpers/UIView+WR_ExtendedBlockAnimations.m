@@ -25,7 +25,7 @@
 
 
 
-@interface WRAnimationBlockDelegate : NSObject
+@interface WRAnimationBlockDelegate : NSObject <CAAnimationDelegate>
 
 @property (nonatomic, copy) void(^start)(void);
 @property (nonatomic, copy) void(^stop)(BOOL);

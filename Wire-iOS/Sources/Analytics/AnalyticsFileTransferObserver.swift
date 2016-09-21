@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -45,7 +45,7 @@ import zmessaging
                 return
         }
         
-        self.analyticsTracker.tagSucceededFileUploadWithSize(fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension, duration: fabs(startTime.timeIntervalSinceNow))
+        self.analyticsTracker.tagSucceededFileUpload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension, duration: fabs(startTime.timeIntervalSinceNow))
     }
     
     func uploadFailedNotification(_ notification: Notification?) {
@@ -55,7 +55,7 @@ import zmessaging
                 return
         }
         
-        self.analyticsTracker.tagFailedFileUploadWithSize(fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension)
+        self.analyticsTracker.tagFailedFileUpload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension)
     }
     
     func downloadFinishedNotification(_ notification: Notification?) {
@@ -66,7 +66,7 @@ import zmessaging
                 return
         }
         
-        self.analyticsTracker.tagSuccededFileDownloadWithSize(fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension, duration: fabs(startTime.timeIntervalSinceNow))
+        self.analyticsTracker.tagSuccededFileDownload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension, duration: fabs(startTime.timeIntervalSinceNow))
     }
     
     func downloadFailedNotification(_ notification: Notification?) {
@@ -76,7 +76,7 @@ import zmessaging
                 return
         }
         
-        self.analyticsTracker.tagFailedFileDownloadWithSize(fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension)
+        self.analyticsTracker.tagFailedFileDownload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension)
     }
     
 }

@@ -20,6 +20,7 @@
 @import WireExtensionComponents;
 #import <zmessaging/zmessaging.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, UserImageViewSize) {
     UserImageViewSizeFirst,
@@ -43,13 +44,13 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 
 @interface UserImageView : AvatarImageView <ZMUserObserver>
 
-@property (nonatomic) id<ZMBareUser, ZMSearchableUser> user;
+@property (nonatomic, nullable) id<ZMBareUser, ZMSearchableUser> user;
 @property (nonatomic) BOOL shouldDesaturate;
 @property (nonatomic) BOOL indicatorEnabled;
 @property (nonatomic) BOOL borderColorMatchesAccentColor;
 
 @property (nonatomic) UserImageViewSize suggestedImageSize;
-@property (nonatomic, weak) id<UserImageViewDelegate> delegate;
+@property (nonatomic, weak, nullable) id<UserImageViewDelegate> delegate;
 
 - (instancetype)initWithMagicPrefix:(NSString *)magicPrefix;
 
@@ -58,3 +59,5 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 @interface UserImageView (Magic)
 - (void)setupWithMagicPrefix:(NSString *)magicPrefix;
 @end
+
+NS_ASSUME_NONNULL_END

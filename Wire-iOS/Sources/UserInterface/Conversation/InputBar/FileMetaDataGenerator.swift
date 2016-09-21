@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -29,9 +29,9 @@ import CocoaLumberjackSwift
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
             
             if AVURLAsset.wr_isAudioVisualUTI(uti) {
-                let asset = AVURLAsset(URL: url)
+                let asset = AVURLAsset(url: url)
                 
-                if let videoTrack = asset.tracksWithMediaType(AVMediaTypeVideo).first {
+                if let videoTrack = asset.tracks(withMediaType: AVMediaTypeVideo).first {
                     completion(ZMVideoMetadata(fileURL: url, duration: asset.duration.seconds, dimensions: videoTrack.naturalSize, thumbnail: thumbnail))
                 } else {
                     let loudness = audioSamplesFromAsset(asset, maxSamples: 100)
@@ -49,23 +49,23 @@ import CocoaLumberjackSwift
 extension AVURLAsset {
     static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
         return audiovisualTypes().reduce(false) { (conformsBefore: Bool, compatibleUTI: String) -> Bool in
-            conformsBefore || UTTypeConformsTo(UTI, compatibleUTI)
+            conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI)
         }
     }
 }
 
 func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
-    let assetTrack = asset.tracksWithMediaType(AVMediaTypeAudio).first
+    let assetTrack = asset.tracks(withMediaType: AVMediaTypeAudio).first
     let reader: AVAssetReader
     do {
         reader = try AVAssetReader(asset: asset)
     }
     catch let error {
         DDLogError("Cannot read asset metadata for \(asset): \(error)")
-        return .None
+        return .none
     }
     
-    let outputSettings = [ AVFormatIDKey : NSNumber(unsignedInt: kAudioFormatLinearPCM),
+    let outputSettings = [ AVFormatIDKey : NSNumber(value: kAudioFormatLinearPCM),
                            AVLinearPCMBitDepthKey : 16,
                            AVLinearPCMIsBigEndianKey : false,
                            AVLinearPCMIsFloatKey : false,
@@ -73,13 +73,13 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
     
     let output = AVAssetReaderTrackOutput(track: assetTrack!, outputSettings: outputSettings)
     output.alwaysCopiesSampleData = false
-    reader.addOutput(output)
+    reader.add(output)
     var sampleCount : UInt64 = 0
     
     for item in (assetTrack?.formatDescriptions)! {
         let formatDescription  = item as! CMFormatDescription
         let basicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
-        sampleCount = UInt64(basicDescription.memory.mSampleRate * Float64(asset.duration.value)/Float64(asset.duration.timescale));
+        sampleCount = UInt64(basicDescription?.memory.mSampleRate * Float64(asset.duration.value)/Float64(asset.duration.timescale));
     }
     
     let stride = Int(max(sampleCount / maxSamples, 1))
@@ -88,7 +88,7 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
     
     reader.startReading()
     
-    while (reader.status == .Reading) {
+    while (reader.status == .reading) {
         if let sampleBuffer = output.copyNextSampleBuffer() {
             var audioBufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: 0, mDataByteSize: 0, mData: nil))
             var buffer : CMBlockBuffer?

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -23,7 +23,7 @@ import CocoaLumberjackSwift
 extension AVAsset {
 
     public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
-        let alteredAsset = AVAsset(URL: NSURL(fileURLWithPath: inPath))
+        let alteredAsset = AVAsset(URL: NSURL(fileURLWithPath: inPath) as URL)
 
         let exportSession = AVAssetExportSession(asset: alteredAsset, presetName: AVAssetExportPresetAppleM4A)!
         

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -27,16 +27,16 @@ class CannotDecryptCell: IconSystemCell {
     static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
 
-    fileprivate let exclamationColor = UIColor(forZMAccentColor: .VividRed)
+    fileprivate let exclamationColor = UIColor(for: .vividRed)
     
-    override func configureForMessage(_ message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
-        super.configureForMessage(message, layoutProperties: layoutProperties)
-        leftIconView.image = UIImage(forIcon: .ExclamationMark, fontSize: 16, color: exclamationColor)
+    override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+        super.configure(for: message, layoutProperties: layoutProperties)
+        leftIconView.image = UIImage(for: .exclamationMark, fontSize: 16, color: exclamationColor)
         updateLabel()
     }
     
     func updateLabel() {
-        let acceptedTypes : [ZMSystemMessageType] = [.DecryptionFailed, .DecryptionFailed_RemoteIdentityChanged]
+        let acceptedTypes : [ZMSystemMessageType] = [.decryptionFailed, .decryptionFailed_RemoteIdentityChanged]
         guard let systemMessageData = message.systemMessageData,
             let labelBoldFont = labelBoldFont,
             let labelFont = labelFont,
@@ -45,17 +45,17 @@ class CannotDecryptCell: IconSystemCell {
             , acceptedTypes.contains(systemMessageData.systemMessageType)
         else { return }
         
-        let remoteIDChanged = systemMessageData.systemMessageType == .DecryptionFailed_RemoteIdentityChanged
+        let remoteIDChanged = systemMessageData.systemMessageType == .decryptionFailed_RemoteIdentityChanged
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
-        let linkAttributes = [NSFontAttributeName: labelFont, NSLinkAttributeName: link]
-        let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged).uppercaseString
-        let why = localizedWhyPart(remoteIDChanged).uppercaseString && labelFont && labelTextColor && linkAttributes
-        let messageString = localizedWhatPart(remoteIDChanged, name: name).uppercaseString && labelFont && labelTextColor
+        let linkAttributes = [NSFontAttributeName: labelFont, NSLinkAttributeName: link as AnyObject] as [String : AnyObject]
+        let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged).uppercased()
+        let why = localizedWhyPart(remoteIDChanged).uppercased() && labelFont && labelTextColor && linkAttributes
+        let messageString = localizedWhatPart(remoteIDChanged, name: name).uppercased() && labelFont && labelTextColor
         let fullString = messageString + " " + why
         
         labelView.attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
-        labelView.addLinkToURL(link, withRange: NSMakeRange(messageString.length+1, why.length))
+        labelView.addLink(to: link, with: NSMakeRange(messageString.length+1, why.length))
         labelView.accessibilityLabel = labelView.attributedText.string
     }
     
@@ -80,11 +80,11 @@ class CannotDecryptCell: IconSystemCell {
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
         var url : Foundation.URL!
-        if URL.isEqual(type(of: self).generalErrorURL) {
-            url = Foundation.URL.wr_cannotDecryptHelpURL()
+        if URL == type(of: self).generalErrorURL {
+            url = NSURL.wr_cannotDecryptHelp() as URL!
         }
-        else if URL.isEqual(type(of: self).remoteIDErrorURL) {
-            url = Foundation.URL.wr_cannotDecryptNewRemoteIDHelpURL()
+        else if URL == type(of: self).remoteIDErrorURL {
+            url = NSURL.wr_cannotDecryptNewRemoteIDHelp() as URL!
         }
         UIApplication.shared.openURL(url)
     }

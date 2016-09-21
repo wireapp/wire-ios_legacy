@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -46,7 +46,7 @@ extension ZMAddressBookContact {
         composeController.modalPresentationStyle = .formSheet
         composeController.setMessageBody("send_personal_invitation.text".localized, isHTML: false)
         composeController.setToRecipients([email])
-        ZClientViewController.sharedZClientViewController().presentViewController(composeController, animated: true, completion: .None)
+        ZClientViewController.shared().presentViewController(composeController, animated: true, completion: .None)
     }
     
     public static func canInviteLocallyWithPhoneNumber() -> Bool {
@@ -59,6 +59,6 @@ extension ZMAddressBookContact {
         composeController.modalPresentationStyle = .formSheet
         composeController.body = "send_personal_invitation.text".localized
         composeController.recipients = [phoneNumber]
-        ZClientViewController.sharedZClientViewController().presentViewController(composeController, animated: true, completion: .None)
+        ZClientViewController.shared().presentViewController(composeController, animated: true, completion: .none)
     }
 }

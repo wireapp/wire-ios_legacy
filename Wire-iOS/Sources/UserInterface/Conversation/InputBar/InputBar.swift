@@ -99,7 +99,7 @@ private struct InputBarConstants {
     
     override open var bounds: CGRect {
         didSet {
-            invisibleInputAccessoryView?.setIntrinsicContentSize(CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height))
+            invisibleInputAccessoryView?.intrinsicContentSize(CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height))
         }
     }
         
@@ -143,7 +143,7 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
-        fakeCursor.backgroundColor = UIColor.accentColor
+        fakeCursor.backgroundColor = UIColor.accentColor()
         
         buttonRowSeparator.cas_styleClass = "separator"
         inputBarSeparator.cas_styleClass = "separator"
@@ -153,12 +153,12 @@ private struct InputBarConstants {
         textView.lineFragmentPadding = 0
         textView.textContainerInset = UIEdgeInsetsMake(17, 0, 17, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
-        textView.keyboardType = .Default;
-        textView.returnKeyType = .Send;
-        textView.keyboardAppearance = ColorScheme.defaultColorScheme().keyboardAppearance;
-        textView.placeholderTextTransform = .Upper
+        textView.keyboardType = .default;
+        textView.returnKeyType = .send;
+        textView.keyboardAppearance = ColorScheme.default().keyboardAppearance;
+        textView.placeholderTextTransform = .upper
         
-        contentSizeObserver = KeyValueObserver.observeObject(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
+        contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateBackgroundColor()
     }
     
@@ -172,7 +172,7 @@ private struct InputBarConstants {
             
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing - 16
             rightAccessoryView.top == rightAccessoryView.superview!.top
-            rightAccessoryView.width == 0 ~ 750
+            rightAccessoryView.width == 0 ~ LayoutPriority(750)
             rightAccessoryView.bottom == buttonContainer.top
             
             buttonContainer.top == textView.bottom
@@ -180,7 +180,7 @@ private struct InputBarConstants {
             textView.leading == leftAccessoryView.trailing
             textView.right == rightAccessoryView.left
             textView.height >= 56
-            textView.height <= 120 ~ 750
+            textView.height <= 120 ~ LayoutPriority(750)
 
             buttonRowSeparator.top == buttonContainer.top
             buttonRowSeparator.left == buttonRowSeparator.superview!.left + 16
@@ -249,7 +249,7 @@ private struct InputBarConstants {
     }
     
     func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
-        fakeCursor.hidden = textView.isFirstResponder() || textView.text.characters.count != 0 || firstResponder != nil
+        fakeCursor.hidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
     }
     
     func textViewContentSizeDidChange(_ notification: Notification) {
@@ -259,7 +259,7 @@ private struct InputBarConstants {
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
     
     override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if self.textView.isFirstResponder() {
+        if self.textView.isFirstResponder {
             if super.point(inside: point, with: event) {
                 let locationInButtonRow = buttonInnerContainer.convert(point, from: self)
                 return locationInButtonRow.y < buttonInnerContainer.bounds.height / 1.3
@@ -295,9 +295,9 @@ private struct InputBarConstants {
         }
         
         if animated {
-            UIView.wr_animateWithEasing(RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
-            UIView.transitionWithView(self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
-                UIView.animateWithDuration(0.2, delay: 0.1, options:  .CurveEaseInOut, animations: self.updateBackgroundColor, completion: completion)
+            UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
+            UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
+                UIView.animateWithDuration(0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateBackgroundColor, completion: completion)
             }
         } else {
             layoutIfNeeded()
@@ -337,7 +337,7 @@ private struct InputBarConstants {
     fileprivate func updateEditViewState() {
         if case .editing(let text) = inputBarState {
             let canUndo = textView.undoManager?.canUndo ?? false
-            editingView.undoButton.enabled = canUndo
+            editingView.undoButton.isEnabled = canUndo
 
             // We do not want to enable the confirm button when
             // the text is the same as the original message

@@ -83,7 +83,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 self.cellNameLabelToIconInset.isActive = false
             }
             else {
-                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: .white())
+                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
                 self.cellNameLabelToIconInset.isActive = true
             }
         }
@@ -129,7 +129,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     func setup() {
-        self.backgroundColor = UIColor.clear()
+        self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
         
@@ -146,7 +146,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.cellNameLabel.font = UIFont.systemFont(ofSize: 17)
         self.cellNameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        self.cellNameLabel.textColor = UIColor.white()
+        self.cellNameLabel.textColor = UIColor.white
         self.contentView.addSubview(self.cellNameLabel)
         
         constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
@@ -158,7 +158,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         
         self.cellNameLabelToIconInset.isActive = false
         
-        self.valueLabel.textColor = UIColor.lightGray()
+        self.valueLabel.textColor = UIColor.lightGray
         self.valueLabel.font = UIFont.systemFont(ofSize: 17)
         self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
         self.valueLabel.textAlignment = .right
@@ -274,7 +274,7 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         self.textInput.translatesAutoresizingMaskIntoConstraints = false
         self.textInput.delegate = self
         self.textInput.textAlignment = .right
-        self.textInput.textColor = .lightGray()
+        self.textInput.textColor = UIColor.lightGray
         self.contentView.addSubview(self.textInput)
         
         constrain(self.contentView, self.cellNameLabel, self.textInput) { contentView, cellNameLabel, textInput in

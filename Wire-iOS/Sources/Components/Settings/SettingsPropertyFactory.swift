@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -33,13 +33,14 @@ extension AVSMediaManager: AVSMediaManagerInterface {
 }
 
 protocol ZMUserSessionInterface {
-    func performChanges(_: ()->())
-    func enqueueChanges(_: ()->())
+    func performChanges(_ block: @escaping () -> Swift.Void)
+    func enqueueChanges(_ block: @escaping () -> Swift.Void)
     
     var isNotificationContentHidden : Bool { get set }
 }
 
 extension ZMUserSession: ZMUserSessionInterface {
+
 }
 
 class SettingsPropertyFactory {
@@ -76,7 +77,7 @@ class SettingsPropertyFactory {
             // Profile
         case .ProfileName:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.String(value: self.selfUser.name)
+                return SettingsPropertyValue.string(value: self.selfUser.name)
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
@@ -93,7 +94,7 @@ class SettingsPropertyFactory {
 
         case .AccentColor:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.Number(value: Int(self.selfUser.accentColorValue.rawValue))
+                return SettingsPropertyValue.number(value: Int(self.selfUser.accentColorValue.rawValue))
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
@@ -109,24 +110,24 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
         case .DarkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.Bool(value: self.userDefaults.stringForKey(UserDefaultColorScheme) == "dark")
+                return SettingsPropertyValue.bool(value: self.userDefaults.stringForKey(UserDefaultColorScheme) == "dark")
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
                 switch(value) {
                 case .bool(let boolValue):
-                    self.userDefaults.setObject(boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
+                    self.userDefaults.set(boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
                 default:
                     fatalError("Incorrect type \(value) for key \(propertyName)")
                 }
                 
-                NotificationCenter.defaultCenter().postNotificationName(SettingsColorSchemeChangedNotification, object: self)
+                NotificationCenter.defaultCenter().postNotificationName(NSNotification.Name.SettingsColorSchemeChanged, object: self)
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
         case .SoundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
-                    return SettingsPropertyValue.Number(value: Int(mediaManager.intensityLevel.rawValue))
+                    return SettingsPropertyValue.number(value: Int(mediaManager.intensityLevel.rawValue))
                 }
                 else {
                     return SettingsPropertyValue.number(value: 0)

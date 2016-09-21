@@ -77,13 +77,13 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         super.init(nibName: nil, bundle: nil)
         
         self.userClientToken = userClient.addObserver(self)
-        if userClient.fingerprint == .None {
-            ZMUserSession.sharedSession().enqueueChanges({ () -> Void in                
+        if userClient.fingerprint == .none {
+            ZMUserSession.shared().enqueueChanges({ () -> Void in
                 self.userClient.markForFetchingPreKeys()
             })
         }
         self.updateFingerprintLabel()
-        self.modalPresentationStyle = .OverCurrentContext
+        self.modalPresentationStyle = .overCurrentContext
         self.title = NSLocalizedString("registration.devices.title", comment:"")
     }
     
@@ -174,7 +174,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     func createTypeLabel() {
         let typeLabel = UILabel()
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
-        typeLabel.text = self.userClient.deviceClass?.uppercaseString
+        typeLabel.text = self.userClient.deviceClass?.uppercased
         typeLabel.numberOfLines = 1
         self.contentView.addSubview(typeLabel)
         self.typeLabel = typeLabel
@@ -226,7 +226,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
             if let fingerprintMonospaceFont = self.fingerprintFont?.monospacedFont(),
                 let fingerprintBoldMonospaceFont = self.fingerprintBoldFont?.monospacedFont(),
                 let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
-                    [NSFontAttributeName: fingerprintMonospaceFont],
+                    attributes: [NSFontAttributeName: fingerprintMonospaceFont],
                     boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
                     uppercase: false
                 )
@@ -244,7 +244,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     func createVerifiedToggle() {
         let verifiedToggle = UISwitch()
         verifiedToggle.translatesAutoresizingMaskIntoConstraints = false
-        verifiedToggle.on = self.userClient.verified
+        verifiedToggle.isOn = self.userClient.verified
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
         self.verifiedToggle = verifiedToggle
@@ -331,24 +331,24 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     }
     
     func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.sharedSession().selfUserClient())
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared().selfUserClient())
         let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
-        navigationControllerWrapper.modalPresentationStyle = .CurrentContext
-        self.presentViewController(navigationControllerWrapper, animated: true, completion: .None)
+        navigationControllerWrapper.modalPresentationStyle = .currentContext
+        self.present(navigationControllerWrapper, animated: true, completion: .None)
     }
     
     func onTrustChanged(_ sender: AnyObject) {
         if let verifiedToggle = self.verifiedToggle {
-            let selfClient = ZMUserSession.sharedSession().selfUserClient()
+            let selfClient = ZMUserSession.shared().selfUserClient()
             if(verifiedToggle.isOn) {
-                selfClient.trustClient(self.userClient)
+                selfClient?.trustClient(self.userClient)
             } else {
-                selfClient.ignoreClient(self.userClient)
+                selfClient?.ignoreClient(self.userClient)
             }
-            verifiedToggle.on = self.userClient.verified
+            verifiedToggle.isOn = self.userClient.verified
             
-            let verificationType : DeviceVerificationType = verifiedToggle.on ? .Verified : .Unverified
-            Analytics.shared()?.tagChangeDeviceVerification(verificationType, deviceOwner: .Other)
+            let verificationType : DeviceVerificationType = verifiedToggle.isOn ? .Verified : .Unverified
+            Analytics.shared()?.tagChange(verificationType, deviceOwner: .Other)
         }
     }
     
@@ -365,7 +365,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         }
         
         // This means the fingerprint is acquired
-        if self.resetSessionPending && self.userClient.fingerprint != .None {
+        if self.resetSessionPending && self.userClient.fingerprint != .none {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
             let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler:  { [unowned alert] (_) -> Void in
                 alert.dismiss(animated: true, completion: .none)

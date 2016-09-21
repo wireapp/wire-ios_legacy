@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -43,19 +43,19 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
 
     var tableView: UITableView!
 
-    required init(userClient: UserClient, credentials: ZMEmailCredentials? = .None) {
+    required init(userClient: UserClient, credentials: ZMEmailCredentials? = .none) {
         self.userClient = userClient
         
         super.init(nibName: nil, bundle: nil)
-        self.edgesForExtendedLayout = UIRectEdge.None
+        self.edgesForExtendedLayout = []
 
         self.userClientToken = userClient.addObserver(self)
-        if userClient.fingerprint == .None {
-            ZMUserSession.sharedSession().enqueueChanges({ () -> Void in
+        if userClient.fingerprint == .none {
+            ZMUserSession.shared().enqueueChanges({ () -> Void in
                 userClient.markForFetchingPreKeys()
             })
         }
-        self.title = userClient.deviceClass?.capitalizedString
+        self.title = userClient.deviceClass?.capitalized(with: NSLocale.current)
         self.credentials = credentials
     }
     
@@ -70,7 +70,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .clear()
+        self.view.backgroundColor = UIColor.clear
         
         self.createTableView()
         
@@ -87,7 +87,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
-        tableView.backgroundColor = .clear()
+        tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.register(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
@@ -110,16 +110,16 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func onVerifiedChanged(_ sender: UISwitch!) {
-        let selfClient = ZMUserSession.sharedSession().selfUserClient()
+        let selfClient = ZMUserSession.shared().selfUserClient()
         if(sender.isOn) {
-            selfClient.trustClient(self.userClient)
+            selfClient?.trustClient(self.userClient)
         } else {
-            selfClient.ignoreClient(self.userClient)
+            selfClient?.ignoreClient(self.userClient)
         }
-        sender.on = self.userClient.verified
+        sender.isOn = self.userClient.verified
         
-        let verificationType : DeviceVerificationType = sender.on ? .Verified : .Unverified
-        Analytics.shared()?.tagChangeDeviceVerification(verificationType, deviceOwner: .Self)
+        let verificationType : DeviceVerificationType = sender.isOn ? .verified : .unverified
+        Analytics.shared()?.tagChange(verificationType, deviceOwner: .self)
     }
     
     func onDonePressed(_ sender: AnyObject!) {
@@ -130,7 +130,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if self.userClient == ZMUserSession.sharedSession().selfUserClient() {
+        if self.userClient == ZMUserSession.shared().selfUserClient() {
             return 2
         }
         else {
@@ -145,7 +145,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .info:
             return 1
         case .fingerprintAndVerify:
-            if self.userClient == ZMUserSession.sharedSession().selfUserClient()  {
+            if self.userClient == ZMUserSession.shared().selfUserClient()  {
                 return 1
             }
             else {
@@ -187,7 +187,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                 if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).verifiedCellReuseIdentifier, for: indexPath) as? SettingsToggleCell {
                     cell.titleText = NSLocalizedString("device.verified", comment: "")
                     cell.switchView.addTarget(self, action: #selector(SettingsClientViewController.onVerifiedChanged(_:)), for: .touchUpInside)
-                    cell.switchView.on = self.userClient.verified
+                    cell.switchView.isOn = self.userClient.verified
                    
                     return cell
                 }
@@ -229,7 +229,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
             
         case .removeDevice:
             if let credentials = self.credentials {
-                ZMUserSession.sharedSession().deleteClients([self.userClient], withCredentials: credentials)
+                ZMUserSession.shared().delete([self.userClient], with: credentials)
                 if let navigationController = self.navigationController {
                     navigationController.popViewController(animated: true)
                 }
@@ -240,7 +240,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                     case .left(let passwordString):
                         let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress, password: passwordString)
                         self.credentials = newCredentials
-                        ZMUserSession.sharedSession().deleteClients([self.userClient], withCredentials: newCredentials)
+                        ZMUserSession.shared().delete([self.userClient], with: newCredentials)
                         if let navigationController = self.navigationController {
                             navigationController.popViewController(animated: true)
                         }
@@ -294,7 +294,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         // This means the fingerprint is acquired
-        if self.resetSessionPending && self.userClient.fingerprint != .None {
+        if self.resetSessionPending && self.userClient.fingerprint != .none {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
             let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler:  { [unowned alert] (_) -> Void in
                 alert.dismiss(animated: true, completion: .none)

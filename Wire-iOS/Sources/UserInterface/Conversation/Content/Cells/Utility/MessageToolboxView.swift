@@ -85,9 +85,9 @@ extension ZMConversationMessage {
         statusLabel.verticalAlignment = .center
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                      NSForegroundColorAttributeName: UIColor(forZMAccentColor: .vividRed)]
+                                      NSForegroundColorAttributeName: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                            NSForegroundColorAttributeName: UIColor(forZMAccentColor: .vividRed).withAlphaComponent(0.5)]
+                                            NSForegroundColorAttributeName: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         labelClipView.addSubview(statusLabel)
         
         likeTooltipArrow.translatesAutoresizingMaskIntoConstraints = false
@@ -207,7 +207,7 @@ extension ZMConversationMessage {
             return user.displayName
         }.joined(separator: ", ")
         
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : Any]
+        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -302,7 +302,7 @@ extension ZMConversationMessage {
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : Any]
+        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
         let attributedText = likeTooltipText && attributes
 
         if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
@@ -354,7 +354,7 @@ extension MessageToolboxView: TTTAttributedLabelDelegate {
     // MARK: - TTTAttributedLabelDelegate
     
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: Foundation.URL!) {
-        if URL.isEqual(type(of: self).resendLink) {
+        if URL == type(of: self).resendLink {
             self.delegate?.messageToolboxViewDidSelectResend(self)
         }
     }

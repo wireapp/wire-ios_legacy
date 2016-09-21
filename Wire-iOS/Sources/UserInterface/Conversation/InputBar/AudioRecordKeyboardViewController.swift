@@ -46,7 +46,7 @@ import CocoaLumberjackSwift
     fileprivate var accentColorChangeHandler: AccentColorChangeHandler?
     fileprivate var effectPickerViewController: AudioEffectsPickerViewController?
     
-    fileprivate var currentEffect: AVSAudioEffectType = .None
+    fileprivate var currentEffect: AVSAudioEffectType = .none
     fileprivate var currentEffectFilePath: String?
     
     fileprivate(set) var state: State = .ready {
@@ -74,8 +74,8 @@ import CocoaLumberjackSwift
         configureAudioRecorder()
         createConstraints()
         
-        if DeveloperMenuState.developerMenuEnabled() && Settings.sharedSettings().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.sharedSettings().maxRecordingDurationDebug
+        if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
         }
     }
     
@@ -115,21 +115,21 @@ import CocoaLumberjackSwift
         self.recordButton.setIcon(.recordDot, with: .tiny, for: UIControlState())
         self.recordButton.accessibilityLabel = "record"
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
-        self.recordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .VividRed), for: .Normal)
+        self.recordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
         self.recordButton.setIconColor(UIColor.white, for: UIControlState())
         self.recordButton.layer.masksToBounds = true
 
         self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: UIControlState())
         self.stopRecordButton.accessibilityLabel = "stopRecording"
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
-        self.stopRecordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .VividRed), for: .Normal)
+        self.stopRecordButton.setBackgroundImageColor(UIColor(forZMAccentColor: .vividRed), for: .normal)
         self.stopRecordButton.setIconColor(UIColor.white, for: UIControlState())
         self.stopRecordButton.layer.masksToBounds = true
 
         self.confirmButton.setIcon(.checkmark, with: .tiny, for: UIControlState())
         self.confirmButton.accessibilityLabel = "confirmRecording"
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
-        self.confirmButton.setBackgroundImageColor(UIColor(forZMAccentColor: .StrongLimeGreen), for: .Normal)
+        self.confirmButton.setBackgroundImageColor(UIColor(for: .strongLimeGreen), for: .normal)
         self.confirmButton.setIconColor(UIColor.white, for: UIControlState())
         self.confirmButton.layer.masksToBounds = true
 
@@ -162,11 +162,11 @@ import CocoaLumberjackSwift
         
         if atRange.location != NSNotFound {
             let suitableEffects = AVSAudioEffectType.displayedEffects.filter {
-                $0 != .None
+                $0 != .none
             }
             
             let randomEffect = suitableEffects[Int(arc4random()) % suitableEffects.count]
-            let randomEffectImage = UIImage(forIcon: randomEffect.icon, iconSize: .SearchBar, color: colorScheme.colorWithName(ColorSchemeColorTextDimmed))
+            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(withName: ColorSchemeColorTextDimmed))
 
             let tipEffectImageAttachment = NSTextAttachment()
             tipEffectImageAttachment.image = randomEffectImage
@@ -265,7 +265,7 @@ import CocoaLumberjackSwift
         }
         
         recorder.recordStartedCallback = {
-            AppDelegate.sharedAppDelegate().mediaPlaybackManager.audioTrackPlayer.stop()
+            AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
@@ -348,7 +348,7 @@ import CocoaLumberjackSwift
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to send as audio file") }
         
-        delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, context: context, filter: .None)
+        delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, context: context, filter: .none)
     }
     
     fileprivate func openEffectsPicker() {
@@ -357,11 +357,11 @@ import CocoaLumberjackSwift
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
         // To apply noize reduction filter
-        AVSAudioEffectType.None.apply(url.path!, outPath: noizeReducePath) {
+        AVSAudioEffectType.none.apply(url.path, outPath: noizeReducePath) {
             self.currentEffectFilePath = noizeReducePath
-            url.path!.deleteFileAtPath()
+            url.path.deleteFileAtPath()
             
-            if self.effectPickerViewController != .None {
+            if self.effectPickerViewController != .none {
                 self.closeEffectsPicker(animated: false)
             }
             
@@ -370,7 +370,7 @@ import CocoaLumberjackSwift
             self.addChildViewController(newEffectPickerViewController)
             newEffectPickerViewController.view.alpha = 0
             
-            UIView.transitionWithView(self.view, duration: 0.35, options: [.CurveEaseIn], animations: {
+            UIView.transitionWithView(self.view, duration: 0.35, options: [.curveEaseIn], animations: {
                 newEffectPickerViewController.view.translatesAutoresizingMaskIntoConstraints = false
                 self.topContainer.addSubview(newEffectPickerViewController.view)
                 constrain(self.topContainer, newEffectPickerViewController.view) { topContainer, newControllerView in
@@ -378,7 +378,7 @@ import CocoaLumberjackSwift
                 }
                 newEffectPickerViewController.view.alpha = 1
             }) { _ in
-                newEffectPickerViewController.didMoveToParentViewController(self)
+                newEffectPickerViewController.didMove(toParentViewController: self)
             }
             
             self.effectPickerViewController = newEffectPickerViewController
@@ -414,7 +414,7 @@ import CocoaLumberjackSwift
         
         let effectName: String
         
-        if self.currentEffect == .None {
+        if self.currentEffect == .none {
             effectName = "Original"
         }
         else {
@@ -428,7 +428,7 @@ import CocoaLumberjackSwift
         AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { (success) in
             if success {
                 audioPath.deleteFileAtPath()
-                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, context: .AfterEffect, filter: self.currentEffect)
+                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, context: .afterEffect, filter: self.currentEffect)
             }
         }
     }

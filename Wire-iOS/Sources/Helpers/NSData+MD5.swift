@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,16 +22,17 @@ import Foundation
 extension Data {
     func wr_MD5Hash() -> String {
         let digestLen = Int(CC_MD5_DIGEST_LENGTH)
-        let result = UnsafeMutablePointer<CUnsignedChar>.alloc(digestLen)
-        
-        CC_MD5(self.bytes, CC_LONG(self.length), result)
+        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
+        self.withUnsafeBytes { bytes in
+            CC_MD5(bytes, CC_LONG(self.count), result)
+        }
         
         let hash = NSMutableString()
         for i in 0..<digestLen {
             hash.appendFormat("%02x", result[i])
         }
         
-        result.dealloc(digestLen)
+        result.deallocate(capacity: digestLen)
         
         return String(format: hash as String)
     }

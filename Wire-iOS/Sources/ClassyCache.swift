@@ -130,7 +130,7 @@ extension Dictionary where
                 return
             }
             
-            DDLogInfo("Saved bcas to: \(bcasPath) (\(data.length))")
+            DDLogInfo("Saved bcas to: \(bcasPath) (\(data.count))")
         }
     }
     
