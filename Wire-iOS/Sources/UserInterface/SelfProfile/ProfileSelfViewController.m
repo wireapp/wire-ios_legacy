@@ -56,7 +56,6 @@
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLs.h"
 #import "NSLayoutConstraint+Helpers.h"
-#import "NSString+Wire.h"
 #import <PureLayout.h>
 
 @import MessageUI;

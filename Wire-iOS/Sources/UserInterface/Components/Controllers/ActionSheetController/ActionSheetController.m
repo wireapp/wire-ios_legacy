@@ -22,7 +22,6 @@
 @import Classy;
 @import WireExtensionComponents;
 #import "Wire-Swift.h"
-#import "NSString+Wire.h"
 
 
 #import "ActionSheetController.h"

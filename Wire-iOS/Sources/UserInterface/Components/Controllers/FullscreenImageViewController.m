@@ -42,7 +42,6 @@
 #import "UIFont+MagicAccess.h"
 #import "UIView+MTAnimation.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "NSString+Wire.h"
 #import "NSDate+Format.h"
 
 #import "Constants.h"

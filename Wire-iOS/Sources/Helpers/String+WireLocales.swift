@@ -40,3 +40,49 @@ extension NSString {
         return slashlessString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
     }
 }
+
+//static NSRegularExpression *slashCommandMatcher;
+//
+//
+//@implementation NSString (Wire)
+//
+//
+//- (NSString *)uppercaseStringWithCurrentLocale;
+//{
+//    return [self uppercaseStringWithLocale:[NSLocale currentLocale]];
+//    }
+//    
+//    - (NSString *)lowercaseStringWithCurrentLocale;
+//{
+//    return [self lowercaseStringWithLocale:[NSLocale currentLocale]];
+//    }
+//    
+//    - (BOOL)matchesSlashCommand
+//        {
+//            static dispatch_once_t onceToken;
+//            dispatch_once(&onceToken, ^{
+//            slashCommandMatcher = [NSRegularExpression regularExpressionWithPattern:@"^\\/" options:0 error:nil];
+//            });
+//            
+//            BOOL match = NO;
+//            
+//            if ([slashCommandMatcher matchesInString:self options:0 range:NSMakeRange(0, self.length)].count) {
+//                match = YES;
+//            }
+//            
+//            return match;
+//        }
+//        
+//        
+//        - (NSArray *)args
+//            {
+//                if (self.matchesSlashCommand) {
+//                    NSString *slashlessString = [self stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
+//                    return [slashlessString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//                }
+//                else {
+//                    return [NSArray array];
+//                }
+//}
+//
+//@end

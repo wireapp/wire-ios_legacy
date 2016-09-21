@@ -31,7 +31,6 @@
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "NSString+Wire.h"
 
 #import "AddContactsViewController.h"
 #import "ContactsDataSource.h"

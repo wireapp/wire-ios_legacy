@@ -25,7 +25,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "WAZUIMagicIOS.h"
 
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 
 @interface CameraConfirmationView ()

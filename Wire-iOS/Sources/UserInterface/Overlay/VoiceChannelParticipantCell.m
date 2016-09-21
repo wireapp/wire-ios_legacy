@@ -23,7 +23,7 @@
 
 #import "VoiceUserImageView.h"
 #import "WAZUIMagicIOS.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 

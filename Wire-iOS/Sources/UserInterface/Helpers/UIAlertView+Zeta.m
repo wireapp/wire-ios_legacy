@@ -18,7 +18,7 @@
 
 
 #import "UIAlertView+Zeta.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 
 

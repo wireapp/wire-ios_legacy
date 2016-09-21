@@ -23,7 +23,7 @@
 #import "WAZUIMagic.h"
 #import "UIFont+MagicAccess.h"
 #import "UIColor+MagicAccess.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "UIView+Borders.h"
 
