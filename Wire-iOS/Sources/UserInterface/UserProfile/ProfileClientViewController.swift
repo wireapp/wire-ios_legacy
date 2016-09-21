@@ -22,6 +22,22 @@ import Cartography
 import CocoaLumberjackSwift
 import Classy
 
+class ProfileClientViewController: UIViewController {
+    var showBackButton: Bool = true
+    required init(client: UserClient) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+/*
 class ProfileClientViewController: UIViewController, UserClientObserver, UITextViewDelegate {
     let userClient: UserClient!
     var userClientToken: UserClientObserverOpaqueToken!
@@ -387,4 +403,4 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
             return false
         }
     }
-}
+}*/

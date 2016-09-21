@@ -21,6 +21,7 @@ import UIKit
 import Cartography
 import ZMCLinkPreview
 import TTTAttributedLabel
+import WireExtensionComponents
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
@@ -28,7 +29,26 @@ import TTTAttributedLabel
 }
 
 class ArticleView: UIView {
+    weak var delegate: ArticleViewDelegate?
     
+    init(withImagePlaceholder imagePlaceholder: Bool) {
+        super.init(frame: CGRect.zero)
+
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(withTextMessageData textMessageData: ZMTextMessageData) {
+
+    }
+}
+/*
+
+class ArticleView: UIView {
+
     /// MARK - Styling
     var containerColor: UIColor?
     var titleTextColor: UIColor?
@@ -138,10 +158,10 @@ class ArticleView: UIView {
     }
     
     func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
-        let urlWithoutScheme = URL.absoluteString.stringByRemovingURLScheme(URL.scheme!)
-        let displayString = urlWithoutScheme.stringByRemovingPrefixWWW().stringByRemovingTrailingForwardSlash()
+        let urlWithoutScheme = URL.absoluteString.removingURLScheme(URL.scheme!)
+        let displayString = urlWithoutScheme.removingPrefixWWW().removingTrailingForwardSlash()
 
-        if let host = URL.host?.stringByRemovingPrefixWWW() {
+        if let host = URL.host?.removingPrefixWWW() {
             return displayString.attributedString.addAttributes(authorHighlightAttributes, toSubstring: host)
         } else {
             return displayString.attributedString
@@ -244,20 +264,4 @@ extension LinkPreview {
 
 }
 
-// MARK: - URL Formatting
-
-private extension String {
-
-    func stringByRemovingPrefixWWW() -> String {
-        return replacingOccurrences(of: "www.", with: "", options: .anchored, range: nil)
-    }
-
-    func stringByRemovingTrailingForwardSlash() -> String {
-        return replacingOccurrences(of: "/", with: "", options: [.anchored, .backwards], range: nil)
-    }
-
-    func stringByRemovingURLScheme(_ scheme: String) -> String {
-        return replacingOccurrences(of: scheme + "://", with: "", options: .anchored, range: nil)
-    }
-
-}
+*/
