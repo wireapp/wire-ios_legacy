@@ -577,14 +577,14 @@
     }];
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(ZMMessage *)message
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message
 {
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [message resend];
     }];
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(ZMMessage *)message
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id <ZMConversationMessage>)message
 {
     NSString *text = message.textMessageData.messageText;
     

@@ -22,8 +22,8 @@ import Foundation
 extension ZMConversationMessage {
     public func audioCanBeSaved() -> Bool {
         if let fileMessageData = self.fileMessageData,
-            let fileURL = fileMessageData.fileURL
-            , fileMessageData.isAudio() {
+            let _ = fileMessageData.fileURL,
+            fileMessageData.isAudio() {
             return true
         }
         else {

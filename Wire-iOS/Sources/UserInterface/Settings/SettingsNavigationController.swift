@@ -50,8 +50,8 @@ import Foundation
         self.delegate = self
         
         self.transitioningDelegate = self
-        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.SoundAlerts.changeNotificationName), object: nil)
-        NotificationCenter.defaultCenter.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: NSNotification.Name(rawValue: type(of: self).dismissNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.SoundAlerts.changeNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: NSNotification.Name(rawValue: type(of: self).dismissNotificationName), object: nil)
     }
     
     func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {
@@ -114,7 +114,7 @@ import Foundation
         }
     }
     
-    func dismissNotification(notification: NSNotification) {
+    func dismissNotification(_ notification: NSNotification) {
         self.dismissAction?(self)
     }
     
@@ -140,7 +140,7 @@ import Foundation
         
         let navButtonAppearance = UIBarButtonItem.wr_appearanceWhenContained(in: UINavigationBar.self)
                 
-        navButtonAppearance?.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], for: UIControlState.Normal)
+        navButtonAppearance?.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], for: UIControlState.normal)
 
         self.interactivePopGestureRecognizer!.delegate = self
     }
@@ -171,7 +171,7 @@ import Foundation
         
         newLoginAlertController?.addAction(actionTrustDevices)
         
-        self.presentViewController(newLoginAlertController!, animated:true, completion:.none)
+        self.present(newLoginAlertController!, animated:true, completion:.none)
         
         ZMUserSession.shared().enqueueChanges {
             clients.forEach {

@@ -150,7 +150,7 @@ open class WaveformProgressView: UIView {
         backgroundWaveform.barColor = UIColor.gray
         backgroundWaveform.translatesAutoresizingMaskIntoConstraints = false
         foregroundWaveform.backgroundColor = UIColor.clear
-        foregroundWaveform.barColor = UIColor.accentColor()
+        foregroundWaveform.barColor = UIColor.accent()
         foregroundWaveform.translatesAutoresizingMaskIntoConstraints = false
         foregroundWaveform.layer.mask = maskShape
         

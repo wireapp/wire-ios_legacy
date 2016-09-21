@@ -149,7 +149,7 @@ open class LocationMessageCell: ConversationCell {
     
     // MARK: - Selection, Copy & Delete
     
-    open override func canPerformAction(_ action: Selector, withSender sender: AnyObject?) -> Bool {
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(cut), #selector(paste), #selector(select), #selector(selectAll):
             return false
@@ -160,7 +160,7 @@ open class LocationMessageCell: ConversationCell {
         }
     }
     
-    open override func copy(_ sender: AnyObject?) {
+    open override func copy(_ sender: Any?) {
         guard let locationMessageData = message.locationMessageData else { return }
         let coordinates = "\(locationMessageData.latitude), \(locationMessageData.longitude)"
         UIPasteboard.general.string = message.locationMessageData?.name ?? coordinates

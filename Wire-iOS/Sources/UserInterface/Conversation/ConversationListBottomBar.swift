@@ -68,7 +68,7 @@ import Cartography
     var showTooltip: Bool = false {
         didSet {
             if self.showTooltip {
-                self.contactsButton.setIconColor(UIColor.accentColor(), for: .normal)
+                self.contactsButton.setIconColor(UIColor.accent(), for: .normal)
             }
             else {
                 self.contactsButton.setIconColor(UIColor.clear, for: UIControlState())
@@ -84,7 +84,7 @@ import Cartography
         createConstraints()
         updateIndicator()
         if let user = user {
-            userObserverToken = ZMUser.add(self, forUsers: [user], in: .sharedSession())
+            userObserverToken = ZMUser.add(self, forUsers: [user], in: .shared())
         }
     }
 
@@ -122,7 +122,7 @@ import Cartography
         
         accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] color, _ in
             if let `self` = self , self.showTooltip {
-                self.contactsButton.setIconColor(color: color, forState: .normal)
+                self.contactsButton.setIconColor(color, for: .normal)
             }
         }
     }

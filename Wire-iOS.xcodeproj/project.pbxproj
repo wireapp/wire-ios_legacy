@@ -123,7 +123,6 @@
 		1E3FA0531B78B22100A9743D /* AvatarImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E3FA0511B78B22100A9743D /* AvatarImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E3FA0541B78B22100A9743D /* AvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3FA0521B78B22100A9743D /* AvatarImageView.m */; };
 		1E3FA0901B7CE3BD00A9743D /* PreviewImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3FA08F1B7CE3BD00A9743D /* PreviewImagesViewController.swift */; };
-		1E471D181BC67AB500C85203 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E471D171BC67AB500C85203 /* NSString+URL.swift */; };
 		1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */; };
 		1E5505D31BCBD86000811575 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5505D21BCBD86000811575 /* Analytics.swift */; };
 		1E5E0CB01B6B83C6003B0CAC /* ButtonWithLargerHitArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CAC1B6B83C6003B0CAC /* ButtonWithLargerHitArea.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -426,6 +425,7 @@
 		8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */; };
 		872334391CD2450500CF8B11 /* FilePreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872334381CD2450500CF8B11 /* FilePreviewGenerator.swift */; };
 		8725B7C21D780D2500ADBDEB /* ZMMessage+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8725B7C11D780D2500ADBDEB /* ZMMessage+Likes.swift */; };
+		872633E91D9322BA008B69D8 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E471D171BC67AB500C85203 /* NSString+URL.swift */; };
 		872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */; };
 		872A7E8C1C1981A300E4B261 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872A7E8B1C1981A300E4B261 /* AppController.m */; };
 		872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A419E58816006752B4 /* ProfileFooterView.m */; };
@@ -5041,6 +5041,7 @@
 				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
 				160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */,
 				1EE9DCCA1B5F9A6D00E347DF /* TokenizedTextView.m in Sources */,
+				872633E91D9322BA008B69D8 /* NSString+URL.swift in Sources */,
 				1E5E0CB31B6B83C6003B0CAC /* IconButton.m in Sources */,
 				8795A5C51D34D09E0024101B /* KnockAnimationLayer.m in Sources */,
 				87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */,
@@ -5076,7 +5077,6 @@
 				1EE9DC871B5F991900E347DF /* ConversationListCell.swift in Sources */,
 				1EFBFF3F1B81FFA50011A94A /* NSItemProvider+Attachments.swift in Sources */,
 				1EE9DCFB1B5FE76600E347DF /* UIAlertController+NSError.swift in Sources */,
-				1E471D181BC67AB500C85203 /* NSString+URL.swift in Sources */,
 				1EE9DC8C1B5F991900E347DF /* ShareViewController.swift in Sources */,
 				1EE9DC8B1B5F991900E347DF /* RootViewController.swift in Sources */,
 				1EE9DCF21B5FCA5E00E347DF /* UIColor+Accent.swift in Sources */,

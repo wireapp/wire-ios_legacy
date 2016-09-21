@@ -101,12 +101,13 @@ public struct AudioEffectCellBorders : OptionSet {
     }
     
     fileprivate func updateForSelectedState() {
-        self.iconView.setIconColor(self.isSelected ? UIColor.accentColor : UIColor.white, for: .normal)
+        let color = self.isSelected ? UIColor.accent() : UIColor.white
+        self.iconView.setIconColor(color, for: .normal)
     }
     
     public var effect: AVSAudioEffectType = .none {
         didSet {
-            self.iconView.setIcon(icon: effect.icon, with: .small, for: .normal)
+            self.iconView.setIcon(effect.icon, with: .small, for: .normal)
             self.accessibilityLabel = effect.description
         }
     }

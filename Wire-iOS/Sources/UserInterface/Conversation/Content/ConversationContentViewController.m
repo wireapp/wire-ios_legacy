@@ -326,7 +326,7 @@
         id<ZMConversationMessage>topVisibleMessage = [self.messageWindow.messages objectAtIndex:topVisibleIndexPath.row];
         id<ZMConversationMessage>bottomVisibleMessage = [self.messageWindow.messages objectAtIndex:bottomVisibleIndexPath.row];
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation setVisibleWindowFromMessage:topVisibleMessage toMessage:bottomVisibleMessage];
+            [self.conversation setVisibleWindowFromMessage:(ZMMessage *)topVisibleMessage toMessage:(ZMMessage *)bottomVisibleMessage];
         }];
     }
 }
@@ -920,7 +920,7 @@
     return isInWindow && notCoveredModally && viewIsVisible;
 }
 
-- (void)handleMessageUpdateForFileUpload:(NSArray *)messageChangeInfos selectedMessage:(ZMMessage *)selectedMessage
+- (void)handleMessageUpdateForFileUpload:(NSArray *)messageChangeInfos selectedMessage:(id<ZMConversationMessage>)selectedMessage
 {
     if ([self viewControllerIsVisible]) {
         NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
@@ -952,7 +952,7 @@
 - (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos
 {
     if (self.waitingForFileDownload) {
-        ZMMessage *selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
+        id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
         if (([Message isVideoMessage:selectedMessage] ||
              [Message isAudioMessage:selectedMessage] ||
              [Message isFileTransferMessage:selectedMessage]) && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {

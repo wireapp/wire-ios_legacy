@@ -21,10 +21,10 @@ import Classy
 import Foundation
 import CocoaLumberjackSwift
 
-extension Dictionary
+extension Dictionary where Key: Hashable, Value: Any
 {
     func wr_keyValues() -> [[String: AnyObject]] {
-        return self.keys.map({ ["key":   $0,
+        return self.keys.map({ ["key": $0 as AnyObject,
                                 "value": self[$0]! as AnyObject] as [String: AnyObject] })
     }
     
@@ -91,7 +91,7 @@ extension Dictionary
     }()
     
     func bcasPath(_ casPath: String, variables: [AnyHashable: Any]!) -> String? {
-        let data = variables.wr_sortedKeyValues() as Any
+        let data = variables.wr_sortedKeyValues()
         guard let fileData = NSMutableData(contentsOfFile: casPath),
             let variablesJSON = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
             else {

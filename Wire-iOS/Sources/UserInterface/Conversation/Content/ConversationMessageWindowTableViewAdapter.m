@@ -146,7 +146,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     }
 }
 
-- (void)setEditingMessage:(ZMMessage *)editingMessage
+- (void)setEditingMessage:(id <ZMConversationMessage>)editingMessage
 {
     _editingMessage = editingMessage;
     [self reconfigureVisibleCellsWithDeletedIndexPaths:nil];

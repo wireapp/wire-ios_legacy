@@ -71,12 +71,12 @@ class ClientTableViewCell: UITableViewCell {
                     CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
 
                         if let placemark = placemarks?.first,
-                            let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String],
+                            let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String] as? String,
                             let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String] ,
                             localClient == self.userClient &&
                             error == nil {
                                 
-                            self.activationLabel.text = "\(NSLocalizedString("registration.devices.activated_in", comment: "")) \(addressCity), \(addressCountry.uppercased()) — \(activationDate.wr_formattedDate())"
+                            self.activationLabel.text = "\(NSLocalizedString("registration.devices.activated_in", comment: "")) \(addressCity), \(addressCountry.uppercased()) — \((activationDate as NSDate).wr_formattedDate())"
                         }
                     } as! CLGeocodeCompletionHandler)
                     
@@ -185,8 +185,8 @@ class ClientTableViewCell: UITableViewCell {
             , userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor],
-                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.whiteColor()],
+                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.white],
+                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.white],
                     uppercase: true
                 )
         }

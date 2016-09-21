@@ -70,13 +70,13 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     
     lazy private var lastCallSessionReports: [TechnicalReport] = {
         let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.trimmingCharacters(in: CharacterSet.whitespaces)
-        let reportStrings = voiceChannelDebugString.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        let reportStrings = voiceChannelDebugString.components(separatedBy: CharacterSet.newlines)
         
-        return reportStrings.reduce([TechnicalReport](), combine: { (reports, report) -> [TechnicalReport] in
+        return reportStrings.reduce([TechnicalReport](), { (reports, report) -> [TechnicalReport] in
             var mutableReports = reports
-            if let separatorRange = report.rangeOfString(":") {
-                let title = report.substringToIndex(separatorRange.startIndex)
-                let data = report.substringFromIndex(separatorRange.startIndex.advancedBy(1))
+            if let separatorRange = report.range(of:":") {
+                let title = report.substring(to: separatorRange.lowerBound)
+                let data = report.substring(from: report.index(separatorRange.lowerBound, offsetBy: 1))
                 mutableReports.append([SettingsTechnicalReportViewController.technicalReportTitle: title, SettingsTechnicalReportViewController.technicalReportData: data])
             }
             

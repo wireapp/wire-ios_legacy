@@ -51,7 +51,7 @@ extension UIImage {
     let title, descriptionText: String
     let tapHandler: (()->())?
     
-    init(title: String, description: String,  handler: @escaping (()->())? = nil) {
+    init(title: String, description: String,  handler: (()->())? = nil) {
         self.title = title
         descriptionText = description
         tapHandler = handler

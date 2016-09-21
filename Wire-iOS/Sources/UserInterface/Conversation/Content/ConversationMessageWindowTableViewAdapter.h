@@ -26,9 +26,9 @@
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject <UITableViewDataSource>
 
-@property (nonatomic) ZMMessage *lastUnreadMessage;
-@property (nonatomic) ZMMessage *selectedMessage;
-@property (nonatomic) ZMMessage *editingMessage;
+@property (nonatomic) id<ZMConversationMessage> lastUnreadMessage;
+@property (nonatomic) id<ZMConversationMessage> selectedMessage;
+@property (nonatomic) id<ZMConversationMessage> editingMessage;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) id<ConversationCellDelegate> conversationCellDelegate;
 

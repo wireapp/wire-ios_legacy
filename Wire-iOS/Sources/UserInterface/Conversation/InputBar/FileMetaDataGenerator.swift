@@ -23,7 +23,7 @@ import CocoaLumberjackSwift
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
-    static func metadataForFileAtURL(_ url: URL, UTI uti: String, completion: (ZMFileMetadata) -> ()) {
+    static func metadataForFileAtURL(_ url: URL, UTI uti: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
             
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
@@ -108,9 +108,13 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
             var maxAmplitude : Int16 = 0
             
             for buffer in abl {
-                let samples = UnsafeMutableBufferPointer<Int16>(start: buffer.mData, count: Int(buffer.mDataByteSize) / sizeof(Int16))
+                guard let data = buffer.mData else {
+                    continue
+                }
                 
-                for sample in samples {
+                let i16bufptr = UnsafeBufferPointer(start: data.assumingMemoryBound(to: Int16.self), count: Int(buffer.mDataByteSize)/Int(MemoryLayout<Int16>.size))
+                
+                for sample in Array(i16bufptr) {
                     sampleSkipCounter += 1
                     maxAmplitude = max(maxAmplitude, sample)
                     

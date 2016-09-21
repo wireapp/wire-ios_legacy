@@ -44,9 +44,9 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button;
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(ZMMessage *)message;
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(ZMMessage *)message;
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController performImageSaveAnimation:(UIView *)snapshotView sourceRect:(CGRect)sourceRect;
 

@@ -127,13 +127,13 @@ extension AVSAudioEffectType: CustomStringConvertible {
     
     public func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
         
-        dispatch_async(type(of: self).wr_convertQueue) {
+        type(of: self).wr_convertQueue.async {
             
-            let result = AVSAudioEffect().applyEffectWav(nil, inFile: inPath, outFile: outPath, effect: self, nr_flag: true)
+            let result = AVSAudioEffect().applyWav(nil, inFile: inPath, outFile: outPath, effect: self, nr_flag: true)
             DDLogInfo("applyEffect \(self) from \(inPath) to \(outPath): \(result)")
-            dispatch_async(dispatch_get_main_queue(), {                 
+            DispatchQueue.main.async {
                 completion?()
-            })
+            }
         }
     }
 }

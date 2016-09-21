@@ -25,7 +25,7 @@
 
 @implementation ZMConversationMessageWindow (Formatting)
 
-- (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(ZMMessage *)lastUnreadMessage
+- (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(id<ZMConversationMessage>)lastUnreadMessage
 {
     ConversationCellLayoutProperties *layoutProperties = [[ConversationCellLayoutProperties alloc] init];
     layoutProperties.showSender       = [self shouldShowSenderForMessage:message];

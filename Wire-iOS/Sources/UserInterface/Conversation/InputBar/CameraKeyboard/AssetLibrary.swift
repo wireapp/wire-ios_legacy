@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -48,7 +48,7 @@ open class AssetLibrary {
         if index >= count {
             throw AssetError.outOfRange
         }
-        return fetch.object(at: Int(index)) as! PHAsset
+        return fetch.object(at: Int(index))
     }
     
     open func refetchAssets(synchronous: Bool = false) {
@@ -84,7 +84,7 @@ open class AssetLibrary {
         }
     }
     
-    fileprivate var fetch: PHFetchResult<AnyObject>?
+    fileprivate var fetch: PHFetchResult<PHAsset>?
     
     init(synchronous: Bool = false) {
         self.synchronous = synchronous

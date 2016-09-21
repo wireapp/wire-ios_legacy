@@ -55,7 +55,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 @interface SplitViewControllerTransitionContext ()
 
 @property (nonatomic) NSDictionary *viewControllers;
-@property (nonatomic, weak) UIView *containerView;
+@property (nonatomic) UIView *containerView;
 @property (nonatomic) UIModalPresentationStyle presentationStyle;
 
 @end

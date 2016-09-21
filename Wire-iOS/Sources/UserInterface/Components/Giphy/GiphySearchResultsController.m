@@ -55,7 +55,7 @@
         self.ziphyClient = [ZiphyClient wr_ziphyWithDefaultConfiguration];
         self.ziphySearchResultsController = [[ZiphySearchResultsController alloc] initWithSearchTerm:self.searchTerm
                                                                                             pageSize:self.pageSize
-                                                                                       callBackQueue:dispatch_get_main_queue()];
+                                                                                       callBackQueue:(OS_dispatch_queue *)dispatch_get_main_queue()];
         self.ziphySearchResultsController.ziphyClient = self.ziphyClient;
         self.searchResults = [NSArray array];
     }
@@ -115,7 +115,7 @@
                            ofType:(ZiphyImageType)imageType
                        completion:(void (^)(BOOL success, ZiphyImageRep *ziphyImageRep, Ziph *ziph, NSData *imageData, NSError *error))completion
 {
-    [self.ziphyClient  fetchImage:dispatch_get_main_queue()
+    [self.ziphyClient  fetchImage:(OS_dispatch_queue *)dispatch_get_main_queue()
                             ziph:ziph
                        imageType:imageType
                     onCompletion:completion];

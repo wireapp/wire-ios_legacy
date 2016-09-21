@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIColor (WR_ColorScheme)
 
 + (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor;
-+ (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor variant:(ColorSchemeVariant)variant;
++ (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor variant:(enum ColorSchemeVariant)variant;
 
 @end
 
