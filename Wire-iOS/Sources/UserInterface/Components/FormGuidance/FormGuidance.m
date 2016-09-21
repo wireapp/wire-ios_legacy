@@ -22,7 +22,7 @@
 #import "Guidance.h"
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 
 

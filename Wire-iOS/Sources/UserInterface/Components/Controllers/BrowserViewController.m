@@ -25,7 +25,7 @@
 #import "BrowserViewController.h"
 #import "BrowserBarView.h"
 @import WireExtensionComponents;
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 
 

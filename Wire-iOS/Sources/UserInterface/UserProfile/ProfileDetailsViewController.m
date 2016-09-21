@@ -43,7 +43,7 @@
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "ZClientViewController.h"
 #import "ProfileFooterView.h"

@@ -24,7 +24,7 @@
 #import "zmessaging+iOS.h"
 #import "WireStyleKit.h"
 #import "WAZUIMagicIOS.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 #import "UIColor+Mixing.h"
 #import "Analytics+iOS.h"
 #import "UIColor+WR_ColorScheme.h"
