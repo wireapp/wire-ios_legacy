@@ -55,7 +55,7 @@
 
 + (instancetype)wr_passwordResetURL
 {
-    return [self URLWithString:@"https://wire.com/forgot/"];
+    return [self URLWithString:@"https://account.wire.com/forgot/"];
 }
 
 + (instancetype)wr_supportURL
