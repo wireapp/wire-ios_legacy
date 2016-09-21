@@ -23,21 +23,21 @@ import Cartography
 
 
 @objc protocol TabBarControllerDelegate: class {
-    func tabBarController(controller: TabBarController, tabBarDidSelectIndex: Int)
+    func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 
 
 public extension UIViewController {
     public var wr_tabBarController : TabBarController? {
         get {
-            if (parentViewController == nil) {
+            if (parent == nil) {
                 return nil;
             }
-            else if (parentViewController?.isKindOfClass(TabBarController) != nil) {
-                return parentViewController as? TabBarController;
+            else if (parent?.isKind(of: TabBarController.self) != nil) {
+                return parent as? TabBarController;
             }
             else {
-                return parentViewController?.wr_tabBarController;
+                return parent?.wr_tabBarController;
             }
         }
     }
@@ -49,22 +49,22 @@ public extension UIViewController {
 
 
 @objc
-public class TabBarController: UIViewController {
+open class TabBarController: UIViewController {
 
-    public private(set) var viewControllers : [UIViewController]
-    public private(set) var selectedIndex : Int
-    public var style : TabBarStyle = .Default
-    public var enabled : Bool = true {
+    open fileprivate(set) var viewControllers : [UIViewController]
+    open fileprivate(set) var selectedIndex : Int
+    open var style : TabBarStyle = .default
+    open var enabled : Bool = true {
         didSet {
-            self.tabBar?.userInteractionEnabled = self.enabled
+            self.tabBar?.isUserInteractionEnabled = self.enabled
         }
     }
     
     weak var delegate: TabBarControllerDelegate?
     
-    private var presentedTabBarViewController : UIViewController?
-    private var tabBar : TabBar?
-    private var contentView : UIView!
+    fileprivate var presentedTabBarViewController : UIViewController?
+    fileprivate var tabBar : TabBar?
+    fileprivate var contentView : UIView!
     
     required public init( viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
@@ -76,7 +76,7 @@ public class TabBarController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         createViews()
@@ -84,7 +84,7 @@ public class TabBarController: UIViewController {
         selectIndex(selectedIndex, animated: false)
     }
     
-    private func createViews() {
+    fileprivate func createViews() {
         self.contentView = UIView(frame: self.view.bounds)
         self.contentView!.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
@@ -93,12 +93,12 @@ public class TabBarController: UIViewController {
             let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
             self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
             self.tabBar?.delegate = self
-            self.tabBar?.userInteractionEnabled = self.enabled
+            self.tabBar?.isUserInteractionEnabled = self.enabled
             self.view.addSubview(self.tabBar!)
         }
     }
     
-    private func createConstraints() {
+    fileprivate func createConstraints() {
         
         if let tabBar = self.tabBar {
             constrain(tabBar, self.contentView) { tabBar, contentView in
@@ -117,7 +117,7 @@ public class TabBarController: UIViewController {
         }
     }
         
-    public func selectIndex(index: Int, animated: Bool) {
+    open func selectIndex(_ index: Int, animated: Bool) {
         selectedIndex = index
         
         let toViewController = self.viewControllers[index]
@@ -132,31 +132,31 @@ public class TabBarController: UIViewController {
         self.tabBar?.setSelectedIndex(index, animated: animated)
         
         if (fromViewController != nil) {
-            fromViewController?.willMoveToParentViewController(nil)
+            fromViewController?.willMove(toParentViewController: nil)
         }
         
         toViewController.view.translatesAutoresizingMaskIntoConstraints = true
-        toViewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         toViewController.view.frame = self.contentView.bounds
         
         if (animated && fromViewController != nil) {
-            fromViewController?.willMoveToParentViewController(nil)
+            fromViewController?.willMove(toParentViewController: nil)
             addChildViewController(toViewController)
             
-            self.transitionFromViewController(fromViewController!, toViewController: toViewController, duration: 0.35, options: .TransitionCrossDissolve, animations: {
-                if toViewController.respondsToSelector(#selector(UIViewController.takeFirstResponder)) {
-                    toViewController.performSelector(#selector(UIViewController.takeFirstResponder))
+            self.transition(from: fromViewController!, to: toViewController, duration: 0.35, options: .transitionCrossDissolve, animations: {
+                if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
+                    toViewController.perform(#selector(UIViewController.takeFirstResponder))
                 }
                 }, completion: { (finished) in
                     fromViewController?.removeFromParentViewController()
-                    toViewController.didMoveToParentViewController(self)
+                    toViewController.didMove(toParentViewController: self)
                 }
             )
         } else {
             fromViewController?.removeFromParentViewController()
             addChildViewController(toViewController)
             self.contentView.addSubview(toViewController.view)
-            toViewController.didMoveToParentViewController(self)
+            toViewController.didMove(toParentViewController: self)
         }
     }
     
@@ -164,7 +164,7 @@ public class TabBarController: UIViewController {
 
 extension TabBarController : TabBarDelegate {
     
-    public func didSelectIndex(index: Int) {
+    public func didSelectIndex(_ index: Int) {
         selectIndex(index, animated: true)
     }
     
