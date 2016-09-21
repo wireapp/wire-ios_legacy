@@ -132,7 +132,6 @@ import Foundation
             Analytics.shared()?.tagResetPassword(true, fromType: ResetFromProfile)
         }
         
-        let resetPasswordSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword])
         
         var signOutSection: SettingsSectionDescriptor?
         if DeveloperMenuState.signOutEnabled() {
@@ -161,15 +160,16 @@ import Foundation
             return alert
         })
         
-        let deleteSubtitle = "self.settings.account_details.delete_account.footer".localized
-        let deleteSection = SettingsSectionDescriptor(cellDescriptors: [deleteAccountButton], header: .None, footer: deleteSubtitle)
+        let actionsSubtitle = "self.settings.account_details.delete_account.footer".localized
+        let actionsTitle = "self.settings.account_details.actions.title".localized
+        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: actionsSubtitle)
 
         let items: [SettingsSectionDescriptorType]
         if let signOutSection = signOutSection {
-            items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, signOutSection, deleteSection]
+            items = [nameAndDetailsSection, appearanceSection, actionsSection, signOutSection]
         }
         else {
-            items = [nameAndDetailsSection, appearanceSection, resetPasswordSection, deleteSection]
+            items = [nameAndDetailsSection, appearanceSection, actionsSection]
         }
         
         return SettingsGroupCellDescriptor(items: items, title: "self.settings.account_section".localized, icon: .SettingsAccount)
@@ -414,7 +414,7 @@ import Foundation
             return BrowserViewController(URL: NSURL.wr_licenseInformationURL().wr_URLByAppendingLocaleParameter())
         }, previewGenerator: .None)
 
-        let linksSection = SettingsSectionDescriptor(cellDescriptors: [privacyPolicyButton, tosButton, licenseButton])
+        let linksSection = SettingsSectionDescriptor(cellDescriptors: [tosButton, privacyPolicyButton, licenseButton])
         
         let websiteButton = SettingsButtonCellDescriptor(title: "about.website.title".localized, isDestructive: false) { _ in
             UIApplication.sharedApplication().openURL(NSURL.wr_websiteURL().wr_URLByAppendingLocaleParameter())
@@ -447,11 +447,11 @@ import Foundation
             }
             
             let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .None, footer: copyrightInfo)
-            items = [linksSection, websiteSection, infoSection]
+            items = [websiteSection, linksSection, infoSection]
         }
         else {
             let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton], header: .None, footer: version + " " + copyrightInfo)
-            items = [linksSection, websiteSection]
+            items = [websiteSection, linksSection]
         }
         
         return SettingsGroupCellDescriptor(items: items, title: "self.about".localized, style: .Grouped, identifier: .None, previewGenerator: .None, icon:  .WireLogo)

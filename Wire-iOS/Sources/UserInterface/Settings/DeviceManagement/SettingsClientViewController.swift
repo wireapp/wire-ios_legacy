@@ -206,7 +206,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .ResetSession:
             if let cell = tableView.dequeueReusableCellWithIdentifier(self.dynamicType.resetCellReuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
-                cell.titleColor = UIColor(colorLiteralRed:0.0, green:122.0/255.0, blue:1.0, alpha:1.0)
                 
                 return cell
             }
@@ -215,7 +214,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .RemoveDevice:
             if let cell = tableView.dequeueReusableCellWithIdentifier(self.dynamicType.deleteCellReuseIdentifier, forIndexPath: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
-                cell.titleColor = UIColor.redColor()
                 
                 return cell
             }

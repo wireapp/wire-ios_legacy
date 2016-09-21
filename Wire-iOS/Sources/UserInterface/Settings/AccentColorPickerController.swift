@@ -69,6 +69,7 @@ public protocol ColorPickerControllerDelegate {
         
         self.closeButton.setIcon(.X, withSize: .Tiny, forState: .Normal)
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), forControlEvents: .TouchUpInside)
+        self.closeButton.setIconColor(.darkGrayColor(), forState: .Normal)
         
         self.titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         

@@ -307,6 +307,7 @@ import CocoaLumberjackSwift
             case 0:
                 cell.userClient = self.selfClient
                 cell.wr_editable = false
+                cell.showVerified = false
             case 1:
                 cell.userClient = self.sortedClients[indexPath.row]
                 cell.wr_editable = true

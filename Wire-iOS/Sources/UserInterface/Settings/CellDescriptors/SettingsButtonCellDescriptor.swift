@@ -109,12 +109,8 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
     
     func featureCell(cell: SettingsCellType) {
         cell.titleText = self.title
-        if self.isDestructive {
-            cell.titleColor = UIColor.redColor()
-        }
-        else {
-            cell.titleColor = UIColor.whiteColor()
-        }
+
+        cell.titleColor = UIColor.whiteColor()
     }
     
     func select(value: SettingsPropertyValue?) {
