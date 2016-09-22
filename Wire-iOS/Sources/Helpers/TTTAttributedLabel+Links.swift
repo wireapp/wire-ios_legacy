@@ -23,12 +23,13 @@ import TTTAttributedLabel
 
 extension TTTAttributedLabel {
 
-    func addLinks(){
-        attributedText.enumerateAttribute(NSLinkAttributeName, in: NSMakeRange(0, attributedText.length), options: [], using: { (value: AnyObject?, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-            if let URL = value as? URL{
+    func addLinks() {
+        
+        attributedText.enumerateAttribute(NSLinkAttributeName, in: NSMakeRange(0, attributedText.length), options: [], using: { (value: Any?, range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+            if let URL = value as? URL {
                 self.addLink(to: URL, with: range)
             }
-        } as! (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void)
+        })
         
     }
 }

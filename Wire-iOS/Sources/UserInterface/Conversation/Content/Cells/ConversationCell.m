@@ -318,6 +318,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)updateToolboxVisibilityAnimated:(BOOL)animated
 {
+    if (nil == self.message) {
+        return;
+    }
+    
     ZMDeliveryState deliveryState = self.message.deliveryState;
     
     // Code disabled until the majority would send the delivery receipts

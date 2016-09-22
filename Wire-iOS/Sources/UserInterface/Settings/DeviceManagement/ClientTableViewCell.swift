@@ -68,7 +68,7 @@ class ClientTableViewCell: UITableViewCell {
                 if let activationDate = userClient.activationDate , userClient.activationLocationLatitude != 0 && userClient.activationLocationLongitude != 0 {
 
                     let localClient = self.userClient
-                    CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+                    CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
 
                         if let placemark = placemarks?.first,
                             let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String] as? String,
@@ -78,7 +78,7 @@ class ClientTableViewCell: UITableViewCell {
                                 
                             self.activationLabel.text = "\(NSLocalizedString("registration.devices.activated_in", comment: "")) \(addressCity), \(addressCountry.uppercased()) — \((activationDate as NSDate).wr_formattedDate())"
                         }
-                    } as! CLGeocodeCompletionHandler)
+                    })
                     
                     self.activationLabel.text = (activationDate as NSDate).wr_formattedDate()
                 }

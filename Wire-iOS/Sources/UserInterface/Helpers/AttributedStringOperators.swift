@@ -22,7 +22,7 @@ import Foundation
 // MARK: - Operators
 
 // Concats the lhs and rhs and returns a NSAttributedString
-infix operator +: AdditionPrecedence
+infix operator + : AdditionPrecedence
 
 func +(left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     let result = NSMutableAttributedString()
@@ -53,30 +53,30 @@ func +(left: NSAttributedString, right: String) -> NSAttributedString {
 }
 
 // Concats the lhs and rhs and assigns the result to the lhs
-infix operator +=: AssignmentPrecedence
+infix operator += : AssignmentPrecedence
 
-func +=(left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
+@discardableResult func +=(left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
     left.append(right.attributedString)
     return left
 }
 
-func +=(left: inout NSAttributedString, right: String) -> NSAttributedString {
+@discardableResult func +=(left: inout NSAttributedString, right: String) -> NSAttributedString {
     left = left + right
     return left
 }
 
-func +=(left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+@discardableResult func +=(left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     left = left + right
     return left
 }
 
-func +=(left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
+@discardableResult func +=(left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
     guard let rhs = right else { return left }
     return left += rhs
 }
 
 // Applies the attributes on the rhs to the string on the lhs
-infix operator &&: LogicalConjunctionPrecedence
+infix operator && : LogicalConjunctionPrecedence
 
 func &&(left: String, right: [String: AnyObject]) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: right)

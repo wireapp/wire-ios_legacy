@@ -252,7 +252,7 @@ private struct InputBarConstants {
         fakeCursor.isHidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
     }
     
-    func textViewContentSizeDidChange(_ notification: Notification) {
+    func textViewContentSizeDidChange(_ sender: AnyObject) {
         textIsOverflowing = textView.contentSize.height > textView.bounds.size.height
     }
 
