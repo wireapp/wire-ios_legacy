@@ -369,7 +369,11 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        let isFrontCamera = cameraCell.cameraController.currentCamera == .front
+        guard let cameraController = cameraCell.cameraController else {
+            return
+        }
+        
+        let isFrontCamera = cameraController.currentCamera == .front
         
         let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.front : ConversationMediaPictureCamera.back
         

@@ -27,7 +27,7 @@ public protocol CameraCellDelegate: class {
 }
 
 open class CameraCell: UICollectionViewCell {
-    let cameraController = CameraController()
+    let cameraController: CameraController?
     
     let expandButton = IconButton()
     let takePictureButton = IconButton()
@@ -42,19 +42,25 @@ open class CameraCell: UICollectionViewCell {
     }
     
     override init(frame: CGRect) {
+        self.cameraController = CameraController()
+        
         super.init(frame: frame)
         
-        self.cameraController.previewLayer.frame = self.contentView.bounds
-        self.cameraController.currentCamera = Settings.shared().preferredCamera
-            
+        if let cameraController = self.cameraController {
+            cameraController.previewLayer.frame = self.contentView.bounds
+            cameraController.currentCamera = Settings.shared().preferredCamera
+            cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.contentView.layer.addSublayer(cameraController.previewLayer)
+        }
+        
         self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = UIColor.black
         
-        self.cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        self.contentView.layer.addSublayer(self.cameraController.previewLayer)
         
         delay(0.01) {
-            self.cameraController.startRunning()
+            if let cameraController = self.cameraController {
+                cameraController.startRunning()
+            }
             self.updateVideoOrientation()
         }
         
@@ -115,17 +121,25 @@ open class CameraCell: UICollectionViewCell {
 
     override open func didMoveToWindow() {
         super.didMoveToWindow()
+        
+        guard let cameraController = self.cameraController else {
+            return
+        }
+        
         if self.window == .none {
-            self.cameraController.stopRunning()
+            cameraController.stopRunning()
         }
         else {
-            self.cameraController.startRunning()
+            cameraController.startRunning()
         }
     }
     
     override open func layoutSubviews() {
         super.layoutSubviews()
-        self.cameraController.previewLayer.frame = self.contentView.bounds
+        guard let cameraController = self.cameraController else {
+            return
+        }
+        cameraController.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
     }
     
@@ -138,6 +152,10 @@ open class CameraCell: UICollectionViewCell {
     }
     
     fileprivate func updateVideoOrientation() {
+        guard let cameraController = self.cameraController else {
+            return
+        }
+        
         let newOrientation: AVCaptureVideoOrientation
         
         switch UIDevice.current.orientation {
@@ -157,15 +175,15 @@ open class CameraCell: UICollectionViewCell {
             newOrientation = .portrait;
         }
         
-        if let connection = self.cameraController.previewLayer.connection , connection.isVideoOrientationSupported {
+        if let connection = cameraController.previewLayer.connection , connection.isVideoOrientationSupported {
             connection.videoOrientation = newOrientation
         }
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            self.cameraController.snapshotVideoOrientation = newOrientation
+            cameraController.snapshotVideoOrientation = newOrientation
         }
         else {
-            self.cameraController.snapshotVideoOrientation = .portrait
+            cameraController.snapshotVideoOrientation = .portrait
         }
     }
     
@@ -176,7 +194,8 @@ open class CameraCell: UICollectionViewCell {
     func cameraControllerWillChangeCurrentCamera(_ notification: Notification!) {
         
         guard let _ = self.window,
-                let snapshotImage = self.cameraController.videoSnapshot.imageScaled(withFactor: 0.5) else {
+                let cameraController = self.cameraController,
+                let snapshotImage = cameraController.videoSnapshot?.imageScaled(withFactor: 0.5) else {
             return
         }
     
@@ -184,7 +203,7 @@ open class CameraCell: UICollectionViewCell {
         
         let flipView = UIView()
         flipView.autoresizesSubviews = true
-        flipView.frame = self.cameraController.previewLayer.frame
+        flipView.frame = cameraController.previewLayer.frame
         flipView.backgroundColor = UIColor.black
         flipView.isOpaque = true
         self.contentView.insertSubview(flipView, belowSubview: self.expandButton)
@@ -203,7 +222,7 @@ open class CameraCell: UICollectionViewCell {
         
         CATransaction.flush()
         
-        self.cameraController.previewLayer.isHidden = true
+        cameraController.previewLayer.isHidden = true
         self.expandButton.isHidden = true
         self.takePictureButton.isHidden = true
         self.changeCameraButton.isHidden = true
@@ -214,7 +233,7 @@ open class CameraCell: UICollectionViewCell {
         
             UIView.animate(withDuration: 0.35, delay: 0.35, options: [], animations: {
                     flipView.alpha = 0
-                    self.cameraController.previewLayer.isHidden = false
+                    cameraController.previewLayer.isHidden = false
                 }, completion: { _ in
                     flipView.removeFromSuperview()
 
@@ -234,7 +253,11 @@ open class CameraCell: UICollectionViewCell {
     }
     
     func shutterButtonPressed(_ sender: AnyObject) {
-        self.cameraController.captureStillImage { data, meta, error in
+        guard let cameraController = self.cameraController else {
+            return
+        }
+        
+        cameraController.captureStillImage { data, meta, error in
             if error == nil {
                 self.delegate?.cameraCell(self, didPickImageData: data!)
             }
@@ -242,7 +265,11 @@ open class CameraCell: UICollectionViewCell {
     }
     
     func changeCameraPressed(_ sender: AnyObject) {
-        self.cameraController.currentCamera = self.cameraController.currentCamera == .front ? .back : .front
-        Settings.shared().preferredCamera = self.cameraController.currentCamera
+        guard let cameraController = self.cameraController else {
+            return
+        }
+        
+        cameraController.currentCamera = cameraController.currentCamera == .front ? .back : .front
+        Settings.shared().preferredCamera = cameraController.currentCamera
     }
 }

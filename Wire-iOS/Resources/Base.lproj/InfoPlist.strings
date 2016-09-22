@@ -19,3 +19,4 @@
 "NSContactsUsageDescription" = "We’d like to access your Contacts so we can connect you with people you might know. Your data is safely stored with us and not shared with anyone else.";
 "NSMicrophoneUsageDescription" = "You will be able to talk to people and send audio messages";
 "NSLocationWhenInUseUsageDescription" = "Allow Wire to access your location so you can send your location to others.";
+"NSCameraUsageDescription" = "You would be able to place video calls and send photos";

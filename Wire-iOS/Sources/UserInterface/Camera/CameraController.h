@@ -20,6 +20,8 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 FOUNDATION_EXTERN NSString * const CameraControllerWillChangeCurrentCamera;
 FOUNDATION_EXTERN NSString * const CameraControllerDidChangeCurrentCamera;
 
@@ -59,19 +61,21 @@ typedef NS_ENUM(NSInteger, CameraControllerCamera) {
 
 @interface CameraController : NSObject
 
-@property (nonatomic, weak) id<CameraControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<CameraControllerDelegate> delegate;
 @property (nonatomic, readonly) AVCaptureVideoPreviewLayer *previewLayer;
 
 @property (nonatomic) CameraControllerCamera currentCamera;
 @property (nonatomic) AVCaptureFlashMode flashMode;
 @property (nonatomic) CGFloat exposureBias;
 @property (nonatomic) CGFloat exposureCompensation;
-@property (nonatomic, readonly) UIImage *videoSnapshot;
+@property (nonatomic, readonly, nullable) UIImage *videoSnapshot;
 @property (nonatomic) AVCaptureVideoOrientation snapshotVideoOrientation;
 
 @property (nonatomic, readonly) BOOL isContinousAutoFocusSupported;
 @property (nonatomic, readonly) BOOL isContinousAutoFocusEnabled;
 @property (nonatomic, readonly) BOOL isCameraAccessDenied;
+
+- (nullable instancetype)initCameraController NS_DESIGNATED_INITIALIZER;
 
 - (void)startRunning;
 - (void)stopRunning;
@@ -82,7 +86,7 @@ typedef NS_ENUM(NSInteger, CameraControllerCamera) {
 - (void)enableContinousAutoFocus;
 - (void)lockFocusAtPointOfInterest:(CGPoint)point;
 
-- (void)captureStillImageWithCompletionHandler:(void (^)(NSData *imageData, NSDictionary *metaData, NSError *error))completionHandler;
+- (void)captureStillImageWithCompletionHandler:(void (^)(NSData * _Nullable imageData, NSDictionary * _Nullable metaData, NSError * _Nullable error))completionHandler;
 
 /// Register an observer for a camera setting. The observer is not retained.
 - (void)registerObserver:(id<CameraSettingValueObserver>)observer setting:(NSString *)setting;
@@ -91,3 +95,5 @@ typedef NS_ENUM(NSInteger, CameraControllerCamera) {
 - (void)unregisterObserver:(id<CameraSettingValueObserver>)observe setting:(NSString *)setting;
 
 @end
+
+NS_ASSUME_NONNULL_END
