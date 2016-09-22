@@ -24,6 +24,8 @@
 @class ConversationCellLayoutProperties;
 @class LinkAttachment;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSAttributedString (FormatLinkAttachments)
 + (NSAttributedString *)formattedStringWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
                                                 forMessage:(id<ZMTextMessageData>)message
@@ -31,9 +33,11 @@
 @end
 
 @interface Message (Formatting)
-+ (NSArray *)linkAttachments:(id<ZMTextMessageData>)message;
++ (NSArray<LinkAttachment *> *)linkAttachments:(id<ZMTextMessageData>)message;
 
 /// This method needs to be called as soon as the text color configuration got changed: Magic changes cause of rotation for instance
 + (void)invalidateTextColorConfiguration;
 
 @end
+
+NS_ASSUME_NONNULL_END

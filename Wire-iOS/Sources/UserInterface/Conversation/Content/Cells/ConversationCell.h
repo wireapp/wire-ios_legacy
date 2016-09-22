@@ -28,6 +28,7 @@
 @class MessageToolboxView;
 @class AnalyticsTracker;
 @class LikeButton;
+@class LinkAttachment;
 
 
 typedef NS_ENUM(NSUInteger, ConversationCellAction) {
@@ -62,7 +63,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, assign) BOOL alwaysShowDeliveryState;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
-@property (nonatomic, strong) NSArray *linkAttachments;
+@property (nonatomic, strong) NSArray<LinkAttachment *> *linkAttachments;
 
 @end
 

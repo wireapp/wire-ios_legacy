@@ -195,7 +195,7 @@ static inline NSDataDetector *linkDataDetector(void)
     return linkAttributes;
 }
 
-+ (NSArray *)linkAttachments:(id<ZMTextMessageData>)message
++ (NSArray<LinkAttachment *> *)linkAttachments:(id<ZMTextMessageData>)message
 {
     NSDataDetector *detector = linkDataDetector();
     NSArray *contentURLs = nil;

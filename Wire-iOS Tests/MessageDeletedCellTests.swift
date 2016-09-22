@@ -47,7 +47,7 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
 
 extension MessageDeletedCellTests {
 
-    func configure(cell: MessageDeletedCell) -> MessageDeletedCell {
+    func configure(cell: MessageDeletedCell) {
         let message = MockMessageFactory.systemMessage(with: .messageDeletedForEveryone, users: 0, clients: 0)
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
@@ -63,7 +63,6 @@ extension MessageDeletedCellTests {
         cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
-        return cell
     }
 
 }

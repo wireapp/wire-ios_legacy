@@ -54,7 +54,7 @@ import Foundation
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: NSNotification.Name(rawValue: type(of: self).dismissNotificationName), object: nil)
     }
     
-    func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {
+    @discardableResult func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {
         var resultViewController: UIViewController? = .none
         // Let's assume for the moment that menu is only 2 levels deep
         self.rootGroup.allCellDescriptors().forEach({ (topCellDescriptor: SettingsCellDescriptorType) -> () in

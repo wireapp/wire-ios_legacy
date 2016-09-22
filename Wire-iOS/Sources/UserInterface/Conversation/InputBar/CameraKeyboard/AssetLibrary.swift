@@ -80,7 +80,7 @@ open class AssetLibrary {
             syncOperation()
         }
         else {
-            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: syncOperation)
+            DispatchQueue(label: "WireAssetLibrary", qos: DispatchQoS.background, attributes: [], autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: .none).async(execute: syncOperation)
         }
     }
     

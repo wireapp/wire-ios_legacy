@@ -74,7 +74,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         self.delegateMock = CameraKeyboardViewControllerDelegateMock()
     }
     
-    func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
+    @discardableResult func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         self.sut.beginAppearanceTransition(true, animated: false)
         self.sut.endAppearanceTransition()
         

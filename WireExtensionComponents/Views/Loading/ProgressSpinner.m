@@ -24,7 +24,7 @@
 @import QuartzCore;
 
 
-@interface ProgressSpinner ()
+@interface ProgressSpinner () <CAAnimationDelegate>
 
 @property (nonatomic) UIImageView *spinner;
 @property (nonatomic, readonly) BOOL isAnimationRunning;
