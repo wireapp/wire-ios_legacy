@@ -23,11 +23,18 @@ import CocoaLumberjackSwift
 extension AVAsset {
 
     public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
-        let alteredAsset = AVAsset(url: NSURL(fileURLWithPath: inPath) as URL)
 
-        let exportSession = AVAssetExportSession(asset: alteredAsset, presetName: AVAssetExportPresetAppleM4A)!
+        let fileURL = URL(fileURLWithPath: inPath)
+        let alteredAsset = AVAsset(url: fileURL)
+        let session = AVAssetExportSession(asset: alteredAsset, presetName: AVAssetExportPresetAppleM4A)
         
-        let encodedEffectAudioURL = NSURL(fileURLWithPath: outPath)
+        guard let exportSession = session else {
+            DDLogError("Failed to create export session with asset \(alteredAsset)")
+            completion?(false)
+            return
+        }
+    
+        let encodedEffectAudioURL = URL(fileURLWithPath: outPath)
         
         exportSession.outputURL = encodedEffectAudioURL as URL
         exportSession.outputFileType = AVFileTypeAppleM4A
@@ -36,13 +43,13 @@ extension AVAsset {
             switch exportSession.status {
             case .failed:
                 DDLogError("Cannot transcode \(inPath) to \(outPath): \(exportSession.error)")
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     completion?(false)
-                })
+                }
             default:
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     completion?(true)
-                })
+                }
                 break
             }
             

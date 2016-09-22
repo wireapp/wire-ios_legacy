@@ -428,7 +428,7 @@ import CocoaLumberjackSwift
         AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { (success) in
             if success {
                 audioPath.deleteFileAtPath()
-                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, context: .afterEffect, filter: self.currentEffect)
+                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: URL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, context: .afterEffect, filter: self.currentEffect)
             }
         }
     }

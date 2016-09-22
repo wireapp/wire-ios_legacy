@@ -28,7 +28,7 @@ extension NSString {
     }()
     
     static func filenameForSelfUser() -> NSString {
-        let filename = "\(ZMUser.selfUser().name) \(dateFormatter.string(from: Date()))"
+        let filename = "\(ZMUser.selfUser().name!) \(dateFormatter.string(from: Date()))"
         return filename.replacingOccurrences(of: " ", with: "-") as NSString
     }
 }
