@@ -292,7 +292,6 @@
 		871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0361D34F60700DF0793 /* NSDate+Format.m */; };
 		871BC05A1D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */; };
 		871BC05B1D34F60700DF0793 /* NSLayoutConstraint+Magic.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC03A1D34F60700DF0793 /* NSLayoutConstraint+Magic.m */; };
-		871BC05C1D34F60700DF0793 /* NSString+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC03C1D34F60700DF0793 /* NSString+Wire.m */; };
 		871BC1261D34F7B700DF0793 /* ZiphyClient+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1251D34F7B700DF0793 /* ZiphyClient+Convenience.m */; };
 		871BC2201D34F8F800DF0793 /* ActionSheetAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC12B1D34F8F800DF0793 /* ActionSheetAlertView.m */; };
 		871BC2211D34F8F800DF0793 /* ActionSheetContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC12D1D34F8F800DF0793 /* ActionSheetContainerView.m */; };
@@ -1242,8 +1241,6 @@
 		871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SimpleTypeAccess.m"; sourceTree = "<group>"; };
 		871BC0391D34F60700DF0793 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+Magic.h"; sourceTree = "<group>"; };
 		871BC03A1D34F60700DF0793 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+Magic.m"; sourceTree = "<group>"; };
-		871BC03B1D34F60700DF0793 /* NSString+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Wire.h"; sourceTree = "<group>"; };
-		871BC03C1D34F60700DF0793 /* NSString+Wire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Wire.m"; sourceTree = "<group>"; };
 		871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationLaunchType.h; sourceTree = "<group>"; };
 		871BC1241D34F7B700DF0793 /* ZiphyClient+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ZiphyClient+Convenience.h"; path = "ziphy/ZiphyClient+Convenience.h"; sourceTree = "<group>"; };
 		871BC1251D34F7B700DF0793 /* ZiphyClient+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ZiphyClient+Convenience.m"; path = "ziphy/ZiphyClient+Convenience.m"; sourceTree = "<group>"; };
@@ -3923,8 +3920,6 @@
 				871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */,
 				871BC0391D34F60700DF0793 /* NSLayoutConstraint+Magic.h */,
 				871BC03A1D34F60700DF0793 /* NSLayoutConstraint+Magic.m */,
-				871BC03B1D34F60700DF0793 /* NSString+Wire.h */,
-				871BC03C1D34F60700DF0793 /* NSString+Wire.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
 				87066FAA1D8C1AA90085F48B /* UIView+UIAppearanceSwift.h */,
 				87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */,
@@ -5224,7 +5219,6 @@
 				8798C51A1C3ACDF700678AD7 /* NoHistoryViewController.m in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
 				168635321ADFB20900EDC7D9 /* ShareContactsStepViewController.m in Sources */,
-				871BC05C1D34F60700DF0793 /* NSString+Wire.m in Sources */,
 				8F89141B1A9F287E0056AB0C /* ConversationListConnectRequestsItem.m in Sources */,
 				871BC2261D34F8F800DF0793 /* BrowserViewController.m in Sources */,
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
