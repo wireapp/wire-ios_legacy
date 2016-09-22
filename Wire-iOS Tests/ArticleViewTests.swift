@@ -27,7 +27,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        accentColor = .VividRed
+        accentColor = .vividRed
     }
     
     /// MARK - Fixture
@@ -50,7 +50,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageData = UIImageJPEGRepresentation(imageInTestBundleNamed("unsplash_matterhorn.jpg"), 0.9)
+        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
         textMessageData.hasImageData = true
         
         return textMessageData
@@ -64,7 +64,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageData = UIImageJPEGRepresentation(imageInTestBundleNamed("unsplash_matterhorn.jpg"), 0.9)
+        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
         textMessageData.hasImageData = true
         
         return textMessageData

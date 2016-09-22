@@ -42,7 +42,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        accentColor = .StrongBlue
+        accentColor = .strongBlue
         sut = AudioRecordViewController()
         delegate = MockAudioRecordViewControllerDelegate()
         sut.delegate = delegate
@@ -58,7 +58,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersViewControllerCorrectlyState_Recording() {
         // when
-        XCTAssertEqual(sut.recordingState, AudioRecordState.Recording)
+        XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
         
         // then
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
@@ -66,7 +66,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime() {
         // when
-        XCTAssertEqual(sut.recordingState, AudioRecordState.Recording)
+        XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
         
         // then
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
@@ -74,7 +74,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime_Visualization() {
         // when
-        XCTAssertEqual(sut.recordingState, AudioRecordState.Recording)
+        XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
         sut.updateTimeLabel(123)
         sut.audioPreviewView.updateWithLevel(0.2)
         sut.setOverlayState(.expanded(0), animated: false)
@@ -85,7 +85,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime_Visualization_Full() {
         // when
-        XCTAssertEqual(sut.recordingState, AudioRecordState.Recording)
+        XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
         sut.updateTimeLabel(123)
         sut.audioPreviewView.updateWithLevel(0.8)
         sut.setOverlayState(.expanded(1), animated: false)
@@ -124,7 +124,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
 
 
 private extension UIViewController {
-    func prepareForSnapshot() -> UIView {
+    @discardableResult func prepareForSnapshot() -> UIView {
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
         

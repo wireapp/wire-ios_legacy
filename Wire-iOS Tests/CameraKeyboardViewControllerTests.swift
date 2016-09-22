@@ -49,7 +49,7 @@ class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDele
 
 
 @objc class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
-    @objc var layoutSize: SplitViewControllerLayoutSize = .Compact
+    @objc var layoutSize: SplitViewControllerLayoutSize = .compact
     @objc var leftViewControllerWidth: CGFloat = 0
 }
 
@@ -126,7 +126,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
 
     func testInitialStateLayoutSizeCompact() {
         // given
-        self.splitView?.layoutSize = .Compact
+        self.splitView?.layoutSize = .compact
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         // then
@@ -135,7 +135,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testInitialStateLayoutSizeRegularPortrait() {
         // given
-        self.splitView?.layoutSize = .RegularPortrait
+        self.splitView?.layoutSize = .regularPortrait
         self.splitView?.leftViewControllerWidth = 216
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
@@ -145,7 +145,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testInitialStateLayoutSizeRegularLandscape() {
         // given
-        self.splitView?.layoutSize = .RegularLandscape
+        self.splitView?.layoutSize = .regularLandscape
         self.splitView?.leftViewControllerWidth = 216
         // when
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
@@ -155,7 +155,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testCameraScrolledHorisontallySomePercent() {
         // given
-        self.splitView?.layoutSize = .Compact
+        self.splitView?.layoutSize = .compact
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.prepareForSnapshot()
         // when
@@ -166,7 +166,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testCameraScrolledHorisontallyAwayPercent() {
         // given
-        self.splitView?.layoutSize = .Compact
+        self.splitView?.layoutSize = .compact
         self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
         self.prepareForSnapshot()
         // when

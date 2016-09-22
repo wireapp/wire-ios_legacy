@@ -59,7 +59,7 @@ class ZMMockAnalytics: AnalyticsInterface {
 class SettingsPropertyTests: XCTestCase {
     let userDefaults: UserDefaults = UserDefaults.standard
     
-    func saveAndCheck<T: AnyObject>( _ property: SettingsProperty, value : T) -> Bool where T: Equatable {
+    func saveAndCheck<T: Any>( _ property: SettingsProperty, value: T) -> Bool where T: Equatable {
         var property = property
         property << value
         if let readValue : T = property.propertyValue.value() as? T {

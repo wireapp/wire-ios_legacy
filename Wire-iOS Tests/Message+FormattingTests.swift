@@ -48,7 +48,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url}")
         
         // when
-        let formattedText = NSAttributedString(linkAttachments: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
         
         // then
         XCTAssertEqual(formattedText.string, "text text")

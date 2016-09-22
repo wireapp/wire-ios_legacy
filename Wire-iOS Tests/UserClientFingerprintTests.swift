@@ -29,7 +29,7 @@ class UserClientFingerprintTests: XCTestCase {
         } // String "UHUU"
         
         // when
-        let result = data.mapBytes({ (char: UInt8) -> (String) in
+        let result = data.mapBytes(callback: { (char: UInt8) -> (String) in
             return String(UnicodeScalar(char))
         }).joined(separator: "")
         
@@ -45,7 +45,7 @@ class UserClientFingerprintTests: XCTestCase {
         } // String "UHUU"
         
         // when
-        let result = data.mapBytes({ (char: UInt16) -> (String) in
+        let result = data.mapBytes(callback: { (char: UInt16) -> (String) in
             return String(UnicodeScalar(UInt8(truncatingBitPattern: char))) + String(UnicodeScalar(UInt8(truncatingBitPattern: char>>8)))
         }).joined(separator: "")
         
@@ -63,7 +63,7 @@ class UserClientFingerprintTests: XCTestCase {
         } // Long String
         
         // when
-        let result = data.mapBytes({ (char: UInt16) -> (String) in
+        let result = data.mapBytes(callback: { (char: UInt16) -> (String) in
             let char1 = UInt8(truncatingBitPattern: char)
             let char2 = UInt8(truncatingBitPattern: char>>8)
             var result = ""

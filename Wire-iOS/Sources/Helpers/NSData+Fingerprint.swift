@@ -72,4 +72,8 @@ extension Data {
     public func attributedFingerprint(attributes: [String : AnyObject], boldAttributes: [String : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
         return (self as NSData).attributedFingerprint(attributes: attributes, boldAttributes: boldAttributes, uppercase: uppercase);
     }
+    
+    public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {
+        return (self as NSData).mapBytes(callback: callback)
+    }
 }

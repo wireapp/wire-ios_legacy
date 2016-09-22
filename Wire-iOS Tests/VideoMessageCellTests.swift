@@ -27,7 +27,7 @@ class VideoMessageCellTests: ZMSnapshotTestCase {
         let fileMessage = MockMessageFactory.fileTransferMessage()
         fileMessage?.backingFileMessageData.mimeType = "video/mp4"
         fileMessage?.backingFileMessageData.filename = "vacation.mp4"
-        fileMessage?.backingFileMessageData.previewData = UIImageJPEGRepresentation(imageInTestBundleNamed("unsplash_matterhorn.jpg"), 0.9)
+        fileMessage?.backingFileMessageData.previewData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
         
         if let config = config {
             config(fileMessage!)
@@ -235,7 +235,7 @@ class VideoMessageCellTests: ZMSnapshotTestCase {
     func testDownloadedCell_fromThisDevice_NoDuration() {
         verify(view: cellWithConfig {
             $0.fileMessageData?.transferState = .downloaded
-            $0.backingFileMessageData.fileURL = Bundle.mainBundle().bundleURL
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
             $0.backingFileMessageData?.durationMilliseconds = 0
         })
     }

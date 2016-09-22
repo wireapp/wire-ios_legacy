@@ -26,8 +26,8 @@
 
 @interface NSAttributedString (FormatLinkAttachments)
 + (NSAttributedString *)formattedStringWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
-                                              forMessage:(id<ZMTextMessageData>)message
-                                                 isGiphy:(BOOL)isGiphy;
+                                                forMessage:(id<ZMTextMessageData>)message
+                                                   isGiphy:(BOOL)isGiphy;
 @end
 
 @interface Message (Formatting)

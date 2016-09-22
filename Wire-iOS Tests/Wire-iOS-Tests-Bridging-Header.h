@@ -34,4 +34,5 @@
 #import "ImageMessageCell+Internal.h"
 #import "TextMessageCell.h"
 #import "Message+Private.h"
+#import "Message+Formatting.h"
 

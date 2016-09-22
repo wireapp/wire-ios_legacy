@@ -25,15 +25,15 @@ private let zoomLevelKey = "LastLocationZoomLevelKey"
 
 public extension LocationData {
 
-    func toDictionary() -> [String : AnyObject] {
+    func toDictionary() -> [String : Any] {
         return [
-            latitudeKey: latitude as AnyObject,
-            longitudeKey: longitude as AnyObject,
-            zoomLevelKey: Int(zoomLevel) as AnyObject
+            latitudeKey: latitude,
+            longitudeKey: longitude,
+            zoomLevelKey: Int(zoomLevel)
         ]
     }
 
-    static func locationData(fromDictionary dict: [String : AnyObject]) -> LocationData? {
+    static func locationData(fromDictionary dict: [String : Any]) -> LocationData? {
         guard let latitude = dict[latitudeKey] as? Float,
             let longitude = dict[longitudeKey] as? Float,
             let zoomLevel = dict[zoomLevelKey] as? Int else { return nil }

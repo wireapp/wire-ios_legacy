@@ -106,7 +106,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.audioRecorder.startRecordingHitCount, 1)
         XCTAssertEqual(self.audioRecorder.stopRecordingHitCount, 0)
         XCTAssertEqual(self.audioRecorder.deleteRecordingHitCount, 0)
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Recording)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.recording)
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
     }
     
@@ -118,7 +118,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.audioRecorder.startRecordingHitCount, 1)
         XCTAssertEqual(self.audioRecorder.stopRecordingHitCount, 0)
         XCTAssertEqual(self.audioRecorder.deleteRecordingHitCount, 0)
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Recording)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.recording)
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
     }
     
@@ -133,7 +133,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.audioRecorder.startRecordingHitCount, 1)
         XCTAssertEqual(self.audioRecorder.stopRecordingHitCount, 1)
         XCTAssertEqual(self.audioRecorder.deleteRecordingHitCount, 0)
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Recording)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.recording)
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
     }
     
@@ -145,7 +145,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         self.audioRecorder.recordEndedCallback!(true)
         
         // then
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Effects)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.effects)
     }
     
     func testThatItSwitchesToRecordingAfterRecordDiscarded() {
@@ -154,13 +154,13 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         
         // and when
         self.audioRecorder.recordEndedCallback!(true)
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Effects)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.effects)
 
         // and when
         self.sut.redoButton.sendActions(for: .touchUpInside)
         
         // then
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Ready)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.ready)
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
 
     }
@@ -171,7 +171,7 @@ class AudioRecordKeyboardViewControllerTests: XCTestCase {
         
         // and when
         self.audioRecorder.recordEndedCallback!(true)
-        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.Effects)
+        XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.effects)
         
         // and when
         self.sut.cancelButton.sendActions(for: .touchUpInside)

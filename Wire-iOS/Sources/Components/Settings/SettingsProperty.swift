@@ -82,7 +82,7 @@ enum SettingsPropertyValue: Equatable {
     case bool(value: Swift.Bool)
     case none
     
-    static func propertyValue(_ object: AnyObject?) -> SettingsPropertyValue {
+    static func propertyValue(_ object: Any?) -> SettingsPropertyValue {
         switch(object) {
         case let intValue as Int:
             return SettingsPropertyValue.number(value: intValue)
@@ -98,7 +98,7 @@ enum SettingsPropertyValue: Equatable {
         }
     }
     
-    func value() -> AnyObject? {
+    func value() -> Any? {
         switch (self) {
         case .number(let value):
             return value as AnyObject?
@@ -147,7 +147,7 @@ protocol SettingsProperty {
  - parameter property: Property to set the value on
  - parameter expr:     Property value (raw)
  */
-func << (property: inout SettingsProperty, expr: @autoclosure () -> AnyObject) {
+func << (property: inout SettingsProperty, expr: @autoclosure () -> Any) {
     let value = expr()
     
     property.propertyValue = SettingsPropertyValue.propertyValue(value)
@@ -171,7 +171,7 @@ func << (property: inout SettingsProperty, expr: @autoclosure () -> SettingsProp
  - parameter value:    Value to assign
  - parameter property: Property to read the value from
  */
-func << (value: inout AnyObject?, property: SettingsProperty) {
+func << (value: inout Any?, property: SettingsProperty) {
     value = property.propertyValue.value()
 }
 

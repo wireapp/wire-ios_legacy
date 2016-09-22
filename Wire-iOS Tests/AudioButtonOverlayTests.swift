@@ -68,10 +68,10 @@ class AudioButtonOverlayTests: ZMSnapshotTestCase {
     
     func testThatItCallsTheButtonHandlerWithTheCorrectButtonType() {
         sut.playButton.sendActions(for: .touchUpInside)
-        XCTAssertEqual(buttonTapHistory, [.Play])
+        XCTAssertEqual(buttonTapHistory, [.play])
         
         sut.sendButton.sendActions(for: .touchUpInside)
-        XCTAssertEqual(buttonTapHistory, [.Play, .Send])
+        XCTAssertEqual(buttonTapHistory, [.play, .send])
     }
     
 }
