@@ -30,14 +30,14 @@ typedef NS_ENUM(NSUInteger, ButtonStyle) {
     ButtonStyleEmptyMonochrome
 };
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface Button : ButtonWithLargerHitArea
 
 @property (nonatomic) BOOL circular;
 @property (nonatomic) TextTransform textTransform;
 
-+ (instancetype)buttonWithStyleClass:(NSString *)styleClass;
++ (instancetype)buttonWithStyleClass:(NSString * _Nullable)styleClass;
 + (instancetype)buttonWithStyle:(ButtonStyle)style;
 + (instancetype)buttonWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant;
 
@@ -46,3 +46,5 @@ typedef NS_ENUM(NSUInteger, ButtonStyle) {
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
 
 @end
+
+NS_ASSUME_NONNULL_END

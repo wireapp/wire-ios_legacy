@@ -50,20 +50,20 @@ import Classy
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard let font = buttonFont else { return }
-        sendButton?.titleLabel?.font = font
+        sendButton.titleLabel?.font = font
     }
     
     fileprivate func configureViews() {
-        sendButton?.setTitle("location.send_button.title".localized.uppercased(), for: UIControlState())
-        sendButton?.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        sendButton?.accessibilityIdentifier = "sendLocation"
+        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: UIControlState())
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        sendButton.accessibilityIdentifier = "sendLocation"
         addressLabel.accessibilityIdentifier = "selectedAddress"
         view.addSubview(containerView)
-        [addressLabel, sendButton, separatorView].forEach(containerView.addSubview as! (Any) -> Void)
+        [addressLabel, sendButton, separatorView].forEach(containerView.addSubview)
     }
 
     fileprivate func createConstraints() {
-        constrain(view, containerView, separatorView, addressLabel, sendButton!) { view, container, separator, label, button in
+        constrain(view, containerView, separatorView, addressLabel, sendButton) { view, container, separator, label, button in
             container.edges == inset(view.edges, 24, 0)
             label.leading == container.leading
             label.trailing <= button.leading - 12 ~ LayoutPriority(1000)
@@ -78,7 +78,7 @@ import Classy
             separator.height == 0.5
         }
         
-        sendButton?.setContentCompressionResistancePriority(1000, for: .horizontal)
+        sendButton.setContentCompressionResistancePriority(1000, for: .horizontal)
         addressLabel.setContentCompressionResistancePriority(750, for: .horizontal)
     }
     
