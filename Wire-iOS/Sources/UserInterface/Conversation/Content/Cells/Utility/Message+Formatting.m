@@ -28,6 +28,7 @@
 #import "UIColor+WR_ColorScheme.h"
 #import "NSString+Emoji.h"
 
+@import WireExtensionComponents;
 @import ZMCLinkPreview;
 
 static NSMutableParagraphStyle *cellParagraphStyle;
@@ -69,16 +70,11 @@ static inline NSDataDetector *linkDataDetector(void)
 }
 
 
-@implementation Message (Formatting)
+@implementation NSAttributedString (FormatLinkAttachments)
 
-+ (void)invalidateTextColorConfiguration
-{
-    WireMarkdownParser = nil;
-}
-
-+ (NSAttributedString *)formattedTextWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
-                                              forMessage:(id<ZMTextMessageData>)message
-                                                 isGiphy:(BOOL)isGiphy
++ (NSAttributedString *)formattedStringWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
+                                                forMessage:(id<ZMTextMessageData>)message
+                                                   isGiphy:(BOOL)isGiphy
 {
     if (message.messageText.length == 0) {
         return [[NSAttributedString alloc] initWithString:@""];
@@ -89,7 +85,7 @@ static inline NSDataDetector *linkDataDetector(void)
     
     // Remove any trailing links which have a link preview, but not for old style embeds (SoundCloud, Vimeo, YouTube)
     BOOL containsEmbed = linkAttachments.firstObject.type != LinkAttachmentTypeNone;
-
+    
     if (linkPreview != nil && text.length == linkPreview.characterOffsetInText + linkPreview.originalURLString.length && !containsEmbed && !isGiphy) {
         text = [text stringByReplacingOccurrencesOfString:message.linkPreview.originalURLString withString:@"" options:0 range:NSMakeRange(0, text.length)];
         linkAttachments = [linkAttachments filterWithBlock:^BOOL(LinkAttachment *linkAttachment) {
@@ -162,7 +158,7 @@ static inline NSDataDetector *linkDataDetector(void)
         if (! WireMarkdownParser) {
             WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
         }
-
+        
         markdownStr = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString];
     }
     
@@ -171,6 +167,16 @@ static inline NSDataDetector *linkDataDetector(void)
     }
     
     return (nil != markdownStr) ? markdownStr: attributedString;
+}
+
+@end
+
+
+@implementation Message (Formatting)
+
++ (void)invalidateTextColorConfiguration
+{
+    WireMarkdownParser = nil;
 }
 
 + (NSArray *)linkAttachmentsForURLMatches:(NSArray *)matches

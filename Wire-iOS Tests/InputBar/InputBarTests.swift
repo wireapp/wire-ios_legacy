@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -25,7 +25,7 @@ class InputBarTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        self.accentColor = .VividRed
+        self.accentColor = .vividRed
     }
     
     let shortText = "Lorem ipsum dolor"
@@ -86,7 +86,7 @@ class InputBarTests: ZMSnapshotTestCase {
         let inputBar = InputBar(buttons: buttons())
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = LTRText
-        inputBar.textView.textAlignment = .Right
+        inputBar.textView.textAlignment = .right
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
         CASStyler.default().styleItem(inputBar)

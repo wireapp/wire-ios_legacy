@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -80,7 +80,7 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     func testEffectSelectedState() {
         let preparedView = self.prepareForSnapshot()
 
-        self.sut.selectedAudioEffect = AVSAudioEffectType.ChorusMax
+        self.sut.selectedAudioEffect = AVSAudioEffectType.chorusMax
         self.verify(view: preparedView)
     }
 }

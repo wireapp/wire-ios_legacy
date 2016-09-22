@@ -25,7 +25,7 @@ class InputBarEditViewTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .whiteColor()
+        snapshotBackgroundColor = UIColor.white
         sut = InputBarEditView()
         constrain(sut) { $0.height == 56 }
         CASStyler.default().styleItem(sut)

@@ -29,8 +29,8 @@
 @synthesize activationDate;
 @synthesize model;
 @synthesize deviceClass;
-@synthesize activationLocationLatitude;
-@synthesize activationLocationLongitude;
+@synthesize activationLatitude;
+@synthesize activationLongitude;
 @synthesize fingerprint;
 @synthesize verified;
 

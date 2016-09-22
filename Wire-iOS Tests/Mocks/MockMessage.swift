@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -29,9 +29,9 @@ import ZMCLinkPreview
 }
 
 @objc class MockSystemMessageData: NSObject, ZMSystemMessageData {
-    var systemMessageType: ZMSystemMessageType = .Invalid
+    var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser>! = Set()
-    var clients: Set<NSObject>! = Set()
+    var clients: Set<AnyHashable>! = Set()
     var addedUsers: Set<ZMUser>! = Set()
     var removedUsers: Set<ZMUser>! = Set()
     var text: String! = ""
@@ -46,7 +46,7 @@ import ZMCLinkPreview
 @objc class MockFileMessageData: NSObject, ZMFileMessageData {
     var mimeType: String! = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
-    var transferState: ZMFileTransferState = .Uploaded
+    var transferState: ZMFileTransferState = .uploaded
     var filename: String! = "TestFile.pdf"
     var progress: Float = 0
     var fileURL: URL? = .none
@@ -110,14 +110,14 @@ import ZMCLinkPreview
     // MARK: - ZMConversationMessage
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser? = .None
+    var sender: ZMUser? = .none
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
-    var conversation: ZMConversation? = .None
-    var deliveryState: ZMDeliveryState = .Delivered
-    var imageMessageData: ZMImageMessageData? = .None
-    var systemMessageData: ZMSystemMessageData? = .None
-    var knockMessageData: ZMKnockMessageData? = .None
+    var conversation: ZMConversation? = .none
+    var deliveryState: ZMDeliveryState = .delivered
+    var imageMessageData: ZMImageMessageData? = .none
+    var systemMessageData: ZMSystemMessageData? = .none
+    var knockMessageData: ZMKnockMessageData? = .none
 
     var fileMessageData: ZMFileMessageData? {
         return backingFileMessageData
@@ -158,7 +158,7 @@ import ZMCLinkPreview
 
     var hasBeenDeleted = false
     
-    var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.Invalid
+    var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
 }
 
 extension MockMessage {
@@ -166,12 +166,12 @@ extension MockMessage {
         guard let timestamp = self.serverTimestamp else {
             return .none
         }
-        let timeString = Message.longVersionTimeFormatter().stringFromDate(timestamp)
+        let timeString = Message.longVersionTimeFormatter().string(from: timestamp)
         let oneDayInSeconds = 24.0 * 60.0 * 60.0
         let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
         
         if shouldShowDate {
-            let dateString = Message.shortVersionDateFormatter().stringFromDate(timestamp)
+            let dateString = Message.shortVersionDateFormatter().string(from: timestamp)
             return dateString + " " + timeString
         }
         else {

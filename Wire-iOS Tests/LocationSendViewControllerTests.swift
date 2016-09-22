@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -26,7 +26,7 @@ class LocationSendViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        accentColor = .VividRed
+        accentColor = .vividRed
         sut = LocationSendViewController()
     }
     

@@ -18,9 +18,13 @@
 
 #import "Message.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Message (Private)
 
 + (NSDateFormatter *)shortVersionDateFormatter;
 + (NSDateFormatter *)longVersionTimeFormatter;
 
 @end
+
+NS_ASSUME_NONNULL_END

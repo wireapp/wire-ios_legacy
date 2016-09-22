@@ -33,76 +33,76 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        Settings.sharedSettings().likeTutorialCompleted = true
-        snapshotBackgroundColor = .whiteColor()
-        accentColor = .StrongBlue
-        sut = TextMessageCell(style: .Default, reuseIdentifier: name!)
+        Settings.shared().likeTutorialCompleted = true
+        snapshotBackgroundColor = UIColor.white
+        accentColor = .strongBlue
+        sut = TextMessageCell(style: .default, reuseIdentifier: name!)
         sut.layer.speed = 0
         [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
-            $0.locale = NSLocale(localeIdentifier: "en_US")
-            $0.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+            $0.locale = NSLocale(localeIdentifier: "en_US") as Locale!
+            $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
         }
     }
     
     func testThatItRendersATextMessage_Sent() {
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_Delivered() {
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(state: .Delivered), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(state: .delivered), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_Expired() {
-        sut.configureForMessage(mockMessage(state: .FailedToSend), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(state: .failedToSend), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_Selected() {
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_Pending_Selected() {
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(state: .Pending), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(state: .pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_LongText() {
         let text = "".padding(toLength: 71,  withPad: "Hello ", startingAt: 0)
-        sut.configureForMessage(mockMessage(text), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(text), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersEditedTimestampCorrectly_Selected() {
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(edited: true), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(text, edited: true), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(text, edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText_Pending() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(text, edited: true, state: .Pending), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(text, edited: true, state: .pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatRenderLastSentMessageWithoutLikeIcon() {
         let layoutProperties = self.layoutProperties
         layoutProperties.alwaysShowDeliveryState = true
-        sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
@@ -110,84 +110,84 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         let layoutProperties = self.layoutProperties
         layoutProperties.alwaysShowDeliveryState = true
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(state: .Sent), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedReceiver() {
-        let message = mockMessage(state: .Sent)
+        let message = mockMessage(state: .sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [otherUsers.first!]]
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSender() {
-        let message = mockMessage(state: .Sent)
+        let message = mockMessage(state: .sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSelected() {
-        let message = mockMessage(state: .Sent)
+        let message = mockMessage(state: .sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedByTwoPeople() {
-        let message = mockMessage(state: .Sent)
+        let message = mockMessage(state: .sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: Array(otherUsers[0..<2])]
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_LikedByTwoPeopleIncludingSelf() {
-        let message = mockMessage(state: .Sent)
+        let message = mockMessage(state: .sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + [otherUsers.first!]]
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedByALotOfPeople() {
-        let message = mockMessage(state: .Sent)
+        let message = mockMessage(state: .sent)
         message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + otherUsers]
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_LikeTooltipNotShownForSelf() {
-        Settings.sharedSettings().likeTutorialCompleted = false
+        Settings.shared().likeTutorialCompleted = false
         
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(mockMessage(), layoutProperties: layoutProperties)
+        sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_LikeTooltipShownForOther() {
-        Settings.sharedSettings().likeTutorialCompleted = false
+        Settings.shared().likeTutorialCompleted = false
         
         let message = mockMessage()
         message.sender = self.otherUsers.first
         
         sut.setSelected(true, animated: false)
-        sut.configureForMessage(message, layoutProperties: layoutProperties)
+        sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     // MARK: - Helper
     
-    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .Delivered) -> MockMessage {
-        let message = MockMessageFactory.textMessageWithText(text)
-        message.deliveryState = state
-        message.serverTimestamp = Date(timeIntervalSince1970: 1234567230)
-        message.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
-        return message
+    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered) -> MockMessage {
+        let message = MockMessageFactory.textMessage(withText: text)
+        message?.deliveryState = state
+        message?.serverTimestamp = Date(timeIntervalSince1970: 1234567230)
+        message?.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
+        return message!
     }
     
     var selfUser: ZMUser {
-        return (MockUser.mockSelfUser() as AnyObject) as! ZMUser
+        return (MockUser.mockSelf() as AnyObject) as! ZMUser
     }
 
     var otherUsers: [ZMUser] {
@@ -199,7 +199,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 private extension TextMessageCell {
 
     func prepareForSnapshot() -> UIView {
-        let size = systemLayoutSizeFittingSize(
+        let size = systemLayoutSizeFitting(
             CGSize(width: 375, height: 0),
             withHorizontalFittingPriority: UILayoutPriorityRequired,
             verticalFittingPriority: UILayoutPriorityFittingSizeLevel

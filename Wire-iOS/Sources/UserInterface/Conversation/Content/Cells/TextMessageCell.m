@@ -167,9 +167,9 @@
     // We do not want to expand the giphy.com link that is sent when sending a GIF via Giphy
     BOOL isGiphy = [textMesssageData.linkPreview.originalURLString.lowercaseString isEqualToString:@"giphy.com"];
 
-    NSAttributedString *attributedMessageText = [Message formattedTextWithLinkAttachments:layoutProperties.linkAttachments
-                                                                               forMessage:message.textMessageData
-                                                                                  isGiphy:isGiphy];
+    NSAttributedString *attributedMessageText = [NSAttributedString formattedStringWithLinkAttachments:layoutProperties.linkAttachments
+                                                                                            forMessage:message.textMessageData
+                                                                                               isGiphy:isGiphy];
     self.messageTextView.attributedText = attributedMessageText;
     [self.messageTextView layoutIfNeeded];
     self.textViewHeightConstraint.active = attributedMessageText.length == 0;

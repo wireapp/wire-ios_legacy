@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,7 +22,7 @@ import XCTest
 
 @objc class MockZMEditableUser: NSObject, ZMEditableUser {
     var name: String! = ""
-    var accentColorValue: ZMAccentColor = .Undefined
+    var accentColorValue: ZMAccentColor = .undefined
     var emailAddress: String! = ""
     var phoneNumber: String! = ""
     
@@ -34,11 +34,11 @@ import XCTest
 }
 
 class MockZMUserSession: ZMUserSessionInterface {
-    func performChanges(_ block: ()->()) {
+    func performChanges(_ block: @escaping () -> Swift.Void) {
         block()
     }
     
-    func enqueueChanges(_ block: ()->()) {
+    func enqueueChanges(_ block: @escaping () -> Swift.Void) {
         block()
     }
     
@@ -46,7 +46,7 @@ class MockZMUserSession: ZMUserSessionInterface {
 }
 
 class ZMMockAVSMediaManager: AVSMediaManagerInterface {
-    var intensityLevel : AVSIntensityLevel = .None
+    var intensityLevel : AVSIntensityLevel = .none
     
     func playMediaByName(_ name: String!) { }
 }

@@ -26,7 +26,7 @@ class ReactionsListViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .whiteColor()
+        snapshotBackgroundColor = UIColor.white
     }
     
     func testThatItRendersReactionsListViewController() {
@@ -44,15 +44,15 @@ class ReactionsListViewControllerTests: ZMSnapshotTestCase {
     }
     
     var message: ZMConversationMessage {
-        let message = MockMessageFactory.textMessageWithText("Hello")
-        message.deliveryState = .Sent
+        let message = MockMessageFactory.textMessage(withText: "Hello")
+        message?.deliveryState = .sent
         
         let users = MockUser.mockUsers().map { $0 as! ZMUser }
-        message.backingUsersReaction = [
+        message?.backingUsersReaction = [
             ZMMessageReaction.Like.rawValue: users
         ]
 
-        return message
+        return message!
     }
     
 }

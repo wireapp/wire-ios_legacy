@@ -19,20 +19,30 @@
 
 import Foundation
 
+extension StaticString {
+    func utf8SignedStart() -> UnsafePointer<Int8> {
+        let fileUnsafePointer = self.utf8Start
+        let reboundToSigned = fileUnsafePointer.withMemoryRebound(to: Int8.self, capacity: self.utf8CodeUnitCount) {
+            return UnsafePointer($0)
+        }
+        return reboundToSigned
+    }
+}
+
 extension ZMSnapshotTestCase {
     func verify(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, tolerance: tolerance, file: UnsafePointer<Int8>(file.utf8Start), line: line)
+        verifyView(view, tolerance: tolerance, file: file.utf8SignedStart(), line: line)
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyViewInAllPhoneWidths(view, file: UnsafePointer<Int8>(file.utf8Start), line: line)
+        verifyView(inAllPhoneWidths: view, file: file.utf8SignedStart(), line: line)
     }
     
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyViewInAllTabletWidths(view, file: UnsafePointer<Int8>(file.utf8Start), line: line)
+        verifyView(inAllTabletWidths: view, file: file.utf8SignedStart(), line: line)
     }
     
     func verifyInAllIPhoneSizes(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyViewInAllPhoneSizes(view, file: UnsafePointer<Int8>(file.utf8Start), line: line, configurationBlock: nil)
+        verifyView(inAllPhoneSizes: view, file: file.utf8SignedStart(), line: line, configurationBlock: nil)
     }
 }

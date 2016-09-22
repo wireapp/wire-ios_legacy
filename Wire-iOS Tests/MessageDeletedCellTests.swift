@@ -26,7 +26,7 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .whiteColor()
+        snapshotBackgroundColor = UIColor.white
         sut = MessageDeletedCell(style: .default, reuseIdentifier: nil)
     }
 
@@ -48,18 +48,18 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
 extension MessageDeletedCellTests {
 
     func configure(cell: MessageDeletedCell) -> MessageDeletedCell {
-        let message = MockMessageFactory.systemMessageWithType(.MessageDeletedForEveryone, users: 0, clients: 0)
+        let message = MockMessageFactory.systemMessage(with: .messageDeletedForEveryone, users: 0, clients: 0)
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
         
-        cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.floatForIdentifier("content.left_margin")),
-                                             0, CGFloat(WAZUIMagic.floatForIdentifier("content.right_margin")))
+        cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")),
+                                             0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))
         cell.layer.speed = 0
-        cell.configureForMessage(message, layoutProperties: layoutProperties)
+        cell.configure(for: message, layoutProperties: layoutProperties)
         
-        let size = cell.systemLayoutSizeFittingSize(CGSize(width: 375, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let size = cell.systemLayoutSizeFitting(CGSize(width: 375, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
         cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()

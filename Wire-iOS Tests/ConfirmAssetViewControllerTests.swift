@@ -26,28 +26,28 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConfirmAssetViewController()
-        snapshotBackgroundColor = .whiteColor()
+        snapshotBackgroundColor = UIColor.white
     }
 
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
-        accentColor = .StrongLimeGreen
-        sut.image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
-        sut.editButtonVisible = true
+        accentColor = .strongLimeGreen
+        sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        sut.isEditButtonVisible = true
         sut.previewTitle = "Matterhorn"
         verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersTheAssetViewControllerWithLandscapeImage_WithoutEditButton() {
-        accentColor = .SoftPink
-        sut.image = imageInTestBundleNamed("unsplash_matterhorn.jpg")
+        accentColor = .softPink
+        sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         sut.previewTitle = "Matterhorn"
         verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersTheAssetViewControllerWithPortraitImage() {
-        accentColor = .VividRed
-        sut.image = imageInTestBundleNamed("unsplash_burger.jpg")
-        sut.editButtonVisible = true
+        accentColor = .vividRed
+        sut.image = image(inTestBundleNamed: "unsplash_burger.jpg")
+        sut.isEditButtonVisible = true
         sut.previewTitle = "Burger & Beer"
         verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
     }
