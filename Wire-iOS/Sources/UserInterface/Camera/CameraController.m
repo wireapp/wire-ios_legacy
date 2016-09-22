@@ -90,7 +90,9 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
 - (void)initializeSession
 {
     self.session = [[AVCaptureSession alloc] init];
+#if TARGET_OS_SIMULATOR == 0
     self.session.sessionPreset = AVCaptureSessionPresetPhoto;
+#endif
     
     AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     

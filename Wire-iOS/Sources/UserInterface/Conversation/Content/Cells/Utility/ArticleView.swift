@@ -190,11 +190,12 @@ class ArticleView: UIView {
             configure(withTwitterStatus: twitterStatus)
         }
         
-        if let imageData = textMessageData.imageData {
+        if let imageData = textMessageData.imageData,
+            let imageDataIdentifier = textMessageData.imageDataIdentifier {
             imageView.image = UIImage(data: imageData)
             loadingView?.isHidden = true
             
-            ArticleView.imageCache.image(for: imageData, cacheKey: textMessageData.imageDataIdentifier, creationBlock: { data -> Any in
+            ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
                     return UIImage.deviceOptimizedImage(from: data)
                 }, completion: {[weak self] (image, _) in
                     if let image = image as? UIImage {
