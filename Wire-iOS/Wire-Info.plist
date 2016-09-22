@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>You would be able to place video calls and send photos</string>
+	<string>In order to take and send pictures Wire needs access to your camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>In order to send stored pictures Wire needs access to your  photo library.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
