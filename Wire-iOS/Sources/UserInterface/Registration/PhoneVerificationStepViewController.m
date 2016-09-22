@@ -27,7 +27,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "Constants.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "zmessaging+iOS.h"
 #import "UIViewController+Errors.h"

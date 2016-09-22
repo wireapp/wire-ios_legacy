@@ -29,7 +29,7 @@
 #import "GiphySearchResultsController.h"
 
 #import <PureLayout/PureLayout.h>
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 @interface GiphyViewController () <UINavigationControllerDelegate>
 

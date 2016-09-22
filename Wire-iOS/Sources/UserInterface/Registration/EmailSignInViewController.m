@@ -22,8 +22,6 @@
 #import <PureLayout/PureLayout.h>
 #import <WireExtensionComponents/WireExtensionComponents.h>
 
-#import "Wire-Swift.h"
-
 #import "zmessaging+iOS.h"
 @import OnePasswordExtension;
 #import "RegistrationTextField.h"
@@ -40,7 +38,7 @@
 #import "Constants.h"
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLS.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Registration.h"
 #import "Analytics+iOS.h"

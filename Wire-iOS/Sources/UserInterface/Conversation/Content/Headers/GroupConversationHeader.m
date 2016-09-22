@@ -28,7 +28,7 @@
 #import "WebLinkTextView.h"
 #import <WireExtensionComponents/WireStyleKit.h>
 #import "UIColor+WR_ColorScheme.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 
 @interface GroupConversationHeader () <UITextViewDelegate, ZMConversationObserver>

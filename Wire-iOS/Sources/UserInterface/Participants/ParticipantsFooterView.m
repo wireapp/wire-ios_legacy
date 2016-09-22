@@ -22,7 +22,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import <PureLayout/PureLayout.h>
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 @import WireExtensionComponents;
 
 

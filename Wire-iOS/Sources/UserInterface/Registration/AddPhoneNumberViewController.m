@@ -34,7 +34,7 @@
 #import "UIView+MTAnimation.h"
 #import "UIImage+ZetaIconsNeue.h"
 @import WireExtensionComponents;
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "RegistrationFormController.h"
 #import "CheckmarkViewController.h"

@@ -32,7 +32,6 @@
 #import "WAZUIMagicIOS.h"
 #import "zmessaging+iOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "NSString+Wire.h"
 #import "NSAttributedString+Wire.h"
 #import "Constants.h"
 #import "Analytics+iOS.h"

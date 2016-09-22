@@ -36,7 +36,6 @@
 #import "AnalyticsTracker.h"
 
 #import "zmessaging+iOS.h"
-#import "Wire-Swift.h"
 
 #import "ConversationListContentController.h"
 #import "ConversationListInteractiveItem.h"

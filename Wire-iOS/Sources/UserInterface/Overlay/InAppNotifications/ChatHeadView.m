@@ -28,7 +28,7 @@
 // helpers
 #import <PureLayout.h>
 #import "WAZUIMagicIOS.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "NSString+EmoticonSubstitution.h"
 

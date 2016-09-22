@@ -38,12 +38,11 @@
 #import <CoreMotion/CoreMotion.h>
 #import "UIViewController+Orientation.h"
 #import "SketchColorPickerController.h"
-#import "NSString+Wire.h"
+#import "Wire-Swift.h"
 
 #import "DeviceOrientationObserver.h"
 #import "WRFunctions.h"
 #import "UIImage+Transform.h"
-#import "Wire-Swift.h"
 
 
 static const CGFloat SketchBrushWidthThin = 6;
