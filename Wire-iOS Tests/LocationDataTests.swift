@@ -46,8 +46,8 @@ class LocationDataTests: XCTestCase {
     func testThatLocationDataCanBeCreatedFromADictionary() {
         // when
         let sut = LocationData.locationData(fromDictionary: [
-            "LastLocationLatitudeKey": 45,
-            "LastLocationLongitudeKey": 75,
+            "LastLocationLatitudeKey": 45.0,
+            "LastLocationLongitudeKey": 75.0,
             "LastLocationZoomLevelKey": 5
             ])
 
