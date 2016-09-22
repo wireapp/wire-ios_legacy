@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -22,22 +22,7 @@ import Cartography
 import CocoaLumberjackSwift
 import Classy
 
-class ProfileClientViewController: UIViewController {
-    var showBackButton: Bool = true
-    required init(client: UserClient) {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 
-/*
 class ProfileClientViewController: UIViewController, UserClientObserver, UITextViewDelegate {
     let userClient: UserClient!
     var userClientToken: UserClientObserverOpaqueToken!
@@ -123,7 +108,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         super.viewDidLoad()
         
         CASStyler.default().styleItem(self)
-        
+
         self.createContentView()
         self.createBackButton()
         self.createShowMyDeviceButton()
@@ -175,7 +160,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         if let user = self.userClient.user,
             let reviewInvitationTextFont = self.reviewInvitationTextFont {
             reviewInvitationTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && reviewInvitationTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: reviewInvitationTextFont, NSLinkAttributeName: URL.wr_fingerprintHowToVerifyURL()])
+                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: reviewInvitationTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
         }
         self.contentView.addSubview(reviewInvitationTextView)
         self.reviewInvitationTextView = reviewInvitationTextView
@@ -190,7 +175,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     func createTypeLabel() {
         let typeLabel = UILabel()
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
-        typeLabel.text = self.userClient.deviceClass?.uppercased
+        typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         self.contentView.addSubview(typeLabel)
         self.typeLabel = typeLabel
@@ -216,7 +201,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
                 )
         }
     }
-    
+
     func createFullIDLabel() {
         let fullIDLabel = UILabel()
         fullIDLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -350,7 +335,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared().selfUserClient())
         let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
         navigationControllerWrapper.modalPresentationStyle = .currentContext
-        self.present(navigationControllerWrapper, animated: true, completion: .None)
+        self.present(navigationControllerWrapper, animated: true, completion: .none)
     }
     
     func onTrustChanged(_ sender: AnyObject) {
@@ -363,8 +348,8 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
             }
             verifiedToggle.isOn = self.userClient.verified
             
-            let verificationType : DeviceVerificationType = verifiedToggle.isOn ? .Verified : .Unverified
-            Analytics.shared()?.tagChange(verificationType, deviceOwner: .Other)
+            let verificationType : DeviceVerificationType = verifiedToggle.isOn ? .verified : .unverified
+            Analytics.shared()?.tagChange(verificationType, deviceOwner: .other)
         }
     }
     
@@ -395,7 +380,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     // MARK: - UITextViewDelegate
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        if URL.isEqual(Foundation.URL.wr_fingerprintHowToVerifyURL()) {
+        if URL == NSURL.wr_fingerprintHowToVerify() as URL {
             UIApplication.shared.openURL(URL)
             return true
         }
@@ -403,4 +388,4 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
             return false
         }
     }
-}*/
+}

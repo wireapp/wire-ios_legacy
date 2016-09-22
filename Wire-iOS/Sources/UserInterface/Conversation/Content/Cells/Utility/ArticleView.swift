@@ -27,25 +27,25 @@ import WireExtensionComponents
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
     func articleViewDidLongPressView(_ articleView: ArticleView)
 }
-
-class ArticleView: UIView {
-    weak var delegate: ArticleViewDelegate?
-    
-    init(withImagePlaceholder imagePlaceholder: Bool) {
-        super.init(frame: CGRect.zero)
-
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(withTextMessageData textMessageData: ZMTextMessageData) {
-
-    }
-}
-/*
+//
+//class ArticleView: UIView {
+//    weak var delegate: ArticleViewDelegate?
+//    
+//    init(withImagePlaceholder imagePlaceholder: Bool) {
+//        super.init(frame: CGRect.zero)
+//
+//    }
+//    
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    func configure(withTextMessageData textMessageData: ZMTextMessageData) {
+//
+//    }
+//}
+//
 
 class ArticleView: UIView {
 
@@ -177,7 +177,9 @@ class ArticleView: UIView {
     }()
     
     func configure(withTextMessageData textMessageData: ZMTextMessageData) {
-        guard let linkPreview = textMessageData.linkPreview else { return }
+        guard let linkPreview = textMessageData.linkPreview else {
+            return
+        }
         self.linkPreview = linkPreview
 
         if let article = linkPreview as? Article {
@@ -192,11 +194,9 @@ class ArticleView: UIView {
             imageView.image = UIImage(data: imageData)
             loadingView?.isHidden = true
             
-            ArticleView.imageCache.image(for: imageData, cacheKey: textMessageData.imageDataIdentifier, creationBlock:
-                { data -> AnyObject! in
+            ArticleView.imageCache.image(for: imageData, cacheKey: textMessageData.imageDataIdentifier, creationBlock: { data -> Any in
                     return UIImage.deviceOptimizedImage(from: data)
-                }, completion:
-                {[weak self] (image, _) in
+                }, completion: {[weak self] (image, _) in
                     if let image = image as? UIImage {
                         self?.imageView.image = image
                     }
@@ -261,7 +261,5 @@ extension LinkPreview {
 
         return nil
     }
-
 }
 
-*/
