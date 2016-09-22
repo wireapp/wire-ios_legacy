@@ -25,7 +25,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Analytics+iOS.h"
 #import "WebLinkTextView.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 #import "Button.h"
 
 #import "AnalyticsTracker+Navigation.h"

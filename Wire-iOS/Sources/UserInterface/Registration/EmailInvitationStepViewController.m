@@ -32,7 +32,7 @@
 #import "UIFont+MagicAccess.h"
 #import "zmessaging+iOS.h"
 #import "GuidanceLabel.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 
 

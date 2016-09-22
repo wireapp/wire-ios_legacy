@@ -28,7 +28,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import "zmessaging+iOS.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 typedef NS_ENUM(NSInteger, StatusBarState) {
     StatusBarStateOk,

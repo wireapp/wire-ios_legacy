@@ -23,6 +23,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "AnalyticsTracker+Permissions.h"
+#import "NSString+Wire.h"
 #import "Wire-Swift.h"
 
 

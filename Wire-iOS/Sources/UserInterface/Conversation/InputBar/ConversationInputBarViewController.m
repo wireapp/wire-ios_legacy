@@ -39,7 +39,7 @@
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Sketchpad.h"
 #import "AnalyticsTracker+FileTransfer.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 
 #import "ZMUserSession+Additions.h"

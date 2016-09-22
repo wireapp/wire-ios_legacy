@@ -34,13 +34,14 @@
 #import "UIView+MTAnimation.h"
 #import "UIImage+ZetaIconsNeue.h"
 @import WireExtensionComponents;
+#import "NSString+Wire.h"
 
 #import "RegistrationFormController.h"
 #import "CheckmarkViewController.h"
 #import "UIViewController+Orientation.h"
 
 #import "AnalyticsTracker+Registration.h"
-#import "Wire-Swift.h"
+
 
 
 @interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMUserEditingObserver, ZMUserObserver>

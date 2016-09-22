@@ -23,6 +23,7 @@
 #import "StartUIViewController.h"
 #import "zmessaging+iOS.h"
 #import "CameraViewController.h"
+#import "NSString+Wire.h"
 #import "ZClientViewController.h"
 
 #import "Wire-Swift.h"

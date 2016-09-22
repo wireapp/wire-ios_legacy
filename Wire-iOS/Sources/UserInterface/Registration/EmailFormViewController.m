@@ -25,7 +25,7 @@
 #import "RegistrationTextField.h"
 #import "GuidanceLabel.h"
 #import "zmessaging+iOS.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 #import "UIViewController+Errors.h"
 

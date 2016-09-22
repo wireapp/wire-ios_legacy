@@ -26,7 +26,7 @@
 #import "UIView+Borders.h"
 #import "UIView+MTAnimation.h"
 #import "MentionsCollectionView.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 #import <PureLayout/PureLayout.h>
 

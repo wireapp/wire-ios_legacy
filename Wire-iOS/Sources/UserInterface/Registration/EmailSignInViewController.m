@@ -40,7 +40,7 @@
 #import "Constants.h"
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLS.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 #import "AnalyticsTracker+Registration.h"
 #import "Analytics+iOS.h"

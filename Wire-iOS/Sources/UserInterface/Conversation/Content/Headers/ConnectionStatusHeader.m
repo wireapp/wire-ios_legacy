@@ -25,7 +25,7 @@
 #import "UserImageView.h"
 #import "UIFont+MagicAccess.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 @interface ConnectionStatusHeader () <ZMUserObserver>
 

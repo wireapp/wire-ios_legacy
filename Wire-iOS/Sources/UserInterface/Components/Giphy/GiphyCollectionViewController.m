@@ -30,7 +30,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "StopWatch.h"
 #import "UIScrollView+Zeta.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 @import WireExtensionComponents;
 

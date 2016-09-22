@@ -28,7 +28,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "UIResponder+FirstResponder.h"
 #import "WireStyleKit.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 
 @interface NavigationController ()

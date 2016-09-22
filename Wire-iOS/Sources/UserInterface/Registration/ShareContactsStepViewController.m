@@ -27,6 +27,7 @@
 
 #import "RegistrationFormController.h"
 #import "ShareContactsViewController.h"
+#import "NSString+Wire.h"
 #import "Wire-Swift.h"
 
 @interface ShareContactsStepViewController () <FormStepDelegate>

@@ -24,7 +24,7 @@
 
 #import "UIColor+WAZExtensions.h"
 #import "UIView+Borders.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 #import "WAZUIMagic.h"
 #import "AccentColorChangeHandler.h"
 #import "Constants.h"

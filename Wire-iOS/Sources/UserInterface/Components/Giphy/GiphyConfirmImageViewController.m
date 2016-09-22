@@ -34,7 +34,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIViewController+Orientation.h"
 #import "GiphySearchResultsController.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 #import "zmessaging+iOS.h"
 #import "ZMUserSession+Additions.h"

@@ -26,7 +26,7 @@
 #import "CameraFocusRing.h"
 #import "CameraExposureSlider.h"
 #import "UIFont+MagicAccess.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 #import "WAZUIMagicIOS.h"
 

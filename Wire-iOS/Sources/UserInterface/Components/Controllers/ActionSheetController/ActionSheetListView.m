@@ -20,7 +20,7 @@
 #import <PureLayout/PureLayout.h>
 
 @import Classy;
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 #import "ActionSheetListView.h"
 #import "ActionSheetController.h"
 

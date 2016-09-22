@@ -30,7 +30,7 @@
 #import "NavigationController.h"
 #import "UIResponder+FirstResponder.h"
 #import "zmessaging+iOS.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 #import "AnalyticsTracker+Navigation.h"
 

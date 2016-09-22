@@ -38,6 +38,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import "UIViewController+Orientation.h"
 #import "SketchColorPickerController.h"
+#import "NSString+Wire.h"
 
 #import "DeviceOrientationObserver.h"
 #import "WRFunctions.h"

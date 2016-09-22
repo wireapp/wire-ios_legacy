@@ -28,7 +28,7 @@
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "ColorScheme.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 
 static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f;

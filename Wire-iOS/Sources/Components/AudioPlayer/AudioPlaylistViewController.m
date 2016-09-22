@@ -36,7 +36,7 @@
 #import "SoundcloudService.h"
 #import "LinkAttachment.h"
 #import "WAZUIMagicIOS.h"
-#import "Wire-Swift.h"
+#import "NSString+Wire.h"
 
 
 static NSString * const AudioPlaylistCellReuseIdentifier = @"AudioPlaylistCellReuseIdentifier";

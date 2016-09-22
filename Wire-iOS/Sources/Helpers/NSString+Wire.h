@@ -17,17 +17,16 @@
 // 
 
 
-#import "UIAlertView+Zeta.h"
-#import "NSString+Wire.h"
+#import <Foundation/Foundation.h>
 
 
 
-@implementation UIAlertView (Zeta)
+@interface NSString (Wire)
 
-+ (UIAlertView *)microphoneDisabledAlertViewWithDelegate:(id)delegate
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSLocalizedString(@"call.microphone_warning.title", @"Mic disabled") uppercaseStringWithCurrentLocale] message:NSLocalizedString(@"call.microphone_warning.explanation", @"Enable Mic in Privacy settings") delegate:delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    return alertView;
-}
+- (NSString *)uppercaseStringWithCurrentLocale;
+- (NSString *)lowercaseStringWithCurrentLocale;
 
+- (BOOL)matchesSlashCommand;
+
+- (NSArray *)args;
 @end
