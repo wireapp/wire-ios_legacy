@@ -27,25 +27,6 @@ import WireExtensionComponents
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
     func articleViewDidLongPressView(_ articleView: ArticleView)
 }
-//
-//class ArticleView: UIView {
-//    weak var delegate: ArticleViewDelegate?
-//    
-//    init(withImagePlaceholder imagePlaceholder: Bool) {
-//        super.init(frame: CGRect.zero)
-//
-//    }
-//    
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    func configure(withTextMessageData textMessageData: ZMTextMessageData) {
-//
-//    }
-//}
-//
 
 class ArticleView: UIView {
 
