@@ -22,6 +22,7 @@ import MessageUI
 typealias TechnicalReport = [String: String]
 
 class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+
     private enum TechnicalReportSection: Int {
         case Reports = 0
         case Options = 1
@@ -37,7 +38,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     init() {
         sendReportCell = UITableViewCell(style: .default, reuseIdentifier: nil)
         sendReportCell.backgroundColor = UIColor.clear
-        sendReportCell.textLabel?.text = NSLocalizedString("self.settings.technical_report.send_report", comment: "")
+        sendReportCell.textLabel?.text = "self.settings.technical_report.send_report".localized
         sendReportCell.textLabel?.textColor = UIColor.accent()
         sendReportCell.backgroundColor = UIColor.clear
         sendReportCell.backgroundView = UIView()
@@ -45,7 +46,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         
         includedVoiceLogCell = UITableViewCell(style: .default, reuseIdentifier: nil)
         includedVoiceLogCell.accessoryType = .checkmark
-        includedVoiceLogCell.textLabel?.text = NSLocalizedString("self.settings.technical_report.include_log", comment: "")
+        includedVoiceLogCell.textLabel?.text = "self.settings.technical_report.include_log".localized
         includedVoiceLogCell.textLabel?.textColor = UIColor.white
         includedVoiceLogCell.backgroundColor = UIColor.clear
         includedVoiceLogCell.backgroundView = UIView()
@@ -69,8 +70,8 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     lazy private var lastCallSessionReports: [TechnicalReport] = {
-        let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.trimmingCharacters(in: CharacterSet.whitespaces)
-        let reportStrings = voiceChannelDebugString.components(separatedBy: CharacterSet.newlines)
+        let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.trimmingCharacters(in: .whitespaces)
+        let reportStrings = voiceChannelDebugString.components(separatedBy: .newlines)
         
         return reportStrings.reduce([TechnicalReport](), { (reports, report) -> [TechnicalReport] in
             var mutableReports = reports
@@ -111,51 +112,48 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     // MARK TableView Delegates
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == TechnicalReportSection.Reports.rawValue else {
-            return 2
-        }
+        guard section == TechnicalReportSection.Reports.rawValue else { return 2 }
         return lastCallSessionReports.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case TechnicalReportSection.Options.rawValue:
             return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: technicalReportReuseIdentifier, for: indexPath as IndexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: technicalReportReuseIdentifier, for: indexPath)
             let technicalReport = lastCallSessionReports[indexPath.row]
             cell.detailTextLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportData]
             cell.textLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportTitle]
             return cell
-            
         }
     }
     
-    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return indexPath.section > 0
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == TechnicalReportSection.Options.rawValue
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
-        case TechnicalReportSection.Reports.rawValue where indexPath.row == 0:
+        case TechnicalReportSection.Options.rawValue where indexPath.row == 0:
             includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .none ? .checkmark : .none
         case TechnicalReportSection.Options.rawValue where indexPath.row == 1:
             sendReport()
-        default:
-            break
+        default: break
         }
-        
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: Mail Delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.presentingViewController!.dismiss(animated: true, completion: nil)
+        controller.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
