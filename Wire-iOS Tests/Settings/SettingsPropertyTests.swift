@@ -76,7 +76,7 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.DarkMode, userDefaultsKey: UserDefaultColorScheme, userDefaults: self.userDefaults)
         // when & then
-        XCTAssertTrue(self.saveAndCheck(property, value: "dark"))
+        XCTAssertTrue(self.saveAndCheck(property, value: "light"))
     }
     
     func testThatBoolUserDefaultsSettingSave() {
