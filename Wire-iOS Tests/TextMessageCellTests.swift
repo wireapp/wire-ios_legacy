@@ -199,16 +199,8 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 private extension TextMessageCell {
 
     func prepareForSnapshot() -> UIView {
-        let size = systemLayoutSizeFitting(
-            CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: UILayoutPriorityRequired,
-            verticalFittingPriority: UILayoutPriorityFittingSizeLevel
-        )
-        
-        bounds = CGRect(origin: .zero, size: size)
-        setNeedsLayout()
-        layoutIfNeeded()
-        return self
+        self.backgroundColor = .clear
+        return self.wrapInTableView()
     }
 
 }
