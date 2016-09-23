@@ -113,11 +113,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#if TARGET_OS_SIMULATOR
-    #pragma mark TEMPORARILY disable AVS on simulator
-    [Settings sharedSettings].disableAVS = YES;
-#endif
-    
+
     DDLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupLogging];

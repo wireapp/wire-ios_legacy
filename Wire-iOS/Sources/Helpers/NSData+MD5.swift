@@ -23,7 +23,7 @@ extension Data {
     func wr_MD5Hash() -> String {
         let digestLen = Int(CC_MD5_DIGEST_LENGTH)
         let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
-        self.withUnsafeBytes { bytes in
+        let _ = withUnsafeBytes { bytes in
             CC_MD5(bytes, CC_LONG(self.count), result)
         }
         
