@@ -347,6 +347,10 @@ static ImageCache *imageCache(void)
 - (void)updateSavableImage
 {
     NSData *data = self.message.imageMessageData.mediumData;
+    if (nil == data) {
+        return;
+    }
+
     UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
     self.savableImage = [[SavableImage alloc] initWithData:data orientation:orientation];
 }
