@@ -72,11 +72,12 @@ class ClientTableViewCell: UITableViewCell {
 
                         if let placemark = placemarks?.first,
                             let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String] as? String,
-                            let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String] ,
+                            let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String],
+                            let dateString = (activationDate as NSDate).wr_formattedDate(),
                             localClient == self.userClient &&
                             error == nil {
-                                
-                            self.activationLabel.text = "\(NSLocalizedString("registration.devices.activated_in", comment: "")) \(addressCity), \(addressCountry.uppercased()) — \((activationDate as NSDate).wr_formattedDate())"
+
+                            self.activationLabel.text = "\("registration.devices.activated_in".localized) \(addressCity), \(addressCountry.uppercased()) — \(dateString)"
                         }
                     })
                     
