@@ -721,6 +721,7 @@
 		BF606D771CAC1C0A002BAC94 /* ToolTipViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */; };
 		BF74EE4C1CD249B000D626CB /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF74EE4B1CD249B000D626CB /* HockeySDK.framework */; };
 		BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78687D1D86B36D0063762F /* LocationDataTests.swift */; };
+		BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EF5441D953B3F003E3999 /* Date+Format.swift */; };
 		BF8042271BFC741F004CD789 /* NSURL+WireURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */; };
 		BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
 		BF8CADD91D6CAAFC007602B8 /* Conversation+SortedParticipants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CADD81D6CAAFC007602B8 /* Conversation+SortedParticipants.swift */; };
@@ -1990,6 +1991,7 @@
 		BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolTipViewControllerTests.m; sourceTree = "<group>"; };
 		BF74EE4B1CD249B000D626CB /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Carthage/Build/iOS/HockeySDK.framework; sourceTree = "<group>"; };
 		BF78687D1D86B36D0063762F /* LocationDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataTests.swift; sourceTree = "<group>"; };
+		BF7EF5441D953B3F003E3999 /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		BF8042251BFC741F004CD789 /* NSURL+WireURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+WireURLs.h"; sourceTree = "<group>"; };
 		BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+WireURLs.m"; sourceTree = "<group>"; };
 		BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserClient+Fingerprint.swift"; sourceTree = "<group>"; };
@@ -2456,6 +2458,7 @@
 				1EB9BF361BC7ED3D002EF0F3 /* SharedAnalytics */,
 				871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */,
 				871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */,
+				BF7EF5441D953B3F003E3999 /* Date+Format.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -5061,6 +5064,7 @@
 				1EF2BE641BDA966000E287B9 /* UITextView+TextTransform.m in Sources */,
 				1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */,
 				8795A5C71D34D09E0024101B /* PulseLayer.m in Sources */,
+				BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */,
 				8795A5CB1D34D09E0024101B /* UserListeningLayer.m in Sources */,
 				878607201D33E3FF00971A19 /* LineNumberLogFormatter.m in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,

@@ -1,20 +1,20 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 
 import UIKit
@@ -57,42 +57,39 @@ class ClientTableViewCell: UITableViewCell {
     
     var userClient: UserClient? {
         didSet {
-            if let userClient = self.userClient {
-                if let userClientModel = userClient.model {
-                        
-                    nameLabel.text = userClientModel
-                }
-                
-                self.updateLabel()
-                
-                if let activationDate = userClient.activationDate , userClient.activationLocationLatitude != 0 && userClient.activationLocationLongitude != 0 {
-
-                    let localClient = self.userClient
-                    CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-
-                        if let placemark = placemarks?.first,
-                            let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String] as? String,
-                            let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String],
-                            let dateString = (activationDate as NSDate).wr_formattedDate(),
-                            localClient == self.userClient &&
-                            error == nil {
-
-                            self.activationLabel.text = "\("registration.devices.activated_in".localized) \(addressCity), \(addressCountry.uppercased()) — \(dateString)"
-                        }
-                    })
-                    
-                    self.activationLabel.text = (activationDate as NSDate).wr_formattedDate()
-                }
-                else if let activationDate = userClient.activationDate {
-                    self.activationLabel.text = (activationDate as NSDate).wr_formattedDate()
-                }
-                else {
-                    self.activationLabel.text = ""
-                }
-                
-                self.updateFingerprint()
-                self.updateVerifiedLabel()
+            guard let userClient = self.userClient else { return }
+            if let userClientModel = userClient.model {
+                nameLabel.text = userClientModel
             }
+            
+            self.updateLabel()
+            
+            if let activationDate = userClient.activationDate, userClient.activationLocationLatitude != 0 && userClient.activationLocationLongitude != 0 {
+                
+                let localClient = self.userClient
+                CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
+                    
+                    if let placemark = placemarks?.first,
+                        let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String] as? String,
+                        let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String],
+                        localClient == self.userClient &&
+                            error == nil {
+                        
+                        self.activationLabel.text = "\("registration.devices.activated_in".localized) \(addressCity), \(addressCountry.uppercased()) — \(activationDate.wr_formattedDate())"
+                    }
+                })
+                
+                self.activationLabel.text = activationDate.wr_formattedDate()
+            }
+            else if let activationDate = userClient.activationDate {
+                self.activationLabel.text = activationDate.wr_formattedDate()
+            }
+            else {
+                self.activationLabel.text = ""
+            }
+            
+            self.updateFingerprint()
+            self.updateVerifiedLabel()
         }
     }
     
