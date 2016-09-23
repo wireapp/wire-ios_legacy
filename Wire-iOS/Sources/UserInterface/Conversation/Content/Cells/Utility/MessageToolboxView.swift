@@ -100,7 +100,10 @@ extension ZMConversationMessage {
             labelClipView.centerY == selfView.centerY
             labelClipView.right == selfView.rightMargin
             
-            statusLabel.edges == labelClipView.edges
+            statusLabel.left == labelClipView.left
+            statusLabel.top == labelClipView.top
+            statusLabel.bottom == labelClipView.bottom
+            statusLabel.right <= reactionsView.left
             
             reactionsView.right == selfView.rightMargin
             reactionsView.centerY == selfView.centerY
