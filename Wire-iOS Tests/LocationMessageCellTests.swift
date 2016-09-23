@@ -33,18 +33,18 @@ class LocationMessageCellTests: ZMSnapshotTestCase {
     func testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
         // If it does we can try to use the 'withAccurancy' methods in FBSnapshotTestCase
-        verify(view: cellWithConfig())
+        verify(view: wrappedCellWithConfig())
     }
     
     func testThatItRendersLocationCellWithoutAddressCorrect() {
-        verify(view: cellWithConfig {
+        verify(view: wrappedCellWithConfig {
             $0.backingLocationMessageData.name = nil
         })
     }
 
     // MARK: - Helper
 
-    func cellWithConfig(_ config: CellConfiguration? = nil) -> LocationMessageCell {
+    func wrappedCellWithConfig(_ config: CellConfiguration? = nil) -> UITableView {
         let fileMessage = MockMessageFactory.locationMessage()
         fileMessage?.backingLocationMessageData?.latitude = 9.041169
         fileMessage?.backingLocationMessageData?.longitude = 48.53775
@@ -67,12 +67,8 @@ class LocationMessageCellTests: ZMSnapshotTestCase {
                                               0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))
         
         cell.configure(for: fileMessage, layoutProperties: layoutProperties)
-        cell.layoutIfNeeded()
         
-        let size = cell.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
-        cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
-        cell.layoutIfNeeded()
-        return cell
+        return cell.wrapInTableView()
     }
     
 }

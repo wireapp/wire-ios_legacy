@@ -39,7 +39,7 @@
               @(ZMSystemMessageTypeDecryptionFailed): [CannotDecryptCell class]};
 }
 
-+ (IconSystemCell *)cellForMessageType:(ZMSystemMessageType)type users:(NSUInteger)usersCount clients:(NSUInteger)clientsCount config:(void(^)(MockMessage *))config {
++ (UITableView *)wrappedCellForMessageType:(ZMSystemMessageType)type users:(NSUInteger)usersCount clients:(NSUInteger)clientsCount config:(void(^)(MockMessage *))config {
     
     MockMessage *systemMessage = [MockMessageFactory systemMessageWithType:type users:usersCount clients:clientsCount];
 
@@ -64,84 +64,84 @@
     [cell layoutIfNeeded];
     CGSize size = [cell systemLayoutSizeFittingSize:CGSizeMake(320.0, 0.0) withHorizontalFittingPriority: UILayoutPriorityRequired verticalFittingPriority: UILayoutPriorityFittingSizeLevel];
     cell.bounds = CGRectMake(0.0, 0.0, size.width, size.height);
-    return cell;
+    return [cell wrapInTableView];
 }
 
 - (void)testCannotDecryptMessage {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
+    ZMVerifyView(wrappedCell);
 }
  
 - (void)testNewClient_oneUser_oneClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:1 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:1 config:nil];
+    ZMVerifyView(wrappedCell);
 }
  
 - (void)testNewClient_selfUser_oneClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:1 config:^(MockMessage *message) {
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:1 config:^(MockMessage *message) {
         MockSystemMessageData *mockMessageData = (MockSystemMessageData *)message.systemMessageData;
         mockMessageData.users = [NSSet setWithObject:[MockUser mockSelfUser]];
     }];
-    ZMVerifyView(cell);
+    ZMVerifyView(wrappedCell);
 }
  
 - (void)testNewClient_selfUser_manyClients {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:2 config:^(MockMessage *message) {
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:2 config:^(MockMessage *message) {
         MockSystemMessageData *mockMessageData = (MockSystemMessageData *)message.systemMessageData;
         mockMessageData.users = [NSSet setWithObject:[MockUser mockSelfUser]];
     }];
-    ZMVerifyView(cell);
+    ZMVerifyView(wrappedCell);
 }
  
 - (void)testNewClient_oneUser_manyClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:3 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeNewClient users:1 clients:3 config:nil];
+    ZMVerifyView(wrappedCell);
 }
  
 - (void)testNewClient_manyUsers_manyClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeNewClient users:3 clients:4 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeNewClient users:3 clients:4 config:nil];
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testIgnoredClient_oneUser_oneClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:1 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:1 config:nil];
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testIgnoredClient_selfUser_oneClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:1 config:^(MockMessage *message) {
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:1 config:^(MockMessage *message) {
         MockSystemMessageData *mockMessageData = (MockSystemMessageData *)message.systemMessageData;
         mockMessageData.users = [NSSet setWithObject:[MockUser mockSelfUser]];
     }];
-    ZMVerifyView(cell);
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testIgnoredClient_selfUser_manyClients {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:2 config:^(MockMessage *message) {
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:2 config:^(MockMessage *message) {
         MockSystemMessageData *mockMessageData = (MockSystemMessageData *)message.systemMessageData;
         mockMessageData.users = [NSSet setWithObject:[MockUser mockSelfUser]];
     }];
-    ZMVerifyView(cell);
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testIgnoredClient_oneUser_manyClient {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:3 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeIgnoredClient users:1 clients:3 config:nil];
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testConversationIsSecure {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeConversationIsSecure users:0 clients:0 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeConversationIsSecure users:0 clients:0 config:nil];
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testPotentialGap {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypePotentialGap users:0 clients:0 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypePotentialGap users:0 clients:0 config:nil];
+    ZMVerifyView(wrappedCell);
 }
 
 - (void)testDecryptionFailed {
-    IconSystemCell *cell = [self.class cellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
-    ZMVerifyView(cell);
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
+    ZMVerifyView(wrappedCell);
 }
 
 @end

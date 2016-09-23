@@ -19,6 +19,48 @@
 
 import Foundation
 
+extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
+    func wrapInTableView() -> UITableView {
+        let tableView = UITableView(frame: self.bounds, style: .plain)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.layoutMargins = self.layoutMargins
+        
+        let size = self.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        self.layoutSubviews()
+        
+        self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
+        self.contentView.bounds = self.bounds
+        
+        tableView.reloadData()
+        tableView.bounds = self.bounds
+        tableView.layoutIfNeeded()
+        CASStyler.default().styleItem(self)
+        self.layoutSubviews()
+        return tableView
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.bounds.size.height
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return self
+    }
+}
+
 extension StaticString {
     func utf8SignedStart() -> UnsafePointer<Int8> {
         let fileUnsafePointer = self.utf8Start

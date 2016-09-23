@@ -22,7 +22,7 @@ import XCTest
 
 class FileTransferCellTests: ZMSnapshotTestCase {
     
-    func cellWithConfig(_ config: ((MockMessage) -> ())?) -> FileTransferCell {
+    func wrappedCellWithConfig(_ config: ((MockMessage) -> ())?) -> UITableView {
     
         let fileMessage = MockMessageFactory.fileTransferMessage()
         
@@ -46,12 +46,8 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))
         
         cell.configure(for: fileMessage, layoutProperties: layoutProperties)
-        cell.layoutIfNeeded()
-
-        let size = cell.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
-        cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
-        cell.layoutIfNeeded()
-        return cell
+      
+        return cell.wrapInTableView()
     }
     
     override func setUp() {
@@ -60,7 +56,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
    
     func testUploadedCell_fromThisDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
@@ -68,7 +64,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testUploadedCell_fromOtherDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
         })
@@ -76,7 +72,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testUploadedCell_fromOtherUser() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
@@ -87,7 +83,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     
     
     func testUploadedCell_fromThisDevice_longFileName() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.fileMessageData?.filename = "Etiam lacus elit, tempor at blandit sit amet, faucibus in erat. Mauris faucibus scelerisque mattis.pdf"
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -96,7 +92,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testUploadedCell_fromThisDevice_bigFileSize() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.fileMessageData?.size = 1024 * 1024 * 25
             $0.backingFileMessageData.fileURL = .none
@@ -106,7 +102,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     
     
     func testUploadingCell_fromThisDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
@@ -114,7 +110,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testUploadingCell_fromOtherDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
             $0.backingFileMessageData.fileURL = .none
         })
@@ -122,7 +118,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testUploadingCell_fromOtherUser() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
             $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
@@ -133,7 +129,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     
     
     func testDownloadingCell_fromThisDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloading
             $0.fileMessageData?.progress = 0.75
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -142,7 +138,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testDownloadingCell_fromOtherDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloading
             $0.fileMessageData?.progress = 0.75
             $0.backingFileMessageData.fileURL = .none
@@ -151,7 +147,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testDownloadingCell_fromOtherUser() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloading
             $0.backingFileMessageData.fileURL = .none
             $0.fileMessageData?.progress = 0.75
@@ -163,7 +159,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     
     
     func testDownloadedCell_fromThisDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloaded
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
@@ -171,7 +167,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testDownloadedCell_fromOtherDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloaded
             $0.backingFileMessageData.fileURL = .none
         })
@@ -179,7 +175,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testDownloadedCell_fromOtherUser() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloaded
             $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
@@ -190,7 +186,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     
     
     func testFailedDownloadCell_fromThisDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedDownload
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
@@ -198,7 +194,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testFailedDownloadCell_fromOtherDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedDownload
             $0.backingFileMessageData.fileURL = .none
         })
@@ -206,7 +202,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testFailedDownloadCell_fromOtherUser() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedDownload
             $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
@@ -218,7 +214,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     
     
     func testFailedUploadCell_fromThisDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedUpload
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
@@ -226,7 +222,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testFailedUploadCell_fromOtherDevice() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedUpload
             $0.backingFileMessageData.fileURL = .none
         })
@@ -234,7 +230,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     }
     
     func testFailedUploadCell_fromOtherUser() {
-        let cell = self.cellWithConfig({
+        let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedUpload
             $0.backingFileMessageData.fileURL = .none
             $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
@@ -245,7 +241,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     // MARK : Upload Cancelled
     
     func testCancelledUploadCell_fromThisDevice() {
-        let cell = cellWithConfig {
+        let cell = wrappedCellWithConfig {
             $0.fileMessageData?.transferState = .cancelledUpload
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         }

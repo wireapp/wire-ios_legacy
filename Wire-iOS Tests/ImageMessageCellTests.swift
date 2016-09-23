@@ -44,33 +44,33 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
 
     func testThatItRendersImageMessageWhenImageIsSet() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let cell = sut.prepareForSnapshot(image.size, image: image)
-        verify(view: cell)
+        let wrap = sut.prepareForSnapshot(image.size, image: image)
+        verify(view: wrap)
     }
 
     func testThatItRendersImageMessageWhenImageIsSet_SmallImage() {
         let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
-        let cell = sut.prepareForSnapshot(image.size, image: image)
-        verify(view: cell)
+        let wrap = sut.prepareForSnapshot(image.size, image: image)
+        verify(view: wrap)
     }
 
     func testThatItRendersImageMessageWithResendButton() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let cell = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
-        verify(view: cell)
+        let wrap = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
+        verify(view: wrap)
     }
     
     func testThatItRendersImageMessageWithResendButton_SmallImage() {
         let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
-        let cell = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
-        verify(view: cell)
+        let wrap = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
+        verify(view: wrap)
     }
 
 }
 
 private extension ImageMessageCell {
 
-    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false) -> ImageMessageCell {
+    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false) -> UITableView {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
@@ -90,18 +90,9 @@ private extension ImageMessageCell {
             setImage(image)
         }
 
-        let size = systemLayoutSizeFitting(
-            CGSize(width: 320, height: 0),
-            withHorizontalFittingPriority: UILayoutPriorityRequired,
-            verticalFittingPriority: UILayoutPriorityFittingSizeLevel
-        )
-
-        bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         layer.speed = 0
 
-        setNeedsLayout()
-        layoutIfNeeded()
-        return self
+        return self.wrapInTableView()
     }
 
 }
