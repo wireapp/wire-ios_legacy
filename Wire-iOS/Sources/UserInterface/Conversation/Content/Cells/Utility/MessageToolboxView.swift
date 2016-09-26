@@ -74,8 +74,6 @@ extension ZMConversationMessage {
         tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
         tapGestureRecogniser.delegate = self
         addGestureRecognizer(tapGestureRecogniser)
-        
-        superview?.debug()
     }
     
     private func setupViews() {
