@@ -138,7 +138,6 @@ import Foundation
             let signOutButton = SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
                 Settings.shared().reset()
                 ZMUserSession.resetStateAndExit()
-                exit(0)
             }
             signOutSection = SettingsSectionDescriptor(cellDescriptors: [signOutButton], header: .none, footer: .none)
         }
