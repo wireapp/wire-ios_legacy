@@ -86,7 +86,6 @@ import Foundation
                 stepDelegate.strongCapture = stepDelegate
                 
                 addEmailController.formStepDelegate = stepDelegate
-                
                 return addEmailController
             }
         }
@@ -235,7 +234,7 @@ import Foundation
             let alertsSection = SettingsSectionDescriptor(cellDescriptors: [allAlerts, someAlerts, noneAlerts], header: titleLabel, footer: .none)
             
             let alertPreviewGenerator : PreviewGeneratorType = {
-                let value = soundAlertProperty.propertyValue
+                let value = soundAlertProperty.value()
                 guard let rawValue = value.value() as? UInt,
                     let intensityLevel = AVSIntensityLevel(rawValue: rawValue) else { return .text($0.title) }
                 
@@ -269,7 +268,7 @@ import Foundation
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         
         
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .settingsOptions)
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {
@@ -313,7 +312,7 @@ import Foundation
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: "self.settings.sound_menu.ringtones.title".localized)
         
         let previewGenerator: PreviewGeneratorType = { cellDescriptor in
-            let value = settingsProperty.propertyValue
+            let value = settingsProperty.value()
             
             if let stringValue = value.value() as? String,
                 let enumValue = ZMSound(rawValue: stringValue) {
@@ -433,29 +432,20 @@ import Foundation
         
         let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
 
-        let items: [SettingsSectionDescriptorType]
-        if DeveloperMenuState.developerMenuEnabled() {
-            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
-            let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
-                SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
-                
-                if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
-                    let versionInfo = VersionInfoViewController()
-                    
-                    UIApplication.shared.keyWindow?.rootViewController?.present(versionInfo, animated: true, completion: .none)
-                }
-            }
+        let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
+        let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
+            SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
             
-            let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .none, footer: copyrightInfo)
-            items = [websiteSection, linksSection, infoSection]
-        }
-        else {
-            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton], header: .none, footer: version + " " + copyrightInfo)
-            items = [websiteSection, linksSection]
+            if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
+                let versionInfo = VersionInfoViewController()
+                
+                UIApplication.shared.keyWindow?.rootViewController?.present(versionInfo, animated: true, completion: .none)
+            }
         }
         
-        return SettingsGroupCellDescriptor(items: items, title: "self.about".localized, style: .grouped, identifier: .none, previewGenerator: .none, icon: .wireLogo)
-
+        let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .none, footer: copyrightInfo)
+        
+        return SettingsGroupCellDescriptor(items: [websiteSection, linksSection, infoSection], title: "self.about".localized, style: .grouped, identifier: .none, previewGenerator: .none, icon: .wireLogo)
     }
     
     // MARK: Subgroups

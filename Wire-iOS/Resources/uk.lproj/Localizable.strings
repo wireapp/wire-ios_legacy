@@ -475,7 +475,7 @@
 "self.settings.apns_logging.title" = "Ведення журналу APNS";
 
 // Privacy (visibility) options
-"self.settings.privacy_menu.title" = "Конфіденційність та безпека";
+"self.settings.options_menu.title" = "Конфіденційність та безпека";
 
 "self.settings.privacy_contacts_section.title" = "Контакти";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";

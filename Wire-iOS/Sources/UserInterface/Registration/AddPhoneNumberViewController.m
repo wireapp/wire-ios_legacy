@@ -107,7 +107,6 @@
     }
     
     self.view.opaque = NO;
-    self.title = NSLocalizedString(@"registration.title", @"");
     
     [self updateViewConstraints];
 }

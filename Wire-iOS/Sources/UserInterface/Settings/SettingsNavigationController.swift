@@ -102,7 +102,7 @@ import Foundation
     func soundIntensityChanged(_ notification: Notification) {
         let soundProperty = self.settingsPropertyFactory.property(.SoundAlerts)
         
-        if let intensivityLevel = soundProperty.propertyValue.value() as? AVSIntensityLevel {
+        if let intensivityLevel = soundProperty.rawValue() as? AVSIntensityLevel {
             switch(intensivityLevel) {
             case .full:
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeAlways)

@@ -475,7 +475,7 @@
 "self.settings.apns_logging.title" = "APNS Protokollierung";
 
 // Privacy (visibility) options
-"self.settings.privacy_menu.title" = "Datenschutz & Sicherheit";
+"self.settings.options_menu.title" = "Datenschutz & Sicherheit";
 
 "self.settings.privacy_contacts_section.title" = "Kontakte";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Öffne Kontakteinstellungen";
