@@ -49,7 +49,7 @@
     static MockUser *selfUser = nil;
 
     if (selfUser == nil) {
-        selfUser = self.mockUsers.lastObject;
+        selfUser = (MockUser *)self.mockUsers.lastObject;
         selfUser.isSelfUser = YES;
     }
     

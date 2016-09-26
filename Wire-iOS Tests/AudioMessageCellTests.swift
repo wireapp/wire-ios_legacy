@@ -71,7 +71,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -81,7 +81,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
             $0.backingFileMessageData.previewData = nil
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -91,7 +91,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
             $0.backingFileMessageData.normalizedLoudness = [0.25, 0.5, 1]
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -122,7 +122,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
             $0.fileMessageData?.transferState = .uploading
             $0.backingFileMessageData.previewData = nil
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -131,7 +131,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -152,7 +152,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
             $0.fileMessageData?.transferState = .downloading
             $0.backingFileMessageData.fileURL = .none
             $0.fileMessageData?.progress = 0.75
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -171,7 +171,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloaded
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -190,7 +190,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedDownload
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -209,7 +209,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedUpload
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -229,7 +229,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         let cell = wrappedCellWithConfig {
             $0.fileMessageData?.transferState = .cancelledUpload
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         }
         
         verify(view: cell)

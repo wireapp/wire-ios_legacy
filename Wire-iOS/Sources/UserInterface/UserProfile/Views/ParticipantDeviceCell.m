@@ -80,6 +80,7 @@
     [self.nameLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.trustLevelImageView withOffset:16];
     
     [self.identifierLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.nameLabel];
+    [self.identifierLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.identifierLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
 }
 

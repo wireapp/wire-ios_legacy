@@ -75,7 +75,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -121,7 +121,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -151,7 +151,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
             $0.fileMessageData?.transferState = .downloading
             $0.backingFileMessageData.fileURL = .none
             $0.fileMessageData?.progress = 0.75
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -178,7 +178,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .downloaded
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -205,7 +205,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedDownload
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }
@@ -233,7 +233,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .failedUpload
             $0.backingFileMessageData.fileURL = .none
-            $0.sender = (MockUser.mockUsers()[0] as! ZMUser)
+            $0.sender = MockUser.mockUsers().first!
         })
         verify(view: cell)
     }

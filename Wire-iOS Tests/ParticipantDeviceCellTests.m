@@ -40,37 +40,37 @@
     self.user = [ZMUser insertNewObjectInManagedObjectContext:self.uiMOC];
 }
 
-- (void)disabled_testThatItRendersTheCellUnverifiedFullWidthIdentifierLongerThan_16_Characters
+- (void)testThatItRendersTheCellUnverifiedFullWidthIdentifierLongerThan_16_Characters
 {
     UserClient *client = [UserClient fetchUserClientWithRemoteId:@"102030405060708090" forUser:self.user createIfNeeded:YES];
     client.deviceClass = @"tablet";
     [self.sut configureForClient:client];
-    ZMVerifyViewInAllIPhoneWidths([self.sut wrapInTableView]);
+    ZMVerifyView([self.sut wrapInTableView]);
 }
 
-- (void)disabled_testThatItRendersTheCellUnverifiedTruncatedIdentifier
+- (void)testThatItRendersTheCellUnverifiedTruncatedIdentifier
 {
     UserClient *client = [UserClient fetchUserClientWithRemoteId:@"807060504030201" forUser:self.user createIfNeeded:YES];
     client.deviceClass = @"desktop";
     [self.sut configureForClient:client];
-    ZMVerifyViewInAllIPhoneWidths([self.sut wrapInTableView]);
+    ZMVerifyView([self.sut wrapInTableView]);
 }
 
-- (void)disabled_testThatItRendersTheCellUnverifiedTruncatedIdentifierMultipleCharactersMissing
+- (void)testThatItRendersTheCellUnverifiedTruncatedIdentifierMultipleCharactersMissing
 {
     UserClient *client = [UserClient fetchUserClientWithRemoteId:@"7060504030201" forUser:self.user createIfNeeded:YES];
     client.deviceClass = @"desktop";
     [self.sut configureForClient:client];
-    ZMVerifyViewInAllIPhoneWidths([self.sut wrapInTableView]);
+    ZMVerifyView([self.sut wrapInTableView]);
 }
 
-- (void)disabled_testThatItRendersTheCellVerifiedWithLabel
+- (void)testThatItRendersTheCellVerifiedWithLabel
 {
     UserClient *client = [UserClient fetchUserClientWithRemoteId:@"e7b2u9d4s85h1gv0" forUser:self.user createIfNeeded:YES];
     client.deviceClass = @"phone";
     [self trustClient:client];
     [self.sut configureForClient:client];
-    ZMVerifyViewInAllIPhoneWidths([self.sut wrapInTableView]);
+    ZMVerifyView([self.sut wrapInTableView]);
 }
 
 #pragma mark - Helper
