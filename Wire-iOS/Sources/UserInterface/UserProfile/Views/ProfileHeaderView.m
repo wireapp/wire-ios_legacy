@@ -23,11 +23,10 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import <PureLayout/PureLayout.h>
 
-#import "TextViewWithDataDetectorWorkaround.h"
-
 #import <WireExtensionComponents/WireExtensionComponents.h>
 #import <PureLayout/PureLayout.h>
 #import "WireStyleKit.h"
+#import "Wire-Swift.h"
 
 
 @interface ProfileHeaderView ()
@@ -75,7 +74,7 @@
     [self addSubview:self.verifiedImageView];
     self.verifiedImageView.hidden = YES;
 
-    self.subtitleLabel = [[TextViewWithDataDetectorWorkaround alloc] initForAutoLayout];
+    self.subtitleLabel = [[LinkInteractionTextView alloc] initForAutoLayout];
 	self.subtitleLabel.editable = NO;
     self.subtitleLabel.scrollEnabled = NO;
 	self.subtitleLabel.textContainerInset = UIEdgeInsetsZero;

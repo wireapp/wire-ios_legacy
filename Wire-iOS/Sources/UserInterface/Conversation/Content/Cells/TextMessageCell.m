@@ -25,7 +25,6 @@
 #import "zmessaging+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "WAZUIMagicIOS.h"
-#import "TextViewWithDataDetectorWorkaround.h"
 #import "Message+Formatting.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
@@ -50,7 +49,7 @@
 
 @property (nonatomic, assign) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic, strong) TextViewWithDataDetectorWorkaround *messageTextView;
+@property (nonatomic, strong) LinkInteractionTextView *messageTextView;
 @property (nonatomic, strong) UIView *linkAttachmentContainer;
 @property (nonatomic, strong) UIImageView *editedImageView;
 @property (nonatomic, strong) LinkAttachment *linkAttachment;
@@ -92,9 +91,9 @@
 
 - (void)createTextMessageViews
 {
-    self.messageTextView = [[TextViewWithDataDetectorWorkaround alloc] init];
+    self.messageTextView = [[LinkInteractionTextView alloc] init];
     self.messageTextView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.messageTextView.textViewInteractionDelegate = self;
+    self.messageTextView.interactionDelegate = self;
     [self.messageContentView addSubview:self.messageTextView];
     
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
@@ -376,9 +375,9 @@
 
 #pragma mark - TextViewInteractionDelegate
 
-- (void)textView:(TextViewWithDataDetectorWorkaround *)textView willOpenURL:(NSURL *)URL
+- (void)textView:(LinkInteractionTextView *)textView willOpenURL:(NSURL *)url
 {
-    LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", URL]].lastObject;
+    LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", url]].lastObject;
     
     if (linkAttachment != nil) {
         [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:linkAttachment.type
@@ -389,10 +388,11 @@
     }
 }
 
-- (void)textView:(TextViewWithDataDetectorWorkaround *)textView didLongPressLinkWithGestureRecognizer:(UILongPressGestureRecognizer *)longPress
+- (void)textView:(LinkInteractionTextView *)textView didLongPressLink:(UILongPressGestureRecognizer *)recognizer
 {
     [self showMenu];
 }
+
 
 @end
 

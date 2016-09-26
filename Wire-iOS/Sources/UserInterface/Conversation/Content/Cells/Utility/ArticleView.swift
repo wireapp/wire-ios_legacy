@@ -126,7 +126,7 @@ class ArticleView: UIView {
         }
         
         if let loadingView = self.loadingView {
-            constrain(imageView, loadingView) {imageView, loadingView in
+            constrain(imageView, loadingView) { imageView, loadingView in
                 loadingView.center == imageView.center
             }
         }

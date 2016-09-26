@@ -353,7 +353,6 @@
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
 		871BC2701D34F8F800DF0793 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D51D34F8F800DF0793 /* StackView.m */; };
 		871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */; };
-		871BC2721D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D91D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.m */; };
 		871BC2731D34F8F800DF0793 /* UpsideDownTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */; };
 		871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */; };
 		871BC2751D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E01D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m */; };
@@ -734,6 +733,7 @@
 		BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */; };
 		BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */; };
 		BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */; };
+		BFA25DC11D9976B60086DEBD /* LinkInteractionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC01D9976B60086DEBD /* LinkInteractionTextView.swift */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
@@ -1371,8 +1371,6 @@
 		871BC1D51D34F8F800DF0793 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 		871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeMenuCollectionCell.h; sourceTree = "<group>"; };
 		871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeMenuCollectionCell.m; sourceTree = "<group>"; };
-		871BC1D81D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWithDataDetectorWorkaround.h; sourceTree = "<group>"; };
-		871BC1D91D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWithDataDetectorWorkaround.m; sourceTree = "<group>"; };
 		871BC1DA1D34F8F800DF0793 /* UpsideDownTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpsideDownTableView.h; sourceTree = "<group>"; };
 		871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpsideDownTableView.m; sourceTree = "<group>"; };
 		871BC1DD1D34F8F800DF0793 /* BadgeUserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeUserImageView.h; sourceTree = "<group>"; };
@@ -2006,6 +2004,7 @@
 		BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_burger.jpg; sourceTree = "<group>"; };
 		BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageCellTests.swift; sourceTree = "<group>"; };
 		BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_small.jpg; sourceTree = "<group>"; };
+		BFA25DC01D9976B60086DEBD /* LinkInteractionTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkInteractionTextView.swift; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
@@ -3032,8 +3031,7 @@
 				871BC1D51D34F8F800DF0793 /* StackView.m */,
 				871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */,
 				871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */,
-				871BC1D81D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.h */,
-				871BC1D91D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.m */,
+				BFA25DC01D9976B60086DEBD /* LinkInteractionTextView.swift */,
 				871BC1DA1D34F8F800DF0793 /* UpsideDownTableView.h */,
 				871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */,
 				871BC1DC1D34F8F800DF0793 /* UserImageView */,
@@ -5136,7 +5134,6 @@
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
 				871BC2631D34F8F800DF0793 /* BackgroundView.m in Sources */,
 				871BC0041D34F56300DF0793 /* AnalyticsLocalyticsProvider.m in Sources */,
-				871BC2721D34F8F800DF0793 /* TextViewWithDataDetectorWorkaround.m in Sources */,
 				871BC2481D34F8F800DF0793 /* NSString+WAZUIMagic.m in Sources */,
 				871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */,
 				879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */,
@@ -5448,6 +5445,7 @@
 				BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */,
 				16BCF4311A0A457900A2D3D6 /* GuidanceLabel.m in Sources */,
 				87DCF49D1D34E9E600BB420F /* MapKit+Helper.swift in Sources */,
+				BFA25DC11D9976B60086DEBD /* LinkInteractionTextView.swift in Sources */,
 				8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */,
 				874448811C22F64900E7B947 /* IconSystemCell.swift in Sources */,
 				870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */,
