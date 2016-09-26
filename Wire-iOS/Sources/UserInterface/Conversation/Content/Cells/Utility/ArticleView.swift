@@ -36,8 +36,8 @@ class ArticleView: UIView {
     var titleFont: UIFont?
     var authorTextColor: UIColor?
     var authorFont: UIFont?
-    var authorHighlightTextColor: UIColor = UIColor.gray
-    var authorHighlightFont: UIFont = UIFont.boldSystemFont(ofSize: 14)
+    var authorHighlightTextColor = UIColor.gray
+    var authorHighlightFont = UIFont.boldSystemFont(ofSize: 14)
     
     /// MARK - Views
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
@@ -96,7 +96,7 @@ class ArticleView: UIView {
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
         messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
-        messageLabel.linkAttributes = [NSForegroundColorAttributeName : UIColor.accent]
+        messageLabel.linkAttributes = [NSForegroundColorAttributeName : UIColor.accent()]
         messageLabel.activeLinkAttributes = [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
         messageLabel.delegate = self
         
@@ -175,10 +175,9 @@ class ArticleView: UIView {
             let imageDataIdentifier = textMessageData.imageDataIdentifier {
             imageView.image = UIImage(data: imageData)
             loadingView?.isHidden = true
-            
             ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
                     return UIImage.deviceOptimizedImage(from: data)
-                }, completion: {[weak self] (image, _) in
+                }, completion: { [weak self] (image, _) in
                     if let image = image as? UIImage {
                         self?.imageView.image = image
                     }
