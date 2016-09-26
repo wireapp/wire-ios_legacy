@@ -68,17 +68,23 @@ extension ZMConversationMessage {
         super.init(frame: frame)
         CASStyler.default().styleItem(self)
         
-        reactionsView.translatesAutoresizingMaskIntoConstraints = false
-        reactionsView.accessibilityIdentifier = "reactionsView"
-        self.addSubview(reactionsView)
+        setupViews()
+        createConstraints()
+        
+        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
+        tapGestureRecogniser.delegate = self
+        addGestureRecognizer(tapGestureRecogniser)
+        
+        superview?.debug()
+    }
     
+    private func setupViews() {
+        reactionsView.accessibilityIdentifier = "reactionsView"
+        
         labelClipView.clipsToBounds = true
         labelClipView.isAccessibilityElement = true
-        labelClipView.translatesAutoresizingMaskIntoConstraints = false
         labelClipView.isUserInteractionEnabled = true
-        self.addSubview(labelClipView)
         
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.delegate = self
         statusLabel.extendsLinkTouchArea = true
         statusLabel.isUserInteractionEnabled = true
@@ -88,14 +94,16 @@ extension ZMConversationMessage {
                                       NSForegroundColorAttributeName: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
                                             NSForegroundColorAttributeName: UIColor(for: .vividRed).withAlphaComponent(0.5)]
-        labelClipView.addSubview(statusLabel)
         
-        likeTooltipArrow.translatesAutoresizingMaskIntoConstraints = false
+        labelClipView.addSubview(statusLabel)
         likeTooltipArrow.accessibilityIdentifier = "likeTooltipArrow"
         likeTooltipArrow.text = "←"
-        self.addSubview(likeTooltipArrow)
         
-        constrain(self, self.reactionsView, self.statusLabel, self.labelClipView, self.likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
+        [likeTooltipArrow, reactionsView, labelClipView].forEach(addSubview)
+    }
+    
+    private func createConstraints() {
+        constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
             labelClipView.left == selfView.leftMargin
             labelClipView.centerY == selfView.centerY
             labelClipView.right == selfView.rightMargin
@@ -111,11 +119,6 @@ extension ZMConversationMessage {
             likeTooltipArrow.centerY == statusLabel.centerY
             likeTooltipArrow.right == selfView.leftMargin - 8
         }
-        
-        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
-        tapGestureRecogniser.delegate = self
-        
-        self.addGestureRecognizer(tapGestureRecogniser)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -133,7 +136,7 @@ extension ZMConversationMessage {
         let canShowTooltip = !Settings.shared().likeTutorialCompleted && !message.hasReactions() && message.canBeLiked
         
         // Show like tip
-        if let sender = message.sender , !sender.isSelfUser && canShowTooltip {
+        if let sender = message.sender, !sender.isSelfUser && canShowTooltip {
             showReactionsView(message.hasReactions(), animated: false)
             self.likeTooltipArrow.isHidden = false
             self.tapGestureRecogniser.isEnabled = message.hasReactions()
@@ -216,10 +219,9 @@ extension ZMConversationMessage {
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
         let targetSize = CGSize(width: 10000, height: CGFloat.greatestFiniteMagnitude)
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
-        
+
         let attributedText: NSAttributedString
-        
-        if labelSize.width > self.statusLabel.bounds.size.width - self.reactionsView.bounds.size.width {
+        if labelSize.width > (labelClipView.bounds.width - reactionsView.bounds.width) {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             attributedText = likersCount && attributes
         }
@@ -227,7 +229,7 @@ extension ZMConversationMessage {
             attributedText = likersNamesAttributedString
         }
 
-        if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
+        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
             return
         }
         
