@@ -26,10 +26,18 @@ extension ConversationInputBarViewController {
     }
     
     func emojiButtonTapped(_ sender: IconButton) {
-        mode = .emojiInput
-        inputBar.textView.becomeFirstResponder()
+        if mode != .emojiInput {
+            mode = .emojiInput
+            inputBar.textView.becomeFirstResponder()
+        } else {
+            emojiKeyboardViewController = nil
+            inputBar.textView.resignFirstResponder()
+            delay(0.3) {
+                self.mode = .textInput
+            }
+        }
     }
-    
+
     public func createEmojiKeyboardViewController() {
         emojiKeyboardViewController = EmojiKeyboardViewController()
         emojiKeyboardViewController?.delegate = self
