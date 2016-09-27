@@ -439,7 +439,6 @@
 "self.settings.device_details.reset_session.success" = "Сессия была обновлена";
 
 "self.settings.account_details.delete_account.title" = "Удалить аккаунт";
-"self.settings.account_details.delete_account.footer" = "Это сбросит все настройки и удалит все ваши разговоры, данные и контакты.";
 
 "self.settings.account_details.delete_account.alert.title" = "Удалить аккаунт";
 "self.settings.account_details.delete_account.alert.message" = "Мы вышлем вам сообщение по электронной почте или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";

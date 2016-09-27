@@ -158,9 +158,8 @@ import Foundation
             return alert
         })
         
-        let actionsSubtitle = "self.settings.account_details.delete_account.footer".localized
         let actionsTitle = "self.settings.account_details.actions.title".localized
-        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: actionsSubtitle)
+        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: .none)
 
         let items: [SettingsSectionDescriptorType]
         if let signOutSection = signOutSection {

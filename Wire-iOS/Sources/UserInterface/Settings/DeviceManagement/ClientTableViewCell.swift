@@ -179,8 +179,7 @@ class ClientTableViewCell: UITableViewCell {
     func updateFingerprint() {
         if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospacedFont(),
             let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospacedFont(),
-            let userClient = self.userClient
-            , userClient.remoteIdentifier != nil {
+            let userClient = self.userClient, userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
                     [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.white],
@@ -191,8 +190,7 @@ class ClientTableViewCell: UITableViewCell {
     }
     
     func updateLabel() {
-        if let userClientLabel = self.userClient?.label
-            , self.showLabel {
+        if let userClientLabel = self.userClient?.label, self.showLabel {
             self.labelLabel.text = userClientLabel
         }
         else {

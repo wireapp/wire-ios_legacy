@@ -29,6 +29,7 @@ import Foundation
     
     fileprivate let pushTransition = PushTransition()
     fileprivate let popTransition = PopTransition()
+    fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
     static func settingsNavigationController() -> SettingsNavigationController {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
@@ -73,8 +74,8 @@ import Foundation
                     if let cellIdentifier = cellDescriptor.identifier,
                         let cellGroupDescriptor = cellDescriptor as? SettingsControllerGeneratorType,
                         let topViewController = topCellGroupDescriptor.generateViewController(),
-                        let viewController = cellGroupDescriptor.generateViewController()
-                        , cellIdentifier == identifier
+                        let viewController = cellGroupDescriptor.generateViewController(),
+                        cellIdentifier == identifier
                     {
                         self.pushViewController(topViewController, animated: false)
                         self.pushViewController(viewController, animated: false)
@@ -121,6 +122,7 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
+        self.interactivePopGestureRecognizer?.isEnabled = false
         
         if let rootViewController = self.rootGroup.generateViewController() {
             Analytics.shared()?.tagScreen("SETTINGS")
@@ -141,10 +143,10 @@ import Foundation
                 
         navButtonAppearance?.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], for: UIControlState.normal)
         
-        let goBackGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(SettingsNavigationController.onEdgeSwipe(gestureRecognizer:)))
-        goBackGestureRecognizer.edges = [.left]
-        goBackGestureRecognizer.delegate = self
-        self.view.addGestureRecognizer(goBackGestureRecognizer)
+        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(SettingsNavigationController.onEdgeSwipe(gestureRecognizer:)))
+        self.dismissGestureRecognizer.edges = [.left]
+        self.dismissGestureRecognizer.delegate = self
+        self.view.addGestureRecognizer(self.dismissGestureRecognizer)
     }
     
     override func viewDidAppear(_ animated: Bool) {

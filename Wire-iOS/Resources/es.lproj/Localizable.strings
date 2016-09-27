@@ -439,7 +439,6 @@
 "self.settings.device_details.reset_session.success" = "La sesión ha sido restablecida";
 
 "self.settings.account_details.delete_account.title" = "Eliminar Cuenta";
-"self.settings.account_details.delete_account.footer" = "Esto restablecerá la aplicación y borrará todas sus conversaciones, contenidos y conexiones.";
 
 "self.settings.account_details.delete_account.alert.title" = "Eliminar Cuenta";
 "self.settings.account_details.delete_account.alert.message" = "Te enviaremos un mensaje por correo electrónico o SMS. Sigue el enlace para borrar permanentemente tu cuenta.";

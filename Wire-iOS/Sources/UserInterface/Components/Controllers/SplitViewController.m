@@ -145,7 +145,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 @end
 
 
-@interface SplitViewController ()
+@interface SplitViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic) UIView *leftView;
 @property (nonatomic) UIView *rightView;
@@ -192,6 +192,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     _leftViewControllerRevealed = YES;
     self.openPercentage = 1;
     self.horizontalPanner = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onHorizontalPan:)];
+    self.horizontalPanner.delegate = self;
     [self.view addGestureRecognizer:self.horizontalPanner];
 }
 
@@ -581,6 +582,19 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 }
 
 #pragma mark - Gesture Recognizers
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self] || self.isLeftViewControllerExpanded) {
+        return NO;
+    }
+    
+    if (self.leftViewControllerRevealed && ! IS_IPAD) {
+        return NO;
+    }
+    
+    return YES;
+}
 
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer
 {

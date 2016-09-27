@@ -439,7 +439,6 @@
 "self.settings.device_details.reset_session.success" = "Сессія була скинута";
 
 "self.settings.account_details.delete_account.title" = "Видалити акаунт";
-"self.settings.account_details.delete_account.footer" = "Це виконає скидання всіх налаштувань та видалить історію всіх ваших розмов, ваші дані та контакти.";
 
 "self.settings.account_details.delete_account.alert.title" = "Видалити акаунт";
 "self.settings.account_details.delete_account.alert.message" = "Ми надішлемо вам повідомлення електронною поштою або через SMS. Перейдіть за посиланням, щоб остаточно видалити свій акаунт.";
