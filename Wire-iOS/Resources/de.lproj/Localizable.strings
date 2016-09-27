@@ -439,7 +439,6 @@
 "self.settings.device_details.reset_session.success" = "Die Session wurde zurückgesetzt";
 
 "self.settings.account_details.delete_account.title" = "Benutzerkonto löschen";
-"self.settings.account_details.delete_account.footer" = "Die Anwendung zurückgesetzt und alle Unterhaltungen, deren Inhalte als auch deine Verbindungen gelöscht.";
 
 "self.settings.account_details.delete_account.alert.title" = "Benutzerkonto löschen";
 "self.settings.account_details.delete_account.alert.message" = "In Kürze erhältst du eine Nachricht per E-Mail oder SMS. Folge dem Link darin, um dein Konto zu löschen.";
@@ -475,7 +474,7 @@
 "self.settings.apns_logging.title" = "APNS Protokollierung";
 
 // Privacy (visibility) options
-"self.settings.privacy_menu.title" = "Datenschutz & Sicherheit";
+"self.settings.options_menu.title" = "Datenschutz & Sicherheit";
 
 "self.settings.privacy_contacts_section.title" = "Kontakte";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Öffne Kontakteinstellungen";

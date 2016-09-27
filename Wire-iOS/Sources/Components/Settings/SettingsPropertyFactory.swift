@@ -39,8 +39,21 @@ protocol ZMUserSessionInterface {
     var isNotificationContentHidden : Bool { get set }
 }
 
-extension ZMUserSession: ZMUserSessionInterface {
 
+extension ZMUserSession: ZMUserSessionInterface {
+}
+
+protocol ValidatorType {
+    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>!) throws
+}
+
+extension ZMUser: ValidatorType {
+}
+
+typealias SettingsSelfUser = ValidatorType & ZMEditableUser
+
+enum SettingsPropertyError: Error {
+    case WrongValue(String)
 }
 
 class SettingsPropertyFactory {
@@ -48,7 +61,7 @@ class SettingsPropertyFactory {
     var analytics: AnalyticsInterface?
     var mediaManager: AVSMediaManagerInterface?
     var userSession: ZMUserSessionInterface
-    let selfUser: ZMEditableUser
+    let selfUser: SettingsSelfUser
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.Markdown                   : UserDefaultMarkdown,
@@ -64,7 +77,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.DisableSendButton          : UserDefaultSendButtonDisabled
     ]
     
-    init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: ZMEditableUser) {
+    init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser) {
         self.userDefaults = userDefaults
         self.analytics = analytics
         self.mediaManager = mediaManager
@@ -80,14 +93,17 @@ class SettingsPropertyFactory {
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.string(value: self.selfUser.name)
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .string(let stringValue):
+                    var inOutString: NSString? = stringValue as NSString
+                    try type(of: self.selfUser).validateName(&inOutString)
+                    
                     self.userSession.enqueueChanges({
                         self.selfUser.name = stringValue
                     })
                 default:
-                    fatalError("Incorrect type \(value) for key \(propertyName)")
+                    throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             }
             
@@ -97,14 +113,14 @@ class SettingsPropertyFactory {
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.number(value: Int(self.selfUser.accentColorValue.rawValue))
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let intValue):
                     self.userSession.enqueueChanges({
                         self.selfUser.accentColorValue = ZMAccentColor(rawValue: Int16(intValue))!
                     })
                 default:
-                    fatalError("Incorrect type \(value) for key \(propertyName)")
+                    throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             }
             
@@ -113,12 +129,12 @@ class SettingsPropertyFactory {
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.bool(value: self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) -> () in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .bool(let boolValue):
                     self.userDefaults.set(boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
                 default:
-                    fatalError("Incorrect type \(value) for key \(propertyName)")
+                    throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
                 
                 NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self)
@@ -134,7 +150,7 @@ class SettingsPropertyFactory {
                     return SettingsPropertyValue.number(value: 0)
                 }
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(intValue)),
@@ -142,10 +158,10 @@ class SettingsPropertyFactory {
                         mediaManager.intensityLevel = intensivityLevel
                     }
                     else {
-                        fatalError("Cannot use value \(intValue) for AVSIntensivityLevel at \(propertyName)")
+                        throw SettingsPropertyError.WrongValue("Cannot use value \(intValue) for AVSIntensivityLevel at \(propertyName)")
                     }
                 default:
-                    fatalError("Incorrect type \(value) for key \(propertyName)")
+                    throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
@@ -159,7 +175,7 @@ class SettingsPropertyFactory {
                     return .bool(value: false)
                 }
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 if var analytics = self.analytics {
                     switch(value) {
                     case .number(let intValue):
@@ -167,7 +183,7 @@ class SettingsPropertyFactory {
                     case .bool(let boolValue):
                         analytics.isOptedOut = boolValue
                     default:
-                        fatalError("Incorrect type \(value) for key \(propertyName)")
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
                 }
             }
@@ -178,7 +194,7 @@ class SettingsPropertyFactory {
                 return .bool(value: self.userSession.isNotificationContentHidden)
             }
             
-            let setAction : SetAction = { (porperty: SettingsBlockProperty, value: SettingsPropertyValue) in
+            let setAction : SetAction = { (porperty: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .bool(let boolValue):
                         self.userSession.performChanges {
@@ -186,7 +202,7 @@ class SettingsPropertyFactory {
                         }
                     
                     default:
-                        fatalError("Incorrect type: \(value) for key \(propertyName)")
+                        throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
                 }
             }
             

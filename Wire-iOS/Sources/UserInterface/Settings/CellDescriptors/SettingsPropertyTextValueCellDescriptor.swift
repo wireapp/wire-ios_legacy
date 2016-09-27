@@ -18,6 +18,7 @@
 
 
 import Foundation
+import CocoaLumberjackSwift
 
 class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsTextCell.self
@@ -39,14 +40,27 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let textCell = cell as? SettingsTextCell,
-            let stringValue = self.settingsProperty.propertyValue.value() as? String {
+            let stringValue = self.settingsProperty.rawValue() as? String {
                 textCell.textInput.text = stringValue
         }
     }
     
     func select(_ value: SettingsPropertyValue?) {
         if let stringValue = value?.value() as? String {
-            self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
+            
+            do {
+                try self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
+            }
+            catch let error as NSError {
+                let alertView = UIAlertController(title: "error.full_name".localized, message: error.localizedDescription, preferredStyle: .alert)
+                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
+                alertView.addAction(actionCancel)
+                UIApplication.shared.keyWindow!.rootViewController?.present(alertView, animated: true, completion: .none)
+                
+            }
+            catch let generalError {
+                DDLogError("Error setting property: \(generalError)")
+            }
         }
     }
 }

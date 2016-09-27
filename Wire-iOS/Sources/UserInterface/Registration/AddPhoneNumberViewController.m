@@ -107,9 +107,17 @@
     }
     
     self.view.opaque = NO;
-    self.title = NSLocalizedString(@"registration.title", @"");
     
     [self updateViewConstraints];
+}
+
+- (void)setShowsNavigationBar:(BOOL)showsNavigationBar
+{
+    _showsNavigationBar = showsNavigationBar;
+    self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.rightButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.logoEnabled = self.showsNavigationBar;
+
 }
 
 - (void)createNavigationController
@@ -125,7 +133,9 @@
     self.rootNavigationController.delegate = self;
     self.rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.rootNavigationController.view.opaque = NO;
-    self.rootNavigationController.navigationBarHidden = self.navigationController != nil;
+    self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.rightButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.logoEnabled = self.showsNavigationBar;
     
     [self addChildViewController:self.rootNavigationController];
     [self.view addSubview:self.rootNavigationController.view];

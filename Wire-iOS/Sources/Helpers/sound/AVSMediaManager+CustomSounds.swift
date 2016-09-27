@@ -50,7 +50,7 @@ extension AVSMediaManager {
     
     func updateCustomSoundForProperty(_ property: SettingsProperty) {
         let name = property.propertyName.rawValue
-        let value = property.propertyValue.value()
+        let value = property.rawValue()
         if let stringValue = value as? String {
             self.updateCustomSoundForName(name, propertyValue: stringValue)
         }

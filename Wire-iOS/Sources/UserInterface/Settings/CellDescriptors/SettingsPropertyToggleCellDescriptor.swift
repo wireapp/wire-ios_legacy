@@ -18,6 +18,8 @@
 
 
 import Foundation
+import CocoaLumberjackSwift
+
 /**
  * @abstract Generates the cell that displays toggle control
  */
@@ -44,7 +46,7 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
         cell.titleText = self.title
         if let toggleCell = cell as? SettingsToggleCell {
             var boolValue = false
-            if let value = self.settingsProperty.propertyValue.value() as? Int {
+            if let value = self.settingsProperty.value().value() as? Int {
                 boolValue = value > 0
             }
             else {
@@ -73,6 +75,11 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
             valueToSet = !valueToSet
         }
         
-        self.settingsProperty << SettingsPropertyValue.bool(value: valueToSet)
+        do {
+            try self.settingsProperty << SettingsPropertyValue.bool(value: valueToSet)
+        }
+        catch(let e) {
+            DDLogError("Cannot set property: \(e)")
+        }
     }
 }

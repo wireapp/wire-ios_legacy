@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger, AddEmailPasswordViewControllerSkipButtonType) {
 
 @interface AddEmailPasswordViewController : UIViewController
 
+@property (nonatomic) BOOL showsNavigationBar;
 @property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;
 @property (nonatomic) AddEmailPasswordViewControllerSkipButtonType skipButtonType;
 @property (nonatomic, strong) AnalyticsTracker *analyticsTracker;

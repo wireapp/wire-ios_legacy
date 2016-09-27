@@ -77,8 +77,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         self.createTableView()
         self.createConstraints()
         
-        if let navController = self.navigationController
-            , navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
+        if let navController = self.navigationController, navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
         }
     }

@@ -61,7 +61,7 @@ import Foundation
         else {
             phoneElement = SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
                 let addController = AddPhoneNumberViewController()
-                
+                addController.showsNavigationBar = false
                 let stepDelegate = DismissStepDelegate()
                 stepDelegate.strongCapture = stepDelegate
                 
@@ -81,12 +81,11 @@ import Foundation
         else {
             emailElement = SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
                 let addEmailController = AddEmailPasswordViewController()
-                
+                addEmailController.showsNavigationBar = false
                 let stepDelegate = DismissStepDelegate()
                 stepDelegate.strongCapture = stepDelegate
                 
                 addEmailController.formStepDelegate = stepDelegate
-                
                 return addEmailController
             }
         }
@@ -159,9 +158,8 @@ import Foundation
             return alert
         })
         
-        let actionsSubtitle = "self.settings.account_details.delete_account.footer".localized
         let actionsTitle = "self.settings.account_details.actions.title".localized
-        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: actionsSubtitle)
+        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: .none)
 
         let items: [SettingsSectionDescriptorType]
         if let signOutSection = signOutSection {
@@ -235,7 +233,7 @@ import Foundation
             let alertsSection = SettingsSectionDescriptor(cellDescriptors: [allAlerts, someAlerts, noneAlerts], header: titleLabel, footer: .none)
             
             let alertPreviewGenerator : PreviewGeneratorType = {
-                let value = soundAlertProperty.propertyValue
+                let value = soundAlertProperty.value()
                 guard let rawValue = value.value() as? UInt,
                     let intensityLevel = AVSIntensityLevel(rawValue: rawValue) else { return .text($0.title) }
                 
@@ -275,7 +273,7 @@ import Foundation
             footer: "self.settings.send_button.footer".localized
         )
         
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection, sendButtonSection], title: "self.settings.privacy_menu.title".localized, icon: .settingsOptions)
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection, sendButtonSection], title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {
@@ -319,7 +317,7 @@ import Foundation
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: "self.settings.sound_menu.ringtones.title".localized)
         
         let previewGenerator: PreviewGeneratorType = { cellDescriptor in
-            let value = settingsProperty.propertyValue
+            let value = settingsProperty.value()
             
             if let stringValue = value.value() as? String,
                 let enumValue = ZMSound(rawValue: stringValue) {
@@ -439,29 +437,20 @@ import Foundation
         
         let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
 
-        let items: [SettingsSectionDescriptorType]
-        if DeveloperMenuState.developerMenuEnabled() {
-            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
-            let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
-                SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
-                
-                if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
-                    let versionInfo = VersionInfoViewController()
-                    
-                    UIApplication.shared.keyWindow?.rootViewController?.present(versionInfo, animated: true, completion: .none)
-                }
-            }
+        let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
+        let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
+            SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
             
-            let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .none, footer: copyrightInfo)
-            items = [websiteSection, linksSection, infoSection]
-        }
-        else {
-            let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton], header: .none, footer: version + " " + copyrightInfo)
-            items = [websiteSection, linksSection]
+            if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
+                let versionInfo = VersionInfoViewController()
+                
+                UIApplication.shared.keyWindow?.rootViewController?.present(versionInfo, animated: true, completion: .none)
+            }
         }
         
-        return SettingsGroupCellDescriptor(items: items, title: "self.about".localized, style: .grouped, identifier: .none, previewGenerator: .none, icon: .wireLogo)
-
+        let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .none, footer: copyrightInfo)
+        
+        return SettingsGroupCellDescriptor(items: [websiteSection, linksSection, infoSection], title: "self.about".localized, style: .grouped, identifier: .none, previewGenerator: .none, icon: .wireLogo)
     }
     
     // MARK: Subgroups

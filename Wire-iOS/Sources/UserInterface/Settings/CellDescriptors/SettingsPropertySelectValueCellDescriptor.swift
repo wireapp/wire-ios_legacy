@@ -18,6 +18,7 @@
 
 
 import Foundation
+import CocoaLumberjackSwift
 
 class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsValueCell.self
@@ -46,13 +47,17 @@ class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorT
         cell.titleText = self.title
         cell.cellColor = self.backgroundColor
         if let valueCell = cell as? SettingsValueCell {
-            valueCell.accessoryType = self.settingsProperty.propertyValue == self.value ? .checkmark : .none
+            valueCell.accessoryType = self.settingsProperty.value() == self.value ? .checkmark : .none
         }
     }
     
     func select(_ value: SettingsPropertyValue?) {
-        
-        self.settingsProperty << self.value
+        do {
+            try self.settingsProperty << self.value
+        }
+        catch (let e) {
+            DDLogError("Cannot set property: \(e)")
+        }
         if let selectAction = self.selectAction {
             selectAction(self)
         }

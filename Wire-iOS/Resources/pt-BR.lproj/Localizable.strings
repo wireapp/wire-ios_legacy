@@ -439,7 +439,6 @@
 "self.settings.device_details.reset_session.success" = "A sessão foi redefinida";
 
 "self.settings.account_details.delete_account.title" = "Excluir Conta";
-"self.settings.account_details.delete_account.footer" = "Isto irá reiniciar o aplicativo e excluir todas as suas conversas, conteúdo e conexões.";
 
 "self.settings.account_details.delete_account.alert.title" = "Excluir Conta";
 "self.settings.account_details.delete_account.alert.message" = "Nós enviaremos uma mensagem via e-mail ou SMS. Siga o link para excluir permanentemente a sua conta.";
@@ -475,7 +474,7 @@
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
-"self.settings.privacy_menu.title" = "Privacidade e Segurança";
+"self.settings.options_menu.title" = "Privacidade e Segurança";
 
 "self.settings.privacy_contacts_section.title" = "Contatos";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir ajustes de contatos";

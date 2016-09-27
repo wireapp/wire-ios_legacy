@@ -449,7 +449,6 @@
 "self.settings.account_details.actions.title" = "Actions";
 
 "self.settings.account_details.delete_account.title" = "Delete Account";
-"self.settings.account_details.delete_account.footer" = "This will reset the application and delete all your conversations, content and connections.";
 
 "self.settings.account_details.delete_account.alert.title" = "Delete Account";
 "self.settings.account_details.delete_account.alert.message" = "We will send you a message via email or SMS. Follow the link to permanently delete your account.";
@@ -490,7 +489,7 @@
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
-"self.settings.privacy_menu.title" = "Privacy & Security";
+"self.settings.options_menu.title" = "Options";
 
 "self.settings.privacy_contacts_section.title" = "Contacts";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open contacts settings";

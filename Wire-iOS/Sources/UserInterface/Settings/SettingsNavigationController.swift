@@ -29,6 +29,7 @@ import Foundation
     
     fileprivate let pushTransition = PushTransition()
     fileprivate let popTransition = PopTransition()
+    fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
     static func settingsNavigationController() -> SettingsNavigationController {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
@@ -61,8 +62,8 @@ import Foundation
             
             if let cellIdentifier = topCellDescriptor.identifier,
                 let cellGroupDescriptor = topCellDescriptor as? SettingsControllerGeneratorType,
-                let viewController = cellGroupDescriptor.generateViewController()
-                , cellIdentifier == identifier
+                let viewController = cellGroupDescriptor.generateViewController(),
+                cellIdentifier == identifier
             {
                 self.pushViewController(viewController, animated: false)
                 resultViewController = viewController
@@ -73,8 +74,8 @@ import Foundation
                     if let cellIdentifier = cellDescriptor.identifier,
                         let cellGroupDescriptor = cellDescriptor as? SettingsControllerGeneratorType,
                         let topViewController = topCellGroupDescriptor.generateViewController(),
-                        let viewController = cellGroupDescriptor.generateViewController()
-                        , cellIdentifier == identifier
+                        let viewController = cellGroupDescriptor.generateViewController(),
+                        cellIdentifier == identifier
                     {
                         self.pushViewController(topViewController, animated: false)
                         self.pushViewController(viewController, animated: false)
@@ -102,7 +103,7 @@ import Foundation
     func soundIntensityChanged(_ notification: Notification) {
         let soundProperty = self.settingsPropertyFactory.property(.SoundAlerts)
         
-        if let intensivityLevel = soundProperty.propertyValue.value() as? AVSIntensityLevel {
+        if let intensivityLevel = soundProperty.rawValue() as? AVSIntensityLevel {
             switch(intensivityLevel) {
             case .full:
                 Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeAlways)
@@ -121,10 +122,10 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
+        self.interactivePopGestureRecognizer?.isEnabled = false
         
         if let rootViewController = self.rootGroup.generateViewController() {
             Analytics.shared()?.tagScreen("SETTINGS")
-            
             self.pushViewController(rootViewController, animated: false)
             if let settingsTableController = rootViewController as? SettingsTableViewController {
                 settingsTableController.dismissAction = { [unowned self] _ in
@@ -141,13 +142,22 @@ import Foundation
         let navButtonAppearance = UIBarButtonItem.wr_appearanceWhenContained(in: UINavigationBar.self)
                 
         navButtonAppearance?.setTitleTextAttributes([NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()], for: UIControlState.normal)
-
-        self.interactivePopGestureRecognizer!.delegate = self
+        
+        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(SettingsNavigationController.onEdgeSwipe(gestureRecognizer:)))
+        self.dismissGestureRecognizer.edges = [.left]
+        self.dismissGestureRecognizer.delegate = self
+        self.view.addGestureRecognizer(self.dismissGestureRecognizer)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presentNewLoginAlertControllerIfNeeded()
+    }
+    
+    func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
+        if gestureRecognizer.state == .recognized {
+            self.popViewController(animated: true)
+        }
     }
     
     fileprivate func presentNewLoginAlertControllerIfNeeded() {
@@ -203,18 +213,14 @@ extension SettingsNavigationController: UINavigationControllerDelegate {
 }
 
 extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
-
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return .none
-    }
-
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
         transition.direction = .vertical
         return transition
     }
     
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
         transition.direction = .vertical
         return transition
