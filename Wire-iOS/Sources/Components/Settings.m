@@ -53,6 +53,7 @@ NSString * const UserDefaultDisableAVS = @"ZMDisableAVS";
 NSString * const UserDefaultDisableUI = @"ZMDisableUI";
 NSString * const UserDefaultDisableHockey = @"ZMDisableHockey";
 NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
+NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 
 
 @interface Settings ()
@@ -99,7 +100,8 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
              UserDefaultDisableHockey,
              UserDefaultDisableAnalytics,
              UserDefaultLastUserLocation,
-             UserDefaultPreferredCamera
+             UserDefaultPreferredCamera,
+             UserDefaultSendButtonDisabled
              ];
 }
 
@@ -361,6 +363,16 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 - (NSString *)pingSoundName
 {
     return [self.defaults objectForKey:UserDefaultPingSoundName];
+}
+
+- (BOOL)disableSendButton
+{
+    return [self.defaults boolForKey:UserDefaultSendButtonDisabled];
+}
+
+- (void)setDisableSendButton:(BOOL)disableSendButton
+{
+    [self.defaults setBool:disableSendButton forKey:UserDefaultSendButtonDisabled];
 }
 
 #pragma mark - Features disable keys

@@ -100,6 +100,12 @@
 
 @end
 
+@interface ConversationInputBarViewController (Sending)
+
+- (void)sendButtonPressed:(id)sender;
+
+@end
+
 @interface ConversationInputBarViewController (UITextViewDelegate) <UITextViewDelegate>
 
 @end
@@ -119,7 +125,8 @@
 @property (nonatomic) IconButton *sketchButton;
 @property (nonatomic) IconButton *pingButton;
 @property (nonatomic) IconButton *locationButton;
-@property (nonatomic) IconButton *gifButton;
+@property (nonatomic) IconButton *sendButton;
+@property (nonatomic) IconButton *gifButton; // TODO: GIF button has to be setup correctly
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
@@ -178,8 +185,8 @@
     
     [self createSingleTapGestureRecognizer];
     
-    [self createInputBar];
-    [self createGifButton];
+    [self createInputBar]; // Creates all buttons
+    [self createSendButton];
     [self createVerifiedView];
     [self createAuthorImageView];
     [self createTypingView];
@@ -190,6 +197,7 @@
     
     [self configureAudioButton:self.audioButton];
     
+    [self.sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.photoButton addTarget:self action:@selector(cameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.videoButton addTarget:self action:@selector(videoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.sketchButton addTarget:self action:@selector(sketchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -313,17 +321,16 @@
     [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
 }
 
-- (void)createGifButton
+- (void)createSendButton
 {
-    self.gifButton = [IconButton iconButtonCircular];
-    self.gifButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.gifButton setIcon:ZetaIconTypeGif withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    self.gifButton.cas_styleClass = @"gif-button";
-    self.gifButton.accessibilityIdentifier = @"gifButton";
-    
-    [self.inputBar.rightAccessoryView addSubview:self.gifButton];
-    [self.gifButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
-    [self.gifButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(12, 0, 0, 0) excludingEdge:ALEdgeBottom];
+    self.sendButton = [IconButton iconButtonCircular];
+    self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    self.sendButton.accessibilityIdentifier = @"sendButton";
+
+    [self.inputBar.rightAccessoryView addSubview:self.sendButton];
+    [self.sendButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
+    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(12, 0, 0, 0) excludingEdge:ALEdgeBottom];
 }
 
 - (void)createVerifiedView
@@ -343,10 +350,9 @@
     [self.verifiedLabelView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.verifiedShieldButton];
     [self.verifiedLabelView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.verifiedShieldButton withOffset:-12.0f];
     
-    [self.verifiedShieldButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.gifButton];
-    [self.verifiedShieldButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.gifButton];
+    [self.verifiedShieldButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.sendButton];
+    [self.verifiedShieldButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
 }
-
 
 - (void)createAuthorImageView
 {
@@ -389,8 +395,8 @@
 - (void)updateRightAccessoryView
 {
     const NSUInteger textLength = self.inputBar.textView.text.length;
-    self.gifButton.hidden = ! (textLength > 0 && textLength < 20) || self.inputBar.isEditing;
-    self.verifiedShieldButton.hidden = self.conversation.securityLevel != ZMConversationSecurityLevelSecure || self.inputBar.textView.isFirstResponder || textLength > 0;
+    self.sendButton.hidden = textLength == 0;
+    self.verifiedShieldButton.hidden = self.conversation.securityLevel != ZMConversationSecurityLevelSecure || !self.sendButton.hidden;
 }
 
 - (void)updateAccessoryViews
@@ -602,6 +608,11 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if (!Settings.sharedSettings.disableSendButton) {
+        // The send button is not disabled, we allow newlines and don't send.
+        return YES;
+    }
+
     if ([text isEqualToString:@"\n"]) {
         [self sendOrEditText:textView.text];
         return NO;
@@ -907,6 +918,21 @@
 }
 
 @end
+
+
+
+#pragma mark - SendButton
+
+@implementation ConversationInputBarViewController (Sending)
+
+- (void)sendButtonPressed:(id)sender
+{
+    [self sendOrEditText:self.inputBar.textView.text];
+}
+
+@end
+
+
 
 #pragma mark - PingButton
 

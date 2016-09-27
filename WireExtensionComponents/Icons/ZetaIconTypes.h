@@ -133,6 +133,9 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeSettingsSupport                 = 0x127,
     ZetaIconTypeWireLogo                        = 0x202,
 
+    ZetaIconTypeSend                            = 0x235,
+    ZetaIconTypeEmoji                           = 0x237,
+
     ZetaIconTypeEffectBallon                    = 0x240,
     ZetaIconTypeEffectJellyfish                 = 0x242,
     ZetaIconTypeEffectRabbit                    = 0x243,
