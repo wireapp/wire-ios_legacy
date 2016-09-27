@@ -35,39 +35,39 @@ Available settings
 enum SettingsPropertyName: String, CustomStringConvertible {
     
     // User defaults
-    case ChatHeadsDisabled = "ChatHeadsDisabled"
-    case NotificationContentVisible = "NotificationContentVisible"
-    case Markdown = "Markdown"
+    case chatHeadsDisabled = "ChatHeadsDisabled"
+    case notificationContentVisible = "NotificationContentVisible"
+    case markdown = "Markdown"
     
-    case SkipFirstTimeUseChecks = "SkipFirstTimeUseChecks"
+    case skipFirstTimeUseChecks = "SkipFirstTimeUseChecks"
     
-    case PreferredFlashMode = "PreferredFlashMode"
+    case preferredFlashMode = "PreferredFlashMode"
     
-    case DarkMode = "DarkMode"
+    case darkMode = "DarkMode"
     
-    case DisableSendButton = "DisableSendButton"
+    case disableSendButton = "DisableSendButton"
     
     // Profile
-    case ProfileName = "ProfileName"
-    case AccentColor = "AccentColor"
+    case profileName = "ProfileName"
+    case accentColor = "AccentColor"
     
     // AVS
-    case SoundAlerts = "SoundAlerts"
+    case soundAlerts = "SoundAlerts"
     
     // Analytics
-    case AnalyticsOptOut = "AnalyticsOptOut"
+    case analyticsOptOut = "AnalyticsOptOut"
 
     // Sounds
-    case MessageSoundName = "MessageSoundName"
-    case CallSoundName = "CallSoundName"
-    case PingSoundName = "PingSoundName"
+    case messageSoundName = "MessageSoundName"
+    case callSoundName = "CallSoundName"
+    case pingSoundName = "PingSoundName"
     
     // Debug
     
-    case DisableUI = "DisableUI"
-    case DisableAVS = "DisableAVS"
-    case DisableHockey = "DisableHockey"
-    case DisableAnalytics = "DisableAnalytics"
+    case disableUI = "DisableUI"
+    case disableAVS = "DisableAVS"
+    case disableHockey = "DisableHockey"
+    case disableAnalytics = "DisableAnalytics"
 
     var changeNotificationName: String {
         return self.description + "ChangeNotification"

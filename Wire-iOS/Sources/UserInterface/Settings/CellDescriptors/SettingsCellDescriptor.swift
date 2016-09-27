@@ -204,49 +204,49 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
 
 func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
     switch (name) {
-    case .ChatHeadsDisabled:
+    case .chatHeadsDisabled:
         return "self.settings.notifications.chat_alerts.toggle".localized
-    case .NotificationContentVisible:
+    case .notificationContentVisible:
         return "self.settings.notifications.push_notification.toogle".localized
-    case .Markdown:
+    case .markdown:
         return "Markdown support"
         
-    case .SkipFirstTimeUseChecks:
+    case .skipFirstTimeUseChecks:
         return "Skip first time use checks"
         
-    case .PreferredFlashMode:
+    case .preferredFlashMode:
         return "Flash Mode"
-    case .DarkMode:
+    case .darkMode:
         return "self.settings.account_picture_group.theme".localized
         // Profile
-    case .ProfileName:
+    case .profileName:
         return "self.settings.account_section.name.title".localized
         
         // AVS
-    case .SoundAlerts:
+    case .soundAlerts:
         return "self.settings.sound_menu.title".localized
         
         // Analytics
-    case .AnalyticsOptOut:
+    case .analyticsOptOut:
         return "self.settings.privacy_analytics_section.title".localized
         
-    case .DisableUI:
+    case .disableUI:
         return "Disable UI (Restart needed)"
-    case .DisableHockey:
+    case .disableHockey:
         return "Disable Hockey (Restart needed)"
-    case .DisableAVS:
+    case .disableAVS:
         return "Disable AVS (Restart needed)"
-    case .DisableAnalytics:
+    case .disableAnalytics:
         return "Disable Analytics (Restart needed)"
-    case .MessageSoundName:
+    case .messageSoundName:
         return "self.settings.sound_menu.message.title".localized
-    case .CallSoundName:
+    case .callSoundName:
         return "self.settings.sound_menu.ringtone.title".localized
-    case .PingSoundName:
+    case .pingSoundName:
         return "self.settings.sound_menu.ping.title".localized
-    case .AccentColor:
+    case .accentColor:
         return "self.settings.account_picture_group.color".localized
-    case .DisableSendButton:
+    case .disableSendButton:
         return "self.settings.send_button.title".localized
     }
 }

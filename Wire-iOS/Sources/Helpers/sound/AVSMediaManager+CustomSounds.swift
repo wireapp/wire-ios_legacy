@@ -30,21 +30,21 @@ extension AVSMediaManager {
     }
     
     func observeSoundConfigurationChanges() {
-        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.MessageSoundName.changeNotificationName), object: .none)
-        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.CallSoundName.changeNotificationName), object: .none)
-        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.PingSoundName.changeNotificationName), object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.messageSoundName.changeNotificationName), object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.callSoundName.changeNotificationName), object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.pingSoundName.changeNotificationName), object: .none)
     }
     
     func configureCustomSounds() {
         let settingsPropertyFactory = self.settingsPropertyFactory()
         
-        let messageSoundProperty = settingsPropertyFactory.property(.MessageSoundName)
+        let messageSoundProperty = settingsPropertyFactory.property(.messageSoundName)
         self.updateCustomSoundForProperty(messageSoundProperty)
         
-        let callSoundProperty = settingsPropertyFactory.property(.CallSoundName)
+        let callSoundProperty = settingsPropertyFactory.property(.callSoundName)
         self.updateCustomSoundForProperty(callSoundProperty)
         
-        let pingSoundProperty = settingsPropertyFactory.property(.PingSoundName)
+        let pingSoundProperty = settingsPropertyFactory.property(.pingSoundName)
         self.updateCustomSoundForProperty(pingSoundProperty)
     }
     
@@ -62,15 +62,15 @@ extension AVSMediaManager {
         let soundValue = value == .none ? .none : ZMSound(rawValue: value!)
         
         switch propertyName {
-        case SettingsPropertyName.MessageSoundName.rawValue:
+        case SettingsPropertyName.messageSoundName.rawValue:
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundFirstMessageReceivedSound)
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundMessageReceivedSound)
             
-        case SettingsPropertyName.CallSoundName.rawValue:
+        case SettingsPropertyName.callSoundName.rawValue:
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundRingingFromThemInCallSound)
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundRingingFromThemSound)
             
-        case SettingsPropertyName.PingSoundName.rawValue:
+        case SettingsPropertyName.pingSoundName.rawValue:
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundOutgoingKnockSound)
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSoundIncomingKnockSound)
             

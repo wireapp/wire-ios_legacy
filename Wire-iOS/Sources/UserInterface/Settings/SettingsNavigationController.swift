@@ -51,7 +51,7 @@ import Foundation
         self.delegate = self
         
         self.transitioningDelegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.SoundAlerts.changeNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.soundAlerts.changeNotificationName), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: NSNotification.Name(rawValue: type(of: self).dismissNotificationName), object: nil)
     }
     
@@ -101,7 +101,7 @@ import Foundation
     }
     
     func soundIntensityChanged(_ notification: Notification) {
-        let soundProperty = self.settingsPropertyFactory.property(.SoundAlerts)
+        let soundProperty = self.settingsPropertyFactory.property(.soundAlerts)
         
         if let intensivityLevel = soundProperty.rawValue() as? AVSIntensityLevel {
             switch(intensivityLevel) {

@@ -49,7 +49,7 @@ import Foundation
     }
     
     func accountGroup() -> SettingsCellDescriptorType {
-        let nameElement = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ProfileName))
+        let nameElement = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.profileName))
         
         let phoneElement: SettingsCellDescriptorType
         
@@ -117,7 +117,7 @@ import Foundation
             appearanceCells = [pictureElement, colorElement]
         }
         else {
-            let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DarkMode))
+            let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.darkMode))
             appearanceCells = [pictureElement, colorElement, darkThemeElement]
         }
         
@@ -204,19 +204,19 @@ import Foundation
         let clearHistorySection = SettingsSectionDescriptor(cellDescriptors: [clearHistoryButton], header: .none, footer: subtitleText)  { (_) -> (Bool) in return false }
         
         let notificationHeader = "self.settings.notifications.push_notification.title".localized
-        let notification = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.NotificationContentVisible), inverse: true)
+        let notification = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.notificationContentVisible), inverse: true)
         let notificationFooter = "self.settings.notifications.push_notification.footer".localized
         let notificationVisibleSection = SettingsSectionDescriptor(cellDescriptors: [notification], header: notificationHeader, footer: notificationFooter)
         
         
-        let chatHeads = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.ChatHeadsDisabled), inverse: true)
+        let chatHeads = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.chatHeadsDisabled), inverse: true)
         let chatHeadsFooter = "self.settings.notifications.chat_alerts.footer".localized
         let chatHeadsSection = SettingsSectionDescriptor(cellDescriptors: [chatHeads], header: nil, footer: chatHeadsFooter)
         
         let soundAlert : SettingsCellDescriptorType = {
             let titleLabel = "self.settings.sound_menu.title".localized
             
-            let soundAlertProperty = self.settingsPropertyFactory.property(.SoundAlerts)
+            let soundAlertProperty = self.settingsPropertyFactory.property(.soundAlerts)
             
             let allAlerts = SettingsPropertySelectValueCellDescriptor(settingsProperty: soundAlertProperty,
                                                                       value: SettingsPropertyValue.number(value: Int(AVSIntensityLevel.full.rawValue)),
@@ -255,18 +255,18 @@ import Foundation
         
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
         
-        let callSoundProperty = self.settingsPropertyFactory.property(.CallSoundName)
+        let callSoundProperty = self.settingsPropertyFactory.property(.callSoundName)
         let callSoundGroup = self.soundGroupForSetting(callSoundProperty, title: SettingsPropertyLabelText(callSoundProperty.propertyName), callSound: true, fallbackSoundName: MediaManagerSoundRingingFromThemSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_call".localized)
         
-        let messageSoundProperty = self.settingsPropertyFactory.property(.MessageSoundName)
+        let messageSoundProperty = self.settingsPropertyFactory.property(.messageSoundName)
         let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: SettingsPropertyLabelText(messageSoundProperty.propertyName), callSound: false, fallbackSoundName: MediaManagerSoundMessageReceivedSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_message".localized)
         
-        let pingSoundProperty = self.settingsPropertyFactory.property(.PingSoundName)
+        let pingSoundProperty = self.settingsPropertyFactory.property(.pingSoundName)
         let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: SettingsPropertyLabelText(pingSoundProperty.propertyName), callSound: false, fallbackSoundName: MediaManagerSoundIncomingKnockSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_ping".localized)
         
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         
-        let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.DisableSendButton))
+        let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton))
         let sendButtonSection = SettingsSectionDescriptor(
             cellDescriptors: [sendButtonDescriptor],
             header: "self.settings.send_button.header".localized,
@@ -332,7 +332,7 @@ import Foundation
     }
     
     func advancedGroup() -> SettingsCellDescriptorType {
-        let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.AnalyticsOptOut), inverse: true)
+        let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.analyticsOptOut), inverse: true)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized
         let usageInfo = "self.settings.privacy_analytics_menu.description.title".localized
         let sendUsageSection = SettingsSectionDescriptor(cellDescriptors: [sendDataToWire], header: usageLabel, footer: usageInfo)
@@ -375,10 +375,10 @@ import Foundation
             return DevOptionsController()
         }
         
-        let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableAVS))
-        let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableUI))
-        let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableHockey))
-        let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.DisableAnalytics))
+        let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
+        let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
+        let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableHockey))
+        let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title, icon: .effectRobot)
     }
@@ -458,7 +458,7 @@ import Foundation
     func colorsSubgroup() -> SettingsSectionDescriptorType {
         let cellDescriptors = ZMAccentColor.all().map { (color) -> SettingsCellDescriptorType in
             let value = SettingsPropertyValue.number(value: Int(color.rawValue))
-            return SettingsPropertySelectValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.AccentColor), value: value, title: "", identifier: .none, selectAction: { _ in
+            return SettingsPropertySelectValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.accentColor), value: value, title: "", identifier: .none, selectAction: { _ in
                 
                 }, backgroundColor: color.color) as SettingsCellDescriptorType
         }
