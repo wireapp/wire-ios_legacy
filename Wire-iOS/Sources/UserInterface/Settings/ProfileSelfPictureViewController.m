@@ -233,6 +233,7 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 {
     [super setupTopView];
     self.selfUserImageView = [[UIImageView alloc] init];
+    self.selfUserImageView.clipsToBounds = YES;
     self.selfUserImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.selfUserImageView.image = [UIImage imageWithData:[ZMUser selfUser].imageMediumData];
 
