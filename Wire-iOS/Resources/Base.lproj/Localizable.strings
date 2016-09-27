@@ -380,7 +380,7 @@
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
-"profile.devices.detail.reset_session.title" = "Reset session";
+"profile.devices.detail.reset_session.title" = "Reset Session";
 
 // General strings
 "general.confirm" = "OK";
@@ -439,7 +439,7 @@
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Dark theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
@@ -464,7 +464,7 @@
 
 "self.settings.sound_menu.sounds.title" = "Sounds";
 "self.settings.sound_menu.ringtone.title" = "Ringtone";
-"self.settings.sound_menu.message.title" = "Text Tone";
+"self.settings.sound_menu.message.title" = "Text tone";
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Ringtones";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
@@ -474,7 +474,7 @@
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
 // Sound alerts (TO BE UPDPATED)
-"self.settings.sound_menu.title" = "Sound Alerts";
+"self.settings.sound_menu.title" = "Sound alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";
 "self.settings.sound_menu.all_sounds.title" = "All";
 "self.settings.sound_menu.mute_while_talking.title" = "First message, pings, calls";
