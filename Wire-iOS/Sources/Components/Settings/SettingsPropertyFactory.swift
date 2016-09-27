@@ -44,7 +44,7 @@ extension ZMUserSession: ZMUserSessionInterface {
 }
 
 protocol ValidatorType {
-    func validateValue(_ ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>, forKey inKey: String) throws
+    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>!) throws
 }
 
 extension ZMUser: ValidatorType {
@@ -95,8 +95,8 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .string(let stringValue):
-                    var stringValueAsAnyObject: AnyObject? = stringValue as AnyObject?
-                    try self.selfUser.validateValue(&stringValueAsAnyObject, forKey: "name")
+                    var inOutString: NSString? = stringValue as NSString
+                    try type(of: self.selfUser).validateName(&inOutString)
                     
                     self.userSession.enqueueChanges({
                         self.selfUser.name = stringValue

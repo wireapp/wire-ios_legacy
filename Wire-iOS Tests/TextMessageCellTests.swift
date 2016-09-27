@@ -191,7 +191,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     var otherUsers: [ZMUser] {
-        return MockUser.mockUsers().map { $0 as! ZMUser }
+        return MockUser.mockUsers().map { $0 }
     }
 
 }

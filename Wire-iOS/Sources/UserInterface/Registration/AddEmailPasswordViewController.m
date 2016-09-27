@@ -103,11 +103,23 @@
     self.rootNavigationController = [[NavigationController alloc] initWithRootViewController:self.addEmailStepViewController.registrationFormViewController];
     self.rootNavigationController.delegate = self;
     self.rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.rightButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.logoEnabled = self.showsNavigationBar;
+    
     self.addEmailStepViewController.registrationNavigationController = self.rootNavigationController;
         
     [self addChildViewController:self.rootNavigationController];
     [self.view addSubview:self.rootNavigationController.view];
     [self.rootNavigationController didMoveToParentViewController:self];
+}
+
+- (void)setShowsNavigationBar:(BOOL)showsNavigationBar
+{
+    _showsNavigationBar = showsNavigationBar;
+    self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.rightButtonEnabled = self.showsNavigationBar;
+    self.rootNavigationController.logoEnabled = self.showsNavigationBar;
 }
 
 - (void)createCloseButton

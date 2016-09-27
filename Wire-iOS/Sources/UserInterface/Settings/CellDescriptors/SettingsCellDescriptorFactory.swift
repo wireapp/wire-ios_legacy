@@ -61,7 +61,7 @@ import Foundation
         else {
             phoneElement = SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
                 let addController = AddPhoneNumberViewController()
-                
+                addController.showsNavigationBar = false
                 let stepDelegate = DismissStepDelegate()
                 stepDelegate.strongCapture = stepDelegate
                 
@@ -81,7 +81,7 @@ import Foundation
         else {
             emailElement = SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
                 let addEmailController = AddEmailPasswordViewController()
-                
+                addEmailController.showsNavigationBar = false
                 let stepDelegate = DismissStepDelegate()
                 stepDelegate.strongCapture = stepDelegate
                 

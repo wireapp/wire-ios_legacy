@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, AddPhoneNumberViewControllerSkipButtonType) {
 
 
 @interface AddPhoneNumberViewController : UIViewController
-
+@property (nonatomic, assign) BOOL showsNavigationBar;
 @property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;
 @property (nonatomic) AddPhoneNumberViewControllerSkipButtonType skipButtonType;
 @property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
