@@ -543,6 +543,7 @@
 		8798C51A1C3ACDF700678AD7 /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8798C5191C3ACDF700678AD7 /* NoHistoryViewController.m */; };
 		87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9C1D34FEF400105D44 /* audio-notifications */; };
 		87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */; };
+		87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */; };
 		87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */; };
 		87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */; };
 		87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BEB0351D39018600DE9575 /* FormatterKit.framework */; };
@@ -1661,6 +1662,7 @@
 		87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ringing_from_them_long.caf; sourceTree = "<group>"; };
 		87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationInputBarViewController+Files.m"; sourceTree = "<group>"; };
 		87AAD74D1CF2E4FF002760FF /* ConversationInputBarViewController+Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationInputBarViewController+Files.h"; sourceTree = "<group>"; };
+		87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStyleNavigationController.swift; sourceTree = "<group>"; };
 		87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailEditingTextField.swift; sourceTree = "<group>"; };
 		87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferCell.swift; sourceTree = "<group>"; };
 		87BEB0351D39018600DE9575 /* FormatterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FormatterKit.framework; path = Carthage/Build/iOS/FormatterKit.framework; sourceTree = "<group>"; };
@@ -4261,6 +4263,7 @@
 				871067351C0DC5570035603B /* CellDescriptors */,
 				870815851BF4E76A00D321BC /* SettingsCell.swift */,
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
+				87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
@@ -5151,6 +5154,7 @@
 				16A2C6691AA7752F00DC2905 /* CameraController.m in Sources */,
 				871BC35E1D34F94200DF0793 /* NetworkConditionHelper.m in Sources */,
 				F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */,
+				87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */,
 				871BC0051D34F56300DF0793 /* AnalyticsTracker.m in Sources */,
 				87DCF4F31D34EA4500BB420F /* StartUIQuickActionsBar.m in Sources */,
 				8F8914181A9F287E0056AB0C /* PingAnimationLayer.m in Sources */,
