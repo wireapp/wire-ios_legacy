@@ -421,13 +421,13 @@
 // Settings - Account details
 "self.settings.account_section" = "Account";
 
-"self.settings.account_details_group.title" = "Account Details";
+"self.settings.account_details_group.title" = "Info";
 
 "self.settings.account_section.name.title" = "Name";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
 
-"self.settings.account_details_group.footer" = "Your details will be encrypted, so we won't see your information, but people will be able to find you on Wire.";
+"self.settings.account_details_group.footer" = "People can find you with these details. The information is encrypted and not visible to anyone else.";
 
 "self.settings.account_details.remove_device.title" = "Remove Device";
 "self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
@@ -441,9 +441,9 @@
 
 "self.settings.account_picture_group.theme" = "Dark Theme";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare fingerprints to verify your devices and conversations.";
-"self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset your secure session to make sure that the correct fingerprints are shown on all devices.";
-"self.settings.device_details.remove_device.subtitle" = "You will be automatically logged out of that device.";
+"self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
+"self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased and you will be logged out.";
 "self.settings.device_details.reset_session.success" = "The session has been reset";
 
 "self.settings.account_details.actions.title" = "Actions";
@@ -487,8 +487,8 @@
 "self.settings.options_menu.title" = "Options";
 
 "self.settings.privacy_contacts_section.title" = "Contacts";
-"self.settings.privacy_contacts_menu.settings_button.title" = "Open contacts settings";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "Sharing your contacts helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
@@ -500,18 +500,18 @@
 
 "self.settings.advanced.title" = "Advanced";
 "self.settings.advanced.troubleshooting.title" = "Troubleshooting";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Submit Debug Report";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose problems.\nIf you have any trouble with calling, please describe the steps required to reproduce the issue, provide screenshots if possible and send this email.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Calling Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems.";
 "self.settings.advanced.reset_push_token.title" = "Reset Push Notifications Token";
-"self.settings.advanced.reset_push_token.subtitle" = "Wire Support may ask you to reset this token if you have problems with push notifications.";
-"self.settings.advanced.reset_push_token_alert.title" = "Push Token has been reset";
+"self.settings.advanced.reset_push_token.subtitle" = "If you experience problems with push notifications, Wire Support may ask you to reset this token.";
+"self.settings.advanced.reset_push_token_alert.title" = "Push token has been reset";
 "self.settings.advanced.reset_push_token_alert.message" = "Notifications will be restored in a few seconds.";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
 "self.settings.technical_report.send_report" = "Send report to Wire";
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
-"self.settings.technical_report.mail.subject" = "Calling Report";
+"self.settings.technical_report.mail.subject" = "Wire Calling Report";
 "self.settings.technical_report.include_log" = "Include detailed log";
 
 // Password reset
@@ -611,7 +611,7 @@
 "registration.devices.title" = "Devices";
 "registration.devices.active_list_header" = "Active";
 "registration.devices.current_list_header" = "Current";
-"registration.devices.active_list_subtitle" = "If you don’t recognize a device above, remove it and reset your password in Settings > Account.";
+"registration.devices.active_list_subtitle" = "If you don’t recognize a device above, remove it and reset your password.";
 "registration.devices.activated_in" = "Activated in";
 "registration.devices.id" = "ID:";
 
