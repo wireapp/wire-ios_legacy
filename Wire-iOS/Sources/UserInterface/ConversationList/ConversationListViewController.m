@@ -889,9 +889,9 @@
         case ConversationListButtonTypeSettings:
         {
             SettingsNavigationController *settingsViewController = [self createSettingsViewController];
+            KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
             
             if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-                KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
                 keyboardAvoidingWrapperController.topInset = 20;
                 @weakify(keyboardAvoidingWrapperController);
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
@@ -909,9 +909,9 @@
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
                     [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
                 };
-                settingsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-                settingsViewController.view.backgroundColor = [UIColor blackColor];
-                [self.parentViewController presentViewController:settingsViewController animated:YES completion:nil];
+                keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
+                keyboardAvoidingWrapperController.view.backgroundColor = [UIColor blackColor];
+                [self.parentViewController presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
             }
             break;
         }
