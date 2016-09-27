@@ -65,6 +65,8 @@ extern NSString * const UserDefaultDisableUI;
 extern NSString * const UserDefaultDisableHockey;
 extern NSString * const UserDefaultDisableAnalytics;
 
+extern NSString * const UserDefaultSendButtonDisabled;
+
 /// Model object for locally stored (not in SE or AVS) user app settings
 @interface Settings : NSObject
 

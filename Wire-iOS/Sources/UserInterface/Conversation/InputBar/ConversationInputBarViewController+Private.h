@@ -23,11 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 @class AudioRecordKeyboardViewController;
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
+@class EmojiKeyboardViewController;
 
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) AudioRecordKeyboardViewController *audioRecordKeyboardViewController;
 @property (nonatomic, nullable) CameraKeyboardViewController *cameraKeyboardViewController;
+@property (nonatomic, nullable) EmojiKeyboardViewController *emojiKeyboardViewController;
 @property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
 @property (nonatomic, nullable) id <ZMConversationMessage> editingMessage;
 

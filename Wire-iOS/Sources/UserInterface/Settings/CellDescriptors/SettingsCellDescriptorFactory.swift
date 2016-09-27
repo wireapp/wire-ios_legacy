@@ -268,8 +268,14 @@ import Foundation
         
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         
+        let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.DisableSendButton))
+        let sendButtonSection = SettingsSectionDescriptor(
+            cellDescriptors: [sendButtonDescriptor],
+            header: "self.settings.send_button.header".localized,
+            footer: "self.settings.send_button.footer".localized
+        )
         
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection], title: "self.settings.privacy_menu.title".localized, icon: .settingsOptions)
+        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection, sendButtonSection], title: "self.settings.privacy_menu.title".localized, icon: .settingsOptions)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {

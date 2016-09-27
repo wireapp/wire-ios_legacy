@@ -246,6 +246,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.sound_menu.ping.title".localized
     case .AccentColor:
         return "self.settings.account_picture_group.color".localized
+    case .DisableSendButton:
+        return "self.settings.send_button.title".localized
     }
 }
 

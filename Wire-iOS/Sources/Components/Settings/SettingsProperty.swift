@@ -29,6 +29,7 @@ Available settings
 - PriofileName:           User name
 - SoundAlerts:            Sound alerts level
 - AnalyticsOptOut:        Opt-Out analytics
+- DisableSendButton:      Opt-Out of new send button
 - Disable(.*):            Disable some app features (debug)
 */
 enum SettingsPropertyName: String, CustomStringConvertible {
@@ -44,6 +45,8 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     
     case DarkMode = "DarkMode"
     
+    case DisableSendButton = "DisableSendButton"
+    
     // Profile
     case ProfileName = "ProfileName"
     case AccentColor = "AccentColor"
@@ -55,7 +58,6 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case AnalyticsOptOut = "AnalyticsOptOut"
 
     // Sounds
-    
     case MessageSoundName = "MessageSoundName"
     case CallSoundName = "CallSoundName"
     case PingSoundName = "PingSoundName"

@@ -59,7 +59,7 @@
     self.tableView.rowHeight = 64;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = UIColor.clearColor;
-    [ParticipantDeviceCell registerInTableView:self.tableView];
+    [ParticipantDeviceCell registerIn:self.tableView];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 32, 0);
     [self setupTableHeaderView];
     [self.user fetchUserClients];

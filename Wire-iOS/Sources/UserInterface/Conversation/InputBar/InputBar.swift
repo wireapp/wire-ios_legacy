@@ -160,12 +160,16 @@ private struct InputBarConstants {
         textView.textContainerInset = UIEdgeInsetsMake(17, 0, 17, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
         textView.keyboardType = .default
-        textView.returnKeyType = Settings.shared().returnKeyType
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
-        
+        updateReturnKey()
+
         contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateBackgroundColor()
+    }
+    
+    public func updateReturnKey() {
+        textView.returnKeyType = Settings.shared().returnKeyType
     }
     
     fileprivate func createConstraints() {

@@ -61,6 +61,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.DisableAVS                 : UserDefaultDisableAVS,
         SettingsPropertyName.DisableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.DisableAnalytics           : UserDefaultDisableAnalytics,
+        SettingsPropertyName.DisableSendButton          : UserDefaultSendButtonDisabled
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: ZMEditableUser) {
