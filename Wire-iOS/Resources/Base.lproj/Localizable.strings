@@ -405,8 +405,8 @@
 "about.tos.title"="Terms of Use";
 "about.privacy.title"="Privacy Policy";
 "about.license.title" = "License Information";
-"about.website.title"="Wire website";
-"about.copyright.title"="© %d Wire Swiss GmbH";
+"about.website.title"="Wire Website";
+"about.copyright.title"="© Wire Swiss GmbH";
 
 // Self new devices
 "self.new_device_alert.title" = "You have connected %@ to your Wire account";
