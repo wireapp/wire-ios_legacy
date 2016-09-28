@@ -19,6 +19,7 @@
 
 import Foundation
 
+
 extension ConversationInputBarViewController {
     
     func configureEmojiButton(_ button: IconButton) {
@@ -31,11 +32,17 @@ extension ConversationInputBarViewController {
             inputBar.textView.becomeFirstResponder()
         } else {
             emojiKeyboardViewController = nil
-            inputBar.textView.resignFirstResponder()
             delay(0.3) {
                 self.mode = .textInput
             }
         }
+
+        updateEmojiButton(sender)
+    }
+    
+    public func updateEmojiButton(_ button: IconButton) {
+        let type = mode == .emojiInput ? ZetaIconType.text : .emoji
+        button.setIcon(type, with: .tiny, for: .normal)
     }
 
     public func createEmojiKeyboardViewController() {
@@ -49,7 +56,9 @@ extension ConversationInputBarViewController: EmojiKeyboardViewControllerDelegat
     
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         guard mode == .emojiInput else { return }
-        sendOrEditText(emoji)
+        let text = inputBar.textView.text ?? ""
+        inputBar.textView.text = text + emoji
+        textViewDidChange(inputBar.textView)
     }
     
 }

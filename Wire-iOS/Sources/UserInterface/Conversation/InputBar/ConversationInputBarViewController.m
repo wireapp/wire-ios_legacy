@@ -106,10 +106,6 @@
 
 @end
 
-@interface ConversationInputBarViewController (UITextViewDelegate) <UITextViewDelegate>
-
-@end
-
 @interface  ConversationInputBarViewController (UIGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 
 @end
@@ -189,7 +185,7 @@
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createVerifiedView];
-    [self createAuthorImageView];
+    [self createEmojiButton];
     [self createTypingView];
     
     if (self.conversation.hasDraftMessageText) {
@@ -363,7 +359,7 @@
     [self.verifiedShieldButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
 }
 
-- (void)createAuthorImageView
+- (void)createEmojiButton
 {
     const CGFloat senderDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
     
@@ -401,7 +397,9 @@
 - (void)updateRightAccessoryView
 {
     const NSUInteger textLength = self.inputBar.textView.text.length;
-    self.sendButton.hidden = textLength == 0 || Settings.sharedSettings.disableSendButton;
+    BOOL hideSendButton = Settings.sharedSettings.disableSendButton && self.mode != ConversationInputBarViewControllerModeEmojiInput;
+    self.sendButton.hidden = textLength == 0 || hideSendButton;
+
     self.verifiedShieldButton.hidden = self.conversation.securityLevel != ZMConversationSecurityLevelSecure || textLength > 0;
 }
 
@@ -510,14 +508,17 @@
             [self selectInputControllerButton:self.emojiButton];
             break;
     }
+    
+    [self updateRightAccessoryView];
 }
 
 - (void)selectInputControllerButton:(IconButton *)button
 {
-    NSArray <IconButton *> *buttons = @[self.photoButton, self.audioButton, self.emojiButton];
-    for (IconButton *otherButton in buttons) {
+    for (IconButton *otherButton in @[self.photoButton, self.audioButton]) {
         otherButton.selected = [button isEqual:otherButton];
     }
+
+    [self updateEmojiButton:self.emojiButton];
 }
 
 - (void)clearTextInputAssistentItemIfNeeded

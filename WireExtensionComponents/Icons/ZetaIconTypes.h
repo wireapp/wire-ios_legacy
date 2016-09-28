@@ -134,6 +134,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeWireLogo                        = 0x202,
 
     ZetaIconTypeSend                            = 0x235,
+    ZetaIconTypeText                            = 0x236,
     ZetaIconTypeEmoji                           = 0x237,
 
     ZetaIconTypeEffectBallon                    = 0x240,
