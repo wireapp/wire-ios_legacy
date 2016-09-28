@@ -19,6 +19,8 @@
 
 import Foundation
 import zmessaging
+import WireMessageStrategy
+
 
 @objc class AnalyticsFileTransferObserver: NSObject {
     let analyticsTracker: AnalyticsTracker = AnalyticsTracker(context: "")
