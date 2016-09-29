@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode;
 - (ZetaIconType)iconTypeForState:(UIControlState)state;
 - (void)setIconColor:(UIColor *)color forState:(UIControlState)state;
-- (UIColor *)iconColorForState:(UIControlState)state;
+- (nullable UIColor *)iconColorForState:(UIControlState)state;
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;
