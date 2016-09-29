@@ -70,7 +70,7 @@ class GiphyConfirmationViewController: UIViewController {
         view.addSubview(imagePreview)
         view.addSubview(buttonContainer)
         
-        _ = [cancelButton, acceptButton].map(buttonContainer.addSubview)
+        [cancelButton, acceptButton].forEach(buttonContainer.addSubview)
 
         configureConstraints()
         fetchImage()
