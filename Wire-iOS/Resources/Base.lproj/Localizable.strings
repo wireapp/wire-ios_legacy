@@ -703,7 +703,8 @@
 "giphy.error.no_result" = "no gif found";
 
 "giphy.confirm" = "send";
-"giphy.try_another" = "try another";
+"giphy.cancel" = "cancel";
+"giphy.search_placeholder" = "Search giphy";
 
 "invite_banner.title" = "Bring your friends to Wire!";
 "invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";

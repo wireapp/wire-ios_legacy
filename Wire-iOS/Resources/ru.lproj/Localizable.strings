@@ -688,7 +688,6 @@
 "giphy.error.no_result" = "gif не найдена";
 
 "giphy.confirm" = "отправить";
-"giphy.try_another" = "попробуйте еще";
 
 "invite_banner.title" = "Приведите друзей в Wire!";
 "invite_banner.message" = "Наслаждайтесь звонками, сообщениями, скетчами, GIF \nи многим другим в приватном или групповом разговоре.";

@@ -945,41 +945,13 @@ CameraViewController {
 
 /* Giphy */
 
-GiphyConfirmImageViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-    imagePreviewView: @{
-        backgroundColor: $color-background;
-    }
-}
-
-GiphyViewController {
+GiphyConfirmationViewController {
     view: @{
         backgroundColor: $color-background;
     }
 }
 
-GiphyNavigationBar {
-    backgroundColor: $color-background;
-    centerButton: @{
-        titleColor: $color-text-foreground;
-    }
-}
-
-GiphyConfirmImageViewController {
-    imagePreviewView: @{
-        backgroundColor: $color-background;
-    }
-    confirmButtonsContainer: @{
-        backgroundColor: $color-background;
-    }
-    rejectImageButton: @{
-        titleColor: $color-accent-current;
-    }
-}
-
-GiphyCollectionViewController {
+GiphySearchViewController {
     collectionView: @{
         backgroundColor: $color-background;
     }

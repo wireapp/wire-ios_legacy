@@ -110,6 +110,10 @@
 
 @end
 
+@interface ConversationInputBarViewController (GiphySearchViewController) <GiphySearchViewControllerDelegate>
+
+@end
+
 
 
 @interface ConversationInputBarViewController ()
@@ -909,45 +913,14 @@
     
         NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         
-        GiphyViewController *giphyViewController = [[GiphyViewController alloc] initWithSearchTerm:searchTerm];
-        giphyViewController.conversation = self.conversation;
-        giphyViewController.analyticsTracker = self.analyticsTracker;
         
-        giphyViewController.onCancel = ^{
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.inputBar.textView becomeFirstResponder];
-            }];
-        };
+//        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[UISearchBar.class]] setBackgroundColor:UIColor.redColor];
         
-        @weakify(giphyViewController,self)
-        
-        giphyViewController.onConfirm = ^{
-            
-            @strongify(giphyViewController,self)
-            
-            [self clearInputBar];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self.sendController sendTextMessage:[self messageFromSearchTerm:giphyViewController.searchTerm] withImageData:giphyViewController.imageData];
-        };
-        
-        [[ZClientViewController sharedZClientViewController] presentViewController:giphyViewController animated:YES completion:nil];
+        GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
+        giphySearchViewController.delegate = self;
+        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:nil];
         
     }
-}
-
-- (NSString *)messageFromSearchTerm:(NSString *)searchTerm
-{
-    NSString *messageText = nil;
-    
-    if ([searchTerm isEqualToString:@""]) {
-        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
-    }
-    else {
-        
-        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
-    }
-    
-    return messageText;
 }
 
 @end
@@ -1079,6 +1052,17 @@
     else {
         return CGRectContainsPoint(gestureRecognizer.view.bounds, [touch locationInView:gestureRecognizer.view]);
     }
+}
+
+@end
+
+@implementation ConversationInputBarViewController (GiphySearchViewControllerDelegate)
+
+- (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
+{
+    [self clearInputBar];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.sendController sendMessageWithImageData:imageData completion:nil];
 }
 
 @end

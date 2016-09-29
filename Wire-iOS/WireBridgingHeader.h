@@ -53,6 +53,8 @@
 #import "SearchResultCell.h"
 #import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
+#import "ARCollectionViewMasonryLayout.h"
+#import "ZiphyClient+Convenience.h"
 
 // View Controllers
 #import "ZClientViewController.h"
