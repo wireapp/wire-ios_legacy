@@ -76,15 +76,15 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     
 }
 
-extension EmojiKeyboardViewController: EmojiSectionViewControllerDelefate {
+extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
 
-    func sectionViewControler(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action) {
+    func sectionViewController(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action) {
         switch action {
-        case .Select(let type):
+        case .select(let type):
             guard let section = emojiDataSource.sectionIndex(for: type) else { return }
             let indexPath = IndexPath(item: 0, section: section)
             collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-        case .Delete:
+        case .delete:
             delegate?.emojiKeyboardViewControllerDeleteTapped(self)
         }
     }

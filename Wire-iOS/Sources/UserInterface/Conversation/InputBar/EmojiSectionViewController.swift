@@ -21,16 +21,16 @@ import Foundation
 import Cartography
 
 
-protocol EmojiSectionViewControllerDelefate: class {
-    func sectionViewControler(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action)
+protocol EmojiSectionViewControllerDelegate: class {
+    func sectionViewController(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action)
 }
 
 
 class EmojiSectionViewController: UIViewController {
     
     enum Action {
-        case Select(EmojiSectionType)
-        case Delete
+        case select(EmojiSectionType)
+        case delete
     }
 
     private var typesByButton = [IconButton: EmojiSectionType]()
@@ -48,7 +48,7 @@ class EmojiSectionViewController: UIViewController {
         }
     }
     
-    weak var sectionDelegate: EmojiSectionViewControllerDelefate? = nil
+    weak var sectionDelegate: EmojiSectionViewControllerDelegate? = nil
     
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)
@@ -96,8 +96,8 @@ class EmojiSectionViewController: UIViewController {
     }
     
     @objc private func didTappButton(_ sender: IconButton) {
-        let action: Action = typesByButton[sender].map { .Select($0) } ?? .Delete
-        sectionDelegate?.sectionViewControler(self, performAction: action)
+        let action: Action = typesByButton[sender].map { .select($0) } ?? .delete
+        sectionDelegate?.sectionViewController(self, performAction: action)
     }
 
     @objc private func didPan(_ recognizer: UIPanGestureRecognizer) {
@@ -110,7 +110,7 @@ class EmojiSectionViewController: UIViewController {
             let location = recognizer.location(in: view)
             guard let button = sectionButtons.filter ({ $0.frame.contains(location) }).first else { return }
             guard let type = typesByButton[button] else { return }
-            sectionDelegate?.sectionViewControler(self, performAction: .Select(type))
+            sectionDelegate?.sectionViewController(self, performAction: .select(type))
             selectedType = type
         case .ended, .failed, .cancelled:
             ignoreSelectionUpdates = false
