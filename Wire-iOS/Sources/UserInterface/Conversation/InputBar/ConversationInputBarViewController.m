@@ -127,7 +127,7 @@
 @property (nonatomic) IconButton *locationButton;
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *emojiButton;
-@property (nonatomic) IconButton *gifButton; // TODO: GIF button has to be setup correctly
+@property (nonatomic) IconButton *gifButton;
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
@@ -293,8 +293,12 @@
     self.locationButton.accessibilityIdentifier = @"locationButton";
     [self.locationButton setIcon:ZetaIconTypeLocationPin withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
-
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.locationButton, self.audioButton, self.pingButton, self.uploadFileButton]];
+    self.gifButton = [[IconButton alloc] init];
+    self.gifButton.hitAreaPadding = CGSizeZero;
+    self.gifButton.accessibilityIdentifier = @"gifButton";
+    [self.gifButton setIcon:ZetaIconTypeGif withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.locationButton, self.audioButton, self.pingButton, self.uploadFileButton, self.gifButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     
@@ -912,10 +916,6 @@
         [Analytics.shared tagMediaAction:ConversationMediaActionGif inConversation:self.conversation];
     
         NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
-        
-//        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[UISearchBar.class]] setBackgroundColor:UIColor.redColor];
-        
         GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
         giphySearchViewController.delegate = self;
         [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:nil];
@@ -1060,6 +1060,7 @@
 
 - (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
 {
+    [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
     [self clearInputBar];
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.sendController sendMessageWithImageData:imageData completion:nil];
