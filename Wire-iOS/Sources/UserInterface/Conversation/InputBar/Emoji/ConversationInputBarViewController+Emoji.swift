@@ -53,6 +53,10 @@ extension ConversationInputBarViewController {
 }
 
 extension ConversationInputBarViewController: EmojiKeyboardViewControllerDelegate {
+
+    func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController) {
+        inputBar.textView.deleteBackward()
+    }
     
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         guard mode == .emojiInput else { return }

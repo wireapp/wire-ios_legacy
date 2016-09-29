@@ -20,12 +20,15 @@
 #import "ButtonWithLargerHitArea.h"
 #import "ZetaIconTypes.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface IconButton : ButtonWithLargerHitArea
 
 @property (nonatomic) BOOL circular;
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic) BOOL adjustsTitleWhenHighlighted;
 @property (nonatomic) CGFloat titleImageSpacing;
+
 
 + (instancetype)iconButtonDefault;
 + (instancetype)iconButtonCircularLight;
@@ -43,3 +46,5 @@
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;
 
 @end
+
+NS_ASSUME_NONNULL_END

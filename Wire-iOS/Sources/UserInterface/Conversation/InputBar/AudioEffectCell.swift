@@ -101,7 +101,7 @@ public struct AudioEffectCellBorders : OptionSet {
     }
     
     fileprivate func updateForSelectedState() {
-        let color = self.isSelected ? UIColor.accent() : UIColor.white
+        let color: UIColor = self.isSelected ? UIColor.accent() : UIColor.white
         self.iconView.setIconColor(color, for: .normal)
     }
     

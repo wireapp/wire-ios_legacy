@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -116,6 +117,14 @@
 + (void)drawIcon_0x235_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x237_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x236_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x238_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x250_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x251_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x252_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x253_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x254_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x255_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x256_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -194,6 +203,14 @@
 + (UIImage*)imageOfIcon_0x235_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x237_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x236_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x238_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x250_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x251_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x252_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x253_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x254_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x255_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x256_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

@@ -156,6 +156,25 @@ IconButton.gif-button {
     borderWidth: 0.8;
 }
 
+IconButton.emoji-category {
+    iconColor: $color-text-dimmed-dark;
+    iconColor[state:selected]: $color-text-foreground-dark;
+    iconColor[state:highlighted]: $color-icon-highlighted-dark;
+    backgroundImageColor[state:selected]: clear;
+    borderColor[state:normal]: clear;
+    circular: false;
+    borderWidth: 0.0;
+}
+
+IconButton.emoji-backspace {
+    iconColor: $color-text-foreground-dark;
+    iconColor[state:highlighted]: $color-icon-highlighted-dark;
+    backgroundImageColor[state:selected]: clear;
+    borderColor[state:normal]: clear;
+    circular: false;
+    borderWidth: 0.0;
+}
+
 VoiceChannelParticipantCell {
     nameLabel: @{
         textAlignment: center;

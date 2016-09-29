@@ -134,12 +134,12 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
 
     func createBackButton() {
         let backButton = IconButton.iconButtonCircular()
-        backButton?.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
-        backButton?.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
-        backButton?.translatesAutoresizingMaskIntoConstraints = false
-        backButton?.isHidden = !self.showBackButton
+        backButton.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
+        backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.isHidden = !self.showBackButton
         self.backButton = backButton
-        self.view.addSubview(backButton!)
+        self.view.addSubview(backButton)
     }
     
     func createShowMyDeviceButton() {

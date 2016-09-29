@@ -114,12 +114,12 @@ public extension ConversationViewController {
     
     func barButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?) -> UIBarButtonItem {
         let button = IconButton.iconButtonDefault()
-        button?.setIcon(type, with: .tiny, for: .normal)
-        button?.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -16)
-        button?.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
-        button?.addTarget(target, action: action, for: .touchUpInside)
-        button?.accessibilityIdentifier = accessibilityIdentifier
-        return UIBarButtonItem(customView: button!)
+        button.setIcon(type, with: .tiny, for: .normal)
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -16)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        button.accessibilityIdentifier = accessibilityIdentifier
+        return UIBarButtonItem(customView: button)
     }
     
     var audioCallBarButtonItem: UIBarButtonItem {

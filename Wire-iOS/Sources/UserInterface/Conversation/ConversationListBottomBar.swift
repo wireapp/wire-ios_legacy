@@ -121,7 +121,7 @@ import Cartography
         [settingsButtonContainer, contactsButtonContainer, archivedButtonContainer, separator].forEach(view.addSubview)
         
         accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] color, _ in
-            if let `self` = self , self.showTooltip {
+            if let `self` = self, let color = color, self.showTooltip {
                 self.contactsButton.setIconColor(color, for: .normal)
             }
         }
