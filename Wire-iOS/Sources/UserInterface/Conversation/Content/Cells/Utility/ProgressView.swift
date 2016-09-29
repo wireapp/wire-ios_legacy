@@ -78,6 +78,12 @@ import Foundation
     }
 
     fileprivate func updateProgress(_ animated: Bool) {
+        guard self.progress.isNormal &&
+                self.bounds.width != 0 &&
+                    self.bounds.height != 0 else {
+            return
+        }
+        
         let progress = (self.deterministic ?? false) ? self.progress : 1;
         
         let setBlock = {
