@@ -58,6 +58,9 @@ class ZMMockAnalytics: AnalyticsInterface {
     var isOptedOut: Bool = false
 }
 
+class ZMMockCrashlogManager: CrashlogManager {
+    var isCrashManagerDisabled: Bool = false
+}
 
 class SettingsPropertyTests: XCTestCase {
     let userDefaults: UserDefaults = UserDefaults.standard
@@ -98,7 +101,7 @@ class SettingsPropertyTests: XCTestCase {
         let mediaManager = ZMMockAVSMediaManager()
         let analytics = ZMMockAnalytics()
         
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
         
         let property = factory.property(SettingsPropertyName.ProfileName)
         // when & then
@@ -112,7 +115,7 @@ class SettingsPropertyTests: XCTestCase {
         let mediaManager = ZMMockAVSMediaManager()
         let analytics = ZMMockAnalytics()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
         
         let property = factory.property(SettingsPropertyName.SoundAlerts)
         // when & then
@@ -125,8 +128,9 @@ class SettingsPropertyTests: XCTestCase {
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
         let analytics = ZMMockAnalytics()
-
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
+        let crashlogManager = ZMMockCrashlogManager()
+        
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser, crashlogManager: crashlogManager)
         
         let property = factory.property(SettingsPropertyName.AnalyticsOptOut)
         // when & then
