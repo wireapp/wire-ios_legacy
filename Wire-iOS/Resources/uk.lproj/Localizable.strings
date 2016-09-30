@@ -703,8 +703,7 @@
 "giphy.error.no_result" = "анімацій не знайдено";
 
 "giphy.confirm" = "надіслати";
-"giphy.cancel" = "скасувати";
-"giphy.search_placeholder" = "Пошук Giphy";
+"giphy.try_another" = "спробувати іншу";
 
 "invite_banner.title" = "Запросіть ваших друзів до Wire!";
 "invite_banner.message" = "Насолоджуйтесь дзвінками, повідомленнями, зарисовками, GIF-анімаціями приватно або в групах.";
