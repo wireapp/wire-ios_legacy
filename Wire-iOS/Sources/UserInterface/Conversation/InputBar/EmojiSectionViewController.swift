@@ -22,26 +22,14 @@ import Cartography
 
 
 protocol EmojiSectionViewControllerDelegate: class {
-    func sectionViewController(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action)
+    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType)
 }
 
 
 class EmojiSectionViewController: UIViewController {
-    
-    enum Action {
-        case select(EmojiSectionType)
-        case delete
-    }
-
-    var backspaceEnabled = false {
-        didSet {
-            backspaceButton.isEnabled = backspaceEnabled
-        }
-    }
 
     private var typesByButton = [IconButton: EmojiSectionType]()
     private var sectionButtons = [IconButton]()
-    private let backspaceButton = IconButton.iconButtonDefault()
     private let iconSize = UIImage.size(for: .tiny)
     private var ignoreSelectionUpdates = false
 
@@ -82,10 +70,6 @@ class EmojiSectionViewController: UIViewController {
     
     private func setupViews() {
         sectionButtons.forEach(view.addSubview)
-        backspaceButton.setIcon(.backspace, with: .small, for: .normal)
-        backspaceButton.cas_styleClass = "emoji-backspace"
-        backspaceButton.addTarget(self, action: #selector(didTappButton), for: .touchUpInside)
-        view.addSubview(backspaceButton)
     }
     
     private func createSectionButton(for type: EmojiSectionType) -> IconButton {
@@ -102,8 +86,8 @@ class EmojiSectionViewController: UIViewController {
     }
     
     @objc private func didTappButton(_ sender: IconButton) {
-        let action: Action = typesByButton[sender].map { .select($0) } ?? .delete
-        sectionDelegate?.sectionViewController(self, performAction: action)
+        guard let type = typesByButton[sender] else { return }
+        sectionDelegate?.sectionViewController(self, didSelect: type)
     }
 
     @objc private func didPan(_ recognizer: UIPanGestureRecognizer) {
@@ -116,30 +100,45 @@ class EmojiSectionViewController: UIViewController {
             let location = recognizer.location(in: view)
             guard let button = sectionButtons.filter ({ $0.frame.contains(location) }).first else { return }
             guard let type = typesByButton[button] else { return }
-            sectionDelegate?.sectionViewController(self, performAction: .select(type))
+            sectionDelegate?.sectionViewController(self, didSelect: type)
             selectedType = type
         case .ended, .failed, .cancelled:
             ignoreSelectionUpdates = false
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sectionButtons.forEach {
+            $0.removeFromSuperview()
+            view.addSubview($0)
+        }
+
+        createConstraints()
+        sectionButtons.forEach {
+            $0.hitAreaPadding = CGSize(width: 5, height: view.bounds.height / 2)
         }
     }
     
     private func createConstraints() {
         
         let inset: CGFloat = 16
-        
-        constrain(view, sectionButtons.first!, backspaceButton) { view, firstButton, backButton in
+        let count = CGFloat(sectionButtons.count)
+        let fullSpacing = (view.bounds.width - 2 * inset) - iconSize
+        let padding = fullSpacing / (count - 1)
+
+        constrain(view, sectionButtons.first!) { view, firstButton in
             firstButton.leading == view.leading + inset
-            backButton.trailing == view.trailing - inset
             view.height == iconSize + inset
         }
         
         sectionButtons.enumerated().dropFirst().forEach { idx, button in
             constrain(button, sectionButtons[idx - 1], view) { button, previous, view in
-                button.centerX == previous.centerX + inset + iconSize
+                button.centerX == previous.centerX + padding
             }
         }
         
-        (sectionButtons + [backspaceButton]).forEach {
+        sectionButtons.forEach {
             constrain($0, view) { button, view in
                 button.top == view.top
             }

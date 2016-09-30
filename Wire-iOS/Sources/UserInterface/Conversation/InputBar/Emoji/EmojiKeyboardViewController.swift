@@ -33,10 +33,12 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
     fileprivate let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
+    private let backspaceButton = IconButton.iconButtonDefault()
+    private var deleting = false
 
     var backspaceEnabled = false {
         didSet {
-            sectionViewController.backspaceEnabled = backspaceEnabled
+            backspaceButton.isEnabled = backspaceEnabled
         }
     }
     
@@ -64,17 +66,26 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         addChildViewController(sectionViewController)
         view.addSubview(sectionViewController.view)
         sectionViewController.didMove(toParentViewController: self)
+
+        backspaceButton.setIcon(.backspace, with: .small, for: .normal)
+        backspaceButton.cas_styleClass = "emoji-backspace"
+        backspaceButton.addTarget(self, action: #selector(backspaceTapped), for: .touchUpInside)
+        backspaceButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(backspaceLongPressed)))
+        view.addSubview(backspaceButton)
     }
     
     func createConstraints() {
-        constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
+        constrain(view, collectionView, sectionViewController.view, backspaceButton) { view, collectionView, sectionView, backButton in
             collectionView.top == view.top
             collectionView.leading == view.leading
             collectionView.trailing == view.trailing
             collectionView.bottom == sectionView.top
             sectionView.bottom == view.bottom
             sectionView.leading == view.leading
-            sectionView.trailing == view.trailing
+            sectionView.trailing == backButton.trailing - 32 ~ 750.0
+            sectionView.width <= 400
+            backButton.trailing == view.trailing - 16
+            backButton.top == sectionView.top
         }
     }
     
@@ -91,22 +102,39 @@ protocol EmojiKeyboardViewControllerDelegate: class {
             self.sectionViewController.didSelectSection(self.emojiDataSource[section].type)
         }
     }
+
+    func backspaceTapped(_ sender: IconButton) {
+        delete()
+    }
+
+    func backspaceLongPressed(_ sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            deleting = true
+            delete()
+        default: deleting = false
+        }
+    }
+
+    func delete() {
+        delegate?.emojiKeyboardViewControllerDeleteTapped(self)
+        guard deleting else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            self.delete()
+        }
+    }
+
     
 }
 
 extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
 
-    func sectionViewController(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action) {
-        switch action {
-        case .select(let type):
-            guard let section = emojiDataSource.sectionIndex(for: type) else { return }
-            let indexPath = IndexPath(item: 0, section: section)
-            collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-        case .delete:
-            delegate?.emojiKeyboardViewControllerDeleteTapped(self)
-        }
+    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect type: EmojiSectionType) {
+        guard let section = emojiDataSource.sectionIndex(for: type) else { return }
+        let indexPath = IndexPath(item: 0, section: section)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
     }
-
+    
 }
 
 
