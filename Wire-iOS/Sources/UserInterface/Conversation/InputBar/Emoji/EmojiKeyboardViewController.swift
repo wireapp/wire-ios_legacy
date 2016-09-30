@@ -87,25 +87,23 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     func updateSectionSelection() {
         DispatchQueue.main.async {
             let minSection = Set(self.collectionView.indexPathsForVisibleItems.map { $0.section }).min()
-            print(minSection)
             guard let section = minSection  else { return }
             self.sectionViewController.didSelectSection(self.emojiDataSource[section].type)
         }
+    }
+
+    func backspaceTapped() {
+        delegate?.emojiKeyboardViewControllerDeleteTapped(self)
     }
     
 }
 
 extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
 
-    func sectionViewController(_ viewController: EmojiSectionViewController, performAction action: EmojiSectionViewController.Action) {
-        switch action {
-        case .select(let type):
-            guard let section = emojiDataSource.sectionIndex(for: type) else { return }
-            let indexPath = IndexPath(item: 0, section: section)
-            collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-        case .delete:
-            delegate?.emojiKeyboardViewControllerDeleteTapped(self)
-        }
+    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect type: EmojiSectionType) {
+        guard let section = emojiDataSource.sectionIndex(for: type) else { return }
+        let indexPath = IndexPath(item: 0, section: section)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
     }
 
 }
