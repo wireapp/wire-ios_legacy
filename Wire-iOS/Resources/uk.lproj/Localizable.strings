@@ -391,7 +391,9 @@
 // Options menu contents
 
 "self.settings" = "Налаштування";
-"self.help_center" = "Допомога";
+"self.help_center" = "Служба підтримки";
+"self.help_center.support_website" = "Сайт підтримки Wire";
+"self.help_center.contact_support" = "Зверніться до служби підтримки";
 "self.about" = "Про програму";
 "self.sign_out" = "Вихід";
 "self.report_abuse" = "Надіслати звіт про зловживання";
@@ -403,8 +405,8 @@
 "about.tos.title" = "Умови використання";
 "about.privacy.title" = "Політика конфіденційності";
 "about.license.title" = "Відомості про ліцензію";
-"about.website.title" = "wire.com";
-"about.copyright.title" = "© %d Wire Swiss GmbH";
+"about.website.title" = "Веб-сайт Wire";
+"about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
 "self.new_device_alert.title" = "Ви під'єднали пристрій %@ до вашого акаунту в Wire";
@@ -419,13 +421,13 @@
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
 
-"self.settings.account_details_group.title" = "Подробиці акаунта";
+"self.settings.account_details_group.title" = "Інформація";
 
 "self.settings.account_section.name.title" = "Ім’я";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Номер телефону";
 
-"self.settings.account_details_group.footer" = "Ваші дані будуть зашифровані, і тому ми будемо не в змозі прочитати їх, але інші люди отримають можливість знайти вас в Wire.";
+"self.settings.account_details_group.footer" = "Ці деталі допоможуть іншим людям знайти вас. Інформація зашифрована та невидима для всіх інших користувачів.";
 
 "self.settings.account_details.remove_device.title" = "Видалити пристрій";
 "self.settings.account_details.key_fingerprint.title" = "Ідентифікатор";
@@ -433,10 +435,18 @@
 "self.settings.account_details.remove_device.password" = "Пароль";
 "self.settings.account_details.remove_device.password.error" = "Невірний пароль";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівнюйте ідентифікатори, щоб зверифікувати ваші пристрої та розмови.";
-"self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не співпадають, виконайте скидання вашої захищеної сесії, щоб упевнитись, що ідентифікатори правильно відображаються на всіх пристроях.";
-"self.settings.device_details.remove_device.subtitle" = "Ви автоматично вийдете з цього пристрою.";
+"self.settings.account_appearance_group.title" = "Оформлення";
+"self.settings.account_picture_group.picture" = "Картинка";
+"self.settings.account_picture_group.color" = "Колір";
+
+"self.settings.account_picture_group.theme" = "Темна тема";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівняйте їх, щоб зверифікувати ваші пристрої та розмови.";
+"self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не збігаються, виконайте скидання сесії, щоб згенерувати нові ключі шифрування з обидвох сторін.";
+"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви більше не використовуєте його. Вашу історію повідомлень буде стерто, і ви вийдете із системи на цьому пристрої.";
 "self.settings.device_details.reset_session.success" = "Сессія була скинута";
+
+"self.settings.account_details.actions.title" = "Дії";
 
 "self.settings.account_details.delete_account.title" = "Видалити акаунт";
 
@@ -463,8 +473,13 @@
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пінг у Wire";
 
+// Send Button
+"self.settings.send_button.title" = "Використовувати кнопку \"Ввід\" для надсилання повідомлень";
+"self.settings.send_button.header" = "Кнопка \"Надіслати\"";
+"self.settings.send_button.footer" = "Якщо увімкнено, то повідомлення можна буде надсилати за допомогою кнопки \"Ввід\", замість спеціально призначеної для цього кнопки \"Надіслати\"";
+
 // Sound alerts (TO BE UPDPATED)
-"self.settings.sound_menu.title" = "Звукові нотифікації";
+"self.settings.sound_menu.title" = "Звукові сповіщення";
 "self.settings.sound_menu.no_sounds.title" = "Все вимкнено";
 "self.settings.sound_menu.all_sounds.title" = "Всі";
 "self.settings.sound_menu.mute_while_talking.title" = "Перше повідомлення, пінг, дзвінок";
@@ -474,11 +489,11 @@
 "self.settings.apns_logging.title" = "Ведення журналу APNS";
 
 // Privacy (visibility) options
-"self.settings.options_menu.title" = "Конфіденційність та безпека";
+"self.settings.options_menu.title" = "Налаштування";
 
 "self.settings.privacy_contacts_section.title" = "Контакти";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "Поділіться контактами - це допоможе вам знайти людей, яких ви знаєте. Ми анонімізуємо всю інформацію та не передаємо її третім особам. Надайте доступ в меню Налаштування > Конфіденціальність > Контакти.";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам установити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
 
@@ -490,10 +505,10 @@
 
 "self.settings.advanced.title" = "Розширені налаштування";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Відправити звіт для відлагодження";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ця інформація допомагає службі підтримки Wire діагностувати проблеми.\nЯкщо у вас є будь-які проблеми з дзвінками, будь ласка, опишіть кроки, необхідні для відтворення проблеми, додайте скріншоти, якщо це можливо, та надішліть цей лист.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Звіт для налагодження дзвінків";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ця інформація допомагає відділу підтримки Wire діагностувати проблеми, пов'язані з дзвінками.";
 "self.settings.advanced.reset_push_token.title" = "Оновити Push-токен для сповіщень";
-"self.settings.advanced.reset_push_token.subtitle" = "Техпідтримка Wire може попросити вас виконати скидання цього токену, якщо у вас виникнуть проблеми з push-сповіщеннями.";
+"self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщення, відділ підтримки Wire може попросити вас скинути цей токен.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен був оновлений";
 "self.settings.advanced.reset_push_token_alert.message" = "Сповіщення будуть відновлені за декілька секунд.";
 
@@ -501,12 +516,11 @@
 "self.settings.technical_report_section.title" = "Технічний звіт";
 "self.settings.technical_report.send_report" = "Надіслати звіт до Wire";
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
-"self.settings.technical_report.mail.subject" = "Звіт про дзвінки";
+"self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -602,7 +616,7 @@
 "registration.devices.title" = "Пристрої";
 "registration.devices.active_list_header" = "Активні";
 "registration.devices.current_list_header" = "Поточний";
-"registration.devices.active_list_subtitle" = "Якщо ви не впізнаєте один з пристроїв вище, видаліть його та скиньте пароль в меню Налаштування > Акаунт.";
+"registration.devices.active_list_subtitle" = "Якщо ви не впізнаєте пристрою вище, видаліть його і виконайте скидання паролю.";
 "registration.devices.activated_in" = "Активований:";
 "registration.devices.id" = "ID:";
 
@@ -689,7 +703,8 @@
 "giphy.error.no_result" = "анімацій не знайдено";
 
 "giphy.confirm" = "надіслати";
-"giphy.try_another" = "спробувати іншу";
+"giphy.cancel" = "скасувати";
+"giphy.search_placeholder" = "Пошук Giphy";
 
 "invite_banner.title" = "Запросіть ваших друзів до Wire!";
 "invite_banner.message" = "Насолоджуйтесь дзвінками, повідомленнями, зарисовками, GIF-анімаціями приватно або в групах.";

@@ -391,7 +391,9 @@
 // Options menu contents
 
 "self.settings" = "Настройки";
-"self.help_center" = "Помощь";
+"self.help_center" = "Служба поддержки";
+"self.help_center.support_website" = "Cайт техподдержки Wire";
+"self.help_center.contact_support" = "Связаться с техподдержкой";
 "self.about" = "О программе";
 "self.sign_out" = "Выход";
 "self.report_abuse" = "Сообщить о злоупотреблении";
@@ -403,8 +405,8 @@
 "about.tos.title" = "Условия использования";
 "about.privacy.title" = "Политика конфиденциальности";
 "about.license.title" = "Информация о лицензии";
-"about.website.title" = "wire.com";
-"about.copyright.title" = "© %d Wire Swiss GmbH";
+"about.website.title" = "Веб-сайт Wire";
+"about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
 "self.new_device_alert.title" = "Вы подключили %@ к вашему аккаунту Wire";
@@ -419,13 +421,13 @@
 // Settings - Account details
 "self.settings.account_section" = "Аккаунт";
 
-"self.settings.account_details_group.title" = "Детали аккаунта";
+"self.settings.account_details_group.title" = "Информация";
 
 "self.settings.account_section.name.title" = "Имя";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Телефон";
 
-"self.settings.account_details_group.footer" = "Ваши данные будут зашифрованы, поэтому мы не увидим вашу информацию, но люди смогут найти вас в Wire.";
+"self.settings.account_details_group.footer" = "Люди могут найти вас с этими данными. Информация зашифрована и не видна кому-либо еще.";
 
 "self.settings.account_details.remove_device.title" = "Удалить устройство";
 "self.settings.account_details.key_fingerprint.title" = "Отпечаток";
@@ -433,10 +435,18 @@
 "self.settings.account_details.remove_device.password" = "Пароль";
 "self.settings.account_details.remove_device.password.error" = "Неправильный пароль";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire присваивает каждому устройству уникальный отпечаток. Сравните отпечатки, чтобы верифицировать ваши устройства и разговоры.";
-"self.settings.device_details.reset_session.subtitle" = "Если отпечатки не совпадают, сбросьте вашу сессию безопасности, чтобы убедиться, что отпечатки правильно отображаются на всех устройствах.";
-"self.settings.device_details.remove_device.subtitle" = "Вы автоматически выйдете из этого устройства.";
+"self.settings.account_appearance_group.title" = "Внешний вид";
+"self.settings.account_picture_group.picture" = "Изображение";
+"self.settings.account_picture_group.color" = "Цвет";
+
+"self.settings.account_picture_group.theme" = "Тёмная тема";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire дает каждому устройству уникальный отпечаток. Сравните их и заверифицируйте ваши устройства и разговоры.";
+"self.settings.device_details.reset_session.subtitle" = "Если отпечатки не совпадают, сбросьте сессию для создания новых ключей шифрования на обеих сторонах.";
+"self.settings.device_details.remove_device.subtitle" = "Удалите это устройство, если вы прекратили им пользоваться. История сообщений будет стерта, и вы выйдите из аккаунта.";
 "self.settings.device_details.reset_session.success" = "Сессия была обновлена";
+
+"self.settings.account_details.actions.title" = "Действия";
 
 "self.settings.account_details.delete_account.title" = "Удалить аккаунт";
 
@@ -463,6 +473,11 @@
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пинг Wire";
 
+// Send Button
+"self.settings.send_button.title" = "Использовать клавишу Отправить для отправки сообщений";
+"self.settings.send_button.header" = "Кнопка \"отправить\"";
+"self.settings.send_button.footer" = "Во включенном режиме сообщения будут отправляться при нажатии на клавиатуре на клавишу Отправить";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звуковые уведомления";
 "self.settings.sound_menu.no_sounds.title" = "Отключены";
@@ -474,11 +489,11 @@
 "self.settings.apns_logging.title" = "APNS протоколирование";
 
 // Privacy (visibility) options
-"self.settings.options_menu.title" = "Конфиденциальность и безопасность";
+"self.settings.options_menu.title" = "Настройки";
 
 "self.settings.privacy_contacts_section.title" = "Контакты";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Открыть настройки контактов";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "Поделитесь контактами - это поможет вам общаться с другими людьми. Вся информация анонимна и не передается третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет вам связаться с другими людьми. Мы анонимизируем всю информацию и не передаем ее третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
@@ -490,10 +505,10 @@
 
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Отправить отчет Debug";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация поможет службе поддержки Wire диагностировать проблемы.\nЕсли у вас есть какие-либо проблемы с вызовом, пожалуйста, опишите шаги, необходимые для воспроизведения проблемы, приложите скриншоты, если это возможно, и отправьте это письмо.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Отчет для отладки звонка";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает отделу поддержки Wire диагностировать проблемы, связанные со звонками.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен Push уведомления";
-"self.settings.advanced.reset_push_token.subtitle" = "Техподдержка Wire может попросить вас изменить этот токен, если у вас есть проблемы с push-уведомлениями.";
+"self.settings.advanced.reset_push_token.subtitle" = "Если у вас возникли проблемы с push-уведомлениями, отдел поддержки Wire может попросить вас его сбросить.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен был обновлен";
 "self.settings.advanced.reset_push_token_alert.message" = "Уведомления будут восстановлены в течение нескольких секунд.";
 
@@ -501,7 +516,7 @@
 "self.settings.technical_report_section.title" = "Технический отчет";
 "self.settings.technical_report.send_report" = "Отправить отчет в Wire";
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
-"self.settings.technical_report.mail.subject" = "Отчет о звонках";
+"self.settings.technical_report.mail.subject" = "Wire отчет о звонке";
 "self.settings.technical_report.include_log" = "Включить подробную запись логов";
 
 // Password reset
@@ -601,7 +616,7 @@
 "registration.devices.title" = "Устройства";
 "registration.devices.active_list_header" = "Активное";
 "registration.devices.current_list_header" = "Текущее";
-"registration.devices.active_list_subtitle" = "Если вы не распознаете устройство выше, удалите его и измените пароль в меню Настройки> Аккаунт.";
+"registration.devices.active_list_subtitle" = "Если не распознаете устройство выше, удалите его и переустановите пароль.";
 "registration.devices.activated_in" = "Активирован в";
 "registration.devices.id" = "ID:";
 
@@ -688,7 +703,8 @@
 "giphy.error.no_result" = "gif не найдена";
 
 "giphy.confirm" = "отправить";
-"giphy.try_another" = "попробуйте еще";
+"giphy.cancel" = "отменить";
+"giphy.search_placeholder" = "Поиск Giphy";
 
 "invite_banner.title" = "Приведите друзей в Wire!";
 "invite_banner.message" = "Наслаждайтесь звонками, сообщениями, скетчами, GIF \nи многим другим в приватном или групповом разговоре.";

@@ -19,7 +19,7 @@
 
 "general.ok" = "De acuerdo";
 "general.cancel" = "Cancelar";
-"general.open_settings" = "Abrir Configuración de Wire";
+"general.open_settings" = "Abrir Ajustes de Wire";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,7 +57,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invitar a más gente";
-"peoplepicker.quick-action.open-conversation" = "Abierto";
+"peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Crear grupo";
 
 // Contacts UI
@@ -202,7 +202,7 @@
 "content.system.reactivated_device" = "Se comenzó a utilizar %@ otra vez. Por el momento los mensajes enviados no aparecerán aquí";
 
 "content.system.new_device" = "un nuevo dispositivo";
-"content.system.started_using" = "comenzó a utilizar";
+"content.system.started_using" = "comenzaste a utilizar";
 "content.system.is_verified" = "Se verifican todas las huellas dactilares";
 
 "content.system.unverified" = "%@ no verificó una de %@"; // example "You unverified one of Jule's devices"
@@ -315,8 +315,8 @@
 "meta.leave_conversation_button_leave" = "Abandonar";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ comenzó a usar un nuevo dispositivo.";
-"meta.degraded.degradation_reason_message.plural" = "%@ comenzó a utilizar nuevos dispositivos.";
+"meta.degraded.degradation_reason_message.singular" = "%@ comenzaste a utilizar un nuevo dispositivo.";
+"meta.degraded.degradation_reason_message.plural" = "%@ comenzaste a utilizar nuevos dispositivos.";
 "meta.degraded.dialog_message" = "¿Desea enviar su mensaje?";
 "meta.degraded.show_device_button" = "Mostrar dispositivo";
 "meta.degraded.send_anyway_button" = "Enviar de todos modos";
@@ -391,7 +391,9 @@
 // Options menu contents
 
 "self.settings" = "Ajustes";
-"self.help_center" = "Ayuda";
+"self.help_center" = "Soporte";
+"self.help_center.support_website" = "Página de soporte de Wire";
+"self.help_center.contact_support" = "Contactar con Soporte";
 "self.about" = "Acerca de";
 "self.sign_out" = "Cerrar Sesión";
 "self.report_abuse" = "Reportar Mal Uso";
@@ -403,8 +405,8 @@
 "about.tos.title" = "Términos de Uso";
 "about.privacy.title" = "Política de Privacidad";
 "about.license.title" = "Información de la licencia";
-"about.website.title" = "wire.com";
-"about.copyright.title" = "© %d Wire Swiss GmbH";
+"about.website.title" = "Sitio web de Wire";
+"about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
 "self.new_device_alert.title" = "Has conectado %@ a tu cuenta de Wire";
@@ -419,13 +421,13 @@
 // Settings - Account details
 "self.settings.account_section" = "Cuenta";
 
-"self.settings.account_details_group.title" = "Detalles de la Cuenta";
+"self.settings.account_details_group.title" = "Información";
 
 "self.settings.account_section.name.title" = "Nombre";
 "self.settings.account_section.email.title" = "Correo electrónico";
 "self.settings.account_section.phone.title" = "Teléfono";
 
-"self.settings.account_details_group.footer" = "Tus datos serán encriptados, para no ver tu información, pero las personas podrán encontrarte en Wire.";
+"self.settings.account_details_group.footer" = "La gente puede encontrarte con estos detalles. La información es encriptada y no es visible a nadie mas.";
 
 "self.settings.account_details.remove_device.title" = "Eliminar dispositivo";
 "self.settings.account_details.key_fingerprint.title" = "Huella digital";
@@ -433,10 +435,18 @@
 "self.settings.account_details.remove_device.password" = "Contraseña";
 "self.settings.account_details.remove_device.password.error" = "Contraseña incorrecta";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire proporciona a cada dispositivo una huella digital única. Compare las huellas para verificar su dispositivos y conversaciones.";
-"self.settings.device_details.reset_session.subtitle" = "Si las huellas digitales no coinciden, restablezca su sesión segura para asegurarse de que las huellas que aparecen en todos los dispositivos son las correctas.";
-"self.settings.device_details.remove_device.subtitle" = "Usted será desconectado automáticamente de ese dispositivo.";
+"self.settings.account_appearance_group.title" = "Aspecto";
+"self.settings.account_picture_group.picture" = "Imagen";
+"self.settings.account_picture_group.color" = "Color";
+
+"self.settings.account_picture_group.theme" = "Tema oscuro";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire proporciona a cada dispositivo una huella digital única. Compare las huellas dactilares para verificar su dispositivos y conversaciones.";
+"self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased and you will be logged out.";
 "self.settings.device_details.reset_session.success" = "La sesión ha sido restablecida";
+
+"self.settings.account_details.actions.title" = "Acciones";
 
 "self.settings.account_details.delete_account.title" = "Eliminar Cuenta";
 
@@ -463,6 +473,11 @@
 "self.settings.sound_menu.sounds.wire_message" = "Mensaje por Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Ping por Wire";
 
+// Send Button
+"self.settings.send_button.title" = "Use return key to send messages";
+"self.settings.send_button.header" = "Send Button";
+"self.settings.send_button.footer" = "If turned on, messages will be send when tapping the return key instead of the dedicated send button";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Alertas de sonido";
 "self.settings.sound_menu.no_sounds.title" = "Ninguno";
@@ -474,11 +489,11 @@
 "self.settings.apns_logging.title" = "Registro de APNS";
 
 // Privacy (visibility) options
-"self.settings.options_menu.title" = "Privacidad y seguridad";
+"self.settings.options_menu.title" = "Opciones";
 
 "self.settings.privacy_contacts_section.title" = "Contactos";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir ajustes de contactos";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos te ayuda a conectar con los demás. Toda la información es anónima y no la compartiremos con nadie más. Permite el acceso a través de Ajustes > Privacidad > Contactos.";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
@@ -490,10 +505,10 @@
 
 "self.settings.advanced.title" = "Avanzado";
 "self.settings.advanced.troubleshooting.title" = "Solución de problemas";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Enviar informe de depuración";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Esta información ayuda al equipo de Soporte de Wire a diagnosticar problemas. Si tienes algún problema con las llamadas, por favor describe los pasos necesarios para reproducir el problema y proporcionar imágenes de ser posible, y envía este correo electrónico.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Calling Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems.";
 "self.settings.advanced.reset_push_token.title" = "Restablece el Token de las Notificaciones Push";
-"self.settings.advanced.reset_push_token.subtitle" = "El equipo de soporte de Wire te puede solicitar restablecer este token si tienes problemas con las notificaciones push.";
+"self.settings.advanced.reset_push_token.subtitle" = "If you experience problems with push notifications, Wire Support may ask you to reset this token.";
 "self.settings.advanced.reset_push_token_alert.title" = "El Token Push ha sido restablecido";
 "self.settings.advanced.reset_push_token_alert.message" = "Las notificaciones se restaurarán en unos segundos.";
 
@@ -601,7 +616,7 @@
 "registration.devices.title" = "Dispositivos";
 "registration.devices.active_list_header" = "Activo";
 "registration.devices.current_list_header" = "Actual";
-"registration.devices.active_list_subtitle" = "Si no reconoce un dispositivo de arriba, eliminelo y restablecezca la contraseña en Ajustes > Cuenta.";
+"registration.devices.active_list_subtitle" = "If you don’t recognize a device above, remove it and reset your password.";
 "registration.devices.activated_in" = "Activado en";
 "registration.devices.id" = "ID:";
 
@@ -688,7 +703,8 @@
 "giphy.error.no_result" = "no se encontró gif";
 
 "giphy.confirm" = "enviar";
-"giphy.try_another" = "intentalo con otro";
+"giphy.cancel" = "cancel";
+"giphy.search_placeholder" = "Search giphy";
 
 "invite_banner.title" = "¡Trae a tus amigos a Wire!";
 "invite_banner.message" = "Disfruta de llamadas, mensajes, dibujos, GIFs y más en privado o con grupos.";
