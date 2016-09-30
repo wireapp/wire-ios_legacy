@@ -25,8 +25,8 @@ typealias Emoji = String
 class EmojiDataSource: NSObject, UICollectionViewDataSource {
 
     enum Update {
-        case Insert(Int)
-        case Reload(Int)
+        case insert(Int)
+        case reload(Int)
     }
 
     typealias CellProvider = (Emoji, IndexPath) -> UICollectionViewCell
@@ -74,8 +74,8 @@ class EmojiDataSource: NSObject, UICollectionViewDataSource {
 
         defer { RecentlyUsedEmojiPeristenceCoordinator.store(recentlyUsed) }
         switch (shouldInsert, shouldReload) {
-        case (true, _): return .Insert(0)
-        case (false, true): return .Reload(0)
+        case (true, _): return .insert(0)
+        case (false, true): return .reload(0)
         default: return nil
         }
     }
