@@ -24,19 +24,26 @@
 
 @implementation ZMUserSession (RequestProxy)
 
-- (void)doRequest:(NSURLRequest * __nonnull)request completionHandler:(void (^ __nonnull)(NSData * __nullable, NSURLResponse * __nullable, NSError * __nullable))completionHandler
+- (id)doRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
 {
     // Removing the https://host part from the given URL, so zmessaging can prepend it with the Wire giphy proxy host
     NSString *fullHost = [NSString stringWithFormat:@"%@://%@", request.URL.scheme, request.URL.host];
     NSString *URLString = [request.URL absoluteString];
     URLString = [URLString stringByReplacingOccurrencesOfString:fullHost withString:@""];
-
-    [self doRequestWithPath:URLString method:ZMMethodGET type:ProxiedRequestTypeGiphy completionHandler:completionHandler];
+    
+    return [self doRequestWithPath:URLString method:ZMMethodGET type:ProxiedRequestTypeGiphy completionHandler:completionHandler];
 }
 
-- (void)doRequestWithPath:(NSString *)path method:(ZMTransportRequestMethod)method type:(ProxiedRequestType)type completionHandler:(void (^ __nonnull)(NSData * __nullable, NSURLResponse * __nullable, NSError * __nullable))completionHandler;
+- (void)cancelRequestWithRequestIdentifier:(id)requestIdentifier
 {
-    [self proxiedRequestWithPath:path method:method type:type callback:completionHandler];
+    if ([requestIdentifier isKindOfClass:ZMProxyRequest.class]) {
+        [self cancelProxiedRequest:(ZMProxyRequest *)requestIdentifier];
+    }
+}
+
+- (ZMProxyRequest *)doRequestWithPath:(NSString *)path method:(ZMTransportRequestMethod)method type:(ProxiedRequestType)type completionHandler:(void (^ __nonnull)(NSData * __nullable, NSURLResponse * __nullable, NSError * __nullable))completionHandler;
+{
+    return [self proxiedRequestWithPath:path method:method type:type callback:completionHandler];
 }
 
 @end
