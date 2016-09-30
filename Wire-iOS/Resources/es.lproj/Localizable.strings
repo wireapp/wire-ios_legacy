@@ -703,8 +703,7 @@
 "giphy.error.no_result" = "no se encontró gif";
 
 "giphy.confirm" = "enviar";
-"giphy.cancel" = "cancel";
-"giphy.search_placeholder" = "Search giphy";
+"giphy.try_another" = "intentalo con otro";
 
 "invite_banner.title" = "¡Trae a tus amigos a Wire!";
 "invite_banner.message" = "Disfruta de llamadas, mensajes, dibujos, GIFs y más en privado o con grupos.";
