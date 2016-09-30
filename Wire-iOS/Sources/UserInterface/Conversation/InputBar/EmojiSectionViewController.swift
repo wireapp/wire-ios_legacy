@@ -33,6 +33,12 @@ class EmojiSectionViewController: UIViewController {
         case delete
     }
 
+    var backspaceEnabled = false {
+        didSet {
+            backspaceButton.isEnabled = backspaceEnabled
+        }
+    }
+
     private var typesByButton = [IconButton: EmojiSectionType]()
     private var sectionButtons = [IconButton]()
     private let backspaceButton = IconButton.iconButtonDefault()

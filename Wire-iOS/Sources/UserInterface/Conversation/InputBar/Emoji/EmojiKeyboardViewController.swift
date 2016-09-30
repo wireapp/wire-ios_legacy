@@ -30,10 +30,15 @@ protocol EmojiKeyboardViewControllerDelegate: class {
 @objc class EmojiKeyboardViewController: UIViewController {
     
     weak var delegate: EmojiKeyboardViewControllerDelegate?
-    
-    var emojiDataSource: EmojiDataSource!
-    let collectionView = EmojiCollectionView()
-    let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
+    fileprivate var emojiDataSource: EmojiDataSource!
+    fileprivate let collectionView = EmojiCollectionView()
+    fileprivate let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
+
+    var backspaceEnabled = false {
+        didSet {
+            sectionViewController.backspaceEnabled = backspaceEnabled
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +48,11 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         sectionViewController.sectionDelegate = self
         setupViews()
         createConstraints()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateSectionSelection()
     }
     
     func setupViews() {
@@ -73,6 +83,15 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         cell.titleLabel.text = emoji
         return cell
     }
+
+    func updateSectionSelection() {
+        DispatchQueue.main.async {
+            let minSection = Set(self.collectionView.indexPathsForVisibleItems.map { $0.section }).min()
+            print(minSection)
+            guard let section = minSection  else { return }
+            self.sectionViewController.didSelectSection(self.emojiDataSource[section].type)
+        }
+    }
     
 }
 
@@ -96,24 +115,33 @@ extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        delegate?.emojiKeyboardViewController(self, didSelectEmoji: emojiDataSource[indexPath])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        sectionViewController.didSelectSection(emojiDataSource[indexPath.section].type)
+        let emoji = emojiDataSource[indexPath]
+        delegate?.emojiKeyboardViewController(self, didSelectEmoji: emoji)
+        guard let result = emojiDataSource.register(used: emoji) else { return }
+        collectionView.performBatchUpdates({ 
+            switch result {
+            case .Insert(let section): collectionView.insertSections(IndexSet(integer: section))
+            case .Reload(let section): collectionView.reloadSections(IndexSet(integer: section))
+            }
+        }, completion: { _ in
+            self.updateSectionSelection()
+        })
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let (first, last) = (section == 0, section == collectionView.numberOfSections)
         return UIEdgeInsets(top: 0, left: !first ? 12 : 0, bottom: 0, right: !last ? 12 : 0)
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        updateSectionSelection()
+    }
 }
 
 class EmojiCollectionViewCell: UICollectionViewCell {
+
     let titleLabel = UILabel()
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -126,7 +154,7 @@ class EmojiCollectionViewCell: UICollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet {
-            UIView.animate(withDuration: 0.1) {
+            UIView.animate(withDuration: 0.1) { 
                 self.alpha = self.isHighlighted ? 0.6 : 1
             }
         }
@@ -144,6 +172,7 @@ class EmojiCollectionViewCell: UICollectionViewCell {
             label.edges == view.edges
         }
     }
+
 }
 
 

@@ -48,6 +48,7 @@ extension ConversationInputBarViewController {
     public func createEmojiKeyboardViewController() {
         emojiKeyboardViewController = EmojiKeyboardViewController()
         emojiKeyboardViewController?.delegate = self
+        updateBackspaceButton()
     }
 
 }
@@ -56,6 +57,7 @@ extension ConversationInputBarViewController: EmojiKeyboardViewControllerDelegat
 
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController) {
         inputBar.textView.deleteBackward()
+        updateBackspaceButton()
     }
     
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
@@ -63,6 +65,11 @@ extension ConversationInputBarViewController: EmojiKeyboardViewControllerDelegat
         let text = inputBar.textView.text ?? ""
         inputBar.textView.text = text + emoji
         textViewDidChange(inputBar.textView)
+        updateBackspaceButton()
+    }
+
+    func updateBackspaceButton() {
+        emojiKeyboardViewController?.backspaceEnabled = !inputBar.textView.text.isEmpty
     }
     
 }
