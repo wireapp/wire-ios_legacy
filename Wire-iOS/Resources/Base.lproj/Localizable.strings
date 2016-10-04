@@ -473,10 +473,10 @@
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
-// Send Button
-"self.settings.send_button.title" = "Use return key to send messages";
-"self.settings.send_button.header" = "Send Button";
-"self.settings.send_button.footer" = "If turned on, messages will be send when tapping the return key instead of the dedicated send button";
+// By popular demand
+"self.settings.popular_demand.title" = "By popular demand";
+"self.settings.popular_demand.send_button.title" = "Send Button";
+"self.settings.popular_demand.send_button.footer" = "Disable to send via the return key";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sound alerts";
