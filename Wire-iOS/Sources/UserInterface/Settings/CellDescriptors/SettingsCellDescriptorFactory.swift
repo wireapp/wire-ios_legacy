@@ -22,7 +22,6 @@ import Foundation
 @objc class SettingsCellDescriptorFactory: NSObject {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
-    static fileprivate var versionTapCount: UInt = 0
     
     class DismissStepDelegate: NSObject, FormStepDelegate {
         var strongCapture: DismissStepDelegate?
@@ -251,8 +250,15 @@ import Foundation
         let pushSection = SettingsSectionDescriptor(cellDescriptors: [pushButton], header: .none, footer: pushSectionSubtitle)  { (_) -> (Bool) in
             return true
         }
+
+        let versionTitle =  "self.settings.advanced.version_technical_details.title".localized
+        let versionCell = SettingsButtonCellDescriptor(title: versionTitle, isDestructive: false) { _ in
+            UIApplication.shared.keyWindow?.rootViewController?.present(VersionInfoViewController(), animated: true, completion: .none)
+        }
+
+        let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
         
-        return SettingsGroupCellDescriptor(items: [sendUsageSection, troubleshootingSection, pushSection], title: "self.settings.advanced.title".localized, icon: .settingsAdvanced)
+        return SettingsGroupCellDescriptor(items: [sendUsageSection, troubleshootingSection, pushSection, versionSection], title: "self.settings.advanced.title".localized, icon: .settingsAdvanced)
     }
     
     func developerGroup() -> SettingsCellDescriptorType {
@@ -304,40 +310,37 @@ import Foundation
             return BrowserViewController(url: (NSURL.wr_licenseInformation() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
         }, previewGenerator: .none)
 
-        let linksSection = SettingsSectionDescriptor(cellDescriptors: [tosButton, privacyPolicyButton, licenseButton])
+        let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let buildNumber = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
+
+        var currentYear = NSCalendar.current.component(.year, from: Date())
+        if currentYear < 2014 {
+            currentYear = 2014
+        }
+
+        let version = String(format: "Version %@ (%@)", shortVersion, buildNumber)
+        let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
+
+        let linksSection = SettingsSectionDescriptor(
+            cellDescriptors: [tosButton, privacyPolicyButton, licenseButton],
+            header: nil,
+            footer: "\n" + version + "\n" + copyrightInfo
+        )
         
         let websiteButton = SettingsButtonCellDescriptor(title: "about.website.title".localized, isDestructive: false) { _ in
             UIApplication.shared.openURL((NSURL.wr_website() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
         }
-        
-        
-        let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-        let buildNumber = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
-        let version = String(format: "Version %@ (%@)", shortVersion, buildNumber)
-
-        let currentDate = NSDate()
-        var currentYear = NSCalendar.current.component(.year, from:currentDate as Date)
-
-        if currentYear < 2014 {
-            currentYear = 2014
-        }
-        
-        let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
 
         let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
-        let versionCell = SettingsButtonCellDescriptor(title: version, isDestructive: false) { _ in
-            SettingsCellDescriptorFactory.versionTapCount = SettingsCellDescriptorFactory.versionTapCount + 1
-            
-            if SettingsCellDescriptorFactory.versionTapCount % 3 == 0 {
-                let versionInfo = VersionInfoViewController()
-                
-                UIApplication.shared.keyWindow?.rootViewController?.present(versionInfo, animated: true, completion: .none)
-            }
-        }
         
-        let infoSection = SettingsSectionDescriptor(cellDescriptors: [versionCell], header: .none, footer: copyrightInfo)
-        
-        return SettingsGroupCellDescriptor(items: [websiteSection, linksSection, infoSection], title: "self.about".localized, style: .grouped, identifier: .none, previewGenerator: .none, icon: .wireLogo)
+        return SettingsGroupCellDescriptor(
+            items: [websiteSection, linksSection],
+            title: "self.about".localized,
+            style: .grouped,
+            identifier: .none,
+            previewGenerator: .none,
+            icon: .wireLogo
+        )
     }
     
     // MARK: Subgroups
