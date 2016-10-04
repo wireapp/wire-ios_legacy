@@ -336,14 +336,15 @@
 
 - (void)createSendButton
 {
-    self.sendButton = [IconButton iconButtonCircular];
+    self.sendButton = [IconButton iconButtonDefault];
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     self.sendButton.accessibilityIdentifier = @"sendButton";
+    self.sendButton.cas_styleClass = @"send-button";
 
     [self.inputBar.rightAccessoryView addSubview:self.sendButton];
-    [self.sendButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
-    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(12, 0, 0, 0) excludingEdge:ALEdgeBottom];
+    [self.sendButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
+    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(14, 0, 0, 0) excludingEdge:ALEdgeBottom];
 }
 
 - (void)createVerifiedView
