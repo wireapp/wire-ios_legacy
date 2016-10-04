@@ -129,12 +129,12 @@ protocol EmojiKeyboardViewControllerDelegate: class {
 
 extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
 
-    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect type: EmojiSectionType) {
+    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect type: EmojiSectionType, scrolling: Bool) {
         guard let section = emojiDataSource.sectionIndex(for: type) else { return }
         let indexPath = IndexPath(item: 0, section: section)
-        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: !scrolling)
     }
-    
+
 }
 
 
@@ -160,7 +160,7 @@ extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: !first ? 12 : 0, bottom: 0, right: !last ? 12 : 0)
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func scrollViewDidScroll(_ scrolLView: UIScrollView) {
         updateSectionSelection()
     }
 }

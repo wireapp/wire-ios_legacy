@@ -22,7 +22,7 @@ import Cartography
 
 
 protocol EmojiSectionViewControllerDelegate: class {
-    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType)
+    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType, scrolling: Bool)
 }
 
 
@@ -87,7 +87,7 @@ class EmojiSectionViewController: UIViewController {
     
     @objc private func didTappButton(_ sender: IconButton) {
         guard let type = typesByButton[sender] else { return }
-        sectionDelegate?.sectionViewController(self, didSelect: type)
+        sectionDelegate?.sectionViewController(self, didSelect: type, scrolling: false)
     }
 
     @objc private func didPan(_ recognizer: UIPanGestureRecognizer) {
@@ -100,7 +100,7 @@ class EmojiSectionViewController: UIViewController {
             let location = recognizer.location(in: view)
             guard let button = sectionButtons.filter ({ $0.frame.contains(location) }).first else { return }
             guard let type = typesByButton[button] else { return }
-            sectionDelegate?.sectionViewController(self, didSelect: type)
+            sectionDelegate?.sectionViewController(self, didSelect: type, scrolling: true)
             selectedType = type
         case .ended, .failed, .cancelled:
             ignoreSelectionUpdates = false
