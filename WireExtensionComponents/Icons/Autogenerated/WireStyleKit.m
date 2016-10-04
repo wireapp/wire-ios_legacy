@@ -3550,34 +3550,6 @@ static UIImage* _imageOfShieldnotverified = nil;
     [flagPath fill];
 }
 
-+ (void)drawIcon_0x2350_28ptWithColor: (UIColor*)color
-{
-
-    //// Oval Drawing
-    UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(0, 0, 56, 56)];
-    [color setFill];
-    [ovalPath fill];
-
-
-    //// Send Drawing
-    UIBezierPath* sendPath = [UIBezierPath bezierPath];
-    [sendPath moveToPoint: CGPointMake(18, 37.45)];
-    [sendPath addCurveToPoint: CGPointMake(21.52, 39.6) controlPoint1: CGPointMake(18, 39.65) controlPoint2: CGPointMake(19.57, 40.6)];
-    [sendPath addLineToPoint: CGPointMake(40.55, 29.81)];
-    [sendPath addCurveToPoint: CGPointMake(40.55, 26.19) controlPoint1: CGPointMake(42.47, 28.82) controlPoint2: CGPointMake(42.49, 27.19)];
-    [sendPath addLineToPoint: CGPointMake(21.52, 16.39)];
-    [sendPath addCurveToPoint: CGPointMake(18, 18.54) controlPoint1: CGPointMake(19.59, 15.4) controlPoint2: CGPointMake(18, 16.35)];
-    [sendPath addLineToPoint: CGPointMake(18, 28)];
-    [sendPath addLineToPoint: CGPointMake(36, 28)];
-    [sendPath addLineToPoint: CGPointMake(18, 31)];
-    [sendPath addLineToPoint: CGPointMake(18, 37.45)];
-    [sendPath closePath];
-    sendPath.usesEvenOddFillRule = YES;
-
-    [UIColor.whiteColor setFill];
-    [sendPath fill];
-}
-
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -5183,17 +5155,6 @@ static UIImage* _imageOfShieldnotverified = nil;
     UIGraphicsEndImageContext();
 
     return imageOfIcon_0x256_32pt;
-}
-
-+ (UIImage*)imageOfIcon_0x2350_28ptWithColor: (UIColor*)color
-{
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(56, 56), NO, 0.0f);
-    [WireStyleKit drawIcon_0x2350_28ptWithColor: color];
-
-    UIImage* imageOfIcon_0x2350_28pt = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return imageOfIcon_0x2350_28pt;
 }
 
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent
