@@ -194,7 +194,7 @@ class SettingsPropertyFactory {
                 return .bool(value: self.userSession.isNotificationContentHidden)
             }
             
-            let setAction : SetAction = { (porperty: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .bool(let boolValue):
                         self.userSession.performChanges {
@@ -207,7 +207,40 @@ class SettingsPropertyFactory {
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
-            
+
+        case .tweetOpeningOption:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return .number(value: Settings.shared().twitterLinkOpeningOptionRawValue) },
+                setAction: { _, value in
+                    switch value {
+                    case .number(value: let rawValue): Settings.shared().twitterLinkOpeningOptionRawValue = rawValue
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
+                }
+            })
+
+        case .mapsOpeningOption:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return .number(value: Settings.shared().mapsLinkOpeningOptionRawValue) },
+                setAction: { _, value in
+                    switch value {
+                    case .number(value: let rawValue): Settings.shared().mapsLinkOpeningOptionRawValue = rawValue
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
+                }
+            })
+
+        case .browserOpeningOption:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return .number(value: Settings.shared().browserLinkOpeningOptionRawValue) },
+                setAction: { _, value in
+                    switch value {
+                    case .number(value: let rawValue): Settings.shared().browserLinkOpeningOptionRawValue = rawValue
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
+                    }
+            })
+
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)

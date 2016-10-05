@@ -55,6 +55,10 @@ NSString * const UserDefaultDisableHockey = @"ZMDisableHockey";
 NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 
+NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
+NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
+NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
+
 
 @interface Settings ()
 
@@ -101,7 +105,10 @@ NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
              UserDefaultDisableAnalytics,
              UserDefaultLastUserLocation,
              UserDefaultPreferredCamera,
-             UserDefaultSendButtonDisabled
+             UserDefaultSendButtonDisabled,
+             UserDefaultTwitterOpeningRawValue,
+             UserDefaultMapsOpeningRawValue,
+             UserDefaultBrowserOpeningRawValue
              ];
 }
 
@@ -419,6 +426,36 @@ NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 {
     [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
     [self.defaults synchronize];
+}
+
+- (NSInteger)twitterLinkOpeningOptionRawValue
+{
+    return [self.defaults integerForKey:UserDefaultTwitterOpeningRawValue];
+}
+
+- (void)setTwitterLinkOpeningOptionRawValue:(NSInteger)twitterLinkOpeningOptionRawValue
+{
+    [self.defaults setInteger:twitterLinkOpeningOptionRawValue forKey:UserDefaultTwitterOpeningRawValue];
+}
+
+- (NSInteger)mapsLinkOpeningOptionRawValue
+{
+    return [self.defaults integerForKey:UserDefaultMapsOpeningRawValue];
+}
+
+- (void)setMapsLinkOpeningOptionRawValue:(NSInteger)mapsLinkOpeningOptionRawValue
+{
+    [self.defaults setInteger:mapsLinkOpeningOptionRawValue forKey:UserDefaultMapsOpeningRawValue];
+}
+
+- (NSInteger)browserLinkOpeningOptionRawValue
+{
+    return [self.defaults integerForKey:UserDefaultBrowserOpeningRawValue];
+}
+
+- (void)setBrowserLinkOpeningOptionRawValue:(NSInteger)browserLinkOpeningOptionRawValue
+{
+    [self.defaults setInteger:browserLinkOpeningOptionRawValue forKey:UserDefaultBrowserOpeningRawValue];
 }
 
 @end

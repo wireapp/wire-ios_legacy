@@ -478,6 +478,22 @@
 "self.settings.send_button.header" = "Send Button";
 "self.settings.send_button.footer" = "If turned on, messages will be send when tapping the return key instead of the dedicated send button";
 
+// Open in
+"self.settings.external_apps.header" = "External Apps";
+
+"self.settings.link_options.twitter.title" = "Tweets";
+"self.settings.link_options.maps.title" = "Maps";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sound alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";

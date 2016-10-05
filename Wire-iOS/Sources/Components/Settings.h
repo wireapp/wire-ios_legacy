@@ -93,6 +93,10 @@ extern NSString * const UserDefaultSendButtonDisabled;
 @property (nonatomic) NSString *callSoundName;
 @property (nonatomic) NSString *pingSoundName;
 
+@property (nonatomic) NSInteger twitterLinkOpeningOptionRawValue;
+@property (nonatomic) NSInteger browserLinkOpeningOptionRawValue;
+@property (nonatomic) NSInteger mapsLinkOpeningOptionRawValue;
+
 + (instancetype)sharedSettings;
 
 // Persist all the settings

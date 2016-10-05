@@ -248,6 +248,13 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.account_picture_group.color".localized
     case .disableSendButton:
         return "self.settings.send_button.title".localized
+    case .tweetOpeningOption:
+        return "self.settings.link_options.twitter.title".localized
+    case .mapsOpeningOption:
+        return "self.settings.link_options.maps.title".localized
+    case .browserOpeningOption:
+        return "self.settings.link_options.browser.title".localized
+
     }
 }
 

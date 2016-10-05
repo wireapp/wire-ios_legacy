@@ -61,6 +61,11 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case messageSoundName = "MessageSoundName"
     case callSoundName = "CallSoundName"
     case pingSoundName = "PingSoundName"
+
+    // Open In
+    case tweetOpeningOption = "TweetOpeningOption"
+    case mapsOpeningOption = "MapsOpeningOption"
+    case browserOpeningOption = "BrowserOpeningOption"
     
     // Debug
     
