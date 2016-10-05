@@ -89,12 +89,6 @@
 @interface ConversationInputBarViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
-@interface ConversationInputBarViewController (VerifiedShield)
-
-- (void)verifiedShieldButtonPressed:(UIButton *)sender;
-
-@end
-
 @interface ConversationInputBarViewController (Giphy)
 
 - (void)giphyButtonPressed:(id)sender;
@@ -134,9 +128,6 @@
 
 @property (nonatomic) UserImageView *authorImageView;
 @property (nonatomic) TypingConversationView *typingView;
-@property (nonatomic) UIView *verifiedContainerView;
-@property (nonatomic) UILabel *verifiedLabelView;
-@property (nonatomic) ButtonWithLargerHitArea *verifiedShieldButton;
 @property (nonatomic) NSLayoutConstraint *collapseViewConstraint;
 
 @property (nonatomic) InputBar *inputBar;
@@ -189,7 +180,6 @@
     
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
-    [self createVerifiedView];
     [self createEmojiButton];
     [self createTypingView];
     
@@ -207,7 +197,6 @@
     [self.uploadFileButton addTarget:self action:@selector(docUploadPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.pingButton addTarget:self action:@selector(pingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.gifButton addTarget:self action:@selector(giphyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.verifiedShieldButton addTarget:self action:@selector(verifiedShieldButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.locationButton addTarget:self action:@selector(locationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.conversationObserverToken == nil) {
@@ -350,27 +339,6 @@
     [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(14, 0, 0, rightInset - 16) excludingEdge:ALEdgeBottom];
 }
 
-- (void)createVerifiedView
-{
-    self.verifiedLabelView = [[UILabel alloc] initForAutoLayout];
-    self.verifiedLabelView.cas_styleClass = @"conversationVerifiedLabel";
-    self.verifiedLabelView.accessibilityIdentifier = @"verifiedConversationLabel";
-    self.verifiedLabelView.text = NSLocalizedString(@"conversation.input_bar.verified", @"");
-    self.verifiedLabelView.alpha = 0;
-    [self.inputBar.rightAccessoryView addSubview:self.verifiedLabelView];
-    
-    self.verifiedShieldButton = [[ButtonWithLargerHitArea alloc] initForAutoLayout];
-    self.verifiedShieldButton.accessibilityIdentifier = @"verifiedConversationIndicator";
-    [self.verifiedShieldButton setImage:[WireStyleKit imageOfShieldverified] forState:UIControlStateNormal];
-    [self.inputBar.rightAccessoryView addSubview:self.verifiedShieldButton];
-    
-    [self.verifiedLabelView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.verifiedShieldButton];
-    [self.verifiedLabelView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.verifiedShieldButton withOffset:-12.0f];
-    
-    [self.verifiedShieldButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.sendButton];
-    [self.verifiedShieldButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
-}
-
 - (void)createEmojiButton
 {
     const CGFloat senderDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
@@ -413,8 +381,6 @@
     BOOL hideSendButton = Settings.sharedSettings.disableSendButton && self.mode != ConversationInputBarViewControllerModeEmojiInput;
     BOOL editing = nil != self.editingMessage;
     self.sendButton.hidden = textLength == 0 || hideSendButton || editing;
-
-    self.verifiedShieldButton.hidden = self.conversation.securityLevel != ZMConversationSecurityLevelSecure || textLength > 0;
 }
 
 - (void)updateAccessoryViews
@@ -861,54 +827,6 @@
 
 @end
 
-@implementation ConversationInputBarViewController (VerifiedShield)
-
-- (void)verifiedShieldButtonPressed:(UIButton *)sender
-{
-    sender.userInteractionEnabled = NO;
-    [self setVerifiedLabelHidden:self.verifiedLabelView.alpha != 0 animated:YES completion:^{
-        sender.userInteractionEnabled = YES;
-    }];
-}
-
-- (void)setVerifiedLabelHidden:(BOOL)verifiedLabelHidden
-{
-    [self setVerifiedLabelHidden:verifiedLabelHidden animated:NO completion:nil];
-}
-
-- (void)hideVerifiedLabel
-{
-    [self setVerifiedLabelHidden:YES animated:YES completion:nil];
-}
-
-- (void)setVerifiedLabelHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    dispatch_block_t animations = ^{
-        self.verifiedLabelView.alpha = hidden ? 0.0f : 1.0f;
-    };
-    
-    void (^animationCompletion) (BOOL) = ^(BOOL finished) {
-        if (completion) {
-            completion();
-        }
-    };
-    
-    if (animated) {
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseInOutExpo
-                            duration:0.35
-                          animations:animations
-                          completion:animationCompletion];
-    } else {
-        animations();
-        animationCompletion(YES);
-    }
-    
-    [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideVerifiedLabel) object:nil];
-    [self performSelector:@selector(hideVerifiedLabel) withObject:nil afterDelay:3.0f];
-}
-
-@end
-
 
 @implementation ConversationInputBarViewController (Giphy)
 
@@ -998,10 +916,6 @@
     
     if (change.participantsChanged || change.connectionStateChanged) {
         [self updateInputBarVisibility];
-    }
-    
-    if (change.securityLevelChanged) {
-        [self updateRightAccessoryView];
     }
 }
 

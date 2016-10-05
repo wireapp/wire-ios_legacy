@@ -879,6 +879,10 @@
     if (note.nameChanged) {
         [self setupNavigatiomItem];
     }
+
+    if (note.securityLevelChanged) {
+        [self.titleView configure:self.conversation];
+    }
 }
 
 - (void)presentConversationDegradedActionSheetControllerForUsers:(NSSet<ZMUser *> *)users
