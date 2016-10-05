@@ -24,7 +24,7 @@ public final class ConversationTitleView: UIView {
     
     var titleColor, titleColorSelected: UIColor?
     var titleFont: UIFont?
-    var titleButton: UIButton!
+    var titleButton = UIButton()
     public var tapHandler: ((UIButton) -> Void)? = nil
     
     init(conversation: ZMConversation) {
@@ -37,8 +37,7 @@ public final class ConversationTitleView: UIView {
     }
     
     private func createViews(_ conversation: ZMConversation) {
-        titleButton = UIButton()
-        titleButton.addTarget(self, action: #selector(ConversationTitleView.titleButtonTapped(_:)), for: .touchUpInside)
+        titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
         addSubview(titleButton)
     }
     
@@ -49,7 +48,7 @@ public final class ConversationTitleView: UIView {
         let titleWithColor: (UIColor) -> NSAttributedString = {
             var attributed = (title + "  " + NSAttributedString(attachment: .downArrow(color: $0)))
             if conversation.securityLevel == .secure {
-                attributed = NSAttributedString(attachment: .verifiedShield()) + " " + attributed
+                attributed = NSAttributedString(attachment: .verifiedShield()) + "  " + attributed
             }
             return attributed && $0
         }
