@@ -38,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
+- (void)updateSendButtonVisibility;
+
 @end
 
 

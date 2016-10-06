@@ -35,6 +35,8 @@ extension ConversationInputBarViewController {
         guard let text = message.textMessageData?.messageText else { return }
         mode = .textInput
         editingMessage = message
+        updateSendButtonVisibility()
+
         inputBar.inputBarState = .editing(originalText: text)
         NotificationCenter.default.addObserver(
             self,

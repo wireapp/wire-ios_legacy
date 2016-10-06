@@ -210,7 +210,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self updateRightAccessoryView];
+    [self updateSendButtonVisibility];
     [self.inputBar updateReturnKey];
 }
 
@@ -374,7 +374,7 @@
     self.authorImageView.alpha = self.inputBar.textView.isFirstResponder ? 1 : 0;
 }
 
-- (void)updateRightAccessoryView
+- (void)updateSendButtonVisibility
 {
     NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
     const NSUInteger textLength = trimmed.length;
@@ -386,13 +386,13 @@
 - (void)updateAccessoryViews
 {
     [self updateLeftAccessoryView];
-    [self updateRightAccessoryView];
+    [self updateSendButtonVisibility];
 }
 
 - (void)clearInputBar
 {
     self.inputBar.textView.text = @"";
-    [self updateRightAccessoryView];
+    [self updateSendButtonVisibility];
 }
 
 - (void)setTypingUsers:(NSSet *)typingUsers
@@ -489,7 +489,7 @@
             break;
     }
     
-    [self updateRightAccessoryView];
+    [self updateSendButtonVisibility];
 }
 
 - (void)selectInputControllerButton:(IconButton *)button
@@ -616,7 +616,7 @@
         }
     }
     
-    [self updateRightAccessoryView];
+    [self updateSendButtonVisibility];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
