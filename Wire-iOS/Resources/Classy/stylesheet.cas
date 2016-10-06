@@ -897,6 +897,21 @@ ConversationInputBarViewController {
     }
 }
 
+TypingIndicatorView {
+    container: @{
+        backgroundColor: $color-background
+    }
+    
+    expandingLine: @{
+        backgroundColor: $color-background
+    }
+    
+    nameLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-placeholder;
+    }
+}
+
 /* Image confirmer */
 
 ConfirmAssetViewController {

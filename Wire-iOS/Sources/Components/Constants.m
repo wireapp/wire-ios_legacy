@@ -32,4 +32,4 @@ NSString *const UserPrefKeyProfilePictureTipCompleted = @"ProfilePictureTipCompl
 NSString *const UserPrefKeyAccentColorTipCompleted = @"AccentColorTipCompleted";
 
 BOOL const IsTypingEnabled = YES;
-BOOL const IsTypingInGroupConversationsEnabled = NO;
+BOOL const IsTypingInGroupConversationsEnabled = YES;

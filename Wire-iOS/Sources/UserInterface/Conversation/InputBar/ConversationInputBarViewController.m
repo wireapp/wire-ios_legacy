@@ -29,7 +29,6 @@
 #import <WireExtensionComponents/WireExtensionComponents.h>
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
-#import "TypingConversationView.h"
 #import "CameraViewController.h"
 #import "SketchViewController.h"
 #import "UIView+Borders.h"
@@ -127,8 +126,8 @@
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) TypingConversationView *typingView;
 @property (nonatomic) NSLayoutConstraint *collapseViewConstraint;
+@property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) InputBar *inputBar;
 @property (nonatomic) ZMConversation *conversation;
@@ -153,8 +152,8 @@
         self.conversationObserverToken = [self.conversation addConversationObserver:self];
         
         if ([self.conversation shouldDisplayIsTyping]) {
-            [_conversation addTypingObserver:self];
-            self.typingUsers = _conversation.typingUsers;
+            [conversation addTypingObserver:self];
+            self.typingUsers = conversation.typingUsers;
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
@@ -181,7 +180,7 @@
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createEmojiButton];
-    [self createTypingView];
+    [self createTypingIndicatorView];
     
     if (self.conversation.hasDraftMessageText) {
         self.inputBar.textView.text = self.conversation.draftMessageText;
@@ -205,6 +204,8 @@
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
+    [self updateSeparatorLineVisibility];
+    [self updateTypingIndicatorVisibility];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -354,14 +355,19 @@
     [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
-- (void)createTypingView
+- (void)createTypingIndicatorView
 {
-    self.typingView = [[TypingConversationView alloc] initForAutoLayout];
-    self.typingView.userInteractionEnabled = NO;
-    self.typingView.users = self.typingUsers;
-    [self.inputBar.leftAccessoryView addSubview:self.typingView];
-    [self.typingView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.typingView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:14];
+    self.typingIndicatorView = [[TypingIndicatorView alloc] init];
+    self.typingIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.typingIndicatorView.accessibilityIdentifier = @"typingIndicator";
+    self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
+    [self.typingIndicatorView setHidden:YES animated:NO];
+    
+    [self.inputBar  addSubview:self.typingIndicatorView];
+    [self.typingIndicatorView  autoConstrainAttribute:(ALAttribute)ALAxisHorizontal toAttribute:ALAttributeTop ofView:self.inputBar];
+    [self.typingIndicatorView autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)updateNewButtonTitleLabel
@@ -395,10 +401,34 @@
     [self updateSendButtonVisibility];
 }
 
+- (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
+{
+    _inputBarOverlapsContent = inputBarOverlapsContent;
+    
+    [self updateSeparatorLineVisibility];
+}
+
 - (void)setTypingUsers:(NSSet *)typingUsers
 {
     _typingUsers = typingUsers;
-    self.typingView.users = typingUsers;
+    
+    [self updateSeparatorLineVisibility];
+    [self updateTypingIndicatorVisibility];
+}
+
+- (void)updateTypingIndicatorVisibility
+{
+    if (self.typingUsers.count > 0) {
+        self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
+        [self.typingIndicatorView layoutIfNeeded];
+    }
+    
+    [self.typingIndicatorView setHidden:self.typingUsers.count == 0 animated: true];
+}
+
+- (void)updateSeparatorLineVisibility
+{
+    self.inputBar.separatorEnabled = self.inputBarOverlapsContent || self.typingUsers.count > 0;
 }
 
 - (void)updateInputBarVisibility
@@ -899,22 +929,7 @@
 @implementation ConversationInputBarViewController (ZMConversationObserver)
 
 - (void)conversationDidChange:(ConversationChangeInfo *)change
-{
-    if (change.messagesChanged) {
-        
-        if (self.conversation.messages.count != 0) {
-            id<ZMConversationMessage>lastMessage = self.conversation.messages.lastObject;
-            
-            if (! [lastMessage.sender isSelfUser] && ([NSDate timeIntervalSinceReferenceDate] - [lastMessage.serverTimestamp timeIntervalSinceReferenceDate]) < 5.0f) {
-                NSMutableSet *currentTyping = [NSMutableSet setWithSet:self.typingUsers];
-                
-                [currentTyping removeObject:lastMessage.sender];
-                
-                self.typingUsers = currentTyping;
-            }
-        }
-    }
-    
+{    
     if (change.participantsChanged || change.connectionStateChanged) {
         [self updateInputBarVisibility];
     }
