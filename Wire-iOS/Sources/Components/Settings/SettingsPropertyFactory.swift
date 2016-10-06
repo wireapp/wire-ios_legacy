@@ -219,6 +219,20 @@ class SettingsPropertyFactory {
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+
+        case .disableSendButton:
+            return SettingsBlockProperty(
+                propertyName: .disableSendButton,
+                getAction: { _ in return .bool(value: Settings.shared().disableSendButton) },
+                setAction: { _, value in
+                    switch value {
+                    case .bool(value: let disabled):
+                        Settings.shared().disableSendButton = disabled
+                        Analytics.shared()?.tagSendButtonDisabled(disabled)
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {

@@ -762,6 +762,8 @@
 		BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */; };
 		BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */; };
 		BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */; };
+		BFCF31DF1DA64AD40039B3DC /* Analytics+SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */; };
+		BFCF31E11DA64B970039B3DC /* Analytics+EmojiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */; };
 		BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */; };
 		BFE08C1E1D5B6F34002367F6 /* MessageDeletedCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */; };
 		BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */; };
@@ -2047,6 +2049,8 @@
 		BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyUsedEmojis.swift; sourceTree = "<group>"; };
 		BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Options.swift"; sourceTree = "<group>"; };
 		BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeight.swift; sourceTree = "<group>"; };
+		BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+SendButton.swift"; sourceTree = "<group>"; };
+		BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+EmojiKeyboard.swift"; sourceTree = "<group>"; };
 		BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCell.swift; sourceTree = "<group>"; };
 		BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCellTests.swift; sourceTree = "<group>"; };
 		BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MessageDeletion.swift"; sourceTree = "<group>"; };
@@ -2769,6 +2773,8 @@
 				871BBFC71D34F56300DF0793 /* Analytics+ConversationEvents.m */,
 				F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */,
 				871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */,
+				BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */,
+				BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */,
 				871BBFC91D34F56300DF0793 /* Analytics+Navigation.h */,
 				871BBFCA1D34F56300DF0793 /* Analytics+Navigation.m */,
 				871BBFCB1D34F56300DF0793 /* Analytics+OTREvents.h */,
@@ -5434,6 +5440,7 @@
 				8F89141A1A9F287E0056AB0C /* UnsentIndicatorLayer.m in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
+				BFCF31DF1DA64AD40039B3DC /* Analytics+SendButton.swift in Sources */,
 				16EBBEFF1BEBBCF40087DA60 /* InvitationStatusController.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
@@ -5640,6 +5647,7 @@
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
 				8F8914171A9F287E0056AB0C /* MissedCallIndicatorLayer.m in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
+				BFCF31E11DA64B970039B3DC /* Analytics+EmojiKeyboard.swift in Sources */,
 				8FC854BA199245770008B66B /* RootViewController.m in Sources */,
 				871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */,
 				871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */,

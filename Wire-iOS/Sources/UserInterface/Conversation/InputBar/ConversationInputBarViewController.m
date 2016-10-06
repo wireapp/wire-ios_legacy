@@ -486,6 +486,7 @@
 
             self.singleTapGestureRecognizer.enabled = YES;
             [self selectInputControllerButton:self.emojiButton];
+            [Analytics.shared tagEmojiKeyboardOpenend:self.conversation];
             break;
     }
     
