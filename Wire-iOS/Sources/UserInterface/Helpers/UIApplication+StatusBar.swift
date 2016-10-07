@@ -43,7 +43,7 @@ public extension UIApplication {
         }
     }
     
-    fileprivate func wr_topmostController() -> UIViewController? {
+    public func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
         let orderedWindows = self.windows.sorted { win1, win2 in
             win1.windowLevel > win2.windowLevel
         }
@@ -65,8 +65,7 @@ public extension UIApplication {
                 return .none
         }
         
-        while let presentedController = topController.presentedViewController
-                , presentedController.modalPresentationStyle == .fullScreen {
+        while let presentedController = topController.presentedViewController, ((onlyFullScreen && presentedController.modalPresentationStyle == .fullScreen) || !onlyFullScreen) {
             topController = presentedController
         }
         
