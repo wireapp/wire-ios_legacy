@@ -427,7 +427,7 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
 
-"self.settings.account_details_group.footer" = "People can find you with these details. The information is encrypted and not visible to anyone else.";
+"self.settings.account_details_group.footer" = "People can find you with these details.";
 
 "self.settings.account_details.remove_device.title" = "Remove Device";
 "self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
