@@ -324,9 +324,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     ZMDeliveryState deliveryState = self.message.deliveryState;
     
-    // Code disabled until the majority would send the delivery receipts
-//    BOOL shouldShowPendingDeliveryState = self.message.conversation.conversationType == ZMConversationTypeOneOnOne;
-    BOOL shouldShowDeliveryState = /*(deliveryState == ZMDeliveryStatePending && shouldShowPendingDeliveryState) ||*/ deliveryState == ZMDeliveryStateFailedToSend || self.layoutProperties.alwaysShowDeliveryState;
+    BOOL shouldShowPendingDeliveryState = self.message.conversation.conversationType == ZMConversationTypeOneOnOne;
+    BOOL shouldShowDeliveryState = (deliveryState == ZMDeliveryStatePending && shouldShowPendingDeliveryState) || deliveryState == ZMDeliveryStateFailedToSend || self.layoutProperties.alwaysShowDeliveryState;
     BOOL shouldBeVisible = self.selected || self.message.usersReaction.count > 0 || shouldShowDeliveryState;
     
     if (! [Message shouldShowTimestamp:self.message]) {
