@@ -62,20 +62,22 @@ private struct InputBarConstants {
     let contentRightMargin = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
 }
 
-@objc open class InputBar: UIView {
+@objc public final class InputBar: UIView {
     
-    open let textView: NextResponderTextView = NextResponderTextView()
-    open let leftAccessoryView  = UIView()
-    open let rightAccessoryView = UIView()
+    public let textView: NextResponderTextView = NextResponderTextView()
+    public let leftAccessoryView  = UIView()
+    public let rightAccessoryView = UIView()
     
     // Contains and clips the buttonInnerContainer
-    open let buttonContainer = UIView()
+    public let buttonContainer = UIView()
     
-    open let editingView = InputBarEditView()
-    open let buttonsView: InputBarButtonsView
+    public let editingView = InputBarEditView()
+    public let buttonsView: InputBarButtonsView
     
-    open var editingBackgroundColor: UIColor?
-    open var barBackgroundColor: UIColor?
+    public var editingBackgroundColor: UIColor?
+    public var barBackgroundColor: UIColor?
+    public var writingSeparatorColor: UIColor?
+    public var ephemeralSeparatorColor: UIColor?
 
     fileprivate var contentSizeObserver: NSObject? = nil
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
@@ -163,12 +165,11 @@ private struct InputBarConstants {
     
     fileprivate func setupViews() {
         fakeCursor.backgroundColor = UIColor.accent()
-        
-        buttonRowSeparator.cas_styleClass = "separator"
+
         inputBarSeparator.cas_styleClass = "separator"
         
         textView.accessibilityIdentifier = "inputField"
-        textView.placeholder = "conversation.input_bar.placeholder".localized
+        updatePlaceholder()
         textView.lineFragmentPadding = 0
         textView.textContainerInset = UIEdgeInsetsMake(17, 0, 17, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
@@ -179,10 +180,37 @@ private struct InputBarConstants {
 
         contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateBackgroundColor()
+        updateInputBar(withState: inputBarState)
     }
     
     public func updateReturnKey() {
         textView.returnKeyType = Settings.shared().returnKeyType
+    }
+
+    func updatePlaceholder() {
+        textView.placeholder = placeholderText(for: inputBarState)
+    }
+
+    func placeholderText(for state: InputBarState) -> String? {
+        switch inputBarState {
+        case .writing(ephemeral: let ephemeral):
+            if ephemeral {
+                return "conversation.input_bar.placeholder_ephemeral".localized
+            }
+            return "conversation.input_bar.placeholder".localized
+        case .editing: return nil
+        }
+    }
+
+    func placeholderColor(for state: InputBarState) -> String? {
+        switch inputBarState {
+        case .writing(ephemeral: let ephemeral):
+            if ephemeral {
+                return "conversation.input_bar.placeholder_ephemeral".localized
+            }
+            return "conversation.input_bar.placeholder".localized
+        case .editing: return nil
+        }
     }
     
     fileprivate func createConstraints() {
@@ -298,14 +326,25 @@ private struct InputBarConstants {
 
     // MARK: - InputBarState
 
+    public func updateEphemeralState() {
+        switch inputBarState {
+        case .writing(let ephemeral):
+        self.buttonRowSeparator.backgroundColor = ephemeral ? self.ephemeralSeparatorColor : self.writingSeparatorColor
+        default: return
+        }
+    }
+
     func updateInputBar(withState state: InputBarState, animated: Bool = true) {
         updateEditViewState()
+        updatePlaceholder()
         rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {
             switch state {
             case .writing:
                 self.textView.text = nil
+                self.updateEphemeralState()
+
             case .editing(let text):
                 self.setInputBarText(text)
             }

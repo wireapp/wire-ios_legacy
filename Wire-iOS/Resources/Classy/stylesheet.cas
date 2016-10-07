@@ -149,7 +149,8 @@ IconButton.resend-button {
 IconButton.send-button {
     circular: true;
     borderWidth: 0.0;
-    iconColor: $color-background-light;
+    iconColor[state: normal]: $color-background-light;
+    iconColor[state: highlighted]: $color-background-light;
     backgroundImageColor[state:highlighted]: $color-accent-current-darken;
     backgroundImageColor[state:normal]: $color-accent-current;
 }
@@ -867,7 +868,9 @@ UILabel.conversationVerifiedLabel {
 InputBar: {
     barBackgroundColor: $color-text-background;
     editingBackgroundColor: $color-accent-yellow;
-    
+    writingSeparatorColor: $color-separator;
+    ephemeralSeparatorColor: $color-accent-orange;
+
     IconButton {
         iconColor[state:normal]: $color-icon-normal;
         iconColor[state:highlighted]: $color-icon-highlighted;

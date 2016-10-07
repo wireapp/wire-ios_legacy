@@ -216,6 +216,7 @@
     [super viewWillAppear:animated];
     [self updateSendButtonVisibility];
     [self.inputBar updateReturnKey];
+    [self.inputBar updateEphemeralState];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

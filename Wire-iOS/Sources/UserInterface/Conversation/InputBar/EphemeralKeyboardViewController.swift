@@ -66,13 +66,32 @@ extension ZMConversationMessageDestructionTimeout {
     public var pickerFont: UIFont?
     public var pickerColor: UIColor?
     public var separatorColor: UIColor?
+    private let conversation: ZMConversation
 
     private let picker = PickerView()
+
+
+    public init(conversation: ZMConversation) {
+        self.conversation = conversation
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard let index = timeouts.index(of: conversation.destructionTimeout) else { return }
+        picker.selectRow(index, inComponent: 0, animated: false)
+
     }
 
     private func setupViews() {
@@ -99,11 +118,6 @@ extension ZMConversationMessageDestructionTimeout {
             picker.leading == view.leading + inset.x
             picker.trailing == view.trailing - inset.x
         }
-    }
-
-    func setSelection(_ time: ZMConversationMessageDestructionTimeout) {
-        guard let index = timeouts.index(of: time) else { return }
-        picker.selectRow(index, inComponent: 0, animated: false)
     }
 
 }

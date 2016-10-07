@@ -23,10 +23,8 @@ import Foundation
 extension ConversationInputBarViewController {
 
     public func createEphemeralKeyboardViewController() {
-        ephemeralKeyboardViewController = EphemeralKeyboardViewController()
+        ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
         ephemeralKeyboardViewController?.delegate = self
-        guard let timeout = conversation.destructionTimout else { return }
-        ephemeralKeyboardViewController?.setSelection(timeout)
     }
 
     public func configureHourglassButton(_ button: IconButton) {
@@ -42,11 +40,18 @@ extension ConversationInputBarViewController {
         }
     }
 
+    public func updateWritingState() {
+        guard nil == editingMessage else { return }
+        inputBar.inputBarState = .writing(ephemeral: conversation.destructionEnabled)
+    }
+
 }
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
+
+        inputBar.inputBarState = .writing(ephemeral: timeout != .none)
         ZMUserSession.shared().enqueueChanges {
             self.conversation.updateMessageDestructionTimeout(timeout)
         }
@@ -54,10 +59,14 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
 
 }
 
-private extension ZMConversation {
+public extension ZMConversation {
 
-    var destructionTimout: ZMConversationMessageDestructionTimeout? {
-        return ZMConversationMessageDestructionTimeout(rawValue: Int16(messageDestructionTimeout))
+    var destructionEnabled: Bool {
+        return destructionTimeout != .none
+    }
+
+    var destructionTimeout: ZMConversationMessageDestructionTimeout {
+        return ZMConversationMessageDestructionTimeout(rawValue: Int16(messageDestructionTimeout)) ?? .none
     }
 
 }
