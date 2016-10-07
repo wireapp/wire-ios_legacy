@@ -19,12 +19,15 @@
 
 #import "ZMUserSession+RequestProxy.h"
 
+@interface ZMProxyRequest (ZiphyRequestIdentifier) <ZiphyRequestIdentifier>
+@end
 
-
+@implementation ZMProxyRequest (ZiphyRequestIdentifier)
+@end
 
 @implementation ZMUserSession (RequestProxy)
 
-- (id)doRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
+- (id<ZiphyRequestIdentifier>)doRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
 {
     // Removing the https://host part from the given URL, so zmessaging can prepend it with the Wire giphy proxy host
     NSString *fullHost = [NSString stringWithFormat:@"%@://%@", request.URL.scheme, request.URL.host];
@@ -34,9 +37,9 @@
     return [self doRequestWithPath:URLString method:ZMMethodGET type:ProxiedRequestTypeGiphy completionHandler:completionHandler];
 }
 
-- (void)cancelRequestWithRequestIdentifier:(id)requestIdentifier
+- (void)cancelRequestWithRequestIdentifier:(id<ZiphyRequestIdentifier>)requestIdentifier
 {
-    if ([requestIdentifier isKindOfClass:ZMProxyRequest.class]) {
+    if ([(id)requestIdentifier isKindOfClass:ZMProxyRequest.class]) {
         [self cancelProxiedRequest:(ZMProxyRequest *)requestIdentifier];
     }
 }

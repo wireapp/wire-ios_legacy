@@ -21,10 +21,7 @@
 
 #import "zmessaging+iOS.h"
 #import <ziphy/ziphy-Swift.h>
-
-
-@class ZMProxyRequest;
-
+#import <zmessaging/zmessaging-Swift.h>
 
 @protocol ProxiedURLRequester <NSObject>
 - (ZMProxyRequest  * _Nonnull)doRequestWithPath:(NSString * __nonnull)path
