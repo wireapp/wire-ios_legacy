@@ -30,8 +30,22 @@ extension Settings {
 }
 
 public enum InputBarState: Equatable {
-    case writing
+    case writing(ephemeral: Bool)
     case editing(originalText: String)
+
+    var isWriting: Bool {
+        switch self {
+        case .writing(ephemeral: _): return true
+        default: return false
+        }
+    }
+
+    var isEditing: Bool {
+        switch self {
+        case .editing(originalText: _): return true
+        default: return false
+        }
+    }
 }
 
 public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
@@ -75,11 +89,10 @@ private struct InputBarConstants {
     fileprivate let notificationCenter = NotificationCenter.default
     
     var isEditing: Bool {
-        if case .editing(_) = inputBarState { return true }
-        return false
+        return inputBarState.isEditing
     }
     
-    var inputBarState: InputBarState = .writing {
+    var inputBarState: InputBarState = .writing(ephemeral: false) {
         didSet {
             updateInputBar(withState: inputBarState)
         }
@@ -287,7 +300,7 @@ private struct InputBarConstants {
 
     func updateInputBar(withState state: InputBarState, animated: Bool = true) {
         updateEditViewState()
-        rowTopInsetConstraint?.constant = state == .writing ? -constants.buttonsBarHeight : 0
+        rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {
             switch state {
@@ -320,7 +333,7 @@ private struct InputBarConstants {
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
         let mixed = writingColor.mix(editingColor, amount: 0.16)
-        return state == .writing ? writingColor : mixed
+        return state.isWriting ? writingColor : mixed
     }
 
     fileprivate func updateBackgroundColor() {
@@ -337,7 +350,7 @@ private struct InputBarConstants {
     }
 
     open func undo() {
-        guard inputBarState != .writing else { return }
+        guard inputBarState.isWriting else { return }
         guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()

@@ -890,6 +890,14 @@ InputBarEditView: {
 }
 
 ConversationInputBarViewController {
+
+    hourglassButton: @{
+        iconColor: $color-icon-normal;
+        iconColor[state:selected]: $color-accent-orange;
+        iconColor[state:highlighted]: $color-icon-highlighted;
+        backgroundImageColor[state:selected]: clear;
+    }
+
     audioRecorderTooltip: @{
         font: $font-small;
         textColor: $color-text-dimmed;
@@ -1241,6 +1249,24 @@ SearchViewController PeopleInputController TokenField {
     tokenSelectedBorderColor: white;
 }
 
+/* Ephemeral Keyboard */
+
+EphemeralKeyboardViewController {
+
+    pickerFont: $font-normal-medium;
+    pickerColor: $color-text-foreground-dark;
+    separatorColor: $color-separator-light;
+
+    view: @{
+        backgroundColor: $color-text-foreground-light;
+    }
+
+    titleLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-small-medium;
+    }
+}
+
 /* Profile Devices */
 
 ProfileDevicesViewController {
@@ -1251,6 +1277,7 @@ ProfileDevicesViewController {
     view: @{
         backgroundColor: $color-background;
     }
+
 }
 
 ParticipantDeviceCell {

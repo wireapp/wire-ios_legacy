@@ -252,6 +252,11 @@
         [articleView configureWithTextMessageData:textMesssageData];
         [self.message requestImageDownload];
     }
+
+    if (change.isObfuscatedChanged) {
+        [self configureForMessage:change.message layoutProperties:self.layoutProperties];
+        needsLayout = YES;
+    }
     
     return needsLayout;
 }

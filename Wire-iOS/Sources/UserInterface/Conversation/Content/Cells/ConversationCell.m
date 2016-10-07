@@ -216,13 +216,17 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.beingEdited = NO;
 }
 
-- (void)willDisplayInTableView
+- (void)willDisplayInTableView:(BOOL)onScreen
 {
     if (self.layoutProperties.showBurstTimestamp) {
         self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
     }
     
     [self.contentView bringSubviewToFront:self.likeButton];
+
+    if (onScreen) {
+        __unused BOOL willSelfDestruct = [self.message startSelfDestructionIfNeeded];
+    }
 }
 
 - (void)didEndDisplayingInTableView

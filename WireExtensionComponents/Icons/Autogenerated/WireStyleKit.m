@@ -3550,6 +3550,95 @@ static UIImage* _imageOfShieldnotverified = nil;
     [flagPath fill];
 }
 
++ (void)drawIcon_0x124_32ptWithColor: (UIColor*)color
+{
+
+    //// More Drawing
+    UIBezierPath* morePath = [UIBezierPath bezierPath];
+    [morePath moveToPoint: CGPointMake(8, 64)];
+    [morePath addCurveToPoint: CGPointMake(16, 56) controlPoint1: CGPointMake(12.42, 64) controlPoint2: CGPointMake(16, 60.42)];
+    [morePath addCurveToPoint: CGPointMake(8, 48) controlPoint1: CGPointMake(16, 51.58) controlPoint2: CGPointMake(12.42, 48)];
+    [morePath addCurveToPoint: CGPointMake(0, 56) controlPoint1: CGPointMake(3.58, 48) controlPoint2: CGPointMake(0, 51.58)];
+    [morePath addCurveToPoint: CGPointMake(8, 64) controlPoint1: CGPointMake(0, 60.42) controlPoint2: CGPointMake(3.58, 64)];
+    [morePath addLineToPoint: CGPointMake(8, 64)];
+    [morePath closePath];
+    [morePath moveToPoint: CGPointMake(56, 64)];
+    [morePath addCurveToPoint: CGPointMake(64, 56) controlPoint1: CGPointMake(60.42, 64) controlPoint2: CGPointMake(64, 60.42)];
+    [morePath addCurveToPoint: CGPointMake(56, 48) controlPoint1: CGPointMake(64, 51.58) controlPoint2: CGPointMake(60.42, 48)];
+    [morePath addCurveToPoint: CGPointMake(48, 56) controlPoint1: CGPointMake(51.58, 48) controlPoint2: CGPointMake(48, 51.58)];
+    [morePath addCurveToPoint: CGPointMake(56, 64) controlPoint1: CGPointMake(48, 60.42) controlPoint2: CGPointMake(51.58, 64)];
+    [morePath addLineToPoint: CGPointMake(56, 64)];
+    [morePath closePath];
+    [morePath moveToPoint: CGPointMake(32, 64)];
+    [morePath addCurveToPoint: CGPointMake(40, 56) controlPoint1: CGPointMake(36.42, 64) controlPoint2: CGPointMake(40, 60.42)];
+    [morePath addCurveToPoint: CGPointMake(32, 48) controlPoint1: CGPointMake(40, 51.58) controlPoint2: CGPointMake(36.42, 48)];
+    [morePath addCurveToPoint: CGPointMake(24, 56) controlPoint1: CGPointMake(27.58, 48) controlPoint2: CGPointMake(24, 51.58)];
+    [morePath addCurveToPoint: CGPointMake(32, 64) controlPoint1: CGPointMake(24, 60.42) controlPoint2: CGPointMake(27.58, 64)];
+    [morePath addLineToPoint: CGPointMake(32, 64)];
+    [morePath closePath];
+    morePath.miterLimit = 4;
+
+    morePath.usesEvenOddFillRule = YES;
+
+    [color setFill];
+    [morePath fill];
+}
+
++ (void)drawIcon_0x239_32ptWithColor: (UIColor*)color
+{
+
+    //// Hourglass Drawing
+    UIBezierPath* hourglassPath = [UIBezierPath bezierPath];
+    [hourglassPath moveToPoint: CGPointMake(28, 32)];
+    [hourglassPath addCurveToPoint: CGPointMake(32, 36) controlPoint1: CGPointMake(28, 34.21) controlPoint2: CGPointMake(29.79, 36)];
+    [hourglassPath addCurveToPoint: CGPointMake(36, 32) controlPoint1: CGPointMake(34.21, 36) controlPoint2: CGPointMake(36, 34.21)];
+    [hourglassPath addLineToPoint: CGPointMake(28, 32)];
+    [hourglassPath closePath];
+    [hourglassPath moveToPoint: CGPointMake(36, 32)];
+    [hourglassPath addCurveToPoint: CGPointMake(40.45, 41.21) controlPoint1: CGPointMake(36, 36.02) controlPoint2: CGPointMake(37.46, 38.58)];
+    [hourglassPath addCurveToPoint: CGPointMake(43.21, 43.62) controlPoint1: CGPointMake(40.69, 41.4) controlPoint2: CGPointMake(42.7, 43.12)];
+    [hourglassPath addCurveToPoint: CGPointMake(47.86, 56) controlPoint1: CGPointMake(45.86, 46.19) controlPoint2: CGPointMake(47.41, 49.68)];
+    [hourglassPath addLineToPoint: CGPointMake(16.14, 56)];
+    [hourglassPath addCurveToPoint: CGPointMake(20.79, 43.62) controlPoint1: CGPointMake(16.59, 49.68) controlPoint2: CGPointMake(18.14, 46.19)];
+    [hourglassPath addCurveToPoint: CGPointMake(23.55, 41.21) controlPoint1: CGPointMake(21.3, 43.12) controlPoint2: CGPointMake(23.31, 41.4)];
+    [hourglassPath addCurveToPoint: CGPointMake(28, 32) controlPoint1: CGPointMake(26.54, 38.58) controlPoint2: CGPointMake(28, 36.02)];
+    [hourglassPath addLineToPoint: CGPointMake(36, 32)];
+    [hourglassPath closePath];
+    [hourglassPath moveToPoint: CGPointMake(47.86, 8)];
+    [hourglassPath addCurveToPoint: CGPointMake(47.37, 12) controlPoint1: CGPointMake(47.75, 9.48) controlPoint2: CGPointMake(47.6, 10.81)];
+    [hourglassPath addLineToPoint: CGPointMake(16.63, 12)];
+    [hourglassPath addCurveToPoint: CGPointMake(16.14, 8) controlPoint1: CGPointMake(16.4, 10.81) controlPoint2: CGPointMake(16.25, 9.48)];
+    [hourglassPath addLineToPoint: CGPointMake(47.86, 8)];
+    [hourglassPath closePath];
+    [hourglassPath moveToPoint: CGPointMake(51.87, 8)];
+    [hourglassPath addLineToPoint: CGPointMake(56, 8)];
+    [hourglassPath addLineToPoint: CGPointMake(56, 4)];
+    [hourglassPath addCurveToPoint: CGPointMake(51.99, 0) controlPoint1: CGPointMake(56, 1.78) controlPoint2: CGPointMake(54.2, 0)];
+    [hourglassPath addLineToPoint: CGPointMake(12.01, 0)];
+    [hourglassPath addCurveToPoint: CGPointMake(8, 4) controlPoint1: CGPointMake(9.82, 0) controlPoint2: CGPointMake(8, 1.79)];
+    [hourglassPath addLineToPoint: CGPointMake(8, 8)];
+    [hourglassPath addLineToPoint: CGPointMake(12.13, 8)];
+    [hourglassPath addCurveToPoint: CGPointMake(24, 32) controlPoint1: CGPointMake(13.44, 26.81) controlPoint2: CGPointMake(24, 23.24)];
+    [hourglassPath addCurveToPoint: CGPointMake(12.13, 56) controlPoint1: CGPointMake(24, 40.76) controlPoint2: CGPointMake(13.44, 37.19)];
+    [hourglassPath addLineToPoint: CGPointMake(12.13, 56)];
+    [hourglassPath addLineToPoint: CGPointMake(8, 56)];
+    [hourglassPath addLineToPoint: CGPointMake(8, 60)];
+    [hourglassPath addCurveToPoint: CGPointMake(12.01, 64) controlPoint1: CGPointMake(8, 62.22) controlPoint2: CGPointMake(9.8, 64)];
+    [hourglassPath addLineToPoint: CGPointMake(51.99, 64)];
+    [hourglassPath addCurveToPoint: CGPointMake(56, 60) controlPoint1: CGPointMake(54.18, 64) controlPoint2: CGPointMake(56, 62.21)];
+    [hourglassPath addLineToPoint: CGPointMake(56, 56)];
+    [hourglassPath addLineToPoint: CGPointMake(51.87, 56)];
+    [hourglassPath addLineToPoint: CGPointMake(51.87, 56)];
+    [hourglassPath addCurveToPoint: CGPointMake(40, 32) controlPoint1: CGPointMake(50.56, 37.19) controlPoint2: CGPointMake(40, 40.76)];
+    [hourglassPath addCurveToPoint: CGPointMake(51.87, 8) controlPoint1: CGPointMake(40, 23.24) controlPoint2: CGPointMake(50.56, 26.81)];
+    [hourglassPath addLineToPoint: CGPointMake(51.87, 8)];
+    [hourglassPath closePath];
+    hourglassPath.usesEvenOddFillRule = YES;
+
+    [color setFill];
+    [hourglassPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -5155,6 +5244,28 @@ static UIImage* _imageOfShieldnotverified = nil;
     UIGraphicsEndImageContext();
 
     return imageOfIcon_0x256_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x124_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0.0f);
+    [WireStyleKit drawIcon_0x124_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x124_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x124_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x239_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0.0f);
+    [WireStyleKit drawIcon_0x239_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x239_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x239_32pt;
 }
 
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent

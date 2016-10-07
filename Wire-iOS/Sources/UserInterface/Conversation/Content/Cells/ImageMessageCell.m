@@ -411,7 +411,7 @@ static ImageCache *imageCache(void)
 {
     BOOL needsLayout = [super updateForMessage:change];
     
-    if (change.imageChanged) {
+    if (change.imageChanged || change.isObfuscatedChanged) {
         [self configureForMessage:self.message layoutProperties:self.layoutProperties];
     }
     

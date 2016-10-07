@@ -114,6 +114,7 @@
 @property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
 @property (nonatomic) BOOL waitingForFileDownload;
 @property (nonatomic) UIDocumentInteractionController *documentInteractionController;
+@property (nonatomic) BOOL onScreen;
 
 @end
 
@@ -182,12 +183,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.onScreen = YES;
     
     self.activeMediaPlayerObserver = [KeyValueObserver observeObject:[AppDelegate sharedAppDelegate].mediaPlaybackManager
                                                              keyPath:@"activeMediaPlayer"
                                                               target:self
                                                             selector:@selector(activeMediaPlayerChanged:)
                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+
+    for (ConversationCell *cell in self.tableView.visibleCells) {
+        if ([cell isKindOfClass:ConversationCell.class]) {
+            [cell willDisplayInTableView:self.onScreen];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -196,6 +204,12 @@
     [AppDelegate sharedAppDelegate].notificationWindowController.showLoadMessages = self.wasFetchingMessages;
     
     [self updateVisibleMessagesWindow];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.onScreen = NO;
 }
 
 - (void)viewDidLayoutSubviews
@@ -667,7 +681,7 @@
 		[self updateVisibleMessagesWindow];
 	});
     
-    [conversationCell willDisplayInTableView];
+    [conversationCell willDisplayInTableView:self.onScreen];
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
 

@@ -162,6 +162,10 @@
 // Twitter
 "twitter_status.on_twitter" = "%@ on Twitter";
 
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for dissappearing messages";
+
 // System messages
 "content.system.continued_conversation" = "Start a conversation with %@";
 
