@@ -109,9 +109,7 @@ class TypingIndicatorView: UIView {
         addSubview(container)
         container.addSubview(nameLabel)
         container.addSubview(animatedPen)
-        
-//        container.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         setupConstraints()
     }
     
