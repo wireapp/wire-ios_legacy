@@ -26,6 +26,13 @@ class AnimatedPenView : UIView {
     private let dots = UIImageView()
     private let pen = UIImageView()
     
+    public var isAnimating : Bool = false {
+        didSet {
+            pen.layer.speed = isAnimating ? 1 : 0;
+            pen.layer.beginTime = pen.layer.convertTime(CACurrentMediaTime(), from: nil)
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -36,14 +43,17 @@ class AnimatedPenView : UIView {
         pen.image = UIImage(for: .pencil, fontSize: 8, color: iconColor)
         pen.backgroundColor = backgroundColor
         pen.contentMode = .center
-        
+
         addSubview(dots)
         addSubview(pen)
         
         setupConstraints()
         startWritingAnimation()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ThreeDotsLoadingView.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        pen.layer.speed = 0
+        pen.layer.timeOffset = 2
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -85,6 +95,7 @@ class AnimatedPenView : UIView {
     func applicationDidBecomeActive(_ notification : Notification) {
         startWritingAnimation()
     }
+
 }
 
 class TypingIndicatorView: UIView {
@@ -158,25 +169,25 @@ class TypingIndicatorView: UIView {
             self.layoutIfNeeded()
         }
         
-        let hideContainer = { (finished : Bool) in
-            UIView.animate(withDuration: 0.15, animations: {
-                self.container.alpha = CGFloat(0.0)
-            })
+        let showContainer = {
+            self.container.alpha = 1
         }
         
-        let showContainer = { (finished : Bool) in
-            UIView.wr_animate(easing: RBBEasingFunctionEaseInQuad, duration: 0.15, animations: {
-                self.container.alpha = CGFloat(1.0)
-            })
+        let hideContainer = {
+            self.container.alpha = 0
         }
         
         if (animated) {
             if (hidden) {
                 collapseLine()
-                hideContainer(true)
+                UIView.animate(withDuration: 0.15, animations: hideContainer)
             } else {
+                animatedPen.isAnimating = false
                 self.layoutSubviews()
-                UIView.wr_animate(easing: RBBEasingFunctionEaseInOutQuad, duration: 0.35, animations: expandLine, completion: showContainer)
+                UIView.wr_animate(easing: RBBEasingFunctionEaseInOutQuad, duration: 0.35, animations: expandLine)
+                UIView.wr_animate(easing: RBBEasingFunctionEaseInQuad, duration: 0.15, delay: 0.15, animations: showContainer, options: .beginFromCurrentState, completion: { _ in
+                    self.animatedPen.isAnimating = true
+                })
             }
             
         } else {
@@ -185,7 +196,7 @@ class TypingIndicatorView: UIView {
                 self.container.alpha = 0
             } else {
                 expandLine()
-                self.container.alpha = 1
+                showContainer()
             }
         }
     }
