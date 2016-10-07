@@ -19,4 +19,4 @@
 "NSContactsUsageDescription" = "Um deine Freunde schneller auf Wire zu finden, lade dein Adressbuch hoch. Deine Daten werden anonymisiert und niemals mit Dritten geteilt.";
 "NSMicrophoneUsageDescription" = "Erlaube Wire den Zugriff auf dein Mikrofon. Dies is notwendig um mit deinen Freunden telefonieren, sowie ihnen Audio-Nachrichten senden zu können.";
 "NSLocationWhenInUseUsageDescription" = "Erlaube Wire Zugriff auf deinen Standort, damit du diesen mit anderen teilen kannst.";
-"NSCameraUsageDescription" = "Erlaube Wire den Zugriff auf deine Kamera. Dies ist notwendig um Fotos zu senden, sowie audio- und video Telefonate durchzuführen.";
+"NSCameraUsageDescription" = "Erlaube Wire den Zugriff auf deine Kamera. Dies ist notwendig um Fotos senden, sowie Audio- und Video-Telefonate durchführen zu können.";

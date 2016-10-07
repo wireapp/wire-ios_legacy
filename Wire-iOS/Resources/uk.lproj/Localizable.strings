@@ -427,7 +427,7 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Номер телефону";
 
-"self.settings.account_details_group.footer" = "Ці деталі допоможуть іншим людям знайти вас. Інформація зашифрована та невидима для всіх інших користувачів.";
+"self.settings.account_details_group.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 
 "self.settings.account_details.remove_device.title" = "Видалити пристрій";
 "self.settings.account_details.key_fingerprint.title" = "Ідентифікатор";
@@ -456,7 +456,7 @@
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Сповіщення";
-"self.settings.notifications.push_notification.toogle" = "Попередній перегляд повідомлення";
+"self.settings.notifications.push_notification.toogle" = "Попередній перегляд сповіщень";
 "self.settings.notifications.push_notification.footer" = "Ім'я відправника та повідомлення на екрані блокування та в Центрі сповіщень.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Заголовки повідомлень";
@@ -464,7 +464,7 @@
 
 "self.settings.sound_menu.sounds.title" = "Звуки";
 "self.settings.sound_menu.ringtone.title" = "Рингтон";
-"self.settings.sound_menu.message.title" = "Звук текстового повідомлення";
+"self.settings.sound_menu.message.title" = "Звук текстових повідомлень";
 "self.settings.sound_menu.ping.title" = "Пінг";
 "self.settings.sound_menu.ringtones.title" = "Рингтони";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
@@ -473,10 +473,10 @@
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пінг у Wire";
 
-// Send Button
-"self.settings.send_button.title" = "Використовувати кнопку \"Ввід\" для надсилання повідомлень";
-"self.settings.send_button.header" = "Кнопка \"Надіслати\"";
-"self.settings.send_button.footer" = "Якщо увімкнено, то повідомлення можна буде надсилати за допомогою кнопки \"Ввід\", замість спеціально призначеної для цього кнопки \"Надіслати\"";
+// By popular demand
+"self.settings.popular_demand.title" = "У відповідь на численні прохання";
+"self.settings.popular_demand.send_button.title" = "Кнопка \"Надіслати\"";
+"self.settings.popular_demand.send_button.footer" = "Вимкнути надсилання через клавішу \"Ввід\".";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звукові сповіщення";
@@ -508,9 +508,10 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Звіт для налагодження дзвінків";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ця інформація допомагає відділу підтримки Wire діагностувати проблеми, пов'язані з дзвінками.";
 "self.settings.advanced.reset_push_token.title" = "Оновити Push-токен для сповіщень";
-"self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщення, відділ підтримки Wire може попросити вас скинути цей токен.";
+"self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщеннями, команда підтримки Wire може попросити вас виконати скидання цього токену.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен був оновлений";
 "self.settings.advanced.reset_push_token_alert.message" = "Сповіщення будуть відновлені за декілька секунд.";
+"self.settings.advanced.version_technical_details.title" = "Технічні деталі збірки";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Технічний звіт";
@@ -703,6 +704,8 @@
 "giphy.error.no_result" = "анімацій не знайдено";
 
 "giphy.confirm" = "надіслати";
+"giphy.cancel" = "скасувати";
+"giphy.search_placeholder" = "Пошук Giphy";
 
 "invite_banner.title" = "Запросіть ваших друзів до Wire!";
 "invite_banner.message" = "Насолоджуйтесь дзвінками, повідомленнями, зарисовками, GIF-анімаціями приватно або в групах.";
