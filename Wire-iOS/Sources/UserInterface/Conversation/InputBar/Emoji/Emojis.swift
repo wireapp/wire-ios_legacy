@@ -23,17 +23,25 @@ import Foundation
 typealias Emoji = String
 
 class EmojiDataSource: NSObject, UICollectionViewDataSource {
-    
+
+    enum Update {
+        case insert(Int)
+        case reload(Int)
+    }
+
     typealias CellProvider = (Emoji, IndexPath) -> UICollectionViewCell
-    
-    private let sections: [EmojiSection]
+
     let cellProvider: CellProvider
-    
+
+    private var sections: [EmojiSection]
+    private let recentlyUsed: RecentlyUsedEmojiSection
     
     init(provider: @escaping CellProvider) {
         cellProvider = provider
-        sections = EmojiSectionType.all.flatMap(EmojiSection.init)
+        self.recentlyUsed = RecentlyUsedEmojiPeristenceCoordinator.loadOrCreate()
+        sections = EmojiSectionType.all.flatMap(FileEmojiSection.init)
         super.init()
+        insertRecentlyUsedSectionIfNeeded()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -59,16 +67,35 @@ class EmojiDataSource: NSObject, UICollectionViewDataSource {
     func sectionIndex(for type: EmojiSectionType) -> Int? {
         return sections.map { $0.type }.index(of: type)
     }
+
+    func register(used emoji: Emoji) -> Update? {
+        let shouldReload = recentlyUsed.register(emoji)
+        let shouldInsert = insertRecentlyUsedSectionIfNeeded()
+
+        defer { RecentlyUsedEmojiPeristenceCoordinator.store(recentlyUsed) }
+        switch (shouldInsert, shouldReload) {
+        case (true, _): return .insert(0)
+        case (false, true): return .reload(0)
+        default: return nil
+        }
+    }
+
+    @discardableResult func insertRecentlyUsedSectionIfNeeded() -> Bool {
+        guard let first = sections.first, !(first is RecentlyUsedEmojiSection), !recentlyUsed.emoji.isEmpty else { return false }
+        sections.insert(recentlyUsed, at: 0)
+        return true
+    }
     
 }
 
 
 enum EmojiSectionType: String {
 
-    case people, nature, food, travel, activities, objects, symbols, flags
+    case recent, people, nature, food, travel, activities, objects, symbols, flags
 
     var icon: ZetaIconType {
         switch self {
+        case .recent: return .clock
         case .people: return .emoji
         case .nature: return .flower
         case .food: return .cake
@@ -82,7 +109,8 @@ enum EmojiSectionType: String {
 
     static var all: [EmojiSectionType] {
         return [
-            EmojiSectionType.people,
+            EmojiSectionType.recent,
+            .people,
             .nature,
             .food,
             .travel,
@@ -95,7 +123,18 @@ enum EmojiSectionType: String {
 
 }
 
-struct EmojiSection {
+protocol EmojiSection {
+    var emoji: [Emoji] { get }
+    var type: EmojiSectionType { get }
+}
+
+extension EmojiSection {
+    subscript(index: Int) -> Emoji {
+        return emoji[index]
+    }
+}
+
+struct FileEmojiSection: EmojiSection {
     
     init?(_ type: EmojiSectionType) {
         let filename = "emoji_\(type.rawValue)"
@@ -108,8 +147,4 @@ struct EmojiSection {
     let emoji: [Emoji]
     let type: EmojiSectionType
     
-    subscript(index: Int) -> Emoji {
-        return emoji[index]
-    }
 }
-

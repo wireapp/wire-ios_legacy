@@ -44,8 +44,8 @@ public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
 
 private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
-    let contentLeftMargin = CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin"))
-    let contentRightMargin = CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin"))
+    let contentLeftMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
+    let contentRightMargin = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
 }
 
 @objc open class InputBar: UIView {
@@ -179,7 +179,7 @@ private struct InputBarConstants {
             leftAccessoryView.top == leftAccessoryView.superview!.top
             leftAccessoryView.bottom == buttonContainer.top
             leftAccessoryView.width == constants.contentLeftMargin
-            
+
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing - 16
             rightAccessoryView.top == rightAccessoryView.superview!.top
             rightAccessoryView.width == 0 ~ LayoutPriority(750)

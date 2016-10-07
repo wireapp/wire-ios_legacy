@@ -56,12 +56,20 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
+protocol CrashlogManager {
+   var isCrashManagerDisabled: Bool { get set }
+}
+
+extension BITHockeyManager: CrashlogManager {
+}
+
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var analytics: AnalyticsInterface?
     var mediaManager: AVSMediaManagerInterface?
     var userSession: ZMUserSessionInterface
     let selfUser: SettingsSelfUser
+    var crashlogManager: CrashlogManager?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.markdown                   : UserDefaultMarkdown,
@@ -77,12 +85,13 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled
     ]
     
-    init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser) {
+    init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
         self.userDefaults = userDefaults
         self.analytics = analytics
         self.mediaManager = mediaManager
         self.userSession = userSession
         self.selfUser = selfUser
+        self.crashlogManager = crashlogManager
     }
     
     func property(_ propertyName: SettingsPropertyName) -> SettingsProperty {
@@ -176,12 +185,15 @@ class SettingsPropertyFactory {
                 }
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
-                if var analytics = self.analytics {
+                if var analytics = self.analytics,
+                    var crashlogManager = self.crashlogManager {
                     switch(value) {
                     case .number(let intValue):
                         analytics.isOptedOut = Bool(intValue)
+                        crashlogManager.isCrashManagerDisabled = Bool(intValue)
                     case .bool(let boolValue):
                         analytics.isOptedOut = boolValue
+                        crashlogManager.isCrashManagerDisabled = boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -207,6 +219,20 @@ class SettingsPropertyFactory {
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+
+        case .disableSendButton:
+            return SettingsBlockProperty(
+                propertyName: .disableSendButton,
+                getAction: { _ in return .bool(value: Settings.shared().disableSendButton) },
+                setAction: { _, value in
+                    switch value {
+                    case .bool(value: let disabled):
+                        Settings.shared().disableSendButton = disabled
+                        Analytics.shared()?.tagSendButtonDisabled(disabled)
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {

@@ -19,6 +19,7 @@
 
 #import "UIView+Zeta.h"
 #import "UIResponder+FirstResponder.h"
+#import "Wire-Swift.h"
 
 static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboardHeightKey";
 
@@ -81,25 +82,16 @@ static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboa
 + (CGSize)wr_lastKeyboardSize
 {
     NSString *currentLastValue = [[NSUserDefaults standardUserDefaults] objectForKey:WireLastCachedKeyboardHeightKey];
+    
     if (currentLastValue == nil) {
-        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 216);
+        return CGSizeMake([UIScreen mainScreen].bounds.size.width, KeyboardHeight.current);
     }
     else {
         CGSize keyboardSize = CGSizeFromString(currentLastValue);
         
         // If keyboardSize value is clearly off we need to pull default value
         if (keyboardSize.height < 150) {
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-                if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-                    keyboardSize.height = 264;
-                }
-                else {
-                    keyboardSize.height = 352;
-                }
-            }
-            else {
-                keyboardSize.height = 216;
-            }
+            keyboardSize.height = KeyboardHeight.current;
         }
         
         return keyboardSize;

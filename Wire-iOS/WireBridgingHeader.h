@@ -118,6 +118,7 @@
 #import "UIView+UIAppearanceSwift.h"
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
+@import HockeySDK;
 
 // Camera
 #import "CameraController.h"

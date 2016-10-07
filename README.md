@@ -33,7 +33,7 @@ The iOS application follows closely the overall mobile architecture, adding its 
 
 ![iOS app architecture](https://github.com/wireapp/wire/blob/master/assets/ios-architecture.png?raw=true)
 
-*wire-ios-sync-engine* is the top-most layer of the iOS *sync engine*, and it is using on a number of lower-level frameworks.
+*wire-ios-sync-engine* is the top-most layer of the iOS *sync engine*, and it is using a number of other frameworks itself.
 
 ### Repositories
 

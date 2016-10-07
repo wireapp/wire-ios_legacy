@@ -34,10 +34,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) id <ZMConversationMessage> editingMessage;
 
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
+@property (nonatomic)           BOOL inputBarOverlapsContent;
 @property (nonatomic)           NSUInteger videoSendContext;
 
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
+- (void)updateSendButtonVisibility;
+
 @end
 
 

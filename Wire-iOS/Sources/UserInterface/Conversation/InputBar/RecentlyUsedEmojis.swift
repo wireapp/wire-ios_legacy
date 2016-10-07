@@ -1,0 +1,91 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+
+import Foundation
+
+
+class RecentlyUsedEmojiSection: NSObject, EmojiSection {
+
+    let type: EmojiSectionType = .recent
+
+    private(set) var emoji = [Emoji]()
+    private let backing = NSMutableOrderedSet()
+    private let capacity: Int
+
+    init(capacity: Int) {
+        self.capacity = capacity
+    }
+
+    fileprivate convenience init(capacity: Int, elements: [Emoji]) {
+        self.init(capacity: capacity)
+        elements.forEach { register($0) }
+    }
+
+    @discardableResult func register(_ element: Emoji) -> Bool {
+        switch backing.index(of: element) {
+        case 0: return false // No update neccessary if the first element is already the new one
+        case NSNotFound: backing.insert(element, at: 0)
+        case let idx: backing.moveObjects(at: IndexSet(integer: idx), to: 0)
+        }
+
+        defer { emoji = backing.array as! [Emoji] }
+        guard backing.count > capacity else { return true }
+        backing.removeObjects(at: IndexSet(integersIn: capacity..<backing.count))
+        return true
+    }
+    
+}
+
+
+class RecentlyUsedEmojiPeristenceCoordinator {
+
+    static func loadOrCreate() -> RecentlyUsedEmojiSection {
+        return loadFromDisk() ?? RecentlyUsedEmojiSection(capacity: 15)
+    }
+
+    static func store(_ section: RecentlyUsedEmojiSection) {
+        guard let emojiUrl = url else { return }
+        createDirectoryIfNeeded()
+        (section.emoji as NSArray).write(to: emojiUrl, atomically: true)
+    }
+
+    private static func loadFromDisk() -> RecentlyUsedEmojiSection? {
+        guard let emojiUrl = url else { return nil }
+        guard let emoji = NSArray(contentsOf: emojiUrl) as? [Emoji] else { return nil }
+        return RecentlyUsedEmojiSection(capacity: 15, elements: emoji)
+    }
+
+    private static func createDirectoryIfNeeded() {
+        guard var url = directoryUrl else { return }
+        var values = URLResourceValues()
+        values.isExcludedFromBackup = true
+        _ = try? url.setResourceValues(values)
+        _ = try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+    }
+
+    private static var directoryUrl: URL? = {
+        let url = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return url?.appendingPathComponent("emoji")
+    }()
+
+    private static var url: URL? = {
+        return directoryUrl?.appendingPathComponent("recently_used.plist")
+    }()
+
+}

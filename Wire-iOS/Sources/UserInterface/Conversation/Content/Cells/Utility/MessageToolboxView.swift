@@ -252,9 +252,7 @@ extension ZMConversationMessage {
             case .pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
             case .delivered:
-                // Code disabled until the majority would send the delivery receipts
-                // deliveryStateString = "content.system.message_delivered_timestamp".localized
-                fallthrough
+                deliveryStateString = "content.system.message_delivered_timestamp".localized
             case .sent:
                 deliveryStateString = "content.system.message_sent_timestamp".localized
             case .failedToSend:
