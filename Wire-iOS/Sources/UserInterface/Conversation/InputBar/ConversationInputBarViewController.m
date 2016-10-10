@@ -999,7 +999,18 @@
     [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
     [self clearInputBar];
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.sendController sendMessageWithImageData:imageData completion:nil];
+    
+    
+    
+    NSString *messageText = nil;
+    
+    if ([searchTerm isEqualToString:@""]) {
+        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
+    } else {
+        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
+    }
+    
+    [self.sendController sendTextMessage:messageText withImageData:imageData];
 }
 
 @end
