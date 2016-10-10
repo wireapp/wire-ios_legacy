@@ -32,6 +32,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     var lineView: UIView!
     
     var labelTextColor: UIColor?
+    var labelTextBlendedColor: UIColor?
     var labelFont: UIFont?
     var labelBoldFont: UIFont?
     
