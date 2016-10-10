@@ -66,6 +66,7 @@ class GiphySearchViewController : UICollectionViewController {
     let searchResultsController : ZiphySearchResultsController
     let masonrylayout : ARCollectionViewMasonryLayout
     let searchBar : UISearchBar = UISearchBar()
+    let noResultsLabel = UILabel()
     let conversation : ZMConversation
     var searchTerm : String
     var pendingTimer : Timer?
@@ -91,6 +92,10 @@ class GiphySearchViewController : UICollectionViewController {
     }
     
     override func viewDidLoad() {
+        noResultsLabel.text = "giphy.error.no_result".localized.uppercased()
+        noResultsLabel.isHidden = true
+        view.addSubview(noResultsLabel)
+        
         masonrylayout.dimensionLength = self.view.bounds.width / 2
         masonrylayout.minimumLineSpacing = 1
         masonrylayout.itemMargins = CGSize(width: 1, height: 1)
@@ -108,16 +113,24 @@ class GiphySearchViewController : UICollectionViewController {
         
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
+        
+        constrain(view, noResultsLabel) { container, noResultsLabel in
+            noResultsLabel.center == container.center
+        }
     }
     
     public func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: self)
         
-        let backArrow  = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withAlignmentRectInsets(UIEdgeInsets.init(top: 0, left: 0, bottom: -2, right: 0))
-        navigationController.navigationBar.backIndicatorImage = backArrow
-        navigationController.navigationBar.backIndicatorTransitionMaskImage = backArrow
+        var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
+        backButtonImage = backButtonImage?.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
+        backButtonImage = backButtonImage?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
+        navigationController.navigationBar.backIndicatorImage = backButtonImage
+        navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
+        
+        navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps(), NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
+        navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.title.font_spec"), NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
         navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationController.navigationBar.isTranslucent = false
         
@@ -134,10 +147,12 @@ class GiphySearchViewController : UICollectionViewController {
         if searchTerm.isEmpty {
             pendingSearchtask = searchResultsController.trending() { [weak self] (success, error) in
                 self?.collectionView?.reloadData()
+                self?.noResultsLabel.isHidden = self?.searchResultsController.results.count > 0
             }
         } else {
             pendingSearchtask = searchResultsController.search(withSearchTerm: searchTerm) { [weak self] (success, error) in
                 self?.collectionView?.reloadData()
+                self?.noResultsLabel.isHidden = self?.searchResultsController.results.count > 0
             }
         }
     }
@@ -198,7 +213,7 @@ class GiphySearchViewController : UICollectionViewController {
         }
         
         let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
-        confirmationController.title = conversation.displayName
+        confirmationController.title = conversation.displayName.uppercased()
         confirmationController.delegate = self
         navigationController?.pushViewController(confirmationController, animated: true)
     }

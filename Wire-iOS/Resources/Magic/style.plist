@@ -237,6 +237,20 @@
 					<string>proportional</string>
 				</dict>
 			</dict>
+			<key>title</key>
+			<dict>
+				<key>font_spec</key>
+				<dict>
+					<key>font</key>
+					<string>System-Medium</string>
+					<key>size</key>
+					<integer>12</integer>
+					<key>number_style</key>
+					<string>regular</string>
+					<key>number_spacing</key>
+					<string>proportional</string>
+				</dict>
+			</dict>
 		</dict>
 	</dict>
 </dict>
