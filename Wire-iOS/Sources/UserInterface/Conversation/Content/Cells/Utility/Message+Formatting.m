@@ -100,8 +100,15 @@ static inline NSDataDetector *linkDataDetector(void)
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"];
     });
+
+    UIFont *font;
+    if ([(ZMMessage*)message isObfuscated]) {
+        font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
+    } else {
+        font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    }
     
-    NSDictionary *attributes = @{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"],
+    NSDictionary *attributes = @{ NSFontAttributeName : font,
                                   NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground],
                                   NSParagraphStyleAttributeName : cellParagraphStyle,
                                   NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground] };

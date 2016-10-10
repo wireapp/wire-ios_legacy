@@ -216,7 +216,7 @@
     [super viewWillAppear:animated];
     [self updateSendButtonVisibility];
     [self.inputBar updateReturnKey];
-    [self.inputBar updateEphemeralState];
+    [self updateWritingState];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -399,7 +399,7 @@
     BOOL hideSendButton = Settings.sharedSettings.disableSendButton && self.mode != ConversationInputBarViewControllerModeEmojiInput;
     BOOL editing = nil != self.editingMessage;
     self.sendButton.hidden = textLength == 0 || hideSendButton || editing;
-    self.hourglassButton.hidden = !self.sendButton.hidden || self.conversation.conversationType != ZMConversationTypeOneOnOne;
+    self.hourglassButton.hidden = !self.sendButton.hidden || self.conversation.conversationType != ZMConversationTypeOneOnOne || editing;
 }
 
 - (void)updateAccessoryViews

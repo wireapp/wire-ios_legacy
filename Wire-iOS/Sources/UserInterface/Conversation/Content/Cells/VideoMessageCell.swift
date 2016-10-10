@@ -141,9 +141,7 @@ open class VideoMessageCell: ConversationCell {
         }
         
         message.requestImageDownload()
-    
         configureVisibleViews(forfileMessageData: fileMessageData, initialConfiguration: initialConfiguration)
-        
         topMargin?.constant = layoutProperties.showSender ? 12 : 0
     }
 
@@ -287,4 +285,11 @@ open class VideoMessageCell: ConversationCell {
             DDLogError("Cannot save video: \(error)")
         }
     }
+
+    // MARK: - Ephemeral
+
+    open override var startSelfDestructionWhenOnscreen: Bool {
+        return false
+    }
+
 }

@@ -224,9 +224,14 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     [self.contentView bringSubviewToFront:self.likeButton];
 
-    if (onScreen) {
-        __unused BOOL willSelfDestruct = [self.message startSelfDestructionIfNeeded];
+    if (onScreen && self.startSelfDestructionWhenOnscreen) {
+        [self.message startSelfDestructionIfNeeded];
     }
+}
+
+- (BOOL)startSelfDestructionWhenOnscreen
+{
+    return YES;
 }
 
 - (void)didEndDisplayingInTableView
@@ -448,6 +453,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)showMenu;
 {
+    if (self.message.isEphemeral) {
+        return;
+    }
+
     BOOL shouldBecomeFirstResponder = YES;
     if ([self.delegate respondsToSelector:@selector(conversationCell:shouldBecomeFirstResponderWhenShowMenuWithCellType:)]) {
         shouldBecomeFirstResponder = [self.delegate conversationCell:self shouldBecomeFirstResponderWhenShowMenuWithCellType:[self messageType]];

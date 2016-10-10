@@ -422,6 +422,8 @@
         return;
     }
 
+    [message startSelfDestructionIfNeeded];
+
     [self.analyticsTracker tagOpenedFileWithSize:message.fileMessageData.size
                                    fileExtension:[message.fileMessageData.filename pathExtension]];
     

@@ -77,7 +77,8 @@ private struct InputBarConstants {
     public var editingBackgroundColor: UIColor?
     public var barBackgroundColor: UIColor?
     public var writingSeparatorColor: UIColor?
-    public var ephemeralSeparatorColor: UIColor?
+    public var ephemeralColor: UIColor?
+    public var placeholderColor: UIColor?
 
     fileprivate var contentSizeObserver: NSObject? = nil
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
@@ -164,8 +165,6 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
-        fakeCursor.backgroundColor = UIColor.accent()
-
         inputBarSeparator.cas_styleClass = "separator"
         
         textView.accessibilityIdentifier = "inputField"
@@ -176,41 +175,13 @@ private struct InputBarConstants {
         textView.keyboardType = .default
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
+        textView.tintAdjustmentMode = .automatic
+
         updateReturnKey()
 
         contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
-        updateBackgroundColor()
-        updateInputBar(withState: inputBarState)
-    }
-    
-    public func updateReturnKey() {
-        textView.returnKeyType = Settings.shared().returnKeyType
-    }
-
-    func updatePlaceholder() {
-        textView.placeholder = placeholderText(for: inputBarState)
-    }
-
-    func placeholderText(for state: InputBarState) -> String? {
-        switch inputBarState {
-        case .writing(ephemeral: let ephemeral):
-            if ephemeral {
-                return "conversation.input_bar.placeholder_ephemeral".localized
-            }
-            return "conversation.input_bar.placeholder".localized
-        case .editing: return nil
-        }
-    }
-
-    func placeholderColor(for state: InputBarState) -> String? {
-        switch inputBarState {
-        case .writing(ephemeral: let ephemeral):
-            if ephemeral {
-                return "conversation.input_bar.placeholder_ephemeral".localized
-            }
-            return "conversation.input_bar.placeholder".localized
-        case .editing: return nil
-        }
+        updateInputBar(withState: inputBarState, animated: false)
+        updateColors()
     }
     
     fileprivate func createConstraints() {
@@ -294,6 +265,27 @@ private struct InputBarConstants {
             fakeCursor.layer.add(animation, forKey: "blinkAnimation")
         }
     }
+
+    public func updateReturnKey() {
+        textView.returnKeyType = Settings.shared().returnKeyType
+    }
+
+    func updatePlaceholder() {
+        textView.placeholder = placeholderText(for: inputBarState)
+        textView.setNeedsLayout()
+        textView.layoutIfNeeded()
+    }
+
+    func placeholderText(for state: InputBarState) -> String? {
+        switch inputBarState {
+        case .writing(ephemeral: let ephemeral):
+            if ephemeral {
+                return "conversation.input_bar.placeholder_ephemeral".localized
+            }
+            return "conversation.input_bar.placeholder".localized
+        case .editing: return nil
+        }
+    }
     
     fileprivate func updateTopSeparator() {
         inputBarSeparator.isHidden = !textIsOverflowing && !separatorEnabled
@@ -326,14 +318,6 @@ private struct InputBarConstants {
 
     // MARK: - InputBarState
 
-    public func updateEphemeralState() {
-        switch inputBarState {
-        case .writing(let ephemeral):
-        self.buttonRowSeparator.backgroundColor = ephemeral ? self.ephemeralSeparatorColor : self.writingSeparatorColor
-        default: return
-        }
-    }
-
     func updateInputBar(withState state: InputBarState, animated: Bool = true) {
         updateEditViewState()
         updatePlaceholder()
@@ -343,7 +327,6 @@ private struct InputBarConstants {
             switch state {
             case .writing:
                 self.textView.text = nil
-                self.updateEphemeralState()
 
             case .editing(let text):
                 self.setInputBarText(text)
@@ -353,30 +336,37 @@ private struct InputBarConstants {
         let completion: (Bool) -> Void = { _ in
             if case .editing(_) = state {
                 self.textView.becomeFirstResponder()
+                self.updateColors()
             }
         }
         
         if animated {
             UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
-                UIView.animate(withDuration: 0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateBackgroundColor, completion: completion)
+                UIView.animate(withDuration: 0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateColors, completion: completion)
             }
         } else {
             layoutIfNeeded()
             textViewChanges()
-            updateBackgroundColor()
+            updateColors()
             completion(true)
         }
     }
 
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
-        let mixed = writingColor.mix(editingColor, amount: 0.16)
-        return state.isWriting ? writingColor : mixed
+        return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
 
-    fileprivate func updateBackgroundColor() {
+    fileprivate func updateColors() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
+
+        if case .writing(let ephemeral) = inputBarState {
+            buttonRowSeparator.backgroundColor = ephemeral ? ephemeralColor : writingSeparatorColor
+            textView.placeholderTextColor = ephemeral ? ephemeralColor : placeholderColor
+            fakeCursor.backgroundColor = ephemeral ? ephemeralColor : .accent()
+            textView.tintColor = ephemeral ? ephemeralColor : .accent()
+        }
     }
 
     // MARK: – Editing View State

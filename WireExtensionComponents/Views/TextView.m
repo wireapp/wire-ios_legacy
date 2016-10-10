@@ -96,6 +96,7 @@
 {
     _placeholder = placeholder;
     self.placeholderLabel.text = placeholder;
+    [self.placeholderLabel sizeToFit];
     [self showOrHidePlaceholder];
 }
 
@@ -158,7 +159,7 @@
                                                 self.placeholderTextContainerInset.top,
                                                 rect.size.width - self.placeholderTextContainerInset.left - self.placeholderTextContainerInset.right - 2 * linePadding,
                                                 rect.size.height - self.placeholderTextContainerInset.top - self.placeholderTextContainerInset.bottom);
-            self.placeholderLabel = [[UILabel alloc]initWithFrame:placeholderRect];
+            self.placeholderLabel = [[UILabel alloc] initWithFrame:placeholderRect];
             self.placeholderLabel.font = self.placeholderFont;
             self.placeholderLabel.textAlignment = self.textAlignment;
             self.placeholderLabel.textColor = self.placeholderTextColor;

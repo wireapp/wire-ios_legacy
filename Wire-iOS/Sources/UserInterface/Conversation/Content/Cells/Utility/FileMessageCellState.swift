@@ -44,12 +44,16 @@ public enum FileMessageCellState {
     case cancelledUpload /// only for sender
     
     case failedDownload
+
+    case obfuscated
     
     // Value mapping from message consolidated state (transfer state, previewData, fileURL) to FileMessageCellState
     static func fromConversationMessage(_ message: ZMConversationMessage) -> FileMessageCellState? {
         guard let fileMessageData = message.fileMessageData , Message.isFileTransferMessage(message) else {
             return .none
         }
+
+        guard !message.isObfuscated else { return .obfuscated }
         
         switch fileMessageData.transferState {
         case .uploaded: return .uploaded

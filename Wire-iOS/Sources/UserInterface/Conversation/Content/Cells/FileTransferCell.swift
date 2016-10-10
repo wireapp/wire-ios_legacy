@@ -298,4 +298,11 @@ open class FileTransferCell: ConversationCell {
     override open func messageType() -> MessageType {
         return .file
     }
+
+    // MARK: - Ephemeral
+
+    override open var startSelfDestructionWhenOnscreen: Bool {
+        return false
+    }
+
 }

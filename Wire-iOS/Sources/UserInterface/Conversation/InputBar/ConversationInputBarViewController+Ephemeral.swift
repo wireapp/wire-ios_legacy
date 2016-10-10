@@ -50,7 +50,6 @@ extension ConversationInputBarViewController {
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
-
         inputBar.inputBarState = .writing(ephemeral: timeout != .none)
         ZMUserSession.shared().enqueueChanges {
             self.conversation.updateMessageDestructionTimeout(timeout)

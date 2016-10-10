@@ -869,7 +869,8 @@ InputBar: {
     barBackgroundColor: $color-text-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
-    ephemeralSeparatorColor: $color-accent-orange;
+    ephemeralColor: $color-accent-orange;
+    placeholderColor: $color-text-placeholder;
 
     IconButton {
         iconColor[state:normal]: $color-icon-normal;
@@ -881,7 +882,6 @@ InputBar: {
         placeholderFont: $font-small-light;
         textColor: $color-text-foreground;
         backgroundColor: clear;
-        placeholderTextColor: $color-text-placeholder;
     }
 }
 

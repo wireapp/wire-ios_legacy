@@ -93,6 +93,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) MessageToolboxView *messageToolboxView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
+@property (nonatomic, readonly) BOOL startSelfDestructionWhenOnscreen;
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
 @property (nonatomic) BOOL showsMenu;
