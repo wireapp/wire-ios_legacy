@@ -29,6 +29,9 @@ public final class ConversationTitleView: UIView {
     
     init(conversation: ZMConversation) {
         super.init(frame: CGRect.zero)
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = "Name"
+        
         createViews(conversation)
         CASStyler.default().styleItem(self)
         configure(conversation)
@@ -56,8 +59,14 @@ public final class ConversationTitleView: UIView {
         titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
         titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
         titleButton.sizeToFit()
+        updateAccessibilityValue(conversation)
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    private func updateAccessibilityValue(_ conversation: ZMConversation) {
+        let verifiedString = (conversation.securityLevel == .secure) ? " - verified fingerprints" : ""
+        self.accessibilityValue = conversation.displayName.uppercased() + verifiedString
     }
     
     private func createConstraints() {
