@@ -699,6 +699,8 @@
 		BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */; };
 		BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */; };
 		BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */; };
+		BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */; };
+		BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */; };
 		BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */; };
 		BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */; };
 		BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */; };
@@ -1978,6 +1980,8 @@
 		BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Ephemeral.swift"; sourceTree = "<group>"; };
 		BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedactedScript-Regular.ttf"; sourceTree = "<group>"; };
 		BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralKeyboardViewController.swift; sourceTree = "<group>"; };
+		BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestructionCountdownView.swift; sourceTree = "<group>"; };
+		BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestructionCountdownViewTests.swift; sourceTree = "<group>"; };
 		BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRootViewController.swift; sourceTree = "<group>"; };
 		BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMSnapshotTestCase.h; sourceTree = "<group>"; };
 		BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMSnapshotTestCase.m; sourceTree = "<group>"; };
@@ -3346,6 +3350,7 @@
 				874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */,
 				8744489A1C22FCE500E7B947 /* TSMarkdownParser+Wire.m */,
 				87071CBF1CB68BDA0039388A /* ProgressView.swift */,
+				BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */,
 				87F61D191CD36F0900670794 /* GradientView.swift */,
 				87F61D1B1CD379EC00670794 /* CircularProgressView.swift */,
 				874B5DAD1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift */,
@@ -4380,6 +4385,7 @@
 				BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */,
 				BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */,
 				BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */,
+				BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */,
 				BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */,
 				BF52C15D1CAEC1430037331F /* ArchivedNavigationBarTests.m */,
 				8751A93B1C737D7200C72324 /* IconSystemCellTests.m */,
@@ -5179,6 +5185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				162ACDD11A696F21009025B3 /* ConnectionRequestCell.m in Sources */,
+				BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */,
 				8F8914381A9F2A510056AB0C /* TopItemsController.m in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
@@ -5752,6 +5759,7 @@
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
 				87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */,
+				BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */,
 				87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */,
