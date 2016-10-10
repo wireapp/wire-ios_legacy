@@ -139,6 +139,15 @@ import ZMCLinkPreview
     var backingTextMessageData: MockTextMessageData! = .none
     var backingFileMessageData: MockFileMessageData! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none
+
+    var isEphemeral: Bool = false
+    var isObfuscated: Bool = false
+
+    var deletionTimeout: TimeInterval = -1
+
+    func startSelfDestructionIfNeeded() -> Bool {
+        return true
+    }
     
     func requestFileDownload() {
         // no-op
