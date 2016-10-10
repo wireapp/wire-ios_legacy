@@ -329,9 +329,9 @@
 {
     self.sendButton = [IconButton iconButtonDefault];
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal renderingMode:UIImageRenderingModeAlwaysTemplate];
     self.sendButton.accessibilityIdentifier = @"sendButton";
-    self.sendButton.cas_styleClass = @"send-button";
+    self.sendButton.adjustsImageWhenHighlighted = NO;
 
     [self.inputBar.rightAccessoryView addSubview:self.sendButton];
     CGFloat edgeLength = 28;
