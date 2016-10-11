@@ -703,6 +703,8 @@
 		BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */; };
 		BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */; };
 		BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */; };
+		BF0BDF991DAD3800003C61DE /* Analytics+SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */; };
+		BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */; };
 		BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationRootViewController.swift */; };
 		BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */; };
 		BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */; };
@@ -780,8 +782,6 @@
 		CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED176461D0074610005234F /* ConversationParticipantsCell.swift */; };
 		CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */; };
 		DB0782221B00E98F00C6B140 /* FormFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0782211B00E98F00C6B140 /* FormFlowViewController.m */; };
-		DB1D4F051A7282EF004CB7B2 /* TypingUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D4F001A7282EF004CB7B2 /* TypingUserView.m */; };
-		DB1D4F071A7282EF004CB7B2 /* TypingConversationView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1D4F041A7282EF004CB7B2 /* TypingConversationView.m */; };
 		DB29BD411AE1094E00DCEF6D /* EmailSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29BD401AE1094E00DCEF6D /* EmailSignInViewController.m */; };
 		DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
@@ -5406,6 +5406,7 @@
 				8715A16A19EBF69500E2C6DE /* CommonConnectionsView.m in Sources */,
 				872CB8B419E58816006752B4 /* ProfileHeaderView.m in Sources */,
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
+				BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */,
 				8F3C945219D1A8EC00288AFE /* VoiceChannelOverlay.m in Sources */,
 				CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */,
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
@@ -5453,7 +5454,6 @@
 				8F89141A1A9F287E0056AB0C /* UnsentIndicatorLayer.m in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
-				BFCF31DF1DA64AD40039B3DC /* Analytics+SendButton.swift in Sources */,
 				16EBBEFF1BEBBCF40087DA60 /* InvitationStatusController.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
@@ -5473,6 +5473,7 @@
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
+				BF0BDF991DAD3800003C61DE /* Analytics+SendButton.swift in Sources */,
 				875A23171ADEA1AD00111C88 /* CountryCodeView.m in Sources */,
 				BF9453321CE5CF4C0024E00C /* FileMetaDataGenerator.swift in Sources */,
 				87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */,
@@ -5662,7 +5663,6 @@
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
 				8F8914171A9F287E0056AB0C /* MissedCallIndicatorLayer.m in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
-				BFCF31E11DA64B970039B3DC /* Analytics+EmojiKeyboard.swift in Sources */,
 				8FC854BA199245770008B66B /* RootViewController.m in Sources */,
 				871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */,
 				871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */,
