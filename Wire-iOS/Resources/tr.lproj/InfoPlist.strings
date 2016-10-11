@@ -1,4 +1,4 @@
-/*
+/* 
  *  Wire
  *  Copyright (C) 2016 Wire Swiss GmbH
  *
@@ -14,9 +14,9 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see http://www.gnu.org/licenses/.
- */
+*/
 
-"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information and do not share it with anyone else.";
-"NSMicrophoneUsageDescription" = "Allow Wire to access your microphone so you can talk to people and send audio messages.";
-"NSLocationWhenInUseUsageDescription" = "Allow Wire to access your location so you can send your location to others.";
-"NSCameraUsageDescription" = "Allow Wire to access your camera so you can place video calls and send photos.";
+"NSContactsUsageDescription" = "Kişilerinizi paylaşın ki sizi başkalarına bağlayabilelim. Tüm bilgilerinizi gizler ve kimseyle paylaşmayız.";
+"NSMicrophoneUsageDescription" = "Wire'ın mikrofonunuza erişmesine izin verin ki bu sayede insanlar sesli konuşabilir ve sesli mesaj gönderebilirsiniz.";
+"NSLocationWhenInUseUsageDescription" = "Wire'ın konumunuza erişmesine izin verin, bu sayede konumunuzu başkalarıyla paylaşabilirsiniz.";
+"NSCameraUsageDescription" = "Wire'ın kameranıza erişmesine izin verin bu sayede görüntülü görüşmeler yapabilir ve fotoğraf yollayabilirsiniz.";
