@@ -104,7 +104,7 @@ import ZMCLinkPreview
 
 
 @objc class MockMessage: NSObject, ZMConversationMessage {
-    
+
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -144,6 +144,7 @@ import ZMCLinkPreview
     var isObfuscated: Bool = false
 
     var deletionTimeout: TimeInterval = -1
+    public var destructionDate: Date? = nil
 
     func startSelfDestructionIfNeeded() -> Bool {
         return true
