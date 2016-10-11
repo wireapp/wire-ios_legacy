@@ -29,7 +29,6 @@
 #import <WireExtensionComponents/WireExtensionComponents.h>
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
-#import "TypingConversationView.h"
 #import "CameraViewController.h"
 #import "SketchViewController.h"
 #import "UIView+Borders.h"
@@ -129,8 +128,8 @@
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) TypingConversationView *typingView;
 @property (nonatomic) NSLayoutConstraint *collapseViewConstraint;
+@property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) InputBar *inputBar;
 @property (nonatomic) ZMConversation *conversation;
@@ -155,8 +154,8 @@
         self.conversationObserverToken = [self.conversation addConversationObserver:self];
         
         if ([self.conversation shouldDisplayIsTyping]) {
-            [_conversation addTypingObserver:self];
-            self.typingUsers = _conversation.typingUsers;
+            [conversation addTypingObserver:self];
+            self.typingUsers = conversation.typingUsers;
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
@@ -183,8 +182,9 @@
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createEmojiButton];
+
     [self createHourglassButton];
-    [self createTypingView];
+    [self createTypingIndicatorView];
     
     if (self.conversation.hasDraftMessageText) {
         self.inputBar.textView.text = self.conversation.draftMessageText;
@@ -209,6 +209,8 @@
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
+    [self updateSeparatorLineVisibility];
+    [self updateTypingIndicatorVisibility];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -293,7 +295,7 @@
     self.gifButton.accessibilityIdentifier = @"gifButton";
     [self.gifButton setIcon:ZetaIconTypeGif withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.locationButton, self.audioButton, self.pingButton, self.uploadFileButton, self.gifButton]];
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     
@@ -335,6 +337,7 @@
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     self.sendButton.accessibilityIdentifier = @"sendButton";
+    self.sendButton.adjustsImageWhenHighlighted = NO;
     self.sendButton.cas_styleClass = @"send-button";
 
     [self.inputBar.rightAccessoryView addSubview:self.sendButton];
@@ -372,14 +375,19 @@
     [self.hourglassButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.sendButton withOffset:0];
 }
 
-- (void)createTypingView
+- (void)createTypingIndicatorView
 {
-    self.typingView = [[TypingConversationView alloc] initForAutoLayout];
-    self.typingView.userInteractionEnabled = NO;
-    self.typingView.users = self.typingUsers;
-    [self.inputBar.leftAccessoryView addSubview:self.typingView];
-    [self.typingView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.typingView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:14];
+    self.typingIndicatorView = [[TypingIndicatorView alloc] init];
+    self.typingIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.typingIndicatorView.accessibilityIdentifier = @"typingIndicator";
+    self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
+    [self.typingIndicatorView setHidden:YES animated:NO];
+    
+    [self.inputBar  addSubview:self.typingIndicatorView];
+    [self.typingIndicatorView  autoConstrainAttribute:(ALAttribute)ALAxisHorizontal toAttribute:ALAttributeTop ofView:self.inputBar];
+    [self.typingIndicatorView autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)updateNewButtonTitleLabel
@@ -414,10 +422,34 @@
     [self updateSendButtonVisibility];
 }
 
+- (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
+{
+    _inputBarOverlapsContent = inputBarOverlapsContent;
+    
+    [self updateSeparatorLineVisibility];
+}
+
 - (void)setTypingUsers:(NSSet *)typingUsers
 {
     _typingUsers = typingUsers;
-    self.typingView.users = typingUsers;
+    
+    [self updateSeparatorLineVisibility];
+    [self updateTypingIndicatorVisibility];
+}
+
+- (void)updateTypingIndicatorVisibility
+{
+    if (self.typingUsers.count > 0) {
+        self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
+        [self.typingIndicatorView layoutIfNeeded];
+    }
+    
+    [self.typingIndicatorView setHidden:self.typingUsers.count == 0 animated: true];
+}
+
+- (void)updateSeparatorLineVisibility
+{
+    self.inputBar.separatorEnabled = self.inputBarOverlapsContent || self.typingUsers.count > 0;
 }
 
 - (void)updateInputBarVisibility
@@ -500,6 +532,7 @@
 
             self.singleTapGestureRecognizer.enabled = NO;
             [self selectInputControllerButton:self.emojiButton];
+            [Analytics.shared tagEmojiKeyboardOpenend:self.conversation];
             break;
 
         case ConversationInputBarViewControllerModeTimeoutConfguration:
@@ -945,22 +978,7 @@
 @implementation ConversationInputBarViewController (ZMConversationObserver)
 
 - (void)conversationDidChange:(ConversationChangeInfo *)change
-{
-    if (change.messagesChanged) {
-        
-        if (self.conversation.messages.count != 0) {
-            id<ZMConversationMessage>lastMessage = self.conversation.messages.lastObject;
-            
-            if (! [lastMessage.sender isSelfUser] && ([NSDate timeIntervalSinceReferenceDate] - [lastMessage.serverTimestamp timeIntervalSinceReferenceDate]) < 5.0f) {
-                NSMutableSet *currentTyping = [NSMutableSet setWithSet:self.typingUsers];
-                
-                [currentTyping removeObject:lastMessage.sender];
-                
-                self.typingUsers = currentTyping;
-            }
-        }
-    }
-    
+{    
     if (change.participantsChanged || change.connectionStateChanged) {
         [self updateInputBarVisibility];
     }
@@ -1030,7 +1048,18 @@
     [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
     [self clearInputBar];
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.sendController sendMessageWithImageData:imageData completion:nil];
+    
+    
+    
+    NSString *messageText = nil;
+    
+    if ([searchTerm isEqualToString:@""]) {
+        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
+    } else {
+        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
+    }
+    
+    [self.sendController sendTextMessage:messageText withImageData:imageData];
 }
 
 @end

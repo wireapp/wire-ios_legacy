@@ -427,7 +427,7 @@
 "self.settings.account_section.email.title" = "E-mail";
 "self.settings.account_section.phone.title" = "Telefone";
 
-"self.settings.account_details_group.footer" = "Pessoas podem te encontrar com esses detalhes. As informações são criptografadas e não são visíveis para qualquer outra pessoa.";
+"self.settings.account_details_group.footer" = "Pessoas podem te encontrar com esses detalhes.";
 
 "self.settings.account_details.remove_device.title" = "Remover o dispositivo";
 "self.settings.account_details.key_fingerprint.title" = "Chave digital";
@@ -439,7 +439,7 @@
 "self.settings.account_picture_group.picture" = "Imagem";
 "self.settings.account_picture_group.color" = "Cor";
 
-"self.settings.account_picture_group.theme" = "Tema escuro";
+"self.settings.account_picture_group.theme" = "Tema Escuro";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire dá uma impressão digital única a cada dispositivo. Compare-os e verifique seus dispositivos e conversas.";
 "self.settings.device_details.reset_session.subtitle" = "Se as impressões digitais não corresponderem, redefina a sessão para gerar novas chaves de criptografia em ambos os lados.";
@@ -456,7 +456,7 @@
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notificações";
-"self.settings.notifications.push_notification.toogle" = "Pré-visualização de mensagens";
+"self.settings.notifications.push_notification.toogle" = "Pré-visualização de Mensagens";
 "self.settings.notifications.push_notification.footer" = "Nome do remetente e mensagem na tela de bloqueio e na Central de Notificações.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Banners de Mensagens";
@@ -473,10 +473,10 @@
 "self.settings.sound_menu.sounds.wire_message" = "Mensagem do Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Ping do Wire";
 
-// Send Button
-"self.settings.send_button.title" = "Use a tecla return para enviar mensagens";
-"self.settings.send_button.header" = "Botão Enviar";
-"self.settings.send_button.footer" = "Se ativado, mensagens serão enviadas quando através da tecla Enter em vez do Botão Enviar dedicado";
+// By popular demand
+"self.settings.popular_demand.title" = "Por demanda popular";
+"self.settings.popular_demand.send_button.title" = "Botão Enviar";
+"self.settings.popular_demand.send_button.footer" = "Desabilite para enviar através da tecla return.";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Alertas de som";
@@ -497,7 +497,7 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
-"self.settings.privacy_analytics_section.title" = "Relatórios de uso e erro";
+"self.settings.privacy_analytics_section.title" = "Relatórios de Uso e Erro";
 "self.settings.privacy_analytics_menu.description.title" = "Faça o Wire melhorar mandando informações de uso anônimas.\n";
 
 "self.settings.privacy.clear_history.title" = "Limpar Histórico";
@@ -511,6 +511,7 @@
 "self.settings.advanced.reset_push_token.subtitle" = "Se você tiver problemas com notificações, o Suporte do Wire pode solicitar que você redefinir esse token.";
 "self.settings.advanced.reset_push_token_alert.title" = "Token de notificações foi redefinido";
 "self.settings.advanced.reset_push_token_alert.message" = "As notificações serão restauradas em poucos segundos.";
+"self.settings.advanced.version_technical_details.title" = "Detalhes técnicos da Versão";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Relatório Técnico";
@@ -703,6 +704,8 @@
 "giphy.error.no_result" = "nenhum gif encontrado";
 
 "giphy.confirm" = "enviar";
+"giphy.cancel" = "cancelar";
+"giphy.search_placeholder" = "Pesquisa Giphy";
 
 "invite_banner.title" = "Traga seus amigos para o Wire!";
 "invite_banner.message" = "Desfrute de chamadas, mensagens, desenhos, GIFs e muito mais em privado ou com grupos.";

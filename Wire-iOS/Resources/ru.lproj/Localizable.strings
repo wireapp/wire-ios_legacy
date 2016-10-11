@@ -427,7 +427,7 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Телефон";
 
-"self.settings.account_details_group.footer" = "Люди могут найти вас с этими данными. Информация зашифрована и не видна кому-либо еще.";
+"self.settings.account_details_group.footer" = "Люди могут найти вас с этими данными.";
 
 "self.settings.account_details.remove_device.title" = "Удалить устройство";
 "self.settings.account_details.key_fingerprint.title" = "Отпечаток";
@@ -473,10 +473,10 @@
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пинг Wire";
 
-// Send Button
-"self.settings.send_button.title" = "Использовать клавишу Отправить для отправки сообщений";
-"self.settings.send_button.header" = "Кнопка \"отправить\"";
-"self.settings.send_button.footer" = "Во включенном режиме сообщения будут отправляться при нажатии на клавиатуре на клавишу Отправить";
+// By popular demand
+"self.settings.popular_demand.title" = "По многочисленным просьбам";
+"self.settings.popular_demand.send_button.title" = "Кнопка \"отправить\"";
+"self.settings.popular_demand.send_button.footer" = "Отключить отправку по нажатию клавиши Enter.";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звуковые уведомления";
@@ -511,6 +511,7 @@
 "self.settings.advanced.reset_push_token.subtitle" = "Если у вас возникли проблемы с push-уведомлениями, отдел поддержки Wire может попросить вас его сбросить.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен был обновлен";
 "self.settings.advanced.reset_push_token_alert.message" = "Уведомления будут восстановлены в течение нескольких секунд.";
+"self.settings.advanced.version_technical_details.title" = "Технические детали версии";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Технический отчет";
@@ -703,6 +704,8 @@
 "giphy.error.no_result" = "gif не найдена";
 
 "giphy.confirm" = "отправить";
+"giphy.cancel" = "отменить";
+"giphy.search_placeholder" = "Поиск Giphy";
 
 "invite_banner.title" = "Приведите друзей в Wire!";
 "invite_banner.message" = "Наслаждайтесь звонками, сообщениями, скетчами, GIF \nи многим другим в приватном или групповом разговоре.";

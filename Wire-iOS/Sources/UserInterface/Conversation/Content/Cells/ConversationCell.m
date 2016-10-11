@@ -152,6 +152,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     self.messageContentView = [[UIView alloc] init];
     self.messageContentView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.messageContentView.accessibilityElementsHidden = NO;
     [self.contentView addSubview:self.messageContentView];
     
     
@@ -194,6 +195,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.messageToolboxView.translatesAutoresizingMaskIntoConstraints = NO;
     self.messageToolboxView.isAccessibilityElement = YES;
     self.messageToolboxView.accessibilityIdentifier = @"MessageToolbox";
+    self.messageToolboxView.accessibilityLabel = @"MessageToolbox";
     [self.contentView addSubview:self.messageToolboxView];
     
     [self createLikeButton];
@@ -202,6 +204,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     self.doubleTapGestureRecognizer.delaysTouchesBegan = YES;
     [self.contentView addGestureRecognizer:self.doubleTapGestureRecognizer];
+    
+    self.contentView.isAccessibilityElement = YES;
+    
+    NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
+    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.unreadDotView, self.messageToolboxView, self.likeButton]];
+    self.accessibilityElements = accessibilityElements;
 }
 
 - (void)prepareForReuse
@@ -333,9 +341,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     ZMDeliveryState deliveryState = self.message.deliveryState;
     
-    // Code disabled until the majority would send the delivery receipts
-//    BOOL shouldShowPendingDeliveryState = self.message.conversation.conversationType == ZMConversationTypeOneOnOne;
-    BOOL shouldShowDeliveryState = /*(deliveryState == ZMDeliveryStatePending && shouldShowPendingDeliveryState) ||*/ deliveryState == ZMDeliveryStateFailedToSend || self.layoutProperties.alwaysShowDeliveryState;
+    BOOL shouldShowPendingDeliveryState = self.message.conversation.conversationType == ZMConversationTypeOneOnOne;
+    BOOL shouldShowDeliveryState = (deliveryState == ZMDeliveryStatePending && shouldShowPendingDeliveryState) || deliveryState == ZMDeliveryStateFailedToSend || self.layoutProperties.alwaysShowDeliveryState;
     BOOL shouldBeVisible = self.selected || self.message.usersReaction.count > 0 || shouldShowDeliveryState;
     
     if (! [Message shouldShowTimestamp:self.message]) {

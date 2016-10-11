@@ -1,4 +1,4 @@
-github "wireapp/wire-ios-ziphy" ~> 5.0
+github "wireapp/wire-ios-ziphy" ~> 6.0
 github "wireapp/SmoothLineView" "0.1.12-wire-ft"
 github "wireapp/TSMarkdownParser" ~> 1.0.17
 github "wireapp/Classy" "v0.2.6"

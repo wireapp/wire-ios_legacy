@@ -48,7 +48,15 @@ extension ZMConversationMessage {
 
 @objc open class MessageToolboxView: UIView {
     fileprivate static let resendLink = URL(string: "settings://resend-message")!
-    
+
+    private static let ephemeralTimeFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .dropLeading
+        return formatter
+    }()
+
     open let statusLabel = TTTAttributedLabel(frame: CGRect.zero)
     open let reactionsView = ReactionsView()
     fileprivate let labelClipView = UIView()
@@ -66,6 +74,9 @@ extension ZMConversationMessage {
     override init(frame: CGRect) {
         
         super.init(frame: frame)
+        self.isAccessibilityElement = true
+        self.accessibilityElementsHidden = false
+        
         CASStyler.default().styleItem(self)
         
         setupViews()
@@ -87,6 +98,8 @@ extension ZMConversationMessage {
         statusLabel.extendsLinkTouchArea = true
         statusLabel.isUserInteractionEnabled = true
         statusLabel.verticalAlignment = .center
+        statusLabel.isAccessibilityElement = true
+        statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
                                       NSForegroundColorAttributeName: UIColor(for: .vividRed)]
@@ -233,7 +246,7 @@ extension ZMConversationMessage {
         
         let changeBlock = {
             self.statusLabel.attributedText = attributedText
-            self.statusLabel.accessibilityLabel = self.statusLabel.attributedText.string
+            self.accessibilityValue = self.statusLabel.attributedText.string
         }
         
         if animated {
@@ -243,18 +256,20 @@ extension ZMConversationMessage {
             changeBlock()
         }
     }
+
+    public func updateTimestamp(_ message: ZMConversationMessage) {
+        configureTimestamp(message)
+    }
     
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
         var deliveryStateString: String? = .none
         
-        if let sender = message.sender , sender.isSelfUser {
+        if let sender = message.sender, sender.isSelfUser {
             switch message.deliveryState {
             case .pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
             case .delivered:
-                // Code disabled until the majority would send the delivery receipts
-                // deliveryStateString = "content.system.message_delivered_timestamp".localized
-                fallthrough
+                deliveryStateString = "content.system.message_delivered_timestamp".localized
             case .sent:
                 deliveryStateString = "content.system.message_sent_timestamp".localized
             case .failedToSend:
@@ -263,7 +278,13 @@ extension ZMConversationMessage {
                 deliveryStateString = .none
             }
         }
-        
+
+        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
+        if let destructionDate = message.destructionDate, showDestructionTimer {
+            let remaining = destructionDate.timeIntervalSinceNow
+            deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
+        }
+
         let finalText: String
         
         if let timestampString = self.timestampString(message) , message.deliveryState == .delivered || message.deliveryState == .sent {
@@ -284,14 +305,18 @@ extension ZMConversationMessage {
             let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
             attributedText.addAttributes([NSLinkAttributeName: type(of: self).resendLink], range: linkRange)
         }
+
+        if showDestructionTimer, let stateString = deliveryStateString {
+            attributedText.addAttributes([NSForegroundColorAttributeName: UIColor(for: .brightOrange)], to: stateString)
+        }
         
-        if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
+        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
             return
         }
         
         let changeBlock =  {
             self.statusLabel.attributedText = attributedText
-            self.statusLabel.accessibilityLabel = self.statusLabel.attributedText.string
+            self.accessibilityValue = self.statusLabel.attributedText.string
             self.statusLabel.addLinks()
         }
         
@@ -314,7 +339,7 @@ extension ZMConversationMessage {
         
         let changeBlock =  {
             self.statusLabel.attributedText = attributedText
-            self.statusLabel.accessibilityLabel = self.statusLabel.attributedText.string
+            self.accessibilityValue = self.statusLabel.attributedText.string
         }
         
         if animated {

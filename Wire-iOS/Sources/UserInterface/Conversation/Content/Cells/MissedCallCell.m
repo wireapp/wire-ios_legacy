@@ -50,6 +50,10 @@
                                                                  0, [WAZUIMagic floatForIdentifier:@"content.system_message.right_margin"]);
         [self createMissedCallViews];
         [self createConstraints];
+        
+        NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
+        [accessibilityElements addObjectsFromArray:@[self.subtitleLabel]];
+        self.accessibilityElements = accessibilityElements;
     }
     
     return self;
@@ -87,6 +91,8 @@
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.subtitleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
     self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
+    self.subtitleLabel.accessibilityIdentifier = @"PingedLabel";
+    self.subtitleLabel.isAccessibilityElement = YES;
     [self.messageContentView addSubview:self.subtitleLabel];
 }
 

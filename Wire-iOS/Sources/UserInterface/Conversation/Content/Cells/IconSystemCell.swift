@@ -42,10 +42,14 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         
         self.leftIconView = UIImageView(frame: CGRect.zero)
         self.leftIconView.contentMode = .center
+        self.leftIconView.isAccessibilityElement = true
+        self.leftIconView.accessibilityLabel = "Icon"
         
         self.labelView = TTTAttributedLabel(frame: CGRect.zero)
         self.labelView.extendsLinkTouchArea = true
         self.labelView.numberOfLines = 0
+        self.labelView.isAccessibilityElement = true
+        self.labelView.accessibilityLabel = "Text"
         self.labelView.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
                                         NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
         
@@ -59,6 +63,8 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         self.leftIconContainer.addSubview(self.leftIconView)
         self.messageContentView.addSubview(self.labelView)
         self.contentView.addSubview(self.lineView)
+        
+        self.accessibilityElements = [self.labelView, self.leftIconView]
         
         CASStyler.default().styleItem(self)
     }

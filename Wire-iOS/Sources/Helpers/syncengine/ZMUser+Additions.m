@@ -107,7 +107,7 @@ ZMUser *BareUserToUser(id bareUser) {
     ZMAccentColor accentColorValue;
 
     do {
-        accentColorValue = arc4random() % (ZMAccentColorMax) + 1;
+        accentColorValue = arc4random_uniform(ZMAccentColorMax) + 1;
     }
     while (accentColorValue == ZMAccentColorSoftPink ||
            accentColorValue == ZMAccentColorStrongLimeGreen ||
@@ -120,7 +120,7 @@ ZMUser *BareUserToUser(id bareUser) {
 {
     ZMAccentColor accentColorValue;
     
-    accentColorValue = arc4random() % (ZMAccentColorMax) + 1;
+    accentColorValue = arc4random_uniform(ZMAccentColorMax) + 1;
 
     return accentColorValue;
 }

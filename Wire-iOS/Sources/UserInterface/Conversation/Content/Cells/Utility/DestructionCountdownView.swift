@@ -30,12 +30,10 @@ public final class DestructionCountdownView: UIView {
     private let fullColor = UIColor(for: .brightOrange)
     private let emptyColor = UIColor(for: .brightOrange).withAlphaComponent(0.5)
 
-    private var fullDots: Int = 0 {
+    private var fullDots: Int? {
         didSet(oldValue) {
-            guard oldValue != fullDots else { return }
-            dots.dropLast(fullDots).forEach {
-                $0.backgroundColor = emptyColor
-            }
+            guard let old = oldValue, let new = fullDots, old != new else { return }
+            updateColors(new)
         }
     }
 
@@ -43,14 +41,26 @@ public final class DestructionCountdownView: UIView {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
+        updateColors(numberOfDots)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func update(fraction: CGFloat) {
+    /// Updates the filled dots with the given fraction
+    /// - parameter fraction: the floating point fraction between 0 and 1
+    /// - returns: `true` if a change was necessary and `false` otherwise
+    @discardableResult public func update(fraction: CGFloat) -> Bool {
+        let previous = fullDots
         fullDots = Int(CGFloat(numberOfDots) * fraction.clamp(0, upper: 1))
+        return previous != fullDots
+    }
+
+    private func updateColors(_ filled: Int) {
+        dots.reversed().enumerated().forEach { idx, dot in
+            dot.backgroundColor = idx <= filled ? fullColor : emptyColor
+        }
     }
 
     public override func layoutSubviews() {

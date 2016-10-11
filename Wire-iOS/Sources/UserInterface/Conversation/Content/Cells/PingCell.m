@@ -64,6 +64,10 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self.pingImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.contentView addSubview:self.pingImageView];
+    
+    NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
+    [accessibilityElements addObjectsFromArray:@[self.authorLabel]];
+    self.accessibilityElements = accessibilityElements;
 }
 
 - (void)createConstraints

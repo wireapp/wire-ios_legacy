@@ -25,6 +25,7 @@ public extension ConversationCell {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
+        self.likeButton.accessibilityLabel = "likeButton"
         self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), for: .touchUpInside)
         self.likeButton.setIcon(.liked, with: .like, for: .normal)
         self.likeButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextDimmed), for: .normal)

@@ -520,7 +520,7 @@
             didScrollWithOffsetFromBottom:(CGFloat)offset
                         withLatestMessage:(id<ZMConversationMessage>)message
 {
-    self.inputBarController.inputBar.separatorEnabled = ! contentViewController.isScrolledToBottom;
+    self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
 }
 
 - (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view

@@ -98,7 +98,7 @@ class GiphySearchViewController : UICollectionViewController {
         searchBar.text = searchTerm
         searchBar.delegate = self
         searchBar.tintColor = .accent()
-        searchBar.placeholder = "giphy.search_placeholder".localized.uppercased()
+        searchBar.placeholder = "giphy.search_placeholder".localized
         searchBar.barStyle = ColorScheme.default().variant == .dark ? .black : .default
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar

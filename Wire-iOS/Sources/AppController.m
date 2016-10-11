@@ -327,9 +327,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         DDLogInfo(@"Database migration required, performing migration now:");
         NSTimeInterval timeStart = [NSDate timeIntervalSinceReferenceDate];
         [ZMUserSession prepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier completion:^{
-            NSTimeInterval timeEnd = [NSDate timeIntervalSinceReferenceDate];
-            DDLogInfo(@"Database migration DONE: %.02f sec", timeEnd - timeStart);
-            configuration();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSTimeInterval timeEnd = [NSDate timeIntervalSinceReferenceDate];
+                DDLogInfo(@"Database migration DONE: %.02f sec", timeEnd - timeStart);
+                configuration();
+            });
         }];
         return NO;
     }
