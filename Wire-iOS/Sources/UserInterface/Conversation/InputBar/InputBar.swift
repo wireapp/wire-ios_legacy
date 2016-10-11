@@ -208,7 +208,6 @@ private struct InputBarConstants {
             buttonsView.leading == buttonInnerContainer.leading
             buttonsView.trailing <= buttonInnerContainer.trailing
             buttonsView.bottom == buttonInnerContainer.bottom
-            buttonsView.width == 414 ~ LayoutPriority(750)
         }
         
         constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
