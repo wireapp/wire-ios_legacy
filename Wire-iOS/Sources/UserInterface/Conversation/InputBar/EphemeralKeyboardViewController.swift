@@ -43,6 +43,7 @@ extension ZMConversationMessageDestructionTimeout {
             .none,
             .fiveSeconds,
             .fifteenSeconds,
+            .oneMinute,
             .fiveMinutes,
             .fifteenMinutes
         ]
