@@ -875,8 +875,9 @@
         NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
         giphySearchViewController.delegate = self;
-        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:nil];
-        
+        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:^{
+            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
+        }];
     }
 }
 

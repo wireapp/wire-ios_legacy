@@ -26,6 +26,22 @@ import Cartography
     
 }
 
+class GiphyNavigationController : UINavigationController {
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default().variant == .dark ? .lightContent : .default
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+}
+
 class GiphyCollectionViewCell : UICollectionViewCell {
     
     static let CellIdentifier = "GiphyCollectionViewCell"
@@ -72,6 +88,7 @@ class GiphySearchViewController : UICollectionViewController {
     var pendingTimer : Timer?
     var pendingSearchtask : CancelableTask?
     var pendingFetchTask : CancelableTask?
+    var needsToConfigureLayout : Bool = false
     
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
@@ -96,10 +113,8 @@ class GiphySearchViewController : UICollectionViewController {
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
         
-        masonrylayout.dimensionLength = self.view.bounds.width / 2
-        masonrylayout.minimumLineSpacing = 1
-        masonrylayout.itemMargins = CGSize(width: 1, height: 1)
-        
+        configureMasonryLayout(withSize: view.bounds.size)
+
         searchBar.text = searchTerm
         searchBar.delegate = self
         searchBar.tintColor = .accent()
@@ -119,8 +134,30 @@ class GiphySearchViewController : UICollectionViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        needsToConfigureLayout = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if needsToConfigureLayout {
+            self.configureMasonryLayout(withSize: view.bounds.size)
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+            needsToConfigureLayout = false
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.configureMasonryLayout(withSize: size)
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+    
     public func wrapInsideNavigationController() -> UINavigationController {
-        let navigationController = UINavigationController(rootViewController: self)
+        let navigationController = GiphyNavigationController(rootViewController: self)
         
         var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
         backButtonImage = backButtonImage?.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
@@ -135,6 +172,13 @@ class GiphySearchViewController : UICollectionViewController {
         navigationController.navigationBar.isTranslucent = false
         
         return navigationController
+    }
+    
+    func configureMasonryLayout(withSize size: CGSize) {
+        masonrylayout.rank = UInt(ceilf(Float(size.width) / 256.0))
+        masonrylayout.dimensionLength = view.bounds.width / CGFloat(masonrylayout.rank)
+        masonrylayout.minimumLineSpacing = 1
+        masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
     
     func onDismiss() {
