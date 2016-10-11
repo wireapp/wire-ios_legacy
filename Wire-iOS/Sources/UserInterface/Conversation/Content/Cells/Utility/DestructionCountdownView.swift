@@ -23,12 +23,21 @@ import Cartography
 
 public final class DestructionCountdownView: UIView {
 
-    private let numberOfDots = 5
-    private let padding: CGFloat = 2
-    private let dotSize: CGFloat = 8
+    public let numberOfDots = 5
+    private let padding: CGFloat = 1
+    private let dotSize: CGFloat = 3
     private var dots = [UIView]()
     private let fullColor = UIColor(for: .brightOrange)
     private let emptyColor = UIColor(for: .brightOrange).withAlphaComponent(0.5)
+
+    private var fullDots: Int = 0 {
+        didSet(oldValue) {
+            guard oldValue != fullDots else { return }
+            dots.dropLast(fullDots).forEach {
+                $0.backgroundColor = emptyColor
+            }
+        }
+    }
 
     public init() {
         super.init(frame: .zero)
@@ -41,10 +50,7 @@ public final class DestructionCountdownView: UIView {
     }
 
     public func update(fraction: CGFloat) {
-        let fullCount = Int(floor(CGFloat(numberOfDots) * fraction))
-        dots.dropLast(fullCount).forEach {
-            $0.backgroundColor = emptyColor
-        }
+        fullDots = Int(CGFloat(numberOfDots) * fraction.clamp(0, upper: 1))
     }
 
     public override func layoutSubviews() {

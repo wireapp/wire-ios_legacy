@@ -30,7 +30,6 @@ class DestructionCountdownViewTests: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = .white
         sut = DestructionCountdownView()
-        recordMode = true
     }
 
     func testThatItRendersCorrectlyInInitialState() {

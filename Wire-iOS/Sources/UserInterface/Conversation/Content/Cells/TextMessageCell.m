@@ -60,6 +60,9 @@
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerRightMarginConstraint;
 @property (nonatomic, strong) UIView *linkAttachmentView;
 
+@property (nonatomic, strong) DestructionCountdownView *countdownView;
+@property (nonatomic, strong) CADisplayLink *destructionLink;
+
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 
 @end
@@ -81,7 +84,8 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    
+    [self tearDownCountdownLink];
+
     self.mediaPlayerTopMarginConstraint.constant = 0;
     [self.linkAttachmentViewController.view removeFromSuperview];
     self.linkAttachmentViewController = nil;
@@ -95,7 +99,11 @@
     self.messageTextView.translatesAutoresizingMaskIntoConstraints = NO;
     self.messageTextView.interactionDelegate = self;
     [self.messageContentView addSubview:self.messageTextView];
-    
+
+    self.countdownView = [[DestructionCountdownView alloc] init];
+    [self.messageContentView addSubview:self.countdownView];
+    self.countdownView.hidden = YES;
+
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.dataDetectorTypes = UIDataDetectorTypeNone;
     self.messageTextView.editable = NO;
@@ -140,6 +148,9 @@
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
+
+    [self.countdownView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
+    [self.countdownView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.messageTextView];
 }
 
 - (void)updateTextMessageConstraintConstants
@@ -157,6 +168,8 @@
     if ( ! [Message isTextMessage:message]) {
         return;
     }
+
+    [self startCountdownAnimationIfNeeded:message];
     
     [super configureForMessage:message layoutProperties:layoutProperties];
     [message requestImageDownload];
@@ -196,21 +209,53 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-            ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
-            articleView.translatesAutoresizingMaskIntoConstraints = NO;
-            [articleView configureWithTextMessageData:textMesssageData];
-            [self.linkAttachmentContainer addSubview:articleView];
-            [articleView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-            [articleView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-            [articleView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-            [articleView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-            articleView.delegate = self;
-            self.linkAttachmentView = articleView;
-        }
-    
+        ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
+        articleView.translatesAutoresizingMaskIntoConstraints = NO;
+        [articleView configureWithTextMessageData:textMesssageData];
+        [self.linkAttachmentContainer addSubview:articleView];
+        [articleView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [articleView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [articleView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+        [articleView autoPinEdgeToSuperviewMargin:ALEdgeRight];
+        articleView.delegate = self;
+        self.linkAttachmentView = articleView;
+    }
+
     [self.linkAttachmentViewController fetchAttachment];
 
     [self updateTextMessageConstraintConstants];
+}
+
+- (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message
+{
+    if (self.showDestructionCountdown && nil == self.destructionLink) {
+        self.destructionLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateCountdownView)];
+        [self.destructionLink addToRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
+    }
+}
+
+- (BOOL)showDestructionCountdown
+{
+    return self.message.isEphemeral && !self.message.isObfuscated;
+}
+
+- (void)updateCountdownView
+{
+    self.countdownView.hidden = !self.showDestructionCountdown;
+
+    if (! self.showDestructionCountdown && nil != self.destructionLink) {
+        [self tearDownCountdownLink];
+        return;
+    }
+
+    CGFloat fraction = self.message.destructionDate.timeIntervalSinceNow / self.message.deletionTimeout;
+    [self.countdownView updateWithFraction:fraction];
+}
+
+- (void)tearDownCountdownLink
+{
+    [self.destructionLink invalidate];
+    self.destructionLink = nil;
 }
 
 - (LinkAttachment *)lastKnownLinkAttachmentInList:(NSArray *)linkAttachments
@@ -223,7 +268,7 @@
             result = linkAttachment;
         }
     }
-    
+
     return result;
 }
 
@@ -255,12 +300,26 @@
 
     if (change.isObfuscatedChanged) {
         [self configureForMessage:change.message layoutProperties:self.layoutProperties];
+        [self updateCountdownView];
         needsLayout = YES;
     }
     
     return needsLayout;
 }
 
+- (void)didEndDisplayingInTableView
+{
+    [super didEndDisplayingInTableView];
+    [self tearDownCountdownLink];
+}
+
+- (void)willDisplayInTableView:(BOOL)onScreen
+{
+    [super willDisplayInTableView:onScreen];
+    if (onScreen) {
+        [self startCountdownAnimationIfNeeded:self.message];
+    }
+}
 
 #pragma mark - Copy/Paste
 
