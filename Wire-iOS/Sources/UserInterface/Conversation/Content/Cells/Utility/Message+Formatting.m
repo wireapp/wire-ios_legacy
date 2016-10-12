@@ -75,6 +75,7 @@ static inline NSDataDetector *linkDataDetector(void)
 + (NSAttributedString *)formattedStringWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
                                                 forMessage:(id<ZMTextMessageData>)message
                                                    isGiphy:(BOOL)isGiphy
+                                                obfuscated:(BOOL)obfuscated
 {
     if (message.messageText.length == 0) {
         return [[NSAttributedString alloc] initWithString:@""];
@@ -102,7 +103,7 @@ static inline NSDataDetector *linkDataDetector(void)
     });
 
     UIFont *font;
-    if ([(ZMMessage *)message isObfuscated]) {
+    if (obfuscated) {
         font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
     } else {
         font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];

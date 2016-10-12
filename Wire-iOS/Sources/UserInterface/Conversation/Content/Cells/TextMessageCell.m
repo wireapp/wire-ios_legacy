@@ -177,7 +177,8 @@
 
     NSAttributedString *attributedMessageText = [NSAttributedString formattedStringWithLinkAttachments:layoutProperties.linkAttachments
                                                                                             forMessage:message.textMessageData
-                                                                                               isGiphy:isGiphy];
+                                                                                               isGiphy:isGiphy
+                                                                                            obfuscated:message.isObfuscated];
     self.messageTextView.attributedText = attributedMessageText;
     [self.messageTextView layoutIfNeeded];
     self.textViewHeightConstraint.active = attributedMessageText.length == 0;
