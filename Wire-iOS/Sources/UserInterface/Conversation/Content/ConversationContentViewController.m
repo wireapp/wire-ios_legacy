@@ -189,11 +189,12 @@
                                                              keyPath:@"activeMediaPlayer"
                                                               target:self
                                                             selector:@selector(activeMediaPlayerChanged:)
+
                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 
     for (ConversationCell *cell in self.tableView.visibleCells) {
         if ([cell isKindOfClass:ConversationCell.class]) {
-            [cell willDisplayInTableView:self.onScreen];
+            [cell willDisplayInTableView:YES];
         }
     }
 }
@@ -208,8 +209,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
     self.onScreen = NO;
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidLayoutSubviews
@@ -905,6 +906,11 @@
         ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
+}
+
+- (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell
+{
+    return self.onScreen;
 }
 
 @end

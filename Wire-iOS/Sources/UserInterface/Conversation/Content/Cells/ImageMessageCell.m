@@ -238,6 +238,7 @@ static ImageCache *imageCache(void)
     [self.fullScreenButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
 
     [self.obfuscationView autoPinEdgesToSuperviewEdges];
+    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.fullImageView withOffset:8];
 }
 
  - (void)updateImageMessageConstraintConstants

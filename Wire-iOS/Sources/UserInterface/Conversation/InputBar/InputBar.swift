@@ -353,6 +353,12 @@ private struct InputBarConstants {
         }
     }
 
+    public func updateEphemeralState() {
+        guard inputBarState.isWriting else { return }
+        updateColors()
+        updatePlaceholder()
+    }
+
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
         return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
@@ -362,11 +368,17 @@ private struct InputBarConstants {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
 
         if case .writing(let ephemeral) = inputBarState {
-            buttonRowSeparator.backgroundColor = ephemeral ? ephemeralColor : writingSeparatorColor
-            textView.placeholderTextColor = ephemeral ? ephemeralColor : placeholderColor
-            fakeCursor.backgroundColor = ephemeral ? ephemeralColor : .accent()
-            textView.tintColor = ephemeral ? ephemeralColor : .accent()
+            showEphemeralColors(ephemeral)
+        } else {
+            showEphemeralColors(false)
         }
+    }
+
+    private func showEphemeralColors(_ show: Bool) {
+        buttonRowSeparator.backgroundColor = show ? ephemeralColor : writingSeparatorColor
+        textView.placeholderTextColor = show ? ephemeralColor : placeholderColor
+        fakeCursor.backgroundColor = show ? ephemeralColor : .accent()
+        textView.tintColor = show ? ephemeralColor : .accent()
     }
 
     // MARK: – Editing View State

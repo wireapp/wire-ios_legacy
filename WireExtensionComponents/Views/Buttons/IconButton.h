@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL circular;
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic) BOOL adjustsTitleWhenHighlighted;
+@property (nonatomic) BOOL adjustsBorderColorWhenHighlighted;
 @property (nonatomic) CGFloat titleImageSpacing;
 
 

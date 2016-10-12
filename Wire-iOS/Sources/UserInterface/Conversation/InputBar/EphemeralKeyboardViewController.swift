@@ -28,9 +28,17 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
-fileprivate let formatter: DateComponentsFormatter = {
+fileprivate let longStyleFormatter: DateComponentsFormatter = {
     let formatter = DateComponentsFormatter()
     formatter.unitsStyle = .full
+    formatter.allowedUnits = [.minute, .second]
+    formatter.zeroFormattingBehavior = [.dropLeading, .dropTrailing]
+    return formatter
+}()
+
+fileprivate let shortStyleFormatter: DateComponentsFormatter = {
+    let formatter = DateComponentsFormatter()
+    formatter.unitsStyle = .abbreviated
     formatter.allowedUnits = [.minute, .second]
     formatter.zeroFormattingBehavior = [.dropLeading, .dropTrailing]
     return formatter
@@ -51,7 +59,12 @@ extension ZMConversationMessageDestructionTimeout {
 
     var displayString: String? {
         guard .none != self else { return "input.ephemeral.timeout.none".localized }
-        return formatter.string(from: TimeInterval(rawValue))
+        return longStyleFormatter.string(from: TimeInterval(rawValue))
+    }
+
+    var shortDisplayString: String? {
+        guard .none != self else { return nil }
+        return shortStyleFormatter.string(from: TimeInterval(rawValue))
     }
 
 }

@@ -102,7 +102,7 @@ static inline NSDataDetector *linkDataDetector(void)
     });
 
     UIFont *font;
-    if ([(ZMMessage*)message isObfuscated]) {
+    if ([(ZMMessage *)message isObfuscated]) {
         font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
     } else {
         font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];

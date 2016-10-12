@@ -79,6 +79,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
+- (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell;
 @end
 
 
@@ -91,9 +92,9 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) UIView *messageContentView;
 @property (nonatomic) LikeButton *likeButton;
 @property (nonatomic, readonly) MessageToolboxView *messageToolboxView;
+@property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
-@property (nonatomic, readonly) BOOL startSelfDestructionWhenOnscreen;
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
 @property (nonatomic) BOOL showsMenu;

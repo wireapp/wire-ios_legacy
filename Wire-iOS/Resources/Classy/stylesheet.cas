@@ -763,6 +763,10 @@ MessageToolboxView {
 }
 
 ^ConversationCell {
+    countdownContainerView: @{
+        backgroundColor: $color-background;
+    }
+
     authorLabel: @{
         font: $font-small-medium;
         textColor: $color-text-foreground;
@@ -893,6 +897,14 @@ InputBarEditView: {
 }
 
 ConversationInputBarViewController {
+
+    ephemeralSendButton: @{
+        borderColor: $color-accent-orange;
+        titleColor: $color-accent-orange;
+        titleLabel: @{
+            font: $font-small;
+        }
+    }
 
     hourglassButton: @{
         iconColor: $color-icon-normal;

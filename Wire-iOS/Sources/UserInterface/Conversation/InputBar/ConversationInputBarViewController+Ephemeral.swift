@@ -45,6 +45,11 @@ extension ConversationInputBarViewController {
         inputBar.inputBarState = .writing(ephemeral: conversation.destructionEnabled)
     }
 
+    public func updateEphemeralSendButtonTitle(_ button: ButtonWithLargerHitArea) {
+        let title = conversation.destructionTimeout.shortDisplayString
+        button.setTitle(title, for: .normal)
+    }
+
 }
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {

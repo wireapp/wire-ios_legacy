@@ -53,13 +53,13 @@ public final class DestructionCountdownView: UIView {
     /// - returns: `true` if a change was necessary and `false` otherwise
     @discardableResult public func update(fraction: CGFloat) -> Bool {
         let previous = fullDots
-        fullDots = Int(CGFloat(numberOfDots) * fraction.clamp(0, upper: 1))
+        fullDots = Int(floor(CGFloat(numberOfDots) * fraction.clamp(0, upper: 1)))
         return previous != fullDots
     }
 
     private func updateColors(_ filled: Int) {
         dots.reversed().enumerated().forEach { idx, dot in
-            dot.backgroundColor = idx <= filled ? fullColor : emptyColor
+            dot.backgroundColor = idx < filled ? fullColor : emptyColor
         }
     }
 

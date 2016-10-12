@@ -70,7 +70,6 @@ public final class AudioMessageCell: ConversationCell {
         self.loadingView.isHidden = true
 
         obfuscationView.backgroundColor = UIColor(for: .brightOrange)
-        obfuscationView.isHidden = true
 
         allViews = [playButton, timeLabel, downloadProgressView, playerProgressView, waveformProgressView, loadingView, obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)
@@ -120,7 +119,7 @@ public final class AudioMessageCell: ConversationCell {
             timeLabel.width >= 32
         }
 
-        constrain(self.containerView, obfuscationView) { container, obfuscationView in
+        constrain(containerView, obfuscationView) { container, obfuscationView in
             obfuscationView.edges == container.edges
         }
         
@@ -142,6 +141,10 @@ public final class AudioMessageCell: ConversationCell {
             waveformProgressView.height == 32
             
             loadingView.center == containerView.center
+        }
+
+        constrain(containerView, countdownContainerView) { container, countDownContainer in
+            countDownContainer.top == container.top
         }
     }
     
