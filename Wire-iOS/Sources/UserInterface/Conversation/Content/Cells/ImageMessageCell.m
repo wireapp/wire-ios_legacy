@@ -403,7 +403,10 @@ static ImageCache *imageCache(void)
 
 - (void)updateAccessibilityElements
 {
-    NSMutableArray *elements = @[self.imageViewContainer].mutableCopy;
+    
+    NSMutableArray *elements = self.accessibilityElements.mutableCopy;
+    [elements addObject:self.imageViewContainer];
+    
     if (self.selected) {
         [elements addObjectsFromArray:@[self.sketchButton, self.fullScreenButton, self.imageViewContainer]];
     }

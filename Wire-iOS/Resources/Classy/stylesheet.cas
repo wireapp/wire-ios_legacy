@@ -788,6 +788,7 @@ MessageToolboxView {
     labelTextColor: $color-text-foreground;
     labelFont: $font-small-light;
     labelBoldFont: $font-small-medium;
+    labelTextBlendedColor: $color-text-dimmed;
 }
 
 FileTransferCell {
