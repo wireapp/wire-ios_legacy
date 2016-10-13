@@ -26,6 +26,8 @@ extern NSString * const ColorSchemeColorTextBackground;
 extern NSString * const ColorSchemeColorTextDimmed;
 extern NSString * const ColorSchemeColorTextPlaceholder;
 
+extern NSString * const ColorSchemeColorEphemeral;
+
 extern NSString * const ColorSchemeColorIconNormal;
 extern NSString * const ColorSchemeColorIconSelected;
 extern NSString * const ColorSchemeColorIconHighlighted;

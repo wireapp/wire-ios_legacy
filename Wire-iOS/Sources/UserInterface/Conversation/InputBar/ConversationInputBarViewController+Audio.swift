@@ -117,7 +117,6 @@ extension ConversationInputBarViewController {
     
     fileprivate func hideInKeyboardAudioRecordViewController() {
         self.inputBar.textView.resignFirstResponder()
-        self.audioRecordKeyboardViewController = nil
         delay(0.3) {
             self.mode = .textInput
         }
@@ -136,7 +135,6 @@ extension ConversationInputBarViewController {
     
     public func hideCameraKeyboardViewController(_ completion: @escaping ()->()) {
         self.inputBar.textView.resignFirstResponder()
-        self.cameraKeyboardViewController = nil
         delay(0.3) {
             self.mode = .textInput
             completion()

@@ -45,17 +45,13 @@ class ArticleView: UIView {
     let imageView = UIImageView()
     var loadingView: ThreeDotsLoadingView?
     var linkPreview: LinkPreview?
+    private let obfuscationView = UIView()
+    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: CGRect.zero)
-
-        [messageLabel, authorLabel, imageView].forEach { view in
-            let view = view as! UIView
-            
-            view.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(view)
-        }
+        [messageLabel, authorLabel, imageView, obfuscationView].forEach(addSubview)
         
         if (imagePlaceholder) {
             let loadingView = ThreeDotsLoadingView()
@@ -85,31 +81,40 @@ class ArticleView: UIView {
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        
-        authorLabel.font = authorFont
-        authorLabel.textColor = authorTextColor
+
         authorLabel.lineBreakMode = .byTruncatingMiddle
         authorLabel.accessibilityIdentifier = "linkPreviewSource"
-        
-        messageLabel.font = titleFont
-        messageLabel.textColor = titleTextColor
+
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
         messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
-        messageLabel.linkAttributes = [NSForegroundColorAttributeName : UIColor.accent()]
-        messageLabel.activeLinkAttributes = [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
         messageLabel.delegate = self
+
+        obfuscationView.backgroundColor = ephemeralColor
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
         addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(viewLongPressed)))
+
+        updateLabels()
+    }
+
+    func updateLabels(obfuscated: Bool = false) {
+        messageLabel.linkAttributes = obfuscated ? nil :  [NSForegroundColorAttributeName : UIColor.accent()]
+        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
+
+        authorLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 16) : authorFont
+        messageLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 20) : titleFont
+
+        authorLabel.textColor = obfuscated ? ephemeralColor : authorTextColor
+        messageLabel.textColor = obfuscated ? ephemeralColor : titleTextColor
     }
     
     func setupConstraints(_ imagePlaceholder: Bool) {
         let imageHeight : CGFloat = imagePlaceholder ? 144 : 0
         
-        constrain(self, messageLabel, authorLabel, imageView) { container, messageLabel, authorLabel, imageView in
+        constrain(self, messageLabel, authorLabel, imageView, obfuscationView) { container, messageLabel, authorLabel, imageView, obfuscationView in
             imageView.left == container.left
             imageView.top == container.top
             imageView.right == container.right
@@ -123,6 +128,8 @@ class ArticleView: UIView {
             authorLabel.right == container.right - 12
             authorLabel.top == messageLabel.bottom + 8
             authorLabel.bottom == container.bottom - 12
+
+            obfuscationView.edges == imageView.edges
         }
         
         if let loadingView = self.loadingView {
@@ -133,9 +140,7 @@ class ArticleView: UIView {
     }
     
     var authorHighlightAttributes : [String: AnyObject] {
-        get {
             return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
-        }
     }
     
     func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
@@ -157,36 +162,45 @@ class ArticleView: UIView {
         return cache
     }()
     
-    func configure(withTextMessageData textMessageData: ZMTextMessageData) {
+    func configure(withTextMessageData textMessageData: ZMTextMessageData, obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
             return
         }
         self.linkPreview = linkPreview
+        updateLabels(obfuscated: obfuscated)
 
         if let article = linkPreview as? Article {
-            configure(withArticle: article)
+            configure(withArticle: article, obfuscated: obfuscated)
         }
         
         if let twitterStatus = linkPreview as? TwitterStatus {
             configure(withTwitterStatus: twitterStatus)
         }
-        
+
+        obfuscationView.isHidden = !obfuscated
+
         if let imageData = textMessageData.imageData,
             let imageDataIdentifier = textMessageData.imageDataIdentifier {
-            imageView.image = UIImage(data: imageData)
-            loadingView?.isHidden = true
-            ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
+
+            if obfuscated {
+                ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
+                imageView.image = nil
+            } else {
+                imageView.image = UIImage(data: imageData)
+                loadingView?.isHidden = true
+                ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
                     return UIImage.deviceOptimizedImage(from: data)
-                }, completion: { [weak self] (image, _) in
-                    if let image = image as? UIImage {
-                        self?.imageView.image = image
-                    }
-            })
+                    }, completion: { [weak self] (image, _) in
+                        if let image = image as? UIImage {
+                            self?.imageView.image = image
+                        }
+                    })
+            }
         }
     }
     
-    func configure(withArticle article: Article) {
-        if let url = article.openableURL {
+    func configure(withArticle article: Article, obfuscated: Bool) {
+        if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
         } else {
             authorLabel.text = article.originalURLString
@@ -200,7 +214,7 @@ class ArticleView: UIView {
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
         messageLabel.text = twitterStatus.message
     }
-    
+
     func viewTapped(_ sender: UITapGestureRecognizer) {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)

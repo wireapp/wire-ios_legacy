@@ -30,11 +30,11 @@ extension ZMConversationMessage {
         guard let conversation = self.conversation else {
             return false
         }
-        
+
         let participatesInConversation = conversation.activeParticipants.contains(ZMUser.selfUser())
         let sentOrDelivered = [ZMDeliveryState.sent, ZMDeliveryState.delivered].contains(deliveryState)
         let likableType = Message.isNormalMessage(self) && !Message.isKnock(self)
-        return participatesInConversation && sentOrDelivered && likableType
+        return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
     }
 
     var liked: Bool {

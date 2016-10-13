@@ -71,6 +71,7 @@
 @property (nonatomic, strong) IconButton *sketchButton;
 @property (nonatomic, strong) IconButton *fullScreenButton;
 @property (nonatomic, strong) UIView *imageViewContainer;
+@property (nonatomic, strong) UIView *obfuscationView;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
 @property (nonatomic) SavableImage *savableImage;
 
@@ -154,7 +155,7 @@ static ImageCache *imageCache(void)
     [super prepareForReuse];
     
     self.originalImageSize = CGSizeZero;
-    
+    self.obfuscationView.hidden = YES;
     self.image = nil;
 
     if (self.imageAspectConstraint) {
@@ -167,7 +168,6 @@ static ImageCache *imageCache(void)
 - (void)didEndDisplayingInTableView
 {
     [super didEndDisplayingInTableView];
-    
     [self recycleImage];
 }
 
@@ -187,6 +187,10 @@ static ImageCache *imageCache(void)
 
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.loadingView];
+
+    self.obfuscationView = [[UIView alloc] initForAutoLayout];
+    [self.imageViewContainer addSubview:self.obfuscationView];
+    self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
     self.loadingView.hidden = NO;
@@ -231,6 +235,9 @@ static ImageCache *imageCache(void)
     [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
     [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
     [self.fullScreenButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
+
+    [self.obfuscationView autoPinEdgesToSuperviewEdges];
+    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.fullImageView withOffset:8];
 }
 
  - (void)updateImageMessageConstraintConstants
@@ -265,13 +272,14 @@ static ImageCache *imageCache(void)
     if (! [Message isImageMessage:convMessage]) {
         return;
     }
+
+    [super configureForMessage:convMessage layoutProperties:layoutProperties];
+
     id<ZMImageMessageData> imageMessageData = convMessage.imageMessageData;
     
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
-    
-    [super configureForMessage:convMessage layoutProperties:layoutProperties];
-    
+
     self.originalImageSize = imageMessageData.originalSize;
     
     [self updateImageMessageConstraintConstants];
@@ -320,9 +328,17 @@ static ImageCache *imageCache(void)
         }];
     }
     else {
-        // We did not download the medium image yet, start the progress animation
-        [self.loadingView startProgressAnimation];
-        self.loadingView.hidden = NO;
+
+        if (convMessage.isObfuscated) {
+            self.loadingView.hidden = YES;
+            self.obfuscationView.hidden = NO;
+            self.fullScreenButton.hidden = YES;
+            self.sketchButton.hidden = YES;
+        } else {
+            // We did not download the medium image yet, start the progress animation
+            [self.loadingView startProgressAnimation];
+            self.loadingView.hidden = NO;
+        }
     }
 }
 
@@ -414,7 +430,7 @@ static ImageCache *imageCache(void)
 {
     BOOL needsLayout = [super updateForMessage:change];
     
-    if (change.imageChanged) {
+    if (change.imageChanged || change.isObfuscatedChanged) {
         [self configureForMessage:self.message layoutProperties:self.layoutProperties];
     }
     

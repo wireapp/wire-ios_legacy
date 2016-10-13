@@ -279,6 +279,10 @@
     [self expandState:state block:^(UIControlState state) {
         if (color) {
             [self.borderColorByState setObject:[color copy] forKey:@(state)];
+
+            if (self.adjustsBorderColorWhenHighlighted && state == UIControlStateNormal) {
+                [self.borderColorByState setObject:[color mix:UIColor.blackColor amount:0.4] forKey:@(UIControlStateHighlighted)];
+            }
         }
     }];
 

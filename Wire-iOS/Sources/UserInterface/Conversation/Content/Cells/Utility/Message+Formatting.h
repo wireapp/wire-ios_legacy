@@ -29,7 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSAttributedString (FormatLinkAttachments)
 + (NSAttributedString *)formattedStringWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
                                                 forMessage:(id<ZMTextMessageData>)message
-                                                   isGiphy:(BOOL)isGiphy;
+                                                   isGiphy:(BOOL)isGiphy
+                                                obfuscated:(BOOL)obfuscated;
 @end
 
 @interface Message (Formatting)

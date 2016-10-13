@@ -48,7 +48,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "text text")
@@ -59,7 +59,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url}")
 
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true, obfuscated: false)
 
         // then
         XCTAssertEqual(formattedText.string, "text text \(previewURL)")
@@ -70,7 +70,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}")
 
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true, obfuscated: false)
 
         // then
         XCTAssertEqual(formattedText.string, previewURL)
@@ -81,7 +81,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {regular-url} {preview-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "text text \(regularURL)")
@@ -92,7 +92,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url} {regular-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "text text \(previewURL) \(regularURL)")
@@ -103,7 +103,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url} text text")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "\(previewURL) text text")
@@ -114,7 +114,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url} {regular-url} text text")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "\(previewURL) \(regularURL) text text")
@@ -125,7 +125,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{regular-url} {preview-url} text text")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "\(regularURL) \(previewURL) text text")
@@ -136,7 +136,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "")
@@ -147,7 +147,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "hello:{preview-url}") // NSDataDetector gets confused by this text
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
         
         // then
         XCTAssertEqual(formattedText.string, "hello:")

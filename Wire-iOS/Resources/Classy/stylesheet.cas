@@ -146,6 +146,14 @@ IconButton.resend-button {
     backgroundImageColor[state:selected]: $color-icon-background-selected;
 }
 
+IconButton.send-button {
+    circular: true;
+    borderWidth: 0.0;
+    iconColor[state: normal]: $color-background-light;
+    iconColor[state: highlighted]: $color-background-light;
+    backgroundImageColor[state:highlighted]: $color-accent-current-darken;
+    backgroundImageColor[state:normal]: $color-accent-current;
+}
 
 IconButton.gif-button {
     iconColor: $color-icon-normal;
@@ -755,6 +763,10 @@ MessageToolboxView {
 }
 
 ^ConversationCell {
+    countdownContainerView: @{
+        backgroundColor: $color-background;
+    }
+
     authorLabel: @{
         font: $font-small-medium;
         textColor: $color-text-foreground;
@@ -776,6 +788,7 @@ MessageToolboxView {
     labelTextColor: $color-text-foreground;
     labelFont: $font-small-light;
     labelBoldFont: $font-small-medium;
+    labelTextBlendedColor: $color-text-dimmed;
 }
 
 FileTransferCell {
@@ -804,6 +817,10 @@ VideoMessageCell {
 ImageMessageCell {
     imageViewContainer: @{
         backgroundColor: $color-placeholder-background;
+    }
+
+    obfuscationView: @{
+        backgroundColor: $color-ephemeral;
     }
 }
 
@@ -860,7 +877,10 @@ UILabel.conversationVerifiedLabel {
 InputBar: {
     barBackgroundColor: $color-text-background;
     editingBackgroundColor: $color-accent-yellow;
-    
+    writingSeparatorColor: $color-separator;
+    ephemeralColor: $color-ephemeral;
+    placeholderColor: $color-text-placeholder;
+
     IconButton {
         iconColor[state:normal]: $color-icon-normal;
         iconColor[state:highlighted]: $color-icon-highlighted;
@@ -871,7 +891,6 @@ InputBar: {
         placeholderFont: $font-small-light;
         textColor: $color-text-foreground;
         backgroundColor: clear;
-        placeholderTextColor: $color-text-placeholder;
     }
 }
 
@@ -892,6 +911,22 @@ IconButton.send-button {
 }
 
 ConversationInputBarViewController {
+
+    ephemeralSendButton: @{
+        borderColor: $color-ephemeral;
+        titleColor: $color-ephemeral;
+        titleLabel: @{
+            font: $font-small;
+        }
+    }
+
+    hourglassButton: @{
+        iconColor: $color-icon-normal;
+        iconColor[state:selected]: $color-ephemeral;
+        iconColor[state:highlighted]: $color-icon-highlighted;
+        backgroundImageColor[state:selected]: clear;
+    }
+
     audioRecorderTooltip: @{
         font: $font-small;
         textColor: $color-text-dimmed;
@@ -1263,6 +1298,24 @@ SearchViewController PeopleInputController TokenField {
     tokenSelectedBorderColor: white;
 }
 
+/* Ephemeral Keyboard */
+
+EphemeralKeyboardViewController {
+
+    pickerFont: $font-normal-medium;
+    pickerColor: $color-text-foreground-dark;
+    separatorColor: $color-separator-light;
+
+    view: @{
+        backgroundColor: $color-text-foreground-light;
+    }
+
+    titleLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-small-medium;
+    }
+}
+
 /* Profile Devices */
 
 ProfileDevicesViewController {
@@ -1273,6 +1326,7 @@ ProfileDevicesViewController {
     view: @{
         backgroundColor: $color-background;
     }
+
 }
 
 ParticipantDeviceCell {

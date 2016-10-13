@@ -190,7 +190,8 @@
             ! isSenderSelfUser &&
             isMessageUnread &&
             isTimelyMessage &&
-            ! isSystemMessage;
+            ! isSystemMessage &&
+            ! message.isEphemeral;
 }
 
 @end

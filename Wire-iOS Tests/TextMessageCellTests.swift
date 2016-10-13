@@ -49,6 +49,11 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
+
+    func testThatItRendersATextMessage_Obfuscated() {
+        sut.configure(for: mockMessage(state: .sent, obfuscated: true), layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
     
     func testThatItRendersATextMessage_Delivered() {
         sut.setSelected(true, animated: false)
@@ -178,9 +183,10 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     
     // MARK: - Helper
     
-    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered) -> MockMessage {
+    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered, obfuscated: Bool = false) -> MockMessage {
         let message = MockMessageFactory.textMessage(withText: text)
         message?.deliveryState = state
+        message?.isObfuscated = obfuscated
         message?.serverTimestamp = Date(timeIntervalSince1970: 1234567230)
         message?.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
         return message!

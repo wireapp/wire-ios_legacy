@@ -248,4 +248,14 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         
         verify(view: cell)
     }
+
+    // MARK : Obfuscated
+
+    func testObfuscatedFileTransferCell() {
+        verify(view: wrappedCellWithConfig {
+            $0.fileMessageData?.transferState = .uploaded
+            $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
+            $0.isObfuscated = true
+        })
+    }
 }

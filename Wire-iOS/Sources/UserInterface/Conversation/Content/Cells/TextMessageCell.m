@@ -60,6 +60,8 @@
 @property (nonatomic, strong) NSLayoutConstraint *mediaPlayerRightMarginConstraint;
 @property (nonatomic, strong) UIView *linkAttachmentView;
 
+
+
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 
 @end
@@ -81,7 +83,7 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    
+
     self.mediaPlayerTopMarginConstraint.constant = 0;
     [self.linkAttachmentViewController.view removeFromSuperview];
     self.linkAttachmentViewController = nil;
@@ -95,7 +97,7 @@
     self.messageTextView.translatesAutoresizingMaskIntoConstraints = NO;
     self.messageTextView.interactionDelegate = self;
     [self.messageContentView addSubview:self.messageTextView];
-    
+
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.dataDetectorTypes = UIDataDetectorTypeNone;
     self.messageTextView.editable = NO;
@@ -146,6 +148,7 @@
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
+    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.messageTextView];
 }
 
 - (void)updateTextMessageConstraintConstants
@@ -174,7 +177,8 @@
 
     NSAttributedString *attributedMessageText = [NSAttributedString formattedStringWithLinkAttachments:layoutProperties.linkAttachments
                                                                                             forMessage:message.textMessageData
-                                                                                               isGiphy:isGiphy];
+                                                                                               isGiphy:isGiphy
+                                                                                            obfuscated:message.isObfuscated];
     self.messageTextView.attributedText = attributedMessageText;
     [self.messageTextView layoutIfNeeded];
     self.textViewHeightConstraint.active = attributedMessageText.length == 0;
@@ -202,22 +206,23 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-            ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
-            articleView.translatesAutoresizingMaskIntoConstraints = NO;
-            [articleView configureWithTextMessageData:textMesssageData];
-            [self.linkAttachmentContainer addSubview:articleView];
-            [articleView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-            [articleView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-            [articleView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-            [articleView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-            articleView.delegate = self;
-            self.linkAttachmentView = articleView;
-        }
-    
+        ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
+        articleView.translatesAutoresizingMaskIntoConstraints = NO;
+        [articleView configureWithTextMessageData:textMesssageData obfuscated:message.isObfuscated];
+        [self.linkAttachmentContainer addSubview:articleView];
+        [articleView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [articleView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [articleView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+        [articleView autoPinEdgeToSuperviewMargin:ALEdgeRight];
+        articleView.delegate = self;
+        self.linkAttachmentView = articleView;
+    }
+
     [self.linkAttachmentViewController fetchAttachment];
 
     [self updateTextMessageConstraintConstants];
 }
+
 
 - (LinkAttachment *)lastKnownLinkAttachmentInList:(NSArray *)linkAttachments
 {
@@ -229,7 +234,7 @@
             result = linkAttachment;
         }
     }
-    
+
     return result;
 }
 
@@ -255,13 +260,12 @@
     id<ZMTextMessageData> textMesssageData = change.message.textMessageData;
     if (change.imageChanged && nil != textMesssageData.linkPreview && [self.linkAttachmentView isKindOfClass:ArticleView.class]) {
         ArticleView *articleView = (ArticleView *)self.linkAttachmentView;
-        [articleView configureWithTextMessageData:textMesssageData];
+        [articleView configureWithTextMessageData:textMesssageData obfuscated:self.message.isObfuscated];
         [self.message requestImageDownload];
     }
-    
+
     return needsLayout;
 }
-
 
 #pragma mark - Copy/Paste
 

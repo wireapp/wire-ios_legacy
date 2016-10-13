@@ -21,6 +21,8 @@
 #import "zmessaging+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIView+MTAnimation.h"
+#import "UIColor+WAZExtensions.h"
+#import "UIColor+WR_ColorScheme.h"
 
 #import "UIView+Borders.h"
 
@@ -74,6 +76,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
 {
     [self.pingImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
     [self.pingImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
+    [self.countdownContainerView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.pingImageView];
 }
 
 - (void)prepareForReuse
@@ -97,8 +100,9 @@ typedef void (^AnimationBlock)(id, NSInteger);
     }
     
     self.authorLabel.text = pingText;
-    
-    self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:self.message.sender.accentColor];
+
+    UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral] : self.message.sender.accentColor;
+    self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:pingColor];
 }
 
 - (UIView *)selectionView
