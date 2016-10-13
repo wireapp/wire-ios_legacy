@@ -194,7 +194,7 @@
 
     for (ConversationCell *cell in self.tableView.visibleCells) {
         if ([cell isKindOfClass:ConversationCell.class]) {
-            [cell willDisplayInTableView:YES];
+            [cell willDisplayInTableView];
         }
     }
 }
@@ -684,7 +684,7 @@
 		[self updateVisibleMessagesWindow];
 	});
     
-    [conversationCell willDisplayInTableView:self.onScreen];
+    [conversationCell willDisplayInTableView];
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
 

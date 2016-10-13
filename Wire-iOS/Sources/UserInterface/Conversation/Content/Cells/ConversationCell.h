@@ -108,7 +108,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.
 - (BOOL)updateForMessage:(MessageChangeInfo *)changeInfo;
-- (void)willDisplayInTableView:(BOOL)onScreen;
+- (void)willDisplayInTableView;
 - (void)didEndDisplayingInTableView;
 
 #pragma mark - For deleted menu, meant to be implmented by subclass

@@ -111,7 +111,7 @@ extension ZMConversationMessageDestructionTimeout {
     private func setupViews() {
         CASStyler.default().styleItem(self)
         picker.delegate = self
-        picker.delegate = self
+        picker.dataSource = self
         picker.tintColor = .red
         picker.showsSelectionIndicator = true
         picker.selectorColor = separatorColor

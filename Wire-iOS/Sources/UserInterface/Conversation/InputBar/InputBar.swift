@@ -390,7 +390,7 @@ private struct InputBarConstants {
     }
 
     open func undo() {
-        guard inputBarState.isWriting else { return }
+        guard inputBarState.isEditing else { return }
         guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()

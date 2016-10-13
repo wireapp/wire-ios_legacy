@@ -237,7 +237,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self updateCountdownView];
 }
 
-- (void)willDisplayInTableView:(BOOL)onScreen
+- (void)willDisplayInTableView
 {
     if (self.layoutProperties.showBurstTimestamp) {
         self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];

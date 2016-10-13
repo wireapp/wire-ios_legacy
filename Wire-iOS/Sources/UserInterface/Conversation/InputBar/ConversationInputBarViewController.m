@@ -644,16 +644,18 @@
 
 - (void)deallocateUnusedInputControllers
 {
-    void (^cleanup)(UIViewController *) = ^(UIViewController *vc) {
-        if (! [vc isEqual:self.inputController]) {
-            vc = nil;
-        }
-    };
-
-    cleanup(self.cameraKeyboardViewController);
-    cleanup(self.audioRecordKeyboardViewController);
-    cleanup(self.emojiKeyboardViewController);
-    cleanup(self.ephemeralKeyboardViewController);
+    if (! [self.cameraKeyboardViewController isEqual:self.inputController]) {
+        self.cameraKeyboardViewController = nil;
+    }
+    if (! [self.audioRecordKeyboardViewController isEqual:self.inputController]) {
+        self.audioRecordKeyboardViewController = nil;
+    }
+    if (! [self.emojiKeyboardViewController isEqual:self.inputController]) {
+        self.emojiKeyboardViewController = nil;
+    }
+    if (! [self.ephemeralKeyboardViewController isEqual:self.inputController]) {
+        self.ephemeralKeyboardViewController = nil;
+    }
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification

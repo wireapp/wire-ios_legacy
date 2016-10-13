@@ -71,7 +71,7 @@ public final class AudioMessageCell: ConversationCell {
 
         obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
 
-        allViews = [playButton, timeLabel, downloadProgressView, playerProgressView, waveformProgressView, loadingView, obfuscationView]
+        self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView, self.obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)
         
         self.messageContentView.addSubview(self.containerView)
