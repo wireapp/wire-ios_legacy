@@ -115,9 +115,9 @@ public final class VideoMessageCell: ConversationCell {
             loadingView.center == previewImageView.center
         }
 
-        constrain(messageContentView, countdownContainerView, obfuscationView) { messageContentView, countDownContainer, obfuscationView in
-            countDownContainer.top == messageContentView.top + 8
-            obfuscationView.edges == messageContentView.edges
+        constrain(previewImageView, countdownContainerView, obfuscationView) { previewImageView, countDownContainer, obfuscationView in
+            countDownContainer.top == previewImageView.top + 8
+            obfuscationView.edges == previewImageView.edges
         }
     }
     
