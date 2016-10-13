@@ -346,6 +346,7 @@
     self.sendButton = [IconButton iconButtonDefault];
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+
     self.sendButton.accessibilityIdentifier = @"sendButton";
     self.sendButton.adjustsImageWhenHighlighted = NO;
     self.sendButton.cas_styleClass = @"send-button";
@@ -957,8 +958,9 @@
         NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
         giphySearchViewController.delegate = self;
-        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:nil];
-        
+        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:^{
+            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
+        }];
     }
 }
 

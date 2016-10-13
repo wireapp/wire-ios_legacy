@@ -712,7 +712,7 @@
 
 "giphy.confirm" = "send";
 "giphy.cancel" = "cancel";
-"giphy.search_placeholder" = "Search giphy";
+"giphy.search_placeholder" = "Search Giphy";
 
 "invite_banner.title" = "Bring your friends to Wire!";
 "invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";

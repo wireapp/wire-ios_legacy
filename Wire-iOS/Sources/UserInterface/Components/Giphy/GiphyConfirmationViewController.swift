@@ -48,7 +48,8 @@ class GiphyConfirmationViewController: UIViewController {
         }
         
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(GiphySearchViewController.onDismiss))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector
+            (GiphySearchViewController.onDismiss))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +58,13 @@ class GiphyConfirmationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont(magicIdentifier: "style.text.title.font_spec")
+        titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        titleLabel.text = title?.uppercased()
+        titleLabel.sizeToFit()
+        navigationItem.titleView = titleLabel
         
         view.backgroundColor = .black
         acceptButton.isEnabled = false
@@ -71,7 +79,7 @@ class GiphyConfirmationViewController: UIViewController {
         view.addSubview(buttonContainer)
         
         [cancelButton, acceptButton].forEach(buttonContainer.addSubview)
-
+        
         configureConstraints()
         fetchImage()
     }
@@ -102,7 +110,7 @@ class GiphyConfirmationViewController: UIViewController {
     
     func configureConstraints() {
         constrain(view, imagePreview) { container, imagePreview in
-            imagePreview.edges == inset(container.edges, 0, 0, 72, 0)
+            imagePreview.edges == inset(container.edges, 32, 0, 104, 0)
         }
         
         constrain(buttonContainer, cancelButton, acceptButton) { container, leftButton, rightButton in
@@ -122,9 +130,11 @@ class GiphyConfirmationViewController: UIViewController {
         }
         
         constrain(view, buttonContainer) { container, buttonContainer in
-            buttonContainer.left == container.left + 32
-            buttonContainer.right == container.right - 32
+            buttonContainer.left >= container.left + 32
+            buttonContainer.right <= container.right - 32
             buttonContainer.bottom  == container.bottom - 32
+            buttonContainer.width == 476 ~ LayoutPriority(700)
+            buttonContainer.centerX == container.centerX
         }
     }
 }
