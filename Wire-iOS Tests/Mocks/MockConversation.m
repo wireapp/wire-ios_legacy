@@ -76,5 +76,10 @@
     return NO;
 }
 
+- (ZMConversationMessageDestructionTimeout)destructionTimeout
+{
+    return ZMConversationMessageDestructionTimeoutFifteenSeconds;
+}
+
 
 @end

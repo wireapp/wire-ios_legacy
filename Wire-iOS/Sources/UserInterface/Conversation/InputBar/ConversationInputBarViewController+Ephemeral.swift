@@ -32,6 +32,10 @@ extension ConversationInputBarViewController {
     }
 
     public func hourglassButtonPressed(_ sender: IconButton) {
+        dismissEphemeralKeyboard()
+    }
+
+    fileprivate func dismissEphemeralKeyboard() {
         if mode != .timeoutConfguration {
             mode = .timeoutConfguration
             inputBar.textView.becomeFirstResponder()
@@ -53,6 +57,10 @@ extension ConversationInputBarViewController {
 }
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
+
+    func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
+        dismissEphemeralKeyboard()
+    }
 
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
         inputBar.inputBarState = .writing(ephemeral: timeout != .none)

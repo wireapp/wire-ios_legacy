@@ -1,34 +1,29 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
+#import "MockConversation.h"
+#import "MockConversationFactory.h"
 
-@import Foundation;
-@import zmessaging;
-#import "MockLoader.h"
+@implementation MockConversationFactory
 
-
-@interface MockConversation : NSObject<Mockable>    
-
-@property (nonatomic, copy) NSString *displayName;
-@property (nonatomic) ZMConversationType conversationType;
-@property (nonatomic) BOOL isVideoCall;
-@property (nonatomic) NSOrderedSet *activeParticipants;
-@property (nonatomic) ZMConversationSecurityLevel securityLevel;
-@property (nonatomic) ZMConversationMessageDestructionTimeout destructionTimeout;
++ (MockConversation *)mockConversation
+{
+    return [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
+}
 
 @end

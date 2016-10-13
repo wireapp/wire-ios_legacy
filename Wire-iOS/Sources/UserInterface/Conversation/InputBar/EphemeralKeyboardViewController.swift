@@ -22,6 +22,8 @@ import Cartography
 
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
+    func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
+
     func ephemeralKeyboard(
         _ keyboard: EphemeralKeyboardViewController,
         didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout
@@ -51,9 +53,7 @@ extension ZMConversationMessageDestructionTimeout {
             .none,
             .fiveSeconds,
             .fifteenSeconds,
-            .oneMinute,
-            .fiveMinutes,
-            .fifteenMinutes
+            .oneMinute
         ]
     }
 
@@ -68,6 +68,7 @@ extension ZMConversationMessageDestructionTimeout {
     }
 
 }
+
 
 
 @objc public final class EphemeralKeyboardViewController: UIViewController {
@@ -105,7 +106,6 @@ extension ZMConversationMessageDestructionTimeout {
 
         guard let index = timeouts.index(of: conversation.destructionTimeout) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
-
     }
 
     private func setupViews() {
@@ -115,10 +115,22 @@ extension ZMConversationMessageDestructionTimeout {
         picker.tintColor = .red
         picker.showsSelectionIndicator = true
         picker.selectorColor = separatorColor
+        picker.didTapViewClosure = dismissKeyboardIfNeeded
 
         titleLabel.textAlignment = .center
         titleLabel.text = "input.ephemeral.title".localized.uppercased()
         [titleLabel, picker].forEach(view.addSubview)
+    }
+
+    func dismissKeyboardIfNeeded(recognizer: UIGestureRecognizer) {
+        let selectedRow = picker.selectedRow(inComponent: 0)
+        guard selectedRow != -1 else { return }
+        let height = pickerView(picker, rowHeightForComponent: 0)
+        let rect = picker.frame.insetBy(dx: 0, dy: picker.bounds.midY - height / 2)
+
+        let location = recognizer.location(in: view)
+        guard rect.contains(location) else { return }
+        delegate?.ephemeralKeyboardWantsToBeDismissed(self)
     }
 
     private func createConstraints() {
@@ -140,15 +152,44 @@ extension ZMConversationMessageDestructionTimeout {
 /// This class is a workaround to make the selector color
 /// of a `UIPickerView` changeable. It relies on the height of the selector
 /// views, which means that the behaviour could break in future iOS updates.
-class PickerView: UIPickerView {
+class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
     var selectorColor: UIColor? = nil
+    var tapRecognizer: UIGestureRecognizer! = nil
+    var didTapViewClosure: ((UIGestureRecognizer) -> Void)? = nil
+
+    init() {
+        super.init(frame: .zero)
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        tapRecognizer.delegate = self
+        addGestureRecognizer(tapRecognizer)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         for subview in subviews where subview.bounds.height <= 1.0 {
             subview.backgroundColor = selectorColor
         }
+    }
+
+    @objc func didTapView(sender: UIGestureRecognizer) {
+        didTapViewClosure?(sender)
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizer == tapRecognizer
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer == tapRecognizer
     }
 
 }
