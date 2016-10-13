@@ -137,6 +137,9 @@ extension ZMConversationMessageDestructionTimeout {
 }
 
 
+/// This class is a workaround to make the selector color
+/// of a `UIPickerView` changeable. It relies on the height of the selector
+/// views, which means that the behaviour could break in future iOS updates.
 class PickerView: UIPickerView {
 
     var selectorColor: UIColor? = nil

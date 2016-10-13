@@ -615,6 +615,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     if ([self.delegate respondsToSelector:@selector(conversationCellShouldStartDestructionTimer:)] &&
         [self.delegate conversationCellShouldStartDestructionTimer:self]) {
         [self.message startSelfDestructionIfNeeded];
+        [self startCountdownAnimationIfNeeded:self.message];
     }
 
     [self updateToolboxVisibilityAnimated:change.reactionsChanged];
