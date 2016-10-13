@@ -103,20 +103,29 @@ static inline NSDataDetector *linkDataDetector(void)
     });
 
     UIFont *font;
+    UIColor *foregroundColor;
+
     if (obfuscated) {
         font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
+        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral];
     } else {
         font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
     }
     
-    NSDictionary *attributes = @{ NSFontAttributeName : font,
-                                  NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground],
-                                  NSParagraphStyleAttributeName : cellParagraphStyle,
-                                  NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground] };
+    NSDictionary *attributes = @{
+                                NSFontAttributeName : font,
+                                NSForegroundColorAttributeName : foregroundColor,
+                                NSParagraphStyleAttributeName : cellParagraphStyle,
+                                NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground]
+                                };
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text
-                                                                                         attributes:attributes];
-    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+
+    if (obfuscated) {
+        return attributedString;
+    }
+
     [attributedString beginEditing];
     
     NSMutableArray *invalidLinkAttachments = [NSMutableArray array];

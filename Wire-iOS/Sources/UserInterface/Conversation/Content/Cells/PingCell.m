@@ -22,6 +22,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIView+MTAnimation.h"
 #import "UIColor+WAZExtensions.h"
+#import "UIColor+WR_ColorScheme.h"
 
 #import "UIView+Borders.h"
 
@@ -100,7 +101,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
     
     self.authorLabel.text = pingText;
 
-    UIColor *pingColor = message.isObfuscated ? [UIColor colorForZMAccentColor:ZMAccentColorBrightOrange] : self.message.sender.accentColor;
+    UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral] : self.message.sender.accentColor;
     self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:pingColor];
 }
 

@@ -27,12 +27,12 @@ public final class DestructionCountdownView: UIView {
     private let padding: CGFloat = 1
     private let dotSize: CGFloat = 3
     private var dots = [UIView]()
-    private let fullColor = UIColor(for: .brightOrange)
-    private let emptyColor = UIColor(for: .brightOrange).withAlphaComponent(0.5)
+    private let fullColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+    private let emptyColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral).withAlphaComponent(0.5)
 
     private var fullDots: Int? {
         didSet(oldValue) {
-            guard let old = oldValue, let new = fullDots, old != new else { return }
+            guard let new = fullDots, oldValue != new else { return }
             updateColors(new)
         }
     }
@@ -103,4 +103,5 @@ public final class DestructionCountdownView: UIView {
             }
         }
     }
+
 }

@@ -66,11 +66,18 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         verify(view: wrap)
     }
 
+    func testThatItRendersImageMessageObfuscated() {
+        recordMode = true
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = sut.prepareForSnapshot(image.size, image: image, obfuscated: true)
+        verify(view: wrap)
+    }
+
 }
 
 private extension ImageMessageCell {
 
-    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false) -> UITableView {
+    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false) -> UITableView {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
@@ -79,6 +86,7 @@ private extension ImageMessageCell {
         
         let message = MockMessageFactory.imageMessage()
         message?.deliveryState = failedToSend ? .failedToSend : .delivered
+        message?.isObfuscated = obfuscated
         let imageMessageData = message?.imageMessageData as! MockImageMessageData
         imageMessageData.mockOriginalSize = imageSize
 

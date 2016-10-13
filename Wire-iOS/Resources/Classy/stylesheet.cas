@@ -818,6 +818,10 @@ ImageMessageCell {
     imageViewContainer: @{
         backgroundColor: $color-placeholder-background;
     }
+
+    obfuscationView: @{
+        backgroundColor: $color-ephemeral;
+    }
 }
 
 AudioMessageCell {
@@ -874,7 +878,7 @@ InputBar: {
     barBackgroundColor: $color-text-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
-    ephemeralColor: $color-accent-orange;
+    ephemeralColor: $color-ephemeral;
     placeholderColor: $color-text-placeholder;
 
     IconButton {
@@ -900,8 +904,8 @@ InputBarEditView: {
 ConversationInputBarViewController {
 
     ephemeralSendButton: @{
-        borderColor: $color-accent-orange;
-        titleColor: $color-accent-orange;
+        borderColor: $color-ephemeral;
+        titleColor: $color-ephemeral;
         titleLabel: @{
             font: $font-small;
         }
@@ -909,7 +913,7 @@ ConversationInputBarViewController {
 
     hourglassButton: @{
         iconColor: $color-icon-normal;
-        iconColor[state:selected]: $color-accent-orange;
+        iconColor[state:selected]: $color-ephemeral;
         iconColor[state:highlighted]: $color-icon-highlighted;
         backgroundImageColor[state:selected]: clear;
     }

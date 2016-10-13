@@ -46,6 +46,7 @@ class ArticleView: UIView {
     var loadingView: ThreeDotsLoadingView?
     var linkPreview: LinkPreview?
     private let obfuscationView = UIView()
+    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
@@ -81,32 +82,33 @@ class ArticleView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
-        authorLabel.textColor = authorTextColor
         authorLabel.lineBreakMode = .byTruncatingMiddle
         authorLabel.accessibilityIdentifier = "linkPreviewSource"
 
-        messageLabel.textColor = titleTextColor
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
         messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
         messageLabel.delegate = self
 
-        obfuscationView.backgroundColor = UIColor(for: .brightOrange)
+        obfuscationView.backgroundColor = ephemeralColor
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
         addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(viewLongPressed)))
 
-        updateFonts()
+        updateLabels()
     }
 
-    func updateFonts(obfuscated: Bool = false) {
+    func updateLabels(obfuscated: Bool = false) {
         messageLabel.linkAttributes = obfuscated ? nil :  [NSForegroundColorAttributeName : UIColor.accent()]
         messageLabel.activeLinkAttributes = obfuscated ? nil : [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
 
         authorLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 16) : authorFont
         messageLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 20) : titleFont
+
+        authorLabel.textColor = obfuscated ? ephemeralColor : authorTextColor
+        messageLabel.textColor = obfuscated ? ephemeralColor : titleTextColor
     }
     
     func setupConstraints(_ imagePlaceholder: Bool) {
@@ -138,9 +140,7 @@ class ArticleView: UIView {
     }
     
     var authorHighlightAttributes : [String: AnyObject] {
-        get {
             return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
-        }
     }
     
     func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
@@ -167,9 +167,10 @@ class ArticleView: UIView {
             return
         }
         self.linkPreview = linkPreview
+        updateLabels(obfuscated: obfuscated)
 
         if let article = linkPreview as? Article {
-            configure(withArticle: article)
+            configure(withArticle: article, obfuscated: obfuscated)
         }
         
         if let twitterStatus = linkPreview as? TwitterStatus {
@@ -177,7 +178,6 @@ class ArticleView: UIView {
         }
 
         obfuscationView.isHidden = !obfuscated
-        updateFonts(obfuscated: obfuscated)
 
         if let imageData = textMessageData.imageData,
             let imageDataIdentifier = textMessageData.imageDataIdentifier {
@@ -199,8 +199,8 @@ class ArticleView: UIView {
         }
     }
     
-    func configure(withArticle article: Article) {
-        if let url = article.openableURL {
+    func configure(withArticle article: Article, obfuscated: Bool) {
+        if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
         } else {
             authorLabel.text = article.originalURLString
@@ -214,7 +214,7 @@ class ArticleView: UIView {
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
         messageLabel.text = twitterStatus.message
     }
-    
+
     func viewTapped(_ sender: UITapGestureRecognizer) {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)

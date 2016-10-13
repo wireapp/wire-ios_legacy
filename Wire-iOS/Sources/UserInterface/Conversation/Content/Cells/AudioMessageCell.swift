@@ -69,7 +69,7 @@ public final class AudioMessageCell: ConversationCell {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
 
-        obfuscationView.backgroundColor = UIColor(for: .brightOrange)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
 
         allViews = [playButton, timeLabel, downloadProgressView, playerProgressView, waveformProgressView, loadingView, obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)

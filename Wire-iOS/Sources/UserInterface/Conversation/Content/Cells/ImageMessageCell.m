@@ -190,7 +190,6 @@ static ImageCache *imageCache(void)
 
     self.obfuscationView = [[UIView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.obfuscationView];
-    self.obfuscationView.backgroundColor = [UIColor colorForZMAccentColor:ZMAccentColorBrightOrange];
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
