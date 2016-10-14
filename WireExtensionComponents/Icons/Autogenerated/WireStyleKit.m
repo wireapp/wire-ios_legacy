@@ -5536,10 +5536,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(16, 16), NO, 0.0f);
     [WireStyleKit drawShieldnotverified];
-    
+
     _imageOfShieldnotverified = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return _imageOfShieldnotverified;
 }
 
@@ -5547,10 +5547,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(18, 9), NO, 0.0f);
     [WireStyleKit drawTabWithColor: color];
-    
+
     UIImage* imageOfTab = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfTab;
 }
 
@@ -5583,7 +5583,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setOngoingcallTargets: (NSArray*)ongoingcallTargets
 {
     _ongoingcallTargets = ongoingcallTargets;
-    
+
     for (id target in self.ongoingcallTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfOngoingcall];
 }
@@ -5591,7 +5591,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldverifiedTargets: (NSArray*)shieldverifiedTargets
 {
     _shieldverifiedTargets = shieldverifiedTargets;
-    
+
     for (id target in self.shieldverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldverified];
 }
@@ -5599,7 +5599,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldnotverifiedTargets: (NSArray*)shieldnotverifiedTargets
 {
     _shieldnotverifiedTargets = shieldnotverifiedTargets;
-    
+
     for (id target in self.shieldnotverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldnotverified];
 }
