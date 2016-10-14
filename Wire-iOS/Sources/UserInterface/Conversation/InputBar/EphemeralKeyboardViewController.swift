@@ -122,14 +122,7 @@ extension ZMConversationMessageDestructionTimeout {
         [titleLabel, picker].forEach(view.addSubview)
     }
 
-    func dismissKeyboardIfNeeded(recognizer: UIGestureRecognizer) {
-        let selectedRow = picker.selectedRow(inComponent: 0)
-        guard selectedRow != -1 else { return }
-        let height = pickerView(picker, rowHeightForComponent: 0)
-        let rect = picker.frame.insetBy(dx: 0, dy: picker.bounds.midY - height / 2)
-
-        let location = recognizer.location(in: view)
-        guard rect.contains(location) else { return }
+    func dismissKeyboardIfNeeded() {
         delegate?.ephemeralKeyboardWantsToBeDismissed(self)
     }
 
@@ -156,7 +149,7 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
     var selectorColor: UIColor? = nil
     var tapRecognizer: UIGestureRecognizer! = nil
-    var didTapViewClosure: ((UIGestureRecognizer) -> Void)? = nil
+    var didTapViewClosure: (() -> Void)? = nil
 
     init() {
         super.init(frame: .zero)
@@ -177,11 +170,30 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
     }
 
     @objc func didTapView(sender: UIGestureRecognizer) {
-        didTapViewClosure?(sender)
+        guard recognizerInSelectedRow(sender) else { return }
+        didTapViewClosure?()
     }
 
+    /// Used to determine if the recognizers touches are in the area
+    /// of the selected row of the `UIPickerView`, this is done by asking the
+    /// delegate for the rowHeight and using it to caculate the rect 
+    /// of the center (selected) row.
+    private func recognizerInSelectedRow(_ recognizer: UIGestureRecognizer) -> Bool {
+        guard selectedRow(inComponent: 0) != -1 else { return false }
+        guard let height = delegate?.pickerView?(self, rowHeightForComponent: 0) else { return false }
+        let rect = bounds.insetBy(dx: 0, dy: bounds.midY - height / 2)
+        let location = recognizer.location(in: self)
+        return rect.contains(location)
+    }
+
+    // MARK: - UIGestureRecognizerDelegate
+
+    // We want the tapgesture recognizer to fire when the selected row is tapped,
+    // but need to make sure the scrolling behaviour and taps outside the selected row still
+    // get propagated (other wise the scroll-to behaviour would break when tapping on another row) etc.
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return gestureRecognizer == tapRecognizer
+        return gestureRecognizer == tapRecognizer && recognizerInSelectedRow(gestureRecognizer)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -189,7 +201,7 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return otherGestureRecognizer == tapRecognizer
+        return otherGestureRecognizer == tapRecognizer && recognizerInSelectedRow(gestureRecognizer)
     }
 
 }
