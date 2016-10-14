@@ -65,21 +65,9 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
         inputBar.inputBarState = .writing(ephemeral: timeout != .none)
         ZMUserSession.shared().enqueueChanges {
-            self.conversation.updateMessageDestructionTimeout(timeout)
+            self.conversation.updateMessageDestructionTimeout(timeout: timeout)
             self.updateRightAccessoryView()
         }
-    }
-
-}
-
-public extension ZMConversation {
-
-    var destructionEnabled: Bool {
-        return destructionTimeout != .none
-    }
-
-    var destructionTimeout: ZMConversationMessageDestructionTimeout {
-        return ZMConversationMessageDestructionTimeout(rawValue: Int16(messageDestructionTimeout)) ?? .none
     }
 
 }

@@ -77,13 +77,13 @@ extension ZMConversationMessageDestructionTimeout {
     var isSeconds: Bool {
         switch self {
         case .fiveSeconds, .fifteenSeconds: return true
-        case .none, .oneMinute, .fiveMinutes, .fifteenMinutes: return false
+        case .none, .oneMinute: return false
         }
     }
 
     var isMinutes: Bool {
         switch self {
-        case .oneMinute, .fiveMinutes, .fifteenMinutes: return true
+        case .oneMinute: return true
         case .none, .fiveSeconds, .fifteenSeconds: return false
         }
      }
