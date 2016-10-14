@@ -203,6 +203,9 @@
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state
 {
     [self setBackgroundImage:[UIImage singlePixelImageWithColor:color] forState:state];
+    if (self.adjustBackgroundImageWhenHighlighted && (state & UIControlStateNormal) == UIControlStateNormal) {
+        [self setBackgroundImage:[UIImage singlePixelImageWithColor:[color mix:UIColor.blackColor amount:0.4]] forState:UIControlStateHighlighted];
+    }
 }
 
 - (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state

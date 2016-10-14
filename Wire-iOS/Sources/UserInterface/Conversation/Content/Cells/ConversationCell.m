@@ -247,8 +247,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
     if ([self.delegate respondsToSelector:@selector(conversationCellShouldStartDestructionTimer:)] &&
         [self.delegate conversationCellShouldStartDestructionTimer:self]) {
-        [self.message startSelfDestructionIfNeeded];
-        [self startCountdownAnimationIfNeeded:self.message];
+        [self updateCountdownView];
+        if ([self.message startSelfDestructionIfNeeded]) {
+            [self startCountdownAnimationIfNeeded:self.message];
+        }
     }
 
     [self.messageContentView bringSubviewToFront:self.countdownContainerView];
@@ -614,8 +616,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
     if ([self.delegate respondsToSelector:@selector(conversationCellShouldStartDestructionTimer:)] &&
         [self.delegate conversationCellShouldStartDestructionTimer:self]) {
-        [self.message startSelfDestructionIfNeeded];
-        [self startCountdownAnimationIfNeeded:self.message];
+        if ([self.message startSelfDestructionIfNeeded]) {
+            [self startCountdownAnimationIfNeeded:self.message];
+        }
     }
 
     [self updateToolboxVisibilityAnimated:change.reactionsChanged];
@@ -653,7 +656,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         return;
     }
 
-    if (!self.countdownContainerView.hidden) {
+    if (!self.countdownContainerView.hidden && nil != self.message.destructionDate) {
         CGFloat fraction = self.message.destructionDate.timeIntervalSinceNow / self.message.deletionTimeout;
         [self.countdownView updateWithFraction:fraction];
         [self.messageToolboxView updateTimestamp:self.message];

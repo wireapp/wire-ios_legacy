@@ -121,7 +121,7 @@
 @property (nonatomic) IconButton *pingButton;
 @property (nonatomic) IconButton *locationButton;
 @property (nonatomic) IconButton *sendButton;
-@property (nonatomic) IconButton *ephemeralSendButton;
+@property (nonatomic) IconButton *ephemeralIndicatorButton;
 @property (nonatomic) IconButton *emojiButton;
 @property (nonatomic) IconButton *gifButton;
 @property (nonatomic) IconButton *hourglassButton;
@@ -139,6 +139,7 @@
 @property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
 
 @property (nonatomic) UIViewController *inputController;
+@property (nonatomic) ConversationInputBarButtonState *sendButtonState;
 
 @property (nonatomic) BOOL inRotation;
 @end
@@ -153,7 +154,7 @@
         self.conversation = conversation;
         self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
         self.conversationObserverToken = [self.conversation addConversationObserver:self];
-        
+        self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
         if ([self.conversation shouldDisplayIsTyping]) {
             [conversation addTypingObserver:self];
             self.typingUsers = conversation.typingUsers;
@@ -194,10 +195,10 @@
     
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
-    [self configureHourglassButton:self.hourglassButton];
+    [self configureEphemeralKeyboardButton:self.hourglassButton];
+    [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     
     [self.sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.ephemeralSendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.photoButton addTarget:self action:@selector(cameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.videoButton addTarget:self action:@selector(videoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.sketchButton addTarget:self action:@selector(sketchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -241,7 +242,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.ephemeralSendButton.layer.cornerRadius = CGRectGetWidth(self.ephemeralSendButton.bounds) / 2;
+    self.ephemeralIndicatorButton.layer.cornerRadius = CGRectGetWidth(self.ephemeralIndicatorButton.bounds) / 2;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -349,6 +350,7 @@
 
     self.sendButton.accessibilityIdentifier = @"sendButton";
     self.sendButton.adjustsImageWhenHighlighted = NO;
+    self.sendButton.adjustBackgroundImageWhenHighlighted = YES;
     self.sendButton.cas_styleClass = @"send-button";
 
     [self.inputBar.rightAccessoryView addSubview:self.sendButton];
@@ -360,21 +362,21 @@
 
 - (void)createEphemeralSendButton
 {
-    self.ephemeralSendButton = [[IconButton alloc] initForAutoLayout];
-    self.ephemeralSendButton.layer.borderWidth = 0.5;
+    self.ephemeralIndicatorButton = [[IconButton alloc] initForAutoLayout];
+    self.ephemeralIndicatorButton.layer.borderWidth = 0.5;
 
-    self.ephemeralSendButton.accessibilityIdentifier = @"ephemeralSendButton";
-    self.ephemeralSendButton.adjustsTitleWhenHighlighted = YES;
-    self.ephemeralSendButton.adjustsBorderColorWhenHighlighted = YES;
+    self.ephemeralIndicatorButton.accessibilityIdentifier = @"ephemeralTimeIndicatorButton";
+    self.ephemeralIndicatorButton.adjustsTitleWhenHighlighted = YES;
+    self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
 
-    [self.inputBar.rightAccessoryView addSubview:self.ephemeralSendButton];
+    [self.inputBar.rightAccessoryView addSubview:self.ephemeralIndicatorButton];
 
-    [self.ephemeralSendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.sendButton];
-    [self.ephemeralSendButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton];
-    [self.ephemeralSendButton autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.sendButton];
-    [self.ephemeralSendButton autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.sendButton];
+    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.sendButton];
+    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton];
+    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.sendButton];
+    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.sendButton];
 
-    [self updateEphemeralSendButtonTitle:self.ephemeralSendButton];
+    [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
 
 - (void)createEmojiButton
@@ -396,8 +398,9 @@
 {
     self.hourglassButton = IconButton.iconButtonDefault;
     self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
+
     [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    self.hourglassButton.accessibilityIdentifier = @"ephemeralButton";
+    self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
     [self.inputBar.rightAccessoryView addSubview:self.hourglassButton];
 
     [self.hourglassButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.sendButton withOffset:0];
@@ -432,18 +435,29 @@
 
 - (void)updateRightAccessoryView
 {
-    [self updateEphemeralSendButtonTitle:self.ephemeralSendButton];
+    [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
+    [self updateSendButtonColor];
+
     NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-    const NSUInteger textLength = trimmed.length;
 
-    BOOL editing = nil != self.editingMessage;
-    BOOL ephemeral = self.conversation.messageDestructionTimeout != 0;
-    BOOL hideSendButton = (Settings.sharedSettings.disableSendButton && self.mode != ConversationInputBarViewControllerModeEmojiInput) || editing || textLength == 0;
+    [self.sendButtonState updateWithTextLength:trimmed.length
+                                       editing:nil != self.editingMessage
+                            destructionTimeout:self.conversation.messageDestructionTimeout
+                              conversationType:self.conversation.conversationType
+                                          mode:self.mode];
 
-    self.sendButton.hidden = hideSendButton || ephemeral;
-    self.ephemeralSendButton.hidden = hideSendButton || !ephemeral;
+    self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
+    self.hourglassButton.hidden = self.sendButtonState.hourglassButtonHidden;
+    self.ephemeralIndicatorButton.hidden = self.sendButtonState.ephemeralIndicatorButtonHidden;
+}
 
-    self.hourglassButton.hidden = !hideSendButton || self.conversation.conversationType != ZMConversationTypeOneOnOne || editing;
+- (void)updateSendButtonColor
+{
+    if (self.conversation.messageDestructionTimeout != 0) {
+        [self.sendButton setBackgroundImageColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral] forState:UIControlStateNormal];
+    } else {
+        [self.sendButton setBackgroundImageColor:UIColor.accentColor forState:UIControlStateNormal];
+    }
 }
 
 - (void)updateAccessoryViews

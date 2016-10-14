@@ -912,7 +912,7 @@ IconButton.send-button {
 
 ConversationInputBarViewController {
 
-    ephemeralSendButton: @{
+    ephemeralIndicatorButton: @{
         borderColor: $color-ephemeral;
         titleColor: $color-ephemeral;
         titleLabel: @{

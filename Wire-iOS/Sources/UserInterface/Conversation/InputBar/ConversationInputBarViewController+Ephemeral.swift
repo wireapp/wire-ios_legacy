@@ -27,15 +27,15 @@ extension ConversationInputBarViewController {
         ephemeralKeyboardViewController?.delegate = self
     }
 
-    public func configureHourglassButton(_ button: IconButton) {
-        button.addTarget(self, action: #selector(hourglassButtonPressed), for: .touchUpInside)
+    public func configureEphemeralKeyboardButton(_ button: IconButton) {
+        button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)
     }
 
-    public func hourglassButtonPressed(_ sender: IconButton) {
-        dismissEphemeralKeyboard()
+    public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
+        updateEphemeralKeyboardVisibility()
     }
 
-    fileprivate func dismissEphemeralKeyboard() {
+    fileprivate func updateEphemeralKeyboardVisibility() {
         if mode != .timeoutConfguration {
             mode = .timeoutConfguration
             inputBar.textView.becomeFirstResponder()
@@ -49,7 +49,7 @@ extension ConversationInputBarViewController {
         inputBar.inputBarState = .writing(ephemeral: conversation.destructionEnabled)
     }
 
-    public func updateEphemeralSendButtonTitle(_ button: ButtonWithLargerHitArea) {
+    public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         let title = conversation.destructionTimeout.shortDisplayString
         button.setTitle(title, for: .normal)
     }
@@ -59,13 +59,14 @@ extension ConversationInputBarViewController {
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
-        dismissEphemeralKeyboard()
+        updateEphemeralKeyboardVisibility()
     }
 
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
         inputBar.inputBarState = .writing(ephemeral: timeout != .none)
         ZMUserSession.shared().enqueueChanges {
             self.conversation.updateMessageDestructionTimeout(timeout)
+            self.updateRightAccessoryView()
         }
     }
 
