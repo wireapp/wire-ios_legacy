@@ -75,17 +75,11 @@ extension ZMConversationMessageDestructionTimeout {
 extension ZMConversationMessageDestructionTimeout {
 
     var isSeconds: Bool {
-        switch self {
-        case .fiveSeconds, .fifteenSeconds: return true
-        case .none, .oneMinute: return false
-        }
+        return rawValue < 60
     }
 
     var isMinutes: Bool {
-        switch self {
-        case .oneMinute: return true
-        case .none, .fiveSeconds, .fifteenSeconds: return false
-        }
+        return rawValue >= 60
      }
 
 }
