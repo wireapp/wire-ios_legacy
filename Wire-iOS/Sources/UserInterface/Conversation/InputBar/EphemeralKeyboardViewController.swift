@@ -46,6 +46,7 @@ fileprivate let shortStyleFormatter: DateComponentsFormatter = {
     return formatter
 }()
 
+
 extension ZMConversationMessageDestructionTimeout {
 
     static var all: [ZMConversationMessageDestructionTimeout] {
@@ -63,12 +64,41 @@ extension ZMConversationMessageDestructionTimeout {
     }
 
     var shortDisplayString: String? {
-        guard .none != self else { return nil }
-        return shortStyleFormatter.string(from: TimeInterval(rawValue))
+        if isSeconds { return String(rawValue) }
+        if isMinutes { return String(Int(rawValue / 60)) }
+        return nil
     }
 
 }
 
+
+extension ZMConversationMessageDestructionTimeout {
+
+    var isSeconds: Bool {
+        switch self {
+        case .fiveSeconds, .fifteenSeconds: return true
+        case .none, .oneMinute, .fiveMinutes, .fifteenMinutes: return false
+        }
+    }
+
+    var isMinutes: Bool {
+        switch self {
+        case .oneMinute, .fiveMinutes, .fifteenMinutes: return true
+        case .none, .fiveSeconds, .fifteenSeconds: return false
+        }
+     }
+
+}
+
+public extension ZMConversation {
+
+    var timeoutImage: UIImage? {
+        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond() }
+        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute() }
+        return nil
+    }
+
+}
 
 
 @objc public final class EphemeralKeyboardViewController: UIViewController {
@@ -81,8 +111,8 @@ extension ZMConversationMessageDestructionTimeout {
     public var pickerFont: UIFont?
     public var pickerColor: UIColor?
     public var separatorColor: UIColor?
-    private let conversation: ZMConversation
 
+    private let conversation: ZMConversation
     private let picker = PickerView()
 
 
