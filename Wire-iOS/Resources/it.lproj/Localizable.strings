@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "Verificato";
 "conversation.input_bar.placeholder" = "Digita un messaggio";
+"conversation.input_bar.placeholder_ephemeral" = "Timed message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Scorri in su per inviare";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tocca per inviare";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "%@ su Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "Inizia una conversazione con %@";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "Il tuo";
 "content.system.cannot_decrypt.identity.otherUser_part" = "di %@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Ulteriori informazioni";
+"content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Caricamento…";
 "content.file.downloading" = "Download in corso…";

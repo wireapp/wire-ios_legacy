@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "Geverifieerd";
 "conversation.input_bar.placeholder" = "Typ een bericht";
+"conversation.input_bar.placeholder_ephemeral" = "Timed message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe omhoog om te versturen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tik om te verzenden";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "%@ op Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "Begin een gesprek met %@";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "Jou";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@'s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Leer meer";
+"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Uploaden…";
 "content.file.downloading" = "Downloaden…";
@@ -705,7 +712,7 @@
 
 "giphy.confirm" = "stuur";
 "giphy.cancel" = "anuleer";
-"giphy.search_placeholder" = "Zoek giphy";
+"giphy.search_placeholder" = "Zoek Giphy";
 
 "invite_banner.title" = "Nodig je vrienden uit tot Wire!";
 "invite_banner.message" = "Geniet van bellen, berichten, schetsen, GIF's en meer in privé gesprekken of in groepen.";

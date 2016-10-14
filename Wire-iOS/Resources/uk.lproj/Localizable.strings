@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "Верифікований";
 "conversation.input_bar.placeholder" = "Напишіть повідомлення";
+"conversation.input_bar.placeholder_ephemeral" = "Timed message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть вгору для надсилання";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "%@ в Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "Почати розмову з %@";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "Ваш";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Дізнатися більше";
+"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Завантаження…";
 "content.file.downloading" = "Скачування…";
@@ -255,7 +262,7 @@
 "missive.connection_request.default_message" = "Привіт %@,\nдавай спілкуватися в Wire.\n%@";
 
 "connection_request.send_button_title" = "Додати";
-"inbox.connection_request.connect_button_title" = "Додати";
+"inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
 
 // Voice
@@ -598,7 +605,7 @@
 "registration.address_book_access_denied.hero.title" = "Wire не має доступу до ваших контактів.";
 "registration.address_book_access_denied.hero.paragraph1" = "Wire допоможе вам знайти ваших друзів, якщо ви поділитесь контактами.";
 "registration.address_book_access_denied.hero.paragraph2" = "Щоб дозволити доступ перейдіть в Налаштування та торкніться до переключателя біля пункту Контакти.";
-"registration.address_book_access_denied.settings_button.title" = "Налаштування";
+"registration.address_book_access_denied.settings_button.title" = "Параметри";
 "registration.address_book_access_denied.maybe_later_button.title" = "Можливо, пізніше";
 
 "registration.push_access_denied.hero.title" = "Не пропустіть жодного дзвінка або повідомлення.";

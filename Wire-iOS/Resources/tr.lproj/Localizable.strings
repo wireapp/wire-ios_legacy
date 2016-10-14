@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "Doğrulandı";
 "conversation.input_bar.placeholder" = "Bir mesaj yazın";
+"conversation.input_bar.placeholder_ephemeral" = "Timed message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Göndermek için kaydırın";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Göndermek için tıkla";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "%@ Twitter'da";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "%@ ile bir konuşma başlat";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "Senin";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@'nin"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Daha Fazla";
+"content.system.cannot_decrypt.otherDevice_part" = "(cihaz %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Yükleniyor…";
 "content.file.downloading" = "İndiriliyor…";

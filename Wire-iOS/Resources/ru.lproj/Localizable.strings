@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "Проверено";
 "conversation.input_bar.placeholder" = "Наберите сообщение";
+"conversation.input_bar.placeholder_ephemeral" = "Не удалось послать сообщение";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Нажмите для отправки";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "%@ в Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "Начать разговор с %@";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "Ваш";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Подробнее";
+"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Отправка…";
 "content.file.downloading" = "Загрузка…";

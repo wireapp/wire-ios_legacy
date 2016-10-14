@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "検証する";
 "conversation.input_bar.placeholder" = "メッセージを入力します";
+"conversation.input_bar.placeholder_ephemeral" = "Timed message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "上にスワイプして送信";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "タップして送信";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "ツイッターに%@します";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "%@と会話を始めます";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "あなたの";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@の"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "もっと知る";
+"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "アップロード中...";
 "content.file.downloading" = "ダウンロード中…";
