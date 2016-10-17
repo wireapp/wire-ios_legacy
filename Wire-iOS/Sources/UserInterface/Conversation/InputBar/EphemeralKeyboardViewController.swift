@@ -156,7 +156,7 @@ public extension ZMConversation {
             label.leading == view.leading
             label.trailing == view.trailing
             label.top == view.top + inset.y
-            picker.top == label.bottom + inset.y
+            picker.top == label.bottom
             picker.bottom == view.bottom - inset.y
             picker.leading == view.leading + inset.x
             picker.trailing == view.trailing - inset.x
