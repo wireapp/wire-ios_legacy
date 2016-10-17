@@ -26,7 +26,7 @@
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
 #import "LinkAttachment.h"
-
+@import ZMCDataModel;
 
 
 @implementation LinkAttachmentViewControllerFactory
@@ -44,8 +44,12 @@
 
 - (UIViewController<LinkAttachmentPresenter> *)viewControllerForLinkAttachment:(LinkAttachment *)linkAttachment message:(id<ZMConversationMessage>)message
 {
+    if (message.isObfuscated) {
+        return nil;
+    }
+
     UIViewController<LinkAttachmentPresenter> *viewController = nil;
-    
+
     if (linkAttachment.type == LinkAttachmentTypeSoundcloudTrack) {
         AudioTrackViewController *audioTrackViewController = [[AudioTrackViewController alloc] initWithAudioTrackPlayer:[AppDelegate sharedAppDelegate].mediaPlaybackManager.audioTrackPlayer sourceMessage:message];
         audioTrackViewController.providerImage = [UIImage imageNamed:@"soundcloud"];

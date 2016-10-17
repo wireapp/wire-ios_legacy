@@ -156,6 +156,8 @@ static ImageCache *imageCache(void)
     
     self.originalImageSize = CGSizeZero;
     self.obfuscationView.hidden = YES;
+    self.fullScreenButton.hidden = NO;
+    self.sketchButton.hidden = NO;
     self.image = nil;
 
     if (self.imageAspectConstraint) {

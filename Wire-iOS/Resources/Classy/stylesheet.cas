@@ -1316,6 +1316,10 @@ EphemeralKeyboardViewController {
     }
 }
 
+PickerView {
+    backgroundColor: clear;
+}
+
 /* Profile Devices */
 
 ProfileDevicesViewController {

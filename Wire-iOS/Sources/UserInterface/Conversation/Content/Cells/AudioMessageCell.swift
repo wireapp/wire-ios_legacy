@@ -159,6 +159,10 @@ public final class AudioMessageCell: ConversationCell {
                 self.expectingDownload = false
             }
         }
+
+        if changeInfo.isObfuscatedChanged {
+            stopPlaying()
+        }
         
         return needsLayout
     }
@@ -193,9 +197,14 @@ public final class AudioMessageCell: ConversationCell {
         }
     }
     
-    open override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         self.proximityListener.stopListening()
+    }
+
+    public override func willDeleteMessage() {
+        proximityListener.stopListening()
+        stopPlaying()
     }
     
     private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
@@ -306,6 +315,13 @@ public final class AudioMessageCell: ConversationCell {
     
     private func audioTrackPlayer() -> AudioTrackPlayer {
         return AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer
+    }
+
+    private func stopPlaying() {
+        let player = audioTrackPlayer()
+        let audioTrackPlayingSame = player.sourceMessage != nil && player.sourceMessage.isEqual(message)
+        guard audioTrackPlayingSame else { return }
+        player.pause()
     }
     
     private func playTrack() {
