@@ -44,11 +44,6 @@ extension ConversationInputBarViewController {
         }
     }
 
-    public func updateWritingState() {
-        guard nil == editingMessage else { return }
-        inputBar.inputBarState = .writing(ephemeral: conversation.destructionEnabled)
-    }
-
     public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         let title = conversation.destructionTimeout.shortDisplayString
         button.setTitle(title, for: .normal)
