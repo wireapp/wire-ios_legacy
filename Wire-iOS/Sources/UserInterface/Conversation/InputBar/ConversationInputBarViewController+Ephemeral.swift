@@ -49,6 +49,7 @@ extension ConversationInputBarViewController {
             } else {
                 // we only want to change the mode when we present a custom keyboard
                 mode = .timeoutConfguration
+                inputBar.textView.becomeFirstResponder()
             }
         // dismissing
         } else {
