@@ -20,7 +20,6 @@
 #import "MockConversation.h"
 
 
-
 @implementation MockConversation
 
 #pragma mark - Mockable
@@ -76,10 +75,9 @@
     return NO;
 }
 
-//- (ZMConversationMessageDestructionTimeout)destructionTimeout
-//{
-//    return ZMConversationMessageDestructionTimeoutFifteenSeconds;
-//}
-
+- (NSTimeInterval)messageDestructionTimeout
+{
+    return 15;
+}
 
 @end
