@@ -748,13 +748,13 @@ GroupConversationHeader {
 
 MessageToolboxView {
     statusLabel: @{
-        font: $font-small-light;
+        font: $font-small-medium;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
         textContainerInset: 0, 0, 0, 0;
     }
     likeTooltipArrow: @{
-        font: $font-small-light;
+        font: $font-small-medium;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
@@ -888,7 +888,7 @@ InputBar: {
     
     textView: @{
         font: $font-normal-light;
-        placeholderFont: $font-small-light;
+        placeholderFont: $font-small-medium;
         textColor: $color-text-foreground;
         backgroundColor: clear;
     }
