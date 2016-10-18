@@ -151,6 +151,13 @@
     [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.messageTextView];
 }
 
+- (void)willDeleteMessage
+{
+    // If we have a linkattachment which is playing we need to stop
+    [self.linkAttachmentViewController tearDown];
+    [super willDeleteMessage];
+}
+
 - (void)updateTextMessageConstraintConstants
 {
     BOOL hasLinkAttachment = self.linkAttachment || self.linkAttachmentView;
@@ -243,6 +250,12 @@
 /// Overriden from the super class cell
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
+    if (change.isObfuscatedChanged) {
+        // We need to tear down the attachment controller before super is called,
+        // as the attachment will already be set to `nil` otherwise
+        [self.linkAttachmentViewController tearDown];
+    }
+
     BOOL needsLayout = [super updateForMessage:change];
 
     if (change.linkPreviewChanged && self.linkAttachmentView == nil) {
