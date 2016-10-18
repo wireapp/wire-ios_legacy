@@ -43,7 +43,15 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
 
     var tableView: UITableView!
     let topSeparator = OverflowSeparatorView()
+    
+    var fromConversation : Bool = false
 
+    convenience init(userClient: UserClient, fromConversation: Bool, credentials: ZMEmailCredentials? = .none)
+    {
+        self.init(userClient: userClient, credentials: credentials)
+        self.fromConversation = fromConversation
+    }
+    
     required init(userClient: UserClient, credentials: ZMEmailCredentials? = .none) {
         self.userClient = userClient
         
@@ -71,15 +79,23 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.clear
-        
         self.view.addSubview(self.topSeparator)
         self.createTableView()
         self.createConstraints()
         
+        ///presented modally (from conversation
         if let navController = self.navigationController, navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
+            if fromConversation {
+                let barColor = Settings.shared().colorScheme == .light ? UIColor.white : UIColor.clear
+                navController.navigationBar.barTintColor = barColor
+            }
         }
+        
+        if fromConversation {
+            self.cas_styleClass = "conversation"
+        }
+        CASStyler.default().styleItem(self)
     }
     
     fileprivate func createTableView() {
@@ -90,7 +106,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = UIColor.clear
-        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.register(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.register(SettingsTableCell.self, forCellReuseIdentifier: type(of: self).deleteCellReuseIdentifier)
@@ -170,6 +185,12 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let clientSection = ClientSection(rawValue: (indexPath as NSIndexPath).section) else { return UITableViewCell() }
 
+        let styler = {[unowned self] (cell: UITableViewCell) -> () in
+            if self.fromConversation {
+                cell.cas_styleClass = "conversation"
+            }
+        }
+        
         switch clientSection {
             
         case .info:
@@ -179,6 +200,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                 cell.wr_editable = false
                 cell.showVerified = false
                 cell.showLabel = true
+                styler(cell)
                 return cell
             }
 
@@ -187,8 +209,10 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .fingerprintAndVerify:
             if (indexPath as NSIndexPath).row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: FingerprintTableViewCell.zm_reuseIdentifier, for: indexPath) as? FingerprintTableViewCell {
+                    
                     cell.selectionStyle = .none
                     cell.fingerprint = self.userClient.fingerprint
+                    styler(cell)
                     return cell
                 }
             }
@@ -197,7 +221,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                     cell.titleText = NSLocalizedString("device.verified", comment: "")
                     cell.switchView.addTarget(self, action: #selector(SettingsClientViewController.onVerifiedChanged(_:)), for: .touchUpInside)
                     cell.switchView.isOn = self.userClient.verified
-                   
+                   styler(cell)
                     return cell
                 }
             }
@@ -205,7 +229,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .resetSession:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
-                
+                styler(cell)
                 return cell
             }
             
@@ -213,7 +237,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .removeDevice:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
-                
+                styler(cell)
                 return cell
             }
             

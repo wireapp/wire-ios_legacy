@@ -1349,7 +1349,66 @@ ParticipantDeviceHeaderView {
     font: $font-normal-light;
 }
 
-FingerprintTableViewCell {
+
+SettingsClientViewController.conversation {
+    view: @{
+        backgroundColor: $color-background
+    }
+    
+    tableView: @{
+        separatorColor: $color-separator
+    }
+    navigationController: @{
+        navigationBar: @{
+            titleTextAttributes :@{
+                foregroundColor: $color-text-foreground
+            }
+        }
+    }
+    
+    ^ClientTableViewCell.conversation  {
+        nameLabel: @{
+            font: $font-normal-medium;
+            textColor: $color-text-foreground;
+        }
+        labelLabel: @{
+            font: $font-small-medium;
+            textColor: $color-text-foreground;
+        }
+        activationLabel: @{
+            font: $font-small-light;
+            textColor: $color-text-foreground;
+        }
+        verifiedLabel: @{
+            font: $font-small;
+        }
+        fingerprintLabelFont: $font-small-light;
+        fingerprintLabelBoldFont: $font-small-medium;
+        fingerprintTextColor: $color-text-foreground
+        
+    }
+    
+    ^FingerprintTableViewCell.conversation  {
+        fingerprintLabelFont: $font-normal-light;
+        fingerprintLabelBoldFont: $font-normal-medium;
+        
+        titleLabel: @{
+            font: $font-small-medium;
+            textColor: $color-text-foreground;
+        }
+        fingerprintLabel: @{
+            textColor: $color-text-foreground;
+        }
+    }
+}
+
+SettingsClientViewController {
+    tableView: @{
+        separatorColor: rgb(255,255,255,0.1)
+    }
+}
+
+FingerprintTableViewCell{
     fingerprintLabelFont: $font-normal-light;
     fingerprintLabelBoldFont: $font-normal-medium;
     
@@ -1361,6 +1420,7 @@ FingerprintTableViewCell {
         textColor: white;
     }
 }
+
 
 ClientTableViewCell {
     nameLabel: @{
@@ -1380,6 +1440,7 @@ ClientTableViewCell {
     }
     fingerprintLabelFont: $font-small-light;
     fingerprintLabelBoldFont: $font-small-medium;
+    fingerprintTextColor: white
 }
 
 /* Registration */
