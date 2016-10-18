@@ -923,7 +923,7 @@ ConversationInputBarViewController {
         borderWidth: 0.0;
         titleColor: $color-ephemeral;
         titleLabel: @{
-            font: $font-small;
+            font: $font-small-medium;
         }
     }
 
