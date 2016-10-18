@@ -30,7 +30,7 @@ public extension NSURL {
 public extension URL {
 
     func open() {
-        let openened = openAsTweet() || openAsLocation() || openAsLink()
+        let openened = openAsTweet() || openAsLink()
         if !openened {
             UIApplication.shared.openURL(self)
         }
@@ -47,12 +47,23 @@ public extension URL {
         }
     }
 
-    private func openAsLocation() -> Bool {
-        return false
+    public func openAsLocation() -> Bool {
+        let saved = MapsOpeningOption(rawValue: Settings.shared().mapsLinkOpeningOptionRawValue) ?? .apple
+        switch saved {
+        case .apple: return false
+        case .google:
+            return UIApplication.shared.openURL(self)
+        }
     }
 
     private func openAsLink() -> Bool {
-        return false
+        let saved = BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
+        switch saved {
+        case .safari: return false
+        case .chrome:
+            guard let url = chromeURL else { return false }
+            return UIApplication.shared.openURL(url)
+        }
     }
 
 }
@@ -144,29 +155,35 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
     var isAvailable: Bool {
         switch self {
         case .safari: return true
-        case .chrome: return UIApplication.shared.googleChromeInstalled
+        case .chrome: return UIApplication.shared.chromeInstalled
         }
     }
 }
 
+// MARK: - Maps
+
 private extension UIApplication {
 
     var googleMapsInstalled: Bool {
-        return false // TODO
-    }
-
-    var googleChromeInstalled: Bool {
-        return false // TODO
+        return URL(string: "comgooglemaps://").map(canOpenURL) ?? false
     }
 }
+
+fileprivate extension URL {
+
+    var googleMapsURL: URL? {
+        return nil
+    }
+
+}
+
 
 // MARK: - Tweets
 
 private extension UIApplication {
 
     var tweetbotInstalled: Bool {
-        guard let url = URL(string: "tweetbot://") else { return false }
-        return canOpenURL(url)
+        return URL(string: "tweetbot://").map(canOpenURL) ?? false
     }
     
 }
@@ -199,6 +216,25 @@ private extension String {
 
     func replacingWithTweetbotURLScheme(_ string: String) -> String {
         return replacingOccurrences(of: string, with: "tweetbot://")
+    }
+
+}
+
+
+// MARK: - Browser
+
+private extension UIApplication {
+
+    var chromeInstalled: Bool {
+        return URL(string: "googlechrome://").map(canOpenURL) ?? false
+    }
+
+}
+
+fileprivate extension URL {
+
+    var chromeURL: URL? {
+        return URL(string: "googlechrome://\(absoluteString)")
     }
 
 }
