@@ -15,13 +15,13 @@
                 <key>zero</key>
                 <string></string>
                 <key>one</key>
-                <string>a device</string>
+                <string>en enhed</string>
                 <key>few</key>
-                <string>%lu devices</string>
+                <string>%lu enheder</string>
                 <key>many</key>
-                <string>%lu devices</string>
+                <string>%lu enheder</string>
                 <key>other</key>
-                <string>%lu devices</string>
+                <string>%lu enheder</string>
             </dict>
         </dict>
 		<key>participants.people.count</key>
@@ -35,21 +35,21 @@
 				<key>NSStringFormatValueTypeKey</key>
 				<string>lu</string>
 				<key>zero</key>
-				<string>No people</string>
+				<string>Ingen brugere</string>
 				<key>one</key>
-				<string>One person</string>
+				<string>En person</string>
 				<key>few</key>
-				<string>%lu people</string>
+				<string>%lu brugere</string>
 				<key>many</key>
-				<string>%lu people</string>
+				<string>%lu brugere</string>
 				<key>other</key>
-				<string>%lu people</string>
+				<string>%lu brugere</string>
 			</dict>
 		</dict>
         <key>content.system.missing_messages.subtitle_added</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ been added</string>
+            <string>%@ %#@lu_number_of_users@ blev tilføjet</string>
             <key>lu_number_of_users</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -59,15 +59,15 @@
                 <key>zero</key>
                 <string></string>
                 <key>one</key>
-                <string>has</string>
+                <string>er</string>
                 <key>other</key>
-                <string>have</string>
+                <string>er</string>
             </dict>
         </dict>
         <key>content.system.missing_messages.subtitle_removed</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ been removed</string>
+            <string>%@ %#@lu_number_of_users@ er blevet fjernet</string>
             <key>lu_number_of_users</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -77,15 +77,15 @@
                 <key>zero</key>
                 <string></string>
                 <key>one</key>
-                <string>has</string>
+                <string>er</string>
                 <key>other</key>
-                <string>have</string>
+                <string>er</string>
             </dict>
         </dict>
 		<key>list.connect_request.people_waiting</key>
 		<dict>
 			<key>NSStringLocalizedFormatKey</key>
-			<string>%#@d_number_of_people@ waiting</string>
+			<string>%#@d_number_of_people@ venter</string>
 			<key>d_number_of_people</key>
 			<dict>
 				<key>NSStringFormatSpecTypeKey</key>
@@ -95,13 +95,13 @@
 				<key>zero</key>
 				<string></string>
 				<key>one</key>
-				<string>One person</string>
+				<string>En person</string>
 				<key>few</key>
-				<string>%d people</string>
+				<string>%d brugere</string>
 				<key>many</key>
-				<string>%d people</string>
+				<string>%d personer</string>
 				<key>other</key>
-				<string>%d people</string>
+				<string>%d brugere</string>
 			</dict>
 		</dict>
 		<key>content.system.participants_n_others</key>
@@ -117,19 +117,19 @@
 				<key>zero</key>
 				<string/>
 				<key>one</key>
-				<string>and one more</string>
+				<string>og en mere</string>
 				<key>few</key>
-				<string>and %d others</string>
+				<string>og %d andre</string>
 				<key>many</key>
-				<string>and %d others</string>
+				<string>og %d andre</string>
 				<key>other</key>
-				<string>and %d others</string>
+				<string>og %d andre</string>
 			</dict>
 		</dict>
 		<key>peoplepicker.suggested.knows_more</key>
 		<dict>
 			<key>NSStringLocalizedFormatKey</key>
-			<string>Knows %@ and %#@d_number_of_others@</string>
+			<string>Kender %@ og %#@d_number_of_others@</string>
 			<key>d_number_of_others</key>
 			<dict>
 				<key>NSStringFormatSpecTypeKey</key>
@@ -137,17 +137,17 @@
 				<key>NSStringFormatValueTypeKey</key>
 				<string>d</string>
 				<key>few</key>
-				<string>%d others</string>
+				<string>%d andre</string>
 				<key>many</key>
-				<string>%d others</string>
+				<string>%d andre</string>
 				<key>other</key>
-				<string>%d others</string>
+				<string>%d andre</string>
 			</dict>
 		</dict>
         <key>content.system.people_started_using</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@d_number_of_others@ started using %#@d_new_devices@</string>
+            <string>%@ %#@d_number_of_others@ begyndte at bruge %#@d_new_devices@</string>
             <key>d_number_of_others</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -157,7 +157,7 @@
                 <key>one</key>
                 <string></string>
                 <key>other</key>
-                <string>and %d others</string>
+                <string>og %d andre</string>
             </dict>
             <key>d_new_devices</key>
             <dict>
@@ -166,9 +166,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>a new device</string>
+                <string>en ny enhed</string>
                 <key>other</key>
-                <string>new devices</string>
+                <string>nye enheder</string>
             </dict>
         </dict>
         <key>content.system.new_devices</key>
@@ -182,9 +182,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>a new device</string>
+                <string>en ny enhed</string>
                 <key>other</key>
-                <string>new devices</string>
+                <string>nye enheder</string>
             </dict>
         </dict>
 	</dict>
