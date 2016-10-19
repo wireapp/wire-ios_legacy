@@ -19,6 +19,7 @@
 
 import Foundation
 
+
 public extension NSURL {
 
     @objc func open() {
@@ -160,6 +161,7 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
     }
 }
 
+
 // MARK: - Maps
 
 private extension UIApplication {
@@ -227,6 +229,12 @@ private extension UIApplication {
 fileprivate extension URL {
 
     var chromeURL: URL? {
+        if absoluteString.contains("http://") {
+            return URL(string: "googlechrome://\(absoluteString.replacingOccurrences(of: "http://", with: ""))")
+        }
+        if absoluteString.contains("https://") {
+            return URL(string: "googlechromes://\(absoluteString.replacingOccurrences(of: "https://", with: ""))")
+        }
         return URL(string: "googlechrome://\(absoluteString)")
     }
 
