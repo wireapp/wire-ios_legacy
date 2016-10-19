@@ -53,7 +53,7 @@ extension ZMConversationMessage {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute, .second]
-        formatter.zeroFormattingBehavior = .dropLeading
+        formatter.zeroFormattingBehavior = [.dropLeading, .dropTrailing]
         return formatter
     }()
 
@@ -281,13 +281,13 @@ extension ZMConversationMessage {
 
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
         if let destructionDate = message.destructionDate, showDestructionTimer {
-            let remaining = destructionDate.timeIntervalSinceNow
+            let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
             deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
         }
 
         let finalText: String
         
-        if let timestampString = self.timestampString(message) , message.deliveryState == .delivered || message.deliveryState == .sent {
+        if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
             if let deliveryStateString = deliveryStateString {
                 finalText = timestampString + " ・ " + deliveryStateString
             }

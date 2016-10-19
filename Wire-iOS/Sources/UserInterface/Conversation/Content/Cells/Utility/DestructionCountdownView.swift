@@ -59,7 +59,7 @@ public final class DestructionCountdownView: UIView {
 
     private func updateColors(_ filled: Int) {
         dots.reversed().enumerated().forEach { idx, dot in
-            dot.backgroundColor = idx < filled ? fullColor : emptyColor
+            dot.backgroundColor = idx <= filled ? fullColor : emptyColor
         }
     }
 
