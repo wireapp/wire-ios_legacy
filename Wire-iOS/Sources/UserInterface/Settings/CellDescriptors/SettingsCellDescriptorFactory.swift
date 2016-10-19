@@ -276,12 +276,19 @@ import Foundation
 
     func advancedGroup() -> SettingsCellDescriptorType {
 
+        var externalAppsDescriptors = [SettingsCellDescriptorType]()
+        if TweetOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
+        }
+        if MapsOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)))
+        }
+        if BrowserOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
+        }
+
         let externalAppsSection = SettingsSectionDescriptor(
-            cellDescriptors: [
-                twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)),
-                mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)),
-                browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption))
-            ],
+            cellDescriptors: externalAppsDescriptors,
             header: "self.settings.external_apps.header".localized
         )
 
@@ -325,8 +332,13 @@ import Foundation
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
 
+        var advanvedItems = [sendUsageSection, troubleshootingSection, pushSection, versionSection]
+        if externalAppsDescriptors.count > 0 {
+            advanvedItems.insert(externalAppsSection, at: 0)
+        }
+
         return SettingsGroupCellDescriptor(
-            items: [externalAppsSection, sendUsageSection, troubleshootingSection, pushSection, versionSection],
+            items: advanvedItems,
             title: "self.settings.advanced.title".localized,
             icon: .settingsAdvanced
         )
