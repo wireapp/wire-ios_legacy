@@ -265,7 +265,7 @@ import Foundation
         let title = "self.settings.developer_options.title".localized
         
         let devController = SettingsExternalScreenCellDescriptor(title: "Logging") { () -> (UIViewController?) in
-            return DevOptionsController()
+            return DeveloperOptionsController()
         }
         
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
