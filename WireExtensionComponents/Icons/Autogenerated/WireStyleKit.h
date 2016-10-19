@@ -24,6 +24,9 @@
 @interface WireStyleKit : NSObject
 
 // iOS Controls Customization Outlets
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* secondTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* minuteTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* hourTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
@@ -85,7 +88,6 @@
 + (void)drawIcon_0x110_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x103_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x211_32ptWithColor: (UIColor*)color;
-+ (void)drawIcon_0x1000_28ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x142_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x152_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x185_32ptWithColor: (UIColor*)color;
@@ -125,6 +127,11 @@
 + (void)drawIcon_0x254_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x255_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x256_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x124_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x239_32ptWithColor: (UIColor*)color;
++ (void)drawSecond;
++ (void)drawMinute;
++ (void)drawHour;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -177,7 +184,6 @@
 + (UIImage*)imageOfIcon_0x110_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x103_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x211_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x1000_28ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x142_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x152_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x146_32ptWithColor: (UIColor*)color;
@@ -211,6 +217,11 @@
 + (UIImage*)imageOfIcon_0x254_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x255_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x256_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x124_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x239_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfSecond;
++ (UIImage*)imageOfMinute;
++ (UIImage*)imageOfHour;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

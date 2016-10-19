@@ -34,6 +34,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kBITExcludeApplicationSupportFromBackup"];
         
         BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
+        hockeyManager.disableCrashManager = [Analytics.shared isOptedOut];
         [hockeyManager configureWithIdentifier:@STRINGIZE(HOCKEY_APP_ID_KEY) delegate:self];
         [hockeyManager.authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
         if (! [BITHockeyManager sharedHockeyManager].crashManager.didCrashInLastSession) {

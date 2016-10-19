@@ -26,6 +26,22 @@ import Cartography
     
 }
 
+class GiphyNavigationController : UINavigationController {
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default().variant == .dark ? .lightContent : .default
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+}
+
 class GiphyCollectionViewCell : UICollectionViewCell {
     
     static let CellIdentifier = "GiphyCollectionViewCell"
@@ -66,11 +82,13 @@ class GiphySearchViewController : UICollectionViewController {
     let searchResultsController : ZiphySearchResultsController
     let masonrylayout : ARCollectionViewMasonryLayout
     let searchBar : UISearchBar = UISearchBar()
+    let noResultsLabel = UILabel()
     let conversation : ZMConversation
     var searchTerm : String
     var pendingTimer : Timer?
     var pendingSearchtask : CancelableTask?
     var pendingFetchTask : CancelableTask?
+    var needsToConfigureLayout : Bool = false
     
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
@@ -91,14 +109,16 @@ class GiphySearchViewController : UICollectionViewController {
     }
     
     override func viewDidLoad() {
-        masonrylayout.dimensionLength = self.view.bounds.width / 2
-        masonrylayout.minimumLineSpacing = 1
-        masonrylayout.itemMargins = CGSize(width: 1, height: 1)
+        noResultsLabel.text = "giphy.error.no_result".localized.uppercased()
+        noResultsLabel.isHidden = true
+        view.addSubview(noResultsLabel)
         
+        configureMasonryLayout(withSize: view.bounds.size)
+
         searchBar.text = searchTerm
         searchBar.delegate = self
         searchBar.tintColor = .accent()
-        searchBar.placeholder = "giphy.search_placeholder".localized.uppercased()
+        searchBar.placeholder = "giphy.search_placeholder".localized
         searchBar.barStyle = ColorScheme.default().variant == .dark ? .black : .default
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
@@ -108,20 +128,57 @@ class GiphySearchViewController : UICollectionViewController {
         
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
+        
+        constrain(view, noResultsLabel) { container, noResultsLabel in
+            noResultsLabel.center == container.center
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        needsToConfigureLayout = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if needsToConfigureLayout {
+            self.configureMasonryLayout(withSize: view.bounds.size)
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+            needsToConfigureLayout = false
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.configureMasonryLayout(withSize: size)
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+        })
     }
     
     public func wrapInsideNavigationController() -> UINavigationController {
-        let navigationController = UINavigationController(rootViewController: self)
+        let navigationController = GiphyNavigationController(rootViewController: self)
         
-        let backArrow  = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withAlignmentRectInsets(UIEdgeInsets.init(top: 0, left: 0, bottom: -2, right: 0))
-        navigationController.navigationBar.backIndicatorImage = backArrow
-        navigationController.navigationBar.backIndicatorTransitionMaskImage = backArrow
+        var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
+        backButtonImage = backButtonImage?.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
+        backButtonImage = backButtonImage?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
+        navigationController.navigationBar.backIndicatorImage = backButtonImage
+        navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
+        
+        navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps(), NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
+        navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.title.font_spec"), NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
         navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationController.navigationBar.isTranslucent = false
         
         return navigationController
+    }
+    
+    func configureMasonryLayout(withSize size: CGSize) {
+        masonrylayout.rank = UInt(ceilf(Float(size.width) / 256.0))
+        masonrylayout.dimensionLength = view.bounds.width / CGFloat(masonrylayout.rank)
+        masonrylayout.minimumLineSpacing = 1
+        masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
     
     func onDismiss() {
@@ -134,10 +191,12 @@ class GiphySearchViewController : UICollectionViewController {
         if searchTerm.isEmpty {
             pendingSearchtask = searchResultsController.trending() { [weak self] (success, error) in
                 self?.collectionView?.reloadData()
+                self?.noResultsLabel.isHidden = self?.searchResultsController.results.count > 0
             }
         } else {
             pendingSearchtask = searchResultsController.search(withSearchTerm: searchTerm) { [weak self] (success, error) in
                 self?.collectionView?.reloadData()
+                self?.noResultsLabel.isHidden = self?.searchResultsController.results.count > 0
             }
         }
     }
@@ -198,7 +257,7 @@ class GiphySearchViewController : UICollectionViewController {
         }
         
         let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
-        confirmationController.title = conversation.displayName
+        confirmationController.title = conversation.displayName.uppercased()
         confirmationController.delegate = self
         navigationController?.pushViewController(confirmationController, animated: true)
     }

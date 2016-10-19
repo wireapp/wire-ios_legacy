@@ -134,7 +134,7 @@ extension NSAttributedString {
     // Adds the attribtues to the given substring in self and returns the resulting String
     func addAttributes(_ attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
-        mutableSelf.addAttributes(attributes, range: (string as NSString).range(of: substring))
+        mutableSelf.addAttributes(attributes, to: substring)
         return mutableSelf
     }
     
@@ -142,6 +142,14 @@ extension NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.setAttributes(attributes, range: (string as NSString).range(of: substring))
         return mutableSelf
+    }
+
+}
+
+extension NSMutableAttributedString {
+
+    func addAttributes(_ attributes: [String: AnyObject], to substring: String) {
+        addAttributes(attributes, range: (string as NSString).range(of: substring))
     }
 
 }

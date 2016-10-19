@@ -25,16 +25,14 @@ class RecentlyUsedEmojiSection: NSObject, EmojiSection {
     let type: EmojiSectionType = .recent
 
     private(set) var emoji = [Emoji]()
-    private let backing = NSMutableOrderedSet()
+    private let backing: NSMutableOrderedSet
     private let capacity: Int
 
-    init(capacity: Int) {
+    init(capacity: Int, elements: [Emoji] = []) {
         self.capacity = capacity
-    }
-
-    fileprivate convenience init(capacity: Int, elements: [Emoji]) {
-        self.init(capacity: capacity)
-        elements.forEach { register($0) }
+        self.backing = NSMutableOrderedSet(array: elements)
+        super.init()
+        updateContent()
     }
 
     @discardableResult func register(_ element: Emoji) -> Bool {
@@ -44,10 +42,14 @@ class RecentlyUsedEmojiSection: NSObject, EmojiSection {
         case let idx: backing.moveObjects(at: IndexSet(integer: idx), to: 0)
         }
 
-        defer { emoji = backing.array as! [Emoji] }
-        guard backing.count > capacity else { return true }
-        backing.removeObjects(at: IndexSet(integersIn: capacity..<backing.count))
+        updateContent()
         return true
+    }
+
+    private func updateContent() {
+        defer { emoji = backing.array as! [Emoji] }
+        guard backing.count > capacity else { return }
+        backing.removeObjects(at: IndexSet(integersIn: capacity..<backing.count))
     }
     
 }

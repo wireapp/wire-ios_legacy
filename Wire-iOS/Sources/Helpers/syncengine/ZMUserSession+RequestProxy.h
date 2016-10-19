@@ -21,13 +21,13 @@
 
 #import "zmessaging+iOS.h"
 #import <ziphy/ziphy-Swift.h>
-
+#import <zmessaging/zmessaging-Swift.h>
 
 @protocol ProxiedURLRequester <NSObject>
-- (void)doRequestWithPath:(NSString * __nonnull)path
-                 method:(ZMTransportRequestMethod)method
-                     type:(ProxiedRequestType)type
-        completionHandler:(void (^ __nonnull)(NSData * __nullable, NSURLResponse * __nullable, NSError * __nullable))completionHandler;
+- (ZMProxyRequest  * _Nonnull)doRequestWithPath:(NSString * __nonnull)path
+                                         method:(ZMTransportRequestMethod)method
+                                           type:(ProxiedRequestType)type
+                              completionHandler:(void (^ __nonnull)(NSData * __nullable, NSURLResponse * __nullable, NSError * __nullable))completionHandler;
 @end
 
 

@@ -104,7 +104,7 @@ import ZMCLinkPreview
 
 
 @objc class MockMessage: NSObject, ZMConversationMessage {
-    
+
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -139,6 +139,16 @@ import ZMCLinkPreview
     var backingTextMessageData: MockTextMessageData! = .none
     var backingFileMessageData: MockFileMessageData! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none
+
+    var isEphemeral: Bool = false
+    var isObfuscated: Bool = false
+
+    var deletionTimeout: TimeInterval = -1
+    public var destructionDate: Date? = nil
+
+    func startSelfDestructionIfNeeded() -> Bool {
+        return true
+    }
     
     func requestFileDownload() {
         // no-op

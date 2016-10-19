@@ -90,8 +90,8 @@ class FingerprintTableViewCell: UITableViewCell {
         if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospacedFont(),
             let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospacedFont(),
             let attributedFingerprint = self.fingerprint?.attributedFingerprint(
-                attributes: [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: UIColor.white],
-                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: UIColor.white],
+                attributes: [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: fingerprintLabel.textColor],
+                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: fingerprintLabel.textColor],
                 uppercase: false) {
                 
                     self.fingerprintLabel.attributedText = attributedFingerprint

@@ -75,6 +75,7 @@ static inline NSDataDetector *linkDataDetector(void)
 + (NSAttributedString *)formattedStringWithLinkAttachments:(NSArray <LinkAttachment *>*)linkAttachments
                                                 forMessage:(id<ZMTextMessageData>)message
                                                    isGiphy:(BOOL)isGiphy
+                                                obfuscated:(BOOL)obfuscated
 {
     if (message.messageText.length == 0) {
         return [[NSAttributedString alloc] initWithString:@""];
@@ -100,15 +101,31 @@ static inline NSDataDetector *linkDataDetector(void)
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"];
     });
+
+    UIFont *font;
+    UIColor *foregroundColor;
+
+    if (obfuscated) {
+        font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
+        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral];
+    } else {
+        font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
+    }
     
-    NSDictionary *attributes = @{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"],
-                                  NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground],
-                                  NSParagraphStyleAttributeName : cellParagraphStyle,
-                                  NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground] };
+    NSDictionary *attributes = @{
+                                NSFontAttributeName : font,
+                                NSForegroundColorAttributeName : foregroundColor,
+                                NSParagraphStyleAttributeName : cellParagraphStyle,
+                                NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground]
+                                };
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text
-                                                                                         attributes:attributes];
-    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+
+    if (obfuscated) {
+        return attributedString;
+    }
+
     [attributedString beginEditing];
     
     NSMutableArray *invalidLinkAttachments = [NSMutableArray array];

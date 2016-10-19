@@ -20,7 +20,7 @@
 #import "AnalyticsLocalyticsProvider.h"
 #import <Localytics/Localytics.h>
 #import "DefaultIntegerClusterizer.h"
-
+#import "DeveloperMenuState.h"
 
 
 @interface AnalyticsLocalyticsProvider () <LLAnalyticsDelegate>
@@ -59,11 +59,7 @@
 - (void)createSession
 {
     [Localytics setAnalyticsDelegate:self];
-#if ENABLE_DEVELOPER_MENU
-    [Localytics setLoggingEnabled:YES];
-#else 
-    [Localytics setLoggingEnabled:NO];
-#endif
+    [Localytics setLoggingEnabled:[DeveloperMenuState developerMenuEnabled]];
 
     [Localytics integrate:@STRINGIZE(ANALYTICS_API_KEY)];
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {

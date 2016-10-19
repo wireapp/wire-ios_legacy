@@ -22,13 +22,15 @@ import Cartography
 import AddressBook
 
 /// Displays the location message
-open class LocationMessageCell: ConversationCell {
+public final class LocationMessageCell: ConversationCell {
     
-    fileprivate let mapView = MKMapView()
-    fileprivate let containerView = UIView()
-    fileprivate let addressContainerView = UIView()
-    fileprivate let addressLabel = UILabel()
-    fileprivate weak var locationAnnotation: MKPointAnnotation? = nil
+    private let mapView = MKMapView()
+    private let containerView = UIView()
+    private let obfuscationView = UIView()
+    private let addressContainerView = UIView()
+    private let addressLabel = UILabel()
+    private var recognizer: UITapGestureRecognizer?
+    private weak var locationAnnotation: MKPointAnnotation? = nil
     var labelFont: UIFont?
     var labelTextColor, containerColor: UIColor?
     
@@ -47,7 +49,7 @@ open class LocationMessageCell: ConversationCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func configureViews() {
+    private func configureViews() {
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
         mapView.isRotateEnabled = false
@@ -56,25 +58,29 @@ open class LocationMessageCell: ConversationCell {
         mapView.showsPointsOfInterest = true
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
-        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openInMaps)))
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        recognizer = UITapGestureRecognizer(target: self, action: #selector(openInMaps))
+        containerView.addGestureRecognizer(recognizer!)
         messageContentView.addSubview(containerView)
-        [mapView, addressContainerView].forEach(containerView.addSubview)
+        [mapView, addressContainerView, obfuscationView].forEach(containerView.addSubview)
         addressContainerView.addSubview(addressLabel)
-        
+        obfuscationView.isHidden = true
+
         guard let font = labelFont, let color = labelTextColor, let containerColor = containerColor else { return }
         addressLabel.font = font
         addressLabel.textColor = color
         addressContainerView.backgroundColor = containerColor
     }
     
-    fileprivate func createConstraints() {
-        constrain(messageContentView, containerView, authorLabel, mapView) { contentView, container, authorLabel, mapView in
+    private func createConstraints() {
+        constrain(messageContentView, containerView, authorLabel, mapView, obfuscationView) { contentView, container, authorLabel, mapView, obfuscationView in
             container.left == authorLabel.left
             container.right == contentView.rightMargin
             container.top == contentView.top
             container.bottom == contentView.bottom
             container.height == 160
             mapView.edges == container.edges
+            obfuscationView.edges == container.edges
         }
         
         constrain(containerView, addressContainerView, addressLabel) { container, addressContainer, addressLabel in
@@ -84,10 +90,25 @@ open class LocationMessageCell: ConversationCell {
             addressLabel.edges == inset(addressContainer.edges, 12, 0)
             addressContainer.height == 42
         }
+
+        constrain(containerView, countdownContainerView) { container, countDownContainer in
+            countDownContainer.top == container.top
+        }
     }
-    
-    open override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        obfuscationView.isHidden = true
+    }
+
+    public override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
+        recognizer?.isEnabled = !message.isObfuscated
+        if message.isObfuscated {
+            obfuscationView.isHidden = false
+            return
+        }
+
         guard let locationData = message.locationMessageData else { return }
         
         if let address = locationData.name {
@@ -107,6 +128,13 @@ open class LocationMessageCell: ConversationCell {
         annotation.coordinate = locationData.coordinate
         mapView.addAnnotation(annotation)
         locationAnnotation = annotation
+    }
+
+    public override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+        super.update(forMessage: changeInfo)
+        guard changeInfo.isObfuscatedChanged else { return false }
+        configure(for: message, layoutProperties: layoutProperties)
+        return true
     }
     
     func updateMapLocation(withLocationData locationData: ZMLocationMessageData) {
@@ -174,7 +202,7 @@ open class LocationMessageCell: ConversationCell {
         return properties
     }
     
-    fileprivate func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         UIView.animate(withDuration: animated ? ConversationCellSelectionAnimationDuration: 0) {
             self.containerView.alpha = selected ? ConversationCellSelectedOpacity : 1
         }

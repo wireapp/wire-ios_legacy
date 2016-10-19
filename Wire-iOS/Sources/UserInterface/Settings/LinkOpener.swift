@@ -167,13 +167,6 @@ private extension UIApplication {
     var googleMapsInstalled: Bool {
         return URL(string: "comgooglemaps://").map(canOpenURL) ?? false
     }
-}
-
-fileprivate extension URL {
-
-    var googleMapsURL: URL? {
-        return nil
-    }
 
 }
 

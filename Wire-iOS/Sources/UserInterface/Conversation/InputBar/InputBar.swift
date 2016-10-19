@@ -30,8 +30,22 @@ extension Settings {
 }
 
 public enum InputBarState: Equatable {
-    case writing
+    case writing(ephemeral: Bool)
     case editing(originalText: String)
+
+    var isWriting: Bool {
+        switch self {
+        case .writing(ephemeral: _): return true
+        default: return false
+        }
+    }
+
+    var isEditing: Bool {
+        switch self {
+        case .editing(originalText: _): return true
+        default: return false
+        }
+    }
 }
 
 public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
@@ -44,24 +58,30 @@ public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
 
 private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
-    let contentLeftMargin = CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin"))
-    let contentRightMargin = CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin"))
+    let contentLeftMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
+    let contentRightMargin = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
 }
 
-@objc open class InputBar: UIView {
-    
-    open let textView: NextResponderTextView = NextResponderTextView()
-    open let leftAccessoryView  = UIView()
-    open let rightAccessoryView = UIView()
+@objc public final class InputBar: UIView {
+
+    private let inputBarVerticalInset : CGFloat = 34
+
+
+    public let textView: NextResponderTextView = NextResponderTextView()
+    public let leftAccessoryView  = UIView()
+    public let rightAccessoryView = UIView()
     
     // Contains and clips the buttonInnerContainer
-    open let buttonContainer = UIView()
+    public let buttonContainer = UIView()
     
-    open let editingView = InputBarEditView()
-    open let buttonsView: InputBarButtonsView
+    public let editingView = InputBarEditView()
+    public let buttonsView: InputBarButtonsView
     
-    open var editingBackgroundColor: UIColor?
-    open var barBackgroundColor: UIColor?
+    public var editingBackgroundColor: UIColor?
+    public var barBackgroundColor: UIColor?
+    public var writingSeparatorColor: UIColor?
+    public var ephemeralColor: UIColor?
+    public var placeholderColor: UIColor?
 
     fileprivate var contentSizeObserver: NSObject? = nil
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
@@ -75,13 +95,12 @@ private struct InputBarConstants {
     fileprivate let notificationCenter = NotificationCenter.default
     
     var isEditing: Bool {
-        if case .editing(_) = inputBarState { return true }
-        return false
+        return inputBarState.isEditing
     }
     
-    var inputBarState: InputBarState = .writing {
-        didSet {
-            updateInputBar(withState: inputBarState)
+    var inputBarState: InputBarState = .writing(ephemeral: false) {
+        didSet(oldValue) {
+            updateInputBar(withState: inputBarState, oldState: oldValue)
         }
     }
     
@@ -91,25 +110,25 @@ private struct InputBarConstants {
         }
     }
     
-    open var separatorEnabled = false {
+    public var separatorEnabled = false {
         didSet {
             updateTopSeparator()
         }
     }
     
-    open var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
+    public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
     
-    override open var bounds: CGRect {
+    override public var bounds: CGRect {
         didSet {
             invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height)
         }
     }
         
-    override open func didMoveToWindow() {
+    override public func didMoveToWindow() {
         super.didMoveToWindow()
         startCursorBlinkAnimation()
     }
@@ -149,27 +168,23 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
-        fakeCursor.backgroundColor = UIColor.accent()
-        
-        buttonRowSeparator.cas_styleClass = "separator"
         inputBarSeparator.cas_styleClass = "separator"
         
         textView.accessibilityIdentifier = "inputField"
-        textView.placeholder = "conversation.input_bar.placeholder".localized
+        updatePlaceholder()
         textView.lineFragmentPadding = 0
-        textView.textContainerInset = UIEdgeInsetsMake(17, 0, 17, 4)
+        textView.textContainerInset = UIEdgeInsetsMake(inputBarVerticalInset / 2, 0, inputBarVerticalInset / 2, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
         textView.keyboardType = .default
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
+        textView.tintAdjustmentMode = .automatic
+
         updateReturnKey()
 
         contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
-        updateBackgroundColor()
-    }
-    
-    public func updateReturnKey() {
-        textView.returnKeyType = Settings.shared().returnKeyType
+        updateInputBar(withState: inputBarState, animated: false)
+        updateColors()
     }
     
     fileprivate func createConstraints() {
@@ -179,7 +194,7 @@ private struct InputBarConstants {
             leftAccessoryView.top == leftAccessoryView.superview!.top
             leftAccessoryView.bottom == buttonContainer.top
             leftAccessoryView.width == constants.contentLeftMargin
-            
+
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing - 16
             rightAccessoryView.top == rightAccessoryView.superview!.top
             rightAccessoryView.width == 0 ~ LayoutPriority(750)
@@ -208,7 +223,6 @@ private struct InputBarConstants {
             buttonsView.leading == buttonInnerContainer.leading
             buttonsView.trailing <= buttonInnerContainer.trailing
             buttonsView.bottom == buttonInnerContainer.bottom
-            buttonsView.width == 414 ~ LayoutPriority(750)
         }
         
         constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
@@ -253,6 +267,27 @@ private struct InputBarConstants {
             fakeCursor.layer.add(animation, forKey: "blinkAnimation")
         }
     }
+
+    public func updateReturnKey() {
+        textView.returnKeyType = Settings.shared().returnKeyType
+    }
+
+    func updatePlaceholder() {
+        textView.placeholder = placeholderText(for: inputBarState)
+        textView.setNeedsLayout()
+        textView.layoutIfNeeded()
+    }
+
+    func placeholderText(for state: InputBarState) -> String? {
+        switch inputBarState {
+        case .writing(ephemeral: let ephemeral):
+            if ephemeral {
+                return "conversation.input_bar.placeholder_ephemeral".localized
+            }
+            return "conversation.input_bar.placeholder".localized
+        case .editing: return nil
+        }
+    }
     
     fileprivate func updateTopSeparator() {
         inputBarSeparator.isHidden = !textIsOverflowing && !separatorEnabled
@@ -263,7 +298,11 @@ private struct InputBarConstants {
     }
     
     func textViewContentSizeDidChange(_ sender: AnyObject) {
-        textIsOverflowing = textView.contentSize.height > textView.bounds.size.height
+        guard let textViewFont = textView.font
+            else { return }
+        
+        let lineCount = floor((textView.contentSize.height - inputBarVerticalInset) / textViewFont.lineHeight)
+        textIsOverflowing = lineCount > 1 // we show separator when the text is 2+ lines
     }
 
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
@@ -285,46 +324,67 @@ private struct InputBarConstants {
 
     // MARK: - InputBarState
 
-    func updateInputBar(withState state: InputBarState, animated: Bool = true) {
+    func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
         updateEditViewState()
-        rowTopInsetConstraint?.constant = state == .writing ? -constants.buttonsBarHeight : 0
+        updatePlaceholder()
+        rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {
             switch state {
             case .writing:
-                self.textView.text = nil
+                if let oldState = oldState, oldState.isEditing {
+                    self.textView.text = nil
+                }
             case .editing(let text):
                 self.setInputBarText(text)
             }
         }
         
         let completion: (Bool) -> Void = { _ in
+            self.updateColors()
             if case .editing(_) = state {
                 self.textView.becomeFirstResponder()
             }
         }
-        
+
         if animated {
             UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
-                UIView.animate(withDuration: 0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateBackgroundColor, completion: completion)
+                UIView.animate(withDuration: 0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateColors, completion: completion)
             }
         } else {
             layoutIfNeeded()
             textViewChanges()
-            updateBackgroundColor()
             completion(true)
         }
     }
 
-    fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
-        guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
-        let mixed = writingColor.mix(editingColor, amount: 0.16)
-        return state == .writing ? writingColor : mixed
+    public func updateEphemeralState() {
+        guard inputBarState.isWriting else { return }
+        updateColors()
+        updatePlaceholder()
     }
 
-    fileprivate func updateBackgroundColor() {
+    fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
+        guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
+        return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
+    }
+
+    fileprivate func updateColors() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
+
+        if case .writing(let ephemeral) = inputBarState {
+            showEphemeralColors(ephemeral)
+        } else {
+            showEphemeralColors(false)
+        }
+    }
+
+    private func showEphemeralColors(_ show: Bool) {
+        buttonRowSeparator.backgroundColor = show ? ephemeralColor : writingSeparatorColor
+        textView.placeholderTextColor = show ? ephemeralColor : placeholderColor
+        fakeCursor.backgroundColor = show ? ephemeralColor : .accent()
+        textView.tintColor = show ? ephemeralColor : .accent()
     }
 
     // MARK: – Editing View State
@@ -337,7 +397,7 @@ private struct InputBarConstants {
     }
 
     open func undo() {
-        guard inputBarState != .writing else { return }
+        guard inputBarState.isEditing else { return }
         guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()

@@ -25,5 +25,5 @@ $color-accent-pink      = rgb(254,  94, 189);
 $color-accent-magenta   = rgb(157,   0, 255);
 
 /* Misc */
-$color-soundcloud       = rgb(252, 60,  8);
-$color-endtoend         = rgb(0,   150, 240);
+$color-soundcloud       = rgb(252, 60,   8);
+$color-endtoend         = rgb(0,  150, 240);

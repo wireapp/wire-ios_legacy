@@ -92,7 +92,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     func testArticleViewWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: articleWithoutPicture())
+        sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
         
         verifyInAllPhoneWidths(view: sut)
@@ -101,7 +101,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     func testArticleViewWithPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: articleWithPicture())
+        sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
         
         verifyInAllPhoneWidths(view: sut)
@@ -115,7 +115,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         let textMessageData = articleWithPicture()
         textMessageData.imageData = .none
-        sut.configure(withTextMessageData: textMessageData)
+        sut.configure(withTextMessageData: textMessageData, obfuscated: false)
         sut.layoutIfNeeded()
         
         verifyInAllPhoneWidths(view: sut)
@@ -124,7 +124,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     func testArticleViewWithTruncatedURL() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: articleWithLongURL())
+        sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
         
         verifyInAllPhoneWidths(view: sut)
@@ -133,9 +133,18 @@ class ArticleViewTests: ZMSnapshotTestCase {
     func testArticleViewWithTwitterStatusWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: twitterStatusWithoutPicture())
+        sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
         
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testArticleViewObfuscated() {
+        sut = ArticleView(withImagePlaceholder: true)
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
+        sut.layoutIfNeeded()
+
         verifyInAllPhoneWidths(view: sut)
     }
 }

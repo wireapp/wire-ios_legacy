@@ -165,7 +165,8 @@ import CocoaLumberjackSwift
                 $0 != .none
             }
             
-            let randomEffect = suitableEffects[Int(arc4random()) % suitableEffects.count]
+            let maxEffect : UInt32 = UInt32(suitableEffects.count)
+            let randomEffect = suitableEffects[Int(arc4random_uniform(maxEffect))]
             let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(withName: ColorSchemeColorTextDimmed))
 
             let tipEffectImageAttachment = NSTextAttachment()

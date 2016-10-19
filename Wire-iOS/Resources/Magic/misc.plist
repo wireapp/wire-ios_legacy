@@ -329,6 +329,8 @@
 		<integer>4</integer>
 		<key>bottom_label_inset</key>
 		<integer>5</integer>
+		<key>ephemeral_bottom_label_inset</key>
+		<integer>8</integer>
 		<key>animation_inset_container</key>
 		<integer>48</integer>
 		<key>animation_inset_text</key>

@@ -24,23 +24,37 @@
 
 @interface ConversationTitleViewTests : ZMSnapshotTestCase
 @property (nonatomic) ConversationTitleView *sut;
+@property (nonatomic) MockConversation *conversation;
 @end
 
 @implementation ConversationTitleViewTests
 
-- (void)setUp {
+- (void)setUp
+{
     [super setUp];
-    MockConversation *conversation = [MockConversation new];
-    conversation.displayName = @"Alan Turing";
-    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)conversation];
-    self.sut.backgroundColor = UIColor.whiteColor;
+    self.conversation = [MockConversation new];
+    self.conversation.displayName = @"Alan Turing";
+    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
+    self.snapshotBackgroundColor = UIColor.whiteColor;
 }
 
-- (void)testThatItRendersTheConversationDisplayNameCorrectly {
+- (void)testThatItRendersTheConversationDisplayNameCorrectly
+{
     ZMVerifyView(self.sut);
 }
 
-- (void)testThatItExecutesTheTapHandlerOnTitleTap {
+- (void)testThatItUpdatesTheTitleViewAndRendersTheVerifiedShieldCorrectly
+{
+    // when
+    self.conversation.securityLevel = ZMConversationSecurityLevelSecure;
+    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
+
+    // then
+    ZMVerifyView(self.sut);
+}
+
+- (void)testThatItExecutesTheTapHandlerOnTitleTap
+{
     // given
     __block NSUInteger callCount;
     self.sut.tapHandler = ^(UIButton *button) {

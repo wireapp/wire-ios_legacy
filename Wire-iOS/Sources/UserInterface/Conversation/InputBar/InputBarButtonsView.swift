@@ -87,7 +87,7 @@ public final class InputBarButtonsView: UIView {
             buttonRow.right == view.right
             buttonRowHeight = buttonRow.height == 0
             view.height == constants.buttonsBarHeight
-            view.width == 414 ~ LayoutPriority(750)
+            view.width == 600 ~ LayoutPriority(750)
         }
     }
     

@@ -128,6 +128,7 @@
 
 "conversation.input_bar.verified" = "Verified";
 "conversation.input_bar.placeholder" = "Type a message";
+"conversation.input_bar.placeholder_ephemeral" = "Timed message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe up to send";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tap to send";
@@ -161,6 +162,10 @@
 
 // Twitter
 "twitter_status.on_twitter" = "%@ on Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
 "content.system.continued_conversation" = "Start a conversation with %@";
@@ -221,6 +226,8 @@
 "content.system.cannot_decrypt.identity.you_part" = "Your";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@'s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Learn More";
+"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+                                                                            // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Uploading…";
 "content.file.downloading" = "Downloading…";
@@ -427,7 +434,7 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
 
-"self.settings.account_details_group.footer" = "People can find you with these details. The information is encrypted and not visible to anyone else.";
+"self.settings.account_details_group.footer" = "People can find you with these details.";
 
 "self.settings.account_details.remove_device.title" = "Remove Device";
 "self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
@@ -439,7 +446,7 @@
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
-"self.settings.account_picture_group.theme" = "Dark theme";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
@@ -456,15 +463,15 @@
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
-"self.settings.notifications.push_notification.toogle" = "Message previews";
+"self.settings.notifications.push_notification.toogle" = "Message Previews";
 "self.settings.notifications.push_notification.footer" = "Sender name and message on the lock screen and in Notification Center.";
 
-"self.settings.notifications.chat_alerts.toggle" = "Message banners";
+"self.settings.notifications.chat_alerts.toggle" = "Message Banners";
 "self.settings.notifications.chat_alerts.footer" = "New messages in other conversations.";
 
 "self.settings.sound_menu.sounds.title" = "Sounds";
 "self.settings.sound_menu.ringtone.title" = "Ringtone";
-"self.settings.sound_menu.message.title" = "Text tone";
+"self.settings.sound_menu.message.title" = "Text Tone";
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Ringtones";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
@@ -473,10 +480,10 @@
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
-// Send Button
-"self.settings.send_button.title" = "Use return key to send messages";
-"self.settings.send_button.header" = "Send Button";
-"self.settings.send_button.footer" = "If turned on, messages will be send when tapping the return key instead of the dedicated send button";
+// By popular demand
+"self.settings.popular_demand.title" = "By popular demand";
+"self.settings.popular_demand.send_button.title" = "Send Button";
+"self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 
 // Open in
 "self.settings.external_apps.header" = "External Apps";
@@ -495,7 +502,7 @@
 "open_link.browser.option.chrome" = "Chrome";
 
 // Sound alerts (TO BE UPDPATED)
-"self.settings.sound_menu.title" = "Sound alerts";
+"self.settings.sound_menu.title" = "Sound Alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";
 "self.settings.sound_menu.all_sounds.title" = "All";
 "self.settings.sound_menu.mute_while_talking.title" = "First message, pings, calls";
@@ -513,7 +520,7 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
-"self.settings.privacy_analytics_section.title" = "Usage and crash reports";
+"self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
 "self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
 
 "self.settings.privacy.clear_history.title" = "Clear History";
@@ -527,6 +534,7 @@
 "self.settings.advanced.reset_push_token.subtitle" = "If you experience problems with push notifications, Wire Support may ask you to reset this token.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push token has been reset";
 "self.settings.advanced.reset_push_token_alert.message" = "Notifications will be restored in a few seconds.";
+"self.settings.advanced.version_technical_details.title" = "Version Technical Details";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
@@ -720,7 +728,7 @@
 
 "giphy.confirm" = "send";
 "giphy.cancel" = "cancel";
-"giphy.search_placeholder" = "Search giphy";
+"giphy.search_placeholder" = "Search Giphy";
 
 "invite_banner.title" = "Bring your friends to Wire!";
 "invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";

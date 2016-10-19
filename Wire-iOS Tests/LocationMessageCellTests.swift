@@ -42,6 +42,12 @@ class LocationMessageCellTests: ZMSnapshotTestCase {
         })
     }
 
+    func testThatItRendersLocationCellObfuscated() {
+        verify(view: wrappedCellWithConfig {
+            $0.isObfuscated = true
+        })
+    }
+
     // MARK: - Helper
 
     func wrappedCellWithConfig(_ config: CellConfiguration? = nil) -> UITableView {

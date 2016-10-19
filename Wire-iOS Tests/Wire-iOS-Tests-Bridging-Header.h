@@ -35,4 +35,6 @@
 #import "TextMessageCell.h"
 #import "Message+Private.h"
 #import "Message+Formatting.h"
+#import "MockConversation.h"
+#import "MockConversationFactory.h"
 

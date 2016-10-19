@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeCameraLens                      = 0x143,
     ZetaIconTypeCameraShutter                   = 0x144,
     ZetaIconTypeCameraSwitch                    = 0x120,
+    ZetaIconTypeTypingDots                      = 0x124,
     ZetaIconTypeSpinner                         = 0x126, // The activity spinner
     ZetaIconTypeLocationPin                     = 0x148, // Placemarker
     ZetaIconTypeEye                             = 0x185,
@@ -137,6 +138,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeText                            = 0x236,
     ZetaIconTypeEmoji                           = 0x237,
     ZetaIconTypeBackspace                       = 0x238,
+
+    ZetaIconTypeHourglass                       = 0x239,
 
     ZetaIconTypeEffectBallon                    = 0x240,
     ZetaIconTypeEffectJellyfish                 = 0x242,

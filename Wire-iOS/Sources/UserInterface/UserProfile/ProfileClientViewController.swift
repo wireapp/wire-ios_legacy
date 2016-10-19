@@ -41,6 +41,9 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     var verifiedToggle: UISwitch!
     var verifiedToggleLabel: UILabel!
     var resetButton: ButtonWithLargerHitArea!
+    
+    var fromConversation: Bool = false
+    
     var showBackButton: Bool = true {
         didSet {
             self.backButton?.isHidden = !self.showBackButton
@@ -72,6 +75,12 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         }
     }
 
+    convenience init(client: UserClient, fromConversation: Bool)
+    {
+        self.init(client: client)
+        self.fromConversation = fromConversation
+    }
+    
     required init(client: UserClient) {
         self.userClient = client
 
@@ -332,7 +341,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     }
     
     func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared().selfUserClient())
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared().selfUserClient(), fromConversation:self.fromConversation)
         let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
         navigationControllerWrapper.modalPresentationStyle = .currentContext
         self.present(navigationControllerWrapper, animated: true, completion: .none)

@@ -101,7 +101,7 @@
     self.messageLabel.backgroundColor = [UIColor clearColor];
     self.messageLabel.userInteractionEnabled = NO;
     self.messageLabel.text = [self messageText];
-    self.messageLabel.font =  [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.messageLabel.font = [self messageFont];
     self.messageLabel.textColor = [UIColor colorWithMagicIdentifier:@"notifications.text_color"];
     self.messageLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 
@@ -141,6 +141,7 @@
     NSString *result = @"";
 
     if ([Message isTextMessage:self.message]) {
+        
         result = [self.message.textMessageData.messageText stringByResolvingEmoticonShortcuts];
     }
     else if ([Message isImageMessage:self.message]) {
@@ -165,6 +166,17 @@
     return result;
 }
 
+- (UIFont *)messageFont
+{
+    UIFont *font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+
+    if (self.message.isEphemeral) {
+        return [UIFont fontWithName:@"RedactedScript-Regular" size:font.pointSize];
+    }
+
+    return font;
+}
+
 - (void)didTapInAppNotification:(UITapGestureRecognizer *)tapper
 {
     if (tapper.state == UIGestureRecognizerStateRecognized) {
@@ -186,6 +198,7 @@
 
         CGFloat topLabelInset = [WAZUIMagic cgFloatForIdentifier:@"notifications.top_label_inset"];
         CGFloat bottomLabelInset = [WAZUIMagic cgFloatForIdentifier:@"notifications.bottom_label_inset"];
+        CGFloat ephemeralBottomLabelInset = [WAZUIMagic cgFloatForIdentifier:@"notifications.ephemeral_bottom_label_inset"];
 
         [self.userImageView autoSetDimension:ALDimensionHeight toSize:tileDiameter];
         [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
@@ -198,7 +211,9 @@
 
         self.messageLabelLeftConstraint = [self.messageLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.userImageView withOffset:tileToContentGap + self.imageToTextInset];
         self.messageLabelRightConstraint = [self.messageLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:[WAZUIMagic cgFloatForIdentifier:@"notifications.corner_radius"] - self.imageToTextInset];
-        [self.messageLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:bottomLabelInset];
+
+        CGFloat bottomInset = self.message.isEphemeral ? ephemeralBottomLabelInset : bottomLabelInset;
+        [self.messageLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:bottomInset];
     }
 
     [super updateConstraints];

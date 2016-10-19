@@ -52,6 +52,11 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         createConstraints()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateSectionSelection()
@@ -129,12 +134,12 @@ protocol EmojiKeyboardViewControllerDelegate: class {
 
 extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
 
-    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect type: EmojiSectionType) {
+    func sectionViewController(_ viewController: EmojiSectionViewController, didSelect type: EmojiSectionType, scrolling: Bool) {
         guard let section = emojiDataSource.sectionIndex(for: type) else { return }
         let indexPath = IndexPath(item: 0, section: section)
-        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: !scrolling)
     }
-    
+
 }
 
 
@@ -160,7 +165,7 @@ extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: !first ? 12 : 0, bottom: 0, right: !last ? 12 : 0)
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func scrollViewDidScroll(_ scrolLView: UIScrollView) {
         updateSectionSelection()
     }
 }
@@ -189,7 +194,8 @@ class EmojiCollectionViewCell: UICollectionViewCell {
     
     func setupViews() {
         titleLabel.textAlignment = .center
-        titleLabel.font = .systemFont(ofSize: 28)
+        let fontSize: CGFloat =  UIDevice.current.userInterfaceIdiom == .pad ? 40 : 28
+        titleLabel.font = .systemFont(ofSize: fontSize)
         titleLabel.adjustsFontSizeToFitWidth = true
         addSubview(titleLabel)
     }

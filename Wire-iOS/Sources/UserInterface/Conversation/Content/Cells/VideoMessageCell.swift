@@ -35,18 +35,19 @@ extension ZMConversationMessage {
 }
 
 /// Displays the video message with different states
-open class VideoMessageCell: ConversationCell {
-    fileprivate let previewImageView = UIImageView()
-    fileprivate let progressView = CircularProgressView()
-    fileprivate let playButton = IconButton()
-    fileprivate let bottomGradientView = GradientView()
-    fileprivate let timeLabel = UILabel()
-    fileprivate let loadingView = ThreeDotsLoadingView()
-    fileprivate var topMargin : NSLayoutConstraint?
-    
-    fileprivate let normalColor = UIColor.black.withAlphaComponent(0.4)
-    fileprivate let failureColor = UIColor.red.withAlphaComponent(0.24)
-    fileprivate var allViews : [UIView] = []
+public final class VideoMessageCell: ConversationCell {
+    private let previewImageView = UIImageView()
+    private let progressView = CircularProgressView()
+    private let playButton = IconButton()
+    private let bottomGradientView = GradientView()
+    private let timeLabel = UILabel()
+    private let loadingView = ThreeDotsLoadingView()
+    private var topMargin : NSLayoutConstraint?
+    private let obfuscationView = UIView()
+
+    private let normalColor = UIColor.black.withAlphaComponent(0.4)
+    private let failureColor = UIColor.red.withAlphaComponent(0.24)
+    private var allViews : [UIView] = []
     
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,8 +76,9 @@ open class VideoMessageCell: ConversationCell {
         
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
-        
-        self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView]
+
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView, obfuscationView]
         self.allViews.forEach(messageContentView.addSubview)
         
         CASStyler.default().styleItem(self)
@@ -112,6 +114,11 @@ open class VideoMessageCell: ConversationCell {
             sizeLabel.centerY == bottomGradientView.centerY
             loadingView.center == previewImageView.center
         }
+
+        constrain(previewImageView, countdownContainerView, obfuscationView) { previewImageView, countDownContainer, obfuscationView in
+            countDownContainer.top == previewImageView.top + 8
+            obfuscationView.edges == previewImageView.edges
+        }
     }
     
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
@@ -120,7 +127,7 @@ open class VideoMessageCell: ConversationCell {
         if let fileMessageData = self.message.fileMessageData {
             self.configureForVideoMessage(fileMessageData, initialConfiguration: false)
         }
-        
+
         return needsLayout
     }
     
@@ -135,19 +142,17 @@ open class VideoMessageCell: ConversationCell {
         }
     }
     
-    fileprivate func configureForVideoMessage(_ fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
+    private func configureForVideoMessage(_ fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
         guard let fileMessageData = message.fileMessageData else {
             return
         }
         
         message.requestImageDownload()
-    
         configureVisibleViews(forfileMessageData: fileMessageData, initialConfiguration: initialConfiguration)
-        
         topMargin?.constant = layoutProperties.showSender ? 12 : 0
     }
 
-    fileprivate func configureVisibleViews(forfileMessageData fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
+    private func configureVisibleViews(forfileMessageData fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {
         guard let state = FileMessageCellState.fromConversationMessage(message) else { return }
         
         var visibleViews : [UIView] = [previewImageView]
@@ -179,11 +184,15 @@ open class VideoMessageCell: ConversationCell {
             self.playButton.setIcon(viewsState.playButtonIcon, with: .actionButton, for: .normal)
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
+
+        if state == .obfuscated {
+            visibleViews = [obfuscationView]
+        }
         
         self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
     }
     
-    fileprivate func updateTimeLabel(withFileMessageData fileMessageData: ZMFileMessageData) {
+    private func updateTimeLabel(withFileMessageData fileMessageData: ZMFileMessageData) {
         let duration = Int(roundf(Float(fileMessageData.durationMilliseconds) / 1000.0))
         var timeLabelText = ByteCountFormatter.string(fromByteCount: Int64(fileMessageData.size), countStyle: .binary)
         
@@ -197,7 +206,7 @@ open class VideoMessageCell: ConversationCell {
         self.timeLabel.accessibilityValue = self.timeLabel.text
     }
     
-    override open func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
@@ -287,4 +296,5 @@ open class VideoMessageCell: ConversationCell {
             DDLogError("Cannot save video: \(error)")
         }
     }
+
 }

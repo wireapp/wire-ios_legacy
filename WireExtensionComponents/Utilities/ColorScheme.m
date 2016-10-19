@@ -25,6 +25,8 @@ NSString * const ColorSchemeColorAccent = @"accent-current";
 NSString * const ColorSchemeColorAccentDimmed = @"accent-current-dimmed";
 NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
+NSString * const ColorSchemeColorEphemeral = @"ephemeral";
+
 NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorBackground = @"background";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
@@ -160,6 +162,7 @@ static NSString* light(NSString *colorString) {
 {
     UIColor *clear = [UIColor clearColor];
     UIColor *white = [UIColor whiteColor];
+    UIColor *ephemeral = [UIColor wr_colorFromString:@"rgb(255, 80, 0)"];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
@@ -182,6 +185,7 @@ static NSString* light(NSString *colorString) {
     NSDictionary *lightColors = @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
                                    ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
+                                   ColorSchemeColorEphemeral: ephemeral,
                                    ColorSchemeColorTextForeground: graphite,
                                    ColorSchemeColorTextBackground: white,
                                    ColorSchemeColorTextDimmed: lightGraphite,
@@ -214,6 +218,7 @@ static NSString* light(NSString *colorString) {
     NSDictionary *darkColors = @{ ColorSchemeColorAccent: accentColor,
                                   ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
                                   ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
+                                  ColorSchemeColorEphemeral: ephemeral,
                                   ColorSchemeColorTextForeground: white,
                                   ColorSchemeColorTextBackground: backgroundGraphite,
                                   ColorSchemeColorTextDimmed: lightGraphite,

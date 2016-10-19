@@ -20,7 +20,6 @@
 #import "MockConversation.h"
 
 
-
 @implementation MockConversation
 
 #pragma mark - Mockable
@@ -76,5 +75,9 @@
     return NO;
 }
 
+- (NSTimeInterval)messageDestructionTimeout
+{
+    return 15;
+}
 
 @end

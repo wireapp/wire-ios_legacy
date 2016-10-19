@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 // Cell that disaplys the file transfer and it's states
-open class FileTransferCell: ConversationCell {
+public final class FileTransferCell: ConversationCell {
     let containerView = UIView()
     let progressView = CircularProgressView()
     let topLabel = UILabel()
@@ -29,7 +29,8 @@ open class FileTransferCell: ConversationCell {
     let fileTypeIconView = UIImageView()
     let loadingView = ThreeDotsLoadingView()
     let actionButton = IconButton()
-    
+    private let obfuscationView = UIView()
+
     var labelTextColor: UIColor?
     var labelTextBlendedColor: UIColor?
     var labelFont: UIFont?
@@ -42,6 +43,7 @@ open class FileTransferCell: ConversationCell {
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
         self.containerView.cas_styleClass = "container-view"
+        containerView.clipsToBounds = true
         
         self.topLabel.numberOfLines = 1
         self.topLabel.lineBreakMode = .byTruncatingMiddle
@@ -63,9 +65,12 @@ open class FileTransferCell: ConversationCell {
         self.loadingView.isHidden = true
         
         self.messageContentView.addSubview(self.containerView)
+
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
         
-        self.allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView]
+        self.allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView, obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)
+
         
         CASStyler.default().styleItem(self)
         
@@ -116,11 +121,17 @@ open class FileTransferCell: ConversationCell {
             bottomLabel.right == topLabel.right
             loadingView.center == loadingView.superview!.center
         }
+
+        constrain(containerView, countdownContainerView, obfuscationView) { container, countDownContainer, obfuscationView in
+            countDownContainer.top == container.top
+            obfuscationView.edges == container.edges
+        }
     }
     
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
         self.configureForFileTransferMessage(self.message.fileMessageData!, initialConfiguration: false)
+
         return needsLayout
     }
     
@@ -220,6 +231,8 @@ open class FileTransferCell: ConversationCell {
         var visibleViews : [UIView] = [topLabel, bottomLabel]
         
         switch state {
+        case .obfuscated:
+            visibleViews = [obfuscationView]
         case .unavailable:
             visibleViews = [loadingView]
         case .uploading, .downloading:
@@ -298,4 +311,5 @@ open class FileTransferCell: ConversationCell {
     override open func messageType() -> MessageType {
         return .file
     }
+
 }
