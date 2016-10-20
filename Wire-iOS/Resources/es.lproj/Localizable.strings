@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire proporciona a cada dispositivo una huella digital única. Compare las huellas dactilares para verificar su dispositivos y conversaciones.";
 "self.settings.device_details.reset_session.subtitle" = "Si no coinciden las huellas digitales, reiniciar la sesión para generar nuevas claves de cifrado en ambos lados.";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
+"self.settings.device_details.remove_device.subtitle" = "Eliminar este dispositivo si ha dejado de usarlo. Se borrará el historial de mensajes y será desconectado.";
 "self.settings.device_details.reset_session.success" = "La sesión ha sido restablecida";
 
 "self.settings.account_details.actions.title" = "Acciones";

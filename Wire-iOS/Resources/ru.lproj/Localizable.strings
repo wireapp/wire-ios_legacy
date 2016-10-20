@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire дает каждому устройству уникальный отпечаток. Сравните их и заверифицируйте ваши устройства и разговоры.";
 "self.settings.device_details.reset_session.subtitle" = "Если отпечатки не совпадают, сбросьте сессию для создания новых ключей шифрования на обеих сторонах.";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
+"self.settings.device_details.remove_device.subtitle" = "Удалите это устройство, если вы перестали им пользоваться. История сообщений на нём будет стёрта, и вы выйдите из аккаунта.";
 "self.settings.device_details.reset_session.success" = "Сессия была обновлена";
 
 "self.settings.account_details.actions.title" = "Действия";
