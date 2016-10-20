@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Désactivé";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.title" = "Paramétrer une minuterie pour les messages temporaires";
 
 // System messages
 "content.system.continued_conversation" = "Démarrer une conversation avec %@";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte unique. Comparez les et vérifiez vos appareils et conversations.";
 "self.settings.device_details.reset_session.subtitle" = "Si les empreintes ne correspondent pas, réinitialisez la session afin de générer de nouvelles clés de chiffrement des deux côtés.";
-"self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous avez cessé de l’utiliser. Votre historique sera effacé et vous serez déconnecté.";
+"self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous avez arrêté de l'utiliser. L'historique de vos messages sera effacé de l'appareil et vous serez déconnecté.";
 "self.settings.device_details.reset_session.success" = "La session a été réinitialisée";
 
 "self.settings.account_details.actions.title" = "Actions";

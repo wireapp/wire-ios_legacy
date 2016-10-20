@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "Überprüft";
 "conversation.input_bar.placeholder" = "Schreibe eine Nachricht";
-"conversation.input_bar.placeholder_ephemeral" = "Selbstzerstörende Nachricht";
+"conversation.input_bar.placeholder_ephemeral" = "Temporäre Nachricht";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Zum Senden nach oben Wischen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tippe, um zu senden";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gibt jedem Gerät einen einzigartigen Fingerabdruck. Vergleiche diese und verifiziere deine Geräte und Unterhaltungen.";
 "self.settings.device_details.reset_session.subtitle" = "Falls die Fingerabdrücke nicht übereinstimmen, setze die Session zurück um neue Verschlüsselungs-Schlüssel auf beiden Seiten zu erstellen.";
-"self.settings.device_details.remove_device.subtitle" = "Entferne das Gerät, wenn du es nicht mehr nutzt. Der Nachrichtenverlauf wird gelöscht werden und du wirst abgemeldet.";
+"self.settings.device_details.remove_device.subtitle" = "Entferne das Gerät, wenn du es nicht mehr nutzt. Der Nachrichtenverlauf wird auf diesem Gerät gelöscht werden und du wirst abgemeldet.";
 "self.settings.device_details.reset_session.success" = "Die Session wurde zurückgesetzt";
 
 "self.settings.account_details.actions.title" = "Aktionen";
@@ -624,7 +624,7 @@
 "registration.devices.title" = "Geräte";
 "registration.devices.active_list_header" = "Aktiv";
 "registration.devices.current_list_header" = "Dieses Gerät";
-"registration.devices.active_list_subtitle" = "Sollte eines der oben stehenden Geräte nicht durch dich registriert worden sein, entferne es bitte und setze das Passwort in deinem Benutzerkonto zurück.";
+"registration.devices.active_list_subtitle" = "Falls du eines dieser Geräte nicht erkennst, entferne es und setze dein Passwort zurück.";
 "registration.devices.activated_in" = "Aktiviert in";
 "registration.devices.id" = "ID:";
 

@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "Проверено";
 "conversation.input_bar.placeholder" = "Наберите сообщение";
-"conversation.input_bar.placeholder_ephemeral" = "Не удалось послать сообщение";
+"conversation.input_bar.placeholder_ephemeral" = "Временное сообщение";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Нажмите для отправки";
@@ -164,8 +164,8 @@
 "twitter_status.on_twitter" = "%@ в Twitter";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Off";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.timeout.none" = "Выключен";
+"input.ephemeral.title" = "Установить таймер для временных сообщений";
 
 // System messages
 "content.system.continued_conversation" = "Начать разговор с %@";
@@ -226,7 +226,7 @@
 "content.system.cannot_decrypt.identity.you_part" = "Ваш";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Подробнее";
-"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+"content.system.cannot_decrypt.otherDevice_part" = "(устройство %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Отправка…";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire дает каждому устройству уникальный отпечаток. Сравните их и заверифицируйте ваши устройства и разговоры.";
 "self.settings.device_details.reset_session.subtitle" = "Если отпечатки не совпадают, сбросьте сессию для создания новых ключей шифрования на обеих сторонах.";
-"self.settings.device_details.remove_device.subtitle" = "Удалите это устройство, если вы прекратили им пользоваться. История сообщений будет стерта, и вы выйдите из аккаунта.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
 "self.settings.device_details.reset_session.success" = "Сессия была обновлена";
 
 "self.settings.account_details.actions.title" = "Действия";

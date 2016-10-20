@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "検証する";
 "conversation.input_bar.placeholder" = "メッセージを入力します";
-"conversation.input_bar.placeholder_ephemeral" = "Timed message";
+"conversation.input_bar.placeholder_ephemeral" = "タイマーメッセージ";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "上にスワイプして送信";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "タップして送信";
@@ -164,7 +164,7 @@
 "twitter_status.on_twitter" = "ツイッターに%@します";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.timeout.none" = "オフ";
 "input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
@@ -226,7 +226,7 @@
 "content.system.cannot_decrypt.identity.you_part" = "あなたの";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@の"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "もっと知る";
-"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+"content.system.cannot_decrypt.otherDevice_part" = "(デバイス %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "アップロード中...";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wireは各デバイスに固有のフィンガープリントを付与します。これを比較することでお使いのデバイスと会話を確認します。";
 "self.settings.device_details.reset_session.subtitle" = "フィンガープリントが一致しない場合は、セッションをリセットして、会話相手と双方で新しい暗号化キーを生成します。";
-"self.settings.device_details.remove_device.subtitle" = "使用を停止している場合、このデバイスを削除します。メッセージ履歴は消去され、ログアウトされます。";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
 "self.settings.device_details.reset_session.success" = "このセッションはリセットされました";
 
 "self.settings.account_details.actions.title" = "アクション";

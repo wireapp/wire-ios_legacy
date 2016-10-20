@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "Verificado";
 "conversation.input_bar.placeholder" = "Escriba un mensaje";
-"conversation.input_bar.placeholder_ephemeral" = "Timed message";
+"conversation.input_bar.placeholder_ephemeral" = "Mensaje temporizado";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Deslice hacia arriba para enviar";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Oprime para enviar";
@@ -164,7 +164,7 @@
 "twitter_status.on_twitter" = "%@ en Twitter";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.timeout.none" = "Desactivar";
 "input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire proporciona a cada dispositivo una huella digital única. Compare las huellas dactilares para verificar su dispositivos y conversaciones.";
 "self.settings.device_details.reset_session.subtitle" = "Si no coinciden las huellas digitales, reiniciar la sesión para generar nuevas claves de cifrado en ambos lados.";
-"self.settings.device_details.remove_device.subtitle" = "Eliminar este dispositivo si ha dejado de usarlo. Se borrará el historial de mensajes y será desconectado.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
 "self.settings.device_details.reset_session.success" = "La sesión ha sido restablecida";
 
 "self.settings.account_details.actions.title" = "Acciones";

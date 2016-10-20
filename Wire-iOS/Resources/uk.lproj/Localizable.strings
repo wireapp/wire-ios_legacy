@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "Верифікований";
 "conversation.input_bar.placeholder" = "Напишіть повідомлення";
-"conversation.input_bar.placeholder_ephemeral" = "Timed message";
+"conversation.input_bar.placeholder_ephemeral" = "Тимчасове повідомлення";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть вгору для надсилання";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
@@ -164,8 +164,8 @@
 "twitter_status.on_twitter" = "%@ в Twitter";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Off";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.timeout.none" = "Вимкнений";
+"input.ephemeral.title" = "Встановіть таймер для тимчасових повідомлень";
 
 // System messages
 "content.system.continued_conversation" = "Почати розмову з %@";
@@ -226,7 +226,7 @@
 "content.system.cannot_decrypt.identity.you_part" = "Ваш";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Дізнатися більше";
-"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+"content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Завантаження…";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівняйте їх, щоб зверифікувати ваші пристрої та розмови.";
 "self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не збігаються, виконайте скидання сесії, щоб згенерувати нові ключі шифрування з обидвох сторін.";
-"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви більше не використовуєте його. Вашу історію повідомлень буде стерто, і ви вийдете із системи на цьому пристрої.";
+"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви більше не використовуєте його. Вашу історію повідомлень буде стерто на цьому пристрої, і ви повернетесь до діалогу вводу імені та паролю.";
 "self.settings.device_details.reset_session.success" = "Сессія була скинута";
 
 "self.settings.account_details.actions.title" = "Дії";

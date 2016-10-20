@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "Verificado";
 "conversation.input_bar.placeholder" = "Digite uma mensagem";
-"conversation.input_bar.placeholder_ephemeral" = "Timed message";
+"conversation.input_bar.placeholder_ephemeral" = "Mensagem com tempo";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Puxe para cima para enviar";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Toque para enviar";
@@ -164,7 +164,7 @@
 "twitter_status.on_twitter" = "%@ no Twitter";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Off";
+"input.ephemeral.timeout.none" = "Desligar";
 "input.ephemeral.title" = "Set a timer for temporary messages";
 
 // System messages
@@ -226,7 +226,7 @@
 "content.system.cannot_decrypt.identity.you_part" = "Seu";
 "content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Saiba Mais";
-"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+"content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.file.uploading" = "Enviando…";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire dá uma impressão digital única a cada dispositivo. Compare-os e verifique seus dispositivos e conversas.";
 "self.settings.device_details.reset_session.subtitle" = "Se as impressões digitais não corresponderem, redefina a sessão para gerar novas chaves de criptografia em ambos os lados.";
-"self.settings.device_details.remove_device.subtitle" = "Remova este dispositivo se você ter parado de usá-lo. Seu histórico de mensagens será apagado e você será registrado para fora.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
 "self.settings.device_details.reset_session.success" = "A sessão foi redefinida";
 
 "self.settings.account_details.actions.title" = "Ações";
@@ -569,7 +569,7 @@
 "registration.verify_email.resend.button_title" = "Re-enviar";
 
 "registration.select_picture.subtitle" = "O Wire é muito mais legal com uma foto.";
-"registration.select_picture.button_title" = "Escolha sua imagem";
+"registration.select_picture.button_title" = "Escolha sua foto";
 "registration.keep_picture.button_title" = "Manter essa";
 "registration.camera_action.title" = "Tirar foto";
 "registration.photo_gallery_action.title" = "Escolha a foto";
