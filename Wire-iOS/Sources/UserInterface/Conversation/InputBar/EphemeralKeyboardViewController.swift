@@ -49,15 +49,6 @@ fileprivate let shortStyleFormatter: DateComponentsFormatter = {
 
 extension ZMConversationMessageDestructionTimeout {
 
-    static var all: [ZMConversationMessageDestructionTimeout] {
-        return [
-            .none,
-            .fiveSeconds,
-            .fifteenSeconds,
-            .oneMinute
-        ]
-    }
-
     var displayString: String? {
         guard .none != self else { return "input.ephemeral.timeout.none".localized }
         return longStyleFormatter.string(from: TimeInterval(rawValue))
