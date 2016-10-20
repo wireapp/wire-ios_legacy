@@ -275,16 +275,16 @@ import Foundation
     }
 
     func advancedGroup() -> SettingsCellDescriptorType {
-
         var externalAppsDescriptors = [SettingsCellDescriptorType]()
-        if TweetOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
+
+        if BrowserOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
         }
         if MapsOpeningOption.optionsAvailable {
             externalAppsDescriptors.append(mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)))
         }
-        if BrowserOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
+        if TweetOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
         }
 
         let externalAppsSection = SettingsSectionDescriptor(
