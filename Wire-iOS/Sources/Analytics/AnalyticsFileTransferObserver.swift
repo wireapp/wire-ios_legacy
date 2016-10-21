@@ -73,7 +73,11 @@ import WireMessageStrategy
                 return
         }
         
-        self.analyticsTracker.tagSuccededFileDownload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension, duration: fabs(startTime.timeIntervalSinceNow))
+        self.analyticsTracker.tagSuccededFileDownload(
+            withSize: fileMessageData.size, message: message,
+            fileExtension: (fileMessageData.filename as NSString).pathExtension,
+            duration: fabs(startTime.timeIntervalSinceNow)
+        )
     }
     
     func downloadFailedNotification(_ notification: Notification?) {

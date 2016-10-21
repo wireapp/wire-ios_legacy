@@ -20,6 +20,7 @@
 #import "AnalyticsTracker.h"
 
 @class ZMConversation;
+@protocol ZMConversationMessage;
 
 typedef NS_ENUM(NSUInteger, FileTransferContext) {
     FileTransferContextShareExtension,
@@ -39,8 +40,8 @@ typedef NS_ENUM(NSUInteger, FileTransferContext) {
 
 - (void)tagFailedFileUploadWithSize:(unsigned long long)size fileExtension:(NSString *)extension;
 
-- (void)tagInitiatedFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension;
-- (void)tagSuccededFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension duration:(NSTimeInterval)duration;
+- (void)tagInitiatedFileDownloadWithSize:(unsigned long long)size message:(id <ZMConversationMessage>)message fileExtension:(NSString *)extension;
+- (void)tagSuccededFileDownloadWithSize:(unsigned long long)size message:(id <ZMConversationMessage>)message fileExtension:(NSString *)extension duration:(NSTimeInterval)duration;
 - (void)tagFailedFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension;
 
 - (void)tagOpenedFileWithSize:(unsigned long long)size fileExtension:(NSString *)extension;

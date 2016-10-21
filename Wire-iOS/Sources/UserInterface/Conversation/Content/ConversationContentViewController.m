@@ -404,6 +404,7 @@
             self.waitingForFileDownload = YES;
             
             [self.analyticsTracker tagInitiatedFileDownloadWithSize:message.fileMessageData.size
+                                                            message:message
                                                       fileExtension:[message.fileMessageData.filename pathExtension]];
         }
             break;

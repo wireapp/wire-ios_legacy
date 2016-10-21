@@ -93,26 +93,30 @@ FOUNDATION_EXPORT NSString *FileTransferContextToNSString(FileTransferContext co
                      @"type": extension}];
 }
 
-- (void)tagInitiatedFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension
+- (void)tagInitiatedFileDownloadWithSize:(unsigned long long)size message:(id <ZMConversationMessage>)message fileExtension:(NSString *)extension
 {
-    [self tagEvent:@"file.initiated_file_download"
-        attributes:@{AnalyticsFileSizeBytesKey: [NSString stringWithFormat:@"%llu", size],
-                     AnalyticsFileSizeMegabytesKey: [[DefaultIntegerClusterizer fileSizeClusterizer] clusterizeInteger:(int)roundf(((float)size) / (1024.0 * 1024.0))],
-                     @"type": extension}];
+    NSMutableDictionary *attributes = [self.class ephemeralAttributesForMessage:message].mutableCopy;
+    attributes[AnalyticsFileSizeBytesKey] = [NSString stringWithFormat:@"%llu", size];
+    attributes[AnalyticsFileSizeMegabytesKey] = [[DefaultIntegerClusterizer fileSizeClusterizer] clusterizeInteger:(int)roundf(((float)size) / (1024.0 * 1024.0))];
+    attributes[@"types"] = extension;
+
+    [self tagEvent:@"file.initiated_file_download" attributes:attributes];
 }
 
-- (void)tagSuccededFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension duration:(NSTimeInterval)duration
+- (void)tagSuccededFileDownloadWithSize:(unsigned long long)size message:(id <ZMConversationMessage>)message fileExtension:(NSString *)extension duration:(NSTimeInterval)duration
 {
-    [self tagEvent:@"file.failed_file_download"
-        attributes:@{AnalyticsFileSizeBytesKey: [NSString stringWithFormat:@"%llu", size],
-                     AnalyticsFileSizeMegabytesKey: [[DefaultIntegerClusterizer fileSizeClusterizer] clusterizeInteger:(int)roundf(((float)size) / (1024.0 * 1024.0))],
-                     @"type": extension,
-                     @"time": [NSString stringWithFormat:@"%.02f", duration]}];
+    NSMutableDictionary *attributes = [self.class ephemeralAttributesForMessage:message].mutableCopy;
+    attributes[AnalyticsFileSizeBytesKey] = [NSString stringWithFormat:@"%llu", size];
+    attributes[AnalyticsFileSizeMegabytesKey] = [[DefaultIntegerClusterizer fileSizeClusterizer] clusterizeInteger:(int)roundf(((float)size) / (1024.0 * 1024.0))];
+    attributes[@"types"] = extension;
+    attributes[@"time"] = [NSString stringWithFormat:@"%.02f", duration];
+
+    [self tagEvent:@"file.successfully_downloaded_file" attributes:attributes];
 }
 
 - (void)tagFailedFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension
 {
-    [self tagEvent:@"file.successfully_downloaded_file"
+    [self tagEvent:@"file.failed_file_download"
         attributes:@{AnalyticsFileSizeBytesKey: [NSString stringWithFormat:@"%llu", size],
                      AnalyticsFileSizeMegabytesKey: [[DefaultIntegerClusterizer fileSizeClusterizer] clusterizeInteger:(int)roundf(((float)size) / (1024.0 * 1024.0))],
                      @"type": extension}];
@@ -124,6 +128,17 @@ FOUNDATION_EXPORT NSString *FileTransferContextToNSString(FileTransferContext co
         attributes:@{AnalyticsFileSizeBytesKey: [NSString stringWithFormat:@"%llu", size],
                      AnalyticsFileSizeMegabytesKey: [[DefaultIntegerClusterizer fileSizeClusterizer] clusterizeInteger:(int)roundf(((float)size) / (1024.0 * 1024.0))],
                      @"type": extension}];
+}
+
++ (NSDictionary *)ephemeralAttributesForMessage:(id <ZMConversationMessage>)message
+{
+    NSMutableDictionary *attributes = @{@"is_ephemeral": message.isEphemeral ? @"true" : @"false"}.mutableCopy;
+    if (! message.isEphemeral) {
+        return attributes;
+    }
+
+    attributes[@"ephemeral_time"] = [NSString stringWithFormat:@"%.f", message.deletionTimeout];
+    return attributes;
 }
 
 @end
