@@ -61,6 +61,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
 
+@property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) BOOL focusOnNextSelection;
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
@@ -131,6 +132,17 @@ static NSString * const CellReuseIdConversation = @"CellId";
     // from another view
     [self reload];
     [self scrollToCurrentSelectionAnimated:NO];
+
+    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:AppDelegate.sharedAppDelegate.mediaPlaybackManager
+                                                             keyPath:@"activeMediaPlayer"
+                                                              target:self
+                                                            selector:@selector(activeMediaPlayerChanged:)];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.activeMediaPlayerObserver = nil;
 }
 
 - (void)setupViews
@@ -433,6 +445,15 @@ static NSString * const CellReuseIdConversation = @"CellId";
         [result addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
     }];
     return result;
+}
+
+#pragma mark - ActiveMediaPlayer observer
+
+- (void)activeMediaPlayerChanged:(NSDictionary *)change
+{
+    for (ConversationListCell *cell in self.collectionView.visibleCells) {
+        [cell updateRightAccessory];
+    }
 }
 
 @end

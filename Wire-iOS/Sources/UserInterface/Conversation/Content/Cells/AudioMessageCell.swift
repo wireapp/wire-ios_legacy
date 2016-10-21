@@ -204,7 +204,10 @@ public final class AudioMessageCell: ConversationCell {
 
     public override func willDeleteMessage() {
         proximityListener.stopListening()
-        stopPlaying()
+        let player = audioTrackPlayer()
+        let audioTrackPlayingSame = player.sourceMessage != nil && player.sourceMessage.isEqual(message)
+        guard audioTrackPlayingSame else { return }
+        player.stop()
     }
     
     private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, initialConfiguration: Bool) {

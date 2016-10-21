@@ -161,6 +161,13 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 
 - (void)willDeleteMessagesAtIndexPaths:(NSArray<NSIndexPath *>*)deletedIndexPaths
 {
+    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+    id<ZMConversationMessage> mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
+
+    if (mediaPlayingMessage.hasBeenDeleted) {
+        [mediaPlaybackManager stop];
+    }
+
     for (NSIndexPath *indexPath in deletedIndexPaths) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         if ([cell isKindOfClass:ConversationCell.class]) {

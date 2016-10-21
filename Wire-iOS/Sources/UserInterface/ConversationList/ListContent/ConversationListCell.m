@@ -49,15 +49,6 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 48;
 static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.1;
 
 
-@interface ConversationListCell (RightAccessory)
-
-- (void)updateRightAccessory;
-- (void)mediaPlayerStateDidChange:(id)sender;
-- (void)mediaControllerDidBecomeActive:(id)sender;
-
-@end
-
-
 
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
 
@@ -318,16 +309,6 @@ static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.1;
     }
     
     return NO;
-}
-
-- (void)mediaPlayerStateDidChange:(id)sender
-{
-    [self updateRightAccessory];
-}
-
-- (void)mediaControllerDidBecomeActive:(id)sender
-{
-    [self updateRightAccessory];
 }
 
 @end

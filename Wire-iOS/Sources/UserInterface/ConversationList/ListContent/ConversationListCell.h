@@ -34,6 +34,12 @@
 @end
 
 
+@interface ConversationListCell (RightAccessory)
+
+- (void)updateRightAccessory;
+
+@end
+
 
 @protocol ConversationListCellDelegate <NSObject>
 
