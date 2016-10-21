@@ -94,7 +94,7 @@
 			"loopAllowed": 0,
 			"mixingAllowed": 100,
 			"incallAllowed": 0,
-			"intensity": 100
+			"intensity": 50
 		},
 		"new_message": {
 			"path": "new_message",
@@ -110,7 +110,7 @@
 			"loopAllowed": 0,
 			"mixingAllowed": 100,
 			"incallAllowed": 0,
-			"intensity": 100
+			"intensity": 50
 		},
 		"ping_from_me": {
 			"path": "ping_from_me",
