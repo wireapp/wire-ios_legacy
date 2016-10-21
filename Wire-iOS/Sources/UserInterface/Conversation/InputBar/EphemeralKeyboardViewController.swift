@@ -30,19 +30,12 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
+
 fileprivate let longStyleFormatter: DateComponentsFormatter = {
     let formatter = DateComponentsFormatter()
     formatter.unitsStyle = .full
-    formatter.allowedUnits = [.minute, .second]
-    formatter.zeroFormattingBehavior = [.dropLeading, .dropTrailing]
-    return formatter
-}()
-
-fileprivate let shortStyleFormatter: DateComponentsFormatter = {
-    let formatter = DateComponentsFormatter()
-    formatter.unitsStyle = .abbreviated
-    formatter.allowedUnits = [.minute, .second]
-    formatter.zeroFormattingBehavior = [.dropLeading, .dropTrailing]
+    formatter.allowedUnits = [.day, .hour, .minute, .second]
+    formatter.zeroFormattingBehavior = .dropAll
     return formatter
 }()
 
@@ -57,6 +50,8 @@ extension ZMConversationMessageDestructionTimeout {
     var shortDisplayString: String? {
         if isSeconds { return String(Int(rawValue)) }
         if isMinutes { return String(Int(rawValue / 60)) }
+        if isHours { return String(Int(rawValue / 3600)) }
+        if isDays { return String(Int(rawValue / 86400)) }
         return nil
     }
 
@@ -70,16 +65,26 @@ extension ZMConversationMessageDestructionTimeout {
     }
 
     var isMinutes: Bool {
-        return rawValue >= 60
+        return 60..<3600 ~= rawValue
      }
+
+    var isHours: Bool {
+        return 3600..<86400 ~= rawValue
+    }
+
+    var isDays: Bool {
+        return rawValue >= 86400
+    }
 
 }
 
 public extension ZMConversation {
 
     var timeoutImage: UIImage? {
-        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond() }
+        if destructionTimeout.isDays { return WireStyleKit.imageOfDay() }
+        if destructionTimeout.isHours { return WireStyleKit.imageOfHour() }
         if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute() }
+        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond() }
         return nil
     }
 

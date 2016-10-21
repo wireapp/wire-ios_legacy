@@ -27,6 +27,7 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* secondTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* minuteTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* hourTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* dayTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
@@ -132,6 +133,7 @@
 + (void)drawSecond;
 + (void)drawMinute;
 + (void)drawHour;
++ (void)drawDay;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -222,6 +224,7 @@
 + (UIImage*)imageOfSecond;
 + (UIImage*)imageOfMinute;
 + (UIImage*)imageOfHour;
++ (UIImage*)imageOfDay;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

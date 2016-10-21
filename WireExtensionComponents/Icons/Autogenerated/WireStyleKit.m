@@ -29,6 +29,7 @@ static UIColor* _fillColor10 = nil;
 static UIImage* _imageOfSecond = nil;
 static UIImage* _imageOfMinute = nil;
 static UIImage* _imageOfHour = nil;
+static UIImage* _imageOfDay = nil;
 static UIImage* _imageOfOngoingcall = nil;
 static UIImage* _imageOfShieldverified = nil;
 static UIImage* _imageOfShieldnotverified = nil;
@@ -3764,6 +3765,60 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezier2Path fill];
 }
 
++ (void)drawDay
+{
+    //// Color Declarations
+    UIColor* orange40 = [UIColor colorWithRed: 1 green: 0.314 blue: 0 alpha: 0.4];
+    UIColor* fillColor = [UIColor colorWithRed: 1 green: 0.314 blue: 0 alpha: 1];
+
+    //// Bezier 2 Drawing
+    UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
+    [bezier2Path moveToPoint: CGPointMake(46.86, 13.15)];
+    [bezier2Path addCurveToPoint: CGPointMake(32, 8) controlPoint1: CGPointMake(42.77, 9.93) controlPoint2: CGPointMake(37.61, 8)];
+    [bezier2Path addCurveToPoint: CGPointMake(8, 32) controlPoint1: CGPointMake(18.75, 8) controlPoint2: CGPointMake(8, 18.75)];
+    [bezier2Path addCurveToPoint: CGPointMake(32, 56) controlPoint1: CGPointMake(8, 45.25) controlPoint2: CGPointMake(18.75, 56)];
+    [bezier2Path addCurveToPoint: CGPointMake(55.72, 35.66) controlPoint1: CGPointMake(44.01, 56) controlPoint2: CGPointMake(53.96, 47.18)];
+    [bezier2Path addCurveToPoint: CGPointMake(54.68, 35.87) controlPoint1: CGPointMake(55.38, 35.75) controlPoint2: CGPointMake(55.03, 35.82)];
+    [bezier2Path addCurveToPoint: CGPointMake(32, 55) controlPoint1: CGPointMake(52.83, 46.73) controlPoint2: CGPointMake(43.38, 55)];
+    [bezier2Path addCurveToPoint: CGPointMake(9, 32) controlPoint1: CGPointMake(19.3, 55) controlPoint2: CGPointMake(9, 44.7)];
+    [bezier2Path addCurveToPoint: CGPointMake(32, 9) controlPoint1: CGPointMake(9, 19.3) controlPoint2: CGPointMake(19.3, 9)];
+    [bezier2Path addCurveToPoint: CGPointMake(45.89, 13.67) controlPoint1: CGPointMake(37.22, 9) controlPoint2: CGPointMake(42.03, 10.74)];
+    [bezier2Path addCurveToPoint: CGPointMake(46.86, 13.15) controlPoint1: CGPointMake(46.21, 13.48) controlPoint2: CGPointMake(46.53, 13.31)];
+    [bezier2Path addLineToPoint: CGPointMake(46.86, 13.15)];
+    [bezier2Path closePath];
+    [orange40 setFill];
+    [bezier2Path fill];
+
+
+    //// Bezier 3 Drawing
+    UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
+    [bezier3Path moveToPoint: CGPointMake(53.13, 30)];
+    [bezier3Path addCurveToPoint: CGPointMake(56.09, 28.34) controlPoint1: CGPointMake(54.45, 30) controlPoint2: CGPointMake(55.55, 29.38)];
+    [bezier3Path addLineToPoint: CGPointMake(56.23, 28.34)];
+    [bezier3Path addLineToPoint: CGPointMake(56.23, 29.84)];
+    [bezier3Path addLineToPoint: CGPointMake(58.32, 29.84)];
+    [bezier3Path addLineToPoint: CGPointMake(58.32, 16.67)];
+    [bezier3Path addLineToPoint: CGPointMake(56.16, 16.67)];
+    [bezier3Path addLineToPoint: CGPointMake(56.16, 21.85)];
+    [bezier3Path addLineToPoint: CGPointMake(56.02, 21.85)];
+    [bezier3Path addCurveToPoint: CGPointMake(53.13, 20.18) controlPoint1: CGPointMake(55.51, 20.81) controlPoint2: CGPointMake(54.44, 20.18)];
+    [bezier3Path addCurveToPoint: CGPointMake(49.22, 25.08) controlPoint1: CGPointMake(50.74, 20.18) controlPoint2: CGPointMake(49.22, 22.08)];
+    [bezier3Path addCurveToPoint: CGPointMake(53.13, 30) controlPoint1: CGPointMake(49.22, 28.11) controlPoint2: CGPointMake(50.73, 30)];
+    [bezier3Path addLineToPoint: CGPointMake(53.13, 30)];
+    [bezier3Path closePath];
+    [bezier3Path moveToPoint: CGPointMake(53.8, 22.02)];
+    [bezier3Path addCurveToPoint: CGPointMake(56.19, 25.09) controlPoint1: CGPointMake(55.28, 22.02) controlPoint2: CGPointMake(56.19, 23.2)];
+    [bezier3Path addCurveToPoint: CGPointMake(53.8, 28.17) controlPoint1: CGPointMake(56.19, 27) controlPoint2: CGPointMake(55.29, 28.17)];
+    [bezier3Path addCurveToPoint: CGPointMake(51.43, 25.09) controlPoint1: CGPointMake(52.33, 28.17) controlPoint2: CGPointMake(51.43, 27.01)];
+    [bezier3Path addCurveToPoint: CGPointMake(53.8, 22.02) controlPoint1: CGPointMake(51.43, 23.18) controlPoint2: CGPointMake(52.33, 22.02)];
+    [bezier3Path addLineToPoint: CGPointMake(53.8, 22.02)];
+    [bezier3Path closePath];
+    bezier3Path.usesEvenOddFillRule = YES;
+
+    [fillColor setFill];
+    [bezier3Path fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -5424,6 +5479,20 @@ static UIImage* _imageOfShieldnotverified = nil;
     return _imageOfHour;
 }
 
++ (UIImage*)imageOfDay
+{
+    if (_imageOfDay)
+        return _imageOfDay;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0.0f);
+    [WireStyleKit drawDay];
+
+    _imageOfDay = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfDay;
+}
+
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, 0.0f);
@@ -5539,7 +5608,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
     _imageOfShieldnotverified = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     return _imageOfShieldnotverified;
 }
 
@@ -5547,10 +5616,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(18, 9), NO, 0.0f);
     [WireStyleKit drawTabWithColor: color];
-
+    
     UIImage* imageOfTab = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     return imageOfTab;
 }
 
@@ -5580,10 +5649,18 @@ static UIImage* _imageOfShieldnotverified = nil;
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfHour];
 }
 
+- (void)setDayTargets: (NSArray*)dayTargets
+{
+    _dayTargets = dayTargets;
+    
+    for (id target in self.dayTargets)
+        [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfDay];
+}
+
 - (void)setOngoingcallTargets: (NSArray*)ongoingcallTargets
 {
     _ongoingcallTargets = ongoingcallTargets;
-
+    
     for (id target in self.ongoingcallTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfOngoingcall];
 }
@@ -5591,7 +5668,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldverifiedTargets: (NSArray*)shieldverifiedTargets
 {
     _shieldverifiedTargets = shieldverifiedTargets;
-
+    
     for (id target in self.shieldverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldverified];
 }
@@ -5599,7 +5676,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldnotverifiedTargets: (NSArray*)shieldnotverifiedTargets
 {
     _shieldnotverifiedTargets = shieldnotverifiedTargets;
-
+    
     for (id target in self.shieldnotverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldnotverified];
 }

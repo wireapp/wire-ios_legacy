@@ -52,8 +52,8 @@ extension ZMConversationMessage {
     private static let ephemeralTimeFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
-        formatter.allowedUnits = [.minute, .second]
-        formatter.zeroFormattingBehavior = [.dropLeading, .dropTrailing]
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        formatter.zeroFormattingBehavior = .dropAll
         return formatter
     }()
 
