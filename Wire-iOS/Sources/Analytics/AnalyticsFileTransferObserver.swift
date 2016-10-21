@@ -47,7 +47,12 @@ import WireMessageStrategy
                 return
         }
         
-        self.analyticsTracker.tagSucceededFileUpload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension, duration: fabs(startTime.timeIntervalSinceNow))
+        self.analyticsTracker.tagSucceededFileUpload(
+            withSize: fileMessageData.size,
+            in: message.conversation,
+            fileExtension: (fileMessageData.filename as NSString).pathExtension,
+            duration: fabs(startTime.timeIntervalSinceNow)
+        )
     }
     
     func uploadFailedNotification(_ notification: Notification?) {

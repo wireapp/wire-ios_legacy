@@ -19,6 +19,8 @@
 
 #import "AnalyticsTracker.h"
 
+@class ZMConversation;
+
 typedef NS_ENUM(NSUInteger, FileTransferContext) {
     FileTransferContextShareExtension,
     FileTransferContextApp
@@ -29,7 +31,12 @@ typedef NS_ENUM(NSUInteger, FileTransferContext) {
 - (void)tagCannotUploadFileSizeExceedsWithSize:(unsigned long long)size fileExtension:(NSString *)extension;
 - (void)tagInitiatedFileUploadWithSize:(unsigned long long)size fileExtension:(NSString *)extension context:(FileTransferContext)context;
 - (void)tagCancelledFileUploadWithSize:(unsigned long long)size fileExtension:(NSString *)extension;
-- (void)tagSucceededFileUploadWithSize:(unsigned long long)size fileExtension:(NSString *)extension duration:(NSTimeInterval)duration;
+
+- (void)tagSucceededFileUploadWithSize:(unsigned long long)size
+                        inConversation:(ZMConversation *)conversation
+                         fileExtension:(NSString *)extension
+                              duration:(NSTimeInterval)duration;
+
 - (void)tagFailedFileUploadWithSize:(unsigned long long)size fileExtension:(NSString *)extension;
 
 - (void)tagInitiatedFileDownloadWithSize:(unsigned long long)size fileExtension:(NSString *)extension;

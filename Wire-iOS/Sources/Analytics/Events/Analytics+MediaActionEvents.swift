@@ -181,6 +181,20 @@ let videoDurationClusterizer: TimeIntervalClusterizer = {
     return TimeIntervalClusterizer.videoDuration()
 }()
 
+
+public extension ZMConversation {
+
+    var ephemeralTrackingAttributes: [String: String] {
+        let ephemeral = destructionTimeout != .none
+        var attributes = ["is_ephemeral": ephemeral ? "true" : "false"]
+        guard ephemeral else { return attributes }
+        attributes["ephemeral_time"] = "\(Int(destructionTimeout.rawValue))"
+        return attributes
+    }
+
+}
+
+
 public extension Analytics {
 
     /// User clicked on any action in cursor, giphy button or audio / video call button from toolbar.
@@ -193,7 +207,9 @@ public extension Analytics {
     }
     
     @objc public func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
-        var attributes = ["action": action.attributeValue]
+        var attributes = conversation.ephemeralTrackingAttributes
+        attributes["action"] = action.attributeValue
+
         if let typeAttribute = conversation.analyticsTypeString() {
             attributes["with_bot"] = conversation.isBotConversation ? "true" : "false";
             attributes["conversation_type"] = typeAttribute
@@ -223,7 +239,7 @@ public extension Analytics {
     }
     
     @objc public func tagMediaSentPicture(inConversation conversation: ZMConversation, metadata: ImageMetadata) {
-        var attributes = [String: String]()
+        var attributes = conversation.ephemeralTrackingAttributes
         if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
         }
@@ -257,8 +273,10 @@ public extension Analytics {
     
     /// User uploads video message
     @objc public func tagSentVideoMessage(inConversation conversation: ZMConversation, context: ConversationMediaVideoContext, duration: TimeInterval) {
-        var attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
-                          "duration_actual": type(of: self).stringFromTimeInterval(duration)]
+
+        var attributes = conversation.ephemeralTrackingAttributes
+        attributes["duration"] = videoDurationClusterizer.clusterizeTimeInterval(duration)
+        attributes["duration_actual"] = type(of: self).stringFromTimeInterval(duration)
         
         if let typeAttribute = conversation.analyticsTypeString() {
             attributes["conversation_type"] = typeAttribute
@@ -297,13 +315,20 @@ public extension Analytics {
     }
     
     /// User uploads an audio message
-    public func tagSentAudioMessage(_ duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType, type: ConversationMediaRecordingType) {
+    public func tagSentAudioMessage(in conversation: ZMConversation, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType, type: ConversationMediaRecordingType) {
         let filterName = filter.description.lowercased()
-        let attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
-                          "duration_actual": type(of: self).stringFromTimeInterval(duration),
-                          AudioMessageContext.keyName: context.attributeString,
-                          "filter": filterName,
-                          "state": type.description]
+        var  attributes = [
+            "duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
+            "duration_actual": type(of: self).stringFromTimeInterval(duration),
+            AudioMessageContext.keyName: context.attributeString,
+            "filter": filterName,
+            "state": type.description
+        ]
+
+        conversation.ephemeralTrackingAttributes.forEach { key, value in
+            attributes[key] = value
+        }
+
         tagEvent(conversationMediaSentAudioMessageEventName, attributes: attributes)
     }
     
