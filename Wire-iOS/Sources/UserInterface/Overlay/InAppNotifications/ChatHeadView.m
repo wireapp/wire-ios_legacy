@@ -198,6 +198,7 @@
 
         CGFloat topLabelInset = [WAZUIMagic cgFloatForIdentifier:@"notifications.top_label_inset"];
         CGFloat bottomLabelInset = [WAZUIMagic cgFloatForIdentifier:@"notifications.bottom_label_inset"];
+        CGFloat ephemeralBottomLabelInset = [WAZUIMagic cgFloatForIdentifier:@"notifications.ephemeral_bottom_label_inset"];
 
         [self.userImageView autoSetDimension:ALDimensionHeight toSize:tileDiameter];
         [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
@@ -210,7 +211,9 @@
 
         self.messageLabelLeftConstraint = [self.messageLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.userImageView withOffset:tileToContentGap + self.imageToTextInset];
         self.messageLabelRightConstraint = [self.messageLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:[WAZUIMagic cgFloatForIdentifier:@"notifications.corner_radius"] - self.imageToTextInset];
-        [self.messageLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:bottomLabelInset];
+
+        CGFloat bottomInset = self.message.isEphemeral ? ephemeralBottomLabelInset : bottomLabelInset;
+        [self.messageLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:bottomInset];
     }
 
     [super updateConstraints];

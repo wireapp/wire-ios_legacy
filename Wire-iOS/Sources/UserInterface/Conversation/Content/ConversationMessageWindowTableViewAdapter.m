@@ -114,7 +114,11 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     BOOL initialContentLoad = self.messageWindow.messages.count == change.insertedIndexes.count && change.deletedIndexes.count == 0;
     BOOL updateOnlyChange = change.insertedIndexes.count == 0 && change.deletedIndexes.count == 0 && change.movedIndexPairs.count == 0;
     BOOL insertionAtTop = change.insertedIndexes.count > 0 && change.insertedIndexes.lastIndex == self.messageWindow.messages.count - 1;
-    
+
+    if (change.deletedIndexes.count) {
+        [self willDeleteMessagesAtIndexPaths:[change.deletedIndexes indexPaths]];
+    }
+
     if (initialContentLoad || insertionAtTop) {
         [self.tableView reloadData];
     }
@@ -150,6 +154,16 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 {
     _editingMessage = editingMessage;
     [self reconfigureVisibleCellsWithDeletedIndexPaths:nil];
+}
+
+- (void)willDeleteMessagesAtIndexPaths:(NSArray<NSIndexPath *>*)deletedIndexPaths
+{
+    for (NSIndexPath *indexPath in deletedIndexPaths) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        if ([cell isKindOfClass:ConversationCell.class]) {
+            [(ConversationCell *)cell willDeleteMessage];
+        }
+    }
 }
 
 - (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths

@@ -46,6 +46,7 @@ fileprivate let shortStyleFormatter: DateComponentsFormatter = {
     return formatter
 }()
 
+
 extension ZMConversationMessageDestructionTimeout {
 
     static var all: [ZMConversationMessageDestructionTimeout] {
@@ -63,12 +64,35 @@ extension ZMConversationMessageDestructionTimeout {
     }
 
     var shortDisplayString: String? {
-        guard .none != self else { return nil }
-        return shortStyleFormatter.string(from: TimeInterval(rawValue))
+        if isSeconds { return String(Int(rawValue)) }
+        if isMinutes { return String(Int(rawValue / 60)) }
+        return nil
     }
 
 }
 
+
+extension ZMConversationMessageDestructionTimeout {
+
+    var isSeconds: Bool {
+        return rawValue < 60
+    }
+
+    var isMinutes: Bool {
+        return rawValue >= 60
+     }
+
+}
+
+public extension ZMConversation {
+
+    var timeoutImage: UIImage? {
+        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond() }
+        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute() }
+        return nil
+    }
+
+}
 
 
 @objc public final class EphemeralKeyboardViewController: UIViewController {
@@ -81,8 +105,8 @@ extension ZMConversationMessageDestructionTimeout {
     public var pickerFont: UIFont?
     public var pickerColor: UIColor?
     public var separatorColor: UIColor?
-    private let conversation: ZMConversation
 
+    private let conversation: ZMConversation
     private let picker = PickerView()
 
 
@@ -133,7 +157,7 @@ extension ZMConversationMessageDestructionTimeout {
             label.trailing == view.trailing
             label.top == view.top + inset.y
             picker.top == label.bottom + inset.y
-            picker.bottom == view.bottom - inset.y
+            picker.bottom <= view.bottom - inset.y
             picker.leading == view.leading + inset.x
             picker.trailing == view.trailing - inset.x
         }

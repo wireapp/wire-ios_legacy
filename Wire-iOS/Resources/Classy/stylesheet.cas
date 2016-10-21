@@ -748,13 +748,13 @@ GroupConversationHeader {
 
 MessageToolboxView {
     statusLabel: @{
-        font: $font-small-light;
+        font: $font-small-medium;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
         textContainerInset: 0, 0, 0, 0;
     }
     likeTooltipArrow: @{
-        font: $font-small-light;
+        font: $font-small-medium;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
@@ -888,7 +888,7 @@ InputBar: {
     
     textView: @{
         font: $font-normal-light;
-        placeholderFont: $font-small-light;
+        placeholderFont: $font-small-medium;
         textColor: $color-text-foreground;
         backgroundColor: clear;
     }
@@ -910,21 +910,21 @@ IconButton.send-button {
     backgroundImageColor[state:normal]: $color-accent-current;
 }
 
+IconButton.hourglass {
+    iconColor: $color-icon-normal;
+    iconColor[state:selected]: $color-ephemeral;
+    iconColor[state:highlighted]: $color-icon-highlighted;
+    backgroundImageColor[state:selected]: clear;
+}
+
 ConversationInputBarViewController {
 
     ephemeralIndicatorButton: @{
-        borderColor: $color-ephemeral;
+        borderWidth: 0.0;
         titleColor: $color-ephemeral;
         titleLabel: @{
             font: $font-small;
         }
-    }
-
-    hourglassButton: @{
-        iconColor: $color-icon-normal;
-        iconColor[state:selected]: $color-ephemeral;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-        backgroundImageColor[state:selected]: clear;
     }
 
     audioRecorderTooltip: @{
@@ -1316,6 +1316,10 @@ EphemeralKeyboardViewController {
     }
 }
 
+PickerView {
+    backgroundColor: clear;
+}
+
 /* Profile Devices */
 
 ProfileDevicesViewController {
@@ -1349,7 +1353,66 @@ ParticipantDeviceHeaderView {
     font: $font-normal-light;
 }
 
-FingerprintTableViewCell {
+
+SettingsClientViewController.conversation {
+    view: @{
+        backgroundColor: $color-background
+    }
+    
+    tableView: @{
+        separatorColor: $color-separator
+    }
+    navigationController: @{
+        navigationBar: @{
+            titleTextAttributes :@{
+                foregroundColor: $color-text-foreground
+            }
+        }
+    }
+    
+    ^ClientTableViewCell.conversation  {
+        nameLabel: @{
+            font: $font-normal-medium;
+            textColor: $color-text-foreground;
+        }
+        labelLabel: @{
+            font: $font-small-medium;
+            textColor: $color-text-foreground;
+        }
+        activationLabel: @{
+            font: $font-small-light;
+            textColor: $color-text-foreground;
+        }
+        verifiedLabel: @{
+            font: $font-small;
+        }
+        fingerprintLabelFont: $font-small-light;
+        fingerprintLabelBoldFont: $font-small-medium;
+        fingerprintTextColor: $color-text-foreground
+        
+    }
+    
+    ^FingerprintTableViewCell.conversation  {
+        fingerprintLabelFont: $font-normal-light;
+        fingerprintLabelBoldFont: $font-normal-medium;
+        
+        titleLabel: @{
+            font: $font-small-medium;
+            textColor: $color-text-foreground;
+        }
+        fingerprintLabel: @{
+            textColor: $color-text-foreground;
+        }
+    }
+}
+
+SettingsClientViewController {
+    tableView: @{
+        separatorColor: rgb(255,255,255,0.1)
+    }
+}
+
+FingerprintTableViewCell{
     fingerprintLabelFont: $font-normal-light;
     fingerprintLabelBoldFont: $font-normal-medium;
     
@@ -1361,6 +1424,7 @@ FingerprintTableViewCell {
         textColor: white;
     }
 }
+
 
 ClientTableViewCell {
     nameLabel: @{
@@ -1380,6 +1444,7 @@ ClientTableViewCell {
     }
     fingerprintLabelFont: $font-small-light;
     fingerprintLabelBoldFont: $font-small-medium;
+    fingerprintTextColor: white
 }
 
 /* Registration */

@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Off";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.title" = "Set a timer for timed messages";
 
 // System messages
 "content.system.continued_conversation" = "Start a conversation with %@";

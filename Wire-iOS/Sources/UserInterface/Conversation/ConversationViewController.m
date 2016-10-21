@@ -900,7 +900,7 @@
                                                       if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
                                                           ZMUser *user = self.conversation.connectedUser;
                                                           if (user.clients.count == 1) {
-                                                              ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject];
+                                                              ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
                                                               userClientController.showBackButton = NO;
                                                               [navigationController pushViewController:userClientController animated:YES];
                                                           } else {

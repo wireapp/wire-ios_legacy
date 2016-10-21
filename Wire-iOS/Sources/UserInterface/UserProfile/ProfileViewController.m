@@ -372,7 +372,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)profileDevicesViewController:(ProfileDevicesViewController *)profileDevicesViewController didTapDetailForClient:(UserClient *)client
 {
-    ProfileClientViewController *userClientDetailController = [[ProfileClientViewController alloc] initWithClient:client];
+    ProfileClientViewController *userClientDetailController = [[ProfileClientViewController alloc] initWithClient:client fromConversation:YES];
     [self presentViewController:userClientDetailController animated:YES completion:nil];
 }
 

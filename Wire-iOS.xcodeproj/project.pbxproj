@@ -1940,6 +1940,18 @@
 		AF65A25B1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsListViewControllerTests.swift; sourceTree = "<group>"; };
 		AF917BAC1C6E9B2F00491EA9 /* AppControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppControllerTests.m; sourceTree = "<group>"; };
 		AF917BAE1C6E9D3F00491EA9 /* AppController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppController+Internal.h"; sourceTree = "<group>"; };
+		B419513D1DAD1182002FC027 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B419513E1DAD1182002FC027 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ja; path = ja.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B419513F1DAD1182002FC027 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B41951401DAD1188002FC027 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B41951411DAD1188002FC027 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = it; path = it.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B41951421DAD1188002FC027 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B41951431DAD119C002FC027 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B41951441DAD119C002FC027 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B41951451DAD119D002FC027 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B41951461DAD11A5002FC027 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B41951471DAD11A5002FC027 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		B41951481DAD11A6002FC027 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B4446E1E1CFDF115005C83A7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B4446E1F1CFDF115005C83A7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		B4446E201CFDF116005C83A7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -4783,6 +4795,10 @@
 				uk,
 				es,
 				ru,
+				ja,
+				it,
+				nl,
+				tr,
 			);
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
@@ -5810,6 +5826,10 @@
 				B4D37F991D7EEDD800D0C1BC /* uk */,
 				B4D37F9C1D7EEDE300D0C1BC /* es */,
 				B4D37F9F1D7EEDEB00D0C1BC /* ru */,
+				B419513E1DAD1182002FC027 /* ja */,
+				B41951411DAD1188002FC027 /* it */,
+				B41951441DAD119C002FC027 /* nl */,
+				B41951471DAD11A5002FC027 /* tr */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -5823,6 +5843,10 @@
 				B4D37F9A1D7EEDD800D0C1BC /* uk */,
 				B4D37F9D1D7EEDE300D0C1BC /* es */,
 				B4D37FA01D7EEDEB00D0C1BC /* ru */,
+				B419513F1DAD1182002FC027 /* ja */,
+				B41951421DAD1188002FC027 /* it */,
+				B41951451DAD119D002FC027 /* nl */,
+				B41951481DAD11A6002FC027 /* tr */,
 			);
 			name = InfoPlist.strings;
 			path = "Wire-iOS/Resources";
@@ -5837,6 +5861,10 @@
 				B4D37F981D7EEDD800D0C1BC /* uk */,
 				B4D37F9B1D7EEDE300D0C1BC /* es */,
 				B4D37F9E1D7EEDEB00D0C1BC /* ru */,
+				B419513D1DAD1182002FC027 /* ja */,
+				B41951401DAD1188002FC027 /* it */,
+				B41951431DAD119C002FC027 /* nl */,
+				B41951461DAD11A5002FC027 /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

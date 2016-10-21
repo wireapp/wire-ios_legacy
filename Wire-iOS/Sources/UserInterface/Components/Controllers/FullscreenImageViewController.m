@@ -449,7 +449,7 @@
         return NO;
     }
     else if (action == @selector(copy:) || action == @selector(saveImage)) {
-        return YES;
+        return YES && !self.message.isEphemeral;
     }
     else if (action == @selector(paste:)) {
         return NO;

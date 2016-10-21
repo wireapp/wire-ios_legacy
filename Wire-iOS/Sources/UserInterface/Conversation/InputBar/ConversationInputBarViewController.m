@@ -183,7 +183,7 @@
     
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
-    [self createEphemeralSendButton];
+    [self createEphemeralIndicatorButton];
     [self createEmojiButton];
 
     [self createHourglassButton];
@@ -360,7 +360,7 @@
     [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(14, 0, 0, rightInset - 16) excludingEdge:ALEdgeBottom];
 }
 
-- (void)createEphemeralSendButton
+- (void)createEphemeralIndicatorButton
 {
     self.ephemeralIndicatorButton = [[IconButton alloc] initForAutoLayout];
     self.ephemeralIndicatorButton.layer.borderWidth = 0.5;
@@ -371,10 +371,9 @@
 
     [self.inputBar.rightAccessoryView addSubview:self.ephemeralIndicatorButton];
 
-    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.sendButton];
+    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
+    [self.ephemeralIndicatorButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
     [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton];
-    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.sendButton];
-    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.sendButton];
 
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
@@ -400,12 +399,14 @@
     self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
 
     [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
+    self.hourglassButton.cas_styleClass = @"hourglass";
     [self.inputBar.rightAccessoryView addSubview:self.hourglassButton];
 
-    [self.hourglassButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.sendButton withOffset:0];
-    [self.hourglassButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton withOffset:0];
+    [self.hourglassButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
     [self.hourglassButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.sendButton withOffset:0];
+    [self.hourglassButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton withOffset:0];
 }
 
 - (void)createTypingIndicatorView
@@ -449,6 +450,8 @@
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
     self.hourglassButton.hidden = self.sendButtonState.hourglassButtonHidden;
     self.ephemeralIndicatorButton.hidden = self.sendButtonState.ephemeralIndicatorButtonHidden;
+
+    [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.timeoutImage forState:UIControlStateNormal];
 }
 
 - (void)updateSendButtonColor
