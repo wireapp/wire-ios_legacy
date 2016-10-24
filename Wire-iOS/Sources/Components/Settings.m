@@ -121,7 +121,7 @@ NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
     self = [super init];
     if (self) {
         [self restoreLastUsedIntensityLevel];
-
+        [self loadEnabledLogs];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
@@ -445,3 +445,4 @@ NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 }
 
 @end
+

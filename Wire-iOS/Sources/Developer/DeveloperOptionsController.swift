@@ -95,7 +95,6 @@ extension DeveloperOptionsController : UITableViewDataSource {
     func switchLogDidChange(sender: AnyObject) {
         let `switch` = sender as! UISwitch
         let logTag = self.allTags[`switch`.tag]
-        let newLevel = `switch`.isOn ? ZMLogLevel_t.debug : ZMLogLevel_t.warn
-        ZMLogSetLevelForTag(newLevel, logTag)
+        Settings.shared().set(logTag: logTag, enabled: `switch`.isOn)
     }
 }
