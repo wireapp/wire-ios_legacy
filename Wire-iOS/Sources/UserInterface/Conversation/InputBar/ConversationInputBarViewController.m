@@ -956,7 +956,7 @@
     
     CanvasViewController *viewController = [[CanvasViewController alloc] init];
     viewController.delegate = self;
-    viewController.title = self.conversation.displayName.uppercaseString
+    viewController.title = self.conversation.displayName.uppercaseString;
     
     [self.parentViewController presentViewController:[viewController wrapInNavigationController] animated:YES completion:nil];
     

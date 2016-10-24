@@ -5116,6 +5116,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Canvas.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
