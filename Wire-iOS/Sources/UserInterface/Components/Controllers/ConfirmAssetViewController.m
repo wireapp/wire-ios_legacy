@@ -63,6 +63,12 @@ static const CGFloat MarginInset = 24;
 @end
 
 
+@interface ZMAssetMetaDataEncoder (Test)
+
++ (CGSize)imageSizeForImageData:(NSData *)imageData;
+
+@end
+
 
 @implementation ConfirmAssetViewController
 
@@ -100,6 +106,13 @@ static const CGFloat MarginInset = 24;
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
+}
+
+- (void)testImageData:(NSData *)data
+{
+    CGSize size = [ZMAssetMetaDataEncoder imageSizeForImageData:data];
+    
+    NSLog(@"size: %@", NSStringFromCGSize(size));
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

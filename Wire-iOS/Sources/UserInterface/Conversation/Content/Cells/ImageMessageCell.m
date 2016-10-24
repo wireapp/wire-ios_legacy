@@ -282,7 +282,7 @@ static ImageCache *imageCache(void)
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
 
-    self.originalImageSize = imageMessageData.originalSize;
+    self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(0.5, 0.5));
     
     [self updateImageMessageConstraintConstants];
     

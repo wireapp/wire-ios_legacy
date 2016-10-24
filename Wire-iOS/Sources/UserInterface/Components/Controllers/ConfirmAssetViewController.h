@@ -33,4 +33,6 @@
 
 @property (nonatomic, copy) NSString *previewTitle;
 
+- (void)testImageData:(NSData *)data;
+
 @end

@@ -12,3 +12,4 @@ github "wireapp/onepassword-app-extension" "framework/1.8.2"
 github "wireapp/FormatterKit" ~> 1.8.1
 github "wireapp/VIMNetworking" "v6.0.2-wire-carthage-2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
+github "wireapp/wire-ios-canvas" ~> 1.0.0

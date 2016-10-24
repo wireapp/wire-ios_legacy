@@ -18,6 +18,7 @@
 
 #import "SketchViewController.h"
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class AudioRecordKeyboardViewController;
@@ -49,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationInputBarViewController (Sketch) <SketchViewControllerDelegate>
 - (void)sketchButtonPressed:(nullable id)sender;
 @end
+
 
 
 @interface ConversationInputBarViewController (UITextViewDelegate) <UITextViewDelegate>

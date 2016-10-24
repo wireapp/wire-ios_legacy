@@ -126,6 +126,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         let image = UIImage(data: imageData as Data)
         
         let confirmImageViewController = ConfirmAssetViewController()
+        confirmImageViewController.testImageData(imageData as Data!)
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.image = image
         confirmImageViewController.previewTitle = self.conversation.displayName.uppercased()

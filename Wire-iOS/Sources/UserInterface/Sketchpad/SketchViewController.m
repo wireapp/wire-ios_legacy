@@ -410,10 +410,10 @@ static const CGFloat SketchBrushWidthThin = 6;
 - (void)confirmButtonPressed:(id)sender
 {
     // Has anything been drew check
-    if (! [self.sketchView canUndo] && !self.confirmsWithoutSketch) {
-        [self cancelButtonPressed:nil];
-        return;
-    }
+//    if (! [self.sketchView canUndo] && !self.confirmsWithoutSketch) {
+//        [self cancelButtonPressed:nil];
+//        return;
+//    }
 
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     // In case the user is drawing on landscape, we need to rotate the final
