@@ -14,16 +14,32 @@ import Cartography
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
 }
 
+@objc public enum ConversationMediaSketchSource : UInt {
+    case none
+    case sketchButton
+    case cameraGallery
+    case imageFullView
+}
+
 class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     var delegate : CanvasViewControllerDelegate?
-    var canvas : Canvas!
+    var canvas = Canvas()
     var toolbar : SketchToolbar!
     let drawButton = IconButton()
     let emojiButton = IconButton()
     let sendButton = IconButton()
     let photoButton = IconButton()
     let separatorLine = UIView()
+    var source : ConversationMediaSketchSource = .none
+    var sketchImage : UIImage? = nil {
+        didSet {
+            if let image = sketchImage {
+                canvas.referenceImage = image
+            }
+            
+        }
+    }
     
     let emojiKeyboardViewController =  EmojiKeyboardViewController()
     let colorPickerController = SketchColorPickerController()
@@ -46,7 +62,6 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         
         view.backgroundColor = .white
         
-        canvas = Canvas()
         canvas.backgroundColor = .white
         
         emojiKeyboardViewController.delegate = self
@@ -87,26 +102,6 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)
     }
     
-    /*
-     NSArray *sketchColors = @[[UIColor blackColor],
-     [UIColor whiteColor],
-     [UIColor colorForZMAccentColor:ZMAccentColorStrongBlue],
-     [UIColor colorForZMAccentColor:ZMAccentColorStrongLimeGreen],
-     [UIColor colorForZMAccentColor:ZMAccentColorBrightYellow],
-     [UIColor colorForZMAccentColor:ZMAccentColorVividRed],
-     [UIColor colorForZMAccentColor:ZMAccentColorBrightOrange],
-     [UIColor colorForZMAccentColor:ZMAccentColorSoftPink],
-     [UIColor colorForZMAccentColor:ZMAccentColorViolet],
-     [UIColor cas_colorWithHex:@"#96bed6"],
-     [UIColor cas_colorWithHex:@"#a3eba3"],
-     [UIColor cas_colorWithHex:@"#fee7a3"],
-     [UIColor cas_colorWithHex:@"#fda5a5"],
-     [UIColor cas_colorWithHex:@"#ffd4a3"],
-     [UIColor cas_colorWithHex:@"#fec4e7"],
-     [UIColor cas_colorWithHex:@"#dba3fe"],
-     [UIColor cas_colorWithHex:@"#a3a3a3"]];
- */
-    
     func configureColorPicker() {
         
         colorPickerController.sketchColors = [.black,
@@ -117,7 +112,15 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
                                               UIColor(for: .vividRed),
                                               UIColor(for: .brightOrange),
                                               UIColor(for: .softPink),
-                                              UIColor(for: .violet)]
+                                              UIColor(for: .violet),
+                                              UIColor.cas_color(withHex: "#96bed6"),
+                                              UIColor.cas_color(withHex: "#a3eba3"),
+                                              UIColor.cas_color(withHex: "#fee7a3"),
+                                              UIColor.cas_color(withHex: "#fda5a5"),
+                                              UIColor.cas_color(withHex: "#ffd4a3"),
+                                              UIColor.cas_color(withHex: "#fec4e7"),
+                                              UIColor.cas_color(withHex: "#dba3fe"),
+                                              UIColor.cas_color(withHex: "#a3a3a3")]
         
         colorPickerController.delegate = self
         colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.index(of: UIColor.accent()) ?? 0)
@@ -205,18 +208,19 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         
         let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 72)]
-        let size = (emoji as NSString).size(attributes: attributes)
+        let attributedEmoji = NSAttributedString(string: emoji, attributes: attributes)
+        let size = attributedEmoji.size()
         let rect = CGRect(origin: CGPoint.zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, false, 0);
-        (emoji as NSString).draw(in: rect, withAttributes: attributes)
+        attributedEmoji.draw(in: rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        if let image = image {
+        if let image = image?.imageWithAlphaTrimmed {
             canvas.mode = .edit
             canvas.insert(image: image, at: canvas.center)
         }
-        
+                
         hideEmojiKeyboard()
     }
 }

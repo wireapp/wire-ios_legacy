@@ -55,8 +55,6 @@
 #import "StopWatch.h"
 #import "UIView+MTAnimation.h"
 
-#import "SketchViewController.h"
-
 #import "Wire-Swift.h"
 
 #import "NSLayoutConstraint+Helpers.h"

@@ -71,7 +71,6 @@
 #import "VoiceChannelController.h"
 #import "SplitViewController.h"
 #import "ConfirmAssetViewController.h"
-#import "SketchViewController.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
@@ -119,6 +118,7 @@
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
+#import <Classy/UIColor+CASAdditions.h>
 @import HockeySDK;
 
 // Camera

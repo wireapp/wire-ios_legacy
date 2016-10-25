@@ -64,7 +64,6 @@
 #import "StopWatch.h"
 #import "ImageMessageCell.h"
 
-#import "SketchViewController.h"
 #import "AnalyticsTracker+Sketchpad.h"
 #import "AnalyticsTracker+FileTransfer.h"
 
@@ -101,7 +100,7 @@
 
 
 
-@interface ConversationContentViewController () <FullscreenImageViewControllerDelegate, SketchViewControllerDelegate, UIDocumentInteractionControllerDelegate>
+@interface ConversationContentViewController () <FullscreenImageViewControllerDelegate, CanvasViewControllerDelegate, UIDocumentInteractionControllerDelegate>
 
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, strong) NSMutableDictionary *cellLayoutPropertiesCache;
@@ -545,25 +544,14 @@
 
 - (void)openSketchForMessage:(id<ZMConversationMessage>)message
 {
-    SketchViewController *viewController = [[SketchViewController alloc] init];
-    viewController.sketchTitle = message.conversation.displayName;
+    CanvasViewController *viewController = [[CanvasViewController alloc] init];
+    viewController.title = message.conversation.displayName.uppercaseString;
     viewController.delegate = self;
-    viewController.source = ConversationMediaSketchSourceImageFullView;
-    
-    ZMUser *lastSender = message.conversation.lastMessageSender;
-    [self.parentViewController presentViewController:viewController animated:YES completion:^{
-        [viewController.backgroundViewController setUser:lastSender animated:NO];
-        viewController.canvasBackgroundImage = [[UIImage alloc] initWithData:message.imageMessageData.imageData];
-    }];
+    viewController.sketchImage = [UIImage imageWithData:message.imageMessageData.imageData];
+    [self.parentViewController presentViewController:viewController.wrapInNavigationController animated:YES completion:nil];
 }
 
-- (void)sketchViewControllerDidCancel:(SketchViewController *)controller
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-
-}
-
-- (void)sketchViewController:(SketchViewController *)controller didSketchImage:(UIImage *)image
+- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
 {
     [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
     if (image) {
@@ -573,7 +561,7 @@
             [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionSketch inConversation:self.conversation];
-            [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:controller.source];
+            [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
             [Analytics shared].sessionSummary.imagesSent++;
         }];
     }

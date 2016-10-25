@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#import "SketchViewController.h"
-
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,12 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateRightAccessoryView;
 
 @end
-
-
-@interface ConversationInputBarViewController (Sketch) <SketchViewControllerDelegate>
-- (void)sketchButtonPressed:(nullable id)sender;
-@end
-
 
 
 @interface ConversationInputBarViewController (UITextViewDelegate) <UITextViewDelegate>

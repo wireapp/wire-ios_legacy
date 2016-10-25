@@ -30,7 +30,6 @@
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
 #import "CameraViewController.h"
-#import "SketchViewController.h"
 #import "UIView+Borders.h"
 #import "UIViewController+Errors.h"
 
@@ -99,16 +98,18 @@
 
 @end
 
+@interface ConversationInputBarViewController (Sketch)
+
+- (void)sketchButtonPressed:(nullable id)sender;
+
+@end
+
 
 @interface  ConversationInputBarViewController (UIGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 
 @end
 
 @interface ConversationInputBarViewController (GiphySearchViewController) <GiphySearchViewControllerDelegate>
-
-@end
-
-@interface ConversationInputBarViewController (Canvas) <CanvasViewControllerDelegate>
 
 @end
 
@@ -894,59 +895,6 @@
 
 @end
 
-@implementation ConversationInputBarViewController (Canvas)
-
-- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
-{
-    @weakify(self);
-    [self hideCameraKeyboardViewController:^{
-        @strongify(self);
-        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-        if (image) {
-            NSData *imageData = UIImagePNGRepresentation(image);
-            
-//            CGSize size = [ZMAssetMetaDataEncoder imageSizeForImageData:imageData];
-              CGSize size = [ConversationInputBarViewController imageSizeForImageData:imageData];
-            
-            NSLog(@"size: %@", NSStringFromCGSize(size));
-            
-//            UIImage *testImage = [UIImage imageWithData:imageData];
-//            NSLog(@"testimage: %@", testImage);
-            [self.sendController sendMessageWithImageData:imageData completion:^{
-                [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceSketchButton];
-            }];
-        }
-    }];
-}
-
-+ (CGSize)imageSizeForImageData:(NSData *)imageData
-{
-    NSDictionary *properties;
-    if(imageData != nil) {
-        CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef) imageData, NULL);
-        properties = CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL));
-        CFBridgingRelease(imageSource);
-    }
-    
-    NSNumber *boxedWidth = properties[(__bridge id)kCGImagePropertyPixelWidth];
-    NSInteger width = boxedWidth ? boxedWidth.integerValue : -1;
-    
-    NSNumber *boxedHeight = properties[(__bridge id)kCGImagePropertyPixelHeight];
-    NSInteger height = boxedHeight ? boxedHeight.integerValue : -1;
-    
-    NSNumber *boxedDPIWidth = properties[(__bridge id)kCGImagePropertyDPIWidth];
-    NSInteger DPIWidth = boxedDPIWidth ? boxedDPIWidth.integerValue : -1;
-    
-    NSNumber *boxedDPIHeight = properties[(__bridge id)kCGImagePropertyDPIHeight];
-    NSInteger DPIHeight = boxedDPIHeight ? boxedDPIHeight.integerValue : -1;
-    
-    NSLog(@"DPI-width: %li, DPI-height: %li", (long)DPIWidth, (long)DPIHeight);
-    
-    return CGSizeMake(width, height);
-}
-
-@end
-
 @implementation ConversationInputBarViewController (Sketch)
 
 - (void)sketchButtonPressed:(id)sender
@@ -957,46 +905,9 @@
     CanvasViewController *viewController = [[CanvasViewController alloc] init];
     viewController.delegate = self;
     viewController.title = self.conversation.displayName.uppercaseString;
+    viewController.source = ConversationMediaSketchSourceSketchButton;
     
     [self.parentViewController presentViewController:[viewController wrapInNavigationController] animated:YES completion:nil];
-    
-//    SketchViewController *viewController = [[SketchViewController alloc] init];
-//    viewController.sketchTitle = self.conversation.displayName;
-//    viewController.delegate = self;
-//    viewController.source = ConversationMediaSketchSourceSketchButton;
-//    
-//    ZMUser *lastSender = self.conversation.lastMessageSender;
-//    [self.parentViewController presentViewController:viewController animated:YES completion:^{
-//        [viewController.backgroundViewController setUser:lastSender animated:NO];
-//        [self.analyticsTracker tagNavigationViewEnteredSketchpad];
-//    }];
-}
-
-- (void)sketchViewControllerDidCancel:(SketchViewController *)controller
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:^{
-        [self.analyticsTracker tagNavigationViewSkippedSketchpad];
-    }];
-}
-
-- (void)sketchViewController:(SketchViewController *)controller didSketchImage:(UIImage *)image
-{
-    @weakify(self);
-    [self hideCameraKeyboardViewController:^{
-        @strongify(self);
-        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-        if (image) {
-            NSData *imageData = UIImagePNGRepresentation(image);
-            
-            CGSize size = [ZMAssetMetaDataEncoder imageSizeForImageData:imageData];
-            
-            NSLog(@"size: %@", NSStringFromCGSize(size));
-            
-            [self.sendController sendMessageWithImageData:imageData completion:^{
-                   [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:controller.source];
-            }];
-        }
-    }];
 }
 
 @end

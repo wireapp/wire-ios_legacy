@@ -40,7 +40,6 @@
 #import "Constants.h"
 #import "Settings.h"
 #import "DeviceOrientationObserver.h"
-#import "SketchViewController.h"
 
 #import "AnalyticsTracker+Permissions.h"
 #import "UIViewController+Orientation.h"
@@ -107,7 +106,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 @end
 
-@interface CameraViewController (Sketch) <SketchViewControllerDelegate>
+@interface CameraViewController (Sketch) <CanvasViewControllerDelegate>
 @end
 
 @implementation CameraViewController
@@ -502,13 +501,10 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 - (IBAction)editImage:(id)sender
 {
-    SketchViewController *viewController = [[SketchViewController alloc] init];
+    CanvasViewController *viewController = [[CanvasViewController alloc] init];
     viewController.delegate = self;
-    viewController.source = ConversationMediaSketchSourceCameraGallery;
-    
-    [self presentViewController:viewController animated:YES completion:^{
-        viewController.canvasBackgroundImage = self.imagePreviewView.image;
-    }];
+    viewController.sketchImage = self.imagePreviewView.image;
+    [self presentViewController:viewController.wrapInNavigationController animated:YES completion:nil];
 }
 
 #pragma mark - CameraBottomToolsViewControllerDelegate
@@ -619,12 +615,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 @implementation CameraViewController (Sketch)
 
-- (void)sketchViewControllerDidCancel:(SketchViewController *)controller
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)sketchViewController:(SketchViewController *)controller didSketchImage:(UIImage *)image
+- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
 {
     self.imagePreviewView.image = image;
     self.cameraImageData = UIImagePNGRepresentation(image);
