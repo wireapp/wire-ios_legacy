@@ -319,28 +319,14 @@ BrowserBarView {
 
 /* Sketch related */
 
-SketchBottomView {
+SketchToolbar {
     backgroundColor: $color-background;
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-SketchTopView {
-    backgroundColor: $color-background;
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
     
-    UILabel {
-        font: $font-small;
-        textColor: $color-text-foreground;
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal;
+        iconColor[state:highlighted]: $color-icon-highlighted;
+        iconColor[state:selected]: $color-accent-current;
     }
-}
-
-SketchViewController UIView > UILabel {
-    font: $font-small;
-    textColor: $color-text-dimmed;
 }
 
 /* Profile */

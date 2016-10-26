@@ -50,6 +50,11 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.title.font_spec"), NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
         navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        navigationController.navigationBar.setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBackground)), for: .default)
+        let moget = UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
+        let blaha = UIImage(cgImage: moget!.cgImage!, scale: 2, orientation: moget!.imageOrientation)
+        navigationController.navigationBar.shadowImage = blaha
+        
         return navigationController
     }
     
@@ -63,6 +68,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         view.backgroundColor = .white
         
         canvas.backgroundColor = .white
+        canvas.delegate = self
         
         emojiKeyboardViewController.delegate = self
     
@@ -74,6 +80,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         configureNavigationItems()
         configureColorPicker()
         configureButtons()
+        updateButtonSelection()
         createConstraints()
     }
     
@@ -83,23 +90,32 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         
         let closeButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(CanvasViewController.close))
         let undoButtonItem = UIBarButtonItem(image: undoImage, style: .plain, target: canvas, action: #selector(Canvas.undo))
+        undoButtonItem.isEnabled = false
         
         navigationItem.leftBarButtonItem = undoButtonItem
         navigationItem.rightBarButtonItem = closeButtonItem
     }
     
     func configureButtons() {
+        let hitAreaPadding = CGSize(width: 5, height: 5)
+        
         sendButton.setIcon(.send, with: .tiny, for: .normal)
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
+        sendButton.isEnabled = false
+        sendButton.cas_styleClass = "send-button"
+        sendButton.hitAreaPadding = hitAreaPadding
         
         drawButton.setIcon(.brush, with: .tiny, for: .normal)
         drawButton.addTarget(self, action: #selector(selectDrawTool), for: .touchUpInside)
+        drawButton.hitAreaPadding = hitAreaPadding
         
         photoButton.setIcon(.photo, with: .tiny, for: .normal)
         photoButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
+        photoButton.hitAreaPadding = hitAreaPadding
         
         emojiButton.setIcon(.emoji, with: .tiny, for: .normal)
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)
+        emojiButton.hitAreaPadding = hitAreaPadding
     }
     
     func configureColorPicker() {
@@ -123,13 +139,10 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
                                               UIColor.cas_color(withHex: "#a3a3a3")]
         
         colorPickerController.delegate = self
-        colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.index(of: UIColor.accent()) ?? 0)
         colorPickerController.willMove(toParentViewController: self)
         view.addSubview(colorPickerController.view)
         addChildViewController(colorPickerController)
-        
-        
-        
+        colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.index(of: UIColor.accent()) ?? 0)
     }
     
     func createConstraints() {
@@ -155,10 +168,22 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         }
     }
     
+    func updateButtonSelection() {
+        [drawButton, emojiButton].forEach({ $0.isSelected = false })
+        
+        switch canvas.mode {
+        case .draw:
+            drawButton.isSelected = true
+        case .edit:
+            emojiButton.isSelected = true
+        }
+    }
+    
     // MARK - actions
     
     func selectDrawTool() {
         canvas.mode = .draw
+        updateButtonSelection()
     }
     
     func openEmojiKeyboard() {
@@ -173,6 +198,15 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     func close() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension CanvasViewController : CanvasDelegate {
+    
+    func canvasDidChange(_ canvas: Canvas) {
+        sendButton.isEnabled = canvas.hasChanges
+        navigationItem.leftBarButtonItem?.isEnabled = canvas.hasChanges
     }
     
 }
@@ -219,6 +253,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
         if let image = image?.imageWithAlphaTrimmed {
             canvas.mode = .edit
             canvas.insert(image: image, at: canvas.center)
+            updateButtonSelection()
         }
                 
         hideEmojiKeyboard()

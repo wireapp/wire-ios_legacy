@@ -11,6 +11,8 @@ import Cartography
 
 class SketchToolbar : UIView {
     
+    private let buttonSpacing : CGFloat = 10.0
+    
     let leftButton : UIButton!
     let rightButton : UIButton!
     let centerButtons : [UIButton]
@@ -48,21 +50,21 @@ class SketchToolbar : UIView {
     func createButtonContraints(buttons: [UIButton]) {
         for button in buttons {
             constrain(button) { button in
-                button.width == 48
-                button.height == 48
+                button.width == 28
+                button.height == 28
             }
         }
     }
     
     func createConstraints() {
         constrain(self, leftButton, rightButton, centerButtonContainer, separatorLine) { container, leftButton, rightButton, centerButtonContainer, separatorLine in
-            leftButton.left == container.left
-            leftButton.top == container.top
-            leftButton.bottom == container.bottom
+            container.height == 48
             
-            rightButton.right == container.right
-            rightButton.top == container.top
-            rightButton.bottom == container.bottom
+            leftButton.left == container.left + buttonSpacing
+            leftButton.centerY == container.centerY
+            
+            rightButton.right == container.right - buttonSpacing
+            rightButton.centerY == container.centerY
             
             centerButtonContainer.centerX == container.centerX
             centerButtonContainer.top == container.top
@@ -84,13 +86,11 @@ class SketchToolbar : UIView {
         let rightButton = centerButtons.last!
         
         constrain(centerButtonContainer, leftButton, rightButton) { container, leftButton, rightButton in
-            leftButton.left == container.left
-            leftButton.top == container.top
-            leftButton.bottom == container.bottom
+            leftButton.left == container.left + buttonSpacing
+            leftButton.centerY == container.centerY
             
-            rightButton.right == container.right
-            rightButton.top == container.top
-            rightButton.bottom == container.bottom
+            rightButton.right == container.right - buttonSpacing
+            rightButton.centerY == container.centerY
         }
         
         for i in 1..<centerButtons.count {
@@ -98,9 +98,8 @@ class SketchToolbar : UIView {
             let button = centerButtons[i]
             
             constrain(centerButtonContainer, button, previousButton) { container, button, previousButton in
-                button.left == previousButton.right
-                button.top == container.top
-                button.bottom == container.bottom
+                button.left == previousButton.right + buttonSpacing
+                button.centerY == container.centerY
             }
         }
     }
