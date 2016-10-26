@@ -319,6 +319,16 @@ BrowserBarView {
 
 /* Sketch related */
 
+CanvasViewController {
+    
+    hintLabel: @{
+        font: $font-small;
+        textColor: $color-text-placeholder;
+        textAlignment: center;
+    }
+    
+}
+
 SketchToolbar {
     backgroundColor: $color-background;
     

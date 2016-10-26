@@ -31,6 +31,8 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     let sendButton = IconButton()
     let photoButton = IconButton()
     let separatorLine = UIView()
+    let hintLabel = UILabel()
+    let hintImageView = UIImageView()
     var source : ConversationMediaSketchSource = .none
     var sketchImage : UIImage? = nil {
         didSet {
@@ -74,8 +76,15 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: ColorScheme.default().color(withName: ColorSchemeColorPlaceholderBackground))
+        hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
+        hintLabel.numberOfLines = 0
         
-        [canvas, toolbar, separatorLine].forEach(view.addSubview)
+        [canvas, hintLabel, hintImageView, toolbar, separatorLine].forEach(view.addSubview)
+        
+        if sketchImage != nil {
+            hideHint()
+        }
         
         configureNavigationItems()
         configureColorPicker()
@@ -166,6 +175,13 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
             toolbar.left == container.left
             toolbar.right == container.right
         }
+        
+        constrain(view, colorPickerController.view, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
+            hintImageView.center == container.center
+            hintLabel.top == colorPicker.bottom + 16
+            hintLabel.leftMargin == container.leftMargin
+            hintLabel.rightMargin == container.rightMargin
+        }
     }
     
     func updateButtonSelection() {
@@ -177,6 +193,11 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         case .edit:
             emojiButton.isSelected = true
         }
+    }
+    
+    func hideHint() {
+        hintLabel.isHidden = true
+        hintImageView.isHidden = true
     }
     
     // MARK - actions
@@ -207,6 +228,7 @@ extension CanvasViewController : CanvasDelegate {
     func canvasDidChange(_ canvas: Canvas) {
         sendButton.isEnabled = canvas.hasChanges
         navigationItem.leftBarButtonItem?.isEnabled = canvas.hasChanges
+        hideHint()
     }
     
 }
