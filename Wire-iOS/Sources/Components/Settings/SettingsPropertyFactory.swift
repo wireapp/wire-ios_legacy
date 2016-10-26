@@ -82,7 +82,10 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableAVS                 : UserDefaultDisableAVS,
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
-        SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled
+        SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
+        SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
+        SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
+        SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
@@ -219,39 +222,6 @@ class SettingsPropertyFactory {
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
-
-        case .tweetOpeningOption:
-            return SettingsBlockProperty(
-                propertyName: propertyName,
-                getAction: { _ in return .number(value: Settings.shared().twitterLinkOpeningOptionRawValue) },
-                setAction: { _, value in
-                    switch value {
-                    case .number(value: let rawValue): Settings.shared().twitterLinkOpeningOptionRawValue = rawValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
-                }
-            })
-
-        case .mapsOpeningOption:
-            return SettingsBlockProperty(
-                propertyName: propertyName,
-                getAction: { _ in return .number(value: Settings.shared().mapsLinkOpeningOptionRawValue) },
-                setAction: { _, value in
-                    switch value {
-                    case .number(value: let rawValue): Settings.shared().mapsLinkOpeningOptionRawValue = rawValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
-                }
-            })
-
-        case .browserOpeningOption:
-            return SettingsBlockProperty(
-                propertyName: propertyName,
-                getAction: { _ in return .number(value: Settings.shared().browserLinkOpeningOptionRawValue) },
-                setAction: { _, value in
-                    switch value {
-                    case .number(value: let rawValue): Settings.shared().browserLinkOpeningOptionRawValue = rawValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
-                    }
-            })
 
         case .disableSendButton:
             return SettingsBlockProperty(

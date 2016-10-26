@@ -67,6 +67,10 @@ extern NSString * const UserDefaultDisableAnalytics;
 
 extern NSString * const UserDefaultSendButtonDisabled;
 
+extern NSString * const UserDefaultTwitterOpeningRawValue;
+extern NSString * const UserDefaultMapsOpeningRawValue;
+extern NSString * const UserDefaultBrowserOpeningRawValue;
+
 /// Model object for locally stored (not in SE or AVS) user app settings
 @interface Settings : NSObject
 
