@@ -47,17 +47,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     let colorPickerController = SketchColorPickerController()
     
     public var wrapInNavigationController : UINavigationController {
-        let navigationController = UINavigationController(rootViewController: self)
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.title.font_spec"), NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
-        navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-        navigationController.navigationBar.setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBackground)), for: .default)
-        let moget = UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
-        let blaha = UIImage(cgImage: moget!.cgImage!, scale: 2, orientation: moget!.imageOrientation)
-        navigationController.navigationBar.shadowImage = blaha
-        
-        return navigationController
+        return wrap(inNavigationControllerClass: RotationAwareNavigationController.self)
     }
     
     override var shouldAutorotate: Bool {

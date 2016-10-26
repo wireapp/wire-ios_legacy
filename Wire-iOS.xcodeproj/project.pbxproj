@@ -93,6 +93,7 @@
 		16BEBC3D1D006A6B006FFD3E /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */; };
 		16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBC3E1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift */; };
 		16CB8A2F1DBA39C400B5BC47 /* SketchToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB8A2E1DBA39C400B5BC47 /* SketchToolbar.swift */; };
+		16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */; };
 		16D316581BC28ED90050B835 /* ZMConversation+Actions.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D316571BC28ED90050B835 /* ZMConversation+Actions.m */; };
 		16D3631C1AAB63DB00471F5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3631B1AAB63DB00471F5F /* CameraViewController.m */; };
 		16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */; };
@@ -808,7 +809,6 @@
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		F517A3BE1B31340700073990 /* SmoothLineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F517A3BD1B31340700073990 /* SmoothLineView.framework */; };
 		F5EAB12B1B120665008DB66A /* SketchBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EAB12A1B120665008DB66A /* SketchBottomView.m */; };
-		F5F52F721B11D7050053F1C8 /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F52F711B11D7050053F1C8 /* SketchViewController.m */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -997,6 +997,7 @@
 		16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingView.swift; sourceTree = "<group>"; };
 		16BEBC3E1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingViewTests.swift; sourceTree = "<group>"; };
 		16CB8A2E1DBA39C400B5BC47 /* SketchToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SketchToolbar.swift; sourceTree = "<group>"; };
+		16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNavigationBar.swift; sourceTree = "<group>"; };
 		16D316561BC28ED90050B835 /* ZMConversation+Actions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMConversation+Actions.h"; sourceTree = "<group>"; };
 		16D316571BC28ED90050B835 /* ZMConversation+Actions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMConversation+Actions.m"; sourceTree = "<group>"; };
 		16D3631A1AAB63DB00471F5F /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
@@ -2947,6 +2948,7 @@
 				871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */,
 				871BC1351D34F8F800DF0793 /* BrowserBarView.h */,
 				871BC1361D34F8F800DF0793 /* BrowserBarView.m */,
+				16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */,
 				871BC1371D34F8F800DF0793 /* BrowserViewController.h */,
 				871BC1381D34F8F800DF0793 /* BrowserViewController.m */,
 				871BC1391D34F8F800DF0793 /* CameraAccessMessageViewController.h */,
@@ -5545,7 +5547,6 @@
 				873313111D2137350082B8F7 /* AVAsset+VideoConvert.swift in Sources */,
 				87555C851A85021C00A43E2E /* ChatHeadView.m in Sources */,
 				871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */,
-				F5F52F721B11D7050053F1C8 /* SketchViewController.m in Sources */,
 				87722C541ADFEDFA00842F18 /* EmailVerificationStepViewController.m in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
 				871BC05A1D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m in Sources */,
@@ -5674,6 +5675,7 @@
 				16A2C6721AA8AA6500DC2905 /* CameraControlsViewController.m in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
 				160DECDD1AB333A3000FB575 /* CameraFocusRing.m in Sources */,
+				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
 				8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */,
 				F5EAB12B1B120665008DB66A /* SketchBottomView.m in Sources */,
 				CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */,
