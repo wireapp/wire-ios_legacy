@@ -5076,7 +5076,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/ziphy.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SmoothLineView.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/MarkdownParser.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Classy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
