@@ -697,7 +697,6 @@
 		BADA351F1B431E5000396F2C /* NSURLWireLocaleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BADA351E1B431E5000396F2C /* NSURLWireLocaleTests.m */; };
 		BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */; };
 		BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */; };
-		BAFE919E1B5E92E000E08D2A /* SketchTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFE919D1B5E92E000E08D2A /* SketchTopView.m */; };
 		BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */; };
 		BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
@@ -808,7 +807,6 @@
 		DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		F517A3BE1B31340700073990 /* SmoothLineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F517A3BD1B31340700073990 /* SmoothLineView.framework */; };
-		F5EAB12B1B120665008DB66A /* SketchBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EAB12A1B120665008DB66A /* SketchBottomView.m */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -2001,8 +1999,6 @@
 		BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMUserSession+RequestProxy.m"; sourceTree = "<group>"; };
 		BAEF10F81B8C8849005BFA48 /* AnimatedListMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedListMenuView.h; sourceTree = "<group>"; };
 		BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedListMenuView.m; sourceTree = "<group>"; };
-		BAFE919C1B5E92E000E08D2A /* SketchTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchTopView.h; path = Sketchpad/SketchTopView.h; sourceTree = "<group>"; };
-		BAFE919D1B5E92E000E08D2A /* SketchTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchTopView.m; path = Sketchpad/SketchTopView.m; sourceTree = "<group>"; };
 		BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTechnicalReportViewController.swift; sourceTree = "<group>"; };
 		BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WireLocales.swift"; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
@@ -2145,10 +2141,6 @@
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
 		F517A3BD1B31340700073990 /* SmoothLineView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SmoothLineView.framework; path = Carthage/Build/iOS/SmoothLineView.framework; sourceTree = "<group>"; };
-		F5EAB1291B120665008DB66A /* SketchBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchBottomView.h; path = Sketchpad/SketchBottomView.h; sourceTree = "<group>"; };
-		F5EAB12A1B120665008DB66A /* SketchBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchBottomView.m; path = Sketchpad/SketchBottomView.m; sourceTree = "<group>"; };
-		F5F52F701B11D7050053F1C8 /* SketchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchViewController.h; path = Sketchpad/SketchViewController.h; sourceTree = "<group>"; };
-		F5F52F711B11D7050053F1C8 /* SketchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchViewController.m; path = Sketchpad/SketchViewController.m; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
 		F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Analytics.swift"; sourceTree = "<group>"; };
@@ -4592,14 +4584,8 @@
 		F5F52F6F1B11D6DB0053F1C8 /* Sketchpad */ = {
 			isa = PBXGroup;
 			children = (
-				F5F52F701B11D7050053F1C8 /* SketchViewController.h */,
-				F5F52F711B11D7050053F1C8 /* SketchViewController.m */,
-				F5EAB1291B120665008DB66A /* SketchBottomView.h */,
-				F5EAB12A1B120665008DB66A /* SketchBottomView.m */,
 				BA8DC27A1B5FF5CF00103262 /* SketchColorPickerController.h */,
 				BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */,
-				BAFE919C1B5E92E000E08D2A /* SketchTopView.h */,
-				BAFE919D1B5E92E000E08D2A /* SketchTopView.m */,
 				BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.h */,
 				BAA1F7E31B610D89002402B6 /* SketchColorCollectionViewCell.m */,
 				BAD4D0641B613D4E008585A5 /* ColorKnobView.h */,
@@ -5677,7 +5663,6 @@
 				160DECDD1AB333A3000FB575 /* CameraFocusRing.m in Sources */,
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
 				8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */,
-				F5EAB12B1B120665008DB66A /* SketchBottomView.m in Sources */,
 				CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */,
 				16BEBC3D1D006A6B006FFD3E /* ThreeDotsLoadingView.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
@@ -5731,7 +5716,6 @@
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
 				16E4E81A1BF215CB002D7409 /* InvitationFlowViewController.m in Sources */,
-				BAFE919E1B5E92E000E08D2A /* SketchTopView.m in Sources */,
 				163BB60D1BEA976C00606381 /* BarController.m in Sources */,
 				872334391CD2450500CF8B11 /* FilePreviewGenerator.swift in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
