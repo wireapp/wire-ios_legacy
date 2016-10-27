@@ -237,14 +237,35 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
         }
         
         addChildViewController(emojiKeyboardViewController)
+        
+        let offscreen = CGAffineTransform(translationX: 0, y: KeyboardHeight.current)
+        emojiKeyboardViewController.view.transform = offscreen
+        view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.25,
+                       delay: 0,
+                       options: UIViewAnimationOptions(rawValue: UInt(7)),
+                       animations: {
+                        self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
+            }, completion: nil)
     }
     
     func hideEmojiKeyboard() {
         guard childViewControllers.contains(emojiKeyboardViewController) else { return }
         
         emojiKeyboardViewController.willMove(toParentViewController: nil)
-        emojiKeyboardViewController.view.removeFromSuperview()
-        emojiKeyboardViewController.removeFromParentViewController()
+        
+        UIView.animate(withDuration: 0.25,
+                       delay: 0,
+                       options: UIViewAnimationOptions(rawValue: UInt(7)),
+                       animations: {
+                        let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
+                        self.emojiKeyboardViewController.view.transform = offscreen
+            },
+                       completion: { (finished) in
+                        self.emojiKeyboardViewController.view.removeFromSuperview()
+                        self.emojiKeyboardViewController.removeFromParentViewController()
+        })
     }
     
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController) {
