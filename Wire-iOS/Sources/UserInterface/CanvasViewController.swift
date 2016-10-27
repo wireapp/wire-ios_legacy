@@ -305,6 +305,8 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
         UIImagePickerController.loadImage(fromMediaInfo: info, result: { (image, _, _) in
             if let image = image, let cgImage = image.cgImage {
                 self.canvas.referenceImage = UIImage(cgImage: cgImage, scale: 2, orientation: image.imageOrientation)
+                self.canvas.mode = .draw
+                self.updateButtonSelection()
             }
             picker.dismiss(animated: true, completion: nil)
         }) { (error) in
