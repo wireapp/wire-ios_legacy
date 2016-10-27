@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Desactivar";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.title" = "Ajusta un temporizador para los mensajes temporales";
 
 // System messages
 "content.system.continued_conversation" = "Inicia una conversación con %@";
@@ -484,6 +484,24 @@
 "self.settings.popular_demand.title" = "Por demanda popular";
 "self.settings.popular_demand.send_button.title" = "Botón de enviar";
 "self.settings.popular_demand.send_button.footer" = "Deshabilitar para enviar via teclado.";
+
+// Open in
+"self.settings.external_apps.header" = "External Apps";
+
+"self.settings.link_options.twitter.title" = "Tweets";
+"self.settings.link_options.maps.title" = "Maps";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Alertas de sonido";

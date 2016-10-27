@@ -485,6 +485,24 @@
 "self.settings.popular_demand.send_button.title" = "Pulsante Invia";
 "self.settings.popular_demand.send_button.footer" = "Disattiva per inviare tramite il tasto invio.";
 
+// Open in
+"self.settings.external_apps.header" = "App esterna";
+
+"self.settings.link_options.twitter.title" = "Tweet";
+"self.settings.link_options.maps.title" = "Mappa";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Map";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Suono di allerta";
 "self.settings.sound_menu.no_sounds.title" = "Nessuno";

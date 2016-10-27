@@ -18,7 +18,7 @@
 
 
 "general.ok" = "OK";
-"general.cancel" = "Anuleer";
+"general.cancel" = "Annuleer";
 "general.open_settings" = "Open Wire Instellingen";
 
 
@@ -30,14 +30,14 @@
 "peoplepicker.button.add_to_conversation" = "Toevoegen";
 "peoplepicker.header.conversations" = "Groepen";
 "peoplepicker.header.send_invitation" = "Uitnodigen";
-"peoplepicker.header.contacts" = "Verbindingen";
+"peoplepicker.header.contacts" = "Contacten";
 "peoplepicker.header.directory" = "Verbind";
-"peoplepicker.title.create_conversation" = "Groep creëren";
+"peoplepicker.title.create_conversation" = "Maak groep";
 "peoplepicker.title.add_to_conversation" = "Mensen toevoegen";
 
 "peoplepicker.no_contacts_title" = "Geen contacten";
 
-"peoplepicker.no_matching_results_title" = "Geen resultaten";
+"peoplepicker.no_matching_results_title" = "Geen resultaten.";
 "peoplepicker.no_matching_results_message" = "Email adres invoegen";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Uitnodiging sturen";
@@ -127,7 +127,7 @@
 "conversation.displayname.emptygroup" = "Leeg groep gesprek";
 
 "conversation.input_bar.verified" = "Geverifieerd";
-"conversation.input_bar.placeholder" = "Typ een bericht";
+"conversation.input_bar.placeholder" = "Type een bericht";
 "conversation.input_bar.placeholder_ephemeral" = "Tijdelijk bericht";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe omhoog om te versturen";
@@ -197,7 +197,7 @@
 "content.system.deleted_message_prefix_timestamp" = "Verwijderd op %@";
 "content.system.edited_message_prefix_timestamp" = "Gewijzigd op %@";
 "content.system.connecting_to" = "Verbinden met %@.\nBegin een gesprek";
-"content.system.connected_to" = "Verbinden met %@.\nBegin een gesprek";
+"content.system.connected_to" = "Verbonden met %@.\nBegin een gesprek";
 "content.system.other_wanted_to_talk" = "%@ belde";
 "content.system.you_wanted_to_talk" = "Jij belde";
 
@@ -406,7 +406,7 @@
 "self.report_abuse" = "Misbruik melden";
 
 "self.add_phone_number" = "Voeg telefoon nummer toe";
-"self.add_email_password" = "E-mailadres en wachtwoord toevoegen";
+"self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
 
 // About screen
 "about.tos.title" = "Gebruikersvoorwaarden";
@@ -434,7 +434,7 @@
 "self.settings.account_section.email.title" = "E-mail";
 "self.settings.account_section.phone.title" = "Telefoonnummer";
 
-"self.settings.account_details_group.footer" = "Mensen kunnen mij vinden met deze gegevens.";
+"self.settings.account_details_group.footer" = "Mensen kunnen jou vinden met deze gegevens.";
 
 "self.settings.account_details.remove_device.title" = "Verwijder apparaat";
 "self.settings.account_details.key_fingerprint.title" = "Digitale vingerafdruk";
@@ -464,7 +464,7 @@
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Meldingen";
 "self.settings.notifications.push_notification.toogle" = "Toon voorvertoning";
-"self.settings.notifications.push_notification.footer" = "Zender naam en het bericht op het lock screen en in het notificatie center.";
+"self.settings.notifications.push_notification.footer" = "De naam van de verzender en het bericht word op het lock screen getoond en in de notificatie center.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Bericht banners";
 "self.settings.notifications.chat_alerts.footer" = "Nieuw bericht in andere gesprekken.";
@@ -477,13 +477,31 @@
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire oproep";
-"self.settings.sound_menu.sounds.wire_message" = "Wire berichten";
+"self.settings.sound_menu.sounds.wire_message" = "Wire bericht";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire ping";
 
 // By popular demand
 "self.settings.popular_demand.title" = "Op populariteit";
 "self.settings.popular_demand.send_button.title" = "Verstuur knop";
 "self.settings.popular_demand.send_button.footer" = "Zet het verstuur via 'enter' toets uit.";
+
+// Open in
+"self.settings.external_apps.header" = "Externe apps";
+
+"self.settings.link_options.twitter.title" = "Tweets";
+"self.settings.link_options.maps.title" = "Kaarten";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Kaarten";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Alert geluiden";
@@ -510,15 +528,15 @@
 "self.settings.privacy.clear_history.title" = "Geschiedenis verwijderen";
 "self.settings.privacy.clear_history.subtitle" = "Dit verwijdert alle content van all je gesprekken.";
 
-"self.settings.advanced.title" = "Geadvanceerd";
+"self.settings.advanced.title" = "Geavanceerd";
 "self.settings.advanced.troubleshooting.title" = "Probleemoplossing";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Fout report verzenden";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Fout rapport verzenden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Deze informatie helpt Wire support om bel problemen op te lossen.";
 "self.settings.advanced.reset_push_token.title" = "Herstel de Push Notifications Token";
-"self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervind met push notificaties, Wire Support kan vragen om deze token te restten.";
+"self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervindt met push notificaties, kan de Wire support vragen om deze token te resetten.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push token is gereset";
 "self.settings.advanced.reset_push_token_alert.message" = "Notificaties zullen worden hersteld over een paar seconden.";
-"self.settings.advanced.version_technical_details.title" = "Technische versie details";
+"self.settings.advanced.version_technical_details.title" = "Technische details deze versie";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical report";
@@ -528,7 +546,7 @@
 "self.settings.technical_report.include_log" = "Voeg gedetailleerde log toe";
 
 // Password reset
-"self.settings.password_reset_menu.title" = "Wachtwoord Resetten";
+"self.settings.password_reset_menu.title" = "Reset wachtwoord";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -599,7 +617,7 @@
 
 "registration.share_contacts.hero.title" = "Vind mensen op Wire";
 "registration.share_contacts.hero.paragraph" = "Geef Wire toegang tot je contacten om je te verbinden met andere mensen. We anonimiseren de date an delen het met niemand anders.";
-"registration.share_contacts.find_friends_button.title" = "Contacten delen";
+"registration.share_contacts.find_friends_button.title" = "Deel contacten";
 "registration.share_contacts.skip_button.title" = "Niet nu";
 
 "registration.address_book_access_denied.hero.title" = "Wire heeft geen toegang tot je contacten.";
@@ -624,7 +642,7 @@
 "registration.devices.title" = "Apparaten";
 "registration.devices.active_list_header" = "Actief";
 "registration.devices.current_list_header" = "Huidig";
-"registration.devices.active_list_subtitle" = "Als je bovengenoemde apparaten niet kent, verwijder ze en reset je wachtwoord.";
+"registration.devices.active_list_subtitle" = "Als je een van de bovengenoemde apparaten niet kent, verwijder deze dan en reset je wachtwoord.";
 "registration.devices.activated_in" = "Geactiveerd in";
 "registration.devices.id" = "ID:";
 
