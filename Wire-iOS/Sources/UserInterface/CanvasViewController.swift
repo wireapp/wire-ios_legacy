@@ -33,6 +33,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     let separatorLine = UIView()
     let hintLabel = UILabel()
     let hintImageView = UIImageView()
+    var isEmojiKeyboardInTransition = false
     var source : ConversationMediaSketchSource = .none
     var sketchImage : UIImage? = nil {
         didSet {
@@ -198,6 +199,8 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func openEmojiKeyboard() {
+        canvas.mode = .edit
+        updateButtonSelection()
         showEmojiKeyboard()
     }
     
@@ -211,6 +214,11 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        hideEmojiKeyboard()
+    }
 }
 
 extension CanvasViewController : CanvasDelegate {
@@ -226,6 +234,8 @@ extension CanvasViewController : CanvasDelegate {
 extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     
     func showEmojiKeyboard() {
+        guard !isEmojiKeyboardInTransition else { return }
+        
         emojiKeyboardViewController.willMove(toParentViewController: self)
         view.addSubview(emojiKeyboardViewController.view)
         
@@ -238,6 +248,8 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
         
         addChildViewController(emojiKeyboardViewController)
         
+        isEmojiKeyboardInTransition = true
+        
         let offscreen = CGAffineTransform(translationX: 0, y: KeyboardHeight.current)
         emojiKeyboardViewController.view.transform = offscreen
         view.layoutIfNeeded()
@@ -247,13 +259,18 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
                        options: UIViewAnimationOptions(rawValue: UInt(7)),
                        animations: {
                         self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
-            }, completion: nil)
+            },
+                       completion: { (finished) in
+                        self.isEmojiKeyboardInTransition = false
+        })
     }
     
     func hideEmojiKeyboard() {
-        guard childViewControllers.contains(emojiKeyboardViewController) else { return }
+        guard childViewControllers.contains(emojiKeyboardViewController), !isEmojiKeyboardInTransition else { return }
         
         emojiKeyboardViewController.willMove(toParentViewController: nil)
+        
+        isEmojiKeyboardInTransition = true
         
         UIView.animate(withDuration: 0.25,
                        delay: 0,
@@ -265,6 +282,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
                        completion: { (finished) in
                         self.emojiKeyboardViewController.view.removeFromSuperview()
                         self.emojiKeyboardViewController.removeFromParentViewController()
+                        self.isEmojiKeyboardInTransition = false
         })
     }
     
@@ -284,9 +302,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
         UIGraphicsEndImageContext()
         
         if let image = image?.imageWithAlphaTrimmed {
-            canvas.mode = .edit
             canvas.insert(image: image, at: canvas.center)
-            updateButtonSelection()
         }
                 
         hideEmojiKeyboard()
