@@ -58,7 +58,7 @@ extension Settings {
     /// Sets whether recording is enabled
     private func setLogRecording(enabled: Bool) {
         if enabled && DeveloperMenuState.developerMenuEnabled() { // never record on non-internal
-            ZMSLog.startRecording(size: 10000)
+            ZMSLog.startRecording(size: 20000)
         }
         else {
             ZMSLog.stopRecording()
