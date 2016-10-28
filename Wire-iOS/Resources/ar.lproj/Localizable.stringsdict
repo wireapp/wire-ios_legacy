@@ -15,13 +15,13 @@
                 <key>zero</key>
                 <string></string>
                 <key>one</key>
-                <string>a device</string>
+                <string>جهاز</string>
                 <key>few</key>
-                <string>%lu devices</string>
+                <string>%lu أجهزة</string>
                 <key>many</key>
-                <string>%lu devices</string>
+                <string>%lu أجهزة</string>
                 <key>other</key>
-                <string>%lu devices</string>
+                <string>%lu أجهزة</string>
             </dict>
         </dict>
 		<key>participants.people.count</key>
@@ -35,21 +35,21 @@
 				<key>NSStringFormatValueTypeKey</key>
 				<string>lu</string>
 				<key>zero</key>
-				<string>No people</string>
+				<string>لا يوجد أشخاص</string>
 				<key>one</key>
-				<string>One person</string>
+				<string>شخص واحد</string>
 				<key>few</key>
-				<string>%lu people</string>
+				<string>%lu أشخاص</string>
 				<key>many</key>
-				<string>%lu people</string>
+				<string>%lu أشخاص</string>
 				<key>other</key>
-				<string>%lu people</string>
+				<string>%lu أشخاص</string>
 			</dict>
 		</dict>
         <key>content.system.missing_messages.subtitle_added</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ been added</string>
+            <string>%@%#@lu_number_of_users@ تم إضافتهم</string>
             <key>lu_number_of_users</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -59,15 +59,15 @@
                 <key>zero</key>
                 <string></string>
                 <key>one</key>
-                <string>has</string>
+                <string>قد</string>
                 <key>other</key>
-                <string>have</string>
+                <string>قد</string>
             </dict>
         </dict>
         <key>content.system.missing_messages.subtitle_removed</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ been removed</string>
+            <string>%@%#@lu_number_of_users@ تم إزالتهم</string>
             <key>lu_number_of_users</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -77,15 +77,15 @@
                 <key>zero</key>
                 <string></string>
                 <key>one</key>
-                <string>has</string>
+                <string>قد</string>
                 <key>other</key>
-                <string>have</string>
+                <string>قد</string>
             </dict>
         </dict>
 		<key>list.connect_request.people_waiting</key>
 		<dict>
 			<key>NSStringLocalizedFormatKey</key>
-			<string>%#@d_number_of_people@ waiting</string>
+			<string>%#@d_number_of_people@ في الإنتظار</string>
 			<key>d_number_of_people</key>
 			<dict>
 				<key>NSStringFormatSpecTypeKey</key>
@@ -95,13 +95,13 @@
 				<key>zero</key>
 				<string></string>
 				<key>one</key>
-				<string>One person</string>
+				<string>شخص واحد</string>
 				<key>few</key>
-				<string>%d people</string>
+				<string>%d أشخاص</string>
 				<key>many</key>
-				<string>%d people</string>
+				<string>%d أشخاص</string>
 				<key>other</key>
-				<string>%d people</string>
+				<string>%d أشخاص</string>
 			</dict>
 		</dict>
 		<key>content.system.participants_n_others</key>
@@ -166,7 +166,7 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>a new device</string>
+                <string>جهاز جديد</string>
                 <key>other</key>
                 <string>new devices</string>
             </dict>
@@ -182,7 +182,7 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>a new device</string>
+                <string>جهاز جديد</string>
                 <key>other</key>
                 <string>new devices</string>
             </dict>

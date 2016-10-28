@@ -1,253 +1,253 @@
-//
+// 
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
 
-"general.ok" = "OK";
-"general.cancel" = "Cancel";
-"general.open_settings" = "Open Wire Settings";
+"general.ok" = "موافق";
+"general.cancel" = "إلغاء";
+"general.open_settings" = "فتح إعدادات Wire";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Search by name or email";
-"peoplepicker.header.top_people" = "Top people";
-"peoplepicker.button.create_conversation" = "Create group";
-"peoplepicker.button.add_to_conversation" = "Add";
-"peoplepicker.header.conversations" = "Groups";
-"peoplepicker.header.send_invitation" = "Invite";
-"peoplepicker.header.contacts" = "Connections";
-"peoplepicker.header.directory" = "Connect";
-"peoplepicker.title.create_conversation" = "Create group";
-"peoplepicker.title.add_to_conversation" = "Add people";
+"peoplepicker.search_placeholder" = "البحث حسب الاسم أو البريد الإلكتروني";
+"peoplepicker.header.top_people" = "الأشخاص المفضلين";
+"peoplepicker.button.create_conversation" = "إنشاء مجموعة";
+"peoplepicker.button.add_to_conversation" = "إضافة";
+"peoplepicker.header.conversations" = "المجموعات";
+"peoplepicker.header.send_invitation" = "قم بدعوة";
+"peoplepicker.header.contacts" = "جهات الاتصال";
+"peoplepicker.header.directory" = "تواصل";
+"peoplepicker.title.create_conversation" = "إنشاء مجموعة";
+"peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
 
-"peoplepicker.no_contacts_title" = "No Contacts.";
+"peoplepicker.no_contacts_title" = "لا توجد جهات اتصال.";
 
-"peoplepicker.no_matching_results_title" = "No results.";
-"peoplepicker.no_matching_results_message" = "Enter a full email address.";
+"peoplepicker.no_matching_results_title" = "لا توجد نتائج.";
+"peoplepicker.no_matching_results_message" = "أدخل عنوان البريد الإلكتروني.";
 
-"peoplepicker.no_matching_results.action.send_invite" = "Send an invitation";
-"peoplepicker.no_matching_results.action.share_contacts" = "Share contacts";
+"peoplepicker.no_matching_results.action.send_invite" = "إرسال دعوة";
+"peoplepicker.no_matching_results.action.share_contacts" = "مشاركة جهات الاتصال";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Please enter a valid email address";
-"peoplepicker.no_matching_results_after_address_book_upload_title" = "No results.";
+"peoplepicker.no_matching_results_provide_valid_email" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "لا توجد نتائج.";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Enter a full email address or";
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "أدخل عنوان البريد الإلكتروني أو";
 /*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "share contacts";
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "مشاركة جهات الاتصال";
 
-"peoplepicker.share_contacts.no_results.title" = "Find people by name or email address";
+"peoplepicker.share_contacts.no_results.title" = "البحث عن أشخاص باستخدام الاسم أو عنوان البريد الإلكتروني";
 
-"peoplepicker.send_invitation.dialog.title" = "Invitation sent";
-"peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
-"peoplepicker.send_invitation.dialog.ok" = "OK";
+"peoplepicker.send_invitation.dialog.title" = "تم إرسال الدعوة";
+"peoplepicker.send_invitation.dialog.message" = "يمكن استخدامها لمدة أسبوعين. حال انتهاء صلاحيتها أرسل واحدة جديدة.";
+"peoplepicker.send_invitation.dialog.ok" = "موافق";
 
-"peoplepicker.invite_more_people" = "Invite more people";
-"peoplepicker.quick-action.open-conversation" = "Open";
-"peoplepicker.quick-action.create-conversation" = "Create group";
+"peoplepicker.invite_more_people" = "ادعُ أُناسًا أكثر";
+"peoplepicker.quick-action.open-conversation" = "افتح";
+"peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
 // Contacts UI
-"contacts_ui.search_placeholder" = "Search by name";
-"contacts_ui.invite_others" = "Invite others";
-"contacts_ui.name_in_contacts" = "%@ in address book";
-"contacts_ui.connection_request" = "Requested to connect";
-"contacts_ui.action_button.invite" = "Invite";
-"contacts_ui.action_button.open" = "Open";
-"contacts_ui.invite_sheet.cancel_button_title" = "Cancel";
-"contacts_ui.notification.invitation_sent" = "Invitation sent";
-"contacts_ui.notification.invitation_failed" = "Failed to send invitation";
-"contacts_ui.title" = "Invite people";
+"contacts_ui.search_placeholder" = "البحث بحسب الاسم";
+"contacts_ui.invite_others" = "ادعُ آخرين";
+"contacts_ui.name_in_contacts" = "%@ موجود في جهات اتصالك";
+"contacts_ui.connection_request" = "تم إرسال طلب اتصال";
+"contacts_ui.action_button.invite" = "قم بدعوة";
+"contacts_ui.action_button.open" = "افتح";
+"contacts_ui.invite_sheet.cancel_button_title" = "إلغاء";
+"contacts_ui.notification.invitation_sent" = "تم إرسال الدعوة";
+"contacts_ui.notification.invitation_failed" = "فَشل إرسال الدعوة";
+"contacts_ui.title" = "دعوة أُناس";
 
-"contacts_ui.no_contact.title" = "No active conversations\n";
-"contacts_ui.no_contact.message" = "Tap contacts to start a conversation";
+"contacts_ui.no_contact.title" = "لا توجد محادثات نشطة\n";
+"contacts_ui.no_contact.message" = "اضغط على جهات الاتصال لبدء محادثة جديدة";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contacts";
+"bottom_bar.contacts_button.title" = "جهات اتصال";
 
 // Archived List
-"archived_list.title" = "archive";
+"archived_list.title" = "الأرشيف";
 
 // Add contact tool tip
-"tool_tip.contacts.title" = "Conversations start here";
-"tool_tip.contacts.message" = "Start a conversation or invite more people to join. Call, message and share in private or with groups.";
+"tool_tip.contacts.title" = "المحادثات تبدأ هنا";
+"tool_tip.contacts.message" = "ابدأ محادثة أو قم بدعوة المزيد من الأشخاص للانضمام. اتصل ، أرسل رسائل و شارك في محادثات خاصة أوجماعية.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
-"peoplepicker.suggested.knows_one" = "Knows %@";
-"peoplepicker.suggested.knows_two" = "Knows %@ and %@";
-"peoplepicker.hide_search_result" = "Hide";
-"peoplepicker.hide_search_result_progress" = "Hiding…";
+"peoplepicker.suggested.knows_one" = "تعرف %@";
+"peoplepicker.suggested.knows_two" = "تعرف %@ و %@";
+"peoplepicker.hide_search_result" = "إخفاء";
+"peoplepicker.hide_search_result_progress" = "جارٍ الإخفاء…";
 
-"send_invitation.subject" = "Connect with me on Wire";
-"send_invitation.text" = "I’m on Wire. Search for %@\nor visit https://get.wire.com to connect with me.";
-"send_invitation_no_email.text" = "I’m on Wire. Visit https://get.wire.com to connect with me.";
+"send_invitation.subject" = "تواصل معي على Wire";
+"send_invitation.text" = "أنا أستخدم Wire. ابحث بإستخدام %@\nأو لِج https://get.wire.com لتتواصل معي.";
+"send_invitation_no_email.text" = "أنا أستخدم Wire. لِج https://get.wire.com لتتواصل معي.";
 
-"send_personal_invitation.text" = "I’m on Wire, talk to you there. https://get.wire.com";
+"send_personal_invitation.text" = "أنا أستخدم Wire، تحدث معي هُناك. https://get.wire.com";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
-"notifications.shared_a_photo" = "shared a picture";
+"notifications.shared_a_photo" = "شارك صورة";
 "notifications.pinged" = "pinged";
-"notifications.sent_file" = "shared a file";
-"notifications.sent_location" = "shared a location";
-"notifications.sent_video" = "shared a video";
-"notifications.sent_audio" = "shared an audio";
+"notifications.sent_file" = "شارك ملف";
+"notifications.sent_location" = "شارك موقع";
+"notifications.sent_video" = "شارك فيديو";
+"notifications.sent_audio" = "شارك مقطع صوتي";
 "notifications.in_conversation" = "%@ - %@";
-"notifications.this_conversation" = "%@ in this conversation";
+"notifications.this_conversation" = "%@ في هذه المُحادثة";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.archived_conversations" = "ARCHIVE";
-"list.archived_conversations_close" = "Close archive";
+"list.archived_conversations" = "حفظ في الأرشيف";
+"list.archived_conversations_close" = "إغلاق الأرشيف";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
-"conversation.invite_more_people.title" = "Spread the word!";
-"conversation.invite_more_people.description" = "Add people to this conversation";
+"conversation.invite_more_people.title" = "اُنشر التطبيق!";
+"conversation.invite_more_people.description" = "أضف أشخاص لهذه المحادثة";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
-"conversation.invite_more_people.button_title" = "Add People";
+"conversation.invite_more_people.button_title" = "إضافة أشخاص";
 
 // Conversation names
-"conversation.displayname.emptygroup" = "Empty group conversation";
+"conversation.displayname.emptygroup" = "محادثة جماعية";
 
-"conversation.input_bar.verified" = "Verified";
-"conversation.input_bar.placeholder" = "Type a message";
-"conversation.input_bar.placeholder_ephemeral" = "Timed message";
+"conversation.input_bar.verified" = "تم التحقق";
+"conversation.input_bar.placeholder" = "اكتب الرسالة";
+"conversation.input_bar.placeholder_ephemeral" = "رسالة مؤقّتة";
 
-"conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe up to send";
-"conversation.input_bar.audio_message.tooltip.tap_send" = "Tap to send";
-"conversation.input_bar.audio_message.too_long.title" = "Recording Stopped";
-"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@. Send this message?";
-"conversation.input_bar.audio_message.send" = "Send";
+"conversation.input_bar.audio_message.tooltip.pull_send" = "اسحب لأعلى للإرسال";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "اُنقُر للإرسال";
+"conversation.input_bar.audio_message.too_long.title" = "تم إيقاف التسجيل";
+"conversation.input_bar.audio_message.too_long.message" = "الرسائل الصوتية محدودة بـ%@. هل تريد مُتابعة الإرسال؟";
+"conversation.input_bar.audio_message.send" = "إرسال";
 
-"conversation.input_bar.audio_message.keyboard.record_tip" = "Tap to record\nYou can  %@  it after that";
-"conversation.input_bar.audio_message.keyboard.filter_tip" = "Choose a filter above";
+"conversation.input_bar.audio_message.keyboard.record_tip" = "انقر لبدء التسجيل\nبإمكانك %@ بعد ذلك";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "اختر الفلتر أعلاه";
 
 // Image confirmation dialogue
-"image_confirmer.confirm" = "OK";
-"image_confirmer.cancel" = "Cancel";
-"image.add_sketch" = "Add a sketch";
-"image.edit_image" = "Edit image";
+"image_confirmer.confirm" = "موافق";
+"image_confirmer.cancel" = "إلغاء";
+"image.add_sketch" = "إضافة رسم يدوي";
+"image.edit_image" = "تَعديل الصورة";
 
 // Camera access
-"camera_access.denied" = "Wire needs access to the Camera.";
+"camera_access.denied" = "Wire يحتاج للوصول للكاميرا.";
 "camera_access.denied.instruction" = "";
-"camera_access.denied.open_settings" = "Enable it in Wire Settings";
+"camera_access.denied.open_settings" = "تَفعيلها من إعدادات Wire";
 
 // Camera Controls
-"camera_controls.aeaf_lock" = "AE/AF Lock";
+"camera_controls.aeaf_lock" = "AE/AF قفل";
 
 // Location
-"location.send_button.title" = "Send";
-"location.unauthorized_alert.title" = "Enable Location Services";
-"location.unauthorized_alert.message" = "To send your location, enable Location Services and allow Wire to access your location.";
-"location.unauthorized_alert.cancel" = "Cancel";
-"location.unauthorized_alert.settings" = "Settings";
+"location.send_button.title" = "إرسال";
+"location.unauthorized_alert.title" = "تَفعيل خدمات الموقع";
+"location.unauthorized_alert.message" = "لإرسال موقعك، فَعِّل خدمات الموقع لتمكين Wire من الوصول لموقعك.";
+"location.unauthorized_alert.cancel" = "إلغاء";
+"location.unauthorized_alert.settings" = "الإعدادات";
 
 // Twitter
-"twitter_status.on_twitter" = "%@ on Twitter";
+"twitter_status.on_twitter" = "%@ مُتواجد على تويتر";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Off";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.timeout.none" = "غير مفعل";
+"input.ephemeral.title" = "اضبط المؤقِّت للرسائل المؤقَّتة";
 
 // System messages
-"content.system.continued_conversation" = "Start a conversation with %@";
+"content.system.continued_conversation" = "بدأ مُحادثة مع %@";
 
-"content.system.other_started_conversation" = "%@ started a conversation with %@";
-"content.system.you_started_conversation" = "You started a conversation with %@";
+"content.system.other_started_conversation" = "%@ بدأ مُحادثة مع %@";
+"content.system.you_started_conversation" = "بدأت محادثة مع %@";
 
-"content.system.you_added_participant" = "You added %@";
-"content.system.other_added_participant" = "%@ added %@";
-"content.system.other_added_you" = "%@ added you";
+"content.system.you_added_participant" = "قمت بإضافة %@";
+"content.system.other_added_participant" = "%@ أضاف %@";
+"content.system.other_added_you" = "%@ أضافك";
 
-"content.system.participants_you" = "You";
-"content.system.participants_1_other" = "%@ and %@";
-"content.system.other_left" = "%@ left";
-"content.system.you_left" = "You left";
-"content.system.other_removed_other" = "%@ removed %@";
-"content.system.other_removed_you" = "%@ removed you";
-"content.system.you_removed_other" = "You removed %@";
-"content.system.other_renamed_conv" = "%@ renamed the conversation";
-"content.system.you_renamed_conv" = "You renamed the conversation";
-"content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
-"content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
-"content.system.pending_message_timestamp" = "Sending…";
-"content.system.message_sent_timestamp" = "Sent";
-"content.system.message_delivered_timestamp" = "Delivered";
-"content.system.failedtosend_message_timestamp" = "Sending failed.";
-"content.system.failedtosend_message_timestamp_resend" = "Resend";
-"content.system.like_tooltip" = "Tap to like";
-"content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
-"content.system.edited_message_prefix_timestamp" = "Edited on %@";
-"content.system.connecting_to" = "Connecting to %@.\nStart a conversation";
-"content.system.connected_to" = "Connected to %@\nStart a conversation";
-"content.system.other_wanted_to_talk" = "%@ called";
-"content.system.you_wanted_to_talk" = "You called";
+"content.system.participants_you" = "أنت";
+"content.system.participants_1_other" = "%@ و %@";
+"content.system.other_left" = "غادر %@";
+"content.system.you_left" = "أنت غادرت";
+"content.system.other_removed_other" = "قام %@ بإزالة %@";
+"content.system.other_removed_you" = "قام %@ بإزالتك";
+"content.system.you_removed_other" = "قمت بإزالة %@";
+"content.system.other_renamed_conv" = "قام %@ بإعادة تسمية المُحادثة";
+"content.system.you_renamed_conv" = "قمت بإعادة تسمية المحادثة";
+"content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
+"content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
+"content.system.pending_message_timestamp" = "جاري الإرسال...";
+"content.system.message_sent_timestamp" = "أُرسِلت";
+"content.system.message_delivered_timestamp" = "أُستلمَت";
+"content.system.failedtosend_message_timestamp" = "فَشِل الإرسال.";
+"content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
+"content.system.like_tooltip" = "انقر للإعجاب";
+"content.system.deleted_message_prefix_timestamp" = "حُذِفت في %@";
+"content.system.edited_message_prefix_timestamp" = "عُدّلت في %@";
+"content.system.connecting_to" = "التواصل مع %@\nبدأ مُحادثة";
+"content.system.connected_to" = "تم التواصل مع %@\nبدأ مُحادثة";
+"content.system.other_wanted_to_talk" = "اتصل %@";
+"content.system.you_wanted_to_talk" = "اتّصلت أنت";
 
-"content.system.you_started" = "You";
-"content.system.this_device" = "this device";
+"content.system.you_started" = "أنت";
+"content.system.this_device" = "هذا الجهاز";
 
-"content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here";
+"content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا";
 
-"content.system.new_device" = "a new device";
-"content.system.started_using" = "started using";
-"content.system.is_verified" = "All fingerprints are verified";
+"content.system.new_device" = "جهاز جديد";
+"content.system.started_using" = "بدأت استخدام";
+"content.system.is_verified" = "تم التّحقق من رمز التشفير";
 
-"content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule's devices"
-"content.system.your_devices" = "your devices";
-"content.system.other_devices" = "%@'s devices";
+"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule's devices"
+"content.system.your_devices" = "أجهزتك";
+"content.system.other_devices" = "أجهزة %@";
 
-"content.system.missing_messages.title" = "You haven't used this device for a while. Some messages may not appear here.";
-"content.system.missing_messages.subtitle_start" = "Meanwhile,";
+"content.system.missing_messages.title" = "لم تستخدم هذا الجهاز لمدة. بعض الرسائل لن تظهر هُنَا.";
+"content.system.missing_messages.subtitle_start" = "في هذه الأثناء،";
 
-"content.system.cannot_decrypt" = "A message from %@ was not received.";
+"content.system.cannot_decrypt" = "لم يتم تلقي رسالة من %@.";
 
-"content.system.cannot_decrypt.you_part" = "you";
-"content.system.cannot_decrypt.why_part" = "Why?";
+"content.system.cannot_decrypt.you_part" = "أنت";
+"content.system.cannot_decrypt.why_part" = "لماذا؟";
 
-"content.system.cannot_decrypt.identity" = "%@ device identity changed. Undelivered message.";
-"content.system.cannot_decrypt.identity.you_part" = "Your";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@'s"; // posessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Learn More";
-"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
-                                                                            // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt.identity" = "تغيّرت هوية جهاز %@. رسالة غير مُستلمة.";
+"content.system.cannot_decrypt.identity.you_part" = "الخاص بك";
+"content.system.cannot_decrypt.identity.otherUser_part" = "الخاص بـ%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.why_part" = "معرفة المزيد";
+"content.system.cannot_decrypt.otherDevice_part" = "(جهاز %@)"; // example " (device d1b23c54f34a)".
+// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.file.uploading" = "Uploading…";
-"content.file.downloading" = "Downloading…";
-"content.file.upload_failed" = "Upload failed";
-"content.file.upload_cancelled" = "Upload cancelled";
-"content.file.upload_video" = "Videos";
-"content.file.take_video" = "Record a video";
+"content.file.uploading" = "تحميل...";
+"content.file.downloading" = "تنزيل...";
+"content.file.upload_failed" = "فشلت عملية الرفع";
+"content.file.upload_cancelled" = "تم إلغاء الرفع";
+"content.file.upload_video" = "مقاطع فيديو";
+"content.file.take_video" = "تسجيل الفيديو";
 
-"content.file.save_video" = "Save";
-"content.file.save_audio" = "Save";
-"content.image.save_image" = "Save";
+"content.file.save_video" = "حفظ";
+"content.file.save_audio" = "حفظ";
+"content.image.save_image" = "حفظ";
 
-"content.message.delete" = "Delete";
+"content.message.delete" = "حذف";
 
-"content.message.like" = "Like";
-"content.message.unlike" = "Unlike";
+"content.message.like" = "اعجاب";
+"content.message.unlike" = "إلغاء إعجابي";
 
-"content.reactions_list.likers" = "Liked by";
+"content.reactions_list.likers" = "إعجاب من  ";
 
-"content.file.too_big" = "You can send files up to %@";
+"content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
 // Someone pinged
 "content.ping.text" = "%1$@ PINGED";
 
@@ -255,483 +255,483 @@
 "content.ping.you.text" = "YOU PINGED";
 
 // Inline Player
-"content.player.unable_to_play" = "UNABLE TO PLAY TRACK";
+"content.player.unable_to_play" = "غير قادر على تشغيل المقطع";
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
-"connection_request.title" = "Connect to %@"; //check UPPERCASE implementation in code
-"missive.connection_request.default_message" = "Hi %@,\nLet’s connect on Wire.\n%@";
+"connection_request.title" = "الاتصال بـ%@"; // check UPPERCASE implementation in code
+"missive.connection_request.default_message" = "مرحبًا %@،\nلنتواصل عبر Wire\n%@";
 
-"connection_request.send_button_title" = "Connect";
-"inbox.connection_request.connect_button_title" = "Connect";
-"inbox.connection_request.ignore_button_title" = "Ignore";
+"connection_request.send_button_title" = "تواصل";
+"inbox.connection_request.connect_button_title" = "تواصل";
+"inbox.connection_request.ignore_button_title" = "تجاهل";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nCalling";
-"voice.status.group_call.incoming" = "%@\nRinging";
-"voice.status.one_to_one.outgoing" = "%@\nRinging";
-"voice.status.joining" = "%@\nConnecting";
-"voice.status.video_not_available" = "Video turned off";
-"voice.status.low_connection" = "Bad connection";
-"voice.network_error.title" = "No Internet Connection";
-"voice.network_error.body" = "You must be online to call. Check your connection and try again.";
-"voice.alert.call_in_progress.title" = "Call in progress";
-"voice.alert.call_in_progress.message" = "Another of your devices is already participating in the call";
-"voice.alert.call_in_progress.confirm" = "Ok";
-"voice.accept_button.title" = "Accept";
-"voice.decline_button.title" = "Decline";
-"voice.hang_up_button.title" = "Hang Up";
-"voice.mute_button.title" = "Mute";
-"voice.video_button.title" = "Video";
-"voice.speaker_button.title" = "Speaker";
+"voice.status.one_to_one.incoming" = "%@\nيتصل";
+"voice.status.group_call.incoming" = "%@\nيرن";
+"voice.status.one_to_one.outgoing" = "%@\nيرن";
+"voice.status.joining" = "%@\nجار الاتصال";
+"voice.status.video_not_available" = "تم إيقاف الفيديو";
+"voice.status.low_connection" = "حالة الإتصال سيئة";
+"voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
+"voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
+"voice.alert.call_in_progress.title" = "يتم إجراء المكالمة";
+"voice.alert.call_in_progress.message" = "يتم بالفعل إجراء مُكالمة من خلال أحد أجهزتك الأخرى";
+"voice.alert.call_in_progress.confirm" = "موافق";
+"voice.accept_button.title" = "قبول";
+"voice.decline_button.title" = "رفض";
+"voice.hang_up_button.title" = "إنهاء الاتصال";
+"voice.mute_button.title" = "كتم الصوت";
+"voice.video_button.title" = "فيديو";
+"voice.speaker_button.title" = "مكبّر الصوت";
 
-"voice.alert.microphone_warning.title" = "Wire needs access to the Microphone.";
-"voice.alert.microphone_warning.explanation" = "Enable it in Wire Settings.";
+"voice.alert.microphone_warning.title" = "Wire يحتاج للوصول للميكرفون.";
+"voice.alert.microphone_warning.explanation" = "تَفعيلها من إعدادات Wire.";
 
-"voice.alert.camera_warning.title" = "Wire needs access to the Camera.";
-"voice.alert.camera_warning.explanation" = "Go to Settings and allow Wire to access the camera.";
+"voice.alert.camera_warning.title" = "Wire يحتاج للوصول للكاميرا.";
+"voice.alert.camera_warning.explanation" = "اسمح لـWire بالوصول للكاميرا من الإعدادات.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add people";
+"participants.add_people_button_title" = "إضافة أشخاص";
 
 // Meta Menu
-"meta.menu.rename" = "Rename";
-"meta.menu.leave" = "Leave";
-"meta.menu.archive" = "Archive";
-"meta.menu.unarchive" = "Unarchive";
-"meta.menu.delete" = "Delete";
-"meta.menu.silence.mute" = "Mute";
-"meta.menu.silence.unmute" = "Unmute";
-"meta.menu.cancel" = "Cancel";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.rename" = "إعادة التّسمية";
+"meta.menu.leave" = "غادر";
+"meta.menu.archive" = "حفظ في الأرشيف";
+"meta.menu.unarchive" = "إلغاء الأرشفة";
+"meta.menu.delete" = "حذف";
+"meta.menu.silence.mute" = "كتم الصوت";
+"meta.menu.silence.unmute" = "إلغاء كتم الصوت";
+"meta.menu.cancel" = "إلغاء";
+"meta.menu.cancel_connection_request" = "تم إلغاء الطلب";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Delete content?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history and remove it from the list.";
-"meta.menu.delete_content.leave_as_well_message" = "Also leave the conversation";
-"meta.menu.delete_content.button_cancel" = "Cancel";
-"meta.menu.delete_content.button_delete" = "Delete";
+"meta.menu.delete_content.dialog_title" = "حذف المحتوى؟";
+"meta.menu.delete_content.dialog_message" = "هذا سوف يمحي تاريخ المحادثة و يزيلها من القائمة.";
+"meta.menu.delete_content.leave_as_well_message" = "غادر المحادثة أيضا";
+"meta.menu.delete_content.button_cancel" = "إلغاء";
+"meta.menu.delete_content.button_delete" = "حذف";
 
 // Leave conversation
-"meta.leave_conversation_dialog_title" = "Leave conversation?";
-"meta.leave_conversation_dialog_message" = "The participants will be notified and the conversation will be removed from your list.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also delete the content";
-"meta.leave_conversation_button_cancel" = "Cancel";
-"meta.leave_conversation_button_leave" = "Leave";
+"meta.leave_conversation_dialog_title" = "مُغادرة المُحادثة؟";
+"meta.leave_conversation_dialog_message" = "سيتم إبلاغ المشاركين وحذف المحادثة من قائمتك.";
+"meta.leave_conversation.delete_content_as_well_message" = "وحذف مُحتواها";
+"meta.leave_conversation_button_cancel" = "إلغاء";
+"meta.leave_conversation_button_leave" = "غادر";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
-"meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
-"meta.degraded.dialog_message" = "Do you still want to send your message?";
-"meta.degraded.show_device_button" = "Show device";
-"meta.degraded.send_anyway_button" = "Send anyway";
+"meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";
+"meta.degraded.degradation_reason_message.plural" = "%@ بدأ باستخدام جهاز جديد.";
+"meta.degraded.dialog_message" = "ألا زلت تريد إرسال رسالتك؟";
+"meta.degraded.show_device_button" = "اعرض الجهاز";
+"meta.degraded.send_anyway_button" = "أرسل على أي حال";
 
 // Remove from conversation dialogue
-"profile.remove_dialog_title" = "Remove?";
-"profile.remove_dialog_message" = "%@ won’t be able to send or receive messages in this conversation.";
-"profile.remove_dialog_button_cancel" = "Cancel";
-"profile.remove_dialog_button_remove" = "Remove";
+"profile.remove_dialog_title" = "إزالة؟";
+"profile.remove_dialog_message" = "لن يتمكن %@ من إرسال أو إستقبال رسائل في هذه المُحادثة.";
+"profile.remove_dialog_button_cancel" = "إلغاء";
+"profile.remove_dialog_button_remove" = "إزالة";
 
 // Block dialog
-"profile.block_dialog.title" = "Block?";
-"profile.block_dialog.message" = "%@ won’t be able to find or contact you on Wire.";
-"profile.block_dialog.button_cancel" = "Cancel";
-"profile.block_dialog.button_block" = "Block";
+"profile.block_dialog.title" = "حظر؟\n";
+"profile.block_dialog.message" = "لن يتمكن %@ من إيجادك أو الإتصال بك على Wire.";
+"profile.block_dialog.button_cancel" = "إلغاء";
+"profile.block_dialog.button_block" = "حظر \n";
 
 // Delete message dialog
-"message.delete_dialog.message" = "This cannot be undone.";
-"message.delete_dialog.action.cancel" = "Cancel";
-"message.delete_dialog.action.hide" = "Delete for Me";
-"message.delete_dialog.action.delete" = "Delete for Everyone";
+"message.delete_dialog.message" = "لا يمكن التراجع عن هذا بعد القيام به";
+"message.delete_dialog.action.cancel" = "إلغاء";
+"message.delete_dialog.action.hide" = "حذف بالنسبة لي";
+"message.delete_dialog.action.delete" = "حذف للجميع";
 
 // Edit message
-"message.menu.edit.title" = "Edit";
+"message.menu.edit.title" = "تعديل";
 
 // Accept connection request
-"profile.connection_request_dialog.title" = "Accept?";
-"profile.connection_request_dialog.message" = "This will connect you and open the conversation with %@.";
-"profile.connection_request_dialog.button_cancel" = "Ignore";
-"profile.connection_request_dialog.button_connect" = "Connect";
+"profile.connection_request_dialog.title" = "قبول؟";
+"profile.connection_request_dialog.message" = "سوف يتم توصيلك وبدأ مُحادثة مع %@.";
+"profile.connection_request_dialog.button_cancel" = "تجاهل";
+"profile.connection_request_dialog.button_connect" = "تواصل";
 
 // Cancel connection request
-"profile.cancel_connection_request_dialog.title" = "Cancel Request?";
-"profile.cancel_connection_request_dialog.message" = "Remove connection request to %@.";
-"profile.cancel_connection_request_dialog.button_no" = "No";
-"profile.cancel_connection_request_dialog.button_yes" = "Yes";
+"profile.cancel_connection_request_dialog.title" = "الغاء الطّلب؟";
+"profile.cancel_connection_request_dialog.message" = "حذف طلب الإتصال مع %@.";
+"profile.cancel_connection_request_dialog.button_no" = "لا";
+"profile.cancel_connection_request_dialog.button_yes" = "نعم";
 
 // Unblock button
-"profile.unblock_button_title" = "Unblock";
+"profile.unblock_button_title" = "إلغاء حظر";
 
-"profile.cancel_connection_button_title" = "CANCEL REQUEST";
-"profile.connection_request_state.blocked" = "BLOCKED";
-"profile.create_conversation_button_title" = "Create group";
-"profile.open_conversation_button_title" = "Open conversation";
+"profile.cancel_connection_button_title" = "إلغاء الطلب";
+"profile.connection_request_state.blocked" = "حظر";
+"profile.create_conversation_button_title" = "إنشاء مجموعة";
+"profile.open_conversation_button_title" = "افتح المحادثة";
 
 // User Details
-"profile.details.title" = "Details";
+"profile.details.title" = "التفاصيل";
 
 // Device list
-"profile.devices.title" = "Devices";
-"profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
-"profile.devices.fingerprint_message" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation. Why verify conversations?";
-"profile.devices.fingerprint_message.link" = "Why verify conversations?";
+"profile.devices.title" = "الأجهزة";
+"profile.devices.fingerprint_message_unencrypted" = "يستخدم %@ نسخة قديمة من Wire. لا توجد أجهزة معروضة هنا.";
+"profile.devices.fingerprint_message" = "يعطي Wire كل جهاز بصمة فريدة.\nقارنها مع %@ للتحقق من مُحادثتك.\nلِمَ أتحقق من مُحادثاتي؟";
+"profile.devices.fingerprint_message.link" = "لِمَ أتحقق من مُحادثاتي؟";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@'s device.";
-"profile.devices.detail.verify_message.link" = "How do I do that?";
-"profile.devices.detail.show_my_device.title" = "Show my device fingerprint";
-"device.verified" = "Verified";
-"device.not_verified" = "Not Verified";
-"device.class.desktop" = "Desktop";
-"device.class.tablet" = "Tablet";
-"device.class.phone" = "Phone";
-"profile.devices.detail.reset_session.title" = "Reset Session";
+"profile.devices.detail.verify_message" = "تحقق أن هذه البصمة تتطابق مع المعروضة على جهاز %@.";
+"profile.devices.detail.verify_message.link" = "كيف أفعل ذلك؟";
+"profile.devices.detail.show_my_device.title" = "اعرض بصمة جهازي";
+"device.verified" = "تم التحقق";
+"device.not_verified" = "لم يتم التحقق منه";
+"device.class.desktop" = "سطح المكتب";
+"device.class.tablet" = "الجهاز اللوحي";
+"device.class.phone" = "الهاتف";
+"profile.devices.detail.reset_session.title" = "إعادة تعيين الجلسة";
 
 // General strings
-"general.confirm" = "OK";
+"general.confirm" = "موافق";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
-
 // Options menu contents
-"self.settings" = "Settings";
-"self.help_center" = "Support";
-"self.help_center.support_website" = "Wire Support Website";
-"self.help_center.contact_support" = "Contact Support";
-"self.about" = "About";
-"self.sign_out" = "Log Out";
-"self.report_abuse" = "Report Misuse";
 
-"self.add_phone_number" = "Add phone number";
-"self.add_email_password" = "Add email address and password";
+"self.settings" = "الإعدادات";
+"self.help_center" = "الدعم";
+"self.help_center.support_website" = "الموقع الإلكتروني للدعم في واير ";
+"self.help_center.contact_support" = "اتصل بالدعم";
+"self.about" = "عن";
+"self.sign_out" = "تسجيل الخروج";
+"self.report_abuse" = "بلغ عن إساءة الاستخدام";
+
+"self.add_phone_number" = "أضف رقم الهاتف";
+"self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";
 
 // About screen
-"about.tos.title"="Terms of Use";
-"about.privacy.title"="Privacy Policy";
-"about.license.title" = "License Information";
-"about.website.title"="Wire Website";
-"about.copyright.title"="© Wire Swiss GmbH";
+"about.tos.title" = "شروط الاستخدام";
+"about.privacy.title" = "سياسة الخصوصية";
+"about.license.title" = "معلومات عن الترخيص";
+"about.website.title" = "الموقع الإلكتروني ل واير";
+"about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "You have connected %@ to your Wire account";
-"self.new_device_alert.title_prefix.tablet" = "a tablet";
-"self.new_device_alert.title_prefix.phone" = "a phone";
-"self.new_device_alert.title_prefix.devices" = "%d devices";
-"self.new_device_alert.message" = "%@\n\nIf you didn’t do this, remove the device and reset your password.";
-"self.new_device_alert.message_plural" = "%@\n\nIf you didn’t do this, remove those devices and reset your password.";
-"self.new_device_alert.manage_devices" = "Manage devices";
-"self.new_device_alert.trust_devices" = "OK";
+"self.new_device_alert.title" = "قمت بربط %@ لحسابك في Wire";
+"self.new_device_alert.title_prefix.tablet" = "جهاز لوحي";
+"self.new_device_alert.title_prefix.phone" = "هاتف";
+"self.new_device_alert.title_prefix.devices" = "أجهزة %d";
+"self.new_device_alert.message" = "%@\n\nإذا لم يكن أنت من فعل هذا، أزل الجهاز وأعد تعيين كلمة المرور.";
+"self.new_device_alert.message_plural" = "%@\n\nإذا لم تفعل ذلك، أزل هذه الأجهزة وقُم بتعيين كلمة المرور.";
+"self.new_device_alert.manage_devices" = "إدارة الأجهزة";
+"self.new_device_alert.trust_devices" = "موافق";
 
 // Settings - Account details
-"self.settings.account_section" = "Account";
+"self.settings.account_section" = "الحساب";
 
-"self.settings.account_details_group.title" = "Info";
+"self.settings.account_details_group.title" = "معلومات";
 
-"self.settings.account_section.name.title" = "Name";
-"self.settings.account_section.email.title" = "Email";
-"self.settings.account_section.phone.title" = "Phone";
+"self.settings.account_section.name.title" = "الاسم";
+"self.settings.account_section.email.title" = "البريد الإلكتروني";
+"self.settings.account_section.phone.title" = "الهاتف";
 
-"self.settings.account_details_group.footer" = "People can find you with these details.";
+"self.settings.account_details_group.footer" = "سيتمكن الناس من ايجادك من خلال هذه التفاصيل.";
 
-"self.settings.account_details.remove_device.title" = "Remove Device";
-"self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
-"self.settings.account_details.remove_device.message" = "Your password is required to remove the device";
-"self.settings.account_details.remove_device.password" = "Password";
-"self.settings.account_details.remove_device.password.error" = "Wrong password";
+"self.settings.account_details.remove_device.title" = "إزالة الجهاز";
+"self.settings.account_details.key_fingerprint.title" = "مفتاح البصمة";
+"self.settings.account_details.remove_device.message" = "كلمة مرورك مطلوبة لحذف هذا الجهاز";
+"self.settings.account_details.remove_device.password" = "كلمة المرور";
+"self.settings.account_details.remove_device.password.error" = "كلمة مرور خاطئة";
 
-"self.settings.account_appearance_group.title" = "Appearance";
-"self.settings.account_picture_group.picture" = "Picture";
-"self.settings.account_picture_group.color" = "Color";
+"self.settings.account_appearance_group.title" = "المظهر";
+"self.settings.account_picture_group.picture" = "الصورة";
+"self.settings.account_picture_group.color" = "اللون";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "ثيم غامق";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
-"self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
-"self.settings.device_details.reset_session.success" = "The session has been reset";
+"self.settings.device_details.fingerprint.subtitle" = "واير يعطي كل جهاز بصمة فريدة. قم بمقارنة البصمات و تحقق من أجهزتك و محادثاتك.";
+"self.settings.device_details.reset_session.subtitle" = "في حالة عدم تطابق بصمات الأجهزة، أعد تعيين الجلسة لإنشاء مفاتيح تشفير جديدة على كلا الجانبين.";
+"self.settings.device_details.remove_device.subtitle" = "قم بإزالة هذا الجهاز إذا كنت قد توقفت عن استخدامه. سيتم مسح تاريخ الرسائل الخاصة بك و تسجيل خروجك.";
+"self.settings.device_details.reset_session.success" = "تم إعادة تعيين الجلسة";
 
-"self.settings.account_details.actions.title" = "Actions";
+"self.settings.account_details.actions.title" = "الإجراءات";
 
-"self.settings.account_details.delete_account.title" = "Delete Account";
+"self.settings.account_details.delete_account.title" = "حذف الحساب";
 
-"self.settings.account_details.delete_account.alert.title" = "Delete Account";
-"self.settings.account_details.delete_account.alert.message" = "We will send you a message via email or SMS. Follow the link to permanently delete your account.";
+"self.settings.account_details.delete_account.alert.title" = "حذف الحساب";
+"self.settings.account_details.delete_account.alert.message" = "سوف نرسل لك رسالة عبر البريد الإلكتروني أو في رسالة قصيرة.\nاتّبع التعليمات في الرابط لحذف حسابك بشكل دائم.";
 
 
 // Chat alerts
-"self.settings.notifications.push_notification.title" = "Notifications";
-"self.settings.notifications.push_notification.toogle" = "Message Previews";
-"self.settings.notifications.push_notification.footer" = "Sender name and message on the lock screen and in Notification Center.";
+"self.settings.notifications.push_notification.title" = "إشعارات";
+"self.settings.notifications.push_notification.toogle" = "استعراض الرسائل";
+"self.settings.notifications.push_notification.footer" = "اسم المُرسل ورسالته في قفل الشاشة وفي مركز الإشعارات.";
 
-"self.settings.notifications.chat_alerts.toggle" = "Message Banners";
-"self.settings.notifications.chat_alerts.footer" = "New messages in other conversations.";
+"self.settings.notifications.chat_alerts.toggle" = "شارة الرسالة";
+"self.settings.notifications.chat_alerts.footer" = "رسائل جديدة في مُحادثات أخرى.";
 
-"self.settings.sound_menu.sounds.title" = "Sounds";
-"self.settings.sound_menu.ringtone.title" = "Ringtone";
-"self.settings.sound_menu.message.title" = "Text Tone";
-"self.settings.sound_menu.ping.title" = "Ping";
-"self.settings.sound_menu.ringtones.title" = "Ringtones";
+"self.settings.sound_menu.sounds.title" = "الأصوات";
+"self.settings.sound_menu.ringtone.title" = "نغمة الرنين";
+"self.settings.sound_menu.message.title" = "نغمة التنبيه";
+"self.settings.sound_menu.ping.title" = "بينغ";
+"self.settings.sound_menu.ringtones.title" = "النغمات";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
-"self.settings.sound_menu.sounds.wire_call" = "Wire Call";
-"self.settings.sound_menu.sounds.wire_message" = "Wire Message";
+"self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
+"self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
 
 // By popular demand
-"self.settings.popular_demand.title" = "By popular demand";
-"self.settings.popular_demand.send_button.title" = "Send Button";
-"self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
+"self.settings.popular_demand.title" = "الأكثر شعبية";
+"self.settings.popular_demand.send_button.title" = "زر الإرسال";
+"self.settings.popular_demand.send_button.footer" = "عطّله لتستخدم زر لوحة المفاتيح.";
 
 // Open in
-"self.settings.external_apps.header" = "External Apps";
+"self.settings.external_apps.header" = "تطبيقات خارجية";
 
-"self.settings.link_options.twitter.title" = "Tweets";
-"self.settings.link_options.maps.title" = "Maps";
-"self.settings.link_options.browser.title" = "Browser";
+"self.settings.link_options.twitter.title" = "غرّد";
+"self.settings.link_options.maps.title" = "خرائط";
+"self.settings.link_options.browser.title" = "المُتصفّح";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "سفاري / تويتر";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Maps";
-"open_link.maps.option.google" = "Google Maps";
+"open_link.maps.option.apple" = "خرائط Apple";
+"open_link.maps.option.google" = "خرائط جوجل";
 
-"open_link.browser.option.safari" = "Safari";
-"open_link.browser.option.chrome" = "Chrome";
-"open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.safari" = "سفاري";
+"open_link.browser.option.chrome" = "جوجل كروم";
+"open_link.browser.option.firefox" = "فيرفكس";
 
 // Sound alerts (TO BE UPDPATED)
-"self.settings.sound_menu.title" = "Sound Alerts";
-"self.settings.sound_menu.no_sounds.title" = "None";
-"self.settings.sound_menu.all_sounds.title" = "All";
-"self.settings.sound_menu.mute_while_talking.title" = "First message, pings, calls";
+"self.settings.sound_menu.title" = "التنبيهات الصوتية";
+"self.settings.sound_menu.no_sounds.title" = "لا شيء";
+"self.settings.sound_menu.all_sounds.title" = "الجميع";
+"self.settings.sound_menu.mute_while_talking.title" = "أول رسالة ، بنغ أو مكالمة";
 
 // Developer options
-"self.settings.developer_options.title" = "Developer Options";
+"self.settings.developer_options.title" = "خيارات مطور البرامج";
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
-"self.settings.options_menu.title" = "Options";
+"self.settings.options_menu.title" = "الخيارات";
 
-"self.settings.privacy_contacts_section.title" = "Contacts";
-"self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
+"self.settings.privacy_contacts_section.title" = "جهات الاتصال";
+"self.settings.privacy_contacts_menu.settings_button.title" = "فتح إعدادات جهات الإتصال";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
-"self.settings.privacy_analytics_menu.devices.title" = "Devices";
+"self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
 
-"self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
-"self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
+"self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
+"self.settings.privacy_analytics_menu.description.title" = "اجعل Wire أفضل عبر إرسال معلومات مُموّهة.\n";
 
-"self.settings.privacy.clear_history.title" = "Clear History";
-"self.settings.privacy.clear_history.subtitle" = "This will permanently erase the content of all your conversations.";
+"self.settings.privacy.clear_history.title" = "مسح التاريخ";
+"self.settings.privacy.clear_history.subtitle" = "سيؤدي هذا إلى محو محتوى جميع المحادثات الخاصة بك بشكل دائم.";
 
-"self.settings.advanced.title" = "Advanced";
-"self.settings.advanced.troubleshooting.title" = "Troubleshooting";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Calling Debug Report";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems.";
-"self.settings.advanced.reset_push_token.title" = "Reset Push Notifications Token";
-"self.settings.advanced.reset_push_token.subtitle" = "If you experience problems with push notifications, Wire Support may ask you to reset this token.";
-"self.settings.advanced.reset_push_token_alert.title" = "Push token has been reset";
-"self.settings.advanced.reset_push_token_alert.message" = "Notifications will be restored in a few seconds.";
-"self.settings.advanced.version_technical_details.title" = "Version Technical Details";
+"self.settings.advanced.title" = "متقدم";
+"self.settings.advanced.troubleshooting.title" = "اكتشاف الأخطاء وإصلاحها";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Calling Debug تقرير";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "هذه المعلومات تساعد Wire Support في تشخيص مشاكل الاتصال.";
+"self.settings.advanced.reset_push_token.title" = "إعادة تعيين أذون تدفق الإشعارات";
+"self.settings.advanced.reset_push_token.subtitle" = "في حال وجود مشكلة في تدفق الإشعارات، من المحتمل أن يخبرك Wire Support بإعادة تعيين هذه الأذون.";
+"self.settings.advanced.reset_push_token_alert.title" = "تم إعادة تعيين أذون التدفق";
+"self.settings.advanced.reset_push_token_alert.message" = "سيتم إستعادة الإشعارات خلال ثوانٍ.";
+"self.settings.advanced.version_technical_details.title" = "نسخة التفاصيل الفنية";
 
 // Technical Report
-"self.settings.technical_report_section.title" = "Technical Report";
-"self.settings.technical_report.send_report" = "Send report to Wire";
+"self.settings.technical_report_section.title" = "تقرير فني";
+"self.settings.technical_report.send_report" = "أرسل تقرير لـWire";
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
-"self.settings.technical_report.mail.subject" = "Wire Calling Report";
-"self.settings.technical_report.include_log" = "Include detailed log";
+"self.settings.technical_report.mail.subject" = "تقرير اتصال Wire";
+"self.settings.technical_report.include_log" = "تضمين سجل مُفصّل";
 
 // Password reset
-"self.settings.password_reset_menu.title" = "Reset Password";
+"self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
-"system_status_bar.no_internet.title" = "No Internet";
-"system_status_bar.no_internet.explanation" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
-"system_status_bar.poor_connectivity.title" = "Slow Internet, can’t call now";
-"system_status_bar.poor_connectivity.explanation" = "We can’t guarantee voice quality. Connect to Wi-Fi or try changing your location.";
+"system_status_bar.no_internet.title" = "لا يوجد إنترنت";
+"system_status_bar.no_internet.explanation" = "يبدو أن هناك مشكلة في اتصالك بالإنترنت. من فضلك تأكد من عمل الاتصال.";
+"system_status_bar.poor_connectivity.title" = "اتصال سيّء، لا يمكن إجراء مُكالمة الآن";
+"system_status_bar.poor_connectivity.explanation" = "لا نستطيع أن نضمن لك جودة الاتصال. اتصل من خلال Wi-Fi او حاول تغيير موقعك.";
 
 // Common connections on profile view
-"profile_other.common_connections" = "You both know";
+"profile_other.common_connections" = "كلاكما تعرفان";
 
 // View user profile and options menu
-"name.placeholder" = "Your full name";
-"name.guidance.tooshort" = "At least 2 characters";
-"name.guidance.toolong" = "Too many characters";
+"name.placeholder" = "اسمك الكامل";
+"name.guidance.tooshort" = "استخدام على الأقل حرفين";
+"name.guidance.toolong" = "حروف كثيرة عن الحد";
 
-"email.placeholder" = "Email";
+"email.placeholder" = "البريد الإلكتروني";
 
-"password.placeholder" = "Password";
-"password.guidance.tooshort" = "At least 8 characters";
-"password.guidance.toolong" = "Too many characters";
+"password.placeholder" = "كلمة المرور";
+"password.guidance.tooshort" = "8 أحرف على الأقل";
+"password.guidance.toolong" = "حروف كثيرة عن الحد";
 
-"registration.title" = "Registration";
-"registration.close_email_invitation_button.email_title" = "Use another email";
-"registration.close_email_invitation_button.phone_title" = "Register by phone";
-"registration.close_phone_invitation_button.email_title" = "Register by email";
-"registration.close_phone_invitation_button.phone_title" = "Use another phone";
+"registration.title" = "تسجيل";
+"registration.close_email_invitation_button.email_title" = "استخدام بريد إلكتروني آخر";
+"registration.close_email_invitation_button.phone_title" = "تسجيل بواسطة رقم الهاتف";
+"registration.close_phone_invitation_button.email_title" = "تسجيل بواسطة بريد إلكتروني";
+"registration.close_phone_invitation_button.phone_title" = "استخدام رقم هاتف آخر";
 
-"registration.enter_phone_number.title" = "Edit phone number";
-"registration.enter_phone_number.placeholder" = "Phone number";
+"registration.enter_phone_number.title" = "تعديل رقم الهاتف";
+"registration.enter_phone_number.placeholder" = "رقم الهاتف";
 
-"registration.verify_phone_number.instructions" = "Enter the verification code we sent to %@";
-"registration.verify_phone_number.resend" = "Resend";
-"registration.verify_phone_number.resend_placeholder" = "No code showing up?\nYou can request a new one in %.0f seconds";
+"registration.verify_phone_number.instructions" = "أدخل رمز التّحقق الذي أُرسل لـ%@";
+"registration.verify_phone_number.resend" = "إعادة الإرسال";
+"registration.verify_phone_number.resend_placeholder" = "لم يظهر لك الرمز؟\nبإمكانك طلب واحد جديد خلال %.0f ثانية";
 
-"registration.verify_email.instructions" = "We sent an email to %@.\n Follow the link to verify your address.";
-"registration.verify_email.resend.instructions" = "Didn't get the message?";
-"registration.verify_email.resend.button_title" = "Re-send";
+"registration.verify_email.instructions" = "قمنا بإرسال رسالة لـ %@.\nتتبع الرابط لتأكيد بريدك الإلكتروني.";
+"registration.verify_email.resend.instructions" = "لم تستلم الرسالة؟";
+"registration.verify_email.resend.button_title" = "إعادة إرسال";
 
-"registration.select_picture.subtitle" = "Wire is so much nicer with a picture.";
-"registration.select_picture.button_title" = "Choose your own";
-"registration.keep_picture.button_title" = "Keep this one";
-"registration.camera_action.title" = "Take photo";
-"registration.photo_gallery_action.title" = "Choose Photo";
-"registration.cancel_action.title" = "Cancel";
+"registration.select_picture.subtitle" = "واير أجمل بكثير مع صورة.";
+"registration.select_picture.button_title" = "اختيار الخاصة بك";
+"registration.keep_picture.button_title" = "إبقاء هذه";
+"registration.camera_action.title" = "إلتقط صورة";
+"registration.photo_gallery_action.title" = "إختيار صورة";
+"registration.cancel_action.title" = "إلغاء";
 
-"registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
-"registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
-"registration.no_history.got_it" = "OK";
+"registration.no_history.hero" = "أنها المرة الأولى التي تستخدم فيها واير على هذا الجهاز.";
+"registration.no_history.subtitle" = "لأسباب تتعلق بالخصوصية، لن يظهر تاريخ المحادثات الخاصة بك هنا.";
+"registration.no_history.got_it" = "موافق";
 
-"registration.no_history.logged_out.hero" = "You've used Wire on this device before.";
-"registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";
-"registration.no_history.logged_out.got_it" = "OK";
+"registration.no_history.logged_out.hero" = "قمت بإستخدام Wire على هذا الجهاز من قبل.";
+"registration.no_history.logged_out.subtitle" = "الرسائل المُرسلة خلال ذلك الحين لن تظهر هنا.";
+"registration.no_history.logged_out.got_it" = "موافق";
 
-"registration.enter_name.title" = "Edit Name";
-"registration.enter_name.hero" = "What should we call you?";
-"registration.enter_name.placeholder" = "Your full name";
+"registration.enter_name.title" = "تعديل الاسم";
+"registration.enter_name.hero" = "ماذا يجب أن نسميك؟";
+"registration.enter_name.placeholder" = "اسمك الكامل";
 
-"registration.terms_of_use.title" = "Welcome to Wire.";
-"registration.terms_of_use.terms" = "By continuing you agree to the Wire Terms of Use.";
-"registration.terms_of_use.terms.link" = "Terms of Use";
-"registration.terms_of_use.agree" = "I agree";
+"registration.terms_of_use.title" = "مرحبًا بك في Wire.";
+"registration.terms_of_use.terms" = "في حال الاستمرار أنت توافق على شروط استخدام Wire.";
+"registration.terms_of_use.terms.link" = "شروط الاستخدام";
+"registration.terms_of_use.agree" = "أُوافق";
 
-"registration.email_flow.title" = "Register by Email";
-"registration.email_flow.email_step.title" = "Edit Details";
+"registration.email_flow.title" = "تسجيل بواسطة بريد إلكتروني";
+"registration.email_flow.email_step.title" = "تعديل التفاصيل";
 
-"registration.country_select.title" = "Country";
+"registration.country_select.title" = "البلد";
 
-"registration.share_contacts.hero.title" = "Find people on Wire";
-"registration.share_contacts.hero.paragraph"  = "Share your contacts so we can connect you with others. We anonymize all information and do not share it with anyone else.";
-"registration.share_contacts.find_friends_button.title" = "Share contacts";
-"registration.share_contacts.skip_button.title" = "Not now";
+"registration.share_contacts.hero.title" = "إيجاد أُناس على Wire";
+"registration.share_contacts.hero.paragraph" = "اسمح لـWire بالوصول لجهات الإتصال الخاصة بك حتى تتمكن من التواصل مع الآخرين. نحن نحفظ سرية معلوماتك ولا نتشاركها من أحد آخر.";
+"registration.share_contacts.find_friends_button.title" = "مشاركة جهات الاتصال";
+"registration.share_contacts.skip_button.title" = "ليس الآن";
 
-"registration.address_book_access_denied.hero.title" = "Wire does not have access to your contacts.";
-"registration.address_book_access_denied.hero.paragraph1" = "Wire helps find your friends if you share your contacts.";
-"registration.address_book_access_denied.hero.paragraph2" = "To enable access tap Settings and turn on Contacts.";
-"registration.address_book_access_denied.settings_button.title" = "Settings";
-"registration.address_book_access_denied.maybe_later_button.title" = "Maybe later";
+"registration.address_book_access_denied.hero.title" = "لا يملك Wire صلاحية الوصول لجهات اتصالك.";
+"registration.address_book_access_denied.hero.paragraph1" = "يساعدك Wire في العثور على أصدقائك عند مشاركة جهات اتصالك.";
+"registration.address_book_access_denied.hero.paragraph2" = "لتمكين الوصول اذهب للإعدادات وقم بتفعيله.";
+"registration.address_book_access_denied.settings_button.title" = "الإعدادات";
+"registration.address_book_access_denied.maybe_later_button.title" = "ربما في وقت لاحق";
 
-"registration.push_access_denied.hero.title" = "Never miss a call or a message.";
-"registration.push_access_denied.hero.paragraph1" = "Enable Notifications in Settings.";
-"registration.push_access_denied.settings_button.title" = "Go to Settings";
-"registration.push_access_denied.maybe_later_button.title" = "Maybe later";
+"registration.push_access_denied.hero.title" = "لا تُفَوّت أي مُكالمة أو رسالة.";
+"registration.push_access_denied.hero.paragraph1" = "فعّل الإشعارات من الإعدادات.";
+"registration.push_access_denied.settings_button.title" = "اذهب للإعدادات";
+"registration.push_access_denied.maybe_later_button.title" = "ربما في وقت لاحق";
 
-"registration.signin.title" = "Log In";
+"registration.signin.title" = "تسجيل الدخول";
 "registration.signin.too_many_devices.title" = "";
-"registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
-"registration.signin.too_many_devices.manage_button.title" = "Manage devices";
-"registration.signin.too_many_devices.sign_out_button.title" = "Log out";
-"registration.signin.email_button.title" = "Email";
-"registration.signin.phone_button.title" = "Phone";
+"registration.signin.too_many_devices.subtitle" = "قم بإزالة أحد الأجهزة الأخرى الخاصة بك لبدء استخدام واير على هذا الجهاز.";
+"registration.signin.too_many_devices.manage_button.title" = "إدارة الأجهزة";
+"registration.signin.too_many_devices.sign_out_button.title" = "تسجيل الخروج";
+"registration.signin.email_button.title" = "البريد الإلكتروني";
+"registration.signin.phone_button.title" = "الهاتف";
 
-"registration.devices.title" = "Devices";
-"registration.devices.active_list_header" = "Active";
-"registration.devices.current_list_header" = "Current";
-"registration.devices.active_list_subtitle" = "If you don’t recognize a device above, remove it and reset your password.";
-"registration.devices.activated_in" = "Activated in";
-"registration.devices.id" = "ID:";
+"registration.devices.title" = "الأجهزة";
+"registration.devices.active_list_header" = "نشط";
+"registration.devices.current_list_header" = "الحالي";
+"registration.devices.active_list_subtitle" = "إذا كنت لا تتعرف على الجهاز أعلاه، قم بإزالته وإعادة تعيين كلمة المرور الخاصة بك.";
+"registration.devices.activated_in" = "تم تنشيطه في";
+"registration.devices.id" = "المُعرّف:";
 
-"signin.forgot_password" = "Forgot password?";
+"signin.forgot_password" = "نسيتَ كلمة المرور؟";
 
-"registration.add_phone_number.hero.title" = "Add phone number";
-"registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";
-"registration.add_phone_number.skip_button.title" = "Not now";
+"registration.add_phone_number.hero.title" = "أضف رقم الهاتف";
+"registration.add_phone_number.hero.paragraph" = "يساعدنا هذا على إيجاد أشخاص لربما تعرفهم. نحن لا نشارك هذه المعلومات.";
+"registration.add_phone_number.skip_button.title" = "ليس الآن";
 
-"registration.add_email_password.hero.title" = "Add your email and password.";
-"registration.add_email_password.hero.paragraph" = "This lets you use Wire on multiple devices.";
+"registration.add_email_password.hero.title" = "قم بإضافة عنوان بريدك الإلكتروني وكلمة مرور.";
+"registration.add_email_password.hero.paragraph" = "هذا يمكنك من استخدام واير على أجهزة متعددة.";
 
-"registration.email_invitation.title" = "Invitation";
-"registration.email_invitation.hero.title" = "Hello, %@";
-"registration.email_invitation.hero.paragraph" = "Choose a password to create your account.";
+"registration.email_invitation.title" = "دعوة";
+"registration.email_invitation.hero.title" = "مرحبًا، %@";
+"registration.email_invitation.hero.paragraph" = "اختر كلمة مرور لإنشاء الحساب الخاص بك.";
 
-"registration.phone_invitation.title" = "Invitation";
-"registration.phone_invitation.hero.title" = "Hello, %@";
-"registration.phone_invitation.hero.paragraph" = "You are one step away from creating your account.";
+"registration.phone_invitation.title" = "دعوة";
+"registration.phone_invitation.hero.title" = "مرحبًا، %@";
+"registration.phone_invitation.hero.paragraph" = "أنت على بعد خطوة واحدة من إنشاء حسابك الخاص.";
 
-"error.name_and_email" = "Please enter your full name and a valid email address";
-"error.full_name" = "Please enter your full name";
-"error.email" = "Please enter a valid email address";
-"error.input.too_long" = "Input too long";
-"error.input.too_short" = "Input too short";
-"error.email.invalid" = "Please enter a valid email address";
-"error.phone.invalid" = "Please enter a valid phone number";
+"error.name_and_email" = "الرجاء إدخال اسمك الكامل وعنوان بريد إلكتروني صحيح";
+"error.full_name" = "ادخل اسمك الكامل";
+"error.email" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
+"error.input.too_long" = "المُدخل طويل جدًا";
+"error.input.too_short" = "المُدخل قصير جداً";
+"error.email.invalid" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
+"error.phone.invalid" = "الرجاء إدخال رقم هاتف صحيح";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
-"error.user.unkown_error" = "Something went wrong, please try again";
-"error.user.needs_credentials" = "Please verify your details and try again.";
-"error.user.invalid_credentials" = "Please verify your details and try again.";
-"error.user.account_pending_activation" = "The account you are trying access is pending activation. Please verify your details.";
-"error.user.network_error" = "There seems to be a problem with your network. Please try again later.";
-"error.user.email_is_taken" = "The email address you provided has already been registered. Please try again.";
-"error.user.phone_is_taken" = "The phone number you provided has already been registered. Please try again.";
-"error.user.phone_code_invalid" = "Please enter a valid code";
-"error.user.phone_code_too_many" = "We already sent you a code via SMS. Tap Resend after 10 minutes to get a new one.";
-"error.user.registration_unknown_error" = "Something went wrong. Please try again.";
-"error.user.device_deleted_remotely" = "You have been logged out from another device.";
+"error.user.unkown_error" = "حدث خطأ ما، برجاء إعادة المحاولة";
+"error.user.needs_credentials" = "الرجاء التحقق من التفاصيل الخاصة بك وحاول مرة أخرى.";
+"error.user.invalid_credentials" = "الرجاء التحقق من التفاصيل الخاصة بك وحاول مرة أخرى.";
+"error.user.account_pending_activation" = "الحساب الذي تحاول الوصول له في انتظار التفعيل. من فضلك تحقق من التفاصيل.";
+"error.user.network_error" = "يبدو أن هناك مشكلة في شبكة اتصالك. الرجاء المحاولة مرة أخرى لاحقاً.";
+"error.user.email_is_taken" = "البريد الإلكتروني المُدخل تم استخدامه بالفعل. الرجاء استخدام بريد إلكتروني مختلف.";
+"error.user.phone_is_taken" = "رقم الهاتف الذي أعطيته تم تسجيله من قبل. الرجاء حاول مرة أخرى.";
+"error.user.phone_code_invalid" = "الرجاء ادخال رمز صحيح";
+"error.user.phone_code_too_many" = "لقد قمنا بإرسال رمز إليك عبر رسالة قصيرة . انقر فوق إعادة إرسال بعد 10 دقائق للحصول على رمز جديد.";
+"error.user.registration_unknown_error" = "حدث خطأ ما. برجاء إعادة المحاولة.";
+"error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.updating_password" = "Couldn't update your password.";
+"error.updating_password" = "تعذَّر تحديث كلمة مرورك.";
 
-"error.group_call.too_many_members_in_conversation.title" = "Too many people to call";
-"error.group_call.too_many_members_in_conversation" = "Calls work in conversations with up to %d people.";
-"error.group_call.too_many_participants_in_the_call.title" = "The call is full";
-"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d people in here.";
-"error.call.gsm_ongoing.title" = "Cellular call";
-"error.call.gsm_ongoing" = "Please cancel the cellular call before calling on Wire.";
-"error.call.general.title" = "Call error";
-"error.call.general" = "Please try calling again in several minutes.";
-"error.call.slow_connection.title" = "Slow connection";
-"error.call.slow_connection" = "You might experience issues during the call";
-"error.call.slow_connection.call_anyway" = "Call anyway";
+"error.group_call.too_many_members_in_conversation.title" = "هناك أشخاص أكثر مما يجب في هذه المكالمة";
+"error.group_call.too_many_members_in_conversation" = "تستطيع إجراء مكالمات لحد %d أشخاص.";
+"error.group_call.too_many_participants_in_the_call.title" = "المكالمة ممتلئة";
+"error.group_call.too_many_participants_in_the_call" = "لا يوجد متسع لغير %d أشخاص.";
+"error.call.gsm_ongoing.title" = "مُكالمة خلوية";
+"error.call.gsm_ongoing" = "من فضلك أنهِ المكالمة الخلوية قبل التّحدث باستخدام Wire.";
+"error.call.general.title" = "خطأ في المكالمة";
+"error.call.general" = "حاول الاتصال مرة أخرى خلال دقائق.";
+"error.call.slow_connection.title" = "اتصال بطيء";
+"error.call.slow_connection" = "قد تواجه مشكلات أثناء المكالمة";
+"error.call.slow_connection.call_anyway" = "الاتصال على أي حال";
 
-"error.invite.no_email_provider" = "Please configure your email client to be able to send the invites via email";
-"error.invite.no_messaging_provider" = "Please configure your SMS to be able to send the invites via SMS";
+"error.invite.no_email_provider" = "من فضلك اضبط تطبيق البريد الإلكتروني للتّمكن من إرسال دعوات من خلاله";
+"error.invite.no_messaging_provider" = "من فضلك اضبط الـSMS لتتمكن من إرسال دعوات من خلالها";
 
-"sketchpad.initial_hint" = "Tap color to change brush size\nPress and hold to fill an area\nShake to remove a photo";
+"sketchpad.initial_hint" = "انقر على اللون لتغيير مقاس الفرشة\nانقر وعلِّق لملأ مساحة\nقم بالهز لحذف صورة";
 
-"migration.please_wait_message" = "One moment, please";
+"migration.please_wait_message" = "لحظة، من فضلك";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are used by the backend to localize APNS
-"push.notification.new_user" = "%@ joined Wire";
-"push.notification.new_message" = "New message";
+"push.notification.new_user" = "انضمّ %@ لـWire";
+"push.notification.new_message" = "رسالة جديدة";
 
 
-//Force Update
-"force.update.title" = "Update necessary";
-"force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
-"force.update.ok_button" = "Go to App Store";
+// Force Update
+"force.update.title" = "مطلوب التحديث";
+"force.update.message" = "أنت تفتقد مميزات جديدة.\nاحصل على آخر إصدار من Wire من خلال App Store.";
+"force.update.ok_button" = "اذهب لـApp Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · via giphy.com";
-"giphy.conversation.random_message" = "via giphy.com";
-"giphy.error.no_more_results" = "no more gifs";
-"giphy.error.no_result" = "no gif found";
+"giphy.conversation.message" = "%@ · عبر giphy.com";
+"giphy.conversation.random_message" = "عبر giphy.com";
+"giphy.error.no_more_results" = "لا مزيد من gifs";
+"giphy.error.no_result" = "لم يتم العثور على أي gif";
 
-"giphy.confirm" = "send";
-"giphy.cancel" = "cancel";
-"giphy.search_placeholder" = "Search Giphy";
+"giphy.confirm" = "إرسال";
+"giphy.cancel" = "إلغاء";
+"giphy.search_placeholder" = "البحث عن جيفي";
 
-"invite_banner.title" = "Bring your friends to Wire!";
-"invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";
-"invite_banner.invite_button_title" = "Invite more people";
+"invite_banner.title" = "ادعُ أصدقاء لاستخدام Wire!";
+"invite_banner.message" = "استمتع بالمكالمات، الرسائل، الرسومات، الصور المتحركة والمزيد في المحادثات الفردية أو الجماعية.";
+"invite_banner.invite_button_title" = "ادعُ أُناسًا أكثر";
