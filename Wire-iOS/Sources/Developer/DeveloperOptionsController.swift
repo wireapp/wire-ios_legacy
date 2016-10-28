@@ -21,6 +21,7 @@ import ZMCSystem
 import zmessaging
 import Cartography
 import MessageUI
+import UIKit
 
 class DeveloperOptionsController : UIViewController {
     
@@ -32,6 +33,8 @@ class DeveloperOptionsController : UIViewController {
     
     /// Map from UIButton to the action it should perform.
     var uiButtonToAction : [UIButton : ()->()] = [:]
+    
+    var mailViewController : MFMailComposeViewController? = nil
 }
 
 extension DeveloperOptionsController {
@@ -82,26 +85,7 @@ extension DeveloperOptionsController {
     func forwardLogCell() -> UITableViewCell {
         return self.createCellWithButton(labelText: "Forward log records") {
             let logs = ZMSLog.recordedContent
-            guard logs.count > 0 else {
-                let alert = UIAlertView(title: "Error", message: "You have no logs to send", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-                return
-            }
-            guard MFMailComposeViewController.canSendMail() else {
-                let alert = UIAlertView(title: "Error", message: "You do not have email set up", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-                return
-            }
-            
-            // email sending
-            let composeVC = MFMailComposeViewController()
-            composeVC.setToRecipients(["ios@wire.com"])
-            let user = ZMUser.selfUser()!
-            composeVC.setSubject("Debug logs from \(user.name)")
-            composeVC.setMessageBody("Here are the logs!", isHTML: false)
-            let completeLog = logs.joined(separator: "\n")
-            composeVC.addAttachmentData(completeLog.data(using: .utf8)!, mimeType: "text/plain", fileName: "logs.txt")
-            self.present(composeVC, animated: true, completion: nil)
+            self.sendEmail(logs: logs)
             
         }
     }
@@ -174,5 +158,56 @@ extension DeveloperOptionsController {
             }
             action()
         }
+    }
+}
+
+// MARK: - Email sending
+extension DeveloperOptionsController : MFMailComposeViewControllerDelegate {
+    
+    func sendEmail(logs: [String]) {
+        
+        if self.mailViewController != nil {
+            return
+        }
+        
+        guard logs.count > 0 else {
+            let alert = UIAlertView(title: "Error", message: "You have no logs to send", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+            return
+        }
+        guard MFMailComposeViewController.canSendMail() else {
+            let alert = UIAlertView(title: "Error", message: "You do not have email set up", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+            return
+        }
+        
+        // Prepare subject & body
+        let user = ZMUser.selfUser()!
+        let userID = user.remoteIdentifier?.transportString() ?? ""
+        let device = UIDevice.current.name
+        let now = Date()
+        let userDescription = "\(user.name ?? "") [user: \(userID)] [device: \(device)]"
+        let message = "Here are the logs from \(userDescription), at \(now)\n"
+            + "It contains \(logs.count) log entries, please find them in the attached file"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        let timeStr = formatter.string(from: now)
+        let fileName = "logs_U\(userID)_T\(timeStr).txt"
+        
+        // compose
+        let mailVC = MFMailComposeViewController()
+        mailVC.setToRecipients(["ios@wire.com"])
+        mailVC.setSubject("iOS logs from \(userDescription)")
+        mailVC.setMessageBody(message, isHTML: false)
+        let completeLog = logs.joined(separator: "\n")
+        mailVC.addAttachmentData(completeLog.data(using: .utf8)!, mimeType: "text/plain", fileName: fileName)
+        mailVC.mailComposeDelegate = self
+        self.mailViewController = mailVC
+        self.present(mailVC, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        self.mailViewController = nil
+        controller.dismiss(animated: true)
     }
 }
