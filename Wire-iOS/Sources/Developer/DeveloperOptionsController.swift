@@ -18,18 +18,20 @@
 
 import Foundation
 import ZMCSystem
+import zmessaging
 import Cartography
+import MessageUI
 
 class DeveloperOptionsController : UIViewController {
     
-    var allTags : [String]!
-    var tableView : UITableView!
-}
-
-struct DevOptionsLabelWithSwitch {
-    let label : UILabel
-    let uiSwitch : UISwitch
-    let tag : String
+    /// Cells
+    var tableCells : [UITableViewCell]!
+    /// Map from UISwitch to the action it should perform. 
+    /// The parameter of the action is whether the switch is on or off
+    var uiSwitchToAction : [UISwitch : (Bool)->()] = [:]
+    
+    /// Map from UIButton to the action it should perform.
+    var uiButtonToAction : [UIButton : ()->()] = [:]
 }
 
 extension DeveloperOptionsController {
@@ -39,15 +41,16 @@ extension DeveloperOptionsController {
         self.view = UIView()
         self.edgesForExtendedLayout = UIRectEdge()
         self.view.backgroundColor = .clear
-        self.allTags = Array(ZMLogGetAllTags()!.map { $0 as! String})
         
-        self.tableView = UITableView()
-        self.tableView.dataSource = self
-        self.tableView.backgroundColor = .clear
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.tableView)
+        self.tableCells = [forwardLogCell()] + ZMSLog.allTags.map { logSwitchCell(tag: $0) }
         
-        constrain(self.view, self.tableView) { view, tableView in
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(tableView)
+        
+        constrain(self.view, tableView) { view, tableView in
             tableView.edges == view.edges
         }
     }
@@ -57,44 +60,119 @@ extension DeveloperOptionsController {
 extension DeveloperOptionsController : UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allTags.count
+        return self.tableCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return self.tableCells[indexPath.row]
+    }
+}
+
+// MARK: - Cells
+extension DeveloperOptionsController {
+    
+    /// Creates a cell to switch a specific log tag on or off
+    func logSwitchCell(tag: String) -> UITableViewCell {
+        return self.createCellWithSwitch(labelText: "Log \(tag)", isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
+            Settings.shared().set(logTag: tag, enabled: isOn)
+        }
+    }
+    
+    /// Creates a cell to forward logs
+    func forwardLogCell() -> UITableViewCell {
+        return self.createCellWithButton(labelText: "Forward log records") {
+            let logs = ZMSLog.recordedContent
+            guard logs.count > 0 else {
+                let alert = UIAlertView(title: "Error", message: "You have no logs to send", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+                return
+            }
+            guard MFMailComposeViewController.canSendMail() else {
+                let alert = UIAlertView(title: "Error", message: "You do not have email set up", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+                return
+            }
+            
+            // email sending
+            let composeVC = MFMailComposeViewController()
+            composeVC.setToRecipients(["ios@wire.com"])
+            let user = ZMUser.selfUser()!
+            composeVC.setSubject("Debug logs from \(user.name)")
+            composeVC.setMessageBody("Here are the logs!", isHTML: false)
+            let completeLog = logs.joined(separator: "\n")
+            composeVC.addAttachmentData(completeLog.data(using: .utf8)!, mimeType: "text/plain", fileName: "logs.txt")
+            self.present(composeVC, animated: true, completion: nil)
+            
+        }
+    }
+    
+    /// Creates a cell to forward logs
+    func createCellWithButton(labelText: String, onTouchDown: @escaping ()->()) -> UITableViewCell {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Go!", for: .normal)
+        button.addTarget(self, action: #selector(DeveloperOptionsController.didPressButton(sender:)), for: .touchDown)
+        self.uiButtonToAction[button] = onTouchDown
+        return self.createCellWithLabelAndView(labelText: labelText, view: button)
+    }
+    
+    /// Creates and sets the layout of a cell with a UISwitch
+    func createCellWithSwitch(labelText: String, isOn: Bool, onValueChange: @escaping (Bool)->() ) -> UITableViewCell {
+        let toggle = UISwitch()
+        toggle.translatesAutoresizingMaskIntoConstraints = false
+        toggle.isOn = isOn
+        toggle.addTarget(self, action: #selector(DeveloperOptionsController.switchDidChange(sender:)), for: .valueChanged)
+        self.uiSwitchToAction[toggle] = onValueChange
+        return self.createCellWithLabelAndView(labelText: "Log \(labelText)", view: toggle)
+    }
+    
+    /// Creates and sets the layout of a cell with a label and a view
+    func createCellWithLabelAndView(labelText: String, view: UIView) -> UITableViewCell {
         let cell = UITableViewCell()
-        let logText = self.allTags[indexPath.row]
         cell.backgroundColor = .clear
         
         let label = UILabel()
-        label.text = "Log \(logText)"
+        label.text = labelText
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(label)
-
+        
         constrain(cell.contentView, label) { contentView, label in
             label.centerY == contentView.centerY
             label.left == contentView.left + 20
         }
         
-        let `switch` = UISwitch()
-        `switch`.translatesAutoresizingMaskIntoConstraints = false
-        `switch`.isOn = ZMLogGetLevelForTag(logText) == .debug
-        `switch`.tag = indexPath.row
-        `switch`.addTarget(self, action: #selector(DeveloperOptionsController.switchLogDidChange(sender:)), for: .valueChanged)
-        cell.contentView.addSubview(`switch`)
-
-        constrain(cell.contentView, `switch`, label) { contentView, `switch`, label in
-            `switch`.trailing == contentView.trailing - 20
-            label.trailing == `switch`.leading
-            `switch`.centerY == label.centerY
-        }
+        cell.contentView.addSubview(view)
         
+        constrain(cell.contentView, view, label) { contentView, view, label in
+            view.trailing == contentView.trailing - 20
+            label.trailing == view.leading
+            view.centerY == label.centerY
+        }
         return cell
     }
+}
+
+// MARK: - Actions
+extension DeveloperOptionsController {
     
-    func switchLogDidChange(sender: AnyObject) {
-        let `switch` = sender as! UISwitch
-        let logTag = self.allTags[`switch`.tag]
-        Settings.shared().set(logTag: logTag, enabled: `switch`.isOn)
+    /// Invoked when one of the switches changes
+    func switchDidChange(sender: AnyObject) {
+        if let toggle = sender as? UISwitch {
+            guard let action = self.uiSwitchToAction[toggle] else {
+                fatalError("Unknown switch?")
+            }
+            action(toggle.isOn)
+        }
+    }
+    
+    /// Invoked when one of the buttons is pressed
+    func didPressButton(sender: AnyObject) {
+        if let button = sender as? UIButton {
+            guard let action = self.uiButtonToAction[button] else {
+                fatalError("Unknown button?")
+            }
+            action()
+        }
     }
 }

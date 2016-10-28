@@ -398,7 +398,7 @@
 
 #pragma mark - TextViewInteractionDelegate
 
-- (void)textView:(LinkInteractionTextView *)textView willOpenURL:(NSURL *)url
+- (void)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
     LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", url]].lastObject;
     
@@ -409,6 +409,8 @@
         [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:LinkAttachmentTypeNone
                                                          conversationType:self.message.conversation.conversationType];
     }
+
+    [url open];
 }
 
 - (void)textView:(LinkInteractionTextView *)textView didLongPressLink:(UILongPressGestureRecognizer *)recognizer

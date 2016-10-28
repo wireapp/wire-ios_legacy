@@ -76,6 +76,12 @@
 	<string>12345677</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>comgooglemaps</string>
+		<string>tweetbot</string>
+		<string>twitterrific</string>
+		<string>googlechrome</string>
+		<string>googlechromes</string>
+		<string>firefox</string>
 		<string>org-appextension-feature-password-management</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>

@@ -874,9 +874,7 @@
     [self.tableView selectRowAtIndexPath:[self.tableView indexPathForCell:cell] animated:NO scrollPosition:UITableViewScrollPositionNone];
     self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
 
-    if (! [UIApplication.sharedApplication openURL:url]) {
-        DDLogError(@"Unable to open URL: %@", url);
-    }
+    [url open];
     
     [self.tableView beginUpdates];
     [self.tableView endUpdates];

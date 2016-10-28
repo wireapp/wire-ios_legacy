@@ -19,32 +19,49 @@
 import Foundation
 import ZMCSystem
 
+/// User default key for the array of enabled logs
 private let enabledLogsKey = "WireEnabledZMLogTags"
+
 
 extension Settings {
     
+    /// Enable/disable a log
     func set(logTag: String, enabled: Bool) {
-        ZMLogSetLevelForTag(enabled ? .debug : .warn, (logTag as NSString).utf8String!)
+
+        ZMSLog.set(level: enabled ? .debug : .warn, tag: logTag)
         saveEnabledLogs()
     }
     
+    /// Save to user defaults the list of logs that are enabled
     private func saveEnabledLogs() {
-        let enabledLogs = ZMLogGetAllTags().filter { str in
-            let level = ZMLogGetLevelForTag(str as! String)
+        let enabledLogs = ZMSLog.allTags.filter { tag in
+            let level = ZMSLog.getLevel(tag: tag)
             return level == .debug || level == .info
         } as NSArray
         
         UserDefaults.shared().set(enabledLogs, forKey: enabledLogsKey)
+        setLogRecording(enabled: enabledLogs.count > 0)
     }
     
+    /// Loads from user default the list of logs that are enabled
     @objc public func loadEnabledLogs() {
-        
-        guard let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<NSString> else {
+        guard let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> else {
             return
         }
         
         tagsToEnable.forEach { (tag) in
-            ZMLogSetLevelForTag(.debug, tag.utf8String!)
+            ZMSLog.set(level: .debug, tag: tag)
+        }
+        setLogRecording(enabled: !tagsToEnable.isEmpty)
+    }
+    
+    /// Sets whether recording is enabled
+    private func setLogRecording(enabled: Bool) {
+        if enabled && DeveloperMenuState.developerMenuEnabled() { // never record on non-internal
+            ZMSLog.startRecording(size: 10000)
+        }
+        else {
+            ZMSLog.stopRecording()
         }
     }
 }

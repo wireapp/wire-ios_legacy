@@ -334,9 +334,11 @@ public extension Analytics {
     
     /// User plays an audio message
     @objc public func tagPlayedAudioMessage(_ duration: TimeInterval, extensionString: String) {
-        let attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
-                          "duration_actual": type(of: self).stringFromTimeInterval(duration),
-                          "type": extensionString]
+        let attributes: [String: String] = [
+            "duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
+            "duration_actual": type(of: self).stringFromTimeInterval(duration),
+            "type": extensionString
+        ]
         tagEvent(conversationMediaPlayedAudioMessageEventName, attributes: attributes)
     }
     
