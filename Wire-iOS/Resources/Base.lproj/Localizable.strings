@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 
 // Open in
-"self.settings.external_apps.header" = "External Apps";
+"self.settings.external_apps.header" = "Open Links In";
 
 "self.settings.link_options.twitter.title" = "Tweets";
-"self.settings.link_options.maps.title" = "Maps";
+"self.settings.link_options.maps.title" = "Locations";
 "self.settings.link_options.browser.title" = "Browser";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
