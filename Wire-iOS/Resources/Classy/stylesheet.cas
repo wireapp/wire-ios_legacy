@@ -970,6 +970,22 @@ ConfirmAssetViewController {
     }
 }
 
+ImageToolbarView.on-image {
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal-dark;
+        iconColor[state:highlighted]: $color-icon-highlighted-dark;
+        iconColor[state:selected]: $color-accent-current-dark;
+    }
+}
+
+ImageToolbarView.on-background {
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal;
+        iconColor[state:highlighted]: $color-icon-highlighted;
+        iconColor[state:selected]: $color-accent-current;
+    }
+}
+
 /* Location */
 
 ModalTopBar {

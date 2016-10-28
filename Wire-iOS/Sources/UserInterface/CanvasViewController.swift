@@ -21,6 +21,11 @@ import Cartography
     case imageFullView
 }
 
+@objc public enum CanvasViewControllerEditMode : UInt {
+    case draw
+    case emoji
+}
+
 class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     var delegate : CanvasViewControllerDelegate?
@@ -194,14 +199,16 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     // MARK - actions
     
     func selectDrawTool() {
-        canvas.mode = .draw
-        updateButtonSelection()
+        select(editMode: .draw, animated: true)
+//        canvas.mode = .draw
+//        updateButtonSelection()
     }
     
     func openEmojiKeyboard() {
-        canvas.mode = .edit
-        updateButtonSelection()
-        showEmojiKeyboard()
+        select(editMode: .emoji, animated: true)
+//        canvas.mode = .edit
+//        updateButtonSelection()
+//        showEmojiKeyboard()
     }
     
     func exportImage() {
@@ -217,7 +224,21 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-        hideEmojiKeyboard()
+        hideEmojiKeyboard(animated: true)
+    }
+    
+    func select(editMode: CanvasViewControllerEditMode, animated: Bool) {
+        
+        switch editMode {
+        case .draw:
+            hideEmojiKeyboard(animated: animated)
+            canvas.mode = .draw
+            updateButtonSelection()
+        case .emoji:
+            canvas.mode = .edit
+            updateButtonSelection()
+            showEmojiKeyboard(animated: animated)
+        }
     }
 }
 
@@ -233,7 +254,7 @@ extension CanvasViewController : CanvasDelegate {
 
 extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     
-    func showEmojiKeyboard() {
+    func showEmojiKeyboard(animated: Bool) {
         guard !isEmojiKeyboardInTransition else { return }
         
         emojiKeyboardViewController.willMove(toParentViewController: self)
@@ -248,42 +269,53 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
         
         addChildViewController(emojiKeyboardViewController)
         
-        isEmojiKeyboardInTransition = true
-        
-        let offscreen = CGAffineTransform(translationX: 0, y: KeyboardHeight.current)
-        emojiKeyboardViewController.view.transform = offscreen
-        view.layoutIfNeeded()
-        
-        UIView.animate(withDuration: 0.25,
-                       delay: 0,
-                       options: UIViewAnimationOptions(rawValue: UInt(7)),
-                       animations: {
-                        self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
-            },
-                       completion: { (finished) in
-                        self.isEmojiKeyboardInTransition = false
-        })
+        if (animated) {
+            isEmojiKeyboardInTransition = true
+            
+            let offscreen = CGAffineTransform(translationX: 0, y: KeyboardHeight.current)
+            emojiKeyboardViewController.view.transform = offscreen
+            view.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.25,
+                           delay: 0,
+                           options: UIViewAnimationOptions(rawValue: UInt(7)),
+                           animations: {
+                            self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
+                },
+                           completion: { (finished) in
+                            self.isEmojiKeyboardInTransition = false
+            })
+        }
     }
     
-    func hideEmojiKeyboard() {
+    func hideEmojiKeyboard(animated: Bool) {
         guard childViewControllers.contains(emojiKeyboardViewController), !isEmojiKeyboardInTransition else { return }
         
         emojiKeyboardViewController.willMove(toParentViewController: nil)
         
-        isEmojiKeyboardInTransition = true
+        let removeEmojiKeyboardViewController = {
+            self.emojiKeyboardViewController.view.removeFromSuperview()
+            self.emojiKeyboardViewController.removeFromParentViewController()
+        }
         
-        UIView.animate(withDuration: 0.25,
-                       delay: 0,
-                       options: UIViewAnimationOptions(rawValue: UInt(7)),
-                       animations: {
-                        let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
-                        self.emojiKeyboardViewController.view.transform = offscreen
-            },
-                       completion: { (finished) in
-                        self.emojiKeyboardViewController.view.removeFromSuperview()
-                        self.emojiKeyboardViewController.removeFromParentViewController()
-                        self.isEmojiKeyboardInTransition = false
-        })
+        if (animated) {
+            
+            isEmojiKeyboardInTransition = true
+            
+            UIView.animate(withDuration: 0.25,
+                           delay: 0,
+                           options: UIViewAnimationOptions(rawValue: UInt(7)),
+                           animations: {
+                            let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
+                            self.emojiKeyboardViewController.view.transform = offscreen
+                },
+                           completion: { (finished) in
+                            self.isEmojiKeyboardInTransition = false
+                            removeEmojiKeyboardViewController()
+            })
+        } else {
+            removeEmojiKeyboardViewController()
+        }
     }
     
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController) {
@@ -305,7 +337,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
             canvas.insert(image: image, at: canvas.center)
         }
                 
-        hideEmojiKeyboard()
+        hideEmojiKeyboard(animated: true)
     }
 }
 

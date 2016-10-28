@@ -24,6 +24,7 @@
 @import AVKit;
 @import AVFoundation;
 #import "WAZUIMagicIOS.h"
+#import "Wire-Swift.h"
 
 #import "UIColor+WAZExtensions.h"
 #import "FLAnimatedImage.h"
@@ -40,9 +41,7 @@ static const CGFloat TopBarHeight = 64;
 static const CGFloat BottomBarMinHeight = 88;
 static const CGFloat MarginInset = 24;
 
-
-
-@interface ConfirmAssetViewController ()
+@interface ConfirmAssetViewController () <CanvasViewControllerDelegate>
 
 @property (nonatomic) UIView *topPanel;
 @property (nonatomic) UIView *bottomPanel;
@@ -58,14 +57,9 @@ static const CGFloat MarginInset = 24;
 
 @property (nonatomic) NSLayoutConstraint *topBarHeightConstraint;
 
-@property (nonatomic) IconButton *editButton;
-
-@end
-
-
-@interface ZMAssetMetaDataEncoder (Test)
-
-+ (CGSize)imageSizeForImageData:(NSData *)imageData;
+@property (nonatomic) ImageToolbarView *imageToolbarViewInsideImage;
+@property (nonatomic) ImageToolbarView *imageToolbarView;
+@property (nonatomic) UIView *imageToolbarSeparatorView;
 
 @end
 
@@ -84,7 +78,6 @@ static const CGFloat MarginInset = 24;
     }
     [self createTopPanel];
     [self createBottomPanel];
-    [self createEditButton];
     [self createConstraints];
     
     [[CASStyler defaultStyler] styleItem:self];
@@ -108,11 +101,16 @@ static const CGFloat MarginInset = 24;
     return NO;
 }
 
-- (void)testImageData:(NSData *)data
+- (BOOL)imageToolbarFitsInsideImage
 {
-    CGSize size = [ZMAssetMetaDataEncoder imageSizeForImageData:data];
+    CGSize imageSize = [(UIImage *)self.image size];
     
-    NSLog(@"size: %@", NSStringFromCGSize(size));
+    return imageSize.width > 300 && imageSize.height > 300;
+}
+
+- (BOOL)showEditingOptions
+{
+    return self.videoURL == nil;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -135,9 +133,19 @@ static const CGFloat MarginInset = 24;
     self.imagePreviewView = [[FLAnimatedImageView alloc] init];
     self.imagePreviewView.translatesAutoresizingMaskIntoConstraints = NO;
     self.imagePreviewView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imagePreviewView.userInteractionEnabled = YES;
     [self.view addSubview:self.imagePreviewView];
     
     [self.imagePreviewView setMediaAsset:self.image];
+    
+    if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
+        self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
+        self.imageToolbarViewInsideImage.translatesAutoresizingMaskIntoConstraints = NO;
+        self.imageToolbarViewInsideImage.isPlacedOnImage = YES;
+        [self.imageToolbarViewInsideImage.sketchButton addTarget:self action:@selector(sketchEdit:) forControlEvents:UIControlEventTouchUpInside];
+        [self.imageToolbarViewInsideImage.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
+        [self.imagePreviewView addSubview:self.imageToolbarViewInsideImage];
+    }
 }
 
 - (void)createVideoPanel
@@ -164,33 +172,24 @@ static const CGFloat MarginInset = 24;
     [self.topPanel addSubview:self.titleLabel];
 }
 
-- (void)createEditButton
-{
-    self.editButton = [IconButton iconButtonCircularLight];
-    [self.editButton setTitleImageSpacing:12 horizontalMargin:12];
-    
-    NSString *editButtonTitle = NSLocalizedString(@"image.add_sketch", @"").uppercaseString;
-    [self.editButton setTitle:editButtonTitle forState:UIControlStateNormal];
-    
-    [self.editButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    self.editButton.accessibilityIdentifier = @"editNotConfirmedImageButton";
-    
-    [self.view addSubview:self.editButton];
-    [self.editButton addTarget:self action:@selector(editImage:) forControlEvents:UIControlEventTouchUpInside];
-    self.editButton.hidden = ! self.isEditButtonVisible;
-}
-
-- (void)setEditButtonVisible:(BOOL)editButtonVisible
-{
-    _editButtonVisible = editButtonVisible;
-    self.editButton.hidden = ! editButtonVisible;
-}
-
 - (void)createBottomPanel
 {
     self.bottomPanel = [[UIView alloc] init];
     self.bottomPanel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.bottomPanel];
+    
+    if ([self showEditingOptions] && ![self imageToolbarFitsInsideImage]) {
+        self.imageToolbarView = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
+        self.imageToolbarView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.imageToolbarView.sketchButton addTarget:self action:@selector(sketchEdit:) forControlEvents:UIControlEventTouchUpInside];
+        [self.imageToolbarView.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
+        [self.bottomPanel addSubview:self.imageToolbarView];
+        
+        self.imageToolbarSeparatorView = [[UIView alloc] init];
+        self.imageToolbarSeparatorView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.imageToolbarSeparatorView.cas_styleClass = @"separator";
+        [self.imageToolbarView addSubview:self.imageToolbarSeparatorView];
+    }
     
     self.confirmButtonsContainer = [[UIView alloc] init];
     self.confirmButtonsContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -221,14 +220,25 @@ static const CGFloat MarginInset = 24;
     
     // Bottom panel
     [self.bottomPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.bottomPanel autoSetDimension:ALDimensionHeight toSize:BottomBarMinHeight];
+    
+    [self.imageToolbarView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
+    
+    [self.imageToolbarSeparatorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.imageToolbarSeparatorView autoSetDimension:ALDimensionHeight toSize:0.5];
     
     // Accept/Reject panel
-    [self.confirmButtonsContainer autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bottomPanel];
+    [self.confirmButtonsContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.confirmButtonsContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.confirmButtonsContainer autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.bottomPanel];
+    [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.confirmButtonsContainer autoSetDimension:ALDimensionHeight toSize:BottomBarMinHeight];
+    
+    if (self.imageToolbarView) {
+        [self.confirmButtonsContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.imageToolbarView withOffset:0];
+    } else {
+        [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    }
     
     [self.acceptImageButton autoSetDimension:ALDimensionHeight toSize:40];
     [self.acceptImageButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
@@ -248,14 +258,13 @@ static const CGFloat MarginInset = 24;
     [self.acceptImageButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.rejectImageButton];
     
     // Preview image
-    [self.imagePreviewView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel];
-    [self.imagePreviewView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomPanel];
-    [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-
-    [self.editButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.editButton autoSetDimension:ALDimensionHeight toSize:32];
-    [self.editButton autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view withOffset:-112];
+    CGSize imageSize = [(UIImage *)self.image size];
+    [self.imagePreviewView autoCenterInSuperview];
+    [self.imagePreviewView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.imagePreviewView autoPinEdge:ALEdgeBottom  toEdge:ALEdgeTop ofView:self.bottomPanel withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+    [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.imagePreviewView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imagePreviewView withMultiplier: imageSize.height / imageSize.width];
 
     [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
@@ -264,6 +273,10 @@ static const CGFloat MarginInset = 24;
     [self.playerViewController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomPanel];
     
     self.topBarHeightConstraint.constant = (self.titleLabel.text != nil) ? TopBarHeight : 0;
+    
+    // Image toolbar
+    [self.imageToolbarViewInsideImage autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.imageToolbarViewInsideImage autoSetDimension:ALDimensionHeight toSize:60];
 }
 
 #pragma mark - Actions
@@ -271,7 +284,7 @@ static const CGFloat MarginInset = 24;
 - (IBAction)acceptImage:(id)sender
 {
     if (self.onConfirm) {
-        self.onConfirm();
+        self.onConfirm(nil);
     }
 }
 
@@ -282,10 +295,37 @@ static const CGFloat MarginInset = 24;
     }
 }
 
-- (IBAction)editImage:(id)sender
+- (IBAction)sketchEdit:(id)sender
 {
-    if (self.onEdit) {
-        self.onEdit();
+    [self openSketchInEditMode:CanvasViewControllerEditModeDraw];
+}
+
+- (IBAction)emojiEdit:(id)sender
+{
+    [self openSketchInEditMode:CanvasViewControllerEditModeEmoji];
+}
+
+- (void)openSketchInEditMode:(CanvasViewControllerEditMode)editMode
+{
+    CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
+    canvasViewController.sketchImage = (UIImage *)self.image;
+    canvasViewController.delegate = self;
+    canvasViewController.title = self.previewTitle;
+    [canvasViewController selectWithEditMode:editMode animated:NO];
+    
+    UIViewController *navigationController = canvasViewController.wrapInNavigationController;
+    navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+#pragma mark - CanvasViewControllerDelegate
+
+
+- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
+{
+    if (self.onConfirm) {
+        self.onConfirm(image);
     }
 }
 

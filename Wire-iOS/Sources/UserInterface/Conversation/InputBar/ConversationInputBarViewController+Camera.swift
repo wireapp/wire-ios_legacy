@@ -76,8 +76,8 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             confirmVideoViewController.videoURL = videoURL as URL!
             confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
-            confirmVideoViewController.isEditButtonVisible = false
-            confirmVideoViewController.onConfirm = { [unowned self] in
+//            confirmVideoViewController.isEditButtonVisible = false
+            confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
                 Analytics.shared()?.tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
                 self.uploadFile(at: videoURL as URL!)
@@ -126,46 +126,32 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         let image = UIImage(data: imageData as Data)
         
         let confirmImageViewController = ConfirmAssetViewController()
-        confirmImageViewController.testImageData(imageData as Data!)
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.image = image
         confirmImageViewController.previewTitle = self.conversation.displayName.uppercased()
-        confirmImageViewController.isEditButtonVisible = true
-        confirmImageViewController.onConfirm = { [unowned self] in
+        confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
             self.dismiss(animated: true, completion: .none)
             
-            Analytics.shared()?.tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
-                
-            self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
             if metadata.source == .camera {
                 let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
                 UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
             }
+            
+            if let editedImage = editedImage, let editedImageData = UIImagePNGRepresentation(editedImage) {
+                metadata.source = .sketch
+                metadata.sketchSource = .cameraGallery
+                self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
+            } else {
+                self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
+            }
+            
+            Analytics.shared()?.tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
         }
         
         confirmImageViewController.onCancel = { [unowned self] in
             self.dismiss(animated: true) {
                 self.mode = .camera
                 self.inputBar.textView.becomeFirstResponder()
-            }
-        }
-        
-        confirmImageViewController.onEdit = { [unowned self] in
-            self.dismiss(animated: true) {
-                delay(0.01) {
-                    self.hideCameraKeyboardViewController {
-                        let canvasViewController = CanvasViewController()
-                        canvasViewController.delegate = self
-                        canvasViewController.sketchImage = image
-                        canvasViewController.source = .cameraGallery
-                        canvasViewController.title = "image.edit_image".localized.uppercased()
-                        
-                        let navigationController = canvasViewController.wrapInNavigationController
-                        navigationController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-                        
-                        self.present(navigationController, animated: true, completion: .none)
-                    }
-                }
             }
         }
         

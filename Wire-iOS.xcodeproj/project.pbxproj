@@ -50,6 +50,7 @@
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
 		165B47ED1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */; };
 		165EA0B81DB67B94008ECC60 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165EA0B71DB67B94008ECC60 /* CanvasViewController.swift */; };
+		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		1670AFE81B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1670AFE71B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
 		16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A1C1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift */; };
@@ -929,6 +930,7 @@
 		165B47EB1BF23D6C00C46EFE /* PhoneInvitationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneInvitationStepViewController.h; sourceTree = "<group>"; };
 		165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneInvitationStepViewController.m; sourceTree = "<group>"; };
 		165EA0B71DB67B94008ECC60 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
+		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		1670AFE61B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceChannelCollectionViewLayout.h; sourceTree = "<group>"; };
 		1670AFE71B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelCollectionViewLayout.m; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
@@ -3089,6 +3091,7 @@
 				BFA25DC01D9976B60086DEBD /* LinkInteractionTextView.swift */,
 				871BC1DA1D34F8F800DF0793 /* UpsideDownTableView.h */,
 				871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */,
+				166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */,
 				871BC1DC1D34F8F800DF0793 /* UserImageView */,
 				871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */,
 				871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */,
@@ -5718,6 +5721,7 @@
 				871BC00B1D34F56300DF0793 /* Analytics+CallEvents.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
 				87DCF4E11D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m in Sources */,
+				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
 				871BC0011D34F56300DF0793 /* AnalyticsConversationVerifiedObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

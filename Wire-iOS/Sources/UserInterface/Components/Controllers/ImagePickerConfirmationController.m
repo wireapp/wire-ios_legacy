@@ -41,7 +41,7 @@
 
 @end
 
-@interface ImagePickerConfirmationController (CanvasViewControllerDelegate) <CanvasViewControllerDelegate>
+@interface ImagePickerConfirmationController (CanvasViewControllerDelegate)
 @end
 
 @implementation ImagePickerConfirmationController
@@ -58,7 +58,6 @@
             confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             confirmImageViewController.image = image;
             confirmImageViewController.previewTitle = self.previewTitle;
-            confirmImageViewController.editButtonVisible = YES;
             
             if (IS_IPAD) {
                 [confirmImageViewController.view setPopoverBorderEnabled:YES];
@@ -68,32 +67,30 @@
                 [picker dismissViewControllerAnimated:YES completion:nil];
             };
             
-            confirmImageViewController.onConfirm = ^{
+            confirmImageViewController.onConfirm = ^(UIImage *editedImage){
                 @strongify(self);
                 
-                [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-                    if (imageData != nil) {
-                        ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                        metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
-                        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                            metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                if (editedImage != nil) {
+                    ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                    metadata.source = ConversationMediaPictureSourceSketch;
+                    metadata.sketchSource = ConversationMediaSketchSourceCameraGallery;
+                    metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+                    
+                    self.imagePickedBlock(UIImagePNGRepresentation(editedImage), metadata);
+                } else {
+                    [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
+                        if (imageData != nil) {
+                            ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                            metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
+                            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                                metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                            }
+                            metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+                            
+                            self.imagePickedBlock(imageData, metadata);
                         }
-                        metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-                        
-                        self.imagePickedBlock(imageData, metadata);
-                    }
-                }];
-            };
-            
-            confirmImageViewController.onEdit = ^{
-                [picker dismissViewControllerAnimated:YES completion:nil];
-                
-                CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
-                canvasViewController.title = NSLocalizedString(@"image.edit_image", @"").uppercaseString;
-                canvasViewController.delegate = self;
-                canvasViewController.sketchImage = image;
-                
-                [picker presentViewController:canvasViewController.wrapInNavigationController animated:YES completion:nil];
+                    }];
+                }
             };
             
             [picker presentViewController:confirmImageViewController animated:YES completion:nil];
@@ -123,24 +120,5 @@
     return (NSString *)CFBridgingRelease(UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,(__bridge CFStringRef)extension , NULL));
 }
 
-
-@end
-
-@implementation ImagePickerConfirmationController (CanvasViewControllerDelegate)
-
-- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
-{
-    @weakify(self);
-    [self.presentingPickerController dismissViewControllerAnimated:YES completion:^{
-        @strongify(self);
-        
-        ImageMetadata *metadata = [[ImageMetadata alloc] init];
-        metadata.source = ConversationMediaPictureSourceSketch;
-        metadata.sketchSource = ConversationMediaSketchSourceCameraGallery;
-        metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-        
-        self.imagePickedBlock(UIImagePNGRepresentation(image), metadata);
-    }];
-}
 
 @end
