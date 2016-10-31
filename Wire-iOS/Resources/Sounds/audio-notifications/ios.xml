@@ -182,7 +182,7 @@
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
-			<integer>100</integer>
+			<integer>50</integer>
 		</dict>
 		<key>new_message</key>
 		<dict>
@@ -212,7 +212,7 @@
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
-			<integer>100</integer>
+			<integer>50</integer>
 		</dict>
 		<key>ping_from_me</key>
 		<dict>

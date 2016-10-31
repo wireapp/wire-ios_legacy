@@ -82,7 +82,10 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableAVS                 : UserDefaultDisableAVS,
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
-        SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled
+        SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
+        SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
+        SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
+        SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
@@ -206,7 +209,7 @@ class SettingsPropertyFactory {
                 return .bool(value: self.userSession.isNotificationContentHidden)
             }
             
-            let setAction : SetAction = { (porperty: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .bool(let boolValue):
                         self.userSession.performChanges {
@@ -233,7 +236,7 @@ class SettingsPropertyFactory {
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
-            
+
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)

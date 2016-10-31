@@ -485,6 +485,24 @@
 "self.settings.popular_demand.send_button.title" = "Send Button";
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 
+// Open in
+"self.settings.external_apps.header" = "Open Links In";
+
+"self.settings.link_options.twitter.title" = "Tweets";
+"self.settings.link_options.maps.title" = "Locations";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sound Alerts";
 "self.settings.sound_menu.no_sounds.title" = "None";
