@@ -11,7 +11,8 @@ import Cartography
 
 
 @objc enum ImageToolbarConfiguration : UInt {
-    case conversation
+    case cell
+    case compactCell
     case preview
 }
 
@@ -25,22 +26,26 @@ class ImageToolbarView: UIView {
     let expandButton = IconButton()
     var buttons : [IconButton] = []
     
+    var configuration : ImageToolbarConfiguration {
+        didSet {
+            guard oldValue != configuration else { return }
+            
+            updateButtonConfiguration()
+        }
+    }
+    
     var isPlacedOnImage : Bool = false {
         didSet {
             gradientLayer.isHidden = !isPlacedOnImage
             cas_styleClass = isPlacedOnImage ? "on-image" : "on-background"
+            buttons.forEach(CASStyler.default().styleItem)
         }
     }
     
     @objc public init(withConfiguraton configuration: ImageToolbarConfiguration) {
-        super.init(frame: CGRect.zero)
+        self.configuration = configuration
         
-        switch configuration {
-        case .conversation:
-            buttons = [sketchButton, emojiButton, textButton, expandButton]
-        case .preview:
-            buttons = [sketchButton, emojiButton, textButton]
-        }
+        super.init(frame: CGRect.zero)
         
         cas_styleClass = "on-background"
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.init(white: 0, alpha: 0.40).cgColor]
@@ -48,10 +53,17 @@ class ImageToolbarView: UIView {
         layer.addSublayer(gradientLayer)
         
         addSubview(buttonContainer)
-        buttons.forEach(buttonContainer.addSubview)
         
-        createConstrains()
-        configureButtons()
+        constrain(self, buttonContainer) { container, buttonContainer in
+            buttonContainer.centerX == container.centerX
+            buttonContainer.top == container.top
+            buttonContainer.bottom == container.bottom
+            buttonContainer.left >= container.left
+            buttonContainer.right <= container.right
+        }
+        
+        setupButtons()
+        updateButtonConfiguration()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,29 +76,42 @@ class ImageToolbarView: UIView {
         gradientLayer.frame = bounds
     }
     
-    func createConstrains() {
-        constrain(self, buttonContainer) { container, buttonContainer in
-            buttonContainer.centerX == container.centerX
-            buttonContainer.top == container.top
-            buttonContainer.bottom == container.bottom
+    func updateButtonConfiguration() {
+        buttons.forEach({ $0.removeFromSuperview() })
+        
+        switch configuration {
+        case .cell:
+            buttons = [sketchButton, emojiButton, textButton, expandButton]
+        case .compactCell:
+            buttons = [sketchButton, expandButton]
+        case .preview:
+            buttons = [sketchButton, emojiButton, textButton]
         }
+        
+        buttons.forEach(buttonContainer.addSubview)
+        
+        createButtonConstraints()
+    }
+    
+    func createButtonConstraints() {
+        let spacing : CGFloat = 16
         
         if let firstButton = buttons.first {
             constrain(buttonContainer, firstButton) { container, firstButton in
-                firstButton.left == container.left
+                firstButton.left == container.left + spacing
             }
         }
         
         if let lastButton = buttons.last {
             constrain(buttonContainer, lastButton) { container, lastButton in
-                lastButton.right == container.right
+                lastButton.right == container.right - spacing
             }
         }
         
         for button in buttons {
             constrain(buttonContainer, button) { container, button in
-                button.width == 48
-                button.height == 48
+                button.width == 16
+                button.height == 16
                 button.centerY == container.centerY
             }
         }
@@ -96,13 +121,13 @@ class ImageToolbarView: UIView {
             let button = buttons[i]
             
             constrain(self, button, previousButton) { container, button, previousButton in
-                button.left == previousButton.right
+                button.left == previousButton.right + spacing * 2
             }
         }
     }
     
-    func configureButtons() {
-        let hitAreaPadding = CGSize(width: 0, height: 0)
+    func setupButtons() {
+        let hitAreaPadding = CGSize(width: 16, height: 16)
         
         sketchButton.setIcon(.brush, with: .tiny, for: .normal)
         sketchButton.hitAreaPadding = hitAreaPadding

@@ -814,6 +814,10 @@ ImageMessageCell {
     imageViewContainer: @{
         backgroundColor: $color-placeholder-background;
     }
+    
+    fullImageView: @{
+        backgroundColor: $color-background;
+    }
 
     obfuscationView: @{
         backgroundColor: $color-ephemeral;

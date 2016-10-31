@@ -38,7 +38,9 @@ typedef NS_ENUM(NSUInteger, ConversationCellAction) {
     ConversationCellActionPresent,
     ConversationCellActionSave,
     ConversationCellActionEdit,
-    ConversationCellActionSketch,
+    ConversationCellActionSketchDraw,
+    ConversationCellActionSketchEmoji,
+    ConversationCellActionSketchText,
     ConversationCellActionLike
 };
 

@@ -243,7 +243,8 @@
         CFRelease(source);
         return nil;
     }
-    UIImage *image = [UIImage imageWithCGImage:scaledImage];
+
+    UIImage *image = [UIImage imageWithCGImage:scaledImage scale:2.0 orientation:UIImageOrientationUp];
     
     CFRelease(source);
     CFRelease(scaledImage);

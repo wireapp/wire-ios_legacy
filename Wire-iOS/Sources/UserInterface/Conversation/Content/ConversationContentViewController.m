@@ -100,7 +100,7 @@
 
 
 
-@interface ConversationContentViewController () <FullscreenImageViewControllerDelegate, CanvasViewControllerDelegate, UIDocumentInteractionControllerDelegate>
+@interface ConversationContentViewController () <CanvasViewControllerDelegate, UIDocumentInteractionControllerDelegate>
 
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, strong) NSMutableDictionary *cellLayoutPropertiesCache;
@@ -512,7 +512,6 @@
     }
     
     FullscreenImageViewController *fullscreenImageViewController = [[FullscreenImageViewController alloc] initWithMessage:message];
-    fullscreenImageViewController.delegate = self;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         fullscreenImageViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         fullscreenImageViewController.snapshotBackgroundView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:YES];
@@ -535,20 +534,15 @@
     }];
 }
 
-- (void)fullscreenImageViewController:(FullscreenImageViewController *)controller wantsEditImageMessage:(id<ZMConversationMessage>)message
+- (void)openSketchForMessage:(id<ZMConversationMessage>)message inEditMode:(CanvasViewControllerEditMode)editMode
 {
-    [controller dismissViewControllerAnimated:NO completion:nil];
-
-    [self openSketchForMessage:message];
-}
-
-- (void)openSketchForMessage:(id<ZMConversationMessage>)message
-{
-    CanvasViewController *viewController = [[CanvasViewController alloc] init];
-    viewController.title = message.conversation.displayName.uppercaseString;
-    viewController.delegate = self;
-    viewController.sketchImage = [UIImage imageWithData:message.imageMessageData.imageData];
-    [self.parentViewController presentViewController:viewController.wrapInNavigationController animated:YES completion:nil];
+    CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
+    canvasViewController.sketchImage = [UIImage imageWithData:message.imageMessageData.imageData];
+    canvasViewController.delegate = self;
+    canvasViewController.title = message.conversation.displayName.uppercaseString;
+    [canvasViewController selectWithEditMode:editMode animated:NO];
+    
+    [self presentViewController:canvasViewController.wrapInNavigationController animated:YES completion:nil];
 }
 
 - (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
@@ -825,9 +819,19 @@
             [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
         }
             break;
-        case ConversationCellActionSketch:
+        case ConversationCellActionSketchDraw:
         {
-            [self openSketchForMessage:cell.message];
+            [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
+        }
+            break;
+        case ConversationCellActionSketchEmoji:
+        {
+            [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
+        }
+            break;
+        case ConversationCellActionSketchText:
+        {
+            // Not implemented yet
         }
             break;
         case ConversationCellActionLike:

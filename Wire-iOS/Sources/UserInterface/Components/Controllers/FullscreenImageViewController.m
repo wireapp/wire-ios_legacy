@@ -325,13 +325,6 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)editImageTapped:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(fullscreenImageViewController:wantsEditImageMessage:)]) {
-        [self.delegate fullscreenImageViewController:self wantsEditImageMessage:self.message];
-    }
-}
-
 - (void)updateZoom
 {
     [self updateZoomWithSize:self.view.bounds.size];
