@@ -81,11 +81,11 @@ class ImageToolbarView: UIView {
         
         switch configuration {
         case .cell:
-            buttons = [sketchButton, emojiButton, textButton, expandButton]
+            buttons = [sketchButton, emojiButton, expandButton]
         case .compactCell:
             buttons = [sketchButton, expandButton]
         case .preview:
-            buttons = [sketchButton, emojiButton, textButton]
+            buttons = [sketchButton, emojiButton]
         }
         
         buttons.forEach(buttonContainer.addSubview)
