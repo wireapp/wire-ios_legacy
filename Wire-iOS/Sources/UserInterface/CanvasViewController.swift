@@ -79,6 +79,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         canvas.delegate = self
         
         emojiKeyboardViewController.delegate = self
+        emojiKeyboardViewController.backspaceHidden = true
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
