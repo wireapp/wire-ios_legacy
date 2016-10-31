@@ -187,6 +187,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
+    self.fullImageView.hidden = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
 
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
@@ -378,12 +379,13 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     if (image != nil) {
         self.loadingView.hidden = YES;
         [self.loadingView stopProgressAnimation];
+        self.fullImageView.hidden = NO;
         [self.fullImageView setMediaAsset:image];
-        [self showImageView:self.fullImageView];
         [self updateSavableImage];
     } else {
         self.savableImage = nil;
         [self.fullImageView setMediaAsset:nil];
+        self.fullImageView.hidden = YES;
     }
 }
 
@@ -414,11 +416,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         changeBlock();
     }
     
-}
-
-- (void)showImageView:(UIView *)imageView
-{
-    self.fullImageView.hidden = imageView != self.fullImageView;
 }
 
 - (void)recycleImage

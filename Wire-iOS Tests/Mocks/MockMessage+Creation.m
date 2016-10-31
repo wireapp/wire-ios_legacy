@@ -41,7 +41,7 @@
     MockMessage *message = [[MockMessage alloc] init];
     MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.conversation = (ZMConversation *)conversation;
-    message.serverTimestamp = [NSDate date];
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
     message.sender = (id)[MockUser mockSelfUser];
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
     MockTextMessageData *textMessageData = [[MockTextMessageData alloc] init];
@@ -57,7 +57,7 @@
     
     MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.conversation = (ZMConversation *)conversation;
-    message.serverTimestamp = [NSDate date];
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
     message.sender = (id)[MockUser mockSelfUser];
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
     message.knockMessageData = [[MockKnockMessageData alloc] init];
@@ -71,7 +71,7 @@
     
     MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.conversation = (ZMConversation *)conversation;
-    message.serverTimestamp = [NSDate date];
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
     message.sender = (id)[MockUser mockSelfUser];
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
     message.imageMessageData = [[MockImageMessageData alloc] init];
@@ -112,7 +112,7 @@
     
     MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.conversation = (ZMConversation *)conversation;
-    message.serverTimestamp = [NSDate date];
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
     
     message.sender = (id)[MockUser mockSelfUser];
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
@@ -127,7 +127,7 @@
     
     MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.conversation = (ZMConversation *)conversation;
-    message.serverTimestamp = [NSDate date];
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
     
     message.sender = (id)[MockUser mockSelfUser];
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];

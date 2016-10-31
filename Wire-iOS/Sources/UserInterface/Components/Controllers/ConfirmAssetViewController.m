@@ -105,7 +105,7 @@ static const CGFloat MarginInset = 24;
 {
     CGSize imageSize = [(UIImage *)self.image size];
     
-    return imageSize.width > 300 && imageSize.height > 300;
+    return imageSize.width > 192 && imageSize.height > 96;
 }
 
 - (BOOL)showEditingOptions
@@ -276,7 +276,7 @@ static const CGFloat MarginInset = 24;
     
     // Image toolbar
     [self.imageToolbarViewInsideImage autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.imageToolbarViewInsideImage autoSetDimension:ALDimensionHeight toSize:60];
+    [self.imageToolbarViewInsideImage autoSetDimension:ALDimensionHeight toSize:48];
 }
 
 #pragma mark - Actions
