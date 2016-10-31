@@ -76,7 +76,6 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             confirmVideoViewController.videoURL = videoURL as URL!
             confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
-//            confirmVideoViewController.isEditButtonVisible = false
             confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
                 Analytics.shared()?.tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
