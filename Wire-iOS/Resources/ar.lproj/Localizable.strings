@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "عطّله لتستخدم زر لوحة المفاتيح.";
 
 // Open in
-"self.settings.external_apps.header" = "تطبيقات خارجية";
+"self.settings.external_apps.header" = "فتح الروابط في";
 
 "self.settings.link_options.twitter.title" = "غرّد";
-"self.settings.link_options.maps.title" = "خرائط";
+"self.settings.link_options.maps.title" = "مواقع";
 "self.settings.link_options.browser.title" = "المُتصفّح";
 
 "open_link.twitter.option.default" = "سفاري / تويتر";

@@ -117,19 +117,19 @@
 				<key>zero</key>
 				<string/>
 				<key>one</key>
-				<string>and one more</string>
+				<string>وواحد آخر</string>
 				<key>few</key>
-				<string>and %d others</string>
+				<string>و %d آخرين</string>
 				<key>many</key>
-				<string>and %d others</string>
+				<string>و %d آخرين</string>
 				<key>other</key>
-				<string>and %d others</string>
+				<string>و %d آخرين</string>
 			</dict>
 		</dict>
 		<key>peoplepicker.suggested.knows_more</key>
 		<dict>
 			<key>NSStringLocalizedFormatKey</key>
-			<string>Knows %@ and %#@d_number_of_others@</string>
+			<string>يعرف %@ و %#@d_number_of_others@</string>
 			<key>d_number_of_others</key>
 			<dict>
 				<key>NSStringFormatSpecTypeKey</key>
@@ -137,17 +137,17 @@
 				<key>NSStringFormatValueTypeKey</key>
 				<string>d</string>
 				<key>few</key>
-				<string>%d others</string>
+				<string>%d آخرين</string>
 				<key>many</key>
-				<string>%d others</string>
+				<string>%d آخرين</string>
 				<key>other</key>
-				<string>%d others</string>
+				<string>%d آخرين</string>
 			</dict>
 		</dict>
         <key>content.system.people_started_using</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@d_number_of_others@ started using %#@d_new_devices@</string>
+            <string>%@ %#@d_number_of_others@ بدأ بإستخدام %#@d_new_devices@</string>
             <key>d_number_of_others</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -157,7 +157,7 @@
                 <key>one</key>
                 <string></string>
                 <key>other</key>
-                <string>and %d others</string>
+                <string>و %d آخرين</string>
             </dict>
             <key>d_new_devices</key>
             <dict>
@@ -168,7 +168,7 @@
                 <key>one</key>
                 <string>جهاز جديد</string>
                 <key>other</key>
-                <string>new devices</string>
+                <string>أجهزة جديدة</string>
             </dict>
         </dict>
         <key>content.system.new_devices</key>
@@ -184,7 +184,7 @@
                 <key>one</key>
                 <string>جهاز جديد</string>
                 <key>other</key>
-                <string>new devices</string>
+                <string>أجهزة جديدة</string>
             </dict>
         </dict>
 	</dict>
