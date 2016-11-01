@@ -19,6 +19,7 @@
 import UIKit
 import Canvas
 import Cartography
+import CocoaLumberjackSwift
 
 @objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
@@ -364,7 +365,7 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
             }
             picker.dismiss(animated: true, completion: nil)
         }) { (error) in
-            print("error: ", error)
+            DDLogError("error: \(error)")
         }
     }
     
