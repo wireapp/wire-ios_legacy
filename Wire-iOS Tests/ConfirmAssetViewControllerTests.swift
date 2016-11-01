@@ -46,7 +46,7 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     func testThatItRendersTheAssetViewControllerWithSmallImage() {
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
-        sut.previewTitle = "See Food"
+        sut.previewTitle = "Sea Food"
         verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
     }
 
