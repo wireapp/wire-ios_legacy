@@ -28,3 +28,4 @@ github "wireapp/wire-ios-data-model" "25.2.0"
 github "wireapp/wire-ios-request-strategy" "7.2.0"
 github "wireapp/wire-ios-message-strategy" "5.1.1"
 github "wireapp/wire-ios-sync-engine" "57.1.0"
+
