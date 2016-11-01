@@ -24,6 +24,8 @@
 
 @protocol MediaAsset <NSObject>
 
+@property (nonatomic, readonly) CGSize size;
+
 - (NSData *)data;
 - (BOOL)isGIF;
 

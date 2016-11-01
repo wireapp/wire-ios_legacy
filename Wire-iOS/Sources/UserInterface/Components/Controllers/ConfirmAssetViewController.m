@@ -103,9 +103,7 @@ static const CGFloat MarginInset = 24;
 
 - (BOOL)imageToolbarFitsInsideImage
 {
-    CGSize imageSize = [(UIImage *)self.image size];
-    
-    return imageSize.width > 192 && imageSize.height > 96;
+    return self.image.size.width > 192 && self.image.size.height > 96;
 }
 
 - (BOOL)showEditingOptions
@@ -258,7 +256,7 @@ static const CGFloat MarginInset = 24;
     [self.acceptImageButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.rejectImageButton];
     
     // Preview image
-    CGSize imageSize = [(UIImage *)self.image size];
+    CGSize imageSize = self.image.size;
     [self.imagePreviewView autoCenterInSuperview];
     [self.imagePreviewView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.imagePreviewView autoPinEdge:ALEdgeBottom  toEdge:ALEdgeTop ofView:self.bottomPanel withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
@@ -307,6 +305,10 @@ static const CGFloat MarginInset = 24;
 
 - (void)openSketchInEditMode:(CanvasViewControllerEditMode)editMode
 {
+    if (![self.image isKindOfClass:UIImage.class]) {
+        return;
+    }
+    
     CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
     canvasViewController.sketchImage = (UIImage *)self.image;
     canvasViewController.delegate = self;
