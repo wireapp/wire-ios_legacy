@@ -28,7 +28,6 @@ import Cartography
 
 class ImageToolbarView: UIView {
     
-    let gradientLayer = CAGradientLayer()
     let buttonContainer = UIView()
     let sketchButton = IconButton()
     let emojiButton = IconButton()
@@ -46,7 +45,7 @@ class ImageToolbarView: UIView {
     
     var isPlacedOnImage : Bool = false {
         didSet {
-            gradientLayer.isHidden = !isPlacedOnImage
+            backgroundColor = isPlacedOnImage ? UIColor(white: 0, alpha: 0.40) : UIColor.clear
             cas_styleClass = isPlacedOnImage ? "on-image" : "on-background"
             buttons.forEach(CASStyler.default().styleItem)
         }
@@ -58,10 +57,6 @@ class ImageToolbarView: UIView {
         super.init(frame: CGRect.zero)
         
         cas_styleClass = "on-background"
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.init(white: 0, alpha: 0.40).cgColor]
-        gradientLayer.isHidden = true
-        layer.addSublayer(gradientLayer)
-        
         addSubview(buttonContainer)
         
         constrain(self, buttonContainer) { container, buttonContainer in
@@ -78,12 +73,6 @@ class ImageToolbarView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        gradientLayer.frame = bounds
     }
     
     func updateButtonConfiguration() {
