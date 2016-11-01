@@ -85,7 +85,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         
-        [canvas, hintLabel, hintImageView, toolbar, separatorLine].forEach(view.addSubview)
+        [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
         
         if sketchImage != nil {
             hideHint()
@@ -159,6 +159,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
                                               UIColor.cas_color(withHex: "#dba3fe"),
                                               UIColor.cas_color(withHex: "#a3a3a3")]
         
+        colorPickerController.view.addSubview(separatorLine)
         colorPickerController.delegate = self
         colorPickerController.willMove(toParentViewController: self)
         view.addSubview(colorPickerController.view)
@@ -174,8 +175,8 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
             colorPicker.height == 48
             
             separatorLine.top == colorPicker.bottom
-            separatorLine.left == container.left
-            separatorLine.right == container.right
+            separatorLine.left == colorPicker.left
+            separatorLine.right == colorPicker.right
             separatorLine.height == 0.5
             
             canvas.top == container.top
@@ -198,6 +199,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     func updateButtonSelection() {
         drawButton.isSelected = canvas.mode == .draw
+        colorPickerController.view.isHidden = canvas.mode != .draw
     }
     
     func hideHint() {
