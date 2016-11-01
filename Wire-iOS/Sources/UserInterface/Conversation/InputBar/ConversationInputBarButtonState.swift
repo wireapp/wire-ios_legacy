@@ -29,11 +29,11 @@ public final class ConversationInputBarButtonState: NSObject {
     }
 
     public var hourglassButtonHidden: Bool {
-        return hasText || conversationType != .oneOnOne || editing || ephemeral || disableEphemeralSending
+        return hasText || editing || ephemeral || disableEphemeralSending
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return hasText || conversationType != .oneOnOne || editing || !ephemeral || disableEphemeralSending
+        return hasText || editing || !ephemeral || disableEphemeralSending
     }
 
     private var hasText: Bool {
