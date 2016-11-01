@@ -336,15 +336,8 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         
         let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 72)]
-        let attributedEmoji = NSAttributedString(string: emoji, attributes: attributes)
-        let size = attributedEmoji.size()
-        let rect = CGRect(origin: CGPoint.zero, size: size)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0);
-        attributedEmoji.draw(in: rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
         
-        if let image = image?.imageWithAlphaTrimmed {
+        if let image = emoji.image(renderedWithAttributes: attributes)?.imageWithAlphaTrimmed {
             canvas.insert(image: image, at: canvas.center)
         }
                 
