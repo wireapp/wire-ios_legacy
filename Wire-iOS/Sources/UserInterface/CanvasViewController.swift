@@ -114,7 +114,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func configureButtons() {
-        let hitAreaPadding = CGSize(width: 5, height: 5)
+        let hitAreaPadding = CGSize(width: 16, height: 16)
         
         sendButton.setIcon(.send, with: .tiny, for: .normal)
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
