@@ -74,9 +74,6 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
-        canvas.backgroundColor = .white
         canvas.delegate = self
         
         emojiKeyboardViewController.delegate = self

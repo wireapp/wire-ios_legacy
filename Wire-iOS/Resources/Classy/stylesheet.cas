@@ -321,6 +321,10 @@ BrowserBarView {
 
 CanvasViewController {
     
+    canvas: @{
+        backgroundColor: white
+    }
+    
     hintLabel: @{
         font: $font-small;
         textColor: $color-text-placeholder;
