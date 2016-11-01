@@ -124,7 +124,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         sendButton.accessibilityIdentifier = "sendButton"
         
         drawButton.setIcon(.brush, with: .tiny, for: .normal)
-        drawButton.addTarget(self, action: #selector(selectDrawTool), for: .touchUpInside)
+        drawButton.addTarget(self, action: #selector(toggleDrawTool), for: .touchUpInside)
         drawButton.hitAreaPadding = hitAreaPadding
         drawButton.accessibilityIdentifier = "drawButton"
         
@@ -197,14 +197,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func updateButtonSelection() {
-        [drawButton, emojiButton].forEach({ $0.isSelected = false })
-        
-        switch canvas.mode {
-        case .draw:
-            drawButton.isSelected = true
-        case .edit:
-            emojiButton.isSelected = true
-        }
+        drawButton.isSelected = canvas.mode == .draw
     }
     
     func hideHint() {
@@ -214,8 +207,14 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK - actions
     
-    func selectDrawTool() {
-        select(editMode: .draw, animated: true)
+    func toggleDrawTool() {
+        if canvas.mode == .edit {
+            canvas.mode = .draw
+        } else {
+            canvas.mode = .edit
+        }
+        
+        updateButtonSelection()
     }
     
     func openEmojiKeyboard() {
