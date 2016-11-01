@@ -141,14 +141,18 @@ class ImageToolbarView: UIView {
         
         sketchButton.setIcon(.brush, with: .tiny, for: .normal)
         sketchButton.hitAreaPadding = hitAreaPadding
+        sketchButton.accessibilityIdentifier = "sketchButton"
         
         emojiButton.setIcon(.emoji, with: .tiny, for: .normal)
         emojiButton.hitAreaPadding = hitAreaPadding
+        emojiButton.accessibilityIdentifier = "emojiButton"
         
         textButton.setIcon(.pencil, with: .tiny, for: .normal)
         textButton.hitAreaPadding = hitAreaPadding
+        textButton.accessibilityIdentifier = "textButton"
         
         expandButton.setIcon(.fullScreen, with: .tiny, for: .normal)
         expandButton.hitAreaPadding = hitAreaPadding
+        expandButton.accessibilityIdentifier = "expandButton"
     }
 }

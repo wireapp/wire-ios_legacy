@@ -106,8 +106,11 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
         
         let closeButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(CanvasViewController.close))
+        closeButtonItem.accessibilityIdentifier = "closeButton"
+        
         let undoButtonItem = UIBarButtonItem(image: undoImage, style: .plain, target: canvas, action: #selector(Canvas.undo))
         undoButtonItem.isEnabled = false
+        undoButtonItem.accessibilityIdentifier = "undoButton"
         
         navigationItem.leftBarButtonItem = undoButtonItem
         navigationItem.rightBarButtonItem = closeButtonItem
@@ -121,18 +124,22 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         sendButton.isEnabled = false
         sendButton.cas_styleClass = "send-button"
         sendButton.hitAreaPadding = hitAreaPadding
+        sendButton.accessibilityIdentifier = "sendButton"
         
         drawButton.setIcon(.brush, with: .tiny, for: .normal)
         drawButton.addTarget(self, action: #selector(selectDrawTool), for: .touchUpInside)
         drawButton.hitAreaPadding = hitAreaPadding
+        drawButton.accessibilityIdentifier = "drawButton"
         
         photoButton.setIcon(.photo, with: .tiny, for: .normal)
         photoButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         photoButton.hitAreaPadding = hitAreaPadding
+        photoButton.accessibilityIdentifier = "photoButton"
         
         emojiButton.setIcon(.emoji, with: .tiny, for: .normal)
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)
         emojiButton.hitAreaPadding = hitAreaPadding
+        emojiButton.accessibilityIdentifier = "emojiButton"
     }
     
     func configureColorPicker() {
