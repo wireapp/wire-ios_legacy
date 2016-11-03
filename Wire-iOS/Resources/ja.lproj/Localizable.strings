@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "オフ";
-"input.ephemeral.title" = "タイマーメッセージの時間を設定する";
+"input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
 "content.system.continued_conversation" = "%@と会話を始めます";
@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "キーボードからの送信を無効にします。";
 
 // Open in
-"self.settings.external_apps.header" = "外部アプリ";
+"self.settings.external_apps.header" = "リンクを開く";
 
 "self.settings.link_options.twitter.title" = "ツイート";
-"self.settings.link_options.maps.title" = "マップ";
+"self.settings.link_options.maps.title" = "ロケーション";
 "self.settings.link_options.browser.title" = "ブラウザ";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "メールで招待状を送るために、メールクライアントの設定をしてください。";
 "error.invite.no_messaging_provider" = "SMSで招待状を送るために、SMSの設定をしてください。";
 
-"sketchpad.initial_hint" = "ブラシのサイズを変更するためにカラーをタップする\n隙間を埋めるために長押しをする\n写真を削除するために振動させる";
+"sketchpad.initial_hint" = "色をタップしてブラシのサイズを変更します";
 
 "migration.please_wait_message" = "どうぞしばらくお待ちください";
 

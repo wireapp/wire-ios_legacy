@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Выключен";
-"input.ephemeral.title" = "Установить таймер для временных сообщений";
+"input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
 "content.system.continued_conversation" = "Начать разговор с %@";
@@ -486,11 +486,11 @@
 "self.settings.popular_demand.send_button.footer" = "Отключить отправку по нажатию клавиши Enter.";
 
 // Open in
-"self.settings.external_apps.header" = "External Apps";
+"self.settings.external_apps.header" = "Открыть ссылки в";
 
-"self.settings.link_options.twitter.title" = "Tweets";
-"self.settings.link_options.maps.title" = "Maps";
-"self.settings.link_options.browser.title" = "Browser";
+"self.settings.link_options.twitter.title" = "Твиты";
+"self.settings.link_options.maps.title" = "Местоположения";
+"self.settings.link_options.browser.title" = "Браузер";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "Пожалуйста, настройте ваш почтовый клиент, чтобы иметь возможность отправлять приглашения по электронной почте";
 "error.invite.no_messaging_provider" = "Пожалуйста, настройте SMS, чтобы иметь возможность отправлять приглашения через SMS";
 
-"sketchpad.initial_hint" = "Нажмите, чтобы изменить цвет размер кисти \nНажмите и удерживайте, чтобы заполнить область \nВстряхните, чтобы удалить фотографию";
+"sketchpad.initial_hint" = "Нажмите на цвет, чтобы изменить размер кисти";
 
 "migration.please_wait_message" = "Пожалуйста, подождите";
 

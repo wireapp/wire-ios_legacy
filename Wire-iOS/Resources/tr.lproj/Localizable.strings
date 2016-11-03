@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Kapalı";
-"input.ephemeral.title" = "Geçici mesajlar için bir süre belirleyin";
+"input.ephemeral.title" = "Mesajın kaybolması için bir süre ayarlayın";
 
 // System messages
 "content.system.continued_conversation" = "%@ ile bir konuşma başlat";
@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "Giriş (Enter) tuşu ile göndermeyi devre dışı bırak.";
 
 // Open in
-"self.settings.external_apps.header" = "Harici Uygulamalar";
+"self.settings.external_apps.header" = "Bağlantıları açmak için uygulama seç";
 
 "self.settings.link_options.twitter.title" = "Tweetler";
-"self.settings.link_options.maps.title" = "Haritalar";
+"self.settings.link_options.maps.title" = "Konumlar";
 "self.settings.link_options.browser.title" = "Tarayıcı";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "Lütfen e-posta ile davet göndermek için e-posta istemcinizi yapılandırın";
 "error.invite.no_messaging_provider" = "Lütfen SMS göndermek için SMS'inizi yapılandırın";
 
-"sketchpad.initial_hint" = "Fırça boyutunu değiştirmek için renge dokunun\nBir alanı doldurmak için basılı tutun\nFotoğrafı silmek için sallayın";
+"sketchpad.initial_hint" = "Fırça boyutunu değiştirmek için renklere tıklayın";
 
 "migration.please_wait_message" = "Bir dakika, lütfen";
 

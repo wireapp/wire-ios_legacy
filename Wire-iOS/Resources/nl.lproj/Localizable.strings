@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Uit";
-"input.ephemeral.title" = "Stel een timer in voor een tijdelijk bericht";
+"input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
 "content.system.continued_conversation" = "Begin een gesprek met %@";
@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "Zet het verstuur via 'enter' toets uit.";
 
 // Open in
-"self.settings.external_apps.header" = "Externe apps";
+"self.settings.external_apps.header" = "Open Links in";
 
 "self.settings.link_options.twitter.title" = "Tweets";
-"self.settings.link_options.maps.title" = "Kaarten";
+"self.settings.link_options.maps.title" = "Locaties";
 "self.settings.link_options.browser.title" = "Browser";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "Configureer je email applicatie om invites te versturen via email";
 "error.invite.no_messaging_provider" = "Configureer je SMS om berichten te verzenden via SMS";
 
-"sketchpad.initial_hint" = "Tab op de kleur om de kwast grote aan te passen.\nHoud lang in gedrukt om het hele veld te kleuren. \nSchut om de foto te verwijderen";
+"sketchpad.initial_hint" = "Klik op de kleuren om de brush size te veranderen";
 
 "migration.please_wait_message" = "Een moment, alsjeblieft";
 

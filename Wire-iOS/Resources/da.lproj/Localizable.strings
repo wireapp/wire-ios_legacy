@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Slået fra";
-"input.ephemeral.title" = "Sæt en timer for midlertidige beskeder";
+"input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
 "content.system.continued_conversation" = "Start en samtale med %@";
@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "Deaktiver for at sende via returtasten.";
 
 // Open in
-"self.settings.external_apps.header" = "External Apps";
+"self.settings.external_apps.header" = "Open Links In";
 
 "self.settings.link_options.twitter.title" = "Tweets";
-"self.settings.link_options.maps.title" = "Maps";
+"self.settings.link_options.maps.title" = "Locations";
 "self.settings.link_options.browser.title" = "Browser";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "Konfigurer din e-mail klient for at kunne sende invitationer via e-mail";
 "error.invite.no_messaging_provider" = "Konfigurer din SMS for at kunne sende invitationer vis SMS";
 
-"sketchpad.initial_hint" = "Tryk på farve for at ændre penselstørrelse\nTryk og hold inde for at fylde et område\nRyst for at fjerne et billede";
+"sketchpad.initial_hint" = "Tap colors to change brush size";
 
 "migration.please_wait_message" = "Et øjeblik";
 

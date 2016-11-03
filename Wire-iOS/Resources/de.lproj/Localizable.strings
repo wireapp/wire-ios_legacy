@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Aus";
-"input.ephemeral.title" = "Dauer für temporäre Nachrichten";
+"input.ephemeral.title" = "Wähle eine Zeit, nach welcher die Nachricht verschwindet";
 
 // System messages
 "content.system.continued_conversation" = "Beginne eine Unterhaltung mit %@";
@@ -486,13 +486,13 @@
 "self.settings.popular_demand.send_button.footer" = "Deaktivieren, um Nachrichten mit der Enter-Taste zu senden.";
 
 // Open in
-"self.settings.external_apps.header" = "External Apps";
+"self.settings.external_apps.header" = "Öffne Links in";
 
 "self.settings.link_options.twitter.title" = "Tweets";
-"self.settings.link_options.maps.title" = "Maps";
+"self.settings.link_options.maps.title" = "Standorte";
 "self.settings.link_options.browser.title" = "Browser";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "Bitte konfiguriere deinen E-Mail-Client, um Einladungen per E-Mail zu senden";
 "error.invite.no_messaging_provider" = "Bitte konfiguriere iMessage, um Einladungen per SMS senden zu können";
 
-"sketchpad.initial_hint" = "Tippen Sie auf die Farbe um die Pinselgröße zu ändern\nDrücken und halten, um den Bereich zu füllen \nSchütteln, um ein Foto zu entfernen";
+"sketchpad.initial_hint" = "Tippe auf die Farben, um die Pinselgröße zu ändern";
 
 "migration.please_wait_message" = "Einen Moment bitte";
 

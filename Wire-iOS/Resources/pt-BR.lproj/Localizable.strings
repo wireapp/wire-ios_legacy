@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Desligar";
-"input.ephemeral.title" = "Definir um tempo para mensagens temporárias";
+"input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
 "content.system.continued_conversation" = "Iniciar uma conversa com %@";
@@ -486,10 +486,10 @@
 "self.settings.popular_demand.send_button.footer" = "Desabilite para enviar através da tecla return.";
 
 // Open in
-"self.settings.external_apps.header" = "Aplicações Externas";
+"self.settings.external_apps.header" = "Abrir Links";
 
 "self.settings.link_options.twitter.title" = "Tuites";
-"self.settings.link_options.maps.title" = "Mapas";
+"self.settings.link_options.maps.title" = "Localidades";
 "self.settings.link_options.browser.title" = "Navegador";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "Por favor, configure seu cliente de e-mail para poder enviar os convites via e-mail";
 "error.invite.no_messaging_provider" = "Por favor, configure seu SMS para ser capaz de enviar os convites através de SMS";
 
-"sketchpad.initial_hint" = "Toque na cor para alterar o tamanho do pincel \nPressione e segure para preencher uma área \nAgite para remover uma foto";
+"sketchpad.initial_hint" = "Tap colors to change brush size";
 
 "migration.please_wait_message" = "Um momento, por favor";
 
