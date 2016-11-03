@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Slået fra";
-"input.ephemeral.title" = "Set a time for the message to disappear";
+"input.ephemeral.title" = "Sæt en timer for midlertidige beskeder";
 
 // System messages
 "content.system.continued_conversation" = "Start en samtale med %@";

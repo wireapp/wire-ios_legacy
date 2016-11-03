@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Выключен";
-"input.ephemeral.title" = "Set a time for the message to disappear";
+"input.ephemeral.title" = "Установить время, когда сообщение исчезнет";
 
 // System messages
 "content.system.continued_conversation" = "Начать разговор с %@";

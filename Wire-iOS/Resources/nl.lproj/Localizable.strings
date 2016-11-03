@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Uit";
-"input.ephemeral.title" = "Set a time for the message to disappear";
+"input.ephemeral.title" = "Stel een timer in voor een tijdelijk bericht";
 
 // System messages
 "content.system.continued_conversation" = "Begin een gesprek met %@";
