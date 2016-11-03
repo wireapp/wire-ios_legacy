@@ -92,6 +92,7 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
         ZMUserSession.shared().enqueueChanges {
             self.conversation.updateMessageDestructionTimeout(timeout: timeout)
             self.updateRightAccessoryView()
+            self.updateButtonIconsForEphemeral()
         }
     }
 

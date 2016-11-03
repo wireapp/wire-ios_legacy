@@ -370,21 +370,39 @@ private struct InputBarConstants {
         return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
 
-    fileprivate func updateColors() {
-        backgroundColor = backgroundColor(forInputBarState: inputBarState)
-
+    fileprivate var isEphemeral: Bool {
         if case .writing(let ephemeral) = inputBarState {
-            showEphemeralColors(ephemeral)
+            return ephemeral
         } else {
-            showEphemeralColors(false)
+            return false
         }
     }
-
-    private func showEphemeralColors(_ show: Bool) {
-        buttonRowSeparator.backgroundColor = show ? ephemeralColor : writingSeparatorColor
-        textView.placeholderTextColor = show ? ephemeralColor : placeholderColor
-        fakeCursor.backgroundColor = show ? ephemeralColor : .accent()
-        textView.tintColor = show ? ephemeralColor : .accent()
+    
+    fileprivate func updateColors() {
+        backgroundColor = backgroundColor(forInputBarState: inputBarState)
+        buttonRowSeparator.backgroundColor = writingSeparatorColor
+        textView.placeholderTextColor = self.isEphemeral ? ephemeralColor : placeholderColor
+        fakeCursor.backgroundColor = .accent()
+        textView.tintColor = .accent()
+        
+        var buttons = self.buttonsView.buttons
+        
+        buttons.append(self.buttonsView.expandRowButton)
+        
+        buttons.forEach { button in
+            guard let button = button as? IconButton else {
+                return
+            }
+            
+            if self.isEphemeral {
+                button.setIconColor(UIColor.accent(), for: .normal)
+                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .highlighted)
+            }
+            else {
+                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
+                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconHighlighted), for: .highlighted)
+            }
+        }
     }
 
     // MARK: – Editing View State

@@ -101,7 +101,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
     
     self.authorLabel.text = pingText;
 
-    UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral] : self.message.sender.accentColor;
+    UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmed] : self.message.sender.accentColor;
     self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:pingColor];
 }
 

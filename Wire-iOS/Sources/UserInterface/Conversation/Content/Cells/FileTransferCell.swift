@@ -66,7 +66,7 @@ public final class FileTransferCell: ConversationCell {
         
         self.messageContentView.addSubview(self.containerView)
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
         
         self.allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView, obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)

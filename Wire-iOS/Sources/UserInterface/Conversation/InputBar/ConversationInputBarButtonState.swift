@@ -40,7 +40,7 @@ public final class ConversationInputBarButtonState: NSObject {
         return textLength != 0
     }
 
-    private var ephemeral: Bool {
+    public var ephemeral: Bool {
         return destructionTimeout != 0
     }
 

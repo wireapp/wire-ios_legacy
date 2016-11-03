@@ -77,7 +77,7 @@ public final class VideoMessageCell: ConversationCell {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView, obfuscationView]
         self.allViews.forEach(messageContentView.addSubview)
         

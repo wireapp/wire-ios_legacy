@@ -824,7 +824,7 @@ ImageMessageCell {
     }
 
     obfuscationView: @{
-        backgroundColor: $color-ephemeral;
+        backgroundColor: $color-accent-current-dimmed;
     }
 }
 
@@ -882,14 +882,9 @@ InputBar: {
     barBackgroundColor: $color-text-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
-    ephemeralColor: $color-ephemeral;
+    ephemeralColor: $color-accent-current;
     placeholderColor: $color-text-placeholder;
 
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-    
     textView: @{
         font: $font-normal-light;
         placeholderFont: $font-small-medium;
@@ -916,7 +911,7 @@ IconButton.send-button {
 
 IconButton.hourglass {
     iconColor: $color-icon-normal;
-    iconColor[state:selected]: $color-ephemeral;
+    iconColor[state:selected]: $color-accent-current-dimmed;
     iconColor[state:highlighted]: $color-icon-highlighted;
     backgroundImageColor[state:selected]: clear;
 }
@@ -925,7 +920,7 @@ ConversationInputBarViewController {
 
     ephemeralIndicatorButton: @{
         borderWidth: 0.0;
-        titleColor: $color-ephemeral;
+        titleColor: $color-accent-current-dimmed;
         titleLabel: @{
             font: $font-small-medium;
         }

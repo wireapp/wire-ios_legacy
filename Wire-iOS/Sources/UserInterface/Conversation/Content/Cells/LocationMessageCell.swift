@@ -58,7 +58,7 @@ public final class LocationMessageCell: ConversationCell {
         mapView.showsPointsOfInterest = true
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
         recognizer = UITapGestureRecognizer(target: self, action: #selector(openInMaps))
         containerView.addGestureRecognizer(recognizer!)
         messageContentView.addSubview(containerView)

@@ -70,6 +70,7 @@ extension ConversationInputBarViewController {
         guard nil == editingMessage else { return }
         inputBar.inputBarState = .writing(ephemeral: conversation.destructionEnabled)
         updateRightAccessoryView()
+        updateButtonIconsForEphemeral()
     }
 
 }

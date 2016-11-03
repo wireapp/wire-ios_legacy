@@ -307,7 +307,7 @@ extension ZMConversationMessage {
         }
 
         if showDestructionTimer, let stateString = deliveryStateString {
-            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
             attributedText.addAttributes([NSForegroundColorAttributeName: ephemeralColor], to: stateString)
         }
         
