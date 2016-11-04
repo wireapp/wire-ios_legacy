@@ -447,6 +447,7 @@
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
                             destructionTimeout:self.conversation.messageDestructionTimeout
+                              conversationType:self.conversation.conversationType
                                           mode:self.mode];
 
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
