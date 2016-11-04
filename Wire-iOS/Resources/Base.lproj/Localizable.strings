@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. You will be logged out of this device immediately.";
 "self.settings.device_details.reset_session.success" = "The session has been reset";
 
 "self.settings.account_details.actions.title" = "Actions";
