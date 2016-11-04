@@ -347,7 +347,7 @@ private struct InputBarConstants {
             }
         }
 
-        if animated {
+        if animated && self.superview != nil {
             UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
                 self.updateColors()
