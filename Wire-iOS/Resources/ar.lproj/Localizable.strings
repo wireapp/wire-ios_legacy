@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "غير مفعل";
-"input.ephemeral.title" = "اضبط المؤقِّت للرسائل المؤقَّتة";
+"input.ephemeral.title" = "اضبط وقت إختفاء الرسالة";
 
 // System messages
 "content.system.continued_conversation" = "بدأ مُحادثة مع %@";
@@ -706,7 +706,7 @@
 "error.invite.no_email_provider" = "من فضلك اضبط تطبيق البريد الإلكتروني للتّمكن من إرسال دعوات من خلاله";
 "error.invite.no_messaging_provider" = "من فضلك اضبط الـSMS لتتمكن من إرسال دعوات من خلالها";
 
-"sketchpad.initial_hint" = "انقر على اللون لتغيير مقاس الفرشة\nانقر وعلِّق لملأ مساحة\nقم بالهز لحذف صورة";
+"sketchpad.initial_hint" = "انقر على الألوان لتغيير حجم الفرشة";
 
 "migration.please_wait_message" = "لحظة، من فضلك";
 
