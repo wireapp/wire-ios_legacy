@@ -488,7 +488,7 @@
 - (void)updateSendButtonColor
 {
     if (self.conversation.messageDestructionTimeout != 0) {
-        [self.sendButton setBackgroundImageColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmed] forState:UIControlStateNormal];
+        [self.sendButton setBackgroundImageColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmedFlat] forState:UIControlStateNormal];
     } else {
         [self.sendButton setBackgroundImageColor:UIColor.accentColor forState:UIControlStateNormal];
     }

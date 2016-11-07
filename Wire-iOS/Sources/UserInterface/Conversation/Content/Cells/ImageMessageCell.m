@@ -195,7 +195,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self.imageViewContainer addSubview:self.loadingView];
 
     self.obfuscationView = [[UIImageView alloc] initForAutoLayout];
-    self.obfuscationView.backgroundColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDimmed];
+    self.obfuscationView.backgroundColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDimmedFlat];
     self.obfuscationView.contentMode = UIViewContentModeCenter;
     self.obfuscationView.image = [UIImage imageForIcon:ZetaIconTypePhoto iconSize:ZetaIconSizeTiny color:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground]];
     [self.imageViewContainer addSubview:self.obfuscationView];

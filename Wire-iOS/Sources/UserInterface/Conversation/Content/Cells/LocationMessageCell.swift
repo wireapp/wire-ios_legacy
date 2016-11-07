@@ -58,7 +58,7 @@ public final class LocationMessageCell: ConversationCell {
         mapView.showsPointsOfInterest = true
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
         obfuscationView.isOpaque = true
         obfuscationView.contentMode = .center
         obfuscationView.image = UIImage.init(for: .locationPin, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))

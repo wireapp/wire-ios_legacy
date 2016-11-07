@@ -23,6 +23,7 @@
 
 NSString * const ColorSchemeColorAccent = @"accent-current";
 NSString * const ColorSchemeColorAccentDimmed = @"accent-current-dimmed";
+NSString * const ColorSchemeColorAccentDimmedFlat = @"accent-current-dimmed-flat";
 NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
@@ -181,6 +182,7 @@ static NSString* light(NSString *colorString) {
     
     NSDictionary *lightColors = @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
+                                   ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:[UIColor whiteColor]],
                                    ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
                                    ColorSchemeColorTextForeground: graphite,
                                    ColorSchemeColorTextBackground: white,
@@ -213,6 +215,7 @@ static NSString* light(NSString *colorString) {
     
     NSDictionary *darkColors = @{ ColorSchemeColorAccent: accentColor,
                                   ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
+                                  ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:[UIColor whiteColor]],
                                   ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
                                   ColorSchemeColorTextForeground: white,
                                   ColorSchemeColorTextBackground: backgroundGraphite,

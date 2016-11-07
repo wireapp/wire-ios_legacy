@@ -77,7 +77,7 @@ public final class VideoMessageCell: ConversationCell {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
         obfuscationView.isOpaque = true
         obfuscationView.contentMode = .center
         obfuscationView.image = UIImage.init(for: .videoMessage, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))

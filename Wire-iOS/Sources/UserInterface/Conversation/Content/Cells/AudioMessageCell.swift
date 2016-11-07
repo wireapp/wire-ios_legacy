@@ -69,7 +69,7 @@ public final class AudioMessageCell: ConversationCell {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
 
-        self.obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        self.obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
         self.obfuscationView.isOpaque = true
         self.obfuscationView.contentMode = .center
         self.obfuscationView.image = UIImage.init(for: .microphone, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))

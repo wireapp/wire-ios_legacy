@@ -66,7 +66,7 @@ public final class FileTransferCell: ConversationCell {
         
         self.messageContentView.addSubview(self.containerView)
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
         obfuscationView.isOpaque = true
         obfuscationView.contentMode = .center
         obfuscationView.image = UIImage.init(for: .paperclip, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
