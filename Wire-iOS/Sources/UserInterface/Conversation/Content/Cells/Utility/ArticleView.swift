@@ -45,7 +45,7 @@ class ArticleView: UIView {
     let imageView = UIImageView()
     var loadingView: ThreeDotsLoadingView?
     var linkPreview: LinkPreview?
-    private let obfuscationView = UIView()
+    private let obfuscationView = UIImageView()
     private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
     weak var delegate: ArticleViewDelegate?
     
@@ -90,6 +90,9 @@ class ArticleView: UIView {
         messageLabel.delegate = self
 
         obfuscationView.backgroundColor = ephemeralColor
+        obfuscationView.isOpaque = true
+        obfuscationView.contentMode = .center
+        obfuscationView.image = UIImage(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.delegate = self

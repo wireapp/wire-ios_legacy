@@ -182,7 +182,7 @@ static NSString* light(NSString *colorString) {
     
     NSDictionary *lightColors = @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
-                                   ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:[UIColor whiteColor]],
+                                   ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:white],
                                    ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
                                    ColorSchemeColorTextForeground: graphite,
                                    ColorSchemeColorTextBackground: white,
@@ -215,7 +215,7 @@ static NSString* light(NSString *colorString) {
     
     NSDictionary *darkColors = @{ ColorSchemeColorAccent: accentColor,
                                   ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
-                                  ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:[UIColor whiteColor]],
+                                  ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:backgroundGraphite],
                                   ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
                                   ColorSchemeColorTextForeground: white,
                                   ColorSchemeColorTextBackground: backgroundGraphite,
