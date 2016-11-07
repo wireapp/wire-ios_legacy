@@ -146,15 +146,6 @@ IconButton.resend-button {
     backgroundImageColor[state:selected]: $color-icon-background-selected;
 }
 
-IconButton.send-button {
-    circular: true;
-    borderWidth: 0.0;
-    iconColor[state: normal]: $color-background-light;
-    iconColor[state: highlighted]: $color-background-light;
-    backgroundImageColor[state:highlighted]: $color-accent-current-darken;
-    backgroundImageColor[state:normal]: $color-accent-current;
-}
-
 IconButton.gif-button {
     iconColor: $color-icon-normal;
     iconColor[state:selected]: $color-icon-selected;

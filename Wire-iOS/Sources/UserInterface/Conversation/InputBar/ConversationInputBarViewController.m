@@ -342,7 +342,6 @@
 {
     self.sendButton = [IconButton iconButtonDefault];
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
 
     self.sendButton.accessibilityIdentifier = @"sendButton";
     self.sendButton.adjustsImageWhenHighlighted = NO;
@@ -432,7 +431,6 @@
 - (void)updateRightAccessoryView
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
-    [self updateSendButtonColor];
 
     NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
@@ -481,17 +479,12 @@
     [self.gifButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeGifEphemeral : ZetaIconTypeGif
                    withSize:ZetaIconSizeTiny
                    forState:UIControlStateNormal];
+ 
+    [self.sendButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeSendEphemeral : ZetaIconTypeSend
+                    withSize:ZetaIconSizeTiny
+                    forState:UIControlStateNormal];
     
     [self updateEmojiButton:self.emojiButton];
-}
-
-- (void)updateSendButtonColor
-{
-    if (self.conversation.messageDestructionTimeout != 0) {
-        [self.sendButton setBackgroundImageColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmedFlat] forState:UIControlStateNormal];
-    } else {
-        [self.sendButton setBackgroundImageColor:UIColor.accentColor forState:UIControlStateNormal];
-    }
 }
 
 - (void)updateAccessoryViews

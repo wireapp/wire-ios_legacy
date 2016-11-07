@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 #import "WireStyleKit.h"
 
 
@@ -4218,7 +4219,7 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
 }
 
-+ (void)drawIcon_0x235_32pt2WithColor: (UIColor*)color
++ (void)drawIcon_0x735_32ptWithColor: (UIColor*)color
 {
 
     //// Bezier Drawing
@@ -6138,15 +6139,15 @@ static UIImage* _imageOfShieldnotverified = nil;
     return imageOfIcon_0x637_32pt;
 }
 
-+ (UIImage*)imageOfIcon_0x235_32pt2WithColor: (UIColor*)color
++ (UIImage*)imageOfIcon_0x735_32ptWithColor: (UIColor*)color
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0.0f);
-    [WireStyleKit drawIcon_0x235_32pt2WithColor: color];
+    [WireStyleKit drawIcon_0x735_32ptWithColor: color];
 
-    UIImage* imageOfIcon_0x235_32pt2 = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage* imageOfIcon_0x735_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return imageOfIcon_0x235_32pt2;
+    return imageOfIcon_0x735_32pt;
 }
 
 + (UIImage*)imageOfIcon_0x659_32ptWithColor: (UIColor*)color
