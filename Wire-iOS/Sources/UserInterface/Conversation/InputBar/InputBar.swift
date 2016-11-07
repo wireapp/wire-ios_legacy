@@ -46,6 +46,14 @@ public enum InputBarState: Equatable {
         default: return false
         }
     }
+    
+    var isEphemeral: Bool {
+        if case .writing(let ephemeral) = self {
+            return ephemeral
+        } else {
+            return false
+        }
+    }
 }
 
 public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
@@ -369,19 +377,11 @@ private struct InputBarConstants {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
         return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
-
-    fileprivate var isEphemeral: Bool {
-        if case .writing(let ephemeral) = inputBarState {
-            return ephemeral
-        } else {
-            return false
-        }
-    }
     
     fileprivate func updateColors() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = writingSeparatorColor
-        textView.placeholderTextColor = self.isEphemeral ? ephemeralColor : placeholderColor
+        textView.placeholderTextColor = self.inputBarState.isEphemeral ? ephemeralColor : placeholderColor
         fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         
@@ -394,7 +394,7 @@ private struct InputBarConstants {
                 return
             }
             
-            if self.isEphemeral {
+            if self.inputBarState.isEphemeral {
                 button.setIconColor(UIColor.accent(), for: .normal)
                 button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .highlighted)
             }
