@@ -4400,6 +4400,74 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
 }
 
++ (void)drawIcon_0x736_32ptWithColor: (UIColor*)color
+{
+
+    //// Keyboard Drawing
+    UIBezierPath* keyboardPath = [UIBezierPath bezierPath];
+    [keyboardPath moveToPoint: CGPointMake(17.46, 7.36)];
+    [keyboardPath addLineToPoint: CGPointMake(23.3, 7.36)];
+    [keyboardPath addLineToPoint: CGPointMake(34.21, 56.23)];
+    [keyboardPath addLineToPoint: CGPointMake(27.21, 56.23)];
+    [keyboardPath addLineToPoint: CGPointMake(25.15, 45.73)];
+    [keyboardPath addLineToPoint: CGPointMake(15.61, 45.73)];
+    [keyboardPath addLineToPoint: CGPointMake(13.55, 56.23)];
+    [keyboardPath addLineToPoint: CGPointMake(6.55, 56.23)];
+    [keyboardPath addLineToPoint: CGPointMake(17.46, 7.36)];
+    [keyboardPath closePath];
+    [keyboardPath moveToPoint: CGPointMake(50.48, 52.66)];
+    [keyboardPath addLineToPoint: CGPointMake(50.34, 52.66)];
+    [keyboardPath addCurveToPoint: CGPointMake(47.56, 55.61) controlPoint1: CGPointMake(49.43, 53.94) controlPoint2: CGPointMake(48.5, 54.92)];
+    [keyboardPath addCurveToPoint: CGPointMake(43.61, 56.64) controlPoint1: CGPointMake(46.62, 56.3) controlPoint2: CGPointMake(45.31, 56.64)];
+    [keyboardPath addCurveToPoint: CGPointMake(41.08, 56.26) controlPoint1: CGPointMake(42.79, 56.64) controlPoint2: CGPointMake(41.94, 56.51)];
+    [keyboardPath addCurveToPoint: CGPointMake(38.64, 54.89) controlPoint1: CGPointMake(40.21, 56.01) controlPoint2: CGPointMake(39.39, 55.55)];
+    [keyboardPath addCurveToPoint: CGPointMake(36.79, 52.08) controlPoint1: CGPointMake(37.88, 54.23) controlPoint2: CGPointMake(37.27, 53.29)];
+    [keyboardPath addCurveToPoint: CGPointMake(36.07, 47.37) controlPoint1: CGPointMake(36.31, 50.86) controlPoint2: CGPointMake(36.07, 49.3)];
+    [keyboardPath addCurveToPoint: CGPointMake(36.55, 42.19) controlPoint1: CGPointMake(36.07, 45.41) controlPoint2: CGPointMake(36.23, 43.68)];
+    [keyboardPath addCurveToPoint: CGPointMake(38.3, 38.49) controlPoint1: CGPointMake(36.87, 40.71) controlPoint2: CGPointMake(37.45, 39.47)];
+    [keyboardPath addCurveToPoint: CGPointMake(41.69, 36.29) controlPoint1: CGPointMake(39.14, 37.5) controlPoint2: CGPointMake(40.27, 36.77)];
+    [keyboardPath addCurveToPoint: CGPointMake(47.12, 35.57) controlPoint1: CGPointMake(43.11, 35.81) controlPoint2: CGPointMake(44.92, 35.57)];
+    [keyboardPath addCurveToPoint: CGPointMake(48.63, 35.64) controlPoint1: CGPointMake(47.62, 35.57) controlPoint2: CGPointMake(48.12, 35.59)];
+    [keyboardPath addCurveToPoint: CGPointMake(50.48, 35.77) controlPoint1: CGPointMake(49.13, 35.68) controlPoint2: CGPointMake(49.75, 35.73)];
+    [keyboardPath addLineToPoint: CGPointMake(50.48, 32.14)];
+    [keyboardPath addCurveToPoint: CGPointMake(49.72, 29.19) controlPoint1: CGPointMake(50.48, 30.95) controlPoint2: CGPointMake(50.23, 29.96)];
+    [keyboardPath addCurveToPoint: CGPointMake(46.98, 28.02) controlPoint1: CGPointMake(49.22, 28.41) controlPoint2: CGPointMake(48.31, 28.02)];
+    [keyboardPath addCurveToPoint: CGPointMake(44.47, 28.91) controlPoint1: CGPointMake(46.06, 28.02) controlPoint2: CGPointMake(45.23, 28.32)];
+    [keyboardPath addCurveToPoint: CGPointMake(43, 31.52) controlPoint1: CGPointMake(43.72, 29.51) controlPoint2: CGPointMake(43.23, 30.38)];
+    [keyboardPath addLineToPoint: CGPointMake(36.2, 31.52)];
+    [keyboardPath addCurveToPoint: CGPointMake(39.36, 23.97) controlPoint1: CGPointMake(36.43, 28.36) controlPoint2: CGPointMake(37.48, 25.85)];
+    [keyboardPath addCurveToPoint: CGPointMake(42.65, 21.81) controlPoint1: CGPointMake(40.27, 23.05) controlPoint2: CGPointMake(41.37, 22.33)];
+    [keyboardPath addCurveToPoint: CGPointMake(46.98, 21.02) controlPoint1: CGPointMake(43.94, 21.28) controlPoint2: CGPointMake(45.38, 21.02)];
+    [keyboardPath addCurveToPoint: CGPointMake(51.1, 21.7) controlPoint1: CGPointMake(48.44, 21.02) controlPoint2: CGPointMake(49.81, 21.25)];
+    [keyboardPath addCurveToPoint: CGPointMake(54.42, 23.76) controlPoint1: CGPointMake(52.38, 22.16) controlPoint2: CGPointMake(53.49, 22.85)];
+    [keyboardPath addCurveToPoint: CGPointMake(56.66, 27.2) controlPoint1: CGPointMake(55.36, 24.68) controlPoint2: CGPointMake(56.11, 25.82)];
+    [keyboardPath addCurveToPoint: CGPointMake(57.48, 32) controlPoint1: CGPointMake(57.2, 28.57) controlPoint2: CGPointMake(57.48, 30.17)];
+    [keyboardPath addLineToPoint: CGPointMake(57.48, 56.23)];
+    [keyboardPath addLineToPoint: CGPointMake(50.48, 56.23)];
+    [keyboardPath addLineToPoint: CGPointMake(50.48, 52.66)];
+    [keyboardPath closePath];
+    [keyboardPath moveToPoint: CGPointMake(50.48, 41.27)];
+    [keyboardPath addCurveToPoint: CGPointMake(48.56, 41.06) controlPoint1: CGPointMake(49.7, 41.13) controlPoint2: CGPointMake(49.06, 41.06)];
+    [keyboardPath addCurveToPoint: CGPointMake(44.68, 42.12) controlPoint1: CGPointMake(47.05, 41.06) controlPoint2: CGPointMake(45.75, 41.41)];
+    [keyboardPath addCurveToPoint: CGPointMake(43.07, 46) controlPoint1: CGPointMake(43.6, 42.83) controlPoint2: CGPointMake(43.07, 44.13)];
+    [keyboardPath addCurveToPoint: CGPointMake(44.03, 49.23) controlPoint1: CGPointMake(43.07, 47.33) controlPoint2: CGPointMake(43.39, 48.4)];
+    [keyboardPath addCurveToPoint: CGPointMake(46.7, 50.46) controlPoint1: CGPointMake(44.67, 50.05) controlPoint2: CGPointMake(45.56, 50.46)];
+    [keyboardPath addCurveToPoint: CGPointMake(49.48, 49.3) controlPoint1: CGPointMake(47.89, 50.46) controlPoint2: CGPointMake(48.82, 50.07)];
+    [keyboardPath addCurveToPoint: CGPointMake(50.48, 46) controlPoint1: CGPointMake(50.15, 48.52) controlPoint2: CGPointMake(50.48, 47.42)];
+    [keyboardPath addLineToPoint: CGPointMake(50.48, 41.27)];
+    [keyboardPath closePath];
+    [keyboardPath moveToPoint: CGPointMake(20.42, 21.43)];
+    [keyboardPath addLineToPoint: CGPointMake(20.28, 21.43)];
+    [keyboardPath addLineToPoint: CGPointMake(16.85, 39.14)];
+    [keyboardPath addLineToPoint: CGPointMake(23.85, 39.14)];
+    [keyboardPath addLineToPoint: CGPointMake(20.42, 21.43)];
+    [keyboardPath closePath];
+    keyboardPath.usesEvenOddFillRule = YES;
+
+    [color setFill];
+    [keyboardPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -6159,6 +6227,17 @@ static UIImage* _imageOfShieldnotverified = nil;
     UIGraphicsEndImageContext();
 
     return imageOfIcon_0x659_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x736_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0.0f);
+    [WireStyleKit drawIcon_0x736_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x736_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x736_32pt;
 }
 
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent

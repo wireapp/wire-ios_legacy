@@ -45,9 +45,16 @@ extension ConversationInputBarViewController {
         let style: String?
         let color: UIColor
         if mode == .emojiInput {
-            type = ZetaIconType.text
-            style = .none
-            color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+            if self.sendButtonState.ephemeral {
+                type = ZetaIconType.textEphemeral
+                style = "ephemeral"
+                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+            }
+            else {
+                type = ZetaIconType.text
+                style = .none
+                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+            }
         }
         else {
             if self.sendButtonState.ephemeral {

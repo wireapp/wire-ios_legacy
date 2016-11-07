@@ -145,6 +145,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeSend                            = 0x235,
     ZetaIconTypeSendEphemeral                   = 0x735,
     ZetaIconTypeText                            = 0x236,
+    ZetaIconTypeTextEphemeral                   = 0x736,
     ZetaIconTypeEmoji                           = 0x237,
     ZetaIconTypeEmojiEphemeral                  = 0x737,
     ZetaIconTypeBackspace                       = 0x238,

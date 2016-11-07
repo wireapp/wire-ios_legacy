@@ -898,7 +898,7 @@ IconButton.send-button {
 
 IconButton.hourglass {
     iconColor: $color-icon-normal;
-    iconColor[state:selected]: $color-accent-current-dimmed;
+    iconColor[state:selected]: $color-accent-current;
     iconColor[state:highlighted]: $color-icon-highlighted;
     backgroundImageColor[state:selected]: clear;
 }
