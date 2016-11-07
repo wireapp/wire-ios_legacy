@@ -43,7 +43,7 @@ public final class VideoMessageCell: ConversationCell {
     private let timeLabel = UILabel()
     private let loadingView = ThreeDotsLoadingView()
     private var topMargin : NSLayoutConstraint?
-    private let obfuscationView = UIView()
+    private let obfuscationView = UIImageView()
 
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
     private let failureColor = UIColor.red.withAlphaComponent(0.24)
@@ -78,6 +78,10 @@ public final class VideoMessageCell: ConversationCell {
         self.loadingView.isHidden = true
 
         obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        obfuscationView.isOpaque = true
+        obfuscationView.contentMode = .center
+        obfuscationView.image = UIImage.init(for: .videoMessage, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
+        
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView, obfuscationView]
         self.allViews.forEach(messageContentView.addSubview)
         

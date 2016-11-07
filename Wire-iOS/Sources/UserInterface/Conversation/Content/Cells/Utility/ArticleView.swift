@@ -79,7 +79,6 @@ class ArticleView: UIView {
         self.clipsToBounds = true
         accessibilityIdentifier = "linkPreview"
         
-        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
         authorLabel.lineBreakMode = .byTruncatingMiddle
@@ -184,9 +183,12 @@ class ArticleView: UIView {
 
             if obfuscated {
                 ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
-                imageView.image = nil
+                imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
+                imageView.contentMode = .center
+                
             } else {
                 imageView.image = UIImage(data: imageData)
+                imageView.contentMode = .scaleAspectFill
                 loadingView?.isHidden = true
                 ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
                     return UIImage.deviceOptimizedImage(from: data)

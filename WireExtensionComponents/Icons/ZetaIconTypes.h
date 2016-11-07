@@ -149,6 +149,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeBackspace                       = 0x238,
 
     ZetaIconTypeHourglass                       = 0x239,
+    
+    ZetaIconTypeLink                            = 0x167,
 
     ZetaIconTypeEffectBallon                    = 0x240,
     ZetaIconTypeEffectJellyfish                 = 0x242,

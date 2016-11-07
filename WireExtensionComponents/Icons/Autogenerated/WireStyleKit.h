@@ -140,6 +140,7 @@
 + (void)drawIcon_0x235_32pt2WithColor: (UIColor*)color;
 + (void)drawIcon_0x659_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x679_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x167_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;

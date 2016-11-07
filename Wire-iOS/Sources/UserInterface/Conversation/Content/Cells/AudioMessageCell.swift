@@ -31,7 +31,7 @@ public final class AudioMessageCell: ConversationCell {
     private let playerProgressView = ProgressView()
     private let waveformProgressView = WaveformProgressView()
     private let loadingView = ThreeDotsLoadingView()
-    private let obfuscationView = UIView()
+    private let obfuscationView = UIImageView()
 
     private var audioPlayerProgressObserver: NSObject? = .none
     private var audioPlayerStateObserver: NSObject? = .none
@@ -69,7 +69,10 @@ public final class AudioMessageCell: ConversationCell {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        self.obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+        self.obfuscationView.isOpaque = true
+        self.obfuscationView.contentMode = .center
+        self.obfuscationView.image = UIImage.init(for: .microphone, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
 
         self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView, self.obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)

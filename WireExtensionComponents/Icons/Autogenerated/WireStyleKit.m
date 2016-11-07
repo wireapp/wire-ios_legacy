@@ -4356,6 +4356,49 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
 }
 
++ (void)drawIcon_0x167_32ptWithColor: (UIColor*)color
+{
+
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(22.69, 56)];
+    [bezierPath addCurveToPoint: CGPointMake(36.54, 46.22) controlPoint1: CGPointMake(28.96, 56) controlPoint2: CGPointMake(34.48, 52.03)];
+    [bezierPath addCurveToPoint: CGPointMake(37.22, 45) controlPoint1: CGPointMake(36.7, 45.76) controlPoint2: CGPointMake(36.93, 45.35)];
+    [bezierPath addCurveToPoint: CGPointMake(19.92, 30.25) controlPoint1: CGPointMake(29.28, 43.55) controlPoint2: CGPointMake(22.64, 37.95)];
+    [bezierPath addCurveToPoint: CGPointMake(20.28, 26.82) controlPoint1: CGPointMake(19.5, 29.07) controlPoint2: CGPointMake(19.67, 27.82)];
+    [bezierPath addCurveToPoint: CGPointMake(8, 41.31) controlPoint1: CGPointMake(13.32, 27.97) controlPoint2: CGPointMake(8, 34.02)];
+    [bezierPath addCurveToPoint: CGPointMake(22.69, 56) controlPoint1: CGPointMake(8, 49.42) controlPoint2: CGPointMake(14.58, 56)];
+    [bezierPath closePath];
+    [bezierPath moveToPoint: CGPointMake(36.61, 36.6)];
+    [bezierPath addCurveToPoint: CGPointMake(27.46, 27.58) controlPoint1: CGPointMake(32.4, 35.18) controlPoint2: CGPointMake(28.98, 31.89)];
+    [bezierPath addCurveToPoint: CGPointMake(27.39, 27.4) controlPoint1: CGPointMake(27.44, 27.52) controlPoint2: CGPointMake(27.42, 27.46)];
+    [bezierPath addCurveToPoint: CGPointMake(36.54, 36.42) controlPoint1: CGPointMake(31.6, 28.82) controlPoint2: CGPointMake(35.02, 32.11)];
+    [bezierPath addCurveToPoint: CGPointMake(36.61, 36.6) controlPoint1: CGPointMake(36.56, 36.48) controlPoint2: CGPointMake(36.58, 36.54)];
+    [bezierPath closePath];
+    [bezierPath moveToPoint: CGPointMake(26.78, 19)];
+    [bezierPath addCurveToPoint: CGPointMake(27.46, 17.78) controlPoint1: CGPointMake(27.07, 18.65) controlPoint2: CGPointMake(27.3, 18.24)];
+    [bezierPath addCurveToPoint: CGPointMake(41.31, 8) controlPoint1: CGPointMake(29.52, 11.97) controlPoint2: CGPointMake(35.04, 8)];
+    [bezierPath addCurveToPoint: CGPointMake(56, 22.69) controlPoint1: CGPointMake(49.42, 8) controlPoint2: CGPointMake(56, 14.58)];
+    [bezierPath addCurveToPoint: CGPointMake(43.72, 37.18) controlPoint1: CGPointMake(56, 29.98) controlPoint2: CGPointMake(50.68, 36.03)];
+    [bezierPath addCurveToPoint: CGPointMake(44.08, 33.75) controlPoint1: CGPointMake(44.33, 36.18) controlPoint2: CGPointMake(44.5, 34.93)];
+    [bezierPath addCurveToPoint: CGPointMake(26.78, 19) controlPoint1: CGPointMake(41.36, 26.05) controlPoint2: CGPointMake(34.72, 20.45)];
+    [bezierPath closePath];
+    [bezierPath moveToPoint: CGPointMake(22.69, 64)];
+    [bezierPath addCurveToPoint: CGPointMake(44.08, 48.88) controlPoint1: CGPointMake(32.37, 64) controlPoint2: CGPointMake(40.9, 57.87)];
+    [bezierPath addCurveToPoint: CGPointMake(43.59, 45.26) controlPoint1: CGPointMake(44.52, 47.62) controlPoint2: CGPointMake(44.3, 46.28)];
+    [bezierPath addCurveToPoint: CGPointMake(64, 22.69) controlPoint1: CGPointMake(55.05, 44.12) controlPoint2: CGPointMake(64, 34.45)];
+    [bezierPath addCurveToPoint: CGPointMake(41.31, 0) controlPoint1: CGPointMake(64, 10.16) controlPoint2: CGPointMake(53.84, 0)];
+    [bezierPath addCurveToPoint: CGPointMake(19.92, 15.12) controlPoint1: CGPointMake(31.63, 0) controlPoint2: CGPointMake(23.1, 6.13)];
+    [bezierPath addCurveToPoint: CGPointMake(20.41, 18.74) controlPoint1: CGPointMake(19.47, 16.38) controlPoint2: CGPointMake(19.7, 17.72)];
+    [bezierPath addCurveToPoint: CGPointMake(0, 41.31) controlPoint1: CGPointMake(8.95, 19.88) controlPoint2: CGPointMake(0, 29.55)];
+    [bezierPath addCurveToPoint: CGPointMake(22.69, 64) controlPoint1: CGPointMake(0, 53.84) controlPoint2: CGPointMake(10.16, 64)];
+    [bezierPath closePath];
+    bezierPath.usesEvenOddFillRule = YES;
+
+    [color setFill];
+    [bezierPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations

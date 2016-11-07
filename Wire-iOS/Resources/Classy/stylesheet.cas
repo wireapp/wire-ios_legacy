@@ -822,10 +822,6 @@ ImageMessageCell {
     fullImageView: @{
         backgroundColor: $color-background;
     }
-
-    obfuscationView: @{
-        backgroundColor: $color-accent-current-dimmed;
-    }
 }
 
 AudioMessageCell {
