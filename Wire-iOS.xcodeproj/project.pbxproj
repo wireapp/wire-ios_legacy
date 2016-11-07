@@ -549,6 +549,7 @@
 		8797B5891CC9196900F3659B /* AVAsset+VideoConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8797B5881CC9196900F3659B /* AVAsset+VideoConvert.m */; };
 		8798C51A1C3ACDF700678AD7 /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8798C5191C3ACDF700678AD7 /* NoHistoryViewController.m */; };
 		87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9C1D34FEF400105D44 /* audio-notifications */; };
+		87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */; };
 		87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */; };
 		87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */; };
 		87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */; };
@@ -1694,6 +1695,7 @@
 		87A4DAA11D34FF0400105D44 /* new_message.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_message.caf; sourceTree = "<group>"; };
 		87A4DAA21D34FF0400105D44 /* ping_from_them.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ping_from_them.caf; sourceTree = "<group>"; };
 		87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ringing_from_them_long.caf; sourceTree = "<group>"; };
+		87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscationView.swift; sourceTree = "<group>"; };
 		87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationInputBarViewController+Files.m"; sourceTree = "<group>"; };
 		87AAD74D1CF2E4FF002760FF /* ConversationInputBarViewController+Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationInputBarViewController+Files.h"; sourceTree = "<group>"; };
 		87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStyleNavigationController.swift; sourceTree = "<group>"; };
@@ -3400,6 +3402,7 @@
 				875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */,
 				875F89131D6DD6D000D8748E /* ReactionsView.swift */,
 				87CB36B91D74782B007AB4E5 /* LikeButton.swift */,
+				87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -5576,6 +5579,7 @@
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
 				160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */,
+				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
 				8F0EE70A1A667F9A0070E1E8 /* NameChangedCell.m in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
 				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,

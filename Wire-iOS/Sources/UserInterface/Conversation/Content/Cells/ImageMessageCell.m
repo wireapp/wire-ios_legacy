@@ -70,7 +70,7 @@
 @property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
 @property (nonatomic, strong) ImageToolbarView *imageToolbarView;
 @property (nonatomic, strong) UIView *imageViewContainer;
-@property (nonatomic, strong) UIImageView *obfuscationView;
+@property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
 @property (nonatomic) SavableImage *savableImage;
 
@@ -194,13 +194,9 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.loadingView];
 
-    self.obfuscationView = [[UIImageView alloc] initForAutoLayout];
-    self.obfuscationView.backgroundColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDimmedFlat];
-    self.obfuscationView.contentMode = UIViewContentModeCenter;
-    self.obfuscationView.image = [UIImage imageForIcon:ZetaIconTypePhoto iconSize:ZetaIconSizeTiny color:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground]];
+    self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
     self.obfuscationView.hidden = YES;
-    self.obfuscationView.opaque = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
     self.loadingView.hidden = NO;
