@@ -320,7 +320,7 @@
 
 - (void)joinVoiceChannelWithoutAskingForPermissionWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
-    [self.class leaveActiveCallsWithCompletionHandler:^{
+    [self leaveOtherActiveCallsWithCompletionHandler:^{
         ZMVoiceChannelState voiceChannelState = self.voiceChannel.state;
         ZMVoiceChannelConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
 
@@ -359,7 +359,7 @@
     }];
 }
 
-+ (void)leaveActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler
+- (void)leaveOtherActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler
 {
     NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
 

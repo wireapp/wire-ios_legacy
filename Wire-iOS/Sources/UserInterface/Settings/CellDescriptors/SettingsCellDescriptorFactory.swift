@@ -346,12 +346,13 @@ import Foundation
     
     func developerGroup() -> SettingsCellDescriptorType {
         let title = "self.settings.developer_options.title".localized
+        var developerCellDescriptors: [SettingsCellDescriptorType] = []
         
         let devController = SettingsExternalScreenCellDescriptor(title: "Logging") { () -> (UIViewController?) in
             return DeveloperOptionsController()
         }
         
-        var developerCellDescriptors: [SettingsCellDescriptorType] = []
+        developerCellDescriptors.append(devController)
         
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
         developerCellDescriptors.append(diableAVSSetting)
@@ -367,7 +368,7 @@ import Foundation
             developerCellDescriptors.append(callKitDescriptor)
         }
         
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title, icon: .effectRobot)
+        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
     func helpSection() -> SettingsCellDescriptorType {

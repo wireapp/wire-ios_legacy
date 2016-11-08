@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isCallingSupported;
 
 - (void)acceptIncomingCall;
-+ (void)leaveActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler;
+- (void)leaveOtherActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler;
 - (void)startAudioCallWithCompletionHandler:(nullable void(^)(BOOL joined))completion;
 - (void)startVideoCallWithCompletionHandler:(nullable void(^)(BOOL joined))completion;
 
