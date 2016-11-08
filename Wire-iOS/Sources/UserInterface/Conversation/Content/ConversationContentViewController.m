@@ -858,6 +858,12 @@
             }];
         }
             break;
+        case ConversationCellActionForward:
+        {
+            [self showForwardForMessage:cell.message];
+        }
+            
+            break;
     }
 }
 
