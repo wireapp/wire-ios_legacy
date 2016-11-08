@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wireは各デバイスに固有のフィンガープリントを付与します。これを比較することでお使いのデバイスと会話を確認します。";
 "self.settings.device_details.reset_session.subtitle" = "フィンガープリントが一致しない場合は、セッションをリセットして、会話相手と双方で新しい暗号化キーを生成します。";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. You will be logged out of this device immediately.";
+"self.settings.device_details.remove_device.subtitle" = "このデバイスを使用していない場合、このデバイスを削除する。メッセージ履歴はこのデバイスから削除されログアウトされます。";
 "self.settings.device_details.reset_session.success" = "このセッションはリセットされました";
 
 "self.settings.account_details.actions.title" = "アクション";
