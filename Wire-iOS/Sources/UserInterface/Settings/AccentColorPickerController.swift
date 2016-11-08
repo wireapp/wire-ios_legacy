@@ -210,14 +210,12 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
-
 final class AccentColorPickerController: ColorPickerController {
     fileprivate let allAccentColors: [ZMAccentColor]
     
     
     public init() {
-        self.allAccentColors = ZMAccentColor.all().filter { $0 != .brightYellow }
+        self.allAccentColors = ZMAccentColor.allSelectable()
         
         super.init(colors: self.allAccentColors.map { $0.color })
         self.title = "self.settings.account_picture_group.color".localized.uppercased()
