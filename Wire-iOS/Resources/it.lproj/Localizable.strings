@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Disattivo";
-"input.ephemeral.title" = "Imposta un timer per i messaggi temporizzati";
+"input.ephemeral.title" = "Imposta il timer per i messaggi temporanei";
 
 // System messages
 "content.system.continued_conversation" = "Inizia una conversazione con %@";
@@ -485,6 +485,24 @@
 "self.settings.popular_demand.send_button.title" = "Pulsante Invia";
 "self.settings.popular_demand.send_button.footer" = "Disattiva per inviare tramite il tasto invio.";
 
+// Open in
+"self.settings.external_apps.header" = "Apri il link con";
+
+"self.settings.link_options.twitter.title" = "Tweet";
+"self.settings.link_options.maps.title" = "Posizione";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Map";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Suono di allerta";
 "self.settings.sound_menu.no_sounds.title" = "Nessuno";
@@ -688,7 +706,7 @@
 "error.invite.no_email_provider" = "Per favore configura la tua posta elettronica per essere in grado di inviare gli inviti via email";
 "error.invite.no_messaging_provider" = "Per favore configura i tuoi SMS per essere in grado di inviare gli inviti via SMS";
 
-"sketchpad.initial_hint" = "Tocca un colore per cambiare la dimensione del pennello\nTieni premuto per riempire un'area\nScuoti per rimuovere una foto";
+"sketchpad.initial_hint" = "Tocca il colore per cambiare la dimensione del pennello";
 
 "migration.please_wait_message" = "Un attimo, per favore";
 

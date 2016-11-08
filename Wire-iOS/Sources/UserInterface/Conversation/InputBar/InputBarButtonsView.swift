@@ -49,8 +49,8 @@ public final class InputBarButtonsView: UIView {
     fileprivate var buttonRowHeight: NSLayoutConstraint!
     fileprivate var lastLayoutWidth: CGFloat = 0
     
-    fileprivate let expandRowButton = IconButton()
-    fileprivate let buttons: [UIButton]
+    public let expandRowButton = IconButton()
+    public let buttons: [UIButton]
     fileprivate let buttonContainer = UIView()
     fileprivate let constants = InputBarRowConstants()
     

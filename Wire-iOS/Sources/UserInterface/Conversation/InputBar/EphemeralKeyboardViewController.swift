@@ -81,10 +81,10 @@ extension ZMConversationMessageDestructionTimeout {
 public extension ZMConversation {
 
     var timeoutImage: UIImage? {
-        if destructionTimeout.isDays { return WireStyleKit.imageOfDay() }
-        if destructionTimeout.isHours { return WireStyleKit.imageOfHour() }
-        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute() }
-        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond() }
+        if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
+        if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
+        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor.accent()) }
+        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor.accent()) }
         return nil
     }
 

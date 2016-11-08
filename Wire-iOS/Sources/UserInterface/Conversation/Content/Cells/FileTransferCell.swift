@@ -29,7 +29,7 @@ public final class FileTransferCell: ConversationCell {
     let fileTypeIconView = UIImageView()
     let loadingView = ThreeDotsLoadingView()
     let actionButton = IconButton()
-    private let obfuscationView = UIView()
+    private let obfuscationView = ObfuscationView(icon: .paperclip)
 
     var labelTextColor: UIColor?
     var labelTextBlendedColor: UIColor?
@@ -66,8 +66,6 @@ public final class FileTransferCell: ConversationCell {
         
         self.messageContentView.addSubview(self.containerView)
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
-        
         self.allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView, obfuscationView]
         self.allViews.forEach(self.containerView.addSubview)
 

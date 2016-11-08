@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationInputBarSendController;
 @class EmojiKeyboardViewController;
 @class EphemeralKeyboardViewController;
+@class ConversationInputBarButtonState;
 
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
@@ -38,10 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic)           BOOL inputBarOverlapsContent;
 @property (nonatomic)           NSUInteger videoSendContext;
 
+@property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
+
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
-
+- (void)updateButtonIconsForEphemeral;
 @end
 
 

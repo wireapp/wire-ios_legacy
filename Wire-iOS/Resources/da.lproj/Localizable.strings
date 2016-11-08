@@ -485,6 +485,24 @@
 "self.settings.popular_demand.send_button.title" = "Send Knap";
 "self.settings.popular_demand.send_button.footer" = "Deaktiver for at sende via returtasten.";
 
+// Open in
+"self.settings.external_apps.header" = "Open Links In";
+
+"self.settings.link_options.twitter.title" = "Tweets";
+"self.settings.link_options.maps.title" = "Locations";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Lyd advarsler";
 "self.settings.sound_menu.no_sounds.title" = "Ingen";
@@ -688,7 +706,7 @@
 "error.invite.no_email_provider" = "Konfigurer din e-mail klient for at kunne sende invitationer via e-mail";
 "error.invite.no_messaging_provider" = "Konfigurer din SMS for at kunne sende invitationer vis SMS";
 
-"sketchpad.initial_hint" = "Tryk på farve for at ændre penselstørrelse\nTryk og hold inde for at fylde et område\nRyst for at fjerne et billede";
+"sketchpad.initial_hint" = "Tap colors to change brush size";
 
 "migration.please_wait_message" = "Et øjeblik";
 

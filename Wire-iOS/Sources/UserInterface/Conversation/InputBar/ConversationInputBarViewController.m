@@ -142,7 +142,6 @@
 @property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
 
 @property (nonatomic) UIViewController *inputController;
-@property (nonatomic) ConversationInputBarButtonState *sendButtonState;
 
 @property (nonatomic) BOOL inRotation;
 @end
@@ -219,12 +218,14 @@
     [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
     [self updateWritingState];
+    [self updateButtonIconsForEphemeral];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self updateRightAccessoryView];
+    [self updateButtonIconsForEphemeral];
     [self.inputBar updateReturnKey];
     [self.inputBar updateEphemeralState];
 }
@@ -270,44 +271,36 @@
     self.audioButton = [[IconButton alloc] init];
     self.audioButton.hitAreaPadding = CGSizeZero;
     self.audioButton.accessibilityIdentifier = @"audioButton";
-    [self.audioButton setIcon:ZetaIconTypeMicrophone withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.audioButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
 
     self.videoButton = [[IconButton alloc] init];
     self.videoButton.hitAreaPadding = CGSizeZero;
     self.videoButton.accessibilityIdentifier = @"videoButton";
-    [self.videoButton setIcon:ZetaIconTypeVideoMessage withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
     self.photoButton = [[IconButton alloc] init];
     self.photoButton.hitAreaPadding = CGSizeZero;
     self.photoButton.accessibilityIdentifier = @"photoButton";
-    [self.photoButton setIcon:ZetaIconTypeCameraLens withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.photoButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
 
     self.uploadFileButton = [[IconButton alloc] init];
     self.uploadFileButton.hitAreaPadding = CGSizeZero;
     self.uploadFileButton.accessibilityIdentifier = @"uploadFileButton";
-    [self.uploadFileButton setIcon:ZetaIconTypePaperclip withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
     self.sketchButton = [[IconButton alloc] init];
     self.sketchButton.hitAreaPadding = CGSizeZero;
     self.sketchButton.accessibilityIdentifier = @"sketchButton";
-    [self.sketchButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
     self.pingButton = [[IconButton alloc] init];
     self.pingButton.hitAreaPadding = CGSizeZero;
     self.pingButton.accessibilityIdentifier = @"pingButton";
-    [self.pingButton setIcon:ZetaIconTypePing withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
     self.locationButton = [[IconButton alloc] init];
     self.locationButton.hitAreaPadding = CGSizeZero;
     self.locationButton.accessibilityIdentifier = @"locationButton";
-    [self.locationButton setIcon:ZetaIconTypeLocationPin withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
     self.gifButton = [[IconButton alloc] init];
     self.gifButton.hitAreaPadding = CGSizeZero;
     self.gifButton.accessibilityIdentifier = @"gifButton";
-    [self.gifButton setIcon:ZetaIconTypeGif withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     
     self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
@@ -349,7 +342,6 @@
 {
     self.sendButton = [IconButton iconButtonDefault];
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.sendButton setIcon:ZetaIconTypeSend withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
 
     self.sendButton.accessibilityIdentifier = @"sendButton";
     self.sendButton.adjustsImageWhenHighlighted = NO;
@@ -387,7 +379,6 @@
     
     self.emojiButton = IconButton.iconButtonCircular;
     self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.emojiButton setIcon:ZetaIconTypeEmoji withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     self.emojiButton.accessibilityIdentifier = @"emojiButton";
 
     [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
@@ -440,13 +431,13 @@
 - (void)updateRightAccessoryView
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
-    [self updateSendButtonColor];
 
     NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
                             destructionTimeout:self.conversation.messageDestructionTimeout
+                              conversationType:self.conversation.conversationType
                                           mode:self.mode];
 
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
@@ -456,13 +447,45 @@
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.timeoutImage forState:UIControlStateNormal];
 }
 
-- (void)updateSendButtonColor
+- (void)updateButtonIconsForEphemeral
 {
-    if (self.conversation.messageDestructionTimeout != 0) {
-        [self.sendButton setBackgroundImageColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorEphemeral] forState:UIControlStateNormal];
-    } else {
-        [self.sendButton setBackgroundImageColor:UIColor.accentColor forState:UIControlStateNormal];
-    }
+    [self.audioButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeMicrophoneEphemeral : ZetaIconTypeMicrophone
+                     withSize:ZetaIconSizeTiny
+                     forState:UIControlStateNormal];
+    
+    [self.videoButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeVideoMessageEphemeral : ZetaIconTypeVideoMessage
+                     withSize:ZetaIconSizeTiny
+                     forState:UIControlStateNormal];
+    
+    [self.photoButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeCameraLensEphemeral : ZetaIconTypeCameraLens
+                     withSize:ZetaIconSizeTiny
+                     forState:UIControlStateNormal];
+    
+    [self.uploadFileButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypePaperclipEphemeral : ZetaIconTypePaperclip
+                          withSize:ZetaIconSizeTiny
+                          forState:UIControlStateNormal];
+    
+    [self.sketchButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeBrushEphemeral : ZetaIconTypeBrush
+                      withSize:ZetaIconSizeTiny
+                      forState:UIControlStateNormal];
+    
+    [self.pingButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypePingEphemeral : ZetaIconTypePing
+                    withSize:ZetaIconSizeTiny
+                    forState:UIControlStateNormal];
+    
+    [self.locationButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeLocationPinEphemeral : ZetaIconTypeLocationPin
+                        withSize:ZetaIconSizeTiny
+                        forState:UIControlStateNormal];
+    
+    [self.gifButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeGifEphemeral : ZetaIconTypeGif
+                   withSize:ZetaIconSizeTiny
+                   forState:UIControlStateNormal];
+ 
+    [self.sendButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeSendEphemeral : ZetaIconTypeSend
+                    withSize:ZetaIconSizeTiny
+                    forState:UIControlStateNormal];
+    
+    [self updateEmojiButton:self.emojiButton];
 }
 
 - (void)updateAccessoryViews
@@ -609,6 +632,7 @@
     }
     
     [self updateRightAccessoryView];
+    [self updateButtonIconsForEphemeral];
 }
 
 - (void)selectInputControllerButton:(IconButton *)button

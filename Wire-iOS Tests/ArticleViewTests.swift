@@ -141,6 +141,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
 
     func testArticleViewObfuscated() {
         sut = ArticleView(withImagePlaceholder: true)
+        sut.loadingView?.layer.speed = 0
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
         sut.layoutIfNeeded()

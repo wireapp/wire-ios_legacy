@@ -5,8 +5,8 @@ github "wireapp/CocoaLumberjack" "2.4.0-swift3"
 github "wireapp/Cartography" "z0.6.1-swift3"
 github "wireapp/TTTAttributedLabel" "2.0.0"
 github "wireapp/ZipArchive" "1.6.1-swift3"
-github "wireapp/HockeySDK-iOS" "4.0.1"
-github "wireapp/wire-ios-sync-engine" "57.1.0-CallKit4"
+github "wireapp/HockeySDK-iOS" "4.1.2"
+github "wireapp/wire-ios-sync-engine" ~> 58.0.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2"
 github "wireapp/FormatterKit" ~> 1.8.1
 github "wireapp/VIMNetworking" "v6.0.2-wire-carthage-2"
