@@ -25,11 +25,11 @@ extension ConversationContentViewController {
 }
 
 extension ConversationContentViewController: ShareViewControllerDelegate {
-    public func shareViewControllerDidSelect<I>(shareController: ShareViewController<I>, conversations: [I]) {
+    public func shareViewControllerDidSelect<ZMConversation>(shareController: ShareViewController<ZMConversation>, conversations: [ZMConversation]) {
         
     }
     
-    public func shareViewControllerWantsToBeDismissed<I>(shareController: ShareViewController<I>) {
-        self.parent?.dismiss()
+    public func shareViewControllerWantsToBeDismissed<ZMConversation>(shareController: ShareViewController<ZMConversation>) {
+        self.parent?.dismiss(animated: true, completion: .none)
     }
 }
