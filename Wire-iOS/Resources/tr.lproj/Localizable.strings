@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire her cihaza kendine has bir parmak izi verir. Cihazlarınızı ve konuşmalarınızı doğrulamak için parmak izlerinizi karşılaştırın.";
 "self.settings.device_details.reset_session.subtitle" = "Parmak izleri eşleşmezse, her iki tarafta da yeni şifreleme anahtarları oluşturmak için oturumu sıfırlayın.";
-"self.settings.device_details.remove_device.subtitle" = "Eğer bu cihazı kullanmayı bıraktıysanız, cihazı kaldırın. Konuşma geçmişinizden cihazdan silinecek ve otomatik olarak çıkış yapılacak.";
+"self.settings.device_details.remove_device.subtitle" = "Eğer bu cihazı kullanmayı bıraktıysanız, cihazı kaldırın. Ardından cihazdan otomatik olarak çıkış yapılacaktır.";
 "self.settings.device_details.reset_session.success" = "Oturum sıfırlandı";
 
 "self.settings.account_details.actions.title" = "Eylemler";

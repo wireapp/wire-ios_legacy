@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire geeft elk apparaat een eigen vingerafdruk. Vergelijk deze en verifieer je apparaten en gesprekken.";
 "self.settings.device_details.reset_session.subtitle" = "Wanner de digitale vingerprint niet klopt, reset de sessie om nieuwe encryptie sleutels aan te maken op beide apparaten.";
-"self.settings.device_details.remove_device.subtitle" = "Verwijder dit apparaat als je gestopt bent met het gebruiken ervan. Je berichten geschiedenis word verwijdert op dit apparaat en je word uitgelogd.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. You will be logged out of this device immediately.";
 "self.settings.device_details.reset_session.success" = "De sessie is gereset";
 
 "self.settings.account_details.actions.title" = "Acties";

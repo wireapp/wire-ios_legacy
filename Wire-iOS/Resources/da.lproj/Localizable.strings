@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire giver hver enhed et unikt fingeraftryk. Sammenlign dem og verificer dine enheder og samtaler.";
 "self.settings.device_details.reset_session.subtitle" = "Hvis fingeraftrykkene ikke stemmer overens, nulstil sessionen for at generere nye krypteringsnøgler hos begge parter.";
-"self.settings.device_details.remove_device.subtitle" = "Fjern denne enhed hvis du er stoppet med at bruge den. Din chathistorik vil blive slettet på denne enhed og du vil blive logget af.";
+"self.settings.device_details.remove_device.subtitle" = "Fjern denne enhed, hvis du ikke bruger den længere. Du bliver logget ud af enheden med det samme.";
 "self.settings.device_details.reset_session.success" = "Sessionen er blevet nulstillet";
 
 "self.settings.account_details.actions.title" = "Handlinger";
