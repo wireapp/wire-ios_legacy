@@ -620,6 +620,7 @@
 		87DE06B11D256CF50009411F /* DeviceProximityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B01D256CF50009411F /* DeviceProximityListener.swift */; };
 		87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */; };
 		87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0D6D41CD3978900C54196 /* AVKit.framework */; };
+		87E4BCF31DD21E52005A4CF0 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4BCF21DD21E52005A4CF0 /* ShareView.swift */; };
 		87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7C9621BF5E422001C5485 /* WireStyleKit.m */; };
 		87E7C9651BF5E4E2001C5485 /* WireStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 87E7C9611BF5E422001C5485 /* WireStyleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
@@ -1818,6 +1819,7 @@
 		87DE06B01D256CF50009411F /* DeviceProximityListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceProximityListener.swift; sourceTree = "<group>"; };
 		87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectsPickerViewControllerTests.swift; sourceTree = "<group>"; };
 		87E0D6D41CD3978900C54196 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		87E4BCF21DD21E52005A4CF0 /* ShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		87E7C9611BF5E422001C5485 /* WireStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireStyleKit.h; sourceTree = "<group>"; };
 		87E7C9621BF5E422001C5485 /* WireStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WireStyleKit.m; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
@@ -3469,6 +3471,7 @@
 			children = (
 				876113E61DD1DE89007F5969 /* ShareViewController.swift */,
 				876113E81DD1FC4F007F5969 /* ShareViewControllerCell.swift */,
+				87E4BCF21DD21E52005A4CF0 /* ShareView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5210,6 +5213,7 @@
 				1EE9DCC81B5F9A6D00E347DF /* TokenTextAttachment.m in Sources */,
 				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
 				160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */,
+				87E4BCF31DD21E52005A4CF0 /* ShareView.swift in Sources */,
 				1EE9DCCA1B5F9A6D00E347DF /* TokenizedTextView.m in Sources */,
 				872633E91D9322BA008B69D8 /* NSString+URL.swift in Sources */,
 				1E5E0CB31B6B83C6003B0CAC /* IconButton.m in Sources */,

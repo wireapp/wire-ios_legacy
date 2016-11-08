@@ -37,7 +37,7 @@ public protocol ShareViewControllerDelegate: class {
     func shareViewControllerWantsToBeDismissed<I, S>(shareController: ShareViewController<I, S>)
 }
 
-final public class ShareViewController<I: ConversationTypeProtocol, S: ShareableMessageType>: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final public class ShareViewController<I: ConversationTypeProtocol, S: ShareableMessageType>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate {
     public let conversations: [I]
     public let shareable: S
     private(set) var selectedConversations: Set<I> = Set() {
@@ -74,6 +74,7 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
     private var closeButton: IconButton!
     private var sendButton: IconButton!
     private var titleLabel: UILabel!
+    private var tokenField: TokenField!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +83,10 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
         
         self.blurView = UIVisualEffectView(effect: effect)
         self.view.addSubview(self.blurView)
+        
+        self.tokenField = TokenField()
+        self.tokenField.delegate = self
+        self.view.addSubview(self.tokenField)
         
         self.tableView = UITableView()
         self.tableView.backgroundColor = .clear
@@ -141,7 +146,7 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
     }
     
     
-    // Actions
+    // MARK: - Actions
     
     public func onCloseButtonPressed(sender: AnyObject?) {
         self.delegate?.shareViewControllerWantsToBeDismissed(shareController: self)
@@ -155,6 +160,8 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
         }
     }
     
+    // MARK: - UITableViewDataSource & UITableViewDelegate
+
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -177,4 +184,26 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+
+    // MARK: - TokenFieldDelegate
+
+    private func tokenField(_ tokenField: TokenField!, changedTokensTo tokens: [AnyObject]!) {
+        self.recipientList = tokens.map { (($0 as! Token).representedObject as! ZMConversation) }
+    }
+    
+    func tokenField(_ tokenField: TokenField!, changedFilterTextTo text: String!) {
+        self.conversationListController.searchTerm = text
+    }
+    
+    func tokenFieldString(forCollapsedState tokenField: TokenField!) -> String! {
+        if (self.recipientList.count > 1) {
+            return NSString.localizedStringWithFormat(NSLocalizedString("sharing-ext.recipients-field.collapsed", comment: "Name of first user + number of others more") as NSString,
+                self.recipientList[0].displayName, self.recipientList.count-1) as String
+        } else if (self.recipientList.count > 0) {
+            return self.recipientList[0].displayName
+        } else {
+            return ""
+        }
+    }
+
 }
