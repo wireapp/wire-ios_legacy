@@ -23,17 +23,23 @@ public protocol ConversationTypeProtocol: Hashable {
     var displayName: String { get }
 }
 
+public protocol ShareableMessageType {
+    associatedtype I: ConversationTypeProtocol
+    func shareTo<I>(conversations: [I])
+}
+
 public protocol AccentColorProvider: class {
     var accentColor: UIColor! { get }
 }
 
 public protocol ShareViewControllerDelegate: class {
-    func shareViewControllerDidSelect<I>(shareController: ShareViewController<I>, conversations:[I])
-    func shareViewControllerWantsToBeDismissed<I>(shareController: ShareViewController<I>)
+    func shareViewControllerDidShare<I, S>(shareController: ShareViewController<I, S>, conversations:[I])
+    func shareViewControllerWantsToBeDismissed<I, S>(shareController: ShareViewController<I, S>)
 }
 
-final public class ShareViewController<I: ConversationTypeProtocol>: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final public class ShareViewController<I: ConversationTypeProtocol, S: ShareableMessageType>: UIViewController, UITableViewDelegate, UITableViewDataSource {
     public let conversations: [I]
+    public let shareable: S
     private(set) var selectedConversations: Set<I> = Set() {
         didSet {
             sendButton.isEnabled = self.selectedConversations.count > 0
@@ -53,8 +59,9 @@ final public class ShareViewController<I: ConversationTypeProtocol>: UIViewContr
     public var accentColorProvider: AccentColorProvider?
     public weak var delegate: ShareViewControllerDelegate?
     
-    public init(conversations: [I]) {
+    public init(shareable: S, conversations: [I]) {
         self.conversations = conversations
+        self.shareable = shareable
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,6 +69,7 @@ final public class ShareViewController<I: ConversationTypeProtocol>: UIViewContr
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var blurView: UIVisualEffectView!
     private var tableView: UITableView!
     private var closeButton: IconButton!
     private var sendButton: IconButton!
@@ -70,11 +78,17 @@ final public class ShareViewController<I: ConversationTypeProtocol>: UIViewContr
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        let effect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        
+        self.blurView = UIVisualEffectView(effect: effect)
+        self.view.addSubview(self.blurView)
+        
         self.tableView = UITableView()
         self.tableView.backgroundColor = .clear
         
         self.tableView.register(ShareViewControllerCell<I>.self, forCellReuseIdentifier: ShareViewControllerCell<I>.reuseIdentifier)
         
+        self.tableView.separatorStyle = .none
         self.tableView.allowsMultipleSelection = true
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -99,12 +113,16 @@ final public class ShareViewController<I: ConversationTypeProtocol>: UIViewContr
     }
     
     private func createConstraints() {
+        constrain(self.view, self.blurView) { view, blurView in
+            blurView.edges == view.edges
+        }
+        
         constrain(self.view, self.tableView, self.closeButton, self.sendButton, self.titleLabel) { view, tableView, closeButton, sendButton, titleLabel in
             
             titleLabel.top == view.top
             titleLabel.left == view.left
-            titleLabel.right == closeButton.left
-            titleLabel.height == 44
+            titleLabel.right == view.left
+            titleLabel.height == 20
             
             closeButton.centerY == titleLabel.centerY
             closeButton.right == view.right
@@ -131,7 +149,9 @@ final public class ShareViewController<I: ConversationTypeProtocol>: UIViewContr
     
     public func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedConversations.count > 0 {
-            self.delegate?.shareViewControllerDidSelect(shareController: self, conversations: Array(self.selectedConversations))
+            let conversationsToShareTo = Array(self.selectedConversations)
+            self.shareable.shareTo(conversations: conversationsToShareTo)
+            self.delegate?.shareViewControllerDidShare(shareController: self, conversations: conversationsToShareTo)
         }
     }
     

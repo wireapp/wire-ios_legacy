@@ -50,6 +50,10 @@ final class ShareViewControllerCell<I: ConversationTypeProtocol>: UITableViewCel
             
             self.backgroundColor = .clear
             self.titleLabel.backgroundColor = .clear
+            self.titleLabel.textColor = .white
+            self.contentView.backgroundColor = .clear
+            self.backgroundView = UIView()
+            self.selectedBackgroundView = UIView()
             
             self.checkImageView.backgroundColor = accentColorProvider.accentColor
             self.checkImageView.image = UIImage()
@@ -61,6 +65,7 @@ final class ShareViewControllerCell<I: ConversationTypeProtocol>: UITableViewCel
             constrain(self.contentView, self.titleLabel, self.checkImageView) { contentView, titleLabel, checkImageView in
                 checkImageView.centerY == contentView.centerY
                 checkImageView.left == contentView.left + 16
+                checkImageView.width == 32
                 
                 titleLabel.left == checkImageView.right + 16
                 titleLabel.centerY == contentView.centerY
