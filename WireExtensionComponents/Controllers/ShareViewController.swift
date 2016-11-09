@@ -19,48 +19,29 @@
 import Foundation
 import Cartography
 
-public protocol ConversationTypeProtocol: Hashable {
+public protocol ShareDestination: Hashable {
     var displayName: String { get }
 }
 
-public protocol ShareableMessageType {
-    associatedtype I: ConversationTypeProtocol
-    func shareTo<I>(conversations: [I])
+public protocol Shareable {
+    associatedtype I: ShareDestination
+    func share<I>(to: [I])
+    func previewView() -> UIView
 }
 
-public protocol AccentColorProvider: class {
-    var accentColor: UIColor! { get }
-}
-
-public protocol ShareViewControllerDelegate: class {
-    func shareViewControllerDidShare<I, S>(shareController: ShareViewController<I, S>, conversations:[I])
-    func shareViewControllerWantsToBeDismissed<I, S>(shareController: ShareViewController<I, S>)
-}
-
-final public class ShareViewController<I: ConversationTypeProtocol, S: ShareableMessageType>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate {
-    public let conversations: [I]
+final public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate {
+    public let destinations: [D]
     public let shareable: S
-    private(set) var selectedConversations: Set<I> = Set() {
+    private(set) var selectedDestinations: Set<D> = Set() {
         didSet {
-            sendButton.isEnabled = self.selectedConversations.count > 0
+            sendButton.isEnabled = self.selectedDestinations.count > 0
         }
     }
     
-    public override var title: String? {
-        didSet {
-            guard let titleLabel = self.titleLabel else {
-                return
-            }
-
-            titleLabel.text = title
-        }
-    }
+    public var onDismiss: ((ShareViewController)->())?
     
-    public var accentColorProvider: AccentColorProvider?
-    public weak var delegate: ShareViewControllerDelegate?
-    
-    public init(shareable: S, conversations: [I]) {
-        self.conversations = conversations
+    public init(shareable: S, destinations: [D]) {
+        self.destinations = destinations
         self.shareable = shareable
         super.init(nibName: nil, bundle: nil)
     }
@@ -70,11 +51,12 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
     }
     
     private var blurView: UIVisualEffectView!
-    private var tableView: UITableView!
+    private var shareablePreviewView: UIView!
+    private var destinationsTableView: UITableView!
     private var closeButton: IconButton!
     private var sendButton: IconButton!
-    private var titleLabel: UILabel!
     private var tokenField: TokenField!
+    private var bottomSeparatorLine: UIView!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -82,37 +64,35 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
         let effect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         
         self.blurView = UIVisualEffectView(effect: effect)
-        self.view.addSubview(self.blurView)
+        
+        self.shareablePreviewView = self.shareable.previewView()
+        self.shareablePreviewView.isUserInteractionEnabled = false
         
         self.tokenField = TokenField()
         self.tokenField.delegate = self
-        self.view.addSubview(self.tokenField)
         
-        self.tableView = UITableView()
-        self.tableView.backgroundColor = .clear
+        self.destinationsTableView = UITableView()
+        self.destinationsTableView.backgroundColor = .clear
         
-        self.tableView.register(ShareViewControllerCell<I>.self, forCellReuseIdentifier: ShareViewControllerCell<I>.reuseIdentifier)
+        self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         
-        self.tableView.separatorStyle = .none
-        self.tableView.allowsMultipleSelection = true
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.view.addSubview(self.tableView)
+        self.destinationsTableView.separatorStyle = .none
+        self.destinationsTableView.allowsMultipleSelection = true
+        self.destinationsTableView.delegate = self
+        self.destinationsTableView.dataSource = self
         
         self.closeButton = IconButton()
         self.closeButton.setIcon(.X, with: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
-        self.view.addSubview(self.closeButton)
         
         self.sendButton = IconButton()
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, with: .large, for: .normal)
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
-        self.view.addSubview(self.sendButton)
         
-        self.titleLabel = UILabel()
-        self.titleLabel.backgroundColor = self.accentColorProvider?.accentColor
-        self.view.addSubview(self.titleLabel)
+        self.bottomSeparatorLine = UIView()
+        
+        [self.blurView, self.shareablePreviewView, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine].forEach(self.view.addSubview)
         
         self.createConstraints()
     }
@@ -122,23 +102,37 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
             blurView.edges == view.edges
         }
         
-        constrain(self.view, self.tableView, self.closeButton, self.sendButton, self.titleLabel) { view, tableView, closeButton, sendButton, titleLabel in
+        constrain(self.view, self.destinationsTableView, self.shareablePreviewView, self.tokenField, self.bottomSeparatorLine) { view, tableView, shareablePreviewView, tokenField, bottomSeparatorLine in
             
-            titleLabel.top == view.top
-            titleLabel.left == view.left
-            titleLabel.right == view.left
-            titleLabel.height == 20
+            shareablePreviewView.top == view.top + 28
+            shareablePreviewView.left == view.left
+            shareablePreviewView.right == view.right
+            shareablePreviewView.height <= 200
             
-            closeButton.centerY == titleLabel.centerY
-            closeButton.right == view.right
-            closeButton.width == 44
-        
+            tokenField.top == shareablePreviewView.bottom
+            tokenField.left == view.left
+            tokenField.right == view.right
+            
+            
             tableView.left == view.left
             tableView.right == view.right
-            tableView.top == titleLabel.bottom
+            tableView.top == tokenField.bottom
+            tableView.bottom == bottomSeparatorLine.top
             
-            sendButton.top == tableView.bottom
-            sendButton.height == 44
+            bottomSeparatorLine.left == view.left
+            bottomSeparatorLine.right == view.right
+            bottomSeparatorLine.height == 0.5
+        }
+        
+        constrain(self.view, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
+            
+            closeButton.left == view.left + 16
+            closeButton.centerY == sendButton.centerY
+            closeButton.width == 44
+            closeButton.height == closeButton.width
+            
+            sendButton.top == bottomSeparatorLine.bottom
+            sendButton.height == 56
             sendButton.width == sendButton.height
             sendButton.centerX == view.centerX
             sendButton.bottom == view.bottom
@@ -149,14 +143,13 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
     // MARK: - Actions
     
     public func onCloseButtonPressed(sender: AnyObject?) {
-        self.delegate?.shareViewControllerWantsToBeDismissed(shareController: self)
+        self.onDismiss?(self)
     }
     
     public func onSendButtonPressed(sender: AnyObject?) {
-        if self.selectedConversations.count > 0 {
-            let conversationsToShareTo = Array(self.selectedConversations)
-            self.shareable.shareTo(conversations: conversationsToShareTo)
-            self.delegate?.shareViewControllerDidShare(shareController: self, conversations: conversationsToShareTo)
+        if self.selectedDestinations.count > 0 {
+            self.shareable.share(to: Array(self.selectedDestinations))
+            self.onDismiss?(self)
         }
     }
     
@@ -167,16 +160,15 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.conversations.count
+        return self.destinations.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ShareViewControllerCell<I>.reuseIdentifier) as! ShareViewControllerCell<I>
+        let cell = tableView.dequeueReusableCell(withIdentifier: ShareDestinationCell<D>.reuseIdentifier) as! ShareDestinationCell<D>
         
-        let conversation = self.conversations[indexPath.row]
-        cell.accentColorProvider = self.accentColorProvider
-        cell.conversation = conversation
-        cell.isSelected = self.selectedConversations.contains(conversation)
+        let destination = self.destinations[indexPath.row]
+        cell.destination = destination
+        cell.isSelected = self.selectedDestinations.contains(destination)
         
         return cell
     }
@@ -187,23 +179,23 @@ final public class ShareViewController<I: ConversationTypeProtocol, S: Shareable
 
     // MARK: - TokenFieldDelegate
 
-    private func tokenField(_ tokenField: TokenField!, changedTokensTo tokens: [AnyObject]!) {
-        self.recipientList = tokens.map { (($0 as! Token).representedObject as! ZMConversation) }
-    }
-    
-    func tokenField(_ tokenField: TokenField!, changedFilterTextTo text: String!) {
-        self.conversationListController.searchTerm = text
-    }
-    
-    func tokenFieldString(forCollapsedState tokenField: TokenField!) -> String! {
-        if (self.recipientList.count > 1) {
-            return NSString.localizedStringWithFormat(NSLocalizedString("sharing-ext.recipients-field.collapsed", comment: "Name of first user + number of others more") as NSString,
-                self.recipientList[0].displayName, self.recipientList.count-1) as String
-        } else if (self.recipientList.count > 0) {
-            return self.recipientList[0].displayName
-        } else {
-            return ""
-        }
-    }
+//    private func tokenField(_ tokenField: TokenField!, changedTokensTo tokens: [AnyObject]!) {
+//        self.selectedConversations = tokens.map { (($0 as! Token).representedObject as! ShareDestination) }
+//    }
+//    
+//    func tokenField(_ tokenField: TokenField!, changedFilterTextTo text: String!) {
+//        self.conversationListController.searchTerm = text
+//    }
+//    
+//    func tokenFieldString(forCollapsedState tokenField: TokenField!) -> String! {
+//        if (self.recipientList.count > 1) {
+//            return NSString.localizedStringWithFormat(NSLocalizedString("sharing-ext.recipients-field.collapsed", comment: "Name of first user + number of others more") as NSString,
+//                self.recipientList[0].displayName, self.recipientList.count-1) as String
+//        } else if (self.recipientList.count > 0) {
+//            return self.recipientList[0].displayName
+//        } else {
+//            return ""
+//        }
+//    }
 
 }

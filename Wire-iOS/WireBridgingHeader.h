@@ -35,6 +35,8 @@
 @import WireExtensionComponents;
 #import "UIColor+WAZExtensions.h"
 #import "ConversationCell.h"
+#import "TextMessageCell.h"
+#import "ImageMessageCell.h"
 #import "WireStyleKit.h"
 #import <Classy/UIViewController+CASAdditions.h>
 #import "UIViewController+Errors.h"
