@@ -102,8 +102,6 @@ extension SettingsCellDescriptorFactory {
         }()
 
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
-
-
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 
         let callSoundProperty = self.settingsPropertyFactory.property(.callSoundName)
@@ -116,6 +114,25 @@ extension SettingsCellDescriptorFactory {
         let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: SettingsPropertyLabelText(pingSoundProperty.propertyName), callSound: false, fallbackSoundName: MediaManagerSoundIncomingKnockSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_ping".localized)
 
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
+
+        var externalAppsDescriptors = [SettingsCellDescriptorType]()
+
+        if BrowserOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
+        }
+        if MapsOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)))
+        }
+        if TweetOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
+        }
+
+        let externalAppsSection = SettingsSectionDescriptor(
+            cellDescriptors: externalAppsDescriptors,
+            header: "self.settings.external_apps.header".localized
+        )
+
+
 
         let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton), inverse: true)
 
@@ -131,6 +148,73 @@ extension SettingsCellDescriptorFactory {
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
 
-        return SettingsGroupCellDescriptor(items: [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection, byPopularDemandSection], title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
+        var cellDescriptors = [shareContactsDisabledSection, clearHistorySection, notificationVisibleSection, chatHeadsSection, soundAlertSection, soundsSection]
+
+        if externalAppsDescriptors.count > 0 {
+            cellDescriptors.append(externalAppsSection)
+        }
+
+        cellDescriptors.append(byPopularDemandSection)
+
+        return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
+
+    func twitterOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
+        let cells = TweetOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+
+            return SettingsPropertySelectValueCellDescriptor(
+                settingsProperty: property,
+                value: .number(value: option.rawValue),
+                title: option.displayString
+            )
+        }
+
+        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
+        let preview: PreviewGeneratorType = { descriptor in
+            let value = property.value().value() as? Int
+            guard let option = value.flatMap ({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
+            return .text(option.displayString)
+        }
+        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
+    }
+
+    func mapsOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
+        let cells = MapsOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+
+            return SettingsPropertySelectValueCellDescriptor(
+                settingsProperty: property,
+                value: .number(value: option.rawValue),
+                title: option.displayString
+            )
+        }
+
+        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
+        let preview: PreviewGeneratorType = { descriptor in
+            let value = property.value().value() as? Int
+            guard let option = value.flatMap ({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
+            return .text(option.displayString)
+        }
+        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
+    }
+
+    func browserOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
+        let cells = BrowserOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+
+            return SettingsPropertySelectValueCellDescriptor(
+                settingsProperty: property,
+                value: .number(value: option.rawValue),
+                title: option.displayString
+            )
+        }
+
+        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
+        let preview: PreviewGeneratorType = { descriptor in
+            let value = property.value().value() as? Int
+            guard let option = value.flatMap ({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
+            return .text(option.displayString)
+        }
+        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
+    }
+    
+
 }
