@@ -57,9 +57,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 {
     self = [super init];
     if (self) {
-        if (![ZMUserSession useCallKit]) {
-            self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
-        }
+        self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
         self.unreadMessageObserverToken = [ZMMessageNotification addNewMessagesObserver:self inUserSession:[ZMUserSession sharedSession]];
         self.unreadKnockMessageObserverToken = [ZMMessageNotification addNewKnocksObserver:self inUserSession:[ZMUserSession sharedSession]];
         [ZMCallEndedNotification addCallEndObserver:self];
@@ -202,7 +200,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             break;
         }
         case ZMVoiceChannelStateIncomingCall: {
-            if (! change.voiceChannel.conversation.isSilenced) {
+            if (![ZMUserSession useCallKit] && ! change.voiceChannel.conversation.isSilenced) {
                 
                 BOOL otherVoiceChannelIsActive = NO;
                 
