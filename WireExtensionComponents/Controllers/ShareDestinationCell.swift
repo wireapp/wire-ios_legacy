@@ -50,9 +50,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 1
         
-        self.checkImageView.image = UIImage()
-        self.checkImageView.highlightedImage = UIImage(for: .checkmark, iconSize: .small, color: .white)
-        
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.checkImageView)
         
@@ -74,6 +71,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        self.checkImageView.isHighlighted = selected
+        self.checkImageView.image = selected ? UIImage(for: .checkmark, iconSize: .small, color: .white) : nil
+        self.checkImageView.backgroundColor = selected ? UIColor.blue : UIColor.clear
     }
 }

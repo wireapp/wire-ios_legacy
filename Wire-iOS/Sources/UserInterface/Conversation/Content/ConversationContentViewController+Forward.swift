@@ -96,7 +96,7 @@ extension ZMMessage: Shareable {
         
         
         let layoutProperties = ConversationCellLayoutProperties()
-        layoutProperties.showSender       = true
+        layoutProperties.showSender       = false
         layoutProperties.showUnreadMarker = false
         layoutProperties.showBurstTimestamp = false
         layoutProperties.topPadding       = 0

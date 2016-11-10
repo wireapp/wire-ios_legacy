@@ -82,15 +82,18 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         self.destinationsTableView.dataSource = self
         
         self.closeButton = IconButton()
+        self.closeButton.cas_styleClass = "default-dark"
         self.closeButton.setIcon(.X, with: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
         
         self.sendButton = IconButton()
+        self.sendButton.cas_styleClass = "default-dark"
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, with: .large, for: .normal)
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
         
         self.bottomSeparatorLine = UIView()
+        self.bottomSeparatorLine.cas_styleClass = "separator"
         
         [self.blurView, self.shareablePreviewView, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine].forEach(self.view.addSubview)
         
@@ -109,10 +112,9 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
             shareablePreviewView.right == view.right
             shareablePreviewView.height <= 200
             
-            tokenField.top == shareablePreviewView.bottom
+            tokenField.top == shareablePreviewView.bottom + 16
             tokenField.left == view.left
             tokenField.right == view.right
-            
             
             tableView.left == view.left
             tableView.right == view.right
