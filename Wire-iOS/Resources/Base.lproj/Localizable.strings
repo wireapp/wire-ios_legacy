@@ -485,10 +485,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "By popular demand";
 "self.settings.popular_demand.send_button.title" = "Send Button";
+"self.settings.popular_demand.call_kit.title" = "Don't use native calling (restart)";
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 
 // Open in
-"self.settings.external_apps.header" = "Open Links In";
+"self.settings.external_apps.header" = "Open With";
 
 "self.settings.link_options.twitter.title" = "Tweets";
 "self.settings.link_options.maps.title" = "Locations";
@@ -498,7 +499,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.apple" = "Maps";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";

@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gibt jedem Gerät einen einzigartigen Fingerabdruck. Vergleiche diese und verifiziere deine Geräte und Unterhaltungen.";
 "self.settings.device_details.reset_session.subtitle" = "Falls die Fingerabdrücke nicht übereinstimmen, setze die Session zurück um neue Verschlüsselungs-Schlüssel auf beiden Seiten zu erstellen.";
-"self.settings.device_details.remove_device.subtitle" = "Entferne das Gerät, wenn du es nicht mehr nutzt. Der Nachrichtenverlauf wird auf diesem Gerät gelöscht werden und du wirst abgemeldet.";
+"self.settings.device_details.remove_device.subtitle" = "Entferne das Gerät, wenn du es nicht mehr nutzt. Du wirst auf diesem Gerät umgehend abgemeldet.";
 "self.settings.device_details.reset_session.success" = "Die Session wurde zurückgesetzt";
 
 "self.settings.account_details.actions.title" = "Aktionen";

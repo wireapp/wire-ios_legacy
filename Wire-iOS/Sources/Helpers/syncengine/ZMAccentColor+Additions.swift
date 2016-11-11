@@ -34,4 +34,13 @@ extension ZMAccentColor {
                 .softPink,
                 .violet]
     }
+    
+    static func allSelectable() -> [ZMAccentColor] {
+        return [.strongBlue,
+                .strongLimeGreen,
+                .vividRed,
+                .brightOrange,
+                .softPink,
+                .violet]
+    }
 }

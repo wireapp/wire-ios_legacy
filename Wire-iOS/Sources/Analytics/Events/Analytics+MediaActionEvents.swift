@@ -33,7 +33,7 @@
         case .videoMessage: return "video_message"
         case .audioMessage: return "audio_message"
         case .location:     return "location"
-        case .ephemeral:    return "ephermal"
+        case .ephemeral:    return "ephemeral"
         }
     }
 }

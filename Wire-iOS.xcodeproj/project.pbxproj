@@ -431,6 +431,7 @@
 		872633E91D9322BA008B69D8 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E471D171BC67AB500C85203 /* NSString+URL.swift */; };
 		872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */; };
 		872A7E8C1C1981A300E4B261 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872A7E8B1C1981A300E4B261 /* AppController.m */; };
+		872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872C99111DB0EA54006A3BDE /* Intents.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A419E58816006752B4 /* ProfileFooterView.m */; };
 		872CB8B419E58816006752B4 /* ProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A619E58816006752B4 /* ProfileHeaderView.m */; };
 		872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */; };
@@ -557,6 +558,10 @@
 		87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */; };
 		87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */; };
 		87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */; };
+		87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87ADCE4D1DA68FA400CC06DC /* CallKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		87AEDB271DBA619D00010451 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB241DBA619D00010451 /* logo.png */; };
+		87AEDB281DBA619D00010451 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB251DBA619D00010451 /* logo@2x.png */; };
+		87AEDB291DBA619D00010451 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB261DBA619D00010451 /* logo@3x.png */; };
 		87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BEB0351D39018600DE9575 /* FormatterKit.framework */; };
 		87BEB03C1D3E44BA00DE9575 /* CameraKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB03B1D3E44BA00DE9575 /* CameraKeyboardViewController.swift */; };
 		87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB03D1D3E44DE00DE9575 /* CameraCell.swift */; };
@@ -1535,6 +1540,7 @@
 		872A7E8A1C1981A300E4B261 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		872A7E8B1C1981A300E4B261 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		872AC9C21B397E6A00575CF3 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		872C99111DB0EA54006A3BDE /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		872CB8A319E58816006752B4 /* ProfileFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileFooterView.h; sourceTree = "<group>"; };
 		872CB8A419E58816006752B4 /* ProfileFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileFooterView.m; sourceTree = "<group>"; };
 		872CB8A519E58816006752B4 /* ProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileHeaderView.h; sourceTree = "<group>"; };
@@ -1707,6 +1713,10 @@
 		87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStyleNavigationController.swift; sourceTree = "<group>"; };
 		87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailEditingTextField.swift; sourceTree = "<group>"; };
 		87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferCell.swift; sourceTree = "<group>"; };
+		87ADCE4D1DA68FA400CC06DC /* CallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CallKit.framework; path = System/Library/Frameworks/CallKit.framework; sourceTree = SDKROOT; };
+		87AEDB241DBA619D00010451 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		87AEDB251DBA619D00010451 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		87AEDB261DBA619D00010451 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
 		87BEB0351D39018600DE9575 /* FormatterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FormatterKit.framework; path = Carthage/Build/iOS/FormatterKit.framework; sourceTree = "<group>"; };
 		87BEB03B1D3E44BA00DE9575 /* CameraKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraKeyboardViewController.swift; sourceTree = "<group>"; };
 		87BEB03D1D3E44DE00DE9575 /* CameraCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
@@ -2195,6 +2205,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
+				87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
 				872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */,
 				873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */,
@@ -2697,6 +2709,8 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				872C99111DB0EA54006A3BDE /* Intents.framework */,
+				87ADCE4D1DA68FA400CC06DC /* CallKit.framework */,
 				87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */,
 				87023D7A1D76E4E2007B667E /* AFNetworking.framework */,
 				87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */,
@@ -3903,6 +3917,9 @@
 		8FC85089199245760008B66B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				87AEDB241DBA619D00010451 /* logo.png */,
+				87AEDB251DBA619D00010451 /* logo@2x.png */,
+				87AEDB261DBA619D00010451 /* logo@3x.png */,
 				16A2024A1B66505B0095BBD1 /* soundcloud.png */,
 				16A2024B1B66505B0095BBD1 /* soundcloud@2x.png */,
 				87D482AE1B8C7DBC004ED174 /* soundcloud@3x.png */,
@@ -4815,7 +4832,6 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -4894,10 +4910,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1658D2041D3E742A00249609 /* new_message.caf in Resources */,
+				87AEDB281DBA619D00010451 /* logo@2x.png in Resources */,
 				8773160B1B970A82007BA779 /* list.plist in Resources */,
 				BF732A761D9C14C7003077DB /* emoji_nature.plist in Resources */,
 				16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */,
 				877316121B970A82007BA779 /* tutorial.plist in Resources */,
+				87AEDB271DBA619D00010451 /* logo.png in Resources */,
 				8FC853D7199245770008B66B /* Settings.bundle in Resources */,
 				877316081B970A82007BA779 /* ipad.plist in Resources */,
 				BF732A781D9C14C7003077DB /* emoji_people.plist in Resources */,
@@ -4916,6 +4934,7 @@
 				875A23121ADEA1A200111C88 /* CountryCodes.plist in Resources */,
 				BF732A731D9C14C7003077DB /* emoji_activities.plist in Resources */,
 				877316071B970A82007BA779 /* ipad_landscape.plist in Resources */,
+				87AEDB291DBA619D00010451 /* logo@3x.png in Resources */,
 				DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */,
 				BF732A771D9C14C7003077DB /* emoji_objects.plist in Resources */,
 				87D482AF1B8C7DBC004ED174 /* soundcloud@3x.png in Resources */,

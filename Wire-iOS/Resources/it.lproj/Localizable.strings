@@ -128,7 +128,7 @@
 
 "conversation.input_bar.verified" = "Verificato";
 "conversation.input_bar.placeholder" = "Digita un messaggio";
-"conversation.input_bar.placeholder_ephemeral" = "Messaggio temporizzato";
+"conversation.input_bar.placeholder_ephemeral" = "Messaggio a tempo";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Scorri in su per inviare";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tocca per inviare";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire dà un'impronta unica a ogni dispositivo. Confrontale per verificare i tuoi dispositivi e le conversazioni.";
 "self.settings.device_details.reset_session.subtitle" = "Se le impronte digitali non corrispondono, è necessario resettare la sessione per generare nuove chiavi di crittografia per entrambe le parti.";
-"self.settings.device_details.remove_device.subtitle" = "Rimuovi questo dispositivo se hai smesso di usarlo. La cronologia dei messaggi sarà cancellata e verrai disconnesso.";
+"self.settings.device_details.remove_device.subtitle" = "RimuovI questo dispositivo se hai smesso di usarlo. Verrai disconnesso immediatamente.";
 "self.settings.device_details.reset_session.success" = "La sessione è stata reimpostata";
 
 "self.settings.account_details.actions.title" = "Azioni";
@@ -586,7 +586,7 @@
 "registration.verify_email.resend.instructions" = "Non hai ricevuto il messaggio?";
 "registration.verify_email.resend.button_title" = "Invia di nuovo";
 
-"registration.select_picture.subtitle" = "Wire è molto più bello con una foto.";
+"registration.select_picture.subtitle" = "Wire è meglio con una foto.";
 "registration.select_picture.button_title" = "Scegline una tua";
 "registration.keep_picture.button_title" = "Tieni questa";
 "registration.camera_action.title" = "Scatta foto";

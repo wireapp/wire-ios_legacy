@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівняйте їх, щоб зверифікувати ваші пристрої та розмови.";
 "self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не збігаються, виконайте скидання сесії, щоб згенерувати нові ключі шифрування з обидвох сторін.";
-"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви більше не використовуєте його. Вашу історію повідомлень буде стерто на цьому пристрої, і ви повернетесь до діалогу вводу імені та паролю.";
+"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви припинили його використовувати. Ви вийдете відразу, як тільки пристрій буде видалено.";
 "self.settings.device_details.reset_session.success" = "Сессія була скинута";
 
 "self.settings.account_details.actions.title" = "Дії";
