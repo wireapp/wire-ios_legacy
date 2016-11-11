@@ -20,6 +20,8 @@ import Foundation
 import Cartography
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
+    let checmarkSize: CGFloat = 24
+    
     override var reuseIdentifier: String? {
         return type(of: self).reuseIdentifier
     }
@@ -41,24 +43,29 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = .clear
+        self.titleLabel.cas_styleClass = "normal-light"
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = .white
+        
         self.contentView.backgroundColor = .clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
         
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 1
-        
+        self.checkImageView.contentMode = .center
+        self.checkImageView.layer.cornerRadius = self.checmarkSize / 2.0
+
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.checkImageView)
         
         constrain(self.contentView, self.titleLabel, self.checkImageView) { contentView, titleLabel, checkImageView in
             checkImageView.centerY == contentView.centerY
             checkImageView.left == contentView.left + 16
-            checkImageView.width == 32
+            checkImageView.width == self.checmarkSize
+            checkImageView.height == checkImageView.width
             
-            titleLabel.left == checkImageView.right + 16
+            titleLabel.left == checkImageView.right + 24
             titleLabel.centerY == contentView.centerY
             titleLabel.right <= contentView.right - 16
         }
@@ -71,7 +78,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        self.checkImageView.image = selected ? UIImage(for: .checkmark, iconSize: .small, color: .white) : nil
-        self.checkImageView.backgroundColor = selected ? UIColor.blue : UIColor.clear
+        self.checkImageView.image = selected ? UIImage(for: .checkmark, iconSize: .like, color: .white) : nil
+        self.checkImageView.backgroundColor = selected ? ColorScheme.default().color(withName: ColorSchemeColorAccent) : UIColor.clear
     }
 }

@@ -583,6 +583,13 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }
 }
 
+- (void)forward:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
+        [self.delegate conversationCell:self didSelectAction:ConversationCellActionForward];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

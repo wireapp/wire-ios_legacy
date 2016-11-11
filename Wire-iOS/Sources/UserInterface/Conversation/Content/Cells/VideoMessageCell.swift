@@ -261,12 +261,21 @@ public final class VideoMessageCell: ConversationCell {
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
 
+        var additionalItems = [UIMenuItem]()
+        
         if message.videoCanBeSavedToCameraRoll() {
-            let menuItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
-            properties.additionalItems = [menuItem]
-        } else {
-            properties.additionalItems = []
+            let saveItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
+            additionalItems.append(saveItem)
         }
+        
+        if let fileMessageData = message.fileMessageData,
+            let _ = fileMessageData.fileURL {
+            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))
+
+            additionalItems.append(forwardItem)
+        }
+        
+        properties.additionalItems = additionalItems
 
         return properties
     }
@@ -274,6 +283,12 @@ public final class VideoMessageCell: ConversationCell {
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(wr_saveVideo) {
             if self.message.videoCanBeSavedToCameraRoll() {
+                return true
+            }
+        }
+        else if action == #selector(forward(_:)) {
+            if let fileMessageData = message.fileMessageData,
+                let _ = fileMessageData.fileURL {
                 return true
             }
         }

@@ -42,6 +42,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     
     public init(shareable: S, destinations: [D]) {
         self.destinations = destinations
+        self.filteredDestinations = destinations
         self.shareable = shareable
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,6 +53,9 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     
     private var blurView: UIVisualEffectView!
     private var shareablePreviewView: UIView!
+    private var shareablePreviewWrapper: UIView!
+    private var searchIcon: UIImageView!
+    private var topSeparatorView: OverflowSeparatorView!
     private var destinationsTableView: UITableView!
     private var closeButton: IconButton!
     private var sendButton: IconButton!
@@ -67,35 +71,64 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         
         self.shareablePreviewView = self.shareable.previewView()
         self.shareablePreviewView.isUserInteractionEnabled = false
+        self.shareablePreviewView.layer.cornerRadius = 4
+        self.shareablePreviewView.clipsToBounds = true
+        
+        self.shareablePreviewWrapper = UIView()
+        self.shareablePreviewWrapper.clipsToBounds = false
+        self.shareablePreviewWrapper.layer.shadowOpacity = 1
+        self.shareablePreviewWrapper.layer.shadowRadius = 8
+        self.shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
+        self.shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
+        self.shareablePreviewWrapper.layer.shadowPath = UIBezierPath(rect: self.shareablePreviewView.bounds).cgPath
+        
+        self.shareablePreviewWrapper.addSubview(self.shareablePreviewView)
         
         self.tokenField = TokenField()
+        self.tokenField.textColor = .white
+        self.tokenField.layer.cornerRadius = 4
+        self.tokenField.clipsToBounds = true
+        self.tokenField.textView.backgroundColor = UIColor(white: 1, alpha: 0.1)
+        self.tokenField.textView.accessibilityLabel = "textViewSearch"
+        self.tokenField.textView.placeholder = "contacts_ui.search_placeholder"
+        self.tokenField.textView.keyboardAppearance = .dark
+        self.tokenField.textView.contentInset = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 12)
+        self.tokenField.textView.placeholderTextContainerInset = self.tokenField.textView.contentInset
         self.tokenField.delegate = self
+        
+        self.searchIcon = UIImageView()
+        self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
+        
+        self.topSeparatorView = OverflowSeparatorView()
         
         self.destinationsTableView = UITableView()
         self.destinationsTableView.backgroundColor = .clear
-        
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
-        
         self.destinationsTableView.separatorStyle = .none
+        self.destinationsTableView.allowsSelection = true
         self.destinationsTableView.allowsMultipleSelection = true
         self.destinationsTableView.delegate = self
         self.destinationsTableView.dataSource = self
         
         self.closeButton = IconButton()
-        self.closeButton.cas_styleClass = "default-dark"
+        self.closeButton.accessibilityLabel = "close"
+        self.closeButton.cas_styleClass = "default-light"
         self.closeButton.setIcon(.X, with: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
         
         self.sendButton = IconButton()
+        self.sendButton.accessibilityLabel = "send"
         self.sendButton.cas_styleClass = "default-dark"
         self.sendButton.isEnabled = false
-        self.sendButton.setIcon(.send, with: .large, for: .normal)
+        self.sendButton.setIcon(.send, with: .tiny, for: .normal)
+        self.sendButton.setBackgroundImageColor(UIColor.white, for: .normal)
+        self.sendButton.circular = true
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
         
         self.bottomSeparatorLine = UIView()
         self.bottomSeparatorLine.cas_styleClass = "separator"
         
-        [self.blurView, self.shareablePreviewView, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine].forEach(self.view.addSubview)
+        [self.blurView, self.shareablePreviewWrapper, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.view.addSubview)
         
         self.createConstraints()
     }
@@ -105,20 +138,37 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
             blurView.edges == view.edges
         }
         
-        constrain(self.view, self.destinationsTableView, self.shareablePreviewView, self.tokenField, self.bottomSeparatorLine) { view, tableView, shareablePreviewView, tokenField, bottomSeparatorLine in
+        constrain(self.shareablePreviewWrapper, self.shareablePreviewView) { shareablePreviewWrapper, shareablePreviewView in
+            shareablePreviewView.edges == shareablePreviewWrapper.edges
+        }
+        
+        constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
+            searchIcon.top == tokenField.top + 12
+            searchIcon.left == tokenField.left + 12
+        }
+        
+        constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
+            topSeparatorView.left == view.left
+            topSeparatorView.right == view.right
+            topSeparatorView.top == destinationsTableView.top
+            topSeparatorView.height == 0.5
+        }
+        
+        constrain(self.view, self.destinationsTableView, self.shareablePreviewWrapper, self.tokenField, self.bottomSeparatorLine) { view, tableView, shareablePreviewWrapper, tokenField, bottomSeparatorLine in
             
-            shareablePreviewView.top == view.top + 28
-            shareablePreviewView.left == view.left
-            shareablePreviewView.right == view.right
-            shareablePreviewView.height <= 200
+            shareablePreviewWrapper.top == view.top + 28
+            shareablePreviewWrapper.left == view.left + 16
+            shareablePreviewWrapper.right == -16 + view.right
+            shareablePreviewWrapper.height <= 200
             
-            tokenField.top == shareablePreviewView.bottom + 16
-            tokenField.left == view.left
-            tokenField.right == view.right
+            tokenField.top == shareablePreviewWrapper.bottom + 16
+            tokenField.left == view.left + 8
+            tokenField.right == -8 + view.right
+            tokenField.height >= 32
             
             tableView.left == view.left
             tableView.right == view.right
-            tableView.top == tokenField.bottom
+            tableView.top == tokenField.bottom + 8
             tableView.bottom == bottomSeparatorLine.top
             
             bottomSeparatorLine.left == view.left
@@ -128,19 +178,37 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         
         constrain(self.view, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
             
-            closeButton.left == view.left + 16
+            closeButton.left == view.left + 8
             closeButton.centerY == sendButton.centerY
             closeButton.width == 44
             closeButton.height == closeButton.width
             
-            sendButton.top == bottomSeparatorLine.bottom
-            sendButton.height == 56
+            sendButton.top == bottomSeparatorLine.bottom + 12
+            sendButton.height == 32
             sendButton.width == sendButton.height
             sendButton.centerX == view.centerX
-            sendButton.bottom == view.bottom
+            sendButton.bottom == -12 + view.bottom
         }
     }
     
+    // MARK: - Search
+    
+    private var filteredDestinations: [D] = []
+    
+    private var filterString: String? = .none {
+        didSet {
+            if let filterString = filterString, !filterString.isEmpty {
+                self.filteredDestinations = self.destinations.filter {
+                    $0.displayName.contains(filterString)
+                }
+            }
+            else {
+                self.filteredDestinations = self.destinations
+            }
+            
+            self.destinationsTableView.reloadData()
+        }
+    }
     
     // MARK: - Actions
     
@@ -162,42 +230,53 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.destinations.count
+        return self.filteredDestinations.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ShareDestinationCell<D>.reuseIdentifier) as! ShareDestinationCell<D>
         
-        let destination = self.destinations[indexPath.row]
+        let destination = self.filteredDestinations[indexPath.row]
         cell.destination = destination
         cell.isSelected = self.selectedDestinations.contains(destination)
-        
+        if cell.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let destination = self.filteredDestinations[indexPath.row]
+
+        self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
         
+        self.selectedDestinations.insert(destination)
+    }
+    
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let destination = self.filteredDestinations[indexPath.row]
+        
+        guard let token = self.tokenField.token(forRepresentedObject: destination) else {
+            return
+        }
+        self.tokenField.removeToken(token)
+        
+        self.selectedDestinations.remove(destination)
+    }
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.topSeparatorView.scrollViewDidScroll(scrollView: scrollView)
     }
 
     // MARK: - TokenFieldDelegate
 
-//    private func tokenField(_ tokenField: TokenField!, changedTokensTo tokens: [AnyObject]!) {
-//        self.selectedConversations = tokens.map { (($0 as! Token).representedObject as! ShareDestination) }
-//    }
-//    
-//    func tokenField(_ tokenField: TokenField!, changedFilterTextTo text: String!) {
-//        self.conversationListController.searchTerm = text
-//    }
-//    
-//    func tokenFieldString(forCollapsedState tokenField: TokenField!) -> String! {
-//        if (self.recipientList.count > 1) {
-//            return NSString.localizedStringWithFormat(NSLocalizedString("sharing-ext.recipients-field.collapsed", comment: "Name of first user + number of others more") as NSString,
-//                self.recipientList[0].displayName, self.recipientList.count-1) as String
-//        } else if (self.recipientList.count > 0) {
-//            return self.recipientList[0].displayName
-//        } else {
-//            return ""
-//        }
-//    }
-
+    public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
+        self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
+        self.destinationsTableView.reloadData()
+    }
+    
+    public func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
+        self.filterString = text
+    }
+    
 }

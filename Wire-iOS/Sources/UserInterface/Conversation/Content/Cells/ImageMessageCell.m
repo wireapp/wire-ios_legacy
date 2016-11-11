@@ -483,7 +483,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forwardImage)) {
+    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward:)) {
         return self.fullImageView.image != nil;
     }
     else if (action == @selector(paste:)) {
@@ -535,7 +535,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
-    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.forward", @"") action:@selector(forwardImage)];
+    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward:)];
     properties.additionalItems = @[saveItem, forwardItem];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
@@ -547,13 +547,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 {
     if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         [self.delegate conversationCell:self didSelectAction:ConversationCellActionSave];
-    }
-}
-
-- (void)forwardImage
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:ConversationCellActionForward];
     }
 }
 

@@ -228,6 +228,7 @@
 		7A27B7986757069DCFB89168 /* libPods-WireExtensionComponents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
+		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
 		87066FAC1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m in Sources */ = {isa = PBXBuildFile; fileRef = 87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */; };
 		87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CBF1CB68BDA0039388A /* ProgressView.swift */; };
 		87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CC31CB6A3790039388A /* FileTransferCellTests.swift */; };
@@ -530,7 +531,6 @@
 		878C21A01AE4F45600CB9FC4 /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */; };
 		878D65C71C84664A0067E3D9 /* zmessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* zmessaging.framework */; };
 		87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */; };
-		8794505D1D9145E6008F23DE /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8794505C1D9145E6008F23DE /* OverflowSeparatorView.swift */; };
 		8795322E1A8A141000EB495B /* ContrastUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795322D1A8A141000EB495B /* ContrastUserImageView.m */; };
 		8795A5A81D34CF7A0024101B /* NSLayoutConstraint+Helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */; };
@@ -1161,6 +1161,7 @@
 		848DE12A1A83D20000E154B1 /* emoticons.min.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emoticons.min.json; path = ../Sources/emoticons.min.json; sourceTree = "<group>"; };
 		8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WireExtensionComponents.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87023D7A1D76E4E2007B667E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverflowSeparatorView.swift; sourceTree = "<group>"; };
 		87066FAA1D8C1AA90085F48B /* UIView+UIAppearanceSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIAppearanceSwift.h"; sourceTree = "<group>"; };
 		87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIAppearanceSwift.m"; sourceTree = "<group>"; };
 		87071CBF1CB68BDA0039388A /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -1669,7 +1670,6 @@
 		878C219E1AE4F45600CB9FC4 /* CheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkView.h; sourceTree = "<group>"; };
 		878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerprintTableViewCell.swift; sourceTree = "<group>"; };
-		8794505C1D9145E6008F23DE /* OverflowSeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverflowSeparatorView.swift; sourceTree = "<group>"; };
 		8795322C1A8A141000EB495B /* ContrastUserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContrastUserImageView.h; sourceTree = "<group>"; };
 		8795322D1A8A141000EB495B /* ContrastUserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ContrastUserImageView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+Helpers.h"; sourceTree = "<group>"; };
@@ -2641,6 +2641,7 @@
 				1EE9DCA91B5F9A6D00E347DF /* TextView.m */,
 				1EDE4B161BA9993200380349 /* FlexibleNavigationBar.h */,
 				1EDE4B171BA9993200380349 /* FlexibleNavigationBar.m */,
+				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3093,7 +3094,6 @@
 		871BC1A61D34F8F800DF0793 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8794505C1D9145E6008F23DE /* OverflowSeparatorView.swift */,
 				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
 				871BC1BA1D34F8F800DF0793 /* BackgroundView */,
 				871BC1CA1D34F8F800DF0793 /* GapLayer.h */,
@@ -5208,6 +5208,7 @@
 				1E5E0CFF1B6B8EDB003B0CAC /* FileManager.m in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
 				1EE9DCC81B5F9A6D00E347DF /* TokenTextAttachment.m in Sources */,
+				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
 				160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */,
 				1EE9DCCA1B5F9A6D00E347DF /* TokenizedTextView.m in Sources */,
@@ -5307,7 +5308,6 @@
 				871BC3571D34F94200DF0793 /* AudioTrackCell.m in Sources */,
 				8715A16C19EBF69500E2C6DE /* MoreConnectionsButton.m in Sources */,
 				BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */,
-				8794505D1D9145E6008F23DE /* OverflowSeparatorView.swift in Sources */,
 				8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */,
 				168634E51ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m in Sources */,
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,

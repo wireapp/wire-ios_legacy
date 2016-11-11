@@ -239,12 +239,12 @@
 "content.file.save_video" = "Save";
 "content.file.save_audio" = "Save";
 "content.image.save_image" = "Save";
-"content.image.forward" = "Forward";
 
 "content.message.delete" = "Delete";
 
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
+"content.message.forward" = "Forward";
 
 "content.reactions_list.likers" = "Liked by";
 

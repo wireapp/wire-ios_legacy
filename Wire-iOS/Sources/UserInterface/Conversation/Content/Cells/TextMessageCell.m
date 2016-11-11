@@ -300,6 +300,9 @@
     else if (action == @selector(edit:) && self.message.sender.isSelfUser) {
         return YES;
     }
+    else if (action == @selector(forward:)) {
+        return YES;
+    }
     
     return [super canPerformAction:action withSender:sender];
 }
@@ -363,10 +366,16 @@
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
     BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent);
+    NSMutableArray *additionalItems = [NSMutableArray array];
     if (isEditableMessage) {
-        properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
+         [additionalItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     }
-
+    
+    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward:)];
+    [additionalItems addObject:forwardItem];
+    
+    properties.additionalItems = additionalItems;
+    
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {

@@ -1050,6 +1050,11 @@ UILabel.small-light {
     textColor: white;
 }
 
+UILabel.normal-light {
+    font: $font-normal-light;
+    textColor: white;
+}
+
 /* ActionSheetController */
 
 ActionSheetListView UIButton {

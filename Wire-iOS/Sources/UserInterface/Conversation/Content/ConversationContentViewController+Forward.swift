@@ -8,7 +8,7 @@
 
 import Foundation
 import zmessaging
-
+import Cartography
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     func wrapInTableView() -> UITableView {
@@ -30,6 +30,11 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
         tableView.bounds = self.bounds
         tableView.layoutIfNeeded()
+        
+        constrain(tableView) { tableView in
+            tableView.height == size.height
+        }
+        
         CASStyler.default().styleItem(self)
         self.layoutSubviews()
         return tableView
@@ -58,14 +63,14 @@ extension ZMConversation: ShareDestination {
 
 extension ZMMessage: Shareable {
     public func share<ZMConversation>(to: [ZMConversation]) {
-        if let imageMessageData = self.imageMessageData {
-            ZMUserSession.shared().performChanges {
-                to.forEach({ conversation in
-                    let imageData = imageMessageData.imageData
-//                                        conversation.appendMessage(withImageData: imageData)
-                })
-            }
-        }
+//        if let imageMessageData = self.imageMessageData {
+//            ZMUserSession.shared().performChanges {
+//                to.forEach({ conversation in
+////                    let imageData = imageMessageData.imageData
+////                                        conversation.appendMessage(withImageData: imageData)
+//                })
+//            }
+//        }
     }
 
     public typealias I = ZMConversation

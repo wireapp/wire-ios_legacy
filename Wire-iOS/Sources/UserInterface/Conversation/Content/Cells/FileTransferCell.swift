@@ -303,7 +303,28 @@ public final class FileTransferCell: ConversationCell {
             }
         }
         
+        var additionalItems = [UIMenuItem]()
+        
+        if let fileMessageData = message.fileMessageData,
+            let _ = fileMessageData.fileURL {
+            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))
+            
+            additionalItems.append(forwardItem)
+        }
+        
+        properties.additionalItems = additionalItems
+        
         return properties
+    }
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(forward(_:)) {
+            if let fileMessageData = message.fileMessageData,
+                let _ = fileMessageData.fileURL {
+                return true
+            }
+        }
+        return super.canPerformAction(action, withSender: sender)
     }
     
     override open func messageType() -> MessageType {

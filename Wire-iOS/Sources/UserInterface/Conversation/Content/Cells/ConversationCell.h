@@ -117,6 +117,8 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 /// Called before the message will be deleted (e.g. if the message was ephemeral or the sender deleted it manually)
 - (void)willDeleteMessage;
 
+- (void)forward:(id)sender;
+
 #pragma mark - For deleted menu, meant to be implmented by subclass
 
 - (MenuConfigurationProperties *)menuConfigurationProperties;
