@@ -45,8 +45,8 @@ class ArticleView: UIView {
     let imageView = UIImageView()
     var loadingView: ThreeDotsLoadingView?
     var linkPreview: LinkPreview?
-    private let obfuscationView = UIView()
-    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+    private let obfuscationView = ObfuscationView(icon: .link)
+    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
@@ -79,7 +79,6 @@ class ArticleView: UIView {
         self.clipsToBounds = true
         accessibilityIdentifier = "linkPreview"
         
-        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
         authorLabel.lineBreakMode = .byTruncatingMiddle
@@ -90,8 +89,6 @@ class ArticleView: UIView {
         messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
         messageLabel.delegate = self
 
-        obfuscationView.backgroundColor = ephemeralColor
-        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
@@ -184,9 +181,12 @@ class ArticleView: UIView {
 
             if obfuscated {
                 ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
-                imageView.image = nil
+                imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
+                imageView.contentMode = .center
+                
             } else {
                 imageView.image = UIImage(data: imageData)
+                imageView.contentMode = .scaleAspectFill
                 loadingView?.isHidden = true
                 ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
                     return UIImage.deviceOptimizedImage(from: data)

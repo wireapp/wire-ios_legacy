@@ -210,13 +210,17 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
-
-open class AccentColorPickerController: ColorPickerController {
+final class AccentColorPickerController: ColorPickerController {
+    fileprivate let allAccentColors: [ZMAccentColor]
+    
+    
     public init() {
-        super.init(colors: ZMAccentColor.all().map { $0.color })
+        self.allAccentColors = ZMAccentColor.allSelectable()
+        
+        super.init(colors: self.allAccentColors.map { $0.color })
         self.title = "self.settings.account_picture_group.color".localized.uppercased()
-        if let currentColorIndex = ZMAccentColor.all().index(of: ZMUser.selfUser().accentColorValue) {
+        
+        if let currentColorIndex = self.allAccentColors.index(of: ZMUser.selfUser().accentColorValue) {
             self.currentColor = self.colors[currentColorIndex]
         }
         self.delegate = self
@@ -239,7 +243,7 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         }
         
         ZMUserSession.shared().performChanges { 
-            ZMUser.selfUser().accentColorValue = ZMAccentColor.all()[colorIndex]
+            ZMUser.selfUser().accentColorValue = self.allAccentColors[colorIndex]
         }
     }
 

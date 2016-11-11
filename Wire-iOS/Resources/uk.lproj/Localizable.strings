@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Вимкнений";
-"input.ephemeral.title" = "Встановіть таймер для тимчасових повідомлень";
+"input.ephemeral.title" = "Встановіть період, після якого повідомлення зникне";
 
 // System messages
 "content.system.continued_conversation" = "Почати розмову з %@";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівняйте їх, щоб зверифікувати ваші пристрої та розмови.";
 "self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не збігаються, виконайте скидання сесії, щоб згенерувати нові ключі шифрування з обидвох сторін.";
-"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви більше не використовуєте його. Вашу історію повідомлень буде стерто на цьому пристрої, і ви повернетесь до діалогу вводу імені та паролю.";
+"self.settings.device_details.remove_device.subtitle" = "Видаліть цей пристрій, якщо ви припинили його використовувати. Ви вийдете відразу, як тільки пристрій буде видалено.";
 "self.settings.device_details.reset_session.success" = "Сессія була скинута";
 
 "self.settings.account_details.actions.title" = "Дії";
@@ -484,6 +484,24 @@
 "self.settings.popular_demand.title" = "У відповідь на численні прохання";
 "self.settings.popular_demand.send_button.title" = "Кнопка \"Надіслати\"";
 "self.settings.popular_demand.send_button.footer" = "Вимкнути надсилання через клавішу \"Ввід\".";
+
+// Open in
+"self.settings.external_apps.header" = "Відкривати посилання за допомогою";
+
+"self.settings.link_options.twitter.title" = "Твіти";
+"self.settings.link_options.maps.title" = "Місця";
+"self.settings.link_options.browser.title" = "Браузер";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Карти Apple";
+"open_link.maps.option.google" = "Карти Google";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Звукові сповіщення";
@@ -688,7 +706,7 @@
 "error.invite.no_email_provider" = "Будь ласка, налаштуйте ваш поштовий клієнт, щоб надсилати запрошення через email";
 "error.invite.no_messaging_provider" = "Будь ласка, налаштуйте службу надсилання SMS, щоб запрошувати людей через SMS";
 
-"sketchpad.initial_hint" = "Торкніться кольору для зміни розміру пензля\nНатисніть та утримуйте, щоб замалювати фон\nПотрусіть, щоб видалити фонове фото";
+"sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 
 "migration.please_wait_message" = "Будь ласка, зачекайте";
 

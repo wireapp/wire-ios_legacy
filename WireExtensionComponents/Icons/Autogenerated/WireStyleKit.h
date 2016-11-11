@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -24,10 +23,6 @@
 @interface WireStyleKit : NSObject
 
 // iOS Controls Customization Outlets
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* secondTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* minuteTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* hourTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* dayTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
@@ -130,10 +125,23 @@
 + (void)drawIcon_0x256_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x124_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x239_32ptWithColor: (UIColor*)color;
-+ (void)drawSecond;
-+ (void)drawMinute;
-+ (void)drawHour;
-+ (void)drawDay;
++ (void)drawSecondWithColor: (UIColor*)color;
++ (void)drawMinuteWithColor: (UIColor*)color;
++ (void)drawHourWithColor: (UIColor*)color;
++ (void)drawDayWithColor: (UIColor*)color;
++ (void)drawIcon_0x737_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x654_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x643_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x645_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x644_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x719_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x648_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x637_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x735_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x659_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x679_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x167_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x736_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -221,10 +229,20 @@
 + (UIImage*)imageOfIcon_0x256_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x124_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x239_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfSecond;
-+ (UIImage*)imageOfMinute;
-+ (UIImage*)imageOfHour;
-+ (UIImage*)imageOfDay;
++ (UIImage*)imageOfSecondWithColor: (UIColor*)color;
++ (UIImage*)imageOfMinuteWithColor: (UIColor*)color;
++ (UIImage*)imageOfHourWithColor: (UIColor*)color;
++ (UIImage*)imageOfDayWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x737_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x654_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x643_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x645_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x644_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x648_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x637_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x735_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x659_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x736_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

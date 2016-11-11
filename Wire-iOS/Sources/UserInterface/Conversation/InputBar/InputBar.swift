@@ -46,6 +46,14 @@ public enum InputBarState: Equatable {
         default: return false
         }
     }
+    
+    var isEphemeral: Bool {
+        if case .writing(let ephemeral) = self {
+            return ephemeral
+        } else {
+            return false
+        }
+    }
 }
 
 public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
@@ -347,10 +355,10 @@ private struct InputBarConstants {
             }
         }
 
-        if animated {
+        if animated && self.superview != nil {
             UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
-                UIView.animate(withDuration: 0.2, delay: 0.1, options:  .curveEaseInOut, animations: self.updateColors, completion: completion)
+                self.updateColors()
             }
         } else {
             layoutIfNeeded()
@@ -369,22 +377,32 @@ private struct InputBarConstants {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
         return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
-
+    
     fileprivate func updateColors() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
-
-        if case .writing(let ephemeral) = inputBarState {
-            showEphemeralColors(ephemeral)
-        } else {
-            showEphemeralColors(false)
+        buttonRowSeparator.backgroundColor = writingSeparatorColor
+        textView.placeholderTextColor = self.inputBarState.isEphemeral ? ephemeralColor : placeholderColor
+        fakeCursor.backgroundColor = .accent()
+        textView.tintColor = .accent()
+        
+        var buttons = self.buttonsView.buttons
+        
+        buttons.append(self.buttonsView.expandRowButton)
+        
+        buttons.forEach { button in
+            guard let button = button as? IconButton else {
+                return
+            }
+            
+            if self.inputBarState.isEphemeral {
+                button.setIconColor(UIColor.accent(), for: .normal)
+                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .highlighted)
+            }
+            else {
+                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
+                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconHighlighted), for: .highlighted)
+            }
         }
-    }
-
-    private func showEphemeralColors(_ show: Bool) {
-        buttonRowSeparator.backgroundColor = show ? ephemeralColor : writingSeparatorColor
-        textView.placeholderTextColor = show ? ephemeralColor : placeholderColor
-        fakeCursor.backgroundColor = show ? ephemeralColor : .accent()
-        textView.tintColor = show ? ephemeralColor : .accent()
     }
 
     // MARK: – Editing View State

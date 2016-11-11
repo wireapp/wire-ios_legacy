@@ -136,6 +136,11 @@ IconButton.navigation {
     contentHorizontalAlignment: left;
 }
 
+IconButton.ephemeral {
+    iconColor[state:normal]: $color-accent-current;
+    iconColor[state:highlighted]: $color-icon-normal;
+}
+
 CheckBoxButton {
     titleLabel: @{
         font: $font-small-light;

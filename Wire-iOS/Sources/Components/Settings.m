@@ -54,6 +54,8 @@ NSString * const UserDefaultDisableUI = @"ZMDisableUI";
 NSString * const UserDefaultDisableHockey = @"ZMDisableHockey";
 NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
+NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
+
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -106,6 +108,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultLastUserLocation,
              UserDefaultPreferredCamera,
              UserDefaultSendButtonDisabled,
+             UserDefaultDisableCallKit,
              UserDefaultTwitterOpeningRawValue,
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue
@@ -380,6 +383,16 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (void)setDisableSendButton:(BOOL)disableSendButton
 {
     [self.defaults setBool:disableSendButton forKey:UserDefaultSendButtonDisabled];
+}
+
+- (BOOL)disableCallKit
+{
+    return [self.defaults boolForKey:UserDefaultDisableCallKit];
+}
+
+- (void)setDisableCallKit:(BOOL)disableCallKit
+{
+    [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
 }
 
 #pragma mark - Features disable keys

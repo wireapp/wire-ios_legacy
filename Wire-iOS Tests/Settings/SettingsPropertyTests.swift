@@ -92,8 +92,6 @@ class SettingsPropertyTests: XCTestCase {
         try! XCTAssertTrue(self.saveAndCheck(property, value: true))
     }
     
-    
-    
     func testThatNamePropertySetsValue() {
         // given
         let selfUser = MockZMEditableUser()

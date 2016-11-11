@@ -83,6 +83,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
+        SettingsPropertyName.disableCallKit             : UserDefaultDisableCallKit,
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue

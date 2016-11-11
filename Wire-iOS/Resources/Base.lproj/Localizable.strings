@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Off";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
 "content.system.continued_conversation" = "Start a conversation with %@";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
+"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. You will be logged out of this device immediately.";
 "self.settings.device_details.reset_session.success" = "The session has been reset";
 
 "self.settings.account_details.actions.title" = "Actions";
@@ -483,10 +483,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "By popular demand";
 "self.settings.popular_demand.send_button.title" = "Send Button";
+"self.settings.popular_demand.call_kit.title" = "Don't use native calling (restart)";
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 
 // Open in
-"self.settings.external_apps.header" = "Open Links In";
+"self.settings.external_apps.header" = "Open With";
 
 "self.settings.link_options.twitter.title" = "Tweets";
 "self.settings.link_options.maps.title" = "Locations";
@@ -496,7 +497,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.apple" = "Maps";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";

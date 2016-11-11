@@ -26,7 +26,7 @@ public final class LocationMessageCell: ConversationCell {
     
     private let mapView = MKMapView()
     private let containerView = UIView()
-    private let obfuscationView = UIView()
+    private let obfuscationView = ObfuscationView(icon: .locationPin)
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
     private var recognizer: UITapGestureRecognizer?
@@ -58,7 +58,7 @@ public final class LocationMessageCell: ConversationCell {
         mapView.showsPointsOfInterest = true
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        
         recognizer = UITapGestureRecognizer(target: self, action: #selector(openInMaps))
         containerView.addGestureRecognizer(recognizer!)
         messageContentView.addSubview(containerView)

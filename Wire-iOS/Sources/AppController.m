@@ -31,6 +31,7 @@
 @import CocoaLumberjack;
 @import Classy;
 @import WireExtensionComponents;
+@import CallKit;
 #import <AVSFlowManager.h>
 #import "avs+iOS.h"
 #import "MediaPlaybackManager.h"
@@ -366,6 +367,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
     
     (void)[Settings sharedSettings];
+    
+    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
+    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
+    
+    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
     
     NSBundle *bundle = NSBundle.mainBundle;
     NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];

@@ -34,6 +34,7 @@
 #import "MediaAsset.h"
 #import "Analytics+iOS.h"
 #import "Wire-Swift.h"
+#import "UIImage+ZetaIconsNeue.h"
 
 #import "UIView+Borders.h"
 
@@ -69,7 +70,7 @@
 @property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
 @property (nonatomic, strong) ImageToolbarView *imageToolbarView;
 @property (nonatomic, strong) UIView *imageViewContainer;
-@property (nonatomic, strong) UIView *obfuscationView;
+@property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
 @property (nonatomic) SavableImage *savableImage;
 
@@ -193,7 +194,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.loadingView];
 
-    self.obfuscationView = [[UIView alloc] initForAutoLayout];
+    self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
     self.obfuscationView.hidden = YES;
   

@@ -200,7 +200,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             break;
         }
         case ZMVoiceChannelStateIncomingCall: {
-            if (! change.voiceChannel.conversation.isSilenced) {
+            if (![ZMUserSession useCallKit] && ! change.voiceChannel.conversation.isSilenced) {
                 
                 BOOL otherVoiceChannelIsActive = NO;
                 
