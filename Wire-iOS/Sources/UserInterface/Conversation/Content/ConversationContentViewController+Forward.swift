@@ -57,24 +57,45 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
 extension ZMConversation: ShareDestination {
 }
 
-extension ZMMessage: Shareable {
-    public func share<ZMConversation>(to: [ZMConversation]) {
-//        if let imageMessageData = self.imageMessageData {
-//            ZMUserSession.shared().performChanges {
-//                to.forEach({ conversation in
-////                    let imageData = imageMessageData.imageData
-////                                        conversation.appendMessage(withImageData: imageData)
-//                })
-//            }
+func forward(_ message: ZMMessage, to: [AnyObject]) {
+    if Message.isTextMessage(message) {
+        ZMUserSession.shared().performChanges {
+            to.forEach { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
+        }
+    }
+    else if Message.isImageMessage(message) {
+        ZMUserSession.shared().performChanges {
+            to.forEach { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
+        }
+    }
+    else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
+        ZMUserSession.shared().performChanges {
+            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.mimeType) { fileMetadata in
+                to.forEach { _ = $0.appendMessage(with: fileMetadata) }
+            }
+        }
+    }
+    else if Message.isLocationMessage(message) {
+//        ZMUserSession.shared().performChanges {
+//            to.forEach { _ = $0.appendMessage(with: ZMLocationData(latitude:  message.locationMessageData!.latitude, longitude:  message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)) }
 //        }
     }
+    else {
+        fatal("Cannot forward \(message)")
+    }
+}
 
+extension ZMMessage: Shareable {
+    
+    public func share<ZMConversation>(to: [ZMConversation]) {
+        forward(self, to: to as [AnyObject])
+    }
+    
     public typealias I = ZMConversation
-
+    
     public func previewView() -> UIView {
         let cell: ConversationCell
         if Message.isTextMessage(self) {
@@ -99,6 +120,7 @@ extension ZMMessage: Shareable {
             fatal("Cannot create preview for \(self)")
         }
         
+        cell.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
         
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender       = false
@@ -119,7 +141,8 @@ extension ZMMessage: Shareable {
 
 extension ConversationContentViewController {
     @objc public func showForwardFor(message: ZMConversationMessage) {
-        let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }
+        let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter { $0 != message.conversation }
+        
         let shareViewController = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
         
         if self.parent?.parent?.wr_splitViewController.layoutSize == .compact {

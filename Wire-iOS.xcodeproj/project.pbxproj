@@ -229,6 +229,7 @@
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
 		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
+		870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		87066FAC1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m in Sources */ = {isa = PBXBuildFile; fileRef = 87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */; };
 		87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CBF1CB68BDA0039388A /* ProgressView.swift */; };
 		87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CC31CB6A3790039388A /* FileTransferCellTests.swift */; };
@@ -366,7 +367,6 @@
 		871BC2781D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E61D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m */; };
 		871BC2791D34F8F800DF0793 /* VoiceUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E81D34F8F800DF0793 /* VoiceUserImageView.m */; };
 		871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */; };
-		871BC27B1D34F8F800DF0793 /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EC1D34F8F800DF0793 /* AttributedStringOperators.swift */; };
 		871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */; };
 		871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */; };
 		871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F41D34F8F800DF0793 /* NSString+Emoji.m */; };
@@ -1162,6 +1162,7 @@
 		8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WireExtensionComponents.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87023D7A1D76E4E2007B667E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverflowSeparatorView.swift; sourceTree = "<group>"; };
+		870534001DD6265100A7F822 /* AttributedStringOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringOperators.swift; sourceTree = "<group>"; };
 		87066FAA1D8C1AA90085F48B /* UIView+UIAppearanceSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIAppearanceSwift.h"; sourceTree = "<group>"; };
 		87066FAB1D8C1AA90085F48B /* UIView+UIAppearanceSwift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIAppearanceSwift.m"; sourceTree = "<group>"; };
 		87071CBF1CB68BDA0039388A /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -1423,7 +1424,6 @@
 		871BC1E81D34F8F800DF0793 /* VoiceUserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceUserImageView.m; sourceTree = "<group>"; };
 		871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebLinkTextView.h; sourceTree = "<group>"; };
 		871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebLinkTextView.m; sourceTree = "<group>"; };
-		871BC1EC1D34F8F800DF0793 /* AttributedStringOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringOperators.swift; sourceTree = "<group>"; };
 		871BC1ED1D34F8F800DF0793 /* CALayer+EasyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+EasyAnimation.h"; sourceTree = "<group>"; };
 		871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+EasyAnimation.m"; sourceTree = "<group>"; };
 		871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAMediaTimingFunction+AdditionalEquations.h"; sourceTree = "<group>"; };
@@ -2512,6 +2512,7 @@
 				1E0737D01BD8DB3600D781EF /* TextTransform */,
 				1EBA8C6E1B70F9620089CC44 /* CASStyler+Variables.h */,
 				1EBA8C6F1B70F9620089CC44 /* CASStyler+Variables.m */,
+				870534001DD6265100A7F822 /* AttributedStringOperators.swift */,
 				1677FD311BBC19A400491481 /* ColorScheme.h */,
 				1677FD321BBC19A400491481 /* ColorScheme.m */,
 				1E5E0CEF1B6B8EDB003B0CAC /* FileManager.h */,
@@ -3180,7 +3181,6 @@
 		871BC1EB1D34F8F800DF0793 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				871BC1EC1D34F8F800DF0793 /* AttributedStringOperators.swift */,
 				871BC1ED1D34F8F800DF0793 /* CALayer+EasyAnimation.h */,
 				871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */,
 				871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */,
@@ -5210,6 +5210,7 @@
 				1EE9DCC81B5F9A6D00E347DF /* TokenTextAttachment.m in Sources */,
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
+				870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */,
 				160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */,
 				1EE9DCCA1B5F9A6D00E347DF /* TokenizedTextView.m in Sources */,
 				872633E91D9322BA008B69D8 /* NSString+URL.swift in Sources */,
@@ -5600,7 +5601,6 @@
 				871BC28B1D34F8F800DF0793 /* UIResponder+FirstResponder.m in Sources */,
 				871BC23A1D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m in Sources */,
 				8F41CFC9199297C600E3B032 /* Message.m in Sources */,
-				871BC27B1D34F8F800DF0793 /* AttributedStringOperators.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,

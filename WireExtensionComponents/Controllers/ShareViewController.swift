@@ -45,6 +45,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         self.filteredDestinations = destinations
         self.shareable = shareable
         super.init(nibName: nil, bundle: nil)
+        self.modalTransitionStyle = .crossDissolve
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -90,10 +91,10 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         self.tokenField.clipsToBounds = true
         self.tokenField.textView.backgroundColor = UIColor(white: 1, alpha: 0.1)
         self.tokenField.textView.accessibilityLabel = "textViewSearch"
-        self.tokenField.textView.placeholder = "contacts_ui.search_placeholder"
+        self.tokenField.textView.placeholder = "content.message.forward.to".localized.uppercased()
         self.tokenField.textView.keyboardAppearance = .dark
-        self.tokenField.textView.contentInset = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 12)
-        self.tokenField.textView.placeholderTextContainerInset = self.tokenField.textView.contentInset
+        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 8, left: 48, bottom: 8, right: 12)
+        self.tokenField.textView.placeholderTextAlignment = .center
         self.tokenField.delegate = self
         
         self.searchIcon = UIImageView()
@@ -143,7 +144,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         }
         
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
-            searchIcon.top == tokenField.top + 12
+            searchIcon.centerY == tokenField.centerY
             searchIcon.left == tokenField.left + 12
         }
         
