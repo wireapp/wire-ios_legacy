@@ -11,7 +11,7 @@ import zmessaging
 import Cartography
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
-    func wrapInTableView() -> UITableView {
+    public func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
         
         tableView.delegate = self
