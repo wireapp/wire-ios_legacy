@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tap to record\nYou can  %@  it after that";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Choose a filter above";
 
+"conversation.call.many_participants_confirmation.title" = "Confirmation";
+"conversation.call.many_participants_confirmation.message" = "Confirm call in the group conversation.";
+"conversation.call.many_participants_confirmation.call" = "Call";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
