@@ -120,7 +120,7 @@ extension ZMMessage: Shareable {
             fatal("Cannot create preview for \(self)")
         }
         
-        cell.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
+        cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
         
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender       = false

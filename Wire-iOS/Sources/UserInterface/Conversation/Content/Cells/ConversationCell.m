@@ -124,12 +124,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         UIEdgeInsets layoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin"],
                                                       0, [WAZUIMagic floatForIdentifier:@"content.right_margin"]);
         
-        self.contentView.layoutMargins = layoutMargins;
-        
-        // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
-        // here until we re-factor the the ConversationCell
-        self.messageContentView.layoutMargins = layoutMargins;
-        self.messageToolboxView.layoutMargins = layoutMargins;
+        self.contentLayoutMargins = layoutMargins;
     }
     
     return self;
@@ -317,6 +312,18 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
     [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
     [self.countdownContainerView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
+}
+
+- (void)setContentLayoutMargins:(UIEdgeInsets)contentLayoutMargins
+{
+    _contentLayoutMargins = contentLayoutMargins;
+    
+    self.contentView.layoutMargins = contentLayoutMargins;
+    
+    // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
+    // here until we re-factor the the ConversationCell
+    self.messageContentView.layoutMargins = contentLayoutMargins;
+    self.messageToolboxView.layoutMargins = contentLayoutMargins;
 }
 
 - (void)layoutSubviews

@@ -47,20 +47,16 @@
 
 @interface TextMessageCell () <TextViewInteractionDelegate>
 
-@property (nonatomic, assign) BOOL initialTextCellConstraintsCreated;
+@property (nonatomic) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic, strong) LinkInteractionTextView *messageTextView;
-@property (nonatomic, strong) UIView *linkAttachmentContainer;
-@property (nonatomic, strong) UIImageView *editedImageView;
-@property (nonatomic, strong) LinkAttachment *linkAttachment;
-@property (nonatomic, strong) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
+@property (nonatomic) LinkInteractionTextView *messageTextView;
+@property (nonatomic) UIView *linkAttachmentContainer;
+@property (nonatomic) UIImageView *editedImageView;
+@property (nonatomic) LinkAttachment *linkAttachment;
+@property (nonatomic) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
 
-@property (nonatomic, strong) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *mediaPlayerLeftMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *mediaPlayerRightMarginConstraint;
-@property (nonatomic, strong) UIView *linkAttachmentView;
-
-
+@property (nonatomic) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
+@property (nonatomic) UIView *linkAttachmentView;
 
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 
@@ -138,8 +134,8 @@
     self.textViewHeightConstraint = [self.messageTextView autoSetDimension:ALDimensionHeight toSize:0];
     self.textViewHeightConstraint.active = NO;
     
-    self.mediaPlayerLeftMarginConstraint = [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
-    self.mediaPlayerRightMarginConstraint = [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
