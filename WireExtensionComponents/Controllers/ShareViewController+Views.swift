@@ -81,7 +81,7 @@ extension ShareViewController {
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, with: .tiny, for: .normal)
         self.sendButton.setBackgroundImageColor(UIColor.white, for: .normal)
-        self.sendButton.setBackgroundImageColor(UIColor(white: 0.4, alpha: 1), for: .disabled)
+        self.sendButton.setBackgroundImageColor(UIColor(white: 0.64, alpha: 1), for: .disabled)
         self.sendButton.setBorderColor(.clear, for: .normal)
         self.sendButton.setBorderColor(.clear, for: .disabled)
         self.sendButton.circular = true
@@ -105,7 +105,7 @@ extension ShareViewController {
         
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
-            searchIcon.left == tokenField.left + 8
+            searchIcon.left == tokenField.left + 3.5 // the search icon glyph has whitespaces
         }
         
         constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
@@ -141,9 +141,9 @@ extension ShareViewController {
         
         constrain(self.view, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
             
-            closeButton.left == view.left + 4
+            closeButton.left == view.left
             closeButton.centerY == sendButton.centerY
-            closeButton.width == 44
+            closeButton.width == 40
             closeButton.height == closeButton.width
             
             sendButton.top == bottomSeparatorLine.bottom + 12
