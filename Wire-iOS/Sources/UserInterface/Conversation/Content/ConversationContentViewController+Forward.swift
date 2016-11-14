@@ -79,9 +79,10 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
         }
     }
     else if Message.isLocationMessage(message) {
-//        ZMUserSession.shared().performChanges {
-//            to.forEach { _ = $0.appendMessage(with: ZMLocationData(latitude:  message.locationMessageData!.latitude, longitude:  message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)) }
-//        }
+        let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
+        ZMUserSession.shared().performChanges {
+            to.forEach { _ = $0.appendMessage(with: locationData) }
+        }
     }
     else {
         fatal("Cannot forward \(message)")
