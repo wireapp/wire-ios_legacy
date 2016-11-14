@@ -61,7 +61,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         
         constrain(self.contentView, self.titleLabel, self.checkImageView) { contentView, titleLabel, checkImageView in
             checkImageView.centerY == contentView.centerY
-            checkImageView.left == contentView.left + 14
+            checkImageView.left == contentView.left + 16
             checkImageView.width == self.checmarkSize
             checkImageView.height == checkImageView.width
             

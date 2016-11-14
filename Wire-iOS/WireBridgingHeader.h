@@ -37,6 +37,7 @@
 #import "ConversationCell.h"
 #import "TextMessageCell.h"
 #import "ImageMessageCell.h"
+#import "ImageMessageCell+Internal.h"
 #import "WireStyleKit.h"
 #import <Classy/UIViewController+CASAdditions.h>
 #import "UIViewController+Errors.h"

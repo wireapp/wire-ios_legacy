@@ -24,3 +24,8 @@
 - (void)setImage:(id<MediaAsset>)image;
 
 @end
+
+@interface ImageMessageCell ()
+@property (nonatomic) UIViewContentMode smallerThanMinimumSizeContentMode;
+@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@end

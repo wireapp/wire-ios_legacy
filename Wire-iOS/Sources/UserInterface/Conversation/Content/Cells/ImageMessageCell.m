@@ -71,7 +71,6 @@
 @property (nonatomic, strong) ImageToolbarView *imageToolbarView;
 @property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
-@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
 @property (nonatomic) SavableImage *savableImage;
 
 /// Can either be UIImage or FLAnimatedImage
@@ -80,6 +79,9 @@
 @property (nonatomic, strong) NSLayoutConstraint *imageWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *imageAspectConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *imageTopInsetConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageCenterConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageLeftConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageRightConstraint;
 @property (nonatomic, strong) NSArray<NSLayoutConstraint *> *imageToolbarInsideConstraints;
 @property (nonatomic, strong) NSArray<NSLayoutConstraint *> *imageToolbarOutsideConstraints;
 
@@ -109,6 +111,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _smallerThanMinimumSizeContentMode = UIViewContentModeLeft;
         [self createImageMessageViews];
         [self createConstraints];
         
@@ -216,8 +219,12 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self.loadingView autoCenterInSuperview];
 
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    
+    self.imageCenterConstraint = [self.imageViewContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    self.imageCenterConstraint.active = NO;
+    
+    self.imageRightConstraint = [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
+    self.imageLeftConstraint = [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
     
     [NSLayoutConstraint autoSetPriority:ALLayoutPriorityDefaultHigh + 1 forConstraints:^{
         [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
@@ -308,7 +315,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
     self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(0.5, 0.5));
     self.imageSize = CGSizeMake(MAX(48, self.originalImageSize.width), MAX(48, self.originalImageSize.height));
-    self.fullImageView.contentMode =  [self imageSmallerThanMinimumSize] ? UIViewContentModeLeft : UIViewContentModeScaleAspectFill;
+    self.fullImageView.contentMode = [self imageSmallerThanMinimumSize] ? self.smallerThanMinimumSizeContentMode : UIViewContentModeScaleAspectFill;
     self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];
     self.imageToolbarView.configuration = [self imageToolbarNeedsToBeCompact] ? ImageToolbarConfigurationCompactCell : ImageToolbarConfigurationCell;
     
@@ -417,6 +424,22 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         changeBlock();
     }
     
+}
+
+- (void)setSmallerThanMinimumSizeContentMode:(UIViewContentMode)smallerThanMinimumSizeContentMode
+{
+    _smallerThanMinimumSizeContentMode = smallerThanMinimumSizeContentMode;
+    
+    if (self.smallerThanMinimumSizeContentMode == UIViewContentModeCenter) {
+        self.imageCenterConstraint.active = YES;
+        self.imageRightConstraint.active = NO;
+        self.imageLeftConstraint.active = NO;
+    }
+    else {
+        self.imageCenterConstraint.active = NO;
+        self.imageRightConstraint.active = YES;
+        self.imageLeftConstraint.active = YES;
+    }
 }
 
 - (void)recycleImage

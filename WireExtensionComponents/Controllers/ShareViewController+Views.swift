@@ -37,7 +37,6 @@ extension ShareViewController {
         self.shareablePreviewWrapper.layer.shadowRadius = 8
         self.shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
         self.shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
-        self.shareablePreviewWrapper.layer.shadowPath = UIBezierPath(rect: self.shareablePreviewView.bounds).cgPath
         
         self.shareablePreviewWrapper.addSubview(self.shareablePreviewView)
         
@@ -105,7 +104,7 @@ extension ShareViewController {
         
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
-            searchIcon.left == tokenField.left + 3.5 // the search icon glyph has whitespaces
+            searchIcon.left == tokenField.left + 5.5 // the search icon glyph has whitespaces
         }
         
         constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
@@ -143,7 +142,7 @@ extension ShareViewController {
             
             closeButton.left == view.left
             closeButton.centerY == sendButton.centerY
-            closeButton.width == 40
+            closeButton.width == 44
             closeButton.height == closeButton.width
             
             sendButton.top == bottomSeparatorLine.bottom + 12

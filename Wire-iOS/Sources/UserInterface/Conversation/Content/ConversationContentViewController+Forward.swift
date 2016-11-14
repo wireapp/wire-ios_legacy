@@ -113,7 +113,11 @@ extension ZMMessage: Shareable {
             cell = TextMessageCell(style: .default, reuseIdentifier: "")
         }
         else if Message.isImageMessage(self) {
-            cell = ImageMessageCell(style: .default, reuseIdentifier: "")
+            let imageMessageCell = ImageMessageCell(style: .default, reuseIdentifier: "")
+            imageMessageCell.smallerThanMinimumSizeContentMode = .center
+            imageMessageCell.defaultLayoutMargins = .zero
+            cell = imageMessageCell
+
         }
         else if Message.isVideoMessage(self) {
             cell = VideoMessageCell(style: .default, reuseIdentifier: "")
@@ -131,7 +135,7 @@ extension ZMMessage: Shareable {
             fatal("Cannot create preview for \(self)")
         }
         
-        cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
+        cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender       = false
