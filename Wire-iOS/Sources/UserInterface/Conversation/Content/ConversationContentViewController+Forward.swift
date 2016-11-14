@@ -164,8 +164,12 @@ extension ConversationContentViewController {
         }
        
         shareViewController.onDismiss = { shareController in
-            shareController.presentingViewController?.dismiss(animated: true, completion: .none)
+            shareController.presentingViewController?.dismiss(animated: true) {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+            }
         }
-        UIApplication.shared.keyWindow?.rootViewController?.present(shareViewController, animated: true, completion: .none)
+        UIApplication.shared.keyWindow?.rootViewController?.present(shareViewController, animated: true) {
+            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        }
     }
 }

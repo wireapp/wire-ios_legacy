@@ -52,7 +52,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.selectedBackgroundView = UIView()
         
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
-        self.checkImageView.layer.borderWidth = 1
+        self.checkImageView.layer.borderWidth = 2
         self.checkImageView.contentMode = .center
         self.checkImageView.layer.cornerRadius = self.checmarkSize / 2.0
 
@@ -61,7 +61,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         
         constrain(self.contentView, self.titleLabel, self.checkImageView) { contentView, titleLabel, checkImageView in
             checkImageView.centerY == contentView.centerY
-            checkImageView.left == contentView.left + 16
+            checkImageView.left == contentView.left + 14
             checkImageView.width == self.checmarkSize
             checkImageView.height == checkImageView.width
             

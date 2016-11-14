@@ -1488,3 +1488,20 @@ ReactionCell {
     }
 }
 
+/* Share View Controller */
+
+TokenField.share {
+    textView: @{
+        placeholderFont: $font-medium-medium;
+        placeholderTextContainerInset: 0 0;
+    }
+    tokenTitleFont: $font-medium-medium;
+    textColor: white;
+    tokenTitleColor: black;
+    tokenBackgroundColor: white;
+    tokenBorderColor: white;
+    tokenSelectedTitleColor: white;
+    tokenSelectedBackgroundColor: clear;
+    tokenSelectedBorderColor: white;
+}
+

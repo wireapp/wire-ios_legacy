@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 public protocol ShareDestination: Hashable {
     var displayName: String { get }
@@ -52,144 +51,27 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var blurView: UIVisualEffectView!
-    private var shareablePreviewView: UIView!
-    private var shareablePreviewWrapper: UIView!
-    private var searchIcon: UIImageView!
-    private var topSeparatorView: OverflowSeparatorView!
-    private var destinationsTableView: UITableView!
-    private var closeButton: IconButton!
-    private var sendButton: IconButton!
-    private var tokenField: TokenField!
-    private var bottomSeparatorLine: UIView!
+    internal var blurView: UIVisualEffectView!
+    internal var shareablePreviewView: UIView!
+    internal var shareablePreviewWrapper: UIView!
+    internal var searchIcon: UIImageView!
+    internal var topSeparatorView: OverflowSeparatorView!
+    internal var destinationsTableView: UITableView!
+    internal var closeButton: IconButton!
+    internal var sendButton: IconButton!
+    internal var tokenField: TokenField!
+    internal var bottomSeparatorLine: UIView!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let effect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        
-        self.blurView = UIVisualEffectView(effect: effect)
-        
-        self.shareablePreviewView = self.shareable.previewView()
-        self.shareablePreviewView.isUserInteractionEnabled = false
-        self.shareablePreviewView.layer.cornerRadius = 4
-        self.shareablePreviewView.clipsToBounds = true
-        
-        self.shareablePreviewWrapper = UIView()
-        self.shareablePreviewWrapper.clipsToBounds = false
-        self.shareablePreviewWrapper.layer.shadowOpacity = 1
-        self.shareablePreviewWrapper.layer.shadowRadius = 8
-        self.shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
-        self.shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
-        self.shareablePreviewWrapper.layer.shadowPath = UIBezierPath(rect: self.shareablePreviewView.bounds).cgPath
-        
-        self.shareablePreviewWrapper.addSubview(self.shareablePreviewView)
-        
-        self.tokenField = TokenField()
-        self.tokenField.textColor = .white
-        self.tokenField.layer.cornerRadius = 4
-        self.tokenField.clipsToBounds = true
-        self.tokenField.textView.backgroundColor = UIColor(white: 1, alpha: 0.1)
-        self.tokenField.textView.accessibilityLabel = "textViewSearch"
-        self.tokenField.textView.placeholder = "content.message.forward.to".localized.uppercased()
-        self.tokenField.textView.keyboardAppearance = .dark
-        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 8, left: 48, bottom: 8, right: 12)
-        self.tokenField.textView.placeholderTextAlignment = .center
-        self.tokenField.delegate = self
-        
-        self.searchIcon = UIImageView()
-        self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
-        
-        self.topSeparatorView = OverflowSeparatorView()
-        
-        self.destinationsTableView = UITableView()
-        self.destinationsTableView.backgroundColor = .clear
-        self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
-        self.destinationsTableView.separatorStyle = .none
-        self.destinationsTableView.allowsSelection = true
-        self.destinationsTableView.allowsMultipleSelection = true
-        self.destinationsTableView.delegate = self
-        self.destinationsTableView.dataSource = self
-        
-        self.closeButton = IconButton()
-        self.closeButton.accessibilityLabel = "close"
-        self.closeButton.cas_styleClass = "default-light"
-        self.closeButton.setIcon(.X, with: .tiny, for: .normal)
-        self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
-        
-        self.sendButton = IconButton()
-        self.sendButton.accessibilityLabel = "send"
-        self.sendButton.cas_styleClass = "default-dark"
-        self.sendButton.isEnabled = false
-        self.sendButton.setIcon(.send, with: .tiny, for: .normal)
-        self.sendButton.setBackgroundImageColor(UIColor.white, for: .normal)
-        self.sendButton.circular = true
-        self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
-        
-        self.bottomSeparatorLine = UIView()
-        self.bottomSeparatorLine.cas_styleClass = "separator"
-        
-        [self.blurView, self.shareablePreviewWrapper, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.view.addSubview)
+        self.createViews()
         
         self.createConstraints()
     }
     
-    private func createConstraints() {
-        constrain(self.view, self.blurView) { view, blurView in
-            blurView.edges == view.edges
-        }
-        
-        constrain(self.shareablePreviewWrapper, self.shareablePreviewView) { shareablePreviewWrapper, shareablePreviewView in
-            shareablePreviewView.edges == shareablePreviewWrapper.edges
-        }
-        
-        constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
-            searchIcon.centerY == tokenField.centerY
-            searchIcon.left == tokenField.left + 12
-        }
-        
-        constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
-            topSeparatorView.left == view.left
-            topSeparatorView.right == view.right
-            topSeparatorView.top == destinationsTableView.top
-            topSeparatorView.height == 0.5
-        }
-        
-        constrain(self.view, self.destinationsTableView, self.shareablePreviewWrapper, self.tokenField, self.bottomSeparatorLine) { view, tableView, shareablePreviewWrapper, tokenField, bottomSeparatorLine in
-            
-            shareablePreviewWrapper.top == view.top + 28
-            shareablePreviewWrapper.left == view.left + 16
-            shareablePreviewWrapper.right == -16 + view.right
-            shareablePreviewWrapper.height <= 200
-            
-            tokenField.top == shareablePreviewWrapper.bottom + 16
-            tokenField.left == view.left + 8
-            tokenField.right == -8 + view.right
-            tokenField.height >= 32
-            
-            tableView.left == view.left
-            tableView.right == view.right
-            tableView.top == tokenField.bottom + 8
-            tableView.bottom == bottomSeparatorLine.top
-            
-            bottomSeparatorLine.left == view.left
-            bottomSeparatorLine.right == view.right
-            bottomSeparatorLine.height == 0.5
-        }
-        
-        constrain(self.view, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
-            
-            closeButton.left == view.left + 8
-            closeButton.centerY == sendButton.centerY
-            closeButton.width == 44
-            closeButton.height == closeButton.width
-            
-            sendButton.top == bottomSeparatorLine.bottom + 12
-            sendButton.height == 32
-            sendButton.width == sendButton.height
-            sendButton.centerX == view.centerX
-            sendButton.bottom == -12 + view.bottom
-        }
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     // MARK: - Search
@@ -200,7 +82,8 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         didSet {
             if let filterString = filterString, !filterString.isEmpty {
                 self.filteredDestinations = self.destinations.filter {
-                    $0.displayName.contains(filterString)
+                    let name = $0.displayName
+                    return name.range(of: filterString, options: .caseInsensitive) != nil
                 }
             }
             else {

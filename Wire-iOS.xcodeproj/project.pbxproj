@@ -431,6 +431,7 @@
 		872633E91D9322BA008B69D8 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E471D171BC67AB500C85203 /* NSString+URL.swift */; };
 		872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */; };
 		872A7E8C1C1981A300E4B261 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872A7E8B1C1981A300E4B261 /* AppController.m */; };
+		872C2B7F1DD9C22B0086A574 /* ShareViewController+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */; };
 		872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872C99111DB0EA54006A3BDE /* Intents.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A419E58816006752B4 /* ProfileFooterView.m */; };
 		872CB8B419E58816006752B4 /* ProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A619E58816006752B4 /* ProfileHeaderView.m */; };
@@ -1540,6 +1541,7 @@
 		872A7E8A1C1981A300E4B261 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		872A7E8B1C1981A300E4B261 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		872AC9C21B397E6A00575CF3 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Views.swift"; sourceTree = "<group>"; };
 		872C99111DB0EA54006A3BDE /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		872CB8A319E58816006752B4 /* ProfileFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileFooterView.h; sourceTree = "<group>"; };
 		872CB8A419E58816006752B4 /* ProfileFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileFooterView.m; sourceTree = "<group>"; };
@@ -3482,6 +3484,7 @@
 			isa = PBXGroup;
 			children = (
 				876113E61DD1DE89007F5969 /* ShareViewController.swift */,
+				872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */,
 				876113E81DD1FC4F007F5969 /* ShareDestinationCell.swift */,
 			);
 			path = Controllers;
@@ -5223,6 +5226,7 @@
 				1EF2BE5F1BDA71AA00E287B9 /* NSString+TextTransform.m in Sources */,
 				1E5E0CFF1B6B8EDB003B0CAC /* FileManager.m in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
+				872C2B7F1DD9C22B0086A574 /* ShareViewController+Views.swift in Sources */,
 				1EE9DCC81B5F9A6D00E347DF /* TokenTextAttachment.m in Sources */,
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
