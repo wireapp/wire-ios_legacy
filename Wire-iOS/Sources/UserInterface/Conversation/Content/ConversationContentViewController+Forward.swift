@@ -164,7 +164,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         let displayInPopover = self.traitCollection.horizontalSizeClass == .regular &&
                                self.traitCollection.horizontalSizeClass == .regular
                 
-        if displayInPopover{
+        if displayInPopover {
             shareViewController.showPreview = false
         }
         
@@ -175,9 +175,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         if let popoverPresentationController = shareViewController.popoverPresentationController {
             popoverPresentationController.sourceRect = fromCell.selectionRect
             popoverPresentationController.sourceView = fromCell.selectionView
-            if displayInPopover{
-                popoverPresentationController.backgroundColor = UIColor.black
-            }
+            popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
             popoverPresentationController.permittedArrowDirections = .any
         }
         
