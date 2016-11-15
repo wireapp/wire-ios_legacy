@@ -111,31 +111,36 @@ extension ZMMessage: Shareable {
         let cell: ConversationCell
         if Message.isTextMessage(self) {
             cell = TextMessageCell(style: .default, reuseIdentifier: "")
+            cell.contentLayoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+            cell.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         }
         else if Message.isImageMessage(self) {
             let imageMessageCell = ImageMessageCell(style: .default, reuseIdentifier: "")
+            imageMessageCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             imageMessageCell.smallerThanMinimumSizeContentMode = .center
             imageMessageCell.defaultLayoutMargins = .zero
             cell = imageMessageCell
-
         }
         else if Message.isVideoMessage(self) {
             cell = VideoMessageCell(style: .default, reuseIdentifier: "")
+            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else if Message.isAudioMessage(self) {
             cell = AudioMessageCell(style: .default, reuseIdentifier: "")
+            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else if Message.isLocationMessage(self) {
             cell = LocationMessageCell(style: .default, reuseIdentifier: "")
+            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else if Message.isFileTransferMessage(self) {
             cell = FileTransferCell(style: .default, reuseIdentifier: "")
+            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else {
             fatal("Cannot create preview for \(self)")
         }
         
-        cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender       = false
