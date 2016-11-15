@@ -37,6 +37,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         }
     }
     
+    public var showPreview: Bool = true
     public var onDismiss: ((ShareViewController)->())?
     
     public init(shareable: S, destinations: [D]) {
@@ -52,8 +53,8 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     }
     
     internal var blurView: UIVisualEffectView!
-    internal var shareablePreviewView: UIView!
-    internal var shareablePreviewWrapper: UIView!
+    internal var shareablePreviewView: UIView?
+    internal var shareablePreviewWrapper: UIView?
     internal var searchIcon: UIImageView!
     internal var topSeparatorView: OverflowSeparatorView!
     internal var destinationsTableView: UITableView!

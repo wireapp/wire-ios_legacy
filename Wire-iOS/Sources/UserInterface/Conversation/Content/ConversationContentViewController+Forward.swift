@@ -149,24 +149,40 @@ extension ZMMessage: Shareable {
         }
         
         cell.configure(for: self, layoutProperties: layoutProperties)
-        
-        return cell.wrapInTableView()
+        let table = cell.wrapInTableView()
+        table.isUserInteractionEnabled = false
+        return table
     }
 }
 
-extension ConversationContentViewController {
-    @objc public func showForwardFor(message: ZMConversationMessage) {
+extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
+    @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell) {
         let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter { $0 != message.conversation }
         
         let shareViewController = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
         
-        if self.parent?.parent?.wr_splitViewController.layoutSize == .compact {
-            shareViewController.modalPresentationStyle = .overCurrentContext
+        let displayInPopover = self.traitCollection.horizontalSizeClass == .regular &&
+                               self.traitCollection.horizontalSizeClass == .regular
+                
+        if displayInPopover{
+            shareViewController.showPreview = false
         }
-        else {
-            shareViewController.modalPresentationStyle = .formSheet
+        
+        
+        shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
+        shareViewController.modalPresentationStyle = displayInPopover ? .popover : .overCurrentContext
+        
+        if let popoverPresentationController = shareViewController.popoverPresentationController {
+            popoverPresentationController.sourceRect = fromCell.selectionRect
+            popoverPresentationController.sourceView = fromCell.selectionView
+            if displayInPopover{
+                popoverPresentationController.backgroundColor = UIColor.black
+            }
+            popoverPresentationController.permittedArrowDirections = .any
         }
-       
+        
+        shareViewController.presentationController?.delegate = self
+        
         shareViewController.onDismiss = { shareController in
             shareController.presentingViewController?.dismiss(animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
@@ -175,5 +191,9 @@ extension ConversationContentViewController {
         UIApplication.shared.keyWindow?.rootViewController?.present(shareViewController, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
+    }
+    
+    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .overCurrentContext
     }
 }

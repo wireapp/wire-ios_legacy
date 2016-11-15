@@ -26,19 +26,22 @@ extension ShareViewController {
         
         self.blurView = UIVisualEffectView(effect: effect)
         
-        self.shareablePreviewView = self.shareable.previewView()
-        self.shareablePreviewView.isUserInteractionEnabled = false
-        self.shareablePreviewView.layer.cornerRadius = 4
-        self.shareablePreviewView.clipsToBounds = true
-        
-        self.shareablePreviewWrapper = UIView()
-        self.shareablePreviewWrapper.clipsToBounds = false
-        self.shareablePreviewWrapper.layer.shadowOpacity = 1
-        self.shareablePreviewWrapper.layer.shadowRadius = 8
-        self.shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
-        self.shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
-        
-        self.shareablePreviewWrapper.addSubview(self.shareablePreviewView)
+        if self.showPreview {
+            let shareablePreviewView = self.shareable.previewView()
+            shareablePreviewView.layer.cornerRadius = 4
+            shareablePreviewView.clipsToBounds = true
+            self.shareablePreviewView = shareablePreviewView
+            
+            let shareablePreviewWrapper = UIView()
+            shareablePreviewWrapper.clipsToBounds = false
+            shareablePreviewWrapper.layer.shadowOpacity = 1
+            shareablePreviewWrapper.layer.shadowRadius = 8
+            shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
+            shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
+            
+            shareablePreviewWrapper.addSubview(shareablePreviewView)
+            self.shareablePreviewWrapper = shareablePreviewWrapper
+        }
         
         self.tokenField = TokenField()
         self.tokenField.cas_styleClass = "share"
@@ -68,15 +71,13 @@ extension ShareViewController {
         self.destinationsTableView.delegate = self
         self.destinationsTableView.dataSource = self
         
-        self.closeButton = IconButton()
+        self.closeButton = IconButton.iconButtonDefaultLight()
         self.closeButton.accessibilityLabel = "close"
-        self.closeButton.cas_styleClass = "default-light"
         self.closeButton.setIcon(.X, with: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
         
-        self.sendButton = IconButton()
+        self.sendButton = IconButton.iconButtonDefaultDark()
         self.sendButton.accessibilityLabel = "send"
-        self.sendButton.cas_styleClass = "default-dark"
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, with: .tiny, for: .normal)
         self.sendButton.setBackgroundImageColor(UIColor.white, for: .normal)
@@ -89,17 +90,37 @@ extension ShareViewController {
         self.bottomSeparatorLine = UIView()
         self.bottomSeparatorLine.cas_styleClass = "separator"
         
-        [self.blurView, self.shareablePreviewWrapper, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.view.addSubview)
+        [self.blurView, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.view.addSubview)
+        
+        if let shareablePreviewWrapper = self.shareablePreviewWrapper {
+            self.view.addSubview(shareablePreviewWrapper)
+        }
     }
-    
     
     internal func createConstraints() {
         constrain(self.view, self.blurView) { view, blurView in
             blurView.edges == view.edges
         }
         
-        constrain(self.shareablePreviewWrapper, self.shareablePreviewView) { shareablePreviewWrapper, shareablePreviewView in
-            shareablePreviewView.edges == shareablePreviewWrapper.edges
+        if self.showPreview {
+            let screenHeightCompact = (UIScreen.main.bounds.height <= 568)
+
+            constrain(self.view, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
+                
+                shareablePreviewWrapper.top == view.top + 28
+                shareablePreviewWrapper.left == view.left + 16
+                shareablePreviewWrapper.right == -16 + view.right
+                shareablePreviewWrapper.height <= (screenHeightCompact ? 150 : 200)
+                
+                shareablePreviewView.edges == shareablePreviewWrapper.edges
+                
+                tokenField.top == shareablePreviewWrapper.bottom + 16
+            }
+        }
+        else {
+            constrain(self.view, self.tokenField) { view, tokenField in
+                tokenField.top == view.top + 28
+            }
         }
         
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
@@ -114,16 +135,9 @@ extension ShareViewController {
             topSeparatorView.height == 0.5
         }
         
-        let screenHeightCompact = (UIScreen.main.bounds.height <= 568)
         
-        constrain(self.view, self.destinationsTableView, self.shareablePreviewWrapper, self.tokenField, self.bottomSeparatorLine) { view, tableView, shareablePreviewWrapper, tokenField, bottomSeparatorLine in
+        constrain(self.view, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
             
-            shareablePreviewWrapper.top == view.top + 28
-            shareablePreviewWrapper.left == view.left + 16
-            shareablePreviewWrapper.right == -16 + view.right
-            shareablePreviewWrapper.height <= (screenHeightCompact ? 150 : 200)
-            
-            tokenField.top == shareablePreviewWrapper.bottom + 16
             tokenField.left == view.left + 8
             tokenField.right == -8 + view.right
             tokenField.height >= 32

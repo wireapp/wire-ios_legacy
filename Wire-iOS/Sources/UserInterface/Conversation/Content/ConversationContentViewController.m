@@ -860,7 +860,7 @@
             break;
         case ConversationCellActionForward:
         {
-            [self showForwardForMessage:cell.message];
+            [self showForwardForMessage:cell.message fromCell:cell];
         }
             
             break;
