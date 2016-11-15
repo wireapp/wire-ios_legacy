@@ -173,15 +173,14 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             shareViewController.showPreview = false
         }
         
-        
         shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
-        shareViewController.modalPresentationStyle = displayInPopover ? .popover : .overCurrentContext
+        shareViewController.modalPresentationStyle = .popover
         
         if let popoverPresentationController = shareViewController.popoverPresentationController {
             popoverPresentationController.sourceRect = fromCell.selectionRect
             popoverPresentationController.sourceView = fromCell.selectionView
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            popoverPresentationController.permittedArrowDirections = .any
+            popoverPresentationController.permittedArrowDirections = [.up, .down]
         }
         
         shareViewController.presentationController?.delegate = self
@@ -197,6 +196,9 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
     }
     
     public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .overCurrentContext
+        let displayInPopover = self.traitCollection.horizontalSizeClass == .regular &&
+                               self.traitCollection.horizontalSizeClass == .regular
+        
+        return displayInPopover ? .popover : .overFullScreen
     }
 }
