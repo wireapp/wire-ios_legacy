@@ -57,6 +57,8 @@ NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
 
+NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
+
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
 NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
@@ -111,7 +113,8 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultDisableCallKit,
              UserDefaultTwitterOpeningRawValue,
              UserDefaultMapsOpeningRawValue,
-             UserDefaultBrowserOpeningRawValue
+             UserDefaultBrowserOpeningRawValue,
+             UserDefaultSendV3Assets
              ];
 }
 
@@ -440,6 +443,18 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
     [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
     [self.defaults synchronize];
 }
+
+- (BOOL)sendV3Assets
+{
+    return [self.defaults boolForKey:UserDefaultSendV3Assets];
+}
+
+- (void)setSendV3Assets:(BOOL)sendV3Assets
+{
+    [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
+}
+
+#pragma mark - Link opening options
 
 - (NSInteger)twitterLinkOpeningOptionRawValue
 {

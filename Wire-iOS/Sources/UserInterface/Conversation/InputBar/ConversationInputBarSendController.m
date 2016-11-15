@@ -51,7 +51,7 @@
     if (imageData != nil) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
             
-            [self.conversation appendMessageWithImageData:imageData];
+            [self.conversation appendMessageWithImageData:imageData version3:Settings.sharedSettings.sendV3Assets];
         } completionHandler:^{
             
             if (completionHandler){
@@ -100,7 +100,7 @@
     
     [ZMUserSession.sharedSession enqueueChanges:^{
         textMessage = [self.conversation appendMessageWithText:text];
-        [self.conversation appendMessageWithImageData:data];
+        [self.conversation appendMessageWithImageData:data version3:Settings.sharedSettings.sendV3Assets];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
         [Analytics shared].sessionSummary.textMessagesSent++;

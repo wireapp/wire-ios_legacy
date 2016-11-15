@@ -68,6 +68,8 @@ extern NSString * const UserDefaultDisableCallKit;
 
 extern NSString * const UserDefaultSendButtonDisabled;
 
+extern NSString * const UserDefaultSendV3Assets;
+
 extern NSString * const UserDefaultTwitterOpeningRawValue;
 extern NSString * const UserDefaultMapsOpeningRawValue;
 extern NSString * const UserDefaultBrowserOpeningRawValue;
@@ -82,7 +84,9 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 @property (nonatomic) BOOL enableMarkdown;
 @property (nonatomic) BOOL shouldRegisterForVoIPNotificationsOnly;
 @property (nonatomic) BOOL disableSendButton;
+
 @property (nonatomic) BOOL disableCallKit;
+@property (nonatomic) BOOL sendV3Assets;
 
 @property (nonatomic, readonly) BOOL skipFirstTimeUseChecks;
 @property (nonatomic) NSDate *lastPushAlertDate;
