@@ -88,6 +88,9 @@ public final class AudioMessageCell: ConversationCell {
         self.audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
         
         self.audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     deinit {

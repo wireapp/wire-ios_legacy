@@ -86,6 +86,9 @@ public final class VideoMessageCell: ConversationCell {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [previewImageView, playButton, timeLabel, progressView, likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
+
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     public required init?(coder aDecoder: NSCoder) {
