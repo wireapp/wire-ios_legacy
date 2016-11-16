@@ -43,19 +43,14 @@ import CocoaLumberjackSwift
     }
     var clients: [UserClient] = [] {
         didSet {
-            self.sortedClients = self.clients.sorted(by: { (c1: UserClient, c2: UserClient) -> Bool in
-                if let dateC1 = c1.activationDate,
-                    let dateC2 = c2.activationDate {
-                    return dateC1.compare(dateC2) == .orderedDescending
-                }
-                else {
-                    return false
-                }
-            })
+            self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
             self.clientsTableView?.reloadData();
         }
     }
-    
+
+    private let clientSorter: (UserClient, UserClient) -> Bool
+    private let clientFilter: (UserClient) -> Bool
+
     var sortedClients: [UserClient] = []
     
     let selfClient: UserClient?
@@ -64,16 +59,23 @@ import CocoaLumberjackSwift
     var clientsObserverToken: ZMClientUpdateObserverToken?
     var userObserverToken : ZMUserObserverOpaqueToken?
         
-    required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .none, detailedView: Bool = false) {
-        self.selfClient = ZMUserSession.shared().selfUserClient()
+    required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .none, detailedView: Bool = false, showTemporary: Bool = true) {
+        let selfClient = ZMUserSession.shared().selfUserClient()
+        self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
+
+        clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
+        clientSorter = {
+            guard let leftDate = $0.activationDate, let rightDate = $1.activationDate else { return false }
+            return leftDate.compare(rightDate) == .orderedDescending
+        }
+
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("registration.devices.title", comment:"")
         self.edgesForExtendedLayout = []
 
-        let filteredClients = clientsList?.filter { $0 != selfClient } ?? []
-        self.initalizeProperties(filteredClients)
+        self.initalizeProperties(clientsList ?? [])
 
         self.clientsObserverToken = ZMUserSession.shared().add(self)
         self.userObserverToken = ZMUser.add(self, forUsers: [ZMUser.selfUser()], in: ZMUserSession.shared())
@@ -402,4 +404,12 @@ extension ClientListViewController : ZMUserObserver {
         }
     }
     
+}
+
+fileprivate extension UserClient {
+
+    var isTemporary: Bool {
+        return type == "temporary"
+    }
+
 }
