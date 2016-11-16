@@ -88,6 +88,9 @@ public final class AudioMessageCell: ConversationCell {
         self.audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
         
         self.audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     deinit {
@@ -472,12 +475,22 @@ public final class AudioMessageCell: ConversationCell {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
+        
+        var additionalItems = [UIMenuItem]()
+        
         if message.audioCanBeSaved() {
             let menuItem = UIMenuItem(title:"content.file.save_audio".localized, action:#selector(wr_saveAudio))
-            properties.additionalItems = [menuItem]
-        } else {
-            properties.additionalItems = []
+            additionalItems.append(menuItem)
         }
+        
+        if let fileMessageData = message.fileMessageData,
+            let _ = fileMessageData.fileURL {
+            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))
+            
+            additionalItems.append(forwardItem)
+        }
+        
+        properties.additionalItems = additionalItems
         
         return properties
     }
@@ -485,6 +498,15 @@ public final class AudioMessageCell: ConversationCell {
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(wr_saveAudio) && self.message.audioCanBeSaved() {
             return true
+        }
+        else if action == #selector(forward(_:)) {
+            if let fileMessageData = message.fileMessageData,
+            let _ = fileMessageData.fileURL {
+                return true
+            }
+            else {
+                return false
+            }
         }
         return super.canPerformAction(action, withSender: sender)
     }

@@ -139,10 +139,44 @@ public extension ConversationViewController {
         return [audioCallBarButtonItem]
     }
     
+    private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {
+        let participantsCount = self.conversation.activeParticipants.count - 1
+        let message = "conversation.call.many_participants_confirmation.message".localized(args: participantsCount)
+        
+        let confirmation = UIAlertController(title: "conversation.call.many_participants_confirmation.title".localized,
+                                             message: message,
+                                             preferredStyle: .alert)
+        
+        let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
+            completion(false)
+        }
+        confirmation.addAction(actionCancel)
+        
+        let actionSend = UIAlertAction(title: "conversation.call.many_participants_confirmation.call".localized, style: .default) { _ in
+            completion(true)
+        }
+        confirmation.addAction(actionSend)
+        
+        self.present(confirmation, animated: true, completion: .none)
+    }
+    
     func voiceCallItemTapped(_ sender: UIBarButtonItem) {
-        ConversationInputBarViewController.endEditingMessage()
-        conversation.startAudioCall(completionHandler: nil)
-        Analytics.shared()?.tagMediaAction(.audioCall, inConversation: conversation)
+        let startCall = {
+            ConversationInputBarViewController.endEditingMessage()
+            self.conversation.startAudioCall(completionHandler: nil)
+            Analytics.shared()?.tagMediaAction(.audioCall, inConversation: self.conversation)
+        }
+        
+        if self.conversation.activeParticipants.count <= 4 {
+            startCall()
+        }
+        else {
+            self.confirmCallInGroup { accepted in
+                if accepted {
+                    startCall()
+                }
+            }
+        }
     }
     
     func videoCallItemTapped(_ sender: UIBarButtonItem) {

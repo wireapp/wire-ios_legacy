@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 + (instancetype)iconButtonDefault;
++ (instancetype)iconButtonDefaultLight;
++ (instancetype)iconButtonDefaultDark;
 + (instancetype)iconButtonCircularLight;
 + (instancetype)iconButtonCircularDark;
 + (instancetype)iconButtonCircular;

@@ -181,7 +181,7 @@ public final class LocationMessageCell: ConversationCell {
         switch action {
         case #selector(cut), #selector(paste), #selector(select), #selector(selectAll):
             return false
-        case #selector(copy(_:)):
+        case #selector(copy(_:)), #selector(forward(_:)):
             return true
         default:
             return super.canPerformAction(action, withSender: sender)
@@ -199,6 +199,8 @@ public final class LocationMessageCell: ConversationCell {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
+        
+        properties.additionalItems = [UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))]
         return properties
     }
     

@@ -32,10 +32,6 @@
 
 @property (nonatomic) BOOL shouldDrawPlaceholder;
 @property (nonatomic) UILabel *placeholderLabel;
-@property (nonatomic) NSLayoutConstraint *placeholderLabelLeftInset;
-@property (nonatomic) NSLayoutConstraint *placeholderLabelRightInset;
-@property (nonatomic) NSLayoutConstraint *placeholderLabelTopInset;
-@property (nonatomic) NSLayoutConstraint *placeholderLabelBottomInset;
 @end
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
@@ -81,6 +77,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
     self.placeholderTextColor = [UIColor lightGrayColor];
     self.placeholderTextContainerInset = self.textContainerInset;
+    self.placeholderTextAlignment = NSTextAlignmentLeft;
     
     if ([AutomationHelper.sharedHelper disableAutocorrection]) {
         self.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -98,6 +95,12 @@
     self.placeholderLabel.text = placeholder;
     [self.placeholderLabel sizeToFit];
     [self showOrHidePlaceholder];
+}
+
+- (void)setPlaceholderTextAlignment:(NSTextAlignment)placeholderTextAlignment
+{
+    _placeholderTextAlignment = placeholderTextAlignment;
+    self.placeholderLabel.textAlignment = placeholderTextAlignment;
 }
 
 - (void)setPlaceholderTextColor:(UIColor *)placeholderTextColor
@@ -155,6 +158,7 @@
         if(self.placeholderLabel == nil) {
             
             float linePadding = self.textContainer.lineFragmentPadding;
+            
             CGRect placeholderRect = CGRectMake(self.placeholderTextContainerInset.left + linePadding,
                                                 self.placeholderTextContainerInset.top,
                                                 rect.size.width - self.placeholderTextContainerInset.left - self.placeholderTextContainerInset.right - 2 * linePadding,
@@ -164,10 +168,13 @@
             self.placeholderLabel.textAlignment = self.textAlignment;
             self.placeholderLabel.textColor = self.placeholderTextColor;
             self.placeholderLabel.textTransform = self.placeholderTextTransform;
+            self.placeholderLabel.textAlignment = self.placeholderTextAlignment;
             [self addSubview:self.placeholderLabel];
             
             self.placeholderLabel.text = self.placeholder;
-            [self.placeholderLabel sizeToFit];
+            if (self.textAlignment == NSTextAlignmentLeft) {
+                [self.placeholderLabel sizeToFit];
+            }
             
         }
         [self showOrHidePlaceholder];

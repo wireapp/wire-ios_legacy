@@ -111,7 +111,8 @@ ZMUser *BareUserToUser(id bareUser) {
     }
     while (accentColorValue == ZMAccentColorSoftPink ||
            accentColorValue == ZMAccentColorStrongLimeGreen ||
-           accentColorValue == ZMAccentColorVividRed);
+           accentColorValue == ZMAccentColorVividRed ||
+           accentColorValue == ZMAccentColorBrightYellow);
 
     return accentColorValue;
 }

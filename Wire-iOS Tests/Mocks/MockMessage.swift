@@ -65,7 +65,7 @@ import ZMCLinkPreview
         return mimeType == "audio/x-m4a"
     }
 
-    public func v3_isImage() -> Bool {
+    func v3_isImage() -> Bool {
         return false
     }
     

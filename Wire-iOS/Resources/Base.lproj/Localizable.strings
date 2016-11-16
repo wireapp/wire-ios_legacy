@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tap to record\nYou can  %@  it after that";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Choose a filter above";
 
+"conversation.call.many_participants_confirmation.title" = "Start a call";
+"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.call" = "Call";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
+"content.message.forward" = "Forward";
+"content.message.forward.to" = "Send to...";
 
 "content.reactions_list.likers" = "Liked by";
 

@@ -139,6 +139,7 @@ public extension ZMConversation {
 
         titleLabel.textAlignment = .center
         titleLabel.text = "input.ephemeral.title".localized.uppercased()
+        titleLabel.numberOfLines = 0
         [titleLabel, picker].forEach(view.addSubview)
     }
 
@@ -147,15 +148,14 @@ public extension ZMConversation {
     }
 
     private func createConstraints() {
-        let inset = CGPoint(x: 32, y: 16)
         constrain(view, picker, titleLabel) { view, picker, label in
-            label.leading == view.leading
-            label.trailing == view.trailing
-            label.top == view.top + inset.y
-            picker.top == label.bottom + inset.y
-            picker.bottom <= view.bottom - inset.y
-            picker.leading == view.leading + inset.x
-            picker.trailing == view.trailing - inset.x
+            label.leading == view.leading + 16
+            label.trailing == view.trailing - 16
+            label.top == view.top + 16
+            picker.top == label.bottom
+            picker.bottom == view.bottom - 16
+            picker.leading == view.leading + 32
+            picker.trailing == view.trailing - 32
         }
     }
 

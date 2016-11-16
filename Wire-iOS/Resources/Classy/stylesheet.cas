@@ -1050,6 +1050,11 @@ UILabel.small-light {
     textColor: white;
 }
 
+UILabel.normal-light {
+    font: $font-normal-light;
+    textColor: white;
+}
+
 /* ActionSheetController */
 
 ActionSheetListView UIButton {
@@ -1481,5 +1486,22 @@ ReactionCell {
         font: $font-normal;
         textColor: $color-text-foreground;
     }
+}
+
+/* Share View Controller */
+
+TokenField.share {
+    textView: @{
+        placeholderFont: $font-medium-medium;
+        placeholderTextContainerInset: 0 0;
+    }
+    tokenTitleFont: $font-medium-medium;
+    textColor: white;
+    tokenTitleColor: black;
+    tokenBackgroundColor: white;
+    tokenBorderColor: white;
+    tokenSelectedTitleColor: white;
+    tokenSelectedBackgroundColor: clear;
+    tokenSelectedBorderColor: white;
 }
 
