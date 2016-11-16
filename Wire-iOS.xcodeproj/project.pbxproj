@@ -10,7 +10,6 @@
 		1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1600E2041AD5799400C0DBA8 /* PhoneNumberStepViewController.m */; };
 		160546DA1BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */; };
 		16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */; };
-		16063CFF1BDA60C10097F62C /* ConnectionStatusHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063CFE1BDA60C10097F62C /* ConnectionStatusHeader.m */; };
 		16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D011BDA6BF50097F62C /* GroupConversationHeader.m */; };
 		16063D0B1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */; };
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
@@ -889,8 +888,6 @@
 		160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailInvitationStepViewController.m; sourceTree = "<group>"; };
 		16063CE91BCFCEB70097F62C /* InviteBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteBannerViewController.h; sourceTree = "<group>"; };
 		16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteBannerViewController.m; sourceTree = "<group>"; };
-		16063CFD1BDA60C10097F62C /* ConnectionStatusHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionStatusHeader.h; sourceTree = "<group>"; };
-		16063CFE1BDA60C10097F62C /* ConnectionStatusHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionStatusHeader.m; sourceTree = "<group>"; };
 		16063D001BDA6BF50097F62C /* GroupConversationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupConversationHeader.h; sourceTree = "<group>"; };
 		16063D011BDA6BF50097F62C /* GroupConversationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupConversationHeader.m; sourceTree = "<group>"; };
 		16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileNavigationControllerDelegate.h; sourceTree = "<group>"; };
@@ -2294,8 +2291,6 @@
 		16063CFC1BDA5D520097F62C /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				16063CFD1BDA60C10097F62C /* ConnectionStatusHeader.h */,
-				16063CFE1BDA60C10097F62C /* ConnectionStatusHeader.m */,
 				16063D001BDA6BF50097F62C /* GroupConversationHeader.h */,
 				16063D011BDA6BF50097F62C /* GroupConversationHeader.m */,
 			);
@@ -4821,10 +4816,12 @@
 				TargetAttributes = {
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 					};
 					1EE9DC6F1B5F98AD00E347DF = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = W5KEQBF9B5;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -4833,6 +4830,7 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -4843,6 +4841,7 @@
 					};
 					BACB88501AF7C48900DDCDB0 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						TestTargetID = 8F42C537199244A700288E4D;
 					};
@@ -5334,7 +5333,6 @@
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
 				871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */,
 				871BC00C1D34F56300DF0793 /* Analytics+ConversationEvents.m in Sources */,
-				16063CFF1BDA60C10097F62C /* ConnectionStatusHeader.m in Sources */,
 				16258EE51AD6D1150076B75F /* NavigationController.m in Sources */,
 				16A2C6691AA7752F00DC2905 /* CameraController.m in Sources */,
 				871BC35E1D34F94200DF0793 /* NetworkConditionHelper.m in Sources */,

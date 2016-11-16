@@ -42,9 +42,9 @@
 #import "ZClientViewController.h"
 #import "CommonConnectionsView.h"
 #import "UIView+MTAnimation.h"
-#import "ConnectionStatusHeader.h"
 #import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
+#import "IncomingConnectRequestView.h"
 
 // helpers
 #import "WAZUIMagicIOS.h"
@@ -250,7 +250,21 @@
     
     UIView *headerView = nil;
     if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && self.conversation.firstActiveParticipantOtherThanSelf) {
-        headerView = [[ConnectionStatusHeader alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf];
+        IncomingConnectRequestView *incomingConnectionRequestView = [[IncomingConnectRequestView alloc] init];
+        incomingConnectionRequestView.user = self.conversation.firstActiveParticipantOtherThanSelf;
+        incomingConnectionRequestView.acceptBlock = ^() {
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                [self.conversation.firstActiveParticipantOtherThanSelf accept];
+            }];
+        };
+        incomingConnectionRequestView.ignoreBlock = ^() {
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                [self.conversation.firstActiveParticipantOtherThanSelf ignore];
+            } completionHandler:^{
+                [self.delegate conversationContentViewControllerWantsToDismiss:self];
+            }];
+        };
+        headerView = incomingConnectionRequestView;
     }
     
     if (headerView) {

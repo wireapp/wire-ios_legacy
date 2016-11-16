@@ -29,6 +29,8 @@
 @property (nonatomic) ZMUser *user;
 @property (nonatomic) UserImageView *userImageView;
 
+@property (nonatomic) BOOL showConnectionButtons;
+
 @property (nonatomic, copy) void(^acceptBlock)(void);
 @property (nonatomic, copy) void(^ignoreBlock)(void);
 

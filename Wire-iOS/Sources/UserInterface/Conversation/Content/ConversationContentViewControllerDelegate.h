@@ -39,9 +39,6 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
             didScrollWithOffsetFromBottom:(CGFloat)offset
                         withLatestMessage:(id<ZMConversationMessage>)message;
 
-/// Called either when the interactive scroll or the deceleration animation ends. In either case, the view is again in a stable state and not scrolling any more.
-- (void)conversationContentViewControllerDidFinishScrolling:(ConversationContentViewController *)contentViewController;
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
@@ -51,6 +48,8 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController performImageSaveAnimation:(UIView *)snapshotView sourceRect:(CGRect)sourceRect;
 
 - (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell;
+
+- (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller;
 
 @optional
 

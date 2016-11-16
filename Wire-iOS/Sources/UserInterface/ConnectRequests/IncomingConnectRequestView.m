@@ -67,6 +67,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _showConnectionButtons = YES;
         [self setupViews];
         [self setupConstraints];
     }
@@ -185,6 +186,11 @@
     else {
         self.subtitleLabel.text = @"";
     }
+}
+
+- (void)setShowConnectionButtons:(BOOL)showConnectionButtons
+{
+    _showConnectionButtons = showConnectionButtons;
 }
 
 #pragma mark - Actions
