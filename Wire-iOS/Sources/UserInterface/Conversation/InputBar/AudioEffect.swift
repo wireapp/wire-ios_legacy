@@ -53,8 +53,8 @@ extension AVSAudioEffectType: CustomStringConvertible {
                 return .effectAlien // Alien
             case .vocoderMed:
                 return .effectRobot // Robot
-            case .reverse:
-                return .effectReverse // UpsideDown
+            case .pitchUpDownMax:
+                return .effectRollerCoaster // Roller coaster
             default:
                 return .exclamationMark
             }
@@ -106,6 +106,8 @@ extension AVSAudioEffectType: CustomStringConvertible {
                 return "UpsideDown"
             case .vocoderMed:
                 return "VocoderMed"
+            case .pitchUpDownMax:
+                return "Roller coaster"
             case .none:
                 return "None"
             default:
@@ -121,7 +123,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
                                                                 .reverbMax,
                                                                 .chorusMax,
                                                                 .vocoderMed,
-                                                                .reverse]
+                                                                .pitchUpDownMax]
     
     static let wr_convertQueue = DispatchQueue(label: "audioEffectQueue")
     

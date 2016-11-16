@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeEffectChurch                    = 0x244,
     ZetaIconTypeEffectAlien                     = 0x245,
     ZetaIconTypeEffectRobot                     = 0x246,
-    ZetaIconTypeEffectReverse                   = 0x247,
+    ZetaIconTypeEffectRollerCoaster             = 0x247,
 
     // Emoji Categories
     ZetaIconTypeFlower                          = 0x250,
