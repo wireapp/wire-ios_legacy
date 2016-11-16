@@ -53,8 +53,6 @@
 @property (nonatomic) Button *acceptButton;
 @property (nonatomic) Button *ignoreButton;
 
-@property (nonatomic) CommonConnectionsViewController *commonConnectionsController;
-
 @property (nonatomic, copy) NSString *senderName;
 @property (nonatomic, copy) NSString *senderEmail;
 
@@ -80,7 +78,7 @@
     [self addSubview:self.titleLabel];
     
     self.subtitleLabel = [[UILabel alloc] init];
-    self.subtitleLabel.adjustsFontSizeToFitWidth = YES;
+    self.subtitleLabel.numberOfLines = 2;
     [self addSubview:self.subtitleLabel];
     
     self.acceptButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
@@ -99,8 +97,6 @@
     self.userImageView.suggestedImageSize = UserImageViewSizeBig;
     [self addSubview:self.userImageView];
     
-    self.commonConnectionsController = [[CommonConnectionsViewController alloc] init];
-    [self addSubview:self.commonConnectionsController.view];
 }
 
 - (void)setupConstraints
@@ -120,11 +116,7 @@
         [self.userImageView autoSetDimension:ALDimensionWidth toSize:IS_IPHONE_4 ? 200 : 240];
         [self.userImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.userImageView];
         [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        
-        [self.commonConnectionsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:24];
-        [self.commonConnectionsController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.commonConnectionsController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        
+
         self.acceptButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.acceptButton addConstraintForAligningTopToBottomOfView:self.commonConnectionsController.view distance:24];
         [self.acceptButton addConstraintForBottomMargin:24 relativeToView:self];
@@ -151,7 +143,6 @@
     self.senderEmail = user.emailAddress;
 
     self.userImageView.user = self.user;
-    self.commonConnectionsController.user = self.user;
 }
 
 - (void)setSenderName:(NSString *)senderName
