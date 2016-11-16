@@ -18,6 +18,7 @@
 
 
 #import "TextMessageCell.h"
+#import "TextMessageCell+Internal.h"
 
 #import <PureLayout/PureLayout.h>
 #import <Classy/Classy.h>
@@ -49,7 +50,6 @@
 
 @property (nonatomic) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic) LinkInteractionTextView *messageTextView;
 @property (nonatomic) UIView *linkAttachmentContainer;
 @property (nonatomic) UIImageView *editedImageView;
 @property (nonatomic) LinkAttachment *linkAttachment;
@@ -127,7 +127,7 @@
 
 - (void)createConstraints
 {
-    [self.messageTextView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeTop];
     [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
     [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeRight];
     
@@ -139,7 +139,7 @@
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.linkAttachmentContainer autoPinEdgeToSuperviewMargin:ALEdgeBottom];
     }];
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];

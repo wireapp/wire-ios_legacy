@@ -82,9 +82,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic) NSLayoutConstraint *messageToolsHeightConstraint;
 
 @property (nonatomic) NSLayoutConstraint *unreadDotHeightConstraint;
-@property (nonatomic) NSLayoutConstraint *messageContentBottomMarginConstraint;
 
-@property (nonatomic) NSLayoutConstraint *toolboxHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
 @property (nonatomic, strong) UIView *countdownContainerView;
 @property (nonatomic, strong) DestructionCountdownView *countdownView;
@@ -300,12 +299,14 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
+        self.toolboxCollapseConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
+    
+    [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.messageContentBottomMarginConstraint = [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.messageToolboxView];
     [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
@@ -390,7 +391,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     BOOL hideLikeButton = !([Message hasLikers:self.message] || self.selected) && self.layoutProperties.alwaysShowDeliveryState;
     BOOL showLikeButton = [Message messageCanBeLiked:self.message] && !hideLikeButton;
     
-    self.toolboxHeightConstraint.active = ! shouldBeVisible;
+    self.toolboxCollapseConstraint.active = ! shouldBeVisible;
     
     if (shouldBeVisible) {
         [self.messageToolboxView configureForMessage:self.message forceShowTimestamp:self.selected animated:animated];

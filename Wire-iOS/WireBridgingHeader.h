@@ -36,6 +36,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "ConversationCell.h"
 #import "TextMessageCell.h"
+#import "TextMessageCell+Internal.h"
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
 #import "WireStyleKit.h"
