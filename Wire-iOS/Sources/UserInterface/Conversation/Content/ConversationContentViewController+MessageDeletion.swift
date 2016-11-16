@@ -18,6 +18,20 @@
 
 import ZMCDataModel
 
+
+private extension ZMConversationMessage {
+
+    /// Whether the `Delete for everyone` option should be allowed and shown for this message.
+    var canBeDeletedForEveryone: Bool {
+        guard let sender = sender, let conversation = conversation else { return false }
+        return sender.isSelfUser
+            && conversation.isSelfAnActiveMember
+            && (deliveryState == .sent || deliveryState == .delivered)
+    }
+
+}
+
+
 extension ConversationContentViewController {
 
     /**
@@ -28,8 +42,7 @@ extension ConversationContentViewController {
      - parameter message:    The message for which the alert controller should be shown
      */
     func presentDeletionAlertController(forMessage message: ZMConversationMessage, completion: (() -> Void)?) {
-        let showDelete = (message.sender?.isSelfUser ?? false) && conversation.isSelfAnActiveMember
-        let alert = UIAlertController.alertControllerForMessageDeletion(showDelete) { [weak self] action in
+        let alert = UIAlertController.alertControllerForMessageDeletion(message.canBeDeletedForEveryone) { [weak self] action in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {
