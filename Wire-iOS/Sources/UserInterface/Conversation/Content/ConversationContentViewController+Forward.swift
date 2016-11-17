@@ -62,14 +62,16 @@ extension ZMMessage: Shareable {
     
     public func previewView() -> UIView {
         let cell: ConversationCell
+
         if Message.isTextMessage(self) {
             let textMessageCell = TextMessageCell(style: .default, reuseIdentifier: "")
+            textMessageCell.smallLinkAttachments = true
             textMessageCell.contentLayoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
             
             textMessageCell.messageTextView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
             textMessageCell.messageTextView.layer.cornerRadius = 4
             textMessageCell.messageTextView.layer.masksToBounds = true
-            textMessageCell.messageTextView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+            textMessageCell.messageTextView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 10, right: 8)
             textMessageCell.messageTextView.textContainer.lineBreakMode = .byTruncatingTail
             textMessageCell.messageTextView.textContainer.maximumNumberOfLines = 2
             cell = textMessageCell
@@ -103,17 +105,12 @@ extension ZMMessage: Shareable {
             fatal("Cannot create preview for \(self)")
         }
         
-        
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender       = false
         layoutProperties.showUnreadMarker = false
         layoutProperties.showBurstTimestamp = false
         layoutProperties.topPadding       = 0
         layoutProperties.alwaysShowDeliveryState = false
-        
-        if Message.isTextMessage(self) {
-            layoutProperties.linkAttachments = Message.linkAttachments(self.textMessageData!)
-        }
         
         cell.configure(for: self, layoutProperties: layoutProperties)
         

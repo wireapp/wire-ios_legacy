@@ -327,7 +327,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         self.fullImageView.contentMode = [self imageSmallerThanMinimumSize] ? UIViewContentModeLeft : UIViewContentModeScaleAspectFill;
     }
     else {
-        self.fullImageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     
     self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];

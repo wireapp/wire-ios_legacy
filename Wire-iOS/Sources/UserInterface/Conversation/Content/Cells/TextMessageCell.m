@@ -50,8 +50,8 @@
 
 @property (nonatomic) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic) UIView *linkAttachmentContainer;
 @property (nonatomic) UIImageView *editedImageView;
+@property (nonatomic) UIView *linkAttachmentContainer;
 @property (nonatomic) LinkAttachment *linkAttachment;
 @property (nonatomic) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
 
@@ -59,7 +59,6 @@
 @property (nonatomic) UIView *linkAttachmentView;
 
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
-
 @end
 
 
@@ -68,7 +67,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {        
         [self createTextMessageViews];
         [self createConstraints];
     }
@@ -210,6 +209,10 @@
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
+        articleView.imageHeight = self.smallLinkAttachments ? 0 : 144;
+        if (self.smallLinkAttachments) {
+            [articleView autoSetDimension:ALDimensionHeight toSize:70];
+        }
         articleView.translatesAutoresizingMaskIntoConstraints = NO;
         [articleView configureWithTextMessageData:textMesssageData obfuscated:message.isObfuscated];
         [self.linkAttachmentContainer addSubview:articleView];

@@ -20,5 +20,5 @@
 
 @interface TextMessageCell ()
 @property (nonatomic) LinkInteractionTextView *messageTextView;
-
+@property (nonatomic) BOOL smallLinkAttachments;
 @end
