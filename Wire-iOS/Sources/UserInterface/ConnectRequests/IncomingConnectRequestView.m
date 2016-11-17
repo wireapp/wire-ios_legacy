@@ -118,13 +118,13 @@
         [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
 
         self.acceptButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.acceptButton addConstraintForAligningTopToBottomOfView:self.commonConnectionsController.view distance:24];
+        [self.acceptButton addConstraintForAligningTopToBottomOfView:self.userImageView distance:24];
         [self.acceptButton addConstraintForBottomMargin:24 relativeToView:self];
         [self.acceptButton addConstraintForRightMargin:0 relativeToView:self];
         [self.acceptButton addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"connect.connect_button.height"]];
         
         self.ignoreButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.ignoreButton addConstraintForAligningTopToBottomOfView:self.commonConnectionsController.view distance:24];
+        [self.ignoreButton addConstraintForAligningTopToBottomOfView:self.userImageView distance:24];
         [self.ignoreButton addConstraintForBottomMargin:24 relativeToView:self];
         [self.ignoreButton addConstraintForLeftMargin:0 relativeToView:self];
         [self.ignoreBlock addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"connect.ignore_button.height"]];

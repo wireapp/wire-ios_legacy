@@ -249,9 +249,11 @@
     }
     
     UIView *headerView = nil;
-    if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && self.conversation.firstActiveParticipantOtherThanSelf) {
+    ZMUser *otherParticipant = self.conversation.firstActiveParticipantOtherThanSelf;
+    if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && nil != otherParticipant) {
         IncomingConnectRequestView *incomingConnectionRequestView = [[IncomingConnectRequestView alloc] init];
         incomingConnectionRequestView.user = self.conversation.firstActiveParticipantOtherThanSelf;
+        incomingConnectionRequestView.showConnectionButtons = (otherParticipant.connection.status == ZMConnectionStatusPending);
         incomingConnectionRequestView.acceptBlock = ^() {
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [self.conversation.firstActiveParticipantOtherThanSelf accept];
