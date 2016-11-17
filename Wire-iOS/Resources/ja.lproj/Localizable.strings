@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "タップして録音を開始します、その後  %@  できます。";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "上記のフィルターを選択します。";
 
+"conversation.call.many_participants_confirmation.title" = "Start a call";
+"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.call" = "通話";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "キャンセル";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "いいね！";
 "content.message.unlike" = "いいね！を取消す";
+"content.message.forward" = "転送";
+"content.message.forward.to" = "Send to...";
 
 "content.reactions_list.likers" = "いいね！しました";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "人気の高い順";
 "self.settings.popular_demand.send_button.title" = "送信ボタン";
+"self.settings.popular_demand.call_kit.title" = "Don't use native calling (restart)";
 "self.settings.popular_demand.send_button.footer" = "キーボードからの送信を無効にします。";
 
 // Open in
-"self.settings.external_apps.header" = "リンクを開く";
+"self.settings.external_apps.header" = "Open With";
 
 "self.settings.link_options.twitter.title" = "ツイート";
 "self.settings.link_options.maps.title" = "ロケーション";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Appleマップ";
+"open_link.maps.option.apple" = "マップ";
 "open_link.maps.option.google" = "Google マップ";
 
 "open_link.browser.option.safari" = "Safari";

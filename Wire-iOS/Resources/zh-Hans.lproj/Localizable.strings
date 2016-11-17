@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "点击记录\n你之后可以 %@ 它，";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "选择一个筛选器";
 
+"conversation.call.many_participants_confirmation.title" = "Start a call";
+"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.call" = "通话";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
+"content.message.forward" = "转发";
+"content.message.forward.to" = "发送给...";
 
 "content.reactions_list.likers" = "被赞";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "推荐选项";
 "self.settings.popular_demand.send_button.title" = "发送按钮";
+"self.settings.popular_demand.call_kit.title" = "关闭本地通话记录同步功能(需要重启)";
 "self.settings.popular_demand.send_button.footer" = "关闭系统键盘回车发送信息功能。";
 
 // Open in
-"self.settings.external_apps.header" = "打开链接在";
+"self.settings.external_apps.header" = "打开";
 
 "self.settings.link_options.twitter.title" = "Tweets";
 "self.settings.link_options.maps.title" = "位置";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple地图";
+"open_link.maps.option.apple" = "地图";
 "open_link.maps.option.google" = "Google地图";
 
 "open_link.browser.option.safari" = "Safari";
