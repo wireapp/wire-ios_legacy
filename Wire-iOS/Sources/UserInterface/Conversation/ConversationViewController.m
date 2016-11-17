@@ -876,12 +876,8 @@
         [self updateNavigationItemsButtons];
     }
     
-    if (note.nameChanged) {
+    if (note.nameChanged || note.securityLevelChanged) {
         [self setupNavigatiomItem];
-    }
-
-    if (note.securityLevelChanged) {
-        [self.titleView configure:self.conversation];
     }
 }
 

@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tappez pour enregistrer\nVous pouvez l'%@ après cela";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Choisissez un filtre ci-dessus";
 
+"conversation.call.many_participants_confirmation.title" = "Démarrer un appel";
+"conversation.call.many_participants_confirmation.message" = "Cela appellera %d personnes";
+"conversation.call.many_participants_confirmation.call" = "Appel";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuler";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
+"content.message.forward" = "Faire suivre";
+"content.message.forward.to" = "Envoyer à ...";
 
 "content.reactions_list.likers" = "Aimé par";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "À la demande générale";
 "self.settings.popular_demand.send_button.title" = "Bouton d'envoi";
+"self.settings.popular_demand.call_kit.title" = "Ne pas utiliser l'appel natif (redémarrer)";
 "self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer via la touche entrer.";
 
 // Open in
-"self.settings.external_apps.header" = "Ouvrir les liens dans";
+"self.settings.external_apps.header" = "Ouvrir avec";
 
 "self.settings.link_options.twitter.title" = "Tweets";
 "self.settings.link_options.maps.title" = "Emplacements";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.apple" = "Cartes";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";
