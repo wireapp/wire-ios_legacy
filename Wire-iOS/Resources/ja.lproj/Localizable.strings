@@ -493,7 +493,7 @@
 "self.settings.popular_demand.send_button.footer" = "キーボードからの送信を無効にします。";
 
 // Open in
-"self.settings.external_apps.header" = "Open With";
+"self.settings.external_apps.header" = "リンクを開く";
 
 "self.settings.link_options.twitter.title" = "ツイート";
 "self.settings.link_options.maps.title" = "ロケーション";
