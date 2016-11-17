@@ -802,6 +802,7 @@
 		CE3FBF1E1CE22B4900ED087A /* DeleteMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */; };
 		CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */; };
 		CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED176461D0074610005234F /* ConversationParticipantsCell.swift */; };
+		CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE02EAB1DDDD15200BA2BE2 /* avs.framework */; };
 		CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */; };
 		DB0782221B00E98F00C6B140 /* FormFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0782211B00E98F00C6B140 /* FormFlowViewController.m */; };
 		DB29BD411AE1094E00DCEF6D /* EmailSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29BD401AE1094E00DCEF6D /* EmailSignInViewController.m */; };
@@ -2136,6 +2137,7 @@
 		CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteMessageTests.m; sourceTree = "<group>"; };
 		CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationIgnoredDeviceCell.swift; sourceTree = "<group>"; };
 		CED176461D0074610005234F /* ConversationParticipantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationParticipantsCell.swift; sourceTree = "<group>"; };
+		CEE02EAB1DDDD15200BA2BE2 /* avs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = avs.framework; path = Carthage/Build/iOS/avs.framework; sourceTree = "<group>"; };
 		CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderConversationViewController.swift; sourceTree = "<group>"; };
 		DB0782201B00E98F00C6B140 /* FormFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormFlowViewController.h; sourceTree = "<group>"; };
 		DB0782211B00E98F00C6B140 /* FormFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormFlowViewController.m; sourceTree = "<group>"; };
@@ -2226,6 +2228,7 @@
 				1E7222A41B8335EA004180EC /* CocoaLumberjack.framework in Frameworks */,
 				876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
+				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				39260D2402C36A8DE422A998 /* libPods-Wire-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3771,6 +3774,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				CEE02EAB1DDDD15200BA2BE2 /* avs.framework */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -4773,8 +4777,8 @@
 				DBB1CF591A88C15600912518 /* Copy Frameworks and DSYMs */,
 				1EE85C681B5F96FC008E084B /* Embed Frameworks */,
 				873AA0501D05A74B0038343B /* Strip BitCode */,
-				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
 				B51FF934CF48FDB769715E40 /* [CP] Embed Pods Frameworks */,
+				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -4821,10 +4825,12 @@
 				TargetAttributes = {
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 					};
 					1EE9DC6F1B5F98AD00E347DF = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = W5KEQBF9B5;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -4833,6 +4839,7 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -4843,6 +4850,7 @@
 					};
 					BACB88501AF7C48900DDCDB0 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						TestTargetID = 8F42C537199244A700288E4D;
 					};
@@ -5158,12 +5166,12 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ZMProtos.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ProtocolBuffers.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/zmessaging.framework",
+				"$(BUILT_PRODUCTS_DIR)/zmessaging.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumber.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PINCache.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ZMCDataModel.framework",
+				"$(BUILT_PRODUCTS_DIR)/ZMCDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/HockeySDK.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZMCLinkPreview.framework",
@@ -5173,8 +5181,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/VIMNetworkingFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireMessageStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Canvas.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/avs.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (

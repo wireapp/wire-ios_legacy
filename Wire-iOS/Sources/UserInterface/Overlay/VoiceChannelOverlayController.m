@@ -18,7 +18,7 @@
 
 
 #import <PureLayout/PureLayout.h>
-#import <AVSFlowManager.h>
+#import <avs/AVSFlowManager.h>
 
 #import "VoiceChannelOverlayController.h"
 #import "VoiceChannelOverlay.h"
@@ -32,7 +32,7 @@
 #import "ZMVoiceChannel+Additions.h"
 #import "VoiceUserImageView.h"
 #import "CameraPreviewView.h"
-#import <AVSVideoView.h>
+#import <avs/AVSVideoView.h>
 #import "Settings.h"
 #import "Wire-Swift.h"
 
