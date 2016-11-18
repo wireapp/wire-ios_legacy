@@ -20,15 +20,22 @@
 import Foundation
 
 final public class UserConnectionViewController: UIViewController {
-    private var userConnectionView: UserConnectionView!
-    
+    fileprivate var userConnectionView: UserConnectionView!
+    fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
+
+
     public let userSession: ZMUserSession
     public let user: ZMUser
+    public var onIgnore: (()->())? = .none
+    public var onCancelConnection: (()->())? = .none
+    public var onBlock: (()->())? = .none
     
     public init(userSession: ZMUserSession, user: ZMUser) {
         self.userSession = userSession
         self.user = user
         super.init(nibName: .none, bundle: .none)
+        
+        self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -55,6 +62,8 @@ final public class UserConnectionViewController: UIViewController {
             self.userSession.performChanges {
                 user.ignore()
             }
+            
+            self.onIgnore?()
         }
         self.userConnectionView.onBlock = { [weak self] user in
             guard let `self` = self else {
@@ -64,6 +73,7 @@ final public class UserConnectionViewController: UIViewController {
             self.userSession.performChanges {
                 user.block()
             }
+            self.onBlock?()
         }
         self.userConnectionView.onCancelConnection = { [weak self] user in
             guard let `self` = self else {
@@ -73,9 +83,16 @@ final public class UserConnectionViewController: UIViewController {
             self.userSession.performChanges {
                 user.cancelConnectionRequest()
             }
+            self.onCancelConnection?()
         }
         
         self.view = self.userConnectionView
     }
 }
 
+extension UserConnectionViewController: ZMCommonContactsSearchDelegate {
+    
+    public func didReceiveCommonContactsUsers(_ users: NSOrderedSet!, for searchToken: ZMCommonContactsSearchToken!) {
+        self.userConnectionView.commonConnectionsCount = UInt(users.count)
+    }
+}

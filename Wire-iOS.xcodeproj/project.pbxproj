@@ -4146,8 +4146,8 @@
 				DBCBD19119F10A1F000510C1 /* ConnectRequestCell.m */,
 				8FC8517D199245760008B66B /* IncomingConnectRequestView.h */,
 				8FC8517E199245760008B66B /* IncomingConnectRequestView.m */,
-				8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */,
 				87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */,
+				8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */,
 			);
 			path = ConnectRequests;
 			sourceTree = "<group>";

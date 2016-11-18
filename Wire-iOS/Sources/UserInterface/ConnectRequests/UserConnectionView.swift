@@ -28,10 +28,15 @@ final public class UserConnectionView: UIView {
     private let ignoreButton = Button(style: .empty)
     
     private let outgoingConnectionFooter = UIView()
-    private let cancelConnectionButton = IconButton.iconButtonDefaultDark()
+    private let cancelConnectionButton = IconButton.iconButtonCircular()
     private let blockButton = IconButton.iconButtonDefaultDark()
     
     let user: ZMUser
+    var commonConnectionsCount: UInt = 0 {
+        didSet {
+            self.setupLabelText()
+        }
+    }
     var onAccept: ((ZMUser)->())? = .none
     var onIgnore: ((ZMUser)->())? = .none
     var onCancelConnection: ((ZMUser)->())? = .none
@@ -51,21 +56,30 @@ final public class UserConnectionView: UIView {
     
     private func setup() {
         self.nameInfoLabel.numberOfLines = 0
-        self.setupLabel()
+        self.nameInfoLabel.textAlignment = .center
+        self.setupLabelText()
         
+        self.acceptButton.accessibilityLabel = "accept"
         self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized.uppercased(), for: .normal)
         self.acceptButton.addTarget(self, action: #selector(UserConnectionView.onAcceptButton(sender:)), for: .touchUpInside)
         
+        self.ignoreButton.accessibilityLabel = "ignore"
         self.ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized.uppercased(), for: .normal)
         self.ignoreButton.addTarget(self, action: #selector(UserConnectionView.onIgnoreButton(sender:)), for: .touchUpInside)
         
+        self.cancelConnectionButton.accessibilityLabel = "cancel connection"
         self.cancelConnectionButton.setIcon(.redo, with: .tiny, for: .normal)
         self.cancelConnectionButton.setTitle("profile.cancel_connection_button_title".localized.uppercased(), for: .normal)
+        self.cancelConnectionButton.titleLabel?.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.cancelConnectionButton.setTitleColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
+        self.cancelConnectionButton.setTitleImageSpacing(12, horizontalMargin: 0)
         self.cancelConnectionButton.addTarget(self, action: #selector(UserConnectionView.onCancelConnectionButton(sender:)), for: .touchUpInside)
 
+        self.blockButton.accessibilityLabel = "block user"
         self.blockButton.setIcon(.block, with: .tiny, for: .normal)
         self.blockButton.addTarget(self, action: #selector(UserConnectionView.onBlockButton(sender:)), for: .touchUpInside)
 
+        self.userImageView.accessibilityLabel = "user image"
         self.userImageView.shouldDesaturate = false
         self.userImageView.suggestedImageSize = .big
         self.userImageView.user = self.user
@@ -84,13 +98,45 @@ final public class UserConnectionView: UIView {
             self.incomingConnectionFooter.isHidden = true
             self.outgoingConnectionFooter.isHidden = true
         }
-
         
         [self.nameInfoLabel, self.userImageView, self.incomingConnectionFooter, self.outgoingConnectionFooter].forEach(self.addSubview)
     }
     
-    private func setupLabel() {
+    private func setupLabelText() {
+
+        let labelStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
+                          NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_light")] as [String : AnyObject]
         
+        let labelStyleBold = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
+                              NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold")] as [String : AnyObject]
+        
+        var inAddressBook = false
+        var addressBookNameMatchFullName = false
+        
+        if let contact = self.user.contact() {
+            inAddressBook = true
+            addressBookNameMatchFullName = contact.name.lowercased() == self.user.name
+        }
+        
+        let hasCommonConnections = self.commonConnectionsCount > 0
+        
+        let username = self.user.autoUsername() && labelStyle
+        
+        var secondLine: NSAttributedString? = .none
+        
+        if inAddressBook {
+            if addressBookNameMatchFullName {
+                secondLine = "conversation.connection_view.in_address_book".localized && labelStyle
+            }
+            else {
+                secondLine = (self.user.name && labelStyleBold) + " " + ("conversation.connection_view.in_address_book".localized && labelStyle)
+            }
+        }
+        else if hasCommonConnections {
+            secondLine = (String(format: "%ld", self.commonConnectionsCount) && labelStyleBold) + " " + ("conversation.connection_view.common_connections".localized && labelStyle)
+        }
+        
+        self.nameInfoLabel.attributedText = username + (secondLine != .none ? "\n" + secondLine! : "" && labelStyle)
     }
     
     private func createConstraints() {
@@ -99,10 +145,12 @@ final public class UserConnectionView: UIView {
             acceptButton.top == incomingConnectionFooter.top + 12
             acceptButton.bottom == incomingConnectionFooter.bottom - 12
             acceptButton.height == 40
+            acceptButton.width >= 120
             
             ignoreButton.right == incomingConnectionFooter.right - 24
             ignoreButton.centerY == acceptButton.centerY
             ignoreButton.height == acceptButton.height
+            ignoreButton.width >= 120
         }
         
         constrain(self.outgoingConnectionFooter, self.cancelConnectionButton, self.blockButton) { outgoingConnectionFooter, cancelConnectionButton, blockButton in
@@ -122,6 +170,7 @@ final public class UserConnectionView: UIView {
             
             userImageView.center == selfView.center
             userImageView.left == selfView.left + 54
+            userImageView.width == userImageView.height
             
             outgoingConnectionFooter.top >= userImageView.bottom
             outgoingConnectionFooter.left == selfView.left

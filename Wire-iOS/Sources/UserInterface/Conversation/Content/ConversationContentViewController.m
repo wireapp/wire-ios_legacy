@@ -114,7 +114,7 @@
 @property (nonatomic) BOOL waitingForFileDownload;
 @property (nonatomic) UIDocumentInteractionController *documentInteractionController;
 @property (nonatomic) BOOL onScreen;
-
+@property (nonatomic) UserConnectionViewController *connectionViewController;
 @end
 
 
@@ -251,22 +251,21 @@
     UIView *headerView = nil;
     ZMUser *otherParticipant = self.conversation.firstActiveParticipantOtherThanSelf;
     if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && nil != otherParticipant) {
-        IncomingConnectRequestView *incomingConnectionRequestView = [[IncomingConnectRequestView alloc] init];
-        incomingConnectionRequestView.user = self.conversation.firstActiveParticipantOtherThanSelf;
-        incomingConnectionRequestView.showConnectionButtons = (otherParticipant.connection.status == ZMConnectionStatusPending);
-        incomingConnectionRequestView.acceptBlock = ^() {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [self.conversation.firstActiveParticipantOtherThanSelf accept];
-            }];
+        self.connectionViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:otherParticipant];
+        @weakify(self);
+        self.connectionViewController.onIgnore = ^() {
+            @strongify(self);
+            [self.delegate conversationContentViewControllerWantsToDismiss:self];
         };
-        incomingConnectionRequestView.ignoreBlock = ^() {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [self.conversation.firstActiveParticipantOtherThanSelf ignore];
-            } completionHandler:^{
-                [self.delegate conversationContentViewControllerWantsToDismiss:self];
-            }];
+        self.connectionViewController.onBlock = ^() {
+            @strongify(self);
+            [self.delegate conversationContentViewControllerWantsToDismiss:self];
         };
-        headerView = incomingConnectionRequestView;
+        self.connectionViewController.onCancelConnection = ^() {
+            @strongify(self);
+            [self.delegate conversationContentViewControllerWantsToDismiss:self];
+        };
+        headerView = self.connectionViewController.view;
     }
     
     if (headerView) {
@@ -280,7 +279,7 @@
 
 - (void)setConversationHeaderView:(UIView *)headerView
 {
-    CGSize fittingSize = CGSizeMake(self.tableView.self.bounds.size.width, 44);
+    CGSize fittingSize = CGSizeMake(self.tableView.self.bounds.size.width, self.tableView.bounds.size.height - 20);
     CGSize requiredSize = [headerView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
     headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
     self.tableView.tableHeaderView = headerView;

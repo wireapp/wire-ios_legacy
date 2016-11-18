@@ -97,6 +97,39 @@ ZMUser *BareUserToUser(id bareUser) {
     return (self.isPendingApprovalBySelfUser || self.isPendingApprovalByOtherUser);
 }
 
+- (NSString *)autoUsername
+{
+    static NSArray *endings = nil;
+    
+    if (endings == nil) {
+        endings = @[@"_1", @"test", @"111", @"2", @"_wire", @"4", @"_1984", @"_debug"];
+    }
+    
+    uuid_t uuid;
+    [self.remoteIdentifier getUUIDBytes:uuid];
+    
+    NSString *randomEnding = [endings objectAtIndex:uuid[0] % endings.count];
+    
+    NSMutableString *username = [NSMutableString string];
+    
+    NSCharacterSet *passThrough = [NSCharacterSet alphanumericCharacterSet];
+    NSCharacterSet *replace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    
+    for (NSUInteger charindex = 0; charindex < self.name.length; charindex++) {
+        unichar nameChar = [self.name characterAtIndex:charindex];
+        if ([passThrough characterIsMember:nameChar]) {
+            NSString *appendString = [NSString stringWithCharacters:&nameChar length:1];
+            
+            [username appendString:[appendString lowercaseString]];
+        }
+        else if ([replace characterIsMember:nameChar]) {
+            [username appendString:@"_"];
+        }
+    }
+    
+    return [NSString stringWithFormat:@"@%@%@", username, randomEnding];
+}
+
 + (BOOL)selfUserHasIncompleteUserDetails;
 {
     return [[[ZMUser selfUser] emailAddress] length] == 0 || [[[ZMUser selfUser] phoneNumber] length] == 0;
