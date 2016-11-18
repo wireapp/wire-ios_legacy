@@ -31,6 +31,15 @@ final public class UserConnectionViewController: UIViewController {
     public let userSession: ZMUserSession
     public let user: ZMUser
     public var onAction: ((UserConnectionAction)->())?
+    public var showUserName: Bool = false {
+        didSet {
+            guard let userConnectionView = self.userConnectionView else {
+                return
+            }
+            
+            userConnectionView.showUserName = self.showUserName
+        }
+    }
     
     public init(userSession: ZMUserSession, user: ZMUser) {
         self.userSession = userSession
@@ -46,6 +55,7 @@ final public class UserConnectionViewController: UIViewController {
     
     override public func loadView() {
         self.userConnectionView = UserConnectionView(user: self.user)
+        self.userConnectionView.showUserName = self.showUserName
         self.userConnectionView.onAccept = { [weak self] user in
             
             guard let `self` = self else {

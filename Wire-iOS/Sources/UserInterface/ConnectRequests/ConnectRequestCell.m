@@ -33,8 +33,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.contentView.layoutMargins = UIEdgeInsetsMake(0, 24, 0, 24);
-}
+    }
     return self;
 }
 
@@ -45,6 +44,7 @@
     [self.connectRequestViewController.view removeFromSuperview];
     
     self.connectRequestViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:self.user];
+    self.connectRequestViewController.showUserName = YES;
     @weakify(self);
     self.connectRequestViewController.onAction = ^(UserConnectionAction action) {
         @strongify(self);
@@ -63,7 +63,7 @@
     [self.contentView addSubview:self.connectRequestViewController.view];
     
     [self.connectRequestViewController.view autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.connectRequestViewController.view autoPinEdgesToSuperviewMargins];
+    [self.connectRequestViewController.view autoPinEdgesToSuperviewEdges];
     
     [self.connectRequestViewController.view autoSetDimension:ALDimensionWidth toSize:420 relation:NSLayoutRelationLessThanOrEqual];
 }

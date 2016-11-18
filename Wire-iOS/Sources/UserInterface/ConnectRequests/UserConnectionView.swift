@@ -41,7 +41,12 @@ final public class UserConnectionView: UIView {
     var onIgnore: ((ZMUser)->())? = .none
     var onCancelConnection: ((ZMUser)->())? = .none
     var onBlock: ((ZMUser)->())? = .none
-    
+    var showUserName: Bool = false {
+        didSet {
+            self.setupLabelText()
+        }
+    }
+
     init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
@@ -104,6 +109,15 @@ final public class UserConnectionView: UIView {
     
     private func setupLabelText() {
 
+        var name: NSAttributedString = NSAttributedString()
+        
+        if self.showUserName {
+            let nameStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
+                             NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold")] as [String : AnyObject]
+            
+            name = (self.user.name + "\n") && nameStyle
+        }
+        
         let labelStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
                           NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_light")] as [String : AnyObject]
         
@@ -136,7 +150,7 @@ final public class UserConnectionView: UIView {
             secondLine = (String(format: "%ld", self.commonConnectionsCount) && labelStyleBold) + " " + ("conversation.connection_view.common_connections".localized && labelStyle)
         }
         
-        self.nameInfoLabel.attributedText = username + (secondLine != .none ? "\n" + secondLine! : "" && labelStyle)
+        self.nameInfoLabel.attributedText = name + username + (secondLine != .none ? "\n" + secondLine! : "" && labelStyle)
     }
     
     private func createConstraints() {
