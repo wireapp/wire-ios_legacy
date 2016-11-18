@@ -482,9 +482,9 @@
 "self.settings.sound_menu.ringtones.title" = "Ringtones";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
-"self.settings.callkit.title" = "CallKit";
-"self.settings.callkit.caption" = "CallKit";
-"self.settings.callkit.description" = "When CallKit is enabled, Wire calls are treated like native calls. iOS will show them in your call history (including calls you made, received, missed or bypassed). If iCloud is enabled on your device, your call history is automatically sent to Apple.\nRestarting Wire is required for this change.";
+"self.settings.callkit.title" = "Calls";
+"self.settings.callkit.caption" = "Share with iOS";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Call";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
