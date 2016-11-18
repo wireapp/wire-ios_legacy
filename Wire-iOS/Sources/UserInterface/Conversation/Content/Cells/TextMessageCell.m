@@ -211,6 +211,8 @@
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
         articleView.imageHeight = self.smallLinkAttachments ? 0 : 144;
         if (self.smallLinkAttachments) {
+            articleView.messageLabel.numberOfLines = 1;
+            articleView.authorLabel.numberOfLines = 1;
             [articleView autoSetDimension:ALDimensionHeight toSize:70];
         }
         articleView.translatesAutoresizingMaskIntoConstraints = NO;

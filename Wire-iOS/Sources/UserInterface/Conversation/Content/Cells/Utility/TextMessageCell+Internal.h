@@ -20,5 +20,6 @@
 
 @interface TextMessageCell ()
 @property (nonatomic) LinkInteractionTextView *messageTextView;
+// Using @c smallLinkAttachments = YES imply that the cell is not going to be re-used.
 @property (nonatomic) BOOL smallLinkAttachments;
 @end
