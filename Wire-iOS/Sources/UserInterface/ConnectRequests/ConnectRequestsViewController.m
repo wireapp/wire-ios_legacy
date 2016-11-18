@@ -21,13 +21,11 @@
 #import "SessionObjectCache.h"
 
 // ui
-#import "IncomingConnectRequestView.h"
 #import "TextView.h"
 #import "ConnectRequestCell.h"
 #import "ProfileViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "ProfilePresenter.h"
-#import "IncomingConnectRequestView.h"
 #import "UserImageView.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
@@ -51,6 +49,7 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 @property (nonatomic) id <ZMConversationListObserverOpaqueToken> pendingConnectionsListObserverToken;
 
 @property (nonatomic) UITableView *tableView;
+@property (nonatomic) CGRect lastLayoutBounds;
 @end
 
 
@@ -104,8 +103,12 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 - (void)viewDidLayoutSubviews
 {
-    CGFloat xPos = MAX(self.tableView.bounds.size.height - self.tableView.contentSize.height, 0);
-    [self.tableView setContentInset:UIEdgeInsetsMake(xPos, 0, 0, 0)];
+    if (!CGSizeEqualToSize(self.lastLayoutBounds.size, self.view.bounds.size)) {
+        self.lastLayoutBounds = self.view.bounds;
+        [self.tableView reloadData];
+        CGFloat xPos = MAX(self.tableView.bounds.size.height - self.tableView.contentSize.height, 0);
+        [self.tableView setContentInset:UIEdgeInsetsMake(xPos, 0, 0, 0)];
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -137,12 +140,10 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ConnectRequestCell *cell = [tableView dequeueReusableCellWithIdentifier:ConnectionRequestCellIdentifier];
-    [self configureCell:cell forIndexPath:indexPath];
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
-    CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    return size.height;
+    if (tableView.bounds.size.height <= 0) {
+        return [[UIScreen mainScreen] bounds].size.height;
+    }
+    return tableView.bounds.size.height - 48;
 }
 
 #pragma mark - Helpers

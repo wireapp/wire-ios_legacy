@@ -673,7 +673,6 @@
 		8FC85422199245770008B66B /* ZMConversation+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85139199245760008B66B /* ZMConversation+Validation.m */; };
 		8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85143199245760008B66B /* ZetaKeyValueValidation.m */; };
 		8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC8517A199245760008B66B /* ConnectRequestsViewController.m */; };
-		8FC8543F199245770008B66B /* IncomingConnectRequestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC8517E199245760008B66B /* IncomingConnectRequestView.m */; };
 		8FC85451199245770008B66B /* ConversationContentViewController+Scrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851A8199245760008B66B /* ConversationContentViewController+Scrolling.m */; };
 		8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851AA199245760008B66B /* ConversationContentViewController.m */; };
 		8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851AF199245760008B66B /* ConversationViewController+ParticipantsPopover.m */; };
@@ -1918,8 +1917,6 @@
 		8FC85169199245760008B66B /* ObjcAssociatedObjectHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjcAssociatedObjectHelpers.h; sourceTree = "<group>"; };
 		8FC85179199245760008B66B /* ConnectRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectRequestsViewController.h; sourceTree = "<group>"; };
 		8FC8517A199245760008B66B /* ConnectRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConnectRequestsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		8FC8517D199245760008B66B /* IncomingConnectRequestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncomingConnectRequestView.h; sourceTree = "<group>"; };
-		8FC8517E199245760008B66B /* IncomingConnectRequestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomingConnectRequestView.m; sourceTree = "<group>"; };
 		8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "ConversationContentViewController+Private.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		8FC851A7199245760008B66B /* ConversationContentViewController+Scrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationContentViewController+Scrolling.h"; sourceTree = "<group>"; };
 		8FC851A8199245760008B66B /* ConversationContentViewController+Scrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "ConversationContentViewController+Scrolling.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -4144,8 +4141,6 @@
 				8FC8517A199245760008B66B /* ConnectRequestsViewController.m */,
 				DBCBD19019F10A1F000510C1 /* ConnectRequestCell.h */,
 				DBCBD19119F10A1F000510C1 /* ConnectRequestCell.m */,
-				8FC8517D199245760008B66B /* IncomingConnectRequestView.h */,
-				8FC8517E199245760008B66B /* IncomingConnectRequestView.m */,
 				87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */,
 				8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */,
 			);
@@ -5397,7 +5392,6 @@
 				163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */,
 				167B3B491BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m in Sources */,
 				871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */,
-				8FC8543F199245770008B66B /* IncomingConnectRequestView.m in Sources */,
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				8F9E3B8A19D04CAC00FD427A /* SoundEventListener.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,

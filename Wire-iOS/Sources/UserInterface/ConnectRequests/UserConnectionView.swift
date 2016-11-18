@@ -145,12 +145,12 @@ final public class UserConnectionView: UIView {
             acceptButton.top == incomingConnectionFooter.top + 12
             acceptButton.bottom == incomingConnectionFooter.bottom - 12
             acceptButton.height == 40
-            acceptButton.width >= 120
+            acceptButton.width >= 140
             
             ignoreButton.right == incomingConnectionFooter.right - 24
             ignoreButton.centerY == acceptButton.centerY
             ignoreButton.height == acceptButton.height
-            ignoreButton.width >= 120
+            ignoreButton.width >= 140
         }
         
         constrain(self.outgoingConnectionFooter, self.cancelConnectionButton, self.blockButton) { outgoingConnectionFooter, cancelConnectionButton, blockButton in

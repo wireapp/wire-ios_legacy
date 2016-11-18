@@ -19,6 +19,10 @@
 
 import Foundation
 
+@objc public enum UserConnectionAction: UInt {
+    case ignore, accept, cancelConnection, block
+}
+
 final public class UserConnectionViewController: UIViewController {
     fileprivate var userConnectionView: UserConnectionView!
     fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
@@ -26,9 +30,7 @@ final public class UserConnectionViewController: UIViewController {
 
     public let userSession: ZMUserSession
     public let user: ZMUser
-    public var onIgnore: (()->())? = .none
-    public var onCancelConnection: (()->())? = .none
-    public var onBlock: (()->())? = .none
+    public var onAction: ((UserConnectionAction)->())?
     
     public init(userSession: ZMUserSession, user: ZMUser) {
         self.userSession = userSession
@@ -53,6 +55,7 @@ final public class UserConnectionViewController: UIViewController {
             self.userSession.performChanges {
                 user.accept()
             }
+            self.onAction?(.accept)
         }
         self.userConnectionView.onIgnore = { [weak self] user in
             guard let `self` = self else {
@@ -63,7 +66,7 @@ final public class UserConnectionViewController: UIViewController {
                 user.ignore()
             }
             
-            self.onIgnore?()
+            self.onAction?(.ignore)
         }
         self.userConnectionView.onBlock = { [weak self] user in
             guard let `self` = self else {
@@ -73,7 +76,7 @@ final public class UserConnectionViewController: UIViewController {
             self.userSession.performChanges {
                 user.block()
             }
-            self.onBlock?()
+            self.onAction?(.block)
         }
         self.userConnectionView.onCancelConnection = { [weak self] user in
             guard let `self` = self else {
@@ -83,7 +86,7 @@ final public class UserConnectionViewController: UIViewController {
             self.userSession.performChanges {
                 user.cancelConnectionRequest()
             }
-            self.onCancelConnection?()
+            self.onAction?(.cancelConnection)
         }
         
         self.view = self.userConnectionView

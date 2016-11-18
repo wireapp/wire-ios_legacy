@@ -44,7 +44,6 @@
 #import "UIView+MTAnimation.h"
 #import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
-#import "IncomingConnectRequestView.h"
 
 // helpers
 #import "WAZUIMagicIOS.h"
@@ -253,17 +252,18 @@
     if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && nil != otherParticipant) {
         self.connectionViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:otherParticipant];
         @weakify(self);
-        self.connectionViewController.onIgnore = ^() {
+        self.connectionViewController.onAction = ^(UserConnectionAction action) {
             @strongify(self);
-            [self.delegate conversationContentViewControllerWantsToDismiss:self];
-        };
-        self.connectionViewController.onBlock = ^() {
-            @strongify(self);
-            [self.delegate conversationContentViewControllerWantsToDismiss:self];
-        };
-        self.connectionViewController.onCancelConnection = ^() {
-            @strongify(self);
-            [self.delegate conversationContentViewControllerWantsToDismiss:self];
+            switch (action) {
+                case UserConnectionActionIgnore:
+                case UserConnectionActionBlock:
+                case UserConnectionActionCancelConnection:
+                    [self.delegate conversationContentViewControllerWantsToDismiss:self];
+                    break;
+                default:
+                    break;
+            }
+            
         };
         headerView = self.connectionViewController.view;
     }
