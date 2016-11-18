@@ -574,6 +574,7 @@
 		87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E11C734DB60094BFE9 /* MockMessage.swift */; };
 		87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */; };
 		87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */; };
+		87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */; };
 		87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36B91D74782B007AB4E5 /* LikeButton.swift */; };
 		87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */; };
 		87D0F8631C6DF0910071769E /* CameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D0F8621C6DF0910071769E /* CameraPreviewView.m */; };
@@ -1737,6 +1738,7 @@
 		87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Dev.entitlements"; path = "Wire-iOS/Entitlements-Dev.entitlements"; sourceTree = "<group>"; };
 		87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Prod.entitlements"; path = "Wire-iOS/Entitlements-Prod.entitlements"; sourceTree = "<group>"; };
 		87CA49EC1C467A710013A2A9 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserConnectionViewController.swift; sourceTree = "<group>"; };
 		87CB36B91D74782B007AB4E5 /* LikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Like.swift"; sourceTree = "<group>"; };
 		87D0F8611C6DF0910071769E /* CameraPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraPreviewView.h; sourceTree = "<group>"; };
@@ -4145,6 +4147,7 @@
 				8FC8517D199245760008B66B /* IncomingConnectRequestView.h */,
 				8FC8517E199245760008B66B /* IncomingConnectRequestView.m */,
 				8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */,
+				87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */,
 			);
 			path = ConnectRequests;
 			sourceTree = "<group>";
@@ -5736,6 +5739,7 @@
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */,
 				87DCF4F21D34EA4500BB420F /* SearchTokenStore.m in Sources */,
+				87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */,
 				87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */,
 				875D48D11A6D087F00BB17B5 /* ConversationListViewController.m in Sources */,
 				871BC0221D34F56300DF0793 /* AnalyticsTracker+Registration.m in Sources */,
