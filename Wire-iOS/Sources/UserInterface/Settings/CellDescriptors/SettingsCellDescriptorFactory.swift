@@ -283,14 +283,7 @@ import Foundation
         let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableHockey))
         developerCellDescriptors.append(diableHockeySetting)
         let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
-
         developerCellDescriptors.append(diableAnalyticsSetting)
-        
-        if #available(iOS 10.0, *) {
-            let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit))
-            developerCellDescriptors.append(callKitDescriptor)
-        }
-        
         let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
         developerCellDescriptors.append(enableAssetV3Setting)
 
