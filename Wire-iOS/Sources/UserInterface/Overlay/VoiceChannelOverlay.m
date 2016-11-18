@@ -21,8 +21,8 @@
 #import <PureLayout/PureLayout.h>
 @import Classy;
 @import WireExtensionComponents;
-#import <AVSVideoView.h>
-#import <AVSVideoPreview.h>
+#import <avs/AVSVideoView.h>
+#import <avs/AVSVideoPreview.h>
 
 #import "VoiceChannelOverlay.h"
 #import "VoiceChannelOverlayController.h"

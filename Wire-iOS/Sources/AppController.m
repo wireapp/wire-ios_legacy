@@ -32,7 +32,7 @@
 @import Classy;
 @import WireExtensionComponents;
 @import CallKit;
-#import <AVSFlowManager.h>
+#import <avs/AVSFlowManager.h>
 #import "avs+iOS.h"
 #import "MediaPlaybackManager.h"
 #import "StopWatch.h"
