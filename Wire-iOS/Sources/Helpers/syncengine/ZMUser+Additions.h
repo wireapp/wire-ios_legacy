@@ -41,6 +41,9 @@ FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 
 @interface ZMUser (Additions)
 
+/// TODO: temporary debugging username generator
++ (NSString *)autoUsernameForName:(NSString *)name remoteIdentifier:(NSUUID *)remoteIdentifier;
+
 @property (nonatomic, readonly) UIColor *accentColor;
 
 /// Returns the current self user
@@ -60,9 +63,6 @@ FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 
 /// Returns corresponding address book contact in current session
 - (ZMAddressBookContact *)contact;
-
-/// TODO: temporary debugging username generator
-- (NSString *)autoUsername;
 
 /// Randomly select the accent color that can be used for a new user
 + (ZMAccentColor)pickRandomAcceptableAccentColor;

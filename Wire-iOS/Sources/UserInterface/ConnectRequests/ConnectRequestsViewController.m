@@ -157,37 +157,25 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.separatorInset = UIEdgeInsetsZero;
     cell.preservesSuperviewLayoutMargins = NO;
-    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsMake(0, 0, 8, 0);
     @weakify(self);
     
     cell.acceptBlock = ^{
         @strongify(self);
         
-        BOOL lastConnectionRequest = (self.connectionRequests.count == 1);
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-                                        [user accept];
-                                    }
-                                    completionHandler:^{
-                                        if (lastConnectionRequest) {
-                                            [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:^{
-                                                [[ZClientViewController sharedZClientViewController] selectConversation:user.oneToOneConversation
-                                                                                                            focusOnView:YES
-                                                                                                               animated:YES];
-                                            }];
-                                        }
-                                    }];
+        if (self.connectionRequests.count == 0) {
+            [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:^{
+                [[ZClientViewController sharedZClientViewController] selectConversation:user.oneToOneConversation
+                                                                            focusOnView:YES
+                                                                               animated:YES];
+            }];
+        }
     };
     
     cell.ignoreBlock = ^{
-        BOOL lastConnectionRequest = (self.connectionRequests.count == 1);
-
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user ignore];
-        } completionHandler:^{
-            if (lastConnectionRequest) {
-                [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:nil];
-            }
-        }];
+        if (self.connectionRequests.count == 0) {
+            [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:nil];
+        }
     };
     
 }

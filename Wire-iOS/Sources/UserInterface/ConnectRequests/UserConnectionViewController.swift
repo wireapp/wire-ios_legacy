@@ -63,7 +63,7 @@ final public class UserConnectionViewController: UIViewController {
             }
             
             self.userSession.performChanges {
-                user.accept()
+                self.user.accept()
             }
             self.onAction?(.accept)
         }
@@ -73,7 +73,7 @@ final public class UserConnectionViewController: UIViewController {
             }
             
             self.userSession.performChanges {
-                user.ignore()
+                self.user.ignore()
             }
             
             self.onAction?(.ignore)
@@ -84,7 +84,7 @@ final public class UserConnectionViewController: UIViewController {
             }
             
             self.userSession.performChanges {
-                user.block()
+                self.user.block()
             }
             self.onAction?(.block)
         }
@@ -94,7 +94,7 @@ final public class UserConnectionViewController: UIViewController {
             }
             
             self.userSession.performChanges {
-                user.cancelConnectionRequest()
+                self.user.cancelConnectionRequest()
             }
             self.onAction?(.cancelConnection)
         }

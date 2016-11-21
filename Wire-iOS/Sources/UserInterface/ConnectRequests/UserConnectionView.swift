@@ -21,6 +21,7 @@ import Foundation
 import Cartography
 
 final public class UserConnectionView: UIView {
+    typealias User = ZMBareUser & ZMBareUserConnection & ZMSearchableUser
     private let nameInfoLabel = UILabel()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
@@ -31,23 +32,23 @@ final public class UserConnectionView: UIView {
     private let cancelConnectionButton = IconButton.iconButtonCircular()
     private let blockButton = IconButton.iconButtonDefaultDark()
     
-    let user: ZMUser
+    let user: User
     var commonConnectionsCount: UInt = 0 {
         didSet {
             self.setupLabelText()
         }
     }
-    var onAccept: ((ZMUser)->())? = .none
-    var onIgnore: ((ZMUser)->())? = .none
-    var onCancelConnection: ((ZMUser)->())? = .none
-    var onBlock: ((ZMUser)->())? = .none
+    var onAccept: ((User)->())? = .none
+    var onIgnore: ((User)->())? = .none
+    var onCancelConnection: ((User)->())? = .none
+    var onBlock: ((User)->())? = .none
     var showUserName: Bool = false {
         didSet {
             self.setupLabelText()
         }
     }
 
-    init(user: ZMUser) {
+    init(user: User) {
         self.user = user
         super.init(frame: .zero)
         
@@ -95,14 +96,8 @@ final public class UserConnectionView: UIView {
         self.outgoingConnectionFooter.addSubview(self.cancelConnectionButton)
         self.outgoingConnectionFooter.addSubview(self.blockButton)
         
-        if let connection = self.user.connection {
-            self.incomingConnectionFooter.isHidden = connection.status != .pending
-            self.outgoingConnectionFooter.isHidden = connection.status != .sent
-        }
-        else {
-            self.incomingConnectionFooter.isHidden = true
-            self.outgoingConnectionFooter.isHidden = true
-        }
+        self.incomingConnectionFooter.isHidden = self.user.isConnected || self.user.isPendingApprovalByOtherUser
+        self.outgoingConnectionFooter.isHidden = !self.user.isPendingApprovalByOtherUser
         
         [self.nameInfoLabel, self.userImageView, self.incomingConnectionFooter, self.outgoingConnectionFooter].forEach(self.addSubview)
     }
@@ -115,7 +110,7 @@ final public class UserConnectionView: UIView {
             let nameStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
                              NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold")] as [String : AnyObject]
             
-            name = (self.user.name + "\n") && nameStyle
+            name = (self.user.name + "\n\n") && nameStyle
         }
         
         let labelStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
@@ -127,14 +122,21 @@ final public class UserConnectionView: UIView {
         var inAddressBook = false
         var addressBookNameMatchFullName = false
         
-        if let contact = self.user.contact() {
+        if let zmUser = self.user as? ZMUser,
+            let contact = zmUser.contact() {
             inAddressBook = true
             addressBookNameMatchFullName = contact.name.lowercased() == self.user.name
         }
         
         let hasCommonConnections = self.commonConnectionsCount > 0
         
-        let username = self.user.autoUsername() && labelStyle
+        var remoteIdentifier: UUID?
+        
+        if let zmUser = self.user as? ZMUser {
+            remoteIdentifier = zmUser.remoteIdentifier
+        }
+        
+        let username = ZMUser.autoUsername(forName: self.user.name, remoteIdentifier: remoteIdentifier) && labelStyle
         
         var secondLine: NSAttributedString? = .none
         

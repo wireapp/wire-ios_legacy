@@ -63,7 +63,7 @@
     [self.contentView addSubview:self.connectRequestViewController.view];
     
     [self.connectRequestViewController.view autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.connectRequestViewController.view autoPinEdgesToSuperviewEdges];
+    [self.connectRequestViewController.view autoPinEdgesToSuperviewMargins];
     
     [self.connectRequestViewController.view autoSetDimension:ALDimensionWidth toSize:420 relation:NSLayoutRelationLessThanOrEqual];
 }

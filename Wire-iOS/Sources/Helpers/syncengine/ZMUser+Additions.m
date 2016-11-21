@@ -97,7 +97,7 @@ ZMUser *BareUserToUser(id bareUser) {
     return (self.isPendingApprovalBySelfUser || self.isPendingApprovalByOtherUser);
 }
 
-- (NSString *)autoUsername
++ (NSString *)autoUsernameForName:(NSString *)name remoteIdentifier:(NSUUID *)remoteIdentifier
 {
     static NSArray *endings = nil;
     
@@ -105,18 +105,23 @@ ZMUser *BareUserToUser(id bareUser) {
         endings = @[@"_1", @"test", @"111", @"2", @"_wire", @"4", @"_1984", @"_debug"];
     }
     
-    uuid_t uuid;
-    [self.remoteIdentifier getUUIDBytes:uuid];
+    unsigned char userSeed = 0;
     
-    NSString *randomEnding = [endings objectAtIndex:uuid[0] % endings.count];
+    if (nil != remoteIdentifier) {
+        uuid_t uuid;
+        [remoteIdentifier getUUIDBytes:uuid];
+        userSeed = uuid[0];
+    }
+    
+    NSString *randomEnding = [endings objectAtIndex:userSeed % endings.count];
     
     NSMutableString *username = [NSMutableString string];
     
     NSCharacterSet *passThrough = [NSCharacterSet alphanumericCharacterSet];
     NSCharacterSet *replace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     
-    for (NSUInteger charindex = 0; charindex < self.name.length; charindex++) {
-        unichar nameChar = [self.name characterAtIndex:charindex];
+    for (NSUInteger charindex = 0; charindex < name.length; charindex++) {
+        unichar nameChar = [name characterAtIndex:charindex];
         if ([passThrough characterIsMember:nameChar]) {
             NSString *appendString = [NSString stringWithCharacters:&nameChar length:1];
             
