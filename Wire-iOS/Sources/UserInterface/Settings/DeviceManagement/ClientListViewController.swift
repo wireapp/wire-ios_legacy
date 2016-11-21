@@ -409,6 +409,7 @@ extension ClientListViewController : ZMUserObserver {
 fileprivate extension UserClient {
 
     var isTemporary: Bool {
+        guard let type = type else { return false }
         return type == "temporary"
     }
 

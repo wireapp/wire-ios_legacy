@@ -26,6 +26,6 @@
 @end
 
 @interface ImageMessageCell ()
-@property (nonatomic) UIViewContentMode smallerThanMinimumSizeContentMode;
+@property (nonatomic) BOOL autoStretchVertically;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
 @end
