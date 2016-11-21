@@ -38,6 +38,11 @@ class ArticleView: UIView {
     var authorFont: UIFont?
     var authorHighlightTextColor = UIColor.gray
     var authorHighlightFont = UIFont.boldSystemFont(ofSize: 14)
+    var imageHeight: CGFloat = 144 {
+        didSet {
+            self.imageHeightConstraint.constant = self.imageHeight
+        }
+    }
     
     /// MARK - Views
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
@@ -47,6 +52,7 @@ class ArticleView: UIView {
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
+    private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
@@ -109,13 +115,13 @@ class ArticleView: UIView {
     }
     
     func setupConstraints(_ imagePlaceholder: Bool) {
-        let imageHeight : CGFloat = imagePlaceholder ? 144 : 0
+        let imageHeight : CGFloat = imagePlaceholder ? self.imageHeight : 0
         
         constrain(self, messageLabel, authorLabel, imageView, obfuscationView) { container, messageLabel, authorLabel, imageView, obfuscationView in
             imageView.left == container.left
             imageView.top == container.top
             imageView.right == container.right
-            imageView.height == imageHeight ~ 999
+            self.imageHeightConstraint = (imageView.height == imageHeight ~ 999)
             
             messageLabel.left == container.left + 12
             messageLabel.top == imageView.bottom + 12
@@ -137,7 +143,7 @@ class ArticleView: UIView {
     }
     
     var authorHighlightAttributes : [String: AnyObject] {
-            return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
+        return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
     }
     
     func formatURL(_ URL: Foundation.URL) -> NSAttributedString {

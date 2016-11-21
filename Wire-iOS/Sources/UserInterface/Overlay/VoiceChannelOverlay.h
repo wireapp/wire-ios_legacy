@@ -25,7 +25,6 @@
 @class VoiceChannelCollectionViewLayout;
 @class CameraPreviewView;
 @class AVSVideoView;
-@class AVSVideoPreview;
 
 
 typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
@@ -42,7 +41,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @interface VoiceChannelOverlay : UIView
 
 @property (nonatomic, readonly) AVSVideoView *videoView;
-@property (nonatomic, readonly) AVSVideoPreview *videoPreview;
 @property (nonatomic, readonly) CameraPreviewView *cameraPreviewView;
 @property (nonatomic) NSTimeInterval callDuration;
 @property (nonatomic) ZMConversation *callingConversation;

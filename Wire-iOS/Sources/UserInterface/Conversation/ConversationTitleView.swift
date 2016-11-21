@@ -24,7 +24,7 @@ public final class ConversationTitleView: UIView {
     
     var titleColor, titleColorSelected: UIColor?
     var titleFont: UIFont?
-    var titleButton = UIButton()
+    let titleButton = UIButton()
     public var tapHandler: ((UIButton) -> Void)? = nil
     
     init(conversation: ZMConversation) {
@@ -44,7 +44,7 @@ public final class ConversationTitleView: UIView {
         addSubview(titleButton)
     }
     
-    func configure(_ conversation: ZMConversation) {
+    private func configure(_ conversation: ZMConversation) {
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let title = conversation.displayName.uppercased() && font
         

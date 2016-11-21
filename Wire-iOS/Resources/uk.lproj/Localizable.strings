@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Торкніться, щоб почати запис\nВи можете %@ після цього";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Змінити фільтр вище";
 
+"conversation.call.many_participants_confirmation.title" = "Розпочати дзвінок";
+"conversation.call.many_participants_confirmation.message" = "Ви подзвоните %d людям";
+"conversation.call.many_participants_confirmation.call" = "Подзвонити";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "Подобається";
 "content.message.unlike" = "Не подобається";
+"content.message.forward" = "Переслати";
+"content.message.forward.to" = "Переслати в...";
 
 "content.reactions_list.likers" = "Сподобалося";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "У відповідь на численні прохання";
 "self.settings.popular_demand.send_button.title" = "Кнопка \"Надіслати\"";
+"self.settings.popular_demand.call_kit.title" = "Не використовувати системний фреймворк для здійснення дзвінків (необхідне перезавантаження)";
 "self.settings.popular_demand.send_button.footer" = "Вимкнути надсилання через клавішу \"Ввід\".";
 
 // Open in
-"self.settings.external_apps.header" = "Відкривати посилання за допомогою";
+"self.settings.external_apps.header" = "Відкрити за допомогою";
 
 "self.settings.link_options.twitter.title" = "Твіти";
 "self.settings.link_options.maps.title" = "Місця";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Карти Apple";
+"open_link.maps.option.apple" = "Карти";
 "open_link.maps.option.google" = "Карти Google";
 
 "open_link.browser.option.safari" = "Safari";

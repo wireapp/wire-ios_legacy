@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Коснитесь для записи\nВы можете %@ после этого";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Выберите фильтр выше";
 
+"conversation.call.many_participants_confirmation.title" = "Начать звонок";
+"conversation.call.many_participants_confirmation.message" = "Вы будете звонить %d людям";
+"conversation.call.many_participants_confirmation.call" = "Звонок";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отменить";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
+"content.message.forward" = "Переслать";
+"content.message.forward.to" = "Отправить...";
 
 "content.reactions_list.likers" = "Понравилось";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "По многочисленным просьбам";
 "self.settings.popular_demand.send_button.title" = "Кнопка \"отправить\"";
+"self.settings.popular_demand.call_kit.title" = "Не использовать звонки в сети (требуется перезапуск)";
 "self.settings.popular_demand.send_button.footer" = "Отключить отправку по нажатию клавиши Enter.";
 
 // Open in
-"self.settings.external_apps.header" = "Открыть ссылки в";
+"self.settings.external_apps.header" = "Открыть с помощью";
 
 "self.settings.link_options.twitter.title" = "Твиты";
 "self.settings.link_options.maps.title" = "Местоположения";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.apple" = "Карты";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";

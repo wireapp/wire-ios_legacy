@@ -20,6 +20,7 @@
 #import "ZMSnapshotTestCase.h"
 #import "Wire_iOS_Tests-Swift.h"
 #import "Wire-Swift.h"
+#import "Wire_iOS_Tests-Swift.h"
 #import "MockMessage+Creation.h"
 #import "WAZUIMagicIOS.h"
 @import zmessaging;

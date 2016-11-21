@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tryk for at optage\nDu kan %@ efter det";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Vælg et filter ovenfor";
 
+"conversation.call.many_participants_confirmation.title" = "Start a call";
+"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.call" = "Ring op";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuller";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "Synes om";
 "content.message.unlike" = "Synes ikke godt om";
+"content.message.forward" = "Videresend";
+"content.message.forward.to" = "Send to...";
 
 "content.reactions_list.likers" = "Synes godt af";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "Ved populær efterspørgsel";
 "self.settings.popular_demand.send_button.title" = "Send Knap";
+"self.settings.popular_demand.call_kit.title" = "Don't use native calling (restart)";
 "self.settings.popular_demand.send_button.footer" = "Deaktiver for at sende via returtasten.";
 
 // Open in
-"self.settings.external_apps.header" = "Open Links In";
+"self.settings.external_apps.header" = "Open With";
 
 "self.settings.link_options.twitter.title" = "Tweets";
 "self.settings.link_options.maps.title" = "Locations";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.apple" = "Kort";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";

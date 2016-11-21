@@ -139,6 +139,10 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Kaydetmek için tıkla\nDaha sonra %@ bilirsin";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Yukarıdan bir filtre seçin";
 
+"conversation.call.many_participants_confirmation.title" = "Start a call";
+"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.call" = "Ara";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
 "image_confirmer.cancel" = "İptal";
@@ -244,6 +248,8 @@
 
 "content.message.like" = "Beğen";
 "content.message.unlike" = "Beğenme";
+"content.message.forward" = "İlet";
+"content.message.forward.to" = "Send to...";
 
 "content.reactions_list.likers" = "Beğenen";
 
@@ -483,10 +489,11 @@
 // By popular demand
 "self.settings.popular_demand.title" = "Yoğun talep üzerine";
 "self.settings.popular_demand.send_button.title" = "Gönder butonu";
+"self.settings.popular_demand.call_kit.title" = "Yerel aramayı kullanma (yeniden başlatma)";
 "self.settings.popular_demand.send_button.footer" = "Giriş (Enter) tuşu ile göndermeyi devre dışı bırak.";
 
 // Open in
-"self.settings.external_apps.header" = "Bağlantıları açmak için uygulama seç";
+"self.settings.external_apps.header" = "Birlikte Aç";
 
 "self.settings.link_options.twitter.title" = "Tweetler";
 "self.settings.link_options.maps.title" = "Konumlar";
@@ -496,7 +503,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Apple Haritalar";
+"open_link.maps.option.apple" = "Haritalar";
 "open_link.maps.option.google" = "Google Haritalar";
 
 "open_link.browser.option.safari" = "Safari";
