@@ -18,7 +18,7 @@
 
 
 @objc public enum ConversationMediaAction: UInt {
-    case text, photo, audioCall, videoCall, gif, sketch, ping, fileTransfer, videoMessage, audioMessage, location
+    case text, photo, audioCall, videoCall, gif, sketch, ping, fileTransfer, videoMessage, audioMessage, location, ephemeral
     
     var attributeValue: String {
         switch self {
@@ -33,6 +33,7 @@
         case .videoMessage: return "video_message"
         case .audioMessage: return "audio_message"
         case .location:     return "location"
+        case .ephemeral:    return "ephemeral"
         }
     }
 }

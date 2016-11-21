@@ -21,7 +21,7 @@
 #import "ZMSnapshotTestCase.h"
 #import <PureLayout/PureLayout.h>
 #import "ParticipantDeviceCell.h"
-#import "Wire_iOS_Tests-Swift.h"
+#import "Wire-Swift.h"
 
 
 @interface ParticipantDeviceCellTests : ZMSnapshotTestCase

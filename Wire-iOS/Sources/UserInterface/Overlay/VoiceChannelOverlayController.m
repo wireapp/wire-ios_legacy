@@ -361,7 +361,7 @@
 
 - (void)startCallDurationTimer
 {
-    self.callStartedTimestamp = [NSDate date];
+    self.callStartedTimestamp = self.conversation.voiceChannel.callStartDate ? self.conversation.voiceChannel.callStartDate : [NSDate date];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self updateCallDuration];
     });

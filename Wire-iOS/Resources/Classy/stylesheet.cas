@@ -146,15 +146,6 @@ IconButton.resend-button {
     backgroundImageColor[state:selected]: $color-icon-background-selected;
 }
 
-IconButton.send-button {
-    circular: true;
-    borderWidth: 0.0;
-    iconColor[state: normal]: $color-background-light;
-    iconColor[state: highlighted]: $color-background-light;
-    backgroundImageColor[state:highlighted]: $color-accent-current-darken;
-    backgroundImageColor[state:normal]: $color-accent-current;
-}
-
 IconButton.gif-button {
     iconColor: $color-icon-normal;
     iconColor[state:selected]: $color-icon-selected;
@@ -319,28 +310,28 @@ BrowserBarView {
 
 /* Sketch related */
 
-SketchBottomView {
-    backgroundColor: $color-background;
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-SketchTopView {
-    backgroundColor: $color-background;
-    separatorView: @{
-        backgroundColor: $color-separator;
+CanvasViewController {
+    
+    canvas: @{
+        backgroundColor: white
     }
     
-    UILabel {
+    hintLabel: @{
         font: $font-small;
-        textColor: $color-text-foreground;
+        textColor: $color-text-placeholder;
+        textAlignment: center;
     }
+    
 }
 
-SketchViewController UIView > UILabel {
-    font: $font-small;
-    textColor: $color-text-dimmed;
+SketchToolbar {
+    backgroundColor: $color-background;
+    
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal;
+        iconColor[state:highlighted]: $color-icon-highlighted;
+        iconColor[state:selected]: $color-accent-current;
+    }
 }
 
 /* Profile */
@@ -818,9 +809,9 @@ ImageMessageCell {
     imageViewContainer: @{
         backgroundColor: $color-placeholder-background;
     }
-
-    obfuscationView: @{
-        backgroundColor: $color-ephemeral;
+    
+    fullImageView: @{
+        backgroundColor: $color-background;
     }
 }
 
@@ -878,14 +869,9 @@ InputBar: {
     barBackgroundColor: $color-text-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
-    ephemeralColor: $color-ephemeral;
+    ephemeralColor: $color-accent-current;
     placeholderColor: $color-text-placeholder;
 
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-    
     textView: @{
         font: $font-normal-light;
         placeholderFont: $font-small-medium;
@@ -912,7 +898,7 @@ IconButton.send-button {
 
 IconButton.hourglass {
     iconColor: $color-icon-normal;
-    iconColor[state:selected]: $color-ephemeral;
+    iconColor[state:selected]: $color-accent-current;
     iconColor[state:highlighted]: $color-icon-highlighted;
     backgroundImageColor[state:selected]: clear;
 }
@@ -921,7 +907,7 @@ ConversationInputBarViewController {
 
     ephemeralIndicatorButton: @{
         borderWidth: 0.0;
-        titleColor: $color-ephemeral;
+        titleColor: $color-accent-current;
         titleLabel: @{
             font: $font-small-medium;
         }
@@ -971,6 +957,22 @@ ConfirmAssetViewController {
         titleLabel: @{
             font: $font-small;
         }
+    }
+}
+
+ImageToolbarView.on-image {
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal-dark;
+        iconColor[state:highlighted]: $color-icon-highlighted-dark;
+        iconColor[state:selected]: $color-accent-current-dark;
+    }
+}
+
+ImageToolbarView.on-background {
+    IconButton {
+        iconColor[state:normal]: $color-icon-normal;
+        iconColor[state:highlighted]: $color-icon-highlighted;
+        iconColor[state:selected]: $color-accent-current;
     }
 }
 
@@ -1045,6 +1047,11 @@ GiphySearchViewController {
 
 UILabel.small-light {
     font: $font-small;
+    textColor: white;
+}
+
+UILabel.normal-light {
+    font: $font-normal-light;
     textColor: white;
 }
 
@@ -1479,5 +1486,22 @@ ReactionCell {
         font: $font-normal;
         textColor: $color-text-foreground;
     }
+}
+
+/* Share View Controller */
+
+TokenField.share {
+    textView: @{
+        placeholderFont: $font-medium-medium;
+        placeholderTextContainerInset: 0 0;
+    }
+    tokenTitleFont: $font-medium-medium;
+    textColor: white;
+    tokenTitleColor: black;
+    tokenBackgroundColor: white;
+    tokenBorderColor: white;
+    tokenSelectedTitleColor: white;
+    tokenSelectedBackgroundColor: clear;
+    tokenSelectedBorderColor: white;
 }
 

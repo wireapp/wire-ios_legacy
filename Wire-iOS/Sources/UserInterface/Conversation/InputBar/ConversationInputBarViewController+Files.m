@@ -264,7 +264,8 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                                                               context:FileTransferContextApp];
                 
                 [FileMetaDataGenerator metadataForFileAtURL:url UTI:url.UTI completion:^(ZMFileMetadata * _Nonnull metadata) {
-                    id<ZMConversationMessage> message = [self.conversation appendMessageWithFileMetadata:metadata];
+                    id<ZMConversationMessage> message = [self.conversation appendMessageWithFileMetadata:metadata
+                                                                                                version3:Settings.sharedSettings.sendV3Assets];
                     
                     if (message.fileMessageData.isVideo) {
                         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoMessage

@@ -89,6 +89,20 @@
     return iconButton;
 }
 
++ (instancetype)iconButtonDefaultLight
+{
+    IconButton *iconButton = [[self alloc] init];
+    iconButton.cas_styleClass = @"default-light";
+    return iconButton;
+}
+
++ (instancetype)iconButtonDefaultDark
+{
+    IconButton *iconButton = [[self alloc] init];
+    iconButton.cas_styleClass = @"default-dark";
+    return iconButton;
+}
+
 + (instancetype)iconButtonCircularLight
 {
     IconButton *iconButton = [[self alloc] init];

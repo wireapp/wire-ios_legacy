@@ -128,7 +128,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     // MARK: - FormStepDelegate
     
     func didCompleteFormStep(_ viewController: UIViewController!) {
-        let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials)
+        let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials, showTemporary: false)
         clientsListController.view.backgroundColor = UIColor.black
         if self.traitCollection.userInterfaceIdiom == .pad {
             let navigationController = UINavigationController(rootViewController: clientsListController)

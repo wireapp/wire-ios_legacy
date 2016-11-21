@@ -54,6 +54,10 @@ NSString * const UserDefaultDisableUI = @"ZMDisableUI";
 NSString * const UserDefaultDisableHockey = @"ZMDisableHockey";
 NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
+NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
+
+
+NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -106,9 +110,11 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultLastUserLocation,
              UserDefaultPreferredCamera,
              UserDefaultSendButtonDisabled,
+             UserDefaultDisableCallKit,
              UserDefaultTwitterOpeningRawValue,
              UserDefaultMapsOpeningRawValue,
-             UserDefaultBrowserOpeningRawValue
+             UserDefaultBrowserOpeningRawValue,
+             UserDefaultSendV3Assets
              ];
 }
 
@@ -382,6 +388,16 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
     [self.defaults setBool:disableSendButton forKey:UserDefaultSendButtonDisabled];
 }
 
+- (BOOL)disableCallKit
+{
+    return [self.defaults boolForKey:UserDefaultDisableCallKit];
+}
+
+- (void)setDisableCallKit:(BOOL)disableCallKit
+{
+    [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
+}
+
 #pragma mark - Features disable keys
 
 - (BOOL)disableUI
@@ -427,6 +443,18 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
     [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
     [self.defaults synchronize];
 }
+
+- (BOOL)sendV3Assets
+{
+    return [self.defaults boolForKey:UserDefaultSendV3Assets];
+}
+
+- (void)setSendV3Assets:(BOOL)sendV3Assets
+{
+    [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
+}
+
+#pragma mark - Link opening options
 
 - (NSInteger)twitterLinkOpeningOptionRawValue
 {

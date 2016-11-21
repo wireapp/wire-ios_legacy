@@ -76,8 +76,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             confirmVideoViewController.videoURL = videoURL as URL!
             confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
-            confirmVideoViewController.isEditButtonVisible = false
-            confirmVideoViewController.onConfirm = { [unowned self] in
+            confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
                 Analytics.shared()?.tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
                 self.uploadFile(at: videoURL as URL!)
@@ -129,41 +128,29 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.image = image
         confirmImageViewController.previewTitle = self.conversation.displayName.uppercased()
-        confirmImageViewController.isEditButtonVisible = true
-        confirmImageViewController.onConfirm = { [unowned self] in
+        confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
             self.dismiss(animated: true, completion: .none)
             
-            Analytics.shared()?.tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
-                
-            self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
             if metadata.source == .camera {
                 let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
                 UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
             }
+            
+            if let editedImage = editedImage, let editedImageData = UIImagePNGRepresentation(editedImage) {
+                metadata.source = .sketch
+                metadata.sketchSource = .cameraGallery
+                self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
+            } else {
+                self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
+            }
+            
+            Analytics.shared()?.tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
         }
         
         confirmImageViewController.onCancel = { [unowned self] in
             self.dismiss(animated: true) {
                 self.mode = .camera
                 self.inputBar.textView.becomeFirstResponder()
-            }
-        }
-        
-        confirmImageViewController.onEdit = { [unowned self] in
-            self.dismiss(animated: true) {
-                delay(0.01){
-                    self.hideCameraKeyboardViewController {
-                        let sketchViewController = SketchViewController()
-                        sketchViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-                        sketchViewController.sketchTitle = "image.edit_image".localized
-                        sketchViewController.delegate = self
-                        sketchViewController.confirmsWithoutSketch = true
-                        sketchViewController.source = .cameraGallery
-                        
-                        self.present(sketchViewController, animated: true, completion: .none)
-                        sketchViewController.canvasBackgroundImage = image
-                    }
-                }
             }
         }
         
@@ -235,4 +222,21 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
         editor.dismiss(animated: true, completion: .none)
         DDLogError("Video editor failed with error: \(error)")
     }
+}
+
+extension ConversationInputBarViewController : CanvasViewControllerDelegate {
+    
+    func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {
+        hideCameraKeyboardViewController { [weak self] in
+            guard let `self` = self else { return }
+            
+            self.dismiss(animated: true, completion: {
+                let imageData = UIImagePNGRepresentation(image)
+                self.sendController.sendMessage(withImageData: imageData, completion: {
+                    Analytics.shared()?.tagMediaSentPictureSourceSketch(inConversation: self.conversation, sketchSource: canvasViewController.source)
+                })
+            })
+        }
+    }
+    
 }

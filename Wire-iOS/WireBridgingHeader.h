@@ -35,6 +35,9 @@
 @import WireExtensionComponents;
 #import "UIColor+WAZExtensions.h"
 #import "ConversationCell.h"
+#import "TextMessageCell.h"
+#import "ImageMessageCell.h"
+#import "ImageMessageCell+Internal.h"
 #import "WireStyleKit.h"
 #import <Classy/UIViewController+CASAdditions.h>
 #import "UIViewController+Errors.h"
@@ -71,11 +74,11 @@
 #import "VoiceChannelController.h"
 #import "SplitViewController.h"
 #import "ConfirmAssetViewController.h"
-#import "SketchViewController.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
 #import "VersionInfoViewController.h"
+#import "SketchColorPickerController.h"
 #import "BrowserViewController.h"
 
 // Helper objects
@@ -117,6 +120,8 @@
 #import "UIView+UIAppearanceSwift.h"
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
+#import "UIImagePickerController+GetImage.h"
+#import <Classy/UIColor+CASAdditions.h>
 @import HockeySDK;
 
 // Camera

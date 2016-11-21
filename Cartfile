@@ -1,14 +1,14 @@
 github "wireapp/wire-ios-ziphy" ~> 6.0
-github "wireapp/SmoothLineView" "0.1.12-wire-ft"
 github "wireapp/TSMarkdownParser" ~> 1.0.17
 github "wireapp/Classy" "v0.2.6"
 github "wireapp/CocoaLumberjack" "2.4.0-swift3"
 github "wireapp/Cartography" "z0.6.1-swift3"
 github "wireapp/TTTAttributedLabel" "2.0.0"
 github "wireapp/ZipArchive" "1.6.1-swift3"
-github "wireapp/HockeySDK-iOS" "4.0.1"
-github "wireapp/wire-ios-sync-engine" "56.2.0"
+github "wireapp/HockeySDK-iOS" "4.1.2"
+github "wireapp/wire-ios-sync-engine" ~> 60.0.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2"
 github "wireapp/FormatterKit" ~> 1.8.1
 github "wireapp/VIMNetworking" "v6.0.2-wire-carthage-2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
+github "wireapp/wire-ios-canvas" ~> 2.0.0

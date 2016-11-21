@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#import "SketchViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationInputBarSendController;
 @class EmojiKeyboardViewController;
 @class EphemeralKeyboardViewController;
+@class ConversationInputBarButtonState;
 
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
@@ -39,15 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic)           BOOL inputBarOverlapsContent;
 @property (nonatomic)           NSUInteger videoSendContext;
 
+@property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
+
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
-
-@end
-
-
-@interface ConversationInputBarViewController (Sketch) <SketchViewControllerDelegate>
-- (void)sketchButtonPressed:(nullable id)sender;
+- (void)updateButtonIconsForEphemeral;
 @end
 
 

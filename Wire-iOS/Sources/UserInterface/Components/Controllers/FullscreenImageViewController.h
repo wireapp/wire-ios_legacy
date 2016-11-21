@@ -21,12 +21,11 @@
 
 
 @class CenteredScrollView;
-@protocol FullscreenImageViewControllerDelegate, ZMConversationMessage;
+@protocol ZMConversationMessage;
 
 
 @interface FullscreenImageViewController : UIViewController
 
-@property (nonatomic, weak) id <FullscreenImageViewControllerDelegate> delegate;
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
@@ -37,14 +36,5 @@
 - (void)showChrome:(BOOL)shouldShow;
 
 - (void)updateZoom;
-
-
-@end
-
-
-
-@protocol FullscreenImageViewControllerDelegate <NSObject>
-
-- (void)fullscreenImageViewController:(FullscreenImageViewController *)controller wantsEditImageMessage:(id<ZMConversationMessage>)message;
 
 @end

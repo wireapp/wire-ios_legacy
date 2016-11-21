@@ -35,6 +35,7 @@ IB_DESIGNABLE
 @property (nonatomic) TextTransform placeholderTextTransform;
 @property (nonatomic) CGFloat lineFragmentPadding;
 @property (nonatomic) UIEdgeInsets placeholderTextContainerInset;
+@property (nonatomic) NSTextAlignment placeholderTextAlignment;
 
 @end
 

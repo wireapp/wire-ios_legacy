@@ -65,7 +65,7 @@
 
 + (BOOL)isImageMessage:(id<ZMConversationMessage>)message
 {
-    return message.imageMessageData != nil;
+    return message.imageMessageData != nil || (message.fileMessageData != nil && message.fileMessageData.v3_isImage);
 }
 
 + (BOOL)isKnockMessage:(id<ZMConversationMessage>)message
@@ -75,7 +75,7 @@
 
 + (BOOL)isFileTransferMessage:(id<ZMConversationMessage>)message
 {
-    return message.fileMessageData != nil;
+    return message.fileMessageData != nil && !message.fileMessageData.v3_isImage;
 }
 
 + (BOOL)isVideoMessage:(id<ZMConversationMessage>)message

@@ -28,7 +28,6 @@
 #import "UIImagePickerController+GetImage.h"
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
-#import "SketchViewController.h"
 #import "MediaAsset.h"
 
 #import "Wire-Swift.h"
@@ -42,7 +41,7 @@
 
 @end
 
-@interface ImagePickerConfirmationController (SketchViewControllerDelegate) <SketchViewControllerDelegate>
+@interface ImagePickerConfirmationController (CanvasViewControllerDelegate)
 @end
 
 @implementation ImagePickerConfirmationController
@@ -59,7 +58,6 @@
             confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             confirmImageViewController.image = image;
             confirmImageViewController.previewTitle = self.previewTitle;
-            confirmImageViewController.editButtonVisible = YES;
             
             if (IS_IPAD) {
                 [confirmImageViewController.view setPopoverBorderEnabled:YES];
@@ -69,34 +67,30 @@
                 [picker dismissViewControllerAnimated:YES completion:nil];
             };
             
-            confirmImageViewController.onConfirm = ^{
+            confirmImageViewController.onConfirm = ^(UIImage *editedImage){
                 @strongify(self);
                 
-                [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-                    if (imageData != nil) {
-                        ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                        metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
-                        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                            metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                if (editedImage != nil) {
+                    ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                    metadata.source = ConversationMediaPictureSourceSketch;
+                    metadata.sketchSource = ConversationMediaSketchSourceCameraGallery;
+                    metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+                    
+                    self.imagePickedBlock(UIImagePNGRepresentation(editedImage), metadata);
+                } else {
+                    [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
+                        if (imageData != nil) {
+                            ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                            metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
+                            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                                metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                            }
+                            metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+                            
+                            self.imagePickedBlock(imageData, metadata);
                         }
-                        metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-                        
-                        self.imagePickedBlock(imageData, metadata);
-                    }
-                }];
-            };
-            
-            confirmImageViewController.onEdit = ^{
-                [picker dismissViewControllerAnimated:YES completion:nil];
-                
-                SketchViewController *sketchViewController = [[SketchViewController alloc] init];
-                sketchViewController.sketchTitle = NSLocalizedString(@"image.edit_image", @"");
-                sketchViewController.delegate = self;
-                sketchViewController.source = ConversationMediaSketchSourceCameraGallery;
-                
-                [picker presentViewController:sketchViewController animated:YES completion:^{
-                    sketchViewController.canvasBackgroundImage = image;
-                }];
+                    }];
+                }
             };
             
             [picker presentViewController:confirmImageViewController animated:YES completion:nil];
@@ -126,47 +120,5 @@
     return (NSString *)CFBridgingRelease(UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,(__bridge CFStringRef)extension , NULL));
 }
 
-
-@end
-
-@implementation ImagePickerConfirmationController (SketchViewControllerDelegate)
-
-- (void)sketchViewControllerDidCancel:(SketchViewController *)controller
-{
-    [self.presentingPickerController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)sketchViewController:(SketchViewController *)controller didSketchImage:(UIImage *)image
-{
-    @weakify(self);
-    [self.presentingPickerController dismissViewControllerAnimated:YES completion:^{
-        @strongify(self);
-        
-        ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
-        confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        confirmImageViewController.image = image;
-        confirmImageViewController.previewTitle = self.previewTitle;
-        
-        if (IS_IPAD) {
-            [confirmImageViewController.view setPopoverBorderEnabled:YES];
-        }
-        
-        confirmImageViewController.onCancel = ^{
-            [self.presentingPickerController dismissViewControllerAnimated:YES completion:nil];
-        };
-        
-        confirmImageViewController.onConfirm = ^{
-            ImageMetadata *metadata = [[ImageMetadata alloc] init];
-            metadata.source = ConversationMediaPictureSourceSketch;
-            metadata.sketchSource = ConversationMediaSketchSourceCameraGallery;
-            metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-            
-            self.imagePickedBlock(UIImagePNGRepresentation(image), metadata);
-        };
-        
-        [self.presentingPickerController presentViewController:confirmImageViewController animated:YES completion:nil];
-        [self.presentingPickerController setNeedsStatusBarAppearanceUpdate];
-    }];
-}
 
 @end

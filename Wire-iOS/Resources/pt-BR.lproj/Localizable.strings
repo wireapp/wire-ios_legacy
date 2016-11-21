@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Desligar";
-"input.ephemeral.title" = "Set a timer for temporary messages";
+"input.ephemeral.title" = "Defina um tempo para a mensagem desaparecer";
 
 // System messages
 "content.system.continued_conversation" = "Iniciar uma conversa com %@";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire dá uma impressão digital única a cada dispositivo. Compare-os e verifique seus dispositivos e conversas.";
 "self.settings.device_details.reset_session.subtitle" = "Se as impressões digitais não corresponderem, redefina a sessão para gerar novas chaves de criptografia em ambos os lados.";
-"self.settings.device_details.remove_device.subtitle" = "Remove this device if you have stopped using it. Your message history will be erased on this device and you will be logged out.";
+"self.settings.device_details.remove_device.subtitle" = "Remova este dispositivo se você tiver parado de usá-lo. Sua sessão será encerrada nesse dispositivo imediatamente.";
 "self.settings.device_details.reset_session.success" = "A sessão foi redefinida";
 
 "self.settings.account_details.actions.title" = "Ações";
@@ -484,6 +484,24 @@
 "self.settings.popular_demand.title" = "Por demanda popular";
 "self.settings.popular_demand.send_button.title" = "Botão Enviar";
 "self.settings.popular_demand.send_button.footer" = "Desabilite para enviar através da tecla return.";
+
+// Open in
+"self.settings.external_apps.header" = "Abrir Links";
+
+"self.settings.link_options.twitter.title" = "Tuites";
+"self.settings.link_options.maps.title" = "Localidades";
+"self.settings.link_options.browser.title" = "Navegador";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Alertas de som";
@@ -688,7 +706,7 @@
 "error.invite.no_email_provider" = "Por favor, configure seu cliente de e-mail para poder enviar os convites via e-mail";
 "error.invite.no_messaging_provider" = "Por favor, configure seu SMS para ser capaz de enviar os convites através de SMS";
 
-"sketchpad.initial_hint" = "Toque na cor para alterar o tamanho do pincel \nPressione e segure para preencher uma área \nAgite para remover uma foto";
+"sketchpad.initial_hint" = "Toque em cores para alterar o tamanho do pincel";
 
 "migration.please_wait_message" = "Um momento, por favor";
 

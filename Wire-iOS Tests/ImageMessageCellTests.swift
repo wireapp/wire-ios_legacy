@@ -71,12 +71,24 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         let wrap = sut.prepareForSnapshot(image.size, image: image, obfuscated: true)
         verify(view: wrap)
     }
+    
+    func testThatItRendersImageWhenSelected() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true)
+        verify(view: wrap)
+    }
+    
+    func testThatItRendersImageWhenSelected_SmallImage() {
+        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
+        let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true)
+        verify(view: wrap)
+    }
 
 }
 
 private extension ImageMessageCell {
 
-    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false) -> UITableView {
+    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false, selected: Bool = false) -> UITableView {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
@@ -91,6 +103,7 @@ private extension ImageMessageCell {
 
         prepareForReuse()
         configure(for: message, layoutProperties: layoutProperties)
+        setSelected(selected, animated: false)
         layoutIfNeeded()
         
         if let image = image {

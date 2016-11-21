@@ -123,6 +123,19 @@ class InputBarTests: ZMSnapshotTestCase {
         
         verifyInAllPhoneWidths(view: inputBar)
     }
+    
+    func testEphemeralMode() {
+        let inputBar = InputBar(buttons: buttons())
+        inputBar.translatesAutoresizingMaskIntoConstraints = false
+        inputBar.textView.text = ""
+        inputBar.layer.speed = 0
+        inputBar.updateFakeCursorVisibility()
+        inputBar.inputBarState = InputBarState.writing(ephemeral: true)
+        inputBar.updateEphemeralState()
+        CASStyler.default().styleItem(inputBar)
+        
+        verifyInAllPhoneWidths(view: inputBar)
+    }
 
     // Disabled until we figure out the `[MockUser conversationType]` crash after resetting the simulator / on CI
     func disabled_testThatItRendersCorrectlyInEditState() {

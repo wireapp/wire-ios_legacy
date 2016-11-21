@@ -43,7 +43,7 @@ public final class VideoMessageCell: ConversationCell {
     private let timeLabel = UILabel()
     private let loadingView = ThreeDotsLoadingView()
     private var topMargin : NSLayoutConstraint?
-    private let obfuscationView = UIView()
+    private let obfuscationView = ObfuscationView(icon: .videoMessage)
 
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
     private let failureColor = UIColor.red.withAlphaComponent(0.24)
@@ -77,7 +77,6 @@ public final class VideoMessageCell: ConversationCell {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
 
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView, obfuscationView]
         self.allViews.forEach(messageContentView.addSubview)
         
@@ -87,6 +86,9 @@ public final class VideoMessageCell: ConversationCell {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [previewImageView, playButton, timeLabel, progressView, likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
+
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -262,12 +264,21 @@ public final class VideoMessageCell: ConversationCell {
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
 
+        var additionalItems = [UIMenuItem]()
+        
         if message.videoCanBeSavedToCameraRoll() {
-            let menuItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
-            properties.additionalItems = [menuItem]
-        } else {
-            properties.additionalItems = []
+            let saveItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
+            additionalItems.append(saveItem)
         }
+        
+        if let fileMessageData = message.fileMessageData,
+            let _ = fileMessageData.fileURL {
+            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))
+
+            additionalItems.append(forwardItem)
+        }
+        
+        properties.additionalItems = additionalItems
 
         return properties
     }
@@ -275,6 +286,12 @@ public final class VideoMessageCell: ConversationCell {
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(wr_saveVideo) {
             if self.message.videoCanBeSavedToCameraRoll() {
+                return true
+            }
+        }
+        else if action == #selector(forward(_:)) {
+            if let fileMessageData = message.fileMessageData,
+                let _ = fileMessageData.fileURL {
                 return true
             }
         }
