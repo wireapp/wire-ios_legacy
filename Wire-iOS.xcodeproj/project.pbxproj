@@ -4786,6 +4786,7 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -5099,13 +5100,13 @@
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZMCSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZMUtilities.framework",
-				"$(BUILT_PRODUCTS_DIR)/ZMTransport.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ZMTransport.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/zimages.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cryptobox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZMProtos.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ProtocolBuffers.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
-				"$(BUILT_PRODUCTS_DIR)/zmessaging.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/zmessaging.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumber.framework",
@@ -5119,8 +5120,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FormatterKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/VIMNetworkingFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireRequestStrategy.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireMessageStrategy.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Canvas.framework",
 				"$(BUILT_PRODUCTS_DIR)/WireShareEngine.framework",
 			);

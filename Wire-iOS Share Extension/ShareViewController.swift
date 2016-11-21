@@ -21,13 +21,22 @@ import Social
 import WireShareEngine
 import Cartography
 import MobileCoreServices
+import ZMCDataModel
 
 class ShareViewController: SLComposeServiceViewController {
     
     var conversationItem : SLComposeSheetConfigurationItem?
     var sharingSession : SharingSession?
     var selectedConversation : Conversation?
-    var label = UILabel()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let rightButtonBarItem = navigationController?.navigationBar.items?.first?.rightBarButtonItem {
+            rightButtonBarItem.action = #selector(postButtonTapped_test)
+        }
+    }
     
     override func presentationAnimationDidFinish() {
         let bundle = Bundle.main
@@ -56,7 +65,28 @@ class ShareViewController: SLComposeServiceViewController {
 //            }
 //        }
     }
-
+    
+    func postButtonTapped_test() {
+        
+//        var messages : [Sendable] = []
+        
+//        if let sharingSession = sharingSession, let conversation = selectedConversation {
+//            sharingSession.enqueue(changes: {
+//                if let message = conversation.appendTextMessage(self.contentText) {
+//                    messages.append(message)
+//                }
+//            }, completionHandler: { [weak self] in
+//                DispatchQueue.main.async {
+//                    self?.presentSendingProgress(forMessages: messages)
+//                }
+//            })
+//        }
+        
+        sendAttachments { [weak self] (messages) in
+            self?.presentSendingProgress(forMessages: messages)
+        }
+    }
+    
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
         return sharingSession != nil && selectedConversation != nil
@@ -92,37 +122,75 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     
-    func sendImages() {
-        guard selectedConversation != nil else { return }
+    func sendAttachments(sentCompletionHandler: @escaping ([Sendable]) -> Void) {
+        var messages : [Sendable] = []
         
+        guard selectedConversation != nil else {
+            sentCompletionHandler(messages)
+            return
+        }
+        
+        let sendingGroup = DispatchGroup()
         
         extensionContext?.inputItems.forEach { inputItem in
+            
             if let extensionItem = inputItem as? NSExtensionItem, let attachments = extensionItem.attachments as? [NSItemProvider] {
+                
                 for attachment in attachments {
                     
-                    guard attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) else { continue }
+//                    if attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
+//                        
+//                        sendingGroup.enter()
+//                        
+//                        let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
+//                        
+//                        attachment.loadItem(forTypeIdentifier: kUTTypeJPEG as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], dataCompletionHandler: { [weak self] (data, error) in
+//                            
+//                            guard let data = data, error == nil else {
+//                                sendingGroup.leave()
+//                                return
+//                            }
+//                            
+//                            DispatchQueue.main.async {
+//                                if let sharingSession = self?.sharingSession, let conversation = self?.selectedConversation {
+//                                    sharingSession.enqueue(changes: {
+//                                        if let message = conversation.appendImage(data) {
+//                                            messages.append(message)
+//                                        }
+//                                        sendingGroup.leave()
+//                                    })
+//                                }
+//                            }
+//                            })
+//                    } else {
                     
-                    let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
-                    
-                    attachment.loadItem(forTypeIdentifier: kUTTypeJPEG as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], dataCompletionHandler: { [weak self] (data, error) in
+                        sendingGroup.enter()
                         
-                        guard let data = data, error == nil else {
-                            self?.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            if let sharingSession = self?.sharingSession, let conversation = self?.selectedConversation {
-                                sharingSession.enqueue(changes: {
-                                    _ = conversation.appendImage(data)
-                                })
+                        attachment.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, urlCompletionHandler: { [weak self] (url, error) in
+                            
+                            guard let url = url, error == nil else {
+                                sendingGroup.leave()
+                                return
                             }
                             
-//                            self?.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-                        }
+                            DispatchQueue.main.async {
+                                if let sharingSession = self?.sharingSession, let conversation = self?.selectedConversation {
+                                    sharingSession.enqueue(changes: {
+                                        if let message = conversation.appendFile(ZMFileMetadata(fileURL: url)) {
+                                            messages.append(message)
+                                        }
+                                        sendingGroup.leave()
+                                    })
+                                }
+                            }
                         })
+//                    }
                 }
             }
+        }
+        
+        sendingGroup.notify(queue: .main) { 
+            sentCompletionHandler(messages)
         }
     }
 
@@ -137,6 +205,20 @@ class ShareViewController: SLComposeServiceViewController {
         }
         
         return [conversationItem]
+    }
+    
+    func presentSendingProgress(forMessages messages: [Sendable]) {
+        let progressViewController = SendingProgressViewController(messages: messages)
+        
+        progressViewController.cancelHandler = { [weak self] in
+            self?.cancel()
+        }
+        
+        progressViewController.sentHandler = { [weak self] in
+            self?.cancel()
+        }
+        
+        pushConfigurationViewController(progressViewController)
     }
     
     func presentNotSignedInMessage() {
@@ -160,12 +242,85 @@ class ShareViewController: SLComposeServiceViewController {
             self?.popConfigurationViewController()
             self?.validateContent()
             
-            self?.sendImages()
+//            self?.sendImages()
         }
         
         pushConfigurationViewController(conversationSelectionViewController)
     }
     
+}
+
+class SendingProgressViewController : UIViewController, SendableObserver {
+    
+    var sentHandler : (() -> Void)?
+    var cancelHandler : (() -> Void)?
+    
+    private var progressLabel = UILabel()
+    private var observers : [(Sendable, SendableObserverToken)] = []
+    
+    var totalProgress : Float {
+        var totalProgress : Float = 1.0
+        
+        observers.forEach { (message, _) in
+            guard message.deliveryState == .sent else { return }
+            totalProgress = totalProgress - (message.deliveryProgress ?? 0) / Float(observers.count)
+        }
+        
+        return totalProgress
+    }
+    
+    var isAllMessagesDelivered : Bool {
+        return observers.reduce(true) { (result, observer) -> Bool in
+            return result && (observer.0.deliveryState == .sent || observer.0.deliveryState == .delivered)
+        }
+    }
+    
+    init(messages: [Sendable]) {
+        super.init(nibName: nil, bundle: nil)
+        
+        messages.forEach {message in
+            observers.append((message, (message.registerObserverToken(self))))
+        }
+    }
+    
+    deinit {
+        observers.forEach { (message, token) in
+            message.remove(token)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(onCancelTapped))
+        
+        progressLabel.text = "0%";
+        progressLabel.textAlignment = .center
+        progressLabel.font = UIFont.systemFont(ofSize: 32)
+        
+        view.addSubview(progressLabel)
+        
+        constrain(view, progressLabel) { container, progressLabel in
+            progressLabel.edges == container.edgesWithinMargins
+        }
+    }
+    
+    func onCancelTapped() {
+        cancelHandler?()
+    }
+    
+    func onDeliveryChanged() {
+        progressLabel.text = "\(Int(totalProgress * 100))%"
+        
+        if isAllMessagesDelivered {
+            sentHandler?()
+        }
+    }
 }
 
 class NotSignedInViewController : UIViewController {
@@ -186,7 +341,7 @@ class NotSignedInViewController : UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(onCloseTapped))
         
         messageLabel.text = "You need to sign into Wire before you can share anything";
         messageLabel.textAlignment = .center
@@ -199,10 +354,8 @@ class NotSignedInViewController : UIViewController {
         }
     }
     
-    func close() {
-        if let closeHandler = closeHandler {
-            closeHandler()
-        }
+    func onCloseTapped() {
+        closeHandler?()
     }
 }
 
