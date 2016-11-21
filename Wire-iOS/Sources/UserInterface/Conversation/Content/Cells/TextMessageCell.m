@@ -127,14 +127,14 @@
 - (void)createConstraints
 {
     [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeTop];
-    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeRight];
+    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeLeading];
+    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeTrailing];
     
     self.textViewHeightConstraint = [self.messageTextView autoSetDimension:ALDimensionHeight toSize:0];
     self.textViewHeightConstraint.active = NO;
     
-    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
-    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{

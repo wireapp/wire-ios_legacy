@@ -120,10 +120,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
             cell.unreadDotView.backgroundColor = newColor;
         }];
         
-        UIEdgeInsets layoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin"],
-                                                      0, [WAZUIMagic floatForIdentifier:@"content.right_margin"]);
-        
-        self.contentLayoutMargins = layoutMargins;
+        self.contentLayoutMargins = self.layoutDirectionAwareLayoutMargins;
     }
     
     return self;
@@ -270,9 +267,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.unreadDotHeightConstraint.active = NO;
     [self.unreadDotView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.unreadDotView];
     [self.unreadDotView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.burstTimestampLabel];
-    [self.unreadDotView autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.burstTimestampLabel withOffset:-8];
+    [self.unreadDotView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.burstTimestampLabel withOffset:-8];
     
-    [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
     [self.authorLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorImageContainer];
     [self.authorLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
@@ -286,12 +283,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.authorImageView autoCenterInSuperview];
     
     self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampLabel];
-    [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.authorImageContainer autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.authorLabel];
+    [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];
     
     [self.messageContentView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.authorImageView];
-    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
         [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:8];
@@ -312,11 +309,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
 
     [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-    [self.countdownContainerView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
+    [self.countdownContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:8];
 }
 
 - (void)setContentLayoutMargins:(UIEdgeInsets)contentLayoutMargins
 {
+
     _contentLayoutMargins = contentLayoutMargins;
     
     self.contentView.layoutMargins = contentLayoutMargins;

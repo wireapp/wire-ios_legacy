@@ -734,6 +734,7 @@
 		BF4199D71DB794B3006A4C02 /* LinkOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4199D31DB794B3006A4C02 /* LinkOpener.swift */; };
 		BF4199D81DB794B3006A4C02 /* MapOpening.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4199D41DB794B3006A4C02 /* MapOpening.swift */; };
 		BF4199D91DB794B3006A4C02 /* TweetOpening.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4199D51DB794B3006A4C02 /* TweetOpening.swift */; };
+		BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */; };
 		BF5127161CC9119400F23DEA /* ZMSnapshotTestCase+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */; };
 		BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */; };
 		BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF52C1561CAEB9E10037331F /* ArchivedListViewController.swift */; };
@@ -2060,6 +2061,7 @@
 		BF4199D41DB794B3006A4C02 /* MapOpening.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapOpening.swift; sourceTree = "<group>"; };
 		BF4199D51DB794B3006A4C02 /* TweetOpening.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetOpening.swift; sourceTree = "<group>"; };
 		BF4A15D11D4900930051E8BA /* AutomationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomationHelper.swift; sourceTree = "<group>"; };
+		BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutMargins.swift"; sourceTree = "<group>"; };
 		BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+Swift.swift"; sourceTree = "<group>"; };
 		BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiSectionViewController.swift; path = Emoji/EmojiSectionViewController.swift; sourceTree = "<group>"; };
 		BF52C1561CAEB9E10037331F /* ArchivedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArchivedListViewController.swift; path = ../Conversation/ArchivedListViewController.swift; sourceTree = "<group>"; };
@@ -3427,6 +3429,7 @@
 				874B5DAF1CEDEBDA0010474C /* FileMessageCellState.swift */,
 				16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */,
 				BF02CDC21D79A98000C87D38 /* SavableImage.swift */,
+				BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */,
 				16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */,
 				87DE06B01D256CF50009411F /* DeviceProximityListener.swift */,
 				875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */,
@@ -5359,6 +5362,7 @@
 				16D453601B69131400675246 /* ConversationListCollectionViewLayout.m in Sources */,
 				87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */,
 				8FC8549C199245770008B66B /* NetworkStatusViewController.m in Sources */,
+				BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */,
 				1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */,
