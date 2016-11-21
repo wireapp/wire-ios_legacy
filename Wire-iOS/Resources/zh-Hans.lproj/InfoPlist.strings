@@ -1,0 +1,22 @@
+/* 
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+*/
+
+"NSContactsUsageDescription" = "允许Wire读取您的通讯录从而帮助您找到更多的好友。 我们会将您的所有信息匿名处理并且不会泄漏给任何第三方。";
+"NSMicrophoneUsageDescription" = "允许Wire访问您的麦克风，从而您可以与好友进行语音聊天并且发送语音细腻。";
+"NSLocationWhenInUseUsageDescription" = "允许Wire获取您的位置信息，这样你将可以发送你的地理位置给您的朋友。";
+"NSCameraUsageDescription" = "允许Wire访问您的摄像头，从而可以拨打视频电话并发送照片。";

@@ -20,6 +20,7 @@ import Foundation
 
 
 private let disableEphemeralSending = false
+private let disableEphemeralSendingInGroups = false
 
 
 public final class ConversationInputBarButtonState: NSObject {
@@ -29,18 +30,18 @@ public final class ConversationInputBarButtonState: NSObject {
     }
 
     public var hourglassButtonHidden: Bool {
-        return hasText || conversationType != .oneOnOne || editing || ephemeral || disableEphemeralSending
+        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || ephemeral || disableEphemeralSending
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return hasText || conversationType != .oneOnOne || editing || !ephemeral || disableEphemeralSending
+        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
     }
 
     private var hasText: Bool {
         return textLength != 0
     }
 
-    private var ephemeral: Bool {
+    public var ephemeral: Bool {
         return destructionTimeout != 0
     }
 

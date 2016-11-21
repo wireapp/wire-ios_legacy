@@ -26,17 +26,17 @@
 /// The color picker for the sketching
 @interface SketchColorPickerController : UIViewController
 
-@property (nonatomic, weak) id <SketchColorPickerControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id <SketchColorPickerControllerDelegate> delegate;
 /// Contains @c UIColor objects
-@property (nonatomic, copy) NSArray *sketchColors;
+@property (nonatomic, copy, nonnull) NSArray<UIColor *> *sketchColors;
 /// Constains @c NSNumber objects. Default is @6, @12, @18 as @c NSUInteger
-@property (nonatomic, copy) NSArray *brushWidths;
-@property (nonatomic, assign) NSUInteger selectedColorIndex;
+@property (nonatomic, copy, nonnull) NSArray<NSNumber *> *brushWidths;
+@property (nonatomic) NSUInteger selectedColorIndex;
 /// Read only: Use the @c selectedColorIndex to change the selected color
-@property (nonatomic, strong, readonly) UIColor *selectedColor;
+@property (nonatomic, readonly, nullable) UIColor *selectedColor;
 
 /// Returns the current brush width for the given color
-- (NSUInteger)brushWidthForColor:(UIColor *)color;
+- (NSUInteger)brushWidthForColor:( UIColor * _Nonnull )color;
 
 @end
 
@@ -44,6 +44,6 @@
 
 @protocol SketchColorPickerControllerDelegate <NSObject>
 
-- (void)sketchColorPickerController:(SketchColorPickerController *)controller changedSelectedColor:(UIColor *)color;
+- (void)sketchColorPickerController:(SketchColorPickerController * _Nonnull)controller changedSelectedColor:(UIColor * _Nonnull)color;
 
 @end

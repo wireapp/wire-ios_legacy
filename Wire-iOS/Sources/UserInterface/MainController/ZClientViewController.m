@@ -55,8 +55,6 @@
 #import "StopWatch.h"
 #import "UIView+MTAnimation.h"
 
-#import "SketchViewController.h"
-
 #import "Wire-Swift.h"
 
 #import "NSLayoutConstraint+Helpers.h"
@@ -393,7 +391,7 @@
 - (void)openClientListScreenForUser:(ZMUser *)user
 {
     if (user.isSelfUser) {
-        ClientListViewController *clientListViewController = [[ClientListViewController alloc] initWithClientsList:user.clients.allObjects credentials:nil detailedView:YES];
+        ClientListViewController *clientListViewController = [[ClientListViewController alloc] initWithClientsList:user.clients.allObjects credentials:nil detailedView:YES showTemporary:YES];
         clientListViewController.view.backgroundColor = [UIColor blackColor];
         clientListViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissClientListController:)];
         UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:clientListViewController];

@@ -22,24 +22,30 @@ import Cartography
 import Classy
 import TTTAttributedLabel
 
+
 extension ZMConversationMessage {
-    func formattedReceivedDate() -> String? {
-        guard let timestamp = self.serverTimestamp else {
-            return .none
-        }
-        let timeString = Message.longVersionTimeFormatter().string(from: timestamp)
+
+    fileprivate func formattedReceivedDate() -> String? {
+        return serverTimestamp.map(formattedDate)
+    }
+
+    fileprivate func formattedEditedDate() -> String? {
+        return updatedAt.map(formattedDate)
+    }
+
+    private func formattedDate(_ date: Date) -> String {
+        let timeString = Message.longVersionTimeFormatter().string(from: date)
         let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - NSDate().timeIntervalSinceReferenceDate) > oneDayInSeconds
-        
+        let shouldShowDate = fabs(date.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
         if shouldShowDate {
-            let dateString = Message.shortVersionDateFormatter().string(from: timestamp)
+            let dateString = Message.shortVersionDateFormatter().string(from: date)
             return dateString + " " + timeString
-        }
-        else {
+        } else {
             return timeString
         }
     }
 }
+
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
@@ -194,19 +200,16 @@ extension ZMConversationMessage {
     
     fileprivate func timestampString(_ message: ZMConversationMessage) -> String? {
         let timestampString: String?
-        
-        if let dateTimeString = message.formattedReceivedDate() {
+
+        if let editedTimeString = message.formattedEditedDate() {
+            timestampString = String(format: "content.system.edited_message_prefix_timestamp".localized, editedTimeString)
+        } else if let dateTimeString = message.formattedReceivedDate() {
             if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
-            }
-            else if let _ = message.updatedAt {
-                timestampString = String(format: "content.system.edited_message_prefix_timestamp".localized, dateTimeString)
-            }
-            else {
+            } else {
                 timestampString = dateTimeString
             }
-        }
-        else {
+        } else {
             timestampString = .none
         }
         
@@ -307,7 +310,7 @@ extension ZMConversationMessage {
         }
 
         if showDestructionTimer, let stateString = deliveryStateString {
-            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
             attributedText.addAttributes([NSForegroundColorAttributeName: ephemeralColor], to: stateString)
         }
         

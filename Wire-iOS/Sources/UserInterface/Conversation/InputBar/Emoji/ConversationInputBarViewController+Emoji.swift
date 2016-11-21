@@ -41,8 +41,38 @@ extension ConversationInputBarViewController {
     }
     
     public func updateEmojiButton(_ button: IconButton) {
-        let type = mode == .emojiInput ? ZetaIconType.text : .emoji
+        let type: ZetaIconType
+        let style: String?
+        let color: UIColor
+        if mode == .emojiInput {
+            if self.sendButtonState.ephemeral {
+                type = ZetaIconType.textEphemeral
+                style = "ephemeral"
+                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+            }
+            else {
+                type = ZetaIconType.text
+                style = .none
+                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+            }
+        }
+        else {
+            if self.sendButtonState.ephemeral {
+                type = ZetaIconType.emojiEphemeral
+                style = "ephemeral"
+                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+            }
+            else {
+                type = ZetaIconType.emoji
+                style = .none
+                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+            }
+        }
+
+        button.cas_styleClass = style
+        button.setIconColor(color, for: .normal)
         button.setIcon(type, with: .tiny, for: .normal)
+        CASStyler.default().styleItem(self)
     }
 
     public func createEmojiKeyboardViewController() {

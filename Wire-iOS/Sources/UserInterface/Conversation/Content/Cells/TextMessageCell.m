@@ -47,20 +47,16 @@
 
 @interface TextMessageCell () <TextViewInteractionDelegate>
 
-@property (nonatomic, assign) BOOL initialTextCellConstraintsCreated;
+@property (nonatomic) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic, strong) LinkInteractionTextView *messageTextView;
-@property (nonatomic, strong) UIView *linkAttachmentContainer;
-@property (nonatomic, strong) UIImageView *editedImageView;
-@property (nonatomic, strong) LinkAttachment *linkAttachment;
-@property (nonatomic, strong) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
+@property (nonatomic) LinkInteractionTextView *messageTextView;
+@property (nonatomic) UIView *linkAttachmentContainer;
+@property (nonatomic) UIImageView *editedImageView;
+@property (nonatomic) LinkAttachment *linkAttachment;
+@property (nonatomic) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
 
-@property (nonatomic, strong) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *mediaPlayerLeftMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *mediaPlayerRightMarginConstraint;
-@property (nonatomic, strong) UIView *linkAttachmentView;
-
-
+@property (nonatomic) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
+@property (nonatomic) UIView *linkAttachmentView;
 
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 
@@ -138,8 +134,8 @@
     self.textViewHeightConstraint = [self.messageTextView autoSetDimension:ALDimensionHeight toSize:0];
     self.textViewHeightConstraint.active = NO;
     
-    self.mediaPlayerLeftMarginConstraint = [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
-    self.mediaPlayerRightMarginConstraint = [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
@@ -300,6 +296,9 @@
     else if (action == @selector(edit:) && self.message.sender.isSelfUser) {
         return YES;
     }
+    else if (action == @selector(forward:)) {
+        return YES;
+    }
     
     return [super canPerformAction:action withSender:sender];
 }
@@ -363,10 +362,16 @@
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
     BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent);
+    NSMutableArray *additionalItems = [NSMutableArray array];
     if (isEditableMessage) {
-        properties.additionalItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
+         [additionalItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     }
-
+    
+    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward:)];
+    [additionalItems addObject:forwardItem];
+    
+    properties.additionalItems = additionalItems;
+    
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {

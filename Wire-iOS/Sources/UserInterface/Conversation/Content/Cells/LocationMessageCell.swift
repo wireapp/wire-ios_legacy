@@ -26,7 +26,7 @@ public final class LocationMessageCell: ConversationCell {
     
     private let mapView = MKMapView()
     private let containerView = UIView()
-    private let obfuscationView = UIView()
+    private let obfuscationView = ObfuscationView(icon: .locationPin)
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
     private var recognizer: UITapGestureRecognizer?
@@ -58,7 +58,7 @@ public final class LocationMessageCell: ConversationCell {
         mapView.showsPointsOfInterest = true
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
-        obfuscationView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorEphemeral)
+        
         recognizer = UITapGestureRecognizer(target: self, action: #selector(openInMaps))
         containerView.addGestureRecognizer(recognizer!)
         messageContentView.addSubview(containerView)
@@ -181,7 +181,7 @@ public final class LocationMessageCell: ConversationCell {
         switch action {
         case #selector(cut), #selector(paste), #selector(select), #selector(selectAll):
             return false
-        case #selector(copy(_:)):
+        case #selector(copy(_:)), #selector(forward(_:)):
             return true
         default:
             return super.canPerformAction(action, withSender: sender)
@@ -199,6 +199,8 @@ public final class LocationMessageCell: ConversationCell {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
+        
+        properties.additionalItems = [UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))]
         return properties
     }
     

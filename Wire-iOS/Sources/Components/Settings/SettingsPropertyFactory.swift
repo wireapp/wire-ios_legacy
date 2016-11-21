@@ -83,9 +83,11 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
+        SettingsPropertyName.disableCallKit             : UserDefaultDisableCallKit,
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
-        SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue
+        SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
+        SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {

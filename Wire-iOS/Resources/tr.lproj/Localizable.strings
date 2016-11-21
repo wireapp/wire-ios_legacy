@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Kapalı";
-"input.ephemeral.title" = "Geçici mesajlar için bir süre belirleyin";
+"input.ephemeral.title" = "Mesajın kaybolması için bir süre ayarlayın";
 
 // System messages
 "content.system.continued_conversation" = "%@ ile bir konuşma başlat";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire her cihaza kendine has bir parmak izi verir. Cihazlarınızı ve konuşmalarınızı doğrulamak için parmak izlerinizi karşılaştırın.";
 "self.settings.device_details.reset_session.subtitle" = "Parmak izleri eşleşmezse, her iki tarafta da yeni şifreleme anahtarları oluşturmak için oturumu sıfırlayın.";
-"self.settings.device_details.remove_device.subtitle" = "Eğer bu cihazı kullanmayı bıraktıysanız, cihazı kaldırın. Konuşma geçmişinizden cihazdan silinecek ve otomatik olarak çıkış yapılacak.";
+"self.settings.device_details.remove_device.subtitle" = "Eğer bu cihazı kullanmayı bıraktıysanız, cihazı kaldırın. Ardından cihazdan otomatik olarak çıkış yapılacaktır.";
 "self.settings.device_details.reset_session.success" = "Oturum sıfırlandı";
 
 "self.settings.account_details.actions.title" = "Eylemler";
@@ -484,6 +484,24 @@
 "self.settings.popular_demand.title" = "Yoğun talep üzerine";
 "self.settings.popular_demand.send_button.title" = "Gönder butonu";
 "self.settings.popular_demand.send_button.footer" = "Giriş (Enter) tuşu ile göndermeyi devre dışı bırak.";
+
+// Open in
+"self.settings.external_apps.header" = "Bağlantıları açmak için uygulama seç";
+
+"self.settings.link_options.twitter.title" = "Tweetler";
+"self.settings.link_options.maps.title" = "Konumlar";
+"self.settings.link_options.browser.title" = "Tarayıcı";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Haritalar";
+"open_link.maps.option.google" = "Google Haritalar";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sesli Uyarılar";
@@ -524,7 +542,7 @@
 "self.settings.technical_report_section.title" = "Teknik Destek";
 "self.settings.technical_report.send_report" = "Raporu Wire'a gönder";
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
-"self.settings.technical_report.mail.subject" = "Rapor çağırılıyor";
+"self.settings.technical_report.mail.subject" = "Wire Çağrı Rapor";
 "self.settings.technical_report.include_log" = "Detaylı günlüğü ekle";
 
 // Password reset
@@ -688,7 +706,7 @@
 "error.invite.no_email_provider" = "Lütfen e-posta ile davet göndermek için e-posta istemcinizi yapılandırın";
 "error.invite.no_messaging_provider" = "Lütfen SMS göndermek için SMS'inizi yapılandırın";
 
-"sketchpad.initial_hint" = "Fırça boyutunu değiştirmek için renge dokunun\nBir alanı doldurmak için basılı tutun\nFotoğrafı silmek için sallayın";
+"sketchpad.initial_hint" = "Fırça boyutunu değiştirmek için renklere tıklayın";
 
 "migration.please_wait_message" = "Bir dakika, lütfen";
 

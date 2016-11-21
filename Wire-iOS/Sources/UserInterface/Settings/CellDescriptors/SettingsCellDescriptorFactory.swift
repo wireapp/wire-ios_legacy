@@ -173,63 +173,6 @@ import Foundation
         }, icon: .settingsDevices)
     }
 
-    func twitterOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = TweetOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
-
-            return SettingsPropertySelectValueCellDescriptor(
-                settingsProperty: property,
-                value: .number(value: option.rawValue),
-                title: option.displayString
-            )
-        }
-
-        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
-            let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
-            return .text(option.displayString)
-        }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
-    }
-
-    func mapsOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = MapsOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
-
-            return SettingsPropertySelectValueCellDescriptor(
-                settingsProperty: property,
-                value: .number(value: option.rawValue),
-                title: option.displayString
-            )
-        }
-
-        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
-            let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
-            return .text(option.displayString)
-        }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
-    }
-
-    func browserOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = BrowserOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
-
-            return SettingsPropertySelectValueCellDescriptor(
-                settingsProperty: property,
-                value: .number(value: option.rawValue),
-                title: option.displayString
-            )
-        }
-
-        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
-            let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
-            return .text(option.displayString)
-        }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
-    }
-    
     func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, callSound: Bool, fallbackSoundName: String, defaultSoundTitle : String = "self.settings.sound_menu.sounds.wire_sound".localized) -> SettingsCellDescriptorType {
         var items: [ZMSound?] = [.none]
         if callSound {
@@ -275,22 +218,6 @@ import Foundation
     }
 
     func advancedGroup() -> SettingsCellDescriptorType {
-        var externalAppsDescriptors = [SettingsCellDescriptorType]()
-
-        if BrowserOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
-        }
-        if MapsOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)))
-        }
-        if TweetOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
-        }
-
-        let externalAppsSection = SettingsSectionDescriptor(
-            cellDescriptors: externalAppsDescriptors,
-            header: "self.settings.external_apps.header".localized
-        )
 
         let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.analyticsOptOut), inverse: true)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized
@@ -332,13 +259,8 @@ import Foundation
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
 
-        var advanvedItems = [sendUsageSection, troubleshootingSection, pushSection, versionSection]
-        if externalAppsDescriptors.count > 0 {
-            advanvedItems.insert(externalAppsSection, at: 0)
-        }
-
         return SettingsGroupCellDescriptor(
-            items: advanvedItems,
+            items: [sendUsageSection, troubleshootingSection, pushSection, versionSection],
             title: "self.settings.advanced.title".localized,
             icon: .settingsAdvanced
         )
@@ -346,17 +268,33 @@ import Foundation
     
     func developerGroup() -> SettingsCellDescriptorType {
         let title = "self.settings.developer_options.title".localized
+        var developerCellDescriptors: [SettingsCellDescriptorType] = []
         
         let devController = SettingsExternalScreenCellDescriptor(title: "Logging") { () -> (UIViewController?) in
             return DeveloperOptionsController()
         }
         
-        let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
-        let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
-        let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableHockey))
-        let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
+        developerCellDescriptors.append(devController)
         
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: [devController, diableAVSSetting, diableUISetting, diableHockeySetting, diableAnalyticsSetting])], title: title, icon: .effectRobot)
+        let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
+        developerCellDescriptors.append(diableAVSSetting)
+        let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
+        developerCellDescriptors.append(diableUISetting)
+        let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableHockey))
+        developerCellDescriptors.append(diableHockeySetting)
+        let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
+
+        developerCellDescriptors.append(diableAnalyticsSetting)
+        
+        if #available(iOS 10.0, *) {
+            let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit))
+            developerCellDescriptors.append(callKitDescriptor)
+        }
+        
+        let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
+        developerCellDescriptors.append(enableAssetV3Setting)
+
+        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
     func helpSection() -> SettingsCellDescriptorType {

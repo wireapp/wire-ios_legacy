@@ -22,23 +22,11 @@ branches:
 
 cache:
   bundler: true
-  cocoapods: true
-  directories:
-    - Carthage
-    - Libraries
 
 install:
-  - xcrun simctl erase all
-  - open -b com.apple.iphonesimulator
-  - carthage version
-  - brew upgrade carthage
+  - bundle install
   - curl -O https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Dangerfile
-  - ./setup.sh
 
 script:
   - set -o pipefail
-  - xcodebuild build test -workspace Wire-iOS.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.0' | bundle exec second_curtain | tee >build.log >(xcpretty -s)
   - bundle exec danger
-
-after_failure:
-  - tail -n 500 build.log

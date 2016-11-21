@@ -320,7 +320,7 @@
 
 - (void)joinVoiceChannelWithoutAskingForPermissionWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
-    [self leaveActiveVoiceChannelAndIgnoreOtherAllIncomingCallsWithCompletionHandler:^{
+    [self leaveOtherActiveCallsWithCompletionHandler:^{
         ZMVoiceChannelState voiceChannelState = self.voiceChannel.state;
         ZMVoiceChannelConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
 
@@ -329,10 +329,10 @@
             __block BOOL joined = YES;
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 if (video) {
-                    joined = [self.voiceChannel joinVideoCall:nil];
+                    joined = [self.voiceChannel joinVideoCall:nil inUserSession:[ZMUserSession sharedSession]];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoCall inConversation:self];
                 } else {
-                    [self.voiceChannel join];
+                    [self.voiceChannel joinInUserSession:[ZMUserSession sharedSession]];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionAudioCall inConversation:self];
                 }
 
@@ -359,7 +359,7 @@
     }];
 }
 
-- (void)leaveActiveVoiceChannelAndIgnoreOtherAllIncomingCallsWithCompletionHandler:(void(^)())completionHandler
+- (void)leaveOtherActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler
 {
     NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
 

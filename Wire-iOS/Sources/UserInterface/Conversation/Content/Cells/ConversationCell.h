@@ -38,8 +38,11 @@ typedef NS_ENUM(NSUInteger, ConversationCellAction) {
     ConversationCellActionPresent,
     ConversationCellActionSave,
     ConversationCellActionEdit,
-    ConversationCellActionSketch,
-    ConversationCellActionLike
+    ConversationCellActionSketchDraw,
+    ConversationCellActionSketchEmoji,
+    ConversationCellActionSketchText,
+    ConversationCellActionLike,
+    ConversationCellActionForward
 };
 
 extern const CGFloat ConversationCellSelectedOpacity;
@@ -95,6 +98,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
+@property (nonatomic) UIEdgeInsets contentLayoutMargins;
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
 @property (nonatomic) BOOL showsMenu;
@@ -113,6 +117,8 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 /// Called before the message will be deleted (e.g. if the message was ephemeral or the sender deleted it manually)
 - (void)willDeleteMessage;
+
+- (void)forward:(id)sender;
 
 #pragma mark - For deleted menu, meant to be implmented by subclass
 

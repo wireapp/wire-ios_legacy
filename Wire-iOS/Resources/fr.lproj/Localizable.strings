@@ -88,8 +88,8 @@
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Connaît %@";
 "peoplepicker.suggested.knows_two" = "Connaît %@ et %@";
-"peoplepicker.hide_search_result" = "Cacher";
-"peoplepicker.hide_search_result_progress" = "Masquer…";
+"peoplepicker.hide_search_result" = "Masquer";
+"peoplepicker.hide_search_result_progress" = "Masquage…";
 
 "send_invitation.subject" = "Connectez-vous avec moi sur Wire";
 "send_invitation.text" = "Je suis sur Wire. Cherchez %@\nou visitez https://get.wire.com afin de vous connecter avec moi.";
@@ -118,7 +118,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
-"conversation.invite_more_people.title" = "Faîtes passer le mot!";
+"conversation.invite_more_people.title" = "Faîtes passer le mot !";
 "conversation.invite_more_people.description" = "Ajoutez quelqu'un à la conversation";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
 "conversation.invite_more_people.button_title" = "Ajouter des personnes";
@@ -127,7 +127,7 @@
 "conversation.displayname.emptygroup" = "Conversation de groupe vide";
 
 "conversation.input_bar.verified" = "Vérifié";
-"conversation.input_bar.placeholder" = "Tapez un message";
+"conversation.input_bar.placeholder" = "Écrivez un message";
 "conversation.input_bar.placeholder_ephemeral" = "Message éphémère";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Faites glisser pour envoyer";
@@ -165,7 +165,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Désactivé";
-"input.ephemeral.title" = "Paramétrer une minuterie pour les messages temporaires";
+"input.ephemeral.title" = "Paramétrer une durée pour le message temporaire";
 
 // System messages
 "content.system.continued_conversation" = "Démarrer une conversation avec %@";
@@ -450,7 +450,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte unique. Comparez les et vérifiez vos appareils et conversations.";
 "self.settings.device_details.reset_session.subtitle" = "Si les empreintes ne correspondent pas, réinitialisez la session afin de générer de nouvelles clés de chiffrement des deux côtés.";
-"self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous avez arrêté de l'utiliser. L'historique de vos messages sera effacé de l'appareil et vous serez déconnecté.";
+"self.settings.device_details.remove_device.subtitle" = "Supprimez ce périphérique si vous avez cessé de l’utiliser. Vous serez déconnecté de cet appareil immédiatement.";
 "self.settings.device_details.reset_session.success" = "La session a été réinitialisée";
 
 "self.settings.account_details.actions.title" = "Actions";
@@ -484,6 +484,24 @@
 "self.settings.popular_demand.title" = "À la demande générale";
 "self.settings.popular_demand.send_button.title" = "Bouton d'envoi";
 "self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer via la touche entrer.";
+
+// Open in
+"self.settings.external_apps.header" = "Ouvrir les liens dans";
+
+"self.settings.link_options.twitter.title" = "Tweets";
+"self.settings.link_options.maps.title" = "Emplacements";
+"self.settings.link_options.browser.title" = "Navigateur";
+
+"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Apple Maps";
+"open_link.maps.option.google" = "Google Maps";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Alertes sonores";
@@ -688,7 +706,7 @@
 "error.invite.no_email_provider" = "Veuillez configurer votre client de messagerie pour pouvoir envoyer les invitations par email";
 "error.invite.no_messaging_provider" = "Veuillez configurer votre SMS pour pouvoir envoyer les invitations par SMS";
 
-"sketchpad.initial_hint" = "Appuyez sur la couleur pour changer la taille du pinceau\nMaintenez appuyé pour remplir une zone\nSecouez pour enlever une photo";
+"sketchpad.initial_hint" = "Sélectionnez les couleurs pour changer la taille du pinceau";
 
 "migration.please_wait_message" = "Veuillez patienter s'il vous plait";
 

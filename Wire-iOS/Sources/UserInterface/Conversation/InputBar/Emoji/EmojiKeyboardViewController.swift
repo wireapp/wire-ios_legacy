@@ -42,6 +42,12 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         }
     }
     
+    var backspaceHidden = false {
+        didSet {
+            backspaceButton.isHidden = backspaceHidden
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         emojiDataSource = EmojiDataSource(provider: cellForEmoji)
@@ -76,6 +82,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         backspaceButton.cas_styleClass = "emoji-backspace"
         backspaceButton.addTarget(self, action: #selector(backspaceTapped), for: .touchUpInside)
         backspaceButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(backspaceLongPressed)))
+        backspaceButton.isHidden = backspaceHidden
         view.addSubview(backspaceButton)
     }
     
@@ -141,7 +148,6 @@ extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
     }
 
 }
-
 
 extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
     

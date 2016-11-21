@@ -24,13 +24,11 @@
 @interface ConfirmAssetViewController : UIViewController
 
 /// Can either be UIImage or FLAnimatedImage
-@property (nonatomic) id<MediaAsset> image;
-@property (nonatomic) NSURL *videoURL;
-@property (nonatomic, copy) void (^onConfirm)();
-@property (nonatomic, copy) void (^onCancel)();
-@property (nonatomic, getter=isEditButtonVisible) BOOL editButtonVisible;
-@property (nonatomic, copy) void (^onEdit)();
+@property (nonatomic, nullable) id<MediaAsset> image;
+@property (nonatomic, nullable) NSURL *videoURL;
+@property (nonatomic, copy, nullable) void (^onConfirm)(UIImage * _Nullable editedImage);
+@property (nonatomic, copy, nullable) void (^onCancel)();
 
-@property (nonatomic, copy) NSString *previewTitle;
+@property (nonatomic, copy, nullable) NSString *previewTitle;
 
 @end

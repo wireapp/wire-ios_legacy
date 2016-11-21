@@ -34,9 +34,9 @@
 #import "MediaAsset.h"
 #import "Analytics+iOS.h"
 #import "Wire-Swift.h"
+#import "UIImage+ZetaIconsNeue.h"
 
 #import "UIView+Borders.h"
-
 
 
 
@@ -68,11 +68,9 @@
 
 @property (nonatomic, strong) FLAnimatedImageView *fullImageView;
 @property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
-@property (nonatomic, strong) IconButton *sketchButton;
-@property (nonatomic, strong) IconButton *fullScreenButton;
+@property (nonatomic, strong) ImageToolbarView *imageToolbarView;
 @property (nonatomic, strong) UIView *imageViewContainer;
-@property (nonatomic, strong) UIView *obfuscationView;
-@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) SavableImage *savableImage;
 
 /// Can either be UIImage or FLAnimatedImage
@@ -81,8 +79,14 @@
 @property (nonatomic, strong) NSLayoutConstraint *imageWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *imageAspectConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *imageTopInsetConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageCenterConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageLeftConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageRightConstraint;
+@property (nonatomic, strong) NSArray<NSLayoutConstraint *> *imageToolbarInsideConstraints;
+@property (nonatomic, strong) NSArray<NSLayoutConstraint *> *imageToolbarOutsideConstraints;
 
-@property (nonatomic, assign) CGSize originalImageSize;
+@property (nonatomic) CGSize originalImageSize;
+@property (nonatomic) CGSize imageSize;
 
 @end
 
@@ -101,10 +105,13 @@ static ImageCache *imageCache(void)
     return cache;
 }
 
+static const CGFloat ImageToolbarMinimumSize = 192;
+
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _smallerThanMinimumSizeContentMode = UIViewContentModeLeft;
         [self createImageMessageViews];
         [self createConstraints];
         
@@ -155,16 +162,15 @@ static ImageCache *imageCache(void)
     [super prepareForReuse];
     
     self.originalImageSize = CGSizeZero;
+    self.imageSize = CGSizeZero;
     self.obfuscationView.hidden = YES;
-    self.fullScreenButton.hidden = NO;
-    self.sketchButton.hidden = NO;
+    self.imageToolbarView.hidden = NO;
     self.image = nil;
 
     if (self.imageAspectConstraint) {
         [self.imageViewContainer removeConstraint:self.imageAspectConstraint];
         self.imageAspectConstraint = nil;
     }
-    
 }
 
 - (void)didEndDisplayingInTableView
@@ -185,35 +191,26 @@ static ImageCache *imageCache(void)
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
+    self.fullImageView.hidden = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
 
     self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
     [self.imageViewContainer addSubview:self.loadingView];
 
-    self.obfuscationView = [[UIView alloc] initForAutoLayout];
+    self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
     self.loadingView.hidden = NO;
     
-    self.sketchButton = [IconButton iconButtonCircularLight];
-    [self.sketchButton addTarget:self action:@selector(onSketchPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sketchButton setIcon:ZetaIconTypeBrush withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [self.sketchButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
-    self.sketchButton.alpha = self.selected ? 1 : 0;
-    self.sketchButton.accessibilityIdentifier = @"sketchOnImageButton";
-    self.sketchButton.isAccessibilityElement = YES;
-    [self.imageViewContainer addSubview:self.sketchButton];
-    
-    self.fullScreenButton = [IconButton iconButtonCircularLight];
-    [self.fullScreenButton addTarget:self action:@selector(onFullScreenPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.fullScreenButton setIcon:ZetaIconTypeFullScreen withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [self.fullScreenButton setBackgroundImageColor:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorBackground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
-    self.fullScreenButton.alpha = self.selected ? 1 : 0;
-    self.fullScreenButton.accessibilityIdentifier = @"openFullScreenButton";
-    self.fullScreenButton.isAccessibilityElement = YES;
-    [self.imageViewContainer addSubview:self.fullScreenButton];
+    self.imageToolbarView = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationCell];
+    self.imageToolbarView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.imageToolbarView.sketchButton addTarget:self action:@selector(onDrawSketchPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.imageToolbarView.emojiButton addTarget:self action:@selector(onEmojiSketchPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.imageToolbarView.textButton addTarget:self action:@selector(onTextSketchPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.imageToolbarView.expandButton addTarget:self action:@selector(onFullScreenPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.messageContentView addSubview:_imageToolbarView];
 }
 
 - (void)createConstraints
@@ -222,22 +219,32 @@ static ImageCache *imageCache(void)
     [self.loadingView autoCenterInSuperview];
 
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    
+    self.imageCenterConstraint = [self.imageViewContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    self.imageCenterConstraint.active = NO;
+    
+    self.imageRightConstraint = [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeRight relation:NSLayoutRelationGreaterThanOrEqual];
+    self.imageLeftConstraint = [self.imageViewContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
     
     [NSLayoutConstraint autoSetPriority:ALLayoutPriorityDefaultHigh + 1 forConstraints:^{
         [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         self.imageWidthConstraint = [self.imageViewContainer autoSetDimension:ALDimensionWidth toSize:0];
     }];
     
-    [self.sketchButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:16];
-    [self.sketchButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
-    [self.sketchButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
+    NSMutableArray<NSLayoutConstraint *> *insideConstraints = [NSMutableArray array];
+    [insideConstraints addObject:[self.imageToolbarView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.imageViewContainer]];
+    [insideConstraints addObject:[self.imageToolbarView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.imageViewContainer]];
+    [NSLayoutConstraint deactivateConstraints:insideConstraints];
+    self.imageToolbarInsideConstraints = insideConstraints;
     
-    [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
-    [self.fullScreenButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
-    [self.fullScreenButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
-
+    NSMutableArray<NSLayoutConstraint *> *outsideConstraints = [NSMutableArray array];
+    [outsideConstraints addObject:[self.imageToolbarView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.imageViewContainer]];
+    [NSLayoutConstraint deactivateConstraints:outsideConstraints];
+    self.imageToolbarOutsideConstraints = outsideConstraints;
+    
+    [self.imageToolbarView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.imageViewContainer];
+    [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
+    
     [self.obfuscationView autoPinEdgesToSuperviewEdges];
     [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.fullImageView withOffset:8];
 }
@@ -250,23 +257,47 @@ static ImageCache *imageCache(void)
         
         CGRect screen = UIScreen.mainScreen.bounds;
         CGFloat screenRatio = CGRectGetHeight(screen) / CGRectGetWidth(screen);
-        CGFloat imageRatio = self.originalImageSize.height / self.originalImageSize.width;
+        CGFloat imageRatio = self.imageSize.height / self.imageSize.width;
         CGFloat lowerBound = screenRatio * 0.84, upperBound = screenRatio * 1.2;
         
-        BOOL imageWidthExceedsBounds = self.originalImageSize.width > self.bounds.size.width;
+        BOOL imageWidthExceedsBounds = self.imageSize.width > self.bounds.size.width;
         BOOL similarRatio = lowerBound < imageRatio && imageRatio < upperBound;
         BOOL displayEdgeToEdge = imageWidthExceedsBounds && !similarRatio;
         
         self.messageContentView.layoutMargins = displayEdgeToEdge ? UIEdgeInsetsZero : self.defaultLayoutMargins;
-        self.imageWidthConstraint.constant = self.originalImageSize.width;
+        self.imageWidthConstraint.constant = self.imageSize.width;
         
         if (! self.imageAspectConstraint) {
-            CGFloat aspectRatio = self.originalImageSize.height / self.originalImageSize.width;
+            CGFloat aspectRatio = self.imageSize.height / self.imageSize.width;
             [NSLayoutConstraint autoSetPriority:ALLayoutPriorityRequired forConstraints:^{
                 self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imageViewContainer withMultiplier:aspectRatio];
             }];
         }
+        
+        [NSLayoutConstraint deactivateConstraints:self.imageToolbarOutsideConstraints];
+        [NSLayoutConstraint deactivateConstraints:self.imageToolbarInsideConstraints];
+        
+        if ([self imageToolbarFitsInsideImage]) {
+            [NSLayoutConstraint activateConstraints:self.imageToolbarInsideConstraints];
+        } else {
+            [NSLayoutConstraint activateConstraints:self.imageToolbarOutsideConstraints];
+        }
     }
+}
+
+- (BOOL)imageToolbarFitsInsideImage
+{
+    return self.imageSize.width > ImageToolbarMinimumSize;
+}
+
+- (BOOL)imageToolbarNeedsToBeCompact
+{
+    return ![self imageToolbarFitsInsideImage] && (self.bounds.size.width - self.imageSize.width - self.defaultLayoutMargins.left - self.defaultLayoutMargins.right) < ImageToolbarMinimumSize;
+}
+
+- (BOOL)imageSmallerThanMinimumSize
+{
+    return self.originalImageSize.width < self.imageSize.width || self.originalImageSize.height < self.imageSize.height;
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)convMessage layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
@@ -282,7 +313,11 @@ static ImageCache *imageCache(void)
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
 
-    self.originalImageSize = imageMessageData.originalSize;
+    self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(0.5, 0.5));
+    self.imageSize = CGSizeMake(MAX(48, self.originalImageSize.width), MAX(48, self.originalImageSize.height));
+    self.fullImageView.contentMode = [self imageSmallerThanMinimumSize] ? self.smallerThanMinimumSizeContentMode : UIViewContentModeScaleAspectFill;
+    self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];
+    self.imageToolbarView.configuration = [self imageToolbarNeedsToBeCompact] ? ImageToolbarConfigurationCompactCell : ImageToolbarConfigurationCell;
     
     [self updateImageMessageConstraintConstants];
     
@@ -305,8 +340,8 @@ static ImageCache *imageCache(void)
             } else {
                 
                 CGSize screenSize = [UIScreen mainScreen].nativeBounds.size;
-                CGFloat widthRatio = MIN(screenSize.width / self.originalImageSize.width, 1.0);
-                CGFloat minimumHeight = self.originalImageSize.height * widthRatio;
+                CGFloat widthRatio = MIN(screenSize.width / self.imageSize.width, 1.0);
+                CGFloat minimumHeight = self.imageSize.height * widthRatio;
                 CGFloat maxSize = MAX(screenSize.width, minimumHeight);
                 
                 image = [UIImage imageFromData:data withMaxSize:maxSize];
@@ -334,8 +369,7 @@ static ImageCache *imageCache(void)
         if (convMessage.isObfuscated) {
             self.loadingView.hidden = YES;
             self.obfuscationView.hidden = NO;
-            self.fullScreenButton.hidden = YES;
-            self.sketchButton.hidden = YES;
+            self.imageToolbarView.hidden = YES;
         } else {
             // We did not download the medium image yet, start the progress animation
             [self.loadingView startProgressAnimation];
@@ -353,12 +387,13 @@ static ImageCache *imageCache(void)
     if (image != nil) {
         self.loadingView.hidden = YES;
         [self.loadingView stopProgressAnimation];
+        self.fullImageView.hidden = NO;
         [self.fullImageView setMediaAsset:image];
-        [self showImageView:self.fullImageView];
         [self updateSavableImage];
     } else {
         self.savableImage = nil;
         [self.fullImageView setMediaAsset:nil];
+        self.fullImageView.hidden = YES;
     }
 }
 
@@ -379,8 +414,7 @@ static ImageCache *imageCache(void)
     [self updateAccessibilityElements];
 
     dispatch_block_t changeBlock = ^{
-        self.sketchButton.alpha = self.selected ? 1 : 0;
-        self.fullScreenButton.alpha = self.selected ? 1 : 0;
+        self.imageToolbarView.alpha = self.selected ? 1 : 0;
     };
     
     if (animated) {
@@ -392,9 +426,20 @@ static ImageCache *imageCache(void)
     
 }
 
-- (void)showImageView:(UIView *)imageView
+- (void)setSmallerThanMinimumSizeContentMode:(UIViewContentMode)smallerThanMinimumSizeContentMode
 {
-    self.fullImageView.hidden = imageView != self.fullImageView;
+    _smallerThanMinimumSizeContentMode = smallerThanMinimumSizeContentMode;
+    
+    if (self.smallerThanMinimumSizeContentMode == UIViewContentModeCenter) {
+        self.imageCenterConstraint.active = YES;
+        self.imageRightConstraint.active = NO;
+        self.imageLeftConstraint.active = NO;
+    }
+    else {
+        self.imageCenterConstraint.active = NO;
+        self.imageRightConstraint.active = YES;
+        self.imageLeftConstraint.active = YES;
+    }
 }
 
 - (void)recycleImage
@@ -409,7 +454,7 @@ static ImageCache *imageCache(void)
     [elements addObject:self.imageViewContainer];
     
     if (self.selected) {
-        [elements addObjectsFromArray:@[self.sketchButton, self.fullScreenButton, self.imageViewContainer]];
+        [elements addObjectsFromArray:@[self.imageToolbarView, self.imageViewContainer]];
     }
 
     self.accessibilityElements = elements;
@@ -421,8 +466,16 @@ static ImageCache *imageCache(void)
     [self.delegate conversationCell:self didSelectAction:ConversationCellActionPresent];
 }
 
-- (void)onSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketch];
+- (void)onDrawSketchPressed:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketchDraw];
+}
+
+- (void)onEmojiSketchPressed:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketchEmoji];
+}
+
+- (void)onTextSketchPressed:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketchText];
 }
 
 #pragma mark - Message updates
@@ -453,7 +506,7 @@ static ImageCache *imageCache(void)
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:) || action == @selector(saveImage)) {
+    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward:)) {
         return self.fullImageView.image != nil;
     }
     else if (action == @selector(paste:)) {
@@ -505,7 +558,8 @@ static ImageCache *imageCache(void)
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
-    properties.additionalItems = @[saveItem];
+    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward:)];
+    properties.additionalItems = @[saveItem, forwardItem];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };
