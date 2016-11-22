@@ -28,14 +28,21 @@
 + (MockUser *)mockSelfUser;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
-
+@property (nonatomic, readwrite) NSString *name;
+@property (nonatomic, readwrite) NSString *emailAddress;
+@property (nonatomic, readwrite) NSString *phoneNumber;
+@property (nonatomic) ZMAccentColor accentColorValue;
 @property (nonatomic, readwrite) BOOL isBlocked;
 @property (nonatomic, readwrite) BOOL isIgnored;
 @property (nonatomic, readwrite) BOOL isPendingApprovalByOtherUser;
 @property (nonatomic, readwrite) BOOL isPendingApprovalBySelfUser;
+@property (nonatomic, readwrite) BOOL isConnected;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 - (UIColor *)accentColor;
+@property (nonatomic) ZMConnection *connection;
+@property (nonatomic) ZMAddressBookContact *contact;
+@property (nonatomic) NSUUID *remoteIdentifier;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 

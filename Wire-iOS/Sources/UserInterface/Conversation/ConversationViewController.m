@@ -374,6 +374,12 @@
     }
 }
 
+- (void)openConversationList
+{
+    BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
+    [self.parentViewController.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
+}
+
 #pragma mark - Getters, setters
 
 - (void)setConversation:(ZMConversation *)conversation
@@ -499,8 +505,7 @@
 
 - (void)onBackButtonPressed:(UIButton *)backButton
 {
-    BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
-    [self.parentViewController.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
+    [self openConversationList];
 }
 
 - (void)menuDidHide:(NSNotification *)notification
@@ -551,11 +556,6 @@
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
 {
     [self.conversationBarController presentBar:self.mediaBarViewController];
-}
-
-- (void)conversationContentViewControllerDidFinishScrolling:(ConversationContentViewController *)contentViewController
-{
-
 }
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button
@@ -628,6 +628,11 @@
         [snapshotView removeFromSuperview];
         [self.inputBarController bounceCameraIcon];
     }];
+}
+
+- (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller
+{
+    [self openConversationList];
 }
 
 @end
