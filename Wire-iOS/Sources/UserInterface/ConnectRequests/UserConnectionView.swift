@@ -20,8 +20,18 @@
 import Foundation
 import Cartography
 
-final public class UserConnectionView: UIView {
-    typealias User = ZMBareUser & ZMBareUserConnection & ZMSearchableUser
+public final class UserConnectionView: UIView, Copyable {
+    
+    public convenience init(instance: UserConnectionView) {
+        self.init(user: instance.user)
+        self.onAccept = instance.onAccept
+        self.onIgnore = instance.onIgnore
+        self.onCancelConnection = instance.onCancelConnection
+        self.onBlock = instance.onBlock
+        self.showUserName = instance.showUserName
+    }
+    
+    public typealias User = ZMBareUser & ZMBareUserConnection & ZMSearchableUser
     private let nameInfoLabel = UILabel()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
@@ -32,23 +42,28 @@ final public class UserConnectionView: UIView {
     private let cancelConnectionButton = IconButton.iconButtonCircular()
     private let blockButton = IconButton.iconButtonDefaultDark()
     
-    let user: User
-    var commonConnectionsCount: UInt = 0 {
+    public var user: User {
+        didSet {
+            self.updateForUser()
+            self.userImageView.user = self.user
+        }
+    }
+    public var commonConnectionsCount: UInt = 0 {
         didSet {
             self.setupLabelText()
         }
     }
-    var onAccept: ((User)->())? = .none
-    var onIgnore: ((User)->())? = .none
-    var onCancelConnection: ((User)->())? = .none
-    var onBlock: ((User)->())? = .none
-    var showUserName: Bool = false {
+    public var onAccept: ((User)->())? = .none
+    public var onIgnore: ((User)->())? = .none
+    public var onCancelConnection: ((User)->())? = .none
+    public var onBlock: ((User)->())? = .none
+    public var showUserName: Bool = false {
         didSet {
             self.setupLabelText()
         }
     }
 
-    init(user: User) {
+    public init(user: User) {
         self.user = user
         super.init(frame: .zero)
         
@@ -63,7 +78,6 @@ final public class UserConnectionView: UIView {
     private func setup() {
         self.nameInfoLabel.numberOfLines = 0
         self.nameInfoLabel.textAlignment = .center
-        self.setupLabelText()
         
         self.acceptButton.accessibilityLabel = "accept"
         self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized.uppercased(), for: .normal)
@@ -96,10 +110,16 @@ final public class UserConnectionView: UIView {
         self.outgoingConnectionFooter.addSubview(self.cancelConnectionButton)
         self.outgoingConnectionFooter.addSubview(self.blockButton)
         
+        [self.nameInfoLabel, self.userImageView, self.incomingConnectionFooter, self.outgoingConnectionFooter].forEach(self.addSubview)
+        
+        self.updateForUser()
+    }
+    
+    private func updateForUser() {
+        self.setupLabelText()
+        
         self.incomingConnectionFooter.isHidden = self.user.isConnected || self.user.isPendingApprovalByOtherUser
         self.outgoingConnectionFooter.isHidden = !self.user.isPendingApprovalByOtherUser
-        
-        [self.nameInfoLabel, self.userImageView, self.incomingConnectionFooter, self.outgoingConnectionFooter].forEach(self.addSubview)
     }
     
     private func setupLabelText() {

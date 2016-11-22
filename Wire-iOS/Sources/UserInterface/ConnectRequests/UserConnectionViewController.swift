@@ -46,7 +46,9 @@ final public class UserConnectionViewController: UIViewController {
         self.user = user
         super.init(nibName: .none, bundle: .none)
         
-        self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
+        if self.user.totalCommonConnections == 0 {
+            self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -56,6 +58,7 @@ final public class UserConnectionViewController: UIViewController {
     override public func loadView() {
         self.userConnectionView = UserConnectionView(user: self.user)
         self.userConnectionView.showUserName = self.showUserName
+        self.userConnectionView.commonConnectionsCount = self.user.totalCommonConnections
         self.userConnectionView.onAccept = { [weak self] user in
             
             guard let `self` = self else {
