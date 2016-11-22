@@ -134,7 +134,7 @@ extension ZMConversationMessage {
             reactionsView.centerY == selfView.centerY
             
             likeTooltipArrow.centerY == statusLabel.centerY
-            likeTooltipArrow.trailing == selfView.trailingMargin - 8
+            likeTooltipArrow.trailing == selfView.leadingMargin - 8
         }
     }
     
