@@ -514,8 +514,8 @@
 
     [self.listContentController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topItemsController.view];
     [self.listContentController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 }
 
 - (void)updateTopItemsInset

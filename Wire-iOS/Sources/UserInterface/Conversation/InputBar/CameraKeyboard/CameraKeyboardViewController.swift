@@ -100,10 +100,15 @@ open class CameraKeyboardViewController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        createConstraints()
+    }
+
+    private func setupViews() {
         self.createCollectionView()
-        
+
         self.view.backgroundColor = UIColor.white
-        
+
         self.goBackButton.translatesAutoresizingMaskIntoConstraints = false
         self.goBackButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.goBackButton.circular = true
@@ -111,7 +116,8 @@ open class CameraKeyboardViewController: UIViewController {
         self.goBackButton.setIconColor(UIColor.white, for: UIControlState())
         self.goBackButton.accessibilityIdentifier = "goBackButton"
         self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), for: .touchUpInside)
-        
+        self.goBackButton.applyRTLTransformIfNeeded()
+
         self.cameraRollButton.translatesAutoresizingMaskIntoConstraints = false
         self.cameraRollButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.cameraRollButton.circular = true
@@ -119,20 +125,22 @@ open class CameraKeyboardViewController: UIViewController {
         self.cameraRollButton.setIconColor(UIColor.white, for: UIControlState())
         self.cameraRollButton.accessibilityIdentifier = "cameraRollButton"
         self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), for: .touchUpInside)
-        
+
         [self.collectionView, self.goBackButton, self.cameraRollButton].forEach(self.view.addSubview)
-        
+    }
+
+    private func createConstraints() {
         constrain(self.view, self.collectionView, self.goBackButton, self.cameraRollButton) { view, collectionView, goBackButton, cameraRollButton in
             collectionView.edges == view.edges
-            
+
             goBackButton.width == 36
             goBackButton.height == goBackButton.width
-            goBackButton.left == view.left + self.sideMargin
+            goBackButton.leading == view.leading + self.sideMargin
             goBackButton.bottom == view.bottom - 18
-            
+
             cameraRollButton.width == 36
             cameraRollButton.height == goBackButton.width
-            cameraRollButton.right == view.right - self.sideMargin
+            cameraRollButton.trailing == view.trailing - self.sideMargin
             cameraRollButton.centerY == goBackButton.centerY
         }
     }
