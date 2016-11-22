@@ -179,7 +179,7 @@ public final class UserConnectionView: UIView, Copyable {
         constrain(self.incomingConnectionFooter, self.acceptButton, self.ignoreButton) { incomingConnectionFooter, acceptButton, ignoreButton in
             acceptButton.left == incomingConnectionFooter.left + 24
             acceptButton.top == incomingConnectionFooter.top + 12
-            acceptButton.bottom == incomingConnectionFooter.bottom - 12
+            acceptButton.bottom == incomingConnectionFooter.bottom - 24
             acceptButton.height == 40
             acceptButton.width >= 140
             
@@ -192,7 +192,7 @@ public final class UserConnectionView: UIView, Copyable {
         constrain(self.outgoingConnectionFooter, self.cancelConnectionButton, self.blockButton) { outgoingConnectionFooter, cancelConnectionButton, blockButton in
             cancelConnectionButton.left == outgoingConnectionFooter.left + 24
             cancelConnectionButton.top == outgoingConnectionFooter.top + 12
-            cancelConnectionButton.bottom == outgoingConnectionFooter.bottom - 12
+            cancelConnectionButton.bottom == outgoingConnectionFooter.bottom - 24
             
             blockButton.centerY == cancelConnectionButton.centerY
             blockButton.right == outgoingConnectionFooter.right - 24

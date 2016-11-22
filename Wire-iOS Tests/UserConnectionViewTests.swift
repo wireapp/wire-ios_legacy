@@ -103,7 +103,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
         }
         let boolCombinations = Set<Bool>(arrayLiteral: true, false)
         
-        let incomingMutator = Mutator<UserConnectionView, Bool>(mutation: incomingMutation, combinations: boolCombinations)
+        let incomingMutator = Mutator(applicator: incomingMutation, combinations: boolCombinations)
         
         let outgoingMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, mockUser) = self.copy(view: view)
@@ -112,7 +112,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
             return newView
         }
 		
-        let outgoingMutator = Mutator(mutation: outgoingMutation, combinations: boolCombinations)
+        let outgoingMutator = Mutator(applicator: outgoingMutation, combinations: boolCombinations)
         
         let showNameMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, _) = self.copy(view: view)
@@ -120,7 +120,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
             return newView
         }
         
-        let showNameMutator = Mutator(mutation: showNameMutation, combinations: boolCombinations)
+        let showNameMutator = Mutator(applicator: showNameMutation, combinations: boolCombinations)
         
         let commonConnectionsMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, _) = self.copy(view: view)
@@ -128,7 +128,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
             return newView
         }
         
-        let commonConnectionsMutator = Mutator(mutation: commonConnectionsMutation, combinations: boolCombinations)
+        let commonConnectionsMutator = Mutator(applicator: commonConnectionsMutation, combinations: boolCombinations)
         
         let combinator = CombinationTest(mutable: self.sutForUser(), mutators: [incomingMutator, outgoingMutator, showNameMutator, commonConnectionsMutator])
         

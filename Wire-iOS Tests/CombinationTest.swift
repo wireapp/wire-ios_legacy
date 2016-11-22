@@ -19,29 +19,29 @@
 import Foundation
 @testable import Wire
 
-struct Mutator<T: Copyable, I: Hashable> {
-    typealias Mutation = (T, I)->(T)
-    typealias CombinationPair = (combination: I, result: T)
-    let mutation: Mutation
-    let combinations: Set<I>
-    init(mutation: @escaping Mutation, combinations: Set<I>) {
-        self.mutation = mutation
+struct Mutator<SUT: Copyable, Variant: Hashable> {
+    typealias Applicator = (SUT, Variant)->(SUT)
+    typealias CombinationPair = (combination: Variant, result: SUT)
+    let applicator: Applicator
+    let combinations: Set<Variant>
+    init(applicator: @escaping Applicator, combinations: Set<Variant>) {
+        self.applicator = applicator
         self.combinations = combinations
     }
     
-    func apply(_ element: T) -> [CombinationPair] {
+    func apply(_ element: SUT) -> [CombinationPair] {
         return combinations.map {
-            (combination: $0, result: self.mutation(element, $0))
+            (combination: $0, result: self.applicator(element, $0))
         }
     }
 }
 
-class CombinationTest<T: Copyable, I: Hashable> {
-    typealias M = Mutator<T, I>
-    typealias CombinationChainPair = (combinationChain: [I], result: T)
+class CombinationTest<SUT: Copyable, Variant: Hashable> {
+    typealias M = Mutator<SUT, Variant>
+    typealias CombinationChainPair = (combinationChain: [Variant], result: SUT)
     let mutators: [M]
-    let mutable: T
-    init(mutable: T, mutators: [M]) {
+    let mutable: SUT
+    init(mutable: SUT, mutators: [M]) {
         self.mutable = mutable
         self.mutators = mutators
     }
@@ -53,7 +53,7 @@ class CombinationTest<T: Copyable, I: Hashable> {
             let new = current.map { variation -> [CombinationChainPair] in
                 let step = mutator.apply(variation.result)
                 return step.map {
-                    let newChain: [I] = [variation.combinationChain, [$0.combination]].reduce([],+)
+                    let newChain: [Variant] = [variation.combinationChain, [$0.combination]].reduce([],+)
                     return (combinationChain: newChain, result: $0.result)
                 }
             }
@@ -101,14 +101,14 @@ class CombinationTestTest: XCTestCase {
             new.first = value
             return new
         }
-        let firstMutator = Mutator<BoolPair, Bool>(mutation: firstMutation, combinations: boolCombinations)
+        let firstMutator = Mutator<BoolPair, Bool>(applicator: firstMutation, combinations: boolCombinations)
         
         let secondMutation = { (proto: BoolPair, value: Bool) -> BoolPair in
             var new = proto.copy()
             new.second = value
             return new
         }
-        let secondMutator = Mutator<BoolPair, Bool>(mutation: secondMutation, combinations: boolCombinations)
+        let secondMutator = Mutator<BoolPair, Bool>(applicator: secondMutation, combinations: boolCombinations)
         
         let test = CombinationTest(mutable: BoolPair(first: false, second: false), mutators: [firstMutator, secondMutator])
         
