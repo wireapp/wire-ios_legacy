@@ -301,8 +301,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
-    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.messageToolboxView];
