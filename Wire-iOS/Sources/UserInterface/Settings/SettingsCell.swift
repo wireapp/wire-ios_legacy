@@ -137,7 +137,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.contentView.addSubview(self.iconImageView)
         
         constrain(self.contentView, self.iconImageView) { contentView, iconImageView in
-            iconImageView.left == contentView.left + 24
+            iconImageView.leading == contentView.leading + 24
             iconImageView.width == 16
             iconImageView.height == iconImageView.height
             iconImageView.centerY == contentView.centerY
@@ -150,8 +150,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.contentView.addSubview(self.cellNameLabel)
         
         constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
-            self.cellNameLabelToIconInset = cellNameLabel.left == iconImageView.right + 24
-            cellNameLabel.left == contentView.left + 16 ~ LayoutPriority(750)
+            self.cellNameLabelToIconInset = cellNameLabel.leading == iconImageView.trailing + 24
+            cellNameLabel.leading == contentView.leading + 16 ~ LayoutPriority(750)
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }
@@ -164,12 +164,14 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.valueLabel.textAlignment = .right
         
         self.contentView.addSubview(self.valueLabel)
-        
-        constrain(self.contentView, self.cellNameLabel, self.valueLabel) { contentView, cellNameLabel, valueLabel in
+
+        let trailingBoundaryView = accessoryView ?? contentView
+
+        constrain(self.contentView, self.cellNameLabel, self.valueLabel, trailingBoundaryView) { contentView, cellNameLabel, valueLabel, trailingBoundaryView in
             valueLabel.top == contentView.top - 8
             valueLabel.bottom == contentView.bottom + 8
-            valueLabel.left == cellNameLabel.right + 8
-            valueLabel.right == contentView.right - 16
+            valueLabel.leading >= cellNameLabel.trailing + 8
+            valueLabel.trailing == trailingBoundaryView.trailing - 16
         }
         
         self.imagePreview.clipsToBounds = true
@@ -180,7 +182,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         constrain(self.contentView, self.imagePreview) { contentView, imagePreview in
             imagePreview.width == imagePreview.height
             imagePreview.height == 24
-            imagePreview.right == contentView.right - 16
+            imagePreview.trailing == contentView.trailing - 16
             imagePreview.centerY == contentView.centerY
         }
         
@@ -276,12 +278,12 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         self.textInput.textAlignment = .right
         self.textInput.textColor = UIColor.lightGray
         self.contentView.addSubview(self.textInput)
-        
-        constrain(self.contentView, self.cellNameLabel, self.textInput) { contentView, cellNameLabel, textInput in
+
+        let trailingBoundaryView = accessoryView ?? contentView
+        constrain(self.contentView, self.textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
             textInput.top == contentView.top - 8
             textInput.bottom == contentView.bottom + 8
-            textInput.left == cellNameLabel.right + 8
-            textInput.right == contentView.right - 16
+            textInput.trailing == trailingBoundaryView.trailing - 16
         }
     }
     

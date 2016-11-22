@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Melodije zvonjenja";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Klici";
+"self.settings.callkit.caption" = "Deli z iOS";
+"self.settings.callkit.description" = "Prikaže Wire klice na zaklenjenem zaslonu in v iOS zgodovini klicev. Če je omogočen iCloud, je zgodovina klicev deljena z Apple. Znova zaženite Wire za uporabo te nastavitve.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire Klic";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sporočilo";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "Po priljubljenih zahtevah";
 "self.settings.popular_demand.send_button.title" = "Gumb za pošiljanje";
-"self.settings.popular_demand.call_kit.title" = "Ne uporabi klicne sistemske integracije (ponovni zagon)";
 "self.settings.popular_demand.send_button.footer" = "Onemogoči za pošiljanje preko tipke enter.";
 
 // Open in

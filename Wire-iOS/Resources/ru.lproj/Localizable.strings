@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Рингтоны";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Звонки";
+"self.settings.callkit.caption" = "Поделиться с iOS";
+"self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если Вы используете iCloud, история звонков будет передана Apple. Перезапустите Wire, чтобы изменения вступили в силу.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пинг Wire";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "По многочисленным просьбам";
 "self.settings.popular_demand.send_button.title" = "Кнопка \"отправить\"";
-"self.settings.popular_demand.call_kit.title" = "Не использовать звонки в сети (требуется перезапуск)";
 "self.settings.popular_demand.send_button.footer" = "Отключить отправку по нажатию клавиши Enter.";
 
 // Open in

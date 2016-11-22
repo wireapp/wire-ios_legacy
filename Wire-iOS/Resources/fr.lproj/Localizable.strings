@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Sonneries";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Appels";
+"self.settings.callkit.caption" = "Partager avec iOS";
+"self.settings.callkit.description" = "Afficher les appels Wire sur l'écran de vérouillage et dans l'historique des appels sur iOS. Si iCloud est activé, l'historique des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre soit appliqué.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Ping Wire";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "À la demande générale";
 "self.settings.popular_demand.send_button.title" = "Bouton d'envoi";
-"self.settings.popular_demand.call_kit.title" = "Ne pas utiliser l'appel natif (redémarrer)";
 "self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer via la touche entrer.";
 
 // Open in
