@@ -67,7 +67,7 @@ NSString *const PeoplePickerHeaderReuseIdentifier = @"PeoplePickerHeaderReuseIde
 {
     [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:10.0f];
     CGFloat leftInset = [WAZUIMagic floatForIdentifier:@"people_picker.top_conversations_mode.left_padding"];
-    [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftInset];
+    [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftInset];
 }
 
 - (void)setTitle:(NSString *)title

@@ -77,7 +77,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
     self.placeholderTextColor = [UIColor lightGrayColor];
     self.placeholderTextContainerInset = self.textContainerInset;
-    self.placeholderTextAlignment = NSTextAlignmentLeft;
+    self.placeholderTextAlignment = NSTextAlignmentNatural;
     
     if ([AutomationHelper.sharedHelper disableAutocorrection]) {
         self.autocorrectionType = UITextAutocorrectionTypeNo;
