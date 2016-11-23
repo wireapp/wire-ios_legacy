@@ -434,13 +434,16 @@
 // Settings - Account details
 "self.settings.account_section" = "Account";
 
-"self.settings.account_details_group.title" = "Info";
+"self.settings.account_details_group.info.title" = "Info";
+"self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Name";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
+"self.settings.account_section.handle.title" = "@name";
 
-"self.settings.account_details_group.footer" = "People can find you with these details.";
+"self.settings.account_details_group.info.footer" = "People can find you with these details.";
+"self.settings.account_details_group.personal.footer" = "This information is not visible .";
 
 "self.settings.account_details.remove_device.title" = "Remove Device";
 "self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
@@ -466,6 +469,13 @@
 "self.settings.account_details.delete_account.alert.title" = "Delete Account";
 "self.settings.account_details.delete_account.alert.message" = "We will send you a message via email or SMS. Follow the link to permanently delete your account.";
 
+
+// Change @name
+
+"self.settings.account_section.handle.change.title" = "@Name";
+"self.settings.account_section.handle.change.save" = "Save";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";

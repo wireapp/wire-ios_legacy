@@ -1419,6 +1419,26 @@ SettingsClientViewController {
     }
 }
 
+ChangeHandleTableViewCell {
+    backgroundColor: clear;
+
+    prefixLabel: @{
+        font: $font-normal-medium;
+        textColor: $color-text-dimmed-dark;
+    }
+
+    handleTextField: @{
+        font: $font-normal;
+        textColor: $color-text-foreground-dark;
+    }
+}
+
+ChangeHandleViewController {
+    view: @{
+        backgroundColor: clear;
+    }
+}
+
 FingerprintTableViewCell{
     fingerprintLabelFont: $font-normal-light;
     fingerprintLabelBoldFont: $font-normal-medium;
