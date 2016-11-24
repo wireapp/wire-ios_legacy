@@ -148,8 +148,6 @@ extension SettingsCellDescriptorFactory {
             header: "self.settings.external_apps.header".localized
         )
 
-
-
         let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton), inverse: true)
 
         var popularDemandDescriptors: [SettingsCellDescriptorType] = [sendButtonDescriptor]
