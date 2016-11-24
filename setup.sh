@@ -42,6 +42,10 @@ XCODE_VERSION=( ${version//./ } )
 [[ ${XCODE_VERSION[0]} -gt 7 || ( ${XCODE_VERSION[0]} -eq 7 && ${XCODE_VERSION[1]} -ge 3 ) ]] || die "Xcode version should be at least 7.3.1"
 
 # SETUP
+echo "ℹ️  Downloading AVS library..."
+./Scripts/download-avs.sh
+echo ""
+
 echo "ℹ️  Carthage bootstrap. This might take a while..."
 carthage bootstrap --platform ios
 echo ""
@@ -52,10 +56,6 @@ echo ""
 
 echo "ℹ️  Pod install. This might take a while..."
 bundle install --path ~/.gem && bundle exec pod install
-echo ""
-
-echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
