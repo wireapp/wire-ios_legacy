@@ -44,17 +44,18 @@
 
 
 
-@interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMUserEditingObserver, ZMUserObserver>
+@interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>
 
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) NavigationController *rootNavigationController;
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
-@property (nonatomic) id<ZMUserEditingObserverToken> userEditingToken;
+@property (nonatomic) id userEditingToken;
 @property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
 @property (nonatomic) UIButton *closeButton;
 @property (nonatomic) UIButton *skipButton;
+@property (nonatomic, weak) UserProfileUpdateStatus *updateStatus;
 
 @end
 
@@ -62,7 +63,7 @@
 
 - (void)dealloc
 {
-    [[ZMUserSession sharedSession] removeUserEditingObserverForToken:self.userEditingToken];
+    [self.updateStatus removeObserverWithToken:self.userEditingToken];
     [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
@@ -71,7 +72,8 @@
     self = [super init];
     
     if (self) {
-        self.userEditingToken = [[ZMUserSession sharedSession] addUserEditingObserver:self];
+        self.updateStatus = ZMUserSession.sharedSession.userProfileUpdateStatus;
+        self.userEditingToken = [self.updateStatus addObserver:self];
         self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
     }
     
@@ -225,8 +227,8 @@
         [self.analyticsTracker tagEnteredPhone];
 
         self.showLoadingView = YES;
-        
-        [[ZMUserSession sharedSession] requestVerificationCodeForPhoneNumberUpdate:self.phoneNumberStepViewController.phoneNumber];
+
+        [self.updateStatus requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
     }
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
         PhoneVerificationStepViewController *phoneVerificationStepViewController = (PhoneVerificationStepViewController *)viewController;
@@ -234,8 +236,7 @@
                                                                         verificationCode:phoneVerificationStepViewController.verificationCode];
         
         self.showLoadingView = YES;
-        
-        [[ZMUserSession sharedSession] verifyPhoneNumberForUpdate:credentials];
+        [self.updateStatus requestPhoneNumberChangeWithCredentials:credentials];
     }
 }
 
@@ -243,7 +244,7 @@
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [[ZMUserSession sharedSession] requestVerificationCodeForPhoneNumberUpdate:self.phoneNumberStepViewController.phoneNumber];
+    [self.updateStatus requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
 }
 
 #pragma mark - NavigationControllerDelegate
@@ -280,22 +281,8 @@
     }
 }
 
-#pragma mark - ZMUserEditingObserver
+#pragma mark - UserProfileUpdateObserver
 
-- (void)emailUpdateDidFail:(NSError *)error
-{
-    // no-op
-}
-
-- (void)passwordUpdateRequestDidFail
-{
-    // no-op
-}
-
-- (void)didSentVerificationEmail
-{
-    // no-op
-}
 
 - (void)phoneNumberVerificationCodeRequestDidSucceed
 {
@@ -334,12 +321,10 @@
     [self showAlertForError:error];
 }
 
-- (void)phoneNumberVerificationDidFail:(NSError *)error
+- (void)phoneNumberChangeDidFail:(NSError *)error
 {
     self.showLoadingView = NO;
-    
     [self.analyticsTracker tagVerifiedPhoneFailedWithError:error];
-    
     [self showAlertForError:error];
 }
 

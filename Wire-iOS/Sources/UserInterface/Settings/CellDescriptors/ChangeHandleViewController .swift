@@ -40,7 +40,7 @@ struct WiggleAnimator {
 
 protocol ChangeHandleTableViewCellDelegate: class {
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool
-    func tableViewCellDidChangetext(cell: ChangeHandleTableViewCell, text: String)
+    func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String)
 }
 
 
@@ -90,7 +90,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     func editingChanged(textField: UITextField) {
         let lowercase = textField.text?.lowercased() ?? ""
         textField.text = lowercase
-        delegate?.tableViewCellDidChangetext(cell: self, text: lowercase)
+        delegate?.tableViewCellDidChangeText(cell: self, text: lowercase)
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -118,7 +118,12 @@ struct HandleChangeState {
     }
 
     let currentHandle: String
-    private(set) var newHandle: String?
+    private(set) var newHandle: String? {
+        didSet {
+            available = false
+        }
+    }
+
     var available: Bool
 
     var displayHandle: String {
@@ -143,8 +148,10 @@ struct HandleChangeState {
 final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     var state: HandleChangeState
-    private let footerIdentifier = "footerIdentifier"
-    private weak var footerLabel: UILabel?
+    private var footerLabel = UILabel()
+    fileprivate weak var updateStatus = ZMUserSession.shared().userProfileUpdateStatus
+    private var observerToken: AnyObject?
+
 
     convenience init() {
         self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle, newHandle: nil, available: true))
@@ -163,13 +170,22 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateFooter()
+        observerToken = updateStatus?.add(observer: self)
     }
 
-    func setupViews() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let token = observerToken else { return }
+        updateStatus?.removeObserver(token: token)
+    }
+
+    private func setupViews() {
         title = "self.settings.account_section.handle.change.title".localized
         tableView.allowsSelection = false
         ChangeHandleTableViewCell.register(in: tableView)
-        tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: footerIdentifier)
+        footerLabel.numberOfLines = 0
+        updateUI()
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "self.settings.account_section.handle.change.save".localized,
             style: .done,
@@ -182,16 +198,27 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         // TODO: Set handle
     }
 
-    var attributedFooterTitle: NSAttributedString {
+    fileprivate var attributedFooterTitle: NSAttributedString {
         let infoText = "self.settings.account_section.handle.change.footer".localized.attributedString && UIColor(white: 1, alpha: 0.4)
         let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor(for: .vividRed)
-        let prefix = !state.available ? alreadyTakenText + "\n\n" : "\n\n\n".attributedString
+        let prefix = !state.available ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return prefix + infoText
     }
 
-    func updateFooter() {
-        footerLabel?.numberOfLines = 0
-        footerLabel?.attributedText = attributedFooterTitle
+    private func updateFooter() {
+        footerLabel.attributedText = attributedFooterTitle
+        let size = footerLabel.sizeThatFits(CGSize(width: view.frame.width - 32, height: UIViewNoIntrinsicMetric))
+        footerLabel.frame = CGRect(origin: CGPoint(x: 16, y: 0), size: size)
+        tableView.tableFooterView = footerLabel
+    }
+
+    private func updateNavigationItem() {
+        navigationItem.rightBarButtonItem?.isEnabled = state.available
+    }
+
+    fileprivate func updateUI() {
+        updateNavigationItem()
+        updateFooter()
     }
 
     // MARK: - UITableView
@@ -202,19 +229,6 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? 1 : 0
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard section == 0 else { return nil }
-        let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: footerIdentifier)
-        footerLabel = footer?.textLabel
-        updateFooter()
-        print(footer?.textLabel?.text, footer?.textLabel?.attributedText)
-        return footer
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 80
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -240,18 +254,32 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
         }
     }
 
-    func tableViewCellDidChangetext(cell: ChangeHandleTableViewCell, text: String) {
+    func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String) {
         do {
             try state.update(handle: text)
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            updateStatus?.requestCheckHandleAvailability(handle: text)
         } catch {
-            navigationItem.rightBarButtonItem?.isEnabled = false
+            // no-op
         }
 
-        updateFooter()
+        updateUI()
     }
 
 }
 
+extension ChangeHandleViewController: UserProfileUpdateObserver {
 
+    func didCheckAvailiabilityOfHandle(handle: String, available: Bool) {
+        guard handle == state.newHandle else { return }
+        state.available = available
+        updateUI()
+    }
+
+    func didFailToCheckAvailabilityOfHandle(handle: String) {
+        guard handle == state.newHandle else { return }
+        state.available = false
+        updateUI()
+    }
+
+}
 
