@@ -24,7 +24,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
 source avs-versions
-AVS_SEARCH_PATH="wire-avs-ios"
+AVS_FRAMEWORK_NAME="avs.framework"
 
 ##################################
 # CREDENTIALS
@@ -42,14 +42,12 @@ AVS_LOCAL_PATH="wire-avs-ios"
 if [ -z "${AVS_REPO}" ]; then
 	echo "ℹ️  Using wire open source iOS binary"
 	AVS_REPO="wireapp/avs-ios-binaries"
-	AVS_LIBNAME="wire-avs-ios"
 	if [ -z "${AVS_VERSION}" ]; then
 		AVS_VERSION="${OPEN_SOURCE_AVS_VERSION}"
 	fi
 else 
 	echo "ℹ️  Using custom AVS binary"
 	AVS_VERSION="${AVS_CUSTOM_VERSION}"
-	AVS_LIBNAME="avs-ios"
 	if [ -z "${AVS_VERSION}" ]; then
 		AVS_VERSION="${APPSTORE_AVS_VERSION}"
 	fi
@@ -70,23 +68,19 @@ if [ -z "${AVS_VERSION}" ]; then
 	echo "ℹ️  Latest version is ${AVS_VERSION}"
 fi
 
-AVS_FILENAME="${AVS_LIBNAME}.${AVS_VERSION}.tar.bz2"
+AVS_FILENAME="${AVS_FRAMEWORK_NAME}-${AVS_VERSION}.zip"
 AVS_RELEASE_TAG_PATH="https://api.github.com/repos/${AVS_REPO}/releases/tags/${AVS_VERSION}"
-	
+
 ##################################
 # SET UP FOLDERS
 ##################################
 LIBS_PATH=./Libraries
+CARTHAGE_BUILD_PATH=./Carthage/Build/iOS
 
-if [ ! -e $LIBS_PATH ]
-then
-    mkdir $LIBS_PATH
-fi
-
-pushd $LIBS_PATH > /dev/null
+pushd $CARTHAGE_BUILD_PATH > /dev/null
 
 # remove previous, will unzip new
-rm -fr $AVS_SEARCH_PATH > /dev/null
+rm -fr $AVS_FRAMEWORK_NAME > /dev/null
 
 ##################################
 # DOWNLOAD
@@ -101,7 +95,7 @@ else
 	# Get tag json: need to parse json to get assed URL
 	TEMP_FILE=`mktemp`
 	curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}"
-	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][1]["url"]'`
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
 		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"
@@ -121,9 +115,10 @@ fi
 ##################################
 # UNPACK
 ##################################
-echo "ℹ️  Installing in ${LIBS_PATH}/${AVS_LIBNAME}..."
-mkdir "${AVS_SEARCH_PATH}"
-if ! tar -xvzf "${AVS_FILENAME}" -C "${AVS_SEARCH_PATH}" > /dev/null; then
+echo "ℹ️  Installing in ${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK}..."
+mkdir "${AVS_FRAMEWORK_NAME}"
+
+if ! unzip -d "${AVS_FRAMEWORK_NAME}" "${AVS_FILENAME}" > /dev/null; then
 	rm -fr "${AVS_FILENAME}"
 	echo "❌  Failed to install, is the downloaded file valid? ⚠️"
 	exit 1
