@@ -213,9 +213,5 @@ extension ZMUser {
         return "@\(handle)"
     }
 
-    var handle: String {
-        return displayName.lowercased()
-    }
-
 }
 
