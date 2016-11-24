@@ -5185,7 +5185,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/VIMNetworkingFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireMessageStrategy.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Canvas.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/avs.framework",
 			);
