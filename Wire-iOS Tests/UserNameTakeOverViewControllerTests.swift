@@ -31,7 +31,7 @@ class UserNameTakeOverViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersCorrectInitally() {
-        let sut = UserNameTakeOverViewController(suggestedHandle: "username", displayName: "Lonny Jaxon")
+        let sut = UserNameTakeOverViewController(suggestedHandle: "joseluis4839", displayName: "Jose Luis")
         verify(view: sut.prepareForSnapshots())
     }
 

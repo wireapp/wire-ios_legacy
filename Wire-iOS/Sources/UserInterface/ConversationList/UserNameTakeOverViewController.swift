@@ -67,7 +67,7 @@ final class UserNameTakeOverViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentView.layoutMargins = UIEdgeInsets(top: 32, left: 32, bottom: 32, right: 32)
+        contentView.layoutMargins = UIEdgeInsets(top: 28, left: 28, bottom: 28, right: 28)
         CASStyler.default().styleItem(self)
         setupViews()
         createConstraints()
@@ -118,10 +118,10 @@ final class UserNameTakeOverViewController: UIViewController {
         constrain(displayNameLabel, suggestedHandleLabel, topContainer) { nameLabel, handleLabel, container in
             nameLabel.leading == container.leading
             nameLabel.trailing == container.trailing
-            nameLabel.bottom == container.centerY
+            nameLabel.bottom == container.centerY - 4
             handleLabel.leading == container.leading
             handleLabel.trailing == container.trailing
-            handleLabel.top == container.centerY
+            handleLabel.top == container.centerY + 4
         }
 
         constrain(view, contentView, topContainer, titleLabel, subtitleLabel) { view, contentView, container, titleLabel, subtitleLabel in
@@ -132,16 +132,16 @@ final class UserNameTakeOverViewController: UIViewController {
             container.bottom == titleLabel.top
             titleLabel.leading == contentView.leadingMargin
             titleLabel.trailing == contentView.trailingMargin
-            titleLabel.bottom == subtitleLabel.top - 16
+            titleLabel.bottom == subtitleLabel.top - 12
             subtitleLabel.leading == contentView.leadingMargin
             subtitleLabel.trailing == contentView.trailingMargin
         }
 
         constrain(contentView, subtitleLabel, chooseOwnButton, keepSuggestedButton) { contentView, subtitleLabel, chooseButton, keepButton in
-            subtitleLabel.bottom == chooseButton.top - 16
+            subtitleLabel.bottom == chooseButton.top - 28
             chooseButton.leading == contentView.leadingMargin
             chooseButton.trailing == contentView.trailingMargin
-            chooseButton.bottom == keepButton.top - 16
+            chooseButton.bottom == keepButton.top - 8
             chooseButton.height == 40
             keepButton.leading == contentView.leadingMargin
             keepButton.trailing == contentView.trailingMargin
