@@ -73,7 +73,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 - (void)dealloc
 {
     if (self.currentlyActiveVoiceChannelConversation != nil) {
-        [self.currentlyActiveVoiceChannelConversation.voiceChannel removeCallParticipantsObserverForToken:self.callParticipantsToken];
+        [ZMVoiceChannel removeCallParticipantsObserverForToken:self.callParticipantsToken inConversation:self.currentlyActiveVoiceChannelConversation];
     }
     [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
     [ZMMessageNotification removeNewMessagesObserverForToken:self.unreadMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
@@ -249,7 +249,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     }
 }
 
-- (void)changeObservedVoiceChannelConversation:(ZMVoiceChannel *)voiceChannel
+- (void)changeObservedVoiceChannelConversation:(id<VoiceChannel>)voiceChannel
 {
     if (voiceChannel.conversation == self.currentlyActiveVoiceChannelConversation) {
         if (voiceChannel.state == ZMVoiceChannelStateNoActiveUsers) {
@@ -258,7 +258,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     } else {
         if (voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel) {
             [self unregisterAsCallParticipantObserver];
-            self.callParticipantsToken = [voiceChannel addCallParticipantsObserver:self];
+//            self.callParticipantsToken = [ZMVoiceChannel addCallParticipantsObserver:self inConversation:voiceChannel.conversation voiceChannel:voiceChannel]; // FIXME
             self.currentlyActiveVoiceChannelConversation = voiceChannel.conversation;
         }
     }
@@ -266,7 +266,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 - (void)unregisterAsCallParticipantObserver
 {
-    [self.currentlyActiveVoiceChannelConversation.voiceChannel removeCallParticipantsObserverForToken:self.callParticipantsToken];
+    [ZMVoiceChannel removeCallParticipantsObserverForToken:self.callParticipantsToken inConversation:self.currentlyActiveVoiceChannelConversation];
     self.currentlyActiveVoiceChannelConversation = nil;
 }
 

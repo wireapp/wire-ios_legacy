@@ -107,7 +107,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
             mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: "voice.log")
         }
         
-        mailComposeViewController.setMessageBody((report?.string)!, isHTML: false)
+        mailComposeViewController.setMessageBody(report.string, isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
     

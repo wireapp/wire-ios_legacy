@@ -62,7 +62,7 @@
 - (void)dealloc
 {
     [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-    [self.message.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
+    [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 }
 
 - (void)prepareForReuse
@@ -70,7 +70,7 @@
     [super prepareForReuse];
     
     [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-    [self.message.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
+    [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 }
 
 - (void)createMissedCallViews
@@ -110,13 +110,13 @@
 {
     if (message.conversation != self.message.conversation) {
         if (self.voiceChannelStateObserverToken != nil) {
-            [self.message.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
+            [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
         }
         if (self.conversationObserverToken != nil) {
             [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
         }
         self.conversationObserverToken = [message.conversation addConversationObserver:self];
-        self.voiceChannelStateObserverToken = [message.conversation.voiceChannel addVoiceChannelStateObserver:self];
+        self.voiceChannelStateObserverToken = [ZMVoiceChannel addVoiceChannelStateObserver:self inConversation:self.message.conversation];
     }
     
     [super configureForMessage:message layoutProperties:layoutProperties];

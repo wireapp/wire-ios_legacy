@@ -329,10 +329,12 @@
             __block BOOL joined = YES;
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 if (video) {
-                    joined = [self.voiceChannel joinVideoCall:nil inUserSession:[ZMUserSession sharedSession]];
+//                    joined = [self.voiceChannel joinVideoCall:nil inUserSession:[ZMUserSession sharedSession]];
+                    [self.voiceChannel joinWithVideo:YES];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoCall inConversation:self];
                 } else {
-                    [self.voiceChannel joinInUserSession:[ZMUserSession sharedSession]];
+//                    [self.voiceChannel joinInUserSession:[ZMUserSession sharedSession]];
+                    [self.voiceChannel joinWithVideo:NO];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionAudioCall inConversation:self];
                 }
 
@@ -369,7 +371,7 @@
                 continue;
             }
             else if (conversation.voiceChannel.state == ZMVoiceChannelStateIncomingCall) {
-                [conversation.voiceChannel ignoreIncomingCall];
+                [conversation.voiceChannel ignore];
             }
             else if (conversation.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel ||
                      conversation.voiceChannel.state == ZMVoiceChannelStateSelfIsJoiningActiveChannel ||

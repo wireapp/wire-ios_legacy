@@ -103,11 +103,13 @@
     BOOL isVideoCall = voiceChannelOverlayController.conversation.isVideoCall;
     // If call is starting and is video call, select front camera as default
     if (callIsStarting && isVideoCall) {
-        NSError* cameraSetError = nil;
-        [voiceChannelOverlayController.conversation.voiceChannel setVideoCaptureDevice:ZMFrontCameraDeviceID error:&cameraSetError];
-        if (nil != cameraSetError) {
-            DDLogError(@"Cannot set default front camera: %@", cameraSetError);
-        }
+        
+        // FIXME
+//        NSError* cameraSetError = nil;
+//        [voiceChannelOverlayController.conversation.voiceChannel setVideoCaptureDevice:ZMFrontCameraDeviceID error:&cameraSetError];
+//        if (nil != cameraSetError) {
+//            DDLogError(@"Cannot set default front camera: %@", cameraSetError);
+//        }
     }
     
     [self transitionFromVoiceChannelOverlayController:previousVoiceChannelOverlayController toVoiceChannelOverlayController:voiceChannelOverlayController];
@@ -209,7 +211,7 @@
 
 - (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)info
 {
-    DDLogVoice(@"SE: Voice channel state change from %d (%@) to %d (%@)", info.currentState, StringFromZMVoiceChannelState(info.currentState), info.previousState, StringFromZMVoiceChannelState(info.previousState));
+    DDLogVoice(@"SE: Voice channel state change from %d (%@) to %d (%@)", info.previousState, StringFromZMVoiceChannelState(info.previousState), info.currentState, StringFromZMVoiceChannelState(info.currentState));
     [self updateActiveCallConversation];
     [self updateVoiceChannelOverlays];
 }

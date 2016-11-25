@@ -63,9 +63,9 @@ FOUNDATION_EXPORT NSString *StringFromZMVoiceChannelConnectionState(ZMVoiceChann
 
 @implementation ZMVoiceChannel (Additions)
 
-+ (ZMVoiceChannel *)firstActiveVoiceChannelInConversationList:(NSArray *)conversations
++ (id<VoiceChannel>)firstActiveVoiceChannelInConversationList:(NSArray *)conversations
 {
-    ZMVoiceChannel *activeVoiceChannel = nil;
+    id<VoiceChannel> activeVoiceChannel = nil;
     for (ZMConversation *conversation in conversations) {
         if (conversation.voiceChannel != nil && conversation.voiceChannel.state > ZMVoiceChannelStateNoActiveUsers) {
             activeVoiceChannel = conversation.voiceChannel;

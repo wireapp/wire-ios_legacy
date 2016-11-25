@@ -169,7 +169,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
+    [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
@@ -383,7 +383,7 @@
     }
 
     if (self.conversation != nil) {
-        [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
+        [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
         [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
     }
 
@@ -391,7 +391,7 @@
     [self setupNavigatiomItem];
     
     if (self.conversation != nil) {
-        self.voiceChannelStateObserverToken = [conversation.voiceChannel addVoiceChannelStateObserver:self];
+        self.voiceChannelStateObserverToken = [ZMVoiceChannel addVoiceChannelStateObserver:self inConversation:conversation];
         self.conversationObserverToken = [self.conversation addConversationObserver:self];
     }
 }

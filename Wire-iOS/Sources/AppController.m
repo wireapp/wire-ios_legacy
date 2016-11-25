@@ -367,11 +367,14 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
     
     (void)[Settings sharedSettings];
-    
-    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
-    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
-    
-    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
+
+    // FIXME
+//    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
+//    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
+//    
+//    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
+    [ZMUserSession setUseCallKit:NO];
+    [ZMUserSession setEnableCallingV3:[[Settings sharedSettings] enableV3Calling]];
     
     NSBundle *bundle = NSBundle.mainBundle;
     NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];

@@ -258,6 +258,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.link_options.browser.title".localized
     case .sendV3Assets:
         return "Send assets using the v3 endpoint"
+    case .enableV3Calling:
+        return "Enable calling V3"
     }
 }
 

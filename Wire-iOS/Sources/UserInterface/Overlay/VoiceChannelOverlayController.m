@@ -62,11 +62,11 @@
 - (void)dealloc
 {
     if (self.voiceChannelStateObserverToken != nil) {
-        [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
+        [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
     }
     
     if (self.voiceChannelParticipantsObserverToken != nil) {
-        [self.conversation.voiceChannel removeCallParticipantsObserverForToken:self.voiceChannelParticipantsObserverToken];
+        [ZMVoiceChannel removeCallParticipantsObserverForToken:self.voiceChannelParticipantsObserverToken inConversation:self.conversation];
     }
     
     if (![[Settings sharedSettings] disableAVS]) {
@@ -120,11 +120,11 @@
     [self.overlayView cas_styleClass];
     
     if (self.voiceChannelStateObserverToken == nil) {
-        self.voiceChannelStateObserverToken = [self.conversation.voiceChannel addVoiceChannelStateObserver:self];
+        self.voiceChannelStateObserverToken = [ZMVoiceChannel addVoiceChannelStateObserver:self inConversation:self.conversation];
     }
     
     if (self.voiceChannelParticipantsObserverToken == nil && self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-        self.voiceChannelParticipantsObserverToken = [self.conversation.voiceChannel addCallParticipantsObserver:self];
+        self.voiceChannelParticipantsObserverToken = [ZMVoiceChannel addCallParticipantsObserver:self inConversation:self.conversation voiceChannel:self.conversation.voiceChannel];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoReceiveStateUpdated:) name:FlowManagerVideoReceiveStateNotification object:nil];
@@ -191,9 +191,9 @@
 - (void)ignoreButtonClicked:(id)sender
 {
     DDLogVoice(@"UI: Ignore button tap");
-    ZMVoiceChannel *voiceChannel = self.conversation.voiceChannel;
+    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        [voiceChannel ignoreIncomingCall];
+        [voiceChannel ignore];
     } completionHandler:^{
         [Analytics shared].sessionSummary.incomingCallsMuted++;
     }];
@@ -202,7 +202,7 @@
 - (void)leaveButtonClicked:(id)sender
 {
     DDLogVoice(@"UI: Leave button tap");
-    ZMVoiceChannel *voiceChannel = self.conversation.voiceChannel;
+    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel leave];
     }];
@@ -228,7 +228,8 @@
 - (void)videoButtonClicked:(id)sender
 {
     __block NSError *error = nil;
-    BOOL isActive = [self.conversation.voiceChannel isSendingVideoForParticipant:self.conversation.firstActiveParticipantOtherThanSelf error:&error];
+    // FIXME
+    BOOL isActive = NO; // [self.conversation.voiceChannel isSendingVideoForParticipant:self.conversation.firstActiveParticipantOtherThanSelf error:&error];
     if (nil != error) {
         DDLogError(@"Cannot get video active state: %@", error);
     }
@@ -239,7 +240,7 @@
     DDLogVoice(@"UI: video from %d to %d", isActive, newActiveState);
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        [self.conversation.voiceChannel setVideoSendActive:newActiveState error:&error];
+//        [self.conversation.voiceChannel setVideoSendActive:newActiveState error:&error]; FIXME
     }
                                 completionHandler:^{
                                     self.outgoingVideoActive = newActiveState;
@@ -263,7 +264,7 @@
     
     [self.overlayView animateCameraChangeWithChangeAction:^{
         NSError *error = nil;
-        [self.conversation.voiceChannel setVideoCaptureDevice:deviceID error:&error];
+//        [self.conversation.voiceChannel setVideoCaptureDevice:deviceID error:&error]; FIXME
         if (nil != error) {
             DDLogError(@"Error switching camera: %@", error);
         }
@@ -422,7 +423,7 @@
 
 - (void)voiceChannelParticipantsDidChange:(VoiceChannelParticipantsChangeInfo *)info
 {
-    ZMVoiceChannelParticipantState *state = [info.voiceChannel participantStateForUser:self.conversation.connectedUser];
+    ZMVoiceChannelParticipantState *state = [info.voiceChannel stateForParticipant:self.conversation.connectedUser];
     
     if (info.otherActiveVideoCallParticipantsChanged) {
         self.remoteIsSendingVideo = state.isSendingVideo;

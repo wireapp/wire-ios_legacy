@@ -115,7 +115,7 @@ fi
 ##################################
 # UNPACK
 ##################################
-echo "ℹ️  Installing in ${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK}..."
+echo "ℹ️  Installing in ${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK_NAME}..."
 mkdir "${AVS_FRAMEWORK_NAME}"
 
 if ! unzip -d "${AVS_FRAMEWORK_NAME}" "${AVS_FILENAME}" > /dev/null; then

@@ -43,7 +43,7 @@
 - (void)dealloc
 {
     if (self.participantsStateObserverToken) {
-        [self.conversation.voiceChannel removeCallParticipantsObserverForToken:self.participantsStateObserverToken];
+        [ZMVoiceChannel removeCallParticipantsObserverForToken:self.participantsStateObserverToken inConversation:self.conversation];
     }
     
     [ZMVoiceChannelParticipantVoiceGainChangedNotification removeObserver:self];
@@ -57,7 +57,7 @@
         self.conversation = conversation;
         self.collectionView = collectionView;
         
-        self.participantsStateObserverToken = [self.conversation.voiceChannel addCallParticipantsObserver:self];
+        self.participantsStateObserverToken = [ZMVoiceChannel addCallParticipantsObserver:self inConversation:conversation voiceChannel:conversation.voiceChannel];
         [self.collectionView registerClass:[VoiceChannelParticipantCell class] forCellWithReuseIdentifier:@"VoiceChannelParticipantCell"];
         self.collectionView.dataSource = self;
         
@@ -65,7 +65,8 @@
         // the next layout pass, which is when the collection view normally queries the data source.
         [self.collectionView performBatchUpdates:nil completion:nil];
         
-        [ZMVoiceChannelParticipantVoiceGainChangedNotification addObserver:self forVoiceChannel:self.conversation.voiceChannel];
+        // FIXME
+        [ZMVoiceChannelParticipantVoiceGainChangedNotification addObserver:self forVoiceChannel:self.conversation.voiceChannel.v2];
     }
     
     return self;
@@ -75,7 +76,7 @@
 {
     ZMUser *user = [self.conversation.voiceChannel.participants objectAtIndex:indexPath.row];
     
-    ZMVoiceChannelParticipantState *participantState = [self.conversation.voiceChannel participantStateForUser:user];
+    ZMVoiceChannelParticipantState *participantState = [self.conversation.voiceChannel stateForParticipant:user];
         
     VoiceChannelParticipantCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"VoiceChannelParticipantCell" forIndexPath:indexPath];
     [cell configureForUser:user participantState:participantState];
@@ -113,7 +114,7 @@
         [info.updatedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             VoiceChannelParticipantCell *cell = (VoiceChannelParticipantCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:idx inSection:0]];
             ZMUser *user = [self.conversation.voiceChannel.participants objectAtIndex:idx];
-            ZMVoiceChannelParticipantState *participantState = [self.conversation.voiceChannel participantStateForUser:user];
+            ZMVoiceChannelParticipantState *participantState = [self.conversation.voiceChannel stateForParticipant:user];
             
             [cell configureForUser:user participantState:participantState];
         }];
