@@ -394,6 +394,31 @@ MoreConnectionsButton {
     }
 }
 
+UserNameTakeOverViewController {
+    view: @{
+        backgroundColor: clear;
+    }
+
+    displayNameLabel: @{
+        font: $font-large-thin;
+        textColor: $color-text-dimmed-light;
+    }
+
+    suggestedHandleLabel: @{
+        font: $font-large;
+        textColor: $color-text-foreground-dark;
+    }
+
+    titleLabel: @{
+        font: $font-large;
+        textColor: $color-text-foreground-dark;
+    }
+
+    linkFont: $font-large;
+    subtitleFont: $font-large-thin;
+    subtitleColor: $color-text-foreground-dark;
+}
+
 /* User client details screen */
 
 ProfileClientViewController {

@@ -691,6 +691,14 @@
 "error.email.invalid" = "Please enter a valid email address";
 "error.phone.invalid" = "Please enter a valid phone number";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// @name takeover screen
+"registration.select_handle.takeover.title" = "Wire @names are here.";
+"registration.select_handle.takeover.subtitle" = "People will be able to find you easier.";
+"registration.select_handle.takeover.subtitle_link" = "Learn more";
+
+"registration.select_handle.takeover.choose_own" = "Choose your own";
+"registration.select_handle.takeover.keep_suggested" = "Keep this one";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
