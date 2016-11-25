@@ -30,19 +30,25 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersCorrectInitially() {
-        let state = HandleChangeState(currentHandle: "bruno", newHandle: nil, available: true)
+        let state = HandleChangeState(currentHandle: "bruno", newHandle: nil, availability: .unknown)
         let sut = ChangeHandleViewController(state: state)
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersCorrectNewHandleUnavailable() {
-        let state = HandleChangeState(currentHandle: "bruno", newHandle: "kevin92", available: false)
+        let state = HandleChangeState(currentHandle: "bruno", newHandle: "james", availability: .taken)
         let sut = ChangeHandleViewController(state: state)
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersCorrectNewHandleAvailable() {
-        let state = HandleChangeState(currentHandle: "bruno", newHandle: "kevin_92", available: true)
+        let state = HandleChangeState(currentHandle: "bruno", newHandle: "james_xXx", availability: .available)
+        let sut = ChangeHandleViewController(state: state)
+        verify(view: sut.prepareForSnapshots())
+    }
+
+    func testThatItRendersCorrectNewHandleNotYetChecked() {
+        let state = HandleChangeState(currentHandle: "bruno", newHandle: "vanessa92", availability: .unknown)
         let sut = ChangeHandleViewController(state: state)
         verify(view: sut.prepareForSnapshots())
     }
@@ -53,17 +59,26 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
-        constrain(view) { view in
-            view.height == 290
-            view.width == 375
-        }
+        let navigationController = UINavigationController(rootViewController: self)
+        navigationController.navigationBar.tintColor = UIColor(for: .brightOrange)
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.isTranslucent = true
+        navigationController.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.white,
+            NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()
+        ]
+
+        UIBarButtonItem.wr_appearanceWhenContained(in: UINavigationBar.self).setTitleTextAttributes([
+            NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()
+            ], for: UIControlState.normal)
 
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
 
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        return view
+        return navigationController.view
     }
     
 }

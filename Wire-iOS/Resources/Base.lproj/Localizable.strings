@@ -479,7 +479,7 @@
 "self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Unable to set @name";
-"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting yout @name. Please try again.";
+"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your @name. Please try again.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
