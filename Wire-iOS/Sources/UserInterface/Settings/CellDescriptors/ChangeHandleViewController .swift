@@ -109,52 +109,44 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 struct HandleChangeState {
 
-    init(currentHandle: String?, newHandle: String?, available: Bool) {
+    enum ValidationError: Error {
+        case tooShort, tooLong, invalidCharacter, sameAsPrevious
+    }
+
+    enum HandleAvailability {
+        case unknown, available, taken
+    }
+
+    let currentHandle: String?
+    private(set) var newHandle: String?
+    var availability: HandleAvailability
+
+    var displayHandle: String? {
+        return newHandle ?? currentHandle
+    }
+
+    init(currentHandle: String?, newHandle: String?, availability: HandleAvailability) {
         self.currentHandle = currentHandle
         self.newHandle = newHandle
-        self.available = available
-        self.error = nil
+        self.availability = availability
     }
 
     private static var allowedCharacters: CharacterSet = {
         return CharacterSet.decimalDigits.union(.letters).union(CharacterSet(charactersIn: "_"))
     }()
 
-    enum ValidationError: Error {
-        case lessThanTwoCharacters, invalidCharacter, sameAsPrevious
-    }
-
-    let currentHandle: String?
-    private(set) var newHandle: String? {
-        didSet {
-            available = true
-        }
-    }
-
-    var error: ValidationError? = nil
-    var available: Bool
-
-    var displayHandle: String? {
-        return newHandle ?? currentHandle
-    }
-
-    mutating func update(handle: String) throws {
-        try validate(handle: handle)
+    mutating func update(_ handle: String) throws {
+        try validate(handle)
         newHandle = handle
+        availability = .unknown
     }
 
-    private func error(forNewHandle handle: String) -> ValidationError? {
+    func validate(_ handle: String) throws {
         let subset = CharacterSet(charactersIn: handle).isSubset(of: HandleChangeState.allowedCharacters)
-        guard subset else { return .invalidCharacter }
-        guard handle.characters.count > 1 else { return .lessThanTwoCharacters }
-        guard handle != currentHandle else { return .sameAsPrevious }
-        return nil
-    }
-
-    private mutating func validate(handle: String) throws {
-        error = error(forNewHandle: handle)
-        guard let validationError = error else { return }
-        throw validationError
+        guard subset else { throw ValidationError.invalidCharacter }
+        guard handle.characters.count > 2 else { throw ValidationError.tooShort }
+        guard handle.characters.count < 22 else { throw ValidationError.tooLong }
+        guard handle != currentHandle else { throw ValidationError.sameAsPrevious }
     }
 
 }
@@ -169,7 +161,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
 
     convenience init() {
-        self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle ?? nil, newHandle: nil, available: true))
+        self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle ?? nil, newHandle: nil, availability: .unknown))
     }
 
     init(state: HandleChangeState) {
@@ -184,7 +176,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateFooter()
+        updateUI()
         observerToken = updateStatus?.add(observer: self)
     }
 
@@ -218,7 +210,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     fileprivate var attributedFooterTitle: NSAttributedString {
         let infoText = "self.settings.account_section.handle.change.footer".localized.attributedString && UIColor(white: 1, alpha: 0.4)
         let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor(for: .vividRed)
-        let prefix = !state.available ? alreadyTakenText + "\n\n" : "\n\n".attributedString
+        let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return prefix + infoText
     }
 
@@ -230,7 +222,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func updateNavigationItem() {
-        navigationItem.rightBarButtonItem?.isEnabled = state.available && nil == state.error
+        navigationItem.rightBarButtonItem?.isEnabled = state.availability == .available
     }
 
     fileprivate func updateUI() {
@@ -252,6 +244,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChangeHandleTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeHandleTableViewCell
         cell.delegate = self
         cell.handleTextField.text = state.displayHandle
+        cell.handleTextField.becomeFirstResponder()
         return cell
     }
 
@@ -262,9 +255,11 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool {
         do {
-            try state.update(handle: text)
+            try state.validate(text)
             return true
         } catch HandleChangeState.ValidationError.invalidCharacter {
+            return false
+        } catch HandleChangeState.ValidationError.tooLong {
             return false
         } catch {
             return true
@@ -273,7 +268,7 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String) {
         do {
-            try state.update(handle: text)
+            try state.update(text)
             NSObject.cancelPreviousPerformRequests(withTarget: self)
             perform(#selector(checkAvailability), with: text, afterDelay: 0.2)
         } catch {
@@ -293,30 +288,42 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 
     func didCheckAvailiabilityOfHandle(handle: String, available: Bool) {
         guard handle == state.newHandle else { return }
-        state.available = available
+        state.availability = available ? .available : .taken
         updateUI()
     }
 
     func didFailToCheckAvailabilityOfHandle(handle: String) {
         guard handle == state.newHandle else { return }
-        state.available = false
+        // If we fail to check we let the user check again by tapping the save button
+        state.availability = .available
         updateUI()
     }
 
     func didSetHandle() {
         showLoadingView = false
+        state.availability = .taken
     }
 
     func didFailToSetHandle() {
+        presentFailureAlert()
         showLoadingView = false
-        // TODO: Implement error case
     }
 
     func didFailToSetHandleBecauseExisting() {
-        showLoadingView = false
-        state.available = false
+        state.availability = .taken
         updateUI()
+        showLoadingView = false
     }
 
+    private func presentFailureAlert() {
+        let alert = UIAlertController(
+            title: "self.settings.account_section.handle.change.failure_alert.title".localized,
+            message: "self.settings.account_section.handle.change.failure_alert.message".localized,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
