@@ -122,18 +122,20 @@ extension SettingsCellDescriptorFactory {
     }
 
     func handleElement() -> SettingsCellDescriptorType {
-
-        let preview: PreviewGeneratorType = { _ in
-            return .text(ZMUser.selfUser().displayHandle)
+        if let handle = ZMUser.selfUser().displayHandle {
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.account_section.handle.title".localized,
+                isDestructive: false,
+                presentationStyle: .navigation,
+                presentationAction: ChangeHandleViewController.init,
+                previewGenerator: { _ in .text(handle) },
+                hideAccesoryView: true
+            )
         }
 
         return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_section.handle.title".localized,
-            isDestructive: false,
-            presentationStyle: .navigation,
-            presentationAction: ChangeHandleViewController.init,
-            previewGenerator: preview,
-            hideAccesoryView: true
+            title: "self.settings.account_section.add_handle.title".localized,
+            presentationAction: ChangeHandleViewController.init
         )
     }
 
@@ -209,7 +211,8 @@ extension SettingsCellDescriptorFactory {
 
 extension ZMUser {
 
-    var displayHandle: String {
+    var displayHandle: String? {
+        guard let handle = handle else { return nil }
         return "@\(handle)"
     }
 

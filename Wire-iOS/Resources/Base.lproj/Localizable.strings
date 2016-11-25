@@ -441,6 +441,7 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
 "self.settings.account_section.handle.title" = "@name";
+"self.settings.account_section.add_handle.title" = "Add @name";
 
 "self.settings.account_details_group.info.footer" = "People can find you with these details.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";

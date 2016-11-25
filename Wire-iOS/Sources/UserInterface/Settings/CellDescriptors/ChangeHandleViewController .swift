@@ -109,6 +109,13 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 struct HandleChangeState {
 
+    init(currentHandle: String?, newHandle: String?, available: Bool) {
+        self.currentHandle = currentHandle
+        self.newHandle = newHandle
+        self.available = available
+        self.error = nil
+    }
+
     private static var allowedCharacters: CharacterSet = {
         return CharacterSet.decimalDigits.union(.letters).union(CharacterSet(charactersIn: "_"))
     }()
@@ -117,16 +124,17 @@ struct HandleChangeState {
         case lessThanTwoCharacters, invalidCharacter, sameAsPrevious
     }
 
-    let currentHandle: String
+    let currentHandle: String?
     private(set) var newHandle: String? {
         didSet {
-            available = false
+            available = true
         }
     }
 
+    var error: ValidationError? = nil
     var available: Bool
 
-    var displayHandle: String {
+    var displayHandle: String? {
         return newHandle ?? currentHandle
     }
 
@@ -135,11 +143,18 @@ struct HandleChangeState {
         newHandle = handle
     }
 
-    private func validate(handle: String) throws {
+    private func error(forNewHandle handle: String) -> ValidationError? {
         let subset = CharacterSet(charactersIn: handle).isSubset(of: HandleChangeState.allowedCharacters)
-        guard subset else { throw ValidationError.invalidCharacter }
-        guard handle.characters.count > 1 else { throw ValidationError.lessThanTwoCharacters }
-        guard handle != currentHandle else { throw ValidationError.sameAsPrevious }
+        guard subset else { return .invalidCharacter }
+        guard handle.characters.count > 1 else { return .lessThanTwoCharacters }
+        guard handle != currentHandle else { return .sameAsPrevious }
+        return nil
+    }
+
+    private mutating func validate(handle: String) throws {
+        error = error(forNewHandle: handle)
+        guard let validationError = error else { return }
+        throw validationError
     }
 
 }
@@ -154,7 +169,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
 
     convenience init() {
-        self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle, newHandle: nil, available: true))
+        self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle ?? nil, newHandle: nil, available: true))
     }
 
     init(state: HandleChangeState) {
@@ -195,7 +210,9 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     func saveButtonTapped(sender: UIBarButtonItem) {
-        // TODO: Set handle
+        guard let handleToSet = state.newHandle else { return }
+        updateStatus?.requestSettingHandle(handle: handleToSet)
+        showLoadingView = true
     }
 
     fileprivate var attributedFooterTitle: NSAttributedString {
@@ -213,7 +230,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func updateNavigationItem() {
-        navigationItem.rightBarButtonItem?.isEnabled = state.available
+        navigationItem.rightBarButtonItem?.isEnabled = state.available && nil == state.error
     }
 
     fileprivate func updateUI() {
@@ -257,12 +274,17 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String) {
         do {
             try state.update(handle: text)
-            updateStatus?.requestCheckHandleAvailability(handle: text)
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            perform(#selector(checkAvailability), with: text, afterDelay: 0.2)
         } catch {
             // no-op
         }
 
         updateUI()
+    }
+
+    @objc private func checkAvailability(of handle: String) {
+        updateStatus?.requestCheckHandleAvailability(handle: handle)
     }
 
 }
@@ -277,6 +299,21 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 
     func didFailToCheckAvailabilityOfHandle(handle: String) {
         guard handle == state.newHandle else { return }
+        state.available = false
+        updateUI()
+    }
+
+    func didSetHandle() {
+        showLoadingView = false
+    }
+
+    func didFailToSetHandle() {
+        showLoadingView = false
+        // TODO: Implement error case
+    }
+
+    func didFailToSetHandleBecauseExisting() {
+        showLoadingView = false
         state.available = false
         updateUI()
     }
