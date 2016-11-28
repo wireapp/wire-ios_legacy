@@ -207,6 +207,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     private func setupViews() {
         title = "self.settings.account_section.handle.change.title".localized
+        view.backgroundColor = .clear
         tableView.allowsSelection = false
         ChangeHandleTableViewCell.register(in: tableView)
         footerLabel.numberOfLines = 0

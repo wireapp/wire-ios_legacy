@@ -1458,12 +1458,6 @@ ChangeHandleTableViewCell {
     }
 }
 
-ChangeHandleViewController {
-    view: @{
-        backgroundColor: clear;
-    }
-}
-
 FingerprintTableViewCell{
     fingerprintLabelFont: $font-normal-light;
     fingerprintLabelBoldFont: $font-normal-medium;

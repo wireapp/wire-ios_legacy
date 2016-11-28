@@ -24,8 +24,7 @@ import Cartography
 extension ConversationListViewController {
 
     func showUsernameTakeover(with handle: String) {
-        guard nil == usernameTakeoverViewController else { return }
-        guard let selfUser = ZMUser.selfUser() /*, nil == selfUser.handle */ else { return } // TODO: Uncomment
+        guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle, nil == usernameTakeoverViewController else { return }
         usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, displayName: selfUser.displayName)
         usernameTakeoverViewController.delegate = self
 
@@ -56,10 +55,11 @@ extension ConversationListViewController {
 
     fileprivate func openChangeHandleViewController(with handle: String) {
         let handleController = ChangeHandleViewController(suggestedHandle: handle)
-        let navigationController = SettingsStyleNavigationController(rootViewController: handleController)
-
-        navigationController.modalPresentationStyle = .formSheet
         handleController.popOnSuccess = false
+        handleController.view.backgroundColor = .black
+        let navigationController = SettingsStyleNavigationController(rootViewController: handleController)
+        navigationController.modalPresentationStyle = .formSheet
+
         parent?.present(navigationController, animated: true, completion: nil)
     }
 
@@ -76,7 +76,7 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
         switch action {
         case .chooseOwn(let suggested): openChangeHandleViewController(with: suggested)
         case .keepSuggestion(let suggested): setSuggested(handle: suggested)
-        case .learnMore: URL(string: "www.wire.com")?.open() // TODO: Insert correct URL
+        case .learnMore: URL(string: "https://www.wire.com")?.open() // TODO: Insert correct URL
         }
     }
 
