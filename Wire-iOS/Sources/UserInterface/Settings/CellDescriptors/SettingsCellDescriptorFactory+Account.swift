@@ -122,13 +122,13 @@ extension SettingsCellDescriptorFactory {
     }
 
     func handleElement() -> SettingsCellDescriptorType {
-        if let handle = ZMUser.selfUser().handle {
+        if nil != ZMUser.selfUser().handle {
             return SettingsExternalScreenCellDescriptor(
                 title: "self.settings.account_section.handle.title".localized,
                 isDestructive: false,
                 presentationStyle: .navigation,
                 presentationAction: ChangeHandleViewController.init,
-                previewGenerator: { _ in .text("@\(handle)") },
+                previewGenerator: { _ in .text("@\(ZMUser.selfUser().handle ?? "")") },
                 hideAccesoryView: true
             )
         }

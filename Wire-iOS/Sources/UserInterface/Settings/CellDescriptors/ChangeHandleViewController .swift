@@ -64,6 +64,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         handleTextField.delegate = self
         handleTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         handleTextField.autocapitalizationType = .none
+        handleTextField.accessibilityLabel = "handleTextField"
         prefixLabel.text = "@"
         [prefixLabel, handleTextField].forEach(addSubview)
     }
@@ -302,6 +303,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
+        _ = navigationController?.popViewController(animated: true)
     }
 
     func didFailToSetHandle() {
