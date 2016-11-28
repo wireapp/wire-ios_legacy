@@ -175,10 +175,14 @@
         self.credentials = [ZMEmailCredentials credentialsWithEmail:addEmailStepViewController.emailAddress
                                                            password:addEmailStepViewController.password];
 
-        // TODO: Check error
-        [self.updateStatus requestSettingEmailAndPasswordWithCredentials:self.credentials error:nil];
-        
-        self.showLoadingView = YES;
+        NSError *error;
+        [self.updateStatus requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+
+        if (nil != error) {
+            DDLogError(@"Error requesting to set email and password: %@", error);
+        } else {
+            self.showLoadingView = YES;
+        }
     }
 }
 
@@ -187,8 +191,12 @@
 - (void)emailVerificationStepDidRequestVerificationEmail
 {
     [self.analyticsTracker tagResentEmailVerification];
-    // TODO: Check error
-    [self.updateStatus requestSettingEmailAndPasswordWithCredentials:self.credentials error:nil];
+    NSError *error;
+    [self.updateStatus requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+
+    if (nil != error) {
+        DDLogError(@"Error requesting to set email and password: %@", error);
+    }
 }
 
 #pragma mark ZMUserObserver
