@@ -25,7 +25,6 @@ extension SettingsCellDescriptorFactory {
     func accountGroup() -> SettingsCellDescriptorType {
         var sections: [SettingsSectionDescriptorType] = [
             infoSection(),
-            personalSection(),
             appearanceSection(),
             actionsSection()
         ]
@@ -45,18 +44,12 @@ extension SettingsCellDescriptorFactory {
             descriptors.append(handleElement())
         }
 
+        descriptors.append(contentsOf: [phoneElement(), emailElement()])
+
         return SettingsSectionDescriptor(
             cellDescriptors: descriptors,
             header: "self.settings.account_details_group.info.title".localized,
-            footer: "self.settings.account_details_group.info.footer".localized
-        )
-    }
-
-    func personalSection() -> SettingsSectionDescriptorType {
-        return SettingsSectionDescriptor(
-            cellDescriptors: [phoneElement(), emailElement()],
-            header: "self.settings.account_details_group.personal.title".localized,
-            footer: "self.settings.account_details_group.personal.footer".localized
+            footer: nil
         )
     }
 
