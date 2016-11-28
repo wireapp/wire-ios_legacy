@@ -21,18 +21,16 @@ import Foundation
 import Cartography
 
 
-struct WiggleAnimator {
+fileprivate extension UIView {
 
-    static func wiggle(views: UIView...) {
+    func wiggle() {
         let animation = CAKeyframeAnimation()
         animation.keyPath = "position.x"
         animation.duration = 0.3
         animation.isAdditive = true
         animation.values = [0, 4, -4, 2, 0]
         animation.keyTimes = [0, 0.166, 0.5, 0.833, 1]
-        views.forEach {
-            $0.layer.add(animation, forKey: "wiggle-animation")
-        }
+        layer.add(animation, forKey: "wiggle-animation")
     }
 
 }
@@ -83,7 +81,9 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func performWiggleAnimation() {
-        WiggleAnimator.wiggle(views: handleTextField, prefixLabel)
+        [handleTextField, prefixLabel].forEach {
+            $0.wiggle()
+        }
     }
 
     // MARK: - UITextField
@@ -107,7 +107,10 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 }
 
-
+/// This struct represents the current state of a handle
+/// change operation and performs necessary validation steps of
+/// a new handle. The `ChangeHandleViewController` uses this state 
+/// to layout its interface.
 struct HandleChangeState {
 
     enum ValidationError: Error {
@@ -136,12 +139,17 @@ struct HandleChangeState {
         return CharacterSet.decimalDigits.union(.letters).union(CharacterSet(charactersIn: "_"))
     }()
 
+    /// Validates the passed in handle and updates the state if
+    /// no error occurs, otherwise a `ValidationError` will be thrown.
     mutating func update(_ handle: String) throws {
         try validate(handle)
         newHandle = handle
         availability = .unknown
     }
 
+    /// Validation a new handle, if passed in handle
+    /// is invalid, an error will be thrown.
+    /// This function does not update the `HandleChangeState` itself.
     func validate(_ handle: String) throws {
         let subset = CharacterSet(charactersIn: handle).isSubset(of: HandleChangeState.allowedCharacters)
         guard subset else { throw ValidationError.invalidCharacter }
@@ -165,6 +173,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle ?? nil, newHandle: nil, availability: .unknown))
     }
 
+    /// Used to inject a specific `HandleChangeState` in tests. See `ChangeHandleViewControllerTests`.
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
@@ -256,6 +265,8 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool {
         do {
+            /// We validate the new handle and only allow the edit if
+            /// the new handle neither contains invalid characters nor is too long.
             try state.validate(text)
             return true
         } catch HandleChangeState.ValidationError.invalidCharacter {
