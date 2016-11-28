@@ -22,13 +22,13 @@ import Cartography
 import TTTAttributedLabel
 
 
-@objc protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
+protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)
 }
 
 
-@objc enum UserNameTakeOverViewControllerAction: UInt {
-    case chooseOwn, keepSuggestion, learnMore
+enum UserNameTakeOverViewControllerAction {
+    case chooseOwn(String), keepSuggestion(String), learnMore
 }
 
 
@@ -157,8 +157,8 @@ final class UserNameTakeOverViewController: UIViewController {
 
     private func action(for button: Button) -> UserNameTakeOverViewControllerAction? {
         switch button {
-        case chooseOwnButton: return .chooseOwn
-        case keepSuggestedButton: return .keepSuggestion
+        case chooseOwnButton: return .chooseOwn(suggestedHandle)
+        case keepSuggestedButton: return .keepSuggestion(suggestedHandle)
         default: return nil
         }
     }

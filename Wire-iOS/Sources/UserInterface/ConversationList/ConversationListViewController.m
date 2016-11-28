@@ -96,6 +96,9 @@
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;
 
+@property (nonatomic, weak) id<UserProfile> userProfile;
+@property (nonatomic) NSObject *userProfileObserverToken;
+
 @property (nonatomic) TopItemsController *topItemsController;
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
@@ -139,6 +142,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
     [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.allConversationsObserverToken];
 }
 
@@ -156,6 +160,9 @@
     self.contentContainer = [[UIView alloc] initForAutoLayout];
     self.contentContainer.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.contentContainer];
+
+    self.userProfile = ZMUserSession.sharedSession.userProfile;
+    self.userProfileObserverToken = [self.userProfile addObserver:self];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
@@ -190,6 +197,10 @@
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [self.selectedConversation savePendingLastRead];
     }];
+
+    if (Settings.sharedSettings.enableUserNamesUI) {
+        [self.userProfile suggestHandles];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -706,7 +717,7 @@
 
 - (void)showPushPermissionDeniedDialogIfNeeded
 {
-    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
+    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts || self.usernameTakeoverViewController != nil) {
         return;
     }
     
@@ -865,6 +876,10 @@
 - (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController
 {
     [self closePushPermissionDeniedDialog];
+
+    if (nil == ZMUser.selfUser.handle) {
+        [self.userProfile suggestHandles];
+    }
 }
 
 @end

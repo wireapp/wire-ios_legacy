@@ -139,6 +139,10 @@ struct HandleChangeState {
         return CharacterSet.decimalDigits.union(.letters).union(CharacterSet(charactersIn: "_"))
     }()
 
+    private static var allowedLength: CountableClosedRange<Int> {
+        return 3...21
+    }
+
     /// Validates the passed in handle and updates the state if
     /// no error occurs, otherwise a `ValidationError` will be thrown.
     mutating func update(_ handle: String) throws {
@@ -153,8 +157,8 @@ struct HandleChangeState {
     func validate(_ handle: String) throws {
         let subset = CharacterSet(charactersIn: handle).isSubset(of: HandleChangeState.allowedCharacters)
         guard subset else { throw ValidationError.invalidCharacter }
-        guard handle.characters.count > 2 else { throw ValidationError.tooShort }
-        guard handle.characters.count < 22 else { throw ValidationError.tooLong }
+        guard handle.characters.count >= HandleChangeState.allowedLength.lowerBound else { throw ValidationError.tooShort }
+        guard handle.characters.count <= HandleChangeState.allowedLength.upperBound else { throw ValidationError.tooLong }
         guard handle != currentHandle else { throw ValidationError.sameAsPrevious }
     }
 
@@ -167,10 +171,15 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared().userProfile
     private var observerToken: AnyObject?
-
+    var popOnSuccess = true
 
     convenience init() {
         self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle ?? nil, newHandle: nil, availability: .unknown))
+    }
+
+    convenience init(suggestedHandle handle: String) {
+        self.init(state: .init(currentHandle: nil, newHandle: handle, availability: .available))
+        setupViews()
     }
 
     /// Used to inject a specific `HandleChangeState` in tests. See `ChangeHandleViewControllerTests`.
@@ -179,7 +188,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         super.init(style: .grouped)
         setupViews()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -314,6 +323,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
+        guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
     }
 

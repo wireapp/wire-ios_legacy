@@ -781,6 +781,7 @@
 		BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC61D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift */; };
 		BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */; };
 		BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */; };
+		BFAAB2391DEC6B2800CBC096 /* ConversationList+Handles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
@@ -2122,6 +2123,7 @@
 		BFA25DC61D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ConversationInputBarViewController+Emoji.swift"; path = "Emoji/ConversationInputBarViewController+Emoji.swift"; sourceTree = "<group>"; };
 		BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiKeyboardViewController.swift; path = Emoji/EmojiKeyboardViewController.swift; sourceTree = "<group>"; };
 		BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Emojis.swift; path = Emoji/Emojis.swift; sourceTree = "<group>"; };
+		BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationList+Handles.swift"; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
@@ -4313,6 +4315,7 @@
 				87302F461B15D4BF001F478C /* SearchView */,
 				875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */,
 				875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */,
+				BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */,
 				87371C181B7355C400807499 /* ConversationListViewController+StartUI.h */,
 				87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */,
 				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
@@ -5751,6 +5754,7 @@
 				8FC854A4199245770008B66B /* ParticipantsViewController.m in Sources */,
 				871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */,
 				8FC8549B199245770008B66B /* NetworkActivityViewController.m in Sources */,
+				BFAAB2391DEC6B2800CBC096 /* ConversationList+Handles.swift in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,
 				875A23111ADEA1A200111C88 /* CountryCodeResultsTableViewController.m in Sources */,
