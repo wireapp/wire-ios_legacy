@@ -75,7 +75,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
 - (void)createConstraints
 {
     [self.pingImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-    [self.pingImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
+    [self.pingImageView autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.authorLabel withOffset:8];
     [self.countdownContainerView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.pingImageView];
 }
 

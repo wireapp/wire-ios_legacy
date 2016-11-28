@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Рингтони";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Дзвінки";
+"self.settings.callkit.caption" = "Ділитися інформацією з iOS";
+"self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії iOS. Якщо сервіс iCloud активовано, то історія ваших дзвінків буде доступна для Apple. Перезапустіть Wire, щоб застосувати зміну цієї опції.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пінг у Wire";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "У відповідь на численні прохання";
 "self.settings.popular_demand.send_button.title" = "Кнопка \"Надіслати\"";
-"self.settings.popular_demand.call_kit.title" = "Не використовувати системний фреймворк для здійснення дзвінків (необхідне перезавантаження)";
 "self.settings.popular_demand.send_button.footer" = "Вимкнути надсилання через клавішу \"Ввід\".";
 
 // Open in

@@ -43,7 +43,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @property (nonatomic, strong) UIView *lineView;
 
 @property (nonatomic, assign) BOOL enableSubtitles;
-@property (nonatomic, assign) BOOL hasCreatedInitialConstraints;
 
 @property (nonatomic, strong) NSLayoutConstraint *titleBottomMarginConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *rightAccessoryWidthConstraint;
@@ -97,6 +96,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
         [self createSubtitleField];
     }
 
+    [self createConstraints];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(otherConversationListItemDidScroll:)
                                                  name:ConversationListItemDidScrollNotification
@@ -120,38 +121,32 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self addSubview:self.lineView];
 }
 
-- (void)updateConstraints
+- (void)createConstraints
 {
-    if (! self.hasCreatedInitialConstraints) {
-        self.hasCreatedInitialConstraints = YES;
-        
-        CGFloat leftMargin = [WAZUIMagic floatForIdentifier:@"list.left_margin"];
-        [self.statusIndicator autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeRight];
-        [self.statusIndicator autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.titleField];
-        
-        [self.titleField autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:leftMargin];
-        [self.titleField autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.rightAccessory withOffset:0.0];
-        self.titleBottomMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:18.0f];
+    CGFloat leftMargin = [WAZUIMagic floatForIdentifier:@"list.left_margin"];
+    [self.statusIndicator autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
+    [self.statusIndicator autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
 
-        [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:18.0];
-        [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.rightAccessory autoSetDimension:ALDimensionHeight toSize:28.0f];
-        self.rightAccessoryWidthConstraint = [self.rightAccessory autoSetDimension:ALDimensionWidth toSize:0.0f];
-        [self updateRightAccessoryWidth];
-        
-        if (self.enableSubtitles) {
-            [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:2];
-            [self.subtitleField autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.titleField];
-            [self.subtitleField autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.titleField];
-            
-            [self.lineView autoSetDimension:ALDimensionHeight toSize:1.0];
-            [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-            [self.lineView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-35.0];
-            [self.lineView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.titleField];
-        }
+    [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
+    [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0];
+    self.titleBottomMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:18.0f];
+
+    [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
+    [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    [self.rightAccessory autoSetDimension:ALDimensionHeight toSize:28.0f];
+    self.rightAccessoryWidthConstraint = [self.rightAccessory autoSetDimension:ALDimensionWidth toSize:0.0f];
+    [self updateRightAccessoryWidth];
+
+    if (self.enableSubtitles) {
+        [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:2];
+        [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
+        [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.titleField];
+
+        [self.lineView autoSetDimension:ALDimensionHeight toSize:1.0];
+        [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:-35.0];
+        [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
     }
-    
-    [super updateConstraints];
 }
 
 - (void)setTitleText:(NSString *)titleText

@@ -78,7 +78,7 @@ infix operator += : AssignmentPrecedence
 // Applies the attributes on the rhs to the string on the lhs
 infix operator && : LogicalConjunctionPrecedence
 
-public func &&(left: String, right: [String: AnyObject]) -> NSAttributedString {
+public func &&(left: String, right: [String: Any]) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: right)
     return result
 }
@@ -99,7 +99,7 @@ public func &&(left: NSAttributedString, right: UIColor) -> NSAttributedString {
     return result
 }
 
-public func &&(left: NSAttributedString, right: [String: AnyObject]) -> NSAttributedString {
+public func &&(left: NSAttributedString, right: [String: Any]) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes(right, range: NSMakeRange(0, result.length))
     return result

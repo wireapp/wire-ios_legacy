@@ -149,14 +149,14 @@
         [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
         [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftMargin];
-            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:nameAvatarMargin];
+            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
+            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:nameAvatarMargin];
         }];
         [self.hideButton autoSetDimension:ALDimensionWidth toSize:64 relation:NSLayoutRelationGreaterThanOrEqual];
 
         [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel];
-        [self.subtitleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
-        self.subtitleRightMarginConstraint = [self.subtitleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.swipeView withOffset:- rightMargin];
+        [self.subtitleLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
+        self.subtitleRightMarginConstraint = [self.subtitleLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.nameLabelTopConstraint = [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.swipeView withOffset:9.0f];
         self.nameLabelVerticalConstraint = [self.nameLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
@@ -170,21 +170,21 @@
             self.nameLabelTopConstraint.active = YES;
         }
         
-        [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.avatarContainer withOffset:nameAvatarMargin];
-        self.nameRightMarginConstraint = [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.swipeView withOffset:- rightMargin];
+        [self.nameLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
+        self.nameRightMarginConstraint = [self.nameLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
         [self.avatarContainer autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.avatarContainer];
-        [self.avatarContainer autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.swipeView withOffset:leftMargin];
+        [self.avatarContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.swipeView withOffset:leftMargin];
         [self.avatarContainer autoAlignAxisToSuperviewMarginAxis:ALAxisHorizontal];
 
         self.conversationImageViewSize = [self.conversationImageView autoSetDimension:ALDimensionWidth toSize:80];
         [self.conversationImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.conversationImageView];
-        [self.conversationImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.swipeView withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_left_margin"]];
+        [self.conversationImageView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.swipeView withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_left_margin"]];
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
         [self.instantConnectButton autoSetDimensionsToSize:CGSizeMake(64, 64)];
 
         self.initialConstraintsCreated = YES;

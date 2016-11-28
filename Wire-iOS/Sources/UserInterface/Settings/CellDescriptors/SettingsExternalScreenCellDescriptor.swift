@@ -33,6 +33,8 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     let identifier: String?
     let icon: ZetaIconType
 
+    private let hideAccesoryView: Bool
+
     weak var group: SettingsGroupCellDescriptorType?
     weak var viewController: UIViewController?
     
@@ -40,27 +42,32 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
     let presentationAction: () -> (UIViewController?)
     
-    init(title: String, presentationAction: @escaping () -> (UIViewController?)) {
-        self.title = title
-        self.destructive = false
-        self.presentationStyle = .navigation
-        self.presentationAction = presentationAction
-        self.identifier = .none
-        self.previewGenerator = .none
-        self.icon = .none
+    convenience init(title: String, presentationAction: @escaping () -> (UIViewController?)) {
+        self.init(
+            title: title,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            identifier: nil,
+            presentationAction: presentationAction,
+            previewGenerator: nil,
+            icon: .none
+        )
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none) {
-        self.title = title
-        self.destructive = isDestructive
-        self.presentationStyle = presentationStyle
-        self.presentationAction = presentationAction
-        self.identifier = .none
-        self.previewGenerator = previewGenerator
-        self.icon = icon
+    convenience init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none, hideAccesoryView: Bool = false) {
+        self.init(
+            title: title,
+            isDestructive: isDestructive,
+            presentationStyle: presentationStyle,
+            identifier: nil,
+            presentationAction: presentationAction,
+            previewGenerator: previewGenerator,
+            icon: icon,
+            hideAccesoryView: hideAccesoryView
+        )
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none) {
+    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String?, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none, hideAccesoryView: Bool = false) {
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle
@@ -68,6 +75,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         self.identifier = identifier
         self.previewGenerator = previewGenerator
         self.icon = icon
+        self.hideAccesoryView = hideAccesoryView
     }
     
     func select(_ value: SettingsPropertyValue?) {
@@ -95,7 +103,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         }
         cell.icon = self.icon
         if let groupCell = cell as? SettingsGroupCell {
-            if self.presentationStyle == .modal {
+            if self.presentationStyle == .modal || self.hideAccesoryView {
                 groupCell.accessoryType = .none
             } else {
                 groupCell.accessoryType = .disclosureIndicator
