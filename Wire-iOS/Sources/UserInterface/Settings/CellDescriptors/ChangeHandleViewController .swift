@@ -165,7 +165,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     var state: HandleChangeState
     private var footerLabel = UILabel()
-    fileprivate weak var updateStatus = ZMUserSession.shared().userProfileUpdateStatus
+    fileprivate weak var userProfile = ZMUserSession.shared().userProfile
     private var observerToken: AnyObject?
 
 
@@ -187,13 +187,13 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateUI()
-        observerToken = updateStatus?.add(observer: self)
+        observerToken = userProfile?.add(observer: self)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let token = observerToken else { return }
-        updateStatus?.removeObserver(token: token)
+        userProfile?.removeObserver(token: token)
     }
 
     private func setupViews() {
@@ -213,7 +213,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     func saveButtonTapped(sender: UIBarButtonItem) {
         guard let handleToSet = state.newHandle else { return }
-        updateStatus?.requestSettingHandle(handle: handleToSet)
+        userProfile?.requestSettingHandle(handle: handleToSet)
         showLoadingView = true
     }
 
@@ -291,7 +291,7 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
     }
 
     @objc private func checkAvailability(of handle: String) {
-        updateStatus?.requestCheckHandleAvailability(handle: handle)
+        userProfile?.requestCheckHandleAvailability(handle: handle)
     }
 
 }

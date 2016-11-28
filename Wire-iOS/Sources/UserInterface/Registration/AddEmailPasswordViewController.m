@@ -49,7 +49,7 @@
 @property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
 @property (nonatomic) UIButton *closeButton;
 @property (nonatomic) ZMEmailCredentials *credentials;
-@property (nonatomic, weak) UserProfileUpdateStatus *updateStatus;
+@property (nonatomic, weak) id<UserProfile> userProfile;
 
 @end
 
@@ -60,7 +60,7 @@
 
 - (void)dealloc
 {
-    [self.updateStatus removeObserverWithToken:self.userEditingToken];
+    [self.userProfile removeObserverWithToken:self.userEditingToken];
     [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
@@ -69,8 +69,8 @@
     self = [super init];
     
     if (self) {
-        self.updateStatus = ZMUserSession.sharedSession.userProfileUpdateStatus;
-        self.userEditingToken = [self.updateStatus addObserver:self];
+        self.userProfile = ZMUserSession.sharedSession.userProfile;
+        self.userEditingToken = [self.userProfile addObserver:self];
         self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
     }
     
@@ -176,7 +176,7 @@
                                                            password:addEmailStepViewController.password];
 
         NSError *error;
-        [self.updateStatus requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+        [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
 
         if (nil != error) {
             DDLogError(@"Error requesting to set email and password: %@", error);
@@ -192,7 +192,7 @@
 {
     [self.analyticsTracker tagResentEmailVerification];
     NSError *error;
-    [self.updateStatus requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+    [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
 
     if (nil != error) {
         DDLogError(@"Error requesting to set email and password: %@", error);

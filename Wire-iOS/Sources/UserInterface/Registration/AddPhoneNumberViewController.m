@@ -55,7 +55,7 @@
 @property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
 @property (nonatomic) UIButton *closeButton;
 @property (nonatomic) UIButton *skipButton;
-@property (nonatomic, weak) UserProfileUpdateStatus *updateStatus;
+@property (nonatomic, weak) id<UserProfile> userProfile;
 
 @end
 
@@ -63,7 +63,7 @@
 
 - (void)dealloc
 {
-    [self.updateStatus removeObserverWithToken:self.userEditingToken];
+    [self.userProfile removeObserverWithToken:self.userEditingToken];
     [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
@@ -72,8 +72,8 @@
     self = [super init];
     
     if (self) {
-        self.updateStatus = ZMUserSession.sharedSession.userProfileUpdateStatus;
-        self.userEditingToken = [self.updateStatus addObserver:self];
+        self.userProfile = ZMUserSession.sharedSession.userProfile;
+        self.userEditingToken = [self.userProfile addObserver:self];
         self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
     }
     
@@ -228,7 +228,7 @@
 
         self.showLoadingView = YES;
 
-        [self.updateStatus requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
+        [self.userProfile requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
     }
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
         PhoneVerificationStepViewController *phoneVerificationStepViewController = (PhoneVerificationStepViewController *)viewController;
@@ -236,7 +236,7 @@
                                                                         verificationCode:phoneVerificationStepViewController.verificationCode];
         
         self.showLoadingView = YES;
-        [self.updateStatus requestPhoneNumberChangeWithCredentials:credentials];
+        [self.userProfile requestPhoneNumberChangeWithCredentials:credentials];
     }
 }
 
@@ -244,7 +244,7 @@
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [self.updateStatus requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
+    [self.userProfile requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
 }
 
 #pragma mark - NavigationControllerDelegate
