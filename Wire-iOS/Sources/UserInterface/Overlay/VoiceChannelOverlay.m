@@ -467,7 +467,7 @@ static NSString *NotNilString(NSString *string) {
     self.videoButton.enabled = connected;
     self.videoButton.selected = self.videoButton.enabled && self.outgoingVideoActive;
 
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         self.videoViewFullScreen = ! connected;
     } else {
         self.videoView.hidden = YES;
@@ -644,7 +644,7 @@ static NSString *NotNilString(NSString *string) {
         self.cameraPreviewCenterHorisontally.constant = self.cameraPreviewPosition.x;
     }
     
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         self.leaveButtonPinRightConstraint.active = NO;
     }
     else {
@@ -658,7 +658,7 @@ static NSString *NotNilString(NSString *string) {
     
     // Construct visible views list based on:
     // Voice channel state & is video / group call
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         visibleViews = [self visibleViewsForStateInVideoCall:state];
     }
     else {

@@ -278,7 +278,7 @@
 
 - (void)acceptIncomingCall
 {
-    [self joinVoiceChannelWithVideo:self.isVideoCall completionHandler:^(BOOL joined) {
+    [self joinVoiceChannelWithVideo:self.voiceChannel.isVideoCall completionHandler:^(BOOL joined) {
         if (joined) {
             [Analytics shared].sessionSummary.incomingCallsAccepted++;
         }

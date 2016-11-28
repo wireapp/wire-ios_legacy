@@ -170,7 +170,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     switch (state) {
             
         case ZMVoiceChannelStateOutgoingCall: {
-            if (change.voiceChannel.conversation.isVideoCall) {
+            if (change.voiceChannel.conversation.isVideoCall) { // FIXME
                 [mediaManager playSound:MediaManagerSoundRingingFromMeVideoSound];
             }
             else {

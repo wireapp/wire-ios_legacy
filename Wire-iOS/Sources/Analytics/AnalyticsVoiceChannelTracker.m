@@ -68,11 +68,11 @@
     
     if (currentState == ZMVoiceChannelStateOutgoingCall) {
         self.initiatedCall = YES;
-        self.isVideoCall = conversation.isVideoCall;
+        self.isVideoCall = conversation.voiceChannel.isVideoCall;
         [self.analytics tagInitiatedCallInConversation:conversation video:self.isVideoCall];
     }
     else if (currentState == ZMVoiceChannelStateIncomingCall) {
-        self.isVideoCall = conversation.isVideoCall;
+        self.isVideoCall = conversation.voiceChannel.isVideoCall;
         [self.analytics tagReceivedCallInConversation:conversation video:self.isVideoCall];
     }
     else if (currentState == ZMVoiceChannelStateSelfIsJoiningActiveChannel) {

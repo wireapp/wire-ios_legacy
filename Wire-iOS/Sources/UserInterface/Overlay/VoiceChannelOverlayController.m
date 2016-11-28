@@ -81,7 +81,7 @@
     
     if (self) {
         _conversation = conversation;
-        self.remoteIsSendingVideo = conversation.isVideoCall;
+        self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
     }
     
     return self;
@@ -152,7 +152,7 @@
     self.overlayView.muted = mediaManager.microphoneMuted;
     self.overlayView.speakerActive = mediaManager.speakerEnabled;
 
-    self.outgoingVideoActive = self.conversation.isVideoCall;
+    self.outgoingVideoActive = self.conversation.voiceChannel.isVideoCall;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -436,14 +436,14 @@
 {
     DDLogVoice(@"SE: Voice channel state did change to %@ (old %@). %@", StringFromZMVoiceChannelState(change.currentState), StringFromZMVoiceChannelState(change.previousState), change);
     
-    if (change.currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel && self.callStartedTimestamp == nil && !self.conversation.isVideoCall) {
+    if (change.currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel && self.callStartedTimestamp == nil && !self.conversation.voiceChannel.isVideoCall) {
         [self startCallDurationTimer];
     }
     
     if ((change.currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel ||
         change.currentState == ZMVoiceChannelStateIncomingCall ||
         change.currentState == ZMVoiceChannelStateOutgoingCall)
-        && self.conversation.isVideoCall) {
+        && self.conversation.voiceChannel.isVideoCall) {
         [UIApplication sharedApplication].idleTimerDisabled = YES;
     }
     
@@ -495,7 +495,7 @@
 
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
-    if (self.conversation.isVideoCall) {
+    if (self.conversation.voiceChannel.isVideoCall) {
         self.outgoingVideoWasActiveBeforeBackgrounding = self.outgoingVideoActive;
         [[ZMUserSession sharedSession] enqueueChanges:^{
             self.conversation.isSendingVideo = NO;
@@ -505,7 +505,7 @@
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification
 {
-    if (self.conversation.isVideoCall) {
+    if (self.conversation.voiceChannel.isVideoCall) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
             self.conversation.isSendingVideo = self.outgoingVideoWasActiveBeforeBackgrounding;
         }];

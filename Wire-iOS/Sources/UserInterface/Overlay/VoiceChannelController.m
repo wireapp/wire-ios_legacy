@@ -100,7 +100,7 @@
     
     
     BOOL callIsStarting = previousVoiceChannelOverlayController == nil && voiceChannelOverlayController != nil;
-    BOOL isVideoCall = voiceChannelOverlayController.conversation.isVideoCall;
+    BOOL isVideoCall = voiceChannelOverlayController.conversation.voiceChannel.isVideoCall;
     // If call is starting and is video call, select front camera as default
     if (callIsStarting && isVideoCall) {
         
