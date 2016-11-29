@@ -44,16 +44,19 @@
     
     CGAffineTransform offscreenRight = CGAffineTransformMakeTranslation(initialFrameFromViewController.size.width, 0);
     CGAffineTransform offscreenLeft = CGAffineTransformMakeTranslation(-initialFrameFromViewController.size.width, 0);
-    
+
+    CGAffineTransform toViewStartTransform = self.rightToLeft ? offscreenRight : offscreenLeft;
+    CGAffineTransform fromViewEndTransform = self.rightToLeft ? offscreenLeft : offscreenRight;
+
     fromView.frame = initialFrameFromViewController;
     toView.frame = finalFrameToViewController;
-    toView.transform = offscreenLeft;
+    toView.transform = toViewStartTransform;
     
     [containerView addSubview:toView];
     [containerView addSubview:fromView];
     
     dispatch_block_t animation = ^{
-        fromView.transform = offscreenRight;
+        fromView.transform = fromViewEndTransform;
         toView.transform = CGAffineTransformIdentity;
     };
     
@@ -71,6 +74,11 @@
                      completion:^(){
                          completion(YES);
                      }];
+}
+
+- (BOOL)rightToLeft
+{
+    return UIApplication.sharedApplication.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 @end

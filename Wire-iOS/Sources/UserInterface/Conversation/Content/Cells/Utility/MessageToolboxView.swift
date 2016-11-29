@@ -121,20 +121,20 @@ extension ZMConversationMessage {
     
     private func createConstraints() {
         constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
-            labelClipView.left == selfView.leftMargin
+            labelClipView.leading == selfView.leadingMargin
             labelClipView.centerY == selfView.centerY
-            labelClipView.right == selfView.rightMargin
+            labelClipView.trailing == selfView.trailingMargin
             
-            statusLabel.left == labelClipView.left
+            statusLabel.leading == labelClipView.leading
             statusLabel.top == labelClipView.top
             statusLabel.bottom == labelClipView.bottom
-            statusLabel.right <= reactionsView.left
+            statusLabel.trailing <= reactionsView.leading
             
-            reactionsView.right == selfView.rightMargin
+            reactionsView.trailing == selfView.trailingMargin
             reactionsView.centerY == selfView.centerY
             
             likeTooltipArrow.centerY == statusLabel.centerY
-            likeTooltipArrow.right == selfView.leftMargin - 8
+            likeTooltipArrow.trailing == selfView.leadingMargin - 8
         }
     }
     

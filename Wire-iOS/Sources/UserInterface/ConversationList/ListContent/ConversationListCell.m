@@ -158,8 +158,8 @@ static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.1;
         [self.animatedListView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            [self.animatedListView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftMarginConvList];
-            self.archiveRightMarginConstraint = [self.animatedListView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:leftMarginConvList / 2.0f];
+            [self.animatedListView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMarginConvList];
+            self.archiveRightMarginConstraint = [self.animatedListView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:leftMarginConvList / 2.0f];
         }];
     }
 

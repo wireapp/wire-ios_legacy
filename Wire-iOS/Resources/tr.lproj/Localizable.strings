@@ -139,8 +139,8 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Kaydetmek için tıkla\nDaha sonra %@ bilirsin";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Yukarıdan bir filtre seçin";
 
-"conversation.call.many_participants_confirmation.title" = "Start a call";
-"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.title" = "Bir arama başlat";
+"conversation.call.many_participants_confirmation.message" = "Bu %d kişiyi arayacak";
 "conversation.call.many_participants_confirmation.call" = "Ara";
 
 // Image confirmation dialogue
@@ -249,7 +249,7 @@
 "content.message.like" = "Beğen";
 "content.message.unlike" = "Beğenme";
 "content.message.forward" = "İlet";
-"content.message.forward.to" = "Send to...";
+"content.message.forward.to" = "Şuraya gönder...";
 
 "content.reactions_list.likers" = "Beğenen";
 
@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Zil Sesleri";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Calls";
+"self.settings.callkit.caption" = "Share with iOS";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire Araması";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Mesajı";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Pingi";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "Yoğun talep üzerine";
 "self.settings.popular_demand.send_button.title" = "Gönder butonu";
-"self.settings.popular_demand.call_kit.title" = "Yerel aramayı kullanma (yeniden başlatma)";
 "self.settings.popular_demand.send_button.footer" = "Giriş (Enter) tuşu ile göndermeyi devre dışı bırak.";
 
 // Open in

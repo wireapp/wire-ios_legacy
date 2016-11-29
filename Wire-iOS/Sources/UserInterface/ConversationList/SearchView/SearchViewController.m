@@ -66,7 +66,7 @@
     CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
     [self.searchView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:rightMargin - 10];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin - 10];
     [self.cancelButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.peopleInputController.view];
     [self.cancelButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.cancelButton];
     [self.cancelButton autoSetDimension:ALDimensionWidth toSize:30];

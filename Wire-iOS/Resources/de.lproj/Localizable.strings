@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Klingeltöne";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Anrufe";
+"self.settings.callkit.caption" = "Mit iOS teilen";
+"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt. Die Aktivierung dieser Einstellung erfordert einen Neustart von Wire.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire Anruf";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Nachricht";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "Auf allgemeinen Wunsch";
 "self.settings.popular_demand.send_button.title" = "Senden Taste";
-"self.settings.popular_demand.call_kit.title" = "Native anrufe deaktivieren (Neustart erforderlich)";
 "self.settings.popular_demand.send_button.footer" = "Deaktivieren, um Nachrichten mit der Enter-Taste zu senden.";
 
 // Open in

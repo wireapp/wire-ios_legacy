@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Beltonen";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Calls";
+"self.settings.callkit.caption" = "Share with iOS";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire oproep";
 "self.settings.sound_menu.sounds.wire_message" = "Wire bericht";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire ping";
@@ -489,8 +493,7 @@
 // By popular demand
 "self.settings.popular_demand.title" = "Op veler verzoek";
 "self.settings.popular_demand.send_button.title" = "Verstuurknop";
-"self.settings.popular_demand.call_kit.title" = "Gebruik geen native bellen (herstart)";
-"self.settings.popular_demand.send_button.footer" = "Zet het verstuur via 'enter' toets uit.";
+"self.settings.popular_demand.send_button.footer" = "Zet het versturen via de enter-toets uit.";
 
 // Open in
 "self.settings.external_apps.header" = "Open met";
@@ -517,7 +520,7 @@
 "self.settings.sound_menu.mute_while_talking.title" = "Eerste bericht, pings, oproepen";
 
 // Developer options
-"self.settings.developer_options.title" = "Ontwikkelaar Opties";
+"self.settings.developer_options.title" = "Opties voor ontwikkelaars";
 "self.settings.apns_logging.title" = "APNS logging";
 
 // Privacy (visibility) options

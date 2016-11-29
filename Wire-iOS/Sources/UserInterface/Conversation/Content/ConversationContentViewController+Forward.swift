@@ -23,28 +23,43 @@ import Cartography
 extension ZMConversation: ShareDestination {
 }
 
+// Should be called inside ZMUserSession.shared().performChanges block
+func forEachNonEphemeral(in conversations: [ZMConversation], callback: (ZMConversation)->()) {
+    conversations.forEach {
+        let timeout = $0.destructionTimeout
+        $0.updateMessageDestructionTimeout(timeout: .none)
+        
+        callback($0)
+        
+        $0.updateMessageDestructionTimeout(timeout: timeout)
+    }
+}
+
 func forward(_ message: ZMMessage, to: [AnyObject]) {
+    
+    let conversations = to as! [ZMConversation]
+    
     if Message.isTextMessage(message) {
         ZMUserSession.shared().performChanges {
-            to.forEach { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
+            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
         }
     }
     else if Message.isImageMessage(message) {
         ZMUserSession.shared().performChanges {
-            to.forEach { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
+            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
         }
     }
     else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
         ZMUserSession.shared().performChanges {
-            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.mimeType) { fileMetadata in
-                to.forEach { _ = $0.appendMessage(with: fileMetadata) }
+            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI()) { fileMetadata in
+                forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata) }
             }
         }
     }
     else if Message.isLocationMessage(message) {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
         ZMUserSession.shared().performChanges {
-            to.forEach { _ = $0.appendMessage(with: locationData) }
+            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: locationData) }
         }
     }
     else {
@@ -131,7 +146,13 @@ extension ZMMessage: Shareable {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell) {
-        let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter { $0 != message.conversation }
+        self.view.window!.endEditing(true)
+        
+        let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter {
+            ($0.conversationType == .oneOnOne || $0.conversationType == .group) &&
+                $0.isSelfAnActiveMember &&
+                $0 != message.conversation!
+        }
         
         let shareViewController = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
         

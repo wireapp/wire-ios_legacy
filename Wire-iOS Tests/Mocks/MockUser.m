@@ -124,6 +124,11 @@
     }
 }
 
+- (void)doesNotRecognizeSelector:(SEL)aSelector
+{
+
+}
+
 - (NSData *)imageMediumData
 {
     return nil;
