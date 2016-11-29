@@ -42,6 +42,7 @@ final class MockUserCopyable: MockUser, Copyable {
         self.name = instance.name
         self.emailAddress = instance.emailAddress
         self.phoneNumber = instance.phoneNumber
+        self.handle = instance.handle
         self.accentColorValue = instance.accentColorValue
         self.isBlocked = instance.isBlocked
         self.isIgnored = instance.isIgnored
@@ -83,6 +84,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        accentColor = .violet
     }
     
     func copy(view: UserConnectionView) -> (UserConnectionView, MockUser) {

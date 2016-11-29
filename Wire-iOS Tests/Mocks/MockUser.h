@@ -31,6 +31,7 @@
 @property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, readwrite) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
+@property (nonatomic, readwrite) NSString *handle;
 @property (nonatomic) ZMAccentColor accentColorValue;
 @property (nonatomic, readwrite) BOOL isBlocked;
 @property (nonatomic, readwrite) BOOL isIgnored;

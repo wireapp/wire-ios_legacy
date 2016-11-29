@@ -149,14 +149,7 @@ public final class UserConnectionView: UIView, Copyable {
         }
         
         let hasCommonConnections = self.commonConnectionsCount > 0
-        
-        var remoteIdentifier: UUID?
-        
-        if let zmUser = self.user as? ZMUser {
-            remoteIdentifier = zmUser.remoteIdentifier
-        }
-        
-        let username = ZMUser.autoUsername(forName: self.user.name, remoteIdentifier: remoteIdentifier) && labelStyle
+        let username = ("@" + self.user.handle) && labelStyle
         
         var secondLine: NSAttributedString? = .none
         
