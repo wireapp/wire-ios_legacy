@@ -140,7 +140,7 @@ struct HandleChangeState {
     }()
 
     private static var allowedLength: CountableClosedRange<Int> {
-        return 3...21
+        return 2...21
     }
 
     /// Validates the passed in handle and updates the state if

@@ -25,7 +25,7 @@ extension ConversationListViewController {
 
     func showUsernameTakeover(with handle: String) {
         guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle else { return }
-        guard state == .conversationList, nil == usernameTakeoverViewController else { return }
+        guard nil == usernameTakeoverViewController else { return }
         usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, displayName: selfUser.displayName)
         usernameTakeoverViewController.delegate = self
 
