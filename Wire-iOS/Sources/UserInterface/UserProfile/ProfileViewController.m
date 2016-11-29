@@ -194,62 +194,14 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
             headerStyle = ProfileHeaderStyleNoButton; // no button in 1:1 profile popover
         }
     }
-        
-    ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithHeaderStyle:headerStyle];
+
+    ProfileHeaderViewModel *viewModel = [[ProfileHeaderViewModel alloc] initWithUser:user fallbackName:self.bareUser.displayName style:headerStyle];
+    ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    if (user != nil) {
-        headerView.titleLabel.attributedText = [self attributedStringForTitle:user.name];
-        NSString *akaForUser = user.contact.name;
-        if ([akaForUser caseInsensitiveCompare:user.name] == NSOrderedSame) {
-            akaForUser = nil;
-        }
-        NSString *akaString = akaForUser;
-        headerView.akaLabel.attributedText = akaForUser ? [self attributedStringForAka:akaString] : nil;
-    }
-    else {
-        headerView.titleLabel.attributedText = [self attributedStringForTitle:self.bareUser.displayName];
-    }
-    
-    if ((user.isConnected || user.isPendingApprovalBySelfUser || user.isSelfUser || user.isBlocked) && user.emailAddress.length != 0) {
-        headerView.subtitleLabel.attributedText = [self attributedStringForSubtitle:[user.emailAddress uppercasedWithCurrentLocale]];
-    }
     
     [self.view addSubview:headerView];
     self.headerView = headerView;
-}
-
-- (NSAttributedString *)attributedStringForTitle:(NSString *)title
-{
-    if (title == nil) {
-        return nil;
-    }
-    return [[NSAttributedString alloc] initWithString:title
-                                           attributes:@{ NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"]}];
-}
-
-- (NSAttributedString *)attributedStringForAka:(NSString *)aka
-{
-    if (aka == nil) {
-        return nil;
-    }
-    
-    return [[NSAttributedString alloc] initWithString:aka
-                                           attributes:@{ NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"],
-                                                         NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed] }];
-}
-
-- (NSAttributedString *)attributedStringForSubtitle:(NSString *)subtitle
-{
-    if (subtitle == nil) {
-        return nil;
-    }
-    
-    return [[NSAttributedString alloc] initWithString:subtitle
-                                           attributes:@{ NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"],
-                                                         NSForegroundColorAttributeName: [UIColor accentColor] }];
 }
 
 #pragma mark - User observation

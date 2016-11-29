@@ -45,12 +45,14 @@
 
 @implementation ProfileHeaderView
 
-- (instancetype)initWithHeaderStyle:(ProfileHeaderStyle)headerStyle {
+- (instancetype)initWithViewModel:(ProfileHeaderViewModel *)viewModel
+{
     // Use non-zero rect to avoid broken autolayout
 	if (self = [super initWithFrame:CGRectMake(0, 0, 320, 80)]) {
-		_headerStyle = headerStyle;
 		[self createViews];
 		[self setupConstraints];
+        [self configureWithModel:viewModel];
+
 	}
 	return self;
 }
@@ -156,6 +158,14 @@
 
 			break;
 	}
+}
+
+- (void)configureWithModel:(ProfileHeaderViewModel *)model
+{
+    self.headerStyle = model.style;
+    self.titleLabel.attributedText = model.title;
+    self.subtitleLabel.attributedText = model.subtitle;
+    self.akaLabel.attributedText = model.correlationText;
 }
 
  - (void)setShowVerifiedShield:(BOOL)showVerifiedShield

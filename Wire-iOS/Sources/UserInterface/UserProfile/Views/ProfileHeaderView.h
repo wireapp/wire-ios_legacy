@@ -19,6 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class ProfileHeaderViewModel;
 
 typedef NS_ENUM(NSInteger, ProfileHeaderStyle) {
 	ProfileHeaderStyleCancelButton,
@@ -32,7 +33,7 @@ typedef NS_ENUM(NSInteger, ProfileHeaderStyle) {
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
-- (instancetype)initWithHeaderStyle:(ProfileHeaderStyle)headerStyle NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithViewModel:(ProfileHeaderViewModel *)viewModel NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong, readonly) IconButton *dismissButton;
 @property (nonatomic, strong, readonly) UILabel *titleLabel;

@@ -37,4 +37,4 @@
 #import "Message+Formatting.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
-
+#import "ProfileHeaderView.h"
