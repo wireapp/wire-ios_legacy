@@ -24,7 +24,8 @@ import Cartography
 extension ConversationListViewController {
 
     func showUsernameTakeover(with handle: String) {
-        guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle, nil == usernameTakeoverViewController else { return }
+        guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle else { return }
+        guard state == .conversationList, nil == usernameTakeoverViewController else { return }
         usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, displayName: selfUser.displayName)
         usernameTakeoverViewController.delegate = self
 
@@ -37,6 +38,7 @@ extension ConversationListViewController {
             takeover.edges == view.edges
         }
 
+        guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared().loadPlaceholderConversationController(animated: false)
     }
 

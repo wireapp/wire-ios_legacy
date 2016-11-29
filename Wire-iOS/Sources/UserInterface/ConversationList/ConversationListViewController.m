@@ -184,8 +184,10 @@
     [self updateArchiveButtonVisibility];
     
     self.allConversationsObserverToken = [[SessionObjectCache sharedCache].allConversations addConversationListObserver:self];
-    
-    if (! self.isComingFromRegistration) {
+
+    // We only want to present the notification takeover when the user already has a handle
+    // and is not coming from the registration flow (where we alreday ask for permissions).
+    if (! self.isComingFromRegistration && nil != ZMUser.selfUser.handle) {
         [self showPushPermissionDeniedDialogIfNeeded];
     }
 }
@@ -198,7 +200,7 @@
         [self.selectedConversation savePendingLastRead];
     }];
 
-    if (Settings.sharedSettings.enableUserNamesUI) {
+    if (Settings.sharedSettings.enableUserNamesUI && nil == ZMUser.selfUser.handle) {
         [self.userProfile suggestHandles];
     }
 }
@@ -876,10 +878,6 @@
 - (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController
 {
     [self closePushPermissionDeniedDialog];
-
-    if (nil == ZMUser.selfUser.handle) {
-        [self.userProfile suggestHandles];
-    }
 }
 
 @end
