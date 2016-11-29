@@ -697,11 +697,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // @name takeover screen
-"registration.select_handle.takeover.title" = "Wire @names are here.";
-"registration.select_handle.takeover.subtitle" = "People will be able to find you easier.";
+"registration.select_handle.takeover.title" = "Usernames are here.";
+"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Learn more";
 
-"registration.select_handle.takeover.choose_own" = "Choose your own";
+"registration.select_handle.takeover.choose_own" = "Choose yours";
 "registration.select_handle.takeover.keep_suggested" = "Keep this one";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
