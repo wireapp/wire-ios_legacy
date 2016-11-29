@@ -49,10 +49,10 @@
 {
     // Use non-zero rect to avoid broken autolayout
 	if (self = [super initWithFrame:CGRectMake(0, 0, 320, 80)]) {
+        _headerStyle = viewModel.style;
 		[self createViews];
 		[self setupConstraints];
         [self configureWithModel:viewModel];
-
 	}
 	return self;
 }
@@ -113,7 +113,6 @@
 
 - (void)setupConstraints
 {
-
 	CGFloat contentTopMargin = [WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_top_margin"];
 
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:contentTopMargin];
@@ -162,7 +161,6 @@
 
 - (void)configureWithModel:(ProfileHeaderViewModel *)model
 {
-    self.headerStyle = model.style;
     self.titleLabel.attributedText = model.title;
     self.subtitleLabel.attributedText = model.subtitle;
     self.akaLabel.attributedText = model.correlationText;

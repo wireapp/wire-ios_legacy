@@ -27,17 +27,35 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        recordMode = true
     }
 
     func testThatItRendersFallbackUserName() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Thomas", style: .noButton)
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .noButton)
+        let sut = ProfileHeaderView(viewModel: model)
+        verify(view: sut!)
+    }
+
+    func testThatItRendersFallbackUserName_CancelButton() {
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .cancelButton)
+        let sut = ProfileHeaderView(viewModel: model)
+        verify(view: sut!)
+    }
+
+    func testThatItRendersFallbackUserName_BackButton() {
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .backButton)
         let sut = ProfileHeaderView(viewModel: model)
         verify(view: sut!)
     }
 
     func testThatItRendersUserName() {
         let user = MockUser.mockUsers().first
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
+        let sut = ProfileHeaderView(viewModel: model)
+        verify(view: sut!)
+    }
+
+    func testThatItRendersUserNoUsernameButEmail() {
+        let user = MockUser.mockUsers().last
         let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
         let sut = ProfileHeaderView(viewModel: model)
         verify(view: sut!)

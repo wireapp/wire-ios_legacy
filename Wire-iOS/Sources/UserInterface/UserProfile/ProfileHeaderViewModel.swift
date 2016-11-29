@@ -27,6 +27,14 @@ import UIKit
     let correlationText: NSAttributedString?
     let style: ProfileHeaderStyle
 
+    static var smallLightFont: UIFont {
+        return UIFont(magicIdentifier: "style.text.small.font_spec_light")
+    }
+
+    static var dimmedColor: UIColor {
+        return .wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+    }
+
     init(user: ZMUser?, fallbackName fallback: String, style: ProfileHeaderStyle) {
         self.style = style
         title = ProfileHeaderViewModel.attributedTitle(for: user, fallback: fallback)
@@ -43,12 +51,12 @@ import UIKit
         guard let user = user else { return nil }
 
         if let handle = user.handle {
-            return handle && UIFont(magicIdentifier: "style.text.small.font_spec_light")
+            return ("@" + handle) && smallLightFont && dimmedColor
         }
 
         guard let mail = user.emailAddress, mail.characters.count > 0 else { return nil }
         if (user.isConnected || user.isPendingApprovalBySelfUser || user.isSelfUser || user.isBlocked) {
-            return user.emailAddress && UIFont(magicIdentifier: "style.text.small.font_spec_light") && UIColor.accent()
+            return user.emailAddress && smallLightFont && UIColor.accent()
         }
 
         return nil
@@ -59,7 +67,7 @@ import UIKit
         let contact: ZMAddressBookContact? = user.contact()
         guard let correlation = contact?.name else { return nil }
         guard correlation.caseInsensitiveCompare(user.name) != .orderedSame else { return nil }
-        return correlation && UIFont(magicIdentifier: "style.text.small.font_spec_light") && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        return correlation && smallLightFont && dimmedColor
     }
 
 }

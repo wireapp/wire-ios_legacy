@@ -356,7 +356,6 @@ ProfileHeaderView {
         textAlignment: center;
     }
     subtitleLabel: @{
-        textColor: $color-text-foreground;
         textAlignment: center;
     }
 }
