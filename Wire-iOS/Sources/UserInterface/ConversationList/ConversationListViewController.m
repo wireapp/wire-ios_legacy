@@ -212,7 +212,7 @@
 
 - (void)requestSuggestedHandlesIfNeeded
 {
-    if (Settings.sharedSettings.enableUserNamesUI && nil == ZMUser.selfUser.handle) {
+    if (!Settings.sharedSettings.disableUserNamesUI && nil == ZMUser.selfUser.handle) {
         [self.userProfile suggestHandles];
     }
 }
