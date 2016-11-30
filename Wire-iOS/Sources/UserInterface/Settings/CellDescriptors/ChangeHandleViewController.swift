@@ -136,7 +136,7 @@ struct HandleChangeState {
     }
 
     private static var allowedCharacters: CharacterSet = {
-        return CharacterSet.decimalDigits.union(.letters).union(CharacterSet(charactersIn: "_"))
+        return CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz_").union(.decimalDigits)
     }()
 
     private static var allowedLength: CountableClosedRange<Int> {
