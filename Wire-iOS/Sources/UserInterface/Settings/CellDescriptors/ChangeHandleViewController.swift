@@ -146,9 +146,9 @@ struct HandleChangeState {
     /// Validates the passed in handle and updates the state if
     /// no error occurs, otherwise a `ValidationError` will be thrown.
     mutating func update(_ handle: String) throws {
+        availability = .unknown
         try validate(handle)
         newHandle = handle
-        availability = .unknown
     }
 
     /// Validation a new handle, if passed in handle
@@ -290,8 +290,8 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String) {
         do {
-            try state.update(text)
             NSObject.cancelPreviousPerformRequests(withTarget: self)
+            try state.update(text)
             perform(#selector(checkAvailability), with: text, afterDelay: 0.2)
         } catch {
             // no-op
