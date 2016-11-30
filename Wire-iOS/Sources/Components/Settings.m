@@ -58,7 +58,7 @@ NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
 
 NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
-NSString * const UserDefaultEnableUserNamesUI = @"EnableUserNamesUI";
+NSString * const UserDefaultDisableUserNamesUI = @"DisableUserNamesUI";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -116,7 +116,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue,
              UserDefaultSendV3Assets,
-             UserDefaultEnableUserNamesUI
+             UserDefaultDisableUserNamesUI
              ];
 }
 
@@ -456,14 +456,14 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
     [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
 }
 
-- (BOOL)enableUserNamesUI
+- (BOOL)disableUserNamesUI
 {
-    return [self.defaults boolForKey:UserDefaultEnableUserNamesUI];
+    return [self.defaults boolForKey:UserDefaultDisableUserNamesUI];
 }
 
-- (void)setEnableUserNamesUI:(BOOL)enableUserNamesUI
+- (void)setDisableUserNamesUI:(BOOL)disableUserNamesUI
 {
-    [self.defaults setBool:enableUserNamesUI forKey:UserDefaultEnableUserNamesUI];
+    [self.defaults setBool:disableUserNamesUI forKey:UserDefaultDisableUserNamesUI];
 }
 
 #pragma mark - Link opening options
