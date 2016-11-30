@@ -28,27 +28,36 @@ fileprivate let dimmedColor = UIColor.wr_color(fromColorScheme: ColorSchemeColor
 fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
 
 
-class AddressBookCorrelationFormatter {
+@objc public class AddressBookCorrelationFormatter: NSObject {
 
-    private static func addressBookText(for user: ZMUser, with addressBookName: String) -> NSAttributedString? {
+    let lightFont, boldFont: UIFont
+    let color: UIColor
+
+    init(lightFont: UIFont, boldFont: UIFont, color: UIColor) {
+        self.lightFont = lightFont
+        self.boldFont = boldFont
+        self.color = color
+    }
+
+    private func addressBookText(for user: ZMBareUser & ZMSearchableUser, with addressBookName: String) -> NSAttributedString? {
         guard !user.isSelfUser else { return nil }
-        let suffix = "conversation.connection_view.in_address_book".localized && smallLightFont && dimmedColor
+        let suffix = "conversation.connection_view.in_address_book".localized && lightFont && color
         if addressBookName.lowercased() == user.name.lowercased() {
             return suffix
         }
 
-        let contactName = addressBookName && smallBoldFont && dimmedColor
+        let contactName = addressBookName && boldFont && color
         return contactName + " " + suffix
     }
 
-    static func correlationText(for user: ZMUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
+    func correlationText(for user: ZMBareUser & ZMSearchableUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
 
         guard count > 0 else { return nil }
-        let prefix = String(format: "%ld", count) && smallBoldFont && dimmedColor
-        return prefix + " " + ("conversation.connection_view.common_connections".localized && smallLightFont && dimmedColor)
+        let prefix = String(format: "%ld", count) && boldFont && color
+        return prefix + " " + ("conversation.connection_view.common_connections".localized && lightFont && color)
     }
 
 }
@@ -60,6 +69,10 @@ class AddressBookCorrelationFormatter {
     let subtitle: NSAttributedString?
     let correlationText: NSAttributedString?
     let style: ProfileHeaderStyle
+
+    static var formatter: AddressBookCorrelationFormatter = {
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: dimmedColor)
+    }()
 
     init(user: ZMUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int, style: ProfileHeaderStyle) {
         self.style = style
@@ -79,7 +92,7 @@ class AddressBookCorrelationFormatter {
 
     static func attributedCorrelationText(for user: ZMUser?, with connections: Int, addressBookName: String?) -> NSAttributedString? {
         guard let user = user else { return nil }
-        return AddressBookCorrelationFormatter.correlationText(for: user, with: connections, addressBookName: addressBookName)
+        return formatter.correlationText(for: user, with: connections, addressBookName: addressBookName)
     }
 
 }
