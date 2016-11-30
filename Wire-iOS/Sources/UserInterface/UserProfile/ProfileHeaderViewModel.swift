@@ -33,7 +33,7 @@ class AddressBookCorrelationFormatter {
     private static func addressBookText(for user: ZMUser, with addressBookName: String) -> NSAttributedString? {
         guard !user.isSelfUser else { return nil }
         let suffix = "conversation.connection_view.in_address_book".localized && smallLightFont && dimmedColor
-        if addressBookName.lowercased() == user.name {
+        if addressBookName.lowercased() == user.name.lowercased() {
             return suffix
         }
 
@@ -41,11 +41,12 @@ class AddressBookCorrelationFormatter {
         return contactName + " " + suffix
     }
 
-    static func correlationText(for user: ZMUser, with count: UInt, addressBookName: String) -> NSAttributedString {
-        if let addressBook = addressBookText(for: user, with: addressBookName) {
+    static func correlationText(for user: ZMUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
+        if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
 
+        guard count > 0 else { return nil }
         let prefix = String(format: "%ld", count) && smallBoldFont && dimmedColor
         return prefix + " " + ("conversation.connection_view.common_connections".localized && smallLightFont && dimmedColor)
     }
@@ -60,37 +61,25 @@ class AddressBookCorrelationFormatter {
     let correlationText: NSAttributedString?
     let style: ProfileHeaderStyle
 
-    init(user: ZMUser?, fallbackName fallback: String, style: ProfileHeaderStyle) {
+    init(user: ZMUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int, style: ProfileHeaderStyle) {
         self.style = style
         title = ProfileHeaderViewModel.attributedTitle(for: user, fallback: fallback)
         subtitle = ProfileHeaderViewModel.attributedSubtitle(for: user)
-        correlationText = ProfileHeaderViewModel.attributedCorelationText(for: user)
+        correlationText = ProfileHeaderViewModel.attributedCorrelationText(for: user, with: commonConnections, addressBookName: addressBookName)
     }
 
     static func attributedTitle(for user: ZMUser?, fallback: String) -> NSAttributedString {
-        let name = user?.name ?? fallback
-        return name.uppercased() && normalBoldFont && textColor
+        return (user?.name ?? fallback) && normalBoldFont && textColor
     }
 
     static func attributedSubtitle(for user: ZMUser?) -> NSAttributedString? {
-        guard let user = user else { return nil }
-
-        if let handle = user.handle {
-            return ("@" + handle) && smallBoldFont && dimmedColor
-        }
-
-        guard let mail = user.emailAddress, mail.characters.count > 0 else { return nil }
-        if (user.isConnected || user.isPendingApprovalBySelfUser || user.isSelfUser || user.isBlocked) {
-            return user.emailAddress && smallLightFont && UIColor.accent()
-        }
-
-        return nil
+        guard let handle = user?.handle else { return nil }
+        return ("@" + handle) && smallBoldFont && dimmedColor
     }
 
-    static func attributedCorelationText(for user: ZMUser?) -> NSAttributedString? {
+    static func attributedCorrelationText(for user: ZMUser?, with connections: Int, addressBookName: String?) -> NSAttributedString? {
         guard let user = user else { return nil }
-        // TODO: User actual common connections count
-        return AddressBookCorrelationFormatter.correlationText(for: user, with: 5, addressBookName: "Egon")
+        return AddressBookCorrelationFormatter.correlationText(for: user, with: connections, addressBookName: addressBookName)
     }
 
 }

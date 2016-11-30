@@ -194,7 +194,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         }
     }
 
-    ProfileHeaderViewModel *viewModel = [[ProfileHeaderViewModel alloc] initWithUser:user fallbackName:self.bareUser.displayName style:headerStyle];
+    ProfileHeaderViewModel *viewModel = [[ProfileHeaderViewModel alloc] initWithUser:user
+                                                                        fallbackName:self.bareUser.displayName
+                                                                     addressBookName:user.contact.name
+                                                                   commonConnections:user.totalCommonConnections
+                                                                               style:headerStyle];
+
     ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];

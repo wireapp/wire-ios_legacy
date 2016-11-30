@@ -30,40 +30,61 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersFallbackUserName() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .noButton)
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, commonConnections: 0, style: .noButton)
         let sut = ProfileHeaderView(with: model)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_CancelButton() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .cancelButton)
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, commonConnections: 0, style: .cancelButton)
         let sut = ProfileHeaderView(with: model)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_CancelButton_Verified() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .cancelButton)
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, commonConnections: 0, style: .cancelButton)
         let sut = ProfileHeaderView(with: model)
         sut.showVerifiedShield = true
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_BackButton() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .backButton)
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, commonConnections: 0, style: .backButton)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersAddressBookName() {
+        let user = MockUser.mockUsers().first
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "Jose Luis", addressBookName: "JameyBoy", commonConnections: 2, style: .backButton)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersAddressBookName_EqualName() {
+        let user = MockUser.mockUsers().first
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: user?.name, commonConnections: 2, style: .backButton)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersCommonConnections() {
+        let user = MockUser.mockUsers().first
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "Jose Luis", addressBookName: nil, commonConnections: 2, style: .backButton)
         let sut = ProfileHeaderView(with: model)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName() {
         let user = MockUser.mockUsers().first
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 0, style: .noButton)
         let sut = ProfileHeaderView(with: model)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName_Verified() {
         let user = MockUser.mockUsers().first
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 0, style: .noButton)
         let sut = ProfileHeaderView(with: model)
         sut.showVerifiedShield = true
         verifyInAllPhoneWidths(view: sut)
@@ -71,7 +92,14 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
 
     func testThatItRendersUserNoUsernameButEmail() {
         let user = MockUser.mockUsers().last
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 0, style: .noButton)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersUserNoUsernameButEmail_CommonConnections() {
+        let user = MockUser.mockUsers().last
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 2000, style: .noButton)
         let sut = ProfileHeaderView(with: model)
         verifyInAllPhoneWidths(view: sut)
     }

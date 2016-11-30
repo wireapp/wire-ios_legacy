@@ -126,9 +126,14 @@ final class ProfileHeaderView: UIView {
         if headerStyle != .backButton {
             shouldHide = !showVerifiedShield
         }
-        UIView.transition(with: verifiedImageView, duration: 0.2, options: .transitionCrossDissolve, animations: {
-            self.verifiedImageView.isHidden = shouldHide
-            }, completion: nil)
+
+        UIView.transition(
+            with: verifiedImageView,
+            duration: 0.2,
+            options: .transitionCrossDissolve,
+            animations: { self.verifiedImageView.isHidden = shouldHide },
+            completion: nil
+        )
     }
 
 }
