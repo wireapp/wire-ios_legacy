@@ -63,8 +63,7 @@ final class MockUserCopyable: MockUser, Copyable {
 
 final class UserConnectionViewTests: ZMSnapshotTestCase {
     
-    func sutForUser(incoming: Bool = false, outgoing: Bool = false, commonConnectionsCount: UInt = 0) -> UserConnectionView {
-        let user = MockUserCopyable.mockUsers().first!
+    func sutForUser(_ user: ZMUser = MockUserCopyable.mockUsers().first!, incoming: Bool = false, outgoing: Bool = false, commonConnectionsCount: UInt = 0) -> UserConnectionView {
         let mockUser = getMockUser(user: user)
         mockUser.isPendingApprovalByOtherUser = outgoing
         mockUser.isPendingApprovalBySelfUser = incoming
@@ -97,6 +96,16 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
     }
     
     func testVerifyCombinations() {
+        verifyCombinations(of: sutForUser())
+    }
+
+    func testVerifyCombinationsWithoutUserName() {
+        // The last mock user does not have a handle
+        let user = MockUserCopyable.mockUsers().last!
+        verifyCombinations(of: sutForUser(user))
+    }
+
+    func verifyCombinations(of sut: UserConnectionView, line: UInt = #line) {
         let incomingMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, mockUser) = self.copy(view: view)
             mockUser.isConnected = value
@@ -104,43 +113,42 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
             return newView
         }
         let boolCombinations = Set<Bool>(arrayLiteral: true, false)
-        
+
         let incomingMutator = Mutator(applicator: incomingMutation, combinations: boolCombinations)
-        
+
         let outgoingMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, mockUser) = self.copy(view: view)
             mockUser.isPendingApprovalByOtherUser = value
             newView.user = (mockUser as AnyObject) as! ZMUser
             return newView
         }
-		
+
         let outgoingMutator = Mutator(applicator: outgoingMutation, combinations: boolCombinations)
-        
+
         let showNameMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, _) = self.copy(view: view)
             newView.showUserName = value
             return newView
         }
-        
+
         let showNameMutator = Mutator(applicator: showNameMutation, combinations: boolCombinations)
-        
+
         let commonConnectionsMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
             let (newView, _) = self.copy(view: view)
             newView.commonConnectionsCount = value ? 0 : 10
             return newView
         }
-        
+
         let commonConnectionsMutator = Mutator(applicator: commonConnectionsMutation, combinations: boolCombinations)
-        
-        let combinator = CombinationTest(mutable: self.sutForUser(), mutators: [incomingMutator, outgoingMutator, showNameMutator, commonConnectionsMutator])
-        
+
+        let combinator = CombinationTest(mutable: sut, mutators: [incomingMutator, outgoingMutator, showNameMutator, commonConnectionsMutator])
+
         XCTAssertEqual(combinator.testAll {
             let identifier = "\($0.combinationChain)"
             print("Testing combination " + identifier)
             $0.result.layoutForTest()
-            self.verify(view: $0.result, identifier: identifier)
+            self.verify(view: $0.result, identifier: identifier, file: #file, line: line)
             return .none
-        }.count, 0)
-        
+            }.count, 0, line: line)
     }
 }

@@ -149,7 +149,13 @@ public final class UserConnectionView: UIView, Copyable {
         }
         
         let hasCommonConnections = self.commonConnectionsCount > 0
-        let username = ("@" + self.user.handle) && labelStyle
+
+        var handleText = ""
+        if let handle = self.user.handle {
+            handleText = "@" + handle
+        }
+
+        let username = handleText && labelStyle
         
         var secondLine: NSAttributedString? = .none
         
