@@ -20,20 +20,43 @@
 import UIKit
 
 
+fileprivate let smallLightFont = UIFont(magicIdentifier: "style.text.small.font_spec_light")!
+fileprivate let smallBoldFont = UIFont(magicIdentifier: "style.text.small.font_spec_bold")!
+fileprivate let normalBoldFont = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
+fileprivate let dimmedColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+
+
+class AddressBookCorrelationFormatter {
+
+    private static func addressBookText(for user: ZMUser, with addressBookName: String) -> NSAttributedString? {
+        guard !user.isSelfUser else { return nil }
+        let suffix = "conversation.connection_view.in_address_book".localized && smallLightFont && dimmedColor
+        if addressBookName.lowercased() == user.name {
+            return suffix
+        }
+
+        let contactName = addressBookName && smallBoldFont && dimmedColor
+        return contactName + " " + suffix
+    }
+
+    static func correlationText(for user: ZMUser, with count: UInt, addressBookName: String) -> NSAttributedString {
+        if let addressBook = addressBookText(for: user, with: addressBookName) {
+            return addressBook
+        }
+
+        let prefix = String(format: "%ld", count) && smallBoldFont && dimmedColor
+        return prefix + " " + ("conversation.connection_view.common_connections".localized && smallLightFont && dimmedColor)
+    }
+
+}
+
+
 @objc final class ProfileHeaderViewModel: NSObject {
 
     let title: NSAttributedString
     let subtitle: NSAttributedString?
     let correlationText: NSAttributedString?
     let style: ProfileHeaderStyle
-
-    static var smallLightFont: UIFont {
-        return UIFont(magicIdentifier: "style.text.small.font_spec_light")
-    }
-
-    static var dimmedColor: UIColor {
-        return .wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
-    }
 
     init(user: ZMUser?, fallbackName fallback: String, style: ProfileHeaderStyle) {
         self.style = style
@@ -44,14 +67,14 @@ import UIKit
 
     static func attributedTitle(for user: ZMUser?, fallback: String) -> NSAttributedString {
         let name = user?.name ?? fallback
-        return name && UIFont(magicIdentifier: "style.text.normal.font_spec_bold")
+        return name.uppercased() && normalBoldFont
     }
 
     static func attributedSubtitle(for user: ZMUser?) -> NSAttributedString? {
         guard let user = user else { return nil }
 
         if let handle = user.handle {
-            return ("@" + handle) && smallLightFont && dimmedColor
+            return ("@" + handle) && smallBoldFont && dimmedColor
         }
 
         guard let mail = user.emailAddress, mail.characters.count > 0 else { return nil }
@@ -64,10 +87,8 @@ import UIKit
 
     static func attributedCorelationText(for user: ZMUser?) -> NSAttributedString? {
         guard let user = user else { return nil }
-        let contact: ZMAddressBookContact? = user.contact()
-        guard let correlation = contact?.name else { return nil }
-        guard correlation.caseInsensitiveCompare(user.name) != .orderedSame else { return nil }
-        return correlation && smallLightFont && dimmedColor
+        // TODO: User actual common connections count
+        return AddressBookCorrelationFormatter.correlationText(for: user, with: 5, addressBookName: "Egon")
     }
 
 }

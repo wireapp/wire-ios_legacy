@@ -78,6 +78,12 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "contacts";
 
+
+// Profile Header View
+"conversation.connection_view.common_connections" = "friends in common";
+"conversation.connection_view.in_address_book" = "in Address Book";
+
+
 // Archived List
 "archived_list.title" = "archive";
 

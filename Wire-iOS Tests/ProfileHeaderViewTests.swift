@@ -26,41 +26,55 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        recordMode = true
         snapshotBackgroundColor = .white
     }
 
     func testThatItRendersFallbackUserName() {
         let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .noButton)
-        let sut = ProfileHeaderView(viewModel: model)
-        verify(view: sut!)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_CancelButton() {
         let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .cancelButton)
-        let sut = ProfileHeaderView(viewModel: model)
-        verify(view: sut!)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersFallbackUserName_CancelButton_Verified() {
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .cancelButton)
+        let sut = ProfileHeaderView(with: model)
+        sut.showVerifiedShield = true
+        verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_BackButton() {
         let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", style: .backButton)
-        let sut = ProfileHeaderView(viewModel: model)
-        verify(view: sut!)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName() {
         let user = MockUser.mockUsers().first
         let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
-        let sut = ProfileHeaderView(viewModel: model)
-        verify(view: sut!)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersUserName_Verified() {
+        let user = MockUser.mockUsers().first
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
+        let sut = ProfileHeaderView(with: model)
+        sut.showVerifiedShield = true
+        verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserNoUsernameButEmail() {
         let user = MockUser.mockUsers().last
         let model = ProfileHeaderViewModel(user: user, fallbackName: "", style: .noButton)
-        let sut = ProfileHeaderView(viewModel: model)
-        verify(view: sut!)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
     }
 
 }
-
-
