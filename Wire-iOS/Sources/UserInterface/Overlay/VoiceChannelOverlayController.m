@@ -36,15 +36,17 @@
 #import "Settings.h"
 #import "Wire-Swift.h"
 
-@interface VoiceChannelOverlayController () <ZMVoiceChannelStateObserver, ZMVoiceChannelParticipantsObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate>
+@interface VoiceChannelOverlayController () <ZMVoiceChannelStateObserver, ZMVoiceChannelParticipantsObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, WireCallCenterVideoObserver>
 
 @property (nonatomic) UIVisualEffectView *blurEffectView;
 @property (nonatomic) VoiceChannelOverlay *overlayView;
 @property (nonatomic) VoiceChannelParticipantsController *participantsController;
 @property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
 @property (nonatomic) id <ZMVoiceChannelParticipantsObserverOpaqueToken> voiceChannelParticipantsObserverToken;
+@property (nonatomic) id <NSObject> videoObserverToken;
 @property (nonatomic, readwrite) ZMConversation *conversation;
 @property (nonatomic) NSDate *callStartedTimestamp;
+@property (nonatomic) ZMCaptureDevice currentCaptureDevice;
 
 @property (nonatomic) BOOL outgoingVideoActive;
 @property (nonatomic) BOOL outgoingVideoWasActiveBeforeBackgrounding;
@@ -72,6 +74,11 @@
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification removeObserver:self];
     }
+    
+    if (self.videoObserverToken != nil) {
+        [WireCallCenter removeVideoObserverWithToken:self.videoObserverToken];
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -80,6 +87,7 @@
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
+        _currentCaptureDevice = ZMCaptureDeviceFront;
         _conversation = conversation;
         self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
     }
@@ -126,6 +134,8 @@
     if (self.voiceChannelParticipantsObserverToken == nil && self.conversation.conversationType == ZMConversationTypeOneOnOne) {
         self.voiceChannelParticipantsObserverToken = [ZMVoiceChannel addCallParticipantsObserver:self inConversation:self.conversation voiceChannel:self.conversation.voiceChannel];
     }
+    
+    self.videoObserverToken = [WireCallCenter addVideoObserverWithObserver:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoReceiveStateUpdated:) name:FlowManagerVideoReceiveStateNotification object:nil];
     
@@ -227,28 +237,18 @@
 
 - (void)videoButtonClicked:(id)sender
 {
-    __block NSError *error = nil;
-    // FIXME
-    BOOL isActive = NO; // [self.conversation.voiceChannel isSendingVideoForParticipant:self.conversation.firstActiveParticipantOtherThanSelf error:&error];
-    if (nil != error) {
-        DDLogError(@"Cannot get video active state: %@", error);
-    }
-    
-    error = nil;
-   
-    BOOL newActiveState = !isActive;
-    DDLogVoice(@"UI: video from %d to %d", isActive, newActiveState);
-    
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-//        [self.conversation.voiceChannel setVideoSendActive:newActiveState error:&error]; FIXME
-    }
-                                completionHandler:^{
-                                    self.outgoingVideoActive = newActiveState;
-                                    if (nil != error) {
-                                        DDLogError(@"Cannot set video send active: %@", error);
-                                    }
-    }];
-    
+    [[ZMUserSession sharedSession] enqueueChanges:^{ // Calling V2 requires enqueueChanges
+        BOOL active = !self.outgoingVideoActive;
+        
+        NSError *error = nil;
+        [self.conversation.voiceChannel toggleVideoActive:active error:&error];
+        
+        if (error == nil) {
+            self.outgoingVideoActive = active;
+        } else {
+             DDLogError(@"Error toggling video: %@", error);
+        }
+    }];    
 }
 
 - (void)switchCameraButtonClicked:(id)sender;
@@ -259,15 +259,8 @@
     
     self.cameraSwitchInProgress = YES;
     
-    NSString *deviceID = [self.conversation.voiceChannel.currentVideoDeviceID isEqualToString:ZMBackCameraDeviceID] ? ZMFrontCameraDeviceID : ZMBackCameraDeviceID;
-    DDLogVoice(@"UI: Switch camera to %@", deviceID);
-    
     [self.overlayView animateCameraChangeWithChangeAction:^{
-        NSError *error = nil;
-//        [self.conversation.voiceChannel setVideoCaptureDevice:deviceID error:&error]; FIXME
-        if (nil != error) {
-            DDLogError(@"Error switching camera: %@", error);
-        }
+        [self toggleCaptureDevice];
     }
                                                completion:^() {
                                                    // Intentional delay
@@ -275,6 +268,20 @@
                                                        self.cameraSwitchInProgress = NO;
                                                    });
                                                }];
+}
+
+- (void)toggleCaptureDevice
+{
+    ZMCaptureDevice newCaptureDevice = self.currentCaptureDevice == ZMCaptureDeviceFront ? ZMCaptureDeviceBack : ZMCaptureDeviceFront;
+    
+    NSError *error = nil;
+    [self.conversation.voiceChannel setVideoCaptureDeviceWithDevice:newCaptureDevice error:&error];
+    
+    if (error == nil) {
+        self.currentCaptureDevice = newCaptureDevice;
+    } else {
+        DDLogError(@"Error switching camera: %@", error);
+    }
 }
 
 - (void)onDoubleTap:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -405,6 +412,17 @@
     _videoLetterboxed = videoLetterboxed;
     
     self.overlayView.videoView.shouldFill = !self.videoLetterboxed;
+}
+
+#pragma mark - WireCallCenterVideoObserver
+
+- (void)receivingVideoDidChangeWithState:(enum AVSVideoReceiveState)state
+{
+    self.incomingVideoActive = (state == AVSVideoReceiveStateStarted);
+    self.remoteIsSendingVideo = (state == AVSVideoReceiveStateStarted);
+    self.overlayView.lowBandwidth = (state == AVSVideoReceiveStateBadConnection);
+    
+    DDLogVoice(@"receivingVideoDidChangeWithState: incomingVideo = %d, lowBandwidth = %d", self.incomingVideoActive, self.overlayView.lowBandwidth);
 }
 
 #pragma mark - AVSFlowManager Notifications

@@ -101,15 +101,15 @@
     
     BOOL callIsStarting = previousVoiceChannelOverlayController == nil && voiceChannelOverlayController != nil;
     BOOL isVideoCall = voiceChannelOverlayController.conversation.voiceChannel.isVideoCall;
-    // If call is starting and is video call, select front camera as default
+    
     if (callIsStarting && isVideoCall) {
+        // If call is starting and is video call, select front camera as default
+        NSError *error = nil;
+        [voiceChannelOverlayController.conversation.voiceChannel setVideoCaptureDeviceWithDevice:ZMCaptureDeviceFront error:&error];
         
-        // FIXME
-//        NSError* cameraSetError = nil;
-//        [voiceChannelOverlayController.conversation.voiceChannel setVideoCaptureDevice:ZMFrontCameraDeviceID error:&cameraSetError];
-//        if (nil != cameraSetError) {
-//            DDLogError(@"Cannot set default front camera: %@", cameraSetError);
-//        }
+        if (nil != error) {
+            DDLogError(@"Cannot set default front camera: %@", error);
+        }
     }
     
     [self transitionFromVoiceChannelOverlayController:previousVoiceChannelOverlayController toVoiceChannelOverlayController:voiceChannelOverlayController];
