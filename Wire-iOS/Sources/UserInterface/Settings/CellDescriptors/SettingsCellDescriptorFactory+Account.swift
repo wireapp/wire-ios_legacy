@@ -40,7 +40,7 @@ extension SettingsCellDescriptorFactory {
 
     func infoSection() -> SettingsSectionDescriptorType {
         var descriptors = [nameElement()]
-        if Settings.shared().enableUserNamesUI {
+        if !Settings.shared().disableUserNamesUI {
             descriptors.append(handleElement())
         }
 

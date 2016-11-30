@@ -350,17 +350,6 @@ ProfileViewController UserImageView {
     borderColor: rgb(0, 0, 0, 0.08);
 }
 
-ProfileHeaderView {
-    titleLabel: @{
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-    subtitleLabel: @{
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-}
-
 ProfileFooterView {
     leftButton: @{
         contentEdgeInsets: 0 0 0 16

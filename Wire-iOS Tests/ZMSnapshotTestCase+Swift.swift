@@ -79,8 +79,8 @@ extension StaticString {
 }
 
 extension ZMSnapshotTestCase {
-    func verify(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, tolerance: tolerance, file: file.utf8SignedStart(), line: line)
+    func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
+        verifyView(view, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {

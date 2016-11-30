@@ -78,6 +78,12 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "contacts";
 
+
+// Profile Header View
+"conversation.connection_view.common_connections" = "friends in common";
+"conversation.connection_view.in_address_book" = "in Address Book";
+
+
 // Archived List
 "archived_list.title" = "archive";
 
@@ -142,6 +148,9 @@
 "conversation.call.many_participants_confirmation.title" = "Start a call";
 "conversation.call.many_participants_confirmation.message" = "This will call %d people";
 "conversation.call.many_participants_confirmation.call" = "Call";
+
+"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.common_connections" = "friends in common";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
