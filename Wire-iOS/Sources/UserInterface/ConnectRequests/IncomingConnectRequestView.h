@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ProfileHeaderView.h"
 #import "ProfileIncomingConnectionRequestFooterView.h"
 
 @class ZMUser, UserImageView;

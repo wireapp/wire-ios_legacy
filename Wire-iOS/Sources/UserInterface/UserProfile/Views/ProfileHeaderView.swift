@@ -94,7 +94,7 @@ final class ProfileHeaderView: UIView {
             correlation.top == subtitle.bottom
             correlation.centerX == view.centerX
             correlation.height == 16
-            correlation.bottom == view.bottom - 8
+            correlation.bottom == view.bottom - 12
         }
 
         constrain(self, dismissButton, verifiedImageView, titleLabel) { view, dismiss, verified, title in

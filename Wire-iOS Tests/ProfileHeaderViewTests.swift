@@ -26,7 +26,6 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
         snapshotBackgroundColor = .white
     }
 

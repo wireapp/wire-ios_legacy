@@ -59,7 +59,6 @@
 #import "SwizzleTransition.h"
 #import "ARCollectionViewMasonryLayout.h"
 #import "ZiphyClient+Convenience.h"
-#import "ProfileHeaderView.h"
 
 // View Controllers
 #import "ZClientViewController.h"

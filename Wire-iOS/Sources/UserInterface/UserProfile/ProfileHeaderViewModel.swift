@@ -23,7 +23,9 @@ import UIKit
 fileprivate let smallLightFont = UIFont(magicIdentifier: "style.text.small.font_spec_light")!
 fileprivate let smallBoldFont = UIFont(magicIdentifier: "style.text.small.font_spec_bold")!
 fileprivate let normalBoldFont = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
+
 fileprivate let dimmedColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
 
 
 class AddressBookCorrelationFormatter {
@@ -67,7 +69,7 @@ class AddressBookCorrelationFormatter {
 
     static func attributedTitle(for user: ZMUser?, fallback: String) -> NSAttributedString {
         let name = user?.name ?? fallback
-        return name.uppercased() && normalBoldFont
+        return name.uppercased() && normalBoldFont && textColor
     }
 
     static func attributedSubtitle(for user: ZMUser?) -> NSAttributedString? {

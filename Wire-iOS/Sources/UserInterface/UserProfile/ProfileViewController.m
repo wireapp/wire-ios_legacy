@@ -35,7 +35,6 @@
 
 #import "AddContactsViewController.h"
 #import "ContactsDataSource.h"
-#import "ProfileHeaderView.h"
 #import "ProfileNavigationControllerDelegate.h"
 #import "ProfileDevicesViewController.h"
 #import "ProfileDetailsViewController.h"
