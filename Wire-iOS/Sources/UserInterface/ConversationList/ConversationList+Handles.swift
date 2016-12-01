@@ -20,11 +20,14 @@
 import UIKit
 import Cartography
 
+/// Debug flag to ensure the takeover screen is shown even though
+/// the selfUser already has a handle assigned.
+private let debugOverrideShowTakeover = false
 
 extension ConversationListViewController {
 
     func showUsernameTakeover(with handle: String) {
-        guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle else { return }
+        guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle || debugOverrideShowTakeover else { return }
         guard nil == usernameTakeoverViewController else { return }
         usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, displayName: selfUser.displayName)
         usernameTakeoverViewController.delegate = self
@@ -49,13 +52,20 @@ extension ConversationListViewController {
         takeover.removeFromParentViewController()
         contentContainer.alpha = 1
         usernameTakeoverViewController = nil
+        removeUserProfileObserver()
 
         if parent?.presentedViewController is SettingsStyleNavigationController {
             parent?.presentedViewController?.dismiss(animated: true, completion: nil)
         }
+
     }
 
     fileprivate func openChangeHandleViewController(with handle: String) {
+        // We need to ensure we are currently showing the takeover as this
+        // callback will also get invoked when changing the handle from the settings view controller.
+        guard !(parent?.presentedViewController is SettingsStyleNavigationController) else { return }
+        guard nil != usernameTakeoverViewController else { return }
+
         let handleController = ChangeHandleViewController(suggestedHandle: handle)
         handleController.popOnSuccess = false
         handleController.view.backgroundColor = .black

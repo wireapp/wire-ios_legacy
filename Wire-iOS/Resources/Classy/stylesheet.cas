@@ -990,6 +990,12 @@ ImageToolbarView.on-background {
     }
 }
 
+/* Change Handle */
+
+ChangeHandleViewController {
+    footerFont: $font-small;
+}
+
 /* Location */
 
 ModalTopBar {

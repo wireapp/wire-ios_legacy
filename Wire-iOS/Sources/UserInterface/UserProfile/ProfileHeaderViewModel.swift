@@ -55,7 +55,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
             return addressBook
         }
 
-        guard count > 0 else { return nil }
+        guard count > 0 && !user.isConnected else { return nil }
         let prefix = String(format: "%ld", count) && boldFont && color
         return prefix + " " + ("conversation.connection_view.common_connections".localized && lightFont && color)
     }

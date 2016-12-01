@@ -25,4 +25,8 @@
 @interface ConversationListViewController (Private)
 @property (nonatomic) SearchViewController *searchViewController;
 @property (nonatomic, weak, readonly) id<UserProfile> userProfile;
+
+- (void)removeUserProfileObserver;
+
 @end
+
