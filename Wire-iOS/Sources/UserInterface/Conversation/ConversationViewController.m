@@ -879,6 +879,7 @@
     
     if (note.participantsChanged || note.connectionStateChanged) {
         [self updateNavigationItemsButtons];
+        [self.contentViewController updateTableViewHeaderView];
     }
     
     if (note.nameChanged || note.securityLevelChanged) {

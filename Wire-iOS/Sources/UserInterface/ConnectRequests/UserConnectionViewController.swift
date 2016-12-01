@@ -46,7 +46,7 @@ final public class UserConnectionViewController: UIViewController {
         self.user = user
         super.init(nibName: .none, bundle: .none)
         
-        if self.user.totalCommonConnections == 0 {
+        if self.user.totalCommonConnections == 0  && !self.user.isConnected {
             self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
         }
     }

@@ -362,27 +362,6 @@ ProfileFooterView {
     }
 }
 
-CommonConnectionsViewController {
-    headerLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
-    }
-}
-
-CommonConnectionButton {
-    nameLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
-    }
-}
-
-MoreConnectionsButton {
-    moreCountLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-foreground;
-    }
-}
-
 UserNameTakeOverViewController {
     view: @{
         backgroundColor: clear;

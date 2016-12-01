@@ -53,9 +53,6 @@
 #import "ActionSheetController+Conversation.h"
 #import "ProfileNavigationControllerDelegate.h"
 
-#import "CommonConnectionsViewController.h"
-
-
 
 typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     ProfileViewContentModeUnknown,
@@ -88,8 +85,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UserImageView *userImageView;
 @property (nonatomic) UIView *userImageViewContainer;
 @property (nonatomic) UIView *footerView;
-@property (nonatomic) UIView *commonConnectionsViewContainer;
-@property (nonatomic) CommonConnectionsViewController *commonConnectionsViewController;
 
 @end
 
@@ -115,15 +110,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self setupConstraints];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)setupViews
 {
     [self createUserImageView];
-    [self createCommonConnectionsViewController];
     [self createFooter];
 }
 
@@ -138,19 +127,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     
     [self.userImageView autoCenterInSuperview];
-    
-    [self.commonConnectionsViewContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageViewContainer];
-    [self.commonConnectionsViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.commonConnectionsViewContainer autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.commonConnectionsViewContainer autoSetDimension:ALDimensionHeight toSize:0];
-    }];
-    
-    [self.commonConnectionsViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.commonConnectionsViewController.view addConstraintsFittingToView:self.commonConnectionsViewContainer];
-    
-    [self.footerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.commonConnectionsViewContainer];
+
+    [self.footerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageViewContainer];
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
@@ -166,35 +144,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.suggestedImageSize = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
     [self.userImageViewContainer addSubview:self.userImageView];
-}
-
-#pragma mark - Common connections
-
-- (void)createCommonConnectionsViewController
-{
-    self.commonConnectionsViewContainer = [[UIView alloc] initWithFrame:CGRectZero];
-    self.commonConnectionsViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.commonConnectionsViewContainer];
-    
-    ZMUser *fullUser = [self fullUser];
-    
-    BOOL eligibleAsFullUser = (fullUser != nil && ([fullUser isPendingApproval] || [fullUser isBlocked] || [fullUser isIgnored]));
-    BOOL eligibleAsBareUser = ! [self.bareUser isConnected];
-    
-    if (self.bareUser != nil && ! self.bareUser.isSelfUser && (eligibleAsFullUser || eligibleAsBareUser)) {
-        CommonConnectionsViewController *viewController = [CommonConnectionsViewController new];
-        viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.commonConnectionsViewContainer addSubview:viewController.view];
-        viewController.user = self.bareUser;
-        
-        @weakify(self);
-        viewController.didSelectUser = ^(ZMUser *common) {
-            @strongify(self);
-            [self.delegate profileDetailsViewController:self didTapOnCommonConnection:common];
-        };
-        
-        self.commonConnectionsViewController = viewController;
-    }
 }
 
 #pragma mark - Footer

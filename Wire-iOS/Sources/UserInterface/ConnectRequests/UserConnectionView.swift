@@ -30,6 +30,14 @@ public final class UserConnectionView: UIView, Copyable {
         self.onBlock = instance.onBlock
         self.showUserName = instance.showUserName
     }
+
+    static private var correlationFormatter: AddressBookCorrelationFormatter = {
+        return AddressBookCorrelationFormatter(
+            lightFont: UIFont(magicIdentifier: "style.text.small.font_spec_light"),
+            boldFont: UIFont(magicIdentifier: "style.text.small.font_spec_bold"),
+            color: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        )
+    }()
     
     public typealias User = ZMBareUser & ZMBareUserConnection & ZMSearchableUser
     private let nameInfoLabel = UILabel()
@@ -126,29 +134,15 @@ public final class UserConnectionView: UIView, Copyable {
 
         var name: NSAttributedString = NSAttributedString()
         
-        if self.showUserName {
+        if self.showUserName, let username = self.user.name {
             let nameStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
                              NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold")] as [String : AnyObject]
             
-            name = (self.user.name + "\n\n") && nameStyle
+            name = (username + "\n\n") && nameStyle
         }
         
         let labelStyle = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
                           NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_light")] as [String : AnyObject]
-        
-        let labelStyleBold = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
-                              NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold")] as [String : AnyObject]
-        
-        var inAddressBook = false
-        var addressBookNameMatchFullName = false
-        
-        if let zmUser = self.user as? ZMUser,
-            let contact = zmUser.contact() {
-            inAddressBook = true
-            addressBookNameMatchFullName = contact.name.lowercased() == self.user.name
-        }
-        
-        let hasCommonConnections = self.commonConnectionsCount > 0
 
         var handleText = ""
         if let handle = self.user.handle {
@@ -156,36 +150,27 @@ public final class UserConnectionView: UIView, Copyable {
         }
 
         let username = handleText && labelStyle
-        
-        var secondLine: NSAttributedString? = .none
-        
-        if inAddressBook {
-            if addressBookNameMatchFullName {
-                secondLine = "conversation.connection_view.in_address_book".localized && labelStyle
-            }
-            else {
-                secondLine = (self.user.name && labelStyleBold) + " " + ("conversation.connection_view.in_address_book".localized && labelStyle)
-            }
-        }
-        else if hasCommonConnections {
-            secondLine = (String(format: "%ld", self.commonConnectionsCount) && labelStyleBold) + " " + ("conversation.connection_view.common_connections".localized && labelStyle)
-        }
+        let secondLine = type(of: self).correlationFormatter.correlationText(
+            for: user,
+            with: Int(commonConnectionsCount),
+            addressBookName: (user as? ZMUser)?.contact()?.name
+        )
         
         self.nameInfoLabel.attributedText = name + username + (secondLine != .none ? "\n" + secondLine! : "" && labelStyle)
     }
     
     private func createConstraints() {
         constrain(self.incomingConnectionFooter, self.acceptButton, self.ignoreButton) { incomingConnectionFooter, acceptButton, ignoreButton in
-            acceptButton.left == incomingConnectionFooter.left + 24
-            acceptButton.top == incomingConnectionFooter.top + 12
-            acceptButton.bottom == incomingConnectionFooter.bottom - 24
-            acceptButton.height == 40
-            acceptButton.width >= 140
+            ignoreButton.left == incomingConnectionFooter.left + 16
+            ignoreButton.top == incomingConnectionFooter.top + 12
+            ignoreButton.bottom == incomingConnectionFooter.bottom - 24
+            ignoreButton.height == 40
+            ignoreButton.right == incomingConnectionFooter.centerX - 8
             
-            ignoreButton.right == incomingConnectionFooter.right - 24
-            ignoreButton.centerY == acceptButton.centerY
-            ignoreButton.height == acceptButton.height
-            ignoreButton.width >= 140
+            acceptButton.right == incomingConnectionFooter.right - 16
+            acceptButton.left == incomingConnectionFooter.centerX + 8
+            acceptButton.centerY == ignoreButton.centerY
+            acceptButton.height == ignoreButton.height
         }
         
         constrain(self.outgoingConnectionFooter, self.cancelConnectionButton, self.blockButton) { outgoingConnectionFooter, cancelConnectionButton, blockButton in
@@ -204,8 +189,9 @@ public final class UserConnectionView: UIView, Copyable {
             nameInfoLabel.bottom <= userImageView.top
             
             userImageView.center == selfView.center
-            userImageView.left == selfView.left + 54
+            userImageView.left >= selfView.left + 54
             userImageView.width == userImageView.height
+            userImageView.height <= 264
             
             outgoingConnectionFooter.top >= userImageView.bottom
             outgoingConnectionFooter.left == selfView.left

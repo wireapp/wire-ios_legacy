@@ -40,7 +40,6 @@
 // ui
 #import "FullscreenImageViewController.h"
 #import "ZClientViewController.h"
-#import "CommonConnectionsView.h"
 #import "UIView+MTAnimation.h"
 #import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
@@ -261,10 +260,11 @@
                     [self.delegate conversationContentViewControllerWantsToDismiss:self];
                     break;
                 default:
+                    [self updateTableViewHeaderView];
                     break;
             }
-            
         };
+
         headerView = self.connectionViewController.view;
     }
     

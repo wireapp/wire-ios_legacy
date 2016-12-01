@@ -249,10 +249,6 @@
 		871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8710673B1C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift */; };
 		871067431C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067421C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift */; };
 		871067461C0DCDAF0035603B /* DeveloperMenuState.m in Sources */ = {isa = PBXBuildFile; fileRef = 871067451C0DCDAF0035603B /* DeveloperMenuState.m */; };
-		8715A16919EBF69500E2C6DE /* CommonConnectionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8715A16219EBF69500E2C6DE /* CommonConnectionButton.m */; };
-		8715A16A19EBF69500E2C6DE /* CommonConnectionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8715A16419EBF69500E2C6DE /* CommonConnectionsView.m */; };
-		8715A16B19EBF69500E2C6DE /* CommonConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8715A16619EBF69500E2C6DE /* CommonConnectionsViewController.m */; };
-		8715A16C19EBF69500E2C6DE /* MoreConnectionsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8715A16819EBF69500E2C6DE /* MoreConnectionsButton.m */; };
 		871878BD1C1ACA72001FFCC5 /* NSDate+WRFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */; };
 		8719FD671C88802C005FBEC0 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8719FD661C88802C005FBEC0 /* Delay.swift */; };
@@ -784,9 +780,9 @@
 		BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */; };
 		BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */; };
 		BFAAB2391DEC6B2800CBC096 /* ConversationList+Handles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */; };
-		BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */; };
 		BFAAB23D1DED8BB900CBC096 /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB23C1DED8BB900CBC096 /* ProfileHeaderViewModel.swift */; };
 		BFAAB23F1DED95B100CBC096 /* ProfileHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB23E1DED95B100CBC096 /* ProfileHeaderViewTests.swift */; };
+		BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
@@ -1204,14 +1200,6 @@
 		871067421C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsExternalScreenCellDescriptor.swift; sourceTree = "<group>"; };
 		871067441C0DCDAF0035603B /* DeveloperMenuState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeveloperMenuState.h; sourceTree = "<group>"; };
 		871067451C0DCDAF0035603B /* DeveloperMenuState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeveloperMenuState.m; sourceTree = "<group>"; };
-		8715A16119EBF69500E2C6DE /* CommonConnectionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonConnectionButton.h; sourceTree = "<group>"; };
-		8715A16219EBF69500E2C6DE /* CommonConnectionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonConnectionButton.m; sourceTree = "<group>"; };
-		8715A16319EBF69500E2C6DE /* CommonConnectionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonConnectionsView.h; sourceTree = "<group>"; };
-		8715A16419EBF69500E2C6DE /* CommonConnectionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonConnectionsView.m; sourceTree = "<group>"; };
-		8715A16519EBF69500E2C6DE /* CommonConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonConnectionsViewController.h; sourceTree = "<group>"; };
-		8715A16619EBF69500E2C6DE /* CommonConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonConnectionsViewController.m; sourceTree = "<group>"; };
-		8715A16719EBF69500E2C6DE /* MoreConnectionsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreConnectionsButton.h; sourceTree = "<group>"; };
-		8715A16819EBF69500E2C6DE /* MoreConnectionsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreConnectionsButton.m; sourceTree = "<group>"; };
 		871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WRFormat.h"; sourceTree = "<group>"; };
 		871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WRFormat.m"; sourceTree = "<group>"; };
 		8719FD661C88802C005FBEC0 /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
@@ -2129,9 +2117,9 @@
 		BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiKeyboardViewController.swift; path = Emoji/EmojiKeyboardViewController.swift; sourceTree = "<group>"; };
 		BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Emojis.swift; path = Emoji/Emojis.swift; sourceTree = "<group>"; };
 		BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationList+Handles.swift"; sourceTree = "<group>"; };
-		BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Transitions.swift"; sourceTree = "<group>"; };
 		BFAAB23C1DED8BB900CBC096 /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		BFAAB23E1DED95B100CBC096 /* ProfileHeaderViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewTests.swift; sourceTree = "<group>"; };
+		BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Transitions.swift"; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
@@ -2792,21 +2780,6 @@
 				871067451C0DCDAF0035603B /* DeveloperMenuState.m */,
 			);
 			path = CellDescriptors;
-			sourceTree = "<group>";
-		};
-		8715A16019EBF69500E2C6DE /* CommonConnections */ = {
-			isa = PBXGroup;
-			children = (
-				8715A16519EBF69500E2C6DE /* CommonConnectionsViewController.h */,
-				8715A16619EBF69500E2C6DE /* CommonConnectionsViewController.m */,
-				8715A16319EBF69500E2C6DE /* CommonConnectionsView.h */,
-				8715A16419EBF69500E2C6DE /* CommonConnectionsView.m */,
-				8715A16119EBF69500E2C6DE /* CommonConnectionButton.h */,
-				8715A16219EBF69500E2C6DE /* CommonConnectionButton.m */,
-				8715A16719EBF69500E2C6DE /* MoreConnectionsButton.h */,
-				8715A16819EBF69500E2C6DE /* MoreConnectionsButton.m */,
-			);
-			path = CommonConnections;
 			sourceTree = "<group>";
 		};
 		871BBFA11D34F56300DF0793 /* Analytics */ = {
@@ -4451,7 +4424,6 @@
 				87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */,
 				16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */,
 				16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */,
-				8715A16019EBF69500E2C6DE /* CommonConnections */,
 				872CB8A019E58816006752B4 /* Views */,
 			);
 			path = UserProfile;
@@ -5373,7 +5345,6 @@
 				871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */,
 				879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */,
 				871BC3571D34F94200DF0793 /* AudioTrackCell.m in Sources */,
-				8715A16C19EBF69500E2C6DE /* MoreConnectionsButton.m in Sources */,
 				BF1A81281C9848DB00A96CAA /* ConversationRootViewController.swift in Sources */,
 				8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */,
 				168634E51ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m in Sources */,
@@ -5534,7 +5505,6 @@
 				871BC0031D34F56300DF0793 /* AnalyticsFileTransferObserver.swift in Sources */,
 				871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */,
 				168635421AE018B300EDC7D9 /* RegistrationFormController.m in Sources */,
-				8715A16B19EBF69500E2C6DE /* CommonConnectionsViewController.m in Sources */,
 				871BC35C1D34F94200DF0793 /* Constants.m in Sources */,
 				8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */,
 				871BC2961D34F8F800DF0793 /* UIViewController+Orientation.m in Sources */,
@@ -5560,7 +5530,6 @@
 				871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */,
 				87D5E4421C3E79C600EB8289 /* NSData+Fingerprint.swift in Sources */,
 				8725B7C21D780D2500ADBDEB /* ZMMessage+Likes.swift in Sources */,
-				8715A16A19EBF69500E2C6DE /* CommonConnectionsView.m in Sources */,
 				BF4199D71DB794B3006A4C02 /* LinkOpener.swift in Sources */,
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
 				BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */,
@@ -5800,7 +5769,6 @@
 				CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */,
 				16BEBC3D1D006A6B006FFD3E /* ThreeDotsLoadingView.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
-				8715A16919EBF69500E2C6DE /* CommonConnectionButton.m in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
 				F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */,
 				870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */,
