@@ -169,6 +169,7 @@ struct HandleChangeState {
 
 final class ChangeHandleViewController: SettingsBaseTableViewController {
 
+    public var footerFont: UIFont?
     var state: HandleChangeState
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared().userProfile
@@ -189,6 +190,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
+        CASStyler.default().styleItem(self)
         setupViews()
     }
 
@@ -231,11 +233,11 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         showLoadingView = true
     }
 
-    fileprivate var attributedFooterTitle: NSAttributedString {
+    fileprivate var attributedFooterTitle: NSAttributedString? {
         let infoText = "self.settings.account_section.handle.change.footer".localized.attributedString && UIColor(white: 1, alpha: 0.4)
         let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor(for: .vividRed)
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
-        return prefix + infoText
+        return (prefix + infoText) && footerFont
     }
 
     private func updateFooter() {
