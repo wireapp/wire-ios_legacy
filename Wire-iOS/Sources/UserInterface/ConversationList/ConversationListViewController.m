@@ -142,8 +142,13 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
+    [self removeUserProfileObserver];
     [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.allConversationsObserverToken];
+}
+
+- (void)removeUserProfileObserver
+{
+    [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
 }
 
 - (void)loadView
@@ -162,7 +167,6 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userProfileObserverToken = [self.userProfile addObserver:self];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
@@ -213,6 +217,7 @@
 - (void)requestSuggestedHandlesIfNeeded
 {
     if (!Settings.sharedSettings.disableUserNamesUI && nil == ZMUser.selfUser.handle) {
+        self.userProfileObserverToken = [self.userProfile addObserver:self];
         [self.userProfile suggestHandles];
     }
 }
