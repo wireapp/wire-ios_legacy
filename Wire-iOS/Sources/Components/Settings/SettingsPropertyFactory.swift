@@ -88,7 +88,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
         SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets,
-        SettingsPropertyName.disableUserNamesUI         : UserDefaultDisableUserNamesUI
+        SettingsPropertyName.enableUserNamesUI          : UserDefaultEnableUserNamesUI
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
