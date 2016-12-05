@@ -38,6 +38,7 @@
 @property (nonatomic, readwrite) BOOL isPendingApprovalByOtherUser;
 @property (nonatomic, readwrite) BOOL isPendingApprovalBySelfUser;
 @property (nonatomic, readwrite) BOOL isConnected;
+@property (nonatomic, readwrite) NSUInteger totalCommonConnections;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 - (UIColor *)accentColor;

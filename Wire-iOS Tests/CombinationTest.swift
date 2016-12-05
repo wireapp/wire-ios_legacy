@@ -97,14 +97,14 @@ class CombinationTestTest: XCTestCase {
         let boolCombinations = Set<Bool>(arrayLiteral: false, true)
         
         let firstMutation = { (proto: BoolPair, value: Bool) -> BoolPair in
-            var new = proto.copy()
+            var new = proto.copyInstance()
             new.first = value
             return new
         }
         let firstMutator = Mutator<BoolPair, Bool>(applicator: firstMutation, combinations: boolCombinations)
         
         let secondMutation = { (proto: BoolPair, value: Bool) -> BoolPair in
-            var new = proto.copy()
+            var new = proto.copyInstance()
             new.second = value
             return new
         }

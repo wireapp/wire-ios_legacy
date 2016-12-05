@@ -146,6 +146,7 @@
 @property (nonatomic) BOOL mediaBarAnimationInFlight;
 
 @property (nonatomic) ConversationInputBarViewController *inputBarController;
+@property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
 
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
@@ -205,6 +206,8 @@
     [self addChildViewController:self.chatHeadsViewController];
     [self.view addSubview:self.chatHeadsViewController.view];
 
+    [self updateOutgoingConnectionVisibility];
+
     self.isAppearing = NO;
 
     [self createConstraints];
@@ -233,6 +236,55 @@
     self.contentViewController.analyticsTracker = self.analyticsTracker;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
+}
+
+- (void)createOutgoingConnectionViewController
+{
+    self.outgoingConnectionViewController = [[OutgoingConnectionViewController alloc] init];
+    @weakify(self);
+    self.outgoingConnectionViewController.buttonCallback = ^(OutgoingConnectionBottomBarAction action) {
+        @strongify(self);
+        [ZMUserSession.sharedSession enqueueChanges:^{
+            switch (action) {
+                case OutgoingConnectionBottomBarActionCancel:
+                    [self.conversation.firstActiveParticipantOtherThanSelf cancelConnectionRequest];
+                    break;
+                case OutgoingConnectionBottomBarActionArchive:
+                    self.conversation.isArchived = YES;
+                    break;
+            }
+        }];
+
+        [self openConversationList];
+    };
+
+    self.outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+- (void)updateOutgoingConnectionVisibility
+{
+    if (nil == self.conversation) {
+        return;
+    }
+
+    BOOL outgoingConnection = self.conversation.relatedConnectionState == ZMConnectionStatusSent;
+    self.contentViewController.tableView.scrollEnabled = !outgoingConnection;
+
+    if (outgoingConnection) {
+        if (nil != self.outgoingConnectionViewController) {
+            return;
+        }
+        [self createOutgoingConnectionViewController];
+        [self.outgoingConnectionViewController willMoveToParentViewController:self];
+        [self.view addSubview:self.outgoingConnectionViewController.view];
+        [self addChildViewController:self.outgoingConnectionViewController];
+        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    } else {
+        [self.outgoingConnectionViewController willMoveToParentViewController:nil];
+        [self.outgoingConnectionViewController.view removeFromSuperview];
+        [self.outgoingConnectionViewController removeFromParentViewController];
+        self.outgoingConnectionViewController = nil;
+    }
 }
 
 - (void)createBackButton
@@ -395,6 +447,7 @@
 
     _conversation = conversation;
     [self setupNavigatiomItem];
+    [self updateOutgoingConnectionVisibility];
     
     if (self.conversation != nil) {
         self.voiceChannelStateObserverToken = [conversation.voiceChannel addVoiceChannelStateObserver:self];
@@ -879,7 +932,7 @@
     
     if (note.participantsChanged || note.connectionStateChanged) {
         [self updateNavigationItemsButtons];
-        [self.contentViewController updateTableViewHeaderView];
+        [self updateOutgoingConnectionVisibility];
     }
     
     if (note.nameChanged || note.securityLevelChanged) {

@@ -19,27 +19,70 @@
 
 import Foundation
 
-@objc public enum UserConnectionAction: UInt {
-    case ignore, accept, cancelConnection, block
+@objc public enum IncomingConnectionAction: UInt {
+    case ignore, accept
 }
 
-final public class UserConnectionViewController: UIViewController {
-    fileprivate var userConnectionView: UserConnectionView!
-    fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
+final public class IncomingConnectionViewController: UIViewController, ZMCommonContactsSearchDelegate {
 
+    fileprivate var connectionView: IncomingConnectionView!
+    fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
 
     public let userSession: ZMUserSession
     public let user: ZMUser
-    public var onAction: ((UserConnectionAction)->())?
-    public var showUserName: Bool = false {
-        didSet {
-            guard let userConnectionView = self.userConnectionView else {
-                return
-            }
-            
-            userConnectionView.showUserName = self.showUserName
+    public var onAction: ((IncomingConnectionAction) -> ())?
+
+    public init(userSession: ZMUserSession, user: ZMUser) {
+        self.userSession = userSession
+        self.user = user
+        super.init(nibName: .none, bundle: .none)
+        
+        if self.user.totalCommonConnections == 0  && !self.user.isConnected {
+            self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
         }
     }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override public func loadView() {
+        self.connectionView = IncomingConnectionView(user: user)
+        self.connectionView.commonConnectionsCount = user.totalCommonConnections
+        self.connectionView.onAccept = { [weak self] user in
+            guard let `self` = self else { return }
+            self.userSession.performChanges {
+                self.user.accept()
+            }
+            self.onAction?(.accept)
+        }
+        self.connectionView.onIgnore = { [weak self] user in
+            guard let `self` = self else { return }
+            self.userSession.performChanges {
+                self.user.ignore()
+            }
+
+            self.onAction?(.ignore)
+        }
+
+        view = connectionView
+    }
+
+    public func didReceiveCommonContactsUsers(_ users: NSOrderedSet!, for searchToken: ZMCommonContactsSearchToken!) {
+        connectionView.commonConnectionsCount = UInt(users.count)
+    }
+
+}
+
+
+final public class UserConnectionViewController: UIViewController, ZMCommonContactsSearchDelegate {
+
+    fileprivate var userConnectionView: UserConnectionView!
+    fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
+
+    public let userSession: ZMUserSession
+    public let user: ZMUser
+
     
     public init(userSession: ZMUserSession, user: ZMUser) {
         self.userSession = userSession
@@ -57,56 +100,9 @@ final public class UserConnectionViewController: UIViewController {
     
     override public func loadView() {
         self.userConnectionView = UserConnectionView(user: self.user)
-        self.userConnectionView.showUserName = self.showUserName
         self.userConnectionView.commonConnectionsCount = self.user.totalCommonConnections
-        self.userConnectionView.onAccept = { [weak self] user in
-            
-            guard let `self` = self else {
-                return
-            }
-            
-            self.userSession.performChanges {
-                self.user.accept()
-            }
-            self.onAction?(.accept)
-        }
-        self.userConnectionView.onIgnore = { [weak self] user in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.userSession.performChanges {
-                self.user.ignore()
-            }
-            
-            self.onAction?(.ignore)
-        }
-        self.userConnectionView.onBlock = { [weak self] user in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.userSession.performChanges {
-                self.user.block()
-            }
-            self.onAction?(.block)
-        }
-        self.userConnectionView.onCancelConnection = { [weak self] user in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.userSession.performChanges {
-                self.user.cancelConnectionRequest()
-            }
-            self.onAction?(.cancelConnection)
-        }
-        
         self.view = self.userConnectionView
     }
-}
-
-extension UserConnectionViewController: ZMCommonContactsSearchDelegate {
     
     public func didReceiveCommonContactsUsers(_ users: NSOrderedSet!, for searchToken: ZMCommonContactsSearchToken!) {
         self.userConnectionView.commonConnectionsCount = UInt(users.count)

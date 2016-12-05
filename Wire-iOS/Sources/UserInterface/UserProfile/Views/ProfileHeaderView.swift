@@ -37,9 +37,7 @@ final class ProfileHeaderView: UIView {
     private(set) var dismissButton = IconButton.iconButtonCircular()
     private(set) var headerStyle: ProfileHeaderStyle
 
-    private let titleLabel = UILabel()
-    private let subtitleLabel = UILabel()
-    private let correlationLabel = UILabel()
+    private let detailView = UserNameDetailView()
     private let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified())
 
     @objc(initWithViewModel:)
@@ -59,12 +57,7 @@ final class ProfileHeaderView: UIView {
     private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
 
-        [titleLabel, subtitleLabel, correlationLabel].forEach {
-            $0.textAlignment = .center
-            $0.backgroundColor = .clear
-        }
-
-        [titleLabel, subtitleLabel, correlationLabel, dismissButton, verifiedImageView].forEach(addSubview)
+        [detailView, dismissButton, verifiedImageView].forEach(addSubview)
         verifiedImageView.isHidden = true
 
         verifiedImageView.accessibilityIdentifier = "VerifiedShield"
@@ -81,23 +74,14 @@ final class ProfileHeaderView: UIView {
         let topMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_top_margin")
         let horizontalMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_left_margin")
 
-        constrain(self, titleLabel, subtitleLabel, correlationLabel) { view, title, subtitle, correlation in
-            title.top == view.top + topMargin
-            title.height == 32
-            title.leading == view.leading + horizontalMargin + 32
-            title.trailing == view.trailing - (horizontalMargin + 32)
-
-            subtitle.top == title.bottom + 10
-            subtitle.centerX == view.centerX
-            subtitle.height == 16
-
-            correlation.top == subtitle.bottom
-            correlation.centerX == view.centerX
-            correlation.height == 16
-            correlation.bottom == view.bottom - 12
+        constrain(self, detailView) { view, detailView in
+            detailView.top == view.top + topMargin
+            detailView.leading == view.leading + horizontalMargin + 32
+            detailView.trailing == view.trailing - (horizontalMargin + 32)
+            detailView.bottom == view.bottom - 12
         }
 
-        constrain(self, dismissButton, verifiedImageView, titleLabel) { view, dismiss, verified, title in
+        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { view, dismiss, verified, title in
             dismiss.top == view.top + 24
             dismiss.width == dismiss.height
             dismiss.width == 32
@@ -116,9 +100,7 @@ final class ProfileHeaderView: UIView {
     }
 
     private func configure(with model: ProfileHeaderViewModel) {
-        titleLabel.attributedText = model.title
-        subtitleLabel.attributedText = model.subtitle
-        correlationLabel.attributedText = model.correlationText
+        detailView.configure(with: model.userDetailViewModel)
     }
 
     private func updateVerifiedShield() {

@@ -42,29 +42,26 @@
     _user = user;
     
     [self.connectRequestViewController.view removeFromSuperview];
-    
-    self.connectRequestViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:self.user];
-    self.connectRequestViewController.showUserName = YES;
+    self.connectRequestViewController = [[IncomingConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:self.user];
+
     @weakify(self);
-    self.connectRequestViewController.onAction = ^(UserConnectionAction action) {
+    self.connectRequestViewController.onAction = ^(IncomingConnectionAction action) {
         @strongify(self);
         switch(action) {
-            case UserConnectionActionAccept:
+            case IncomingConnectionActionAccept:
                 self.acceptBlock();
                 break;
-            case UserConnectionActionIgnore:
+            case IncomingConnectionActionIgnore:
                 self.ignoreBlock();
-                break;
-            default:
                 break;
         }
     };
+
     self.connectRequestViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.connectRequestViewController.view];
-    
+
     [self.connectRequestViewController.view autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.connectRequestViewController.view autoPinEdgesToSuperviewMargins];
-    
     [self.connectRequestViewController.view autoSetDimension:ALDimensionWidth toSize:420 relation:NSLayoutRelationLessThanOrEqual];
 }
 

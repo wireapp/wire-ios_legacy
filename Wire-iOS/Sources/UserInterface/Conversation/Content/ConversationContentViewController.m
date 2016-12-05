@@ -248,23 +248,10 @@
     
     UIView *headerView = nil;
     ZMUser *otherParticipant = self.conversation.firstActiveParticipantOtherThanSelf;
-    if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && nil != otherParticipant) {
-        self.connectionViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:otherParticipant];
-        @weakify(self);
-        self.connectionViewController.onAction = ^(UserConnectionAction action) {
-            @strongify(self);
-            switch (action) {
-                case UserConnectionActionIgnore:
-                case UserConnectionActionBlock:
-                case UserConnectionActionCancelConnection:
-                    [self.delegate conversationContentViewControllerWantsToDismiss:self];
-                    break;
-                default:
-                    [self updateTableViewHeaderView];
-                    break;
-            }
-        };
+    BOOL connectionOrOneOnOne = self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne;
 
+    if (connectionOrOneOnOne && nil != otherParticipant) {
+        self.connectionViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:otherParticipant];
         headerView = self.connectionViewController.view;
     }
     

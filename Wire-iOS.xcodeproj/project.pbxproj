@@ -757,6 +757,10 @@
 		BF732A7A1D9C14C7003077DB /* emoji_travel.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A721D9C14C7003077DB /* emoji_travel.plist */; };
 		BF74EE4C1CD249B000D626CB /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF74EE4B1CD249B000D626CB /* HockeySDK.framework */; };
 		BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78687D1D86B36D0063762F /* LocationDataTests.swift */; };
+		BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */; };
+		BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */; };
+		BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D91DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift */; };
+		BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2DB1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift */; };
 		BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EF5441D953B3F003E3999 /* Date+Format.swift */; };
 		BF8042271BFC741F004CD789 /* NSURL+WireURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */; };
 		BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B4C1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift */; };
@@ -2091,6 +2095,10 @@
 		BF732A721D9C14C7003077DB /* emoji_travel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_travel.plist; sourceTree = "<group>"; };
 		BF74EE4B1CD249B000D626CB /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Carthage/Build/iOS/HockeySDK.framework; sourceTree = "<group>"; };
 		BF78687D1D86B36D0063762F /* LocationDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataTests.swift; sourceTree = "<group>"; };
+		BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameDetailView.swift; sourceTree = "<group>"; };
+		BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingConnectionView.swift; sourceTree = "<group>"; };
+		BF7ED2D91DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingConnectionBottomBar.swift; sourceTree = "<group>"; };
+		BF7ED2DB1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingConnectionViewTests.swift; sourceTree = "<group>"; };
 		BF7EF5441D953B3F003E3999 /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		BF8042251BFC741F004CD789 /* NSURL+WireURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+WireURLs.h"; sourceTree = "<group>"; };
 		BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+WireURLs.m"; sourceTree = "<group>"; };
@@ -3363,6 +3371,7 @@
 				872CB8A319E58816006752B4 /* ProfileFooterView.h */,
 				872CB8A419E58816006752B4 /* ProfileFooterView.m */,
 				BFD9B9551DEDEE0400E47534 /* ProfileHeaderView.swift */,
+				BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */,
 				BF5C37961C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.h */,
 				BF5C37971C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m */,
 				BF5C37991C0E0E8700EA11E3 /* ParticipantDeviceCell.h */,
@@ -4153,6 +4162,8 @@
 				DBCBD19119F10A1F000510C1 /* ConnectRequestCell.m */,
 				87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */,
 				8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */,
+				BF7ED2D91DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift */,
+				BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */,
 			);
 			path = ConnectRequests;
 			sourceTree = "<group>";
@@ -4534,6 +4545,7 @@
 				BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */,
 				1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */,
 				87CA886F1DE30AD0004101B6 /* UserConnectionViewTests.swift */,
+				BF7ED2DB1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift */,
 				874941CC1DE458DF006CF32B /* CombinationTest.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -5304,6 +5316,7 @@
 				8F8914381A9F2A510056AB0C /* TopItemsController.m in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
+				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
 				BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */,
@@ -5453,6 +5466,7 @@
 				875F89171D6F35EC00D8748E /* ReactionsListViewController.swift in Sources */,
 				871BC2251D34F8F800DF0793 /* BrowserBarView.m in Sources */,
 				168DDD041AFA81820056A5EF /* CheckmarkViewController.m in Sources */,
+				BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */,
 				871BC2761D34F8F800DF0793 /* UserImageView.m in Sources */,
 				87302F4B1B15D6E6001F478C /* SearchViewController.m in Sources */,
 				871BC2311D34F8F800DF0793 /* Guidance.m in Sources */,
@@ -5597,6 +5611,7 @@
 				871BC0021D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m in Sources */,
 				871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */,
 				871BBFFF1D34F56300DF0793 /* AnalyticsBase.m in Sources */,
+				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
 				BF8CADD91D6CAAFC007602B8 /* Conversation+SortedParticipants.swift in Sources */,
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
@@ -5860,6 +5875,7 @@
 				BFAD3A201CD10D6000F0FBED /* MockEditableUser.m in Sources */,
 				87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */,
 				87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
+				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
 				BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */,

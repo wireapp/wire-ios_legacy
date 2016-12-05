@@ -20,10 +20,10 @@
 #import <UIKit/UIKit.h>
 
 @class ZMUser;
-@class UserConnectionViewController;
+@class IncomingConnectionViewController;
 
 @interface ConnectRequestCell : UITableViewCell
-@property (nonatomic) UserConnectionViewController *connectRequestViewController;
+@property (nonatomic) IncomingConnectionViewController *connectRequestViewController;
 
 @property (nonatomic, strong) ZMUser *user;
 @property (nonatomic, copy)   void (^acceptBlock)();

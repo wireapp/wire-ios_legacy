@@ -23,7 +23,7 @@ public protocol Copyable {
 }
 
 public extension Copyable {
-    public func copy() -> Self {
+    public func copyInstance() -> Self {
         return Self.init(instance: self)
     }
 }

@@ -163,6 +163,10 @@
 {
     return @[];
 }
+- (void)refreshData
+{
+    // no-op
+}
     
 - (BOOL)isPendingApproval {
     return false;

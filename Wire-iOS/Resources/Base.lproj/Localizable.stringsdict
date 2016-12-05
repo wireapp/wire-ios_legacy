@@ -198,9 +198,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>friend</string>
+                <string>person</string>
                 <key>other</key>
-                <string>friends</string>
+                <string>people</string>
             </dict>
         </dict>
 	</dict>
