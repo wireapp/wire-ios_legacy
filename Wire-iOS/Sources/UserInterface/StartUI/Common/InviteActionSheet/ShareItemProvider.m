@@ -65,7 +65,8 @@ NSString *ActivityToAnalyticsString(NSString *activity) {
     ZMUser<ZMEditableUser> *fullSelfUser = [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];
 
     if (nil != fullSelfUser.handle) {
-        return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), fullSelfUser.handle];
+        NSString *displayHandle = [NSString stringWithFormat:@"@%@", fullSelfUser.handle];
+        return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), displayHandle];
     } else if (fullSelfUser.emailAddress.length > 0) {
         return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), fullSelfUser.emailAddress];
     }
