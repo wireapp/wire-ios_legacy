@@ -114,8 +114,7 @@ public final class UserConnectionView: UIView, Copyable {
             labelContainer.centerX == selfView.centerX
             labelContainer.top == selfView.top
             labelContainer.left >= selfView.left
-            labelContainer.bottom <= userImageView.top
-            
+
             userImageView.center == selfView.center
             userImageView.left >= selfView.left + 54
             userImageView.width == userImageView.height
@@ -132,7 +131,6 @@ public final class UserConnectionView: UIView, Copyable {
                 $0.leading == labelContainer.leading
                 $0.trailing == labelContainer.trailing
             }
-
         }
     }
 
