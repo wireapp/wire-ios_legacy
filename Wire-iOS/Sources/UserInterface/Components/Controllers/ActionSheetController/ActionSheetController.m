@@ -113,7 +113,7 @@
 @property (nonatomic, readonly) ActionSheetControllerLayout layout;
 @property (nonatomic, readonly) ActionSheetContainerView *actionSheetContainerView;
 @property (nonatomic, readonly) UIView *sheetView;
-@property (nonatomic) UIView *titleView;
+@property (nonatomic, readonly) UIView *titleView;
 
 @end
 
@@ -147,7 +147,7 @@
         self.defaultTransitioningDelegate = [[DefaultActionSheetTransitioningDelegate alloc] init];
         self.transitioningDelegate = self.defaultTransitioningDelegate;
         self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        self.titleView = titleView;
+        _titleView = titleView;
         _layout = layout;
         _style = style;
         _dismissStyle = dismissStyle;
@@ -169,7 +169,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.actionSheetContainerView.titleView addSubview:self.titleView];
+    [self.actionSheetContainerView.topContainerView addSubview:self.titleView];
     [self.titleView autoPinEdgesToSuperviewEdges];
 
     self.actionSheetContainerView.sheetView = self.sheetView;
