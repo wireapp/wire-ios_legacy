@@ -123,7 +123,7 @@
 
 - (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
 {
-    [self.controllerToPresentOn dismissViewControllerAnimated:YES completion:^{
+    [profileViewController dismissViewControllerAnimated:YES completion:^{
         if (completion != nil) {
             completion();
         }

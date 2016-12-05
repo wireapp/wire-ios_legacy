@@ -292,15 +292,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController (ProfileDetailsViewControllerDelegate)
 
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didTapOnCommonConnection:(ZMUser *)connection
-{
-    ProfileViewController *commonProfileController = [[ProfileViewController alloc] initWithUser:connection context:ProfileViewControllerContextCommonConnection];
-    commonProfileController.delegate = self;
-    commonProfileController.navigationControllerDelegate = self.navigationControllerDelegate;
-    self.navigationControllerDelegate.tapLocation = self.view.center;
-    [self.navigationController pushViewController:commonProfileController animated:YES];
-}
-
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didSelectConversation:(ZMConversation *)conversation
 {
     if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToNavigateToConversation:)]) {
