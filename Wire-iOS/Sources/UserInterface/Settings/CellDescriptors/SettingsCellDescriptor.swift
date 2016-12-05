@@ -249,7 +249,7 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
     case .disableSendButton:
         return "self.settings.popular_demand.send_button.title".localized
     case .disableCallKit:
-        return "self.settings.popular_demand.call_kit.title".localized
+        return "self.settings.callkit.caption".localized
     case .tweetOpeningOption:
         return "self.settings.link_options.twitter.title".localized
     case .mapsOpeningOption:
@@ -260,6 +260,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "Send assets using the v3 endpoint"
     case .enableV3Calling:
         return "Enable calling V3"
+    case .enableUserNamesUI:
+        return "Enable username userinterface elements"
     }
 }
 

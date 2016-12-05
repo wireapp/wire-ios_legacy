@@ -113,6 +113,7 @@
 @property (nonatomic, readonly) ActionSheetControllerLayout layout;
 @property (nonatomic, readonly) ActionSheetContainerView *actionSheetContainerView;
 @property (nonatomic, readonly) UIView *sheetView;
+@property (nonatomic, readonly) UIView *titleView;
 
 @end
 
@@ -125,8 +126,20 @@
 
 - (instancetype)initWithTitle:(NSString *)title layout:(ActionSheetControllerLayout)layout style:(ActionSheetControllerStyle)style dismissStyle:(ActionSheetControllerDismissStyle)dismissStyle
 {
+    UILabel *titleLabel = [[UILabel alloc] initForAutoLayout];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.text = title.uppercasedWithCurrentLocale;
+    titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    return [self initWithTitleView:titleLabel layout:layout style:style dismissStyle:dismissStyle];
+}
+
+- (instancetype)initWithTitleView:(UIView *)titleView
+                           layout:(ActionSheetControllerLayout)layout
+                            style:(ActionSheetControllerStyle)style
+                     dismissStyle:(ActionSheetControllerDismissStyle)dismissStyle
+{
     self = [super initWithNibName:nil bundle:nil];
-    
+
     if (self) {
         self.actions = @[];
         self.checkBoxButtons = @[];
@@ -134,12 +147,12 @@
         self.defaultTransitioningDelegate = [[DefaultActionSheetTransitioningDelegate alloc] init];
         self.transitioningDelegate = self.defaultTransitioningDelegate;
         self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        self.title = title;
+        _titleView = titleView;
         _layout = layout;
         _style = style;
         _dismissStyle = dismissStyle;
     }
-    
+
     return self;
 }
 
@@ -156,8 +169,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.actionSheetContainerView.titleLabel.text = [self.title uppercasedWithCurrentLocale];
+    [self.actionSheetContainerView.topContainerView addSubview:self.titleView];
+    [self.titleView autoPinEdgesToSuperviewEdges];
+
     self.actionSheetContainerView.sheetView = self.sheetView;
 
     if (self.dismissStyle == ActionSheetControllerDismissStyleBackground) {

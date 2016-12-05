@@ -33,6 +33,7 @@ public final class LocationMessageCell: ConversationCell {
     private weak var locationAnnotation: MKPointAnnotation? = nil
     var labelFont: UIFont?
     var labelTextColor, containerColor: UIColor?
+    var containerHeightConstraint: NSLayoutConstraint!
     
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -78,7 +79,7 @@ public final class LocationMessageCell: ConversationCell {
             container.right == contentView.rightMargin
             container.top == contentView.top
             container.bottom == contentView.bottom
-            container.height == 160
+            self.containerHeightConstraint = container.height == 160
             mapView.edges == container.edges
             obfuscationView.edges == container.edges
         }

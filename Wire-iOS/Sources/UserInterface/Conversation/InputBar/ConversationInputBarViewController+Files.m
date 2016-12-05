@@ -139,8 +139,8 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
 #endif
         return; // Don't crash on Simulator
     }
-    
-    [self executeWithVideoPermissions:^{
+
+    dispatch_block_t presentController = ^() {
         UIImagePickerController* pickerController = [[UIImagePickerController alloc] init];
         pickerController.sourceType = sourceType;
         pickerController.delegate = self;
@@ -159,7 +159,14 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             }
         }
         [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
-    }];
+    };
+    
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        [self executeWithVideoPermissions:presentController];
+    }
+    else {
+        presentController();
+    }
 }
 
 - (void)executeWithVideoPermissions:(dispatch_block_t)toExecute {

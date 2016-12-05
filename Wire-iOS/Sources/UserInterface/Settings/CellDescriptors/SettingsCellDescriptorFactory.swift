@@ -47,121 +47,6 @@ import Foundation
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain)
     }
     
-    func accountGroup() -> SettingsCellDescriptorType {
-        let nameElement = SettingsPropertyTextValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.profileName))
-        
-        let phoneElement: SettingsCellDescriptorType
-        
-        if let phoneNumber = ZMUser.selfUser().phoneNumber , !phoneNumber.isEmpty {
-            phoneElement = SettingsInfoCellDescriptor(title: "self.settings.account_section.phone.title".localized, previewGenerator: { _ in
-                return SettingsCellPreview.text(ZMUser.selfUser().phoneNumber)
-            })
-        }
-        else {
-            phoneElement = SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
-                let addController = AddPhoneNumberViewController()
-                addController.showsNavigationBar = false
-                let stepDelegate = DismissStepDelegate()
-                stepDelegate.strongCapture = stepDelegate
-                
-                addController.formStepDelegate = stepDelegate
-                return addController
-            }
-        }
-        
-        
-        let emailElement: SettingsCellDescriptorType
-        
-        if let emailAddress = ZMUser.selfUser().emailAddress , !emailAddress.isEmpty {
-            emailElement = SettingsInfoCellDescriptor(title: "self.settings.account_section.email.title".localized, previewGenerator: { _ in
-                return SettingsCellPreview.text(ZMUser.selfUser().emailAddress)
-            })
-        }
-        else {
-            emailElement = SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
-                let addEmailController = AddEmailPasswordViewController()
-                addEmailController.showsNavigationBar = false
-                let stepDelegate = DismissStepDelegate()
-                stepDelegate.strongCapture = stepDelegate
-                
-                addEmailController.formStepDelegate = stepDelegate
-                return addEmailController
-            }
-        }
-        
-        let headerText = "self.settings.account_details_group.title".localized
-        let footerText = "self.settings.account_details_group.footer".localized
-        let nameAndDetailsSection = SettingsSectionDescriptor(cellDescriptors: [nameElement, phoneElement, emailElement], header: headerText, footer: footerText)
-        let pictureText = "self.settings.account_picture_group.picture".localized
-        let pictureElement = SettingsExternalScreenCellDescriptor(title: pictureText, isDestructive: false, presentationStyle: PresentationStyle.modal, presentationAction: { () -> (UIViewController?) in
-            return ProfileSelfPictureViewController() as UIViewController
-            }, previewGenerator: { (cell) -> SettingsCellPreview in
-                guard let profileImageData = ZMUser.selfUser().imageSmallProfileData,
-                let image = UIImage(data: profileImageData) else {
-                    return .none
-                }
-                return .image(image)
-        })
-        
-        let colorText = "self.settings.account_picture_group.color".localized
-        let colorElement = SettingsExternalScreenCellDescriptor(title: colorText, isDestructive: false, presentationStyle: PresentationStyle.modal, presentationAction: { () -> (UIViewController?) in
-            return AccentColorPickerController()
-            }, previewGenerator: { (cell) -> SettingsCellPreview in
-                return .color(ZMUser.selfUser().accentColor)
-        })
-        
-        let appearanceSectionTitle = "self.settings.account_appearance_group.title".localized
-        let appearanceSection = SettingsSectionDescriptor(cellDescriptors: [pictureElement, colorElement], header: appearanceSectionTitle)
-        
-        
-        let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
-        let resetPassword = SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
-            UIApplication.shared.openURL((NSURL.wr_passwordReset() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
-            Analytics.shared()?.tagResetPassword(true, from: ResetFromProfile)
-        }
-        
-        
-        var signOutSection: SettingsSectionDescriptor?
-        if DeveloperMenuState.signOutEnabled() {
-            let signOutButton = SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { (cellDescriptor: SettingsCellDescriptorType) -> () in
-                Settings.shared().reset()
-                ZMUserSession.resetStateAndExit()
-            }
-            signOutSection = SettingsSectionDescriptor(cellDescriptors: [signOutButton], header: .none, footer: .none)
-        }
-        
-        
-        let deleteAccountButton = SettingsExternalScreenCellDescriptor(title: "self.settings.account_details.delete_account.title".localized, isDestructive: true, presentationStyle: .modal, presentationAction: { () -> (UIViewController?) in
-            let alert = UIAlertController(title: "self.settings.account_details.delete_account.alert.title".localized, message: "self.settings.account_details.delete_account.alert.message".localized, preferredStyle: .alert)
-            let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (alertAction: UIAlertAction) -> Void in
-                
-            })
-            alert.addAction(actionCancel)
-            let actionDelete = UIAlertAction(title: "general.ok".localized, style: .destructive, handler: { (alertAction: UIAlertAction) -> Void in
-                ZMUserSession.shared().enqueueChanges({ () -> Void in
-                    ZMUserSession.shared().initiateUserDeletion()
-                })
-            })
-            alert.addAction(actionDelete)
-            
-            return alert
-        })
-        
-        let actionsTitle = "self.settings.account_details.actions.title".localized
-        let actionsSection = SettingsSectionDescriptor(cellDescriptors: [resetPassword, deleteAccountButton], header: actionsTitle, footer: .none)
-
-        let items: [SettingsSectionDescriptorType]
-        if let signOutSection = signOutSection {
-            items = [nameAndDetailsSection, appearanceSection, actionsSection, signOutSection]
-        }
-        else {
-            items = [nameAndDetailsSection, appearanceSection, actionsSection]
-        }
-        
-        return SettingsGroupCellDescriptor(items: items, title: "self.settings.account_section".localized, icon: .settingsAccount)
-    }
-
-    
     func devicesGroup() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices.title".localized,
             isDestructive: false,
@@ -283,19 +168,15 @@ import Foundation
         let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableHockey))
         developerCellDescriptors.append(diableHockeySetting)
         let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
-
         developerCellDescriptors.append(diableAnalyticsSetting)
-        
-        if #available(iOS 10.0, *) {
-            let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit))
-            developerCellDescriptors.append(callKitDescriptor)
-        }
-        
         let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
         developerCellDescriptors.append(enableAssetV3Setting)
         
         let enableCallingV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableV3Calling))
         developerCellDescriptors.append(enableCallingV3Setting)
+
+        let enableUserNamesUI = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableUserNamesUI))
+        developerCellDescriptors.append(enableUserNamesUI)
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
@@ -308,7 +189,8 @@ import Foundation
         }, previewGenerator: .none)
         
         let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: NSURL.wr_askSupport().wr_URLByAppendingLocaleParameter() as URL!)
+            NSURL.wr_askSupport().wr_URLByAppendingLocaleParameter().open()
+            return .none
         }, previewGenerator: .none)
         
         let helpSection = SettingsSectionDescriptor(cellDescriptors: [supportButton, contactButton])

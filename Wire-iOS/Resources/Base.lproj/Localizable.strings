@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Search by name or email";
+"peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "Create group";
 "peoplepicker.button.add_to_conversation" = "Add";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "contacts";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "in Address Book";
+
+
 // Archived List
 "archived_list.title" = "archive";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Hiding…";
 
 "send_invitation.subject" = "Connect with me on Wire";
-"send_invitation.text" = "I’m on Wire. Search for %@\nor visit https://get.wire.com to connect with me.";
+"send_invitation.text" = "I’m on Wire, search for %@ or visit wire.com/download.";
 "send_invitation_no_email.text" = "I’m on Wire. Visit https://get.wire.com to connect with me.";
 
 "send_personal_invitation.text" = "I’m on Wire, talk to you there. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Start a call";
 "conversation.call.many_participants_confirmation.message" = "This will call %d people";
 "conversation.call.many_participants_confirmation.call" = "Call";
+
+"conversation.connection_view.in_address_book" = "in Address Book";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Account";
 
-"self.settings.account_details_group.title" = "Info";
+"self.settings.account_details_group.info.title" = "Info";
+"self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Name";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
+"self.settings.account_section.handle.title" = "Username";
+"self.settings.account_section.add_handle.title" = "Add username";
 
-"self.settings.account_details_group.footer" = "People can find you with these details.";
+"self.settings.account_details_group.info.footer" = "People can find you with these details.";
+"self.settings.account_details_group.personal.footer" = "This information is not visible .";
 
 "self.settings.account_details.remove_device.title" = "Remove Device";
 "self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Delete Account";
 "self.settings.account_details.delete_account.alert.message" = "We will send you a message via email or SMS. Follow the link to permanently delete your account.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.save" = "Save";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
+"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
@@ -482,6 +502,10 @@
 "self.settings.sound_menu.ringtones.title" = "Ringtones";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Calls";
+"self.settings.callkit.caption" = "Share with iOS";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire Call";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
@@ -489,7 +513,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "By popular demand";
 "self.settings.popular_demand.send_button.title" = "Send Button";
-"self.settings.popular_demand.call_kit.title" = "Don't use native calling (restart)";
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 
 // Open in
@@ -678,6 +701,14 @@
 "error.email.invalid" = "Please enter a valid email address";
 "error.phone.invalid" = "Please enter a valid phone number";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Usernames are here.";
+"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Learn more";
+
+"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.keep_suggested" = "Keep this one";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

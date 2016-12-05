@@ -71,7 +71,7 @@
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation;
 
 /**
- * Open the user clietn list screen
+ * Open the user client list screen
  */
 - (void)openClientListScreenForUser:(ZMUser *)user;
 

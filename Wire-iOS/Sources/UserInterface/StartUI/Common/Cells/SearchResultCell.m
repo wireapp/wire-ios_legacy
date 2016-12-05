@@ -25,6 +25,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "zmessaging+iOS.h"
 #import <ZMCDataModel/ZMBareUser.h>
+#import "Wire-Swift.h"
 
 @interface SearchResultCell () <ZMCommonContactsSearchDelegate>
 @property (nonatomic, strong) UIView *gesturesView;
@@ -48,9 +49,36 @@
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, weak)   id<ZMCommonContactsSearchToken> recentSearchToken;
+
 @end
 
 @implementation SearchResultCell
+
++ (UIColor *)subtitleColor
+{
+    return [UIColor colorWithWhite:1.0f alpha:0.4f];
+}
+
++ (UIFont *)lightFont
+{
+    return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+}
+
++ (UIFont *)boldFont
+{
+ return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+}
+
++ (AddressBookCorrelationFormatter *)correlationFormatter
+{
+    static dispatch_once_t onceToken;
+    static AddressBookCorrelationFormatter *formatter = nil;
+    dispatch_once(&onceToken, ^{
+        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont boldFont:self.boldFont color:self.subtitleColor];
+    });
+
+    return formatter;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -87,8 +115,6 @@
 
         self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
         [self.swipeView addSubview:self.subtitleLabel];
-        self.subtitleLabel.textColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
-        self.subtitleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
 
         UITapGestureRecognizer *doubleTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
         doubleTapper.numberOfTapsRequired = 2;
@@ -149,14 +175,14 @@
         [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
         [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftMargin];
-            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:nameAvatarMargin];
+            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
+            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:nameAvatarMargin];
         }];
         [self.hideButton autoSetDimension:ALDimensionWidth toSize:64 relation:NSLayoutRelationGreaterThanOrEqual];
 
         [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel];
-        [self.subtitleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
-        self.subtitleRightMarginConstraint = [self.subtitleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.swipeView withOffset:- rightMargin];
+        [self.subtitleLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
+        self.subtitleRightMarginConstraint = [self.subtitleLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.nameLabelTopConstraint = [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.swipeView withOffset:9.0f];
         self.nameLabelVerticalConstraint = [self.nameLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
@@ -170,21 +196,21 @@
             self.nameLabelTopConstraint.active = YES;
         }
         
-        [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.avatarContainer withOffset:nameAvatarMargin];
-        self.nameRightMarginConstraint = [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.swipeView withOffset:- rightMargin];
+        [self.nameLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
+        self.nameRightMarginConstraint = [self.nameLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
         [self.avatarContainer autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.avatarContainer];
-        [self.avatarContainer autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.swipeView withOffset:leftMargin];
+        [self.avatarContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.swipeView withOffset:leftMargin];
         [self.avatarContainer autoAlignAxisToSuperviewMarginAxis:ALAxisHorizontal];
 
         self.conversationImageViewSize = [self.conversationImageView autoSetDimension:ALDimensionWidth toSize:80];
         [self.conversationImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.conversationImageView];
-        [self.conversationImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.swipeView withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_left_margin"]];
+        [self.conversationImageView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.swipeView withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_left_margin"]];
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
         [self.instantConnectButton autoSetDimensionsToSize:CGSizeMake(64, 64)];
 
         self.initialConstraintsCreated = YES;
@@ -237,7 +263,7 @@
 {
     self.displayName = self.user.name;
     
-    [self updateSubtitleForCommonConnections:self.user.topCommonConnections total:self.user.totalCommonConnections];
+    [self updateSubtitleForCommonConnections:self.user.totalCommonConnections];
     
     BOOL canBeConnected = YES;
 
@@ -397,28 +423,46 @@
     return ! self.user.isConnected && self.canBeHidden;
 }
 
-- (void)updateSubtitleForCommonConnections:(NSOrderedSet *)users total:(NSUInteger)total
+- (void)updateSubtitleForCommonConnections:(NSUInteger)connections
 {
-    if (self.user.isConnected || users.count == 0) {
+    NSAttributedString *subtitle = [self attributedSubtitleWithConnectionCount:connections];
+
+    if (nil == subtitle) {
         self.subtitleLabel.text = @"";
         self.nameLabelTopConstraint.active = NO;
         self.nameLabelVerticalConstraint.active = YES;
-    }
-    else {
+    } else {
         self.nameLabelVerticalConstraint.active = NO;
         self.nameLabelTopConstraint.active = YES;
-        
-        if (users.count == 1) { // Knows "Name"
-            self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"peoplepicker.suggested.knows_one", @""), [users.firstObject displayName]];
-        }
-        else if (users.count == 2) { // Knows "Name" and "Other Name"
-            NSArray *usersArray = users.array;
-            self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"peoplepicker.suggested.knows_two", @""), [usersArray[0] displayName], [usersArray[1] displayName]];
-        }
-        else { // Knows "Name" and N others
-            self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"peoplepicker.suggested.knows_more", @""), [users.firstObject displayName], total - 1];
-        }
+        self.subtitleLabel.attributedText = subtitle;
     }
+}
+
+- (NSAttributedString *)attributedSubtitleWithConnectionCount:(NSUInteger)connections
+{
+    NSMutableAttributedString *subtitle = [[NSMutableAttributedString alloc] init];
+    [subtitle beginEditing];
+
+    NSAttributedString *handle;
+    if (nil != self.user.handle) {
+        NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.class.subtitleColor };
+        NSString *displayHandle = [NSString stringWithFormat:@"@%@", self.user.handle];
+        handle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
+        [subtitle appendAttributedString:handle];
+    }
+
+    NSString *addresBookName = BareUserToUser(self.user).contact.name;
+    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName];
+    if (nil != correlation) {
+        if (nil != handle) {
+            NSDictionary *dashAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
+            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" - " attributes: dashAttributes]];
+        }
+        [subtitle appendAttributedString:correlation];
+    }
+
+    [subtitle endEditing];
+    return subtitle.length != 0 ? subtitle : nil;
 }
 
 #pragma mark - ZMCommonContactsSearchDelegate
@@ -426,7 +470,7 @@
 - (void)didReceiveCommonContactsUsers:(NSOrderedSet *)users forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
 {
     if (searchToken == self.recentSearchToken && ! [self.user isConnected]) {
-        [self updateSubtitleForCommonConnections:users total:users.count];
+        [self updateSubtitleForCommonConnections:users.count];
     }
 }
 

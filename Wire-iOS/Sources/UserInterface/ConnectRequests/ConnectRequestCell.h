@@ -19,10 +19,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class ZMUser, IncomingConnectRequestView;
+@class ZMUser;
+@class IncomingConnectionViewController;
 
 @interface ConnectRequestCell : UITableViewCell
-@property (nonatomic) IncomingConnectRequestView *incomingConnectRequestView;
+@property (nonatomic) IncomingConnectionViewController *connectRequestViewController;
 
 @property (nonatomic, strong) ZMUser *user;
 @property (nonatomic, copy)   void (^acceptBlock)();

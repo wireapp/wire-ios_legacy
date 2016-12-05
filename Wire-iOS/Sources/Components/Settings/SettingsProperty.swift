@@ -76,6 +76,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case disableCallKit = "DisableCallKit"
     case sendV3Assets = "SendV3Assets"
     case enableV3Calling = "EnableV3Calling"
+    case enableUserNamesUI = "EnableUserNamesUI"
 
     var changeNotificationName: String {
         return self.description + "ChangeNotification"

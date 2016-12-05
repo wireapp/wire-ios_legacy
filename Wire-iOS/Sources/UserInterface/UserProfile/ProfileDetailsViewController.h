@@ -29,7 +29,6 @@
 
 @protocol ProfileDetailsViewControllerDelegate <NSObject>
 
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didTapOnCommonConnection:(ZMUser *)connection;
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didSelectConversation:(ZMConversation *)conversation;
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentAddContactsViewController:(AddContactsViewController *)addContactsViewController;
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion;

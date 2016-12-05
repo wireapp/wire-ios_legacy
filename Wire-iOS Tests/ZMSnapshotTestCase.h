@@ -67,7 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Performs an assertion with the given view and the recorded snapshot.
 - (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line;
-- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line;
+- (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line identifier:(nullable NSString *)identifier;
+- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(nullable NSString *)identifier;
 
 /// Performs multiple assertions with the given view using the screen sizes of
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.

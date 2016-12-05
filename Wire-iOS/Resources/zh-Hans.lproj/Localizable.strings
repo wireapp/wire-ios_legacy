@@ -139,8 +139,8 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "点击记录\n你之后可以 %@ 它，";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "选择一个筛选器";
 
-"conversation.call.many_participants_confirmation.title" = "Start a call";
-"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.title" = "开始呼叫";
+"conversation.call.many_participants_confirmation.message" = "这将会呼叫%d位联系人";
 "conversation.call.many_participants_confirmation.call" = "通话";
 
 // Image confirmation dialogue
@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "铃声";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "通话";
+"self.settings.callkit.caption" = "与iOS分享";
+"self.settings.callkit.description" = "在屏幕锁界面与手机通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将与Apple服务器同步。重新启动Wire来启动该功能。";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire 通话";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 信息";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire 打招呼";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "推荐选项";
 "self.settings.popular_demand.send_button.title" = "发送按钮";
-"self.settings.popular_demand.call_kit.title" = "关闭本地通话记录同步功能(需要重启)";
 "self.settings.popular_demand.send_button.footer" = "关闭系统键盘回车发送信息功能。";
 
 // Open in

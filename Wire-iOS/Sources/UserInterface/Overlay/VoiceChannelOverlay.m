@@ -174,15 +174,6 @@ static NSString *NotNilString(NSString *string) {
         self.videoView.userInteractionEnabled = NO;
         self.videoView.backgroundColor = [UIColor colorWithPatternImage:[UIImage dot:9]];
         [self addSubview:self.videoView];
-        
-        // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
-        // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
-        // therefore we use @c autoresizingMask here
-        self.videoPreview = [[AVSVideoPreview alloc] initWithFrame:self.bounds];
-        self.videoPreview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.videoPreview.userInteractionEnabled = NO;
-        self.videoPreview.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.videoPreview];
     }
 
     _videoViewFullScreen = YES;
@@ -401,12 +392,13 @@ static NSString *NotNilString(NSString *string) {
 
 - (void)setVideoViewFullScreen:(BOOL)videoViewFullScreen
 {
+    [self createVideoPreviewIfNeeded];
+
     if (_videoViewFullScreen == videoViewFullScreen) {
         return;
     }
     DDLogVoice(@"videoViewFullScreen: %d -> %d", _videoViewFullScreen, videoViewFullScreen);
     _videoViewFullScreen = videoViewFullScreen;
-
     if (_videoViewFullScreen) {
         self.videoPreview.frame = self.bounds;
         [self insertSubview:self.videoPreview aboveSubview:self.videoView];
@@ -414,6 +406,20 @@ static NSString *NotNilString(NSString *string) {
     else {
         self.videoPreview.frame = self.cameraPreviewView.videoFeedContainer.bounds;
         [self.cameraPreviewView.videoFeedContainer addSubview:self.videoPreview];
+    }
+}
+
+- (void)createVideoPreviewIfNeeded
+{
+    if (![[Settings sharedSettings] disableAVS] && nil == self.videoPreview) {
+        // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
+        // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
+        // therefore we use @c autoresizingMask here
+        self.videoPreview = [[AVSVideoPreview alloc] initWithFrame:self.bounds];
+        self.videoPreview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.videoPreview.userInteractionEnabled = NO;
+        self.videoPreview.backgroundColor = [UIColor clearColor];
+        [self insertSubview:self.videoPreview aboveSubview:self.videoView];
     }
 }
 

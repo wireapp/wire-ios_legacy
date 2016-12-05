@@ -18,6 +18,7 @@
 
 
 #import "TextMessageCell.h"
+#import "TextMessageCell+Internal.h"
 
 #import <PureLayout/PureLayout.h>
 #import <Classy/Classy.h>
@@ -49,9 +50,8 @@
 
 @property (nonatomic) BOOL initialTextCellConstraintsCreated;
 
-@property (nonatomic) LinkInteractionTextView *messageTextView;
-@property (nonatomic) UIView *linkAttachmentContainer;
 @property (nonatomic) UIImageView *editedImageView;
+@property (nonatomic) UIView *linkAttachmentContainer;
 @property (nonatomic) LinkAttachment *linkAttachment;
 @property (nonatomic) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
 
@@ -59,7 +59,6 @@
 @property (nonatomic) UIView *linkAttachmentView;
 
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
-
 @end
 
 
@@ -68,7 +67,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {        
         [self createTextMessageViews];
         [self createConstraints];
     }
@@ -127,19 +126,19 @@
 
 - (void)createConstraints
 {
-    [self.messageTextView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeRight];
+    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeTop];
+    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeLeading];
+    [self.messageTextView autoPinEdgeToSuperviewMargin:ALEdgeTrailing];
     
     self.textViewHeightConstraint = [self.messageTextView autoSetDimension:ALDimensionHeight toSize:0];
     self.textViewHeightConstraint.active = NO;
     
-    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
-    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:0];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.linkAttachmentContainer autoPinEdgeToSuperviewMargin:ALEdgeBottom];
     }];
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
@@ -210,6 +209,12 @@
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
+        articleView.imageHeight = self.smallLinkAttachments ? 0 : 144;
+        if (self.smallLinkAttachments) {
+            articleView.messageLabel.numberOfLines = 1;
+            articleView.authorLabel.numberOfLines = 1;
+            [articleView autoSetDimension:ALDimensionHeight toSize:70];
+        }
         articleView.translatesAutoresizingMaskIntoConstraints = NO;
         [articleView configureWithTextMessageData:textMesssageData obfuscated:message.isObfuscated];
         [self.linkAttachmentContainer addSubview:articleView];

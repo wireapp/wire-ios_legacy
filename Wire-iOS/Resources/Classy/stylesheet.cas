@@ -350,17 +350,6 @@ ProfileViewController UserImageView {
     borderColor: rgb(0, 0, 0, 0.08);
 }
 
-ProfileHeaderView {
-    titleLabel: @{
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-    subtitleLabel: @{
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-}
-
 ProfileFooterView {
     leftButton: @{
         contentEdgeInsets: 0 0 0 16
@@ -373,25 +362,29 @@ ProfileFooterView {
     }
 }
 
-CommonConnectionsViewController {
-    headerLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
+UserNameTakeOverViewController {
+    view: @{
+        backgroundColor: clear;
     }
-}
 
-CommonConnectionButton {
-    nameLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
+    displayNameLabel: @{
+        font: $font-large-thin;
+        textColor: $color-text-dimmed-light;
     }
-}
 
-MoreConnectionsButton {
-    moreCountLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-foreground;
+    suggestedHandleLabel: @{
+        font: $font-large;
+        textColor: $color-text-foreground-dark;
     }
+
+    titleLabel: @{
+        font: $font-large;
+        textColor: $color-text-foreground-dark;
+    }
+
+    linkFont: $font-large;
+    subtitleFont: $font-large-thin;
+    subtitleColor: $color-text-foreground-dark;
 }
 
 /* User client details screen */
@@ -976,6 +969,12 @@ ImageToolbarView.on-background {
     }
 }
 
+/* Change Handle */
+
+ChangeHandleViewController {
+    footerFont: $font-small;
+}
+
 /* Location */
 
 ModalTopBar {
@@ -1070,12 +1069,6 @@ ActionSheetAlertView {
     
     messageLabel: @{
         font: $font-normal-light;
-    }
-}
-
-ActionSheetContainerView {
-    titleLabel: @{
-        font: $font-small-light;
     }
 }
 
@@ -1416,6 +1409,20 @@ SettingsClientViewController.conversation {
 SettingsClientViewController {
     tableView: @{
         separatorColor: rgb(255,255,255,0.1)
+    }
+}
+
+ChangeHandleTableViewCell {
+    backgroundColor: clear;
+
+    prefixLabel: @{
+        font: $font-normal-medium;
+        textColor: $color-text-dimmed-dark;
+    }
+
+    handleTextField: @{
+        font: $font-normal;
+        textColor: $color-text-foreground-dark;
     }
 }
 

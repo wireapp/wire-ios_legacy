@@ -38,17 +38,18 @@
 
 
 
-@interface AddEmailPasswordViewController () <FormStepDelegate, UINavigationControllerDelegate, EmailVerificationStepViewControllerDelegate, ZMUserEditingObserver, ZMUserObserver>
+@interface AddEmailPasswordViewController () <FormStepDelegate, UINavigationControllerDelegate, EmailVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>
 
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) AddEmailStepViewController *addEmailStepViewController;
 @property (nonatomic) NavigationController *rootNavigationController;
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
-@property (nonatomic) id<ZMUserEditingObserverToken> userEditingToken;
+@property (nonatomic) id<UserProfileUpdateObserver> userEditingToken;
 @property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
 @property (nonatomic) UIButton *closeButton;
 @property (nonatomic) ZMEmailCredentials *credentials;
+@property (nonatomic, weak) id<UserProfile> userProfile;
 
 @end
 
@@ -59,7 +60,7 @@
 
 - (void)dealloc
 {
-    [[ZMUserSession sharedSession] removeUserEditingObserverForToken:self.userEditingToken];
+    [self.userProfile removeObserverWithToken:self.userEditingToken];
     [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
@@ -68,7 +69,8 @@
     self = [super init];
     
     if (self) {
-        self.userEditingToken = [[ZMUserSession sharedSession] addUserEditingObserver:self];
+        self.userProfile = ZMUserSession.sharedSession.userProfile;
+        self.userEditingToken = [self.userProfile addObserver:self];
         self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
     }
     
@@ -172,10 +174,15 @@
         
         self.credentials = [ZMEmailCredentials credentialsWithEmail:addEmailStepViewController.emailAddress
                                                            password:addEmailStepViewController.password];
-        
-        [[ZMUserSession sharedSession] requestVerificationEmailForEmailUpdate:self.credentials];
-        
-        self.showLoadingView = YES;
+
+        NSError *error;
+        [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+
+        if (nil != error) {
+            DDLogError(@"Error requesting to set email and password: %@", error);
+        } else {
+            self.showLoadingView = YES;
+        }
     }
 }
 
@@ -184,7 +191,12 @@
 - (void)emailVerificationStepDidRequestVerificationEmail
 {
     [self.analyticsTracker tagResentEmailVerification];
-    [[ZMUserSession sharedSession] requestVerificationEmailForEmailUpdate:self.credentials];
+    NSError *error;
+    [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+
+    if (nil != error) {
+        DDLogError(@"Error requesting to set email and password: %@", error);
+    }
 }
 
 #pragma mark ZMUserObserver
@@ -198,7 +210,7 @@
     }
 }
 
-#pragma mark - ZMUserEditingObserver
+#pragma mark - UserProfileUpdateObserver
 
 - (void)didSentVerificationEmail
 {
@@ -235,21 +247,6 @@
     self.showLoadingView = NO;
     
     [self showAlertForMessage:NSLocalizedString(@"error.updating_password", nil)];
-}
-
-- (void)phoneNumberVerificationCodeRequestDidSucceed
-{
-    // no-op
-}
-
-- (void)phoneNumberVerificationCodeRequestDidFail:(NSError *)error
-{
-    // no-op
-}
-
-- (void)phoneNumberVerificationDidFail:(NSError *)error
-{
-    // no-op
 }
 
 #pragma mark - NavigationControllerDelegate

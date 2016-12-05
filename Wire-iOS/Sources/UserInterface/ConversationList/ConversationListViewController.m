@@ -96,6 +96,9 @@
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;
 
+@property (nonatomic, weak) id<UserProfile> userProfile;
+@property (nonatomic) NSObject *userProfileObserverToken;
+
 @property (nonatomic) TopItemsController *topItemsController;
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
@@ -139,7 +142,13 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeUserProfileObserver];
     [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.allConversationsObserverToken];
+}
+
+- (void)removeUserProfileObserver
+{
+    [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
 }
 
 - (void)loadView
@@ -156,6 +165,8 @@
     self.contentContainer = [[UIView alloc] initForAutoLayout];
     self.contentContainer.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.contentContainer];
+
+    self.userProfile = ZMUserSession.sharedSession.userProfile;
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
@@ -177,10 +188,9 @@
     [self updateArchiveButtonVisibility];
     
     self.allConversationsObserverToken = [[SessionObjectCache sharedCache].allConversations addConversationListObserver:self];
-    
-    if (! self.isComingFromRegistration) {
-        [self showPushPermissionDeniedDialogIfNeeded];
-    }
+
+    [self showPushPermissionDeniedDialogIfNeeded];
+    [self requestSuggestedHandlesIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -202,6 +212,14 @@
     
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
+}
+
+- (void)requestSuggestedHandlesIfNeeded
+{
+    if (Settings.sharedSettings.enableUserNamesUI && nil == ZMUser.selfUser.handle) {
+        self.userProfileObserverToken = [self.userProfile addObserver:self];
+        [self.userProfile suggestHandles];
+    }
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -309,94 +327,18 @@
         }
         return;
     }
+    self.state = state;
+
     switch (state) {
-        case ConversationListStateConversationList:
-        {
+        case ConversationListStateConversationList: {
             [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
-            self.conversationListContainer.hidden = NO;
-
-            // animate
-            self.conversationListContainer.alpha = 0.0f;
-            self.conversationListTopOffset.constant = 88.0f;
-
-            dispatch_block_t animationHideAlternateViewController = ^() {
-                self.topConstraint.constant = self.topConstraint.constant + 88.0f;
-                self.displayedAlternativeViewController.view.alpha = 0.0f;
-            };
-
-            dispatch_block_t completionHideAlternateViewController = ^() {
-                [self.displayedAlternativeViewController willMoveToParentViewController:nil];
-                [self.displayedAlternativeViewController.view removeFromSuperview];
-                [self.displayedAlternativeViewController removeFromParentViewController];
-                [self updateTopItemsInset];
-            };
-
-            dispatch_block_t animationShowConversationList = ^() {
-                self.conversationListContainer.alpha = 1.0f;
-                self.conversationListTopOffset.constant = 0.0f;
-            };
-
-            dispatch_block_t completionShowConversationList = ^() {
-                self.displayedAlternativeViewController = nil;
-                self.state = state;
-                [self updateNoConversationVisibility];
-                if (completion) {
-                    completion();
-                }
-            };
-
-            if (animated) {
-                [self updateViewConstraints];
-                [self.view layoutIfNeeded];
-                
-                NSMutableArray *views = [NSMutableArray array];
-                if (self.conversationListContainer != nil) {
-                    [views addObject:self.conversationListContainer];
-                }
-                
-                if (self.displayedAlternativeViewController != nil) {
-                    [views addObject:self.displayedAlternativeViewController.view];
-                }
-                
-                [UIView mt_animateWithViews:views
-                                   duration:0.35f
-                             timingFunction:MTTimingFunctionEaseInExpo
-                                 animations:^{
-                                     animationHideAlternateViewController();
-                                     [self updateViewConstraints];
-                                     [self.view layoutIfNeeded];
-                                 }
-                                 completion:^{
-                                     completionHideAlternateViewController();
-
-                                     [UIView mt_animateWithViews:views
-                                                        duration:0.55f
-                                                  timingFunction:MTTimingFunctionEaseOutExpo
-                                                      animations:^ {
-                                                          animationShowConversationList();
-                                                          [self updateViewConstraints];
-                                                          [self.view layoutIfNeeded];
-                                                      }
-                                                      completion:completionShowConversationList];
-                                 }];
-            }
-            else {
-                animationHideAlternateViewController();
-                completionHideAlternateViewController();
-                animationShowConversationList();
-                completionShowConversationList();
-                [self updateViewConstraints];
-                [self.view layoutIfNeeded];
-            }
+            [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
         }
             break;
         case ConversationListStatePeoplePicker: {
             StartUIViewController *startUIViewController = self.createPeoplePickerController;
-            [self showViewController:startUIViewController animated:animated completion:^{
-                
-                self.state = state;
+            [self showViewController:startUIViewController animated:YES completion:^{
                 [startUIViewController showKeyboardIfNeeded];
-                
                 if (completion) {
                     completion();
                 }
@@ -404,8 +346,7 @@
         }
             break;
         case ConversationListStateArchived: {
-            [self showViewController:[self createArchivedListViewController] animated:animated completion:^{
-                self.state = state;
+            [self showViewController:self.createArchivedListViewController animated:animated completion:^{
                 if (completion) {
                     completion();
                 }
@@ -419,72 +360,15 @@
 
 - (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
-    self.displayedAlternativeViewController = viewController;
-    [self hideNoContactLabel];
-    [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
-    viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addChildViewController:viewController];
-    [self.contentContainer addSubview:viewController.view];
-    
-    self.topConstraint = [viewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [viewController.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentContainer];
-    [viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [viewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    
-    [viewController didMoveToParentViewController:self];
-    
-    // animate
-    viewController.view.alpha = 0.0f;
-    self.topConstraint.constant = 88.0f;
-    
-    dispatch_block_t animationHideConversationList = ^() {
-        self.conversationListContainer.alpha = 0.0f;
-        self.conversationListTopOffset.constant = self.conversationListTopOffset.constant + 88.0f;
-    };
-    
-    dispatch_block_t completionHideConversationList = ^() {
-        [self.conversationListContainer setHidden:YES];
-    };
-    
-    dispatch_block_t animationShowAlternateViewController = ^() {
-        self.topConstraint.constant = 0.0f;
-        viewController.view.alpha = 1.0f;
-    };
-    
-    if (animated) {
-        [self updateViewConstraints];
-        [self.view layoutIfNeeded];
-        
-        [UIView mt_animateWithViews:@[self.conversationListContainer, viewController.view]
-                           duration:0.35f
-                     timingFunction:MTTimingFunctionEaseInExpo
-                         animations:^{
-                             animationHideConversationList();
-                             [self updateViewConstraints];
-                             [self.view layoutIfNeeded];
-                         }
-                         completion:^{
-                             completionHideConversationList();
-                             
-                             [UIView mt_animateWithViews:@[self.conversationListContainer, viewController.view]
-                                                duration:0.55f
-                                          timingFunction:MTTimingFunctionEaseOutExpo
-                                              animations:^{
-                                                  animationShowAlternateViewController();
-                                                  [self updateViewConstraints];
-                                                  [self.view layoutIfNeeded];
-                                              }
-                                              completion:completion];
-                         }];
-    }
-    else {
-        animationHideConversationList();
-        completionHideConversationList();
-        animationShowAlternateViewController();
-        completion();
-        [self updateViewConstraints];
-        [self.view layoutIfNeeded];
-    }
+    viewController.transitioningDelegate = self;
+    viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    [ZClientViewController.sharedZClientViewController.backgroundViewController setBlurPercentAnimated:1.0];
+
+    [self presentViewController:viewController animated:animated completion:^{
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 - (void)createViewConstraints
@@ -514,8 +398,8 @@
 
     [self.listContentController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topItemsController.view];
     [self.listContentController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 }
 
 - (void)updateTopItemsInset
@@ -697,16 +581,46 @@
 
 - (void)showActionMenuForConversation:(ZMConversation *)conversation
 {
-    ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName layout:ActionSheetControllerLayoutList style:ActionSheetControllerStyleDark];
-    [actionSheetController addActionsForConversation:conversation];
-    [self presentViewController:actionSheetController animated:YES completion:nil];
+    ZMUser *otherParticipant = conversation.firstActiveParticipantOtherThanSelf;
+    BOOL isConnectionOrOneOnOne = conversation.conversationType == ZMConversationTypeConnection || conversation.conversationType == ZMConversationTypeOneOnOne;
+    if (isConnectionOrOneOnOne && nil != otherParticipant) {
+        [self showActionMenuForOneOnOneConversationOrConnection:conversation user:otherParticipant];
+    } else {
+        ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName
+                                                                                             layout:ActionSheetControllerLayoutList
+                                                                                              style:ActionSheetControllerStyleDark];
+        [actionSheetController addActionsForConversation:conversation];
+        [self presentViewController:actionSheetController animated:YES completion:nil];
+    }
+}
+
+- (void)showActionMenuForOneOnOneConversationOrConnection:(ZMConversation *)conversation user:(ZMUser *)user
+{
+    UserNameDetailView *detailView = [[UserNameDetailView alloc] init];
+    UserNameDetailViewModel *model = [[UserNameDetailViewModel alloc] initWithUser:user
+                                                                      fallbackName:@""
+                                                                   addressBookName:BareUserToUser(user).contact.name
+                                                                 commonConnections:user.totalCommonConnections];
+    [detailView configureWith:model];
+    ActionSheetController *controller = [[ActionSheetController alloc] initWithTitleView:detailView
+                                                                                  layout:ActionSheetControllerLayoutList
+                                                                                   style:ActionSheetControllerStyleDark
+                                                                            dismissStyle:ActionSheetControllerDismissStyleBackground];
+    [controller addActionsForConversation:conversation];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - Push permissions
 
 - (void)showPushPermissionDeniedDialogIfNeeded
 {
-    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
+    // We only want to present the notification takeover when the user already has a handle
+    // and is not coming from the registration flow (where we alreday ask for permissions).
+    if (! self.isComingFromRegistration || nil == ZMUser.selfUser.handle) {
+        return;
+    }
+
+    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts || self.usernameTakeoverViewController != nil) {
         return;
     }
     
@@ -902,7 +816,7 @@
                 [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
                 
                 keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                keyboardAvoidingWrapperController.transitioningDelegate = settingsViewController;
+                keyboardAvoidingWrapperController.transitioningDelegate = self;
                 [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
             }
             else {

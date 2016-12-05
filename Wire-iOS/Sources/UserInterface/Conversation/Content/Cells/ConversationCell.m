@@ -82,9 +82,8 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic) NSLayoutConstraint *messageToolsHeightConstraint;
 
 @property (nonatomic) NSLayoutConstraint *unreadDotHeightConstraint;
-@property (nonatomic) NSLayoutConstraint *messageContentBottomMarginConstraint;
 
-@property (nonatomic) NSLayoutConstraint *toolboxHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
 @property (nonatomic, strong) UIView *countdownContainerView;
 @property (nonatomic, strong) DestructionCountdownView *countdownView;
@@ -121,10 +120,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
             cell.unreadDotView.backgroundColor = newColor;
         }];
         
-        UIEdgeInsets layoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin"],
-                                                      0, [WAZUIMagic floatForIdentifier:@"content.right_margin"]);
-        
-        self.contentLayoutMargins = layoutMargins;
+        self.contentLayoutMargins = self.layoutDirectionAwareLayoutMargins;
     }
     
     return self;
@@ -271,9 +267,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.unreadDotHeightConstraint.active = NO;
     [self.unreadDotView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.unreadDotView];
     [self.unreadDotView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.burstTimestampLabel];
-    [self.unreadDotView autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.burstTimestampLabel withOffset:-8];
+    [self.unreadDotView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.burstTimestampLabel withOffset:-8];
     
-    [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
     [self.authorLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorImageContainer];
     [self.authorLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
@@ -287,12 +283,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.authorImageView autoCenterInSuperview];
     
     self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampLabel];
-    [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.authorImageContainer autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.authorLabel];
+    [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];
     
     [self.messageContentView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.authorImageView];
-    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
         [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:8];
@@ -300,22 +296,25 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     }];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.toolboxHeightConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
+        self.toolboxCollapseConstraint = [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
+    
+    [self.messageToolboxView autoSetDimension:ALDimensionHeight toSize:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.messageToolboxView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageContentView];
-    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.messageContentBottomMarginConstraint = [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.messageToolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.messageToolboxView];
     [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
 
     [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-    [self.countdownContainerView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
+    [self.countdownContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:8];
 }
 
 - (void)setContentLayoutMargins:(UIEdgeInsets)contentLayoutMargins
 {
+
     _contentLayoutMargins = contentLayoutMargins;
     
     self.contentView.layoutMargins = contentLayoutMargins;
@@ -390,7 +389,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     BOOL hideLikeButton = !([Message hasLikers:self.message] || self.selected) && self.layoutProperties.alwaysShowDeliveryState;
     BOOL showLikeButton = [Message messageCanBeLiked:self.message] && !hideLikeButton;
     
-    self.toolboxHeightConstraint.active = ! shouldBeVisible;
+    self.toolboxCollapseConstraint.active = ! shouldBeVisible;
     
     if (shouldBeVisible) {
         [self.messageToolboxView configureForMessage:self.message forceShowTimestamp:self.selected animated:animated];

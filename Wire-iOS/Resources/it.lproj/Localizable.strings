@@ -482,6 +482,10 @@
 "self.settings.sound_menu.ringtones.title" = "Suoneria";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
+"self.settings.callkit.title" = "Chiamate";
+"self.settings.callkit.caption" = "Condividi con iOS";
+"self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Chiamata Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Messaggio Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Trillo Wire";
@@ -489,7 +493,6 @@
 // By popular demand
 "self.settings.popular_demand.title" = "A grande richiesta";
 "self.settings.popular_demand.send_button.title" = "Pulsante Invia";
-"self.settings.popular_demand.call_kit.title" = "Don't use native calling (restart)";
 "self.settings.popular_demand.send_button.footer" = "Disattiva per inviare tramite il tasto invio.";
 
 // Open in

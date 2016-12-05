@@ -18,6 +18,55 @@
 
 
 import Foundation
+import Cartography
+
+extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
+    public func wrapInTableView() -> UITableView {
+        let tableView = UITableView(frame: self.bounds, style: .plain)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.layoutMargins = self.layoutMargins
+        
+        let size = self.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        self.layoutSubviews()
+        
+        self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
+        self.contentView.bounds = self.bounds
+        
+        tableView.reloadData()
+        tableView.bounds = self.bounds
+        tableView.layoutIfNeeded()
+        
+        constrain(tableView) { tableView in
+            tableView.height == size.height
+        }
+        
+        CASStyler.default().styleItem(self)
+        self.layoutSubviews()
+        return tableView
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.bounds.size.height
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return self
+    }
+}
+
 
 extension StaticString {
     func utf8SignedStart() -> UnsafePointer<Int8> {
@@ -30,8 +79,8 @@ extension StaticString {
 }
 
 extension ZMSnapshotTestCase {
-    func verify(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, tolerance: tolerance, file: file.utf8SignedStart(), line: line)
+    func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
+        verifyView(view, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
