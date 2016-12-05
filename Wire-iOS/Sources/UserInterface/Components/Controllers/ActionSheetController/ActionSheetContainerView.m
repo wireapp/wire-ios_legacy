@@ -58,9 +58,8 @@
     self.blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.blurEffectView];
     
-    self.titleLabel = [[UILabel alloc] initForAutoLayout];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.blurEffectView.contentView addSubview:self.titleLabel];
+    self.titleView = [[UIView alloc] initForAutoLayout];
+    [self.blurEffectView.contentView addSubview:self.titleView];
     
     [self createInitialConstraints];
 }
@@ -68,7 +67,7 @@
 - (void)createInitialConstraints
 {
     [self.blurEffectView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.titleLabel autoPinEdgesToSuperviewEdgesWithInsets:self.contentInsets excludingEdge:ALEdgeBottom];
+    [self.titleView autoPinEdgesToSuperviewEdgesWithInsets:self.contentInsets excludingEdge:ALEdgeBottom];
 }
 
 - (void)setSheetView:(UIView *)sheetView

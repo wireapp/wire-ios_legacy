@@ -68,7 +68,7 @@
     if (self.reverse) {
         [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.35 delay:0 animations:^{
             self.actionSheetContainerView.sheetView.transform = offscreenSheet;
-            self.actionSheetContainerView.titleLabel.alpha = 0;
+            self.actionSheetContainerView.titleView.alpha = 0;
         } completion:^(BOOL finished) {
             [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.55 delay:0 animations:^{
                 fromView.alpha = 0;
@@ -78,7 +78,7 @@
         }];
     } else {
         toView.alpha = 0;
-        self.actionSheetContainerView.titleLabel.alpha = 0;
+        self.actionSheetContainerView.titleView.alpha = 0;
         self.actionSheetContainerView.sheetView.transform = offscreenSheet;
         
         [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.35 delay:0 animations:^{
@@ -86,7 +86,7 @@
         } completion:^(BOOL finished) {
             [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55 delay:0 animations:^{
                 self.actionSheetContainerView.sheetView.transform = CGAffineTransformIdentity;
-                self.actionSheetContainerView.titleLabel.alpha = 1;
+                self.actionSheetContainerView.titleView.alpha = 1;
             } completion:^(BOOL finished) {
                 [transitionContext completeTransition:YES];
             }];

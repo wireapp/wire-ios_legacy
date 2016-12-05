@@ -76,7 +76,11 @@ typedef NS_ENUM(NSUInteger, ActionSheetControllerDismissStyle) {
 @property (nonatomic, copy) UIImage *iconImage;
 
 - (instancetype)initWithTitle:(NSString *)title layout:(ActionSheetControllerLayout)layout style:(ActionSheetControllerStyle)style;
-- (instancetype)initWithTitle:(NSString *)title layout:(ActionSheetControllerLayout)layout style:(ActionSheetControllerStyle)style dismissStyle:(ActionSheetControllerDismissStyle)dismissStyle NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTitle:(NSString *)title layout:(ActionSheetControllerLayout)layout style:(ActionSheetControllerStyle)style dismissStyle:(ActionSheetControllerDismissStyle)dismissStyle;
+- (instancetype)initWithTitleView:(UIView *)titleView
+                           layout:(ActionSheetControllerLayout)layout
+                            style:(ActionSheetControllerStyle)style
+                     dismissStyle:(ActionSheetControllerDismissStyle)dismissStyle NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

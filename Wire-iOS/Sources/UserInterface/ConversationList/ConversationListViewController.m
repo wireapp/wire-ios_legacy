@@ -581,9 +581,33 @@
 
 - (void)showActionMenuForConversation:(ZMConversation *)conversation
 {
-    ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName layout:ActionSheetControllerLayoutList style:ActionSheetControllerStyleDark];
-    [actionSheetController addActionsForConversation:conversation];
-    [self presentViewController:actionSheetController animated:YES completion:nil];
+    ZMUser *otherParticipant = conversation.firstActiveParticipantOtherThanSelf;
+    BOOL isConnectionOrOneOnOne = conversation.conversationType == ZMConversationTypeConnection || conversation.conversationType == ZMConversationTypeOneOnOne;
+    if (isConnectionOrOneOnOne && nil != otherParticipant) {
+        [self showActionMenuForOneOnOneConversationOrConnection:conversation user:otherParticipant];
+    } else {
+        ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName
+                                                                                             layout:ActionSheetControllerLayoutList
+                                                                                              style:ActionSheetControllerStyleDark];
+        [actionSheetController addActionsForConversation:conversation];
+        [self presentViewController:actionSheetController animated:YES completion:nil];
+    }
+}
+
+- (void)showActionMenuForOneOnOneConversationOrConnection:(ZMConversation *)conversation user:(ZMUser *)user
+{
+    UserNameDetailView *detailView = [[UserNameDetailView alloc] init];
+    UserNameDetailViewModel *model = [[UserNameDetailViewModel alloc] initWithUser:user
+                                                                      fallbackName:@""
+                                                                   addressBookName:BareUserToUser(user).contact.name
+                                                                 commonConnections:user.totalCommonConnections];
+    [detailView configureWith:model];
+    ActionSheetController *controller = [[ActionSheetController alloc] initWithTitleView:detailView
+                                                                                  layout:ActionSheetControllerLayoutList
+                                                                                   style:ActionSheetControllerStyleDark
+                                                                            dismissStyle:ActionSheetControllerDismissStyleBackground];
+    [controller addActionsForConversation:conversation];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - Push permissions
