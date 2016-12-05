@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Search by name or email";
+"peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "Create group";
 "peoplepicker.button.add_to_conversation" = "Add";
