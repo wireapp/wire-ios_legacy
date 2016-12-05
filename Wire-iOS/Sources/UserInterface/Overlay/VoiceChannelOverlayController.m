@@ -76,7 +76,7 @@
     }
     
     if (self.videoObserverToken != nil) {
-        [WireCallCenter removeVideoObserverWithToken:self.videoObserverToken];
+        [WireCallCenter removeObserverWithToken:self.videoObserverToken];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
