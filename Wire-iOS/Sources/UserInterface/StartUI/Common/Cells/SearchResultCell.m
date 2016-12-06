@@ -114,6 +114,7 @@
         [self.swipeView addSubview:self.nameLabel];
 
         self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
+        self.subtitleLabel.accessibilityIdentifier = @"additionalUserInfo";
         [self.swipeView addSubview:self.subtitleLabel];
 
         UITapGestureRecognizer *doubleTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
