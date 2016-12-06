@@ -30,21 +30,15 @@ public final class IncomingConnectionView: UIView {
         )
     }()
 
-    public typealias User = ZMBareUser & ZMBareUserConnection & ZMSearchableUser
-
-    private let nameLabel = UILabel()
-    private let handleLabel = UILabel()
-    private let correlationLabel = UILabel()
-    private let labelContainer = UIView()
-
+    private let userDetailView = UserNameDetailView()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
     private let acceptButton = Button(style: .full)
     private let ignoreButton = Button(style: .empty)
 
-    public var user: User {
+    public var user: ZMUser {
         didSet {
-            self.updateForUser()
+            self.setupLabelText()
             self.userImageView.user = self.user
         }
     }
@@ -55,11 +49,11 @@ public final class IncomingConnectionView: UIView {
         }
     }
 
-    public typealias UserAction = (User) -> Void
+    public typealias UserAction = (ZMUser) -> Void
     public var onAccept: UserAction?
     public var onIgnore: UserAction?
 
-    public init(user: User) {
+    public init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
 
@@ -72,14 +66,7 @@ public final class IncomingConnectionView: UIView {
     }
 
     private func setup() {
-        [nameLabel, handleLabel, correlationLabel].forEach {
-            $0.numberOfLines = 0
-            $0.textAlignment = .center
-        }
-
-        nameLabel.accessibilityIdentifier = "name"
-        handleLabel.accessibilityIdentifier = "handle"
-        correlationLabel.accessibilityIdentifier = "correlation"
+        addSubview(userDetailView)
 
         self.acceptButton.accessibilityLabel = "accept"
         self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized.uppercased(), for: .normal)
@@ -97,43 +84,19 @@ public final class IncomingConnectionView: UIView {
         self.incomingConnectionFooter.addSubview(self.acceptButton)
         self.incomingConnectionFooter.addSubview(self.ignoreButton)
 
-        [self.labelContainer, self.userImageView, self.incomingConnectionFooter].forEach(self.addSubview)
-        [self.nameLabel, self.handleLabel, self.correlationLabel].forEach(labelContainer.addSubview)
-        self.updateForUser()
-    }
-
-    private func updateForUser() {
+        [self.userDetailView, self.userImageView, self.incomingConnectionFooter].forEach(self.addSubview)
         self.setupLabelText()
     }
 
-    private func setupNameLabelText() {
-        guard let username = user.name else { return }
-        nameLabel.attributedText = username && [
-            NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
-            NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold")
-        ]
-    }
-
-    private func setupHandleLabelText() {
-        guard let handle = user.handle else { return }
-        handleLabel.attributedText = ("@" + handle) && [
-            NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
-            NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold")
-        ]
-    }
-
-    private func setupCorrelationLabelText() {
-        correlationLabel.attributedText = type(of: self).correlationFormatter.correlationText(
-            for: user,
-            with: Int(commonConnectionsCount),
-            addressBookName: BareUserToUser(user)?.contact()?.name
-        )
-    }
-
     private func setupLabelText() {
-        setupNameLabelText()
-        setupHandleLabelText()
-        setupCorrelationLabelText()
+        userDetailView.configure(
+            with: .init(
+                user: user,
+                fallbackName: "",
+                addressBookName: user.addressBookEntry?.cachedName,
+                commonConnections: Int(commonConnectionsCount)
+            )
+        )
     }
 
     private func createConstraints() {
@@ -150,11 +113,11 @@ public final class IncomingConnectionView: UIView {
             acceptButton.height == ignoreButton.height
         }
 
-        constrain(self, self.labelContainer, self.incomingConnectionFooter, self.userImageView) { selfView, labelContainer, incomingConnectionFooter, userImageView in
-            labelContainer.centerX == selfView.centerX
-            labelContainer.top == selfView.top + 12
-            labelContainer.left >= selfView.left
-            labelContainer.bottom <= userImageView.top
+        constrain(self, self.userDetailView, self.incomingConnectionFooter, self.userImageView) { selfView, userDetailView, incomingConnectionFooter, userImageView in
+            userDetailView.centerX == selfView.centerX
+            userDetailView.top == selfView.top + 12
+            userDetailView.left >= selfView.left
+            userDetailView.bottom <= userImageView.top
 
             userImageView.center == selfView.center
             userImageView.left >= selfView.left + 54
@@ -165,20 +128,6 @@ public final class IncomingConnectionView: UIView {
             incomingConnectionFooter.left == selfView.left
             incomingConnectionFooter.bottom == selfView.bottom
             incomingConnectionFooter.right == selfView.right
-        }
-
-        constrain(labelContainer, nameLabel, handleLabel, correlationLabel) { labelContainer, nameLabel, handleLabel, correlationLabel in
-            nameLabel.top == labelContainer.top
-            nameLabel.height == 32
-            handleLabel.top == nameLabel.bottom + 10
-            handleLabel.height == 16
-            correlationLabel.top == handleLabel.bottom
-            handleLabel.height == 16
-
-            [nameLabel, handleLabel, correlationLabel].forEach {
-                $0.leading == labelContainer.leading
-                $0.trailing == labelContainer.trailing
-            }
         }
     }
 

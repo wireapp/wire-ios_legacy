@@ -129,6 +129,11 @@
 
 }
 
+- (AddressBookEntry *)addressBookEntry
+{
+    return nil;
+}
+
 - (NSData *)imageMediumData
 {
     return nil;

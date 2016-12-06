@@ -65,9 +65,20 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
 
 
 @objc final class UserNameDetailViewModel: NSObject {
+
     let title: NSAttributedString
-    let subtitle: NSAttributedString?
-    let correlationText: NSAttributedString?
+
+    private let handleText: NSAttributedString?
+    private let correlationText: NSAttributedString?
+
+    var firstSubtitle: NSAttributedString? {
+        return handleText ?? correlationText
+    }
+
+    var secondSubtitle: NSAttributedString? {
+        guard nil != handleText else { return nil }
+        return correlationText
+    }
 
     static var formatter: AddressBookCorrelationFormatter = {
         AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: dimmedColor)
@@ -75,7 +86,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
 
     init(user: ZMUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int) {
         title = UserNameDetailViewModel.attributedTitle(for: user, fallback: fallback)
-        subtitle = UserNameDetailViewModel.attributedSubtitle(for: user)
+        handleText = UserNameDetailViewModel.attributedSubtitle(for: user)
         correlationText = UserNameDetailViewModel.attributedCorrelationText(for: user, with: commonConnections, addressBookName: addressBookName)
     }
 
@@ -113,8 +124,8 @@ final class UserNameDetailView: UIView {
 
     func configure(with model: UserNameDetailViewModel) {
         titleLabel.attributedText = model.title
-        subtitleLabel.attributedText = model.subtitle
-        correlationLabel.attributedText = model.correlationText
+        subtitleLabel.attributedText = model.firstSubtitle
+        correlationLabel.attributedText = model.secondSubtitle
     }
 
     private func setupViews() {
@@ -138,7 +149,7 @@ final class UserNameDetailView: UIView {
             title.leading == view.leading
             title.trailing == view.trailing
 
-            subtitle.top == title.bottom + 10
+            subtitle.top == title.bottom + 4
             subtitle.centerX == view.centerX
             subtitle.height == 16
 
