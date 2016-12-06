@@ -108,7 +108,7 @@ public final class UserConnectionView: UIView, Copyable {
         return type(of: self).correlationFormatter.correlationText(
             for: user,
             with: Int(commonConnectionsCount),
-            addressBookName: user.addressBookEntry?.cachedName
+            addressBookName: BareUserToUser(user)?.contact()?.name
         )
     }
     
