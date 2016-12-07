@@ -20,6 +20,7 @@
 import UIKit
 import Cartography
 import TTTAttributedLabel
+import Classy
 
 
 @objc protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {

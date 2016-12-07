@@ -18,7 +18,7 @@
 
 import UIKit
 import Cartography
-
+import Classy
 
 @objc enum ImageToolbarConfiguration : UInt {
     case cell

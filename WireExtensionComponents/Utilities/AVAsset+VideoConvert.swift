@@ -19,6 +19,7 @@
 
 import Foundation
 import CocoaLumberjackSwift
+import AVFoundation
 
 extension AVAsset {
 

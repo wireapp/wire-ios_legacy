@@ -18,7 +18,7 @@
 
 
 #import "ButtonWithLargerHitArea.h"
-#import "NSString+TextTransform.h"
+#import "TextTransform.h"
 #import "ColorScheme.h"
 
 

@@ -22,7 +22,7 @@
 #import "EmailInvitationStepViewController.h"
 
 #import <PureLayout/PureLayout.h>
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "RegistrationTextField.h"
 #import "Button.h"

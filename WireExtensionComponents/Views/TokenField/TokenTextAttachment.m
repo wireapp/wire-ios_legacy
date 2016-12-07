@@ -20,6 +20,7 @@
 #import "TokenTextAttachment.h"
 #import "Token.h"
 #import "TokenField.h"
+#import "NSString+TextTransform.h"
 
 @implementation TokenTextAttachment
 

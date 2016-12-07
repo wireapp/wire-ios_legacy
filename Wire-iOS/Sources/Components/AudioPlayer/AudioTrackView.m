@@ -18,7 +18,7 @@
 
 
 #import "AudioTrackView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "AudioErrorView.h"
 
 #import <PureLayout/PureLayout.h>

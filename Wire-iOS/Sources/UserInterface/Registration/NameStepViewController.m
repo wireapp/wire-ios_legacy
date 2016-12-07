@@ -20,7 +20,6 @@
 #import "NameStepViewController.h"
 
 #import <PureLayout/PureLayout.h>
-#import <WireExtensionComponents/WireExtensionComponents.h>
 
 #import "RegistrationTextField.h"
 #import "WAZUIMagicIOS.h"
@@ -28,6 +27,7 @@
 
 #import "zmessaging+iOS.h"
 
+@import WireExtensionComponents;
 
 
 @interface NameStepViewController () <RegistrationTextFieldDelegate>

@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-
+import Classy
 
 class MessageDeletedCell: ConversationCell {
     

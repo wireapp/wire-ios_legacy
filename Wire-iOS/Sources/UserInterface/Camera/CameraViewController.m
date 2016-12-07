@@ -30,7 +30,7 @@
 #import "CameraAccessDeniedView.h"
 #import "CameraConfirmationView.h"
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
 #import "UIImage+ZetaIconsNeue.h"

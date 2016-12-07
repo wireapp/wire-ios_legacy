@@ -20,7 +20,7 @@
 
 #import <PureLayout/PureLayout.h>
 #import <Classy/UIViewController+CASAdditions.h>
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "ContactsViewController.h"
 #import "ContactsDataSource.h"

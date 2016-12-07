@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import CocoaLumberjackSwift
+import Classy
 
 extension ZMConversationMessage {
     public func videoCanBeSavedToCameraRoll() -> Bool {

@@ -20,7 +20,7 @@
 #import "EmailSignInViewController.h"
 
 #import <PureLayout/PureLayout.h>
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "zmessaging+iOS.h"
 @import OnePasswordExtension;

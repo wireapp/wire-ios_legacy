@@ -23,7 +23,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import <PureLayout/PureLayout.h>
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import <PureLayout/PureLayout.h>
 #import "WireStyleKit.h"
 #import "Wire-Swift.h"

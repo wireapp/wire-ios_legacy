@@ -20,7 +20,7 @@
 #import <PureLayout/PureLayout.h>
 
 #import "MediaPreviewView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "UIFont+MagicAccess.h"
 
 

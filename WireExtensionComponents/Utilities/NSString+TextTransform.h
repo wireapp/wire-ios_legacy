@@ -18,16 +18,7 @@
 
 
 @import Foundation;
-
-
-
-typedef NS_ENUM(NSUInteger, TextTransform) {
-    TextTransformNone = 0,
-    TextTransformUpper,
-    TextTransformLower,
-    TextTransformCapitalize
-};
-
+#import "TextTransform.h"
 
 extern NSDictionary * TextTransformTable(void);
 

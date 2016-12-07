@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import CocoaLumberjackSwift
+import Classy
 
 /// Displays the audio message with different states
 public final class AudioMessageCell: ConversationCell {

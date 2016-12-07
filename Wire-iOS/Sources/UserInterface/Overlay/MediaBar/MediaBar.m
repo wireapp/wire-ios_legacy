@@ -22,7 +22,7 @@
 #import <PureLayout/PureLayout.h>
 #import <Classy/Classy.h>
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
 #import "WAZUIMagicIOS.h"
 #import "Constants.h"

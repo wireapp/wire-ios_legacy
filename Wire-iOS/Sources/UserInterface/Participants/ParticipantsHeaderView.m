@@ -18,7 +18,7 @@
 
 
 #import "ParticipantsHeaderView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "IconButton.h"
 #import "WAZUIMagicIOS.h"

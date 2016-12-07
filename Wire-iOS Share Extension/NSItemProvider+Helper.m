@@ -15,7 +15,7 @@
 
 - (void)loadItemForTypeIdentifier:(NSString *)typeIdentifier options:(NSDictionary *)options dataCompletionHandler:(ItemProviderDataCompletionHandler)dataCompletionHandler
 {
-    [self loadItemForTypeIdentifier:(NSString *)kUTTypeJPEG options:options completionHandler:^(NSData * _Nullable item, NSError * _Null_unspecified error) {
+    [self loadItemForTypeIdentifier:typeIdentifier options:options completionHandler:^(NSData * _Nullable item, NSError * _Null_unspecified error) {
         dataCompletionHandler(item, error);
     }];
 }

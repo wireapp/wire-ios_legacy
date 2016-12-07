@@ -18,7 +18,7 @@
 
 
 @import UIKit;
-#import "NSString+TextTransform.h"
+#import "TextTransform.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

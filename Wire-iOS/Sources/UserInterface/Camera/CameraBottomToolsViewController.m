@@ -25,7 +25,7 @@
 #import "Constants.h"
 #import "CameraController.h"
 #import "ImagePickerConfirmationController.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Analytics+iOS.h"

@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import Classy
 
 extension UIImage {
    static func arrowImageWithColor(_ color: UIColor) -> UIImage {

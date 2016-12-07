@@ -21,7 +21,7 @@
 
 #import "AudioTrackCell.h"
 #import "AudioTrackView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "AudioTrack.h"
 
 

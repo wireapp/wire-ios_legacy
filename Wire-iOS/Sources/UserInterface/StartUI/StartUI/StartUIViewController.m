@@ -19,7 +19,7 @@
 
 #import <PureLayout/PureLayout.h>
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "StartUIViewController.h"
 #import "StartUIViewController+Testing.h"

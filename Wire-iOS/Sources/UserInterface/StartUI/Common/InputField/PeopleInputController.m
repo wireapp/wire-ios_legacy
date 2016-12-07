@@ -18,7 +18,7 @@
 
 
 #import "PeopleInputController.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import <PureLayout/PureLayout.h>
 
 #import "WAZUIMagicIOS.h"

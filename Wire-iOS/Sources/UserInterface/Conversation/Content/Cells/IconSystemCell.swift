@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import TTTAttributedLabel
+import Classy
 
 // Class for the new system message that is having a following design with icon, text and separator line:
 // <Icon> Lorem ipsum system message ----
