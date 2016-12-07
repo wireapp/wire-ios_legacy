@@ -88,6 +88,13 @@ public func &&(left: String, right: UIFont) -> NSAttributedString {
     return result
 }
 
+public func &&(left: NSAttributedString, right: UIFont?) -> NSAttributedString {
+    guard let font = right else { return left }
+    let result = NSMutableAttributedString(attributedString: left)
+    result.addAttributes([NSFontAttributeName: font], range: NSMakeRange(0, result.length))
+    return result
+}
+
 public func &&(left: String, right: UIColor) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: [NSForegroundColorAttributeName: right])
     return result

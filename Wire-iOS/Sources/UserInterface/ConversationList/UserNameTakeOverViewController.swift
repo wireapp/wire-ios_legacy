@@ -23,13 +23,13 @@ import TTTAttributedLabel
 import Classy
 
 
-@objc protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
+protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)
 }
 
 
-@objc enum UserNameTakeOverViewControllerAction: UInt {
-    case chooseOwn, keepSuggestion, learnMore
+enum UserNameTakeOverViewControllerAction {
+    case chooseOwn(String), keepSuggestion(String), learnMore
 }
 
 
@@ -49,16 +49,16 @@ final class UserNameTakeOverViewController: UIViewController {
     private let contentView = UIView()
     private let topContainer = UIView()
     private let suggestedHandle: String
-    private let displayName: String
+    private let name: String
 
     private let learnMore = "registration.select_handle.takeover.subtitle_link".localized
     fileprivate let learnMoreURL = URL(string:"action://learn-more")!
 
     weak var delegate: UserNameTakeOverViewControllerDelegate?
 
-    init(suggestedHandle: String, displayName: String) {
+    init(suggestedHandle: String, name: String) {
         self.suggestedHandle = suggestedHandle
-        self.displayName = displayName
+        self.name = name
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -78,7 +78,7 @@ final class UserNameTakeOverViewController: UIViewController {
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, titleLabel, subtitleLabel, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
-        displayNameLabel.text = displayName
+        displayNameLabel.text = name
         suggestedHandleLabel.text = "@" + suggestedHandle
         displayNameLabel.textAlignment = .center
         suggestedHandleLabel.textAlignment = .center
@@ -158,8 +158,8 @@ final class UserNameTakeOverViewController: UIViewController {
 
     private func action(for button: Button) -> UserNameTakeOverViewControllerAction? {
         switch button {
-        case chooseOwnButton: return .chooseOwn
-        case keepSuggestedButton: return .keepSuggestion
+        case chooseOwnButton: return .chooseOwn(suggestedHandle)
+        case keepSuggestedButton: return .keepSuggestion(suggestedHandle)
         default: return nil
         }
     }

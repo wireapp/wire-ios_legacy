@@ -77,7 +77,7 @@ static NSSet *phoneWidths(void) {
     [NSManagedObjectContext setUseInMemoryStore:YES];
     [NSManagedObjectContext resetUserInterfaceContext];
     [NSManagedObjectContext resetSharedPersistentStoreCoordinator];
-    self.uiMOC = [NSManagedObjectContext createUserInterfaceContextWithStoreDirectory:[[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil]];
+    self.uiMOC = [NSManagedObjectContext createUserInterfaceContextWithStoreAtURL:[[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil]];
 }
 
 - (void)tearDown
@@ -116,16 +116,30 @@ static NSSet *phoneWidths(void) {
 
 - (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line
 {
-    [self verifyView:view tolerance:0 file:file line:line];
+    [self verifyView:view tolerance:0 file:file line:line identifier:nil];
 }
 
-- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line
+- (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
+{
+    [self verifyView:view tolerance:0 file:file line:line identifier:identifier];
+}
+
+- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
 {
     UIView *container = [self containerViewWithView:view];
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }
-    FBSnapshotVerifyViewWithOptions(container, NSStringFromCGSize(view.bounds.size), FBSnapshotTestCaseDefaultSuffixes(), tolerance);
+    NSString *finalIdentifier = @"";
+    
+    if (0 == identifier.length) {
+        finalIdentifier = NSStringFromCGSize(view.bounds.size);
+    }
+    else {
+        finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, NSStringFromCGSize(view.bounds.size)];
+    }
+    
+    FBSnapshotVerifyViewWithOptions(container, finalIdentifier, FBSnapshotTestCaseDefaultSuffixes(), tolerance);
     [self assertAmbigousLayout:container file:file line:line];
 }
 

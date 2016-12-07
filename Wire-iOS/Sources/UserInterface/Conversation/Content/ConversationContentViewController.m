@@ -40,9 +40,7 @@
 // ui
 #import "FullscreenImageViewController.h"
 #import "ZClientViewController.h"
-#import "CommonConnectionsView.h"
 #import "UIView+MTAnimation.h"
-#import "ConnectionStatusHeader.h"
 #import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
 
@@ -114,7 +112,7 @@
 @property (nonatomic) BOOL waitingForFileDownload;
 @property (nonatomic) UIDocumentInteractionController *documentInteractionController;
 @property (nonatomic) BOOL onScreen;
-
+@property (nonatomic) UserConnectionViewController *connectionViewController;
 @end
 
 
@@ -249,8 +247,12 @@
     }
     
     UIView *headerView = nil;
-    if ((self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne) && self.conversation.firstActiveParticipantOtherThanSelf) {
-        headerView = [[ConnectionStatusHeader alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf];
+    ZMUser *otherParticipant = self.conversation.firstActiveParticipantOtherThanSelf;
+    BOOL connectionOrOneOnOne = self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne;
+
+    if (connectionOrOneOnOne && nil != otherParticipant) {
+        self.connectionViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:otherParticipant];
+        headerView = self.connectionViewController.view;
     }
     
     if (headerView) {
@@ -264,7 +266,7 @@
 
 - (void)setConversationHeaderView:(UIView *)headerView
 {
-    CGSize fittingSize = CGSizeMake(self.tableView.self.bounds.size.width, 44);
+    CGSize fittingSize = CGSizeMake(self.tableView.self.bounds.size.width, self.tableView.bounds.size.height - 20);
     CGSize requiredSize = [headerView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
     headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
     self.tableView.tableHeaderView = headerView;

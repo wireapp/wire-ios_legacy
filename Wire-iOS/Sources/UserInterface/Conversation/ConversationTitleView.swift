@@ -48,9 +48,13 @@ public final class ConversationTitleView: UIView {
     private func configure(_ conversation: ZMConversation) {
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let title = conversation.displayName.uppercased() && font
+        let tappable = conversation.relatedConnectionState != .sent
         
         let titleWithColor: (UIColor) -> NSAttributedString = {
-            var attributed = (title + "  " + NSAttributedString(attachment: .downArrow(color: $0)))
+            var attributed = title
+            if tappable {
+                attributed += "  " + NSAttributedString(attachment: .downArrow(color: $0))
+            }
             if conversation.securityLevel == .secure {
                 attributed = NSAttributedString(attachment: .verifiedShield()) + "  " + attributed
             }
@@ -60,6 +64,7 @@ public final class ConversationTitleView: UIView {
         titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
         titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
         titleButton.sizeToFit()
+        titleButton.isEnabled = tappable
         updateAccessibilityValue(conversation)
         setNeedsLayout()
         layoutIfNeeded()

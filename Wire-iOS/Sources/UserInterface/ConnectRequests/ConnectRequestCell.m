@@ -18,18 +18,13 @@
 
 
 #import "ConnectRequestCell.h"
-#import "IncomingConnectRequestView.h"
-#import "UserImageView.h"
 #import "WAZUIMagic.h"
+#import "Wire-Swift.h"
 
 #import <PureLayout/PureLayout.h>
 
 
 #import "zmessaging+iOS.h"
-
-@interface ConnectRequestCell ()
-@property (nonatomic) UserImageView *userImageView;
-@end
 
 @implementation ConnectRequestCell
 
@@ -38,18 +33,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-
-        self.incomingConnectRequestView = [[IncomingConnectRequestView alloc] init];
-        self.incomingConnectRequestView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addSubview:self.incomingConnectRequestView];
-
-        [self.incomingConnectRequestView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        [self.incomingConnectRequestView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-        [self.incomingConnectRequestView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-            [self.incomingConnectRequestView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self withOffset:-48];
-        }];
-        [self.incomingConnectRequestView autoSetDimension:ALDimensionWidth toSize:420 relation:NSLayoutRelationLessThanOrEqual];
     }
     return self;
 }
@@ -57,19 +40,29 @@
 - (void)setUser:(ZMUser *)user
 {
     _user = user;
-    self.incomingConnectRequestView.user = user;
-}
+    
+    [self.connectRequestViewController.view removeFromSuperview];
+    self.connectRequestViewController = [[IncomingConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:self.user];
 
-- (void)setAcceptBlock:(void (^)())acceptBlock
-{
-    _acceptBlock = [acceptBlock copy];
-    self.incomingConnectRequestView.acceptBlock = self.acceptBlock;
-}
+    @weakify(self);
+    self.connectRequestViewController.onAction = ^(IncomingConnectionAction action) {
+        @strongify(self);
+        switch(action) {
+            case IncomingConnectionActionAccept:
+                self.acceptBlock();
+                break;
+            case IncomingConnectionActionIgnore:
+                self.ignoreBlock();
+                break;
+        }
+    };
 
-- (void)setIgnoreBlock:(void (^)())ignoreBlock
-{
-    _ignoreBlock = [ignoreBlock copy];
-    self.incomingConnectRequestView.ignoreBlock = self.ignoreBlock;
+    self.connectRequestViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:self.connectRequestViewController.view];
+
+    [self.connectRequestViewController.view autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.connectRequestViewController.view autoPinEdgesToSuperviewMargins];
+    [self.connectRequestViewController.view autoSetDimension:ALDimensionWidth toSize:420 relation:NSLayoutRelationLessThanOrEqual];
 }
 
 @end

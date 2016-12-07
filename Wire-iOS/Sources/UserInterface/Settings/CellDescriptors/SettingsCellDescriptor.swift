@@ -259,7 +259,7 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
     case .sendV3Assets:
         return "Send assets using the v3 endpoint"
     case .enableUserNamesUI:
-        return "Enable @name userinterface elements"
+        return "Enable username userinterface elements"
     }
 }
 

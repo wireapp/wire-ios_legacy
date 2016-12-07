@@ -63,17 +63,15 @@ NSString *ActivityToAnalyticsString(NSString *activity) {
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType
 {
     ZMUser<ZMEditableUser> *fullSelfUser = [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];
-    
-    NSString *shareText = nil;
-    if (fullSelfUser.emailAddress.length == 0) {
-        // User has no email address set
-        shareText = NSLocalizedString(@"send_invitation_no_email.text", @"");
+
+    if (nil != fullSelfUser.handle) {
+        NSString *displayHandle = [NSString stringWithFormat:@"@%@", fullSelfUser.handle];
+        return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), displayHandle];
+    } else if (fullSelfUser.emailAddress.length > 0) {
+        return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), fullSelfUser.emailAddress];
     }
-    else {
-        shareText = [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), fullSelfUser.emailAddress];
-    }
-    
-    return shareText;
+
+    return NSLocalizedString(@"send_invitation_no_email.text", @"");
 }
 
 @end

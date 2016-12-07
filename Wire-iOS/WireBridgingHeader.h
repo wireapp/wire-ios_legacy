@@ -62,6 +62,7 @@
 
 // View Controllers
 #import "ZClientViewController.h"
+#import "ZClientViewController+Internal.h"
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
 #import "NavigationController.h"
@@ -81,6 +82,8 @@
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
 #import "BrowserViewController.h"
+#import "ConversationListViewController.h"
+#import "ConversationListViewController+Private.h"
 
 // Helper objects
 #import "PushTransition.h"

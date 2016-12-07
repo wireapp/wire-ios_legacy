@@ -95,21 +95,4 @@
     return NO;
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-	if (!decelerate) {
-		[self.delegate conversationContentViewControllerDidFinishScrolling:self];
-	}
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-	[self.delegate conversationContentViewControllerDidFinishScrolling:self];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
-	[self.delegate conversationContentViewControllerDidFinishScrolling:self];
-}
-
 @end

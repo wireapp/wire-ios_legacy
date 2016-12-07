@@ -350,17 +350,6 @@ ProfileViewController UserImageView {
     borderColor: rgb(0, 0, 0, 0.08);
 }
 
-ProfileHeaderView {
-    titleLabel: @{
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-    subtitleLabel: @{
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-}
-
 ProfileFooterView {
     leftButton: @{
         contentEdgeInsets: 0 0 0 16
@@ -370,27 +359,6 @@ ProfileFooterView {
         titleLabel: @{
             font: $font-small-light;
         }
-    }
-}
-
-CommonConnectionsViewController {
-    headerLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
-    }
-}
-
-CommonConnectionButton {
-    nameLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
-    }
-}
-
-MoreConnectionsButton {
-    moreCountLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-foreground;
     }
 }
 
@@ -1001,6 +969,12 @@ ImageToolbarView.on-background {
     }
 }
 
+/* Change Handle */
+
+ChangeHandleViewController {
+    footerFont: $font-small;
+}
+
 /* Location */
 
 ModalTopBar {
@@ -1095,12 +1069,6 @@ ActionSheetAlertView {
     
     messageLabel: @{
         font: $font-normal-light;
-    }
-}
-
-ActionSheetContainerView {
-    titleLabel: @{
-        font: $font-small-light;
     }
 }
 
@@ -1455,12 +1423,6 @@ ChangeHandleTableViewCell {
     handleTextField: @{
         font: $font-normal;
         textColor: $color-text-foreground-dark;
-    }
-}
-
-ChangeHandleViewController {
-    view: @{
-        backgroundColor: clear;
     }
 }
 

@@ -43,6 +43,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
+- (void)updateTableViewHeaderView;
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message;
 
 @end

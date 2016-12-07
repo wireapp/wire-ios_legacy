@@ -504,8 +504,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     UICollectionViewCell *cell = [self.startUIView.collectionView cellForItemAtIndexPath:indexPath];
     
     [self.profilePresenter presentProfileViewControllerForUser:bareUser
-                                                  inController:self.parentViewController 
-                                                      fromRect:[self.parentViewController.view convertRect:cell.bounds fromView:cell] 
+                                                  inController:self
+                                                      fromRect:[self.view convertRect:cell.bounds fromView:cell]
                                                      onDismiss:^{
         if (IS_IPAD) {
             [self.startUIView.collectionView reloadItemsAtIndexPaths:self.startUIView.collectionView.indexPathsForVisibleItems];

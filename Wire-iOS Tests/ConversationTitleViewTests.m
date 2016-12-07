@@ -33,6 +33,7 @@
 {
     [super setUp];
     self.conversation = [MockConversation new];
+    self.conversation.relatedConnectionState = ZMConnectionStatusAccepted;
     self.conversation.displayName = @"Alan Turing";
     self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
     self.snapshotBackgroundColor = UIColor.whiteColor;
@@ -47,6 +48,16 @@
 {
     // when
     self.conversation.securityLevel = ZMConversationSecurityLevelSecure;
+    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
+
+    // then
+    ZMVerifyView(self.sut);
+}
+
+- (void)testThatItDoesNotRenderTheDownArrowForOutgoingConnections
+{
+    // when
+    self.conversation.relatedConnectionState = ZMConnectionStatusSent;
     self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
 
     // then

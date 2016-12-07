@@ -37,11 +37,7 @@
 
 + (NSArray *)mockUsers
 {
-    static NSArray *mockUsers = nil;
-    if (mockUsers == nil) {
-        mockUsers = [MockLoader mockObjectsOfClass:[MockUser class] fromFile:@"people-01.json"];
-    }
-    return mockUsers;
+    return [MockLoader mockObjectsOfClass:[self class] fromFile:@"people-01.json"];
 }
 
 + (MockUser *)mockSelfUser
@@ -166,6 +162,10 @@
 - (id)clients
 {
     return @[];
+}
+- (void)refreshData
+{
+    // no-op
 }
     
 - (BOOL)isPendingApproval {
