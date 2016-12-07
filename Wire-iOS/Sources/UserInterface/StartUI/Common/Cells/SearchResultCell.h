@@ -28,8 +28,6 @@
 @property (nonatomic, strong) id<ZMBareUser, ZMSearchableUser> user;
 @property (nonatomic, strong) ZMConversation *conversation;
 @property (nonatomic, copy)   NSString *displayName;
-@property (nonatomic, assign) BOOL canBeHidden;
-@property (nonatomic, copy)   void (^hideSelectedAction)(SearchResultCell *);
 @property (nonatomic, copy)   void (^doubleTapAction)(SearchResultCell *);
 @property (nonatomic, copy)   void (^instantConnectAction)(SearchResultCell *);
 

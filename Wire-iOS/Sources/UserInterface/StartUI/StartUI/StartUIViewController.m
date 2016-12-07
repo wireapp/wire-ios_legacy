@@ -227,14 +227,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchDirectory removeSearchResultObserver:self];
     [self.searchDirectory tearDown];
     self.searchDirectory = nil;
-    
-    ZMSearchDirectory *newDirectory = [[self.searchDirectoryClass alloc] initWithUserSession:[ZMUserSession sharedSession]
-                                                                    maxTopConversationsCount:24];
-    self.searchDirectory = newDirectory;
+
+    self.searchDirectory = [[self.searchDirectoryClass alloc] initWithUserSession:ZMUserSession.sharedSession];
     
     [self.searchDirectory addSearchResultObserver:self];
     
-    self.topPeopleLineSection.searchDirectory = self.searchDirectory;
+    self.topPeopleLineSection.topConversationDirectory = ZMUserSession.sharedSession.topConversationsDirectory;
     self.usersInDirectorySection.searchDirectory = self.searchDirectory;
     self.usersInContactsSection.searchDirectory = self.searchDirectory;
     self.groupConversationsSection.searchDirectory = self.searchDirectory;
@@ -633,12 +631,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         if (conversation.conversationType == ZMConversationTypeOneOnOne) {
             user = conversation.firstActiveParticipantOtherThanSelf;
         }
-    }
-    
-    if ([cell isKindOfClass:[SearchResultCell class]]) {
-        SearchResultCell *searchResultCell = (SearchResultCell *)cell;
-        
-        searchResultCell.canBeHidden = (self.mode == StartUIModeInitial);
     }
     
     if ([self.selection.selectedUsers containsObject:user]) {
