@@ -68,7 +68,7 @@
 		1688F35A1C68F0A700A68D8E /* VoiceChannelOverlayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1688F3581C68F0A700A68D8E /* VoiceChannelOverlayTests.m */; };
 		168A16AC1D9597C2005CFA6C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
-		168A16B31D9597C2005CFA6C /* Wire-iOS Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire-iOS Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		168DDD041AFA81820056A5EF /* CheckmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168DDD031AFA81820056A5EF /* CheckmarkViewController.m */; };
 		1693BB0A1AE65FEC00EF46E9 /* AddEmailPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1693BB091AE65FEC00EF46E9 /* AddEmailPasswordViewController.m */; };
 		1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1693D9671CEDB26200D1F13C /* UIApplication+Permissions.m */; };
@@ -208,7 +208,6 @@
 		870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815871BF4EAD100D321BC /* SettingsTableViewController.swift */; };
 		8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815891BF4EADE00D321BC /* SettingsNavigationController.swift */; };
 		8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */; };
-		870912031BF9DA5A00153CA7 /* ZMUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBA8C721B74EAB10089CC44 /* ZMUtilities.framework */; };
 		870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A8C6A1CF719C400874B16 /* RecordingDotView.swift */; };
 		870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */; };
 		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */; };
@@ -870,7 +869,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				168A16B31D9597C2005CFA6C /* Wire-iOS Share Extension.appex in Embed App Extensions */,
+				168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -981,7 +980,7 @@
 		168635411AE018B300EDC7D9 /* RegistrationFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFormController.m; sourceTree = "<group>"; };
 		1688F3581C68F0A700A68D8E /* VoiceChannelOverlayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelOverlayTests.m; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
-		168A16A91D9597C2005CFA6C /* Wire-iOS Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire-iOS Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		168A16AB1D9597C2005CFA6C /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		168A16AE1D9597C2005CFA6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		168A16B01D9597C2005CFA6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3771,7 +3770,7 @@
 				8F42C538199244A700288E4D /* Wire.app */,
 				BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */,
 				1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */,
-				168A16A91D9597C2005CFA6C /* Wire-iOS Share Extension.appex */,
+				168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4715,9 +4714,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		168A16A81D9597C2005CFA6C /* Wire-iOS Share Extension */ = {
+		168A16A81D9597C2005CFA6C /* Wire Share Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 168A16B41D9597C2005CFA6C /* Build configuration list for PBXNativeTarget "Wire-iOS Share Extension" */;
+			buildConfigurationList = 168A16B41D9597C2005CFA6C /* Build configuration list for PBXNativeTarget "Wire Share Extension" */;
 			buildPhases = (
 				168A16A51D9597C2005CFA6C /* Sources */,
 				168A16A61D9597C2005CFA6C /* Frameworks */,
@@ -4727,9 +4726,9 @@
 			);
 			dependencies = (
 			);
-			name = "Wire-iOS Share Extension";
+			name = "Wire Share Extension";
 			productName = "Wire-iOS Share Extension";
-			productReference = 168A16A91D9597C2005CFA6C /* Wire-iOS Share Extension.appex */;
+			productReference = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */ = {
@@ -4878,7 +4877,7 @@
 				8F42C537199244A700288E4D /* Wire-iOS */,
 				BACB88501AF7C48900DDCDB0 /* Wire-iOS-Tests */,
 				1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */,
-				168A16A81D9597C2005CFA6C /* Wire-iOS Share Extension */,
+				168A16A81D9597C2005CFA6C /* Wire Share Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -5889,7 +5888,7 @@
 /* Begin PBXTargetDependency section */
 		168A16B21D9597C2005CFA6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 168A16A81D9597C2005CFA6C /* Wire-iOS Share Extension */;
+			target = 168A16A81D9597C2005CFA6C /* Wire Share Extension */;
 			targetProxy = 168A16B11D9597C2005CFA6C /* PBXContainerItemProxy */;
 		};
 		1EE85C661B5F96FC008E084B /* PBXTargetDependency */ = {
@@ -6379,7 +6378,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		168A16B41D9597C2005CFA6C /* Build configuration list for PBXNativeTarget "Wire-iOS Share Extension" */ = {
+		168A16B41D9597C2005CFA6C /* Build configuration list for PBXNativeTarget "Wire Share Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				168A16B51D9597C2005CFA6C /* Debug */,
