@@ -39,15 +39,8 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
-        var descriptors = [nameElement()]
-        if Settings.shared().enableUserNamesUI {
-            descriptors.append(handleElement())
-        }
-
-        descriptors.append(contentsOf: [phoneElement(), emailElement()])
-
         return SettingsSectionDescriptor(
-            cellDescriptors: descriptors,
+            cellDescriptors: [nameElement(), handleElement(), phoneElement(), emailElement()],
             header: "self.settings.account_details_group.info.title".localized,
             footer: nil
         )

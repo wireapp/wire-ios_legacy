@@ -69,7 +69,6 @@ extern NSString * const UserDefaultDisableCallKit;
 extern NSString * const UserDefaultSendButtonDisabled;
 
 extern NSString * const UserDefaultSendV3Assets;
-extern NSString * const UserDefaultEnableUserNamesUI;
 
 extern NSString * const UserDefaultTwitterOpeningRawValue;
 extern NSString * const UserDefaultMapsOpeningRawValue;
@@ -88,7 +87,6 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 
 @property (nonatomic) BOOL disableCallKit;
 @property (nonatomic) BOOL sendV3Assets;
-@property (nonatomic) BOOL enableUserNamesUI;
 
 @property (nonatomic, readonly) BOOL skipFirstTimeUseChecks;
 @property (nonatomic) NSDate *lastPushAlertDate;

@@ -216,7 +216,7 @@
 
 - (void)requestSuggestedHandlesIfNeeded
 {
-    if (Settings.sharedSettings.enableUserNamesUI && nil == ZMUser.selfUser.handle) {
+    if (nil == ZMUser.selfUser.handle) {
         self.userProfileObserverToken = [self.userProfile addObserver:self];
         [self.userProfile suggestHandles];
     }

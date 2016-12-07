@@ -87,8 +87,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
-        SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets,
-        SettingsPropertyName.enableUserNamesUI          : UserDefaultEnableUserNamesUI
+        SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
