@@ -40,7 +40,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         self.color = color
     }
 
-    private func addressBookText(for user: ZMBareUser & ZMSearchableUser, with addressBookName: String) -> NSAttributedString? {
+    private func addressBookText(for user: ZMSearchableUser, with addressBookName: String) -> NSAttributedString? {
         guard !user.isSelfUser else { return nil }
         let suffix = "conversation.connection_view.in_address_book".localized && lightFont && color
         if addressBookName.lowercased() == user.name.lowercased() {
@@ -51,7 +51,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         return contactName + " " + suffix
     }
 
-    func correlationText(for user: ZMBareUser & ZMSearchableUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
+    func correlationText(for user: ZMSearchableUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
@@ -78,6 +78,21 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
     var secondSubtitle: NSAttributedString? {
         guard nil != handleText else { return nil }
         return correlationText
+    }
+
+    var firstAccessibilityIdentifier: String? {
+        if nil != handleText {
+            return "username"
+        } else if nil != correlationText {
+            return "correlation"
+        }
+
+        return nil
+    }
+
+    var secondAccessibilityIdentifier: String? {
+        guard nil != handleText && nil != correlationText else { return nil }
+        return "correlation"
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
@@ -126,6 +141,9 @@ final class UserNameDetailView: UIView {
         titleLabel.attributedText = model.title
         subtitleLabel.attributedText = model.firstSubtitle
         correlationLabel.attributedText = model.secondSubtitle
+
+        subtitleLabel.accessibilityIdentifier = model.firstAccessibilityIdentifier
+        correlationLabel.accessibilityIdentifier = model.secondAccessibilityIdentifier
     }
 
     private func setupViews() {
@@ -138,8 +156,6 @@ final class UserNameDetailView: UIView {
         }
 
         titleLabel.accessibilityIdentifier = "name"
-        subtitleLabel.accessibilityIdentifier = "username"
-        correlationLabel.accessibilityIdentifier = "correlation"
     }
 
     private func createConstraints() {

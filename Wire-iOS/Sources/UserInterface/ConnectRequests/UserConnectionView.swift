@@ -41,13 +41,13 @@ public final class UserConnectionView: UIView, Copyable {
     
     public var user: ZMUser {
         didSet {
-            self.updateLabelText()
+            self.updateLabels()
             self.userImageView.user = self.user
         }
     }
     public var commonConnectionsCount: UInt = 0 {
         didSet {
-            self.updateLabelText()
+            self.updateLabels()
         }
     }
 
@@ -69,9 +69,6 @@ public final class UserConnectionView: UIView, Copyable {
             $0.textAlignment = .center
         }
 
-        firstLabel.accessibilityIdentifier = "handle"
-        secondLabel.accessibilityIdentifier = "correlation"
-
         self.userImageView.accessibilityLabel = "user image"
         self.userImageView.shouldDesaturate = false
         self.userImageView.suggestedImageSize = .big
@@ -79,21 +76,28 @@ public final class UserConnectionView: UIView, Copyable {
         
         [self.labelContainer, self.userImageView].forEach(self.addSubview)
         [self.firstLabel, self.secondLabel].forEach(labelContainer.addSubview)
-        self.updateLabelText()
+        self.updateLabels()
     }
 
-    private func updateLabelText() {
-        updateFirstLabelText()
-        updateSecondLabelText()
+    private func updateLabels() {
+        updateFirstLabel()
+        updateSecondLabel()
     }
 
-    private func updateFirstLabelText() {
-        firstLabel.attributedText = handleLabelText ?? correlationLabelText
+    private func updateFirstLabel() {
+        if let handleText = handleLabelText {
+            firstLabel.attributedText = handleText
+            firstLabel.accessibilityIdentifier = "username"
+        } else {
+            firstLabel.attributedText = correlationLabelText
+            firstLabel.accessibilityIdentifier = "correlation"
+        }
     }
 
-    private func updateSecondLabelText() {
+    private func updateSecondLabel() {
         guard nil != handleLabelText else { return }
         secondLabel.attributedText = correlationLabelText
+        secondLabel.accessibilityIdentifier = "correlation"
     }
 
     private var handleLabelText: NSAttributedString? {
