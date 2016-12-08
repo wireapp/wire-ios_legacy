@@ -141,8 +141,12 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard let section = TechnicalReportSection(rawValue: section) else {
+            fatal("Unknown section")
+        }
+        
         switch (section) {
-        case 1:
+        case .Options:
         return 20
             
         default:
@@ -153,8 +157,12 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard let section = TechnicalReportSection(rawValue: section) else {
+            fatal("Unknown section")
+        }
+        
         switch (section) {
-        case 1:
+        case .Options:
             let label = UILabel()
             label.text = "self.settings.technical_report.privacy_warning".localized
             label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
