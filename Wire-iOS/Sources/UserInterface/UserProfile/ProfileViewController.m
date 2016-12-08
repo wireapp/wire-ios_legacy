@@ -61,6 +61,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
 @end
 
+@interface ProfileViewController (CommonContactsDelegate) <ZMCommonContactsSearchDelegate>
+@end
 
 @interface ProfileViewController (TabBarControllerDelegate) <TabBarControllerDelegate>
 @end
@@ -73,6 +75,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @property (nonatomic, readonly) ZMConversation *conversation;
 
 @property (nonatomic) id <ZMUserObserverOpaqueToken> observerToken;
+@property (nonatomic) id <ZMCommonContactsSearchToken> commonContactsSearchToken;
 @property (nonatomic) ProfileHeaderView *headerView;
 @property (nonatomic) TabBarController *tabsController;
 
@@ -82,12 +85,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController
 
-- (id)initWithUser:(id<ZMBareUser>)user context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<ZMSearchableUser>)user context:(ProfileViewControllerContext)context
 {
     return [self initWithUser:user conversation:nil context:context];
 }
 
-- (id)initWithUser:(id<ZMBareUser>)user conversation:(ZMConversation *)conversation
+- (id)initWithUser:(id<ZMSearchableUser>)user conversation:(ZMConversation *)conversation
 {
     if (conversation.conversationType == ZMConversationTypeGroup) {
         return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextGroupConversation];
@@ -97,13 +100,16 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (id)initWithUser:(id<ZMBareUser>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<ZMSearchableUser>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     if (self = [super init]) {
         _bareUser = user;
         _conversation = conversation;
         _context = context;
         _navigationControllerDelegate = [[ProfileNavigationControllerDelegate alloc] init];
+        if (user.totalCommonConnections == 0 && !user.isConnected) {
+            _commonContactsSearchToken = [user searchCommonContactsInUserSession:ZMUserSession.sharedSession withDelegate:self];
+        }
     }
     return self;
 }
@@ -183,8 +189,19 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)setupHeader
 {
-    id <ZMBareUser> user = self.bareUser;
+    id<ZMBareUser> user = self.bareUser;
 
+    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user commonConnections:user.totalCommonConnections];
+    ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:headerView];
+    self.headerView = headerView;
+}
+
+- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user commonConnections:(NSInteger)commonConnections
+{
     ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
     if (IS_IPAD) {
         if (self.navigationController.viewControllers.count > 1) {
@@ -194,18 +211,11 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         }
     }
 
-    ProfileHeaderViewModel *viewModel = [[ProfileHeaderViewModel alloc] initWithUser:user
-                                                                        fallbackName:user.displayName
-                                                                     addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-                                                                   commonConnections:user.totalCommonConnections
-                                                                               style:headerStyle];
-
-    ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
-    headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:headerView];
-    self.headerView = headerView;
+    return [[ProfileHeaderViewModel alloc] initWithUser:user
+                                           fallbackName:user.displayName
+                                        addressBookName:BareUserToUser(user).addressBookEntry.cachedName
+                                      commonConnections:commonConnections
+                                                  style:headerStyle];
 }
 
 #pragma mark - User observation
@@ -315,6 +325,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
+
 @implementation ProfileViewController (DevicesListDelegate)
 
 - (void)profileDevicesViewController:(ProfileDevicesViewController *)profileDevicesViewController didTapDetailForClient:(UserClient *)client
@@ -325,6 +336,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
+
 @implementation ProfileViewController (TabBarControllerDelegate)
 
 - (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)index
@@ -333,6 +345,17 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [[Analytics shared] tagOtherDeviceList];
     }
     [self updateShowVerifiedShield];
+}
+
+@end
+
+
+@implementation ProfileViewController (CommonContactsDelegate)
+
+- (void)didReceiveCommonContactsUsers:(NSOrderedSet *)users forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
+{
+    ProfileHeaderViewModel *model = [self headerViewModelWithUser:self.bareUser commonConnections:users.count];
+    [self.headerView configureWithViewModel:model];
 }
 
 @end

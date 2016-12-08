@@ -495,7 +495,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self presentAddressBookUploadDialogue];
 }
 
-- (void)presentProfileViewControllerForUser:(id<ZMBareUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
+- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.peopleInputController.tokenField resignFirstResponder];
 
@@ -666,9 +666,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             }
         }
         
-    } else if ([modelObject conformsToProtocol:@protocol(ZMBareUser)]) {
-        id<ZMBareUser> bareUser = modelObject;
-        ZMUser *user = BareUserToUser(bareUser);
+    } else if ([modelObject conformsToProtocol:@protocol(ZMSearchableUser)]) {
+        id<ZMSearchableUser> searchableUser = modelObject;
+        ZMUser *user = BareUserToUser(searchableUser);
             
         BOOL isAlreadySelectedUser = [self.selection.selectedUsers containsObject:user];
         
@@ -679,7 +679,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             [self.selection addUserToSelectedResults:user];
         }
         else {
-            [self presentProfileViewControllerForUser:bareUser atIndexPath:indexPath];
+            [self presentProfileViewControllerForUser:searchableUser atIndexPath:indexPath];
             [self.startUIView.collectionView deselectItemAtIndexPath:indexPath animated:NO];
         }
     }
@@ -737,8 +737,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if ([modelObject isKindOfClass:[ZMSearchUser class]]) {
 
-        id<ZMBareUser> bareUser = modelObject;
-        ZMUser *user = BareUserToUser(bareUser);
+        id<ZMSearchableUser> searchableUser = modelObject;
+        ZMUser *user = BareUserToUser(searchableUser);
 
         if (user.isConnected && ! user.isBlocked) {
 
@@ -751,7 +751,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             }
         }
         else {
-            [self presentProfileViewControllerForUser:bareUser atIndexPath:indexPath];
+            [self presentProfileViewControllerForUser:searchableUser atIndexPath:indexPath];
 
             if (IS_IPHONE && self.peopleInputController.tokenField.isFirstResponder) {
                 self.peopleInputController.retainSelectedState = YES;

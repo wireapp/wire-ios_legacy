@@ -99,7 +99,8 @@ final class ProfileHeaderView: UIView {
         }
     }
 
-    private func configure(with model: ProfileHeaderViewModel) {
+    @objc(configureWithViewModel:)
+    public func configure(with model: ProfileHeaderViewModel) {
         detailView.configure(with: model.userDetailViewModel)
     }
 
