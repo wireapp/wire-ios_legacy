@@ -375,8 +375,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)presentMenuSheetController
 {
-    ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:self.conversation.displayName layout:ActionSheetControllerLayoutList style:[ActionSheetController defaultStyle]];
-    [actionSheetController addActionsForConversation:self.conversation];
+    ActionSheetController *actionSheetController = [ActionSheetController dialogForConversationDetails:self.conversation style:ActionSheetController.defaultStyle];
     [self presentViewController:actionSheetController animated:YES completion:nil];
 }
 

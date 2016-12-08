@@ -128,8 +128,8 @@
 {
     UILabel *titleLabel = [[UILabel alloc] initForAutoLayout];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = title.uppercasedWithCurrentLocale;
-    titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    titleLabel.text = title;
+    titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
     return [self initWithTitleView:titleLabel layout:layout style:style dismissStyle:dismissStyle];
 }
 
