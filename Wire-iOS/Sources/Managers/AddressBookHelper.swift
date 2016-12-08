@@ -76,7 +76,7 @@ extension AddressBookHelper {
         // Date check
         let timeSinceLastSearch = Date().timeIntervalSince(lastSearchDate)
         let customTimeLimit : TimeInterval
-        if let timeLimitInConfiguration = self.configuration?.addressBookRemoteSearchTimeInterval , timeLimitInConfiguration > 0 {
+        if let timeLimitInConfiguration = self.configuration?.addressBookRemoteSearchTimeInterval, timeLimitInConfiguration > 0 {
             customTimeLimit = timeLimitInConfiguration
         } else {
             customTimeLimit = self.searchTimeInterval

@@ -36,10 +36,11 @@ final public class IncomingConnectionViewController: UIViewController, ZMCommonC
         self.userSession = userSession
         self.user = user
         super.init(nibName: .none, bundle: .none)
-        
-        if self.user.totalCommonConnections == 0  && !self.user.isConnected {
-            self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
-        }
+
+        guard !self.user.isConnected else { return }
+        user.refreshData()
+        guard self.user.totalCommonConnections == 0 else { return }
+        self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -89,9 +90,10 @@ final public class UserConnectionViewController: UIViewController, ZMCommonConta
         self.user = user
         super.init(nibName: .none, bundle: .none)
         
-        if self.user.totalCommonConnections == 0  && !self.user.isConnected {
-            self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
-        }
+        guard !self.user.isConnected else { return }
+        user.refreshData()
+        guard self.user.totalCommonConnections == 0 else { return }
+        self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
     }
     
     required public init?(coder aDecoder: NSCoder) {

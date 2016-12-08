@@ -183,8 +183,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)setupHeader
 {
-    ZMUser *user = [self fullUser];
-    
+    id <ZMBareUser> user = self.bareUser;
+
     ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
     if (IS_IPAD) {
         if (self.navigationController.viewControllers.count > 1) {
@@ -195,8 +195,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 
     ProfileHeaderViewModel *viewModel = [[ProfileHeaderViewModel alloc] initWithUser:user
-                                                                        fallbackName:self.bareUser.displayName
-                                                                     addressBookName:user.addressBookEntry.cachedName
+                                                                        fallbackName:user.displayName
+                                                                     addressBookName:BareUserToUser(user).addressBookEntry.cachedName
                                                                    commonConnections:user.totalCommonConnections
                                                                                style:headerStyle];
 
