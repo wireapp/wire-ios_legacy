@@ -53,5 +53,6 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
 
 - (void)performAfterUserSessionIsInitialized:(dispatch_block_t)block;
+- (void)uploadAddressBookIfNeeded;
 
 @end

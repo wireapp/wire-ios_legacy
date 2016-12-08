@@ -60,7 +60,9 @@ extension AddressBookHelper {
                 return
             }
             
-            ABAddressBookRequestAccessWithCompletion(addressBookRef) { (granted, error) in
+            ABAddressBookRequestAccessWithCompletion(addressBookRef) { [weak self] (granted, error) in
+                self?.persistCurrentAccessStatus()
+
                 DispatchQueue.main.async {
                     callback?(granted)
                 }
@@ -105,6 +107,26 @@ extension AddressBookHelper {
     }
 }
 
+// MARK: – Access Status Change Detection
+extension AddressBookHelper {
+
+    @objc public func persistCurrentAccessStatus() {
+        let status = ABAddressBookGetAuthorizationStatus().rawValue as Int
+        UserDefaults.standard.set(NSNumber(value: status), forKey: addressBookLastAccessStatusKey)
+    }
+
+    private var lastAccessStatus: ABAuthorizationStatus? {
+        guard let value = UserDefaults.standard.object(forKey: addressBookLastAccessStatusKey) as? NSNumber else { return nil }
+        return ABAuthorizationStatus(rawValue: value.intValue)
+    }
+
+    @objc public var accessStatusDidChangeToGranted: Bool {
+        guard let lastStatus = lastAccessStatus else { return false }
+        return ABAddressBookGetAuthorizationStatus() != lastStatus && isAddressBookAccessGranted
+    }
+
+}
+
 // MARK: - Upload
 extension AddressBookHelper {
     
@@ -128,6 +150,7 @@ extension AddressBookHelper {
 private let addressBookLastSearchDate = "UserDefaultsKeyAddressBookExportDate"
 private let addressBookSearchPerfomedAtLeastOnceKey = "AddressBookWasUploaded"
 private let addressBookSearchWasProposedKey = "AddressBookUploadWasProposed"
+private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
 
 private let addressBookIsolationQueue = DispatchQueue(label: "Address book helper", attributes: [])
 
