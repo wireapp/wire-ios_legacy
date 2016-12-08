@@ -270,7 +270,6 @@
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion
 {
     NSArray *conversationsList = [SessionObjectCache sharedCache].conversationList;
-    conversationsList = [conversationsList sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"lastModifiedDate" ascending:NO]]];
     if (conversationsList.count == 0) {
         return;
     } else {

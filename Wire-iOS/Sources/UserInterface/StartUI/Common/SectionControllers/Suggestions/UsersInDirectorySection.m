@@ -192,16 +192,7 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
     };
     
     particularCell.user = modelObject;
-    
-    particularCell.hideSelectedAction = ^(SearchResultCell *cell) {
-        @strongify(self);
-        if ([cell.user isKindOfClass:[ZMSearchUser class]]) {
-            ZMSearchUser *searchUser = (ZMSearchUser *)cell.user;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                
-                [self.searchDirectory removeSearchUserFromSuggestedPeople:searchUser];
-            });
-        }
-    };
+
     particularCell.instantConnectAction = ^(SearchResultCell *cell) {
         @strongify(self);
         NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), cell.user.displayName, [ZMUser selfUser].name];

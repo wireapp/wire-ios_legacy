@@ -44,6 +44,7 @@
 - (UIColor *)accentColor;
 @property (nonatomic) ZMConnection *connection;
 @property (nonatomic) ZMAddressBookContact *contact;
+@property (nonatomic) AddressBookEntry *addressBookEntry;
 @property (nonatomic) NSUUID *remoteIdentifier;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
