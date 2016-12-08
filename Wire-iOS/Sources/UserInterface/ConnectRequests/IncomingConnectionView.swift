@@ -93,7 +93,7 @@ public final class IncomingConnectionView: UIView {
             with: .init(
                 user: user,
                 fallbackName: "",
-                addressBookName: BareUserToUser(user)?.contact()?.name,
+                addressBookName: BareUserToUser(user)?.addressBookEntry?.cachedName,
                 commonConnections: Int(commonConnectionsCount)
             )
         )

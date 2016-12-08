@@ -599,7 +599,7 @@
     UserNameDetailView *detailView = [[UserNameDetailView alloc] init];
     UserNameDetailViewModel *model = [[UserNameDetailViewModel alloc] initWithUser:user
                                                                       fallbackName:@""
-                                                                   addressBookName:BareUserToUser(user).contact.name
+                                                                   addressBookName:BareUserToUser(user).addressBookEntry.cachedName
                                                                  commonConnections:user.totalCommonConnections];
     [detailView configureWith:model];
     ActionSheetController *controller = [[ActionSheetController alloc] initWithTitleView:detailView

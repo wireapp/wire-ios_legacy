@@ -196,7 +196,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
     ProfileHeaderViewModel *viewModel = [[ProfileHeaderViewModel alloc] initWithUser:user
                                                                         fallbackName:self.bareUser.displayName
-                                                                     addressBookName:user.contact.name
+                                                                     addressBookName:user.addressBookEntry.cachedName
                                                                    commonConnections:user.totalCommonConnections
                                                                                style:headerStyle];
 
