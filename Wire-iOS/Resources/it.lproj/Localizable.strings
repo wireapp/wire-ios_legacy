@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Ricerca per nome o e-mail";
+"peoplepicker.search_placeholder" = "Ricerca per nome o username";
 "peoplepicker.header.top_people" = "Più contattati";
 "peoplepicker.button.create_conversation" = "Crea gruppo";
 "peoplepicker.button.add_to_conversation" = "Aggiungi";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "contatti";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "in Rubrica";
+
+
 // Archived List
 "archived_list.title" = "archivio";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Nascondendo…";
 
 "send_invitation.subject" = "Connettiti con me su Wire";
-"send_invitation.text" = "Sono su Wire. Cerca %@\no visita https://get.wire.com per connetterti con me.";
+"send_invitation.text" = "Sono su Wire, cerca %@ o visita wire.com/download.";
 "send_invitation_no_email.text" = "Sono su Wire. Visita https://get.wire.com per connetterti con me.";
 
 "send_personal_invitation.text" = "Sono su wire, ci sentiamo lì. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Inizia una chiamata";
 "conversation.call.many_participants_confirmation.message" = "Questo chiamerà %d persone";
 "conversation.call.many_participants_confirmation.call" = "Chiama";
+
+"conversation.connection_view.in_address_book" = "in Rubrica";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Account";
 
-"self.settings.account_details_group.title" = "Info";
+"self.settings.account_details_group.info.title" = "Info";
+"self.settings.account_details_group.personal.title" = "Personale";
 
 "self.settings.account_section.name.title" = "Nome";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Telefono";
+"self.settings.account_section.handle.title" = "Nome utente";
+"self.settings.account_section.add_handle.title" = "Aggiungi nome utente";
 
-"self.settings.account_details_group.footer" = "Le persone ti possono trovare con questi dettagli.";
+"self.settings.account_details_group.info.footer" = "Le persone ti possono trovare con questi dettagli.";
+"self.settings.account_details_group.personal.footer" = "Questa informazione non è disponibile.";
 
 "self.settings.account_details.remove_device.title" = "Rimuovi dispositivo";
 "self.settings.account_details.key_fingerprint.title" = "Impronta digitale della chiave";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Cancella account";
 "self.settings.account_details.delete_account.alert.message" = "Ti invieremo un SMS o una email. Segui il link per eliminare definitivamente il tuo account.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Nome utente";
+"self.settings.account_section.handle.change.save" = "Salva";
+"self.settings.account_section.handle.change.footer" = "Almeno 2 caratteri. a-z, 0-9, e solo _";
+"self.settings.account_section.handle.change.footer.unavailable" = "E' già stato scelto";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Impossibile sceglietre il nome utente";
+"self.settings.account_section.handle.change.failure_alert.message" = "C'è stato un errore nella scelta del tuo nome utente. Per favore riprova.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifiche";
@@ -681,6 +701,14 @@
 "error.email.invalid" = "Inserisci un indirizzo email valido";
 "error.phone.invalid" = "Inserisci un numero di telefono valido";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Usernames sono qui.";
+"registration.select_handle.takeover.subtitle" = "Rivendica il tuo nome univoco su Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Ulteriori informazioni";
+
+"registration.select_handle.takeover.choose_own" = "Scegli il tuo";
+"registration.select_handle.takeover.keep_suggested" = "Tieni questa";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

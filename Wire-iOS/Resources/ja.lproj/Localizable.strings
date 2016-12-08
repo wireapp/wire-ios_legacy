@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "名前またはメールアドレスで検索します";
+"peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "グループを作成";
 "peoplepicker.button.add_to_conversation" = "追加";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "連絡先";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "in Address Book";
+
+
 // Archived List
 "archived_list.title" = "アーカイブ";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "隠しています...";
 
 "send_invitation.subject" = "Wireで繋がります";
-"send_invitation.text" = "Wireにいます。%@で検索するか、https://get.wire.com のページから私とつながってください。";
+"send_invitation.text" = "I’m on Wire, search for %@ or visit wire.com/download.";
 "send_invitation_no_email.text" = "私はWireにいます。https://get.wire. から、私とつながりましょう。";
 
 "send_personal_invitation.text" = "私は Wire にいます。Wireで話しましょう。https://get.wire.com";
@@ -139,9 +144,11 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "タップして録音を開始します、その後  %@  できます。";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "上記のフィルターを選択します。";
 
-"conversation.call.many_participants_confirmation.title" = "Start a call";
-"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.title" = "通話を始める";
+"conversation.call.many_participants_confirmation.message" = "%d 人を呼び出す";
 "conversation.call.many_participants_confirmation.call" = "通話";
+
+"conversation.connection_view.in_address_book" = "in Address Book";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -169,7 +176,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "オフ";
-"input.ephemeral.title" = "Set a time for the message to disappear";
+"input.ephemeral.title" = "メッセージが消えるまでの時間を設定する";
 
 // System messages
 "content.system.continued_conversation" = "%@と会話を始めます";
@@ -249,7 +256,7 @@
 "content.message.like" = "いいね！";
 "content.message.unlike" = "いいね！を取消す";
 "content.message.forward" = "転送";
-"content.message.forward.to" = "Send to...";
+"content.message.forward.to" = "…に送信";
 
 "content.reactions_list.likers" = "いいね！しました";
 
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "アカウント";
 
-"self.settings.account_details_group.title" = "情報";
+"self.settings.account_details_group.info.title" = "情報";
+"self.settings.account_details_group.personal.title" = "パーソナル";
 
 "self.settings.account_section.name.title" = "名前";
 "self.settings.account_section.email.title" = "メール";
 "self.settings.account_section.phone.title" = "携帯電話";
+"self.settings.account_section.handle.title" = "Username";
+"self.settings.account_section.add_handle.title" = "Add username";
 
-"self.settings.account_details_group.footer" = "この情報で他の人があなたを見つけることができます。";
+"self.settings.account_details_group.info.footer" = "この情報で他の人があなたを見つけることができます。";
+"self.settings.account_details_group.personal.footer" = "この情報は表示されません。";
 
 "self.settings.account_details.remove_device.title" = "デバイスを削除する";
 "self.settings.account_details.key_fingerprint.title" = "重要なフィンガープリント";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "アカウントを削除";
 "self.settings.account_details.delete_account.alert.message" = "EメールまたはSMSをあなたに送信します。リンクに従ってあなたのアカウントを削除してください";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.save" = "保存";
+"self.settings.account_section.handle.change.footer" = "少なくとも２文字。a-z, 0-9, および _ のみが利用できます。";
+"self.settings.account_section.handle.change.footer.unavailable" = "すでに利用されています";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
+"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "通知センター";
@@ -483,7 +503,7 @@
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
 "self.settings.callkit.title" = "Calls";
-"self.settings.callkit.caption" = "Share with iOS";
+"self.settings.callkit.caption" = "iOSで共有する";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
@@ -681,6 +701,14 @@
 "error.email.invalid" = "有効なメール アドレスを入力してください";
 "error.phone.invalid" = "有効な電話番号を入力してください";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Usernames are here.";
+"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Learn more";
+
+"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.keep_suggested" = "これにする";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

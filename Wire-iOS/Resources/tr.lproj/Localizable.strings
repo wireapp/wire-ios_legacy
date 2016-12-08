@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "İsim veya e-posta ile arayın";
+"peoplepicker.search_placeholder" = "İsim veya kullanıcı adına göre ara";
 "peoplepicker.header.top_people" = "Sık Görüşülenler";
 "peoplepicker.button.create_conversation" = "Grup Oluştur";
 "peoplepicker.button.add_to_conversation" = "Ekle";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "kişiler";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "Adres Defterinde";
+
+
 // Archived List
 "archived_list.title" = "arşiv";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Gizleniyor…";
 
 "send_invitation.subject" = "Wire'da bana bağlan";
-"send_invitation.text" = "Wire'dayım. %@ olarak ara ya da bana bağlanmak için https://get.wire.com adresini ziyaret et.";
+"send_invitation.text" = "Wire'dayım, %@ olarak arat ya da wire.com/download bu adresi ziyaret et.";
 "send_invitation_no_email.text" = "Wire'dayım. %@ olarak ara ya da bana bağlanmak için https://get.wire.com adresini ziyaret et.";
 
 "send_personal_invitation.text" = "Wire kullanıyorum, buradan görüşelim: https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Bir arama başlat";
 "conversation.call.many_participants_confirmation.message" = "Bu %d kişiyi arayacak";
 "conversation.call.many_participants_confirmation.call" = "Ara";
+
+"conversation.connection_view.in_address_book" = "Adres Defterinde";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Hesap";
 
-"self.settings.account_details_group.title" = "Bilgi";
+"self.settings.account_details_group.info.title" = "Bilgi";
+"self.settings.account_details_group.personal.title" = "Kişisel";
 
 "self.settings.account_section.name.title" = "İsim";
 "self.settings.account_section.email.title" = "E-posta";
 "self.settings.account_section.phone.title" = "Telefon";
+"self.settings.account_section.handle.title" = "Kullanıcı Adı";
+"self.settings.account_section.add_handle.title" = "Kullanıcı adı ekle";
 
-"self.settings.account_details_group.footer" = "İnsanlar sizi bu bilgiler ile bulabilirler.";
+"self.settings.account_details_group.info.footer" = "İnsanlar sizi bu bilgiler ile bulabilirler.";
+"self.settings.account_details_group.personal.footer" = "Bu bilgi görüntülenebilir değil.";
 
 "self.settings.account_details.remove_device.title" = "Cihazı Kaldır";
 "self.settings.account_details.key_fingerprint.title" = "Anahtar Parmak İzi";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Hesabı Sil";
 "self.settings.account_details.delete_account.alert.message" = "Size e-posta veya SMS üzerinden mesaj göndereceğiz. Hesabınızı kalıcı olarak silmek için bağlantıyı izleyin.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Kullanıcı Adı";
+"self.settings.account_section.handle.change.save" = "Kaydet";
+"self.settings.account_section.handle.change.footer" = "En az 2 karakter. a—z, 0—9, ve yalnızca _.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Çoktan alınmış";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Kullanıcı adı ayarlanamadı";
+"self.settings.account_section.handle.change.failure_alert.message" = "Kullanıcı adınız ayarlanırken bir hata oluştu, lütfen daha sonra tekrar deneyiniz.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Bildirimler";
@@ -482,9 +502,9 @@
 "self.settings.sound_menu.ringtones.title" = "Zil Sesleri";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
-"self.settings.callkit.title" = "Calls";
-"self.settings.callkit.caption" = "Share with iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+"self.settings.callkit.title" = "Aramalar";
+"self.settings.callkit.caption" = "iOS ile Paylaş";
+"self.settings.callkit.description" = "Wire aramalarını kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktif ise, arama geçmişi Apple ile paylaşılacaktır. Bu ayarı uygulamak için Wire'ı yeniden başlatın.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Araması";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Mesajı";
@@ -681,6 +701,14 @@
 "error.email.invalid" = "Lütfen geçerli bir e-posta adresi girin";
 "error.phone.invalid" = "Lütfen geçerli bir telefon numarası girin";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Kullanıcı adları burada.";
+"registration.select_handle.takeover.subtitle" = "Wire üzerinden size özel isminizi hemen alın.";
+"registration.select_handle.takeover.subtitle_link" = "Daha fazla bilgi";
+
+"registration.select_handle.takeover.choose_own" = "Kendinizinkini seçin";
+"registration.select_handle.takeover.keep_suggested" = "Bunu sakla";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

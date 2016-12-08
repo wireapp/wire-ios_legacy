@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Iskanje po imenu ali e-pošti uporabnika";
+"peoplepicker.search_placeholder" = "Iskanje po imenu ali uporabniškem imenu";
 "peoplepicker.header.top_people" = "Top osebe";
 "peoplepicker.button.create_conversation" = "Ustvari skupino";
 "peoplepicker.button.add_to_conversation" = "Dodaj";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "stiki";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "v imeniku";
+
+
 // Archived List
 "archived_list.title" = "arhiv";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Skrivanje…";
 
 "send_invitation.subject" = "Poveži se z mano na Wire";
-"send_invitation.text" = "Sem na Wire. Išči %@\nali obišči https://get.wire.com za povezavo z mano.";
+"send_invitation.text" = "Sem na Wire, poišči %@ ali obišči wire.com/download.";
 "send_invitation_no_email.text" = "Sem na Wire. Obišči https://get.wire.com za povezavo z mano.";
 
 "send_personal_invitation.text" = "Sem na Wire, se slišiva tam. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Začni klic";
 "conversation.call.many_participants_confirmation.message" = "To bo poklicalo %d oseb";
 "conversation.call.many_participants_confirmation.call" = "Klic";
+
+"conversation.connection_view.in_address_book" = "v imeniku";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "V redu";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Račun";
 
-"self.settings.account_details_group.title" = "Informacije";
+"self.settings.account_details_group.info.title" = "Informacije";
+"self.settings.account_details_group.personal.title" = "Osebno";
 
 "self.settings.account_section.name.title" = "Ime";
 "self.settings.account_section.email.title" = "E-pošta";
 "self.settings.account_section.phone.title" = "Telefon";
+"self.settings.account_section.handle.title" = "Uporabniško ime";
+"self.settings.account_section.add_handle.title" = "Dodaj uporabniško ime";
 
-"self.settings.account_details_group.footer" = "Osebe vas lahko najdejo s temi podrobnostmi.";
+"self.settings.account_details_group.info.footer" = "Osebe vas lahko najdejo s temi podrobnostmi.";
+"self.settings.account_details_group.personal.footer" = "Ta informacija ni vidna.";
 
 "self.settings.account_details.remove_device.title" = "Odstrani napravo";
 "self.settings.account_details.key_fingerprint.title" = "Ključ prstnega odtisa naprave";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Izbriši račun";
 "self.settings.account_details.delete_account.alert.message" = "Poslali bomo sporočilo preko e-pošte ali SMS. Sledite povezavi za trajni izbris vašega računa.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Uporabniško ime";
+"self.settings.account_section.handle.change.save" = "Shrani";
+"self.settings.account_section.handle.change.footer" = "Vsaj 2 znaka. Le a—z, 0—9, in _.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Že zasedeno";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Ni mogoče nastaviti uporabniškega imena";
+"self.settings.account_section.handle.change.failure_alert.message" = "Napaka pri nastavitvi vašega uporabniškega imena. Prosimo poizkusite znova.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Obvestila";
@@ -681,6 +701,14 @@
 "error.email.invalid" = "Prosimo vnesite veljaven e-poštni naslov";
 "error.phone.invalid" = "Prosimo vnesite veljavno telefonsko številko";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Uporabniška imena so tukaj.";
+"registration.select_handle.takeover.subtitle" = "Zavzemite vaše unikatno ime na Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Nauči se več";
+
+"registration.select_handle.takeover.choose_own" = "Izberite vaše";
+"registration.select_handle.takeover.keep_suggested" = "Obdrži to";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Шукайте за іменем або email";
+"peoplepicker.search_placeholder" = "Пошук за іменем або ніком";
 "peoplepicker.header.top_people" = "Топ-контакти";
 "peoplepicker.button.create_conversation" = "Створити групу";
 "peoplepicker.button.add_to_conversation" = "Додати";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "контакти";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "в адресній книзі";
+
+
 // Archived List
 "archived_list.title" = "архів";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Приховування…";
 
 "send_invitation.subject" = "Додай мене в Wire";
-"send_invitation.text" = "Я уже в Wire. Шукайте %@\nабо відвідайте https://get.wire.com, щоб додати мене.";
+"send_invitation.text" = "Я в Wire, шукайте %@ або відвідайте wire.com/download.";
 "send_invitation_no_email.text" = "Я уже в Wire. Відвідайте https://get.wire.com, щоб додати мене.";
 
 "send_personal_invitation.text" = "Я уже в Wire, порозмовляємо там. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Розпочати дзвінок";
 "conversation.call.many_participants_confirmation.message" = "Ви подзвоните %d людям";
 "conversation.call.many_participants_confirmation.call" = "Подзвонити";
+
+"conversation.connection_view.in_address_book" = "в адресній книзі";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
 
-"self.settings.account_details_group.title" = "Інформація";
+"self.settings.account_details_group.info.title" = "Інформація";
+"self.settings.account_details_group.personal.title" = "Персональні дані";
 
 "self.settings.account_section.name.title" = "Ім’я";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Номер телефону";
+"self.settings.account_section.handle.title" = "Нік";
+"self.settings.account_section.add_handle.title" = "Додати нік";
 
-"self.settings.account_details_group.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
+"self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
+"self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";
 
 "self.settings.account_details.remove_device.title" = "Видалити пристрій";
 "self.settings.account_details.key_fingerprint.title" = "Ідентифікатор";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Видалити акаунт";
 "self.settings.account_details.delete_account.alert.message" = "Ми надішлемо вам повідомлення електронною поштою або через SMS. Перейдіть за посиланням, щоб остаточно видалити свій акаунт.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Нік";
+"self.settings.account_section.handle.change.save" = "Зберегти";
+"self.settings.account_section.handle.change.footer" = "Мінімум 2 символи з множини a—z, 0—9, та _.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Уже зарезервоване";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Не вдалося зарезервувати нік";
+"self.settings.account_section.handle.change.failure_alert.message" = "Сталася помилка під час резервації вашого ніка. Будь ласка, спробуйте ще раз.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Сповіщення";
@@ -681,6 +701,14 @@
 "error.email.invalid" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "error.phone.invalid" = "Будь ласка, введіть правильний номер телефону";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Ніки вже тут.";
+"registration.select_handle.takeover.subtitle" = "Зарезервуйте свій унікальний нік в Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Дізнатися більше";
+
+"registration.select_handle.takeover.choose_own" = "Оберіть власний варіант";
+"registration.select_handle.takeover.keep_suggested" = "Залишити це";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
