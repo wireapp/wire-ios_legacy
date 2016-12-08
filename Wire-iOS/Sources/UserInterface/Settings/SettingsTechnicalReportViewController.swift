@@ -18,6 +18,7 @@
 
 import UIKit
 import MessageUI
+import Cartography
 
 typealias TechnicalReport = [String: String]
 
@@ -122,6 +123,10 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         return lastCallSessionReports.count
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case TechnicalReportSection.Options.rawValue:
@@ -133,6 +138,42 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
             cell.textLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportTitle]
             return cell
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch (section) {
+        case 1:
+        return 20
+            
+        default:
+            break
+        }
+        
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        switch (section) {
+        case 1:
+            let label = UILabel()
+            label.text = "self.settings.technical_report.privacy_warning".localized
+            label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+            label.backgroundColor = .clear
+            label.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+            
+            let container = UIView()
+            container.addSubview(label)
+            container.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
+            
+            constrain(label, container) { label, container in
+                label.edges == container.edgesWithinMargins
+            }
+            
+            return container
+        default:
+            break
+        }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
