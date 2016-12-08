@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Search by name or username";
+"peoplepicker.search_placeholder" = "Nach Name oder Benutzername suchen";
 "peoplepicker.header.top_people" = "Top Kontakte";
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
 "peoplepicker.button.add_to_conversation" = "Hinzufügen";
@@ -80,7 +80,7 @@
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.in_address_book" = "im Adressbuch";
 
 
 // Archived List
@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "löschen…";
 
 "send_invitation.subject" = "Füge mich auf Wire als Kontakt hinzu";
-"send_invitation.text" = "I’m on Wire, search for %@ or visit wire.com/download.";
+"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf wire.com/download.";
 "send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf https://get.wire.com, um mich als Kontakt hinzuzufügen.";
 
 "send_personal_invitation.text" = "Lass uns zu Wire wechseln: https://get.wire.com";
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Dies wird %d Menschen anrufen";
 "conversation.call.many_participants_confirmation.call" = "Anruf";
 
-"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.in_address_book" = "im Adressbuch";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -442,16 +442,16 @@
 "self.settings.account_section" = "Benutzerkonto";
 
 "self.settings.account_details_group.info.title" = "Info";
-"self.settings.account_details_group.personal.title" = "Personal";
+"self.settings.account_details_group.personal.title" = "Nutzerangaben";
 
 "self.settings.account_section.name.title" = "Name";
 "self.settings.account_section.email.title" = "E-Mail";
 "self.settings.account_section.phone.title" = "Telefon";
-"self.settings.account_section.handle.title" = "Username";
-"self.settings.account_section.add_handle.title" = "Add username";
+"self.settings.account_section.handle.title" = "Benutzername";
+"self.settings.account_section.add_handle.title" = "Benutzernamen hinzufügen";
 
 "self.settings.account_details_group.info.footer" = "Du kannst über diese Informationen von anderen gefunden werden.";
-"self.settings.account_details_group.personal.footer" = "This information is not visible .";
+"self.settings.account_details_group.personal.footer" = "Diese Informationen sind nicht sichtbar.";
 
 "self.settings.account_details.remove_device.title" = "Gerät entfernen";
 "self.settings.account_details.key_fingerprint.title" = "Schlüssel-Fingerabdruck";
@@ -479,13 +479,13 @@
 
 // Change Username
 
-"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.title" = "Benutzername";
 "self.settings.account_section.handle.change.save" = "Speichern";
-"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
-"self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
+"self.settings.account_section.handle.change.footer" = "Mindestens 2 Zeichen. a—z, 0—9, und _";
+"self.settings.account_section.handle.change.footer.unavailable" = "Bereits vergeben";
 
-"self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
-"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
+"self.settings.account_section.handle.change.failure_alert.title" = "Speichern fehlgeschlagen";
+"self.settings.account_section.handle.change.failure_alert.message" = "Es gab einen Fehler beim Speichern deines Benutzernamens. Bitte versuche es erneut.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Benachrichtigungen";
@@ -574,6 +574,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Anruf-Fehlerbericht";
 "self.settings.technical_report.include_log" = "Detaillierten Verlauf hinzufügen";
+"self.settings.technical_report.privacy_warning" = "Detaillierte Logs können personenbezogene Daten enthalten.";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Passwort zurücksetzen";
@@ -703,11 +704,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Usernames are here.";
-"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.title" = "Benutzernamen sind da.";
+"registration.select_handle.takeover.subtitle" = "Sichere dir deinen einzigartigen Benutzernamen auf Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Erfahre mehr";
 
-"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.choose_own" = "Namen selbst festlegen";
 "registration.select_handle.takeover.keep_suggested" = "Behalte dieses";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

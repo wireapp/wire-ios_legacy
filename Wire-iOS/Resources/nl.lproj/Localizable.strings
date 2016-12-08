@@ -574,6 +574,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Rapport over bellen met Wire";
 "self.settings.technical_report.include_log" = "Voeg gedetailleerd log toe";
+"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Herstel wachtwoord";
