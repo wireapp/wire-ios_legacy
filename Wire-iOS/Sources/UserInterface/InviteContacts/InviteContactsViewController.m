@@ -65,7 +65,7 @@
                                                                         focusOnView:YES
                                                                            animated:YES];
         }];
-    } else if (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored) {
+    } else if ((user.user.isPendingApprovalBySelfUser || user.user.isPendingApprovalByOtherUser) && ! user.user.isIgnored) {
         [self dismissViewControllerAnimated:YES completion:^{
             [[ZClientViewController sharedZClientViewController] selectIncomingContactRequestsAndFocusOnView:YES];
         }];
@@ -112,7 +112,7 @@
 
 - (NSUInteger)contactsViewController:(ContactsViewController *)controller actionButtonTitleIndexForUser:(ZMSearchUser *)user
 {
-    if (user.isConnected || (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored)) {
+    if (user.isConnected || ((user.user.isPendingApprovalByOtherUser || user.user.isPendingApprovalBySelfUser) && ! user.user.isIgnored)) {
         return 0;
     } else if (user.user != nil && ! user.user.isIgnored && ! user.user.isPendingApprovalByOtherUser) {
         return 2;
