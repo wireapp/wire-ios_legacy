@@ -409,7 +409,7 @@
     [subtitle beginEditing];
 
     NSAttributedString *handle;
-    if (nil != self.user.handle) {
+    if (nil != self.user.handle && self.user.handle.length > 0) {
         NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.class.subtitleColor };
         NSString *displayHandle = [NSString stringWithFormat:@"@%@", self.user.handle];
         handle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
