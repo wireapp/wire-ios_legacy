@@ -429,7 +429,7 @@
         [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
             if (note.networkState == ZMNetworkStateOnline && isLoggedIn && self.addressBookUploadShouldBeChecked) {
                 self.addressBookUploadShouldBeChecked = NO;
-                [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
+                [self.appController uploadAddressBookIfNeeded];
             }
         }];
     });

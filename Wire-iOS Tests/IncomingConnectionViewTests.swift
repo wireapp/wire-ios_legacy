@@ -41,8 +41,8 @@ final class IncomingConnectionViewTests: ZMSnapshotTestCase {
         verify(view: sut.layoutForTest())
     }
 
-    // As the correlation formatter is done by the `AddressBookCorrelationFormatter` which
-    // is alreday being tested thouroughly in the `ProfileHeaderViewTests` we can avoid repeating these tests here.
+    // As the correlation formatting is done by the `AddressBookCorrelationFormatter` which
+    // is already being tested thouroughly in the `ProfileHeaderViewTests` we can avoid repeating these tests here.
     func testThatItRendersWithUserName_CommonConnections() {
         let user = MockUser.mockUsers().first!
         (user as Any as! MockUser).isConnected = false

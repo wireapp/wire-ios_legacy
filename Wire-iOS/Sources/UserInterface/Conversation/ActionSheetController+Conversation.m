@@ -34,6 +34,44 @@
 
 @implementation ActionSheetController (Conversation)
 
++ (ActionSheetController *)dialogForConversationDetails:(ZMConversation *)conversation style:(ActionSheetControllerStyle)style
+{
+    ZMUser *user = conversation.firstActiveParticipantOtherThanSelf;
+    BOOL isConnectionOrOneOnOne = conversation.conversationType == ZMConversationTypeConnection
+                               || conversation.conversationType == ZMConversationTypeOneOnOne;
+
+    if (isConnectionOrOneOnOne && nil != user) {
+        return [self dialogForConnectionOrOneOnOneConversation:conversation style:style];
+    } else {
+        ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName
+                                                                                             layout:ActionSheetControllerLayoutList
+                                                                                              style:style];
+        [actionSheetController addActionsForConversation:conversation];
+        return actionSheetController;
+    }
+}
+
++ (ActionSheetController *)dialogForConnectionOrOneOnOneConversation:(ZMConversation *)conversation style:(ActionSheetControllerStyle)style
+{
+    ZMUser *user = conversation.firstActiveParticipantOtherThanSelf;
+    Require(nil != user);
+    Require(conversation.conversationType == ZMConversationTypeConnection || conversation.conversationType == ZMConversationTypeOneOnOne);
+
+    UserNameDetailViewModel *model = [[UserNameDetailViewModel alloc] initWithUser:user
+                                                                      fallbackName:@""
+                                                                   addressBookName:BareUserToUser(user).addressBookEntry.cachedName
+                                                                 commonConnections:user.totalCommonConnections];
+
+    UserNameDetailView *detailView = [[UserNameDetailView alloc] init];
+    [detailView configureWith:model];
+    ActionSheetController *controller = [[ActionSheetController alloc] initWithTitleView:detailView
+                                                                                  layout:ActionSheetControllerLayoutList
+                                                                                   style:style
+                                                                            dismissStyle:ActionSheetControllerDismissStyleBackground];
+    [controller addActionsForConversation:conversation];
+    return controller;
+}
+
 - (void)addActionsForConversation:(ZMConversation *)conversation
 {
     [self addAction:[SheetAction actionWithTitle:NSLocalizedString(@"meta.menu.cancel", nil) iconType:ZetaIconTypeNone style:SheetActionStyleCancel handler:^(SheetAction *action) {

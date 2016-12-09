@@ -935,7 +935,7 @@
         [self updateOutgoingConnectionVisibility];
     }
     
-    if (note.nameChanged || note.securityLevelChanged) {
+    if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];
     }
 }

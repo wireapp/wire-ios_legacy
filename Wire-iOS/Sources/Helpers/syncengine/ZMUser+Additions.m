@@ -65,11 +65,6 @@ ZMUser *BareUserToUser(id bareUser) {
     return [UIColor colorForZMAccentColor:self.accentColorValue];
 }
 
-- (ZMAddressBookContact *)contact
-{
-    return [self matchingContact:[ZMUserSession sharedSession]];
-}
-
 + (instancetype)selfUser
 {
     Class mockUserClass = NSClassFromString(@"MockUser");

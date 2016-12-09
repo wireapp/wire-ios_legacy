@@ -33,27 +33,25 @@ public final class UserConnectionView: UIView, Copyable {
             color: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
         )
     }()
-    
-    public typealias User = ZMBareUser & ZMBareUserConnection & ZMSearchableUser
 
-    private let handleLabel = UILabel()
-    private let correlationLabel = UILabel()
+    private let firstLabel = UILabel()
+    private let secondLabel = UILabel()
     private let labelContainer = UIView()
     private let userImageView = UserImageView()
     
-    public var user: User {
+    public var user: ZMUser {
         didSet {
-            self.updateForUser()
+            self.updateLabels()
             self.userImageView.user = self.user
         }
     }
     public var commonConnectionsCount: UInt = 0 {
         didSet {
-            self.setupLabelText()
+            self.updateLabels()
         }
     }
 
-    public init(user: User) {
+    public init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
         
@@ -66,13 +64,10 @@ public final class UserConnectionView: UIView, Copyable {
     }
     
     private func setup() {
-        [handleLabel, correlationLabel].forEach {
+        [firstLabel, secondLabel].forEach {
             $0.numberOfLines = 0
             $0.textAlignment = .center
         }
-
-        handleLabel.accessibilityIdentifier = "handle"
-        correlationLabel.accessibilityIdentifier = "correlation"
 
         self.userImageView.accessibilityLabel = "user image"
         self.userImageView.shouldDesaturate = false
@@ -80,33 +75,45 @@ public final class UserConnectionView: UIView, Copyable {
         self.userImageView.user = self.user
         
         [self.labelContainer, self.userImageView].forEach(self.addSubview)
-        [self.handleLabel, self.correlationLabel].forEach(labelContainer.addSubview)
-        self.updateForUser()
-    }
-    
-    private func updateForUser() {
-        self.setupLabelText()
+        [self.firstLabel, self.secondLabel].forEach(labelContainer.addSubview)
+        self.updateLabels()
     }
 
-    private func setupHandleLabelText() {
-        guard let handle = user.handle else { return }
-        handleLabel.attributedText = ("@" + handle) && [
+    private func updateLabels() {
+        updateFirstLabel()
+        updateSecondLabel()
+    }
+
+    private func updateFirstLabel() {
+        if let handleText = handleLabelText {
+            firstLabel.attributedText = handleText
+            firstLabel.accessibilityIdentifier = "username"
+        } else {
+            firstLabel.attributedText = correlationLabelText
+            firstLabel.accessibilityIdentifier = "correlation"
+        }
+    }
+
+    private func updateSecondLabel() {
+        guard nil != handleLabelText else { return }
+        secondLabel.attributedText = correlationLabelText
+        secondLabel.accessibilityIdentifier = "correlation"
+    }
+
+    private var handleLabelText: NSAttributedString? {
+        guard let handle = user.handle else { return nil }
+        return ("@" + handle) && [
             NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
             NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold")
         ]
     }
 
-    private func setupCorrelationLabelText() {
-        correlationLabel.attributedText = type(of: self).correlationFormatter.correlationText(
+    private var correlationLabelText: NSAttributedString? {
+        return type(of: self).correlationFormatter.correlationText(
             for: user,
             with: Int(commonConnectionsCount),
-            addressBookName: BareUserToUser(user)?.contact()?.name
+            addressBookName: BareUserToUser(user).addressBookEntry?.cachedName
         )
-    }
-
-    private func setupLabelText() {
-        setupHandleLabelText()
-        setupCorrelationLabelText()
     }
     
     private func createConstraints() {
@@ -114,15 +121,14 @@ public final class UserConnectionView: UIView, Copyable {
             labelContainer.centerX == selfView.centerX
             labelContainer.top == selfView.top
             labelContainer.left >= selfView.left
-            labelContainer.bottom <= userImageView.top
-            
+
             userImageView.center == selfView.center
             userImageView.left >= selfView.left + 54
             userImageView.width == userImageView.height
             userImageView.height <= 264
         }
 
-        constrain(labelContainer, handleLabel, correlationLabel) { labelContainer, handleLabel, correlationLabel in
+        constrain(labelContainer, firstLabel, secondLabel) { labelContainer, handleLabel, correlationLabel in
             handleLabel.top == labelContainer.top + 16
             handleLabel.height == 16
             correlationLabel.top == handleLabel.bottom
@@ -132,7 +138,6 @@ public final class UserConnectionView: UIView, Copyable {
                 $0.leading == labelContainer.leading
                 $0.trailing == labelContainer.trailing
             }
-
         }
     }
 

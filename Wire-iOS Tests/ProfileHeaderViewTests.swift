@@ -105,6 +105,14 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut)
     }
 
+    func testThatItRendersUserNoUsernameButEmail_CommonConnections() {
+        let user = MockUser.mockUsers().last
+        (user as Any as! MockUser).isConnected = false
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 2000, style: .noButton)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
     func testThatItRendersUserNoUsernameButEmail_CommonConnections_Connected() {
         let user = MockUser.mockUsers().last
         let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 2000, style: .noButton)

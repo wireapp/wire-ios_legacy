@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Søg på navn eller e-mail";
+"peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Top personer";
 "peoplepicker.button.create_conversation" = "Opret gruppe";
 "peoplepicker.button.add_to_conversation" = "Tilføj";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "kontakter";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "in Address Book";
+
+
 // Archived List
 "archived_list.title" = "arkiv";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Skjuler…";
 
 "send_invitation.subject" = "Forbind dig med mig på Wire";
-"send_invitation.text" = "Jeg er på Wire. Søg på %@\neller besøg https://get.wire.com for at forbinde dig med mig.";
+"send_invitation.text" = "I’m on Wire, search for %@ or visit wire.com/download.";
 "send_invitation_no_email.text" = "Jeg er på Wire. Besøg https://get.wire.com for at forbinde dig med mig.";
 
 "send_personal_invitation.text" = "Jeg er på Wire, vi tales ved derinde. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Start a call";
 "conversation.call.many_participants_confirmation.message" = "This will call %d people";
 "conversation.call.many_participants_confirmation.call" = "Ring op";
+
+"conversation.connection_view.in_address_book" = "in Address Book";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Konto";
 
-"self.settings.account_details_group.title" = "Info";
+"self.settings.account_details_group.info.title" = "Info";
+"self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Navn";
 "self.settings.account_section.email.title" = "E-mail";
 "self.settings.account_section.phone.title" = "Telefon";
+"self.settings.account_section.handle.title" = "Username";
+"self.settings.account_section.add_handle.title" = "Add username";
 
-"self.settings.account_details_group.footer" = "Folk kan finde dig med disse oplysninger.";
+"self.settings.account_details_group.info.footer" = "Folk kan finde dig med disse oplysninger.";
+"self.settings.account_details_group.personal.footer" = "This information is not visible .";
 
 "self.settings.account_details.remove_device.title" = "Slet enhed";
 "self.settings.account_details.key_fingerprint.title" = "Nøgle fingeraftryk";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Slet konto";
 "self.settings.account_details.delete_account.alert.message" = "Vi vil sende en besked via e-mail eller SMS.\nFølg linket for at slette permanent din konto.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.save" = "Gem";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
+"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifikationer";
@@ -554,6 +574,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Opkald Rapportering";
 "self.settings.technical_report.include_log" = "Inkludér detaljeret log";
+"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Nulstil adgangskode";
@@ -681,6 +702,14 @@
 "error.email.invalid" = "Angiv venligst en gyldig e-mail adresse";
 "error.phone.invalid" = "Indtast et gyldigt telefonnummer";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Usernames are here.";
+"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Lær mere";
+
+"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.keep_suggested" = "Behold denne";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

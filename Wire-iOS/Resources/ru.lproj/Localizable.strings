@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Поиск по имени или по email";
+"peoplepicker.search_placeholder" = "Поиск по имени или имени пользователя";
 "peoplepicker.header.top_people" = "Топ-контакты";
 "peoplepicker.button.create_conversation" = "Создать группу";
 "peoplepicker.button.add_to_conversation" = "Добавить";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "контакты";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "В адресной книге";
+
+
 // Archived List
 "archived_list.title" = "архив";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Прячу…";
 
 "send_invitation.subject" = "Добавь меня в Wire";
-"send_invitation.text" = "Я уже в Wire. Ищите %@ или посетите\nhttps://get.wire.com, чтобы добавить меня.";
+"send_invitation.text" = "Я в Wire, ищи %@ или зайди на wire.com/download.";
 "send_invitation_no_email.text" = "Я уже в Wire. Посетите https://get.wire.com, чтобы добавить меня.";
 
 "send_personal_invitation.text" = "Я в Wire, поговорим там https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Начать звонок";
 "conversation.call.many_participants_confirmation.message" = "Вы будете звонить %d людям";
 "conversation.call.many_participants_confirmation.call" = "Звонок";
+
+"conversation.connection_view.in_address_book" = "В адресной книге";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Аккаунт";
 
-"self.settings.account_details_group.title" = "Информация";
+"self.settings.account_details_group.info.title" = "Информация";
+"self.settings.account_details_group.personal.title" = "Личные";
 
 "self.settings.account_section.name.title" = "Имя";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Телефон";
+"self.settings.account_section.handle.title" = "Имя пользователя";
+"self.settings.account_section.add_handle.title" = "Добавить имя пользователя";
 
-"self.settings.account_details_group.footer" = "Люди могут найти вас с этими данными.";
+"self.settings.account_details_group.info.footer" = "Люди могут найти вас с этими данными.";
+"self.settings.account_details_group.personal.footer" = "Эта информация не видна.";
 
 "self.settings.account_details.remove_device.title" = "Удалить устройство";
 "self.settings.account_details.key_fingerprint.title" = "Отпечаток";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Удалить аккаунт";
 "self.settings.account_details.delete_account.alert.message" = "Мы вышлем вам сообщение по электронной почте или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Имя пользователя";
+"self.settings.account_section.handle.change.save" = "Сохранить";
+"self.settings.account_section.handle.change.footer" = "Минимум 2 символа. Только a-z, 0 – 9 и _ .";
+"self.settings.account_section.handle.change.footer.unavailable" = "Уже занято";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Не удается задать имя пользователя";
+"self.settings.account_section.handle.change.failure_alert.message" = "Произошла ошибка при регистрации вашего имени пользователя. Пожалуйста, попробуйте еще раз.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Уведомления";
@@ -554,6 +574,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire отчет о звонке";
 "self.settings.technical_report.include_log" = "Включить подробную запись логов";
+"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
@@ -681,6 +702,14 @@
 "error.email.invalid" = "Пожалуйста, введите правильный email";
 "error.phone.invalid" = "Пожалуйста, введите действительный номер телефона";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Usernames are here.";
+"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Подробнее";
+
+"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.keep_suggested" = "Оставить эту";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

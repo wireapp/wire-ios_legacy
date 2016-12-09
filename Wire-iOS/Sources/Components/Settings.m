@@ -56,10 +56,8 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
-
 NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
 NSString * const UserDefaultEnableV3Calling = @"EnableV3Calling";
-NSString * const UserDefaultEnableUserNamesUI = @"EnableUserNamesUI";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -117,8 +115,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue,
              UserDefaultSendV3Assets,
-             UserDefaultEnableV3Calling,
-             UserDefaultEnableUserNamesUI
+             UserDefaultEnableV3Calling
              ];
 }
 
@@ -466,16 +463,6 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (void)setEnableV3Calling:(BOOL)enableV3Calling
 {
     [self.defaults setBool:enableV3Calling forKey:UserDefaultSendV3Assets];
-}
-
-- (BOOL)enableUserNamesUI
-{
-    return [self.defaults boolForKey:UserDefaultEnableUserNamesUI];
-}
-
-- (void)setEnableUserNamesUI:(BOOL)enableUserNamesUI
-{
-    [self.defaults setBool:enableUserNamesUI forKey:UserDefaultEnableUserNamesUI];
 }
 
 #pragma mark - Link opening options

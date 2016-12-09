@@ -29,7 +29,7 @@ extension ConversationListViewController {
     func showUsernameTakeover(with handle: String) {
         guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle || debugOverrideShowTakeover else { return }
         guard nil == usernameTakeoverViewController else { return }
-        usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, displayName: selfUser.displayName)
+        usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: selfUser.name)
         usernameTakeoverViewController.delegate = self
 
         addChildViewController(usernameTakeoverViewController)
@@ -43,6 +43,8 @@ extension ConversationListViewController {
 
         guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared().loadPlaceholderConversationController(animated: false)
+
+        Analytics.shared()?.tag(UserNameEvent.Takeover.shown)
     }
 
     func removeUsernameTakeover() {
@@ -85,10 +87,27 @@ extension ConversationListViewController {
 extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {
 
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
+        tagEvent(for: action)
+        perform(action)
+    }
+
+    private func perform(_ action: UserNameTakeOverViewControllerAction) {
         switch action {
         case .chooseOwn(let suggested): openChangeHandleViewController(with: suggested)
         case .keepSuggestion(let suggested): setSuggested(handle: suggested)
         case .learnMore: URL(string: "https://wire.com/support/username/")?.open()
+        }
+    }
+
+    private func tagEvent(for action: UserNameTakeOverViewControllerAction) {
+        Analytics.shared()?.tag(event(for: action))
+    }
+
+    private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover {
+        switch action {
+        case .chooseOwn(_): return .openedSettings
+        case .learnMore: return .openedFAQ
+        case .keepSuggestion(_): return .keepSuggested
         }
     }
 

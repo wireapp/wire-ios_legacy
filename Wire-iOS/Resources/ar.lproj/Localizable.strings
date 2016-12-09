@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "البحث حسب الاسم أو البريد الإلكتروني";
+"peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "الأشخاص المفضلين";
 "peoplepicker.button.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.button.add_to_conversation" = "إضافة";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "جهات اتصال";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "في سِجلّ العناوين";
+
+
 // Archived List
 "archived_list.title" = "الأرشيف";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "جارٍ الإخفاء…";
 
 "send_invitation.subject" = "تواصل معي على Wire";
-"send_invitation.text" = "أنا أستخدم Wire. ابحث بإستخدام %@\nأو لِج https://get.wire.com لتتواصل معي.";
+"send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو زُر wire.com/download.";
 "send_invitation_no_email.text" = "أنا أستخدم Wire. لِج https://get.wire.com لتتواصل معي.";
 
 "send_personal_invitation.text" = "أنا أستخدم Wire، تحدث معي هُناك. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "بدء مكالمة";
 "conversation.call.many_participants_confirmation.message" = "ستتصل بـ%d أشخاص";
 "conversation.call.many_participants_confirmation.call" = "اتصال";
+
+"conversation.connection_view.in_address_book" = "في سِجلّ العناوين";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "الحساب";
 
-"self.settings.account_details_group.title" = "معلومات";
+"self.settings.account_details_group.info.title" = "معلومات";
+"self.settings.account_details_group.personal.title" = "شخصي";
 
 "self.settings.account_section.name.title" = "الاسم";
 "self.settings.account_section.email.title" = "البريد الإلكتروني";
 "self.settings.account_section.phone.title" = "الهاتف";
+"self.settings.account_section.handle.title" = "مُعرّف";
+"self.settings.account_section.add_handle.title" = "أضف مُعرّف";
 
-"self.settings.account_details_group.footer" = "سيتمكن الناس من ايجادك من خلال هذه التفاصيل.";
+"self.settings.account_details_group.info.footer" = "سيتمكن الناس من ايجادك من خلال هذه التفاصيل.";
+"self.settings.account_details_group.personal.footer" = "هذه المعلومة غير مرئيّة.";
 
 "self.settings.account_details.remove_device.title" = "إزالة الجهاز";
 "self.settings.account_details.key_fingerprint.title" = "مفتاح البصمة";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "حذف الحساب";
 "self.settings.account_details.delete_account.alert.message" = "سوف نرسل لك رسالة عبر البريد الإلكتروني أو في رسالة قصيرة.\nاتّبع التعليمات في الرابط لحذف حسابك بشكل دائم.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "مُعرّف";
+"self.settings.account_section.handle.change.save" = "حفظ";
+"self.settings.account_section.handle.change.footer" = "على الأقلّ محرفين. a–z, 0–9 و _ فقط.";
+"self.settings.account_section.handle.change.footer.unavailable" = "تمّ استخدامه";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "تعذَّر تعيين المُعرّف";
+"self.settings.account_section.handle.change.failure_alert.message" = "حدث خطأ في إعداد مُعرّفك. من فضلك حاول مرة أخرى.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "إشعارات";
@@ -554,6 +574,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "تقرير اتصال Wire";
 "self.settings.technical_report.include_log" = "تضمين سجل مُفصّل";
+"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
@@ -681,6 +702,14 @@
 "error.email.invalid" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
 "error.phone.invalid" = "الرجاء إدخال رقم هاتف صحيح";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "نقدِّم المعرّفات.";
+"registration.select_handle.takeover.subtitle" = "أعلن معرّفك الفريد على Wire.";
+"registration.select_handle.takeover.subtitle_link" = "معرفة المزيد";
+
+"registration.select_handle.takeover.choose_own" = "اختر الخاص بك";
+"registration.select_handle.takeover.keep_suggested" = "إبقاء هذه";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

@@ -187,5 +187,21 @@
                 <string>nuovi dispositivi</string>
             </dict>
         </dict>
+        <key>conversation.connection_view.common_connections</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_connections@ in comune</string>
+            <key>d_number_connections</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>persona</string>
+                <key>other</key>
+                <string>persone</string>
+            </dict>
+        </dict>
 	</dict>
 </plist>

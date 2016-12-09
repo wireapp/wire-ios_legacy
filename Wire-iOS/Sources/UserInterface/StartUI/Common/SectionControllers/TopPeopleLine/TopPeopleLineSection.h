@@ -21,11 +21,11 @@
 #import "CollectionViewSectionController.h"
 #import "PeopleSelection.h"
 
-@class ZMSearchDirectory;
+@class TopConversationsDirectory;
 
 FOUNDATION_EXPORT NSString *const StartUICollectionViewCellReuseIdentifier;
 
 @interface TopPeopleLineSection : NSObject <CollectionViewSectionController, PeopleSelectionDelegate>
-@property (nonatomic, strong) ZMSearchDirectory *searchDirectory;
+@property (nonatomic, strong) TopConversationsDirectory *topConversationDirectory;
 @property (nonatomic) NSArray *topPeople;
 @end

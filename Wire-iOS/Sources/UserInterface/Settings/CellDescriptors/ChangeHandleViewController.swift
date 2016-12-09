@@ -229,6 +229,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     func saveButtonTapped(sender: UIBarButtonItem) {
         guard let handleToSet = state.newHandle else { return }
+        Analytics.shared()?.tag(UserNameEvent.Settings.enteredUsername(withLength: handleToSet.characters.count))
         userProfile?.requestSettingHandle(handle: handleToSet)
         showLoadingView = true
     }
@@ -330,6 +331,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
+        Analytics.shared()?.tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.characters.count ?? 0))
         guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
     }

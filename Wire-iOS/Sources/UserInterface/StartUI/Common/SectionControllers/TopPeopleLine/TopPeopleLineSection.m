@@ -30,9 +30,10 @@
 
 NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionViewCellReuseIdentifier";
 
-@interface TopPeopleLineSection () <ZMSearchTopConversationsObserver>
+@interface TopPeopleLineSection () <TopConversationsDirectoryObserver>
 @property (nonatomic) UICollectionView *innerCollectionView;
 @property (nonatomic) TopPeopleLineCollectionViewController *innerCollectionViewController;
+@property (nonatomic) TopConversationsDirectoryObserverToken *observerToken;
 @end
 
 @implementation TopPeopleLineSection
@@ -41,7 +42,7 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 
 - (void)dealloc
 {
-    [self.searchDirectory removeTopConversationsObserver:self];
+    [self removeTopConversationObserverIfNeeded];
 }
 
 - (instancetype)init
@@ -111,12 +112,19 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
     self.innerCollectionViewController.topPeople = self.topPeople;
 }
 
-- (void)setSearchDirectory:(ZMSearchDirectory *)searchDirectory
+- (void)removeTopConversationObserverIfNeeded
 {
-    [self.searchDirectory removeTopConversationsObserver:self];
-    _searchDirectory = searchDirectory;
-    [self.searchDirectory addTopConversationsObserver:self];
-    self.topPeople = self.searchDirectory.topConversations;
+    if (nil != self.observerToken) {
+        [self.topConversationDirectory removeObserver:self.observerToken];
+    }
+}
+
+- (void)setTopConversationDirectory:(TopConversationsDirectory *)topConversationDirectory
+{
+    [self removeTopConversationObserverIfNeeded];
+    _topConversationDirectory = topConversationDirectory;
+    self.observerToken = [self.topConversationDirectory addObserver:self];
+    [self.topConversationDirectory refreshTopConversations];
 }
 
 - (void)reloadData
@@ -190,11 +198,11 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
     return UIEdgeInsetsZero;
 }
 
-#pragma mark - ZMSearchTopConversationsObserver
+#pragma mark - TopConversationsDirectoryObserver
 
-- (void)topConversationsDidChange:(NSNotification *)note
+- (void)topConversationsDidChange
 {
-    self.topPeople = self.searchDirectory.topConversations;
+    self.topPeople = self.topConversationDirectory.topConversations;
     [self.innerCollectionView reloadData];
 }
 

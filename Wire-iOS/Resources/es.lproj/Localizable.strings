@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Buscar por nombre o correo electrónico";
+"peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Personas más importantes";
 "peoplepicker.button.create_conversation" = "Crear grupo";
 "peoplepicker.button.add_to_conversation" = "Agregar";
@@ -78,6 +78,11 @@
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "contactos";
 
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "in Address Book";
+
+
 // Archived List
 "archived_list.title" = "archivar";
 
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Ocultando…";
 
 "send_invitation.subject" = "Conectar conmigo en Wire";
-"send_invitation.text" = "Estoy en Wire. Busca por %@ o visita https://get.wire.com para conectar conmigo.";
+"send_invitation.text" = "I’m on Wire, search for %@ or visit wire.com/download.";
 "send_invitation_no_email.text" = "Estoy en Wire. Visita https://get.wire.com para conectar conmigo.";
 
 "send_personal_invitation.text" = "Estoy en Wire, te hablo por allí. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Inicia una llamada";
 "conversation.call.many_participants_confirmation.message" = "Esto llamará a %d personas";
 "conversation.call.many_participants_confirmation.call" = "Llamar";
+
+"conversation.connection_view.in_address_book" = "in Address Book";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -434,13 +441,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Cuenta";
 
-"self.settings.account_details_group.title" = "Información";
+"self.settings.account_details_group.info.title" = "Información";
+"self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Nombre";
 "self.settings.account_section.email.title" = "Correo electrónico";
 "self.settings.account_section.phone.title" = "Teléfono";
+"self.settings.account_section.handle.title" = "Username";
+"self.settings.account_section.add_handle.title" = "Add username";
 
-"self.settings.account_details_group.footer" = "Las personas pueden encontrarse con estos detalles.";
+"self.settings.account_details_group.info.footer" = "Las personas pueden encontrarse con estos detalles.";
+"self.settings.account_details_group.personal.footer" = "This information is not visible .";
 
 "self.settings.account_details.remove_device.title" = "Eliminar dispositivo";
 "self.settings.account_details.key_fingerprint.title" = "Huella digital";
@@ -466,6 +477,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Eliminar Cuenta";
 "self.settings.account_details.delete_account.alert.message" = "Te enviaremos un mensaje por correo electrónico o SMS. Sigue el enlace para borrar permanentemente tu cuenta.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.save" = "Guardar";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
+"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notificaciones";
@@ -482,9 +502,9 @@
 "self.settings.sound_menu.ringtones.title" = "Tonos de llamada";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
-"self.settings.callkit.title" = "Calls";
-"self.settings.callkit.caption" = "Share with iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+"self.settings.callkit.title" = "Llamadas";
+"self.settings.callkit.caption" = "Compartir con iOS";
+"self.settings.callkit.description" = "Mostrar las llamadas de Wire en la pantalla de bloqueo y en el historial de llamadas en iOS. Si iCloud está activado, el historial de llamadas se comparte con Apple. Reiniciar Wire para aplicar esta configuración.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Llamada por Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Mensaje por Wire";
@@ -554,6 +574,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Informe de llamadas";
 "self.settings.technical_report.include_log" = "Incluye el registro detallado";
+"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Restablecer Contraseña";
@@ -681,6 +702,14 @@
 "error.email.invalid" = "Por favor, introduce una dirección de correo electrónico válida";
 "error.phone.invalid" = "Por favor, introduzca un número de teléfono válido";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Usernames are here.";
+"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Aprender más";
+
+"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.keep_suggested" = "Conservar este";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit

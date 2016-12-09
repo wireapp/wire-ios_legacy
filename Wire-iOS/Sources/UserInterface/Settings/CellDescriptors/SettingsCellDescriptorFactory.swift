@@ -175,9 +175,6 @@ import Foundation
         let enableCallingV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableV3Calling))
         developerCellDescriptors.append(enableCallingV3Setting)
 
-        let enableUserNamesUI = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableUserNamesUI))
-        developerCellDescriptors.append(enableUserNamesUI)
-
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
