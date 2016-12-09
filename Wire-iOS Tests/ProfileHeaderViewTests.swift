@@ -120,4 +120,12 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut)
     }
 
+    func testThatItRendersUserWithEmptyUserName() {
+        let user = MockUser.mockUsers().first
+        (user as Any as! MockUser).handle = ""
+        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, commonConnections: 42, style: .noButton)
+        let sut = ProfileHeaderView(with: model)
+        verifyInAllPhoneWidths(view: sut)
+    }
+
 }
