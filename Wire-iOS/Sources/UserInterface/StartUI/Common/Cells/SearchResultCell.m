@@ -27,7 +27,7 @@
 #import <ZMCDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
-@interface SearchResultCell () <ZMCommonContactsSearchDelegate>
+@interface SearchResultCell ()
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
 @property (nonatomic, strong) UIImageView *conversationImageView;
@@ -47,7 +47,6 @@
 @property (nonatomic, strong) NSLayoutConstraint *subtitleRightMarginConstraint;
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
-@property (nonatomic, weak)   id<ZMCommonContactsSearchToken> recentSearchToken;
 
 @end
 
@@ -429,15 +428,6 @@
 
     [subtitle endEditing];
     return subtitle.length != 0 ? subtitle : nil;
-}
-
-#pragma mark - ZMCommonContactsSearchDelegate
-
-- (void)didReceiveCommonContactsUsers:(NSOrderedSet *)users forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
-{
-    if (searchToken == self.recentSearchToken && ! [self.user isConnected]) {
-        [self updateSubtitleForCommonConnections:users.count];
-    }
 }
 
 @end
