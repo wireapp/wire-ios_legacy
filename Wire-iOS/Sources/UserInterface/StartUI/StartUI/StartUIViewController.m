@@ -399,7 +399,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)performSearch
 {
     NSString *searchString = self.peopleInputController.plainTextContent;
-    DDLogInfo("Search for %@", searchString);
+    DDLogInfo(@"Search for %@", searchString);
     [self.startUIView hideEmptyResutsView];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performSearch) object:nil];
 
