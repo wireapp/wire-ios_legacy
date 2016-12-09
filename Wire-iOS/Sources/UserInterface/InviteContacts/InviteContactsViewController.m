@@ -111,7 +111,7 @@
     return @[
              NSLocalizedString(@"contacts_ui.action_button.open", @""),
              NSLocalizedString(@"contacts_ui.action_button.invite", @""),
-             NSLocalizedString(@"connection_request.send_button_title", @""),
+             NSLocalizedString(@"connection_request.send_button_title", @""), // TODO: add separate string contacts_ui.action_button.connect
              ];
 }
 
