@@ -108,6 +108,11 @@ extension SettingsCellDescriptorFactory {
     }
 
     func handleElement() -> SettingsCellDescriptorType {
+        let presentation: () -> ChangeHandleViewController = {
+            Analytics.shared()?.tag(UserNameEvent.Settings.enteredUsernameScreen)
+            return ChangeHandleViewController()
+        }
+
         if nil != ZMUser.selfUser().handle {
             let preview: PreviewGeneratorType = { _ in
                 guard let handle = ZMUser.selfUser().handle else { return .none }
@@ -117,7 +122,7 @@ extension SettingsCellDescriptorFactory {
                 title: "self.settings.account_section.handle.title".localized,
                 isDestructive: false,
                 presentationStyle: .navigation,
-                presentationAction: ChangeHandleViewController.init,
+                presentationAction: presentation,
                 previewGenerator: preview,
                 hideAccesoryView: true
             )
@@ -125,7 +130,7 @@ extension SettingsCellDescriptorFactory {
 
         return SettingsExternalScreenCellDescriptor(
             title: "self.settings.account_section.add_handle.title".localized,
-            presentationAction: ChangeHandleViewController.init
+            presentationAction: presentation
         )
     }
 
