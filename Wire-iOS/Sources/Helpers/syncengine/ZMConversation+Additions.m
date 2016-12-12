@@ -329,12 +329,10 @@
             __block BOOL joined = YES;
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 if (video) {
-//                    joined = [self.voiceChannel joinVideoCall:nil inUserSession:[ZMUserSession sharedSession]]; // FIXME
-                    [self.voiceChannel joinWithVideo:YES];
+                    joined = [self.voiceChannel joinWithVideo:YES];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoCall inConversation:self];
                 } else {
-//                    [self.voiceChannel joinInUserSession:[ZMUserSession sharedSession]]; // FIXME
-                    [self.voiceChannel joinWithVideo:NO];
+                    joined = [self.voiceChannel joinWithVideo:NO];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionAudioCall inConversation:self];
                 }
 
