@@ -6268,6 +6268,7 @@
 					"$(inherited)",
 					"-l\"avsobjc\"",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=1000";
 				PRODUCT_NAME = Wire;
 				PROVISIONING_PROFILE_SPECIFIER = "${PROVISIONING_PROFILE_SPECIFIER_APP}";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";

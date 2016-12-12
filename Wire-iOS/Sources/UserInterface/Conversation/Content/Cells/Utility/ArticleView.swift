@@ -117,7 +117,7 @@ class ArticleView: UIView {
     func setupConstraints(_ imagePlaceholder: Bool) {
         let imageHeight : CGFloat = imagePlaceholder ? self.imageHeight : 0
         
-        constrain(self, messageLabel, authorLabel, imageView, obfuscationView) { container, messageLabel, authorLabel, imageView, obfuscationView in
+        constrain(self, messageLabel, authorLabel, imageView, obfuscationView) { (container: LayoutProxy, messageLabel: LayoutProxy, authorLabel: LayoutProxy, imageView: LayoutProxy, obfuscationView: LayoutProxy) -> () in
             imageView.left == container.left
             imageView.top == container.top
             imageView.right == container.right
