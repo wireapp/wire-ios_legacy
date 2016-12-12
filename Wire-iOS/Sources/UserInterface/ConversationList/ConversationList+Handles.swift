@@ -41,10 +41,10 @@ extension ConversationListViewController {
             takeover.edges == view.edges
         }
 
+        Analytics.shared()?.tag(UserNameEvent.Takeover.shown)
+
         guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared().loadPlaceholderConversationController(animated: false)
-
-        Analytics.shared()?.tag(UserNameEvent.Takeover.shown)
     }
 
     func removeUsernameTakeover() {
