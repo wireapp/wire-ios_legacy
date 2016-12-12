@@ -229,7 +229,6 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     func saveButtonTapped(sender: UIBarButtonItem) {
         guard let handleToSet = state.newHandle else { return }
-        Analytics.shared()?.tag(UserNameEvent.Settings.enteredUsername(withLength: handleToSet.characters.count))
         userProfile?.requestSettingHandle(handle: handleToSet)
         showLoadingView = true
     }

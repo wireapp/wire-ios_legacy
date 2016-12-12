@@ -157,6 +157,8 @@
 
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation
 {
+    [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
+
     [self dismissPeoplePickerWithCompletionBlock:^{
         [[Analytics shared] tagScreen:@"MAIN"];
         [[ZClientViewController sharedZClientViewController] selectConversation:conversation

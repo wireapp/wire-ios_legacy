@@ -77,6 +77,14 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--addressbook-on-simulator"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--addressbook-search-delay 20"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--debug-log-network"
             isEnabled = "NO">
          </CommandLineArgument>

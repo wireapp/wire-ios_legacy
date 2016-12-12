@@ -41,10 +41,10 @@ extension ConversationListViewController {
             takeover.edges == view.edges
         }
 
+        Analytics.shared()?.tag(UserNameEvent.Takeover.shown)
+
         guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared().loadPlaceholderConversationController(animated: false)
-
-        Analytics.shared()?.tag(UserNameEvent.Takeover.shown)
     }
 
     func removeUsernameTakeover() {
@@ -59,7 +59,6 @@ extension ConversationListViewController {
         if parent?.presentedViewController is SettingsStyleNavigationController {
             parent?.presentedViewController?.dismiss(animated: true, completion: nil)
         }
-
     }
 
     fileprivate func openChangeHandleViewController(with handle: String) {
@@ -100,14 +99,15 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
     }
 
     private func tagEvent(for action: UserNameTakeOverViewControllerAction) {
-        Analytics.shared()?.tag(event(for: action))
+        guard let event = event(for: action) else { return }
+        Analytics.shared()?.tag(event)
     }
 
-    private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover {
+    private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover? {
         switch action {
         case .chooseOwn(_): return .openedSettings
         case .learnMore: return .openedFAQ
-        case .keepSuggestion(_): return .keepSuggested
+        default: return nil
         }
     }
 
@@ -117,19 +117,26 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
 extension ConversationListViewController: UserProfileUpdateObserver {
 
     public func didFailToSetHandle() {
+        tagDidSetHandle(successfully: false)
         openChangeHandleViewController(with: "")
     }
 
     public func didFailToSetHandleBecauseExisting() {
+        tagDidSetHandle(successfully: false)
         openChangeHandleViewController(with: "")
     }
 
     public func didSetHandle() {
+        tagDidSetHandle(successfully: true)
         removeUsernameTakeover()
     }
 
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
+    }
+
+    private func tagDidSetHandle(successfully: Bool) {
+        Analytics.shared()?.tag(UserNameEvent.Takeover.keepSuggested(success: successfully))
     }
 
 }

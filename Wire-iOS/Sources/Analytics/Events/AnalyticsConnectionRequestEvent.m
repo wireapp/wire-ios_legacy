@@ -67,10 +67,10 @@ static NSString *AnalyticsConnectionRequestMethodToString(AnalyticsConnectionReq
 
 - (NSDictionary *)attributesDump
 {
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:6];
-    [self dumpIntegerClusterizedValueForKey:NSStringFromSelector(@selector(connectRequestSharedContacts)) toDictionary:result];
-    [result setObject:AnalyticsConnectionRequestMethodToString(self.AnalyticsConnectionRequestMethod) forKey:NSStringFromSelector(@selector(AnalyticsConnectionRequestMethod))];
-    return result;
+    return @{
+             @"common_users_count": @(self.connectRequestSharedContacts),
+             @"context": AnalyticsConnectionRequestMethodToString(self.AnalyticsConnectionRequestMethod)
+             };
 }
 
 @end
