@@ -43,6 +43,7 @@
 #import <Classy/UIViewController+CASAdditions.h>
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
+#import "ConversationViewController+Private.h"
 #import "ConversationListCollectionViewLayout.h"
 #import "ConversationListCell.h"
 #import "GapLoadingBar.h"

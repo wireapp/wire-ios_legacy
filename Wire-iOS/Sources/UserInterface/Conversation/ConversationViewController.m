@@ -158,7 +158,6 @@
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 @property (nonatomic) BOOL isAppearing;
-@property (nonatomic) UIBarButtonItem *backButtonItem;
 @property (nonatomic) ConversationTitleView *titleView;
 
 @end
@@ -287,32 +286,6 @@
     }
 }
 
-- (void)createBackButton
-{
-    if (self.backButtonItem != nil) {
-        return;
-    }
-    
-    IconButton *backButton = IconButton.iconButtonDefault;
-    
-    ZetaIconType leftButtonIcon = ZetaIconTypeNone;
-    if (self.parentViewController.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        leftButtonIcon = ZetaIconTypeBackArrow;
-    }
-    else {
-        leftButtonIcon = ZetaIconTypeHamburger;
-    }
-    
-    [backButton setIcon:leftButtonIcon withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(onBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    backButton.frame = CGRectMake(0, 0, 16, 16);
-    self.backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    
-    self.backButtonItem.accessibilityIdentifier = @"ConversationBackButton";
-    self.navigationItem.leftItemsSupplementBackButton = NO;
-    [self updateBackButtonVisibility];
-}
-
 - (void)createConversationBarController
 {
     self.conversationBarController = [[BarController alloc] init];
@@ -349,15 +322,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self createBackButton];
-    [self updateBackButtonVisibility];
+    [self updateLeftNavigationBarItems];
     self.isAppearing = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateBackButtonVisibility];
+    [self updateLeftNavigationBarItems];
 
     if (IS_IPAD) {
         [self becomeFirstResponder];
@@ -375,13 +347,13 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self updateBackButtonVisibility];
+    [self updateLeftNavigationBarItems];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self updateBackButtonVisibility];
+    [self updateLeftNavigationBarItems];
 }
 
 - (BOOL)shouldAutorotate
@@ -399,7 +371,7 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self updateBackButtonVisibility];
+        [self updateLeftNavigationBarItems];
     }];
 
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -415,15 +387,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)updateBackButtonVisibility
-{
-    if (self.parentViewController.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
-        self.navigationItem.leftBarButtonItem = nil;
-    } else {
-        self.navigationItem.leftBarButtonItem = self.backButtonItem;
-    }
 }
 
 - (void)openConversationList
@@ -474,12 +437,19 @@
     };
     
     self.navigationItem.titleView = self.titleView;
-    [self updateNavigationItemsButtons];
+    self.navigationItem.leftItemsSupplementBackButton = NO;
+
+    [self updateRightNavigationItemsButtons];
 }
 
-- (void)updateNavigationItemsButtons
+- (void)updateRightNavigationItemsButtons
 {
-    self.navigationItem.rightBarButtonItems = [self navigationItemsForConversation:self.conversation];
+    self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+}
+
+- (void)updateLeftNavigationBarItems
+{
+    self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
 }
 
 - (UIViewController *)participantsController
@@ -561,6 +531,11 @@
     [self openConversationList];
 }
 
+- (void)onCollectionButtonPressed:(UIButton *)collectionButton
+{
+    
+}
+
 - (void)menuDidHide:(NSNotification *)notification
 {
     self.inputBarController.inputBar.textView.overrideNextResponder = nil;
@@ -579,6 +554,8 @@
                         withLatestMessage:(id<ZMConversationMessage>)message
 {
     self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
+    
+    
 }
 
 - (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view
@@ -931,7 +908,7 @@
     }
     
     if (note.participantsChanged || note.connectionStateChanged) {
-        [self updateNavigationItemsButtons];
+        [self updateRightNavigationItemsButtons];
         [self updateOutgoingConnectionVisibility];
     }
     
