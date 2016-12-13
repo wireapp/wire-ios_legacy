@@ -32,6 +32,5 @@
 @property (nonatomic, readonly) UIViewController *participantsController;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
-- (void)onCollectionButtonPressed:(UIButton *)collectionButton;
 @end
 

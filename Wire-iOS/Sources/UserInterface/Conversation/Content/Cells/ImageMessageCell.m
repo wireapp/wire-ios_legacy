@@ -38,30 +38,6 @@
 
 #import "UIView+Borders.h"
 
-
-
-@interface Message (DataIdentifier)
-
-+ (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message;
-
-@end
-
-
-
-@implementation Message (DataIdentifier)
-
-+ (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message
-{
-    NSString *identifier = message.imageMessageData.imageDataIdentifier;
-    if (! identifier) {
-        DDLogWarn(@"Image cache key is nil!");
-        return [NSString stringWithFormat:@"nonnil-%p", message.imageMessageData.imageData];
-    }
-    return identifier;
-}
-
-@end
-
 @protocol MediaAsset;
 
 @interface ImageMessageCell ()

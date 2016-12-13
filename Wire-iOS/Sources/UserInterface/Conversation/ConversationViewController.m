@@ -531,11 +531,6 @@
     [self openConversationList];
 }
 
-- (void)onCollectionButtonPressed:(UIButton *)collectionButton
-{
-    
-}
-
 - (void)menuDidHide:(NSNotification *)notification
 {
     self.inputBarController.inputBar.textView.overrideNextResponder = nil;

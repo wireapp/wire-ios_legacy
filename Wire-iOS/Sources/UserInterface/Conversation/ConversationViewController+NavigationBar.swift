@@ -132,4 +132,17 @@ public extension ConversationViewController {
         conversation.startVideoCall(completionHandler: nil)
         Analytics.shared()?.tagMediaAction(.videoCall, inConversation: conversation)
     }
+    
+    func onCollectionButtonPressed(_ sender: AnyObject!) {
+        let collections = CollectionsViewController(conversation: conversation)
+        collections.modalPresentationStyle = .overCurrentContext
+        self.parent?.present(collections, animated: true, completion: {
+            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        })
+        collections.onDismiss = { _ in
+            self.parent?.dismiss(animated: true, completion: { 
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+            })
+        }
+    }
 }
