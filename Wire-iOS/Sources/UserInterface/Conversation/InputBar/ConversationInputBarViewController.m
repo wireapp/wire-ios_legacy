@@ -352,7 +352,7 @@
     CGFloat edgeLength = 28;
     [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
     CGFloat rightInset = ([WAZUIMagic cgFloatForIdentifier:@"content.left_margin"] - edgeLength) / 2;
-    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(14, 0, 0, rightInset - 16) excludingEdge:ALEdgeBottom];
+    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, 14, rightInset - 16) excludingEdge:ALEdgeTop];
 }
 
 - (void)createEphemeralIndicatorButton
@@ -383,7 +383,7 @@
 
     [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
     [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:14];
+    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
     [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
