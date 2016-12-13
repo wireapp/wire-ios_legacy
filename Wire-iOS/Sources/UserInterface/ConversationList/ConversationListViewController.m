@@ -837,11 +837,6 @@
     }];
 }
 
-- (void)archivedListViewController:(ArchivedListViewController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation
-{
-    [self showActionMenuForConversation:conversation];
-}
-
 @end
 
 @implementation ConversationListViewController (ConversationListObserver)
