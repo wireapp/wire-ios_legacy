@@ -230,7 +230,7 @@
 
 - (void)requestSuggestedHandlesIfNeeded
 {
-    if (nil == ZMUser.selfUser.handle && self.initialSyncCompleted && !ZMUser.selfUser.needsToBeUpdatedFromBackend) {
+    if (nil == ZMUser.selfUser.handle && self.initialSyncCompleted) {
         self.userProfileObserverToken = [self.userProfile addObserver:self];
         [self.userProfile suggestHandles];
     }
