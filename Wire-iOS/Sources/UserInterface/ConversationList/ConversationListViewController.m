@@ -203,7 +203,6 @@
     self.allConversationsObserverToken = [[SessionObjectCache sharedCache].allConversations addConversationListObserver:self];
 
     [self showPushPermissionDeniedDialogIfNeeded];
-    [self requestSuggestedHandlesIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -213,6 +212,8 @@
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [self.selectedConversation savePendingLastRead];
     }];
+
+    [self requestSuggestedHandlesIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -229,7 +230,7 @@
 
 - (void)requestSuggestedHandlesIfNeeded
 {
-    if (nil == ZMUser.selfUser.handle && self.initialSyncCompleted) {
+    if (nil == ZMUser.selfUser.handle && self.initialSyncCompleted && !ZMUser.selfUser.needsToBeUpdatedFromBackend) {
         self.userProfileObserverToken = [self.userProfile addObserver:self];
         [self.userProfile suggestHandles];
     }
