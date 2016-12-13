@@ -132,7 +132,6 @@
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) NSLayoutConstraint *collapseViewConstraint;
 @property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) InputBar *inputBar;
@@ -532,14 +531,7 @@
 
 - (void)updateInputBarVisibility
 {
-    if (self.conversation.isReadOnly && self.inputBar.superview != nil) {
-        [self.inputBar removeFromSuperview];
-        self.collapseViewConstraint = [self.view autoSetDimension:ALDimensionHeight toSize:0];
-    } else if (! self.conversation.isReadOnly && self.inputBar.superview == nil) {
-        [self.view removeConstraint:self.collapseViewConstraint];
-        [self.view addSubview:self.inputBar];
-        [self.inputBar autoPinEdgesToSuperviewEdges];
-    }
+    self.view.hidden = self.conversation.isReadOnly;
 }
 
 #pragma mark - Input views handling
