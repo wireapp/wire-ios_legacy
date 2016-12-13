@@ -359,7 +359,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     return [constraints allObjects];
 }
 
-- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated expanded:(BOOL)expanded completion:(void (^)())completion
+- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated expanded:(BOOL)expanded completion:(nullable dispatch_block_t)completion
 {
     if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad && self.leftViewControllerExpanded != expanded) {
         @weakify(self);
@@ -378,17 +378,17 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (void)setLeftViewController:(UIViewController *)leftViewController
+- (void)setLeftViewController:(nullable UIViewController *)leftViewController
 {
     [self setLeftViewController:leftViewController animated:NO completion:nil];
 }
 
-- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated completion:(void (^)())completion
+- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     [self setLeftViewController:leftViewController animated:animated transition:SplitViewControllerTransitionDefault completion:completion];
 }
 
-- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated transition:(SplitViewControllerTransition)transition completion:(void (^)())completion
+- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated transition:(SplitViewControllerTransition)transition completion:(nullable dispatch_block_t)completion
 {
     if (self.leftViewController == leftViewController) {
         if(completion != nil) {
@@ -424,12 +424,12 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (void)setRightViewController:(UIViewController *)rightViewController
+- (void)setRightViewController:(nullable UIViewController *)rightViewController
 {
     [self setRightViewController:rightViewController animated:NO completion:nil];
 }
 
-- (void)setRightViewController:(UIViewController *)rightViewController animated:(BOOL)animated completion:(void (^)())completion
+- (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     if (self.rightViewController == rightViewController) {
         return;
@@ -469,7 +469,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
                        containerView:(UIView *)containerView
                             animator:(id<UIViewControllerAnimatedTransitioning>)animator
                             animated:(BOOL)animated
-                          completion:(void (^)())completion
+                          completion:(nullable dispatch_block_t)completion
 {
     if ([self.childViewControllers containsObject:toViewController]) {
         return NO; // Return if transition is done or already in progress
@@ -503,7 +503,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self setLeftViewControllerExpanded:leftViewControllerIsExpanded animated:YES completion:nil];
 }
 
-- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerExpanded animated:(BOOL)animated completion:(void (^)())completion
+- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerExpanded animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     _leftViewControllerExpanded = leftViewControllerExpanded;
     
@@ -533,7 +533,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self setLeftViewControllerRevealed:leftViewControllerIsRevealed animated:YES completion:nil];
 }
 
-- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(void (^)())completion
+- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     if (animated) {
         [self.view layoutIfNeeded];
