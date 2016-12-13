@@ -59,7 +59,6 @@ extension ConversationListViewController {
         if parent?.presentedViewController is SettingsStyleNavigationController {
             parent?.presentedViewController?.dismiss(animated: true, completion: nil)
         }
-
     }
 
     fileprivate func openChangeHandleViewController(with handle: String) {
@@ -142,3 +141,12 @@ extension ConversationListViewController: UserProfileUpdateObserver {
 
 }
 
+
+extension ConversationListViewController: ZMUserObserver {
+
+    public func userDidChange(_ note: UserChangeInfo!) {
+        guard nil != ZMUser.selfUser().handle && note.handleChanged else { return }
+        removeUsernameTakeover()
+    }
+
+}

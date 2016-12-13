@@ -89,6 +89,9 @@
 
 @end
 
+@interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
+@end
+
 
 
 @interface ConversationListViewController () <TopItemsDelegate, UIGestureRecognizerDelegate>
@@ -130,6 +133,10 @@
 @property (nonatomic, assign) BOOL openArchiveGestureStarted;
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
+@property (nonatomic) BOOL initialSyncCompleted;
+
+@property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -144,6 +151,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
     [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.allConversationsObserverToken];
+    [ZMUserSession removeInitalSyncCompletionObserver:self];
+    [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
 - (void)removeUserProfileObserver
@@ -167,10 +176,14 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
+    self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[ZMUser.selfUser] inUserSession:ZMUserSession.sharedSession];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
+
+    [ZMUserSession addInitalSyncCompletionObserver:self];
+    self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
     [self createNoConversationLabel];
     [self createTopItemsController];
@@ -216,7 +229,7 @@
 
 - (void)requestSuggestedHandlesIfNeeded
 {
-    if (nil == ZMUser.selfUser.handle) {
+    if (nil == ZMUser.selfUser.handle && self.initialSyncCompleted) {
         self.userProfileObserverToken = [self.userProfile addObserver:self];
         [self.userProfile suggestHandles];
     }
@@ -860,6 +873,16 @@
                     animations:^{
         self.bottomBarController.showArchived = [SessionObjectCache.sharedCache archivedConversations].count > 0;
     } completion:nil];
+}
+
+@end
+
+@implementation ConversationListViewController (InitialSyncObserver)
+
+- (void)initialSyncCompleted:(NSNotification *)notification
+{
+    self.initialSyncCompleted = YES;
+    [self requestSuggestedHandlesIfNeeded];
 }
 
 @end
