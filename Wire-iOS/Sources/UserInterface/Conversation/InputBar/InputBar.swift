@@ -212,7 +212,8 @@ private struct InputBarConstants {
             buttonContainer.top == textView.bottom
             textView.top == textView.superview!.top
             textView.leading == leftAccessoryView.trailing
-            textView.trailing == rightAccessoryView.leading
+            textView.trailing <= textView.superview!.trailing - 16
+            textView.trailing == rightAccessoryView.leading ~ LayoutPriority(750)
             textView.height >= 56
             textView.height <= 120 ~ LayoutPriority(750)
 
