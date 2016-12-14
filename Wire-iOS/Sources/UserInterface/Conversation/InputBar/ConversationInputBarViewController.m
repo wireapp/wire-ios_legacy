@@ -347,12 +347,15 @@
     self.sendButton.adjustsImageWhenHighlighted = NO;
     self.sendButton.adjustBackgroundImageWhenHighlighted = YES;
     self.sendButton.cas_styleClass = @"send-button";
+    self.sendButton.hitAreaPadding = CGSizeMake(30, 30);
 
     [self.inputBar.rightAccessoryView addSubview:self.sendButton];
     CGFloat edgeLength = 28;
     [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
     CGFloat rightInset = ([WAZUIMagic cgFloatForIdentifier:@"content.left_margin"] - edgeLength) / 2;
-    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, 14, rightInset - 16) excludingEdge:ALEdgeTop];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)createEphemeralIndicatorButton

@@ -204,7 +204,7 @@ private struct InputBarConstants {
             leftAccessoryView.bottom == buttonContainer.top
             leftAccessoryView.width == constants.contentLeftMargin
 
-            rightAccessoryView.trailing == rightAccessoryView.superview!.trailing - 16
+            rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
             rightAccessoryView.top == rightAccessoryView.superview!.top
             rightAccessoryView.width == 0 ~ LayoutPriority(750)
             rightAccessoryView.bottom == buttonContainer.top
