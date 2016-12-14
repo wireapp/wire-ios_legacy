@@ -26,7 +26,7 @@ final public class CollectionImageCell: UICollectionViewCell {
     static var imageCache: ImageCache {
         let cache = ImageCache(name: "CollectionImageCell.imageCache")
         cache.maxConcurrentOperationCount = 4
-        cache.totalCostLimit = 1024 * 1024 * 10 // 10 MB
+        cache.totalCostLimit = 1024 * 1024 * 20 // 20 MB
         cache.qualityOfService = .utility
     
         return cache
@@ -36,10 +36,11 @@ final public class CollectionImageCell: UICollectionViewCell {
     
     var message: ZMConversationMessage? = .none {
         didSet {
-            guard let _ = self.message?.imageMessageData else {
+            guard let message = self.message, let _ = message.imageMessageData else {
                 self.imageView.image = .none
                 return
             }
+            message.requestImageDownload()
             
             self.loadImage()
             ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
@@ -50,6 +51,7 @@ final public class CollectionImageCell: UICollectionViewCell {
     var messageObserverToken: ZMMessageObserverOpaqueToken? = .none
     
     private let imageView = FLAnimatedImageView()
+    private let loadingView = ThreeDotsLoadingView()
     
     deinit {
         ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
@@ -69,8 +71,10 @@ final public class CollectionImageCell: UICollectionViewCell {
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
         self.contentView.addSubview(self.imageView)
-        constrain(self, self.imageView) { selfView, imageView in
+        self.contentView.addSubview(self.loadingView)
+        constrain(self, self.imageView, self.loadingView) { selfView, imageView, loadingView in
             imageView.edges == selfView.edges
+            loadingView.center == selfView.center
         }
     }
     
@@ -90,8 +94,11 @@ final public class CollectionImageCell: UICollectionViewCell {
     fileprivate func loadImage() {
         guard let imageMessageData = self.message?.imageMessageData else {
             self.imageView.image = .none
-            return
+            fatal("Message is not an image")
         }
+        
+        self.imageView.isHidden = true
+        self.loadingView.isHidden = false
         
         // If medium image is present, use the medium image
         if let imageData = imageMessageData.imageData, imageData.count > 0 {
@@ -108,13 +115,16 @@ final public class CollectionImageCell: UICollectionViewCell {
                 }
                 
                 if (image == nil) {
-                    DDLogError("Invalid image data returned from sync engine!")
+                    DDLogError("Invalid image data cannot be loaded: \(self.message)")
                 }
                 return image
                 
                 }, completion: { (image: Any?, cacheKey: String) in
                     // Double check that our cell's current image is still the same one
                     if let _ = self.message, cacheKey == Message.nonNilImageDataIdentifier(self.message) {
+                        self.imageView.isHidden = false
+                        self.loadingView.isHidden = true
+                        
                         if let image = image as? UIImage {
                             self.imageView.image = image
                         }
