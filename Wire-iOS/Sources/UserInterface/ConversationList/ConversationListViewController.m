@@ -132,6 +132,7 @@
 
 @property (nonatomic, assign) BOOL openArchiveGestureStarted;
 @property (nonatomic) CGFloat contentControllerBottomInset;
+@property (nonatomic) IconButton *debugButton;
 
 @property (nonatomic) BOOL initialSyncCompleted;
 
@@ -189,6 +190,7 @@
     [self createTopItemsController];
     [self createListContentController];
     [self createBottomBarController];
+    [self createDebugButton];
 
     [self createViewConstraints];
     if (![Settings.sharedSettings contactTipWasDisplayed]) {
@@ -214,6 +216,8 @@
     }];
 
     [self requestSuggestedHandlesIfNeeded];
+
+    [self.view bringSubviewToFront:self.debugButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -302,6 +306,24 @@
     SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
 
     return settingsViewController;
+}
+
+- (void)createDebugButton
+{
+    self.debugButton = [IconButton iconButtonDefault];
+    [self.debugButton setBackgroundColor:UIColor.redColor];
+    [self.debugButton setTitle:@"Log List" forState:UIControlStateNormal];
+    [self.debugButton addTarget:self action:@selector(debugButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.debugButton setIconColor:UIColor.redColor forState:UIControlStateNormal];
+    [self.view addSubview:self.debugButton];
+
+    [self.debugButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16];
+    [self.debugButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
+}
+
+- (void)debugButtonTapped:(IconButton *)sender
+{
+    [ListOrderDebugHelper logCurrentConversationListOrderInContext:ZMUserSession.sharedSession.managedObjectContext authorative:YES];
 }
 
 - (void)createTopItemsController
