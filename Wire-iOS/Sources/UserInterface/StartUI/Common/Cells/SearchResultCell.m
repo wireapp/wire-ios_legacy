@@ -420,8 +420,8 @@
     NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName];
     if (nil != correlation) {
         if (nil != handle) {
-            NSDictionary *dashAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
-            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" - " attributes: dashAttributes]];
+            NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
+            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" · " attributes:delimiterAttributes]];
         }
         [subtitle appendAttributedString:correlation];
     }
