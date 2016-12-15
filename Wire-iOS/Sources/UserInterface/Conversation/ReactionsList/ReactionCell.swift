@@ -21,7 +21,7 @@ import zmessaging
 import Cartography
 import Classy
 
-@objc public class ReactionCell: UICollectionViewCell {
+@objc public class ReactionCell: UICollectionViewCell, Reusable {
     public let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
     public let userNameLabel = UILabel()
     
@@ -64,13 +64,5 @@ import Classy
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.user = .none
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
-    
-    override public var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
     }
 }

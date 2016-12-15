@@ -22,7 +22,7 @@ import Cartography
 import CocoaLumberjackSwift
 import WireExtensionComponents
 
-final public class CollectionImageCell: UICollectionViewCell {
+final public class CollectionImageCell: UICollectionViewCell, Reusable {
     static var imageCache: ImageCache {
         let cache = ImageCache(name: "CollectionImageCell.imageCache")
         cache.maxConcurrentOperationCount = 4
@@ -81,14 +81,6 @@ final public class CollectionImageCell: UICollectionViewCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
-    
-    override open var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
     }
     
     fileprivate func loadImage() {

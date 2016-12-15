@@ -121,16 +121,10 @@ public protocol ColorPickerControllerDelegate {
         }
     }
     
-    fileprivate class PickerCell: UITableViewCell {
+    fileprivate class PickerCell: UITableViewCell, Reusable {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
     
-        override var reuseIdentifier: String? {
-            get {
-                return type(of: self).reuseIdentifier
-            }
-        }
-        
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             self.selectionStyle = .none
@@ -149,12 +143,6 @@ public protocol ColorPickerControllerDelegate {
         
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
-        }
-        
-        static var reuseIdentifier: String {
-            get {
-                return self.description()
-            }
         }
         
         var color: UIColor? {

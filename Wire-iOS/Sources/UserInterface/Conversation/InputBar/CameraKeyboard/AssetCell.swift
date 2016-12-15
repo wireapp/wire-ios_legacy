@@ -21,7 +21,7 @@ import Foundation
 import Photos
 import Cartography
 
-open class AssetCell: UICollectionViewCell {
+open class AssetCell: UICollectionViewCell, Reusable {
     
     let imageView = UIImageView()
     let durationView = UILabel()
@@ -116,13 +116,5 @@ open class AssetCell: UICollectionViewCell {
         super.prepareForReuse()
         
         self.asset = .none
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
-    
-    override open var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
     }
 }

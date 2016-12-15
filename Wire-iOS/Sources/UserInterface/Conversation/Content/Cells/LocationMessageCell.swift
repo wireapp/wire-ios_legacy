@@ -156,7 +156,7 @@ public final class LocationMessageCell: ConversationCell {
     }
     
     func openInMaps() {
-        message?.locationMessageData?.openInMaps(withSpan: mapView.region.span)
+        message?.locationMessageData?.openInMaps(with: mapView.region.span)
         guard let conversation = message.conversation else { return }
         let sentBySelf = message.sender?.isSelfUser ?? false
         Analytics.shared()?.tagMediaOpened(.location, inConversation: conversation, sentBySelf: sentBySelf)
@@ -212,9 +212,9 @@ public final class LocationMessageCell: ConversationCell {
     }
 }
 
-private extension ZMLocationMessageData {
+public extension ZMLocationMessageData {
 
-    func openInMaps(withSpan span: MKCoordinateSpan) {
+    func openInMaps(with span: MKCoordinateSpan) {
         let launchOptions = [
             MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: coordinate),
             MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: span)

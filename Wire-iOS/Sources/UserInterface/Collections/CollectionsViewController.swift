@@ -23,22 +23,39 @@ import Foundation
 final public class CollectionsViewController: UIViewController {
     public let conversation: ZMConversation
     public var onDismiss: ((CollectionsViewController)->())?
-
+    public var analyticsTracker: AnalyticsTracker?
+    
     private let collectionsView = CollectionsView()
+    fileprivate let messagePresenter = MessagePresenter()
+    
     fileprivate var imageMessages: [ZMConversationMessage] = []
+    fileprivate var videoMessages: [ZMConversationMessage] = []
+    fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
     init(conversation: ZMConversation) {
         self.conversation = conversation
         super.init(nibName: .none, bundle: .none)
         
-        self.imageMessages = self.conversation.messages.flatMap {
-            if let message = $0 as? ZMConversationMessage, let _ = message.imageMessageData {
-                return message
-            }
-            else {
-                return .none
-            }
-        }
+        self.imageMessages = self.conversation.messages.filter {
+            if let message = $0 as? ZMConversationMessage, let _ = message.imageMessageData
+            { return true }
+            else
+            { return false }
+        } as! [ZMConversationMessage]
+        
+        self.videoMessages = self.conversation.messages.filter {
+            if let message = $0 as? ZMConversationMessage, let fileMessageData = message.fileMessageData, fileMessageData.isVideo()
+            { return true }
+            else
+            { return false }
+        } as! [ZMConversationMessage]
+        
+        self.fileAndAudioMessages = self.conversation.messages.filter {
+            if let message = $0 as? ZMConversationMessage, let fileMessageData = message.fileMessageData, !fileMessageData.isVideo()
+            { return true }
+            else
+            { return false }
+            } as! [ZMConversationMessage]
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -46,6 +63,10 @@ final public class CollectionsViewController: UIViewController {
     }
     
     override public func loadView() {
+        self.messagePresenter.targetViewController = self
+        self.messagePresenter.modalTargetController = self
+        self.messagePresenter.analyticsTracker = self.analyticsTracker
+        
         self.view = self.collectionsView
         
         self.collectionsView.collectionView.delegate = self
@@ -83,35 +104,111 @@ final public class CollectionsViewController: UIViewController {
 }
 
 extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    enum CollectionsSection: UInt {
+        case images = 0
+        case filesAndAudio = 1
+        case videos = 2
+        
+        static func total() -> UInt {
+            return CollectionsSection.videos.rawValue + 1
+        }
+    }
+    
+    private func message(for indexPath: IndexPath) -> ZMConversationMessage {
+        guard let section = CollectionsSection(rawValue: UInt(indexPath.section)) else {
+            fatal("Unknown section")
+        }
+
+        switch(section) {
+        case .images:
+            return self.imageMessages[indexPath.item]
+        case .filesAndAudio:
+            return self.fileAndAudioMessages[indexPath.item]
+        case .videos:
+            return self.videoMessages[indexPath.item]
+        }
+    }
+    
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return Int(CollectionsSection.total())
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imageMessages.count
+        guard let section = CollectionsSection(rawValue: UInt(section)) else {
+            fatal("Unknown section")
+        }
+        
+        switch(section) {
+        case .images:
+            return self.imageMessages.count
+        case .filesAndAudio:
+            return self.fileAndAudioMessages.count
+        case .videos:
+            return self.videoMessages.count
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
-        cell.message = self.imageMessages[indexPath.item]
-        return cell
+        guard let section = CollectionsSection(rawValue: UInt(indexPath.section)) else {
+            fatal("Unknown section")
+        }
+        
+        let message = self.message(for: indexPath)
+        
+        switch(section) {
+        case .images:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
+            cell.message = message
+            return cell
+        case .filesAndAudio:
+            if message.fileMessageData!.isAudio() {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
+                cell.message = message
+                cell.delegate = self
+                return cell
+            }
+            else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFileCell.reuseIdentifier, for: indexPath) as! CollectionFileCell
+                cell.message = message
+                cell.delegate = self
+                return cell
+            }
+        case .videos:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
+            cell.message = message
+            cell.delegate = self
+            return cell
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var divider = 1
-        
-        repeat {
-            divider += 1
-        } while (collectionView.bounds.size.width / CGFloat(divider) > CollectionImageCell.cellSize)
-        
-        let size = collectionView.bounds.size.width / CGFloat(divider)
-        
-        return CGSize(width: size, height: size)
+        guard let section = CollectionsSection(rawValue: UInt(indexPath.section)) else {
+            fatal("Unknown section")
+        }
+        switch(section) {
+        case .images:
+            var divider = 1
+            
+            repeat {
+                divider += 1
+            } while (collectionView.bounds.size.width / CGFloat(divider) > CollectionImageCell.cellSize)
+            
+            let size = collectionView.bounds.size.width / CGFloat(divider)
+            
+            return CGSize(width: size, height: size)
+            
+        case .filesAndAudio:
+            return CGSize(width: collectionView.bounds.size.width, height: 56)
+        case .videos:
+            return CGSize(width: collectionView.bounds.size.width, height: (collectionView.bounds.size.width / 4) * 3)
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let message = self.imageMessages[indexPath.item]
         
+        let message = self.message(for: indexPath)
+       
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         
         let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
@@ -122,5 +219,24 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         self.present(shareViewController, animated: true, completion: .none)        
+    }
+}
+
+extension CollectionsViewController: TransferViewDelegate {
+    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+        switch (action) {
+        case .cancel:
+            ZMUserSession.shared().enqueueChanges {
+                view.fileMessage?.fileMessageData?.cancelTransfer()
+            }
+        case .present:
+            guard let targetView = view as? UIView, let message = view.fileMessage else {
+                return
+            }
+            self.messagePresenter.open(message, targetView: targetView)
+            
+        default:
+            break
+        }
     }
 }

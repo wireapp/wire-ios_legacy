@@ -135,6 +135,7 @@ public extension ConversationViewController {
     
     func onCollectionButtonPressed(_ sender: AnyObject!) {
         let collections = CollectionsViewController(conversation: conversation)
+        collections.analyticsTracker = self.analyticsTracker
         collections.modalPresentationStyle = .overCurrentContext
         self.parent?.present(collections, animated: true, completion: {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)

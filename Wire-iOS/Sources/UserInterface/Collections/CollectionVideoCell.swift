@@ -16,16 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 
-final public class CollectionFileCell: UICollectionViewCell, Reusable {
-    private let fileTransferView = FileTransferView()
-    
+final public class CollectionVideoCell: UICollectionViewCell, Reusable {
+    private let videoMessageView = VideoMessageView()
     public weak var delegate: TransferViewDelegate? {
         didSet {
-            self.fileTransferView.delegate = self.delegate
+            self.videoMessageView.delegate = self.delegate
         }
     }
     public var message: ZMConversationMessage? {
@@ -33,7 +31,7 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
             guard let message = self.message else {
                 return
             }
-            fileTransferView.configure(for: message, isInitial: true)
+            videoMessageView.configure(for: message, isInitial: true)
         }
     }
     
@@ -48,17 +46,11 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
     }
     
     func loadView() {
-        self.fileTransferView.delegate = self.delegate
-        self.fileTransferView.layer.cornerRadius = 4
-        self.fileTransferView.cas_styleClass = "container-view"
-        self.fileTransferView.clipsToBounds = true
+        self.videoMessageView.delegate = self.delegate
+        self.contentView.addSubview(self.videoMessageView)
         
-        self.layoutMargins = UIEdgeInsetsMake(4, 4, 4, 4)
-        
-        self.contentView.addSubview(self.fileTransferView)
-
-        constrain(self, self.fileTransferView) { selfView, fileTransferView in
-            fileTransferView.edges == selfView.edgesWithinMargins
+        constrain(self, self.videoMessageView) { selfView, videoMessageView in
+            videoMessageView.edges == selfView.edges
         }
     }
     
@@ -67,4 +59,3 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
         self.message = .none
     }
 }
-

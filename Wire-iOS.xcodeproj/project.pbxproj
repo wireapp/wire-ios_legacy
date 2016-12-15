@@ -642,6 +642,10 @@
 		87F18BBC1E01577C00C69D9B /* FileMessageViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BBB1E01577C00C69D9B /* FileMessageViewState.swift */; };
 		87F18BBE1E015BBB00C69D9B /* TransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BBD1E015BBB00C69D9B /* TransferView.swift */; };
 		87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BBF1E017B7F00C69D9B /* UIView+VisibleViews.swift */; };
+		87F18BC21E02E4B600C69D9B /* CollectionVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC11E02E4B600C69D9B /* CollectionVideoCell.swift */; };
+		87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */; };
+		87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC71E02E7BF00C69D9B /* Reusable.swift */; };
+		87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BCF1E02F63700C69D9B /* MessagePresenter.m */; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87F61D1C1CD379EC00670794 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D1B1CD379EC00670794 /* CircularProgressView.swift */; };
@@ -1867,6 +1871,11 @@
 		87F18BBB1E01577C00C69D9B /* FileMessageViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMessageViewState.swift; sourceTree = "<group>"; };
 		87F18BBD1E015BBB00C69D9B /* TransferView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferView.swift; sourceTree = "<group>"; };
 		87F18BBF1E017B7F00C69D9B /* UIView+VisibleViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+VisibleViews.swift"; sourceTree = "<group>"; };
+		87F18BC11E02E4B600C69D9B /* CollectionVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionVideoCell.swift; sourceTree = "<group>"; };
+		87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionAudioCell.swift; sourceTree = "<group>"; };
+		87F18BC71E02E7BF00C69D9B /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		87F18BCE1E02F63700C69D9B /* MessagePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePresenter.h; sourceTree = "<group>"; };
+		87F18BCF1E02F63700C69D9B /* MessagePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePresenter.m; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		87F61D1B1CD379EC00670794 /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
@@ -2574,6 +2583,7 @@
 		1E5E0CEE1B6B8EDB003B0CAC /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				87F18BC71E02E7BF00C69D9B /* Reusable.swift */,
 				1E0737D01BD8DB3600D781EF /* TextTransform */,
 				1EBA8C6E1B70F9620089CC44 /* CASStyler+Variables.h */,
 				1EBA8C6F1B70F9620089CC44 /* CASStyler+Variables.m */,
@@ -3635,6 +3645,8 @@
 				87D56DF71E003D9300DFF722 /* CollectionsView.swift */,
 				87D56DF91E0046FE00DFF722 /* CollectionImageCell.swift */,
 				87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */,
+				87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */,
+				87F18BC11E02E4B600C69D9B /* CollectionVideoCell.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
@@ -4270,6 +4282,8 @@
 				16A95FFD1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m */,
 				167B3B471BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.h */,
 				167B3B481BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m */,
+				87F18BCE1E02F63700C69D9B /* MessagePresenter.h */,
+				87F18BCF1E02F63700C69D9B /* MessagePresenter.m */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -5292,6 +5306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				1E0737D81BD8DB7F00D781EF /* UILabel+TextTransform.m in Sources */,
 				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
 				1EB9BF3C1BC7ED5D002EF0F3 /* SharedAnalytics.m in Sources */,
@@ -5570,6 +5585,7 @@
 				BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */,
 				87DCF4DE1D34EA4500BB420F /* SearchResultCell.m in Sources */,
 				871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */,
+				87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */,
 				871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */,
 				8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */,
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */,
@@ -5768,6 +5784,7 @@
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */,
 				871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */,
+				87F18BC21E02E4B600C69D9B /* CollectionVideoCell.swift in Sources */,
 				874A02541D1D325C00D0D74A /* AudioEffect.swift in Sources */,
 				8710673C1C0DC5570035603B /* SettingsButtonCellDescriptor.swift in Sources */,
 				8FC854CC199245770008B66B /* ProfileViewController.m in Sources */,
@@ -5879,6 +5896,7 @@
 				8F8914171A9F287E0056AB0C /* MissedCallIndicatorLayer.m in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
 				54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */,
+				87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */,
 				8FC854BA199245770008B66B /* RootViewController.m in Sources */,
 				871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */,
 				871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */,
