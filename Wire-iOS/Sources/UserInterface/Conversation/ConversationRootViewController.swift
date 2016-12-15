@@ -67,7 +67,7 @@ import Cartography
         self.view.addSubview(navigationSeparator)
         self.view.addSubview(self.contentView)
         
-        constrain(self.customNavBar, self.navigationSeparator, self.view, self.contentView, conversationViewController.view) { customNavBar, navigationSeparator, view, contentView, conversationViewControllerView in
+        constrain(self.customNavBar, self.navigationSeparator, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, navigationSeparator: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
             navigationSeparator.height == 0.5
             navigationSeparator.left == customNavBar.left
             navigationSeparator.top == customNavBar.bottom - 1

@@ -148,16 +148,16 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
     @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell) {
         self.view.window!.endEditing(true)
         
-        let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter {
-            ($0.conversationType == .oneOnOne || $0.conversationType == .group) &&
-                $0.isSelfAnActiveMember &&
-                $0 != message.conversation!
+        let conversations: [ZMConversation] = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
+            return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
+                    conversation.isSelfAnActiveMember &&
+                    conversation != message.conversation!
         }
         
-        let shareViewController = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
+        let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
         
-        let displayInPopover = self.traitCollection.horizontalSizeClass == .regular &&
-                               self.traitCollection.horizontalSizeClass == .regular
+        let displayInPopover: Bool = self.traitCollection.horizontalSizeClass == .regular &&
+                                     self.traitCollection.horizontalSizeClass == .regular
                 
         if displayInPopover {
             shareViewController.showPreview = false
@@ -175,7 +175,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         shareViewController.presentationController?.delegate = self
         
-        shareViewController.onDismiss = { shareController in
+        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>) -> () in
             shareController.presentingViewController?.dismiss(animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }

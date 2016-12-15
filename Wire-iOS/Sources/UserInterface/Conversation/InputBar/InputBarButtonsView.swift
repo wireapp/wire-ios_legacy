@@ -166,18 +166,19 @@ public final class InputBarButtonsView: UIView {
             }
         }
         
-        var previous = buttons.first!
-        for current in buttons.dropFirst() {
+        var previous: UIView = buttons.first!
+        for current: UIView in buttons.dropFirst() {
             let isFirstButton = previous == buttons.first
             let isLastButton = rowIsFull && current == buttons.last
+            let offset = constants.iconSize / 2 + constants.buttonMargin
             
-            constrain(previous, current) { previous, current in
+            constrain(previous, current) { (previous: LayoutProxy, current: LayoutProxy) -> () in
                 previous.trailing == current.leading
                 
                 if (isFirstButton) {
-                    previous.width == current.width * 0.5 + constants.iconSize / 2 + constants.buttonMargin
+                    previous.width == current.width * 0.5 + offset
                 } else if (isLastButton) {
-                    current.width == previous.width * 0.5 + constants.iconSize / 2 + constants.buttonMargin
+                    current.width == previous.width * 0.5 + offset
                 } else {
                     current.width == previous.width
                 }
