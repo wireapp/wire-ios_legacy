@@ -444,19 +444,19 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 #pragma mark - Actions
 
 - (void)onFullScreenPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:ConversationCellActionPresent];
+    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
 }
 
 - (void)onDrawSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketchDraw];
+    [self.delegate conversationCell:self didSelectAction:MessageActionSketchDraw];
 }
 
 - (void)onEmojiSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketchEmoji];
+    [self.delegate conversationCell:self didSelectAction:MessageActionSketchEmoji];
 }
 
 - (void)onTextSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:ConversationCellActionSketchText];
+    [self.delegate conversationCell:self didSelectAction:MessageActionSketchText];
 }
 
 #pragma mark - Message updates
@@ -550,7 +550,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (void)saveImage
 {
     if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:ConversationCellActionSave];
+        [self.delegate conversationCell:self didSelectAction:MessageActionSave];
     }
 }
 

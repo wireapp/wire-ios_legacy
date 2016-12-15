@@ -25,9 +25,9 @@ enum ProgressViewType {
     case infinite
 }
 
-typealias FileMessageCellViewsState = (progressViewType: ProgressViewType?, playButtonIcon: ZetaIconType, playButtonBackgroundColor: UIColor?)
+typealias FileMessageViewViewsState = (progressViewType: ProgressViewType?, playButtonIcon: ZetaIconType, playButtonBackgroundColor: UIColor?)
 
-public enum FileMessageCellState {
+public enum FileMessageViewState {
     
     case unavailable
     
@@ -47,8 +47,8 @@ public enum FileMessageCellState {
 
     case obfuscated
     
-    // Value mapping from message consolidated state (transfer state, previewData, fileURL) to FileMessageCellState
-    static func fromConversationMessage(_ message: ZMConversationMessage) -> FileMessageCellState? {
+    // Value mapping from message consolidated state (transfer state, previewData, fileURL) to FileMessageViewState
+    static func fromConversationMessage(_ message: ZMConversationMessage) -> FileMessageViewState? {
         guard let fileMessageData = message.fileMessageData, Message.isFileTransferMessage(message) else {
             return .none
         }
@@ -86,7 +86,7 @@ public enum FileMessageCellState {
     static let normalColor  = UIColor.black.withAlphaComponent(0.4)
     static let failureColor = UIColor.red.withAlphaComponent(0.24)
     
-    typealias ViewsStateMapping = [FileMessageCellState: FileMessageCellViewsState]
+    typealias ViewsStateMapping = [FileMessageViewState: FileMessageViewViewsState]
     /// Mapping of cell state to it's views state for media message:
     ///  # Cell state ======>      #progressViewType
     ///               ======>      |            #playButtonIcon
@@ -126,15 +126,15 @@ public enum FileMessageCellState {
          .cancelledUpload:         (.none,     .redo,   normalColor),
          .failedDownload:          (.none,     .save,   failureColor),]
     
-    func viewsStateForVideo() -> FileMessageCellViewsState? {
+    func viewsStateForVideo() -> FileMessageViewViewsState? {
         return type(of: self).viewsStateForCellStateForVideoMessage[self]
     }
     
-    func viewsStateForAudio() -> FileMessageCellViewsState? {
+    func viewsStateForAudio() -> FileMessageViewViewsState? {
         return type(of: self).viewsStateForCellStateForAudioMessage[self]
     }
     
-    func viewsStateForFile() -> FileMessageCellViewsState? {
+    func viewsStateForFile() -> FileMessageViewViewsState? {
         return type(of: self).viewsStateForCellStateForFileMessage[self]
     }
 

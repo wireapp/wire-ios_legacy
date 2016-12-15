@@ -771,10 +771,10 @@
     [self.delegate conversationContentViewController:self didTriggerResendingMessage:cell.message];
 }
 
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId
+- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId
 {
     switch (actionId) {
-        case ConversationCellActionCancel:
+        case MessageActionCancel:
         {
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [cell.message.fileMessageData cancelTransfer];
@@ -784,7 +784,7 @@
         }
             break;
             
-        case ConversationCellActionResend:
+        case MessageActionResend:
         {
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [cell.message resend];
@@ -792,20 +792,20 @@
         }
             break;
         
-        case ConversationCellActionDelete:
+        case MessageActionDelete:
         {
             [self presentDeletionAlertControllerForMessage:cell.message completion:^{
                 cell.beingEdited = NO;
             }];
         }
             break;
-        case ConversationCellActionPresent:
+        case MessageActionPresent:
         {
             self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
             [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
         }
             break;
-        case ConversationCellActionSave:
+        case MessageActionSave:
         {
             if ([cell isKindOfClass:ImageMessageCell.class]) {
                 [self saveImageFromCell:(ImageMessageCell *)cell];
@@ -815,28 +815,28 @@
             }
         }
             break;
-        case ConversationCellActionEdit:
+        case MessageActionEdit:
         {
             self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
             [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
         }
             break;
-        case ConversationCellActionSketchDraw:
+        case MessageActionSketchDraw:
         {
             [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
         }
             break;
-        case ConversationCellActionSketchEmoji:
+        case MessageActionSketchEmoji:
         {
             [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
         }
             break;
-        case ConversationCellActionSketchText:
+        case MessageActionSketchText:
         {
             // Not implemented yet
         }
             break;
-        case ConversationCellActionLike:
+        case MessageActionLike:
         {
             BOOL liked = ![Message isLikedMessage:cell.message];
             
@@ -860,7 +860,7 @@
             }];
         }
             break;
-        case ConversationCellActionForward:
+        case MessageActionForward:
         {
             [self showForwardForMessage:cell.message fromCell:cell];
         }
