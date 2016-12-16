@@ -27,7 +27,7 @@ public struct CollectionsSectionSet: OptionSet {
     }
     
     public init?(index: UInt) {
-        self = type(of: self).allAsArray[Int(index)]
+        self = type(of: self).visible[Int(index)]
     }
     
     public static let none = CollectionsSectionSet(rawValue: 0)
@@ -36,12 +36,12 @@ public struct CollectionsSectionSet: OptionSet {
     public static let videos = CollectionsSectionSet(rawValue: 1 << 2)
     public static let links = CollectionsSectionSet(rawValue: 1 << 3)
     
-    public static let all = CollectionsSectionSet(rawValue: UInt.max)
+    public static let all: CollectionsSectionSet = [.images, .filesAndAudio, .videos, .links]
     
-    public static let allAsArray: [CollectionsSectionSet] = [images, filesAndAudio, videos] // links
+    public static let visible: [CollectionsSectionSet] = [images, filesAndAudio, videos] // links
     
-    static func total() -> UInt {
-        return UInt(self.allAsArray.count)
+    static func totalVisible() -> UInt {
+        return UInt(self.visible.count)
     }
 }
 
@@ -181,7 +181,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Int(CollectionsSectionSet.total())
+        return Int(CollectionsSectionSet.totalVisible())
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
