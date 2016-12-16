@@ -32,7 +32,7 @@ public struct AudioEffectCellBorders : OptionSet {
     public static let Bottom = AudioEffectCellBorders(rawValue: 1 << 1)
 }
 
-@objc public final class AudioEffectCell: UICollectionViewCell {
+@objc public final class AudioEffectCell: UICollectionViewCell, Reusable {
     fileprivate let iconView = IconButton()
     fileprivate let borderRightView = UIView()
     fileprivate let borderBottomView = UIView()
@@ -79,14 +79,6 @@ public struct AudioEffectCellBorders : OptionSet {
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public static let reuseIdentifier: String = "AudioEffectCell"
-    
-    public override var reuseIdentifier: String? {
-        get {
-            return type(of: self).reuseIdentifier
-        }
     }
     
     override public var isSelected: Bool {

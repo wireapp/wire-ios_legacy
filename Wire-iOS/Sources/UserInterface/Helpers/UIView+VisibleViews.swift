@@ -20,7 +20,7 @@
 import Foundation
 
 
-extension ConversationCell {
+extension UIView {
     
     public func updateVisibleViews(_ views: [UIView], visibleViews: [UIView], animated: Bool) {
         if (animated) {

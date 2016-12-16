@@ -587,7 +587,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     self.beingEdited = YES;
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:ConversationCellActionDelete];
+        [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
         [[Analytics shared] tagOpenedMessageAction:MessageActionTypeDelete];
     }
 }
@@ -595,7 +595,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 - (void)forward:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:ConversationCellActionForward];
+        [self.delegate conversationCell:self didSelectAction:MessageActionForward];
     }
 }
 

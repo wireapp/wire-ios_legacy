@@ -53,11 +53,17 @@ extension MKMapView {
     
     func setCenterCoordinate(_ coordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool = false) {
         guard CLLocationCoordinate2DIsValid(coordinate) else { return }
-        let latitudeDelta = min(360 / pow(2, Double(zoomLevel)) * Double(frame.height) / 256, 180)
-        let region = MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(latitudeDelta, 0))
+        let region = MKCoordinateRegionMake(coordinate, MKCoordinateSpan(zoomLevel: zoomLevel, viewSize: Float(frame.height)))
         setRegion(region, animated: animated)
     }
 
+}
+
+extension MKCoordinateSpan {
+    init(zoomLevel: Int, viewSize: Float) {
+        self.latitudeDelta = min(360 / pow(2, Double(zoomLevel)) * Double(viewSize) / 256, 180)
+        self.longitudeDelta = 0
+    }
 }
 
 extension LocationData {

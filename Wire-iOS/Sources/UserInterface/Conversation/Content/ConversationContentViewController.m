@@ -55,6 +55,8 @@
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
 #import "UIColor+WR_ColorScheme.h"
+#import "MessagePresenter.h"
+#import "UIViewController+WR_Additions.h"
 
 // Cells
 #import "TextMessageCell.h"
@@ -67,18 +69,6 @@
 
 #import "Wire-Swift.h"
 
-
-@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
-@end
-
-@implementation AVPlayerViewControllerWithoutStatusBar
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-@end
 
 @interface ConversationContentViewController (TableView) <UITableViewDelegate>
 
@@ -96,9 +86,7 @@
 
 @end
 
-
-
-@interface ConversationContentViewController () <CanvasViewControllerDelegate, UIDocumentInteractionControllerDelegate>
+@interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, strong) NSMutableDictionary *cellLayoutPropertiesCache;
@@ -109,10 +97,9 @@
 @property (nonatomic) BOOL wasFetchingMessages;
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
-@property (nonatomic) BOOL waitingForFileDownload;
-@property (nonatomic) UIDocumentInteractionController *documentInteractionController;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
+@property (nonatomic) MessagePresenter* messagePresenter;
 @end
 
 
@@ -126,6 +113,10 @@
     if (self) {
         _conversation = conversation;
         self.cachedRowHeights = [NSMutableDictionary dictionary];
+        self.messagePresenter = [[MessagePresenter alloc] init];
+        self.messagePresenter.targetViewController = self;
+        self.messagePresenter.modalTargetController = self.parentViewController;
+        self.messagePresenter.analyticsTracker = self.analyticsTracker;
     }
     
     return self;
@@ -194,6 +185,8 @@
             [cell willDisplayInTableView];
         }
     }
+    
+    self.messagePresenter.modalTargetController = self.parentViewController;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -350,9 +343,9 @@
 - (void)presentDetailsForMessageAtIndexPath:(NSIndexPath *)indexPath
 {
     id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
-    BOOL isFile = [Message isFileTransferMessage:message],
-         isImage = [Message isImageMessage:message],
-         isLocation = [Message isLocationMessage:message];
+    BOOL isFile = [Message isFileTransferMessage:message];
+    BOOL isImage = [Message isImageMessage:message];
+    BOOL isLocation = [Message isLocationMessage:message];
     
     if (! isFile && ! isImage && ! isLocation) {
         return;
@@ -367,163 +360,7 @@
         return;
     }
     
-    if (isFile && ![Message isAudioMessage:message]) {
-        [self selectFileMessage:message atIndexPath:indexPath];
-    }
-    else if (isImage) {
-        [self openImageMessage:message];
-    } else if (isLocation) {
-        [self openLocationMessage:message cell:cell];
-    }
-}
-
-- (void)openLocationMessage:(id<ZMConversationMessage>)message cell:(UITableViewCell *)cell
-{
-    if (![Message isLocationMessage:message] || ![cell isKindOfClass:LocationMessageCell.class]) {
-        return;
-    }
-    
-    [(LocationMessageCell *)cell openInMaps];
-}
-
-- (void)selectFileMessage:(id<ZMConversationMessage>)message atIndexPath:(NSIndexPath *)indexPath {
-
-    switch (message.fileMessageData.transferState) {
-        case ZMFileTransferStateDownloaded:
-        {
-            [self openFileMessage:message atIndexPath:indexPath];
-            self.waitingForFileDownload = NO;
-        }
-            break;
-        case ZMFileTransferStateUploaded:
-        case ZMFileTransferStateFailedDownload:
-        {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [message.fileMessageData requestFileDownload];
-            }];
-            
-            self.waitingForFileDownload = YES;
-            
-            [self.analyticsTracker tagInitiatedFileDownloadWithSize:message.fileMessageData.size
-                                                            message:message
-                                                      fileExtension:[message.fileMessageData.filename pathExtension]];
-        }
-            break;
-        default:
-            
-            break;
-    }
-}
-
-- (void)openFileMessage:(id<ZMConversationMessage>)message atIndexPath:(NSIndexPath *)indexPath {
-    if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
-        NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        DDLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [message.fileMessageData requestFileDownload];
-        }];
-        return;
-    }
-
-    [message startSelfDestructionIfNeeded];
-
-    [self.analyticsTracker tagOpenedFileWithSize:message.fileMessageData.size
-                                   fileExtension:[message.fileMessageData.filename pathExtension]];
-    
-    if (message.fileMessageData.isVideo) {
-        AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
-
-        AVPlayerViewController *playerController = [[AVPlayerViewControllerWithoutStatusBar alloc] init];
-        playerController.player = player;
-        [self.parentViewController presentViewController:playerController animated:YES completion:^() {
-            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-            [player play];
-            [Analytics.shared tagPlayedVideoMessage:CMTimeGetSeconds(player.currentItem.duration)];
-        }];
-    }
-    else {
-        [self openDocumentControllerForMessage:message atIndexPath:indexPath withPreview:YES];
-    }
-}
-
-- (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message atIndexPath:(NSIndexPath *)indexPath withPreview:(BOOL)preview {
-    if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
-        NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        DDLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [message.fileMessageData requestFileDownload];
-        }];
-        return;
-    }
-
-    [self.view.window endEditing:YES];
-    
-    // Need to create temporary hardlink to make sure the UIDocumentInteractionController shows the correct filename
-    NSError *error = nil;
-    NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:message.fileMessageData.filename];
-    [[NSFileManager defaultManager] linkItemAtPath:message.fileMessageData.fileURL.path toPath:tmpPath error:&error];
-    if (nil != error) {
-        DDLogError(@"Cannot symlink %@ to %@: %@", message.fileMessageData.fileURL.path, tmpPath, error);
-        tmpPath =  message.fileMessageData.fileURL.path;
-    }
-    
-    self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:tmpPath]];
-    self.documentInteractionController.delegate = self;
-    if (!preview || ![self.documentInteractionController presentPreviewAnimated:YES]) {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        UIView *targetView = nil;
-        
-        if ([cell isKindOfClass:[FileTransferCell class]]) {
-            FileTransferCell *fileCell = (FileTransferCell *)cell;
-            targetView = fileCell.actionButton;
-        }
-        else if ([cell isKindOfClass:[AudioMessageCell class]]) {
-            AudioMessageCell *audioCell = (AudioMessageCell *)cell;
-            targetView = audioCell.contentView;
-        }
-        else {
-            targetView = cell;
-        }
-        [self.documentInteractionController presentOptionsMenuFromRect:[self.view convertRect:targetView.bounds fromView:targetView]
-                                                                inView:self.view
-                                                              animated:YES];
-    }
-}
-
-- (void)cleanupTemporaryFileLink {
-    NSError *linkDeleteError = nil;
-    [[NSFileManager defaultManager] removeItemAtURL:self.documentInteractionController.URL error:&linkDeleteError];
-    if (linkDeleteError) {
-        DDLogError(@"Cannot delete temporary link %@: %@", self.documentInteractionController.URL, linkDeleteError);
-    }
-}
-
-- (void)openImageMessage:(id<ZMConversationMessage>)message {
-    /// Don't open full screen images when there is an incoming call
-    ZMVoiceChannel *activeVoiceChannel = [SessionObjectCache sharedCache].firstActiveVoiceChannel;
-    if (IS_IPAD_LANDSCAPE_LAYOUT && activeVoiceChannel != nil && activeVoiceChannel.state == ZMVoiceChannelStateIncomingCall) {
-        return;
-    }
-    
-    if (! [Message isImageMessage:message]) {
-        return;
-    }
-    
-    if (message.imageMessageData == nil) {
-        return;
-    }
-    
-    FullscreenImageViewController *fullscreenImageViewController = [[FullscreenImageViewController alloc] initWithMessage:message];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        fullscreenImageViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        fullscreenImageViewController.snapshotBackgroundView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:YES];
-    } else {
-        fullscreenImageViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    fullscreenImageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self presentViewController:fullscreenImageViewController animated:YES completion:nil];
-    [Analytics shared].sessionSummary.imageContentsClicks++;
+    [self.messagePresenter openMessage:message targetView:cell];
 }
 
 - (void)saveImageFromCell:(ImageMessageCell *)cell
@@ -561,38 +398,6 @@
             [Analytics shared].sessionSummary.imagesSent++;
         }];
     }
-}
-
-#pragma mark - UIDocumentInteractionControllerDelegate
-
-- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
-{
-    return self.parentViewController;
-}
-
-- (void)documentInteractionControllerWillBeginPreview:(UIDocumentInteractionController *)controller
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{        
-        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-    });
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    [self cleanupTemporaryFileLink];
-    self.documentInteractionController = nil;
-}
-
-- (void)documentInteractionControllerDidDismissOpenInMenu:(UIDocumentInteractionController *)controller
-{
-    [self cleanupTemporaryFileLink];
-    self.documentInteractionController = nil;
-}
-
-- (void)documentInteractionControllerDidDismissOptionsMenu:(UIDocumentInteractionController *)controller
-{
-    [self cleanupTemporaryFileLink];
-    self.documentInteractionController = nil;
 }
 
 #pragma mark - Custom UI, utilities
@@ -771,10 +576,10 @@
     [self.delegate conversationContentViewController:self didTriggerResendingMessage:cell.message];
 }
 
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId
+- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId
 {
     switch (actionId) {
-        case ConversationCellActionCancel:
+        case MessageActionCancel:
         {
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [cell.message.fileMessageData cancelTransfer];
@@ -784,7 +589,7 @@
         }
             break;
             
-        case ConversationCellActionResend:
+        case MessageActionResend:
         {
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [cell.message resend];
@@ -792,51 +597,66 @@
         }
             break;
         
-        case ConversationCellActionDelete:
+        case MessageActionDelete:
         {
             [self presentDeletionAlertControllerForMessage:cell.message completion:^{
                 cell.beingEdited = NO;
             }];
         }
             break;
-        case ConversationCellActionPresent:
+        case MessageActionPresent:
         {
             self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
             [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
         }
             break;
-        case ConversationCellActionSave:
+        case MessageActionSave:
         {
             if ([cell isKindOfClass:ImageMessageCell.class]) {
                 [self saveImageFromCell:(ImageMessageCell *)cell];
             } else {
                 self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
-                [self openDocumentControllerForMessage:cell.message atIndexPath:[self.tableView indexPathForCell:cell] withPreview:NO];
+                
+                UIView *targetView = nil;
+                
+                if ([cell isKindOfClass:[FileTransferCell class]]) {
+                    FileTransferCell *fileCell = (FileTransferCell *)cell;
+                    targetView = fileCell.actionButton;
+                }
+                else if ([cell isKindOfClass:[AudioMessageCell class]]) {
+                    AudioMessageCell *audioCell = (AudioMessageCell *)cell;
+                    targetView = audioCell.contentView;
+                }
+                else {
+                    targetView = cell;
+                }
+                
+                [self.messagePresenter openDocumentControllerForMessage:cell.message targetView:targetView withPreview:NO];
             }
         }
             break;
-        case ConversationCellActionEdit:
+        case MessageActionEdit:
         {
             self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
             [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
         }
             break;
-        case ConversationCellActionSketchDraw:
+        case MessageActionSketchDraw:
         {
             [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
         }
             break;
-        case ConversationCellActionSketchEmoji:
+        case MessageActionSketchEmoji:
         {
             [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
         }
             break;
-        case ConversationCellActionSketchText:
+        case MessageActionSketchText:
         {
             // Not implemented yet
         }
             break;
-        case ConversationCellActionLike:
+        case MessageActionLike:
         {
             BOOL liked = ![Message isLikedMessage:cell.message];
             
@@ -860,7 +680,7 @@
             }];
         }
             break;
-        case ConversationCellActionForward:
+        case MessageActionForward:
         {
             [self showForwardForMessage:cell.message fromCell:cell];
         }
@@ -932,52 +752,37 @@
     [self.conversationMessageWindowTableViewAdapter expandMessageWindow];
 }
 
-- (BOOL)viewControllerIsVisible
-{
-    BOOL isInWindow = self.view.window != nil;
-    BOOL notCoveredModally = self.presentedViewController == nil;
-    BOOL viewIsVisible = CGRectIntersectsRect([self.view convertRect:self.view.bounds toView:nil], [[UIScreen mainScreen] bounds]);
-    
-    return isInWindow && notCoveredModally && viewIsVisible;
-}
-
-- (void)handleMessageUpdateForFileUpload:(NSArray *)messageChangeInfos selectedMessage:(id<ZMConversationMessage>)selectedMessage
-{
-    if ([self viewControllerIsVisible]) {
-        NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
-        
-        BOOL __block expectedMessageUpdated = NO;
-        [messageChangeInfos enumerateObjectsUsingBlock:^(MessageChangeInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj.message isEqual:selectedMessage]) {
-                expectedMessageUpdated = YES;
-                *stop = YES;
-            }
-        }];
-        
-        if (expectedMessageUpdated) {
-            NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexOfFileMessage inSection:0];
-            
-            NSArray *indexes = [self.tableView indexPathsForVisibleRows];
-            BOOL isVisibleCell = [indexes containsObjectMatchingWithBlock:^BOOL(NSIndexPath *obj) {
-                return (obj.row == cellIndexPath.row) && (obj.section == cellIndexPath.section);
-            }];
-            
-            if (isVisibleCell) {
-                [self openFileMessage:selectedMessage atIndexPath:cellIndexPath];
-            }
-            self.waitingForFileDownload = NO;
-        }
-    }
-}
-
 - (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos
 {
-    if (self.waitingForFileDownload) {
+    if (self.messagePresenter.waitingForFileDownload) {
         id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
         if (([Message isVideoMessage:selectedMessage] ||
              [Message isAudioMessage:selectedMessage] ||
              [Message isFileTransferMessage:selectedMessage]) && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
-            [self handleMessageUpdateForFileUpload:messageChangeInfos selectedMessage:selectedMessage];
+            if ([self wr_isVisible]) {
+                NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
+                
+                BOOL __block expectedMessageUpdated = NO;
+                [messageChangeInfos enumerateObjectsUsingBlock:^(MessageChangeInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj.message isEqual:selectedMessage]) {
+                        expectedMessageUpdated = YES;
+                        *stop = YES;
+                    }
+                }];
+                
+                if (expectedMessageUpdated) {
+                    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexOfFileMessage inSection:0];
+                    
+                    NSArray *indexes = [self.tableView indexPathsForVisibleRows];
+                    BOOL isVisibleCell = [indexes containsObjectMatchingWithBlock:^BOOL(NSIndexPath *obj) {
+                        return (obj.row == cellIndexPath.row) && (obj.section == cellIndexPath.section);
+                    }];
+                    
+                    if (isVisibleCell) {
+                        [self.messagePresenter openFileMessage:selectedMessage targetView:[self.tableView cellForRowAtIndexPath:cellIndexPath]];
+                    }
+                }
+            }
         }
     }
 }

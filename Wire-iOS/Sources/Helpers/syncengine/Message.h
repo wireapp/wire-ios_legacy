@@ -50,4 +50,6 @@
 
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message;
 
++ (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message;
+
 @end

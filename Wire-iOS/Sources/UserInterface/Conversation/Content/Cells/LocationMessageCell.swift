@@ -156,7 +156,7 @@ public final class LocationMessageCell: ConversationCell {
     }
     
     func openInMaps() {
-        message?.locationMessageData?.openInMaps(withSpan: mapView.region.span)
+        message?.locationMessageData?.openInMaps(with: mapView.region.span)
         guard let conversation = message.conversation else { return }
         let sentBySelf = message.sender?.isSelfUser ?? false
         Analytics.shared()?.tagMediaOpened(.location, inConversation: conversation, sentBySelf: sentBySelf)
@@ -212,35 +212,3 @@ public final class LocationMessageCell: ConversationCell {
     }
 }
 
-private extension ZMLocationMessageData {
-
-    func openInMaps(withSpan span: MKCoordinateSpan) {
-        let launchOptions = [
-            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: coordinate),
-            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: span)
-        ]
-
-        if let url = googleMapsURL, url.openAsLocation() {
-            return
-        }
-
-        mapItem?.openInMaps(launchOptions: launchOptions)
-    }
-
-    var googleMapsURL: URL? {
-        let location = "\(coordinate.latitude),\(coordinate.longitude)"
-        return URL(string: "comgooglemaps://?q=\(location)&center=\(location)&zoom=\(zoomLevel)")
-    }
-
-    var mapItem: MKMapItem? {
-        var addressDictionary: [String : AnyObject]? = nil
-        if let name = name {
-            addressDictionary = [String(kABPersonAddressStreetKey): name as AnyObject]
-        }
-        
-        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDictionary)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = name
-        return mapItem
-    }
-}

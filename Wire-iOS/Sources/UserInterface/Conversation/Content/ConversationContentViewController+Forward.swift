@@ -144,15 +144,21 @@ extension ZMMessage: Shareable {
     }
 }
 
+extension ZMConversationList {
+    func shareableConversations(excluding: ZMConversation) -> [ZMConversation] {
+        return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
+            return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
+                conversation.isSelfAnActiveMember &&
+                conversation != excluding
+        }
+    }
+}
+
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell) {
         self.view.window!.endEditing(true)
         
-        let conversations: [ZMConversation] = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
-            return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
-                    conversation.isSelfAnActiveMember &&
-                    conversation != message.conversation!
-        }
+        let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         
         let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
         

@@ -21,7 +21,7 @@ import Cartography
 
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objc open class ConversationRootViewController: UIViewController, UINavigationBarDelegate {
+@objc open class ConversationRootViewController: UIViewController {
     
     fileprivate var navigationSeparator = UIView()
     fileprivate var customNavBar = UINavigationBar()
@@ -57,7 +57,6 @@ import Cartography
         
         self.customNavBar.isTranslucent = false
         self.customNavBar.isOpaque = true
-        self.customNavBar.delegate = self
         self.customNavBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         self.customNavBar.shadowImage = UIImage()
         self.customNavBar.translatesAutoresizingMaskIntoConstraints = false

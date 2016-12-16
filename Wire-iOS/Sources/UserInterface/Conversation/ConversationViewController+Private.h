@@ -30,8 +30,8 @@
 @property (nonatomic, readonly) ConversationContentViewController *contentViewController;
 @property (nonatomic, readonly) ConversationInputBarViewController *inputBarController;
 @property (nonatomic, readonly) UIViewController *participantsController;
+@property (nonatomic, readonly) AnalyticsTracker *analyticsTracker;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
-- (void)onCollectionButtonPressed:(UIButton *)collectionButton;
 @end
 
