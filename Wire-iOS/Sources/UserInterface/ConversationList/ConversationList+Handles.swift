@@ -99,15 +99,14 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
     }
 
     private func tagEvent(for action: UserNameTakeOverViewControllerAction) {
-        guard let event = event(for: action) else { return }
-        Analytics.shared()?.tag(event)
+        Analytics.shared()?.tag(event(for: action))
     }
 
-    private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover? {
+    private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover {
         switch action {
         case .chooseOwn(_): return .openedSettings
         case .learnMore: return .openedFAQ
-        default: return nil
+        case .keepSuggestion(_): return .keepSuggested(success: true)
         }
     }
 
@@ -117,26 +116,19 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
 extension ConversationListViewController: UserProfileUpdateObserver {
 
     public func didFailToSetHandle() {
-        tagDidSetHandle(successfully: false)
         openChangeHandleViewController(with: "")
     }
 
     public func didFailToSetHandleBecauseExisting() {
-        tagDidSetHandle(successfully: false)
         openChangeHandleViewController(with: "")
     }
 
     public func didSetHandle() {
-        tagDidSetHandle(successfully: true)
         removeUsernameTakeover()
     }
 
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
-    }
-
-    private func tagDidSetHandle(successfully: Bool) {
-        Analytics.shared()?.tag(UserNameEvent.Takeover.keepSuggested(success: successfully))
     }
 
 }
