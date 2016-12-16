@@ -59,6 +59,10 @@ void debugLogUpdate (ConversationListChangeInfo *note);
         self.pendingConversationListObserverToken = [[SessionObjectCache sharedCache].pendingConnectionRequests addConversationListObserver:self];
         self.conversationListObserverToken = [[SessionObjectCache sharedCache].conversationList addConversationListObserver:self];
         self.clearedConversationListObserverToken = [[SessionObjectCache sharedCache].clearedConversations addConversationListObserver:self];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(applicationWillEnterForeground:)
+                                                   name:UIApplicationWillEnterForegroundNotification
+                                                 object:nil];
     }
     return self;
 }
@@ -68,6 +72,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     [[SessionObjectCache sharedCache].pendingConnectionRequests removeConversationListObserverForToken:self.pendingConversationListObserverToken];
     [[SessionObjectCache sharedCache].conversationList removeConversationListObserverForToken:self.conversationListObserverToken];
     [[SessionObjectCache sharedCache].clearedConversations removeConversationListObserverForToken:self.clearedConversationListObserverToken];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 /**
@@ -219,6 +224,10 @@ void debugLogUpdate (ConversationListChangeInfo *note);
         } else {
             NSArray *oldConversationList = [self.aggregatedItems sectionAtIndex:SectionIndexConversations];
             NSArray *newConversationList = [SessionObjectCache sharedCache].conversationList.asArray;
+
+            if ([oldConversationList isEqualToArray:newConversationList]) {
+                return;
+            }
             
             ZMOrderedSetState *startState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSetWithArray:oldConversationList]];
             ZMOrderedSetState *endState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSetWithArray:newConversationList]];
@@ -245,6 +254,12 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     [self updateSection:SectionIndexConversations];
     debugLog(@"RELOAD conversation list");
     [self.delegate listViewModelShouldBeReloaded];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)note
+{
+    [SessionObjectCache.sharedCache.conversationList resort];
+    [self reloadConversationListViewModel];
 }
 
 - (void)conversationInsideList:(ZMConversationList*)list didChange:(ConversationChangeInfo *)changeInfo;
