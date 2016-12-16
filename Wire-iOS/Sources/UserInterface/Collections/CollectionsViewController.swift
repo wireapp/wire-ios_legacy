@@ -63,16 +63,24 @@ final public class CollectionsViewController: UIViewController {
     }
     
     override public func loadView() {
+        self.view = self.collectionsView
+    }
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
         self.messagePresenter.targetViewController = self
         self.messagePresenter.modalTargetController = self
         self.messagePresenter.analyticsTracker = self.analyticsTracker
-        
-        self.view = self.collectionsView
-        
+
         self.collectionsView.collectionView.delegate = self
         self.collectionsView.collectionView.dataSource = self
+
+        self.setupNavigationItem()
+    }
+    
+    private func setupNavigationItem() {
         self.navigationItem.titleView = ConversationTitleView(conversation: self.conversation)
-        
         
         let button = IconButton.iconButtonDefault()
         button.setIcon(.X, with: .tiny, for: .normal)
@@ -80,12 +88,9 @@ final public class CollectionsViewController: UIViewController {
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         button.accessibilityIdentifier = "close"
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -16)
-    
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-    }
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+        
         self.collectionsView.navigationBar.pushItem(self.navigationItem, animated: false)
     }
     

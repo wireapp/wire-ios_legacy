@@ -646,6 +646,7 @@
 		87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */; };
 		87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC71E02E7BF00C69D9B /* Reusable.swift */; };
 		87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BCF1E02F63700C69D9B /* MessagePresenter.m */; };
+		87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87F61D1C1CD379EC00670794 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D1B1CD379EC00670794 /* CircularProgressView.swift */; };
@@ -1876,6 +1877,7 @@
 		87F18BC71E02E7BF00C69D9B /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		87F18BCE1E02F63700C69D9B /* MessagePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePresenter.h; sourceTree = "<group>"; };
 		87F18BCF1E02F63700C69D9B /* MessagePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePresenter.m; sourceTree = "<group>"; };
+		87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMLocationMessageData+Coordinates.swift"; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		87F61D1B1CD379EC00670794 /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
@@ -4168,6 +4170,7 @@
 				16D316571BC28ED90050B835 /* ZMConversation+Actions.m */,
 				8725B7C11D780D2500ADBDEB /* ZMMessage+Likes.swift */,
 				8762BE141D8978F70040E4A5 /* ZMAccentColor+Additions.swift */,
+				87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */,
 			);
 			path = syncengine;
 			sourceTree = "<group>";
@@ -5534,6 +5537,7 @@
 				8F89141B1A9F287E0056AB0C /* ConversationListConnectRequestsItem.m in Sources */,
 				871BC2261D34F8F800DF0793 /* BrowserViewController.m in Sources */,
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
+				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */,
 				8F8914121A9F287E0056AB0C /* ConversationListContentController.m in Sources */,
 				87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */,

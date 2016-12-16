@@ -68,8 +68,7 @@
 
 - (void)openLocationMessage:(id<ZMConversationMessage>)message
 {
-    // TODO!!
-    //[message.locationMessageData openInMapsWithSpan:mapView.region.span];
+    [Message openInMaps:message.locationMessageData];
 }
 
 - (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView {
