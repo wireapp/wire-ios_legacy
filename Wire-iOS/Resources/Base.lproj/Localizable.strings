@@ -774,3 +774,10 @@
 "invite_banner.title" = "Bring your friends to Wire!";
 "invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";
 "invite_banner.invite_button_title" = "Invite more people";
+
+// Collections
+"collections.section.images.title" = "Pictures";
+"collections.section.files.title" = "Files";
+"collections.section.videos.title" = "Videos";
+"collections.section.links.title" = "Links";
+"collections.section.all.button" = "All →";

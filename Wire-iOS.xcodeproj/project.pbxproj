@@ -647,6 +647,8 @@
 		87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC71E02E7BF00C69D9B /* Reusable.swift */; };
 		87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BCF1E02F63700C69D9B /* MessagePresenter.m */; };
 		87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */; };
+		87F18BD51E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD41E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m */; };
+		87F18BD71E04035500C69D9B /* CollectionsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD61E04035500C69D9B /* CollectionsHeaderView.swift */; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87F61D1C1CD379EC00670794 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D1B1CD379EC00670794 /* CircularProgressView.swift */; };
@@ -1878,6 +1880,9 @@
 		87F18BCE1E02F63700C69D9B /* MessagePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePresenter.h; sourceTree = "<group>"; };
 		87F18BCF1E02F63700C69D9B /* MessagePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePresenter.m; sourceTree = "<group>"; };
 		87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMLocationMessageData+Coordinates.swift"; sourceTree = "<group>"; };
+		87F18BD31E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationDetailsTransitioningDelegate.h; sourceTree = "<group>"; };
+		87F18BD41E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationDetailsTransitioningDelegate.m; sourceTree = "<group>"; };
+		87F18BD61E04035500C69D9B /* CollectionsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsHeaderView.swift; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		87F61D1B1CD379EC00670794 /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
@@ -3649,6 +3654,7 @@
 				87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */,
 				87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */,
 				87F18BC11E02E4B600C69D9B /* CollectionVideoCell.swift */,
+				87F18BD61E04035500C69D9B /* CollectionsHeaderView.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
@@ -4263,6 +4269,8 @@
 				16F9EB2A1BC52EE40021EF39 /* ActionSheetController+Conversation.m */,
 				BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */,
 				CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */,
+				87F18BD31E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.h */,
+				87F18BD41E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -5648,6 +5656,7 @@
 				871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */,
 				BF52C1591CAEBD8D0037331F /* ArchivedNavigationBar.swift in Sources */,
 				8F8914151A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.m in Sources */,
+				87F18BD51E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m in Sources */,
 				87BEB03C1D3E44BA00DE9575 /* CameraKeyboardViewController.swift in Sources */,
 				BF8042271BFC741F004CD789 /* NSURL+WireURLs.m in Sources */,
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
@@ -5722,6 +5731,7 @@
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				8FC1EFDF19DED50C0092488D /* ZMVoiceChannel+Additions.m in Sources */,
 				16A761131ACD901700A999D0 /* GuidanceDotView.m in Sources */,
+				87F18BD71E04035500C69D9B /* CollectionsHeaderView.swift in Sources */,
 				871BC05B1D34F60700DF0793 /* NSLayoutConstraint+Magic.m in Sources */,
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,

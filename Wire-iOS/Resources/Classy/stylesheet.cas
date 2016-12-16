@@ -1516,3 +1516,24 @@ TokenField.share {
     tokenSelectedBorderColor: white;
 }
 
+/* Collections */
+
+CollectionsView {
+    backgroundColor: $color-text-background;
+}
+
+CollectionsHeaderView {
+    backgroundColor: $color-text-background;
+    
+    titleLabel: @{
+        font: $font-medium-medium;
+        textColor: $color-text-foreground;
+    }
+
+    actionButton: @{
+        titleLabel: @{
+            font: $font-medium-medium;
+        }
+        titleColor[state:normal]: $color-text-foreground;
+    }
+}

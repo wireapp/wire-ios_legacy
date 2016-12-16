@@ -337,11 +337,11 @@ extension ZMConversationMessage {
         let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
         let attributedText = likeTooltipText && attributes
 
-        if let currentText = self.statusLabel.attributedText , currentText.string == attributedText.string {
+        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
             return
         }
         
-        let changeBlock =  {
+        let changeBlock = {
             self.statusLabel.attributedText = attributedText
             self.accessibilityValue = self.statusLabel.attributedText.string
         }

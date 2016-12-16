@@ -20,41 +20,24 @@
 import Foundation
 import Cartography
 
-final class CollectionsView: UIView {
+@objc public final class CollectionsView: UIView {
     let collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView
-    
-    let blurView = { () -> UIVisualEffectView in
-        let effect = UIBlurEffect(style: .light)
-
-        return UIVisualEffectView(effect: effect)
-    }()
-    
-    let navigationBar = UINavigationBar()
     
     override init(frame: CGRect) {
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
 
         super.init(frame: frame)
         
-        self.navigationBar.isTranslucent = false
-        self.navigationBar.isOpaque = true
-        self.navigationBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(self.navigationBar)
-        
-        self.addSubview(self.blurView)
-        
         self.collectionViewLayout.scrollDirection = .vertical
-        self.collectionViewLayout.minimumLineSpacing = 0
-        self.collectionViewLayout.minimumInteritemSpacing = 0
-        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(16, 0, 16, 0)
+        self.collectionViewLayout.minimumLineSpacing = 1
+        self.collectionViewLayout.minimumInteritemSpacing = 1
+        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
         self.collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
         self.collectionView.register(CollectionAudioCell.self, forCellWithReuseIdentifier: CollectionAudioCell.reuseIdentifier)
         self.collectionView.register(CollectionVideoCell.self, forCellWithReuseIdentifier: CollectionVideoCell.reuseIdentifier)
+        self.collectionView.register(CollectionsHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CollectionsHeaderView.reuseIdentifier)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
@@ -67,24 +50,30 @@ final class CollectionsView: UIView {
         self.constrainViews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public static func closeButton() -> IconButton {
+        let button = IconButton.iconButtonDefault()
+        button.setIcon(.X, with: .tiny, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        button.accessibilityIdentifier = "close"
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -16)
+        return button
+    }
+    
+    public static func backButton() -> IconButton {
+        let button = IconButton.iconButtonDefault()
+        button.setIcon(.backArrow, with: .tiny, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        button.accessibilityIdentifier = "back"
+        return button
+    }
+    
     private func constrainViews() {
-        constrain(self, self.navigationBar, self.blurView, self.collectionView) { (selfView: LayoutProxy, navigationBar: LayoutProxy, blurView: LayoutProxy, collectionView: LayoutProxy) -> () in
-            navigationBar.left == selfView.left
-            navigationBar.right == selfView.right
-            navigationBar.top == selfView.top
-            
-            navigationBar.height == 64
-            
-            blurView.top == navigationBar.bottom
-            blurView.left == selfView.left
-            blurView.right == selfView.right
-            blurView.bottom == selfView.bottom
-            
-            collectionView.edges == blurView.edges
+        constrain(self, self.collectionView) { (selfView: LayoutProxy, collectionView: LayoutProxy) -> () in
+            collectionView.edges == selfView.edges
         }
     }
     

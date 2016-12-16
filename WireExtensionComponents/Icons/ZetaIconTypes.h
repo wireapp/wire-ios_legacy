@@ -162,6 +162,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeEffectRobot                     = 0x246,
     ZetaIconTypeEffectRollerCoaster             = 0x247,
 
+    ZetaIconTypeLibrary                         = 0x260,
+    
     // Emoji Categories
     ZetaIconTypeFlower                          = 0x250,
     ZetaIconTypeCake                            = 0x251,

@@ -19,11 +19,37 @@
 
 import Foundation
 
+public struct CollectionsSectionSet: OptionSet {
+    public let rawValue: UInt
+    
+    public init(rawValue: UInt) {
+        self.rawValue = rawValue
+    }
+    
+    public init?(index: UInt) {
+        self = type(of: self).allAsArray[Int(index)]
+    }
+    
+    public static let none = CollectionsSectionSet(rawValue: 0)
+    public static let images = CollectionsSectionSet(rawValue: 1)
+    public static let filesAndAudio = CollectionsSectionSet(rawValue: 1 << 1)
+    public static let videos = CollectionsSectionSet(rawValue: 1 << 2)
+    public static let links = CollectionsSectionSet(rawValue: 1 << 3)
+    
+    public static let all = CollectionsSectionSet(rawValue: UInt.max)
+    
+    public static let allAsArray: [CollectionsSectionSet] = [images, filesAndAudio, videos] // links
+    
+    static func total() -> UInt {
+        return UInt(self.allAsArray.count)
+    }
+}
 
 final public class CollectionsViewController: UIViewController {
     public let conversation: ZMConversation
     public var onDismiss: ((CollectionsViewController)->())?
     public var analyticsTracker: AnalyticsTracker?
+    public let sections: CollectionsSectionSet
     
     private let collectionsView = CollectionsView()
     fileprivate let messagePresenter = MessagePresenter()
@@ -32,30 +58,37 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var videoMessages: [ZMConversationMessage] = []
     fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
-    init(conversation: ZMConversation) {
+    init(conversation: ZMConversation, sections: CollectionsSectionSet = .all) {
         self.conversation = conversation
+        self.sections = sections
         super.init(nibName: .none, bundle: .none)
         
-        self.imageMessages = self.conversation.messages.filter {
-            if let message = $0 as? ZMConversationMessage, let _ = message.imageMessageData
-            { return true }
-            else
-            { return false }
-        } as! [ZMConversationMessage]
-        
-        self.videoMessages = self.conversation.messages.filter {
-            if let message = $0 as? ZMConversationMessage, let fileMessageData = message.fileMessageData, fileMessageData.isVideo()
-            { return true }
-            else
-            { return false }
-        } as! [ZMConversationMessage]
-        
-        self.fileAndAudioMessages = self.conversation.messages.filter {
-            if let message = $0 as? ZMConversationMessage, let fileMessageData = message.fileMessageData, !fileMessageData.isVideo()
-            { return true }
-            else
-            { return false }
+        if sections.contains(.images) {
+            self.imageMessages = self.conversation.messages.filter {
+                if let message = $0 as? ZMConversationMessage, let _ = message.imageMessageData
+                { return true }
+                else
+                { return false }
             } as! [ZMConversationMessage]
+        }
+        
+        if sections.contains(.videos) {
+            self.videoMessages = self.conversation.messages.filter {
+                if let message = $0 as? ZMConversationMessage, let fileMessageData = message.fileMessageData, fileMessageData.isVideo()
+                { return true }
+                else
+                { return false }
+                } as! [ZMConversationMessage]
+        }
+        
+        if sections.contains(.filesAndAudio) {
+            self.fileAndAudioMessages = self.conversation.messages.filter {
+                if let message = $0 as? ZMConversationMessage, let fileMessageData = message.fileMessageData, !fileMessageData.isVideo()
+                { return true }
+                else
+                { return false }
+                } as! [ZMConversationMessage]
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -80,18 +113,17 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func setupNavigationItem() {
-        self.navigationItem.titleView = ConversationTitleView(conversation: self.conversation)
+        self.navigationItem.titleView = ConversationTitleView(conversation: self.conversation, interactive: false)
         
-        let button = IconButton.iconButtonDefault()
-        button.setIcon(.X, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        let button = CollectionsView.closeButton()
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
-        button.accessibilityIdentifier = "close"
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -16)
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
-        self.collectionsView.navigationBar.pushItem(self.navigationItem, animated: false)
+        if self.navigationController?.viewControllers.count > 1 {
+            let backButton = CollectionsView.backButton()
+            backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        }
     }
     
     open override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -103,70 +135,84 @@ final public class CollectionsViewController: UIViewController {
         }
     }
     
+    public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {
+        switch (action) {
+        case .cancel:
+            ZMUserSession.shared().enqueueChanges {
+                message.fileMessageData?.cancelTransfer()
+            }
+        case .present:
+            self.messagePresenter.open(message, targetView: view)
+            
+        default:
+            break
+        }
+    }
+    
     @objc func closeButtonPressed(_ button: UIButton) {
         self.onDismiss?(self)
+    }
+    
+    @objc func backButtonPressed(_ button: UIButton) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }
 
 extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    enum CollectionsSection: UInt {
-        case images = 0
-        case filesAndAudio = 1
-        case videos = 2
-        
-        static func total() -> UInt {
-            return CollectionsSection.videos.rawValue + 1
+    private func elements(for section: CollectionsSectionSet) -> [ZMConversationMessage] {
+        switch(section) {
+        case CollectionsSectionSet.images:
+            return self.imageMessages
+        case CollectionsSectionSet.filesAndAudio:
+            return self.fileAndAudioMessages
+        case CollectionsSectionSet.videos:
+            return self.videoMessages
+        default: fatal("Unknown section")
         }
     }
     
     private func message(for indexPath: IndexPath) -> ZMConversationMessage {
-        guard let section = CollectionsSection(rawValue: UInt(indexPath.section)) else {
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
-
-        switch(section) {
-        case .images:
-            return self.imageMessages[indexPath.item]
-        case .filesAndAudio:
-            return self.fileAndAudioMessages[indexPath.item]
-        case .videos:
-            return self.videoMessages[indexPath.item]
-        }
+        
+        return self.elements(for: section)[indexPath.row]
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Int(CollectionsSection.total())
+        return Int(CollectionsSectionSet.total())
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let section = CollectionsSection(rawValue: UInt(section)) else {
+        guard let section = CollectionsSectionSet(index: UInt(section)) else {
             fatal("Unknown section")
         }
         
         switch(section) {
-        case .images:
+        case CollectionsSectionSet.images:
             return self.imageMessages.count
-        case .filesAndAudio:
+        case CollectionsSectionSet.filesAndAudio:
             return self.fileAndAudioMessages.count
-        case .videos:
+        case CollectionsSectionSet.videos:
             return self.videoMessages.count
+        default: fatal("Unknown section")
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let section = CollectionsSection(rawValue: UInt(indexPath.section)) else {
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
         
         let message = self.message(for: indexPath)
         
         switch(section) {
-        case .images:
+        case CollectionsSectionSet.images:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
             return cell
-        case .filesAndAudio:
+        case CollectionsSectionSet.filesAndAudio:
             if message.fileMessageData!.isAudio() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
                 cell.message = message
@@ -179,20 +225,21 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.delegate = self
                 return cell
             }
-        case .videos:
+        case CollectionsSectionSet.videos:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
             cell.message = message
             cell.delegate = self
             return cell
+        default: fatal("Unknown section")
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let section = CollectionsSection(rawValue: UInt(indexPath.section)) else {
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
         switch(section) {
-        case .images:
+        case CollectionsSectionSet.images:
             var divider = 1
             
             repeat {
@@ -201,47 +248,66 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             
             let size = collectionView.bounds.size.width / CGFloat(divider)
             
-            return CGSize(width: size, height: size)
+            return CGSize(width: size - 1, height: size - 1)
             
-        case .filesAndAudio:
-            return CGSize(width: collectionView.bounds.size.width, height: 56)
-        case .videos:
+        case CollectionsSectionSet.filesAndAudio:
+            return CGSize(width: collectionView.bounds.size.width, height: 64)
+        case CollectionsSectionSet.videos:
             return CGSize(width: collectionView.bounds.size.width, height: (collectionView.bounds.size.width / 4) * 3)
+        default: fatal("Unknown section")
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let section = CollectionsSectionSet(index: UInt(section)) else {
+            fatal("Unknown section")
+        }
+        
+        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 28) : .zero
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return .zero
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
+            fatal("Unknown section")
+        }
+        
+        switch (kind) {
+        case UICollectionElementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionsHeaderView.reuseIdentifier, for: indexPath) as! CollectionsHeaderView
+            header.section = section
+            header.showActionButton = self.sections == .all
+            header.selectionAction = { [weak self] section in
+                guard let `self` = self else {
+                    return
+                }
+                let collectionController = CollectionsViewController(conversation: self.conversation, sections: section)
+                collectionController.analyticsTracker = self.analyticsTracker
+                collectionController.onDismiss = {
+                    _ = $0.navigationController?.popViewController(animated: true)
+                }
+                self.navigationController?.pushViewController(collectionController, animated: true)
+            }
+            return header
+        default:
+            fatal("No supplementary view for \(kind)")
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let message = self.message(for: indexPath)
-       
-        let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
-        
-        let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
-        
-        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>) -> () in
-            shareController.presentingViewController?.dismiss(animated: true) {
-            }
-        }
-        
-        self.present(shareViewController, animated: true, completion: .none)        
+        self.perform(.present, for: message, from: collectionView.cellForItem(at: indexPath)!)
     }
 }
 
 extension CollectionsViewController: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        switch (action) {
-        case .cancel:
-            ZMUserSession.shared().enqueueChanges {
-                view.fileMessage?.fileMessageData?.cancelTransfer()
-            }
-        case .present:
-            guard let targetView = view as? UIView, let message = view.fileMessage else {
-                return
-            }
-            self.messagePresenter.open(message, targetView: targetView)
-            
-        default:
-            break
+        guard let targetView = view as? UIView else {
+            return
         }
+        self.perform(action, for: view.fileMessage!, from: targetView)
     }
 }
