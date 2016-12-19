@@ -296,7 +296,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Int(CollectionsSectionSet.totalVisible())
+        return CollectionsSectionSet.visible.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

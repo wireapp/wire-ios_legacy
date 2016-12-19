@@ -45,10 +45,6 @@ public struct CollectionsSectionSet: OptionSet, Hashable {
     /// Returns visible sections in the display order
     public static let visible: [CollectionsSectionSet] = [images, filesAndAudio, links, loading]
     
-    static func totalVisible() -> UInt {
-        return UInt(self.visible.count)
-    }
-    
     public var hashValue: Int {
         return Int(self.rawValue)
     }
