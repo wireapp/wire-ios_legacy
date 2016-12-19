@@ -35,7 +35,7 @@
     self.conversation = [MockConversation new];
     self.conversation.relatedConnectionState = ZMConnectionStatusAccepted;
     self.conversation.displayName = @"Alan Turing";
-    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
+    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation interactive:YES];
     self.snapshotBackgroundColor = UIColor.whiteColor;
 }
 
@@ -48,7 +48,7 @@
 {
     // when
     self.conversation.securityLevel = ZMConversationSecurityLevelSecure;
-    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
+    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation interactive:YES];
 
     // then
     ZMVerifyView(self.sut);
@@ -58,7 +58,7 @@
 {
     // when
     self.conversation.relatedConnectionState = ZMConnectionStatusSent;
-    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation];
+    self.sut = [[ConversationTitleView alloc] initWithConversation:(ZMConversation *)self.conversation interactive:YES];
 
     // then
     ZMVerifyView(self.sut);

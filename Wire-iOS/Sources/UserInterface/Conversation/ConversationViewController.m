@@ -80,24 +80,6 @@
 #import "Wire-Swift.h"
 
 
-@interface ConversationDetailsTransitioningDelegate : NSObject<UIViewControllerTransitioningDelegate>
-
-@end
-
-
-@implementation ConversationDetailsTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
-{
-    return [[VerticalTransition alloc] initWithOffset:-88];
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    return [[VerticalTransition alloc] initWithOffset:88];
-}
-
-@end
 
 @interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
 
@@ -421,7 +403,7 @@
 
 - (void)setupNavigatiomItem
 {
-    self.titleView = [[ConversationTitleView alloc] initWithConversation:self.conversation];
+    self.titleView = [[ConversationTitleView alloc] initWithConversation:self.conversation interactive:YES];
     
     ZM_WEAK(self);
     self.titleView.tapHandler = ^(UIButton * _Nonnull button) {

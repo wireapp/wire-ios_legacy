@@ -62,7 +62,7 @@ public extension ConversationViewController {
     }
     
     var collectionsBarButtonItem: UIBarButtonItem {
-        return barButtonItem(withType: .search,
+        return barButtonItem(withType: .library,
                              target: self,
                              action: #selector(ConversationViewController.onCollectionButtonPressed(_:)),
                              accessibilityIdentifier: "collection",
@@ -136,11 +136,19 @@ public extension ConversationViewController {
     func onCollectionButtonPressed(_ sender: AnyObject!) {
         let collections = CollectionsViewController(conversation: conversation)
         collections.analyticsTracker = self.analyticsTracker
-        collections.modalPresentationStyle = .overCurrentContext
-        self.parent?.present(collections, animated: true, completion: {
+        
+        let navigationController = UINavigationController(rootViewController: collections)
+        navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
+
+        self.parent?.present(navigationController, animated: true, completion: {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
-        collections.onDismiss = { _ in
+        
+        collections.onDismiss = {[weak self] _ in
+            guard let `self` = self else {
+                return
+            }
+            
             self.parent?.dismiss(animated: true, completion: { 
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })

@@ -64,6 +64,9 @@
     else if ([Message isFileTransferMessage:message]) {
         [self openFileMessage:message targetView:targetView];
     }
+    else if ([Message isImageMessage:message]) {
+        [self openImageMessage:message];
+    }
 }
 
 - (void)openLocationMessage:(id<ZMConversationMessage>)message

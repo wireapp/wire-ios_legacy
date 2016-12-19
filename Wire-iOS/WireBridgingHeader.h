@@ -60,6 +60,7 @@
 #import "SwizzleTransition.h"
 #import "ARCollectionViewMasonryLayout.h"
 #import "ZiphyClient+Convenience.h"
+#import "ConversationDetailsTransitioningDelegate.h"
 
 // View Controllers
 #import "ZClientViewController.h"
