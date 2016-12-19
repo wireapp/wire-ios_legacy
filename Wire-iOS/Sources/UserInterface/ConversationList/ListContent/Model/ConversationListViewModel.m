@@ -215,7 +215,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     debugLogUpdate(change);
 
     if (change.conversationList == [SessionObjectCache sharedCache].conversationList) {
-        [ListOrderDebugHelper logConversationListChange:change currentList:[self.aggregatedItems sectionAtIndex:SectionIndexConversations]];
 
         // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
         // so we prefer to do the simple reload instead.
@@ -258,7 +257,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)applicationWillEnterForeground:(NSNotification *)note
 {
-    [SessionObjectCache.sharedCache.conversationList resort];
     [self reloadConversationListViewModel];
 }
 
