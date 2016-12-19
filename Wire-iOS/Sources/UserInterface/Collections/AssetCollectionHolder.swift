@@ -39,8 +39,6 @@ open class MulticastDelegate<T: Any>: NSObject {
 }
 
 final class AssetCollectionMulticastDelegate: MulticastDelegate<AssetCollectionDelegate> {
-    
-    
 }
 
 extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {

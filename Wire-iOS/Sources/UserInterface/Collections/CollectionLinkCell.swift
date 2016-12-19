@@ -16,24 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 
-final public class CollectionFileCell: UICollectionViewCell, Reusable {
-    private let fileTransferView = FileTransferView()
-    
-    public weak var delegate: TransferViewDelegate? {
-        didSet {
-            self.fileTransferView.delegate = self.delegate
-        }
-    }
+final public class CollectionLinkCell: UICollectionViewCell, Reusable {
+    private let articleView = ArticleView(withImagePlaceholder: true)
+
     public var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message else {
+            guard let message = self.message, let textMessageData = message.textMessageData else {
                 return
             }
-            fileTransferView.configure(for: message, isInitial: true)
+            articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         }
     }
     
@@ -47,6 +41,17 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
         self.loadView()
     }
     
+    func loadView() {
+        self.layoutMargins = UIEdgeInsetsMake(4, 4, 4, 4)
+        
+        self.articleView.delegate = self
+        self.contentView.addSubview(self.articleView)
+        
+        constrain(self.contentView, self.articleView) { contentView, articleView in
+            articleView.edges == contentView.edgesWithinMargins
+        }
+    }
+    
     var isHeightCalculated: Bool = false
     var containerWidth: CGFloat = 320
     
@@ -56,28 +61,13 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
             layoutIfNeeded()
             var desiredSize = layoutAttributes.size
             desiredSize.width = self.containerWidth
-            let size = contentView.systemLayoutSizeFitting(desiredSize)
+            let size = contentView.systemLayoutSizeFitting(desiredSize, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityDefaultLow)
             var newFrame = layoutAttributes.frame
             newFrame.size.height = CGFloat(ceilf(Float(size.height)))
             layoutAttributes.frame = newFrame
             isHeightCalculated = true
         }
         return layoutAttributes
-    }
-    
-    func loadView() {
-        self.fileTransferView.delegate = self.delegate
-        self.fileTransferView.layer.cornerRadius = 4
-        self.fileTransferView.cas_styleClass = "container-view"
-        self.fileTransferView.clipsToBounds = true
-        
-        self.layoutMargins = UIEdgeInsetsMake(4, 4, 4, 4)
-        
-        self.contentView.addSubview(self.fileTransferView)
-
-        constrain(self, self.fileTransferView) { selfView, fileTransferView in
-            fileTransferView.edges == selfView.edgesWithinMargins
-        }
     }
     
     public override func prepareForReuse() {
@@ -87,3 +77,12 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
     }
 }
 
+extension CollectionLinkCell: ArticleViewDelegate {
+    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
+        url.open()
+    }
+    
+    func articleViewDidLongPressView(_ articleView: ArticleView) {
+        // TODO: showing menu
+    }
+}

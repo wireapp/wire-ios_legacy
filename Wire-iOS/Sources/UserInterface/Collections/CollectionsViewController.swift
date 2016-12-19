@@ -25,21 +25,28 @@ final public class CollectionsViewController: UIViewController {
     public var analyticsTracker: AnalyticsTracker?
     public let sections: CollectionsSectionSet
     
-    fileprivate let collectionsView = CollectionsView()
+    fileprivate var collectionsView: CollectionsView!
     fileprivate let messagePresenter = MessagePresenter()
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
     fileprivate var videoMessages: [ZMConversationMessage] = []
+    fileprivate var linkMessages: [ZMConversationMessage] = []
     fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
     fileprivate let collection: AssetCollectionHolder
+    
+    fileprivate var fetchingDone: Bool = false {
+        didSet {
+            self.updateNoElementsState()
+        }
+    }
     
     convenience init(conversation: ZMConversation) {
         
         let assetCollecitonMulticastDelegate = AssetCollectionMulticastDelegate()
         
-        let include = [MessageCategory.image, MessageCategory.file]
-        let exclude = [MessageCategory.GIF, MessageCategory.video]
+        let include: [MessageCategory] = [.link, .image, .file, .video]
+        let exclude: [MessageCategory] = [.GIF]
         
         let assetCollection = AssetCollection(conversation: conversation, including: include, excluding: exclude, delegate: assetCollecitonMulticastDelegate)
         
@@ -48,7 +55,7 @@ final public class CollectionsViewController: UIViewController {
         self.init(collection: holder)
     }
     
-    init(collection: AssetCollectionHolder, sections: CollectionsSectionSet = .all, messages: [ZMConversationMessage] = []) {
+    init(collection: AssetCollectionHolder, sections: CollectionsSectionSet = .all, messages: [ZMConversationMessage] = [], fetchingDone: Bool = false) {
         self.collection = collection
         self.sections = sections
         
@@ -59,8 +66,12 @@ final public class CollectionsViewController: UIViewController {
             self.fileAndAudioMessages = messages
         case CollectionsSectionSet.videos:
             self.videoMessages = messages
+        case CollectionsSectionSet.links:
+            self.linkMessages = messages
         default: break
         }
+        
+        self.fetchingDone = fetchingDone
         
         super.init(nibName: .none, bundle: .none)
         self.collection.assetCollectionDelegate.add(self)
@@ -75,6 +86,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     override public func loadView() {
+        self.collectionsView = CollectionsView()
         self.view = self.collectionsView
     }
     
@@ -89,6 +101,13 @@ final public class CollectionsViewController: UIViewController {
         self.collectionsView.collectionView.dataSource = self
 
         self.setupNavigationItem()
+        self.updateNoElementsState()
+    }
+    
+    private func updateNoElementsState() {
+        if self.isViewLoaded && self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
+            self.collectionsView.noItemsInLibrary = true
+        }
     }
     
     private func setupNavigationItem() {
@@ -98,7 +117,7 @@ final public class CollectionsViewController: UIViewController {
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
-        if self.navigationController?.viewControllers.count > 1 {
+        if !self.inOverviewMode && self.navigationController?.viewControllers.count > 1 {
             let backButton = CollectionsView.backButton()
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -139,8 +158,9 @@ final public class CollectionsViewController: UIViewController {
 
 extension CollectionsViewController: AssetCollectionDelegate {
     public func assetCollectionDidFetch(collection: ZMCollection, messages: [MessageCategory : [ZMMessage]], hasMore: Bool) {
+        
         for messageCategory in messages {
-            let conversationMessages = messageCategory.value as [ZMConversationMessage]
+            let conversationMessages = messageCategory.value.reversed() as [ZMConversationMessage]
             
             if messageCategory.key.contains(.image) {
                 self.imageMessages.append(contentsOf: conversationMessages)
@@ -149,19 +169,29 @@ extension CollectionsViewController: AssetCollectionDelegate {
             if messageCategory.key.contains(.file) {
                 self.fileAndAudioMessages.append(contentsOf: conversationMessages)
             }
+            
+            if messageCategory.key.contains(.link) {
+                self.linkMessages.append(contentsOf: conversationMessages)
+            }
+            
+            if messageCategory.key.contains(.video) {
+                self.videoMessages.append(contentsOf: conversationMessages)
+            }
         }
         
-        self.collectionsView.collectionView.reloadData()
+        if self.isViewLoaded {
+            self.collectionsView.collectionView.reloadData()
+        }
     }
     
     public func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
-        
+        self.fetchingDone = true
     }
 }
 
 extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private func elements(for section: CollectionsSectionSet) -> [ZMConversationMessage] {
+    fileprivate func elements(for section: CollectionsSectionSet) -> [ZMConversationMessage] {
         switch(section) {
         case CollectionsSectionSet.images:
             return self.imageMessages
@@ -169,16 +199,100 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             return self.fileAndAudioMessages
         case CollectionsSectionSet.videos:
             return self.videoMessages
+        case CollectionsSectionSet.links:
+            return self.linkMessages
         default: fatal("Unknown section")
         }
     }
     
-    private func message(for indexPath: IndexPath) -> ZMConversationMessage {
+    fileprivate func numberOfElements(for section: CollectionsSectionSet) -> Int {
+        switch(section) {
+        case CollectionsSectionSet.images:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInGrid : Int.max
+            return min(self.imageMessages.count, max)
+            
+        case CollectionsSectionSet.filesAndAudio:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            return min(self.fileAndAudioMessages.count, max)
+            
+        case CollectionsSectionSet.videos:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            return min(self.videoMessages.count, max)
+            
+        case CollectionsSectionSet.links:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            return min(self.linkMessages.count, max)
+            
+        case CollectionsSectionSet.loading:
+            return self.fetchingDone ? 0 : 1
+            
+        default: fatal("Unknown section")
+        }
+    }
+    
+    fileprivate func totalNumberOfElements() -> Int {
+        return CollectionsSectionSet.visible.map { self.numberOfElements(for: $0) }.reduce(0, +)
+    }
+    
+    fileprivate func moreElementsToSee(in section: CollectionsSectionSet) -> Bool {
+        switch(section) {
+        case CollectionsSectionSet.images:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInGrid : Int.max
+            return self.videoMessages.count > max
+            
+        case CollectionsSectionSet.filesAndAudio:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            return self.fileAndAudioMessages.count > max
+            
+        case CollectionsSectionSet.videos:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            return self.videoMessages.count > max
+            
+        case CollectionsSectionSet.links:
+            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            return self.linkMessages.count > max
+    
+        case CollectionsSectionSet.loading:
+            return false
+            
+        default: fatal("Unknown section")
+        }
+    }
+    
+    fileprivate func message(for indexPath: IndexPath) -> ZMConversationMessage {
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
         
         return self.elements(for: section)[indexPath.row]
+    }
+    
+    fileprivate var inOverviewMode: Bool {
+        return self.sections == .all
+    }
+    
+    fileprivate var girdElementSize: CGSize {
+        let size = self.collectionsView.collectionView.bounds.size.width / CGFloat(self.elementsPerLine)
+        
+        return CGSize(width: size - 1, height: size - 1)
+    }
+    
+    fileprivate var elementsPerLine: Int {
+        var count: Int = 1
+        
+        repeat {
+            count += 1
+        } while (self.collectionsView.collectionView.bounds.size.width / CGFloat(count) > CollectionImageCell.maxCellSize)
+        
+        return count
+    }
+    
+    fileprivate var maxOverviewElementsInGrid: Int {
+        return self.elementsPerLine * 2 // 2 lines of elements
+    }
+    
+    fileprivate var maxOverviewElementsInTable: Int {
+        return 3
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -190,15 +304,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("Unknown section")
         }
         
-        switch(section) {
-        case CollectionsSectionSet.images:
-            return self.imageMessages.count
-        case CollectionsSectionSet.filesAndAudio:
-            return self.fileAndAudioMessages.count
-        case CollectionsSectionSet.videos:
-            return self.videoMessages.count
-        default: fatal("Unknown section")
-        }
+        return self.numberOfElements(for: section)
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -206,55 +312,53 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("Unknown section")
         }
         
-        let message = self.message(for: indexPath)
         
         switch(section) {
         case CollectionsSectionSet.images:
+            let message = self.message(for: indexPath)
+
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
+            cell.cellSize = self.girdElementSize
             return cell
         case CollectionsSectionSet.filesAndAudio:
+            let message = self.message(for: indexPath)
+
             if message.fileMessageData!.isAudio() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
                 cell.message = message
+                cell.containerWidth = collectionView.bounds.size.width
                 cell.delegate = self
                 return cell
             }
             else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFileCell.reuseIdentifier, for: indexPath) as! CollectionFileCell
                 cell.message = message
+                cell.containerWidth = collectionView.bounds.size.width
                 cell.delegate = self
                 return cell
             }
         case CollectionsSectionSet.videos:
+            let message = self.message(for: indexPath)
+
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
             cell.message = message
+            cell.containerWidth = collectionView.bounds.size.width
             cell.delegate = self
             return cell
-        default: fatal("Unknown section")
-        }
-    }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
-            fatal("Unknown section")
-        }
-        switch(section) {
-        case CollectionsSectionSet.images:
-            var divider = 1
-            
-            repeat {
-                divider += 1
-            } while (collectionView.bounds.size.width / CGFloat(divider) > CollectionImageCell.cellSize)
-            
-            let size = collectionView.bounds.size.width / CGFloat(divider)
-            
-            return CGSize(width: size - 1, height: size - 1)
-            
-        case CollectionsSectionSet.filesAndAudio:
-            return CGSize(width: collectionView.bounds.size.width, height: 64)
-        case CollectionsSectionSet.videos:
-            return CGSize(width: collectionView.bounds.size.width, height: (collectionView.bounds.size.width / 4) * 3)
+        case CollectionsSectionSet.links:
+            let message = self.message(for: indexPath)
+
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
+            cell.message = message
+            cell.containerWidth = collectionView.bounds.size.width
+            return cell
+    
+        case CollectionsSectionSet.loading:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLoadingCell.reuseIdentifier, for: indexPath) as! CollectionLoadingCell
+            return cell
+        
         default: fatal("Unknown section")
         }
     }
@@ -264,7 +368,11 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("Unknown section")
         }
         
-        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 28) : .zero
+        if section == CollectionsSectionSet.loading {
+            return .zero
+        }
+        
+        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 32) : .zero
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -278,14 +386,14 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         
         switch (kind) {
         case UICollectionElementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionsHeaderView.reuseIdentifier, for: indexPath) as! CollectionsHeaderView
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as! CollectionHeaderView
             header.section = section
-            header.showActionButton = self.sections == .all
+            header.showActionButton = self.inOverviewMode && self.moreElementsToSee(in: section)
             header.selectionAction = { [weak self] section in
                 guard let `self` = self else {
                     return
                 }
-                let collectionController = CollectionsViewController(collection: self.collection, sections: section, messages: self.elements(for: section))
+                let collectionController = CollectionsViewController(collection: self.collection, sections: section, messages: self.elements(for: section), fetchingDone: self.fetchingDone)
                 collectionController.analyticsTracker = self.analyticsTracker
                 collectionController.onDismiss = {
                     _ = $0.navigationController?.popViewController(animated: true)

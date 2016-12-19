@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc final public class CollectionsHeaderView: UICollectionReusableView, Reusable {
+@objc final public class CollectionHeaderView: UICollectionReusableView, Reusable {
     
     public var section: CollectionsSectionSet = .none {
         didSet {
@@ -60,7 +60,7 @@ import Cartography
         self.actionButton.contentHorizontalAlignment = .right
         self.actionButton.accessibilityLabel = "open all"
         self.actionButton.setTitle("collections.section.all.button".localized.uppercased(), for: .normal)
-        self.actionButton.addTarget(self, action: #selector(CollectionsHeaderView.didSelect(_:)), for: .touchUpInside)
+        self.actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
         self.addSubview(self.actionButton)
         
         constrain(self, self.titleLabel, self.actionButton) { selfView, titleLabel, actionButton in

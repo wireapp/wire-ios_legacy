@@ -21,7 +21,7 @@ import ZMCDataModel
 
 
 /// This option set represents the collection sections.
-public struct CollectionsSectionSet: OptionSet {
+public struct CollectionsSectionSet: OptionSet, Hashable {
     public let rawValue: UInt
     
     public init(rawValue: UInt) {
@@ -37,14 +37,23 @@ public struct CollectionsSectionSet: OptionSet {
     public static let filesAndAudio = CollectionsSectionSet(rawValue: 1 << 1)
     public static let videos = CollectionsSectionSet(rawValue: 1 << 2)
     public static let links = CollectionsSectionSet(rawValue: 1 << 3)
+    public static let loading = CollectionsSectionSet(rawValue: 1 << 4)
     
     /// Returns all possible section types
-    public static let all: CollectionsSectionSet = [.images, .filesAndAudio, .videos, .links]
+    public static let all: CollectionsSectionSet = [.images, .filesAndAudio, .videos, .links, .loading]
     
     /// Returns visible sections in the display order
-    public static let visible: [CollectionsSectionSet] = [images, filesAndAudio, videos] // links
+    public static let visible: [CollectionsSectionSet] = [images, filesAndAudio, links, loading]
     
     static func totalVisible() -> UInt {
         return UInt(self.visible.count)
     }
+    
+    public var hashValue: Int {
+        return Int(self.rawValue)
+    }
+}
+
+public func ==(lhs: CollectionsSectionSet, rhs: CollectionsSectionSet) -> Bool {
+    return lhs.rawValue == rhs.rawValue
 }

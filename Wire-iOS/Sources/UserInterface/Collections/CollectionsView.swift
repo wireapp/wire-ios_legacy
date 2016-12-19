@@ -23,6 +23,13 @@ import Cartography
 @objc public final class CollectionsView: UIView {
     let collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView
+    let noItemsLabel = UILabel()
+    
+    var noItemsInLibrary: Bool = false {
+        didSet {
+            self.noItemsLabel.isHidden = !self.noItemsInLibrary
+        }
+    }
     
     override init(frame: CGRect) {
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
@@ -32,12 +39,15 @@ import Cartography
         self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 1
         self.collectionViewLayout.minimumInteritemSpacing = 1
-        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        self.collectionViewLayout.estimatedItemSize = CGSize(width: 320, height: 64)
         self.collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
         self.collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
         self.collectionView.register(CollectionAudioCell.self, forCellWithReuseIdentifier: CollectionAudioCell.reuseIdentifier)
         self.collectionView.register(CollectionVideoCell.self, forCellWithReuseIdentifier: CollectionVideoCell.reuseIdentifier)
-        self.collectionView.register(CollectionsHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CollectionsHeaderView.reuseIdentifier)
+        self.collectionView.register(CollectionLinkCell.self, forCellWithReuseIdentifier: CollectionLinkCell.reuseIdentifier)
+        self.collectionView.register(CollectionLoadingCell.self, forCellWithReuseIdentifier: CollectionLoadingCell.reuseIdentifier)
+        self.collectionView.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
@@ -46,6 +56,11 @@ import Cartography
         self.collectionView.backgroundColor = UIColor.clear
         
         self.addSubview(self.collectionView)
+
+        self.noItemsLabel.text = "collections.section.no_items".localized.uppercased()
+        self.noItemsLabel.numberOfLines = 0
+        self.noItemsLabel.isHidden = true
+        self.addSubview(self.noItemsLabel)
         
         self.constrainViews()
     }
@@ -72,8 +87,11 @@ import Cartography
     }
     
     private func constrainViews() {
-        constrain(self, self.collectionView) { (selfView: LayoutProxy, collectionView: LayoutProxy) -> () in
+        constrain(self, self.collectionView, self.noItemsLabel) { (selfView: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy) -> () in
             collectionView.edges == selfView.edges
+            noItemsLabel.center == selfView.center
+            noItemsLabel.left >= selfView.left + 24
+            noItemsLabel.right <= selfView.right - 24
         }
     }
     

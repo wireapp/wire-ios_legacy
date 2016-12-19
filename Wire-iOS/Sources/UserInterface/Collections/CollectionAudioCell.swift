@@ -45,6 +45,24 @@ final public class CollectionAudioCell: UICollectionViewCell, Reusable {
         self.loadView()
     }
     
+    var isHeightCalculated: Bool = false
+    var containerWidth: CGFloat = 320
+    
+    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        if !isHeightCalculated {
+            setNeedsLayout()
+            layoutIfNeeded()
+            var desiredSize = layoutAttributes.size
+            desiredSize.width = self.containerWidth
+            let size = contentView.systemLayoutSizeFitting(desiredSize)
+            var newFrame = layoutAttributes.frame
+            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
+            layoutAttributes.frame = newFrame
+            isHeightCalculated = true
+        }
+        return layoutAttributes
+    }
+    
     func loadView() {
         self.audioMessageView.delegate = self.delegate
         self.audioMessageView.layer.cornerRadius = 4
@@ -63,5 +81,6 @@ final public class CollectionAudioCell: UICollectionViewCell, Reusable {
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
+        self.isHeightCalculated = false
     }
 }
