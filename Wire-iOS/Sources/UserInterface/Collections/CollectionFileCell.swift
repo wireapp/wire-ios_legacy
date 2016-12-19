@@ -58,6 +58,7 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
             desiredSize.width = self.containerWidth
             let size = contentView.systemLayoutSizeFitting(desiredSize)
             var newFrame = layoutAttributes.frame
+            newFrame.size.width = self.containerWidth
             newFrame.size.height = CGFloat(ceilf(Float(size.height)))
             layoutAttributes.frame = newFrame
             isHeightCalculated = true

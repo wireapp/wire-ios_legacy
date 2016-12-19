@@ -20,6 +20,13 @@
 import Foundation
 import ZMCDataModel
 
+extension CategoryMatch {
+    init(including: ZMCDataModel.MessageCategory, excluding: ZMCDataModel.MessageCategory) {
+        self.including = including
+        self.excluding = excluding
+    }
+}
+
 final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public var analyticsTracker: AnalyticsTracker?
@@ -44,11 +51,13 @@ final public class CollectionsViewController: UIViewController {
     convenience init(conversation: ZMConversation) {
         
         let assetCollecitonMulticastDelegate = AssetCollectionMulticastDelegate()
+
+        let matchImages = CategoryMatch(including: .image, excluding: .GIF)
+        let matchFiles = CategoryMatch(including: .file, excluding: [.video])
+        let matchVideo = CategoryMatch(including: .video, excluding: [])
+        let matchLink = CategoryMatch(including: .link, excluding: [])
         
-        let include: [MessageCategory] = [.link, .image, .file, .video]
-        let exclude: [MessageCategory] = [.GIF]
-        
-        let assetCollection = AssetCollection(conversation: conversation, including: include, excluding: exclude, delegate: assetCollecitonMulticastDelegate)
+        let assetCollection = AssetCollection(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink], delegate: assetCollecitonMulticastDelegate)
         
         let holder = AssetCollectionHolder(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: assetCollecitonMulticastDelegate)
         
@@ -157,24 +166,24 @@ final public class CollectionsViewController: UIViewController {
 }
 
 extension CollectionsViewController: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [MessageCategory : [ZMMessage]], hasMore: Bool) {
+    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
             let conversationMessages = messageCategory.value.reversed() as [ZMConversationMessage]
             
-            if messageCategory.key.contains(.image) {
+            if messageCategory.key.including.contains(.image) {
                 self.imageMessages.append(contentsOf: conversationMessages)
             }
             
-            if messageCategory.key.contains(.file) {
+            if messageCategory.key.including.contains(.file) {
                 self.fileAndAudioMessages.append(contentsOf: conversationMessages)
             }
             
-            if messageCategory.key.contains(.link) {
+            if messageCategory.key.including.contains(.link) {
                 self.linkMessages.append(contentsOf: conversationMessages)
             }
             
-            if messageCategory.key.contains(.video) {
+            if messageCategory.key.including.contains(.video) {
                 self.videoMessages.append(contentsOf: conversationMessages)
             }
         }
@@ -409,6 +418,18 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let message = self.message(for: indexPath)
         self.perform(.present, for: message, from: collectionView.cellForItem(at: indexPath)!)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return false
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        
     }
 }
 

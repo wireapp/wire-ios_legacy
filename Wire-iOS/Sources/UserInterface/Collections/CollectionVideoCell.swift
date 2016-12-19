@@ -56,6 +56,7 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
             desiredSize.width = self.containerWidth
             let size = contentView.systemLayoutSizeFitting(desiredSize)
             var newFrame = layoutAttributes.frame
+            newFrame.size.width = self.containerWidth
             newFrame.size.height = CGFloat(ceilf(Float(size.height)))
             layoutAttributes.frame = newFrame
             isHeightCalculated = true
@@ -65,10 +66,12 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
     
     func loadView() {
         self.videoMessageView.delegate = self.delegate
+        self.videoMessageView.clipsToBounds = true
         self.contentView.addSubview(self.videoMessageView)
         
-        constrain(self, self.videoMessageView) { selfView, videoMessageView in
-            videoMessageView.edges == selfView.edges
+        constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
+            videoMessageView.edges == contentView.edges
+            videoMessageView.height == videoMessageView.width * (4.0 / 3.0)
         }
     }
     

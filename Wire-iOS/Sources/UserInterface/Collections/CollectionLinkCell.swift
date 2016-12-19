@@ -61,8 +61,9 @@ final public class CollectionLinkCell: UICollectionViewCell, Reusable {
             layoutIfNeeded()
             var desiredSize = layoutAttributes.size
             desiredSize.width = self.containerWidth
-            let size = contentView.systemLayoutSizeFitting(desiredSize, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityDefaultLow)
+            let size = contentView.systemLayoutSizeFitting(desiredSize)
             var newFrame = layoutAttributes.frame
+            newFrame.size.width = self.containerWidth
             newFrame.size.height = CGFloat(ceilf(Float(size.height)))
             layoutAttributes.frame = newFrame
             isHeightCalculated = true
