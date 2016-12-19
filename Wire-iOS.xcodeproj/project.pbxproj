@@ -549,6 +549,8 @@
 		879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */; };
 		8797B5891CC9196900F3659B /* AVAsset+VideoConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8797B5881CC9196900F3659B /* AVAsset+VideoConvert.m */; };
 		8798C51A1C3ACDF700678AD7 /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8798C5191C3ACDF700678AD7 /* NoHistoryViewController.m */; };
+		87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */; };
+		87A15FCE1E07EAB400AED79B /* AssetCollectionHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FCD1E07EAB400AED79B /* AssetCollectionHolder.swift */; };
 		87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9C1D34FEF400105D44 /* audio-notifications */; };
 		87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A752161E002F6C004317DB /* ConversationRootViewController.swift */; };
 		87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */; };
@@ -1724,6 +1726,8 @@
 		8797B5881CC9196900F3659B /* AVAsset+VideoConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+VideoConvert.m"; sourceTree = "<group>"; };
 		8798C5181C3ACDF700678AD7 /* NoHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoHistoryViewController.h; sourceTree = "<group>"; };
 		8798C5191C3ACDF700678AD7 /* NoHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoHistoryViewController.m; sourceTree = "<group>"; };
+		87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsSectionSet.swift; sourceTree = "<group>"; };
+		87A15FCD1E07EAB400AED79B /* AssetCollectionHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCollectionHolder.swift; sourceTree = "<group>"; };
 		87A418BD1C0CAB1A006FA803 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		87A4DA9C1D34FEF400105D44 /* audio-notifications */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "audio-notifications"; sourceTree = "<group>"; };
 		87A4DA9E1D34FF0400105D44 /* first_message.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = first_message.caf; sourceTree = "<group>"; };
@@ -3648,6 +3652,8 @@
 		87D56DF41E003A4400DFF722 /* Collections */ = {
 			isa = PBXGroup;
 			children = (
+				87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */,
+				87A15FCD1E07EAB400AED79B /* AssetCollectionHolder.swift */,
 				87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */,
 				87D56DF71E003D9300DFF722 /* CollectionsView.swift */,
 				87D56DF91E0046FE00DFF722 /* CollectionImageCell.swift */,
@@ -5477,6 +5483,7 @@
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
 				871BBFFE1D34F56300DF0793 /* Analytics+Metrics.m in Sources */,
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,
+				87A15FCE1E07EAB400AED79B /* AssetCollectionHolder.swift in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
 				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
 				54F7C27F1D74367E004D8087 /* AddressBookHelper.swift in Sources */,
@@ -5526,6 +5533,7 @@
 				160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */,
 				875A23101ADEA1A200111C88 /* CountryCodeBaseTableViewController.m in Sources */,
 				871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */,
+				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
 				874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */,
 				162CFAA11AE4FA7D0078FB87 /* PhoneSignInViewController.m in Sources */,
 				871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */,
