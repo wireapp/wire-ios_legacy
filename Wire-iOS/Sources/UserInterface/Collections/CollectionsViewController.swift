@@ -32,7 +32,9 @@ final public class CollectionsViewController: UIViewController {
     public var analyticsTracker: AnalyticsTracker?
     public let sections: CollectionsSectionSet
     
-    fileprivate var collectionsView: CollectionsView!
+    fileprivate var contentView: CollectionsView! {
+        return self.view as! CollectionsView
+    }
     fileprivate let messagePresenter = MessagePresenter()
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
@@ -45,6 +47,8 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var fetchingDone: Bool = false {
         didSet {
             self.updateNoElementsState()
+            
+            self.contentView.collectionView.reloadData()
         }
     }
     
@@ -95,8 +99,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     override public func loadView() {
-        self.collectionsView = CollectionsView()
-        self.view = self.collectionsView
+        self.view = CollectionsView()
     }
     
     override public func viewDidLoad() {
@@ -106,8 +109,8 @@ final public class CollectionsViewController: UIViewController {
         self.messagePresenter.modalTargetController = self
         self.messagePresenter.analyticsTracker = self.analyticsTracker
 
-        self.collectionsView.collectionView.delegate = self
-        self.collectionsView.collectionView.dataSource = self
+        self.contentView.collectionView.delegate = self
+        self.contentView.collectionView.dataSource = self
 
         self.setupNavigationItem()
         self.updateNoElementsState()
@@ -115,7 +118,7 @@ final public class CollectionsViewController: UIViewController {
     
     private func updateNoElementsState() {
         if self.isViewLoaded && self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
-            self.collectionsView.noItemsInLibrary = true
+            self.contentView.noItemsInLibrary = true
         }
     }
     
@@ -189,7 +192,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
         }
         
         if self.isViewLoaded {
-            self.collectionsView.collectionView.reloadData()
+            self.contentView.collectionView.reloadData()
         }
     }
     
@@ -281,7 +284,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     fileprivate var girdElementSize: CGSize {
-        let size = self.collectionsView.collectionView.bounds.size.width / CGFloat(self.elementsPerLine)
+        let size = self.contentView.collectionView.bounds.size.width / CGFloat(self.elementsPerLine)
         
         return CGSize(width: size - 1, height: size - 1)
     }
@@ -291,7 +294,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         
         repeat {
             count += 1
-        } while (self.collectionsView.collectionView.bounds.size.width / CGFloat(count) > CollectionImageCell.maxCellSize)
+        } while (self.contentView.collectionView.bounds.size.width / CGFloat(count) > CollectionImageCell.maxCellSize)
         
         return count
     }

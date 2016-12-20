@@ -19,37 +19,35 @@
 import Foundation
 import Cartography
 
-final public class CollectionLinkCell: UICollectionViewCell, Reusable {
-    private let articleView = ArticleView(withImagePlaceholder: true)
+final public class CollectionLinkCell: CollectionCell {
+    private var articleView: ArticleView? = .none
 
-    public var message: ZMConversationMessage? {
-        didSet {
-            guard let message = self.message, let textMessageData = message.textMessageData else {
-                return
-            }
-            articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
-        }
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadView()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.loadView()
-    }
-    
-    func loadView() {
-        self.layoutMargins = UIEdgeInsetsMake(4, 4, 4, 4)
+    func createArticleView(withImagePlaceholder: Bool) -> ArticleView {
+        let articleView = ArticleView(withImagePlaceholder: withImagePlaceholder)
+        articleView.delegate = self
+        self.contentView.addSubview(articleView)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(4, 16, 4, 16)
         
-        self.articleView.delegate = self
-        self.contentView.addSubview(self.articleView)
-        
-        constrain(self.contentView, self.articleView) { contentView, articleView in
+        constrain(self.contentView, articleView) { contentView, articleView in
             articleView.edges == contentView.edgesWithinMargins
         }
+        
+        self.articleView = articleView
+        return articleView
+    }
+
+    override func updateForMessage(changeInfo: MessageChangeInfo?) {
+        super.updateForMessage(changeInfo: changeInfo)
+        
+        guard let message = self.message, let textMessageData = message.textMessageData else {
+            return
+        }
+        
+        message.requestImageDownload()
+        
+        self.articleView = nil
+        
+        self.createArticleView(withImagePlaceholder: textMessageData.hasImageData).configure(withTextMessageData: textMessageData, obfuscated: false)
     }
     
     var isHeightCalculated: Bool = false

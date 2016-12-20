@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-final public class CollectionFileCell: UICollectionViewCell, Reusable {
+final public class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
     
     public weak var delegate: TransferViewDelegate? {
@@ -28,13 +28,15 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
             self.fileTransferView.delegate = self.delegate
         }
     }
-    public var message: ZMConversationMessage? {
-        didSet {
-            guard let message = self.message else {
-                return
-            }
-            fileTransferView.configure(for: message, isInitial: true)
+    
+    override func updateForMessage(changeInfo: MessageChangeInfo?) {
+        super.updateForMessage(changeInfo: changeInfo)
+        
+        guard let message = self.message else {
+            return
         }
+        
+        fileTransferView.configure(for: message, isInitial: changeInfo == .none)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -72,12 +74,12 @@ final public class CollectionFileCell: UICollectionViewCell, Reusable {
         self.fileTransferView.cas_styleClass = "container-view"
         self.fileTransferView.clipsToBounds = true
         
-        self.layoutMargins = UIEdgeInsetsMake(4, 4, 4, 4)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(4, 16, 4, 16)
         
         self.contentView.addSubview(self.fileTransferView)
 
-        constrain(self, self.fileTransferView) { selfView, fileTransferView in
-            fileTransferView.edges == selfView.edgesWithinMargins
+        constrain(self.contentView, self.fileTransferView) { contentView, fileTransferView in
+            fileTransferView.edges == contentView.edgesWithinMargins
         }
     }
     

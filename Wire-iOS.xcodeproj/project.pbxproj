@@ -554,6 +554,8 @@
 		87A15FDF1E08318B00AED79B /* CollectionLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FDE1E08318B00AED79B /* CollectionLoadingCell.swift */; };
 		87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FE01E08339500AED79B /* CollectionLinkCell.swift */; };
 		87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9C1D34FEF400105D44 /* audio-notifications */; };
+		87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A540A71E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift */; };
+		87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A540A91E094BA3009028C5 /* CollectionCell.swift */; };
 		87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A752161E002F6C004317DB /* ConversationRootViewController.swift */; };
 		87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */; };
 		87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */; };
@@ -1741,6 +1743,8 @@
 		87A4DAA11D34FF0400105D44 /* new_message.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_message.caf; sourceTree = "<group>"; };
 		87A4DAA21D34FF0400105D44 /* ping_from_them.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ping_from_them.caf; sourceTree = "<group>"; };
 		87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ringing_from_them_long.caf; sourceTree = "<group>"; };
+		87A540A71E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignedFlowLayout.swift; sourceTree = "<group>"; };
+		87A540A91E094BA3009028C5 /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		87A752161E002F6C004317DB /* ConversationRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRootViewController.swift; sourceTree = "<group>"; };
 		87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscationView.swift; sourceTree = "<group>"; };
 		87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationInputBarViewController+Files.m"; sourceTree = "<group>"; };
@@ -3665,7 +3669,9 @@
 				87A15FCD1E07EAB400AED79B /* AssetCollectionHolder.swift */,
 				87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */,
 				87D56DF71E003D9300DFF722 /* CollectionsView.swift */,
+				87A540A71E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift */,
 				87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */,
+				87A540A91E094BA3009028C5 /* CollectionCell.swift */,
 				87D56DF91E0046FE00DFF722 /* CollectionImageCell.swift */,
 				87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */,
 				87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */,
@@ -5828,6 +5834,7 @@
 				87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */,
 				874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */,
 				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,
+				87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */,
 				871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */,
 				87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */,
 				871BC01D1D34F56300DF0793 /* AnalyticsTracker+Media.m in Sources */,
@@ -5895,6 +5902,7 @@
 				87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */,
 				875D48D11A6D087F00BB17B5 /* ConversationListViewController.m in Sources */,
 				871BC0221D34F56300DF0793 /* AnalyticsTracker+Registration.m in Sources */,
+				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
 				16A2C6721AA8AA6500DC2905 /* CameraControlsViewController.m in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,

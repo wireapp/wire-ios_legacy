@@ -22,7 +22,7 @@ import Cartography
 import CocoaLumberjackSwift
 import WireExtensionComponents
 
-final public class CollectionImageCell: UICollectionViewCell, Reusable {
+final public class CollectionImageCell: CollectionCell {
     static var imageCache: ImageCache {
         let cache = ImageCache(name: "CollectionImageCell.imageCache")
         cache.maxConcurrentOperationCount = 4
@@ -36,28 +36,19 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
     
     public var cellSize: CGSize = .zero
     
-    var message: ZMConversationMessage? = .none {
+    override var message: ZMConversationMessage? {
         didSet {
             guard let message = self.message, let _ = message.imageMessageData else {
                 self.imageView.image = .none
                 return
             }
             message.requestImageDownload()
-            
-            self.loadImage()
-            ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
-            self.messageObserverToken = ZMMessageNotification.add(self, for: self.message)
         }
     }
-    
-    var messageObserverToken: ZMMessageObserverOpaqueToken? = .none
-    
+        
     private let imageView = FLAnimatedImageView()
     private let loadingView = ThreeDotsLoadingView()
     
-    deinit {
-        ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
-    }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -98,10 +89,23 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
         self.isHeightCalculated = false
     }
     
+    override func updateForMessage(changeInfo: MessageChangeInfo?) {
+        super.updateForMessage(changeInfo: changeInfo)
+        
+        guard let changeInfo = changeInfo else {
+            self.loadImage()
+            return
+        }
+        
+        if changeInfo.imageChanged {
+            self.loadImage()
+        }
+    }
+    
     fileprivate func loadImage() {
         guard let imageMessageData = self.message?.imageMessageData else {
             self.imageView.image = .none
-            fatal("Message is not an image")
+            return
         }
         
         self.imageView.isHidden = true
@@ -147,10 +151,3 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
     }
 }
 
-extension CollectionImageCell: ZMMessageObserver {
-    public func messageDidChange(_ changeInfo: MessageChangeInfo!) {
-        if changeInfo.imageChanged {
-            self.loadImage()
-        }
-    }
-}

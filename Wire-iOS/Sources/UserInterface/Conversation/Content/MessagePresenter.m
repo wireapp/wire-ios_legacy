@@ -63,6 +63,7 @@
     }
     else if ([Message isFileTransferMessage:message]) {
         if (message.fileMessageData.fileURL == nil) {
+            self.waitingForFileDownload = YES;
             [message requestFileDownload];
         }
         else {

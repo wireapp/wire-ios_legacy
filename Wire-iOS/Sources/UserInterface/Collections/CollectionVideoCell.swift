@@ -19,19 +19,11 @@
 import Foundation
 import Cartography
 
-final public class CollectionVideoCell: UICollectionViewCell, Reusable {
+final public class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
     public weak var delegate: TransferViewDelegate? {
         didSet {
             self.videoMessageView.delegate = self.delegate
-        }
-    }
-    public var message: ZMConversationMessage? {
-        didSet {
-            guard let message = self.message else {
-                return
-            }
-            videoMessageView.configure(for: message, isInitial: true)
         }
     }
     
@@ -43,6 +35,16 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.loadView()
+    }
+    
+    override func updateForMessage(changeInfo: MessageChangeInfo?) {
+        super.updateForMessage(changeInfo: changeInfo)
+        
+        guard let message = self.message else {
+            return
+        }
+        
+        videoMessageView.configure(for: message, isInitial: true)
     }
     
     var isHeightCalculated: Bool = false

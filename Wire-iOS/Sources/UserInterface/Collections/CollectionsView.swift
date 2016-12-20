@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 @objc public final class CollectionsView: UIView {
-    let collectionViewLayout = UICollectionViewFlowLayout()
+    let collectionViewLayout = CollectionViewLeftAlignedFlowLayout()
     var collectionView: UICollectionView
     let noItemsLabel = UILabel()
     
