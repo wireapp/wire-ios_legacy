@@ -450,8 +450,9 @@ extension CollectionsViewController: CollectionCellDelegate {
             if Message.isFileTransferMessage(message) {
                 self.perform(action, for: message, from: cell)
             }
+            else if let linkPreview = message.textMessageData?.linkPreview {
+                linkPreview.openableURL?.open()
+            }
         }
-        
-        
     }
 }

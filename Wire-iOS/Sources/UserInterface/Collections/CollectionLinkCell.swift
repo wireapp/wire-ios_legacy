@@ -24,7 +24,7 @@ final public class CollectionLinkCell: CollectionCell {
 
     func createArticleView(withImagePlaceholder: Bool) -> ArticleView {
         let articleView = ArticleView(withImagePlaceholder: withImagePlaceholder)
-        articleView.delegate = self
+        articleView.isUserInteractionEnabled = false
         self.contentView.addSubview(articleView)
         self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
         
@@ -76,15 +76,5 @@ final public class CollectionLinkCell: CollectionCell {
         super.prepareForReuse()
         self.message = .none
         self.isHeightCalculated = false
-    }
-}
-
-extension CollectionLinkCell: ArticleViewDelegate {
-    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
-        url.open()
-    }
-    
-    func articleViewDidLongPressView(_ articleView: ArticleView) {
-        // TODO: showing menu
     }
 }
