@@ -158,7 +158,7 @@ struct HandleChangeState {
     /// This function does not update the `HandleChangeState` itself.
     func validate(_ handle: String) throws {
         let subset = CharacterSet(charactersIn: handle).isSubset(of: HandleChangeState.allowedCharacters)
-        guard subset else { throw ValidationError.invalidCharacter }
+        guard subset && handle.isEqualToUnicodeName else { throw ValidationError.invalidCharacter }
         guard handle.characters.count >= HandleChangeState.allowedLength.lowerBound else { throw ValidationError.tooShort }
         guard handle.characters.count <= HandleChangeState.allowedLength.upperBound else { throw ValidationError.tooLong }
         guard handle != currentHandle else { throw ValidationError.sameAsPrevious }
@@ -358,3 +358,16 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     }
 }
 
+fileprivate extension String {
+
+    var isEqualToUnicodeName: Bool {
+        if #available(iOS 9, *) {
+            return applyingTransform(.toUnicodeName, reverse: false) == self
+        } else {
+            let ref = NSMutableString(string: self) as CFMutableString
+            CFStringTransform(ref, nil, kCFStringTransformToUnicodeName, false)
+            return ref as String == self
+        }
+    }
+    
+}

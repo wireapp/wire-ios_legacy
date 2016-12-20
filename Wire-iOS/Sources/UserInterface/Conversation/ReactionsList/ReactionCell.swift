@@ -23,35 +23,57 @@ import Classy
 
 @objc public class ReactionCell: UICollectionViewCell, Reusable {
     public let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
-    public let userNameLabel = UILabel()
+    public let userDisplayNameLabel = UILabel()
+    public let usernameLabel = UILabel()
+
+    var displayNameVerticalConstraint: NSLayoutConstraint?
+    var displayNameTopConstraint: NSLayoutConstraint?
     
     public var user: ZMUser? {
         didSet {
             guard let user = self.user else {
-                self.userNameLabel.text = ""
+                self.userDisplayNameLabel.text = ""
+                self.usernameLabel.text = ""
                 return
             }
             
             self.userImageView.user = user
-            self.userNameLabel.text = user.displayName
+            self.userDisplayNameLabel.text = user.displayName
+
+            if let handle = user.handle {
+                displayNameTopConstraint?.isActive = true
+                displayNameVerticalConstraint?.isActive = false
+                usernameLabel.text = "@" + handle
+            } else {
+                displayNameTopConstraint?.isActive = false
+                displayNameVerticalConstraint?.isActive = true
+                usernameLabel.text = ""
+            }
         }
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.contentView.addSubview(self.userNameLabel)
+        self.contentView.addSubview(self.userDisplayNameLabel)
+        self.contentView.addSubview(self.usernameLabel)
         self.contentView.addSubview(self.userImageView)
         
-        constrain(self.contentView, self.userImageView, self.userNameLabel) { contentView, userImageView, userNameLabel in
-            userImageView.left == contentView.left + 24
+        constrain(self.contentView, self.userImageView, self.userDisplayNameLabel, self.usernameLabel) { contentView, userImageView, userDisplayNameLabel, usernameLabel in
+            userImageView.leading == contentView.leading + 24
             userImageView.width == userImageView.height
             userImageView.top == contentView.top + 8
             userImageView.bottom == contentView.bottom - 8
             
-            userNameLabel.left == userImageView.right + 24
-            userNameLabel.centerY == userImageView.centerY
-            userNameLabel.right <= contentView.right - 24
+            userDisplayNameLabel.leading == userImageView.trailing + 24
+            userDisplayNameLabel.trailing <= contentView.trailing - 24
+
+            usernameLabel.top == contentView.centerY
+            usernameLabel.leading == userDisplayNameLabel.leading
+            usernameLabel.trailing <= contentView.trailing - 24
+
+            displayNameTopConstraint = userDisplayNameLabel.bottom == contentView.centerY
+            displayNameVerticalConstraint = userDisplayNameLabel.centerY == userImageView.centerY
         }
         
         CASStyler.default().styleItem(self)

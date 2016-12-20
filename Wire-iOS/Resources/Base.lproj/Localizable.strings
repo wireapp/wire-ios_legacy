@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Search by name";
 "contacts_ui.invite_others" = "Invite others";
-"contacts_ui.name_in_contacts" = "%@ in address book";
+"contacts_ui.name_in_contacts" = "%@ in Contacts";
 "contacts_ui.connection_request" = "Requested to connect";
 "contacts_ui.action_button.invite" = "Invite";
 "contacts_ui.action_button.open" = "Open";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Tap contacts to start a conversation";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contacts";
+"bottom_bar.contacts_button.title" = "people";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.in_address_book" = "in Contacts";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "This will call %d people";
 "conversation.call.many_participants_confirmation.call" = "Call";
 
-"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.in_address_book" = "in Contacts";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";

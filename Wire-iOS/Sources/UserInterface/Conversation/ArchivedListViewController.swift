@@ -25,7 +25,6 @@ import Cartography
 @objc protocol ArchivedListViewControllerDelegate: class {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController)
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
-    func archivedListViewController(_ controller: ArchivedListViewController, wantsActionMenuForConversation conversation: ZMConversation)
 }
 
 // MARK: - ArchivedListViewController
@@ -177,6 +176,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
 extension ArchivedListViewController: ConversationListCellDelegate {
     func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
-        delegate?.archivedListViewController(self, wantsActionMenuForConversation: cell.conversation)
+        guard let sheet = ActionSheetController.dialog(forConversationDetails: cell.conversation, style: .dark) else { return }
+        present(sheet, animated: true, completion: nil)
     }
 }

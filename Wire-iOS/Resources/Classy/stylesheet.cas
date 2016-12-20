@@ -1493,9 +1493,14 @@ ReactionCell {
     contentView: @{
         backgroundColor: $color-text-background;
     }
-    userNameLabel: @{
+    userDisplayNameLabel: @{
         font: $font-normal;
         textColor: $color-text-foreground;
+    }
+
+    usernameLabel: @{
+        font: $font-small-medium;
+        textColor: $color-text-dimmed;
     }
 }
 

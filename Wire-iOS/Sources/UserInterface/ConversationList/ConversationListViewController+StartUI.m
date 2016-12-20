@@ -56,6 +56,7 @@
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
                     conversation = user.oneToOneConversation;
+                    [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
                     [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                                 focusOnView:YES
                                                                                    animated:YES];

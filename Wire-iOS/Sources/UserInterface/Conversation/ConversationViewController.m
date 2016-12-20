@@ -887,6 +887,7 @@
     if (note.participantsChanged || note.connectionStateChanged) {
         [self updateRightNavigationItemsButtons];
         [self updateOutgoingConnectionVisibility];
+        [self.contentViewController updateTableViewHeaderView];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
