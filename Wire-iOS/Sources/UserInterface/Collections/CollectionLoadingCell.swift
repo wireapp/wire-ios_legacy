@@ -25,12 +25,13 @@ import Cartography
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(self.loadingView)
+        self.contentView.addSubview(self.loadingView)
+        self.contentView.clipsToBounds = true
         
         self.loadingView.startAnimating()
         
-        constrain(self, self.loadingView) { selfView, loadingView in
-            loadingView.center == selfView.center
+        constrain(self.contentView, self.loadingView) { contentView, loadingView in
+            loadingView.center == contentView.center
         }
     }
     
@@ -39,11 +40,14 @@ import Cartography
     }
     
     var isHeightCalculated: Bool = false
-    
+    var containerWidth: CGFloat = 320
+    var collapsed: Bool = false
+
     override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         if !isHeightCalculated {
             var newFrame = layoutAttributes.frame
-            newFrame.size.height = 64
+            newFrame.size.height = self.collapsed ? 0 : 64
+            newFrame.size.width = self.containerWidth
             layoutAttributes.frame = newFrame
             isHeightCalculated = true
         }

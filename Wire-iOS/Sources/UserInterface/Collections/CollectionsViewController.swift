@@ -46,14 +46,14 @@ final public class CollectionsViewController: UIViewController {
     
     fileprivate var fetchingDone: Bool = false {
         didSet {
-            self.updateNoElementsState()
-            
-            self.contentView.collectionView.reloadData()
+            if self.isViewLoaded {
+                self.updateNoElementsState()
+                self.contentView.collectionView.reloadData()
+            }
         }
     }
     
     convenience init(conversation: ZMConversation) {
-        
         let assetCollecitonMulticastDelegate = AssetCollectionMulticastDelegate()
 
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
@@ -117,7 +117,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func updateNoElementsState() {
-        if self.isViewLoaded && self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
+        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
             self.contentView.noItemsInLibrary = true
         }
     }
@@ -183,7 +183,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
             }
             
             if messageCategory.key.including.contains(.link) {
-                self.linkMessages.append(contentsOf: conversationMessages)
+                self.linkMessages.append(contentsOf: conversationMessages.filter { $0.textMessageData?.linkPreview != nil })
             }
             
             if messageCategory.key.including.contains(.video) {
@@ -236,7 +236,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             return min(self.linkMessages.count, max)
             
         case CollectionsSectionSet.loading:
-            return self.fetchingDone ? 0 : 1
+            return 1
             
         default: fatal("Unknown section")
         }
@@ -250,7 +250,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         switch(section) {
         case CollectionsSectionSet.images:
             let max = self.inOverviewMode ? self.maxOverviewElementsInGrid : Int.max
-            return self.videoMessages.count > max
+            return self.imageMessages.count > max
             
         case CollectionsSectionSet.filesAndAudio:
             let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
@@ -304,7 +304,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     fileprivate var maxOverviewElementsInTable: Int {
-        return 3
+        return 2
     }
     
     fileprivate var maxOverviewVideoElementsInTable: Int {
@@ -373,6 +373,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     
         case CollectionsSectionSet.loading:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLoadingCell.reuseIdentifier, for: indexPath) as! CollectionLoadingCell
+            cell.containerWidth = collectionView.bounds.size.width
+            cell.collapsed = self.fetchingDone
             return cell
         
         default: fatal("Unknown section")
@@ -411,9 +413,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 }
                 let collectionController = CollectionsViewController(collection: self.collection, sections: section, messages: self.elements(for: section), fetchingDone: self.fetchingDone)
                 collectionController.analyticsTracker = self.analyticsTracker
-                collectionController.onDismiss = {
-                    _ = $0.navigationController?.popViewController(animated: true)
-                }
+                collectionController.onDismiss = self.onDismiss
                 self.navigationController?.pushViewController(collectionController, animated: true)
             }
             return header

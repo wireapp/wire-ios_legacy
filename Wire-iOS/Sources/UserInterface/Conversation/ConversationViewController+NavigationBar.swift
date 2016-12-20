@@ -137,7 +137,7 @@ public extension ConversationViewController {
         let collections = CollectionsViewController(conversation: conversation)
         collections.analyticsTracker = self.analyticsTracker
         
-        let navigationController = UINavigationController(rootViewController: collections)
+        let navigationController = collections.wrap(inNavigationControllerClass: RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 
         self.parent?.present(navigationController, animated: true, completion: {

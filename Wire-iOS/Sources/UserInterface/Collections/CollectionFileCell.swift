@@ -74,7 +74,7 @@ final public class CollectionFileCell: CollectionCell {
         self.fileTransferView.cas_styleClass = "container-view"
         self.fileTransferView.clipsToBounds = true
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(4, 16, 4, 16)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
         
         self.contentView.addSubview(self.fileTransferView)
 

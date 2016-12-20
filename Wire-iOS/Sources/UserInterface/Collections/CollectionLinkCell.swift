@@ -26,7 +26,7 @@ final public class CollectionLinkCell: CollectionCell {
         let articleView = ArticleView(withImagePlaceholder: withImagePlaceholder)
         articleView.delegate = self
         self.contentView.addSubview(articleView)
-        self.contentView.layoutMargins = UIEdgeInsetsMake(4, 16, 4, 16)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
         
         constrain(self.contentView, articleView) { contentView, articleView in
             articleView.edges == contentView.edgesWithinMargins
@@ -45,6 +45,9 @@ final public class CollectionLinkCell: CollectionCell {
         
         message.requestImageDownload()
         
+        isHeightCalculated = false
+        
+        self.articleView?.removeFromSuperview()
         self.articleView = nil
         
         self.createArticleView(withImagePlaceholder: textMessageData.hasImageData).configure(withTextMessageData: textMessageData, obfuscated: false)

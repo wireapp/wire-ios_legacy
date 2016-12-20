@@ -3676,8 +3676,8 @@
 				87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */,
 				87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */,
 				87F18BC11E02E4B600C69D9B /* CollectionVideoCell.swift */,
-				87A15FDE1E08318B00AED79B /* CollectionLoadingCell.swift */,
 				87A15FE01E08339500AED79B /* CollectionLinkCell.swift */,
+				87A15FDE1E08318B00AED79B /* CollectionLoadingCell.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
