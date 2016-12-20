@@ -19,19 +19,15 @@
 import Foundation
 import Cartography
 
-final public class CollectionVideoCell: UICollectionViewCell, Reusable {
-    private let videoMessageView = VideoMessageView()
-    public weak var delegate: TransferViewDelegate? {
-        didSet {
-            self.videoMessageView.delegate = self.delegate
-        }
-    }
+final public class CollectionLinkCell: UICollectionViewCell, Reusable {
+    private let articleView = ArticleView(withImagePlaceholder: true)
+
     public var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message else {
+            guard let message = self.message, let textMessageData = message.textMessageData else {
                 return
             }
-            videoMessageView.configure(for: message, isInitial: true)
+            articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         }
     }
     
@@ -45,6 +41,17 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
         self.loadView()
     }
     
+    func loadView() {
+        self.layoutMargins = UIEdgeInsetsMake(4, 4, 4, 4)
+        
+        self.articleView.delegate = self
+        self.contentView.addSubview(self.articleView)
+        
+        constrain(self.contentView, self.articleView) { contentView, articleView in
+            articleView.edges == contentView.edgesWithinMargins
+        }
+    }
+    
     var isHeightCalculated: Bool = false
     var containerWidth: CGFloat = 320
     
@@ -52,28 +59,31 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
         if !isHeightCalculated {
             setNeedsLayout()
             layoutIfNeeded()
+            var desiredSize = layoutAttributes.size
+            desiredSize.width = self.containerWidth
+            let size = contentView.systemLayoutSizeFitting(desiredSize)
             var newFrame = layoutAttributes.frame
-            newFrame.size.height = CGFloat(ceilf(Float(self.containerWidth * (3.0 / 4.0))))
             newFrame.size.width = self.containerWidth
+            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
             layoutAttributes.frame = newFrame
             isHeightCalculated = true
         }
         return layoutAttributes
     }
     
-    func loadView() {
-        self.videoMessageView.delegate = self.delegate
-        self.videoMessageView.clipsToBounds = true
-        self.contentView.addSubview(self.videoMessageView)
-        
-        constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
-            videoMessageView.edges == contentView.edges
-        }
-    }
-    
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
         self.isHeightCalculated = false
+    }
+}
+
+extension CollectionLinkCell: ArticleViewDelegate {
+    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
+        url.open()
+    }
+    
+    func articleViewDidLongPressView(_ articleView: ArticleView) {
+        // TODO: showing menu
     }
 }

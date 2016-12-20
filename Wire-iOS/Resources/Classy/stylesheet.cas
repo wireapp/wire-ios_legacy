@@ -1520,19 +1520,23 @@ TokenField.share {
 
 CollectionsView {
     backgroundColor: $color-text-background;
+    noItemsLabel: @{
+        font: $font-medium-medium;
+        textColor: $color-text-dimmed;
+    }
 }
 
-CollectionsHeaderView {
-    backgroundColor: $color-text-background;
+CollectionHeaderView {
+    backgroundColor: $color-placeholder-background;
     
     titleLabel: @{
-        font: $font-medium-medium;
+        font: $font-small-medium;
         textColor: $color-text-foreground;
     }
 
     actionButton: @{
         titleLabel: @{
-            font: $font-medium-medium;
+            font: $font-small-light;
         }
         titleColor[state:normal]: $color-text-foreground;
     }

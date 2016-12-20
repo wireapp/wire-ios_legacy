@@ -781,3 +781,4 @@
 "collections.section.videos.title" = "Videos";
 "collections.section.links.title" = "Links";
 "collections.section.all.button" = "All →";
+"collections.section.no_items" = "No items in library";

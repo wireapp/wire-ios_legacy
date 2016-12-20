@@ -32,7 +32,9 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
         return cache
     }
     
-    static let cellSize: CGFloat = 120
+    static let maxCellSize: CGFloat = 120
+    
+    public var cellSize: CGSize = .zero
     
     var message: ZMConversationMessage? = .none {
         didSet {
@@ -67,6 +69,18 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
         self.loadView()
     }
     
+    var isHeightCalculated: Bool = false
+    
+    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        if !isHeightCalculated {
+            var newFrame = layoutAttributes.frame
+            newFrame.size = self.cellSize
+            layoutAttributes.frame = newFrame
+            isHeightCalculated = true
+        }
+        return layoutAttributes
+    }
+    
     func loadView() {
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
@@ -81,6 +95,7 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
+        self.isHeightCalculated = false
     }
     
     fileprivate func loadImage() {
@@ -103,7 +118,7 @@ final public class CollectionImageCell: UICollectionViewCell, Reusable {
                 if (isAnimatedGIF) {
                     image = FLAnimatedImage(animatedGIFData: data)
                 } else {
-                    image = UIImage(from: data, withMaxSize: CollectionImageCell.cellSize * UIScreen.main.scale)
+                    image = UIImage(from: data, withMaxSize: CollectionImageCell.maxCellSize * UIScreen.main.scale)
                 }
                 
                 if (image == nil) {
