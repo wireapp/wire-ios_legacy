@@ -136,6 +136,7 @@ public extension ConversationViewController {
     func onCollectionButtonPressed(_ sender: AnyObject!) {
         let collections = CollectionsViewController(conversation: conversation)
         collections.analyticsTracker = self.analyticsTracker
+        collections.delegate = self
         
         let navigationController = collections.wrap(inNavigationControllerClass: RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
@@ -152,6 +153,27 @@ public extension ConversationViewController {
             self.parent?.dismiss(animated: true, completion: { 
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })
+        }
+    }
+}
+
+extension ConversationViewController: CollectionsViewControllerDelegate {
+    public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
+        switch action {
+        case .forward:
+            self.parent?.dismiss(animated: true) {
+                self.contentViewController.scroll(to: message) { cell in
+                    self.contentViewController.showForwardFor(message: message, fromCell: cell)
+                }
+            }
+            
+            
+        case .showInConversation:
+            self.parent?.dismiss(animated: true) {
+                self.contentViewController.scroll(to: message)
+            }
+        default:
+            break
         }
     }
 }

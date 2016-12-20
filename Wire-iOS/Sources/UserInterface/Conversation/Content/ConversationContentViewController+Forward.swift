@@ -198,3 +198,35 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         return displayInPopover ? .popover : .overFullScreen
     }
 }
+
+extension ConversationContentViewController {
+    func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
+        guard messageToShow.conversation == self.conversation else {
+            fatal("Message from the wrong conversation")
+        }
+        
+        let indexInConversation: Int = self.conversation.messages.index(of: messageToShow)
+        if !self.messageWindow.messages.contains(messageToShow) {
+        
+            let oldestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.firstObject!)
+            let newestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.lastObject!)
+
+            if oldestMessageIndexInMessageWindow > indexInConversation {
+                self.messageWindow.moveUp(byMessages: UInt(oldestMessageIndexInMessageWindow - indexInConversation))
+            }
+            else {
+                self.messageWindow.moveDown(byMessages: UInt(indexInConversation - newestMessageIndexInMessageWindow))
+            }
+        }
+        
+        delay(0.01) {
+            let indexToShow = self.messageWindow.messages.index(of: messageToShow)
+            
+            let cellIndexPath = IndexPath(row: indexToShow, section: 0)
+            self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
+            delay(0.35) {
+                completion?(self.tableView.cellForRow(at: cellIndexPath) as! ConversationCell)
+            }
+        }
+    }
+}

@@ -21,12 +21,7 @@ import Cartography
 
 final public class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
-    public weak var delegate: TransferViewDelegate? {
-        didSet {
-            self.videoMessageView.delegate = self.delegate
-        }
-    }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.loadView()
@@ -64,7 +59,7 @@ final public class CollectionVideoCell: CollectionCell {
     }
     
     func loadView() {
-        self.videoMessageView.delegate = self.delegate
+        self.videoMessageView.delegate = self
         self.videoMessageView.clipsToBounds = true
         self.contentView.addSubview(self.videoMessageView)
         
@@ -77,5 +72,11 @@ final public class CollectionVideoCell: CollectionCell {
         super.prepareForReuse()
         self.message = .none
         self.isHeightCalculated = false
+    }
+}
+
+extension CollectionVideoCell: TransferViewDelegate {
+    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+        self.delegate?.collectionCell(self, performAction: action)
     }
 }

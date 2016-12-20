@@ -23,12 +23,6 @@ import Cartography
 final public class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
     
-    public weak var delegate: TransferViewDelegate? {
-        didSet {
-            self.fileTransferView.delegate = self.delegate
-        }
-    }
-    
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
         
@@ -69,7 +63,7 @@ final public class CollectionFileCell: CollectionCell {
     }
     
     func loadView() {
-        self.fileTransferView.delegate = self.delegate
+        self.fileTransferView.delegate = self
         self.fileTransferView.layer.cornerRadius = 4
         self.fileTransferView.cas_styleClass = "container-view"
         self.fileTransferView.clipsToBounds = true
@@ -90,3 +84,8 @@ final public class CollectionFileCell: CollectionCell {
     }
 }
 
+extension CollectionFileCell: TransferViewDelegate {
+    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+        self.delegate?.collectionCell(self, performAction: action)
+    }
+}

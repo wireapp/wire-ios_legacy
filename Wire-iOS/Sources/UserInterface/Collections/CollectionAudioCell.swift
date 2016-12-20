@@ -21,11 +21,6 @@ import Cartography
 
 final public class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
-    public weak var delegate: TransferViewDelegate? {
-        didSet {
-            self.audioMessageView.delegate = self.delegate
-        }
-    }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -67,7 +62,7 @@ final public class CollectionAudioCell: CollectionCell {
     }
     
     func loadView() {
-        self.audioMessageView.delegate = self.delegate
+        self.audioMessageView.delegate = self
         self.audioMessageView.layer.cornerRadius = 4
         self.audioMessageView.cas_styleClass = "container-view"
         self.audioMessageView.clipsToBounds = true
@@ -85,5 +80,11 @@ final public class CollectionAudioCell: CollectionCell {
         super.prepareForReuse()
         self.message = .none
         self.isHeightCalculated = false
+    }
+}
+
+extension CollectionAudioCell: TransferViewDelegate {
+    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+        self.delegate?.collectionCell(self, performAction: action)
     }
 }

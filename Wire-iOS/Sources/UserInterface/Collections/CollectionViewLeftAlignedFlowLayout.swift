@@ -21,15 +21,16 @@ import Foundation
 
 final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let oldAttributes = super.layoutAttributesForElements(in: rect) else {
+        guard let oldAttributes: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElements(in: rect) else {
             return .none
         }
         
-        var newAttributes = [UICollectionViewLayoutAttributes]()
+        var newAttributes: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
 
-        for attributes in oldAttributes {
-            if attributes.frame.origin.x != self.sectionInset.left && abs(attributes.frame.size.width - (rect.width - self.sectionInset.left - self.sectionInset.right)) <= 1 {
-                var newLeftAlignedFrame = attributes.frame
+        for attributes: UICollectionViewLayoutAttributes in oldAttributes {
+            let cellIsFullWidth = abs(attributes.frame.size.width - (rect.width - self.sectionInset.left - self.sectionInset.right)) <= 1
+            if attributes.frame.origin.x != self.sectionInset.left && cellIsFullWidth {
+                var newLeftAlignedFrame: CGRect = attributes.frame
                 newLeftAlignedFrame.origin.x = self.sectionInset.left
                 attributes.frame = newLeftAlignedFrame
             }

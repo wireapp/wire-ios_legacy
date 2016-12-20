@@ -684,7 +684,10 @@
         {
             [self showForwardForMessage:cell.message fromCell:cell];
         }
-            
+        
+            break;
+        case MessageActionShowInConversation:
+            // Not supported from cell
             break;
     }
 }

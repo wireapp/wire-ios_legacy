@@ -20,6 +20,11 @@
 import Foundation
 import ZMCDataModel
 
+public protocol CollectionsViewControllerDelegate: class {
+    /// NB: only showInConversation and forward actions are forwarded to delegate
+    func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
+}
+
 extension CategoryMatch {
     init(including: ZMCDataModel.MessageCategory, excluding: ZMCDataModel.MessageCategory) {
         self.including = including
@@ -31,6 +36,7 @@ final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public var analyticsTracker: AnalyticsTracker?
     public let sections: CollectionsSectionSet
+    public weak var delegate: CollectionsViewControllerDelegate?
     
     fileprivate var contentView: CollectionsView! {
         return self.view as! CollectionsView
@@ -335,6 +341,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
+            cell.delegate = self
             cell.cellSize = self.girdElementSize
             return cell
         case CollectionsSectionSet.filesAndAudio:
@@ -368,6 +375,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
             cell.message = message
+            cell.delegate = self
             cell.containerWidth = collectionView.bounds.size.width
             return cell
     
@@ -426,17 +434,24 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         let message = self.message(for: indexPath)
         self.perform(.present, for: message, from: collectionView.cellForItem(at: indexPath)!)
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
 }
 
-extension CollectionsViewController: TransferViewDelegate {
-    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        guard let targetView = view as? UIView else {
-            return
+extension CollectionsViewController: CollectionCellDelegate {
+    func collectionCell(_ cell: CollectionCell, performAction action: MessageAction) {
+        guard let message = cell.message else {
+            fatal("Cell does not have a message: \(cell)")
         }
-        self.perform(action, for: view.fileMessage!, from: targetView)
+        
+        switch action {
+        case .forward: fallthrough
+        case .showInConversation:
+            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
+        default:
+            if Message.isFileTransferMessage(message) {
+                self.perform(action, for: message, from: cell)
+            }
+        }
+        
+        
     }
 }
