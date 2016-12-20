@@ -52,12 +52,9 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
         if !isHeightCalculated {
             setNeedsLayout()
             layoutIfNeeded()
-            var desiredSize = layoutAttributes.size
-            desiredSize.width = self.containerWidth
-            let size = contentView.systemLayoutSizeFitting(desiredSize)
             var newFrame = layoutAttributes.frame
+            newFrame.size.height = CGFloat(ceilf(Float(self.containerWidth * (3.0 / 4.0))))
             newFrame.size.width = self.containerWidth
-            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
             layoutAttributes.frame = newFrame
             isHeightCalculated = true
         }
@@ -71,7 +68,6 @@ final public class CollectionVideoCell: UICollectionViewCell, Reusable {
         
         constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
             videoMessageView.edges == contentView.edges
-            videoMessageView.height == videoMessageView.width * (4.0 / 3.0)
         }
     }
     

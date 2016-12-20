@@ -225,7 +225,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             return min(self.fileAndAudioMessages.count, max)
             
         case CollectionsSectionSet.videos:
-            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            let max = self.inOverviewMode ? self.maxOverviewVideoElementsInTable : Int.max
             return min(self.videoMessages.count, max)
             
         case CollectionsSectionSet.links:
@@ -254,7 +254,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             return self.fileAndAudioMessages.count > max
             
         case CollectionsSectionSet.videos:
-            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
+            let max = self.inOverviewMode ? self.maxOverviewVideoElementsInTable : Int.max
             return self.videoMessages.count > max
             
         case CollectionsSectionSet.links:
@@ -302,6 +302,10 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     
     fileprivate var maxOverviewElementsInTable: Int {
         return 3
+    }
+    
+    fileprivate var maxOverviewVideoElementsInTable: Int {
+        return 1
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -421,15 +425,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return false
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        
     }
 }
 

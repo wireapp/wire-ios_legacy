@@ -62,7 +62,12 @@
         [self openLocationMessage:message];
     }
     else if ([Message isFileTransferMessage:message]) {
-        [self openFileMessage:message targetView:targetView];
+        if (message.fileMessageData.fileURL == nil) {
+            [message requestFileDownload];
+        }
+        else {
+            [self openFileMessage:message targetView:targetView];
+        }
     }
     else if ([Message isImageMessage:message]) {
         [self openImageMessage:message];
