@@ -160,6 +160,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     @objc func closeButtonPressed(_ button: UIButton) {
+        collection.assetCollection.tearDown() // Cancel fetchRequests
         self.onDismiss?(self)
     }
     
