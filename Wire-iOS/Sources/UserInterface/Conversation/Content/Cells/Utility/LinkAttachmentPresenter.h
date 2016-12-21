@@ -30,6 +30,5 @@
 @property (nonatomic) LinkAttachment *linkAttachment;
 
 - (void)fetchAttachment;
-- (void)tearDown;
 
 @end

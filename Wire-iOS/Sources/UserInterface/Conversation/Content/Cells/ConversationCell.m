@@ -365,11 +365,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self updateCountdownView];
 }
 
-- (void)willDeleteMessage
-{
-    // no-op
-}
-
 - (void)updateToolboxVisibilityAnimated:(BOOL)animated
 {
     if (nil == self.message) {

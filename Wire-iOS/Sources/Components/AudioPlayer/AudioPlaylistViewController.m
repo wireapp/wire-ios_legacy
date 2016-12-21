@@ -79,11 +79,6 @@ static const CGFloat SeparatorLineOverflow = 4;
     self.view.cas_alternativeParent = nil; // Workaround for https://github.com/cloudkite/Classy/issues/82
 }
 
-- (void)tearDown;
-{
-    [self.audioTrackPlayer stop];
-}
-
 - (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer sourceMessage:(id<ZMConversationMessage>)sourceMessage
 {
     self = [super initWithNibName:nil bundle:nil];

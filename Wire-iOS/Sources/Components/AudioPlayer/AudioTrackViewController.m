@@ -122,11 +122,6 @@
                                                             options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 }
 
-- (void)tearDown;
-{
-    [self.audioTrackPlayer stop];
-}
-
 - (void)createInitialConstraints
 {
     [self.backgroundView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
