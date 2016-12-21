@@ -77,12 +77,12 @@ import CocoaLumberjackSwift
 
         self.initalizeProperties(clientsList ?? [])
 
-        self.clientsObserverToken = ZMUserSession.shared()!.add(self)
+        self.clientsObserverToken = ZMUserSession.shared()?.add(self)
         self.userObserverToken = ZMUser.add(self, forUsers: [ZMUser.selfUser()], in: ZMUserSession.shared())
         
         if clientsList == nil {
             self.showLoadingView = true
-            ZMUserSession.shared()!.fetchAllClients()
+            ZMUserSession.shared()?.fetchAllClients()
         }
     }
     
@@ -95,7 +95,7 @@ import CocoaLumberjackSwift
     }
     
     deinit {
-        ZMUserSession.shared()!.removeClientUpdateObserver(self.clientsObserverToken)
+        ZMUserSession.shared()?.removeClientUpdateObserver(self.clientsObserverToken)
         ZMUser.removeObserver(for: self.userObserverToken)
     }
     
@@ -192,7 +192,7 @@ import CocoaLumberjackSwift
     
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
         self.showLoadingView = true
-        ZMUserSession.shared()!.delete([userClient], with: credentials);
+        ZMUserSession.shared()?.delete([userClient], with: credentials);
     }
 
     func displayError(_ message: String) {
