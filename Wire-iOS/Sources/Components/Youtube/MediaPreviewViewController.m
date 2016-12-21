@@ -58,6 +58,11 @@
     [self.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.view withMultiplier:(9.f / 16.f)];
 }
 
+- (void)tearDown;
+{
+    //NO-OP
+}
+
 - (MediaPreviewView *)mediaPreviewView
 {
     return (MediaPreviewView *)self.view;
