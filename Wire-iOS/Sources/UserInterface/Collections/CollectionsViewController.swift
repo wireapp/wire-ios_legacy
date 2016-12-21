@@ -172,7 +172,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
     public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
-            let conversationMessages = messageCategory.value.reversed() as [ZMConversationMessage]
+            let conversationMessages = messageCategory.value as [ZMConversationMessage]
             
             if messageCategory.key.including.contains(.image) {
                 self.imageMessages.append(contentsOf: conversationMessages)
