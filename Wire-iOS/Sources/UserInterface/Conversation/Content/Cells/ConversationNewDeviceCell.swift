@@ -73,7 +73,7 @@ class ConversationNewDeviceCell: IconSystemCell {
     
     
     func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes){
-        let isSelfClient = clients.first?.isEqual(ZMUserSession.shared().selfUserClient()) ?? false
+        let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient()) ?? false
         
         let senderName = NSLocalizedString("content.system.you_started", comment: "").uppercased() && attributes.senderAttributes
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "").uppercased() && attributes.startedUsingAttributes

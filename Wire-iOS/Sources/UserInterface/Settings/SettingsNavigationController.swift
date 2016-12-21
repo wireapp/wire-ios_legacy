@@ -35,7 +35,7 @@ import Foundation
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
             analytics: Analytics.shared(),
             mediaManager: AVSProvider.shared.mediaManager,
-            userSession: ZMUserSession.shared(),
+            userSession: ZMUserSession.shared()!,
             selfUser: ZMUser.selfUser(),
             crashlogManager: BITHockeyManager.shared())
         
@@ -184,7 +184,7 @@ import Foundation
         
         self.present(newLoginAlertController!, animated:true, completion:.none)
         
-        ZMUserSession.shared().enqueueChanges {
+        ZMUserSession.shared()?.enqueueChanges {
             clients.forEach {
                 $0.needsToNotifyUser = false
             }

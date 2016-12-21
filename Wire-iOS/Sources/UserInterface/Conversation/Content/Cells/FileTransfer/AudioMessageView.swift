@@ -358,7 +358,7 @@ final class AudioMessageView: UIView, TransferView {
             }
         case .uploaded, .failedDownload:
             self.expectingDownload = true
-            ZMUserSession.shared().enqueueChanges({
+            ZMUserSession.shared()?.enqueueChanges({
                 fileMessage.requestFileDownload()
             })
             

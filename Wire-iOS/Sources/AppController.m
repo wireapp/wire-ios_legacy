@@ -127,7 +127,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [self loadAppropriateController];
     self.enteringForeground = NO;
 
-    [self uploadAddressBookIfNeeded];
+    [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
+        if (isLoggedIn) {
+            [self uploadAddressBookIfNeeded];
+        }
+    }];
 }
 
 - (void)uploadAddressBookIfNeeded

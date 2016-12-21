@@ -148,7 +148,7 @@ final public class CollectionsViewController: UIViewController {
     public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {
         switch (action) {
         case .cancel:
-            ZMUserSession.shared().enqueueChanges {
+            ZMUserSession.shared()?.enqueueChanges {
                 message.fileMessageData?.cancelTransfer()
             }
         case .present:

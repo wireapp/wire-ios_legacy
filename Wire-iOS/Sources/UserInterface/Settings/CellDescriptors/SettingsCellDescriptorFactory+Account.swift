@@ -177,8 +177,8 @@ extension SettingsCellDescriptorFactory {
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
             alert.addAction(actionCancel)
             let actionDelete = UIAlertAction(title: "general.ok".localized, style: .destructive) { _ in
-                ZMUserSession.shared().enqueueChanges {
-                    ZMUserSession.shared().initiateUserDeletion()
+                ZMUserSession.shared()?.enqueueChanges {
+                    ZMUserSession.shared()?.initiateUserDeletion()
                 }
             }
             alert.addAction(actionDelete)

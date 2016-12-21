@@ -24,7 +24,7 @@ extension AVSMediaManager {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
                                                               analytics: Analytics.shared(),
                                                               mediaManager: AVSProvider.shared.mediaManager,
-                                                              userSession: ZMUserSession.shared(),
+                                                              userSession: ZMUserSession.shared()!,
                                                               selfUser: ZMUser.selfUser(),
                                                               crashlogManager: BITHockeyManager.shared())
         return settingsPropertyFactory
