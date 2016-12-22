@@ -112,6 +112,10 @@
             argument = "-ZMBackendEnvironmentType edge"
             isEnabled = "NO">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-ConsoleAnalytics"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
