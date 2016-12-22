@@ -155,6 +155,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func updateNoElementsState() {
+        // Empty collection contains one element (loading cell)
         if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 1 {
             self.contentView.noItemsInLibrary = true
         }
