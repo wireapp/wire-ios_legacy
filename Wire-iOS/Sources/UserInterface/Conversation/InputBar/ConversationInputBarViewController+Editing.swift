@@ -50,7 +50,7 @@ extension ConversationInputBarViewController {
         guard nil != editingMessage else { return }
         delegate.conversationInputBarViewControllerDidCancelEditing?(editingMessage)
         editingMessage = nil
-        ZMUserSession.shared().enqueueChanges {
+        ZMUserSession.shared()?.enqueueChanges {
             self.conversation.draftMessageText = ""
         }
         updateWritingState()

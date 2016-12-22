@@ -257,6 +257,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)applicationWillEnterForeground:(NSNotification *)note
 {
+    [SessionObjectCache.sharedCache.conversationList resort];
     [self reloadConversationListViewModel];
 }
 

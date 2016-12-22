@@ -105,10 +105,6 @@ public final class AudioMessageCell: ConversationCell {
         super.prepareForReuse()
         self.audioMessageView.stopProximitySensor()
     }
-
-    public override func willDeleteMessage() {
-        self.audioMessageView.willDeleteMessage()
-    }
     
     override open var tintColor: UIColor! {
         didSet {

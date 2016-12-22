@@ -172,7 +172,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     public var footerFont: UIFont?
     var state: HandleChangeState
     private var footerLabel = UILabel()
-    fileprivate weak var userProfile = ZMUserSession.shared().userProfile
+    fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     private var observerToken: AnyObject?
     var popOnSuccess = true
 

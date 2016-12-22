@@ -146,13 +146,6 @@
     [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.messageTextView];
 }
 
-- (void)willDeleteMessage
-{
-    // If we have a linkattachment which is playing we need to stop
-    [self.linkAttachmentViewController tearDown];
-    [super willDeleteMessage];
-}
-
 - (void)updateTextMessageConstraintConstants
 {
     BOOL hasLinkAttachment = self.linkAttachment || self.linkAttachmentView;

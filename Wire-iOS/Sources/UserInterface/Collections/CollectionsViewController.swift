@@ -154,7 +154,7 @@ final public class CollectionsViewController: UIViewController {
     public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {
         switch (action) {
         case .cancel:
-            ZMUserSession.shared().enqueueChanges {
+            ZMUserSession.shared()?.enqueueChanges {
                 message.fileMessageData?.cancelTransfer()
             }
         case .present:
@@ -166,6 +166,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     @objc func closeButtonPressed(_ button: UIButton) {
+        collection.assetCollection.tearDown() // Cancel fetchRequests
         self.onDismiss?(self)
     }
     
@@ -178,7 +179,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
     public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
-            let conversationMessages = messageCategory.value.reversed() as [ZMConversationMessage]
+            let conversationMessages = messageCategory.value as [ZMConversationMessage]
             
             if messageCategory.key.including.contains(.image) {
                 self.imageMessages.append(contentsOf: conversationMessages)
