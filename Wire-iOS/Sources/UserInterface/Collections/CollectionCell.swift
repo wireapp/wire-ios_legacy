@@ -72,7 +72,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     
     func showMenu() {
         guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
-            return;
+            return
         }
         /**
          *  The reason why we are touching the window here is to workaround a bug where,
@@ -101,7 +101,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         switch action {
         case #selector(CollectionCell.forward(_:)): fallthrough
         case #selector(CollectionCell.showInConversation(_:)):
-            return true
+            return false // To enable menu return `true` here
         default:
             return false
         }
