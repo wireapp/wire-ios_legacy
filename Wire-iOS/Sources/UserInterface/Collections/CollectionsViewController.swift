@@ -63,11 +63,19 @@ final public class CollectionsViewController: UIViewController {
         let assetCollecitonMulticastDelegate = AssetCollectionMulticastDelegate()
 
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
-        let matchFiles = CategoryMatch(including: .file, excluding: [.video])
-        let matchVideo = CategoryMatch(including: .video, excluding: [])
-        let matchLink = CategoryMatch(including: .link, excluding: [])
+        let matchFiles = CategoryMatch(including: .file, excluding: .video)
+        let matchVideo = CategoryMatch(including: .video, excluding: .none)
+        let matchLink = CategoryMatch(including: .link, excluding: .none)
         
-        let assetCollection = AssetCollection(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink], delegate: assetCollecitonMulticastDelegate)
+        
+        let assetCollection: ZMCollection
+        
+        if Settings.shared().enableBatchCollections {
+            assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink], delegate: assetCollecitonMulticastDelegate)
+        }
+        else {
+            assetCollection = AssetCollection(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink], delegate: assetCollecitonMulticastDelegate)
+        }
         
         let holder = AssetCollectionHolder(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: assetCollecitonMulticastDelegate)
         

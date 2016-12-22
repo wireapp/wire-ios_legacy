@@ -19,6 +19,12 @@
 
 import Foundation
 
+extension FloatingPoint {
+    func equal(to other: Self, e: Self) -> Bool {
+        return abs(self - other) < e
+    }
+}
+
 final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let oldAttributes: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElements(in: rect) else {
@@ -26,10 +32,13 @@ final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
         }
         
         var newAttributes: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
-
+        let maxCellWidth = rect.width - self.sectionInset.left - self.sectionInset.right
+        
         for attributes: UICollectionViewLayoutAttributes in oldAttributes {
-            let cellIsFullWidth = abs(attributes.frame.size.width - (rect.width - self.sectionInset.left - self.sectionInset.right)) <= 1
-            if attributes.frame.origin.x != self.sectionInset.left && cellIsFullWidth {
+            
+            let cellIsFullWidth = attributes.frame.size.width.equal(to: maxCellWidth, e: 1)
+            let cellIsNotLeftAligned = attributes.frame.origin.x != self.sectionInset.left
+            if !cellIsFullWidth && cellIsNotLeftAligned {
                 var newLeftAlignedFrame: CGRect = attributes.frame
                 newLeftAlignedFrame.origin.x = self.sectionInset.left
                 attributes.frame = newLeftAlignedFrame

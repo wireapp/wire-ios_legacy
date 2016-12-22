@@ -57,6 +57,6 @@ extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
 
 struct AssetCollectionHolder {
     let conversation: ZMConversation
-    let assetCollection: AssetCollection
+    let assetCollection: ZMCollection
     let assetCollectionDelegate: AssetCollectionMulticastDelegate
 }

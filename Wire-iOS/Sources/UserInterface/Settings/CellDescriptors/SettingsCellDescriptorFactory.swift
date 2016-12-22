@@ -171,7 +171,11 @@ import Foundation
         developerCellDescriptors.append(diableAnalyticsSetting)
         let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
         developerCellDescriptors.append(enableAssetV3Setting)
-
+        let enableCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableCollections))
+        developerCellDescriptors.append(enableCollections)
+        let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
+        developerCellDescriptors.append(enableBatchCollections)
+        
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     

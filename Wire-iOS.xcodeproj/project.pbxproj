@@ -4236,8 +4236,8 @@
 		8FC8516F199245760008B66B /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
-				87D56DF41E003A4400DFF722 /* Collections */,
 				871BC1271D34F8F800DF0793 /* Components */,
+				87D56DF41E003A4400DFF722 /* Collections */,
 				871BC1EB1D34F8F800DF0793 /* Helpers */,
 				8756CA111D2EBE1F002E7CB7 /* LaunchImage */,
 				16DF2F6C1BE7B9EB005CF8DE /* AddContacts */,

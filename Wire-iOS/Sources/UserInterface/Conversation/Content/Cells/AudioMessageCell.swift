@@ -43,8 +43,9 @@ public final class AudioMessageCell: ConversationCell {
         self.messageContentView.addSubview(self.containerView)
         self.createConstraints()
         
-        var currentElements = self.accessibilityElements ?? []
-        currentElements.append(self.audioMessageView.accessibilityElements)
+        var currentElements: [Any] = self.accessibilityElements ?? []
+        let contentViewAccessibilityElements: [Any] = self.audioMessageView.accessibilityElements ?? []
+        currentElements.append(contentsOf: contentViewAccessibilityElements)
         currentElements.append(contentsOf: [likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
         

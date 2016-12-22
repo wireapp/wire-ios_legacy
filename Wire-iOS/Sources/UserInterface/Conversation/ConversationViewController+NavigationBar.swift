@@ -79,12 +79,17 @@ public extension ConversationViewController {
     }
     
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
-        if self.parent?.wr_splitViewController?.layoutSize == .regularLandscape {
-            return [collectionsBarButtonItem]
+        var items: [UIBarButtonItem] = []
+        
+        if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
+            items.append(backBarButtonItem)
         }
-        else {
-            return [backBarButtonItem, collectionsBarButtonItem]
+        
+        if Settings.shared().enableCollections {
+            items.append(collectionsBarButtonItem)
         }
+        
+        return items
     }
     
     private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {

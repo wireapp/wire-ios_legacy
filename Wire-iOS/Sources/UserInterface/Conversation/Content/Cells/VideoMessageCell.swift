@@ -52,8 +52,10 @@ public final class VideoMessageCell: ConversationCell {
         self.contentView.addSubview(self.obfuscationView)
         
         self.createConstraints()
-        var currentElements = self.accessibilityElements ?? []
-        currentElements.append(videoMessageView.accessibilityElements)
+        
+        var currentElements: [Any] = self.accessibilityElements ?? []
+        let contentViewAccessibilityElements: [Any] = self.videoMessageView.accessibilityElements ?? []
+        currentElements.append(contentsOf: contentViewAccessibilityElements)
         currentElements.append(contentsOf: [likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
 

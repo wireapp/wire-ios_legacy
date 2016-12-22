@@ -44,8 +44,9 @@ public final class FileTransferCell: ConversationCell {
         
         self.createConstraints()
         
-        var currentElements = self.accessibilityElements ?? []
-        currentElements.append(self.fileTransferView.accessibilityElements)
+        var currentElements: [Any] = self.accessibilityElements ?? []
+        let contentViewAccessibilityElements: [Any] = self.fileTransferView.accessibilityElements ?? []
+        currentElements.append(contentsOf: contentViewAccessibilityElements)
         currentElements.append(contentsOf: [likeButton, messageToolboxView])
         self.accessibilityElements = currentElements
     }
