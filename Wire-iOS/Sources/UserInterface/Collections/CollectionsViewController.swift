@@ -130,6 +130,38 @@ final public class CollectionsViewController: UIViewController {
         self.updateNoElementsState()
     }
     
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if self.traitCollection.horizontalSizeClass == .regular {
+            return .all
+        }
+        else {
+            return .portrait
+        }
+    }
+    
+    override public var shouldAutorotate: Bool {
+        if self.traitCollection.horizontalSizeClass == .regular {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    override public func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.contentView.collectionViewLayout.invalidateLayout()
+        self.contentView.collectionView.reloadData()
+    }
+    
+    override public var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    open override var preferredStatusBarStyle : UIStatusBarStyle {
+        return ColorScheme.default().variant == .dark ? .lightContent : .default
+    }
+    
     private func updateNoElementsState() {
         if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
             self.contentView.noItemsInLibrary = true
@@ -147,15 +179,6 @@ final public class CollectionsViewController: UIViewController {
             let backButton = CollectionsView.backButton()
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        }
-    }
-    
-    open override var preferredStatusBarStyle : UIStatusBarStyle {
-        switch ColorScheme.default().variant {
-        case .light:
-            return .default
-        case .dark:
-            return .lightContent
         }
     }
     
