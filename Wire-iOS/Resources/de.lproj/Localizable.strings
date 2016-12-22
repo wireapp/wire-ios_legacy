@@ -256,7 +256,7 @@
 "content.message.like" = "Gefällt mir";
 "content.message.unlike" = "Gefällt mir nicht mehr";
 "content.message.forward" = "Weiterleiten";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "In Unterhaltung anzeigen";
 "content.message.forward.to" = "Senden an...";
 
 "content.reactions_list.likers" = "Gefällt";

@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Zoeken op naam";
 "contacts_ui.invite_others" = "Nodig anderen uit";
-"contacts_ui.name_in_contacts" = "%@ in Contacts";
+"contacts_ui.name_in_contacts" = "%@ in Contacten";
 "contacts_ui.connection_request" = "Vraag om een verbinding te maken";
 "contacts_ui.action_button.invite" = "Uitnodigen";
 "contacts_ui.action_button.open" = "Openen";
@@ -80,7 +80,7 @@
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "in Contacts";
+"conversation.connection_view.in_address_book" = "in Contacten";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Hiermee worden %d contacten gebeld";
 "conversation.call.many_participants_confirmation.call" = "Oproep";
 
-"conversation.connection_view.in_address_book" = "in Contacts";
+"conversation.connection_view.in_address_book" = "in Contacten";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,7 +256,7 @@
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
 "content.message.forward" = "Doorsturen";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "Open gesprek";
 "content.message.forward.to" = "Verzenden naar...";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
@@ -777,9 +777,9 @@
 "invite_banner.invite_button_title" = "Nodig meer mensen uit";
 
 // Collections
-"collections.section.images.title" = "Pictures";
-"collections.section.files.title" = "Files";
+"collections.section.images.title" = "Afbeeldingen";
+"collections.section.files.title" = "Bestanden";
 "collections.section.videos.title" = "Video's";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "All →";
-"collections.section.no_items" = "No items in library";
+"collections.section.all.button" = "Alles →";
+"collections.section.no_items" = "Geen items in bibliotheek";

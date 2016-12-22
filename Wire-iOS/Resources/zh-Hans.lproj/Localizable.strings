@@ -256,7 +256,7 @@
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
 "content.message.forward" = "转发";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "在对话中显示";
 "content.message.forward.to" = "发送给...";
 
 "content.reactions_list.likers" = "被赞";

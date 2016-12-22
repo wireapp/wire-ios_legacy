@@ -256,7 +256,7 @@
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
 "content.message.forward" = "Faire suivre";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "Afficher dans la conversation";
 "content.message.forward.to" = "Envoyer à ...";
 
 "content.reactions_list.likers" = "Aimé par";
