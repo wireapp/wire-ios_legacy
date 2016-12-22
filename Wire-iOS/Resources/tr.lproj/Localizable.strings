@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "İsme göre ara";
 "contacts_ui.invite_others" = "Başkalarını davet et";
-"contacts_ui.name_in_contacts" = "%@ adres defterinde";
+"contacts_ui.name_in_contacts" = "Kişilerde %@";
 "contacts_ui.connection_request" = "Bağlanma isteği gönderildi";
 "contacts_ui.action_button.invite" = "Davet et";
 "contacts_ui.action_button.open" = "Aç";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Bir konuşma başlatmak için kişilere tıklayın";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "kişiler";
+"bottom_bar.contacts_button.title" = "kişi";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "Adres Defterinde";
+"conversation.connection_view.in_address_book" = "Kişilerde";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Bu %d kişiyi arayacak";
 "conversation.call.many_participants_confirmation.call" = "Ara";
 
-"conversation.connection_view.in_address_book" = "Adres Defterinde";
+"conversation.connection_view.in_address_book" = "Kişilerde";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -256,6 +256,7 @@
 "content.message.like" = "Beğen";
 "content.message.unlike" = "Beğenme";
 "content.message.forward" = "İlet";
+"content.message.go_to_conversation" = "Show in conversation";
 "content.message.forward.to" = "Şuraya gönder...";
 
 "content.reactions_list.likers" = "Beğenen";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Çağrı Rapor";
 "self.settings.technical_report.include_log" = "Detaylı günlüğü ekle";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Detaylı günlükler kişisel verilerinizi içerebilir";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Parolayı Sıfırla";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Arkadaşlarını Wire'a getir!";
 "invite_banner.message" = "Aramaların, mesajların, çizimlerin, GIF'lerin ve daha fazlasının özel olarak veya gruplarda tadını çıkar.";
 "invite_banner.invite_button_title" = "Daha fazla kişi davet et";
+
+// Collections
+"collections.section.images.title" = "Resimler";
+"collections.section.files.title" = "Dosyalar";
+"collections.section.videos.title" = "Videolar";
+"collections.section.links.title" = "Bağlantılar";
+"collections.section.all.button" = "Hepsi →";
+"collections.section.no_items" = "Kütüphanede hiç içerk yok";

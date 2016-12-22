@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Iskanje po imenu";
 "contacts_ui.invite_others" = "Povabi druge";
-"contacts_ui.name_in_contacts" = "%@ v imeniku";
+"contacts_ui.name_in_contacts" = "%@ v stikih";
 "contacts_ui.connection_request" = "Zahteval povezavo";
 "contacts_ui.action_button.invite" = "Povabi";
 "contacts_ui.action_button.open" = "Odpri";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Tapnite stike za začetek pogovora";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "stiki";
+"bottom_bar.contacts_button.title" = "osebe";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "v imeniku";
+"conversation.connection_view.in_address_book" = "v stikih";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "To bo poklicalo %d oseb";
 "conversation.call.many_participants_confirmation.call" = "Klic";
 
-"conversation.connection_view.in_address_book" = "v imeniku";
+"conversation.connection_view.in_address_book" = "v stikih";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "V redu";
@@ -256,6 +256,7 @@
 "content.message.like" = "Všeč mi je";
 "content.message.unlike" = "Ni mi všeč";
 "content.message.forward" = "Posreduj";
+"content.message.go_to_conversation" = "Pokaži v pogovoru";
 "content.message.forward.to" = "Pošlji...";
 
 "content.reactions_list.likers" = "Všečkali so";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire poročilo o klicih";
 "self.settings.technical_report.include_log" = "Vključi podroben dnevnik";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Podrobni dnevniki lahko vsebujejo osebne podatke";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Ponastavi geslo";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Pripeljite svoje prijatelje na Wire!";
 "invite_banner.message" = "Uživajte v klicih, sporočilih, skicah, GIFih ter več, zasebno in v skupinah.";
 "invite_banner.invite_button_title" = "Povabi več oseb";
+
+// Collections
+"collections.section.images.title" = "Slike";
+"collections.section.files.title" = "Zbirke";
+"collections.section.videos.title" = "Video posnetki";
+"collections.section.links.title" = "Povezave";
+"collections.section.all.button" = "Vse →";
+"collections.section.no_items" = "Ni predmetov v knjižnici";

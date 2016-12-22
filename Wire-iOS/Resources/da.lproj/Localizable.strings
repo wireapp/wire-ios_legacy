@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Search by name or username";
+"peoplepicker.search_placeholder" = "Søg på navn eller brugernavn";
 "peoplepicker.header.top_people" = "Top personer";
 "peoplepicker.button.create_conversation" = "Opret gruppe";
 "peoplepicker.button.add_to_conversation" = "Tilføj";
@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Søg ved navn";
 "contacts_ui.invite_others" = "Invitér andre";
-"contacts_ui.name_in_contacts" = "%@ i adressebog";
+"contacts_ui.name_in_contacts" = "%@ i Kontaktpersoner";
 "contacts_ui.connection_request" = "Har anmodet om at forbinde sig";
 "contacts_ui.action_button.invite" = "Invitér";
 "contacts_ui.action_button.open" = "Åbn";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Tryk på kontakter for at starte en samtale";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "kontakter";
+"bottom_bar.contacts_button.title" = "mennesker";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.in_address_book" = "i Kontaktpersoner";
 
 
 // Archived List
@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Skjuler…";
 
 "send_invitation.subject" = "Forbind dig med mig på Wire";
-"send_invitation.text" = "I’m on Wire, search for %@ or visit wire.com/download.";
+"send_invitation.text" = "Jeg bruger Wire. Søg efter %@ eller besøg get.wire.com";
 "send_invitation_no_email.text" = "Jeg er på Wire. Besøg https://get.wire.com for at forbinde dig med mig.";
 
 "send_personal_invitation.text" = "Jeg er på Wire, vi tales ved derinde. https://get.wire.com";
@@ -144,11 +144,11 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tryk for at optage\nDu kan %@ efter det";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Vælg et filter ovenfor";
 
-"conversation.call.many_participants_confirmation.title" = "Start a call";
-"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.title" = "Starte et opkald";
+"conversation.call.many_participants_confirmation.message" = "Dette vil kalde %d mennesker";
 "conversation.call.many_participants_confirmation.call" = "Ring op";
 
-"conversation.connection_view.in_address_book" = "in Address Book";
+"conversation.connection_view.in_address_book" = "i Kontaktpersoner";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,6 +256,7 @@
 "content.message.like" = "Synes om";
 "content.message.unlike" = "Synes ikke godt om";
 "content.message.forward" = "Videresend";
+"content.message.go_to_conversation" = "Vis i samtale";
 "content.message.forward.to" = "Send til...";
 
 "content.reactions_list.likers" = "Synes godt af";
@@ -442,16 +443,16 @@
 "self.settings.account_section" = "Konto";
 
 "self.settings.account_details_group.info.title" = "Info";
-"self.settings.account_details_group.personal.title" = "Personal";
+"self.settings.account_details_group.personal.title" = "Personligt";
 
 "self.settings.account_section.name.title" = "Navn";
 "self.settings.account_section.email.title" = "E-mail";
 "self.settings.account_section.phone.title" = "Telefon";
-"self.settings.account_section.handle.title" = "Username";
-"self.settings.account_section.add_handle.title" = "Add username";
+"self.settings.account_section.handle.title" = "Brugernavn";
+"self.settings.account_section.add_handle.title" = "Tilføj brugernavn";
 
 "self.settings.account_details_group.info.footer" = "Folk kan finde dig med disse oplysninger.";
-"self.settings.account_details_group.personal.footer" = "This information is not visible .";
+"self.settings.account_details_group.personal.footer" = "Disse oplysninger er ikke synlige.";
 
 "self.settings.account_details.remove_device.title" = "Slet enhed";
 "self.settings.account_details.key_fingerprint.title" = "Nøgle fingeraftryk";
@@ -479,12 +480,12 @@
 
 // Change Username
 
-"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.title" = "Brugernavn";
 "self.settings.account_section.handle.change.save" = "Gem";
-"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
-"self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
+"self.settings.account_section.handle.change.footer" = "Mindst to tegn. Kun a-z, 0-9 og _";
+"self.settings.account_section.handle.change.footer.unavailable" = "Allerede i brug";
 
-"self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
+"self.settings.account_section.handle.change.failure_alert.title" = "Ikke angive brugernavnet";
 "self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
 // Chat alerts
@@ -502,9 +503,9 @@
 "self.settings.sound_menu.ringtones.title" = "Ringetoner";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
-"self.settings.callkit.title" = "Calls";
-"self.settings.callkit.caption" = "Share with iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+"self.settings.callkit.title" = "Opkald";
+"self.settings.callkit.caption" = "Del med iOS";
+"self.settings.callkit.description" = "Vis tråd opfordrer låsen skærmen og i iOS opkald historie. Hvis iCloud er aktiveret, delt Opkaldshistorie med Apple. Genstart Wire for at anvende denne indstilling.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Opkald";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Besked";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Opkald Rapportering";
 "self.settings.technical_report.include_log" = "Inkludér detaljeret log";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Detaljerede logfiler kan indeholde personoplysninger";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Nulstil adgangskode";
@@ -704,11 +705,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Usernames are here.";
-"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.title" = "Brugernavne er her.";
+"registration.select_handle.takeover.subtitle" = "Hævde din unikke navn på Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Lær mere";
 
-"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.choose_own" = "Vælg din";
 "registration.select_handle.takeover.keep_suggested" = "Behold denne";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -745,7 +746,7 @@
 "error.invite.no_email_provider" = "Konfigurer din e-mail klient for at kunne sende invitationer via e-mail";
 "error.invite.no_messaging_provider" = "Konfigurer din SMS for at kunne sende invitationer vis SMS";
 
-"sketchpad.initial_hint" = "Tap colors to change brush size";
+"sketchpad.initial_hint" = "Tryk på farver for at ændre penselstørrelse";
 
 "migration.please_wait_message" = "Et øjeblik";
 
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Bring dine venner med til Wire!";
 "invite_banner.message" = "Nyd opkald, beskeder, skitser, GIFs og mere, privat eller med grupper.";
 "invite_banner.invite_button_title" = "Invitér flere personer";
+
+// Collections
+"collections.section.images.title" = "Billeder";
+"collections.section.files.title" = "Filer";
+"collections.section.videos.title" = "Videoer";
+"collections.section.links.title" = "Links";
+"collections.section.all.button" = "Alle →";
+"collections.section.no_items" = "Ingen elementer i biblioteket";

@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cherchez par nom";
 "contacts_ui.invite_others" = "Invitez d’autres personnes";
-"contacts_ui.name_in_contacts" = "%@ dans le carnet d’adresses";
+"contacts_ui.name_in_contacts" = "%@ dans les contacts";
 "contacts_ui.connection_request" = "A demandé à se connecter";
 "contacts_ui.action_button.invite" = "Inviter";
 "contacts_ui.action_button.open" = "Ouvrir";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Appuyer sur contacts pour démarrer une nouvelle conversation";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contacts";
+"bottom_bar.contacts_button.title" = "personnes";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "dans le carnet d’adresses";
+"conversation.connection_view.in_address_book" = "dans les contacts";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Cela appellera %d personnes";
 "conversation.call.many_participants_confirmation.call" = "Appel";
 
-"conversation.connection_view.in_address_book" = "dans le carnet d’adresses";
+"conversation.connection_view.in_address_book" = "dans les contacts";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,6 +256,7 @@
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
 "content.message.forward" = "Faire suivre";
+"content.message.go_to_conversation" = "Show in conversation";
 "content.message.forward.to" = "Envoyer à ...";
 
 "content.reactions_list.likers" = "Aimé par";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Rapport d'appel Wire";
 "self.settings.technical_report.include_log" = "Inclure le rapport détaillé";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Des rapports détaillés pourraient contenir des données personnelles";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Réinitialiser votre mot de passe";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Amenez vos amis sur Wire !";
 "invite_banner.message" = "Profitez d'appels, de messages, de croquis, de GIFs et plus en privé ou avec des groupes.";
 "invite_banner.invite_button_title" = "Invitez plus de personnes";
+
+// Collections
+"collections.section.images.title" = "Photos";
+"collections.section.files.title" = "Fichiers";
+"collections.section.videos.title" = "Vidéos";
+"collections.section.links.title" = "Liens";
+"collections.section.all.button" = "Tous →";
+"collections.section.no_items" = "Aucun élément dans la bibliothèque";
