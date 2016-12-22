@@ -48,41 +48,33 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var linkMessages: [ZMConversationMessage] = []
     fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
-    fileprivate let collection: AssetCollectionHolder
+    fileprivate let collection: AssetCollectionWrapper
     
     fileprivate var fetchingDone: Bool = false {
         didSet {
             if self.isViewLoaded {
                 self.updateNoElementsState()
-                self.contentView.collectionView.reloadData()
+                self.contentView.collectionView.collectionViewLayout.invalidateLayout()
             }
         }
     }
     
+    fileprivate var inOverviewMode: Bool {
+        return self.sections == .all
+    }
+    
     convenience init(conversation: ZMConversation) {
-        let assetCollecitonMulticastDelegate = AssetCollectionMulticastDelegate()
-
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
         let matchFiles = CategoryMatch(including: .file, excluding: .video)
         let matchVideo = CategoryMatch(including: .video, excluding: .none)
         let matchLink = CategoryMatch(including: .link, excluding: .none)
         
-        
-        let assetCollection: ZMCollection
-        
-        if Settings.shared().enableBatchCollections {
-            assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink], delegate: assetCollecitonMulticastDelegate)
-        }
-        else {
-            assetCollection = AssetCollection(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink], delegate: assetCollecitonMulticastDelegate)
-        }
-        
-        let holder = AssetCollectionHolder(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: assetCollecitonMulticastDelegate)
+        let holder = AssetCollectionWrapper(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink])
         
         self.init(collection: holder)
     }
     
-    init(collection: AssetCollectionHolder, sections: CollectionsSectionSet = .all, messages: [ZMConversationMessage] = [], fetchingDone: Bool = false) {
+    init(collection: AssetCollectionWrapper, sections: CollectionsSectionSet = .all, messages: [ZMConversationMessage] = [], fetchingDone: Bool = false) {
         self.collection = collection
         self.sections = sections
         
@@ -163,7 +155,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func updateNoElementsState() {
-        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
+        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 1 {
             self.contentView.noItemsInLibrary = true
         }
     }
@@ -197,7 +189,6 @@ final public class CollectionsViewController: UIViewController {
     }
     
     @objc func closeButtonPressed(_ button: UIButton) {
-        collection.assetCollection.tearDown() // Cancel fetchRequests
         self.onDismiss?(self)
     }
     
@@ -221,7 +212,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
             }
             
             if messageCategory.key.including.contains(.link) {
-                self.linkMessages.append(contentsOf: conversationMessages.filter { $0.textMessageData?.linkPreview != nil })
+                self.linkMessages.append(contentsOf: conversationMessages)
             }
             
             if messageCategory.key.including.contains(.video) {
@@ -285,28 +276,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     fileprivate func moreElementsToSee(in section: CollectionsSectionSet) -> Bool {
-        switch(section) {
-        case CollectionsSectionSet.images:
-            let max = self.inOverviewMode ? self.maxOverviewElementsInGrid : Int.max
-            return self.imageMessages.count > max
-            
-        case CollectionsSectionSet.filesAndAudio:
-            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
-            return self.fileAndAudioMessages.count > max
-            
-        case CollectionsSectionSet.videos:
-            let max = self.inOverviewMode ? self.maxOverviewVideoElementsInTable : Int.max
-            return self.videoMessages.count > max
-            
-        case CollectionsSectionSet.links:
-            let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
-            return self.linkMessages.count > max
-    
-        case CollectionsSectionSet.loading:
-            return false
-            
-        default: fatal("Unknown section")
-        }
+        return self.elements(for: section).count > self.numberOfElements(for: section)
     }
     
     fileprivate func message(for indexPath: IndexPath) -> ZMConversationMessage {
@@ -315,10 +285,6 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         return self.elements(for: section)[indexPath.row]
-    }
-    
-    fileprivate var inOverviewMode: Bool {
-        return self.sections == .all
     }
     
     fileprivate var girdElementSize: CGSize {
@@ -365,7 +331,6 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
-        
         
         switch(section) {
         case CollectionsSectionSet.images:

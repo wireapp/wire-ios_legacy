@@ -18,6 +18,19 @@
 
 import Foundation
 
+extension ZMConversationMessage {
+    func shortDescription() -> String {
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        let isVideo = Message.isVideoMessage(self)
+        let isAudio = Message.isAudioMessage(self)
+        let isFile = Message.isFileTransferMessage(self)
+        let isPicture = Message.isImageMessage(self)
+        let sender = self.sender?.displayName ?? "<nil>"
+        
+        return "\(address): from \(sender) file=\(isFile) audio=\(isAudio) video=\(isVideo) pic=\(isPicture)"
+    }
+}
+
 protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)
 }
@@ -68,6 +81,18 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         let goToConversation = UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(CollectionCell.showInConversation(_:)))
         properties.additionalItems = [forwardItem, goToConversation]
         return properties
+    }
+    
+    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        print("apply \(layoutAttributes.frame) to \(self.message?.shortDescription())")
+    }
+    
+    override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+
+        print("preferredLayoutAttributesFitting(\(layoutAttributes.frame)) for \(self.message?.shortDescription()): \(attributes.frame)")
+        return attributes
     }
     
     func showMenu() {
