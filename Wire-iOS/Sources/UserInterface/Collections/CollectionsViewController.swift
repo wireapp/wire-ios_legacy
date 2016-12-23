@@ -182,7 +182,27 @@ final public class CollectionsViewController: UIViewController {
                 message.fileMessageData?.cancelTransfer()
             }
         case .present:
-            self.messagePresenter.open(message, targetView: view)
+            if Message.isImageMessage(message) {
+                let imageViewController = FullscreenImageViewController(message: message)
+                
+                let backButton = CollectionsView.backButton()
+                backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+
+                let closeButton = CollectionsView.closeButton()
+                closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
+
+                imageViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+                imageViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+                guard let sender = message.sender, let serverTimestamp = message.serverTimestamp else {
+                    return
+                }
+                imageViewController.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.wr_formattedDate())
+                
+                self.navigationController?.pushViewController(imageViewController, animated: true)
+            }
+            else {
+                self.messagePresenter.open(message, targetView: view)
+            }
             
         default:
             break
