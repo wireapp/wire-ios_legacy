@@ -37,13 +37,13 @@ public struct CollectionsSectionSet: OptionSet, Hashable {
     public static let filesAndAudio = CollectionsSectionSet(rawValue: 1 << 1)
     public static let videos = CollectionsSectionSet(rawValue: 1 << 2)
     public static let links = CollectionsSectionSet(rawValue: 1 << 3)
-    public static let loading = CollectionsSectionSet(rawValue: 1 << 4)
+    public static let loading = CollectionsSectionSet(rawValue: 1 << 4) // special section that shows the loading view
     
     /// Returns all possible section types
     public static let all: CollectionsSectionSet = [.images, .filesAndAudio, .videos, .links, .loading]
     
     /// Returns visible sections in the display order
-    public static let visible: [CollectionsSectionSet] = [images, videos, filesAndAudio, loading]
+    public static let visible: [CollectionsSectionSet] = [images, links, videos, filesAndAudio, loading]
     
     public var hashValue: Int {
         return Int(self.rawValue)

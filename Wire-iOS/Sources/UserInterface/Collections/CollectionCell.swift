@@ -83,18 +83,6 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         return properties
     }
     
-    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        print("apply \(layoutAttributes.frame) to \(self.message?.shortDescription())")
-    }
-    
-    override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
-
-        print("preferredLayoutAttributesFitting(\(layoutAttributes.frame)) for \(self.message?.shortDescription()): \(attributes.frame)")
-        return attributes
-    }
-    
     func showMenu() {
         guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
             return
