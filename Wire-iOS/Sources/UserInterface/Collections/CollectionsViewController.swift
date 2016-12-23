@@ -212,7 +212,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
                 self.fileAndAudioMessages.append(contentsOf: conversationMessages)
             }
             
-            if messageCategory.key.including.contains(.link) {
+            if messageCategory.key.including.contains(.linkPreview) {
                 self.linkMessages.append(contentsOf: conversationMessages)
             }
             
