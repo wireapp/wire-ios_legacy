@@ -1558,3 +1558,15 @@ CollectionCellHeader {
         textColor: $color-text-dimmed;
     }
 }
+
+TwoLineTitleView {
+    titleLabel: @{
+        font: $font-small-medium;
+        textColor: $color-text-foreground;
+    }
+    
+    subtitleLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-foreground;
+    }
+}

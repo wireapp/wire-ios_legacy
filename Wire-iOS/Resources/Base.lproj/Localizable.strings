@@ -777,6 +777,7 @@
 "invite_banner.invite_button_title" = "Invite more people";
 
 // Collections
+"collections.title" = "Library";
 "collections.section.images.title" = "Pictures";
 "collections.section.files.title" = "Files";
 "collections.section.videos.title" = "Videos";
