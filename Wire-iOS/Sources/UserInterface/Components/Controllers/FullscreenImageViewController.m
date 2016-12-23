@@ -153,6 +153,12 @@
     self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.closeButton.hidden = self.navigationController != nil;
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
