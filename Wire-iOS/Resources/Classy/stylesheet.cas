@@ -1527,7 +1527,7 @@ CollectionsView {
     backgroundColor: $color-text-background;
     noItemsLabel: @{
         font: $font-medium-medium;
-        textColor: $color-text-dimmed;
+        textColor: lightGray;
     }
 }
 
