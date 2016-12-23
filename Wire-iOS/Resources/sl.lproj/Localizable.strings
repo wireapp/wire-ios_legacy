@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Zbirke";
 "collections.section.videos.title" = "Video posnetki";
 "collections.section.links.title" = "Povezave";
-"collections.section.all.button" = "Vse →";
+"collections.section.all.button" = "Vse %d →";
 "collections.section.no_items" = "Ni predmetov v knjižnici";

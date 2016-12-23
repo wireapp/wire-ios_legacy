@@ -54,7 +54,6 @@ import Cartography
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.isScrollEnabled = true
         self.collectionView.backgroundColor = UIColor.clear
-        
         self.addSubview(self.collectionView)
 
         self.noItemsLabel.text = "collections.section.no_items".localized.uppercased()

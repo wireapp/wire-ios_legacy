@@ -22,13 +22,31 @@
 #import "AnalyticsLocalyticsProvider.h"
 #import <AVSFlowManager.h>
 #import "Settings.h"
+#import "Wire-Swift.h"
 
 
+static BOOL useConsoleAnalytics = NO;
+NSString * const ZMConsoleAnalyticsArgumentKey = @"-ConsoleAnalytics";
 @implementation Analytics (iOS)
+
++ (void)setConsoleAnayltics:(BOOL)shouldUseConsoleAnalytics;
+{
+    useConsoleAnalytics = shouldUseConsoleAnalytics;
+}
+
 
 + (instancetype)shared
 {
     static Analytics *sharedAnalytics = nil;
+    
+    if (useConsoleAnalytics) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sharedAnalytics = [[Analytics alloc] initWithProvider:[AnalyticsConsoleProvider new]];
+        });
+        return sharedAnalytics;
+    }
+    
     BOOL useAnalytics = USE_ANALYTICS;
     // Don’t track events in debug configuration.
     if (useAnalytics && ![[Settings sharedSettings] disableAnalytics]) {

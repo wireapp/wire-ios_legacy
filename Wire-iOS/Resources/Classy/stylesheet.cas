@@ -1546,3 +1546,27 @@ CollectionHeaderView {
         titleColor[state:normal]: $color-text-foreground;
     }
 }
+
+CollectionCellHeader {
+    nameLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-foreground;
+    }
+    
+    dateLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-dimmed;
+    }
+}
+
+TwoLineTitleView {
+    titleLabel: @{
+        font: $font-small-medium;
+        textColor: $color-text-foreground;
+    }
+    
+    subtitleLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-foreground;
+    }
+}

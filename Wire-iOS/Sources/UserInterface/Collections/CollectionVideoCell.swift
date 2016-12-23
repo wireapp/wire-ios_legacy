@@ -42,22 +42,6 @@ final public class CollectionVideoCell: CollectionCell {
         videoMessageView.configure(for: message, isInitial: true)
     }
     
-    var isHeightCalculated: Bool = false
-    var containerWidth: CGFloat = 320
-    
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        if !isHeightCalculated {
-            setNeedsLayout()
-            layoutIfNeeded()
-            var newFrame = layoutAttributes.frame
-            newFrame.size.height = CGFloat(ceilf(Float(self.containerWidth * (3.0 / 4.0))))
-            newFrame.size.width = self.containerWidth
-            layoutAttributes.frame = newFrame
-            isHeightCalculated = true
-        }
-        return layoutAttributes
-    }
-    
     func loadView() {
         self.videoMessageView.delegate = self
         self.videoMessageView.clipsToBounds = true
@@ -71,7 +55,6 @@ final public class CollectionVideoCell: CollectionCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
-        self.isHeightCalculated = false
     }
 }
 

@@ -33,9 +33,7 @@ final public class CollectionImageCell: CollectionCell {
     }
     
     static let maxCellSize: CGFloat = 120
-    
-    public var cellSize: CGSize = .zero
-    
+
     override var message: ZMConversationMessage? {
         didSet {
             guard let message = self.message, let _ = message.imageMessageData else {
@@ -61,16 +59,6 @@ final public class CollectionImageCell: CollectionCell {
     }
     
     var isHeightCalculated: Bool = false
-    
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        if !isHeightCalculated {
-            var newFrame = layoutAttributes.frame
-            newFrame.size = self.cellSize
-            layoutAttributes.frame = newFrame
-            isHeightCalculated = true
-        }
-        return layoutAttributes
-    }
     
     func loadView() {
         self.imageView.contentMode = .scaleAspectFill

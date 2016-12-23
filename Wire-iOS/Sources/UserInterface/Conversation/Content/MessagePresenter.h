@@ -27,9 +27,9 @@
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 /// Container of the view that hosts popover controller.
-@property (nonatomic) UIViewController *targetViewController;
+@property (nonatomic, weak) UIViewController *targetViewController;
 /// Controller that would be the modal parent of message details.
-@property (nonatomic) UIViewController *modalTargetController;
+@property (nonatomic, weak) UIViewController *modalTargetController;
 
 @property (nonatomic, readonly) BOOL waitingForFileDownload;
 

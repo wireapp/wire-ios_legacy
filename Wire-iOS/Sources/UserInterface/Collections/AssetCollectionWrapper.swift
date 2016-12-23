@@ -55,8 +55,24 @@ extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
     }
 }
 
-struct AssetCollectionHolder {
+final class AssetCollectionWrapper: NSObject {
     let conversation: ZMConversation
     let assetCollection: ZMCollection
     let assetCollectionDelegate: AssetCollectionMulticastDelegate
+    
+    init(conversation: ZMConversation, matchingCategories: [CategoryMatch]) {
+        self.conversation = conversation
+        self.assetCollectionDelegate = AssetCollectionMulticastDelegate()
+        
+        if Settings.shared().enableBatchCollections {
+            self.assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: matchingCategories, delegate: self.assetCollectionDelegate)
+        }
+        else {
+            self.assetCollection = AssetCollection(conversation: conversation, matchingCategories: matchingCategories, delegate: self.assetCollectionDelegate)
+        }
+    }
+    
+    deinit {
+        assetCollection.tearDown()
+    }
 }

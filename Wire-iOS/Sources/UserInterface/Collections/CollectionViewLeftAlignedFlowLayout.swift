@@ -19,12 +19,7 @@
 
 import Foundation
 
-extension FloatingPoint {
-    func equal(to other: Self, e: Self) -> Bool {
-        return abs(self - other) < e
-    }
-}
-
+// NB: This class assumes that the elements in one section are of the same size.
 final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let oldAttributes: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElements(in: rect) else {
@@ -32,16 +27,23 @@ final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
         }
         
         var newAttributes: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
-        let maxCellWidth = rect.width - self.sectionInset.left - self.sectionInset.right
+        let maxCellWidth = self.collectionView!.bounds.size.width - self.sectionInset.left - self.sectionInset.right
         
         for attributes: UICollectionViewLayoutAttributes in oldAttributes {
             
-            let cellIsFullWidth = attributes.frame.size.width.equal(to: maxCellWidth, e: 1)
-            let cellIsNotLeftAligned = attributes.frame.origin.x != self.sectionInset.left
-            if !cellIsFullWidth && cellIsNotLeftAligned {
-                var newLeftAlignedFrame: CGRect = attributes.frame
-                newLeftAlignedFrame.origin.x = self.sectionInset.left
-                attributes.frame = newLeftAlignedFrame
+            let totalElementsInSection = self.collectionView!.numberOfItems(inSection: attributes.indexPath.section)
+            let sectionHasLessElementsThanWidth = totalElementsInSection == 1
+
+            if sectionHasLessElementsThanWidth {
+                let cellIsFullWidth = attributes.frame.size.width.equal(to: maxCellWidth, e: 1)
+                let cellIsNotLeftAligned = attributes.frame.origin.x != self.sectionInset.left
+                if !cellIsFullWidth && cellIsNotLeftAligned {
+                    let inset = (maxCellWidth - CGFloat(totalElementsInSection) * attributes.frame.size.width) / 2
+                    
+                    var newLeftAlignedFrame: CGRect = attributes.frame
+                    newLeftAlignedFrame.origin.x = newLeftAlignedFrame.origin.x - inset
+                    attributes.frame = newLeftAlignedFrame
+                }
             }
             
             newAttributes.append(attributes)

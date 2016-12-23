@@ -37,9 +37,13 @@ import Cartography
         }
     }
     
-    public var showActionButton: Bool = true {
+    public var totalItemsCount: UInt = 0 {
         didSet {
-            self.actionButton.isHidden = !self.showActionButton
+            self.actionButton.isHidden = totalItemsCount == 0
+            
+            let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount).uppercased()
+            
+            self.actionButton.setTitle(totalCountText, for: .normal)
         }
     }
     
@@ -59,7 +63,6 @@ import Cartography
         
         self.actionButton.contentHorizontalAlignment = .right
         self.actionButton.accessibilityLabel = "open all"
-        self.actionButton.setTitle("collections.section.all.button".localized.uppercased(), for: .normal)
         self.actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
         self.addSubview(self.actionButton)
         
