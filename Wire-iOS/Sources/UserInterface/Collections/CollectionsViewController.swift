@@ -291,7 +291,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     fileprivate var girdElementSize: CGSize {
         let size = self.contentView.collectionView.bounds.size.width / CGFloat(self.elementsPerLine)
         
-        return CGSize(width: size - 1, height: size - 1)
+        return CGSize(width: size, height: size)
     }
     
     fileprivate var elementsPerLine: Int {
