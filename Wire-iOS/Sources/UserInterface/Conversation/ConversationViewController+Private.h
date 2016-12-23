@@ -23,13 +23,16 @@
 
 
 @class ConversationInputBarViewController;
-
+@class ConversationDetailsTransitioningDelegate;
 
 @interface ConversationViewController (Private)
 
 @property (nonatomic, readonly) ConversationContentViewController *contentViewController;
 @property (nonatomic, readonly) ConversationInputBarViewController *inputBarController;
 @property (nonatomic, readonly) UIViewController *participantsController;
+@property (nonatomic, readonly) AnalyticsTracker *analyticsTracker;
+@property (nonatomic, readonly) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
 
+- (void)onBackButtonPressed:(UIButton *)backButton;
 @end
 

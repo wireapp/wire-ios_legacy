@@ -46,7 +46,7 @@ import Cartography
         viewModel.delegate = self
         createViews()
         createConstraints()
-        if let initialSyncCompleted = ZMUserSession.shared().initialSyncOnceCompleted {
+        if let initialSyncCompleted = ZMUserSession.shared()?.initialSyncOnceCompleted {
             self.initialSyncCompleted = initialSyncCompleted.boolValue
         }
     }

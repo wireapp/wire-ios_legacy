@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Tippe auf Kontakte, um eine neue Unterhaltung zu beginnen";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "Kontakte";
+"bottom_bar.contacts_button.title" = "Personen";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "im Adressbuch";
+"conversation.connection_view.in_address_book" = "in Kontakte";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Dies wird %d Menschen anrufen";
 "conversation.call.many_participants_confirmation.call" = "Anruf";
 
-"conversation.connection_view.in_address_book" = "im Adressbuch";
+"conversation.connection_view.in_address_book" = "in Kontakte";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,6 +256,7 @@
 "content.message.like" = "Gefällt mir";
 "content.message.unlike" = "Gefällt mir nicht mehr";
 "content.message.forward" = "Weiterleiten";
+"content.message.go_to_conversation" = "In Unterhaltung anzeigen";
 "content.message.forward.to" = "Senden an...";
 
 "content.reactions_list.likers" = "Gefällt";
@@ -618,8 +619,8 @@
 "registration.verify_email.resend.button_title" = "Erneut senden";
 
 "registration.select_picture.subtitle" = "Wire ist so viel netter mit einem Bild.";
-"registration.select_picture.button_title" = "Wähle dein eigenes";
-"registration.keep_picture.button_title" = "Behalte dieses";
+"registration.select_picture.button_title" = "Wähle deinen eigenen";
+"registration.keep_picture.button_title" = "Behalte diesen";
 "registration.camera_action.title" = "Foto aufnehmen";
 "registration.photo_gallery_action.title" = "Foto auswählen";
 "registration.cancel_action.title" = "Abbrechen";
@@ -705,11 +706,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
 "registration.select_handle.takeover.title" = "Benutzernamen sind da.";
-"registration.select_handle.takeover.subtitle" = "Sichere dir deinen einzigartigen Benutzernamen auf Wire.";
+"registration.select_handle.takeover.subtitle" = "Sichere dir deinen persönlichen Benutzernamen auf Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Erfahre mehr";
 
 "registration.select_handle.takeover.choose_own" = "Namen selbst festlegen";
-"registration.select_handle.takeover.keep_suggested" = "Behalte dieses";
+"registration.select_handle.takeover.keep_suggested" = "Behalte diesen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Hole deine Freunde zu Wire!";
 "invite_banner.message" = "Anrufen, Bilder teilen, Musik, GIFs\nund vieles mehr in persönlichen und Gruppenunterhaltungen.";
 "invite_banner.invite_button_title" = "Personen hinzufügen";
+
+// Collections
+"collections.section.images.title" = "Bilder";
+"collections.section.files.title" = "Dokumente";
+"collections.section.videos.title" = "Videos";
+"collections.section.links.title" = "Links";
+"collections.section.all.button" = "Alle →";
+"collections.section.no_items" = "Keine Objekte in der Sammlung";

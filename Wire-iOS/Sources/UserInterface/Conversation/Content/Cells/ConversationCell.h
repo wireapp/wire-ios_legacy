@@ -31,18 +31,19 @@
 @class LinkAttachment;
 
 
-typedef NS_ENUM(NSUInteger, ConversationCellAction) {
-    ConversationCellActionCancel,
-    ConversationCellActionResend,
-    ConversationCellActionDelete,
-    ConversationCellActionPresent,
-    ConversationCellActionSave,
-    ConversationCellActionEdit,
-    ConversationCellActionSketchDraw,
-    ConversationCellActionSketchEmoji,
-    ConversationCellActionSketchText,
-    ConversationCellActionLike,
-    ConversationCellActionForward
+typedef NS_ENUM(NSUInteger, MessageAction) {
+    MessageActionCancel,
+    MessageActionResend,
+    MessageActionDelete,
+    MessageActionPresent,
+    MessageActionSave,
+    MessageActionEdit,
+    MessageActionSketchDraw,
+    MessageActionSketchEmoji,
+    MessageActionSketchText,
+    MessageActionLike,
+    MessageActionForward,
+    MessageActionShowInConversation
 };
 
 extern const CGFloat ConversationCellSelectedOpacity;
@@ -77,7 +78,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 /// Called on touch up inside event on the user image (@c fromImage)
 - (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view;
 - (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(ConversationCellAction)actionId;
+- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
@@ -114,9 +115,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (BOOL)updateForMessage:(MessageChangeInfo *)changeInfo;
 - (void)willDisplayInTableView;
 - (void)didEndDisplayingInTableView;
-
-/// Called before the message will be deleted (e.g. if the message was ephemeral or the sender deleted it manually)
-- (void)willDeleteMessage;
 
 - (void)forward:(id)sender;
 

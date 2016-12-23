@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名称搜索";
 "contacts_ui.invite_others" = "邀请其他人";
-"contacts_ui.name_in_contacts" = "%@ 在联络簿中";
+"contacts_ui.name_in_contacts" = "%@在联系人中";
 "contacts_ui.connection_request" = "请求加为好友";
 "contacts_ui.action_button.invite" = "邀请";
 "contacts_ui.action_button.open" = "开启";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "点击联系人开始对话";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "联系人";
+"bottom_bar.contacts_button.title" = "人";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "在通讯录中";
+"conversation.connection_view.in_address_book" = "在联系人中";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "这将会呼叫%d位联系人";
 "conversation.call.many_participants_confirmation.call" = "通话";
 
-"conversation.connection_view.in_address_book" = "在通讯录中";
+"conversation.connection_view.in_address_book" = "在联系人中";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
@@ -256,6 +256,7 @@
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
 "content.message.forward" = "转发";
+"content.message.go_to_conversation" = "在对话中显示";
 "content.message.forward.to" = "发送给...";
 
 "content.reactions_list.likers" = "被赞";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire通话报告";
 "self.settings.technical_report.include_log" = "包括详细的日志";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "详细的日志将包含个人数据";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "重设密码";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "邀请您的朋友加入Wire！";
 "invite_banner.message" = "尽情享受在个人或群组聊天室中通话，分享信息和图片。";
 "invite_banner.invite_button_title" = "邀请更多人";
+
+// Collections
+"collections.section.images.title" = "图片";
+"collections.section.files.title" = "文件";
+"collections.section.videos.title" = "视频";
+"collections.section.links.title" = "链接";
+"collections.section.all.button" = "所有 →";
+"collections.section.no_items" = "没有任何条目";

@@ -139,7 +139,7 @@ extension AddressBookHelper {
         self.addressBookSearchPerformedAtLeastOnce = true;
         
         if TARGET_OS_SIMULATOR == 0 || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
-            ZMUserSession.shared().uploadAddressBook()
+            ZMUserSession.shared()?.uploadAddressBook()
         }
         UserDefaults.standard.set(Date(), forKey: addressBookLastSearchDate)
     }

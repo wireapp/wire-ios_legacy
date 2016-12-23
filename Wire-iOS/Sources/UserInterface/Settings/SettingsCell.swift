@@ -36,7 +36,7 @@ protocol SettingsCellType: class {
     var icon: ZetaIconType {get set}
 }
 
-class SettingsTableCell: UITableViewCell, SettingsCellType {
+class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
     var iconImageView = UIImageView()
     var cellNameLabel = UILabel()
     var valueLabel = UILabel()
@@ -107,16 +107,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     var descriptor: SettingsCellDescriptorType?
-    
-    override var reuseIdentifier: String {
-        get {
-            return type(of: self).reuseIdentifier
-        }
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)" + "ReuseIdentifier"
-    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

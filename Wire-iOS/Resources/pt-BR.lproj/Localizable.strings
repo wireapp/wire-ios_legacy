@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Pesquisar por nome";
 "contacts_ui.invite_others" = "Convidar outras pessoas";
-"contacts_ui.name_in_contacts" = "%@ está nos contatos";
+"contacts_ui.name_in_contacts" = "%@ nos Contatos";
 "contacts_ui.connection_request" = "Solicitou se conectar";
 "contacts_ui.action_button.invite" = "Convidar";
 "contacts_ui.action_button.open" = "Abrir";
@@ -76,7 +76,7 @@
 "contacts_ui.no_contact.message" = "Toque em contatos para iniciar uma conversa";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contatos";
+"bottom_bar.contacts_button.title" = "pessoas";
 
 
 // Profile Header View
@@ -256,6 +256,7 @@
 "content.message.like" = "Curtir";
 "content.message.unlike" = "Descurtir";
 "content.message.forward" = "Encaminhar";
+"content.message.go_to_conversation" = "Show in conversation";
 "content.message.forward.to" = "Enviar para...";
 
 "content.reactions_list.likers" = "Curtido por";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Traga seus amigos para o Wire!";
 "invite_banner.message" = "Desfrute de chamadas, mensagens, desenhos, GIFs e muito mais em privado ou com grupos.";
 "invite_banner.invite_button_title" = "Convidar mais pessoas";
+
+// Collections
+"collections.section.images.title" = "Imagens";
+"collections.section.files.title" = "Arquivos";
+"collections.section.videos.title" = "Vídeos";
+"collections.section.links.title" = "Links";
+"collections.section.all.button" = "Todos →";
+"collections.section.no_items" = "Não há itens na biblioteca";

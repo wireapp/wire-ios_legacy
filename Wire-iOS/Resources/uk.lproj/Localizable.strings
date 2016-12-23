@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Пошук за іменем";
 "contacts_ui.invite_others" = "Запросити інших користувачів";
-"contacts_ui.name_in_contacts" = "%@ в Адресній книзі";
+"contacts_ui.name_in_contacts" = "%@ в Контактах";
 "contacts_ui.connection_request" = "Надіслав(-ла) запит на додавання до контактів";
 "contacts_ui.action_button.invite" = "Запросити";
 "contacts_ui.action_button.open" = "Вiдкрити";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Натисніть 'КОНТАКТИ', щоб почати розмову";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "контакти";
+"bottom_bar.contacts_button.title" = "люди";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "в адресній книзі";
+"conversation.connection_view.in_address_book" = "в Контактах";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Ви подзвоните %d людям";
 "conversation.call.many_participants_confirmation.call" = "Подзвонити";
 
-"conversation.connection_view.in_address_book" = "в адресній книзі";
+"conversation.connection_view.in_address_book" = "в Контактах";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,6 +256,7 @@
 "content.message.like" = "Подобається";
 "content.message.unlike" = "Не подобається";
 "content.message.forward" = "Переслати";
+"content.message.go_to_conversation" = "Show in conversation";
 "content.message.forward.to" = "Переслати в...";
 
 "content.reactions_list.likers" = "Сподобалося";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Запросіть ваших друзів до Wire!";
 "invite_banner.message" = "Насолоджуйтесь дзвінками, повідомленнями, зарисовками, GIF-анімаціями приватно або в групах.";
 "invite_banner.invite_button_title" = "Запросити більше людей";
+
+// Collections
+"collections.section.images.title" = "Картинки";
+"collections.section.files.title" = "Файли";
+"collections.section.videos.title" = "Відео";
+"collections.section.links.title" = "Посилання";
+"collections.section.all.button" = "Всі →";
+"collections.section.no_items" = "В бібліотеці відсутні елементи";

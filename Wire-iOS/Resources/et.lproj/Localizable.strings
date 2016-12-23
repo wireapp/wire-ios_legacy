@@ -18,7 +18,7 @@
 
 
 "general.ok" = "OK";
-"general.cancel" = "Loobu";
+"general.cancel" = "Tühista";
 "general.open_settings" = "Ava Wire sätted";
 
 
@@ -26,7 +26,7 @@
 // People picker/start UI
 "peoplepicker.search_placeholder" = "Otsi nime või kasutajanime järgi";
 "peoplepicker.header.top_people" = "Aktiivsed vestlused";
-"peoplepicker.button.create_conversation" = "Loo grupp";
+"peoplepicker.button.create_conversation" = "Loo grupivestlus";
 "peoplepicker.button.add_to_conversation" = "Lisa";
 "peoplepicker.header.conversations" = "Grupid";
 "peoplepicker.header.send_invitation" = "Kutsu";
@@ -58,29 +58,29 @@
 
 "peoplepicker.invite_more_people" = "Kutsu rohkem inimesi";
 "peoplepicker.quick-action.open-conversation" = "Ava";
-"peoplepicker.quick-action.create-conversation" = "Loo grupp";
+"peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Otsi nime järgi";
 "contacts_ui.invite_others" = "Kutsu teisi";
-"contacts_ui.name_in_contacts" = "Aadressiraamatus nimega %@";
+"contacts_ui.name_in_contacts" = "%@ seadme kontaktides";
 "contacts_ui.connection_request" = "Ühendussoov";
 "contacts_ui.action_button.invite" = "Kutsu";
 "contacts_ui.action_button.open" = "Ava";
-"contacts_ui.invite_sheet.cancel_button_title" = "Loobu";
+"contacts_ui.invite_sheet.cancel_button_title" = "Tühista";
 "contacts_ui.notification.invitation_sent" = "Kutse saadetud";
 "contacts_ui.notification.invitation_failed" = "Kutse saatmine ebaõnnestus";
 "contacts_ui.title" = "Kutsu inimesi";
 
 "contacts_ui.no_contact.title" = "Pole aktiivseid vestlusi\n";
-"contacts_ui.no_contact.message" = "Vajuta kontaktidel vestluse alustamiseks";
+"contacts_ui.no_contact.message" = "Vestluse alustamiseks toksa kontaktidel";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "kontaktid";
+"bottom_bar.contacts_button.title" = "inimest";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "aadressiraamatus";
+"conversation.connection_view.in_address_book" = "seadme kontaktides";
 
 
 // Archived List
@@ -132,29 +132,29 @@
 "conversation.displayname.emptygroup" = "Tühi grupivestlus";
 
 "conversation.input_bar.verified" = "Kontrollitud";
-"conversation.input_bar.placeholder" = "Trüki sõnum";
-"conversation.input_bar.placeholder_ephemeral" = "Ajastatud sõnum";
+"conversation.input_bar.placeholder" = "Kirjuta sõnum";
+"conversation.input_bar.placeholder_ephemeral" = "Kustuv sõnum";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Saatmiseks nipsa üles";
-"conversation.input_bar.audio_message.tooltip.tap_send" = "Saatmiseks vajuta";
-"conversation.input_bar.audio_message.too_long.title" = "Lindistamine peatatud";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Saatmiseks toksa";
+"conversation.input_bar.audio_message.too_long.title" = "Salvestamine peatatud";
 "conversation.input_bar.audio_message.too_long.message" = "Häälsõnumite pikkus on piiratud: %@. Saada see sõnum?";
 "conversation.input_bar.audio_message.send" = "Saada";
 
-"conversation.input_bar.audio_message.keyboard.record_tip" = "Lindistamiseks vajuta\nSeejärel saad seda %@";
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Salvestamiseks toksa nuppu.\nSeejärel saad sellele %@ filtri lisada.";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Vali ülevalt mõni filter";
 
 "conversation.call.many_participants_confirmation.title" = "Alusta kõnet";
 "conversation.call.many_participants_confirmation.message" = "Inimeste arv, kellele helistad: %d";
 "conversation.call.many_participants_confirmation.call" = "Helista";
 
-"conversation.connection_view.in_address_book" = "aadressiraamatus";
+"conversation.connection_view.in_address_book" = "seadme kontaktides";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
-"image_confirmer.cancel" = "Loobu";
+"image_confirmer.cancel" = "Tühista";
 "image.add_sketch" = "Lisa joonistus";
-"image.edit_image" = "Muuda pilti";
+"image.edit_image" = "Muuda profiilipilti";
 
 // Camera access
 "camera_access.denied" = "Wire vajab ligipääsu kaamerale.";
@@ -168,7 +168,7 @@
 "location.send_button.title" = "Saada";
 "location.unauthorized_alert.title" = "Lülita sisse Asukohateenused";
 "location.unauthorized_alert.message" = "Oma asukoha jagamiseks lülita sisse Asukohateenused ja luba Wire’le ligipääs oma asukohale.";
-"location.unauthorized_alert.cancel" = "Loobu";
+"location.unauthorized_alert.cancel" = "Tühista";
 "location.unauthorized_alert.settings" = "Seaded";
 
 // Twitter
@@ -176,7 +176,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "Väljas";
-"input.ephemeral.title" = "Määra aeg, millal sõnum kaob";
+"input.ephemeral.title" = "Määra kustuvate sõnumite taimeri pikkus";
 
 // System messages
 "content.system.continued_conversation" = "Alusta vestlust kasutajaga %@";
@@ -201,7 +201,7 @@
 "content.system.you_renamed_conv_to_nothing" = "Sa eemaldasid vestluselt nime";
 "content.system.pending_message_timestamp" = "Saadab…";
 "content.system.message_sent_timestamp" = "Saadetud";
-"content.system.message_delivered_timestamp" = "Kohaletoimetatud";
+"content.system.message_delivered_timestamp" = "Kohale toimetatud";
 "content.system.failedtosend_message_timestamp" = "Saatmine ebaõnnestus.";
 "content.system.failedtosend_message_timestamp_resend" = "Saada uuesti";
 "content.system.like_tooltip" = "Vajuta, kui meeldib";
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Sina";
 "content.system.this_device" = "see seade";
 
-"content.system.reactivated_device" = "Sa hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu";
+"content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
 "content.system.new_device" = "uut seadet";
 "content.system.started_using" = "hakkasid kasutama";
@@ -256,6 +256,7 @@
 "content.message.like" = "Meeldib";
 "content.message.unlike" = "Ei meeldi";
 "content.message.forward" = "Edasta";
+"content.message.go_to_conversation" = "Näita vestluses";
 "content.message.forward.to" = "Saada...";
 
 "content.reactions_list.likers" = "Neile meeldib";
@@ -280,8 +281,8 @@
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@\nHelistab";
-"voice.status.group_call.incoming" = "%@\nHeliseb";
-"voice.status.one_to_one.outgoing" = "%@\nHeliseb";
+"voice.status.group_call.incoming" = "%@\nkutsub";
+"voice.status.one_to_one.outgoing" = "%@\nkutsub";
 "voice.status.joining" = "%@\nÜhendatakse";
 "voice.status.video_not_available" = "Video on välja lülitatud";
 "voice.status.low_connection" = "Kehv ühendus";
@@ -290,9 +291,9 @@
 "voice.alert.call_in_progress.title" = "Kõne käimas";
 "voice.alert.call_in_progress.message" = "Üks sinu teistest seadmetest on juba kõnes osaline";
 "voice.alert.call_in_progress.confirm" = "Ok";
-"voice.accept_button.title" = "Kinnita";
+"voice.accept_button.title" = "Vasta";
 "voice.decline_button.title" = "Keeldu";
-"voice.hang_up_button.title" = "Pane ära";
+"voice.hang_up_button.title" = "Lõpeta kõne";
 "voice.mute_button.title" = "Hääletu";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Kõlar";
@@ -317,21 +318,21 @@
 "meta.menu.delete" = "Kustuta";
 "meta.menu.silence.mute" = "Hääletu";
 "meta.menu.silence.unmute" = "Heli sisse";
-"meta.menu.cancel" = "Loobu";
+"meta.menu.cancel" = "Tühista";
 "meta.menu.cancel_connection_request" = "Tühista ühendussoov";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Kustuta sisu?";
 "meta.menu.delete_content.dialog_message" = "See kustutab vestluse ajaloo ja eemaldab vestluse nimekirjast.";
 "meta.menu.delete_content.leave_as_well_message" = "Lahku samuti vestlusest";
-"meta.menu.delete_content.button_cancel" = "Loobu";
+"meta.menu.delete_content.button_cancel" = "Tühista";
 "meta.menu.delete_content.button_delete" = "Kustuta";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Lahku vestlusest?";
 "meta.leave_conversation_dialog_message" = "Osalejaid teavitatakse ja vestlus eemaldatakse sinu nimekirjast.";
 "meta.leave_conversation.delete_content_as_well_message" = "Kustuta ka sisu";
-"meta.leave_conversation_button_cancel" = "Loobu";
+"meta.leave_conversation_button_cancel" = "Tühista";
 "meta.leave_conversation_button_leave" = "Lahku";
 
 // Conversation Degraded (security level lowered)
@@ -344,18 +345,18 @@
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Eemalda?";
 "profile.remove_dialog_message" = "%@ ei saa siin vestluses sõnumeid saata ega neid vastu võtta.";
-"profile.remove_dialog_button_cancel" = "Loobu";
+"profile.remove_dialog_button_cancel" = "Tühista";
 "profile.remove_dialog_button_remove" = "Eemalda";
 
 // Block dialog
 "profile.block_dialog.title" = "Blokeeri?";
 "profile.block_dialog.message" = "%@ ei leia sind ega saa sinuga Wire’s ühenduda.";
-"profile.block_dialog.button_cancel" = "Loobu";
+"profile.block_dialog.button_cancel" = "Tühista";
 "profile.block_dialog.button_block" = "Blokeeri";
 
 // Delete message dialog
 "message.delete_dialog.message" = "Seda ei saa tagasi võtta.";
-"message.delete_dialog.action.cancel" = "Loobu";
+"message.delete_dialog.action.cancel" = "Tühista";
 "message.delete_dialog.action.hide" = "Kustuta minu jaoks";
 "message.delete_dialog.action.delete" = "Kustuta kõigi jaoks";
 
@@ -363,7 +364,7 @@
 "message.menu.edit.title" = "Muuda";
 
 // Accept connection request
-"profile.connection_request_dialog.title" = "Kinnita?";
+"profile.connection_request_dialog.title" = "Lisa kontaktidesse?";
 "profile.connection_request_dialog.message" = "See ühendab teid ja avab vestluse kasutajaga %@.";
 "profile.connection_request_dialog.button_cancel" = "Ignoreeri";
 "profile.connection_request_dialog.button_connect" = "Lisa kontakt";
@@ -388,12 +389,12 @@
 // Device list
 "profile.devices.title" = "Seadmed";
 "profile.devices.fingerprint_message_unencrypted" = "%@ kasutab väga vana Wire versioon. Ei saa näidata ühtegi seadet.";
-"profile.devices.fingerprint_message" = "Wire annab igale seadmele unikaalse sõrmejälje. Võrdle neid kasutajaga %@ ja tõenda oma vestluste õigsust.\nMiks vestluste õigsust kontrollida?";
+"profile.devices.fingerprint_message" = "Wire annab igale seadmele (mobiil, tahvel, arvuti) unikaalse sõrmejälje. Võrdle neid kasutajaga %@ ja kinnita selle vestluse turvalisust.\nMiks vestluste turvalisust kinnitada?";
 "profile.devices.fingerprint_message.link" = "Miks vestluste õigsust kontrollida?";
 
 // Device detail
 "profile.devices.detail.verify_message" = "Veendu, et see vastab sõrmejäljele mis on näha kasutaja %@ seadmes.";
-"profile.devices.detail.verify_message.link" = "Kuidas ma seda teen?";
+"profile.devices.detail.verify_message.link" = "Kuidas seda teha?";
 "profile.devices.detail.show_my_device.title" = "Näita mu seadme sõrmejälge";
 "device.verified" = "Kontrollitud";
 "device.not_verified" = "Tõendamata";
@@ -460,13 +461,13 @@
 "self.settings.account_details.remove_device.password.error" = "Vale parool";
 
 "self.settings.account_appearance_group.title" = "Välimus";
-"self.settings.account_picture_group.picture" = "Pilt";
+"self.settings.account_picture_group.picture" = "Profiilipilt";
 "self.settings.account_picture_group.color" = "Värv";
 
 "self.settings.account_picture_group.theme" = "Tume kujundus";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire annab igale seadmele unikaalse sõrmejälje. Võrdle neid ja tõenda oma seadmete ja vestluste õigsust.";
-"self.settings.device_details.reset_session.subtitle" = "Kui sõrmejäljed ei kattu, lähtesta sessioon, et luua uued krüpteerimisvõtmed mõlemal poolel.";
+"self.settings.device_details.fingerprint.subtitle" = "Wire annab igale seadmele unikaalse sõrmejälje. Võrdle neid ja kinnita seadmete ja vestluste turvalisust.";
+"self.settings.device_details.reset_session.subtitle" = "Kui sõrmejäljed ei kattu, lähtesta sessioon - see loob mõlemal poolel uued krüpteerimisvõtmed.";
 "self.settings.device_details.remove_device.subtitle" = "Eemalda see seade kui sa seda enam ei kasuta. Sind logitakse seadmest koheselt välja.";
 "self.settings.device_details.reset_session.success" = "Sessioon on lähtestatud";
 
@@ -489,11 +490,11 @@
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Teavitused";
-"self.settings.notifications.push_notification.toogle" = "Sõnumi Eelvaated";
-"self.settings.notifications.push_notification.footer" = "Saatja nimi ja sõnum lukustuskuval ja ”Notification Center”-is.";
+"self.settings.notifications.push_notification.toogle" = "Sõnumi eelvaade";
+"self.settings.notifications.push_notification.footer" = "Saatja nimi ja sõnum näidatakse lukustuskuval ja ”Notification Center”-is.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Sõnumi Bännerid";
-"self.settings.notifications.chat_alerts.footer" = "Uued sõnumid teistes vestlustes.";
+"self.settings.notifications.chat_alerts.footer" = "Näitab saabuvaid sõnumeid, kui sul mõni teine vestlus avatud.";
 
 "self.settings.sound_menu.sounds.title" = "Helid";
 "self.settings.sound_menu.ringtone.title" = "Helin";
@@ -504,7 +505,7 @@
 
 "self.settings.callkit.title" = "Kõned";
 "self.settings.callkit.caption" = "Jaga iOS-s";
-"self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja iOS kõnede ajaloos. Kui iCloud on sisse lülitatud, on kõnede ajalugu Apple poolt kättesaadav. Taaskäivita Wire selle seadistuse rakendamiseks.";
+"self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja seadme kõnede ajaloos. Kui sul on iCloud sisse lülitatud, siis saadetakse kõnede ajalugu Apple'i serveritesse. Seadistuse rakendamiseks tuleb Wire taaskäivitada.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Kõne";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sõnum";
@@ -512,14 +513,14 @@
 
 // By popular demand
 "self.settings.popular_demand.title" = "Publiku nõudmisel";
-"self.settings.popular_demand.send_button.title" = "Saada Nupp";
-"self.settings.popular_demand.send_button.footer" = "Lülita välja, et kasutada “Saada” nuppu saatmiseks.";
+"self.settings.popular_demand.send_button.title" = "\"Saada\" nupp vestluses";
+"self.settings.popular_demand.send_button.footer" = "Lülita välja, kui soovid sõnumi saatmiseks klaviatuuri \"return\" nuppu kasutada.";
 
 // Open in
 "self.settings.external_apps.header" = "Ava rakendusega";
 
 "self.settings.link_options.twitter.title" = "Säutsud";
-"self.settings.link_options.maps.title" = "Asukohad";
+"self.settings.link_options.maps.title" = "Kaardirakendus";
 "self.settings.link_options.browser.title" = "Veebilehitseja";
 
 "open_link.twitter.option.default" = "Safari / Twitter";
@@ -620,9 +621,9 @@
 "registration.select_picture.subtitle" = "Wire on palju mõnusam, kui profiilipildi lisad.";
 "registration.select_picture.button_title" = "Vali galeriist";
 "registration.keep_picture.button_title" = "Vali see sama";
-"registration.camera_action.title" = "Tee foto";
+"registration.camera_action.title" = "Tee uus profiilipilt";
 "registration.photo_gallery_action.title" = "Vali foto";
-"registration.cancel_action.title" = "Loobu";
+"registration.cancel_action.title" = "Tühista";
 
 "registration.no_history.hero" = "Kasutad sellel seadmel Wire’t esimest korda.";
 "registration.no_history.subtitle" = "Privaatuse tagamiseks ei ilmu siia sinu varasemad vestlused.";
@@ -633,7 +634,7 @@
 "registration.no_history.logged_out.got_it" = "OK";
 
 "registration.enter_name.title" = "Muuda mine";
-"registration.enter_name.hero" = "Kuidas peaksime sinu poole pöörduma?";
+"registration.enter_name.hero" = "Mis su nimi on?";
 "registration.enter_name.placeholder" = "Sinu nimi";
 
 "registration.terms_of_use.title" = "Tere tulemast Wire’sse.";
@@ -671,7 +672,7 @@
 "registration.signin.phone_button.title" = "Telefon";
 
 "registration.devices.title" = "Seadmed";
-"registration.devices.active_list_header" = "Aktiivne";
+"registration.devices.active_list_header" = "Aktiivsed";
 "registration.devices.current_list_header" = "Praegune";
 "registration.devices.active_list_subtitle" = "Kui sa mõnda toodud seadmetest ei tunne ära, eemalda see ja muuda oma parool.";
 "registration.devices.activated_in" = "Aktiveeritud";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Kutsu oma sõbrad Wire’sse!";
 "invite_banner.message" = "Naudi kõnesid, sõnumeid, joonistusi GIF’e ja palju muud, üksikisikutega või gruppides.";
 "invite_banner.invite_button_title" = "Kutsu rohkem inimesi";
+
+// Collections
+"collections.section.images.title" = "Pildid";
+"collections.section.files.title" = "Failid";
+"collections.section.videos.title" = "Videos";
+"collections.section.links.title" = "Lingid";
+"collections.section.all.button" = "Kõik →";
+"collections.section.no_items" = "Pole midagi näidata.";

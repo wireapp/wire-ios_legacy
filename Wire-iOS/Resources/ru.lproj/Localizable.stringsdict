@@ -190,7 +190,7 @@
         <key>conversation.connection_view.common_connections</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_connections@ in common</string>
+            <string>общие %#@d_number_connections@</string>
             <key>d_number_connections</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -198,9 +198,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>person</string>
+                <string>знакомый</string>
                 <key>other</key>
-                <string>люди</string>
+                <string>знакомых</string>
             </dict>
         </dict>
 	</dict>

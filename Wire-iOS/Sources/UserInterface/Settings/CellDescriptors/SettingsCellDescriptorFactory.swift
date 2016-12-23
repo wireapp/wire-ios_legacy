@@ -122,7 +122,7 @@ import Foundation
         let pushSectionSubtitle = "self.settings.advanced.reset_push_token.subtitle".localized
         
         let pushButton = SettingsExternalScreenCellDescriptor(title: pushTitle, isDestructive: false, presentationStyle: PresentationStyle.modal, presentationAction: { () -> (UIViewController?) in
-            ZMUserSession.shared().resetPushTokens()
+            ZMUserSession.shared()?.resetPushTokens()
             let alert = UIAlertController(title: "self.settings.advanced.reset_push_token_alert.title".localized, message: "self.settings.advanced.reset_push_token_alert.message".localized, preferredStyle: .alert)
             weak var weakAlert = alert;
             alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (alertAction: UIAlertAction) -> Void in
@@ -171,10 +171,13 @@ import Foundation
         developerCellDescriptors.append(diableAnalyticsSetting)
         let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
         developerCellDescriptors.append(enableAssetV3Setting)
-        
         let enableCallingV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableV3Calling))
         developerCellDescriptors.append(enableCallingV3Setting)
-
+        let enableCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableCollections))
+        developerCellDescriptors.append(enableCollections)
+        let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
+        developerCellDescriptors.append(enableBatchCollections)
+        
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     

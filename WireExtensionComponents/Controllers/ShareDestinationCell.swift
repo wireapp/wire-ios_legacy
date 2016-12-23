@@ -19,16 +19,8 @@
 import Foundation
 import Cartography
 
-final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
+final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable {
     let checmarkSize: CGFloat = 24
-    
-    override var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
     
     let titleLabel = UILabel()
     let checkImageView = UIImageView()

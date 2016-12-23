@@ -27,14 +27,14 @@ public final class ConversationTitleView: UIView {
     let titleButton = UIButton()
     public var tapHandler: ((UIButton) -> Void)? = nil
     
-    init(conversation: ZMConversation) {
+    init(conversation: ZMConversation, interactive: Bool = true) {
         super.init(frame: CGRect.zero)
         self.isAccessibilityElement = true
         self.accessibilityLabel = "Name"
         
         createViews(conversation)
         CASStyler.default().styleItem(self)
-        configure(conversation)
+        configure(conversation, interactive: interactive)
         frame = titleButton.bounds
         createConstraints()
     }
@@ -44,10 +44,10 @@ public final class ConversationTitleView: UIView {
         addSubview(titleButton)
     }
     
-    private func configure(_ conversation: ZMConversation) {
+    private func configure(_ conversation: ZMConversation, interactive: Bool) {
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let title = conversation.displayName.uppercased() && font
-        let tappable = conversation.relatedConnectionState != .sent
+        let tappable = interactive && conversation.relatedConnectionState != .sent
         
         let titleWithColor: (UIColor) -> NSAttributedString = {
             var attributed = title

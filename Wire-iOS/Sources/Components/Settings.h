@@ -66,6 +66,9 @@ extern NSString * const UserDefaultDisableHockey;
 extern NSString * const UserDefaultDisableAnalytics;
 extern NSString * const UserDefaultDisableCallKit;
 
+extern NSString * const UserDefaultEnableCollections;
+extern NSString * const UserDefaultEnableBatchCollections;
+
 extern NSString * const UserDefaultSendButtonDisabled;
 
 extern NSString * const UserDefaultSendV3Assets;
@@ -87,8 +90,11 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 @property (nonatomic) BOOL disableSendButton;
 
 @property (nonatomic) BOOL disableCallKit;
-@property (nonatomic) BOOL sendV3Assets;
+@property (nonatomic) BOOL sendV3Assets; // develop option
 @property (nonatomic) BOOL enableV3Calling;
+
+@property (nonatomic) BOOL enableCollections; // develop option
+@property (nonatomic) BOOL enableBatchCollections; // develop option
 
 @property (nonatomic, readonly) BOOL skipFirstTimeUseChecks;
 @property (nonatomic) NSDate *lastPushAlertDate;

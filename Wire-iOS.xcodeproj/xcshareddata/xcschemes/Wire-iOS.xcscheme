@@ -74,7 +74,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-com.apple.CoreData.ConcurrencyDebug 1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--addressbook-on-simulator"
@@ -110,6 +110,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ZMBackendEnvironmentType edge"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-ConsoleAnalytics"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

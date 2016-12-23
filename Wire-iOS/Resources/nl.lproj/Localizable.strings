@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Zoeken op naam";
 "contacts_ui.invite_others" = "Nodig anderen uit";
-"contacts_ui.name_in_contacts" = "%@ in contacten";
+"contacts_ui.name_in_contacts" = "%@ in Contacten";
 "contacts_ui.connection_request" = "Vraag om een verbinding te maken";
 "contacts_ui.action_button.invite" = "Uitnodigen";
 "contacts_ui.action_button.open" = "Openen";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Druk op contacten om een gesprek te beginnen";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contacten";
+"bottom_bar.contacts_button.title" = "personen";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "in Adresboek";
+"conversation.connection_view.in_address_book" = "in Contacten";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Hiermee worden %d contacten gebeld";
 "conversation.call.many_participants_confirmation.call" = "Oproep";
 
-"conversation.connection_view.in_address_book" = "in Adresboek";
+"conversation.connection_view.in_address_book" = "in Contacten";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,6 +256,7 @@
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
 "content.message.forward" = "Doorsturen";
+"content.message.go_to_conversation" = "Open gesprek";
 "content.message.forward.to" = "Verzenden naar...";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Rapport over bellen met Wire";
 "self.settings.technical_report.include_log" = "Voeg gedetailleerd log toe";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Gedetailleerde logs kunnen persoonlijke gegevens bevatten";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Herstel wachtwoord";
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Nodig je vrienden uit tot Wire!";
 "invite_banner.message" = "Geniet van bellen, berichten, schetsen, GIF's en meer in privé gesprekken of in groepen.";
 "invite_banner.invite_button_title" = "Nodig meer mensen uit";
+
+// Collections
+"collections.section.images.title" = "Afbeeldingen";
+"collections.section.files.title" = "Bestanden";
+"collections.section.videos.title" = "Video's";
+"collections.section.links.title" = "Links";
+"collections.section.all.button" = "Alles →";
+"collections.section.no_items" = "Geen items in bibliotheek";

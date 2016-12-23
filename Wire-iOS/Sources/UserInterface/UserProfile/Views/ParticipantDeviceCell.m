@@ -88,8 +88,8 @@
 
 - (void)configureForClient:(UserClient *)client
 {
-    NSDictionary *attributes = @{ NSFontAttributeName: self.fingerprintFont.monospacedFont };
-    NSDictionary *boldAttributes = @{ NSFontAttributeName: self.boldFingerprintFont.monospacedFont };
+    NSDictionary *attributes = @{ NSFontAttributeName: self.fingerprintFont.monospaced };
+    NSDictionary *boldAttributes = @{ NSFontAttributeName: self.boldFingerprintFont.monospaced };
     self.identifierLabel.attributedText = [client attributedRemoteIdentifier:attributes boldAttributes:boldAttributes uppercase:YES];
     self.nameLabel.text = client.deviceClass.uppercaseString ?: client.type.uppercaseString;
     self.trustLevelImageView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified;

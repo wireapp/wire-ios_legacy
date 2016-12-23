@@ -46,4 +46,22 @@ class RotationAwareNavigationController: UINavigationController {
             return super.preferredInterfaceOrientationForPresentation
         }
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        if let topController = self.viewControllers.last {
+            return topController.prefersStatusBarHidden
+        }
+        else {
+            return super.prefersStatusBarHidden
+        }
+    }
+    
+    open override var preferredStatusBarStyle : UIStatusBarStyle {
+        if let topController = self.viewControllers.last {
+            return topController.preferredStatusBarStyle
+        }
+        else {
+            return super.preferredStatusBarStyle
+        }
+    }
 }

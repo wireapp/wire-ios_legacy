@@ -193,4 +193,14 @@
             ! isSystemMessage;
 }
 
++ (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message
+{
+    NSString *identifier = message.imageMessageData.imageDataIdentifier;
+    if (! identifier) {
+        DDLogWarn(@"Image cache key is nil!");
+        return [NSString stringWithFormat:@"nonnil-%p", message.imageMessageData.imageData];
+    }
+    return identifier;
+}
+
 @end

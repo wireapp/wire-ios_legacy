@@ -775,7 +775,9 @@ MessageToolboxView {
     labelTextBlendedColor: $color-text-dimmed;
 }
 
-FileTransferCell {
+FileTransferView {
+    backgroundColor: $color-placeholder-background;
+
     labelTextColor: $color-text-foreground;
     labelTextBlendedColor: $color-text-dimmed;
     labelFont: $font-small-light;
@@ -788,7 +790,7 @@ FileTransferCell {
     }
 }
 
-VideoMessageCell {
+VideoMessageView {
     IconButton {
         iconColor: white;
     }
@@ -808,7 +810,9 @@ ImageMessageCell {
     }
 }
 
-AudioMessageCell {
+AudioMessageView {
+    backgroundColor: $color-placeholder-background;
+
     ProgressView {
         backgroundColor: $color-separator;
         tintColor: $color-accent-current;
@@ -1517,3 +1521,28 @@ TokenField.share {
     tokenSelectedBorderColor: white;
 }
 
+/* Collections */
+
+CollectionsView {
+    backgroundColor: $color-text-background;
+    noItemsLabel: @{
+        font: $font-medium-medium;
+        textColor: $color-text-dimmed;
+    }
+}
+
+CollectionHeaderView {
+    backgroundColor: $color-placeholder-background;
+    
+    titleLabel: @{
+        font: $font-small-medium;
+        textColor: $color-text-foreground;
+    }
+
+    actionButton: @{
+        titleLabel: @{
+            font: $font-small-light;
+        }
+        titleColor[state:normal]: $color-text-foreground;
+    }
+}

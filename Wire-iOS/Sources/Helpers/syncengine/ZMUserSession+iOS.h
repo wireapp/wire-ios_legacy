@@ -19,12 +19,12 @@
 
 #import "zmessaging+iOS.h"
 
-extern NSString * const UserSessionDidRequestAuthenticationNotification;
+extern NSString * __nonnull const UserSessionDidRequestAuthenticationNotification;
 
 @interface ZMUserSession (iOS)
 
-+ (instancetype)sharedSession;
++ (instancetype __nullable)sharedSession;
 
-- (void)loginWithCredentials:(ZMCredentials *)loginCredentials notify:(BOOL)notify;
+- (void)loginWithCredentials:(ZMCredentials * __nonnull)loginCredentials notify:(BOOL)notify;
 
 @end

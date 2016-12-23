@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Поиск по имени";
 "contacts_ui.invite_others" = "Пригласить еще";
-"contacts_ui.name_in_contacts" = "%@ в адресной книге";
+"contacts_ui.name_in_contacts" = "%@ в контактах";
 "contacts_ui.connection_request" = "Запрос на добавление";
 "contacts_ui.action_button.invite" = "Пригласить";
 "contacts_ui.action_button.open" = "Открыть";
@@ -76,11 +76,11 @@
 "contacts_ui.no_contact.message" = "Нажмите на контакты, чтобы начать новый разговор";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "контакты";
+"bottom_bar.contacts_button.title" = "знакомых";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "В адресной книге";
+"conversation.connection_view.in_address_book" = "в контактах";
 
 
 // Archived List
@@ -148,7 +148,7 @@
 "conversation.call.many_participants_confirmation.message" = "Вы будете звонить %d людям";
 "conversation.call.many_participants_confirmation.call" = "Звонок";
 
-"conversation.connection_view.in_address_book" = "В адресной книге";
+"conversation.connection_view.in_address_book" = "в контактах";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -256,6 +256,7 @@
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
 "content.message.forward" = "Переслать";
+"content.message.go_to_conversation" = "Показать в разговоре";
 "content.message.forward.to" = "Отправить...";
 
 "content.reactions_list.likers" = "Понравилось";
@@ -574,7 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire отчет о звонке";
 "self.settings.technical_report.include_log" = "Включить подробную запись логов";
-"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.privacy_warning" = "Подробные журналы могут содержать личные данные";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
@@ -704,11 +705,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Usernames are here.";
-"registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
+"registration.select_handle.takeover.title" = "Имена пользователей здесь.";
+"registration.select_handle.takeover.subtitle" = "Зарезервируйте свое уникальное имя в Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Подробнее";
 
-"registration.select_handle.takeover.choose_own" = "Choose yours";
+"registration.select_handle.takeover.choose_own" = "Выберите ваше";
 "registration.select_handle.takeover.keep_suggested" = "Оставить эту";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -774,3 +775,11 @@
 "invite_banner.title" = "Приведите друзей в Wire!";
 "invite_banner.message" = "Наслаждайтесь звонками, сообщениями, скетчами, GIF \nи многим другим в приватном или групповом разговоре.";
 "invite_banner.invite_button_title" = "Пригласить еще людей";
+
+// Collections
+"collections.section.images.title" = "Изображения";
+"collections.section.files.title" = "Файлы";
+"collections.section.videos.title" = "Видео";
+"collections.section.links.title" = "Ссылки";
+"collections.section.all.button" = "Все →";
+"collections.section.no_items" = "Нет элементов в библиотеке";

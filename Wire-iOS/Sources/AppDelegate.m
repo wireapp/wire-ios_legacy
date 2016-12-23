@@ -129,6 +129,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     DDLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    
+    BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToString:ZMConsoleAnalyticsArgumentKey]) {
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }] != NSNotFound;
+    
+    
+    [Analytics setConsoleAnayltics:containsConsoleAnalytics];
     [Analytics shared]; // preload analytics to listen to some notifications in time
 
     [[NSNotificationCenter defaultCenter] addObserver:self

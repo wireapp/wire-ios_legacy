@@ -34,4 +34,13 @@
     return NO;
 }
 
+- (BOOL)wr_isVisible
+{
+    BOOL isInWindow = self.view.window != nil;
+    BOOL notCoveredModally = self.presentedViewController == nil;
+    BOOL viewIsVisible = CGRectIntersectsRect([self.view convertRect:self.view.bounds toView:nil], [[UIScreen mainScreen] bounds]);
+    
+    return isInWindow && notCoveredModally && viewIsVisible;
+}
+
 @end
