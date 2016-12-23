@@ -1546,3 +1546,15 @@ CollectionHeaderView {
         titleColor[state:normal]: $color-text-foreground;
     }
 }
+
+CollectionCellHeader {
+    nameLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-foreground;
+    }
+    
+    dateLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-dimmed;
+    }
+}

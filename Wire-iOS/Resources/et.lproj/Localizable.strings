@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Failid";
 "collections.section.videos.title" = "Videos";
 "collections.section.links.title" = "Lingid";
-"collections.section.all.button" = "Kõik →";
+"collections.section.all.button" = "Kõik %d →";
 "collections.section.no_items" = "Pole midagi näidata.";

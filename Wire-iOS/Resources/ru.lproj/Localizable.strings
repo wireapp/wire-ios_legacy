@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Файлы";
 "collections.section.videos.title" = "Видео";
 "collections.section.links.title" = "Ссылки";
-"collections.section.all.button" = "Все →";
+"collections.section.all.button" = "Все %d →";
 "collections.section.no_items" = "Нет элементов в библиотеке";

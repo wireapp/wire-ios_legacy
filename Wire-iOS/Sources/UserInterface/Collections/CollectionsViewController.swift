@@ -340,7 +340,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
             cell.delegate = self
-            cell.cellSize = self.girdElementSize
+            cell.desiredWidth = self.girdElementSize.width
+            cell.desiredHeight = self.girdElementSize.height
             return cell
         case CollectionsSectionSet.filesAndAudio:
             let message = self.message(for: indexPath)
@@ -348,14 +349,16 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             if message.fileMessageData!.isAudio() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
                 cell.message = message
-                cell.containerWidth = collectionView.bounds.size.width
+                cell.desiredWidth = collectionView.bounds.size.width
+                cell.desiredHeight = .none
                 cell.delegate = self
                 return cell
             }
             else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFileCell.reuseIdentifier, for: indexPath) as! CollectionFileCell
                 cell.message = message
-                cell.containerWidth = collectionView.bounds.size.width
+                cell.desiredWidth = collectionView.bounds.size.width
+                cell.desiredHeight = .none
                 cell.delegate = self
                 return cell
             }
@@ -364,7 +367,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
             cell.message = message
-            cell.containerWidth = collectionView.bounds.size.width
+            cell.desiredWidth = collectionView.bounds.size.width
+            cell.desiredHeight = collectionView.bounds.size.width * (3.0 / 4.0)
             cell.delegate = self
             return cell
     
@@ -374,7 +378,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
             cell.message = message
             cell.delegate = self
-            cell.containerWidth = collectionView.bounds.size.width
+            cell.desiredWidth = collectionView.bounds.size.width
+            cell.desiredHeight = .none
             return cell
     
         case CollectionsSectionSet.loading:
@@ -412,7 +417,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         case UICollectionElementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as! CollectionHeaderView
             header.section = section
-            header.showActionButton = self.inOverviewMode && self.moreElementsToSee(in: section)
+            header.totalItemsCount = UInt(self.moreElementsToSee(in: section) ? self.elements(for: section).count : 0)
             header.selectionAction = { [weak self] section in
                 guard let `self` = self else {
                     return

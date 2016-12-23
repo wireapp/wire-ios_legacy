@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import Cartography
 
 extension ZMConversationMessage {
     func shortDescription() -> String {
@@ -60,10 +61,84 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         self.loadContents()
     }
     
+    public var desiredWidth: CGFloat? = .none {
+        didSet {
+            guard let value = self.desiredWidth else {
+                widthConstraint.isActive = false
+                return
+            }
+            
+            widthConstraint.isActive = true
+            widthConstraint.constant = value
+        }
+    }
+    public var desiredHeight: CGFloat? = .none {
+        didSet {
+            guard let value = self.desiredHeight else {
+                heightConstraint.isActive = false
+                return
+            }
+            
+            heightConstraint.isActive = true
+            heightConstraint.constant = value
+        }
+    }
+    
+    private var widthConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint!
+    private var cachedSize: CGSize? = .none
+    
+    override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        if let cachedSize = self.cachedSize {
+            var newFrame = layoutAttributes.frame
+            newFrame.size.width = cachedSize.width
+            newFrame.size.height = cachedSize.height
+            layoutAttributes.frame = newFrame
+        }
+        else {
+            setNeedsLayout()
+            layoutIfNeeded()
+            var desiredSize = layoutAttributes.size
+            if let desiredWidth = self.desiredWidth {
+                desiredSize.width = desiredWidth
+            }
+            if let desiredHeight = self.desiredHeight {
+                desiredSize.height = desiredHeight
+            }
+            
+            let size = contentView.systemLayoutSizeFitting(desiredSize)
+            var newFrame = layoutAttributes.frame
+            newFrame.size.width = CGFloat(ceilf(Float(size.width)))
+            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
+            
+            if let desiredWidth = self.desiredWidth {
+                newFrame.size.width = desiredWidth
+            }
+            if let desiredHeight = self.desiredHeight {
+                newFrame.size.height = desiredHeight
+            }
+            
+            layoutAttributes.frame = newFrame
+            self.cachedSize = newFrame.size
+        }
+        
+        return layoutAttributes
+    }
+    
     func loadContents() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
         
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)
+        
+        constrain(self) { selfView in
+            self.heightConstraint = selfView.height == self.desiredHeight ?? 0
+            self.widthConstraint = selfView.width == self.desiredWidth ?? 0
+        }
+    }
+
+    override open func prepareForReuse() {
+        super.prepareForReuse()
+        self.cachedSize = .none
     }
     
     func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {

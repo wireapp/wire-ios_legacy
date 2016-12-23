@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Arquivos";
 "collections.section.videos.title" = "Vídeos";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Todos →";
+"collections.section.all.button" = "Todos %d →";
 "collections.section.no_items" = "Não há itens na biblioteca";

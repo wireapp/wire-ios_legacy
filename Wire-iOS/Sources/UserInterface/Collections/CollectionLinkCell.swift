@@ -21,17 +21,34 @@ import Cartography
 
 final public class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none
-
+    private var headerView = CollectionCellHeader()
+    
     func createArticleView(with textMessageData: ZMTextMessageData) {
         let articleView = ArticleView(withImagePlaceholder: textMessageData.hasImageData)
         articleView.isUserInteractionEnabled = false
         articleView.imageHeight = 144
         articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         self.contentView.addSubview(articleView)
+        
+        // Reconstraint the header
+        self.headerView.removeFromSuperview()
+        self.headerView.message = self.message!
+        
+        self.contentView.addSubview(self.headerView)
+        
         self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
         
-        constrain(self.contentView, articleView) { contentView, articleView in
-            articleView.edges == contentView.edgesWithinMargins
+        constrain(self.contentView, articleView, headerView) { contentView, articleView, headerView in
+            
+            headerView.top == contentView.topMargin
+            headerView.leading == contentView.leadingMargin
+            headerView.trailing == contentView.trailingMargin
+            
+            articleView.top == headerView.bottom + 4
+            
+            articleView.left == contentView.leftMargin
+            articleView.right == contentView.rightMargin
+            articleView.bottom == contentView.bottomMargin
         }
         
         self.articleView = articleView
@@ -43,7 +60,7 @@ final public class CollectionLinkCell: CollectionCell {
         guard let message = self.message, let textMessageData = message.textMessageData, let _ = textMessageData.linkPreview else {
             return
         }
-        
+
         var shouldReload = false
         
         if changeInfo == nil {
@@ -53,9 +70,7 @@ final public class CollectionLinkCell: CollectionCell {
             shouldReload = changeInfo!.imageChanged
         }
 
-        if shouldReload {
-            isHeightCalculated = false
-            
+        if shouldReload {            
             self.articleView?.removeFromSuperview()
             self.articleView = nil
             
@@ -64,28 +79,8 @@ final public class CollectionLinkCell: CollectionCell {
         }
     }
     
-    var isHeightCalculated: Bool = false
-    var containerWidth: CGFloat = 320
-    
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        if !isHeightCalculated {
-            setNeedsLayout()
-            layoutIfNeeded()
-            var desiredSize = layoutAttributes.size
-            desiredSize.width = self.containerWidth
-            let size = contentView.systemLayoutSizeFitting(desiredSize)
-            var newFrame = layoutAttributes.frame
-            newFrame.size.width = self.containerWidth
-            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
-            layoutAttributes.frame = newFrame
-            isHeightCalculated = true
-        }
-        return layoutAttributes
-    }
-    
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
-        self.isHeightCalculated = false
     }
 }
