@@ -50,7 +50,7 @@ final public class CollectionAudioCell: CollectionCell {
         self.audioMessageView.cas_styleClass = "container-view"
         self.audioMessageView.clipsToBounds = true
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 16, 4, 16)
         
         self.contentView.addSubview(self.headerView)
         self.contentView.addSubview(self.audioMessageView)

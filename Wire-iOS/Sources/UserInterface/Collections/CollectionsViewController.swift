@@ -437,6 +437,18 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         let message = self.message(for: indexPath)
         self.perform(.present, for: message, from: collectionView.cellForItem(at: indexPath)!)
     }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        guard let section = CollectionsSectionSet(index: UInt(section)) else {
+            fatal("Unknown section")
+        }
+        
+        if section == CollectionsSectionSet.loading {
+            return .zero
+        }
+        
+        return self.elements(for: section).count > 0 ? UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0) : .zero
+    }
 }
 
 extension CollectionsViewController: CollectionCellDelegate {

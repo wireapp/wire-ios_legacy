@@ -52,7 +52,7 @@ final public class CollectionFileCell: CollectionCell {
         
         self.contentView.addSubview(self.headerView)
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 16, 4, 16)
         
         self.contentView.addSubview(self.fileTransferView)
 

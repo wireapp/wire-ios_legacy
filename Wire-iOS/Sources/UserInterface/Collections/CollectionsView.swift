@@ -39,7 +39,7 @@ import Cartography
         self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 1
         self.collectionViewLayout.minimumInteritemSpacing = 1
-        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionViewLayout.estimatedItemSize = CGSize(width: 320, height: 64)
         self.collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
         self.collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
