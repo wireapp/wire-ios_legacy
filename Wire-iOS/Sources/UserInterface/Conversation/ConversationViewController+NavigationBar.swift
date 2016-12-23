@@ -85,9 +85,7 @@ public extension ConversationViewController {
             items.append(backBarButtonItem)
         }
         
-        if Settings.shared().enableCollections {
-            items.append(collectionsBarButtonItem)
-        }
+        items.append(collectionsBarButtonItem)
         
         return items
     }
