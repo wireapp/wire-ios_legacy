@@ -22,9 +22,11 @@ import Cartography
 final public class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none
 
-    func createArticleView(withImagePlaceholder: Bool) -> ArticleView {
-        let articleView = ArticleView(withImagePlaceholder: withImagePlaceholder)
+    func createArticleView(with textMessageData: ZMTextMessageData) {
+        let articleView = ArticleView(withImagePlaceholder: textMessageData.hasImageData)
         articleView.isUserInteractionEnabled = false
+        articleView.imageHeight = 144
+        articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         self.contentView.addSubview(articleView)
         self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
         
@@ -33,24 +35,33 @@ final public class CollectionLinkCell: CollectionCell {
         }
         
         self.articleView = articleView
-        return articleView
     }
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
         
-        guard let message = self.message, let textMessageData = message.textMessageData else {
+        guard let message = self.message, let textMessageData = message.textMessageData, let _ = textMessageData.linkPreview else {
             return
         }
         
-        message.requestImageDownload()
+        var shouldReload = false
         
-        isHeightCalculated = false
-        
-        self.articleView?.removeFromSuperview()
-        self.articleView = nil
-        
-        self.createArticleView(withImagePlaceholder: textMessageData.hasImageData).configure(withTextMessageData: textMessageData, obfuscated: false)
+        if changeInfo == nil {
+            shouldReload = true
+        }
+        else {
+            shouldReload = changeInfo!.imageChanged
+        }
+
+        if shouldReload {
+            isHeightCalculated = false
+            
+            self.articleView?.removeFromSuperview()
+            self.articleView = nil
+            
+            self.createArticleView(with: textMessageData)
+            message.requestImageDownload()
+        }
     }
     
     var isHeightCalculated: Bool = false
