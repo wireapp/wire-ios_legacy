@@ -26,6 +26,7 @@ protocol CollectionCellDelegate: class {
 open class CollectionCell: UICollectionViewCell, Reusable {
     var messageObserverToken: ZMMessageObserverOpaqueToken? = .none
     weak var delegate: CollectionCellDelegate?
+    
     var message: ZMConversationMessage? = .none {
         didSet {
             ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
@@ -128,7 +129,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     }
     
     func showMenu() {
-        guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
+        guard let menuConfigurationProperties = self.menuConfigurationProperties(), let message = self.message else {
             return
         }
         /**
@@ -148,6 +149,8 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
+        
+        Analytics.shared()?.tagCollectionOpenItemMenu(for: message.conversation!, itemType: CollectionItemType(message: message))
     }
     
     override open var canBecomeFirstResponder: Bool {
@@ -171,10 +174,18 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     
     func forward(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .forward)
+        guard let message = self.message else {
+            return
+        }
+        Analytics.shared()?.tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .forward)
     }
     
     func showInConversation(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .showInConversation)
+        guard let message = self.message else {
+            return
+        }
+        Analytics.shared()?.tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .goto)
     }
 }
 

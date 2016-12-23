@@ -20,6 +20,31 @@
     case image = 0
     case link = 1
     case file = 2
+    case video = 3
+    case audio = 4
+}
+
+extension CollectionItemType {
+    init(message: ZMConversationMessage) {
+        if Message.isImageMessage(message) {
+            self = .image
+        }
+        else if Message.isVideoMessage(message) {
+            self = .video
+        }
+        else if Message.isAudioMessage(message) {
+            self = .audio
+        }
+        else if Message.isFileTransferMessage(message) {
+            self = .file
+        }
+        else if let _ = message.textMessageData?.linkPreview {
+            self = .link
+        }
+        else {
+            fatal("Unknown message type")
+        }
+    }
 }
 
 fileprivate func string(for itemType: CollectionItemType) -> String {
@@ -30,6 +55,10 @@ fileprivate func string(for itemType: CollectionItemType) -> String {
         return "link"
     case .file:
         return "file"
+    case .video:
+        return "video"
+    case .audio:
+        return "audio"
     }
 }
 
@@ -94,7 +123,6 @@ extension Analytics {
     @objc(tagCollectionDidItemActionForConversation:withItemType:actionType:)
     func tagCollectionDidItemAction(for conversation:ZMConversation, itemType:CollectionItemType, action: CollectionActionType)
     {
-        _ = action
         var attributes = conversation.conversationAttributes
         
         attributes["type"] = string(for: itemType)

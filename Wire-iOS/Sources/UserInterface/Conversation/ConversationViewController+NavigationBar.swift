@@ -138,7 +138,6 @@ public extension ConversationViewController {
     
     func onCollectionButtonPressed(_ sender: AnyObject!) {
         let collections = CollectionsViewController(conversation: conversation)
-        collections.analyticsTracker = self.analyticsTracker
         collections.delegate = self
         
         let navigationController = collections.wrap(inNavigationControllerClass: RotationAwareNavigationController.self)

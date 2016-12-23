@@ -34,7 +34,6 @@ extension CategoryMatch {
 
 final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
-    public var analyticsTracker: AnalyticsTracker?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?
     
@@ -50,11 +49,18 @@ final public class CollectionsViewController: UIViewController {
     
     fileprivate let collection: AssetCollectionWrapper
     
+    fileprivate var openCollectionsIsTracked: Bool = false
+    
     fileprivate var fetchingDone: Bool = false {
         didSet {
             if self.isViewLoaded {
                 self.updateNoElementsState()
                 self.contentView.collectionView.collectionViewLayout.invalidateLayout()
+            }
+            
+            if self.inOverviewMode && self.fetchingDone && !self.openCollectionsIsTracked {
+                Analytics.shared()?.tagCollectionOpen(for: self.collection.conversation, itemCount: UInt(self.totalNumberOfElements()))
+                self.openCollectionsIsTracked = true
             }
         }
     }
@@ -113,7 +119,6 @@ final public class CollectionsViewController: UIViewController {
 
         self.messagePresenter.targetViewController = self
         self.messagePresenter.modalTargetController = self
-        self.messagePresenter.analyticsTracker = self.analyticsTracker
 
         self.contentView.collectionView.delegate = self
         self.contentView.collectionView.dataSource = self
@@ -155,8 +160,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func updateNoElementsState() {
-        // Empty collection contains one element (loading cell)
-        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 1 {
+        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
             self.contentView.noItemsInLibrary = true
         }
     }
@@ -182,6 +186,9 @@ final public class CollectionsViewController: UIViewController {
                 message.fileMessageData?.cancelTransfer()
             }
         case .present:
+            
+            Analytics.shared()?.tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
+            
             if Message.isImageMessage(message) {
                 let imageViewController = FullscreenImageViewController(message: message)
                 
@@ -293,7 +300,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     fileprivate func totalNumberOfElements() -> Int {
-        return CollectionsSectionSet.visible.map { self.numberOfElements(for: $0) }.reduce(0, +)
+        // Empty collection contains one element (loading cell)
+        return CollectionsSectionSet.visible.map { self.numberOfElements(for: $0) }.reduce(0, +) - 1
     }
     
     fileprivate func moreElementsToSee(in section: CollectionsSectionSet) -> Bool {
@@ -443,7 +451,6 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                     return
                 }
                 let collectionController = CollectionsViewController(collection: self.collection, sections: section, messages: self.elements(for: section), fetchingDone: self.fetchingDone)
-                collectionController.analyticsTracker = self.analyticsTracker
                 collectionController.onDismiss = self.onDismiss
                 self.navigationController?.pushViewController(collectionController, animated: true)
             }
