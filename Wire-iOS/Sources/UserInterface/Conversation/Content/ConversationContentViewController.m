@@ -802,6 +802,15 @@
         // Update table header when all messages in the conversation are loaded
         [self updateTableViewHeaderView];
     }
+    
+    if (nil != self.expectedMessageToShow) {
+        NSUInteger index = [self.messageWindow.messages indexOfObject:self.expectedMessageToShow];
+        if (index != NSNotFound) {
+            [self scrollToIndex:index completion:self.onMessageShown];
+            self.onMessageShown = nil;
+            self.expectedMessageToShow = nil;
+        }
+    }
 }
 
 @end

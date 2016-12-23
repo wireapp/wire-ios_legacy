@@ -24,17 +24,21 @@
 #import "WAZUIMagicIOS.h"
 #import <zmessaging/zmessaging.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
+@class ConversationCell;
 
 @interface ConversationContentViewController ()
 
 /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
-@property (nonatomic, strong, readwrite) id<ZMConversationMessage>messageWithExpandedTools;
+@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage>messageWithExpandedTools;
 
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
+@property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
+@property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
 
 - (void)removeHighlightsAndMenu;
-- (UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message;
+- (nullable UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message;
 
 @end
 
@@ -44,3 +48,5 @@
 - (void)expandMessageWindowUp;
 
 @end
+
+NS_ASSUME_NONNULL_END

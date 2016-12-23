@@ -158,7 +158,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         switch action {
         case #selector(CollectionCell.forward(_:)): fallthrough
         case #selector(CollectionCell.showInConversation(_:)):
-            return false // To enable menu return `true` here
+            return true
         default:
             return false
         }

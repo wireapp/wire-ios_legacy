@@ -218,15 +218,22 @@ extension ConversationContentViewController {
                 self.messageWindow.moveDown(byMessages: UInt(indexInConversation - newestMessageIndexInMessageWindow))
             }
         }
-        
-        delay(0.01) {
-            let indexToShow = self.messageWindow.messages.index(of: messageToShow)
-            
-            let cellIndexPath = IndexPath(row: indexToShow, section: 0)
-            self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
-            delay(0.35) {
-                completion?(self.tableView.cellForRow(at: cellIndexPath) as! ConversationCell)
-            }
+
+        let indexToShow = self.messageWindow.messages.index(of: messageToShow)
+
+        if indexToShow == NSNotFound {
+            self.expectedMessageToShow = messageToShow
+            self.onMessageShown = completion
         }
+        else {
+            self.scroll(toIndex: indexToShow, completion: completion)
+        }
+    }
+    
+    func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
+        let cellIndexPath = IndexPath(row: indexToShow, section: 0)
+        self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
+
+        completion?(self.tableView.cellForRow(at: cellIndexPath) as! ConversationCell)
     }
 }
