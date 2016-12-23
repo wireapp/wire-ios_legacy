@@ -201,13 +201,14 @@
 {
     @weakify(self);
     
+    const BOOL imageIsAnimatedGIF = self.message.imageMessageData.isAnimatedGIF;
+    NSData *imageData = self.message.imageMessageData.imageData;
+    
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         
         @strongify(self);
         
         id<MediaAsset> image;
-        const BOOL imageIsAnimatedGIF = self.message.imageMessageData.isAnimatedGIF;
-        NSData *imageData = self.message.imageMessageData.imageData;
         
         if (imageIsAnimatedGIF) {
             image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData];
