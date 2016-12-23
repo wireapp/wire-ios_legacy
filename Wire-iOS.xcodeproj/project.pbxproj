@@ -840,6 +840,7 @@
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
 		BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */; };
 		CE3FBF1E1CE22B4900ED087A /* DeleteMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */; };
+		CE8C20301E0C30B400571635 /* Analytics+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C202F1E0C30B400571635 /* Analytics+Collection.swift */; };
 		CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */; };
 		CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED176461D0074610005234F /* ConversationParticipantsCell.swift */; };
 		CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */; };
@@ -2219,6 +2220,7 @@
 		C88A846215D617F8CCFBEB80 /* libPods-Wire-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteMessageTests.m; sourceTree = "<group>"; };
+		CE8C202F1E0C30B400571635 /* Analytics+Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Collection.swift"; sourceTree = "<group>"; };
 		CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationIgnoredDeviceCell.swift; sourceTree = "<group>"; };
 		CED176461D0074610005234F /* ConversationParticipantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationParticipantsCell.swift; sourceTree = "<group>"; };
 		CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderConversationViewController.swift; sourceTree = "<group>"; };
@@ -2906,6 +2908,7 @@
 		871BBFC31D34F56300DF0793 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				CE8C202F1E0C30B400571635 /* Analytics+Collection.swift */,
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */,
 				871BBFC41D34F56300DF0793 /* Analytics+CallEvents.h */,
@@ -5893,6 +5896,7 @@
 				871BC0091D34F56300DF0793 /* DefaultIntegerClusterizer.m in Sources */,
 				8FD5A08619F0490500550525 /* ZMUserSession+Additions.m in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
+				CE8C20301E0C30B400571635 /* Analytics+Collection.swift in Sources */,
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */,
