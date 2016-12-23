@@ -39,18 +39,14 @@ import Cartography
         fatalError("init(coder:) has not been implemented")
     }
     
-    var isHeightCalculated: Bool = false
     var containerWidth: CGFloat = 320
     var collapsed: Bool = false
 
     override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        if !isHeightCalculated {
-            var newFrame = layoutAttributes.frame
-            newFrame.size.height = self.collapsed ? 0 : 64
-            newFrame.size.width = self.containerWidth
-            layoutAttributes.frame = newFrame
-            isHeightCalculated = true
-        }
+        var newFrame = layoutAttributes.frame
+        newFrame.size.height = self.collapsed ? 0 : 64
+        newFrame.size.width = self.containerWidth
+        layoutAttributes.frame = newFrame
         return layoutAttributes
     }
 }
