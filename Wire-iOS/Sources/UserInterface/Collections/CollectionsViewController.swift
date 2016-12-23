@@ -67,7 +67,7 @@ final public class CollectionsViewController: UIViewController {
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
         let matchFiles = CategoryMatch(including: .file, excluding: .video)
         let matchVideo = CategoryMatch(including: .video, excluding: .none)
-        let matchLink = CategoryMatch(including: .link, excluding: .none)
+        let matchLink = CategoryMatch(including: .linkPreview, excluding: .none)
         
         let holder = AssetCollectionWrapper(conversation: conversation, matchingCategories: [matchImages, matchFiles, matchVideo, matchLink])
         
