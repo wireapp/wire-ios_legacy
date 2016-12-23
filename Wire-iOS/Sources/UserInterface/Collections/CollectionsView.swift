@@ -24,10 +24,12 @@ import Cartography
     let collectionViewLayout = CollectionViewLeftAlignedFlowLayout()
     var collectionView: UICollectionView
     let noItemsLabel = UILabel()
+    let noItemsIcon = UIImageView(image: UIImage(for: .library, fontSize: 160, color: UIColor.lightGray))
     
     var noItemsInLibrary: Bool = false {
         didSet {
             self.noItemsLabel.isHidden = !self.noItemsInLibrary
+            self.noItemsIcon.isHidden = !self.noItemsInLibrary
         }
     }
     
@@ -37,9 +39,9 @@ import Cartography
         super.init(frame: frame)
         
         self.collectionViewLayout.scrollDirection = .vertical
-        self.collectionViewLayout.minimumLineSpacing = 1
-        self.collectionViewLayout.minimumInteritemSpacing = 1
-        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        self.collectionViewLayout.minimumLineSpacing = 0
+        self.collectionViewLayout.minimumInteritemSpacing = 0
+        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionViewLayout.estimatedItemSize = CGSize(width: 320, height: 64)
         self.collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
         self.collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
@@ -56,10 +58,13 @@ import Cartography
         self.collectionView.backgroundColor = UIColor.clear
         self.addSubview(self.collectionView)
 
+        self.noItemsLabel.accessibilityLabel = "no items"
         self.noItemsLabel.text = "collections.section.no_items".localized.uppercased()
         self.noItemsLabel.numberOfLines = 0
         self.noItemsLabel.isHidden = true
         self.addSubview(self.noItemsLabel)
+        self.noItemsIcon.isHidden = true
+        self.addSubview(self.noItemsIcon)
         
         self.constrainViews()
     }
@@ -86,11 +91,15 @@ import Cartography
     }
     
     private func constrainViews() {
-        constrain(self, self.collectionView, self.noItemsLabel) { (selfView: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy) -> () in
+        constrain(self, self.collectionView, self.noItemsLabel, self.noItemsIcon) { (selfView: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy, noItemsIcon: LayoutProxy) -> () in
             collectionView.edges == selfView.edges
-            noItemsLabel.center == selfView.center
+            noItemsLabel.centerX == selfView.centerX
+            noItemsLabel.centerY == selfView.centerY + 64
             noItemsLabel.left >= selfView.left + 24
             noItemsLabel.right <= selfView.right - 24
+            
+            noItemsIcon.centerX == selfView.centerX
+            noItemsIcon.bottom == noItemsLabel.top - 24
         }
     }
     

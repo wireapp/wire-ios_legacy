@@ -61,12 +61,16 @@ final public class CollectionImageCell: CollectionCell {
     var isHeightCalculated: Bool = false
     
     func loadView() {
+        self.backgroundColor = UIColor(white: 0, alpha: 0.08)
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.loadingView)
         constrain(self, self.imageView, self.loadingView) { selfView, imageView, loadingView in
-            imageView.edges == selfView.edges
+            imageView.left == selfView.left
+            imageView.right == selfView.right - 1
+            imageView.top == selfView.top
+            imageView.bottom == selfView.bottom - 1
             loadingView.center == selfView.center
         }
     }

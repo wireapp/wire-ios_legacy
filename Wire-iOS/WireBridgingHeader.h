@@ -88,6 +88,7 @@
 #import "BrowserViewController.h"
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
+#import "FullscreenImageViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
