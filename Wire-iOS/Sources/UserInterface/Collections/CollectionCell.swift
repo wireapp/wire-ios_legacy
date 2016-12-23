@@ -19,19 +19,6 @@
 import Foundation
 import Cartography
 
-extension ZMConversationMessage {
-    func shortDescription() -> String {
-        let address = Unmanaged.passUnretained(self).toOpaque()
-        let isVideo = Message.isVideoMessage(self)
-        let isAudio = Message.isAudioMessage(self)
-        let isFile = Message.isFileTransferMessage(self)
-        let isPicture = Message.isImageMessage(self)
-        let sender = self.sender?.displayName ?? "<nil>"
-        
-        return "\(address): from \(sender) file=\(isFile) audio=\(isAudio) video=\(isVideo) pic=\(isPicture)"
-    }
-}
-
 protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)
 }
@@ -61,31 +48,18 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         self.loadContents()
     }
     
-    public var desiredWidth: CGFloat? = .none {
-        didSet {
-            guard let value = self.desiredWidth else {
-                widthConstraint.isActive = false
-                return
-            }
+    public var desiredWidth: CGFloat? = .none
+    public var desiredHeight: CGFloat? = .none
+    
+    override open var intrinsicContentSize: CGSize {
+        get {
+            let width = self.desiredWidth ?? UIViewNoIntrinsicMetric
+            let height = self.desiredHeight ?? UIViewNoIntrinsicMetric
             
-            widthConstraint.isActive = true
-            widthConstraint.constant = value
-        }
-    }
-    public var desiredHeight: CGFloat? = .none {
-        didSet {
-            guard let value = self.desiredHeight else {
-                heightConstraint.isActive = false
-                return
-            }
-            
-            heightConstraint.isActive = true
-            heightConstraint.constant = value
+            return CGSize(width: width, height: height)
         }
     }
     
-    private var widthConstraint: NSLayoutConstraint!
-    private var heightConstraint: NSLayoutConstraint!
     private var cachedSize: CGSize? = .none
     
     override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -129,11 +103,6 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
         
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)
-        
-        constrain(self) { selfView in
-            self.heightConstraint = selfView.height == self.desiredHeight ?? 0
-            self.widthConstraint = selfView.width == self.desiredWidth ?? 0
-        }
     }
 
     override open func prepareForReuse() {
