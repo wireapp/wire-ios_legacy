@@ -45,8 +45,19 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
         }
     }
     
+    private func print(loggingData data: [String: Any])
+    {
+        if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: JSONSerialization.WritingOptions.prettyPrinted),
+            let string = String(data: jsonData, encoding: .utf8) {
+            zmLog.info(string)
+        }
+    }
+    
     func tagScreen(_ screen: String!) {
-        zmLog.info("Tagging Screen: \(screen ?? "")")
+        
+        if screen != nil {
+            print(loggingData:["screen" : screen])
+        }
     }
     
     func tagEvent(_ event: String!) {
@@ -58,34 +69,43 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     }
     
     func tagEvent(_ event: String!, attributes: [AnyHashable : Any]! = [:], customerValueIncrease: NSNumber!) {
-        var string = "Tagging Event: \(event ?? "")"
+        
+        var loggingDict = [String : Any]()
+        
+        if event != nil {
+            loggingDict["event"] = event
+        }
+        
         if !attributes.isEmpty {
-            let keyValues = attributes.map({ (key, value) -> (String, Any) in
-                return (key as! String, value)
+            var localAttributes = [String : String]()
+            attributes.map({ (key, value) -> (String, String) in
+                return (key as! String, (value as AnyObject).description!)
+            }).forEach({ (key, value) in
+                localAttributes[key] = value
             })
-            string.append("\n Attributes: \(keyValues)")
+            loggingDict["attributes"] = localAttributes
         }
         
         if customerValueIncrease != nil {
-            string.append("\n Customer Value Increase: \(customerValueIncrease)")
+            loggingDict["customerValueIncrease"] = customerValueIncrease.description
         }
-        zmLog.info(string)
+        print(loggingData: loggingDict)
     }
     
     func setCustomerID(_ customerID: String!) {
-        zmLog.info("Setting Customer ID: \(customerID ?? "" )")
+        print(loggingData: ["customerID" : customerID])
     }
     
     func setPushToken(_ token: Data!) {
-        zmLog.info("Setting push token: \(token ?? Data() )")
+        print(loggingData: ["pushToken" : token])
     }
     
     func setCustomDimension(_ dimension: Int32, value: String!) {
-        zmLog.info("Setting Custom Dimension: \(dimension) Value: \(value ?? "" )")
+        print(loggingData: ["customeDimension_\(dimension)" : value])
     }
     
     func upload() {
-        zmLog.info("Uploading")
+        
     }
     
     func resume(handler resumeHandler: ResumeHandlerBlock!) {
@@ -97,12 +117,12 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     }
     
     func handleOpen(_ url: URL!) -> Bool {
-        zmLog.info("Opening URL: \(url)")
+        print(loggingData: ["open_url" : url])
         return false
     }
     
     func close() {
-        zmLog.info("Closing")
+        
     }
 }
 
