@@ -840,6 +840,7 @@
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
 		BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */; };
+		CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */; };
 		CE3FBF1E1CE22B4900ED087A /* DeleteMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */; };
 		CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */; };
 		CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED176461D0074610005234F /* ConversationParticipantsCell.swift */; };
@@ -2220,6 +2221,7 @@
 		BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RightToLeft.swift"; sourceTree = "<group>"; };
 		C88A846215D617F8CCFBEB80 /* libPods-Wire-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsConsoleProvider.swift; sourceTree = "<group>"; };
 		CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteMessageTests.m; sourceTree = "<group>"; };
 		CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationIgnoredDeviceCell.swift; sourceTree = "<group>"; };
 		CED176461D0074610005234F /* ConversationParticipantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationParticipantsCell.swift; sourceTree = "<group>"; };
@@ -2879,6 +2881,7 @@
 				871BBFB71D34F56300DF0793 /* AnalyticsVoiceChannelTracker.m */,
 				871BBFB81D34F56300DF0793 /* Application+runDuration.h */,
 				871BBFB91D34F56300DF0793 /* Application+runDuration.m */,
+				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
 				871BBFBD1D34F56300DF0793 /* Clusterizers */,
 				871BBFC31D34F56300DF0793 /* Events */,
 				871BBFE31D34F56300DF0793 /* FileTransfer */,
@@ -5591,6 +5594,7 @@
 				DBDA83911ADFB3F2000AD57D /* RegistrationPhoneFlowViewController.m in Sources */,
 				DB29BD411AE1094E00DCEF6D /* EmailSignInViewController.m in Sources */,
 				871BC36A1D34F94200DF0793 /* YoutubeService.m in Sources */,
+				CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */,
 				871BC28F1D34F8F800DF0793 /* UIView+Borders.m in Sources */,
 				871BC24A1D34F8F800DF0793 /* UIFont+MagicAccess.m in Sources */,
 				87F61D1C1CD379EC00670794 /* CircularProgressView.swift in Sources */,
