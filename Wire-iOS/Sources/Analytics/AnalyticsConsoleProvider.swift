@@ -70,15 +70,21 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     
     func tagEvent(_ event: String!, attributes: [AnyHashable : Any]! = [:], customerValueIncrease: NSNumber!) {
         
+        var printableAttributes = [AnyHashable : Any]()
+        
+        if attributes != nil {
+            printableAttributes = attributes
+        }
+        
         var loggingDict = [String : Any]()
         
         if event != nil {
             loggingDict["event"] = event
         }
         
-        if !attributes.isEmpty {
+        if !printableAttributes.isEmpty {
             var localAttributes = [String : String]()
-            attributes.map({ (key, value) -> (String, String) in
+            printableAttributes.map({ (key, value) -> (String, String) in
                 return (key as! String, (value as AnyObject).description!)
             }).forEach({ (key, value) in
                 localAttributes[key] = value
