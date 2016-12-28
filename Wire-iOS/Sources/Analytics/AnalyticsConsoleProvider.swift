@@ -97,7 +97,7 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     }
     
     func setPushToken(_ token: Data!) {
-        print(loggingData: ["pushToken" : token])
+        print(loggingData: ["pushToken" : token.base64String()])
     }
     
     func setCustomDimension(_ dimension: Int32, value: String!) {

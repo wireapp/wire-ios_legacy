@@ -27,6 +27,7 @@
 
 static BOOL useConsoleAnalytics = NO;
 NSString * const ZMConsoleAnalyticsArgumentKey = @"-ConsoleAnalytics";
+static NSString * const ZMEnableConsoleLog = @"ZMEnableAnalyticsLog";
 @implementation Analytics (iOS)
 
 + (void)setConsoleAnayltics:(BOOL)shouldUseConsoleAnalytics;
@@ -39,7 +40,7 @@ NSString * const ZMConsoleAnalyticsArgumentKey = @"-ConsoleAnalytics";
 {
     static Analytics *sharedAnalytics = nil;
     
-    if (useConsoleAnalytics) {
+    if (useConsoleAnalytics || [[NSUserDefaults standardUserDefaults] boolForKey:ZMEnableConsoleLog]) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             sharedAnalytics = [[Analytics alloc] initWithProvider:[AnalyticsConsoleProvider new]];
