@@ -98,9 +98,9 @@
 
 "send_invitation.subject" = "Connect with me on Wire";
 "send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com.";
-"send_invitation_no_email.text" = "I’m on Wire. Visit https://get.wire.com to connect with me.";
+"send_invitation_no_email.text" = "I’m on Wire. Visit get.wire.com to connect with me.";
 
-"send_personal_invitation.text" = "I’m on Wire, talk to you there. https://get.wire.com.";
+"send_personal_invitation.text" = "I’m on Wire, talk to you there: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
