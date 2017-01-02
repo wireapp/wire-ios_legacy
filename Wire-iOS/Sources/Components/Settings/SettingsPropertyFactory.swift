@@ -89,7 +89,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
         SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets,
         SettingsPropertyName.enableV3Calling            : UserDefaultEnableV3Calling,
-        SettingsPropertyName.enableCollections          : UserDefaultEnableCollections,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
     ]
     

@@ -56,7 +56,6 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
-NSString * const UserDefaultEnableCollections = @"UserDefaultEnableCollections";
 NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCollections";
 
 
@@ -120,7 +119,6 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultBrowserOpeningRawValue,
              UserDefaultSendV3Assets,
              UserDefaultEnableV3Calling,
-             UserDefaultEnableCollections,
              UserDefaultEnableBatchCollections,
              ];
 }
@@ -469,16 +467,6 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (void)setEnableV3Calling:(BOOL)enableV3Calling
 {
     [self.defaults setBool:enableV3Calling forKey:UserDefaultSendV3Assets];
-}
-
-- (BOOL)enableCollections
-{
-    return [self.defaults boolForKey:UserDefaultEnableCollections];
-}
-
-- (void)setEnableCollections:(BOOL)enableCollections
-{
-    [self.defaults setBool:enableCollections forKey:UserDefaultEnableCollections];
 }
 
 - (BOOL)enableBatchCollections

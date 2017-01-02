@@ -5,7 +5,7 @@
 			"format": "m4a",
 			"loopAllowed": 1,
 			"mixingAllowed": 0,
-			"incallAllowed": 0,
+			"incallAllowed": 1,
 			"intensity": 0
 		},
 		"ringing_from_me_video": {
@@ -13,7 +13,7 @@
 			"format": "m4a",
 			"loopAllowed": 1,
 			"mixingAllowed": 0,
-			"incallAllowed": 0,
+			"incallAllowed": 1,
 			"intensity": 0
 		},
 		"ringing_from_them": {

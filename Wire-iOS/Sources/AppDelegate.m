@@ -248,6 +248,7 @@
     [ZMUserSession addInitalSyncCompletionObserver:self];
     [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:self.zetaUserSession];
     [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
+    [self trackErrors];
 }
 
 #pragma mark - URL handling

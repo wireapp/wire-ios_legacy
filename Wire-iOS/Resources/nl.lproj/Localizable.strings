@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Bestanden";
 "collections.section.videos.title" = "Video's";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Alles →";
+"collections.section.all.button" = "Alles %d →";
 "collections.section.no_items" = "Geen items in bibliotheek";

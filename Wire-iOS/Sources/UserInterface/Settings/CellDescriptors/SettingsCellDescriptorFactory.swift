@@ -173,8 +173,6 @@ import Foundation
         developerCellDescriptors.append(enableAssetV3Setting)
         let enableCallingV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableV3Calling))
         developerCellDescriptors.append(enableCallingV3Setting)
-        let enableCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableCollections))
-        developerCellDescriptors.append(enableCollections)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
         

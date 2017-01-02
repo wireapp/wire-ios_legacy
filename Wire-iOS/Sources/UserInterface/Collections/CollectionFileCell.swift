@@ -22,6 +22,7 @@ import Cartography
 
 final public class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
+    private let headerView = CollectionCellHeader()
     
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
@@ -29,7 +30,7 @@ final public class CollectionFileCell: CollectionCell {
         guard let message = self.message else {
             return
         }
-        
+        headerView.message = message
         fileTransferView.configure(for: message, isInitial: changeInfo == .none)
     }
     
@@ -43,44 +44,34 @@ final public class CollectionFileCell: CollectionCell {
         self.loadView()
     }
     
-    var isHeightCalculated: Bool = false
-    var containerWidth: CGFloat = 320
-    
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        if !isHeightCalculated {
-            setNeedsLayout()
-            layoutIfNeeded()
-            var desiredSize = layoutAttributes.size
-            desiredSize.width = self.containerWidth
-            let size = contentView.systemLayoutSizeFitting(desiredSize)
-            var newFrame = layoutAttributes.frame
-            newFrame.size.width = self.containerWidth
-            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
-            layoutAttributes.frame = newFrame
-            isHeightCalculated = true
-        }
-        return layoutAttributes
-    }
-    
     func loadView() {
         self.fileTransferView.delegate = self
         self.fileTransferView.layer.cornerRadius = 4
         self.fileTransferView.cas_styleClass = "container-view"
         self.fileTransferView.clipsToBounds = true
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
+        self.contentView.addSubview(self.headerView)
+        
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 16, 4, 16)
         
         self.contentView.addSubview(self.fileTransferView)
 
-        constrain(self.contentView, self.fileTransferView) { contentView, fileTransferView in
-            fileTransferView.edges == contentView.edgesWithinMargins
+        constrain(self.contentView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
+            headerView.top == contentView.topMargin
+            headerView.leading == contentView.leadingMargin
+            headerView.trailing == contentView.trailingMargin
+            
+            fileTransferView.top == headerView.bottom + 4
+            
+            fileTransferView.left == contentView.leftMargin
+            fileTransferView.right == contentView.rightMargin
+            fileTransferView.bottom == contentView.bottomMargin
         }
     }
     
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
-        self.isHeightCalculated = false
     }
 }
 

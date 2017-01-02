@@ -21,6 +21,7 @@ import Cartography
 
 final public class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
+    private let headerView = CollectionCellHeader()
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -39,47 +40,37 @@ final public class CollectionAudioCell: CollectionCell {
             return
         }
         
+        headerView.message = message
         audioMessageView.configure(for: message, isInitial: true)
     }
-    
-    var isHeightCalculated: Bool = false
-    var containerWidth: CGFloat = 320
-    
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        if !isHeightCalculated {
-            setNeedsLayout()
-            layoutIfNeeded()
-            var desiredSize = layoutAttributes.size
-            desiredSize.width = self.containerWidth
-            let size = contentView.systemLayoutSizeFitting(desiredSize)
-            var newFrame = layoutAttributes.frame
-            newFrame.size.width = self.containerWidth
-            newFrame.size.height = CGFloat(ceilf(Float(size.height)))
-            layoutAttributes.frame = newFrame
-            isHeightCalculated = true
-        }
-        return layoutAttributes
-    }
-    
+        
     func loadView() {
         self.audioMessageView.delegate = self
         self.audioMessageView.layer.cornerRadius = 4
         self.audioMessageView.cas_styleClass = "container-view"
         self.audioMessageView.clipsToBounds = true
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 8, 4, 8)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 16, 4, 16)
         
+        self.contentView.addSubview(self.headerView)
         self.contentView.addSubview(self.audioMessageView)
         
-        constrain(self.contentView, self.audioMessageView) { contentView, audioMessageView in
-            audioMessageView.edges == contentView.edgesWithinMargins
+        constrain(self.contentView, self.audioMessageView, self.headerView) { contentView, audioMessageView, headerView in
+            headerView.top == contentView.topMargin
+            headerView.leading == contentView.leadingMargin
+            headerView.trailing == contentView.trailingMargin
+            
+            audioMessageView.top == headerView.bottom + 4
+            
+            audioMessageView.left == contentView.leftMargin
+            audioMessageView.right == contentView.rightMargin
+            audioMessageView.bottom == contentView.bottomMargin
         }
     }
     
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
-        self.isHeightCalculated = false
     }
 }
 
