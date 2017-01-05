@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "البحث حسب الاسم أو البريد الإلكتروني";
+"peoplepicker.search_placeholder" = "ابحث باستخدام الاسم أو المعرّف";
 "peoplepicker.header.top_people" = "الأشخاص المفضلين";
 "peoplepicker.button.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.button.add_to_conversation" = "إضافة";
@@ -56,14 +56,14 @@
 "peoplepicker.send_invitation.dialog.message" = "يمكن استخدامها لمدة أسبوعين. حال انتهاء صلاحيتها أرسل واحدة جديدة.";
 "peoplepicker.send_invitation.dialog.ok" = "موافق";
 
-"peoplepicker.invite_more_people" = "ادعُ أُناسًا أكثر";
+"peoplepicker.invite_more_people" = "ادعُ أشخاصًا أكثر";
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "البحث بحسب الاسم";
 "contacts_ui.invite_others" = "ادعُ آخرين";
-"contacts_ui.name_in_contacts" = "%@ موجود في جهات اتصالك";
+"contacts_ui.name_in_contacts" = "%@ في جهات اتصالك";
 "contacts_ui.connection_request" = "تم إرسال طلب اتصال";
 "contacts_ui.action_button.invite" = "قم بدعوة";
 "contacts_ui.action_button.open" = "افتح";
@@ -76,7 +76,12 @@
 "contacts_ui.no_contact.message" = "اضغط على جهات الاتصال لبدء محادثة جديدة";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "جهات اتصال";
+"bottom_bar.contacts_button.title" = "أشخاص";
+
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "في جهات الاتصال";
+
 
 // Archived List
 "archived_list.title" = "الأرشيف";
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "جارٍ الإخفاء…";
 
 "send_invitation.subject" = "تواصل معي على Wire";
-"send_invitation.text" = "أنا أستخدم Wire. ابحث بإستخدام %@\nأو لِج https://get.wire.com لتتواصل معي.";
+"send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو زُر wire.com/download.";
 "send_invitation_no_email.text" = "أنا أستخدم Wire. لِج https://get.wire.com لتتواصل معي.";
 
 "send_personal_invitation.text" = "أنا أستخدم Wire، تحدث معي هُناك. https://get.wire.com";
@@ -127,7 +132,7 @@
 "conversation.displayname.emptygroup" = "محادثة جماعية";
 
 "conversation.input_bar.verified" = "تم التحقق";
-"conversation.input_bar.placeholder" = "اكتب الرسالة";
+"conversation.input_bar.placeholder" = "اكتب رسالة";
 "conversation.input_bar.placeholder_ephemeral" = "رسالة مؤقّتة";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "اسحب لأعلى للإرسال";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "بدء مكالمة";
 "conversation.call.many_participants_confirmation.message" = "ستتصل بـ%d أشخاص";
 "conversation.call.many_participants_confirmation.call" = "اتصال";
+
+"conversation.connection_view.in_address_book" = "في جهات الاتصال";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
@@ -194,7 +201,7 @@
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
 "content.system.pending_message_timestamp" = "جاري الإرسال...";
 "content.system.message_sent_timestamp" = "أُرسِلت";
-"content.system.message_delivered_timestamp" = "أُستلمَت";
+"content.system.message_delivered_timestamp" = "تم التسليم";
 "content.system.failedtosend_message_timestamp" = "فَشِل الإرسال.";
 "content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
 "content.system.like_tooltip" = "انقر للإعجاب";
@@ -249,6 +256,7 @@
 "content.message.like" = "اعجاب";
 "content.message.unlike" = "إلغاء إعجابي";
 "content.message.forward" = "أرسل";
+"content.message.go_to_conversation" = "إظهار في المُحادثة";
 "content.message.forward.to" = "إرسال إلى...";
 
 "content.reactions_list.likers" = "إعجاب من  ";
@@ -434,13 +442,17 @@
 // Settings - Account details
 "self.settings.account_section" = "الحساب";
 
-"self.settings.account_details_group.title" = "معلومات";
+"self.settings.account_details_group.info.title" = "معلومات";
+"self.settings.account_details_group.personal.title" = "شخصي";
 
 "self.settings.account_section.name.title" = "الاسم";
 "self.settings.account_section.email.title" = "البريد الإلكتروني";
 "self.settings.account_section.phone.title" = "الهاتف";
+"self.settings.account_section.handle.title" = "مُعرّف";
+"self.settings.account_section.add_handle.title" = "أضف مُعرّف";
 
-"self.settings.account_details_group.footer" = "سيتمكن الناس من ايجادك من خلال هذه التفاصيل.";
+"self.settings.account_details_group.info.footer" = "سيتمكن الناس من ايجادك من خلال هذه التفاصيل.";
+"self.settings.account_details_group.personal.footer" = "هذه المعلومة غير مرئيّة.";
 
 "self.settings.account_details.remove_device.title" = "إزالة الجهاز";
 "self.settings.account_details.key_fingerprint.title" = "مفتاح البصمة";
@@ -466,6 +478,15 @@
 "self.settings.account_details.delete_account.alert.title" = "حذف الحساب";
 "self.settings.account_details.delete_account.alert.message" = "سوف نرسل لك رسالة عبر البريد الإلكتروني أو في رسالة قصيرة.\nاتّبع التعليمات في الرابط لحذف حسابك بشكل دائم.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "مُعرّف";
+"self.settings.account_section.handle.change.save" = "حفظ";
+"self.settings.account_section.handle.change.footer" = "على الأقلّ محرفين. a–z, 0–9 و _ فقط.";
+"self.settings.account_section.handle.change.footer.unavailable" = "تمّ استخدامه";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "تعذَّر تعيين المُعرّف";
+"self.settings.account_section.handle.change.failure_alert.message" = "حدث خطأ في إعداد مُعرّفك. من فضلك حاول مرة أخرى.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "إشعارات";
@@ -554,6 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "تقرير اتصال Wire";
 "self.settings.technical_report.include_log" = "تضمين سجل مُفصّل";
+"self.settings.technical_report.privacy_warning" = "السّجلات المفصّلة قد تضمّن بيانات شخصيّة";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
@@ -590,7 +612,7 @@
 
 "registration.verify_phone_number.instructions" = "أدخل رمز التّحقق الذي أُرسل لـ%@";
 "registration.verify_phone_number.resend" = "إعادة الإرسال";
-"registration.verify_phone_number.resend_placeholder" = "لم يظهر لك الرمز؟\nبإمكانك طلب واحد جديد خلال %.0f ثانية";
+"registration.verify_phone_number.resend_placeholder" = "لم يظهر لك الرمز؟\nبإمكانك طلب رمز جديد خلال %.0f ثانية";
 
 "registration.verify_email.instructions" = "قمنا بإرسال رسالة لـ %@.\nتتبع الرابط لتأكيد بريدك الإلكتروني.";
 "registration.verify_email.resend.instructions" = "لم تستلم الرسالة؟";
@@ -681,6 +703,14 @@
 "error.email.invalid" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
 "error.phone.invalid" = "الرجاء إدخال رقم هاتف صحيح";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "نقدِّم المعرّفات.";
+"registration.select_handle.takeover.subtitle" = "أعلن معرّفك الفريد على Wire.";
+"registration.select_handle.takeover.subtitle_link" = "معرفة المزيد";
+
+"registration.select_handle.takeover.choose_own" = "اختر الخاص بك";
+"registration.select_handle.takeover.keep_suggested" = "إبقاء هذه";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
@@ -745,3 +775,11 @@
 "invite_banner.title" = "ادعُ أصدقاء لاستخدام Wire!";
 "invite_banner.message" = "استمتع بالمكالمات، الرسائل، الرسومات، الصور المتحركة والمزيد في المحادثات الفردية أو الجماعية.";
 "invite_banner.invite_button_title" = "ادعُ أُناسًا أكثر";
+
+// Collections
+"collections.section.images.title" = "صور";
+"collections.section.files.title" = "ملفّات";
+"collections.section.videos.title" = "مقاطع فيديو";
+"collections.section.links.title" = "روابط";
+"collections.section.all.button" = "الكل ←";
+"collections.section.no_items" = "لا توجد عناصر في المكتبة";

@@ -56,6 +56,7 @@
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
                     conversation = user.oneToOneConversation;
+                    [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
                     [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                                 focusOnView:YES
                                                                                    animated:YES];
@@ -157,6 +158,8 @@
 
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation
 {
+    [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
+
     [self dismissPeoplePickerWithCompletionBlock:^{
         [[Analytics shared] tagScreen:@"MAIN"];
         [[ZClientViewController sharedZClientViewController] selectConversation:conversation

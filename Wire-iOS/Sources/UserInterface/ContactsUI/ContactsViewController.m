@@ -408,6 +408,10 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 {
     self.dataSource.searchQuery = text ? text : @"";
     [self updateEmptyResults];
+    if (text.length > 0) {
+        BOOL leadingAt = [[text substringToIndex:1] isEqualToString:@"@"];
+        [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
+    }
 }
 
 - (void)tokenFieldDidConfirmSelection:(TokenField *)controller
@@ -474,11 +478,15 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didSelectUser:(ZMSearchUser *)user
 {
+    if ([user conformsToProtocol:@protocol(AnalyticsConnectionStateProvider)]) {
+        [Analytics.shared tagSelectedSearchResultWithConnectionStateProvider:(id<AnalyticsConnectionStateProvider>)user
+                                                                     context:SearchContextAddContacts];
+    }
+
     [self.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
     [UIView performWithoutAnimation:^{
         [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
     }];
-
 }
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didDeselectUser:(ZMSearchUser *)user

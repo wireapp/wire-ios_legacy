@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "按名称或电子邮件搜索";
+"peoplepicker.search_placeholder" = "通过您的名字或用户名搜索";
 "peoplepicker.header.top_people" = "常联系的人";
 "peoplepicker.button.create_conversation" = "创建群聊";
 "peoplepicker.button.add_to_conversation" = "新增";
@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名称搜索";
 "contacts_ui.invite_others" = "邀请其他人";
-"contacts_ui.name_in_contacts" = "%@ 在联络簿中";
+"contacts_ui.name_in_contacts" = "%@在联系人中";
 "contacts_ui.connection_request" = "请求加为好友";
 "contacts_ui.action_button.invite" = "邀请";
 "contacts_ui.action_button.open" = "开启";
@@ -76,7 +76,12 @@
 "contacts_ui.no_contact.message" = "点击联系人开始对话";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "联系人";
+"bottom_bar.contacts_button.title" = "人";
+
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "在联系人中";
+
 
 // Archived List
 "archived_list.title" = "档案";
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "躲藏......";
 
 "send_invitation.subject" = "和我Wire上成为好友吧";
-"send_invitation.text" = "我在Wire上.%@搜索或访问 https://get.wire.com 与我联系。";
+"send_invitation.text" = "我在Wire, 搜索 %@ 或访问 wire.com/download.";
 "send_invitation_no_email.text" = "我在Wire上。访问 https://get.wire.com 与我联系。";
 
 "send_personal_invitation.text" = "我在使用Wire和你交谈。https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "开始呼叫";
 "conversation.call.many_participants_confirmation.message" = "这将会呼叫%d位联系人";
 "conversation.call.many_participants_confirmation.call" = "通话";
+
+"conversation.connection_view.in_address_book" = "在联系人中";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
@@ -249,6 +256,7 @@
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
 "content.message.forward" = "转发";
+"content.message.go_to_conversation" = "在对话中显示";
 "content.message.forward.to" = "发送给...";
 
 "content.reactions_list.likers" = "被赞";
@@ -434,13 +442,17 @@
 // Settings - Account details
 "self.settings.account_section" = "帐户";
 
-"self.settings.account_details_group.title" = "个人信息";
+"self.settings.account_details_group.info.title" = "个人信息";
+"self.settings.account_details_group.personal.title" = "个人信息";
 
 "self.settings.account_section.name.title" = "名称";
 "self.settings.account_section.email.title" = "电邮箱地址";
 "self.settings.account_section.phone.title" = "电话";
+"self.settings.account_section.handle.title" = "用户名";
+"self.settings.account_section.add_handle.title" = "添加用户名";
 
-"self.settings.account_details_group.footer" = "其他使用者能通过这些信息搜寻到您。";
+"self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息搜寻到您。";
+"self.settings.account_details_group.personal.footer" = "这个信息将不会显示。";
 
 "self.settings.account_details.remove_device.title" = "删除设备";
 "self.settings.account_details.key_fingerprint.title" = "指纹识别";
@@ -466,6 +478,15 @@
 "self.settings.account_details.delete_account.alert.title" = "删除账号";
 "self.settings.account_details.delete_account.alert.message" = "我们将通过电子邮件或手机短信发送链接给您。请点击链接从而永久删除您的账号。";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "用户名";
+"self.settings.account_section.handle.change.save" = "保存";
+"self.settings.account_section.handle.change.footer" = "至少2个字符，仅可使用a—z, 0—9以及下划线。";
+"self.settings.account_section.handle.change.footer.unavailable" = "已经被占用";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "无法设置您的用户名";
+"self.settings.account_section.handle.change.failure_alert.message" = "设置用户名出错。请您重试。";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "通知";
@@ -554,6 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire通话报告";
 "self.settings.technical_report.include_log" = "包括详细的日志";
+"self.settings.technical_report.privacy_warning" = "详细的日志将包含个人数据";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "重设密码";
@@ -681,6 +703,14 @@
 "error.email.invalid" = "请输入有效的电邮箱地址";
 "error.phone.invalid" = "请输入有效的手机号码";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "您的用户名显示在这里。";
+"registration.select_handle.takeover.subtitle" = "设置您在Wire上独一无二的用户名。";
+"registration.select_handle.takeover.subtitle_link" = "更多信息";
+
+"registration.select_handle.takeover.choose_own" = "选择您的";
+"registration.select_handle.takeover.keep_suggested" = "使用当前";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
@@ -745,3 +775,11 @@
 "invite_banner.title" = "邀请您的朋友加入Wire！";
 "invite_banner.message" = "尽情享受在个人或群组聊天室中通话，分享信息和图片。";
 "invite_banner.invite_button_title" = "邀请更多人";
+
+// Collections
+"collections.section.images.title" = "图片";
+"collections.section.files.title" = "文件";
+"collections.section.videos.title" = "视频";
+"collections.section.links.title" = "链接";
+"collections.section.all.button" = "所有 →";
+"collections.section.no_items" = "没有任何条目";

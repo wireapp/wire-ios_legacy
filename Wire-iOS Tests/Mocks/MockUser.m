@@ -98,7 +98,6 @@
 @synthesize imageMediumIdentifier;
 @synthesize canBeConnected;
 @synthesize connectionRequestMessage;
-@synthesize topCommonConnections;
 @synthesize totalCommonConnections;
 
 - (void)connectWithMessageText:(NSString *)text completionHandler:(dispatch_block_t)handler
@@ -130,6 +129,11 @@
 }
 
 - (NSData *)imageMediumData
+{
+    return nil;
+}
+
+- (AddressBookEntry *)addressBookEntry
 {
     return nil;
 }

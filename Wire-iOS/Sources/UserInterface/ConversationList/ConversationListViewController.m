@@ -89,6 +89,9 @@
 
 @end
 
+@interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
+@end
+
 
 
 @interface ConversationListViewController () <TopItemsDelegate, UIGestureRecognizerDelegate>
@@ -130,6 +133,10 @@
 @property (nonatomic, assign) BOOL openArchiveGestureStarted;
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
+@property (nonatomic) BOOL initialSyncCompleted;
+
+@property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -144,6 +151,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
     [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.allConversationsObserverToken];
+    [ZMUserSession removeInitalSyncCompletionObserver:self];
+    [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
 - (void)removeUserProfileObserver
@@ -167,10 +176,14 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
+    self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[ZMUser.selfUser] inUserSession:ZMUserSession.sharedSession];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
+
+    [ZMUserSession addInitalSyncCompletionObserver:self];
+    self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
     [self createNoConversationLabel];
     [self createTopItemsController];
@@ -190,7 +203,6 @@
     self.allConversationsObserverToken = [[SessionObjectCache sharedCache].allConversations addConversationListObserver:self];
 
     [self showPushPermissionDeniedDialogIfNeeded];
-    [self requestSuggestedHandlesIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -200,6 +212,8 @@
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [self.selectedConversation savePendingLastRead];
     }];
+
+    [self requestSuggestedHandlesIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -216,7 +230,7 @@
 
 - (void)requestSuggestedHandlesIfNeeded
 {
-    if (Settings.sharedSettings.enableUserNamesUI && nil == ZMUser.selfUser.handle) {
+    if (nil == ZMUser.selfUser.handle && self.initialSyncCompleted && !ZMUserSession.sharedSession.isPendingHotFixChanges) {
         self.userProfileObserverToken = [self.userProfile addObserver:self];
         [self.userProfile suggestHandles];
     }
@@ -581,32 +595,7 @@
 
 - (void)showActionMenuForConversation:(ZMConversation *)conversation
 {
-    ZMUser *otherParticipant = conversation.firstActiveParticipantOtherThanSelf;
-    BOOL isConnectionOrOneOnOne = conversation.conversationType == ZMConversationTypeConnection || conversation.conversationType == ZMConversationTypeOneOnOne;
-    if (isConnectionOrOneOnOne && nil != otherParticipant) {
-        [self showActionMenuForOneOnOneConversationOrConnection:conversation user:otherParticipant];
-    } else {
-        ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName
-                                                                                             layout:ActionSheetControllerLayoutList
-                                                                                              style:ActionSheetControllerStyleDark];
-        [actionSheetController addActionsForConversation:conversation];
-        [self presentViewController:actionSheetController animated:YES completion:nil];
-    }
-}
-
-- (void)showActionMenuForOneOnOneConversationOrConnection:(ZMConversation *)conversation user:(ZMUser *)user
-{
-    UserNameDetailView *detailView = [[UserNameDetailView alloc] init];
-    UserNameDetailViewModel *model = [[UserNameDetailViewModel alloc] initWithUser:user
-                                                                      fallbackName:@""
-                                                                   addressBookName:BareUserToUser(user).contact.name
-                                                                 commonConnections:user.totalCommonConnections];
-    [detailView configureWith:model];
-    ActionSheetController *controller = [[ActionSheetController alloc] initWithTitleView:detailView
-                                                                                  layout:ActionSheetControllerLayoutList
-                                                                                   style:ActionSheetControllerStyleDark
-                                                                            dismissStyle:ActionSheetControllerDismissStyleBackground];
-    [controller addActionsForConversation:conversation];
+    ActionSheetController *controller = [ActionSheetController dialogForConversationDetails:conversation style:ActionSheetControllerStyleDark];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -862,11 +851,6 @@
     }];
 }
 
-- (void)archivedListViewController:(ArchivedListViewController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation
-{
-    [self showActionMenuForConversation:conversation];
-}
-
 @end
 
 @implementation ConversationListViewController (ConversationListObserver)
@@ -885,6 +869,16 @@
                     animations:^{
         self.bottomBarController.showArchived = [SessionObjectCache.sharedCache archivedConversations].count > 0;
     } completion:nil];
+}
+
+@end
+
+@implementation ConversationListViewController (InitialSyncObserver)
+
+- (void)initialSyncCompleted:(NSNotification *)notification
+{
+    self.initialSyncCompleted = YES;
+    [self requestSuggestedHandlesIfNeeded];
 }
 
 @end

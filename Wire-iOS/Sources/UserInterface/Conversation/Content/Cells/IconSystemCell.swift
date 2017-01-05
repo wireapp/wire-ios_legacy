@@ -81,7 +81,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         if !self.initialIconConstraintsCreated {
             
             let inset: CGFloat = 16
-            constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { leftIconContainer, leftIconView, labelView, messageContentView, authorLabel in
+            constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { (leftIconContainer: LayoutProxy, leftIconView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy, authorLabel: LayoutProxy) -> () in
                 leftIconContainer.leading == messageContentView.leading
                 leftIconContainer.trailing == authorLabel.leading
                 leftIconContainer.top == messageContentView.top + inset
@@ -97,7 +97,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
                 messageContentView.height >= 32
             }
             
-            constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { lineView, contentView, labelView, messageContentView in
+            constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { (lineView: LayoutProxy, contentView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy) -> () in
                 lineView.leading == labelView.trailing + 16
                 lineView.height == 0.5
                 lineView.trailing == contentView.trailing

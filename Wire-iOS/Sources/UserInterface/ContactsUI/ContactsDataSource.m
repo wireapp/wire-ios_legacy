@@ -97,7 +97,9 @@ NS_ASSUME_NONNULL_END
 - (void)didReceiveSearchResult:(ZMSearchResult *)result forToken:(ZMSearchToken)searchToken
 {
     if ([searchToken isEqual:self.currentSearchToken]) {
-        self.ungroupedSearchResults = result.usersInContacts;
+        NSMutableArray *matches = [result.usersInContacts mutableCopy];
+        [matches addObjectsFromArray:result.usersInDirectory];
+        self.ungroupedSearchResults = matches;
         
         if ([self.delegate respondsToSelector:@selector(dataSource:didReceiveSearchResult:)]) {
             [self.delegate dataSource:self didReceiveSearchResult:self.ungroupedSearchResults];

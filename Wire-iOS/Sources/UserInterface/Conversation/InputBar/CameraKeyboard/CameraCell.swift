@@ -26,7 +26,7 @@ public protocol CameraCellDelegate: class {
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
 
-open class CameraCell: UICollectionViewCell {
+open class CameraCell: UICollectionViewCell, Reusable {
     let cameraController: CameraController?
     
     let expandButton = IconButton()
@@ -141,14 +141,6 @@ open class CameraCell: UICollectionViewCell {
         }
         cameraController.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
-    
-    override open var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
     }
     
     fileprivate func updateVideoOrientation() {

@@ -36,7 +36,7 @@ protocol SettingsCellType: class {
     var icon: ZetaIconType {get set}
 }
 
-class SettingsTableCell: UITableViewCell, SettingsCellType {
+class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
     var iconImageView = UIImageView()
     var cellNameLabel = UILabel()
     var valueLabel = UILabel()
@@ -57,21 +57,25 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 self.valueLabel.text = string
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = nil
 
             case .image(let image):
                 self.valueLabel.text = ""
                 self.imagePreview.image = image
                 self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = "image"
                 
             case .color(let color):
                 self.valueLabel.text = ""
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = color
+                self.imagePreview.accessibilityValue = "color"
                 
             case .none:
                 self.valueLabel.text = ""
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = nil
             }
         }
     }
@@ -107,16 +111,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
     
     var descriptor: SettingsCellDescriptorType?
-    
-    override var reuseIdentifier: String {
-        get {
-            return type(of: self).reuseIdentifier
-        }
-    }
-    
-    static var reuseIdentifier: String {
-        return "\(self)" + "ReuseIdentifier"
-    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -177,6 +171,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.imagePreview.clipsToBounds = true
         self.imagePreview.layer.cornerRadius = 12
         self.imagePreview.contentMode = .scaleAspectFill
+        self.imagePreview.accessibilityIdentifier = "imagePreview"
         self.contentView.addSubview(self.imagePreview)
         
         constrain(self.contentView, self.imagePreview) { contentView, imagePreview in
@@ -186,6 +181,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             imagePreview.centerY == contentView.centerY
         }
         
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
+        self.accessibilityElements = currentElements
     }
     
     func updateBackgroundColor() {

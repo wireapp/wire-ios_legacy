@@ -107,6 +107,17 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     
 }
 
+- (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages
+{
+    AudioTrackPlayer *audioTrackerPlayer = [AppDelegate sharedAppDelegate].mediaPlaybackManager.audioTrackPlayer;
+    
+    for (NSObject *deletedMessage in deletedMessages) {
+        if (audioTrackerPlayer.sourceMessage == deletedMessage) {
+            [audioTrackerPlayer stop];
+        }
+    }
+}
+
 #pragma mark - ZMConversationMessageWindowObserver
 
 - (void)conversationWindowDidChange:(MessageWindowChangeInfo *)change
@@ -114,10 +125,8 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     BOOL initialContentLoad = self.messageWindow.messages.count == change.insertedIndexes.count && change.deletedIndexes.count == 0;
     BOOL updateOnlyChange = change.insertedIndexes.count == 0 && change.deletedIndexes.count == 0 && change.movedIndexPairs.count == 0;
     BOOL expandedWindow = change.insertedIndexes.count > 0 && change.insertedIndexes.lastIndex == self.messageWindow.messages.count - 1;
-
-    if (change.deletedIndexes.count) {
-        [self willDeleteMessagesAtIndexPaths:[change.deletedIndexes indexPaths]];
-    }
+    
+    [self stopAudioPlayerForDeletedMessages:change.deletedObjects];
 
     // We want to reload if this is the initial content load or if the message window did expand to the top
     // (e.g. when scrolling to the top), as there are also insertions at the top if messages get deleted we do not
@@ -157,23 +166,6 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 {
     _editingMessage = editingMessage;
     [self reconfigureVisibleCellsWithDeletedIndexPaths:nil];
-}
-
-- (void)willDeleteMessagesAtIndexPaths:(NSArray<NSIndexPath *>*)deletedIndexPaths
-{
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    id<ZMConversationMessage> mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
-
-    if (mediaPlayingMessage.hasBeenDeleted) {
-        [mediaPlaybackManager stop];
-    }
-
-    for (NSIndexPath *indexPath in deletedIndexPaths) {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        if ([cell isKindOfClass:ConversationCell.class]) {
-            [(ConversationCell *)cell willDeleteMessage];
-        }
-    }
 }
 
 - (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths

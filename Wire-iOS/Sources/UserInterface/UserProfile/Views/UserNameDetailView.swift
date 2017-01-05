@@ -40,7 +40,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         self.color = color
     }
 
-    private func addressBookText(for user: ZMSearchableUser, with addressBookName: String) -> NSAttributedString? {
+    private func addressBookText(for user: ZMBareUser, with addressBookName: String) -> NSAttributedString? {
         guard !user.isSelfUser else { return nil }
         let suffix = "conversation.connection_view.in_address_book".localized && lightFont && color
         if addressBookName.lowercased() == user.name.lowercased() {
@@ -51,7 +51,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         return contactName + " " + suffix
     }
 
-    func correlationText(for user: ZMSearchableUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
+    func correlationText(for user: ZMBareUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
@@ -99,22 +99,22 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: dimmedColor)
     }()
 
-    init(user: ZMUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int) {
+    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int) {
         title = UserNameDetailViewModel.attributedTitle(for: user, fallback: fallback)
         handleText = UserNameDetailViewModel.attributedSubtitle(for: user)
         correlationText = UserNameDetailViewModel.attributedCorrelationText(for: user, with: commonConnections, addressBookName: addressBookName)
     }
 
-    static func attributedTitle(for user: ZMUser?, fallback: String) -> NSAttributedString {
+    static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
         return (user?.name ?? fallback) && normalBoldFont && textColor
     }
 
-    static func attributedSubtitle(for user: ZMUser?) -> NSAttributedString? {
-        guard let handle = user?.handle else { return nil }
+    static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
+        guard let handle = user?.handle, handle.characters.count > 0 else { return nil }
         return ("@" + handle) && smallBoldFont && dimmedColor
     }
 
-    static func attributedCorrelationText(for user: ZMUser?, with connections: Int, addressBookName: String?) -> NSAttributedString? {
+    static func attributedCorrelationText(for user: ZMBareUser?, with connections: Int, addressBookName: String?) -> NSAttributedString? {
         guard let user = user else { return nil }
         return formatter.correlationText(for: user, with: connections, addressBookName: addressBookName)
     }

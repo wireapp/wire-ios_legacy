@@ -57,6 +57,36 @@
     return YES;
 }
 
+- (void)inviteUser:(ZMSearchUser *)user fromView:(UIView *)view
+{
+    if (user.isConnected) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
+                                                                        focusOnView:YES
+                                                                           animated:YES];
+        }];
+    } else if (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[ZClientViewController sharedZClientViewController] selectIncomingContactRequestsAndFocusOnView:YES];
+        }];
+    } else if (user.user.isPendingApprovalByOtherUser && ! user.user.isIgnored) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation focusOnView:YES animated:YES];
+        }];
+        
+    } else if (user.user != nil && ! user.user.isIgnored && ! user.user.isPendingApprovalByOtherUser) {
+        NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), user.user.displayName, [ZMUser selfUser].name];
+        
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [user connectWithMessageText:messageText completionHandler:nil];
+        } completionHandler:^{
+            [self.tableView reloadData];
+        }];
+    } else {
+        [self inviteContact:user.contact fromView:view];
+    }
+}
+
 #pragma mark - ContactsViewControllerDelegate
 
 - (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
@@ -81,40 +111,30 @@
     return @[
              NSLocalizedString(@"contacts_ui.action_button.open", @""),
              NSLocalizedString(@"contacts_ui.action_button.invite", @""),
+             NSLocalizedString(@"connection_request.send_button_title", @""), // TODO: add separate string contacts_ui.action_button.connect
              ];
 }
 
 - (NSUInteger)contactsViewController:(ContactsViewController *)controller actionButtonTitleIndexForUser:(ZMSearchUser *)user
 {
-    if (user.isConnected || (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored)) {
+    if (user.isConnected || ((user.user.isPendingApprovalByOtherUser || user.user.isPendingApprovalBySelfUser) && ! user.user.isIgnored)) {
         return 0;
-    } else {
+    } else if (user.user != nil && ! user.user.isIgnored && ! user.user.isPendingApprovalByOtherUser) {
+        return 2;
+    }
+    else {
         return 1;
     }
 }
 
 - (void)contactsViewController:(ContactsViewController *)controller actionButton:(UIButton *)actionButton pressedForUser:(ZMSearchUser *)user
 {
-    if (user.isConnected) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
-                                                                        focusOnView:YES
-                                                                           animated:YES];
-        }];
-    } else if (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectIncomingContactRequestsAndFocusOnView:YES];
-        }];
-    } else {
-        [self inviteContact:user.contact fromView:actionButton];
-    }
+    [self inviteUser:user fromView:actionButton];
 }
 
 - (void)contactsViewController:(ContactsViewController *)controller didSelectCell:(ContactsCell *)cell forUser:(ZMSearchUser *)user
 {
-    if (! user.isConnected) {
-        [self inviteContact:user.contact fromView:cell.contentView];
-    }
+    [self inviteUser:user fromView:cell];
 }
 
 @end

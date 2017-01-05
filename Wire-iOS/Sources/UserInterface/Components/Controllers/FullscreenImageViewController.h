@@ -23,6 +23,7 @@
 @class CenteredScrollView;
 @protocol ZMConversationMessage;
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface FullscreenImageViewController : UIViewController
 
@@ -38,3 +39,5 @@
 - (void)updateZoom;
 
 @end
+
+NS_ASSUME_NONNULL_END

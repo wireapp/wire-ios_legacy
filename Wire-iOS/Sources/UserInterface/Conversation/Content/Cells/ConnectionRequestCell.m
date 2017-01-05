@@ -40,7 +40,7 @@
 - (void)createConstraints
 {
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.messageContentView autoSetDimension:ALDimensionHeight toSize:0];
+        [self.messageContentView autoSetDimension:ALDimensionHeight toSize:2];
     }];
 }
 

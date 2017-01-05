@@ -15,7 +15,7 @@
 			<key>mixingAllowed</key>
 			<integer>0</integer>
 			<key>incallAllowed</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>intensity</key>
 			<integer>0</integer>
 		</dict>
@@ -30,7 +30,7 @@
 			<key>mixingAllowed</key>
 			<integer>0</integer>
 			<key>incallAllowed</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>intensity</key>
 			<integer>0</integer>
 		</dict>

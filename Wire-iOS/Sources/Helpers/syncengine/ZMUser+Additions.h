@@ -58,9 +58,6 @@ FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 /// Blocks user if not already blocked and vice versa.
 - (void)toggleBlocked;
 
-/// Returns corresponding address book contact in current session
-- (ZMAddressBookContact *)contact;
-
 /// Randomly select the accent color that can be used for a new user
 + (ZMAccentColor)pickRandomAcceptableAccentColor;
 + (ZMAccentColor)pickRandomAccentColor;

@@ -129,6 +129,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     DDLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    
+    BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToString:ZMConsoleAnalyticsArgumentKey]) {
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }] != NSNotFound;
+    
+    
+    [Analytics setConsoleAnayltics:containsConsoleAnalytics];
     [Analytics shared]; // preload analytics to listen to some notifications in time
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -237,6 +248,7 @@
     [ZMUserSession addInitalSyncCompletionObserver:self];
     [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:self.zetaUserSession];
     [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
+    [self trackErrors];
 }
 
 #pragma mark - URL handling
@@ -429,7 +441,7 @@
         [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
             if (note.networkState == ZMNetworkStateOnline && isLoggedIn && self.addressBookUploadShouldBeChecked) {
                 self.addressBookUploadShouldBeChecked = NO;
-                [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
+                [self.appController uploadAddressBookIfNeeded];
             }
         }];
     });

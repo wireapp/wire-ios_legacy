@@ -40,17 +40,17 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     let conversations = to as! [ZMConversation]
     
     if Message.isTextMessage(message) {
-        ZMUserSession.shared().performChanges {
+        ZMUserSession.shared()?.performChanges {
             forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
         }
     }
     else if Message.isImageMessage(message) {
-        ZMUserSession.shared().performChanges {
+        ZMUserSession.shared()?.performChanges {
             forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
         }
     }
     else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
-        ZMUserSession.shared().performChanges {
+        ZMUserSession.shared()?.performChanges {
             FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI()) { fileMetadata in
                 forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata) }
             }
@@ -58,7 +58,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     }
     else if Message.isLocationMessage(message) {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
-        ZMUserSession.shared().performChanges {
+        ZMUserSession.shared()?.performChanges {
             forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: locationData) }
         }
     }
@@ -144,20 +144,26 @@ extension ZMMessage: Shareable {
     }
 }
 
+extension ZMConversationList {
+    func shareableConversations(excluding: ZMConversation) -> [ZMConversation] {
+        return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
+            return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
+                conversation.isSelfAnActiveMember &&
+                conversation != excluding
+        }
+    }
+}
+
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell) {
         self.view.window!.endEditing(true)
         
-        let conversations = SessionObjectCache.shared().allConversations.map { $0 as! ZMConversation }.filter {
-            ($0.conversationType == .oneOnOne || $0.conversationType == .group) &&
-                $0.isSelfAnActiveMember &&
-                $0 != message.conversation!
-        }
+        let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         
-        let shareViewController = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
+        let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
         
-        let displayInPopover = self.traitCollection.horizontalSizeClass == .regular &&
-                               self.traitCollection.horizontalSizeClass == .regular
+        let displayInPopover: Bool = self.traitCollection.horizontalSizeClass == .regular &&
+                                     self.traitCollection.horizontalSizeClass == .regular
                 
         if displayInPopover {
             shareViewController.showPreview = false
@@ -175,7 +181,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         shareViewController.presentationController?.delegate = self
         
-        shareViewController.onDismiss = { shareController in
+        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>) -> () in
             shareController.presentingViewController?.dismiss(animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
@@ -190,5 +196,44 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
                                self.traitCollection.horizontalSizeClass == .regular
         
         return displayInPopover ? .popover : .overFullScreen
+    }
+}
+
+extension ConversationContentViewController {
+    func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
+        guard messageToShow.conversation == self.conversation else {
+            fatal("Message from the wrong conversation")
+        }
+        
+        let indexInConversation: Int = self.conversation.messages.index(of: messageToShow)
+        if !self.messageWindow.messages.contains(messageToShow) {
+        
+            let oldestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.firstObject!)
+            let newestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.lastObject!)
+
+            if oldestMessageIndexInMessageWindow > indexInConversation {
+                self.messageWindow.moveUp(byMessages: UInt(oldestMessageIndexInMessageWindow - indexInConversation))
+            }
+            else {
+                self.messageWindow.moveDown(byMessages: UInt(indexInConversation - newestMessageIndexInMessageWindow))
+            }
+        }
+
+        let indexToShow = self.messageWindow.messages.index(of: messageToShow)
+
+        if indexToShow == NSNotFound {
+            self.expectedMessageToShow = messageToShow
+            self.onMessageShown = completion
+        }
+        else {
+            self.scroll(toIndex: indexToShow, completion: completion)
+        }
+    }
+    
+    func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
+        let cellIndexPath = IndexPath(row: indexToShow, section: 0)
+        self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
+
+        completion?(self.tableView.cellForRow(at: cellIndexPath) as! ConversationCell)
     }
 }

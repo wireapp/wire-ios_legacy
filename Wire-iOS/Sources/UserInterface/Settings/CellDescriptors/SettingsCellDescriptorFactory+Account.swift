@@ -39,15 +39,8 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
-        var descriptors = [nameElement()]
-        if Settings.shared().enableUserNamesUI {
-            descriptors.append(handleElement())
-        }
-
-        descriptors.append(contentsOf: [phoneElement(), emailElement()])
-
         return SettingsSectionDescriptor(
-            cellDescriptors: descriptors,
+            cellDescriptors: [nameElement(), handleElement(), phoneElement(), emailElement()],
             header: "self.settings.account_details_group.info.title".localized,
             footer: nil
         )
@@ -115,6 +108,11 @@ extension SettingsCellDescriptorFactory {
     }
 
     func handleElement() -> SettingsCellDescriptorType {
+        let presentation: () -> ChangeHandleViewController = {
+            Analytics.shared()?.tag(UserNameEvent.Settings.enteredUsernameScreen)
+            return ChangeHandleViewController()
+        }
+
         if nil != ZMUser.selfUser().handle {
             let preview: PreviewGeneratorType = { _ in
                 guard let handle = ZMUser.selfUser().handle else { return .none }
@@ -124,7 +122,7 @@ extension SettingsCellDescriptorFactory {
                 title: "self.settings.account_section.handle.title".localized,
                 isDestructive: false,
                 presentationStyle: .navigation,
-                presentationAction: ChangeHandleViewController.init,
+                presentationAction: presentation,
                 previewGenerator: preview,
                 hideAccesoryView: true
             )
@@ -132,7 +130,7 @@ extension SettingsCellDescriptorFactory {
 
         return SettingsExternalScreenCellDescriptor(
             title: "self.settings.account_section.add_handle.title".localized,
-            presentationAction: ChangeHandleViewController.init
+            presentationAction: presentation
         )
     }
 
@@ -179,8 +177,8 @@ extension SettingsCellDescriptorFactory {
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
             alert.addAction(actionCancel)
             let actionDelete = UIAlertAction(title: "general.ok".localized, style: .destructive) { _ in
-                ZMUserSession.shared().enqueueChanges {
-                    ZMUserSession.shared().initiateUserDeletion()
+                ZMUserSession.shared()?.enqueueChanges {
+                    ZMUserSession.shared()?.initiateUserDeletion()
                 }
             }
             alert.addAction(actionDelete)

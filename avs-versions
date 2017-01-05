@@ -17,5 +17,5 @@
 # along with this program. If not, see http://www.gnu.org/licenses/.
 #
 
-export OPEN_SOURCE_AVS_VERSION=2.9.69
-export APPSTORE_AVS_VERSION=2.9.14
+export OPEN_SOURCE_AVS_VERSION=2.9.71
+export APPSTORE_AVS_VERSION=2.9.25

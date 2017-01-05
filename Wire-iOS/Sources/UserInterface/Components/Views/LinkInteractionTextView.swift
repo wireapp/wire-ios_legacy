@@ -58,11 +58,15 @@ import UIKit
 extension LinkInteractionTextView: UITextViewDelegate {
     
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        let beganLongPressRecognizers = gestureRecognizers?.flatMap {
-            $0 as? UILongPressGestureRecognizer
-        }.filter {
-            $0.state == .began
-        } ?? []
+        let beganLongPressRecognizers: [UILongPressGestureRecognizer] = gestureRecognizers?.flatMap { (recognizer: AnyObject) -> (UILongPressGestureRecognizer?) in
+            
+            if let recognizer = recognizer as? UILongPressGestureRecognizer, recognizer.state == .began {
+                return recognizer
+            }
+            else {
+                return .none
+            }
+            } ?? []
 
         for recognizer in beganLongPressRecognizers {
             interactionDelegate?.textView(self, didLongPressLink: recognizer)

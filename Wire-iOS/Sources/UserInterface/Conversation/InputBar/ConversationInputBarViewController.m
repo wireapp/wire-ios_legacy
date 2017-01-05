@@ -132,7 +132,6 @@
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) NSLayoutConstraint *collapseViewConstraint;
 @property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) InputBar *inputBar;
@@ -347,12 +346,15 @@
     self.sendButton.adjustsImageWhenHighlighted = NO;
     self.sendButton.adjustBackgroundImageWhenHighlighted = YES;
     self.sendButton.cas_styleClass = @"send-button";
+    self.sendButton.hitAreaPadding = CGSizeMake(30, 30);
 
     [self.inputBar.rightAccessoryView addSubview:self.sendButton];
     CGFloat edgeLength = 28;
     [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
     CGFloat rightInset = ([WAZUIMagic cgFloatForIdentifier:@"content.left_margin"] - edgeLength) / 2;
-    [self.sendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(14, 0, 0, rightInset - 16) excludingEdge:ALEdgeBottom];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)createEphemeralIndicatorButton
@@ -383,7 +385,7 @@
 
     [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
     [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:14];
+    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
     [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
@@ -532,14 +534,7 @@
 
 - (void)updateInputBarVisibility
 {
-    if (self.conversation.isReadOnly && self.inputBar.superview != nil) {
-        [self.inputBar removeFromSuperview];
-        self.collapseViewConstraint = [self.view autoSetDimension:ALDimensionHeight toSize:0];
-    } else if (! self.conversation.isReadOnly && self.inputBar.superview == nil) {
-        [self.view removeConstraint:self.collapseViewConstraint];
-        [self.view addSubview:self.inputBar];
-        [self.inputBar autoPinEdgesToSuperviewEdges];
-    }
+    self.view.hidden = self.conversation.isReadOnly;
 }
 
 #pragma mark - Input views handling

@@ -22,7 +22,7 @@
 
 @class SplitViewController;
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, SplitViewControllerLayoutSize) {
     SplitViewControllerLayoutSizeCompact,
@@ -45,24 +45,26 @@ FOUNDATION_EXPORT NSString *SplitLayoutObservableDidChangeToLayoutSizeNotificati
 
 
 @interface UIViewController (SplitViewController)
-@property (nonatomic, readonly) SplitViewController *wr_splitViewController;
+@property (nonatomic, readonly, nullable) SplitViewController *wr_splitViewController;
 @end
 
 
 
 @interface SplitViewController : UIViewController <SplitLayoutObservable>
-@property (nonatomic) UIViewController *leftViewController;
-@property (nonatomic) UIViewController *rightViewController;
+@property (nonatomic, nullable) UIViewController *leftViewController;
+@property (nonatomic, nullable) UIViewController *rightViewController;
 
 @property (nonatomic, getter=isLeftViewControllerExpanded) BOOL leftViewControllerExpanded;
 @property (nonatomic, getter=isLeftViewControllerRevealed) BOOL leftViewControllerRevealed;
 
-@property (nonatomic, weak) id<SplitViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<SplitViewControllerDelegate> delegate;
 
-- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated completion:(void (^)())completion;
-- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated expanded:(BOOL)expanded completion:(void (^)())completion;
-- (void)setRightViewController:(UIViewController *)rightViewController animated:(BOOL)animated completion:(void (^)())completion;
-- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerIsExpanded animated:(BOOL)animated completion:(void (^)())completion;
-- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed animated:(BOOL)animated completion:(void (^)())completion;
+- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated expanded:(BOOL)expanded completion:(nullable dispatch_block_t)completion;
+- (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerIsExpanded animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

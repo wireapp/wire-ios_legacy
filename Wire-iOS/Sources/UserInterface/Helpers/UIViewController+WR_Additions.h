@@ -24,4 +24,5 @@
 /// Returns true if the view controller is presented inside a popover
 - (BOOL)wr_isInsidePopoverPresentation;
 
+- (BOOL)wr_isVisible;
 @end

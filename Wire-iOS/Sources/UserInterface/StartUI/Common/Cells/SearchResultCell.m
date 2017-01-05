@@ -27,13 +27,12 @@
 #import <ZMCDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
-@interface SearchResultCell () <ZMCommonContactsSearchDelegate>
+@interface SearchResultCell ()
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
 @property (nonatomic, strong) UIImageView *conversationImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIView *avatarContainer;
-@property (nonatomic, strong) UIButton *hideButton;
 @property (nonatomic, strong) IconButton *instantConnectButton;
 
 @property (nonatomic, strong) UIView *avatarOverlay;
@@ -48,7 +47,6 @@
 @property (nonatomic, strong) NSLayoutConstraint *subtitleRightMarginConstraint;
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
-@property (nonatomic, weak)   id<ZMCommonContactsSearchToken> recentSearchToken;
 
 @end
 
@@ -86,15 +84,6 @@
     if (self) {
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
-        @weakify(self);
-        self.overscrollAction = ^(SwipeMenuCollectionCell *cell) {
-            @strongify(self);
-            if (self.hideSelectedAction != nil) {
-                self.hideSelectedAction(self);
-            }
-            [self.hideButton setTitle:[NSLocalizedString(@"peoplepicker.hide_search_result_progress", @"") uppercaseString] forState:UIControlStateNormal];
-        };
-
         self.gesturesView = [[UIView alloc] initForAutoLayout];
         self.gesturesView.backgroundColor = [UIColor clearColor];
         [self.swipeView addSubview:self.gesturesView];
@@ -122,15 +111,6 @@
         doubleTapper.numberOfTouchesRequired = 1;
         doubleTapper.delaysTouchesBegan = YES;
         [self.gesturesView addGestureRecognizer:doubleTapper];
-
-        self.hideButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.hideButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.hideButton addTarget:self action:@selector(hideSearchResult:) forControlEvents:UIControlEventTouchUpInside];
-        [self.hideButton setTitle:[NSLocalizedString(@"peoplepicker.hide_search_result", @"") uppercaseString] forState:UIControlStateNormal];
-        self.hideButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
-        [self.hideButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.hideButton.backgroundColor = [UIColor clearColor];
-        [self.menuView addSubview:self.hideButton];
         
         self.instantConnectButton = [[IconButton alloc] initForAutoLayout];
         self.instantConnectButton.borderWidth = 0;
@@ -172,14 +152,6 @@
         [self.contentView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
         [self.gesturesView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-
-        [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
-        [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
-            [self.hideButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:nameAvatarMargin];
-        }];
-        [self.hideButton autoSetDimension:ALDimensionWidth toSize:64 relation:NSLayoutRelationGreaterThanOrEqual];
 
         [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel];
         [self.subtitleLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
@@ -256,7 +228,6 @@
         [self.successCheckmark removeFromSuperview];
         self.successCheckmark = nil;
         self.contentView.alpha = 1.0f;
-        [self.hideButton setTitle:[NSLocalizedString(@"peoplepicker.hide_search_result", @"") uppercaseString] forState:UIControlStateNormal];
     }];
 }
 
@@ -353,13 +324,6 @@
     }
 }
 
-- (void)hideSearchResult:(UIButton *)sender
-{
-    if (self.hideSelectedAction != nil) {
-        self.hideSelectedAction(self);
-    }
-}
-
 - (void)instantConnect:(UIButton *)button
 {
     if (self.instantConnectAction != nil) {
@@ -421,7 +385,7 @@
 
 - (BOOL)canOpenDrawer
 {
-    return ! self.user.isConnected && self.canBeHidden;
+    return NO;
 }
 
 - (void)updateSubtitleForCommonConnections:(NSUInteger)connections
@@ -445,34 +409,25 @@
     [subtitle beginEditing];
 
     NSAttributedString *handle;
-    if (nil != self.user.handle) {
+    if (nil != self.user.handle && self.user.handle.length > 0) {
         NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.class.subtitleColor };
         NSString *displayHandle = [NSString stringWithFormat:@"@%@", self.user.handle];
         handle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
         [subtitle appendAttributedString:handle];
     }
 
-    NSString *addresBookName = BareUserToUser(self.user).contact.name;
+    NSString *addresBookName = BareUserToUser(self.user).addressBookEntry.cachedName;
     NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName];
     if (nil != correlation) {
         if (nil != handle) {
-            NSDictionary *dashAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
-            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" - " attributes: dashAttributes]];
+            NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
+            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" · " attributes:delimiterAttributes]];
         }
         [subtitle appendAttributedString:correlation];
     }
 
     [subtitle endEditing];
     return subtitle.length != 0 ? subtitle : nil;
-}
-
-#pragma mark - ZMCommonContactsSearchDelegate
-
-- (void)didReceiveCommonContactsUsers:(NSOrderedSet *)users forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
-{
-    if (searchToken == self.recentSearchToken && ! [self.user isConnected]) {
-        [self updateSubtitleForCommonConnections:users.count];
-    }
 }
 
 @end

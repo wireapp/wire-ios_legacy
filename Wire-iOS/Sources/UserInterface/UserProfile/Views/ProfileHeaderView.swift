@@ -74,14 +74,14 @@ final class ProfileHeaderView: UIView {
         let topMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_top_margin")
         let horizontalMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_left_margin")
 
-        constrain(self, detailView) { view, detailView in
+        constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> () in
             detailView.top == view.top + topMargin
             detailView.leading == view.leading + horizontalMargin + 32
             detailView.trailing == view.trailing - (horizontalMargin + 32)
             detailView.bottom == view.bottom - 12
         }
 
-        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { view, dismiss, verified, title in
+        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { (view: LayoutProxy, dismiss: LayoutProxy, verified: LayoutProxy, title: LayoutProxy) -> () in
             dismiss.top == view.top + 24
             dismiss.width == dismiss.height
             dismiss.width == 32
@@ -99,7 +99,8 @@ final class ProfileHeaderView: UIView {
         }
     }
 
-    private func configure(with model: ProfileHeaderViewModel) {
+    @objc(configureWithViewModel:)
+    public func configure(with model: ProfileHeaderViewModel) {
         detailView.configure(with: model.userDetailViewModel)
     }
 

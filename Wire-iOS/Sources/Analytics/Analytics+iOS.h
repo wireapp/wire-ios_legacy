@@ -21,9 +21,10 @@
 #import "Analytics.h"
 
 
-
+extern NSString * _Nonnull const ZMConsoleAnalyticsArgumentKey;
 @interface Analytics (iOS)
 
++ (void)setConsoleAnayltics:(BOOL)shouldUseConsoleAnalytics;
 + (instancetype __nullable)shared;
 
 @end

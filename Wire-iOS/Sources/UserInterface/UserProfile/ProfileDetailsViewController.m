@@ -375,8 +375,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)presentMenuSheetController
 {
-    ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:self.conversation.displayName layout:ActionSheetControllerLayoutList style:[ActionSheetController defaultStyle]];
-    [actionSheetController addActionsForConversation:self.conversation];
+    ActionSheetController *actionSheetController = [ActionSheetController dialogForConversationDetails:self.conversation style:ActionSheetController.defaultStyle];
     [self presentViewController:actionSheetController animated:YES completion:nil];
 }
 
@@ -495,19 +494,23 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.bareUser connectWithMessageText:message completionHandler:nil];
         } completionHandler:^{
-            if (self.context == ProfileViewControllerContextGroupConversation) {
-                [[Analytics shared] tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:AnalyticsConnectionRequestMethodParticipants connectRequestCount:1]];
-            }
-            else if (self.context == ProfileViewControllerContextSearch) {
-                [[Analytics shared] tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:AnalyticsConnectionRequestMethodUserSearch connectRequestCount:1]];
-            }
-            else {
-                [[Analytics shared] tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:AnalyticsConnectionRequestMethodUnknown connectRequestCount:1]];
-            }
-            
+            AnalyticsConnectionRequestMethod method = [self connectionRequestMethodForContext:self.context];
+            [Analytics.shared tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:method connectRequestCount:self.bareUser.totalCommonConnections]];
             [Analytics shared].sessionSummary.connectRequestsSent++;
         }];
     }];
+}
+
+- (AnalyticsConnectionRequestMethod)connectionRequestMethodForContext:(ProfileViewControllerContext)context
+{
+    switch (context) {
+        case ProfileViewControllerContextGroupConversation:
+            return AnalyticsConnectionRequestMethodParticipants;
+        case ProfileViewControllerContextSearch:
+            return AnalyticsConnectionRequestMethodUserSearch;
+        default:
+            return AnalyticsConnectionRequestMethodUnknown;
+    }
 }
 
 - (void)openOneToOneConversation

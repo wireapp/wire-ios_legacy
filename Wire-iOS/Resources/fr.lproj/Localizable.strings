@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Chercher par nom ou par email";
+"peoplepicker.search_placeholder" = "Rechercher par nom ou par identifiant";
 "peoplepicker.header.top_people" = "Personnes favorites";
 "peoplepicker.button.create_conversation" = "Créer un groupe";
 "peoplepicker.button.add_to_conversation" = "Ajouter";
@@ -63,7 +63,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cherchez par nom";
 "contacts_ui.invite_others" = "Invitez d’autres personnes";
-"contacts_ui.name_in_contacts" = "%@ dans le carnet d’adresses";
+"contacts_ui.name_in_contacts" = "%@ dans les contacts";
 "contacts_ui.connection_request" = "A demandé à se connecter";
 "contacts_ui.action_button.invite" = "Inviter";
 "contacts_ui.action_button.open" = "Ouvrir";
@@ -76,7 +76,12 @@
 "contacts_ui.no_contact.message" = "Appuyer sur contacts pour démarrer une nouvelle conversation";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contacts";
+"bottom_bar.contacts_button.title" = "personnes";
+
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "dans les contacts";
+
 
 // Archived List
 "archived_list.title" = "archive";
@@ -92,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Masquage…";
 
 "send_invitation.subject" = "Connectez-vous avec moi sur Wire";
-"send_invitation.text" = "Je suis sur Wire. Cherchez %@\nou visitez https://get.wire.com afin de vous connecter avec moi.";
+"send_invitation.text" = "Je suis sur Wire, recherchez %@ ou visitez wire.com/download.";
 "send_invitation_no_email.text" = "Je suis sur Wire. Visitez https://get.wire.com afin de vous connecter avec moi.";
 
 "send_personal_invitation.text" = "Je suis sur Wire, rejoignez-moi là. https://get.wire.com";
@@ -142,6 +147,8 @@
 "conversation.call.many_participants_confirmation.title" = "Démarrer un appel";
 "conversation.call.many_participants_confirmation.message" = "Cela appellera %d personnes";
 "conversation.call.many_participants_confirmation.call" = "Appel";
+
+"conversation.connection_view.in_address_book" = "dans les contacts";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -249,6 +256,7 @@
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
 "content.message.forward" = "Faire suivre";
+"content.message.go_to_conversation" = "Afficher dans la conversation";
 "content.message.forward.to" = "Envoyer à ...";
 
 "content.reactions_list.likers" = "Aimé par";
@@ -434,13 +442,17 @@
 // Settings - Account details
 "self.settings.account_section" = "Compte";
 
-"self.settings.account_details_group.title" = "Informations";
+"self.settings.account_details_group.info.title" = "Informations";
+"self.settings.account_details_group.personal.title" = "Confidentiel";
 
 "self.settings.account_section.name.title" = "Nom";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Téléphone";
+"self.settings.account_section.handle.title" = "Nom d'utilisateur";
+"self.settings.account_section.add_handle.title" = "Ajouter un nom d'utilisateur";
 
-"self.settings.account_details_group.footer" = "Des personnes peuvent vous trouver avec ces informations.";
+"self.settings.account_details_group.info.footer" = "Des personnes peuvent vous trouver avec ces informations.";
+"self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
 
 "self.settings.account_details.remove_device.title" = "Enlever l'appareil";
 "self.settings.account_details.key_fingerprint.title" = "Empreinte";
@@ -466,6 +478,15 @@
 "self.settings.account_details.delete_account.alert.title" = "Supprimer le compte";
 "self.settings.account_details.delete_account.alert.message" = "Nous allons vous envoyer un email ou un SMS. Cliquez sur le lien pour supprimer définitivement votre compte.";
 
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Nom d'utilisateur";
+"self.settings.account_section.handle.change.save" = "Enregistrer";
+"self.settings.account_section.handle.change.footer" = "Au moins 2 caractères. a — z, 0 — 9 et _ seulement.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Déjà pris";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Impossible d'enregistrer le nom d'utilisateur";
+"self.settings.account_section.handle.change.failure_alert.message" = "Une erreur s'est produite lors de l'enregistrement de votre nom d'utilisateur. Veuillez réessayer.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
@@ -554,6 +575,7 @@
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Rapport d'appel Wire";
 "self.settings.technical_report.include_log" = "Inclure le rapport détaillé";
+"self.settings.technical_report.privacy_warning" = "Des rapports détaillés pourraient contenir des données personnelles";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Réinitialiser votre mot de passe";
@@ -681,6 +703,14 @@
 "error.email.invalid" = "Veuillez entrer une adresse email valide";
 "error.phone.invalid" = "Veuillez entrer un numéro de téléphone valide";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.title" = "Les noms sont ici.";
+"registration.select_handle.takeover.subtitle" = "Réclamer votre nom unique sur Wire.";
+"registration.select_handle.takeover.subtitle_link" = "En savoir plus ";
+
+"registration.select_handle.takeover.choose_own" = "Choisissez le vôtre";
+"registration.select_handle.takeover.keep_suggested" = "Garder celle-là";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
@@ -745,3 +775,11 @@
 "invite_banner.title" = "Amenez vos amis sur Wire !";
 "invite_banner.message" = "Profitez d'appels, de messages, de croquis, de GIFs et plus en privé ou avec des groupes.";
 "invite_banner.invite_button_title" = "Invitez plus de personnes";
+
+// Collections
+"collections.section.images.title" = "Photos";
+"collections.section.files.title" = "Fichiers";
+"collections.section.videos.title" = "Vidéos";
+"collections.section.links.title" = "Liens";
+"collections.section.all.button" = "Tous %d →";
+"collections.section.no_items" = "Aucun élément dans la bibliothèque";

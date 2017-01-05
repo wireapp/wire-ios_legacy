@@ -227,14 +227,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchDirectory removeSearchResultObserver:self];
     [self.searchDirectory tearDown];
     self.searchDirectory = nil;
-    
-    ZMSearchDirectory *newDirectory = [[self.searchDirectoryClass alloc] initWithUserSession:[ZMUserSession sharedSession]
-                                                                    maxTopConversationsCount:24];
-    self.searchDirectory = newDirectory;
+
+    self.searchDirectory = [[self.searchDirectoryClass alloc] initWithUserSession:ZMUserSession.sharedSession];
     
     [self.searchDirectory addSearchResultObserver:self];
     
-    self.topPeopleLineSection.searchDirectory = self.searchDirectory;
+    self.topPeopleLineSection.topConversationDirectory = ZMUserSession.sharedSession.topConversationsDirectory;
     self.usersInDirectorySection.searchDirectory = self.searchDirectory;
     self.usersInContactsSection.searchDirectory = self.searchDirectory;
     self.groupConversationsSection.searchDirectory = self.searchDirectory;
@@ -400,11 +398,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)performSearch
 {
-    NSLog(@"Search for %@", self.peopleInputController.plainTextContent);
+    NSString *searchString = self.peopleInputController.plainTextContent;
+    DDLogInfo(@"Search for %@", searchString);
     [self.startUIView hideEmptyResutsView];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performSearch) object:nil];
-    
-    if (self.peopleInputController.plainTextContent.length == 0) {
+
+    if (searchString.length == 0) {
         if (self.selection.selectedUsers.count == 0) {
             self.mode = StartUIModeInitial;
             [self doInitialSearch];
@@ -412,15 +411,17 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         else {
             self.mode = StartUIModeUsersSelected;
             [self executeSearch:^{
-                return [self.searchDirectory searchForLocalUsersAndConversationsMatchingQueryString:self.peopleInputController.plainTextContent];
+                return [self.searchDirectory searchForLocalUsersAndConversationsMatchingQueryString:searchString];
             } withType:StartUISearchTypeContactsAndConverastions];
         }
     }
     else {
         self.mode = StartUIModeSearch;
+        BOOL leadingAt = [[searchString substringToIndex:1] isEqualToString:@"@"];
+        [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
         // invoke directory search with the new text    
         [self executeSearch:^{
-            return [self.searchDirectory searchForUsersAndConversationsMatchingQueryString:self.peopleInputController.plainTextContent];        
+            return [self.searchDirectory searchForUsersAndConversationsMatchingQueryString:searchString];
         } withType:StartUISearchTypeContactsAndConverastions];
     }
 }
@@ -497,7 +498,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self presentAddressBookUploadDialogue];
 }
 
-- (void)presentProfileViewControllerForUser:(id<ZMBareUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
+- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.peopleInputController.tokenField resignFirstResponder];
 
@@ -635,12 +636,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         }
     }
     
-    if ([cell isKindOfClass:[SearchResultCell class]]) {
-        SearchResultCell *searchResultCell = (SearchResultCell *)cell;
-        
-        searchResultCell.canBeHidden = (self.mode == StartUIModeInitial);
-    }
-    
     if ([self.selection.selectedUsers containsObject:user]) {
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
@@ -656,6 +651,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)collectionViewSectionController:(id<CollectionViewSectionController>)controller didSelectItem:(id)modelObject atIndexPath:(NSIndexPath *)indexPath
 {
+    if ([modelObject conformsToProtocol:@protocol(AnalyticsConnectionStateProvider)]) {
+        [Analytics.shared tagSelectedSearchResultWithConnectionStateProvider:(id<AnalyticsConnectionStateProvider>)modelObject
+                                                                     context:SearchContextStartUI];
+    }
+
     if ([modelObject isKindOfClass:[ZMConversation class]]) {
         ZMConversation *conversation = modelObject;
         ZMUser *user = conversation.firstActiveParticipantOtherThanSelf;
@@ -674,9 +674,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             }
         }
         
-    } else if ([modelObject conformsToProtocol:@protocol(ZMBareUser)]) {
-        id<ZMBareUser> bareUser = modelObject;
-        ZMUser *user = BareUserToUser(bareUser);
+    } else if ([modelObject conformsToProtocol:@protocol(ZMSearchableUser)]) {
+        id<ZMSearchableUser> searchableUser = modelObject;
+        ZMUser *user = BareUserToUser(searchableUser);
             
         BOOL isAlreadySelectedUser = [self.selection.selectedUsers containsObject:user];
         
@@ -687,7 +687,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             [self.selection addUserToSelectedResults:user];
         }
         else {
-            [self presentProfileViewControllerForUser:bareUser atIndexPath:indexPath];
+            [self presentProfileViewControllerForUser:searchableUser atIndexPath:indexPath];
             [self.startUIView.collectionView deselectItemAtIndexPath:indexPath animated:NO];
         }
     }
@@ -745,8 +745,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if ([modelObject isKindOfClass:[ZMSearchUser class]]) {
 
-        id<ZMBareUser> bareUser = modelObject;
-        ZMUser *user = BareUserToUser(bareUser);
+        id<ZMSearchableUser> searchableUser = modelObject;
+        ZMUser *user = BareUserToUser(searchableUser);
 
         if (user.isConnected && ! user.isBlocked) {
 
@@ -759,7 +759,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             }
         }
         else {
-            [self presentProfileViewControllerForUser:bareUser atIndexPath:indexPath];
+            [self presentProfileViewControllerForUser:searchableUser atIndexPath:indexPath];
 
             if (IS_IPHONE && self.peopleInputController.tokenField.isFirstResponder) {
                 self.peopleInputController.retainSelectedState = YES;

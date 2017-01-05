@@ -56,9 +56,10 @@ NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
+NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCollections";
+
 
 NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
-NSString * const UserDefaultEnableUserNamesUI = @"EnableUserNamesUI";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -116,7 +117,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue,
              UserDefaultSendV3Assets,
-             UserDefaultEnableUserNamesUI
+             UserDefaultEnableBatchCollections,
              ];
 }
 
@@ -456,14 +457,14 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
     [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
 }
 
-- (BOOL)enableUserNamesUI
+- (BOOL)enableBatchCollections
 {
-    return [self.defaults boolForKey:UserDefaultEnableUserNamesUI];
+    return [self.defaults boolForKey:UserDefaultEnableBatchCollections];
 }
 
-- (void)setEnableUserNamesUI:(BOOL)enableUserNamesUI
+- (void)setEnableBatchCollections:(BOOL)enableBatchCollections
 {
-    [self.defaults setBool:enableUserNamesUI forKey:UserDefaultEnableUserNamesUI];
+    [self.defaults setBool:enableBatchCollections forKey:UserDefaultEnableBatchCollections];
 }
 
 #pragma mark - Link opening options

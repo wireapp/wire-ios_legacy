@@ -61,7 +61,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
 
         self.userClientToken = userClient.addObserver(self)
         if userClient.fingerprint == .none {
-            ZMUserSession.shared().enqueueChanges({ () -> Void in
+            ZMUserSession.shared()?.enqueueChanges({ () -> Void in
                 userClient.markForFetchingPreKeys()
             })
         }
@@ -135,7 +135,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func onVerifiedChanged(_ sender: UISwitch!) {
-        let selfClient = ZMUserSession.shared().selfUserClient()
+        let selfClient = ZMUserSession.shared()!.selfUserClient()
         if(sender.isOn) {
             selfClient?.trustClient(self.userClient)
         } else {
@@ -155,7 +155,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if self.userClient == ZMUserSession.shared().selfUserClient() {
+        if self.userClient == ZMUserSession.shared()!.selfUserClient() {
             return 2
         }
         else {
@@ -170,7 +170,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .info:
             return 1
         case .fingerprintAndVerify:
-            if self.userClient == ZMUserSession.shared().selfUserClient()  {
+            if self.userClient == ZMUserSession.shared()?.selfUserClient()  {
                 return 1
             }
             else {
@@ -261,7 +261,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
             
         case .removeDevice:
             if let credentials = self.credentials {
-                ZMUserSession.shared().delete([self.userClient], with: credentials)
+                ZMUserSession.shared()?.delete([self.userClient], with: credentials)
                 if let navigationController = self.navigationController {
                     navigationController.popViewController(animated: true)
                 }
@@ -272,7 +272,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                     case .left(let passwordString):
                         let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress, password: passwordString)
                         self.credentials = newCredentials
-                        ZMUserSession.shared().delete([self.userClient], with: newCredentials)
+                        ZMUserSession.shared()?.delete([self.userClient], with: newCredentials)
                         if let navigationController = self.navigationController {
                             navigationController.popViewController(animated: true)
                         }

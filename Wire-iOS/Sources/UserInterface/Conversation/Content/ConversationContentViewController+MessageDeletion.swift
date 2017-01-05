@@ -56,7 +56,7 @@ extension ConversationContentViewController {
             if case .delete(let type) = action {
                 self?.trackDelete(message, deletionType:type)
 
-                ZMUserSession.shared().enqueueChanges {
+                ZMUserSession.shared()?.enqueueChanges {
                     switch type {
                     case .local:
                         ZMMessage.hideMessage(message)

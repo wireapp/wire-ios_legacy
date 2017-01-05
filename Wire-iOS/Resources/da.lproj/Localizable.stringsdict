@@ -187,5 +187,21 @@
                 <string>nye enheder</string>
             </dict>
         </dict>
+        <key>conversation.connection_view.common_connections</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_connections@ i fælles</string>
+            <key>d_number_connections</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>person</string>
+                <key>other</key>
+                <string>mennesker</string>
+            </dict>
+        </dict>
 	</dict>
 </plist>

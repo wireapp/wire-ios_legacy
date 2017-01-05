@@ -126,6 +126,19 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.enteringForeground = YES;
     [self loadAppropriateController];
     self.enteringForeground = NO;
+
+    [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
+        if (isLoggedIn) {
+            [self uploadAddressBookIfNeeded];
+        }
+    }];
+}
+
+- (void)uploadAddressBookIfNeeded
+{
+    BOOL addressBookDidBecomeGranted = [AddressBookHelper.sharedHelper accessStatusDidChangeToGranted];
+    [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:!addressBookDidBecomeGranted];
+    [AddressBookHelper.sharedHelper persistCurrentAccessStatus];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
