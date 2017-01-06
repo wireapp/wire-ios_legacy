@@ -193,7 +193,7 @@ extension ShareViewController {
                         self.sendAsImage(conversation: conversation, attachment: attachment, group: group, newSendable: newSendable)
                     }
                     else if !hasImageAttachment && attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                        self.sendAsURL(conversation: conversation, attachment: attachment, group: group, newSendable: newSendable)
+                        self.sendAsURL(additionalText: text, conversation: conversation, attachment: attachment, group: group, newSendable: newSendable)
                         shouldSendText = false
                     }
                     else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
@@ -278,7 +278,7 @@ extension ShareViewController {
     }
     
     /// Appends a URL message, and invokes the callback when the message is available
-    fileprivate func sendAsURL(conversation: Conversation, attachment: NSItemProvider, group: DispatchGroup, newSendable: @escaping (Sendable?)->()) {
+    fileprivate func sendAsURL(additionalText: String, conversation: Conversation, attachment: NSItemProvider, group: DispatchGroup, newSendable: @escaping (Sendable?)->()) {
         group.enter()
         attachment.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, urlCompletionHandler: { (url, error) in
 
@@ -289,10 +289,11 @@ extension ShareViewController {
                     group.leave()
                     return
             }
+            let text = additionalText + (additionalText.isEmpty ? "" : "\n") + url.absoluteString
             
             DispatchQueue.main.async {
                 sharingSession.enqueue {
-                    if let message = conversation.appendTextMessage(url.absoluteString) {
+                    if let message = conversation.appendTextMessage(text) {
                         newSendable(message)
                     }
                     group.leave()
