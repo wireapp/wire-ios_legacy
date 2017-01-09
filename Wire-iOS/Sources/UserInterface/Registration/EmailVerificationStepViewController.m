@@ -109,7 +109,7 @@
     [attributedText addAttributes:@{NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"]}
                             range:[instructions rangeOfString:self.emailAddress]];
     
-    return attributedText;
+    return [[NSAttributedString alloc] initWithAttributedString:attributedText];
 }
 
 - (void)createResendInstructions

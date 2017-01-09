@@ -28,7 +28,7 @@ extension UserClient {
         let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes,
             boldAttributes:boldAttributes)
         identifierString.append(attributedRemoteIdentifier!)
-        return identifierString
+        return NSAttributedString(attributedString: identifierString)
     }
     
     public func localizedDeviceClass() -> String? {

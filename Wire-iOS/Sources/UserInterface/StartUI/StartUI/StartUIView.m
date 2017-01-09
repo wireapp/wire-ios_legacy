@@ -220,7 +220,7 @@
         [string appendAttributedString:messageString];
     }
     
-    self.emptyResultView.messageTextView.attributedText = string;
+    self.emptyResultView.messageTextView.attributedText = [[NSAttributedString alloc] initWithAttributedString:string];
     
     [self setEmptyResultsActionView:self.sendInviteActionView visible:self.emptyResultsShowInviteAction];
     [self setEmptyResultsActionView:self.shareContactsActionView visible:self.emptyResultsShowShareContactsAction];

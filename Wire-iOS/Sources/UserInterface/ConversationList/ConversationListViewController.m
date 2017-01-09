@@ -268,7 +268,7 @@
                         attributes:textAttributes];
     
     self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
-    self.noConversationLabel.attributedText = [attributedString copy];
+    self.noConversationLabel.attributedText = [[NSAttributedString alloc] initWithString:attributedString];
     self.noConversationLabel.numberOfLines = 0;
     [self.contentContainer addSubview:self.noConversationLabel];
 }

@@ -95,7 +95,7 @@
     [attributedText addAttributes:@{ NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_medium"] } range:[text rangeOfString:title]];
     [attributedText addAttributes:@{ NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"] } range:[text rangeOfString:paragraph]];
     
-    return attributedText;
+    return [[NSAttributedString alloc] initWithAttributedString:attributedText];
 }
 
 #pragma mark - Actions

@@ -122,7 +122,7 @@
                                                                                        attributes:textAttributes];
 
     [attributedText addAttributes:linkAttributes range:learnMoreLinkRange];
-    return attributedText;
+    return [[NSAttributedString alloc] initWithAttributedString:attributedText];
 }
 
 @end

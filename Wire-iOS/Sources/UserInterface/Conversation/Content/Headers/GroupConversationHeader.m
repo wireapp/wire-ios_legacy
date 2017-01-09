@@ -138,7 +138,7 @@
     NSMutableDictionary *explanationAttributes = [self.explanationTextAttributes mutableCopy];
     [explanationAttributes setObject:[NSURL URLWithString:NSLocalizedString(@"conversation.invite_more_people.explanation_url", nil)] forKey:NSLinkAttributeName];
     
-    return attributedString;
+    return [[NSAttributedString alloc] initWithAttributedString:attributedString];
 }
 
 #pragma mark - UITextViewDelegate
