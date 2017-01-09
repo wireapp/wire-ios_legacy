@@ -23,68 +23,76 @@ import Cartography
 
 public extension ConversationViewController {
     
-    func barButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, imageEdgeInsets: UIEdgeInsets = .zero) -> UIBarButtonItem {
+    func barButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, width: CGFloat = 30, imageEdgeInsets: UIEdgeInsets = .zero) -> IconButton {
         let button = IconButton.iconButtonDefault()
         button.setIcon(type, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        button.frame = CGRect(x: 0, y: 0, width: width, height: 20)
         button.addTarget(target, action: action, for: .touchUpInside)
         button.accessibilityIdentifier = accessibilityIdentifier
         button.imageEdgeInsets = imageEdgeInsets
-        return UIBarButtonItem(customView: button)
+        return button
     }
     
-    var audioCallBarButtonItem: UIBarButtonItem {
+    var audioCallBarButtonItem: IconButton {
         let button = barButtonItem(withType: .callAudio,
                                    target: self,
                                    action: #selector(ConversationViewController.voiceCallItemTapped(_:)),
                                    accessibilityIdentifier: "audioCallBarButton",
+                                   width: 38,
                                    imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -16))
         return button
     }
     
-    var videoCallBarButtonItem: UIBarButtonItem {
+    var videoCallBarButtonItem: IconButton {
         let button = barButtonItem(withType: .callVideo,
                                    target: self,
                                    action: #selector(ConversationViewController.videoCallItemTapped(_:)),
                                    accessibilityIdentifier: "videoCallBarButton",
+                                   width: 30,
                                    imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -16))
         return button
     }
     
-    var backBarButtonItem: UIBarButtonItem {
+    var backBarButtonItem: IconButton {
         let leftButtonIcon: ZetaIconType = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? .backArrow : .hamburger
         
         return barButtonItem(withType: leftButtonIcon,
                              target: self,
                              action: #selector(ConversationViewController.onBackButtonPressed(_:)),
                              accessibilityIdentifier: "ConversationBackButton",
+                             width: 38,
                              imageEdgeInsets: UIEdgeInsetsMake(0, -16, 0, 0))
     }
     
-    var collectionsBarButtonItem: UIBarButtonItem {
+    var collectionsBarButtonItem: IconButton {
         return barButtonItem(withType: .library,
                              target: self,
                              action: #selector(ConversationViewController.onCollectionButtonPressed(_:)),
                              accessibilityIdentifier: "collection",
-                             imageEdgeInsets: UIEdgeInsetsMake(0, -16, 0, 0))
+                             width: 30,
+                             imageEdgeInsets: UIEdgeInsetsMake(0, -8, 0, 0))
     }
     
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly else { return [] }
         if conversation.conversationType == .oneOnOne {
-            return [audioCallBarButtonItem, videoCallBarButtonItem]
+            return [UIBarButtonItem(customView: audioCallBarButtonItem), UIBarButtonItem(customView: videoCallBarButtonItem)]
         }
 
-        return [audioCallBarButtonItem]
+        return [UIBarButtonItem(customView: audioCallBarButtonItem)]
     }
     
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
         
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
-            items.append(backBarButtonItem)
+            let backButton = backBarButtonItem
+            backButton.hitAreaPadding = CGSize(width: 28, height: 20)
+            items.append(UIBarButtonItem(customView: backButton))
         }
-        items.append(collectionsBarButtonItem)
+        let collectionsButton = collectionsBarButtonItem
+        collectionsButton.hitAreaPadding = CGSize(width: 0, height: 20)
+        items.append(UIBarButtonItem(customView: collectionsButton))
         return items
     }
     
