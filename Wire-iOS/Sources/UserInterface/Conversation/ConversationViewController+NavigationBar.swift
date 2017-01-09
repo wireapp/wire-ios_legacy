@@ -49,7 +49,7 @@ public extension ConversationViewController {
                                    action: #selector(ConversationViewController.videoCallItemTapped(_:)),
                                    accessibilityIdentifier: "videoCallBarButton",
                                    width: 30,
-                                   imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -16))
+                                   imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -8))
         return button
     }
     
