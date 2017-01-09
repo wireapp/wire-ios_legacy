@@ -190,6 +190,9 @@
 		1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */; };
 		39260D2402C36A8DE422A998 /* libPods-Wire-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C88A846215D617F8CCFBEB80 /* libPods-Wire-iOS.a */; };
 		5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5407B8C21A643CCE009090C6 /* UIKit.framework */; };
+		543E0C641E2394F4000E2161 /* ConversationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */; };
+		543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */; };
+		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
 		54BB91DE1E1FA5070039E91F /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
@@ -1174,6 +1177,9 @@
 		2729F031D6F030693AF9AEB5 /* Pods-Wire-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		34FC4EA42010986A36883210 /* Pods-Wire-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5407B8C21A643CCE009090C6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationSelectionViewController.swift; sourceTree = "<group>"; };
+		543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingProgressViewController.swift; sourceTree = "<group>"; };
+		543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSignedInViewController.swift; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperOptionsController.swift; sourceTree = "<group>"; };
 		54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
@@ -2446,6 +2452,9 @@
 			children = (
 				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
 				168A16AB1D9597C2005CFA6C /* ShareViewController.swift */,
+				543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */,
+				543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */,
+				543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */,
 				165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */,
 				165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */,
 				168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */,
@@ -5313,7 +5322,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */,
+				543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */,
 				168A16AC1D9597C2005CFA6C /* ShareViewController.swift in Sources */,
+				543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */,
+				543E0C641E2394F4000E2161 /* ConversationSelectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
