@@ -26,7 +26,7 @@
 #import "ConversationInputBarViewController+Files.h"
 #import "Analytics+Events.h"
 #import "UIAlertView+Zeta.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
 #import "CameraViewController.h"

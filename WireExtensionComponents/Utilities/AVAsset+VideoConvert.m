@@ -18,6 +18,8 @@
 
 
 #import "AVAsset+VideoConvert.h"
+#import "weakify.h"
+@import ZMCSystem;
 
 @implementation AVAsset (VideoConvert)
 
@@ -35,7 +37,7 @@
         NSError *deleteError = nil;
         [[NSFileManager defaultManager] removeItemAtURL:url error:&deleteError];
         if (nil != deleteError) {
-            DDLogError(@"Cannot delete file: %@ (%@)", url, deleteError);
+            ZMLogError(@"Cannot delete file: %@ (%@)", url, deleteError);
         }
         
     }
@@ -52,7 +54,7 @@
         NSError *deleteError = nil;
         [[NSFileManager defaultManager] removeItemAtURL:outputURL error:&deleteError];
         if (nil != deleteError) {
-            DDLogError(@"Cannot delete old leftover at %@: %@", outputURL, deleteError);
+            ZMLogError(@"Cannot delete old leftover at %@: %@", outputURL, deleteError);
         }
     }
     
@@ -64,7 +66,7 @@
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
         @strongify(exportSession);
         if (exportSession.error) {
-            DDLogError(@"Export session error: status=%ld error=%@ output=%@", (long)exportSession.status, exportSession.error, outputURL);
+            ZMLogError(@"Export session error: status=%ld error=%@ output=%@", (long)exportSession.status, exportSession.error, outputURL);
         }
         
         if (completion) {

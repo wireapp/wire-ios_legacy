@@ -20,7 +20,7 @@
 #import <PureLayout/PureLayout.h>
 
 #import "AudioHeaderView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "WAZUIMagicIOS.h"
 
 

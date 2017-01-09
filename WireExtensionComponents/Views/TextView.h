@@ -18,8 +18,7 @@
 
 
 @import UIKit;
-#import "NSString+TextTransform.h"
-
+#import "TextTransform.h"
 
 @protocol TextViewProtocol;
 

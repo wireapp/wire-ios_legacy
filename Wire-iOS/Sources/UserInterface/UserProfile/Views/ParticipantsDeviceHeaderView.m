@@ -24,6 +24,7 @@
 #import "NSURL+WireURLs.h"
 #import "WireExtensionComponents.h"
 
+@import Classy;
 
 @interface ParticipantDeviceHeaderView () <UITextViewDelegate>
 @property (strong, nonatomic) UITextView *textView;

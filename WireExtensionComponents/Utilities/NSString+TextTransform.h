@@ -17,24 +17,16 @@
 // 
 
 
+@import Foundation;
+#import "TextTransform.h"
 
-/* String for 'To:' label in view with recipients bubles */
-"sharing-ext.toLabelText" = "To:";
+extern NSDictionary * TextTransformTable(void);
 
-/* Placeholder text for user message */
-"sharing-ext.message.placeholder" = "Type a message";
 
-/* Name of first user (%1$@) + number of others more (%2$d) */
-"sharing-ext.recipients-field.collapsed" = "%1$@ & %2$d more";
 
-/* Number of photos (%1$d) that user is goint to send */
-"sharing-ext.number-of-photos" = "%1$d Photos";
+@interface NSString (TextTransform)
 
-/* Title for alert on login error */
-"sharing-ext.login.error.title" = "Error";
+- (NSString *)transformStringWithTransform:(TextTransform)transform;
++ (TextTransform)textTransformFromString:(NSString *)string;
 
-/* Default message for login error */
-"sharing-ext.login.error.message" = "Please sign in to Wire first";
-
-/* Close action of error alert */
-"sharing-ext.close" = "Close";
+@end

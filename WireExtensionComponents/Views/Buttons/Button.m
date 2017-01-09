@@ -24,10 +24,10 @@
 
 #import "UIControl+Wire.h"
 #import "UIImage+ImageUtilities.h"
+#import "NSString+TextTransform.h"
 
-#import <QuartzCore/QuartzCore.h>
-#import <Foundation/Foundation.h>
-#import <Classy/Classy.h>
+@import QuartzCore;
+@import Classy;
 
 
 @interface Button ()

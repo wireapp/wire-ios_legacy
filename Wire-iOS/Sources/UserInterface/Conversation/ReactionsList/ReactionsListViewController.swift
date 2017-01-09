@@ -19,6 +19,7 @@
 import Foundation
 import zmessaging
 import Cartography
+import Classy
 
 @objc open class ReactionsListViewController: UIViewController {
     open let message: ZMConversationMessage

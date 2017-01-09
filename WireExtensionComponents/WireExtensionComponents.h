@@ -60,17 +60,13 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Utils
 #import <WireExtensionComponents/UIImage+ImageUtilities.h>
-#import <WireExtensionComponents/NSString+TextTransform.h>
-#import <WireExtensionComponents/UILabel+TextTransform.h>
 #import <WireExtensionComponents/UIColor+Mixing.h>
 #import <WireExtensionComponents/UIControl+Wire.h>
 #import <WireExtensionComponents/FileManager.h>
-#import <WireExtensionComponents/CASStyler+Variables.h>
 #import <WireExtensionComponents/ColorScheme.h>
 #import <WireExtensionComponents/SharedAnalytics.h>
 #import <WireExtensionComponents/SharedAnalyticsEvent.h>
 #import <WireExtensionComponents/ColorScheme.h>
-#import <WireExtensionComponents/UITextView+TextTransform.h>
 #import <WireExtensionComponents/NSDate+WRFormat.h>
 #import <WireExtensionComponents/Geometry.h>
 #import <WireExtensionComponents/KeyValueObserver.h>
@@ -79,3 +75,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/metamacros.h>
 #import <WireExtensionComponents/weakify.h>
 #import <WireExtensionComponents/NSLayoutConstraint+Helpers.h>
+#import <WireExtensionComponents/TextTransform.h>
+#import <WireExtensionComponents/NSString+TextTransform.h>
+#import <WireExtensionComponents/AVAsset+VideoConvert.h>

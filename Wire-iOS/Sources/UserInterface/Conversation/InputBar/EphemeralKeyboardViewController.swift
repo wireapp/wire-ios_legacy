@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-
+import Classy
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)

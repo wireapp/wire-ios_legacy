@@ -4,6 +4,8 @@
 <dict>
 	<key>AppIdentifierPrefix</key>
 	<string>${AppIdentifierPrefix}</string>
+	<key>ApplicationGroupIdentifier</key>
+	<string>group.${WIRE_BUNDLE_ID}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -20,23 +22,16 @@
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${WIRE_SHORT_VERSION}</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
+	<key>HostBundleIdentifier</key>
+	<string>$(WIRE_BUNDLE_ID)</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<dict>
-				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
-				<integer>8</integer>
-				<key>NSExtensionActivationSupportsText</key>
-				<true/>
-				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>1</integer>
-			</dict>
+			<string>TRUEPREDICATE</string>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
@@ -44,6 +39,6 @@
 		<string>com.apple.share-services</string>
 	</dict>
 	<key>WireGroupId</key>
-	<string>$(WIRE_BUNDLE_ID)</string>
+	<string>${WIRE_BUNDLE_ID}</string>
 </dict>
 </plist>

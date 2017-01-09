@@ -20,7 +20,7 @@
 #import "ListItemRightAccessoryView.h"
 #import <PureLayout/PureLayout.h>
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
 #import "WAZUIMagicIOS.h"
 #import "AppDelegate.h"

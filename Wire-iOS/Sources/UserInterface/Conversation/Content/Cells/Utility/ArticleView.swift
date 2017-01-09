@@ -22,6 +22,7 @@ import Cartography
 import ZMCLinkPreview
 import TTTAttributedLabel
 import WireExtensionComponents
+import Classy
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)

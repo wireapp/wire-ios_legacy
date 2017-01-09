@@ -18,6 +18,7 @@
 
 import Cartography
 @testable import Wire
+import Classy
 
 class InputBarEditViewTests: ZMSnapshotTestCase {
 

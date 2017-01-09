@@ -22,7 +22,7 @@
 
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "BrowserViewController.h"
 #import "MediaPreviewData.h"
 #import "MediaThumbnail.h"

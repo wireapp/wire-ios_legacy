@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import Classy
 
 @objc public final class TwoLineTitleView: UIView {
     

@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import CocoaLumberjackSwift
+import Classy
 
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?

@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import Classy
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     public func wrapInTableView() -> UITableView {

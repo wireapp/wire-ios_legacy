@@ -21,6 +21,7 @@ import CocoaLumberjackSwift
 import Foundation
 import UIKit
 import Cartography
+import Classy
 
 enum ClientSection: Int {
     case info = 0

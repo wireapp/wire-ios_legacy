@@ -57,21 +57,29 @@ class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
                 self.valueLabel.text = string
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = nil
+                self.imagePreview.isAccessibilityElement = false
 
             case .image(let image):
                 self.valueLabel.text = ""
                 self.imagePreview.image = image
                 self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = "image"
+                self.imagePreview.isAccessibilityElement = true
                 
             case .color(let color):
                 self.valueLabel.text = ""
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = color
+                self.imagePreview.accessibilityValue = "color"
+                self.imagePreview.isAccessibilityElement = true
                 
             case .none:
                 self.valueLabel.text = ""
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = nil
+                self.imagePreview.isAccessibilityElement = false
             }
         }
     }
@@ -111,11 +119,13 @@ class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setup()
+        self.setupAccessibiltyElements()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
+        self.setupAccessibiltyElements()
     }
     
     func setup() {
@@ -167,6 +177,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
         self.imagePreview.clipsToBounds = true
         self.imagePreview.layer.cornerRadius = 12
         self.imagePreview.contentMode = .scaleAspectFill
+        self.imagePreview.accessibilityIdentifier = "imagePreview"
         self.contentView.addSubview(self.imagePreview)
         
         constrain(self.contentView, self.imagePreview) { contentView, imagePreview in
@@ -175,7 +186,12 @@ class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
             imagePreview.trailing == contentView.trailing - 16
             imagePreview.centerY == contentView.centerY
         }
-        
+    }
+    
+    func setupAccessibiltyElements() {
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
+        self.accessibilityElements = currentElements
     }
     
     func updateBackgroundColor() {
@@ -189,16 +205,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
 }
 
 class SettingsGroupCell: SettingsTableCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
-    }
-    
     override func setup() {
         super.setup()
         self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -275,6 +281,14 @@ class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
             textInput.bottom == contentView.bottom + 8
             textInput.trailing == trailingBoundaryView.trailing - 16
         }
+    }
+    
+    override func setupAccessibiltyElements() {
+        super.setupAccessibiltyElements()
+        
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.append(contentsOf: [textInput])
+        self.accessibilityElements = currentElements
     }
     
     // MARK: - UITextFieldDelegate

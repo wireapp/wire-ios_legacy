@@ -21,7 +21,7 @@
 #import "ConversationListViewController+StartUI.h"
 
 #import <PureLayout/PureLayout.h>
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "Settings.h"
 #import "UIScrollView+Zeta.h"

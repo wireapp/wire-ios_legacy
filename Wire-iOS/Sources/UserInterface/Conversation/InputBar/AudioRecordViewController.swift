@@ -22,6 +22,7 @@ import Foundation
 import Cartography
 import CocoaLumberjackSwift
 import MobileCoreServices
+import Classy
 
 @objc public protocol AudioRecordBaseViewController: NSObjectProtocol {
     weak var delegate: AudioRecordViewControllerDelegate? { get set }

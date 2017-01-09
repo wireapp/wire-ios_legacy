@@ -20,12 +20,13 @@
 import Foundation
 import MobileCoreServices
 import CocoaLumberjackSwift
+import ZMCDataModel
+import AVFoundation
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
-    static func metadataForFileAtURL(_ url: URL, UTI uti: String, completion: @escaping (ZMFileMetadata) -> ()) {
+    static public func metadataForFileAtURL(_ url: URL, UTI uti: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
-            
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
             
             if AVURLAsset.wr_isAudioVisualUTI(uti) {

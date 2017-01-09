@@ -24,7 +24,7 @@
 #import "ConversationListItemView.h"
 #import "ConversationListIndicator.h"
 #import "ListItemRightAccessoryView.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "Constants.h"
 #import "WAZUIMagicIOS.h"

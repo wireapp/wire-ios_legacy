@@ -18,7 +18,7 @@
 
 import Foundation
 import Cartography
-
+import Classy
 
 final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?

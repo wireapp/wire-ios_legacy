@@ -20,7 +20,7 @@
 #import "StartUIView.h"
 #import <PureLayout/PureLayout.h>
 #import "WAZUIMagicIOS.h"
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import "PeoplePickerEmptyResultsView.h"
 #import "StartUIQuickActionsBar.h"
 #import "UIView+Zeta.h"

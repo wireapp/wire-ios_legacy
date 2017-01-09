@@ -22,7 +22,7 @@ import Cartography
 import CoreLocation
 import AddressBook
 import CocoaLumberjackSwift
-
+import Classy
 
 class ClientTableViewCell: UITableViewCell {
     

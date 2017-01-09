@@ -20,7 +20,7 @@
 #import "RegistrationViewController.h"
 
 #import <PureLayout/PureLayout.h>
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 
 #import "BackgroundView.h"
 #import "zmessaging+iOS.h"

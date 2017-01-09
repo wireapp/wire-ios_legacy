@@ -23,7 +23,7 @@
 #import "avs+iOS.h"
 
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireExtensionComponents;
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 #import <PureLayout/PureLayout.h>
 
