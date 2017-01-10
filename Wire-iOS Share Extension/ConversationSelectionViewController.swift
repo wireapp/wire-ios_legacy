@@ -20,20 +20,29 @@ import Foundation
 import WireExtensionComponents
 import WireShareEngine
 
-
 class ConversationSelectionViewController : UITableViewController {
     
-    var conversations : [Conversation]
+    fileprivate var allConversations : [Conversation]
+    fileprivate var visibleConversations : [Conversation]
     
     var selectionHandler : ((_ conversation: Conversation) -> Void)?
     
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
+    
     init(conversations: [Conversation]) {
-        self.conversations = conversations
+        allConversations = conversations
+        visibleConversations = conversations
         
         super.init(style: .plain)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ConversationCell")
+        
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.searchBarStyle = .minimal
+
         preferredContentSize = UIScreen.main.bounds.size
+        definesPresentationContext = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,7 +51,10 @@ class ConversationSelectionViewController : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.searchResultsUpdater = self
+        tableView.tableHeaderView = searchController.searchBar
         
+        tableView.backgroundColor = .clear
         view.backgroundColor = .clear
     }
     
@@ -51,11 +63,11 @@ class ConversationSelectionViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversations.count
+        return visibleConversations.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let conversation = conversations[indexPath.row]
+        let conversation = visibleConversations[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath)
         
         cell.textLabel?.text = conversation.name
@@ -65,9 +77,22 @@ class ConversationSelectionViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectionHandler =  selectionHandler {
-            selectionHandler(conversations[indexPath.row])
+        if let selectionHandler = selectionHandler {
+            selectionHandler(visibleConversations[indexPath.row])
         }
     }
-    
+}
+
+extension ConversationSelectionViewController : UISearchResultsUpdating {
+    internal func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchText)
+            visibleConversations = allConversations.filter { conversation in
+                predicate.evaluate(with: conversation)
+            }
+        } else {
+            visibleConversations = allConversations
+        }
+        tableView.reloadData()
+    }
 }
