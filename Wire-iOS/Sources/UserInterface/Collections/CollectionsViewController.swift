@@ -316,7 +316,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return self.elements(for: section)[indexPath.row]
     }
     
-    fileprivate var girdElementSize: CGSize {
+    fileprivate var gridElementSize: CGSize {
         let sectionHorizontalInset = self.contentView.collectionViewLayout.sectionInset.left + self.contentView.collectionViewLayout.sectionInset.right
 
         let size = (self.contentView.collectionView.bounds.size.width - sectionHorizontalInset) / CGFloat(self.elementsPerLine)
@@ -372,8 +372,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
             cell.delegate = self
-            cell.desiredWidth = self.girdElementSize.width
-            cell.desiredHeight = self.girdElementSize.height
+            cell.desiredWidth = self.gridElementSize.width
+            cell.desiredHeight = self.gridElementSize.height
             return cell
         case CollectionsSectionSet.filesAndAudio:
             let message = self.message(for: indexPath)
@@ -399,8 +399,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
             cell.message = message
-            cell.desiredWidth = self.girdElementSize.width
-            cell.desiredHeight = self.girdElementSize.height
+            cell.desiredWidth = self.gridElementSize.width
+            cell.desiredHeight = self.gridElementSize.height
             cell.delegate = self
             return cell
     
