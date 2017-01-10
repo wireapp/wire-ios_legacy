@@ -156,7 +156,8 @@ class ShareViewController: SLComposeServiceViewController {
     private func selectConversation() {
         guard let sharingSession = globSharingSession else { return }
 
-        let conversationSelectionViewController = ConversationSelectionViewController(conversations: sharingSession.writeableNonArchivedConversations)
+        let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
+        let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
         
         conversationSelectionViewController.selectionHandler = { [weak self] conversation in
             self?.conversationItem?.value = conversation.name
