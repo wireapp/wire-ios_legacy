@@ -31,6 +31,12 @@ final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
         
         for attributes: UICollectionViewLayoutAttributes in oldAttributes {
             
+            guard attributes.representedElementCategory == .cell else {
+                newAttributes.append(attributes)
+
+                continue
+            }
+            
             let totalElementsInSection = self.collectionView!.numberOfItems(inSection: attributes.indexPath.section)
             let sectionHasLessElementsThanWidth = totalElementsInSection == 1
 

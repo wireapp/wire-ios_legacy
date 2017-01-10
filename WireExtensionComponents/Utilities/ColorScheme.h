@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+@import zmessaging;
 
 extern NSString * const ColorSchemeColorTextForeground;
 extern NSString * const ColorSchemeColorTextBackground;
@@ -52,6 +52,7 @@ extern NSString * const ColorSchemeColorAvatarBorder;
 extern NSString * const ColorSchemeColorLoadingDotActive;
 extern NSString * const ColorSchemeColorLoadingDotInactive;
 
+extern NSString * const ColorSchemeColorNameAccentPrefix;
 
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
@@ -75,5 +76,13 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 
 - (UIColor *)colorWithName:(NSString *)colorName;
 - (UIColor *)colorWithName:(NSString *)colorName variant:(ColorSchemeVariant)variant;
+
+- (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant;
+@end
+
+@interface UIColor (ColorScheme)
+
+/// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
++ (UIColor *)nameColorForZMAccentColor:(ZMAccentColor)accentColor variant:(ColorSchemeVariant)variant;
 
 @end

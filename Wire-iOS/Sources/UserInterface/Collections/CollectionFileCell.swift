@@ -45,21 +45,22 @@ final public class CollectionFileCell: CollectionCell {
     }
     
     func loadView() {
+        
         self.fileTransferView.delegate = self
         self.fileTransferView.layer.cornerRadius = 4
-        self.fileTransferView.cas_styleClass = "container-view"
         self.fileTransferView.clipsToBounds = true
+
+        self.contentView.cas_styleClass = "container-view"
+        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 4, 4, 4)
         
         self.contentView.addSubview(self.headerView)
-        
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 16, 4, 16)
         
         self.contentView.addSubview(self.fileTransferView)
 
         constrain(self.contentView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
             headerView.top == contentView.topMargin
-            headerView.leading == contentView.leadingMargin
-            headerView.trailing == contentView.trailingMargin
+            headerView.leading == contentView.leadingMargin + 12
+            headerView.trailing == contentView.trailingMargin - 12
             
             fileTransferView.top == headerView.bottom + 4
             

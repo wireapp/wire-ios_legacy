@@ -43,8 +43,10 @@ final public class CollectionVideoCell: CollectionCell {
     }
     
     func loadView() {
+        
         self.videoMessageView.delegate = self
         self.videoMessageView.clipsToBounds = true
+        self.videoMessageView.timeLabelHidden = true
         self.contentView.addSubview(self.videoMessageView)
         
         constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
