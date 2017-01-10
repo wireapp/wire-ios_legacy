@@ -38,7 +38,7 @@ final public class CollectionLinkCell: CollectionCell {
         
         self.contentView.addSubview(self.headerView)
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 4, 4, 4)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
         
         constrain(self.contentView, articleView, headerView) { contentView, articleView, headerView in
             
