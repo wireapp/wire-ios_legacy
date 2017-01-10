@@ -27,6 +27,8 @@ final public class CollectionLinkCell: CollectionCell {
         let articleView = ArticleView(withImagePlaceholder: textMessageData.hasImageData)
         articleView.isUserInteractionEnabled = false
         articleView.imageHeight = 0
+        articleView.messageLabel.numberOfLines = 1
+        articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         self.contentView.addSubview(articleView)
         self.contentView.cas_styleClass = "container-view"
