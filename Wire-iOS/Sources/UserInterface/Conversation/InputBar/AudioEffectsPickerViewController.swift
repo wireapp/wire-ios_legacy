@@ -174,7 +174,7 @@ import Cartography
     
     fileprivate func loadLevels() {
         let url = URL(fileURLWithPath: recordingPath)
-        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI()) { metadata in
+        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { metadata in
             DispatchQueue.main.async(execute: {
                 if let audioMetadata = metadata as? ZMAudioMetadata {
                     self.normalizedLoudness = audioMetadata.normalizedLoudness

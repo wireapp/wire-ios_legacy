@@ -25,7 +25,7 @@ import AVFoundation
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
-    static public func metadataForFileAtURL(_ url: URL, UTI uti: String, completion: @escaping (ZMFileMetadata) -> ()) {
+    static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
             
@@ -40,6 +40,7 @@ import AVFoundation
                     completion(ZMAudioMetadata(fileURL: url, duration: asset.duration.seconds, normalizedLoudness: loudness ?? []))
                 }
             } else {
+                // TODO: set the name of the file (currently there's no API, it always gets it from the URL)
                 completion(ZMFileMetadata(fileURL: url, thumbnail: thumbnail))
             }
         }

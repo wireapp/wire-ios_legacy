@@ -78,7 +78,6 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
-        super.didSelectPost()
 
         send { [weak self] (messages) in
             guard let `self` = self else { return }
@@ -216,36 +215,42 @@ extension ShareViewController {
                 self.sendAsImage(sharingSession: sharingSession, conversation: conversation, attachment: attachment, completionHandler: completeAndAppendToMessages)
             }
             else if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
+                sendingGroup.enter()
                 attachment.fetchURL { url in
-                    if let url = url, url.isFileURL == true { // remote URL, send as link
+                    if let url = url, !url.isFileURL == true { // remote URL, send as link
                         let separator = finalText.isEmpty ? "" : "\n"
                         finalText += separator + url.absoluteString
+                        sendingGroup.leave()
                     } else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
-                        sendingGroup.enter()
-                        self.sendAsFile(sharingSession: sharingSession, conversation: conversation, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                        self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, completionHandler: completeAndAppendToMessages)
                     }
                 }
             }
             else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
                 sendingGroup.enter()
-                self.sendAsFile(sharingSession: sharingSession, conversation: conversation, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: nil, attachment: attachment, completionHandler: completeAndAppendToMessages)
             }
         }
         
-        if !finalText.isEmpty {
-            sendingGroup.enter()
-            self.sendAsText(sharingSession: sharingSession, conversation: conversation, text: finalText, completionHandler: completeAndAppendToMessages)
-        }
+
         
         sendingGroup.notify(queue: .main) {
-            DispatchQueue.main.async {
-                completionHandler(messages)
+            
+            if !finalText.isEmpty {
+                sendingGroup.enter()
+                self.sendAsText(sharingSession: sharingSession, conversation: conversation, text: finalText, completionHandler: completeAndAppendToMessages)
+            }
+            
+            sendingGroup.notify(queue: .main) {
+                DispatchQueue.main.async {
+                    completionHandler(messages)
+                }
             }
         }
     }
     
     /// Appends a file message, and invokes the callback when the message is available
-    fileprivate func sendAsFile(sharingSession: SharingSession, conversation: Conversation, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
+    fileprivate func sendAsFile(sharingSession: SharingSession, conversation: Conversation, name: String?, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
         
         attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
 
@@ -267,7 +272,7 @@ extension ShareViewController {
                             return
                     }
 
-                    FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI()) { metadata -> Void in
+                    FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
                         sharingSession.enqueue {
                             if let message = conversation.appendFile(metadata) {
                                 completionHandler(message)

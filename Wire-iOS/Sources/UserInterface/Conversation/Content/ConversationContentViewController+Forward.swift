@@ -51,7 +51,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     }
     else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
         ZMUserSession.shared()?.performChanges {
-            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI()) { fileMetadata in
+            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI(), name: message.fileMessageData!.fileURL.lastPathComponent) { fileMetadata in
                 forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata) }
             }
         }
