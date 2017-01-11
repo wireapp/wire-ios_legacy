@@ -67,6 +67,8 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
+        super.didSelectPost()
+
         send { [weak self] (messages) in
             self?.presentSendingProgress(forMessages: messages)
         }
@@ -90,12 +92,6 @@ class ShareViewController: SLComposeServiceViewController {
             }
         }
     }
-    
-//    /// Generates the preview image
-//    override func loadPreviewView() -> UIView! {
-//        
-//        return super.loadPreviewView()
-//    }
     
     override func configurationItems() -> [Any]! {
         let conversationItem = SLComposeSheetConfigurationItem()!
