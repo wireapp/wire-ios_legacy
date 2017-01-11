@@ -1524,14 +1524,12 @@ TokenField.share {
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-text-background;
     noItemsLabel: @{
         font: $font-medium-medium;
-        textColor: lightGray;
     }
 }
 
-CollectionHeaderView {    
+CollectionHeaderView {
     titleLabel: @{
         font: $font-small-medium;
         textColor: gray;

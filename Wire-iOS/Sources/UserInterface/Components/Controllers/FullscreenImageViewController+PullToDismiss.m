@@ -65,7 +65,7 @@
             if (self.isDraggingImage) {
                 [self dismissImageFlickingWithVelocity:velocity];
             } else {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismiss];
             }
         }
         else {
@@ -174,7 +174,7 @@
                 [self.animator removeAllBehaviors];
                 self.attachmentBehavior = nil;
                 [self.imageView removeFromSuperview];
-                [self dismissViewControllerAnimated:NO completion:nil];
+                [self dismiss];
             }];
         }
     };

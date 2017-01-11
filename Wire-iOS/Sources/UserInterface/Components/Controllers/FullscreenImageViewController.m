@@ -135,6 +135,16 @@
     [self loadImageAndSetupImageView];
 }
 
+- (void)dismiss
+{
+    if (nil != self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -329,7 +339,7 @@
     if (! IS_IPAD) {
         self.forcePortraitMode = YES;
     }
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self dismiss];
 }
 
 - (void)updateZoom
@@ -422,7 +432,7 @@
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)longPressRecognizer
 {
-    if ([longPressRecognizer state] == UIGestureRecognizerStateBegan) {
+    if ([longPressRecognizer state] == UIGestureRecognizerStateRecognized) {
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(menuDidHide:)

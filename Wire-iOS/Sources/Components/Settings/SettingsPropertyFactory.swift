@@ -184,7 +184,7 @@ class SettingsPropertyFactory {
         case .analyticsOptOut:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let analytics = self.analytics {
-                    return SettingsPropertyValue.number(value: Int(analytics.isOptedOut ? 1 : 0))
+                    return .bool(value: analytics.isOptedOut)
                 }
                 else {
                     return .bool(value: false)
