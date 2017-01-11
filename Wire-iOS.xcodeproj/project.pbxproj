@@ -4945,12 +4945,12 @@
 					};
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 0800;
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -6176,8 +6176,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Wire-iOS Share Extension/Wire-iOS Share Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6201,7 +6200,6 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -6236,7 +6234,6 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -6368,7 +6365,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "${CODE_SIGN_ENTITLEMENTS_APP}";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = W5KEQBF9B5;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6387,7 +6383,6 @@
 				);
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=1000";
 				PRODUCT_NAME = Wire;
-				PROVISIONING_PROFILE = "0f4401da-079b-4f35-ae7d-9adc548cab96";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_APP)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -6404,9 +6399,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "${CODE_SIGN_ENTITLEMENTS_APP}";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				DEVELOPMENT_TEAM = EDF3JCE8BC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -6422,7 +6417,6 @@
 					"-l\"avsobjc\"",
 				);
 				PRODUCT_NAME = Wire;
-				PROVISIONING_PROFILE = "0f4401da-079b-4f35-ae7d-9adc548cab96";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_APP)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";
 				SWIFT_VERSION = 3.0;
