@@ -21,47 +21,21 @@ import WireExtensionComponents
 import WireShareEngine
 import Cartography
 
-class SendingProgressViewController : UIViewController, SendableObserver {
-    
-    var sentHandler : (() -> Void)?
+class SendingProgressViewController : UIViewController {
+
     var cancelHandler : (() -> Void)?
     
     private var progressLabel = UILabel()
     private var observers : [(Sendable, SendableObserverToken)] = []
     
-    var totalProgress : Float {
-        var totalProgress : Float = 0.0
-        
-        observers.forEach { (message, _) in
-            if message.deliveryState == .sent || message.deliveryState == .delivered {
-                totalProgress = totalProgress + 1.0 / Float(observers.count)
-            } else {
-                let messageProgress = (message.deliveryProgress ?? 0)
-                totalProgress = totalProgress +  messageProgress / Float(observers.count)
-            }
-        }
-        
-        return totalProgress
-    }
-    
-    var isAllMessagesDelivered : Bool {
-        return observers.reduce(true) { (result, observer) -> Bool in
-            return result && (observer.0.deliveryState == .sent || observer.0.deliveryState == .delivered)
+    var progress: Float = 0 {
+        didSet {
+            progressLabel.text = "\(Int(progress * 100))%"
         }
     }
     
-    init(messages: [Sendable]) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        
-        messages.forEach {message in
-            observers.append((message, (message.registerObserverToken(self))))
-        }
-    }
-    
-    deinit {
-        observers.forEach { (message, token) in
-            message.remove(token)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -93,12 +67,5 @@ class SendingProgressViewController : UIViewController, SendableObserver {
         }
         cancelHandler?()
     }
-    
-    func onDeliveryChanged() {
-        progressLabel.text = "\(Int(self.totalProgress * 100))%"
-        
-        if self.isAllMessagesDelivered {
-            sentHandler?()
-        }
-    }
+
 }
