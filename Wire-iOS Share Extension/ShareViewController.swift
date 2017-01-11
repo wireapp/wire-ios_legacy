@@ -42,6 +42,11 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let rightButtonBarItem = navigationController?.navigationBar.items?.first?.rightBarButtonItem {
+            rightButtonBarItem.action = #selector(appendPostTapped)
+        }
+        
         self.appendURLIfNeeded()
     }
     
@@ -77,7 +82,8 @@ class ShareViewController: SLComposeServiceViewController {
         return globSharingSession != nil && selectedConversation != nil
     }
 
-    override func didSelectPost() {
+    /// invoked when the user wants to post
+    func appendPostTapped() {
 
         send { [weak self] (messages) in
             guard let `self` = self else { return }
