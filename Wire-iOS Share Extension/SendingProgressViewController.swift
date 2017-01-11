@@ -72,7 +72,7 @@ class SendingProgressViewController : UIViewController, SendableObserver {
         super.viewDidLoad()
         
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(onCancelTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
         progressLabel.text = "0%";
         progressLabel.textAlignment = .center
