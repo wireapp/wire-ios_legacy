@@ -462,6 +462,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 }
                 let collectionController = CollectionsViewController(collection: self.collection, sections: section, messages: self.elements(for: section), fetchingDone: self.fetchingDone)
                 collectionController.onDismiss = self.onDismiss
+                collectionController.delegate = self.delegate
                 self.navigationController?.pushViewController(collectionController, animated: true)
             }
             return header
