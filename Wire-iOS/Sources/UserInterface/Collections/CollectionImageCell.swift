@@ -32,7 +32,7 @@ final public class CollectionImageCell: CollectionCell {
         return cache
     }
     
-    static let maxCellSize: CGFloat = 120
+    static let maxCellSize: CGFloat = 100
 
     override var message: ZMConversationMessage? {
         didSet {

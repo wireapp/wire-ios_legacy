@@ -166,7 +166,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func setupNavigationItem() {
-        self.navigationItem.titleView = TwoLineTitleView(first: "collections.title".localized.uppercased(), second: self.collection.conversation.displayName.uppercased())
+        self.navigationItem.titleView = ConversationTitleView(conversation: self.collection.conversation, interactive: false)
         
         let button = CollectionsView.closeButton()
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
