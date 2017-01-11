@@ -202,10 +202,13 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     
     internal func value() -> SettingsPropertyValue {
         let value : AnyObject? = self.userDefaults.object(forKey: self.userDefaultsKey) as AnyObject?
-        if let numberValue : NSNumber = value as? NSNumber {
+        if let boolValue = value as? Bool {
+            return SettingsPropertyValue.propertyValue(boolValue as AnyObject?)
+        }
+        if let numberValue = value as? NSNumber {
             return SettingsPropertyValue.propertyValue(numberValue.intValue as AnyObject?)
         }
-        else if let stringValue : String = value as? String {
+        else if let stringValue = value as? String {
             return SettingsPropertyValue.propertyValue(stringValue as AnyObject?)
         }
         else {
