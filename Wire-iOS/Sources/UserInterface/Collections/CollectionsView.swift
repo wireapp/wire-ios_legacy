@@ -24,7 +24,7 @@ import Cartography
     let collectionViewLayout = CollectionViewLeftAlignedFlowLayout()
     var collectionView: UICollectionView
     let noItemsLabel = UILabel()
-    let noItemsIcon = UIImageView(image: UIImage(for: .library, fontSize: 160, color: UIColor.lightGray))
+    let noItemsIcon = UIImageView()
     
     var noItemsInLibrary: Bool = false {
         didSet {
@@ -68,6 +68,20 @@ import Cartography
         self.noItemsIcon.isHidden = true
         self.addSubview(self.noItemsIcon)
         
+        let backgroundColor: UIColor
+        if ColorScheme.default().variant == .light {
+            backgroundColor = UIColor(white:0.98, alpha:1)
+        }
+        else {
+            backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        }
+        
+        self.backgroundColor = backgroundColor
+        let placeholderColor = backgroundColor.mix(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), amount: 0.16)
+        
+        self.noItemsIcon.image = UIImage(for: .library, fontSize: 160, color: placeholderColor)
+        self.noItemsLabel.textColor = placeholderColor
+        
         self.constrainViews()
     }
     
@@ -87,7 +101,8 @@ import Cartography
     public static func backButton() -> IconButton {
         let button = IconButton.iconButtonDefault()
         button.setIcon(.backArrow, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        button.frame = CGRect(x: 0, y: 0, width: 38, height: 20)
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
         button.accessibilityIdentifier = "back"
         return button
     }

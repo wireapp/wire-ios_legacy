@@ -309,7 +309,7 @@
     [self.scrollView addGestureRecognizer:panRecognizer];
     
     [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-//    [self.longPressGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
+    [self.longPressGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
     [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
     [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
     
