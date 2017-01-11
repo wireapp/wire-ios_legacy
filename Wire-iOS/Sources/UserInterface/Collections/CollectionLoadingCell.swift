@@ -29,6 +29,7 @@ import Cartography
         self.contentView.clipsToBounds = true
         
         self.loadingView.startAnimating()
+        self.loadingView.hidesWhenStopped = false
         
         constrain(self.contentView, self.loadingView) { contentView, loadingView in
             loadingView.center == contentView.center

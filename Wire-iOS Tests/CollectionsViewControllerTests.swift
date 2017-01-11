@@ -1,52 +1,44 @@
 //
-//  CollectionsViewControllerTests.swift
-//  Wire-iOS
+// Wire
+// Copyright (C) 2017 Wire Swiss GmbH
 //
-//  Created by Vytis ⚪️ on 2017-01-11.
-//  Copyright © 2017 Zeta Project Germany GmbH. All rights reserved.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
 import XCTest
 import Cartography
 @testable import Wire
 
-class MockCollection: NSObject, ZMCollection {
-    func tearDown() { }
-    
-    func assets(for category: ZMCDataModel.CategoryMatch) -> [ZMMessage] {
-        return []
-    }
-
-    let fetchingDone = true
-}
-
 class CollectionsViewControllerTests: ZMSnapshotTestCase {
+    
+    var emptyCollection: AssetCollectionWrapper!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+        let conversation = MockConversation() as Any as! ZMConversation
+        let assetCollection = MockCollection.empty
+        let delegate = AssetCollectionMulticastDelegate()
+        emptyCollection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
     }
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
-        let conversation = MockConversation() as Any as! ZMConversation
-        let assetCollection = MockCollection()
-        let delegate = AssetCollectionMulticastDelegate()
-        let collection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
-        
-        let controller = CollectionsViewController(collection: collection, fetchingDone: true)
+        let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: true)
         verifyInAllIPhoneSizes(view: controller.view)
     }
-}
-
-private extension UIViewController {
-    func prepareForSnapshot() -> UIView {
-        beginAppearanceTransition(true, animated: false)
-        endAppearanceTransition()
-        return view
+    
+    func testThatLoadingIsShownWhenFetching() {
+        let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: false)
+        verifyInAllIPhoneSizes(view: controller.view)
     }
 }
