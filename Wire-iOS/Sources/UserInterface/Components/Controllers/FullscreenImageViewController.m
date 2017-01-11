@@ -313,12 +313,10 @@
     [self.scrollView addGestureRecognizer:panRecognizer];
     
     [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-//    [panRecognizer requireGestureRecognizerToFail:self.longPressGestureRecognizer];
     [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
     [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
     
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
-//    [self.tapGestureRecognzier requireGestureRecognizerToFail:self.longPressGestureRecognizer];
 }
 
 - (NSAttributedString *)attributedNameStringForDisplayName:(NSString *)displayName
