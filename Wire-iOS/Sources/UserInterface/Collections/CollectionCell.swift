@@ -23,9 +23,15 @@ protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)
 }
 
+protocol CollectionCellMessageChangeDelegate: class {
+    func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo)
+}
+
 open class CollectionCell: UICollectionViewCell, Reusable {
     var messageObserverToken: ZMMessageObserverOpaqueToken? = .none
     weak var delegate: CollectionCellDelegate?
+    // Cell forwards the message changes to the delegate
+    weak var messageChangeDelegate: CollectionCellMessageChangeDelegate?
     
     var message: ZMConversationMessage? = .none {
         didSet {
@@ -195,5 +201,6 @@ open class CollectionCell: UICollectionViewCell, Reusable {
 extension CollectionCell: ZMMessageObserver {
     public func messageDidChange(_ changeInfo: MessageChangeInfo!) {
         self.updateForMessage(changeInfo: changeInfo)
+        self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }
 }

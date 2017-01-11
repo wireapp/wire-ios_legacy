@@ -41,6 +41,7 @@ final public class CollectionsViewController: UIViewController {
         return self.view as! CollectionsView
     }
     fileprivate let messagePresenter = MessagePresenter()
+    fileprivate weak var selectedMessage: ZMConversationMessage? = .none
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
     fileprivate var videoMessages: [ZMConversationMessage] = []
@@ -182,11 +183,12 @@ final public class CollectionsViewController: UIViewController {
     public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {
         switch (action) {
         case .cancel:
+            self.selectedMessage = .none
             ZMUserSession.shared()?.enqueueChanges {
                 message.fileMessageData?.cancelTransfer()
             }
         case .present:
-            
+            self.selectedMessage = message
             Analytics.shared()?.tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
             
             if Message.isImageMessage(message) {
@@ -372,6 +374,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
             cell.delegate = self
+            cell.messageChangeDelegate = self
             cell.desiredWidth = self.gridElementSize.width
             cell.desiredHeight = self.gridElementSize.height
             return cell
@@ -384,6 +387,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
                 cell.desiredHeight = .none
                 cell.delegate = self
+                cell.messageChangeDelegate = self
                 return cell
             }
             else {
@@ -392,6 +396,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
                 cell.desiredHeight = .none
                 cell.delegate = self
+                cell.messageChangeDelegate = self
                 return cell
             }
         case CollectionsSectionSet.videos:
@@ -402,6 +407,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             cell.desiredWidth = self.gridElementSize.width
             cell.desiredHeight = self.gridElementSize.height
             cell.delegate = self
+            cell.messageChangeDelegate = self
             return cell
     
         case CollectionsSectionSet.links:
@@ -410,6 +416,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
             cell.message = message
             cell.delegate = self
+            cell.messageChangeDelegate = self
             cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
             cell.desiredHeight = .none
             return cell
@@ -499,5 +506,22 @@ extension CollectionsViewController: CollectionCellDelegate {
                 linkPreview.openableURL?.open()
             }
         }
+    }
+}
+
+extension CollectionsViewController: CollectionCellMessageChangeDelegate {
+    public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
+        
+        guard let message = self.selectedMessage as? ZMMessage,
+              changeInfo.message == message,
+              let fileMessageData = message.fileMessageData,
+              fileMessageData.transferState == .downloaded,
+              self.messagePresenter.waitingForFileDownload,
+              Message.isFileTransferMessage(message) || Message.isVideoMessage(message) || Message.isAudioMessage(message) else {
+            return
+        }
+        
+        self.messagePresenter.openFileMessage(message, targetView: cell)
+        
     }
 }
