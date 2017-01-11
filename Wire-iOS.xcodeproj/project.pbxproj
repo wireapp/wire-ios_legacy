@@ -4945,7 +4945,7 @@
 					};
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = EDF3JCE8BC;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 					};
 					8F42C537199244A700288E4D = {
