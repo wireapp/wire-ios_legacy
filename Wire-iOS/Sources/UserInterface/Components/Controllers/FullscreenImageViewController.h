@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showChrome:(BOOL)shouldShow;
 
 - (void)updateZoom;
+- (void)dismiss;
 
 @end
 
