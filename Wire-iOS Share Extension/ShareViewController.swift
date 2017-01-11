@@ -28,10 +28,17 @@ import Classy
 
 var globSharingSession : SharingSession? = nil
 
+/// The delay after which a progess view controller will be displayed if all messages are not yet sent.
+private let progressDisplayDelay: TimeInterval = 0.5
+
+
 class ShareViewController: SLComposeServiceViewController {
     
     var conversationItem : SLComposeSheetConfigurationItem?
     var selectedConversation : Conversation?
+
+    private var observer: SendableBatchObserver? = nil
+    private weak var progressViewController: SendingProgressViewController? = nil
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,6 +51,10 @@ class ShareViewController: SLComposeServiceViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    deinit {
+        observer = nil
     }
     
     override func presentationAnimationDidFinish() {
@@ -60,7 +71,7 @@ class ShareViewController: SLComposeServiceViewController {
             return
         }
     }
-    
+
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
         return globSharingSession != nil && selectedConversation != nil
@@ -70,10 +81,24 @@ class ShareViewController: SLComposeServiceViewController {
         super.didSelectPost()
 
         send { [weak self] (messages) in
-            self?.presentSendingProgress(forMessages: messages)
+            guard let `self` = self else { return }
+            self.observer = SendableBatchObserver(sendables: messages)
+            self.observer?.progressHandler = {
+                self.progressViewController?.progress = $0
+            }
+            
+            self.observer?.sentHandler = {
+                self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
+                guard self.observer?.allSendablesSent == false else { return }
+                self.presentSendingProgress()
+            }
         }
     }
     
+
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
     private func appendURLIfNeeded() {
         guard self.textView.text.isEmpty else { return } // do not append if the title is already there
@@ -106,18 +131,15 @@ class ShareViewController: SLComposeServiceViewController {
         return [conversationItem]
     }
     
-    private func presentSendingProgress(forMessages messages: [Sendable]) {
-        let progressViewController = SendingProgressViewController(messages: messages)
+    private func presentSendingProgress() {
+        let progressSendingViewController = SendingProgressViewController()
         
-        progressViewController.cancelHandler = { [weak self] in
+        progressSendingViewController.cancelHandler = { [weak self] in
             self?.cancel()
         }
-        
-        progressViewController.sentHandler = { [weak self] in
-            self?.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-        }
-        
-        pushConfigurationViewController(progressViewController)
+
+        progressViewController = progressSendingViewController
+        pushConfigurationViewController(progressSendingViewController)
     }
     
     private func presentNotSignedInMessage() {
