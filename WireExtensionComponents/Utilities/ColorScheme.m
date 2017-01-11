@@ -69,6 +69,9 @@ NSString * const ColorSchemeColorLoadingDotInactive = @"loading-dot-inactive";
 
 NSString * const ColorSchemeColorNameAccentPrefix = @"name-accent";
 
+NSString * const ColorSchemeColorGraphite = @"graphite";
+NSString * const ColorSchemeColorLightGraphite = @"graphite-light";
+
 /// Generates the key name for the accent color that can be used to display the username.
 static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
 
@@ -246,7 +249,9 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorAudioButtonOverlay: lightGraphiteAlpha24,
                                    ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:white],
                                    ColorSchemeColorLoadingDotActive: graphiteAlpha40,
-                                   ColorSchemeColorLoadingDotInactive: graphiteAlpha16}];
+                                   ColorSchemeColorLoadingDotInactive: graphiteAlpha16,
+                                   ColorSchemeColorGraphite: graphite,
+                                   ColorSchemeColorLightGraphite: lightGraphite}];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
         UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantLight];
@@ -285,7 +290,9 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorAudioButtonOverlay: lightGraphiteAlpha24,
                                   ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite],
                                   ColorSchemeColorLoadingDotActive: whiteAlpha40,
-                                  ColorSchemeColorLoadingDotInactive: whiteAlpha16}];
+                                  ColorSchemeColorLoadingDotInactive: whiteAlpha16,
+                                  ColorSchemeColorGraphite: graphite,
+                                  ColorSchemeColorLightGraphite: lightGraphite}];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
         UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantDark];

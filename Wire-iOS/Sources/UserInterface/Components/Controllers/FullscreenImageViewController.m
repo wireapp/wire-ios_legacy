@@ -135,13 +135,16 @@
     [self loadImageAndSetupImageView];
 }
 
-- (void)dismiss
+- (void)dismissWithCompletion:(dispatch_block_t)completion
 {
     if (nil != self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
+        if (completion) {
+            completion();
+        }
     }
     else {
-        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:completion];
     }
 }
 
@@ -257,6 +260,7 @@
 {
     self.topOverlay = [[UIView alloc] init];
     self.topOverlay.translatesAutoresizingMaskIntoConstraints = NO;
+    self.topOverlay.hidden = (self.navigationController != nil);
     [self.view addSubview:self.topOverlay];
 
     // Close button
@@ -282,7 +286,7 @@
 - (void)showChrome:(BOOL)shouldShow
 {
     self.isShowingChrome = shouldShow;
-    self.topOverlay.hidden = !shouldShow;
+    self.topOverlay.hidden = self.navigationController != nil || !shouldShow;
 }
 
 - (void)setupGestureRecognizers
@@ -309,12 +313,12 @@
     [self.scrollView addGestureRecognizer:panRecognizer];
     
     [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-    [self.longPressGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
+//    [panRecognizer requireGestureRecognizerToFail:self.longPressGestureRecognizer];
     [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
     [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
     
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
-    [self.tapGestureRecognzier requireGestureRecognizerToFail:self.longPressGestureRecognizer];
+//    [self.tapGestureRecognzier requireGestureRecognizerToFail:self.longPressGestureRecognizer];
 }
 
 - (NSAttributedString *)attributedNameStringForDisplayName:(NSString *)displayName
@@ -339,7 +343,7 @@
     if (! IS_IPAD) {
         self.forcePortraitMode = YES;
     }
-    [self dismiss];
+    [self dismissWithCompletion:nil];
 }
 
 - (void)updateZoom
@@ -432,7 +436,7 @@
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)longPressRecognizer
 {
-    if ([longPressRecognizer state] == UIGestureRecognizerStateRecognized) {
+    if ([longPressRecognizer state] == UIGestureRecognizerStateBegan) {
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(menuDidHide:)
@@ -444,7 +448,9 @@
         [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
         [menuController setMenuVisible:YES animated:YES];
         UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
-        menuController.menuItems = @[saveItem];
+        UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward)];
+        UIMenuItem *revealInConversation = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.go_to_conversation", @"") action:@selector(revealInConversation)];
+        menuController.menuItems = @[saveItem, forwardItem, revealInConversation];
         [self setSelectedByMenu:YES animated:YES];
     }
 }
@@ -458,8 +464,11 @@
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:) || action == @selector(saveImage)) {
-        return YES && !self.message.isEphemeral;
+    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward)) {
+        return !self.message.isEphemeral;
+    }
+    else if (action == @selector(revealInConversation)) {
+        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionShowInConversation forMessage:self.message];
     }
     else if (action == @selector(paste:)) {
         return NO;
@@ -476,6 +485,20 @@
     [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
     [[Analytics shared] tagMessageCopy];
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.imageView mediaAsset]];
+}
+
+- (void)forward
+{
+    [self dismissWithCompletion:^{
+        [self.delegate wantsToPerformAction:MessageActionForward forMessage:self.message];
+    }];
+}
+
+- (void)revealInConversation
+{
+    [self dismissWithCompletion:^{
+        [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:self.message];
+    }];
 }
 
 - (void)saveImage

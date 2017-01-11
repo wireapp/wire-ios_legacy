@@ -54,6 +54,9 @@ extern NSString * const ColorSchemeColorLoadingDotInactive;
 
 extern NSString * const ColorSchemeColorNameAccentPrefix;
 
+extern NSString * const ColorSchemeColorGraphite;
+extern NSString * const ColorSchemeColorLightGraphite;
+
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
     ColorSchemeVariantDark

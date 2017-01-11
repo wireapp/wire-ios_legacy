@@ -86,6 +86,13 @@
 
 @end
 
+
+
+@interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
+
+@end
+
+
 @interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
@@ -360,7 +367,7 @@
         return;
     }
     
-    [self.messagePresenter openMessage:message targetView:cell];
+    [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
 - (void)saveImageFromCell:(ImageMessageCell *)cell
@@ -407,10 +414,10 @@
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
-- (UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message
+- (ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.messageWindow.messages indexOfObject:message] inSection:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
 
@@ -810,6 +817,34 @@
             self.onMessageShown = nil;
             self.expectedMessageToShow = nil;
         }
+    }
+}
+
+@end
+
+@implementation ConversationContentViewController (MessageActionResponder)
+
+- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    if ([Message isImageMessage:message] && action == MessageActionForward) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    switch (action) {
+        case MessageActionForward:
+        {
+            ConversationCell *cell = [self cellForMessage:message];
+            [self showForwardForMessage:message fromCell:cell];
+        }
+            break;
+            
+            default:
+            break;
     }
 }
 

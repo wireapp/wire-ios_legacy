@@ -53,7 +53,7 @@
 
 @implementation MessagePresenter
 
-- (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView
+- (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView actionResponder:(nullable id<MessageActionResponder>)delegate
 {
     self.waitingForFileDownload = NO;
     [self.modalTargetController.view.window endEditing:YES];
@@ -73,7 +73,7 @@
         }
     }
     else if ([Message isImageMessage:message]) {
-        [self openImageMessage:message];
+        [self openImageMessage:message actionResponder:delegate];
     }
 }
 
@@ -82,7 +82,8 @@
     [Message openInMaps:message.locationMessageData];
 }
 
-- (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView {
+- (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView
+{
     
     if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
         NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
@@ -115,7 +116,8 @@
     }
 }
 
-- (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview {
+- (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview
+{
     
     if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
         NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
@@ -145,7 +147,8 @@
     }
 }
 
-- (void)cleanupTemporaryFileLink {
+- (void)cleanupTemporaryFileLink
+{
     NSError *linkDeleteError = nil;
     [[NSFileManager defaultManager] removeItemAtURL:self.documentInteractionController.URL error:&linkDeleteError];
     if (linkDeleteError) {
@@ -153,7 +156,8 @@
     }
 }
 
-- (void)openImageMessage:(id<ZMConversationMessage>)message {
+- (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate
+{
     /// Don't open full screen images when there is an incoming call
     ZMVoiceChannel *activeVoiceChannel = [SessionObjectCache sharedCache].firstActiveVoiceChannel;
     if (IS_IPAD_LANDSCAPE_LAYOUT && activeVoiceChannel != nil && activeVoiceChannel.state == ZMVoiceChannelStateIncomingCall) {
@@ -176,7 +180,7 @@
         fullscreenImageViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
     fullscreenImageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
+    fullscreenImageViewController.delegate = delegate;
     [self.modalTargetController presentViewController:fullscreenImageViewController animated:YES completion:nil];
     [Analytics shared].sessionSummary.imageContentsClicks++;
 }

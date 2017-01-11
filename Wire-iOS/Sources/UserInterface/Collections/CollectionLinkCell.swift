@@ -46,7 +46,7 @@ final public class CollectionLinkCell: CollectionCell {
             headerView.leading == contentView.leadingMargin + 12
             headerView.trailing == contentView.trailingMargin - 12
             
-            articleView.top == headerView.bottom
+            articleView.top == headerView.bottom - 4
             
             articleView.left == contentView.leftMargin
             articleView.right == contentView.rightMargin

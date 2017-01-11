@@ -23,28 +23,13 @@
 #import "zmessaging+iOS.h"
 
 #import "Analytics+iOS.h"
+#import "MessageAction.h"
 
 @class ConversationCell;
 @class MessageToolboxView;
 @class AnalyticsTracker;
 @class LikeButton;
 @class LinkAttachment;
-
-
-typedef NS_ENUM(NSUInteger, MessageAction) {
-    MessageActionCancel,
-    MessageActionResend,
-    MessageActionDelete,
-    MessageActionPresent,
-    MessageActionSave,
-    MessageActionEdit,
-    MessageActionSketchDraw,
-    MessageActionSketchEmoji,
-    MessageActionSketchText,
-    MessageActionLike,
-    MessageActionForward,
-    MessageActionShowInConversation
-};
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;

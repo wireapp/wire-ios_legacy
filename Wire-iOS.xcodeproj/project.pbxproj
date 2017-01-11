@@ -1676,6 +1676,7 @@
 		8774F0C61B4AB2DD002256A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
+		8781C94E1E2687590024F3F6 /* MessageAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageAction.h; sourceTree = "<group>"; };
 		8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSelfPictureViewController.h; sourceTree = "<group>"; };
 		8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSelfPictureViewController.m; sourceTree = "<group>"; };
 		8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+NewSelfClients.h"; sourceTree = "<group>"; };
@@ -4303,6 +4304,7 @@
 		8FC85181199245760008B66B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				8781C94E1E2687590024F3F6 /* MessageAction.h */,
 				16E311C11A5FEA2B00FF2C9E /* ConversationCell.h */,
 				16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */,
 				87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */,

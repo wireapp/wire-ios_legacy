@@ -17,25 +17,31 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MessageAction.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMConversationMessage;
 @class AnalyticsTracker;
-
 @class MessagePresenter;
 
 @interface MessagePresenter : NSObject
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
+@property (nonatomic, nullable) AnalyticsTracker *analyticsTracker;
 
 /// Container of the view that hosts popover controller.
-@property (nonatomic, weak) UIViewController *targetViewController;
+@property (nonatomic, nullable, weak) UIViewController *targetViewController;
 /// Controller that would be the modal parent of message details.
-@property (nonatomic, weak) UIViewController *modalTargetController;
+@property (nonatomic, nullable, weak) UIViewController *modalTargetController;
 
 @property (nonatomic, readonly) BOOL waitingForFileDownload;
 
 /// Target view must be container in @c targetViewController's view.
-- (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView;
+/// @param delegate the receiver of action callbacks for the message. Currently only forward and reveal in conversation
+///                 actions are supported.
+- (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView actionResponder:(nullable id<MessageActionResponder>)delegate;
 - (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView;
 - (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview;
 
 @end
+
+NS_ASSUME_NONNULL_END
