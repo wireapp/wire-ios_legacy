@@ -183,7 +183,7 @@ static inline NSDataDetector *linkDataDetector(void)
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
     }
     
-    return (nil != markdownStr) ? markdownStr: attributedString;
+    return (nil != markdownStr) ? markdownStr: [[NSAttributedString alloc] initWithAttributedString:attributedString];
 }
 
 @end

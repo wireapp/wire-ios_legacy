@@ -161,7 +161,7 @@ class ArticleView: UIView {
     static var imageCache : ImageCache  = {
         let cache = ImageCache(name: "ArticleView.imageCache")
         cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = 1024 * 1024 * 10; // 10 MB
+        cache.totalCostLimit = UInt(1024 * 1024 * 10); // 10 MB
         cache.qualityOfService = .utility;
         return cache
     }()

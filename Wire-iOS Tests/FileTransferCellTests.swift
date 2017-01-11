@@ -94,7 +94,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     func testUploadedCell_fromThisDevice_bigFileSize() {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
-            $0.fileMessageData?.size = 1024 * 1024 * 25
+            $0.fileMessageData?.size = UInt64(1024 * 1024 * 25)
             $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)

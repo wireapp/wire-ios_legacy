@@ -427,7 +427,7 @@
     }
 
     [subtitle endEditing];
-    return subtitle.length != 0 ? subtitle : nil;
+    return subtitle.length != 0 ? [[NSAttributedString alloc] initWithAttributedString:subtitle] : nil;
 }
 
 @end

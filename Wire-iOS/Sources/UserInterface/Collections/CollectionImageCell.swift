@@ -26,13 +26,13 @@ final public class CollectionImageCell: CollectionCell {
     static var imageCache: ImageCache {
         let cache = ImageCache(name: "CollectionImageCell.imageCache")
         cache.maxConcurrentOperationCount = 4
-        cache.totalCostLimit = 1024 * 1024 * 20 // 20 MB
+        cache.totalCostLimit = UInt(1024 * 1024 * 20) // 20 MB
         cache.qualityOfService = .utility
     
         return cache
     }
     
-    static let maxCellSize: CGFloat = 120
+    static let maxCellSize: CGFloat = 100
 
     override var message: ZMConversationMessage? {
         didSet {
@@ -61,16 +61,15 @@ final public class CollectionImageCell: CollectionCell {
     var isHeightCalculated: Bool = false
     
     func loadView() {
-        self.backgroundColor = UIColor(white: 0, alpha: 0.08)
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.loadingView)
         constrain(self, self.imageView, self.loadingView) { selfView, imageView, loadingView in
             imageView.left == selfView.left
-            imageView.right == selfView.right - 1
+            imageView.right == selfView.right
             imageView.top == selfView.top
-            imageView.bottom == selfView.bottom - 1
+            imageView.bottom == selfView.bottom
             loadingView.center == selfView.center
         }
     }

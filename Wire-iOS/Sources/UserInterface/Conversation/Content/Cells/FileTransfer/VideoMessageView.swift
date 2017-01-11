@@ -24,6 +24,12 @@ final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     
+    public var timeLabelHidden: Bool = false {
+        didSet {
+            self.timeLabel.isHidden = timeLabelHidden
+        }
+    }
+    
     private let previewImageView = UIImageView()
     private let progressView = CircularProgressView()
     private let playButton = IconButton()
@@ -97,9 +103,9 @@ final class VideoMessageView: UIView, TransferView {
             bottomGradientView.height == 56
         }
         
-        constrain(bottomGradientView, timeLabel, previewImageView, loadingView) { bottomGradientView, sizeLabel, previewImageView, loadingView in
-            sizeLabel.right == bottomGradientView.right - 16
-            sizeLabel.centerY == bottomGradientView.centerY
+        constrain(bottomGradientView, timeLabel, previewImageView, loadingView) { bottomGradientView, timeLabel, previewImageView, loadingView in
+            timeLabel.right == bottomGradientView.right - 16
+            timeLabel.centerY == bottomGradientView.centerY
             loadingView.center == previewImageView.center
         }
     }
@@ -123,13 +129,17 @@ final class VideoMessageView: UIView, TransferView {
             updateTimeLabel(withFileMessageData: fileMessageData)
             
             if let previewData = fileMessageData.previewData {
-                visibleViews.append(contentsOf: [previewImageView, bottomGradientView, timeLabel, playButton])
+                visibleViews.append(contentsOf: [previewImageView, bottomGradientView, playButton])
                 self.previewImageView.image = UIImage(data: previewData)
                 self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
             } else {
-                visibleViews.append(contentsOf: [previewImageView, timeLabel, playButton])
+                visibleViews.append(contentsOf: [previewImageView, playButton])
                 self.previewImageView.image = nil
                 self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+            }
+            
+            if !self.timeLabelHidden {
+                visibleViews.append(timeLabel)
             }
         }
         

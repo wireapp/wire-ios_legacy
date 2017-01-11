@@ -26,25 +26,27 @@ final public class CollectionLinkCell: CollectionCell {
     func createArticleView(with textMessageData: ZMTextMessageData) {
         let articleView = ArticleView(withImagePlaceholder: textMessageData.hasImageData)
         articleView.isUserInteractionEnabled = false
-        articleView.imageHeight = 144
+        articleView.imageHeight = 0
+        articleView.messageLabel.numberOfLines = 1
+        articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         self.contentView.addSubview(articleView)
-        
+        self.contentView.cas_styleClass = "container-view"
         // Reconstraint the header
         self.headerView.removeFromSuperview()
         self.headerView.message = self.message!
         
         self.contentView.addSubview(self.headerView)
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(8, 16, 4, 16)
+        self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
         
         constrain(self.contentView, articleView, headerView) { contentView, articleView, headerView in
             
             headerView.top == contentView.topMargin
-            headerView.leading == contentView.leadingMargin
-            headerView.trailing == contentView.trailingMargin
+            headerView.leading == contentView.leadingMargin + 12
+            headerView.trailing == contentView.trailingMargin - 12
             
-            articleView.top == headerView.bottom + 4
+            articleView.top == headerView.bottom
             
             articleView.left == contentView.leftMargin
             articleView.right == contentView.rightMargin

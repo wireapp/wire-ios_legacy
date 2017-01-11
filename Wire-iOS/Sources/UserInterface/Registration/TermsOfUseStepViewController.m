@@ -93,7 +93,7 @@
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
     self.termsOfUseText.delegate = self;
-    self.termsOfUseText.attributedText = attributedTerms;
+    self.termsOfUseText.attributedText = [[NSAttributedString alloc] initWithAttributedString:attributedTerms];
     
     [self.view addSubview:self.termsOfUseText];
 }

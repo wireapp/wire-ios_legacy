@@ -777,10 +777,9 @@
 "invite_banner.invite_button_title" = "Invite more people";
 
 // Collections
-"collections.title" = "Collection";
 "collections.section.images.title" = "Pictures";
 "collections.section.files.title" = "Files";
 "collections.section.videos.title" = "Videos";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "All %d →";
+"collections.section.all.button" = "Show all %d →";
 "collections.section.no_items" = "No items in collection";

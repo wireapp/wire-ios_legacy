@@ -23,8 +23,7 @@
 #import "zmessaging+iOS.h"
 #import "CASStyler+Variables.h"
 #import "ColorScheme.h"
-
-
+@import WireExtensionComponents;
 
 static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 

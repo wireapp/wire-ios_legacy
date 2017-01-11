@@ -122,7 +122,7 @@ SYNTHESIZE_ASC_PRIMITIVE_BLOCK(textTransform, setTextTransform, TextTransform, ^
         [transformedAttributedString setAttributes:attrs range:range];
     }];
     
-    return transformedAttributedString;
+    return [[NSAttributedString alloc] initWithAttributedString:transformedAttributedString];
 }
 
 @end

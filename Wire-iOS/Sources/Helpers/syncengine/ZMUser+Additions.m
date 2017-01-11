@@ -21,7 +21,7 @@
 #import "zmessaging+iOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics+iOS.h"
-
+#import "ColorScheme.h"
 
 ZMUser *BareUserToUser(id bareUser) {
     ZMUser *user = nil;
@@ -63,6 +63,11 @@ ZMUser *BareUserToUser(id bareUser) {
 - (UIColor *)accentColor
 {
     return [UIColor colorForZMAccentColor:self.accentColorValue];
+}
+
+- (UIColor *)nameAccentColor
+{
+    return [UIColor nameColorForZMAccentColor:self.accentColorValue variant:[[ColorScheme defaultColorScheme] variant]];
 }
 
 + (instancetype)selfUser

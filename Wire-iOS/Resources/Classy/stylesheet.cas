@@ -1531,9 +1531,7 @@ CollectionsView {
     }
 }
 
-CollectionHeaderView {
-    backgroundColor: $color-placeholder-background;
-    
+CollectionHeaderView {    
     titleLabel: @{
         font: $font-small-medium;
         textColor: gray;
@@ -1541,16 +1539,15 @@ CollectionHeaderView {
 
     actionButton: @{
         titleLabel: @{
-            font: $font-small-light;
+            font: $font-small-medium;
         }
-        titleColor[state:normal]: rgb(72, 72, 72);
+        titleColor[state:normal]: $color-accent-blue;
     }
 }
 
 CollectionCellHeader {
     nameLabel: @{
-        font: $font-small-light;
-        textColor: rgb(72, 72, 72);
+        font: $font-small-medium;
     }
     
     dateLabel: @{

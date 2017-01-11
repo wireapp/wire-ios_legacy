@@ -23,17 +23,25 @@ import Cartography
     
     public var section: CollectionsSectionSet = .none {
         didSet {
+            let icon: ZetaIconType
+            
             switch(section) {
             case CollectionsSectionSet.images:
                 self.titleLabel.text = "collections.section.images.title".localized.uppercased()
+                icon = .photo
             case CollectionsSectionSet.filesAndAudio:
                 self.titleLabel.text = "collections.section.files.title".localized.uppercased()
+                icon = .document
             case CollectionsSectionSet.videos:
                 self.titleLabel.text = "collections.section.videos.title".localized.uppercased()
+                icon = .movie
             case CollectionsSectionSet.links:
                 self.titleLabel.text = "collections.section.links.title".localized.uppercased()
+                icon = .link
             default: fatal("Unknown section")
             }
+            
+            self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor(white: 1, alpha: 0.48))
         }
     }
     
@@ -41,14 +49,14 @@ import Cartography
         didSet {
             self.actionButton.isHidden = totalItemsCount == 0
             
-            let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount).uppercased()
-            
+            let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount)
             self.actionButton.setTitle(totalCountText, for: .normal)
         }
     }
     
     public let titleLabel = UILabel()
     public let actionButton = UIButton()
+    public let iconImageView = UIImageView()
     
     public var selectionAction: ((CollectionsSectionSet) -> ())? = .none
     
@@ -66,8 +74,16 @@ import Cartography
         self.actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
         self.addSubview(self.actionButton)
         
-        constrain(self, self.titleLabel, self.actionButton) { selfView, titleLabel, actionButton in
-            titleLabel.leading == selfView.leading + 16
+        self.iconImageView.contentMode = .center
+        self.addSubview(self.iconImageView)
+        
+        constrain(self, self.titleLabel, self.actionButton, self.iconImageView) { selfView, titleLabel, actionButton, iconImageView in
+            iconImageView.leading == selfView.leading + 16
+            iconImageView.centerY == selfView.centerY
+            iconImageView.width == 16
+            iconImageView.height == 16
+            
+            titleLabel.leading == iconImageView.trailing + 8
             titleLabel.centerY == selfView.centerY
             titleLabel.trailing == selfView.trailing
             

@@ -101,6 +101,9 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     }
     
     func loadContents() {
+        self.contentView.layer.masksToBounds = true
+        self.contentView.layer.cornerRadius = 4
+        
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
         
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)

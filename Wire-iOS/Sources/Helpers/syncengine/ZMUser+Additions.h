@@ -42,6 +42,7 @@ FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 @interface ZMUser (Additions)
 
 @property (nonatomic, readonly) UIColor *accentColor;
+@property (nonatomic, readonly) UIColor *nameAccentColor;
 
 /// Returns the current self user
 + (instancetype)selfUser;

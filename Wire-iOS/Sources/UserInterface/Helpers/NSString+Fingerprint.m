@@ -56,7 +56,7 @@
                               bold = !bold;
                           }];
     
-    return mutableFingerprintString;
+    return [[NSAttributedString alloc] initWithAttributedString:mutableFingerprintString];
 }
 
 @end

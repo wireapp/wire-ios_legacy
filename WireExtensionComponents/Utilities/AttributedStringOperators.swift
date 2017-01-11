@@ -28,7 +28,7 @@ public func +(left: NSAttributedString, right: NSAttributedString) -> NSAttribut
     let result = NSMutableAttributedString()
     result.append(left)
     result.append(right)
-    return result
+    return NSAttributedString(attributedString: result)
 }
 
 public func +(left: String, right: NSAttributedString) -> NSAttributedString {
@@ -39,7 +39,7 @@ public func +(left: String, right: NSAttributedString) -> NSAttributedString {
     result.append(NSAttributedString(string: left, attributes: attributes))
 
     result.append(right)
-    return result
+    return NSAttributedString(attributedString: result)
 }
 
 public func +(left: NSAttributedString, right: String) -> NSAttributedString {
@@ -49,7 +49,7 @@ public func +(left: NSAttributedString, right: String) -> NSAttributedString {
     let result = NSMutableAttributedString()
     result.append(left)
     result.append(NSAttributedString(string:right, attributes: attributes))
-    return result
+    return NSAttributedString(attributedString: result)
 }
 
 // Concats the lhs and rhs and assigns the result to the lhs
@@ -92,7 +92,7 @@ public func &&(left: NSAttributedString, right: UIFont?) -> NSAttributedString {
     guard let font = right else { return left }
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([NSFontAttributeName: font], range: NSMakeRange(0, result.length))
-    return result
+    return NSAttributedString(attributedString: result)
 }
 
 public func &&(left: String, right: UIColor) -> NSAttributedString {
@@ -103,13 +103,13 @@ public func &&(left: String, right: UIColor) -> NSAttributedString {
 public func &&(left: NSAttributedString, right: UIColor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([NSForegroundColorAttributeName: right], range: NSMakeRange(0, result.length))
-    return result
+    return NSAttributedString(attributedString: result)
 }
 
 public func &&(left: NSAttributedString, right: [String: Any]) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes(right, range: NSMakeRange(0, result.length))
-    return result
+    return NSAttributedString(attributedString: result)
 }
 
 // MARK: - Helper Functions
@@ -142,13 +142,13 @@ public extension NSAttributedString {
     public func addAttributes(_ attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.addAttributes(attributes, to: substring)
-        return mutableSelf
+        return NSAttributedString(attributedString: mutableSelf)
     }
     
     public func setAttributes(_ attributes: [String: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.setAttributes(attributes, range: (string as NSString).range(of: substring))
-        return mutableSelf
+        return NSAttributedString(attributedString: mutableSelf)
     }
 
 }

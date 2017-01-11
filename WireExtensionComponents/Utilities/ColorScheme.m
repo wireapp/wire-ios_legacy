@@ -19,6 +19,7 @@
 
 #import "ColorScheme.h"
 #import "UIColor+Mixing.h"
+#import "UIColor+WAZExtensions.h"
 
 
 NSString * const ColorSchemeColorAccent = @"accent-current";
@@ -65,6 +66,32 @@ NSString * const ColorSchemeColorAudioButtonOverlay = @"audio-button-overlay";
 
 NSString * const ColorSchemeColorLoadingDotActive = @"loading-dot-active";
 NSString * const ColorSchemeColorLoadingDotInactive = @"loading-dot-inactive";
+
+NSString * const ColorSchemeColorNameAccentPrefix = @"name-accent";
+
+/// Generates the key name for the accent color that can be used to display the username.
+static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
+
+static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color) {
+    static NSArray *colorNames = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // NB! Order of the elements and it's position should be in order with ZMAccentColor enum
+        colorNames = @[@"undefined",
+                       @"strong-blue",
+                       @"strong-lime-green",
+                       @"bright-yellow",
+                       @"vivid-red",
+                       @"bright-orange",
+                       @"soft-pink",
+                       @"violet"];
+    });
+
+    assert(color < colorNames.count);
+    
+    return [NSString stringWithFormat:@"%@-%@", ColorSchemeColorNameAccentPrefix, colorNames[color]];
+}
 
 static NSString* dark(NSString *colorString) {
     return [NSString stringWithFormat:@"%@-dark", colorString];
@@ -157,6 +184,13 @@ static NSString* light(NSString *colorString) {
     return [self.colors objectForKey:variant == ColorSchemeVariantLight ? light(colorName) : dark(colorName)];
 }
 
+- (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant
+{
+    NSString *colorName = ColorSchemeNameAccentColorForColor(color);
+    
+    return [self colorWithName:colorName variant:variant];
+}
+
 - (NSDictionary *)colorSchemeColorsWithAccentColor:(UIColor *)accentColor colorSchemeVariant:(ColorSchemeVariant)variant
 {
     UIColor *clear = [UIColor clearColor];
@@ -180,7 +214,8 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
     
-    NSDictionary *lightColors = @{ ColorSchemeColorAccent: accentColor,
+    NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
+                                @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
                                    ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:white],
                                    ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
@@ -211,9 +246,15 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorAudioButtonOverlay: lightGraphiteAlpha24,
                                    ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:white],
                                    ColorSchemeColorLoadingDotActive: graphiteAlpha40,
-                                   ColorSchemeColorLoadingDotInactive: graphiteAlpha16};
+                                   ColorSchemeColorLoadingDotInactive: graphiteAlpha16}];
     
-    NSDictionary *darkColors = @{ ColorSchemeColorAccent: accentColor,
+    for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
+        UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantLight];
+        [lightColors setObject:nameAccentColor forKey:ColorSchemeNameAccentColorForColor(color)];
+    }
+    
+    NSMutableDictionary *darkColors = [NSMutableDictionary dictionaryWithDictionary:
+                               @{ ColorSchemeColorAccent: accentColor,
                                   ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
                                   ColorSchemeColorAccentDimmedFlat: [[accentColor colorWithAlphaComponent:0.16] removeAlphaByBlendingWithColor:backgroundGraphite],
                                   ColorSchemeColorAccentDarken: [[accentColor mix:[UIColor blackColor] amount:0.1] colorWithAlphaComponent:0.32],
@@ -244,8 +285,13 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorAudioButtonOverlay: lightGraphiteAlpha24,
                                   ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite],
                                   ColorSchemeColorLoadingDotActive: whiteAlpha40,
-                                  ColorSchemeColorLoadingDotInactive: whiteAlpha16};
-    
+                                  ColorSchemeColorLoadingDotInactive: whiteAlpha16}];
+
+    for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
+        UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantDark];
+        [darkColors setObject:nameAccentColor forKey:ColorSchemeNameAccentColorForColor(color)];
+    }
+
     NSMutableDictionary *colors = [NSMutableDictionary dictionary];
     
     [lightColors enumerateKeysAndObjectsUsingBlock:^(NSString *colorKey, UIColor *color, BOOL *stop) {
@@ -277,3 +323,25 @@ static NSString* light(NSString *colorString) {
 }
 
 @end
+
+@implementation UIColor (ColorScheme)
+
+/// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
++ (UIColor *)nameColorForZMAccentColor:(ZMAccentColor)accentColor variant:(ColorSchemeVariant)variant
+{
+    // NB: the order of coefficients must match ZMAccentColor enum ordering
+    static const CGFloat accentColorNameColorBlendingCoefficientsDark[] = {0.0f, 0.8f, 0.72f, 0.72f, 0.8f, 0.8f, 1.0f};
+    static const CGFloat accentColorNameColorBlendingCoefficientsLight[] = {0.0f, 0.8f, 0.72f, 0.56f, 0.8f, 0.8f, 0.64f};
+ 
+    assert(accentColor < ZMAccentColorMax);
+    
+    const CGFloat *coefficientsArray = variant == ColorSchemeVariantDark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight;
+    const CGFloat coefficient = coefficientsArray[accentColor];
+    
+    UIColor *background = variant == ColorSchemeVariantDark ? [UIColor blackColor] : [UIColor whiteColor];
+    
+    return [background mix:[UIColor colorForZMAccentColor:accentColor] amount:coefficient];
+}
+
+@end
+

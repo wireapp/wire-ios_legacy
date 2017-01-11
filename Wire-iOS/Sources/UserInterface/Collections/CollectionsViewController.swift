@@ -166,7 +166,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func setupNavigationItem() {
-        self.navigationItem.titleView = TwoLineTitleView(first: "collections.title".localized.uppercased(), second: self.collection.conversation.displayName.uppercased())
+        self.navigationItem.titleView = ConversationTitleView(conversation: self.collection.conversation, interactive: false)
         
         let button = CollectionsView.closeButton()
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
@@ -285,7 +285,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             return min(self.fileAndAudioMessages.count, max)
             
         case CollectionsSectionSet.videos:
-            let max = self.inOverviewMode ? self.maxOverviewVideoElementsInTable : Int.max
+            let max = self.inOverviewMode ? self.maxOverviewElementsInGrid : Int.max
             return min(self.videoMessages.count, max)
             
         case CollectionsSectionSet.links:
@@ -316,18 +316,21 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return self.elements(for: section)[indexPath.row]
     }
     
-    fileprivate var girdElementSize: CGSize {
-        let size = self.contentView.collectionView.bounds.size.width / CGFloat(self.elementsPerLine)
+    fileprivate var gridElementSize: CGSize {
+        let sectionHorizontalInset = self.contentView.collectionViewLayout.sectionInset.left + self.contentView.collectionViewLayout.sectionInset.right
+
+        let size = (self.contentView.collectionView.bounds.size.width - sectionHorizontalInset) / CGFloat(self.elementsPerLine)
         
-        return CGSize(width: size, height: size)
+        return CGSize(width: size - 1, height: size - 1)
     }
     
     fileprivate var elementsPerLine: Int {
         var count: Int = 1
+        let sectionHorizontalInset = self.contentView.collectionViewLayout.sectionInset.left + self.contentView.collectionViewLayout.sectionInset.right
         
         repeat {
             count += 1
-        } while (self.contentView.collectionView.bounds.size.width / CGFloat(count) > CollectionImageCell.maxCellSize)
+        } while ((self.contentView.collectionView.bounds.size.width - sectionHorizontalInset) / CGFloat(count) > CollectionImageCell.maxCellSize)
         
         return count
     }
@@ -337,7 +340,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     fileprivate var maxOverviewElementsInTable: Int {
-        return 2
+        return 3
     }
     
     fileprivate var maxOverviewVideoElementsInTable: Int {
@@ -360,7 +363,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
-        
+        let sectionHorizontalInset = self.contentView.collectionViewLayout.sectionInset.left + self.contentView.collectionViewLayout.sectionInset.right
+
         switch(section) {
         case CollectionsSectionSet.images:
             let message = self.message(for: indexPath)
@@ -368,8 +372,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
             cell.delegate = self
-            cell.desiredWidth = self.girdElementSize.width
-            cell.desiredHeight = self.girdElementSize.height
+            cell.desiredWidth = self.gridElementSize.width
+            cell.desiredHeight = self.gridElementSize.height
             return cell
         case CollectionsSectionSet.filesAndAudio:
             let message = self.message(for: indexPath)
@@ -377,7 +381,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             if message.fileMessageData!.isAudio() {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
                 cell.message = message
-                cell.desiredWidth = collectionView.bounds.size.width
+                cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
                 cell.desiredHeight = .none
                 cell.delegate = self
                 return cell
@@ -385,7 +389,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFileCell.reuseIdentifier, for: indexPath) as! CollectionFileCell
                 cell.message = message
-                cell.desiredWidth = collectionView.bounds.size.width
+                cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
                 cell.desiredHeight = .none
                 cell.delegate = self
                 return cell
@@ -395,8 +399,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
             cell.message = message
-            cell.desiredWidth = collectionView.bounds.size.width
-            cell.desiredHeight = collectionView.bounds.size.width * (3.0 / 4.0)
+            cell.desiredWidth = self.gridElementSize.width
+            cell.desiredHeight = self.gridElementSize.height
             cell.delegate = self
             return cell
     
@@ -406,13 +410,13 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
             cell.message = message
             cell.delegate = self
-            cell.desiredWidth = collectionView.bounds.size.width
+            cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
             cell.desiredHeight = .none
             return cell
     
         case CollectionsSectionSet.loading:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLoadingCell.reuseIdentifier, for: indexPath) as! CollectionLoadingCell
-            cell.containerWidth = collectionView.bounds.size.width
+            cell.containerWidth = collectionView.bounds.size.width - sectionHorizontalInset
             cell.collapsed = self.fetchingDone
             return cell
         
@@ -428,8 +432,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         if section == CollectionsSectionSet.loading {
             return .zero
         }
-        
-        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 32) : .zero
+        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 48) : .zero
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -474,7 +477,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             return .zero
         }
         
-        return self.elements(for: section).count > 0 ? UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0) : .zero
+        return self.elements(for: section).count > 0 ? UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16) : .zero
     }
 }
 

@@ -111,7 +111,7 @@
                                      NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"] }
                             range:[text rangeOfString:paragraph]];
     
-    return attributedText;
+    return [[NSAttributedString alloc] initWithAttributedString: attributedText];
 }
 
 - (void)createEmailField

@@ -27,8 +27,9 @@ import Cartography
                 return
             }
             
-            self.nameLabel.text = sender.displayName.uppercased()
-            self.dateLabel.text = serverTimestamp.wr_formattedDate().uppercased()
+            self.nameLabel.textColor = sender.nameAccentColor
+            self.nameLabel.text = sender.displayName
+            self.dateLabel.text = serverTimestamp.wr_formattedDate()
         }
     }
     

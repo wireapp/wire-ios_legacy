@@ -319,7 +319,7 @@ extension ZMConversationMessage {
         }
         
         let changeBlock =  {
-            self.statusLabel.attributedText = attributedText
+            self.statusLabel.attributedText = NSAttributedString(attributedString: attributedText)
             self.accessibilityValue = self.statusLabel.attributedText.string
             self.statusLabel.addLinks()
         }

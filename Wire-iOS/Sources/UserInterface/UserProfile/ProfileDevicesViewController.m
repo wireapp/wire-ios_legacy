@@ -24,10 +24,10 @@
 
 #import "Analytics+iOS.h"
 #import <PureLayout/PureLayout.h>
-#import "zmessaging+iOS.h"
 #import "Wire-Swift.h"
 
-
+@import zmessaging;
+@import WireMessageStrategy;
 
 @interface ProfileDevicesViewController () <ZMUserObserver, ParticipantDeviceHeaderViewDelegate>
 

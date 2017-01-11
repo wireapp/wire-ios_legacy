@@ -201,8 +201,9 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-        ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:textMesssageData.hasImageData];
-        articleView.imageHeight = self.smallLinkAttachments ? 0 : 144;
+        BOOL showImage = !self.smallLinkAttachments && textMesssageData.hasImageData;
+        ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:showImage];
+
         if (self.smallLinkAttachments) {
             articleView.messageLabel.numberOfLines = 1;
             articleView.authorLabel.numberOfLines = 1;

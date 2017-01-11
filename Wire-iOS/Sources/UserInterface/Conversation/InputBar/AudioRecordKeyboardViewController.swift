@@ -180,7 +180,7 @@ import CocoaLumberjackSwift
         style.lineSpacing = 8
        
         attributedTipText.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
-        self.tipLabel.attributedText = attributedTipText
+        self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
         self.tipLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextDimmed)

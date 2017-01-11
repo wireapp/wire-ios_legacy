@@ -1,15 +1,15 @@
 github "wireapp/wire-ios-ziphy" ~> 6.0
-github "wireapp/TSMarkdownParser" ~> 1.0.17
-github "wireapp/Classy" "v0.2.6"
-github "wireapp/CocoaLumberjack" "2.4.0-swift3"
-github "wireapp/Cartography" "z0.6.1-swift3"
-github "wireapp/TTTAttributedLabel" "2.0.0"
-github "wireapp/ZipArchive" "1.6.1-swift3"
+github "wireapp/TSMarkdownParser" "1.0.17-swift3.0.2"
+github "wireapp/Classy" "v0.2.6-swift3.0.2"
+github "wireapp/CocoaLumberjack" "3.0.0-wire-swift3.0.2"
+github "wireapp/Cartography" "1.0.1-wire-swift3.0.2"
+github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
+github "wireapp/ZipArchive" "1.6.1-swift3.0.2"
 github "wireapp/wire-ios-share-engine" ~> 4.0
-github "wireapp/HockeySDK-iOS" "4.1.3"
+github "wireapp/HockeySDK-iOS" "4.1.3-swift3.0.2"
 github "wireapp/wire-ios-sync-engine" ~> 62.0.0
-github "wireapp/onepassword-app-extension" "framework/1.8.2"
-github "wireapp/FormatterKit" ~> 1.8.1
-github "wireapp/VIMNetworking" "v6.0.2-wire-carthage-2"
+github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
+github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
+github "wireapp/VIMNetworking" "v6.0.2-wire-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
 github "wireapp/wire-ios-canvas" ~> 2.0.0

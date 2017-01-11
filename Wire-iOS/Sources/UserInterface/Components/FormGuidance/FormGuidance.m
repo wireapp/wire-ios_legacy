@@ -152,7 +152,7 @@
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:titleColor range:titleRange];
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:explanationColor range:explanationRange];
 
-            [self setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+            [self setAttributedTitle:[[NSAttributedString alloc] initWithAttributedString:attributedTitle] forState:UIControlStateNormal];
         }
         else if (guidance.title || guidance.explanation) {
             NSString *guidanceText = guidance.title != nil ? guidance.title : guidance.explanation;
@@ -161,7 +161,7 @@
             attributedTitle = [[NSMutableAttributedString alloc] initWithString:guidanceText];
 
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:color range:range];
-            [self setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+            [self setAttributedTitle:[[NSAttributedString alloc] initWithAttributedString:attributedTitle] forState:UIControlStateNormal];
         }
 
         [self setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];

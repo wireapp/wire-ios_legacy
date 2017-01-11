@@ -93,7 +93,8 @@
     [attributedTitle addAttribute:NSFontAttributeName value:[UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"] range:titleRange];
     [attributedTitle addAttribute:NSFontAttributeName value:[UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"] range:subTitleRange];
 
-    [navBar.centerButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+    [navBar.centerButton setAttributedTitle:[[NSAttributedString alloc] initWithAttributedString:attributedTitle]
+                                                                                        forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
