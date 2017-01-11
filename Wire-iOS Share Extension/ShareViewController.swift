@@ -120,8 +120,8 @@ class ShareViewController: SLComposeServiceViewController {
         let conversationItem = SLComposeSheetConfigurationItem()!
         self.conversationItem = conversationItem
         
-        conversationItem.title = "Share to:"
-        conversationItem.value = "None"
+        conversationItem.title = "share_extension.conversation_selection.title".localized
+        conversationItem.value = "share_extension.conversation_selection.empty.value".localized
         conversationItem.tapHandler = { [weak self] in
              self?.selectConversation()
         }
