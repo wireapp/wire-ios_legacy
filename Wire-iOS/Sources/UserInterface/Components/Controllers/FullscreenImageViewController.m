@@ -440,15 +440,27 @@
                                                  selector:@selector(menuDidHide:)
                                                      name:UIMenuControllerDidHideMenuNotification object:nil];
 
-
-        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        /**
+         *  The reason why we are touching the window here is to workaround a bug where,
+         *  After dismissing the webplayer, the window would fail to become the first responder,
+         *  preventing us to show the menu at all.
+         *  We now force the window to be the key window and to be the first responder to ensure that we can
+         *  show the menu controller.
+         */
+        [self.view.window makeKeyWindow];
+        [self.view.window becomeFirstResponder];
+        
         [self.view becomeFirstResponder];
-        [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
-        [menuController setMenuVisible:YES animated:YES];
+        
+        UIMenuController *menuController = UIMenuController.sharedMenuController;
         UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
         UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward)];
         UIMenuItem *revealInConversation = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.go_to_conversation", @"") action:@selector(revealInConversation)];
         menuController.menuItems = @[saveItem, forwardItem, revealInConversation];
+        
+        [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
+        [menuController setMenuVisible:YES animated:YES];
+
         [self setSelectedByMenu:YES animated:YES];
     }
 }
