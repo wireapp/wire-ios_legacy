@@ -52,10 +52,9 @@ class ConversationSelectionViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
-        tableView.tableHeaderView = searchController.searchBar
-        
-        tableView.backgroundColor = .clear
-        view.backgroundColor = .clear
+        let searchBar = searchController.searchBar
+        searchBar.backgroundColor = .white
+        tableView.tableHeaderView = searchBar
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
