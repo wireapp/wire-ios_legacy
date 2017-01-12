@@ -295,7 +295,7 @@ extension ShareViewController {
                     return
             }
             
-            self.prepareForSending(data:data, UTIString: UTIString) { url, error in
+            self.prepareForSending(data:data, UTIString: UTIString, name: name) { url, error in
                 
                 DispatchQueue.main.async {
                     guard let url = url,
@@ -355,11 +355,16 @@ extension ShareViewController {
     }
     
     /// Process data to the right format to be sent
-    private func prepareForSending(data: Data, UTIString UTI: String, completionHandler: @escaping (URL?, Error?) -> Void) {
+    private func prepareForSending(data: Data, UTIString UTI: String, name: String?, completionHandler: @escaping (URL?, Error?) -> Void) {
         let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension as CFString)?.takeRetainedValue() as! String
 
-        let tempDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let tempFileURL = tempDirectory.appendingPathComponent("\(UUID().uuidString).\(fileExtension)")
+        let fileName = name ?? "\(UUID().uuidString).\(fileExtension)"
+        
+        let tempDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) // temp subdir
+        if !FileManager.default.fileExists(atPath: tempDirectory.absoluteString) {
+            try! FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true)
+        }
+        let tempFileURL = tempDirectory.appendingPathComponent(fileName)
 
         if FileManager.default.fileExists(atPath: tempFileURL.absoluteString) {
             try! FileManager.default.removeItem(at: tempFileURL)
