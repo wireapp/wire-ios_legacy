@@ -215,7 +215,7 @@
 "content.system.you_started" = "Você";
 "content.system.this_device" = "este dispositivo";
 
-"content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
+"content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
 "content.system.new_device" = "um novo dispositivo";
 "content.system.started_using" = "começou a usar";
