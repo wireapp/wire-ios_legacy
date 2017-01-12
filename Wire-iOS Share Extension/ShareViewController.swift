@@ -106,18 +106,12 @@ class ShareViewController: SLComposeServiceViewController {
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
     private func appendURLIfNeeded() {
-        guard self.textView.text.isEmpty else { return } // do not append if the title is already there
         self.fetchURLAttachments { (urls) in
             guard let url = urls.first else { return }
             DispatchQueue.main.async {
                 if !url.isFileURL { // remote URL (not local file)
-                    if self.textView.text.isEmpty {
-                        self.placeholder = url.host // suggest
-                    }
-                } else {
-                    if self.textView.text.isEmpty {
-                        self.placeholder = url.lastPathComponent
-                    }
+                    let separator = self.textView.text.isEmpty ? "" : "\n"
+                    self.textView.text = self.textView.text + separator + url.absoluteString
                 }
             }
         }
@@ -226,7 +220,6 @@ extension ShareViewController {
             }
         }
         
-        var finalText = text
         self.attachments.forEach { attachment in
             if attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
                 sendingGroup.enter()
@@ -236,8 +229,6 @@ extension ShareViewController {
                 sendingGroup.enter()
                 attachment.fetchURL { url in
                     if let url = url, !url.isFileURL == true { // remote URL, send as link
-                        let separator = finalText.isEmpty ? "" : "\n"
-                        finalText += separator + url.absoluteString
                         sendingGroup.leave()
                     } else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
                         self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, completionHandler: completeAndAppendToMessages)
@@ -254,9 +245,9 @@ extension ShareViewController {
         
         sendingGroup.notify(queue: .main) {
             
-            if !finalText.isEmpty {
+            if !text.isEmpty {
                 sendingGroup.enter()
-                self.sendAsText(sharingSession: sharingSession, conversation: conversation, text: finalText, completionHandler: completeAndAppendToMessages)
+                self.sendAsText(sharingSession: sharingSession, conversation: conversation, text: text, completionHandler: completeAndAppendToMessages)
             }
             
             sendingGroup.notify(queue: .main) {
