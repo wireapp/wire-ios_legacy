@@ -835,16 +835,9 @@
 
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
-    switch (action) {
-        case MessageActionForward:
-        {
-            ConversationCell *cell = [self cellForMessage:message];
-            [self showForwardForMessage:message fromCell:cell];
-        }
-            break;
-            
-            default:
-            break;
+    if (MessageActionForward == action) {
+        ConversationCell *cell = [self cellForMessage:message];
+        [self showForwardForMessage:message fromCell:cell];
     }
 }
 
