@@ -43,7 +43,8 @@ class ShareViewController: SLComposeServiceViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
-        self.appendURLIfNeeded()
+        self.appendTextToEditor()
+        self.placeholder = "share_extension.input.placeholder".localized
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -128,14 +129,16 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
-    private func appendURLIfNeeded() {
+    private func appendTextToEditor() {
         self.fetchURLAttachments { (urls) in
             guard let url = urls.first else { return }
             DispatchQueue.main.async {
                 if !url.isFileURL { // remote URL (not local file)
                     let separator = self.textView.text.isEmpty ? "" : "\n"
                     self.textView.text = self.textView.text + separator + url.absoluteString
+                    self.textView.delegate?.textViewDidChange?(self.textView)
                 }
+                
             }
         }
     }
