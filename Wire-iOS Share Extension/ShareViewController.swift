@@ -65,6 +65,11 @@ class ShareViewController: SLComposeServiceViewController {
         observer = nil
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.view.backgroundColor = .white
+    }
+    
     override func presentationAnimationDidFinish() {
         let bundle = Bundle.main
         
