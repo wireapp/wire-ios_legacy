@@ -71,7 +71,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     lazy private var lastCallSessionReports: [TechnicalReport] = {
-        let voiceChannelDebugString = ZMVoiceChannel.voiceChannelDebugInformation().string.trimmingCharacters(in: .whitespaces)
+        let voiceChannelDebugString = VoiceChannelV2.voiceChannelDebugInformation().string.trimmingCharacters(in: .whitespaces)
         let reportStrings = voiceChannelDebugString.components(separatedBy: .newlines)
         
         return reportStrings.reduce([TechnicalReport](), { (reports, report) -> [TechnicalReport] in
@@ -87,7 +87,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }()
     
     func sendReport() {
-        let report = ZMVoiceChannel.voiceChannelDebugInformation()
+        let report = VoiceChannelV2.voiceChannelDebugInformation()
         
         guard MFMailComposeViewController.canSendMail() else {
             let activityViewController = UIActivityViewController(activityItems: [report], applicationActivities: nil)

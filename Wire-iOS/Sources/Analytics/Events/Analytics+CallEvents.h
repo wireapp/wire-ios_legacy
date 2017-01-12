@@ -27,6 +27,6 @@
 - (void)tagReceivedCallInConversation:(ZMConversation *)conversation video:(BOOL)video;
 - (void)tagJoinedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall;
 - (void)tagEstablishedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall;
-- (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration reason:(ZMVoiceChannelCallEndReason)reason;
+- (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration reason:(VoiceChannelV2CallEndReason)reason;
 
 @end

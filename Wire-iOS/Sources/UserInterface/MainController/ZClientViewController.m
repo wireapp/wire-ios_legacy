@@ -43,7 +43,7 @@
 
 #import "zmessaging+iOS.h"
 #import "ZMConversation+Additions.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 
 #import "AppDelegate.h"
 #import "VoiceChannelController.h"

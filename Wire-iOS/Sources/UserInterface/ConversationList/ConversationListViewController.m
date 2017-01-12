@@ -39,7 +39,6 @@
 
 #import "ConversationListContentController.h"
 #import "ConversationListInteractiveItem.h"
-#import "TopItemsController.h"
 #import "StartUIViewController.h"
 #import "KeyboardAvoidingViewController.h"
 
@@ -94,7 +93,7 @@
 
 
 
-@interface ConversationListViewController () <TopItemsDelegate, UIGestureRecognizerDelegate>
+@interface ConversationListViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;
@@ -102,7 +101,6 @@
 @property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
 
-@property (nonatomic) TopItemsController *topItemsController;
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
@@ -186,7 +184,6 @@
     self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
     [self createNoConversationLabel];
-    [self createTopItemsController];
     [self createListContentController];
     [self createBottomBarController];
 
@@ -194,7 +191,6 @@
     if (![Settings.sharedSettings contactTipWasDisplayed]) {
         [self showTooltipView];
     }
-    [self updateTopItemsInset];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
     
     [self updateNoConversationVisibility];
@@ -304,17 +300,6 @@
     return settingsViewController;
 }
 
-- (void)createTopItemsController
-{
-    self.topItemsController = [[TopItemsController alloc] init];
-    self.topItemsController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.topItemsController.delegate = self;
-
-    [self addChildViewController:self.topItemsController];
-    [self.conversationListContainer addSubview:self.topItemsController.view];
-    [self.topItemsController didMoveToParentViewController:self];
-}
-
 - (void)createListContentController
 {
     self.listContentController = [[ConversationListContentController alloc] init];
@@ -396,7 +381,6 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
-    
     [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight];
     [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
@@ -406,26 +390,10 @@
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
     [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];
 
-    [self.topItemsController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.topItemsController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.topItemsTopOffset = [self.topItemsController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-
-    [self.listContentController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topItemsController.view];
+    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.listContentController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
     [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-}
-
-- (void)updateTopItemsInset
-{
-    self.listContentController.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.contentControllerBottomInset, 0);
-    
-    if (self.topItemsController.activeVoiceConversation == nil) {
-        self.topItemsTopOffset.constant = 0;
-    }
-    else {
-        self.topItemsTopOffset.constant = 16;
-    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -555,11 +523,7 @@
     @weakify(self);
     [self dismissPeoplePickerWithCompletionBlock:^{
         @strongify(self);
-        if ([self.selectedConversation isEqual:self.topItemsController.activeVoiceConversation]) {
-            [self.topItemsController selectActiveVoiceConversationAndFocusOnView:focus];
-        } else {
-            [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
-        }
+        [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
     }];
 }
 
@@ -572,25 +536,6 @@
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated
 {
     [self.listContentController scrollToCurrentSelectionAnimated:animated];
-}
-
-- (void)topItemsControllerPlusButtonPressed:(TopItemsController *)controller
-{
-    [self presentPeoplePickerAnimated:YES];
-}
-
-- (void)topItemsControllerDidSelectActiveVoiceConversation:(TopItemsController *)controller focusOnView:(BOOL)focus completion:(dispatch_block_t)completion
-{
-    [self.listContentController deselectAll];
-    
-    [[ZClientViewController sharedZClientViewController] loadConversation:controller.activeVoiceConversation
-                                                              focusOnView:focus
-                                                             animated:YES];
-}
-
-- (void)topItemsController:(TopItemsController *)controller activeVoiceConversationChanged:(ZMConversation *)conversation
-{
-    [self updateTopItemsInset];
 }
 
 - (void)showActionMenuForConversation:(ZMConversation *)conversation
@@ -740,12 +685,11 @@
 - (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
 {
     _selectedConversation = conversation;
-    [self.topItemsController deselectAll];
 }
 
 - (void)conversationList:(ConversationListViewController *)controller didSelectInteractiveItem:(ConversationListInteractiveItem *)interactiveItem focusOnView:(BOOL)focus
 {
-    [self.topItemsController deselectAll];
+    
 }
 
 - (void)conversationList:(ConversationListContentController *)controller willSelectIndexPathAfterSelectionDeleted:(NSIndexPath *)conv

@@ -24,27 +24,27 @@
 #import "VoiceChannelOverlay.h"
 #import "zmessaging+iOS.h"
 #import "avs+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "Analytics+iOS.h"
 #import "VoiceChannelParticipantsController.h"
 #import "VoiceChannelCollectionViewLayout.h"
 #import "Constants.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "VoiceUserImageView.h"
 #import "CameraPreviewView.h"
 #import <avs/AVSVideoView.h>
 #import "Settings.h"
 #import "Wire-Swift.h"
 
-@interface VoiceChannelOverlayController () <ZMVoiceChannelStateObserver, ZMVoiceChannelParticipantsObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, WireCallCenterVideoObserver>
+@interface VoiceChannelOverlayController () <VoiceChannelStateObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, ReceivedVideoObserver>
 
 @property (nonatomic) UIVisualEffectView *blurEffectView;
 @property (nonatomic) VoiceChannelOverlay *overlayView;
 @property (nonatomic) VoiceChannelParticipantsController *participantsController;
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-@property (nonatomic) id <ZMVoiceChannelParticipantsObserverOpaqueToken> voiceChannelParticipantsObserverToken;
-@property (nonatomic) id <NSObject> videoObserverToken;
+@property (nonatomic) id voiceChannelStateObserverToken;
+@property (nonatomic) id receivedVideoObserverToken;
 @property (nonatomic, readwrite) ZMConversation *conversation;
+@property (nonatomic) VoiceChannelV2State previousVoiceChannelState;
 @property (nonatomic) NSDate *callStartedTimestamp;
 @property (nonatomic) ZMCaptureDevice currentCaptureDevice;
 
@@ -63,20 +63,8 @@
 
 - (void)dealloc
 {
-    if (self.voiceChannelStateObserverToken != nil) {
-        [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
-    }
-    
-    if (self.voiceChannelParticipantsObserverToken != nil) {
-        [ZMVoiceChannel removeCallParticipantsObserverForToken:self.voiceChannelParticipantsObserverToken inConversation:self.conversation];
-    }
-    
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification removeObserver:self];
-    }
-    
-    if (self.videoObserverToken != nil) {
-        [WireCallCenter removeObserverWithToken:self.videoObserverToken];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -89,6 +77,7 @@
     if (self) {
         _currentCaptureDevice = ZMCaptureDeviceFront;
         _conversation = conversation;
+        _previousVoiceChannelState = VoiceChannelV2StateInvalid;
         self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
     }
     
@@ -128,16 +117,10 @@
     [self.overlayView cas_styleClass];
     
     if (self.voiceChannelStateObserverToken == nil) {
-        self.voiceChannelStateObserverToken = [ZMVoiceChannel addVoiceChannelStateObserver:self inConversation:self.conversation];
+        self.voiceChannelStateObserverToken = [self.conversation.voiceChannel addStateObserver:self];
     }
-    
-    if (self.voiceChannelParticipantsObserverToken == nil && self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-        self.voiceChannelParticipantsObserverToken = [ZMVoiceChannel addCallParticipantsObserver:self inConversation:self.conversation voiceChannel:self.conversation.voiceChannel];
-    }
-    
-    self.videoObserverToken = [WireCallCenter addVideoObserverWithObserver:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoReceiveStateUpdated:) name:FlowManagerVideoReceiveStateNotification object:nil];
+
+    self.receivedVideoObserverToken = [self.conversation.voiceChannel addReceivedVideoObserver:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -151,7 +134,7 @@
     doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:doubleTapGestureRecognizer];
     
-    [self updateVoiceChannelOverlayStateWithChangeInfo:nil];
+    [self updateVoiceChannelOverlayStateWithVoiceChannelState:self.conversation.voiceChannel.state];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -289,39 +272,39 @@
     self.videoLetterboxed = !self.videoLetterboxed;
 }
 
-- (void)updateVoiceChannelOverlayStateWithChangeInfo:(VoiceChannelStateChangeInfo *)changeInfo
+- (void)updateVoiceChannelOverlayStateWithVoiceChannelState:(VoiceChannelV2State)voiceChannelState
 {
-    ZMVoiceChannelState currentState = self.conversation.voiceChannel.state;
-    ZMVoiceChannelState previousState = changeInfo == nil ? ZMVoiceChannelStateInvalid : changeInfo.previousState;
+    VoiceChannelV2State previousState = self.previousVoiceChannelState;
+    self.previousVoiceChannelState = voiceChannelState;
     
-    VoiceChannelOverlayState state = [self viewStateForVoiceChannelState:currentState previousVoiceChannelState:previousState];
+    VoiceChannelOverlayState state = [self viewStateForVoiceChannelState:voiceChannelState previousVoiceChannelState:previousState];
     [self.overlayView transitionToState:state];
     self.overlayView.speakerActive = [[[AVSProvider shared] mediaManager] isSpeakerEnabled];
 }
 
-- (VoiceChannelOverlayState)viewStateForVoiceChannelState:(ZMVoiceChannelState)voiceChannelState previousVoiceChannelState:(ZMVoiceChannelState)previousVoiceChannelState
+- (VoiceChannelOverlayState)viewStateForVoiceChannelState:(VoiceChannelV2State)voiceChannelState previousVoiceChannelState:(VoiceChannelV2State)previousVoiceChannelState
 {
-    if (voiceChannelState == ZMVoiceChannelStateIncomingCall) {
+    if (voiceChannelState == VoiceChannelV2StateIncomingCall) {
         return VoiceChannelOverlayStateIncomingCall;
     }
     
     VoiceChannelOverlayState overlayState;
     switch (voiceChannelState) {
-        case ZMVoiceChannelStateIncomingCall:
+        case VoiceChannelV2StateIncomingCall:
             overlayState = VoiceChannelOverlayStateIncomingCall;
             break;
             
-        case ZMVoiceChannelStateIncomingCallInactive:
+        case VoiceChannelV2StateIncomingCallInactive:
             overlayState = VoiceChannelOverlayStateIncomingCallInactive;
             break;
             
-        case ZMVoiceChannelStateOutgoingCall:
-        case ZMVoiceChannelStateOutgoingCallInactive:
+        case VoiceChannelV2StateOutgoingCall:
+        case VoiceChannelV2StateOutgoingCallInactive:
             overlayState = VoiceChannelOverlayStateOutgoingCall;
             break;
             
-        case ZMVoiceChannelStateSelfIsJoiningActiveChannel:
-            if (previousVoiceChannelState == ZMVoiceChannelStateOutgoingCall || previousVoiceChannelState == ZMVoiceChannelStateOutgoingCallInactive) {
+        case VoiceChannelV2StateSelfIsJoiningActiveChannel:
+            if (previousVoiceChannelState == VoiceChannelV2StateOutgoingCall || previousVoiceChannelState == VoiceChannelV2StateOutgoingCallInactive) {
                 // Hide the media establishment phase for outgoing calls
                 overlayState = VoiceChannelOverlayStateOutgoingCall;
             } else {
@@ -329,7 +312,7 @@
             }
             break;
             
-        case ZMVoiceChannelStateSelfConnectedToActiveChannel:
+        case VoiceChannelV2StateSelfConnectedToActiveChannel:
             overlayState = VoiceChannelOverlayStateConnected;
             break;
             
@@ -337,19 +320,16 @@
             overlayState = VoiceChannelOverlayStateIncomingCall;
     }
     
-    DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromZMVoiceChannelState(voiceChannelState), (long)overlayState, StringFromVoiceChannelOverlayState(overlayState));
+    DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState), (long)overlayState, StringFromVoiceChannelOverlayState(overlayState));
     
     return overlayState;
 }
 
 - (void)leaveConnectedVoiceChannels
 {
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
-    [nonIdleConversations enumerateObjectsUsingBlock:^(ZMConversation*  _Nonnull conversation, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (conversation.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel) {
-            [conversation.voiceChannel leave];
-        }
-    }];
+    for (ZMConversation *conversation in [WireCallCenter activeCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
+        [conversation.voiceChannel leave];
+    }
 }
 
 - (void)joinCurrentVoiceChannel
@@ -414,86 +394,69 @@
     self.overlayView.videoView.shouldFill = !self.videoLetterboxed;
 }
 
-#pragma mark - WireCallCenterVideoObserver
+#pragma mark - ReceivedVideoObserver
 
-- (void)receivingVideoDidChangeWithState:(enum AVSVideoReceiveState)state
+- (void)callCenterDidChangeReceivedVideoState:(enum ReceivedVideoState)receivedVideoState
 {
-    self.incomingVideoActive = (state == AVSVideoReceiveStateStarted);
-    self.remoteIsSendingVideo = (state == AVSVideoReceiveStateStarted);
-    self.overlayView.lowBandwidth = (state == AVSVideoReceiveStateBadConnection);
+    self.incomingVideoActive = (receivedVideoState == ReceivedVideoStateStarted);
+    self.remoteIsSendingVideo = (receivedVideoState == ReceivedVideoStateStarted);
+    self.overlayView.lowBandwidth = (receivedVideoState == ReceivedVideoStateBadConnection);
     
-    DDLogVoice(@"receivingVideoDidChangeWithState: incomingVideo = %d, lowBandwidth = %d", self.incomingVideoActive, self.overlayView.lowBandwidth);
+    DDLogVoice(@"callCenterDidChangeReceivedVideoState: incomingVideo = %d, lowBandwidth = %d", self.incomingVideoActive, self.overlayView.lowBandwidth);
 }
 
-#pragma mark - AVSFlowManager Notifications
+#pragma mark - VoiceChannelV2StateObserver
 
-- (void)videoReceiveStateUpdated:(NSNotification *)note
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation
 {
-    AVSVideoStateChangeInfo* changeInfo = (AVSVideoStateChangeInfo *)note.object;
+    DDLogVoice(@"SE: Voice channel state did change to %@", StringFromVoiceChannelV2State(voiceChannelState));
     
-    self.incomingVideoActive = (changeInfo.state == FLOWMANAGER_VIDEO_RECEIVE_STARTED);
-    self.remoteIsSendingVideo = (changeInfo.state == FLOWMANAGER_VIDEO_RECEIVE_STARTED);
-    self.overlayView.lowBandwidth = (changeInfo.reason == FLOWMANAGER_VIDEO_BAD_CONNECTION);
-    DDLogVoice(@"videoReceiveStateUpdated: incomingVideo = %d, lowBandwidth = %d", self.incomingVideoActive, self.overlayView.lowBandwidth);
-}
-
-#pragma mark - ZMVoiceChannelParticipantsObserver
-
-- (void)voiceChannelParticipantsDidChange:(VoiceChannelParticipantsChangeInfo *)info
-{
-    ZMVoiceChannelParticipantState *state = [info.voiceChannel stateForParticipant:self.conversation.connectedUser];
-    
-    if (info.otherActiveVideoCallParticipantsChanged) {
-        self.remoteIsSendingVideo = state.isSendingVideo;
-    }
-}
-
-#pragma mark - ZMVoiceChannelStateObserver
-
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
-{
-    DDLogVoice(@"SE: Voice channel state did change to %@ (old %@). %@", StringFromZMVoiceChannelState(change.currentState), StringFromZMVoiceChannelState(change.previousState), change);
-    
-    if (change.currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel && self.callStartedTimestamp == nil && !self.conversation.voiceChannel.isVideoCall) {
+    if (voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel && self.callStartedTimestamp == nil && !self.conversation.voiceChannel.isVideoCall) {
         [self startCallDurationTimer];
     }
     
-    if ((change.currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel ||
-        change.currentState == ZMVoiceChannelStateIncomingCall ||
-        change.currentState == ZMVoiceChannelStateOutgoingCall)
+    if ((voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel ||
+        voiceChannelState == VoiceChannelV2StateIncomingCall ||
+        voiceChannelState == VoiceChannelV2StateOutgoingCall)
         && self.conversation.voiceChannel.isVideoCall) {
         [UIApplication sharedApplication].idleTimerDisabled = YES;
     }
     
-    if (change.currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel) {
+    if (voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel) {
         [self createParticipantsControllerIfNecessary];
     }
     
-    [self updateVoiceChannelOverlayStateWithChangeInfo:change];
+    [self updateVoiceChannelOverlayStateWithVoiceChannelState:voiceChannelState];
     
-    if (change.currentState == ZMVoiceChannelStateNoActiveUsers || change.currentState == ZMVoiceChannelStateOutgoingCall) {
+    if (voiceChannelState == VoiceChannelV2StateNoActiveUsers || voiceChannelState == VoiceChannelV2StateOutgoingCall) {
         
         BOOL otherVoiceChannelPresent = NO;
         
-        for (ZMConversation *conversation in [ZMConversationList nonIdleVoiceChannelConversationsInUserSession:[ZMUserSession sharedSession]]) {
+        for (ZMConversation *conversation in [WireCallCenter nonIdleCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
             if (! [conversation isEqual:self.conversation]) {
                 otherVoiceChannelPresent = YES;
                 break;
             }
         }
-        if (! otherVoiceChannelPresent || change.currentState == ZMVoiceChannelStateOutgoingCall) {
+        
+        if (! otherVoiceChannelPresent || voiceChannelState == VoiceChannelV2StateOutgoingCall) {
             [self resetAudioState];
         }
     }
     
-    if (change.currentState == ZMVoiceChannelStateNoActiveUsers) {
+    if (voiceChannelState == VoiceChannelV2StateNoActiveUsers) {
         [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
 }
 
-- (void)voiceChannelJoinFailedWithError:(NSError *)error
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
     DDLogVoice(@"SE: Voice channel join failed with error %@", error);
+}
+
+ - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation
+{
+    DDLogVoice(@"SE: Voice channel did close with reason %i", reason);
 }
 
 #pragma mark - AVSMediaManagerClientObserver
