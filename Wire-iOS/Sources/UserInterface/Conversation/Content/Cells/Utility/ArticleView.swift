@@ -255,9 +255,9 @@ extension LinkPreview {
     var openableURL: NSURL? {
         let application = UIApplication.shared
 
-        if let permanentURL = permanentURL , application.canOpenURL(permanentURL) {
+        if let permanentURL = permanentURL, application.canOpenURL(permanentURL) {
             return permanentURL as NSURL?
-        } else if let originalURL = NSURL(string: originalURLString) , application.canOpenURL(originalURL as URL) {
+        } else if let originalURL = NSURL(string: originalURLString), application.canOpenURL(originalURL as URL) {
             return originalURL
         }
 
