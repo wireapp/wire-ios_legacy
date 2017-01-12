@@ -40,11 +40,15 @@ import Cartography
     }
     
     var containerWidth: CGFloat = 320
-    var collapsed: Bool = false
+    var collapsed: Bool = false {
+        didSet {
+            self.loadingView.isHidden = self.collapsed
+        }
+    }
 
     override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         var newFrame = layoutAttributes.frame
-        newFrame.size.height = self.collapsed ? 0 : 64
+        newFrame.size.height = 24 + (self.collapsed ? 0 : 64)
         newFrame.size.width = self.containerWidth
         layoutAttributes.frame = newFrame
         return layoutAttributes
