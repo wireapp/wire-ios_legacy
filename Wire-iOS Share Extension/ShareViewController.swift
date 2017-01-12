@@ -335,16 +335,19 @@ extension ShareViewController {
     }
     
     /// Process data to the right format to be sent
-    private func prepareForSending(data: Data, UTIString UTI: String, completionHandler: @escaping (URL?, Error?)->Void ) {
+    private func prepareForSending(data: Data, UTIString UTI: String, completionHandler: @escaping (URL?, Error?) -> Void) {
         let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension as CFString)?.takeRetainedValue() as! String
-        let tempFileURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).\(fileExtension)")
+
+        let tempDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let tempFileURL = tempDirectory.appendingPathComponent("\(UUID().uuidString).\(fileExtension)")
+
         if FileManager.default.fileExists(atPath: tempFileURL.absoluteString) {
             try! FileManager.default.removeItem(at: tempFileURL)
         }
         do {
             try data.write(to: tempFileURL)
         } catch {
-            completionHandler(nil, NSError())
+            completionHandler(nil, error)
             return
         }
         
