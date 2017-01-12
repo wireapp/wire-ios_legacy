@@ -26,7 +26,6 @@ class SendingProgressViewController : UIViewController {
     var cancelHandler : (() -> Void)?
     
     private var progressLabel = UILabel()
-    private var observers : [(Sendable, SendableObserverToken)] = []
     
     var progress: Float = 0 {
         didSet {
@@ -60,11 +59,6 @@ class SendingProgressViewController : UIViewController {
     }
     
     func onCancelTapped() {
-        observers.filter {
-            $0.0.deliveryState != .sent && $0.0.deliveryState != .delivered
-            }.forEach {
-                $0.0.cancel()
-        }
         cancelHandler?()
     }
 

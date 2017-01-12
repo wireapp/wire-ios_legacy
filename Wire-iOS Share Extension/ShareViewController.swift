@@ -140,7 +140,14 @@ class ShareViewController: SLComposeServiceViewController {
         let progressSendingViewController = SendingProgressViewController()
         
         progressSendingViewController.cancelHandler = { [weak self] in
-            self?.cancel()
+            guard let `self` = self else { return }
+            self.observer?.sendables.filter {
+                $0.deliveryState != .sent && $0.deliveryState != .delivered
+            }.forEach {
+                $0.cancel()
+            }
+
+            self.cancel()
         }
 
         progressViewController = progressSendingViewController

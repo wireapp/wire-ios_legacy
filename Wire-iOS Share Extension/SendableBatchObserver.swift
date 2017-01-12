@@ -22,7 +22,7 @@ import WireShareEngine
 
 public final class SendableBatchObserver: SendableObserver {
 
-    private let sendables: [Sendable]
+    public let sendables: [Sendable]
     private var observers = [(Sendable, SendableObserverToken)]()
 
     public var sentHandler: (() -> Void)?
