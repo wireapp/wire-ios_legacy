@@ -51,7 +51,7 @@ import Cartography
         self.collectionView.register(CollectionLinkCell.self, forCellWithReuseIdentifier: CollectionLinkCell.reuseIdentifier)
         self.collectionView.register(CollectionLoadingCell.self, forCellWithReuseIdentifier: CollectionLoadingCell.reuseIdentifier)
         self.collectionView.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
-        self.collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 24, right: 0)
+        self.collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.allowsMultipleSelection = false
         self.collectionView.allowsSelection = true
