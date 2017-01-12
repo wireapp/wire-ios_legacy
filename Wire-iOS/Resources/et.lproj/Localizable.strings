@@ -96,11 +96,11 @@
 "peoplepicker.hide_search_result" = "Peida";
 "peoplepicker.hide_search_result_progress" = "Peidetakse…";
 
-"send_invitation.subject" = "Suhtleme Wire kaudu";
-"send_invitation.text" = "Ma kasutan Wire’t, otsi %@ või külasta wire.com/download.";
-"send_invitation_no_email.text" = "Ma kasutan Wire’t. Külasta https://get.wire.com et minuga suhelda.";
+"send_invitation.subject" = "Tule Wire'isse, suhtleme seal edasi";
+"send_invitation.text" = "Kasutan nüüd Wire'it, otsi mu kasutajanime %@, või kui sul seda äppi veel pole, siis tõmba siit: get.wire.com.";
+"send_invitation_no_email.text" = "Ma kasutan nüüd Wire’t. Külasta get.wire.com, et edasi suhelda.";
 
-"send_personal_invitation.text" = "Ma kasutan Wire’t, räägime seal. https://get.wire.com";
+"send_personal_invitation.text" = "Ma kasutan Wire’t, räägime seal edasi: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -244,7 +244,7 @@
 "content.file.downloading" = "Allalaadimine…";
 "content.file.upload_failed" = "Üleslaadimine ebaõnnestus";
 "content.file.upload_cancelled" = "Üleslaadimine katkestati";
-"content.file.upload_video" = "Videos";
+"content.file.upload_video" = "Videod";
 "content.file.take_video" = "Salvesta video";
 
 "content.file.save_video" = "Salvesta";
@@ -256,7 +256,7 @@
 "content.message.like" = "Meeldib";
 "content.message.unlike" = "Ei meeldi";
 "content.message.forward" = "Edasta";
-"content.message.go_to_conversation" = "Näita vestluses";
+"content.message.go_to_conversation" = "Näita";
 "content.message.forward.to" = "Saada...";
 
 "content.reactions_list.likers" = "Neile meeldib";
@@ -273,7 +273,7 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Ühendu kasutajaga %@"; // check UPPERCASE implementation in code
-"missive.connection_request.default_message" = "Hei, %@.\nSuhtleme Wire’s.\n%@";
+"missive.connection_request.default_message" = "Hei, %@.\nSuhtleme Wire's edasi.\n%@";
 
 "connection_request.send_button_title" = "Lisa kontakt";
 "inbox.connection_request.connect_button_title" = "Lisa kontakt";
@@ -493,7 +493,7 @@
 "self.settings.notifications.push_notification.toogle" = "Sõnumi eelvaade";
 "self.settings.notifications.push_notification.footer" = "Saatja nimi ja sõnum näidatakse lukustuskuval ja ”Notification Center”-is.";
 
-"self.settings.notifications.chat_alerts.toggle" = "Sõnumi Bännerid";
+"self.settings.notifications.chat_alerts.toggle" = "Sõnumi bännerid";
 "self.settings.notifications.chat_alerts.footer" = "Näitab saabuvaid sõnumeid, kui sul mõni teine vestlus avatud.";
 
 "self.settings.sound_menu.sounds.title" = "Helid";
@@ -536,7 +536,7 @@
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Heli seadistus";
-"self.settings.sound_menu.no_sounds.title" = "Vaigista kõik";
+"self.settings.sound_menu.no_sounds.title" = "Puudub";
 "self.settings.sound_menu.all_sounds.title" = "Kõik";
 "self.settings.sound_menu.mute_while_talking.title" = "Esimene sõnum, ping, kõne";
 
@@ -779,7 +779,7 @@
 // Collections
 "collections.section.images.title" = "Pildid";
 "collections.section.files.title" = "Failid";
-"collections.section.videos.title" = "Videos";
+"collections.section.videos.title" = "Videod";
 "collections.section.links.title" = "Lingid";
-"collections.section.all.button" = "Kõik %d →";
-"collections.section.no_items" = "Pole midagi näidata.";
+"collections.section.all.button" = "Näita kõik: %d →";
+"collections.section.no_items" = "Kogumik on tühi";

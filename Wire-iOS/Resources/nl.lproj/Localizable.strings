@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Verbergen…";
 
 "send_invitation.subject" = "Verbind met mij op Wire";
-"send_invitation.text" = "Ik gebruik Wire, zoek voor %@ of bezoek wire.com/download.";
-"send_invitation_no_email.text" = "Ik gebruik Wire. Ga naar https://get.wire.com om met mij te verbinden.";
+"send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com.";
+"send_invitation_no_email.text" = "Ik gebruik Wire. Ga naar get.wire.com om met mij te verbinden.";
 
-"send_personal_invitation.text" = "Ik ben op Wire, praat met mij daar. https://get.wire.com";
+"send_personal_invitation.text" = "Ik ben op Wire, praat met mij daar: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Jij";
 "content.system.this_device" = "dit apparaat";
 
-"content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond";
+"content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
 "content.system.new_device" = "een nieuw apparaat";
 "content.system.started_using" = "begon met het gebruik van";
@@ -256,7 +256,7 @@
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
 "content.message.forward" = "Doorsturen";
-"content.message.go_to_conversation" = "Open gesprek";
+"content.message.go_to_conversation" = "Tonen";
 "content.message.forward.to" = "Verzenden naar...";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Bestanden";
 "collections.section.videos.title" = "Video's";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Alles %d →";
-"collections.section.no_items" = "Geen items in bibliotheek";
+"collections.section.all.button" = "Toon alle %d →";
+"collections.section.no_items" = "Geen items in de verzameling";

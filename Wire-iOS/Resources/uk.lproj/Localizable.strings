@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Приховування…";
 
 "send_invitation.subject" = "Додай мене в Wire";
-"send_invitation.text" = "Я в Wire, шукайте %@ або відвідайте wire.com/download.";
-"send_invitation_no_email.text" = "Я уже в Wire. Відвідайте https://get.wire.com, щоб додати мене.";
+"send_invitation.text" = "Я в Wire. Шукайте мене як %@ або відвідайте get.wire.com.";
+"send_invitation_no_email.text" = "Я уже в Wire. Відвідайте get.wire.com, щоб додати мене.";
 
-"send_personal_invitation.text" = "Я уже в Wire, порозмовляємо там. https://get.wire.com";
+"send_personal_invitation.text" = "Я уже в Wire, порозмовляємо там: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Ви";
 "content.system.this_device" = "цей пристрій";
 
-"content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут";
+"content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
 "content.system.new_device" = "новий пристрій";
 "content.system.started_using" = "почали використовувати";
@@ -256,7 +256,7 @@
 "content.message.like" = "Подобається";
 "content.message.unlike" = "Не подобається";
 "content.message.forward" = "Переслати";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "Показати в розмові";
 "content.message.forward.to" = "Переслати в...";
 
 "content.reactions_list.likers" = "Сподобалося";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Файли";
 "collections.section.videos.title" = "Відео";
 "collections.section.links.title" = "Посилання";
-"collections.section.all.button" = "Всі %d →";
-"collections.section.no_items" = "В бібліотеці відсутні елементи";
+"collections.section.all.button" = "Show all %d →";
+"collections.section.no_items" = "Колекція порожня";

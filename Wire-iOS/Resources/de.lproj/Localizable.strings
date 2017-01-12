@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "löschen…";
 
 "send_invitation.subject" = "Füge mich auf Wire als Kontakt hinzu";
-"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf wire.com/download.";
-"send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf https://get.wire.com, um mich als Kontakt hinzuzufügen.";
+"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf wire.com.";
+"send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf get.wire.com, um mich als Kontakt hinzuzufügen.";
 
-"send_personal_invitation.text" = "Lass uns zu Wire wechseln: https://get.wire.com";
+"send_personal_invitation.text" = "Lass uns zu Wire wechseln: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Du";
 "content.system.this_device" = "dieses Gerät";
 
-"content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt";
+"content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
 "content.system.new_device" = "ein neues Gerät";
 "content.system.started_using" = "benutzt";
@@ -256,7 +256,7 @@
 "content.message.like" = "Gefällt mir";
 "content.message.unlike" = "Gefällt mir nicht mehr";
 "content.message.forward" = "Weiterleiten";
-"content.message.go_to_conversation" = "In Unterhaltung anzeigen";
+"content.message.go_to_conversation" = "Öffnen";
 "content.message.forward.to" = "Senden an...";
 
 "content.reactions_list.likers" = "Gefällt";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Dokumente";
 "collections.section.videos.title" = "Videos";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Alle %d →";
-"collections.section.no_items" = "Keine Objekte in der Sammlung";
+"collections.section.all.button" = "Zeige alle %d →";
+"collections.section.no_items" = "Keine Elemente in dieser Sammlung";

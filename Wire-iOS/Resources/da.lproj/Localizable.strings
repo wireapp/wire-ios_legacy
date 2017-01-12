@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Skjuler…";
 
 "send_invitation.subject" = "Forbind dig med mig på Wire";
-"send_invitation.text" = "Jeg bruger Wire. Søg efter %@ eller besøg get.wire.com";
-"send_invitation_no_email.text" = "Jeg er på Wire. Besøg https://get.wire.com for at forbinde dig med mig.";
+"send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com.";
+"send_invitation_no_email.text" = "I’m on Wire. Visit get.wire.com to connect with me.";
 
-"send_personal_invitation.text" = "Jeg er på Wire, vi tales ved derinde. https://get.wire.com";
+"send_personal_invitation.text" = "I’m on Wire, talk to you there: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Dig";
 "content.system.this_device" = "denne enhed";
 
-"content.system.reactivated_device" = "Du begyndte at bruge %@ igen. Beskeder der sendes, vises i mellemtiden ikke her";
+"content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
 "content.system.new_device" = "en ny enhed";
 "content.system.started_using" = "er begyndt at bruge";
@@ -256,7 +256,7 @@
 "content.message.like" = "Synes om";
 "content.message.unlike" = "Synes ikke godt om";
 "content.message.forward" = "Videresend";
-"content.message.go_to_conversation" = "Vis i samtale";
+"content.message.go_to_conversation" = "Reveal";
 "content.message.forward.to" = "Send til...";
 
 "content.reactions_list.likers" = "Synes godt af";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Filer";
 "collections.section.videos.title" = "Videoer";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Alle %d →";
-"collections.section.no_items" = "Ingen elementer i biblioteket";
+"collections.section.all.button" = "Show all %d →";
+"collections.section.no_items" = "No items in collection";

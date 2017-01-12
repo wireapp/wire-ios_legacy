@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Skrivanje…";
 
 "send_invitation.subject" = "Poveži se z mano na Wire";
-"send_invitation.text" = "Sem na Wire, poišči %@ ali obišči wire.com/download.";
-"send_invitation_no_email.text" = "Sem na Wire. Obišči https://get.wire.com za povezavo z mano.";
+"send_invitation.text" = "Sem na Wire, poišči %@ ali obišči get.wire.com.";
+"send_invitation_no_email.text" = "Sem na Wire. Obišči get.wire.com za povezavo z mano.";
 
-"send_personal_invitation.text" = "Sem na Wire, se slišiva tam. https://get.wire.com";
+"send_personal_invitation.text" = "Sem na Wire, se slišiva tam: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Ti";
 "content.system.this_device" = "ta naprava";
 
-"content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj";
+"content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj.";
 
 "content.system.new_device" = "nova naprava";
 "content.system.started_using" = "začel(-a) uporabljati";
@@ -256,7 +256,7 @@
 "content.message.like" = "Všeč mi je";
 "content.message.unlike" = "Ni mi všeč";
 "content.message.forward" = "Posreduj";
-"content.message.go_to_conversation" = "Pokaži v pogovoru";
+"content.message.go_to_conversation" = "Razkrij";
 "content.message.forward.to" = "Pošlji...";
 
 "content.reactions_list.likers" = "Všečkali so";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Zbirke";
 "collections.section.videos.title" = "Video posnetki";
 "collections.section.links.title" = "Povezave";
-"collections.section.all.button" = "Vse %d →";
-"collections.section.no_items" = "Ni predmetov v knjižnici";
+"collections.section.all.button" = "Prikaži vse %d →";
+"collections.section.no_items" = "Ni predmetov v zbirki";
