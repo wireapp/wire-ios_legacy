@@ -22,5 +22,6 @@
 
 
 "share_extension.conversation_selection.title" = "Share to:";
+"share_extension.send_button.title" = "Send";
 "share_extension.conversation_selection.empty.value" = "None";
 "share_extension.input.placeholder" = "Type something…";

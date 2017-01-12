@@ -42,11 +42,7 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let rightButtonBarItem = navigationController?.navigationBar.items?.first?.rightBarButtonItem {
-            rightButtonBarItem.action = #selector(appendPostTapped)
-        }
-        
+        self.setupNavigationBar()
         self.appendURLIfNeeded()
     }
     
@@ -56,6 +52,13 @@ class ShareViewController: SLComposeServiceViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    private func setupNavigationBar() {
+        guard let item = navigationController?.navigationBar.items?.first else { return }
+        item.rightBarButtonItem?.action = #selector(appendPostTapped)
+        item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
+        item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
 
     deinit {
