@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "löschen…";
 
 "send_invitation.subject" = "Füge mich auf Wire als Kontakt hinzu";
-"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf wire.com.";
+"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf get.wire.com.";
 "send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf get.wire.com, um mich als Kontakt hinzuzufügen.";
 
 "send_personal_invitation.text" = "Lass uns zu Wire wechseln: get.wire.com.";

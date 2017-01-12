@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Nascondendo…";
 
 "send_invitation.subject" = "Connettiti con me su Wire";
-"send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com";
+"send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com.";
 "send_invitation_no_email.text" = "Sono su Wire. Visita get.wire.com per connetterti con me.";
 
 "send_personal_invitation.text" = "Sono su Wire, ci sentiamo lì. get.wire.com";
