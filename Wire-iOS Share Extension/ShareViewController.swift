@@ -106,8 +106,17 @@ class ShareViewController: SLComposeServiceViewController {
     
     /// Display a preview image
     override func loadPreviewView() -> UIView! {
-        let parentView : UIView? = super.loadPreviewView()
-        return parentView ?? UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
+        if let parentView = super.loadPreviewView() {
+            return parentView
+        }
+        let hasURL = self.attachments.first(where: { $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String) }) != nil
+        let hasEmptyText = self.textView.text.isEmpty
+        // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
+        // if it has no image, it has a URL and it has text, it must be a file
+        if  hasURL && hasEmptyText {
+            return UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
+        }
+        return nil
     }
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
