@@ -103,6 +103,12 @@ class ShareViewController: SLComposeServiceViewController {
         }
     }
     
+    
+    /// Display a preview image
+    override func loadPreviewView() -> UIView! {
+        let parentView : UIView? = super.loadPreviewView()
+        return parentView ?? UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
+    }
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
     private func appendURLIfNeeded() {
