@@ -75,6 +75,9 @@
     else if ([Message isImageMessage:message]) {
         [self openImageMessage:message actionResponder:delegate];
     }
+    else if (message.textMessageData.linkPreview != nil) {
+        [[message.textMessageData.linkPreview openableURL] open];
+    }
 }
 
 - (void)openLocationMessage:(id<ZMConversationMessage>)message
