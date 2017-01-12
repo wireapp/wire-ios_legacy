@@ -21,6 +21,8 @@
 #import <UIKit/UIKit.h>
 @import zmessaging;
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const ColorSchemeColorTextForeground;
 extern NSString * const ColorSchemeColorTextBackground;
 extern NSString * const ColorSchemeColorTextDimmed;
@@ -44,6 +46,7 @@ extern NSString * const ColorSchemeColorTabSelected;
 extern NSString * const ColorSchemeColorTabHighlighted;
 
 extern NSString * const ColorSchemeColorBackground;
+extern NSString * const ColorSchemeColorBackgroundNew;
 extern NSString * const ColorSchemeColorSeparator;
 extern NSString * const ColorSchemeColorBackgroundOverlay;
 extern NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture;
@@ -89,3 +92,5 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 + (UIColor *)nameColorForZMAccentColor:(ZMAccentColor)accentColor variant:(ColorSchemeVariant)variant;
 
 @end
+
+NS_ASSUME_NONNULL_END

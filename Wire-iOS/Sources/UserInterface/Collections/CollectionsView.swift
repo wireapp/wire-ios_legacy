@@ -68,15 +68,7 @@ import Cartography
         self.noItemsIcon.isHidden = true
         self.addSubview(self.noItemsIcon)
         
-        let backgroundColor: UIColor
-        if ColorScheme.default().variant == .light {
-            backgroundColor = UIColor(white:0.98, alpha:1)
-        }
-        else {
-            backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-        }
-        
-        self.backgroundColor = backgroundColor
+        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         let placeholderColor = backgroundColor.mix(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), amount: 0.16)
         
         self.noItemsIcon.image = UIImage(for: .library, fontSize: 160, color: placeholderColor)

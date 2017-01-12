@@ -29,6 +29,7 @@ NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorBackground = @"background";
+NSString * const ColorSchemeColorBackgroundNew = @"background-new";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
 
@@ -198,6 +199,7 @@ static NSString* light(NSString *colorString) {
 {
     UIColor *clear = [UIColor clearColor];
     UIColor *white = [UIColor whiteColor];
+    UIColor *white98 = [UIColor colorWithWhite:0.98 alpha:1];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
@@ -217,6 +219,7 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
     
+    
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
                                 @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
@@ -228,6 +231,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                    ColorSchemeColorSeparator: lightGraphiteAlpha48,
                                    ColorSchemeColorBackground: white,
+                                   ColorSchemeColorBackgroundNew: white98,
                                    ColorSchemeColorIconNormal: graphite,
                                    ColorSchemeColorIconSelected: white,
                                    ColorSchemeColorIconHighlighted: white,
@@ -247,7 +251,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorAvatarBorder: blackAlpha8,
                                    ColorSchemeColorContactSectionBackground: whiteAlpha80,
                                    ColorSchemeColorAudioButtonOverlay: lightGraphiteAlpha24,
-                                   ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:white],
+                                   ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:white98],
                                    ColorSchemeColorLoadingDotActive: graphiteAlpha40,
                                    ColorSchemeColorLoadingDotInactive: graphiteAlpha16,
                                    ColorSchemeColorGraphite: graphite,
@@ -269,6 +273,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                   ColorSchemeColorSeparator: lightGraphiteAlpha24,
                                   ColorSchemeColorBackground: backgroundGraphite,
+                                  ColorSchemeColorBackgroundNew: backgroundGraphite,
                                   ColorSchemeColorIconNormal: white,
                                   ColorSchemeColorIconSelected: black,
                                   ColorSchemeColorIconHighlighted: white,
