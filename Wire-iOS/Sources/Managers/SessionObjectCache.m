@@ -19,7 +19,6 @@
 
 #import "SessionObjectCache.h"
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
 #import "AppDelegate.h"
 
 
@@ -34,11 +33,6 @@
 @property (nonatomic, readwrite) ZMConversationList *allConversations;
 @property (nonatomic, readwrite) ZMConversationList *clearedConversations;
 @property (nonatomic, readwrite) ZMConversationList *pendingConnectionRequests;
-@property (nonatomic, readwrite) ZMConversationList *activeCallConversations;
-@property (nonatomic, readwrite) ZMConversationList *nonIdleVoiceChannelConversations;
-
-/// Helpers
-@property (nonatomic, readwrite) ZMVoiceChannel *firstActiveVoiceChannel;
 
 @end
 
@@ -102,22 +96,6 @@
     return _allConversations;
 }
 
-- (ZMConversationList *)activeCallConversations
-{
-    if(_activeCallConversations == nil && self.userSession != nil) {
-        _activeCallConversations = [ZMConversationList activeCallConversationsInUserSession:self.userSession];
-    }
-    return _activeCallConversations;
-}
-
-- (ZMConversationList *)nonIdleVoiceChannelConversations
-{
-    if(_nonIdleVoiceChannelConversations == nil && self.userSession != nil) {
-        _nonIdleVoiceChannelConversations = [ZMConversationList nonIdleVoiceChannelConversationsInUserSession:self.userSession];
-    }
-    return _nonIdleVoiceChannelConversations;
-}
-
 - (NSUInteger)totalConversationsCount
 {
     if (_allConversations != nil) {
@@ -126,11 +104,6 @@
     else {
         return self.archivedConversations.count + self.conversationList.count;
     }
-}
-
-- (ZMVoiceChannel *)firstActiveVoiceChannel
-{
-    return [ZMVoiceChannel firstActiveVoiceChannelInConversationList:self.conversationList];
 }
 
 @end

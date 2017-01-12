@@ -76,7 +76,7 @@
 
 
 
-@interface FullscreenImageViewController () <UIScrollViewDelegate, ZMVoiceChannelStateObserver>
+@interface FullscreenImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong, readwrite) UIScrollView *scrollView;
 
@@ -100,8 +100,6 @@
 
 @property (nonatomic, assign) BOOL forcePortraitMode;
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-
 @end
 
 
@@ -118,11 +116,6 @@
     }
 
     return self;
-}
-
-- (void)dealloc
-{
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)loadView
@@ -149,8 +142,6 @@
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
-
-    self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -514,18 +505,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [self setSelectedByMenu:NO animated:YES];
-}
-
-
-#pragma mark - Utilities, custom UI
-
-
-/// Special check in case we get an incoming voice call and we are looking at this view in ipad landscape
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
-{
-    if (change.voiceChannel.state == ZMVoiceChannelStateIncomingCall && IS_IPAD_LANDSCAPE_LAYOUT) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 @end

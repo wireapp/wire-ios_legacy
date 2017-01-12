@@ -60,7 +60,7 @@
     //NO-OP
 }
 
-- (ZMVoiceChannel *)voiceChannel;
+- (VoiceChannelRouter *)voiceChannel;
 {
     return nil;
 }

@@ -64,7 +64,7 @@
     [self tagEvent:video ? @"calling.established_successful_video_call" : @"calling.established_successful_call" attributes:attributes];
 }
 
-- (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration reason:(ZMVoiceChannelCallEndReason)reason
+- (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration reason:(VoiceChannelV2CallEndReason)reason
 {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     
@@ -99,7 +99,7 @@
     return @{ @"app_is_active" : [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive ? @"true" : @"false" };
 }
 
-- (NSDictionary *)attributesForCallEndReason:(ZMVoiceChannelCallEndReason)reason
+- (NSDictionary *)attributesForCallEndReason:(VoiceChannelV2CallEndReason)reason
 {
     return @{ @"reason" : [self stringForCallEndReason:reason] };
 }
@@ -132,25 +132,25 @@
     return @{ @"duration" : durationSlot };
 }
 
-- (NSString *)stringForCallEndReason:(ZMVoiceChannelCallEndReason)reason
+- (NSString *)stringForCallEndReason:(VoiceChannelV2CallEndReason)reason
 {
     NSString *result = nil;
     switch (reason) {
-        case ZMVoiceChannelCallEndReasonRequestedSelf:
+        case VoiceChannelV2CallEndReasonRequestedSelf:
             result = @"self";
             break;
             
-        case ZMVoiceChannelCallEndReasonRequested:
+        case VoiceChannelV2CallEndReasonRequested:
             result = @"other";
             break;
             
-        case ZMVoiceChannelCallEndReasonInterrupted:
+        case VoiceChannelV2CallEndReasonInterrupted:
             result = @"gsm_call";
             break;
             
-        case ZMVoiceChannelCallEndReasonOtherLostMedia:
-        case ZMVoiceChannelCallEndReasonDisconnected:
-        case ZMVoiceChannelCallEndReasonRequestedAVS:
+        case VoiceChannelV2CallEndReasonOtherLostMedia:
+        case VoiceChannelV2CallEndReasonDisconnected:
+        case VoiceChannelV2CallEndReasonRequestedAVS:
             result = [self stringForDroppedCall];
             break;
     }

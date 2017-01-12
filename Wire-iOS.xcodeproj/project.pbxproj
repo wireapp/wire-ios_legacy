@@ -660,11 +660,9 @@
 		8F89141B1A9F287E0056AB0C /* ConversationListConnectRequestsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914081A9F287E0056AB0C /* ConversationListConnectRequestsItem.m */; };
 		8F89141C1A9F287E0056AB0C /* ConversationListInteractiveItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */; };
 		8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */; };
-		8F8914381A9F2A510056AB0C /* TopItemsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914321A9F2A510056AB0C /* TopItemsController.m */; };
-		8F8914391A9F2A510056AB0C /* TopItemsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914341A9F2A510056AB0C /* TopItemsView.m */; };
 		8F89143C1AA07FBD0056AB0C /* ListItemRightAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89143B1AA07FBD0056AB0C /* ListItemRightAccessoryView.m */; };
 		8F9E3B8A19D04CAC00FD427A /* SoundEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9E3B8919D04CAC00FD427A /* SoundEventListener.m */; };
-		8FC1EFDF19DED50C0092488D /* ZMVoiceChannel+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC1EFDE19DED50C0092488D /* ZMVoiceChannel+Additions.m */; };
+		8FC1EFDF19DED50C0092488D /* VoiceChannelV2+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */; };
 		8FC853A5199245770008B66B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85082199245760008B66B /* main.m */; };
 		8FC853BF199245770008B66B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850A0199245760008B66B /* Images.xcassets */; };
 		8FC853D7199245770008B66B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850BA199245760008B66B /* Settings.bundle */; };
@@ -1938,17 +1936,13 @@
 		8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListInteractiveItem.m; sourceTree = "<group>"; };
 		8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewModel.h; sourceTree = "<group>"; };
 		8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListViewModel.m; sourceTree = "<group>"; };
-		8F8914311A9F2A510056AB0C /* TopItemsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopItemsController.h; sourceTree = "<group>"; };
-		8F8914321A9F2A510056AB0C /* TopItemsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopItemsController.m; sourceTree = "<group>"; };
-		8F8914331A9F2A510056AB0C /* TopItemsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopItemsView.h; sourceTree = "<group>"; };
-		8F8914341A9F2A510056AB0C /* TopItemsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopItemsView.m; sourceTree = "<group>"; };
 		8F89143A1AA07FBD0056AB0C /* ListItemRightAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItemRightAccessoryView.h; sourceTree = "<group>"; };
 		8F89143B1AA07FBD0056AB0C /* ListItemRightAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItemRightAccessoryView.m; sourceTree = "<group>"; };
 		8F9E3B8819D04CAC00FD427A /* SoundEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEventListener.h; sourceTree = "<group>"; };
 		8F9E3B8919D04CAC00FD427A /* SoundEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventListener.m; sourceTree = "<group>"; };
 		8FA197181AA5EEE500C64826 /* ZClientViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZClientViewController+Internal.h"; sourceTree = "<group>"; };
-		8FC1EFDD19DED50C0092488D /* ZMVoiceChannel+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMVoiceChannel+Additions.h"; sourceTree = "<group>"; };
-		8FC1EFDE19DED50C0092488D /* ZMVoiceChannel+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMVoiceChannel+Additions.m"; sourceTree = "<group>"; };
+		8FC1EFDD19DED50C0092488D /* VoiceChannelV2+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VoiceChannelV2+Additions.h"; sourceTree = "<group>"; };
+		8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VoiceChannelV2+Additions.m"; sourceTree = "<group>"; };
 		8FC85082199245760008B66B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Wire-iOS/main.m"; sourceTree = "<group>"; };
 		8FC850A0199245760008B66B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8FC850BA199245760008B66B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -2764,6 +2758,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEE02EAB1DDDD15200BA2BE2 /* avs.framework */,
 				54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */,
 				CE8E4FAF1DF0668A0009F437 /* ImageIO.framework */,
 				CE8E4FAD1DF066860009F437 /* MobileCoreServices.framework */,
@@ -3868,7 +3863,6 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				CEE02EAB1DDDD15200BA2BE2 /* avs.framework */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -3965,17 +3959,6 @@
 				8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		8F89142B1A9F2A510056AB0C /* TopItems */ = {
-			isa = PBXGroup;
-			children = (
-				8F8914311A9F2A510056AB0C /* TopItemsController.h */,
-				8F8914321A9F2A510056AB0C /* TopItemsController.m */,
-				8F8914331A9F2A510056AB0C /* TopItemsView.h */,
-				8F8914341A9F2A510056AB0C /* TopItemsView.m */,
-			);
-			path = TopItems;
 			sourceTree = "<group>";
 		};
 		8FBCE5AE1A09395800411222 /* Registration */ = {
@@ -4168,8 +4151,8 @@
 				8FC85139199245760008B66B /* ZMConversation+Validation.m */,
 				8FC85142199245760008B66B /* ZetaKeyValueValidation.h */,
 				8FC85143199245760008B66B /* ZetaKeyValueValidation.m */,
-				8FC1EFDD19DED50C0092488D /* ZMVoiceChannel+Additions.h */,
-				8FC1EFDE19DED50C0092488D /* ZMVoiceChannel+Additions.m */,
+				8FC1EFDD19DED50C0092488D /* VoiceChannelV2+Additions.h */,
+				8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */,
 				8FD5A08419F0490500550525 /* ZMUserSession+Additions.h */,
 				8FD5A08519F0490500550525 /* ZMUserSession+Additions.m */,
 				BAED82B71B307AEE004D027F /* ZMUserSession+RequestProxy.h */,
@@ -4390,7 +4373,6 @@
 		8FC851C0199245760008B66B /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
-				8F89142B1A9F2A510056AB0C /* TopItems */,
 				8F8913E91A9F287E0056AB0C /* ListContent */,
 				87302F461B15D4BF001F478C /* SearchView */,
 				875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */,
@@ -5398,7 +5380,6 @@
 			files = (
 				162ACDD11A696F21009025B3 /* ConnectionRequestCell.m in Sources */,
 				BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */,
-				8F8914381A9F2A510056AB0C /* TopItemsController.m in Sources */,
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
@@ -5590,7 +5571,6 @@
 				8710673F1C0DC5570035603B /* SettingsPropertySelectValueCellDescriptor.swift in Sources */,
 				87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */,
 				16DDA1441B259CB900E1F1FC /* VoiceChannelController.m in Sources */,
-				8F8914391A9F2A510056AB0C /* TopItemsView.m in Sources */,
 				871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */,
@@ -5735,7 +5715,7 @@
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
-				8FC1EFDF19DED50C0092488D /* ZMVoiceChannel+Additions.m in Sources */,
+				8FC1EFDF19DED50C0092488D /* VoiceChannelV2+Additions.m in Sources */,
 				16A761131ACD901700A999D0 /* GuidanceDotView.m in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				871BC05B1D34F60700DF0793 /* NSLayoutConstraint+Magic.m in Sources */,

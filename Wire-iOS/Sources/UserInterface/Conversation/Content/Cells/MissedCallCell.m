@@ -29,13 +29,13 @@
 #import "Analytics+iOS.h"
 #import "UIColor+WR_ColorScheme.h"
 
-@interface MissedCallCell () <ZMConversationObserver, ZMVoiceChannelStateObserver>
+@interface MissedCallCell () <ZMConversationObserver, VoiceChannelStateObserver>
 
 @property (nonatomic, strong) UIButton *missedCallButton;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) NSParagraphStyle *subtitleParagraphStyle;
 @property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
+@property (nonatomic) id voiceChannelStateObserverToken;
 
 @end
 
@@ -62,7 +62,6 @@
 - (void)dealloc
 {
     [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-    [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 }
 
 - (void)prepareForReuse
@@ -70,7 +69,6 @@
     [super prepareForReuse];
     
     [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-    [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 }
 
 - (void)createMissedCallViews
@@ -109,14 +107,11 @@
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
 {
     if (message.conversation != self.message.conversation) {
-        if (self.voiceChannelStateObserverToken != nil) {
-            [ZMVoiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
-        }
         if (self.conversationObserverToken != nil) {
             [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
         }
         self.conversationObserverToken = [message.conversation addConversationObserver:self];
-        self.voiceChannelStateObserverToken = [ZMVoiceChannel addVoiceChannelStateObserver:self inConversation:self.message.conversation];
+        self.voiceChannelStateObserverToken = [self.message.conversation.voiceChannel addStateObserver:self];
     }
     
     [super configureForMessage:message layoutProperties:layoutProperties];
@@ -154,7 +149,7 @@
 {
     BOOL lastMissedCall = [self lastMissedCallInConversation];
     
-    self.missedCallButton.enabled = [self.message.conversation isCallingSupported] && lastMissedCall && self.message.conversation.voiceChannel.state == ZMVoiceChannelStateNoActiveUsers;
+    self.missedCallButton.enabled = [self.message.conversation isCallingSupported] && lastMissedCall && self.message.conversation.voiceChannel.state == VoiceChannelV2StateNoActiveUsers;
     self.missedCallButton.adjustsImageWhenDisabled = lastMissedCall;
     [self.missedCallButton setImage:[self missedCallImageForLastCall:lastMissedCall] forState:UIControlStateNormal];
 }
@@ -185,11 +180,21 @@
     }
 }
 
-#pragma mark - ZMVoiceChannelStateObserver
+#pragma mark - VoiceChannelStateObserver
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation
 {
     [self updateMissedCallButton];
+}
+
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
+{
+    
+}
+
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation
+{
+    
 }
 
 @end

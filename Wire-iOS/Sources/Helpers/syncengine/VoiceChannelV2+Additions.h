@@ -21,12 +21,5 @@
 #import "zmessaging+iOS.h"
 
 
-
-FOUNDATION_EXPORT NSString *StringFromZMVoiceChannelState(ZMVoiceChannelState state);
-FOUNDATION_EXPORT NSString *StringFromZMVoiceChannelConnectionState(ZMVoiceChannelConnectionState state);
-
-@interface ZMVoiceChannel (Additions)
-
-+ (ZMVoiceChannel *)firstActiveVoiceChannelInConversationList:(NSArray *)conversations;
-
-@end
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state);
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2ConnectionState(VoiceChannelV2ConnectionState state);

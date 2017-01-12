@@ -52,11 +52,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 
 
-@interface ConversationListContentController (VoiceChannel) <ZMVoiceChannelStateObserver>
-@end
-
-
-
 @interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
@@ -202,12 +197,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
             if (selectedIndexPath.section == (NSInteger)section && selectedIndexPath.item == (NSInteger)idx) {
                 // select a different conversation
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                        BOOL activeCallConversationIsSelected = [[[SessionObjectCache sharedCache] activeCallConversations] firstObject] == self.listViewModel.selectedItem;
-                    
-                    if (! activeCallConversationIsSelected) {
-                        [self selectListItemAfterRemovingIndex:selectedIndexPath.item section:selectedIndexPath.section];
-                    }
+                    [self selectListItemAfterRemovingIndex:selectedIndexPath.item section:selectedIndexPath.section];
                 });
             }
         }];

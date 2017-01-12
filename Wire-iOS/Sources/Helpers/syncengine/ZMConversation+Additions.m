@@ -321,10 +321,10 @@
 - (void)joinVoiceChannelWithoutAskingForPermissionWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
     [self leaveOtherActiveCallsWithCompletionHandler:^{
-        ZMVoiceChannelState voiceChannelState = self.voiceChannel.state;
-        ZMVoiceChannelConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
+        VoiceChannelV2State voiceChannelState = self.voiceChannel.state;
+        VoiceChannelV2ConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
 
-        if (connectionState == ZMVoiceChannelConnectionStateNotConnected) {
+        if (connectionState == VoiceChannelV2ConnectionStateNotConnected) {
 
             __block BOOL joined = YES;
             [[ZMUserSession sharedSession] enqueueChanges:^{
@@ -343,7 +343,7 @@
             }];
         } else {
 
-            if (voiceChannelState == ZMVoiceChannelStateDeviceTransferReady) {
+            if (voiceChannelState == VoiceChannelV2StateDeviceTransferReady) {
                 UIAlertController *callInProgressAlert =
                 [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.call_in_progress.title", nil)
                                                     message:NSLocalizedString(@"voice.alert.call_in_progress.message", nil)
@@ -361,21 +361,21 @@
 
 - (void)leaveOtherActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler
 {
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
+    NSArray *nonIdleConversations = [WireCallCenter nonIdleCallConversationsInUserSession:[ZMUserSession sharedSession]];
 
     [[ZMUserSession sharedSession] enqueueChanges:^{
         for (ZMConversation *conversation in nonIdleConversations) {
             if (conversation == self) {
                 continue;
             }
-            else if (conversation.voiceChannel.state == ZMVoiceChannelStateIncomingCall) {
+            else if (conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall) {
                 [conversation.voiceChannel ignore];
             }
-            else if (conversation.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateSelfIsJoiningActiveChannel ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateDeviceTransferReady ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateOutgoingCall ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateOutgoingCallInactive) {
+            else if (conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannel ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateDeviceTransferReady ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCall ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallInactive) {
                 [conversation.voiceChannel leave];
             }
         }
