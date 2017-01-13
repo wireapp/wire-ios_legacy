@@ -21,7 +21,7 @@
 
 
 
-"share_extension.conversation_selection.title" = "Conversation:";
+"share_extension.conversation_selection.title" = "Pogovor:";
 "share_extension.send_button.title" = "Pošlji";
-"share_extension.conversation_selection.empty.value" = "Choose";
+"share_extension.conversation_selection.empty.value" = "Izberi";
 "share_extension.input.placeholder" = "Napiši sporočilo";
