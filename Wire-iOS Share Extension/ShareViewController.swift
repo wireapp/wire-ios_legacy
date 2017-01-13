@@ -329,7 +329,7 @@ extension ShareViewController {
     /// Appends an image message, and invokes the callback when the message is available
     fileprivate func sendAsImage(sharingSession: SharingSession, conversation: Conversation, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
         let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
-        attachment.loadItem(forTypeIdentifier: kUTTypeJPEG as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], imageCompletionHandler: { (image, error) in
+        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], imageCompletionHandler: { (image, error) in
             DispatchQueue.main.async {
                 guard let image = image,
                     let imageData = UIImageJPEGRepresentation(image, 0.9),
