@@ -22,6 +22,7 @@
 		160E72391AEA842000F86648 /* EmailFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160E72381AEA842000F86648 /* EmailFormViewController.m */; };
 		160E723E1AEE40B600F86648 /* AddEmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160E723D1AEE40B600F86648 /* AddEmailStepViewController.m */; };
 		161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
+		161541BC1E28FFAE00AC2FFB /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */; };
 		16258EE51AD6D1150076B75F /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16258EE41AD6D1150076B75F /* NavigationController.m */; };
 		16258EE81AD7CEBF0076B75F /* PhoneVerificationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16258EE71AD7CEBF0076B75F /* PhoneVerificationStepViewController.m */; };
 		16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */; };
@@ -633,7 +634,6 @@
 		87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
-		87F61D1C1CD379EC00670794 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D1B1CD379EC00670794 /* CircularProgressView.swift */; };
 		87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */; };
 		87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */; };
 		87FEE0D01D76D65700265A9C /* VIMNetworkingFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */; };
@@ -951,6 +951,7 @@
 		161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wire-iOS Share Extension.entitlements"; sourceTree = "<group>"; };
 		1613C76C1C3D2E7400B1FB8A /* ProfileDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDetailsViewController.h; sourceTree = "<group>"; };
 		1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDetailsViewController.m; sourceTree = "<group>"; };
+		161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		16258EE31AD6D1150076B75F /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		16258EE41AD6D1150076B75F /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
@@ -1886,7 +1887,6 @@
 		87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		87F61D1B1CD379EC00670794 /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiOnlyStringTests.swift; sourceTree = "<group>"; };
 		87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPasswordViewController.swift; sourceTree = "<group>"; };
 		87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VIMNetworkingFramework.framework; path = Carthage/Build/iOS/VIMNetworkingFramework.framework; sourceTree = "<group>"; };
@@ -2692,6 +2692,7 @@
 		1E8C25351BBC279B00FC373F /* Loading */ = {
 			isa = PBXGroup;
 			children = (
+				161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */,
 				1E8C25361BBC279B00FC373F /* ProgressSpinner.h */,
 				1E8C25371BBC279B00FC373F /* ProgressSpinner.m */,
 				1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */,
@@ -3489,7 +3490,6 @@
 				87071CBF1CB68BDA0039388A /* ProgressView.swift */,
 				BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */,
 				87F61D191CD36F0900670794 /* GradientView.swift */,
-				87F61D1B1CD379EC00670794 /* CircularProgressView.swift */,
 				874B5DAD1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift */,
 				16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */,
 				BF02CDC21D79A98000C87D38 /* SavableImage.swift */,
@@ -5358,6 +5358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				161541BC1E28FFAE00AC2FFB /* CircularProgressView.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
@@ -5590,7 +5591,6 @@
 				CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */,
 				871BC28F1D34F8F800DF0793 /* UIView+Borders.m in Sources */,
 				871BC24A1D34F8F800DF0793 /* UIFont+MagicAccess.m in Sources */,
-				87F61D1C1CD379EC00670794 /* CircularProgressView.swift in Sources */,
 				871BC0001D34F56300DF0793 /* AnalyticsConversationListObserver.m in Sources */,
 				871BC01E1D34F56300DF0793 /* AnalyticsTracker+Navigation.m in Sources */,
 				BADA35131B42FEC100396F2C /* NSURL+WireLocale.m in Sources */,

@@ -25,3 +25,4 @@
 "share_extension.send_button.title" = "Send";
 "share_extension.conversation_selection.empty.value" = "Choose";
 "share_extension.input.placeholder" = "Type a message";
+"share_extension.sending_progress.title" = "Sending…";

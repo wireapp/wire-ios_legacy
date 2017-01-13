@@ -25,11 +25,14 @@ class SendingProgressViewController : UIViewController {
 
     var cancelHandler : (() -> Void)?
     
-    private var progressLabel = UILabel()
+    private var circularShadow  = CircularProgressView()
+    private var circularProgress  = CircularProgressView()
+    private let minimumProgress : Float = 0.125
     
     var progress: Float = 0 {
         didSet {
-            progressLabel.text = "\(Int(progress * 100))%"
+            let adjustedProgress = (progress / (1 + minimumProgress)) + minimumProgress
+            circularProgress.setProgress(adjustedProgress, animated: true)
         }
     }
     
@@ -44,18 +47,35 @@ class SendingProgressViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "share_extension.sending_progress.title".localized
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
-        progressLabel.text = "0%";
-        progressLabel.textAlignment = .center
-        progressLabel.font = UIFont.systemFont(ofSize: 32)
+        circularShadow.lineWidth = 2
+        circularShadow.setProgress(1, animated: false)
+        circularShadow.alpha = 0.2
         
-        view.addSubview(progressLabel)
+        circularProgress.lineWidth = 2
+        circularProgress.setProgress(0, animated: false)
+    
+        view.addSubview(circularShadow)
+        view.addSubview(circularProgress)
         
-        constrain(view, progressLabel) { container, progressLabel in
-            progressLabel.edges == container.edgesWithinMargins
+        constrain(view, circularShadow, circularProgress) { container, circularShadow, circularProgress in
+            circularShadow.width == 48
+            circularShadow.height == 48
+            circularShadow.center == container.center
+            
+            circularProgress.width == 48
+            circularProgress.height == 48
+            circularProgress.center == container.center
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        circularProgress.setProgress(minimumProgress, animated: true)
     }
     
     func onCancelTapped() {
