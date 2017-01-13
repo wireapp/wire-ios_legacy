@@ -103,6 +103,8 @@ class ShareViewController: SLComposeServiceViewController {
             self.observer?.progressHandler = {
                 self.progressViewController?.progress = $0
             }
+
+            self.navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
             
             self.observer?.sentHandler = {
                 self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
