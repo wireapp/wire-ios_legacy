@@ -26,7 +26,7 @@ import WireExtensionComponents
 import Classy
 
 
-var globSharingSession : SharingSession? = nil
+var globalSharingSession : SharingSession? = nil
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
@@ -76,11 +76,11 @@ class ShareViewController: SLComposeServiceViewController {
         
         if let applicationGroupIdentifier = bundle.infoDictionary?["ApplicationGroupIdentifier"] as? String,
             let hostBundleIdentifier = bundle.infoDictionary?["HostBundleIdentifier"] as? String,
-            globSharingSession == nil {
-                globSharingSession = try? SharingSession(applicationGroupIdentifier: applicationGroupIdentifier, hostBundleIdentifier: hostBundleIdentifier)
+            globalSharingSession == nil {
+                globalSharingSession = try? SharingSession(applicationGroupIdentifier: applicationGroupIdentifier, hostBundleIdentifier: hostBundleIdentifier)
             }
     
-        guard let sharingSession = globSharingSession, sharingSession.canShare else {
+        guard let sharingSession = globalSharingSession, sharingSession.canShare else {
             presentNotSignedInMessage()
             return
         }
@@ -88,11 +88,14 @@ class ShareViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        return globSharingSession != nil && selectedConversation != nil
+        return globalSharingSession != nil && selectedConversation != nil
     }
 
     /// invoked when the user wants to post
     func appendPostTapped() {
+        if let conversation = self.selectedConversation as? ZMConversation {
+            globalSharingSession?.modifiedConversations.add(conversation)
+        }
 
         send { [weak self] (messages) in
             guard let `self` = self else { return }
@@ -166,7 +169,7 @@ class ShareViewController: SLComposeServiceViewController {
                 $0.deliveryState != .sent && $0.deliveryState != .delivered
             }
 
-            globSharingSession?.enqueue {
+            globalSharingSession?.enqueue {
                 sendablesToCancel?.forEach {
                     $0.cancel()
                 }
@@ -190,7 +193,7 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseConversation() {
-        guard let sharingSession = globSharingSession else { return }
+        guard let sharingSession = globalSharingSession else { return }
 
         let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
         let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
@@ -214,7 +217,7 @@ extension ShareViewController {
     fileprivate func send(sentCompletionHandler: @escaping ([Sendable]) -> Void) {
         
         guard let conversation = self.selectedConversation,
-            let sharingSession = globSharingSession else {
+            let sharingSession = globalSharingSession else {
                 sentCompletionHandler([])
                 return
         }
