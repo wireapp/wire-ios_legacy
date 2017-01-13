@@ -212,22 +212,19 @@ final public class CollectionsViewController: UIViewController {
             Analytics.shared()?.tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
             
             if Message.isImageMessage(message) {
-                let imageViewController = FullscreenImageViewController(message: message)
-                
+                let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
+            
                 let backButton = CollectionsView.backButton()
                 backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
 
                 let closeButton = CollectionsView.closeButton()
                 closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
 
-                imageViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-                imageViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-                guard let sender = message.sender, let serverTimestamp = message.serverTimestamp else {
-                    return
-                }
-                imageViewController.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.wr_formattedDate())
-                imageViewController.delegate = self
-                self.navigationController?.pushViewController(imageViewController, animated: true)
+                imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+                imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+               
+                imagesController.messageActionDelegate = self
+                self.navigationController?.pushViewController(imagesController, animated: true)
             }
             else {
                 self.messagePresenter.open(message, targetView: view, actionResponder: self)

@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic, strong) UIView *snapshotBackgroundView;
 @property (nonatomic, weak)   id <MessageActionResponder> delegate;
+@property (nonatomic) BOOL swipeToDismiss;
 
 - (instancetype)initWithMessage:(id<ZMConversationMessage>)message;
 

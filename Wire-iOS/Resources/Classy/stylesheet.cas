@@ -1566,3 +1566,9 @@ TwoLineTitleView {
         textColor: $color-text-foreground;
     }
 }
+
+ConversationImagesViewController {
+    view: @{
+        backgroundColor: $color-background;
+    }
+}

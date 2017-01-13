@@ -75,7 +75,6 @@
 @end
 
 
-
 @interface FullscreenImageViewController () <UIScrollViewDelegate, ZMVoiceChannelStateObserver>
 
 @property (nonatomic, strong, readwrite) UIScrollView *scrollView;
@@ -115,6 +114,7 @@
     if (self) {
         _message = message;
         _forcePortraitMode = NO;
+        _swipeToDismiss = YES;
     }
 
     return self;
@@ -306,16 +306,17 @@
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     [self.view addGestureRecognizer:self.longPressGestureRecognizer];
 
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] init];
-    panRecognizer.maximumNumberOfTouches = 1;
-    panRecognizer.delegate = self;
-    [panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
-    [self.scrollView addGestureRecognizer:panRecognizer];
-    
-    [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-    [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
-    [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
-    
+    if (self.swipeToDismiss) {
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] init];
+        panRecognizer.maximumNumberOfTouches = 1;
+        panRecognizer.delegate = self;
+        [panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
+        [self.scrollView addGestureRecognizer:panRecognizer];
+        
+        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
+        [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
+        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
+    }
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
 }
 
