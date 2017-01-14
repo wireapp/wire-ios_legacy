@@ -73,3 +73,7 @@ You can then use `carthage build --platform ios` to rebuild the dependency and u
 ### Known limitations
 
 Notifications send through Apple Push Notification service can only be received by the App Store Wire client, which is code signed with Wire's own certificate. This is a security feature enforced by Apple, as documented in Apple's [Local and Remote Notification Programming Guide](https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW3). Any client build from source will not be able to receive notifications.
+
+### Translations
+
+All Wire translations are crowdsourced via CrowdIn: https://crowdin.com/projects/wire
