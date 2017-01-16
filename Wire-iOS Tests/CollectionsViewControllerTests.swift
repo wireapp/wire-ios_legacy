@@ -49,6 +49,7 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatLoadingIsShownWhenFetching() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: false)
+        controller.view.layer.speed = 0 // Disable animations so that the spinner would always be in the same phase
         verifyInAllIPhoneSizes(view: controller.view)
     }
     
