@@ -93,9 +93,6 @@ class ShareViewController: SLComposeServiceViewController {
 
     /// invoked when the user wants to post
     func appendPostTapped() {
-        if let conversation = self.selectedConversation as? ZMConversation {
-            globalSharingSession?.modifiedConversations.add(conversation)
-        }
 
         send { [weak self] (messages) in
             guard let `self` = self else { return }
