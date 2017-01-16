@@ -513,8 +513,7 @@ extension CollectionsViewController: CollectionCellDelegate {
         }
         
         switch action {
-        case .forward: fallthrough
-        case .showInConversation:
+        case .forward, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         default:
             if Message.isFileTransferMessage(message) {
@@ -548,10 +547,7 @@ extension CollectionsViewController: MessageActionResponder {
     public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
         if Message.isImageMessage(message) {
             switch action {
-            case .forward: fallthrough
-            case .copy: fallthrough
-            case .save: fallthrough
-            case .showInConversation:
+            case .forward, .copy, .save, .showInConversation:
                 return true
             
             default:
@@ -564,10 +560,7 @@ extension CollectionsViewController: MessageActionResponder {
     
     public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
-        case .forward: fallthrough
-        case .copy: fallthrough
-        case .save: fallthrough
-        case .showInConversation:
+        case .forward, .copy, .save, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         default: break
         }
