@@ -19,17 +19,27 @@
 import XCTest
 import Cartography
 @testable import Wire
+import ZMCDataModel
+
+extension MockMessage {
+    var message: ZMConversationMessage {
+        return self as Any as! ZMConversationMessage
+    }
+}
 
 class CollectionsViewControllerTests: ZMSnapshotTestCase {
     
     var emptyCollection: AssetCollectionWrapper!
-    
+    var fileMessage: ZMConversationMessage!
+
     override func setUp() {
         super.setUp()
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
         let delegate = AssetCollectionMulticastDelegate()
         emptyCollection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
+        
+        fileMessage =  MockMessageFactory.fileTransferMessage()
     }
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
@@ -40,5 +50,32 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
     func testThatLoadingIsShownWhenFetching() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: false)
         verifyInAllIPhoneSizes(view: controller.view)
+    }
+    
+    func testFilesSectionWhenNotFull() {
+        let assetCollection = MockCollection(fileMessages: [fileMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
+    func testFilesSectionWhenFull() {
+        let assetCollection = MockCollection(fileMessages: [fileMessage, fileMessage, fileMessage, fileMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+}
+
+extension CollectionsViewControllerTests {
+
+    func createController(showingCollection assetCollection: MockCollection) -> CollectionsViewController {
+        let conversation = MockConversation() as Any as! ZMConversation
+        let delegate = AssetCollectionMulticastDelegate()
+        let collection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
+
+        let controller = CollectionsViewController(collection: collection)
+        _ = controller.view
+        delegate.assetCollectionDidFetch(collection: assetCollection, messages: assetCollection.messages, hasMore: false)
+        delegate.assetCollectionDidFinishFetching(collection: assetCollection, result: .success)
+        return controller
     }
 }

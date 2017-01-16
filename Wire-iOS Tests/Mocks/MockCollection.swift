@@ -8,16 +8,30 @@
 
 @testable import Wire
 
-class MockCollection: NSObject, ZMCollection {
+final class MockCollection: NSObject, ZMCollection {
+
+    static let onlyFilesCategory = CategoryMatch(including: .file, excluding: .video)
+
+    let messages: [CategoryMatch : [ZMConversationMessage]]
+
+    init(messages: [CategoryMatch : [ZMConversationMessage]]) {
+        self.messages = messages
+    }
+
+    convenience init(fileMessages: [ZMConversationMessage]) {
+        self.init(messages: [
+            MockCollection.onlyFilesCategory : fileMessages
+            ])
+    }
     
     static var empty: MockCollection {
-        return MockCollection()
+        return MockCollection(messages: [:])
     }
     
     func tearDown() { }
     
-    func assets(for category: ZMCDataModel.CategoryMatch) -> [ZMMessage] {
-        return []
+    func assets(for category: ZMCDataModel.CategoryMatch) -> [ZMConversationMessage] {
+        return messages[category] ?? []
     }
     
     let fetchingDone = true

@@ -26,6 +26,7 @@
 + (MockMessage *)textMessageWithText:(NSString *)text;
 + (MockMessage *)pingMessage;
 + (MockMessage *)imageMessage;
++ (MockMessage *)imageMessageWithImage:(UIImage *)imagel;
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType
                                  users:(NSUInteger)users
                                clients:(NSUInteger)numClients;
