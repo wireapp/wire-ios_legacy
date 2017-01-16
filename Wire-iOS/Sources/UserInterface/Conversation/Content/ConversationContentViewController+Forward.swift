@@ -51,7 +51,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     }
     else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
         ZMUserSession.shared()?.performChanges {
-            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI()) { fileMetadata in
+            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI(), name: message.fileMessageData!.fileURL.lastPathComponent) { fileMetadata in
                 forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata) }
             }
         }
@@ -155,7 +155,7 @@ extension ZMConversationList {
 }
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
-    @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell) {
+    @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell?) {
         self.view.window!.endEditing(true)
         
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
@@ -173,8 +173,10 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         shareViewController.modalPresentationStyle = .popover
         
         if let popoverPresentationController = shareViewController.popoverPresentationController {
-            popoverPresentationController.sourceRect = fromCell.selectionRect
-            popoverPresentationController.sourceView = fromCell.selectionView
+            if let cell = fromCell {
+                popoverPresentationController.sourceRect = cell.selectionRect
+                popoverPresentationController.sourceView = cell.selectionView
+            }
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
             popoverPresentationController.permittedArrowDirections = [.up, .down]
         }

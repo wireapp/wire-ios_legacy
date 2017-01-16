@@ -21,47 +21,23 @@ import WireExtensionComponents
 import WireShareEngine
 import Cartography
 
-class SendingProgressViewController : UIViewController, SendableObserver {
-    
-    var sentHandler : (() -> Void)?
+class SendingProgressViewController : UIViewController {
+
     var cancelHandler : (() -> Void)?
     
-    private var progressLabel = UILabel()
-    private var observers : [(Sendable, SendableObserverToken)] = []
+    private var circularShadow  = CircularProgressView()
+    private var circularProgress  = CircularProgressView()
+    private let minimumProgress : Float = 0.125
     
-    var totalProgress : Float {
-        var totalProgress : Float = 0.0
-        
-        observers.forEach { (message, _) in
-            if message.deliveryState == .sent || message.deliveryState == .delivered {
-                totalProgress = totalProgress + 1.0 / Float(observers.count)
-            } else {
-                let messageProgress = (message.deliveryProgress ?? 0)
-                totalProgress = totalProgress +  messageProgress / Float(observers.count)
-            }
-        }
-        
-        return totalProgress
-    }
-    
-    var isAllMessagesDelivered : Bool {
-        return observers.reduce(true) { (result, observer) -> Bool in
-            return result && (observer.0.deliveryState == .sent || observer.0.deliveryState == .delivered)
+    var progress: Float = 0 {
+        didSet {
+            let adjustedProgress = (progress / (1 + minimumProgress)) + minimumProgress
+            circularProgress.setProgress(adjustedProgress, animated: true)
         }
     }
     
-    init(messages: [Sendable]) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        
-        messages.forEach {message in
-            observers.append((message, (message.registerObserverToken(self))))
-        }
-    }
-    
-    deinit {
-        observers.forEach { (message, token) in
-            message.remove(token)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,34 +47,39 @@ class SendingProgressViewController : UIViewController, SendableObserver {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "share_extension.sending_progress.title".localized
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(onCancelTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
-        progressLabel.text = "0%";
-        progressLabel.textAlignment = .center
-        progressLabel.font = UIFont.systemFont(ofSize: 32)
+        circularShadow.lineWidth = 2
+        circularShadow.setProgress(1, animated: false)
+        circularShadow.alpha = 0.2
         
-        view.addSubview(progressLabel)
+        circularProgress.lineWidth = 2
+        circularProgress.setProgress(0, animated: false)
+    
+        view.addSubview(circularShadow)
+        view.addSubview(circularProgress)
         
-        constrain(view, progressLabel) { container, progressLabel in
-            progressLabel.edges == container.edgesWithinMargins
+        constrain(view, circularShadow, circularProgress) { container, circularShadow, circularProgress in
+            circularShadow.width == 48
+            circularShadow.height == 48
+            circularShadow.center == container.center
+            
+            circularProgress.width == 48
+            circularProgress.height == 48
+            circularProgress.center == container.center
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        circularProgress.setProgress(minimumProgress, animated: true)
     }
     
     func onCancelTapped() {
-        observers.filter {
-            $0.0.deliveryState != .sent && $0.0.deliveryState != .delivered
-            }.forEach {
-                $0.0.cancel()
-        }
         cancelHandler?()
     }
-    
-    func onDeliveryChanged() {
-        progressLabel.text = "\(Int(self.totalProgress * 100))%"
-        
-        if self.isAllMessagesDelivered {
-            sentHandler?()
-        }
-    }
+
 }

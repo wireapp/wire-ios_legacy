@@ -42,7 +42,7 @@ import Classy
         constrain(self, self.titleLabel, self.subtitleLabel) { selfView, titleLabel, subtitleLabel in
             titleLabel.leading == selfView.leading
             titleLabel.trailing == selfView.trailing
-            titleLabel.top == selfView.top
+            titleLabel.top == selfView.top + 4
             subtitleLabel.top == titleLabel.bottom
             subtitleLabel.leading == selfView.leading
             subtitleLabel.trailing == selfView.trailing

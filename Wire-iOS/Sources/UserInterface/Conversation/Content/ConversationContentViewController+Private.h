@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
 
 - (void)removeHighlightsAndMenu;
-- (nullable UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message;
+- (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
 
 @end
 

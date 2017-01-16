@@ -18,12 +18,14 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "MessageAction.h"
 
 @class CenteredScrollView;
 @protocol ZMConversationMessage;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class FullscreenImageViewController;
 
 @interface FullscreenImageViewController : UIViewController
 
@@ -31,12 +33,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic, strong) UIView *snapshotBackgroundView;
+@property (nonatomic, weak)   id <MessageActionResponder> delegate;
+@property (nonatomic) BOOL swipeToDismiss;
 
 - (instancetype)initWithMessage:(id<ZMConversationMessage>)message;
 
 - (void)showChrome:(BOOL)shouldShow;
 
 - (void)updateZoom;
+- (void)dismissWithCompletion:(nullable dispatch_block_t)completion;
 
 @end
 

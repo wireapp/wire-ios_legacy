@@ -43,7 +43,7 @@ public struct CollectionsSectionSet: OptionSet, Hashable {
     public static let all: CollectionsSectionSet = [.images, .filesAndAudio, .videos, .links, .loading]
     
     /// Returns visible sections in the display order
-    public static let visible: [CollectionsSectionSet] = [images, links, videos, filesAndAudio, loading]
+    public static let visible: [CollectionsSectionSet] = [images, videos, links, filesAndAudio, loading]
     
     public var hashValue: Int {
         return Int(self.rawValue)

@@ -93,6 +93,47 @@ final public class CollectionImageCell: CollectionCell {
         }
     }
     
+    override func menuConfigurationProperties() -> MenuConfigurationProperties? {
+        guard let properties = super.menuConfigurationProperties() else {
+            return .none
+        }
+        
+        var mutableItems = properties.additionalItems ?? []
+        
+        let saveItem = UIMenuItem(title: "content.image.save_image".localized, action: #selector(CollectionImageCell.save(_:)))
+        mutableItems.append(saveItem)
+        
+        properties.additionalItems = mutableItems
+        return properties
+    }
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(CollectionImageCell.save(_:)): fallthrough
+        case #selector(copy(_:)):
+            return true
+        default:
+            return super.canPerformAction(action, withSender: sender)
+        }
+    }
+    
+    override public func copy(_ sender: Any?) {
+        guard let imageData = self.message?.imageMessageData?.imageData else {
+            return
+        }
+        
+        UIPasteboard.general.setMediaAsset(UIImage(data: imageData))
+    }
+    
+    func save(_ sender: AnyObject!) {
+        guard let imageData = self.message?.imageMessageData?.imageData, let orientation = self.imageView.image?.imageOrientation else {
+            return
+        }
+        
+        let savableImage = SavableImage(data: imageData, orientation: orientation)
+        savableImage.saveToLibrary()
+    }
+    
     fileprivate func loadImage() {
         guard let imageMessageData = self.message?.imageMessageData else {
             self.imageView.image = .none

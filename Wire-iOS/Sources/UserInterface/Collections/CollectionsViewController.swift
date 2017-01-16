@@ -18,6 +18,7 @@
 
 
 import Foundation
+import Cartography
 import ZMCDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
@@ -41,6 +42,7 @@ final public class CollectionsViewController: UIViewController {
         return self.view as! CollectionsView
     }
     fileprivate let messagePresenter = MessagePresenter()
+    fileprivate weak var selectedMessage: ZMConversationMessage? = .none
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
     fileprivate var videoMessages: [ZMConversationMessage] = []
@@ -166,7 +168,26 @@ final public class CollectionsViewController: UIViewController {
     }
     
     private func setupNavigationItem() {
-        self.navigationItem.titleView = ConversationTitleView(conversation: self.collection.conversation, interactive: false)
+        
+        // The label must be inset from the top due to navigation bar title alignment
+        let titleViewWrapper = UIView()
+        let titleView = ConversationTitleView(conversation: self.collection.conversation, interactive: false)
+        titleViewWrapper.addSubview(titleView)
+        
+        constrain(titleView, titleViewWrapper) { titleView, titleViewWrapper in
+            titleView.top == titleViewWrapper.top + 4
+            titleView.left == titleViewWrapper.left
+            titleView.right == titleViewWrapper.right
+            titleView.bottom == titleViewWrapper.bottom
+        }
+        
+        titleViewWrapper.setNeedsLayout()
+        titleViewWrapper.layoutIfNeeded()
+        
+        let size = titleViewWrapper.systemLayoutSizeFitting(CGSize(width: 320, height: 44))
+        titleViewWrapper.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        
+        self.navigationItem.titleView = titleViewWrapper
         
         let button = CollectionsView.closeButton()
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
@@ -182,33 +203,31 @@ final public class CollectionsViewController: UIViewController {
     public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {
         switch (action) {
         case .cancel:
+            self.selectedMessage = .none
             ZMUserSession.shared()?.enqueueChanges {
                 message.fileMessageData?.cancelTransfer()
             }
         case .present:
-            
+            self.selectedMessage = message
             Analytics.shared()?.tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
             
             if Message.isImageMessage(message) {
-                let imageViewController = FullscreenImageViewController(message: message)
-                
+                let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
+            
                 let backButton = CollectionsView.backButton()
                 backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
 
                 let closeButton = CollectionsView.closeButton()
                 closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
 
-                imageViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-                imageViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-                guard let sender = message.sender, let serverTimestamp = message.serverTimestamp else {
-                    return
-                }
-                imageViewController.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.wr_formattedDate())
-                
-                self.navigationController?.pushViewController(imageViewController, animated: true)
+                imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+                imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+               
+                imagesController.messageActionDelegate = self
+                self.navigationController?.pushViewController(imagesController, animated: true)
             }
             else {
-                self.messagePresenter.open(message, targetView: view)
+                self.messagePresenter.open(message, targetView: view, actionResponder: self)
             }
             
         default:
@@ -226,7 +245,7 @@ final public class CollectionsViewController: UIViewController {
 }
 
 extension CollectionsViewController: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMMessage]], hasMore: Bool) {
+    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
             let conversationMessages = messageCategory.value as [ZMConversationMessage]
@@ -372,6 +391,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             cell.message = message
             cell.delegate = self
+            cell.messageChangeDelegate = self
             cell.desiredWidth = self.gridElementSize.width
             cell.desiredHeight = self.gridElementSize.height
             return cell
@@ -384,6 +404,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
                 cell.desiredHeight = .none
                 cell.delegate = self
+                cell.messageChangeDelegate = self
                 return cell
             }
             else {
@@ -392,6 +413,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
                 cell.desiredHeight = .none
                 cell.delegate = self
+                cell.messageChangeDelegate = self
                 return cell
             }
         case CollectionsSectionSet.videos:
@@ -402,6 +424,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             cell.desiredWidth = self.gridElementSize.width
             cell.desiredHeight = self.gridElementSize.height
             cell.delegate = self
+            cell.messageChangeDelegate = self
             return cell
     
         case CollectionsSectionSet.links:
@@ -410,6 +433,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
             cell.message = message
             cell.delegate = self
+            cell.messageChangeDelegate = self
             cell.desiredWidth = collectionView.bounds.size.width - sectionHorizontalInset
             cell.desiredHeight = .none
             return cell
@@ -455,6 +479,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
                 }
                 let collectionController = CollectionsViewController(collection: self.collection, sections: section, messages: self.elements(for: section), fetchingDone: self.fetchingDone)
                 collectionController.onDismiss = self.onDismiss
+                collectionController.delegate = self.delegate
                 self.navigationController?.pushViewController(collectionController, animated: true)
             }
             return header
@@ -500,4 +525,48 @@ extension CollectionsViewController: CollectionCellDelegate {
             }
         }
     }
+}
+
+extension CollectionsViewController: CollectionCellMessageChangeDelegate {
+    public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
+        
+        guard let message = self.selectedMessage as? ZMMessage,
+              changeInfo.message == message,
+              let fileMessageData = message.fileMessageData,
+              fileMessageData.transferState == .downloaded,
+              self.messagePresenter.waitingForFileDownload,
+              Message.isFileTransferMessage(message) || Message.isVideoMessage(message) || Message.isAudioMessage(message) else {
+            return
+        }
+        
+        self.messagePresenter.openFileMessage(message, targetView: cell)
+        
+    }
+}
+
+extension CollectionsViewController: MessageActionResponder {
+    public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
+        if Message.isImageMessage(message) {
+            switch action {
+            case .forward: fallthrough
+            case .showInConversation:
+                return true
+            
+            default:
+                return false
+            }
+        }
+        
+        return false
+    }
+    
+    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+        switch action {
+        case .forward: fallthrough
+        case .showInConversation:
+            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
+        default: break
+        }
+    }
+
 }

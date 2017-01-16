@@ -90,8 +90,8 @@ extension SettingsCellDescriptorFactory {
 
             let alertPreviewGenerator : PreviewGeneratorType = {
                 let value = soundAlertProperty.value()
-                guard let rawValue = value.value() as? UInt,
-                    let intensityLevel = AVSIntensityLevel(rawValue: rawValue) else { return .text($0.title) }
+                guard let rawValue = value.value() as? NSNumber,
+                    let intensityLevel = AVSIntensityLevel(rawValue: rawValue.uintValue) else { return .text($0.title) }
 
                 switch intensityLevel {
                 case .full:

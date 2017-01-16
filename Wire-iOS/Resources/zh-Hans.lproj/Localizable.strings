@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "躲藏......";
 
 "send_invitation.subject" = "和我Wire上成为好友吧";
-"send_invitation.text" = "我在Wire, 搜索 %@ 或访问 wire.com/download.";
-"send_invitation_no_email.text" = "我在Wire上。访问 https://get.wire.com 与我联系。";
+"send_invitation.text" = "我在使用Wire，搜索%@或者访问get.wire.com 。";
+"send_invitation_no_email.text" = "我在使用Wire。访问 get.wire.com 来添加我为好友。";
 
-"send_personal_invitation.text" = "我在使用Wire和你交谈。https://get.wire.com";
+"send_personal_invitation.text" = "我在使用Wire，让我们在这里聊天吧： get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "你";
 "content.system.this_device" = "此设备";
 
-"content.system.reactivated_device" = "你开始再次使用 %@。在此期间的发送的信息不会出现在这里";
+"content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 
 "content.system.new_device" = "一个新设备";
 "content.system.started_using" = "开始使用";
@@ -256,7 +256,7 @@
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
 "content.message.forward" = "转发";
-"content.message.go_to_conversation" = "在对话中显示";
+"content.message.go_to_conversation" = "显示";
 "content.message.forward.to" = "发送给...";
 
 "content.reactions_list.likers" = "被赞";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "文件";
 "collections.section.videos.title" = "视频";
 "collections.section.links.title" = "链接";
-"collections.section.all.button" = "所有 →";
-"collections.section.no_items" = "没有任何条目";
+"collections.section.all.button" = "显示全部 %d →";
+"collections.section.no_items" = "在资源库中什么都没有";

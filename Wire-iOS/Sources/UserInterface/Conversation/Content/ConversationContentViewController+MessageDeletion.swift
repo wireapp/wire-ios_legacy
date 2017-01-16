@@ -71,7 +71,7 @@ extension ConversationContentViewController {
         }
 
         if let presentationController = alert.popoverPresentationController,
-            let cell = cell(for: message) as? ConversationCell {
+            let cell = cell(for: message) {
             presentationController.sourceView = cell.selectionView
             presentationController.sourceRect = cell.selectionRect
         }

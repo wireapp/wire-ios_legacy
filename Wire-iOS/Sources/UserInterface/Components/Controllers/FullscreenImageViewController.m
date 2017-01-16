@@ -113,6 +113,7 @@
     if (self) {
         _message = message;
         _forcePortraitMode = NO;
+        _swipeToDismiss = YES;
     }
 
     return self;
@@ -126,6 +127,19 @@
     [self setupScrollView];
     [self setupTopOverlay];
     [self loadImageAndSetupImageView];
+}
+
+- (void)dismissWithCompletion:(dispatch_block_t)completion
+{
+    if (nil != self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (completion) {
+            completion();
+        }
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:completion];
+    }
 }
 
 - (void)viewDidLayoutSubviews
@@ -238,6 +252,7 @@
 {
     self.topOverlay = [[UIView alloc] init];
     self.topOverlay.translatesAutoresizingMaskIntoConstraints = NO;
+    self.topOverlay.hidden = (self.navigationController != nil);
     [self.view addSubview:self.topOverlay];
 
     // Close button
@@ -263,7 +278,7 @@
 - (void)showChrome:(BOOL)shouldShow
 {
     self.isShowingChrome = shouldShow;
-    self.topOverlay.hidden = !shouldShow;
+    self.topOverlay.hidden = self.navigationController != nil || !shouldShow;
 }
 
 - (void)setupGestureRecognizers
@@ -283,19 +298,18 @@
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     [self.view addGestureRecognizer:self.longPressGestureRecognizer];
 
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] init];
-    panRecognizer.maximumNumberOfTouches = 1;
-    panRecognizer.delegate = self;
-    [panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
-    [self.scrollView addGestureRecognizer:panRecognizer];
-    
-    [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-    [self.longPressGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-    [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
-    [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
-    
+    if (self.swipeToDismiss) {
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] init];
+        panRecognizer.maximumNumberOfTouches = 1;
+        panRecognizer.delegate = self;
+        [panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
+        [self.scrollView addGestureRecognizer:panRecognizer];
+        
+        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
+        [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
+        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
+    }
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
-    [self.tapGestureRecognzier requireGestureRecognizerToFail:self.longPressGestureRecognizer];
 }
 
 - (NSAttributedString *)attributedNameStringForDisplayName:(NSString *)displayName
@@ -320,7 +334,7 @@
     if (! IS_IPAD) {
         self.forcePortraitMode = YES;
     }
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissWithCompletion:nil];
 }
 
 - (void)updateZoom
@@ -419,13 +433,27 @@
                                                  selector:@selector(menuDidHide:)
                                                      name:UIMenuControllerDidHideMenuNotification object:nil];
 
-
-        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        /**
+         *  The reason why we are touching the window here is to workaround a bug where,
+         *  After dismissing the webplayer, the window would fail to become the first responder,
+         *  preventing us to show the menu at all.
+         *  We now force the window to be the key window and to be the first responder to ensure that we can
+         *  show the menu controller.
+         */
+        [self.view.window makeKeyWindow];
+        [self.view.window becomeFirstResponder];
+        
         [self.view becomeFirstResponder];
+        
+        UIMenuController *menuController = UIMenuController.sharedMenuController;
+        UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
+        UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward)];
+        UIMenuItem *revealInConversation = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.go_to_conversation", @"") action:@selector(revealInConversation)];
+        menuController.menuItems = @[saveItem, forwardItem, revealInConversation];
+        
         [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
         [menuController setMenuVisible:YES animated:YES];
-        UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
-        menuController.menuItems = @[saveItem];
+
         [self setSelectedByMenu:YES animated:YES];
     }
 }
@@ -439,8 +467,11 @@
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:) || action == @selector(saveImage)) {
-        return YES && !self.message.isEphemeral;
+    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward)) {
+        return !self.message.isEphemeral;
+    }
+    else if (action == @selector(revealInConversation)) {
+        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionShowInConversation forMessage:self.message];
     }
     else if (action == @selector(paste:)) {
         return NO;
@@ -457,6 +488,20 @@
     [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
     [[Analytics shared] tagMessageCopy];
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.imageView mediaAsset]];
+}
+
+- (void)forward
+{
+    [self dismissWithCompletion:^{
+        [self.delegate wantsToPerformAction:MessageActionForward forMessage:self.message];
+    }];
+}
+
+- (void)revealInConversation
+{
+    [self dismissWithCompletion:^{
+        [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:self.message];
+    }];
 }
 
 - (void)saveImage

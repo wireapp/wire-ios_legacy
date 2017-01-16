@@ -24,6 +24,7 @@ class ConversationSelectionViewController : UITableViewController {
     
     fileprivate var allConversations : [Conversation]
     fileprivate var visibleConversations : [Conversation]
+    fileprivate let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
     
     var selectionHandler : ((_ conversation: Conversation) -> Void)?
     
@@ -52,10 +53,9 @@ class ConversationSelectionViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
-        tableView.tableHeaderView = searchController.searchBar
-        
-        tableView.backgroundColor = .clear
-        view.backgroundColor = .clear
+        let searchBar = searchController.searchBar
+        searchBar.backgroundColor = .white
+        tableView.tableHeaderView = searchBar
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -72,6 +72,7 @@ class ConversationSelectionViewController : UITableViewController {
         
         cell.textLabel?.text = conversation.name
         cell.backgroundColor = .clear
+        cell.accessoryView = conversation.isTrusted ? UIImageView(image: verifiedShieldImage) : nil
         
         return cell
     }

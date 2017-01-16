@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Прячу…";
 
 "send_invitation.subject" = "Добавь меня в Wire";
-"send_invitation.text" = "Я в Wire, ищи %@ или зайди на wire.com/download.";
-"send_invitation_no_email.text" = "Я уже в Wire. Посетите https://get.wire.com, чтобы добавить меня.";
+"send_invitation.text" = "Я в Wire, ищи %@ или зайди на get.wire.com.";
+"send_invitation_no_email.text" = "Я уже в Wire. Посетите get.wire.com, чтобы добавить меня.";
 
-"send_personal_invitation.text" = "Я в Wire, поговорим там https://get.wire.com";
+"send_personal_invitation.text" = "Я в Wire, поговорим там get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Вы";
 "content.system.this_device" = "это устройство";
 
-"content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь";
+"content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
 "content.system.new_device" = "новое устройство";
 "content.system.started_using" = "начал(-а) использовать";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Файлы";
 "collections.section.videos.title" = "Видео";
 "collections.section.links.title" = "Ссылки";
-"collections.section.all.button" = "Все %d →";
-"collections.section.no_items" = "Нет элементов в библиотеке";
+"collections.section.all.button" = "Показать все %d →";
+"collections.section.no_items" = "Ничего нет";

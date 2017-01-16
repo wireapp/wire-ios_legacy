@@ -42,7 +42,7 @@ final class AssetCollectionMulticastDelegate: MulticastDelegate<AssetCollectionD
 }
 
 extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMMessage]], hasMore: Bool) {
+    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
         self.call {
             $0.assetCollectionDidFetch(collection: collection, messages: messages, hasMore: hasMore)
         }

@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Escondendo...";
 
 "send_invitation.subject" = "Conecte-se comigo no Wire";
-"send_invitation.text" = "Eu estou no Wire, pesquise por %@ ou visite wire.com/download.";
-"send_invitation_no_email.text" = "Estou no Wire. Visite https://get.wire.com para se conectar comigo.";
+"send_invitation.text" = "Eu estou no Wire, pesquise por %@ ou visite get.wire.com.";
+"send_invitation_no_email.text" = "Estou no Wire. Visite get.wire.com para se conectar comigo.";
 
-"send_personal_invitation.text" = "Estou no Wire, falo com você lá. https://get.wire.com";
+"send_personal_invitation.text" = "Estou no Wire, falo com você lá. get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Você";
 "content.system.this_device" = "este dispositivo";
 
-"content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui";
+"content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
 "content.system.new_device" = "um novo dispositivo";
 "content.system.started_using" = "começou a usar";
@@ -256,7 +256,7 @@
 "content.message.like" = "Curtir";
 "content.message.unlike" = "Descurtir";
 "content.message.forward" = "Encaminhar";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "Reveal";
 "content.message.forward.to" = "Enviar para...";
 
 "content.reactions_list.likers" = "Curtido por";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Arquivos";
 "collections.section.videos.title" = "Vídeos";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Todos %d →";
-"collections.section.no_items" = "Não há itens na biblioteca";
+"collections.section.all.button" = "Show all %d →";
+"collections.section.no_items" = "No items in collection";

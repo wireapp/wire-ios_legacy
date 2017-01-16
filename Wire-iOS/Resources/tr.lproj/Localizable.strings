@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "Gizleniyor…";
 
 "send_invitation.subject" = "Wire'da bana bağlan";
-"send_invitation.text" = "Wire'dayım, %@ olarak arat ya da wire.com/download bu adresi ziyaret et.";
-"send_invitation_no_email.text" = "Wire'dayım. %@ olarak ara ya da bana bağlanmak için https://get.wire.com adresini ziyaret et.";
+"send_invitation.text" = "Wire'dayım, %@ olarak arat ya da get.wire.com adresini ziyaret et.";
+"send_invitation_no_email.text" = "Wire'dayım. get.wire.com 'u ziyaret ederek bana bağlanabilirsin.";
 
-"send_personal_invitation.text" = "Wire kullanıyorum, buradan görüşelim: https://get.wire.com";
+"send_personal_invitation.text" = "Wire kullanıyorum, buradan görüşelim: get.wire.com.";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "Sen";
 "content.system.this_device" = "bu cihaz";
 
-"content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek";
+"content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
 
 "content.system.new_device" = "yeni bir cihaz";
 "content.system.started_using" = "kullanmaya başladı";
@@ -256,7 +256,7 @@
 "content.message.like" = "Beğen";
 "content.message.unlike" = "Beğenme";
 "content.message.forward" = "İlet";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Şuraya gönder...";
 
 "content.reactions_list.likers" = "Beğenen";
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "Dosyalar";
 "collections.section.videos.title" = "Videolar";
 "collections.section.links.title" = "Bağlantılar";
-"collections.section.all.button" = "Hepsi %d →";
-"collections.section.no_items" = "Kütüphanede hiç içerk yok";
+"collections.section.all.button" = "Tüm %dleri göster →";
+"collections.section.no_items" = "Koleksiyonda hiçbir şey yok";

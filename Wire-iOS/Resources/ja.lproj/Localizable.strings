@@ -97,10 +97,10 @@
 "peoplepicker.hide_search_result_progress" = "隠しています...";
 
 "send_invitation.subject" = "Wireで繋がります";
-"send_invitation.text" = "私はWireにいます。%@ で検索するか、wire.com/download にアクセスしてください。";
-"send_invitation_no_email.text" = "私はWireにいます。https://get.wire. から、私とつながりましょう。";
+"send_invitation.text" = "私はWireにいます。%@ で検索するか、get.wire.com. にアクセスしてください";
+"send_invitation_no_email.text" = "私はWireにいます。https://get.wire.com にアクセスして私とつながりましょう。";
 
-"send_personal_invitation.text" = "私は Wire にいます。Wireで話しましょう。https://get.wire.com";
+"send_personal_invitation.text" = "私は Wire にいます。Wireで話しましょう。get.wire.com";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -215,7 +215,7 @@
 "content.system.you_started" = "あなた";
 "content.system.this_device" = "このデバイス";
 
-"content.system.reactivated_device" = "あなたは%@を再び利用しています。いままでのメッセージはここには表示されません。";
+"content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 
 "content.system.new_device" = "新しいデバイス";
 "content.system.started_using" = "使用を始めます";
@@ -256,7 +256,7 @@
 "content.message.like" = "いいね！";
 "content.message.unlike" = "いいね！を取消す";
 "content.message.forward" = "転送";
-"content.message.go_to_conversation" = "Show in conversation";
+"content.message.go_to_conversation" = "開く";
 "content.message.forward.to" = "…に送信";
 
 "content.reactions_list.likers" = "いいね！しました";
@@ -330,7 +330,7 @@
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "会話から退室しますか？";
-"meta.leave_conversation_dialog_message" = "参加者に通知され、あなたのリストから会話が削除されます。";
+"meta.leave_conversation_dialog_message" = "参加者に通知されたうえで、あなたのリストから会話が削除されます。";
 "meta.leave_conversation.delete_content_as_well_message" = "コンテンツも削除されます";
 "meta.leave_conversation_button_cancel" = "キャンセル";
 "meta.leave_conversation_button_leave" = "離れる";
@@ -705,7 +705,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "ユーザーネームはここです";
+"registration.select_handle.takeover.title" = "ユーザーネームがここに";
 "registration.select_handle.takeover.subtitle" = "Wireでのユーザーネームを選ぶ";
 "registration.select_handle.takeover.subtitle_link" = "もっと知る";
 
@@ -781,5 +781,5 @@
 "collections.section.files.title" = "ファイル";
 "collections.section.videos.title" = "ビデオ";
 "collections.section.links.title" = "リンク";
-"collections.section.all.button" = "すべて→";
-"collections.section.no_items" = "ライブラリにはなにもありません";
+"collections.section.all.button" = "全てを表示 %d →";
+"collections.section.no_items" = "コレクションにアイテムがありません。";

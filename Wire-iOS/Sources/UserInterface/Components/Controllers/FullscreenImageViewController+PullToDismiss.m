@@ -65,7 +65,7 @@
             if (self.isDraggingImage) {
                 [self dismissImageFlickingWithVelocity:velocity];
             } else {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismissWithCompletion:nil];
             }
         }
         else {
@@ -174,7 +174,7 @@
                 [self.animator removeAllBehaviors];
                 self.attachmentBehavior = nil;
                 [self.imageView removeFromSuperview];
-                [self dismissViewControllerAnimated:NO completion:nil];
+                [self dismissWithCompletion:nil];
             }];
         }
     };
@@ -196,6 +196,10 @@
 
 - (void)updateBackgroundColorWithProgress:(CGFloat)progress
 {
+    if (self.navigationController != nil) {
+        return;
+    }
+    
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     UIUserInterfaceIdiom interfaceIdiom = [UIDevice currentDevice].userInterfaceIdiom;
     if (UIDeviceOrientationIsLandscape(orientation) && interfaceIdiom == UIUserInterfaceIdiomPhone) {

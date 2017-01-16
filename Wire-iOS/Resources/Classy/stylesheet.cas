@@ -1524,17 +1524,16 @@ TokenField.share {
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-text-background;
+    backgroundColor: $color-background-new;
     noItemsLabel: @{
         font: $font-medium-medium;
-        textColor: lightGray;
     }
 }
 
-CollectionHeaderView {    
+CollectionHeaderView {
     titleLabel: @{
         font: $font-small-medium;
-        textColor: gray;
+        textColor: $color-text-foreground;
     }
 
     actionButton: @{
@@ -1565,5 +1564,11 @@ TwoLineTitleView {
     subtitleLabel: @{
         font: $font-small-light;
         textColor: $color-text-foreground;
+    }
+}
+
+ConversationImagesViewController {
+    view: @{
+        backgroundColor: $color-background;
     }
 }
