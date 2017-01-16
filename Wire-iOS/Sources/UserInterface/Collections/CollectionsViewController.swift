@@ -22,7 +22,7 @@ import Cartography
 import ZMCDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
-    /// NB: only showInConversation and forward actions are forwarded to delegate
+    /// NB: only showInConversation, forward, copy and save actions are forwarded to delegate
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
@@ -549,6 +549,8 @@ extension CollectionsViewController: MessageActionResponder {
         if Message.isImageMessage(message) {
             switch action {
             case .forward: fallthrough
+            case .copy: fallthrough
+            case .save: fallthrough
             case .showInConversation:
                 return true
             
@@ -563,6 +565,8 @@ extension CollectionsViewController: MessageActionResponder {
     public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
         case .forward: fallthrough
+        case .copy: fallthrough
+        case .save: fallthrough
         case .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         default: break

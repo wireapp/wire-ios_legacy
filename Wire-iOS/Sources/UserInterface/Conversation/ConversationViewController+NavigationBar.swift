@@ -187,6 +187,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 self.contentViewController.scroll(to: message)
             }
         default:
+            self.contentViewController.wants(toPerform: action, for: message)
             break
         }
     }
