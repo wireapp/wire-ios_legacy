@@ -11,6 +11,7 @@
 final class MockCollection: NSObject, ZMCollection {
 
     static let onlyFilesCategory = CategoryMatch(including: .file, excluding: .video)
+    static let onlyLinksCategory = CategoryMatch(including: .linkPreview, excluding: .none)
 
     let messages: [CategoryMatch : [ZMConversationMessage]]
 
@@ -23,7 +24,13 @@ final class MockCollection: NSObject, ZMCollection {
             MockCollection.onlyFilesCategory : fileMessages
             ])
     }
-    
+
+    convenience init(linkMessages: [ZMConversationMessage]) {
+        self.init(messages: [
+            MockCollection.onlyLinksCategory : linkMessages
+            ])
+    }
+
     static var empty: MockCollection {
         return MockCollection(messages: [:])
     }

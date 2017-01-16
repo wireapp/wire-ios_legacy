@@ -31,6 +31,7 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
     
     var emptyCollection: AssetCollectionWrapper!
     var fileMessage: ZMConversationMessage!
+    var linkMessage: ZMConversationMessage!
 
     override func setUp() {
         super.setUp()
@@ -39,7 +40,8 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         let delegate = AssetCollectionMulticastDelegate()
         emptyCollection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
         
-        fileMessage =  MockMessageFactory.fileTransferMessage()
+        fileMessage = MockMessageFactory.fileTransferMessage()
+        linkMessage = MockMessageFactory.linkMessage()
     }
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
@@ -64,6 +66,19 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         let controller = createController(showingCollection: assetCollection)
         verifyInAllIPhoneSizes(view: controller.view)
     }
+
+    func testLinksSectionWhenNotFull() {
+        let assetCollection = MockCollection(linkMessages: [linkMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
+    func testLinksSectionWhenFull() {
+        let assetCollection = MockCollection(linkMessages: [linkMessage, linkMessage, linkMessage, linkMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
 }
 
 extension CollectionsViewControllerTests {
