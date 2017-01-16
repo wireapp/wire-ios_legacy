@@ -23,7 +23,7 @@ import CocoaLumberjackSwift
 import WireExtensionComponents
 
 final public class CollectionImageCell: CollectionCell {
-    static var imageCache: ImageCache {
+    public static var imageCache: ImageCache {
         let cache = ImageCache(name: "CollectionImageCell.imageCache")
         cache.maxConcurrentOperationCount = 4
         cache.totalCostLimit = UInt(1024 * 1024 * 20) // 20 MB

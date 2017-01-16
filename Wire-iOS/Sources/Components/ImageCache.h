@@ -23,10 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageCache : NSObject
 
-@property (nonatomic, assign) NSUInteger countLimit;
-@property (nonatomic, assign) NSUInteger totalCostLimit;
-@property (nonatomic, assign) NSInteger maxConcurrentOperationCount;
-@property (nonatomic, assign) NSQualityOfService qualityOfService;
+@property (nonatomic) NSUInteger countLimit;
+@property (nonatomic) NSUInteger totalCostLimit;
+@property (nonatomic) NSInteger maxConcurrentOperationCount;
+@property (nonatomic) NSQualityOfService qualityOfService;
+@property (nonatomic, readonly) dispatch_group_t processingGroup;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithName:(nullable NSString *)name NS_DESIGNATED_INITIALIZER;
