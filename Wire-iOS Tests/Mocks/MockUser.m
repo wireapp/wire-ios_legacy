@@ -158,6 +158,11 @@
     return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:1.0];
 }
 
+- (UIColor *)nameAccentColor
+{
+    return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:0.7];
+}
+
 - (id)observableKeys
 {
     return @[];
