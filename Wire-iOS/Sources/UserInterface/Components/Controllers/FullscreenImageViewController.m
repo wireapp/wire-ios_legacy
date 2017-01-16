@@ -74,31 +74,36 @@
 
 @end
 
+@interface FullscreenImageViewController (MessageObserver) <ZMMessageObserver>
+
+@end
 
 
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong, readwrite) UIScrollView *scrollView;
+@property (nonatomic, readwrite) UIScrollView *scrollView;
 
-@property (nonatomic, strong) UIView *topOverlay;
-@property (nonatomic, strong) CALayer *highlightLayer;
+@property (nonatomic) UIView *topOverlay;
+@property (nonatomic) CALayer *highlightLayer;
 
-@property (nonatomic, strong) IconButton *closeButton;
+@property (nonatomic) IconButton *closeButton;
 
-@property (nonatomic, strong, readwrite) UIImageView *imageView;
+@property (nonatomic, readwrite) UIImageView *imageView;
 
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognzier;
-@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
+@property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
+@property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
-@property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic) UIActivityIndicatorView *loadingSpinner;
 
-@property (nonatomic, assign) BOOL isShowingChrome;
-@property (nonatomic, assign) BOOL assetWriteInProgress;
+@property (nonatomic) BOOL isShowingChrome;
+@property (nonatomic) BOOL assetWriteInProgress;
 
 @property (nonatomic) CGFloat lastZoomScale;
 
 @property (nonatomic, assign) BOOL forcePortraitMode;
+
+@property (nonatomic) id <ZMMessageObserverOpaqueToken> messageObserverToken;
 
 @end
 
@@ -114,9 +119,16 @@
         _message = message;
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
+        _showCloseButton = YES;
+        self.messageObserverToken = [ZMMessageNotification addMessageObserver:self forMessage:message];
     }
 
     return self;
+}
+
+- (void)dealloc
+{
+    [ZMMessageNotification removeMessageObserverForToken:self.messageObserverToken];
 }
 
 - (void)loadView
@@ -126,7 +138,13 @@
     [self setupSnapshotBackgroundView];
     [self setupScrollView];
     [self setupTopOverlay];
-    [self loadImageAndSetupImageView];
+    if ([[self.message imageMessageData] imageData] == nil) {
+        [self.message requestImageDownload];
+        [self setupSpinner];
+    }
+    else {
+        [self loadImageAndSetupImageView];
+    }
 }
 
 - (void)dismissWithCompletion:(dispatch_block_t)completion
@@ -161,7 +179,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.closeButton.hidden = self.navigationController != nil;
+    self.closeButton.hidden = !self.showCloseButton;
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -208,6 +226,16 @@
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.scrollView];
 }
 
+- (void)setupSpinner
+{
+    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[[ColorScheme defaultColorScheme] variant] == ColorSchemeVariantDark ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray];
+    self.loadingSpinner.hidesWhenStopped = YES;
+    [self.view addSubview:self.loadingSpinner];
+    [self.loadingSpinner startAnimating];
+    
+    [self.loadingSpinner autoCenterInSuperview];
+}
+
 - (void)loadImageAndSetupImageView
 {
     @weakify(self);
@@ -252,7 +280,7 @@
 {
     self.topOverlay = [[UIView alloc] init];
     self.topOverlay.translatesAutoresizingMaskIntoConstraints = NO;
-    self.topOverlay.hidden = (self.navigationController != nil);
+    self.topOverlay.hidden = !self.showCloseButton;
     [self.view addSubview:self.topOverlay];
 
     // Close button
@@ -278,7 +306,7 @@
 - (void)showChrome:(BOOL)shouldShow
 {
     self.isShowingChrome = shouldShow;
-    self.topOverlay.hidden = self.navigationController != nil || !shouldShow;
+    self.topOverlay.hidden = !self.showCloseButton || !shouldShow;
 }
 
 - (void)setupGestureRecognizers
@@ -467,8 +495,14 @@
     if (action == @selector(cut:)) {
         return NO;
     }
-    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward)) {
-        return !self.message.isEphemeral;
+    else if (action == @selector(copy:)) {
+        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionCopy forMessage:self.message];
+    }
+    else if (action == @selector(saveImage)) {
+        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionSave forMessage:self.message];
+    }
+    else if (action == @selector(forward)) {
+        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionForward forMessage:self.message];
     }
     else if (action == @selector(revealInConversation)) {
         return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionShowInConversation forMessage:self.message];
@@ -485,9 +519,7 @@
 
 - (void)copy:(id)sender
 {
-    [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-    [[Analytics shared] tagMessageCopy];
-    [[UIPasteboard generalPasteboard] setMediaAsset:[self.imageView mediaAsset]];
+    [self.delegate wantsToPerformAction:MessageActionCopy forMessage:self.message];
 }
 
 - (void)forward
@@ -506,9 +538,7 @@
 
 - (void)saveImage
 {
-    NSData *imageData = self.message.imageMessageData.imageData;
-    SavableImage *savableImage = [[SavableImage alloc] initWithData:imageData orientation:self.imageView.image.imageOrientation];
-    [savableImage saveToLibraryWithCompletion:nil];
+    [self.delegate wantsToPerformAction:MessageActionSave forMessage:self.message];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
@@ -550,6 +580,41 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [self setSelectedByMenu:NO animated:YES];
+}
+
+#pragma mark - Utilities, custom UI
+
+- (void)performSaveImageAnimationFromView:(UIView *)saveView
+{
+    UIImageView *ghostImageView = [[UIImageView alloc] initWithImage:self.imageView.image];
+    ghostImageView.contentMode = UIViewContentModeScaleAspectFit;
+    ghostImageView.translatesAutoresizingMaskIntoConstraints = YES;
+    CGRect initialFrame = [self.view convertRect:self.imageView.frame fromView:self.imageView.superview];
+    [self.view addSubview:ghostImageView];
+    ghostImageView.frame = initialFrame;
+    CGPoint targetCenter = [self.view convertPoint:saveView.center fromView:saveView.superview];
+    
+    [UIView mt_animateWithViews:@[ghostImageView] duration:0.55 timingFunction:kMTEaseInExpo animations:^{
+        ghostImageView.center = targetCenter;
+        ghostImageView.alpha = 0;
+        ghostImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    }                completion:^{
+        [ghostImageView removeFromSuperview];
+    }];
+}
+
+@end
+
+@implementation FullscreenImageViewController (MessageObserver)
+
+- (void)messageDidChange:(MessageChangeInfo *)changeInfo
+{
+    if (changeInfo.imageChanged && [[self.message imageMessageData] imageData] != nil) {
+        [self.loadingSpinner removeFromSuperview];
+        self.loadingSpinner = nil;
+        
+        [self loadImageAndSetupImageView];
+    }
 }
 
 @end

@@ -22,15 +22,8 @@ import Cartography
 import ZMCDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
-    /// NB: only showInConversation and forward actions are forwarded to delegate
+    /// NB: only showInConversation, forward, copy and save actions are forwarded to delegate
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
-}
-
-extension CategoryMatch {
-    init(including: ZMCDataModel.MessageCategory, excluding: ZMCDataModel.MessageCategory) {
-        self.including = including
-        self.excluding = excluding
-    }
 }
 
 final public class CollectionsViewController: UIViewController {
@@ -52,6 +45,7 @@ final public class CollectionsViewController: UIViewController {
     fileprivate let collection: AssetCollectionWrapper
     
     fileprivate var openCollectionsIsTracked: Bool = false
+    fileprivate var lastLayoutSize: CGSize = .zero
     
     fileprivate var fetchingDone: Bool = false {
         didSet {
@@ -149,8 +143,11 @@ final public class CollectionsViewController: UIViewController {
     
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.contentView.collectionViewLayout.invalidateLayout()
-        self.contentView.collectionView.reloadData()
+        if self.lastLayoutSize != self.view.bounds.size {
+            self.lastLayoutSize = self.view.bounds.size
+            self.contentView.collectionViewLayout.invalidateLayout()
+            self.contentView.collectionView.reloadData()
+        }
     }
     
     override public var prefersStatusBarHidden: Bool {
@@ -248,7 +245,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
     public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
-            let conversationMessages = messageCategory.value as [ZMConversationMessage]
+            let conversationMessages = messageCategory.value
             
             if messageCategory.key.including.contains(.image) {
                 self.imageMessages.append(contentsOf: conversationMessages)
@@ -513,8 +510,7 @@ extension CollectionsViewController: CollectionCellDelegate {
         }
         
         switch action {
-        case .forward: fallthrough
-        case .showInConversation:
+        case .forward, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         default:
             if Message.isFileTransferMessage(message) {
@@ -548,8 +544,7 @@ extension CollectionsViewController: MessageActionResponder {
     public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
         if Message.isImageMessage(message) {
             switch action {
-            case .forward: fallthrough
-            case .showInConversation:
+            case .forward, .copy, .save, .showInConversation:
                 return true
             
             default:
@@ -562,8 +557,7 @@ extension CollectionsViewController: MessageActionResponder {
     
     public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
-        case .forward: fallthrough
-        case .showInConversation:
+        case .forward, .copy, .save, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         default: break
         }

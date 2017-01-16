@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *snapshotBackgroundView;
 @property (nonatomic, weak)   id <MessageActionResponder> delegate;
 @property (nonatomic) BOOL swipeToDismiss;
+@property (nonatomic) BOOL showCloseButton;
 
 - (instancetype)initWithMessage:(id<ZMConversationMessage>)message;
 
@@ -42,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateZoom;
 - (void)dismissWithCompletion:(nullable dispatch_block_t)completion;
-
+- (void)performSaveImageAnimationFromView:(UIView *)saveView;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -65,6 +65,16 @@
     return message;
 }
 
++ (MockMessage *)imageMessageWithImage:(UIImage *)image {
+    MockImageMessageData *imageData = [[MockImageMessageData alloc] init];
+    imageData.mockImageData = image.data;
+    
+    MockMessage *message = [self imageMessage];
+    message.imageMessageData = imageData;
+    
+    return message;
+}
+
 + (MockMessage *)imageMessage;
 {
     MockMessage *message = [[MockMessage alloc] init];

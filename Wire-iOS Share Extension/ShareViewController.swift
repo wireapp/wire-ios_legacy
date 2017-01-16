@@ -93,9 +93,6 @@ class ShareViewController: SLComposeServiceViewController {
 
     /// invoked when the user wants to post
     func appendPostTapped() {
-        if let conversation = self.selectedConversation as? ZMConversation {
-            globalSharingSession?.modifiedConversations.add(conversation)
-        }
 
         send { [weak self] (messages) in
             guard let `self` = self else { return }
@@ -364,9 +361,9 @@ extension ShareViewController {
     
     /// Process data to the right format to be sent
     private func prepareForSending(data: Data, UTIString UTI: String, name: String?, completionHandler: @escaping (URL?, Error?) -> Void) {
-        let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension as CFString)?.takeRetainedValue() as! String
-
-        let fileName = name ?? "\(UUID().uuidString).\(fileExtension)"
+        guard let fileName = nameForFile(withUTI: UTI, name: name) else {
+            return completionHandler(nil, nil)
+        }
         
         let tempDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) // temp subdir
         if !FileManager.default.fileExists(atPath: tempDirectory.absoluteString) {
@@ -392,6 +389,13 @@ extension ShareViewController {
         } else {
             completionHandler(tempFileURL, nil)
         }
+    }
+
+    private func nameForFile(withUTI UTI: String, name: String?) -> String? {
+        if let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as? String {
+            return "\(UUID().uuidString).\(fileExtension)"
+        }
+        return name
     }
 }
 

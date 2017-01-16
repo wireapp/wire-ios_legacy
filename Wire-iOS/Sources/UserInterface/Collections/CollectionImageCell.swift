@@ -23,14 +23,14 @@ import CocoaLumberjackSwift
 import WireExtensionComponents
 
 final public class CollectionImageCell: CollectionCell {
-    static var imageCache: ImageCache {
+    public static var imageCache: ImageCache = {
         let cache = ImageCache(name: "CollectionImageCell.imageCache")
         cache.maxConcurrentOperationCount = 4
         cache.totalCostLimit = UInt(1024 * 1024 * 20) // 20 MB
         cache.qualityOfService = .utility
     
         return cache
-    }
+    }()
     
     static let maxCellSize: CGFloat = 100
 
@@ -157,10 +157,11 @@ final public class CollectionImageCell: CollectionCell {
                     image = UIImage(from: data, withMaxSize: CollectionImageCell.maxCellSize * UIScreen.main.scale)
                 }
                 
-                if (image == nil) {
-                    DDLogError("Invalid image data cannot be loaded: \(self.message)")
+                guard let finalImage = image else {
+                    fatal("Invalid image data cannot be loaded: \(self.message)")
                 }
-                return image
+                
+                return finalImage
                 
                 }, completion: { (image: Any?, cacheKey: String) in
                     // Double check that our cell's current image is still the same one

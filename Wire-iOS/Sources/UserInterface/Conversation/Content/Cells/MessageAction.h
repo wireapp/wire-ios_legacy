@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, MessageAction) {
     MessageActionDelete,
     MessageActionPresent,
     MessageActionSave,
+    MessageActionCopy,
     MessageActionEdit,
     MessageActionSketchDraw,
     MessageActionSketchEmoji,
