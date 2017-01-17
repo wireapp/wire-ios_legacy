@@ -37,6 +37,8 @@ public final class SendableBatchObserver: SendableObserver {
         observers.forEach { (sendable, token) in
             sendable.remove(token)
         }
+
+        observers = []
     }
 
     public var allSendablesSent: Bool {
