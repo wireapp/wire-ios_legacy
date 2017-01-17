@@ -93,6 +93,7 @@ class ShareViewController: SLComposeServiceViewController {
 
     /// invoked when the user wants to post
     func appendPostTapped() {
+        navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
 
         send { [weak self] (messages) in
             guard let `self` = self else { return }
@@ -100,11 +101,14 @@ class ShareViewController: SLComposeServiceViewController {
             self.observer?.progressHandler = {
                 self.progressViewController?.progress = $0
             }
-
-            self.navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
             
             self.observer?.sentHandler = {
-                self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                    self.view.alpha = 0
+                    self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                }, completion: { _ in
+                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                })
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
