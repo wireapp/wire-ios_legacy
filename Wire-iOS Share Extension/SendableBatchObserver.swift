@@ -40,9 +40,13 @@ public final class SendableBatchObserver: SendableObserver {
     }
 
     public var allSendablesSent: Bool {
-        return observers.reduce(true) { (result, observer) -> Bool in
-            return result && (observer.0.deliveryState == .sent || observer.0.deliveryState == .delivered)
-        }
+        return observers.first { observer -> Bool in
+            let sendable = observer.0
+            return (sendable.deliveryState != .sent
+                && sendable.deliveryState != .delivered
+                // && (sendable.deliveryState != .failedToSend || sendable.blockedBecauseOfMissingClients)
+            )
+        } == nil
     }
 
     private func setupObservers(for sendables: [Sendable]) {
