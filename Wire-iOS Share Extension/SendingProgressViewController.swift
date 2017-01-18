@@ -54,6 +54,7 @@ class SendingProgressViewController : UIViewController {
             self.title = "share_extension.sending_progress.title".localized
         case .preparing:
             circularProgress.deterministic = false
+            circularProgress.setProgress(minimumProgress, animated: false)
             self.title = "share_extension.preparing.title".localized
         }
     }
@@ -93,12 +94,6 @@ class SendingProgressViewController : UIViewController {
         }
 
         updateProgressMode()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        circularProgress.setProgress(minimumProgress, animated: true)
     }
     
     func onCancelTapped() {
