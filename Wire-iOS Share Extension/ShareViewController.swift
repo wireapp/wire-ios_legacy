@@ -35,7 +35,7 @@ class ShareViewController: SLComposeServiceViewController {
     var selectedConversation : Conversation?
 
     fileprivate var sharingSession: SharingSession? = nil
-    fileprivate var isCancelled = false
+    fileprivate var sendController: SendController?
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -63,7 +63,6 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     deinit {
-        observer = nil
         sharingSession = nil
     }
     
@@ -85,7 +84,6 @@ class ShareViewController: SLComposeServiceViewController {
         guard let applicationGroupIdentifier = infoDict?["ApplicationGroupIdentifier"] as? String,
             let hostBundleIdentifier = infoDict?["HostBundleIdentifier"] as? String else { return }
 
-        sharingSession = nil
         sharingSession = try? SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             hostBundleIdentifier: hostBundleIdentifier
@@ -99,17 +97,31 @@ class ShareViewController: SLComposeServiceViewController {
 
     /// invoked when the user wants to post
     func appendPostTapped() {
+        guard let session = sharingSession, let conversation = selectedConversation else { return }
+        let sendController = SendController(text: contentText, attachments: attachments, conversation: conversation, sharingSession: session)
+
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
 
-        send { [weak self] messages in
-            guard let `self` = self, messages.count > 0 else { return }
+        sendController.send { [weak self] progress in
+            switch progress {
+            case .preparing:
+                DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
+                    if sendController.sentAllSendables || nil != self?.progressViewController {
+                        return
+                    }
+                    self?.presentSendingProgress(mode: .preparing)
+                }
 
-            self.observer = SendableBatchObserver(sendables: messages)
-            self.observer?.progressHandler = { [ weak self] in
-                self?.progressViewController?.progress = $0
-            }
+            case .prepared:
+                DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
+                    guard !sendController.sentAllSendables && nil == self?.progressViewController else { return }
+                    self?.presentSendingProgress(mode: .sending)
+                }
 
-            self.observer?.sentHandler = { [ weak self] in
+            case .sending(let progress):
+                self?.progressViewController?.progress = progress
+
+            case .done:
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                     self?.view.alpha = 0
                     self?.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
@@ -119,10 +131,7 @@ class ShareViewController: SLComposeServiceViewController {
             }
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
-            guard (self.observer?.allSendablesSent == false || self.observer == nil) && nil == self.progressViewController else { return }
-            self.presentSendingProgress(mode: .preparing)
-        }
+        self.sendController = sendController
     }
     
     /// Display a preview image
@@ -138,11 +147,6 @@ class ShareViewController: SLComposeServiceViewController {
             return UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
         }
         return nil
-    }
-
-    override func cancel() {
-        isCancelled = true
-        super.cancel()
     }
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
@@ -178,20 +182,9 @@ class ShareViewController: SLComposeServiceViewController {
         progressViewController?.mode = mode
 
         progressSendingViewController.cancelHandler = { [weak self] in
-            guard let `self` = self else { return }
-
-            self.isCancelled = true
-            let sendablesToCancel = self.observer?.sendables.lazy.filter {
-                $0.deliveryState != .sent && $0.deliveryState != .delivered
+            self?.sendController?.cancel {
+                self?.cancel()
             }
-
-            self.sharingSession?.enqueue {
-                sendablesToCancel?.forEach {
-                    $0.cancel()
-                }
-            }
-
-            self.cancel()
         }
 
         progressViewController = progressSendingViewController
@@ -222,250 +215,5 @@ class ShareViewController: SLComposeServiceViewController {
         }
         
         pushConfigurationViewController(conversationSelectionViewController)
-    }
-}
-
-
-// MARK: - Send attachments
-extension ShareViewController {
-    
-    /// Send the content to the selected conversation
-    fileprivate func send(sentCompletionHandler: @escaping ([Sendable]) -> Void) {
-        
-        guard let conversation = self.selectedConversation,
-            let sharingSession = self.sharingSession else {
-                sentCompletionHandler([])
-                return
-        }
-
-        self.sendAttachments(
-            sharingSession: sharingSession,
-            conversation: conversation,
-            text: self.contentText,
-            completionHandler: sentCompletionHandler
-        )
-    }
-
-    /// Send all attachments
-    fileprivate func sendAttachments(sharingSession: SharingSession,
-                          conversation: Conversation,
-                          text: String,
-                          completionHandler: @escaping ([Sendable])->()) {
-        
-        let sendingGroup = DispatchGroup()
-        
-        var messages : [Sendable] = [] // this will always modifed on the main thread
-        
-        let completeAndAppendToMessages : (Sendable?)->() = { sendable in
-            defer { sendingGroup.leave() }
-            guard let sendable = sendable else {
-                return
-            }
-            DispatchQueue.main.async {
-                messages.append(sendable)
-            }
-        }
-        
-        self.attachments.forEach { attachment in
-            if attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
-                sendingGroup.enter()
-                self.sendAsImage(sharingSession: sharingSession, conversation: conversation, attachment: attachment, completionHandler: completeAndAppendToMessages)
-            }
-            else if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                sendingGroup.enter()
-                attachment.fetchURL { url in
-                    if let url = url, !url.isFileURL == true { // remote URL, send as link
-                        sendingGroup.leave()
-                    } else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
-                        self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, completionHandler: completeAndAppendToMessages)
-                    }
-                }
-            }
-            else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
-                sendingGroup.enter()
-                self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: nil, attachment: attachment, completionHandler: completeAndAppendToMessages)
-            }
-        }
-
-        sendingGroup.notify(queue: .main) {
-            
-            if !text.isEmpty {
-                sendingGroup.enter()
-                self.sendAsText(sharingSession: sharingSession, conversation: conversation, text: text, completionHandler: completeAndAppendToMessages)
-            }
-            
-            sendingGroup.notify(queue: .main) {
-                DispatchQueue.main.async {
-                    completionHandler(messages)
-                }
-            }
-        }
-    }
-    
-    /// Appends a file message, and invokes the callback when the message is available
-    fileprivate func sendAsFile(
-        sharingSession: SharingSession,
-        conversation: Conversation,
-        name: String?,
-        attachment: NSItemProvider,
-        completionHandler: @escaping (Sendable?)->()
-        ) {
-        
-        attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
-            guard let data = data, let UTIString = attachment.registeredTypeIdentifiers.first as? String, error == nil else {
-                return DispatchQueue.main.async {
-                    completionHandler(nil)
-                }
-            }
-
-            self.prepareForSending(data:data, UTIString: UTIString, name: name) { url, error in
-                guard let url = url, error == nil else {
-                    return DispatchQueue.main.async {
-                        completionHandler(nil)
-                    }
-                }
-
-                FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
-                    sharingSession.enqueue {
-                        completionHandler(conversation.appendFile(metadata))
-                    }
-                }
-            }
-        })
-    }
-    
-    /// Appends an image message, and invokes the callback when the message is available
-    fileprivate func sendAsImage(sharingSession: SharingSession, conversation: Conversation, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
-        let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
-        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], imageCompletionHandler: { (image, error) in
-
-            guard let image = image, let imageData = UIImageJPEGRepresentation(image, 0.9), error == nil else {
-                return DispatchQueue.main.async {
-                    completionHandler(nil)
-                }
-            }
-
-            sharingSession.enqueue {
-                completionHandler(conversation.appendImage(imageData))
-            }
-        })
-    }
-    
-    /// Appends an image message, and invokes the callback when the message is available
-    fileprivate func sendAsText(sharingSession: SharingSession, conversation: Conversation, text: String, completionHandler: @escaping (Sendable?)->()) {
-        DispatchQueue.main.async {
-            sharingSession.enqueue {
-                if let message = conversation.appendTextMessage(text) {
-                    completionHandler(message)
-                } else {
-                    completionHandler(nil)
-                }
-            }
-        }
-    }
-    
-    /// Process data to the right format to be sent
-    private func prepareForSending(
-        data: Data,
-        UTIString UTI: String,
-        name: String?,
-        completionHandler: @escaping (URL?, Error?) -> Void
-        ) {
-        guard let fileName = nameForFile(withUTI: UTI, name: name) else {
-            return completionHandler(nil, nil)
-        }
-        
-        let tempDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) // temp subdir
-        if !FileManager.default.fileExists(atPath: tempDirectory.absoluteString) {
-            try! FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true)
-        }
-        let tempFileURL = tempDirectory.appendingPathComponent(fileName)
-
-        if FileManager.default.fileExists(atPath: tempFileURL.absoluteString) {
-            try! FileManager.default.removeItem(at: tempFileURL)
-        }
-        do {
-            try data.write(to: tempFileURL)
-        } catch {
-            completionHandler(nil, error)
-            return
-        }
-
-        if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
-            AVAsset.wr_convertVideo(at: tempFileURL) { [weak self] (url, _, error) in
-                // Video conversaion can take a while, we need to ensure the user did not cancel
-                if self?.isCancelled == false {
-                    completionHandler(url, error)
-                } else {
-                    completionHandler(nil, error)
-                }
-            }
-        } else {
-            completionHandler(tempFileURL, nil)
-        }
-    }
-
-    private func nameForFile(withUTI UTI: String, name: String?) -> String? {
-        if let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as? String {
-            return "\(UUID().uuidString).\(fileExtension)"
-        }
-        return name
-    }
-}
-
-// MARK: - Process attachements
-extension ShareViewController {
-    
-    /// Get all the attachments to this post
-    fileprivate var attachments : [NSItemProvider] {
-        guard let items = extensionContext?.inputItems as? [NSExtensionItem] else { return [] }
-        return items.flatMap { $0.attachments as? [NSItemProvider] } // remove optional
-            .flatMap { $0 } // flattens array
-    }
-    
-    /// Gets all the URLs in this post, and invoke the callback (on main queue) when done
-    fileprivate func fetchURLAttachments(callback: @escaping ([URL])->()) {
-        var urls : [URL] = []
-        let group = DispatchGroup()
-        let queue = DispatchQueue(label: "share extension URLs queue")
-        
-        self.attachments.forEach { attachment in
-            if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                group.enter()
-                attachment.fetchURL { url in
-                    defer { group.leave() }
-                    guard let url = url else { return }
-                    queue.async {
-                        urls.append(url)
-                    }
-                }
-            }
-        }
-        group.notify(queue: queue) { _ in callback(urls) }
-    }
-}
-
-extension NSItemProvider {
-    
-    /// Extracts the URL from the item provider
-    func fetchURL(completion: @escaping (URL?)->()) {
-        self.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, urlCompletionHandler: { (url, error) in
-            guard let url = url, error == nil else {
-                completion(nil)
-                return
-            }
-            completion(url)
-        })
-    }
-    
-    /// Extracts data from the item provider
-    func fetchData(completion: @escaping(Data?)->()) {
-        self.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
-            guard let data = data, error != nil else {
-                completion(nil)
-                return
-            }
-            completion(data)
-        })
     }
 }

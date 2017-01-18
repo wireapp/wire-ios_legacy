@@ -29,8 +29,8 @@ class SendingProgressViewController : UIViewController {
 
     var cancelHandler : (() -> Void)?
     
-    private var circularShadow  = CircularProgressView()
-    private var circularProgress  = CircularProgressView()
+    private var circularShadow = CircularProgressView()
+    private var circularProgress = CircularProgressView()
     private let minimumProgress : Float = 0.125
     
     var progress: Float = 0 {
