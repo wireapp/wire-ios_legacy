@@ -154,7 +154,7 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     @objc public func copyCurrent(_ sender: AnyObject!) {
-        let text = "collections.image_viewer.copied.title".localized
+        let text = "collections.image_viewer.copied.title".localized.uppercased()
         overlay.show(text: text)
         self.messageActionDelegate?.wants(toPerform: .copy, for: self.currentMessage)
     }
