@@ -118,6 +118,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     override open func prepareForReuse() {
         super.prepareForReuse()
         self.cachedSize = .none
+        self.message = .none
     }
     
     func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
