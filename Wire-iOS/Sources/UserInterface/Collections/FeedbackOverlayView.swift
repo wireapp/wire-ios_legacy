@@ -47,7 +47,7 @@ public final class FeedbackOverlayView: UIView {
 
     public func show(text: String) {
         titleLabel.text = text
-        UIView.animateKeyframes(withDuration: 3, delay: 0, options: [.calculationModeCubic], animations: {
+        UIView.animateKeyframes(withDuration: 3, delay: 0, options: [], animations: {
             let fadeOutDuration = 0.015
             let fadeInDuration = 0.01
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: fadeInDuration) {
