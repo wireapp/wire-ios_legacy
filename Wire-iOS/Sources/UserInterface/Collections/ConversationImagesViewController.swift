@@ -80,10 +80,7 @@ internal final class ConversationImagesViewController: UIViewController {
             buttonsBar.bottom == view.bottom
             buttonsBar.height == 84
 
-            overlay.height == buttonsBar.height
-            overlay.width == buttonsBar.width
-            overlay.leading == view.leading
-            overlay.bottom == view.bottom
+            overlay.edges == buttonsBar.edges
 
             separator.height == .hairline
             separator.top == buttonsBar.top
