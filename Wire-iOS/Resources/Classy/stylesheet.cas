@@ -1530,6 +1530,14 @@ CollectionsView {
     }
 }
 
+FeedbackOverlayView {
+    backgroundColor: $color-background;
+    titleLabel: @{
+        font: $font-medium-medium;
+        textColor: $color-text-foreground;
+    }
+}
+
 CollectionHeaderView {
     titleLabel: @{
         font: $font-small-medium;

@@ -861,6 +861,8 @@
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
+		F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */; };
+		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -2292,6 +2294,8 @@
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
+		F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
+		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
 		F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Analytics.swift"; sourceTree = "<group>"; };
@@ -3675,6 +3679,7 @@
 				87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */,
 				87D56DF71E003D9300DFF722 /* CollectionsView.swift */,
 				8711A5A31E0D6C8800043ACF /* TwoLineTitleView.swift */,
+				F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */,
 				87A540A71E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift */,
 				87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */,
 				87A540A91E094BA3009028C5 /* CollectionCell.swift */,
@@ -4164,6 +4169,7 @@
 				871BC0361D34F60700DF0793 /* NSDate+Format.m */,
 				871BC0371D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.h */,
 				871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */,
+				F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */,
 				871BC0391D34F60700DF0793 /* NSLayoutConstraint+Magic.h */,
 				871BC03A1D34F60700DF0793 /* NSLayoutConstraint+Magic.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
@@ -5485,6 +5491,7 @@
 				8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */,
 				168634E51ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m in Sources */,
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
+				F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */,
 				871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */,
 				871BC00C1D34F56300DF0793 /* Analytics+ConversationEvents.m in Sources */,
 				16258EE51AD6D1150076B75F /* NavigationController.m in Sources */,
@@ -5559,6 +5566,7 @@
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
+				F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */,
 				16A7610B1ACC4BF000A999D0 /* RegistrationTextField.m in Sources */,
 				160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */,
