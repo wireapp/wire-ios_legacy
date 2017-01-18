@@ -242,7 +242,7 @@
 {
     [self.conversationListViewController selectConversation:conversation
                                                 focusOnView:NO
-                                                animated:NO];
+                                                   animated:NO];
 }
 
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
