@@ -31,7 +31,7 @@ class PostContent {
     /// Conversation to post to
     var target : Conversation? = nil {
         didSet {
-            self.trustAllClients() // TODO MARCO: remove (testing)
+            // no-op. This is useful for debugging
         }
     }
 
@@ -41,43 +41,7 @@ class PostContent {
     init(attachments: [NSItemProvider]) {
         self.attachments = attachments
     }
- 
-    /// Trust all clients in this conversation
-    private func trustAllClients() {
-        // TODO MARCO remove: testing
 
-        let convo = self.target! as! ZMConversation
-        let syncMOC = convo.managedObjectContext!.zm_sync!
-        syncMOC.performGroupedBlockAndWait {
-            let syncConvo = syncMOC.object(with: convo.objectID) as! ZMConversation
-            let selfUser = ZMUser.selfUser(in: syncMOC)
-            let selfClient = selfUser.selfClient()!
-            selfUser.clients.forEach {
-                selfClient.trustClient($0)
-            }
-            syncMOC.saveOrRollback()
-            
-            let otherUsers = syncConvo.otherActiveParticipants.array as! [ZMUser]
-            otherUsers.forEach {
-                $0.clients.forEach {
-                    selfClient.trustClient($0)
-                }
-            }
-        }
-    }
-    
-    /// Force the conversation to degrade
-    fileprivate func causeConversationDegradation() {
-        // TODO MARCO remove: testing
-        let convo = self.target! as! ZMConversation
-        let syncMOC = convo.managedObjectContext!.zm_sync!
-        syncMOC.performGroupedBlockAndWait {
-            let syncConvo = syncMOC.object(with: convo.objectID) as! ZMConversation
-            let otherUsers = syncConvo.otherActiveParticipants.array as! [ZMUser]
-            otherUsers.first?.clients.first?.deleteClientAndEndSession()
-            syncMOC.saveOrRollback()
-        }
-    }
 }
 
 // MARK: - Send attachments
@@ -125,7 +89,6 @@ extension PostContent {
             })
         })
         
-        self.causeConversationDegradation()
         self.sendAttachments(sharingSession: sharingSession,
                              conversation: conversation,
                              text: text)

@@ -224,11 +224,12 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping PostContent.DegradationStrategyChoice) {
-        let alert = UIAlertController(title: "Warning".localized, message: "Users added new device".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Send anyway".localized, style: .destructive, handler: { _ in
+        let title = titleForMissingClients(users: change.users)
+        let alert = UIAlertController(title: title, message: "meta.degraded.dialog_message".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "meta.degraded.send_anyway_button".localized, style: .destructive, handler: { _ in
             callback(.sendAnyway)
         }))
-        alert.addAction(UIAlertAction(title: "Cancel sending".localized, style: .cancel, handler: { _ in
+        alert.addAction(UIAlertAction(title: "meta.degraded.cancel_sending_button".localized, style: .cancel, handler: { _ in
             callback(.cancelSending)
         }))
         self.present(alert, animated: true)
@@ -242,3 +243,8 @@ class ShareViewController: SLComposeServiceViewController {
     }
 }
 
+private func titleForMissingClients(users: Set<ZMUser>) -> String {
+    let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
+    let allUsers = (users.map { $0.displayName ?? "" } as NSArray).componentsJoined(by: ", ") as NSString
+    return NSString(format: template.localized as NSString, allUsers) as String
+}
