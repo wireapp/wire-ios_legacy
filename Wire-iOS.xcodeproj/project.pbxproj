@@ -620,6 +620,7 @@
 		87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0D6D41CD3978900C54196 /* AVKit.framework */; };
 		87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7C9621BF5E422001C5485 /* WireStyleKit.m */; };
 		87E7C9651BF5E4E2001C5485 /* WireStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 87E7C9611BF5E422001C5485 /* WireStyleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6B861E2FCE080019B3C5 /* ZMConversationMessage+File.swift */; };
 		87F18BB01E01533F00C69D9B /* CollectionFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */; };
 		87F18BB61E0154FB00C69D9B /* FileTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BB51E0154FB00C69D9B /* FileTransferView.swift */; };
 		87F18BB81E01550600C69D9B /* AudioMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BB71E01550600C69D9B /* AudioMessageView.swift */; };
@@ -1875,6 +1876,7 @@
 		87E0D6D41CD3978900C54196 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		87E7C9611BF5E422001C5485 /* WireStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireStyleKit.h; sourceTree = "<group>"; };
 		87E7C9621BF5E422001C5485 /* WireStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WireStyleKit.m; sourceTree = "<group>"; };
+		87EB6B861E2FCE080019B3C5 /* ZMConversationMessage+File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+File.swift"; sourceTree = "<group>"; };
 		87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionFileCell.swift; sourceTree = "<group>"; };
 		87F18BB51E0154FB00C69D9B /* FileTransferView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferView.swift; sourceTree = "<group>"; };
 		87F18BB71E01550600C69D9B /* AudioMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageView.swift; sourceTree = "<group>"; };
@@ -3499,6 +3501,7 @@
 				BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */,
 				87F61D191CD36F0900670794 /* GradientView.swift */,
 				874B5DAD1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift */,
+				87EB6B861E2FCE080019B3C5 /* ZMConversationMessage+File.swift */,
 				16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */,
 				BF02CDC21D79A98000C87D38 /* SavableImage.swift */,
 				BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */,
@@ -5647,6 +5650,7 @@
 				871BC00A1D34F56300DF0793 /* TimeIntervalClusterizer.m in Sources */,
 				871BC0031D34F56300DF0793 /* AnalyticsFileTransferObserver.swift in Sources */,
 				871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */,
+				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,
 				87F18BBA1E01551600C69D9B /* VideoMessageView.swift in Sources */,
 				168635421AE018B300EDC7D9 /* RegistrationFormController.m in Sources */,
 				871BC35C1D34F94200DF0793 /* Constants.m in Sources */,

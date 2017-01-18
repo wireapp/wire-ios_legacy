@@ -57,12 +57,7 @@ final public class CollectionVideoCell: CollectionCell {
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(CollectionCell.forward(_:)):
-            if let _ = self.message?.fileMessageData?.fileURL {
-                return true
-            }
-            else {
-                return false
-            }
+            return self.message?.isFileDownloaded() ?? false
         default:
             return super.canPerformAction(action, withSender: sender)
         }
