@@ -1533,7 +1533,7 @@ CollectionsView {
 FeedbackOverlayView {
     backgroundColor: $color-background;
     titleLabel: @{
-        font: $font-medium-medium;
+        font: $font-small-medium;
         textColor: $color-text-foreground;
     }
 }
