@@ -35,6 +35,7 @@ class ShareViewController: SLComposeServiceViewController {
     var selectedConversation : Conversation?
 
     fileprivate var sharingSession: SharingSession? = nil
+    fileprivate var isCancelled = false
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -100,13 +101,18 @@ class ShareViewController: SLComposeServiceViewController {
     func appendPostTapped() {
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
 
-        send { [weak self] (messages) in
-            guard let `self` = self else { return }
+        let preparation: () -> Void = { [weak self] in
+            self?.presentSendingProgress(mode: .preparing)
+        }
+
+        let completion: ([Sendable]) -> Void = { [weak self] messages in
+            guard let `self` = self, messages.count > 0 else { return }
+
             self.observer = SendableBatchObserver(sendables: messages)
             self.observer?.progressHandler = { [ weak self] in
                 self?.progressViewController?.progress = $0
             }
-            
+
             self.observer?.sentHandler = { [ weak self] in
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                     self?.view.alpha = 0
@@ -115,12 +121,14 @@ class ShareViewController: SLComposeServiceViewController {
                     self?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
                 })
             }
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
-                guard self.observer?.allSendablesSent == false else { return }
-                self.presentSendingProgress()
+                guard self.observer?.allSendablesSent == false && nil == self.progressViewController else { return }
+                self.presentSendingProgress(mode: .sending)
             }
         }
+
+        send(preparationHandler: preparation, sentCompletionHandler: completion)
     }
     
     /// Display a preview image
@@ -136,6 +144,11 @@ class ShareViewController: SLComposeServiceViewController {
             return UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
         }
         return nil
+    }
+
+    override func cancel() {
+        isCancelled = true
+        super.cancel()
     }
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
@@ -166,9 +179,10 @@ class ShareViewController: SLComposeServiceViewController {
         return [conversationItem]
     }
     
-    private func presentSendingProgress() {
+    private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
         let progressSendingViewController = SendingProgressViewController()
-        
+        progressViewController?.mode = mode
+
         progressSendingViewController.cancelHandler = { [weak self] in
             guard let `self` = self else { return }
 
@@ -221,25 +235,28 @@ class ShareViewController: SLComposeServiceViewController {
 extension ShareViewController {
     
     /// Send the content to the selected conversation
-    fileprivate func send(sentCompletionHandler: @escaping ([Sendable]) -> Void) {
+    fileprivate func send(preparationHandler: @escaping () -> Void, sentCompletionHandler: @escaping ([Sendable]) -> Void) {
         
         guard let conversation = self.selectedConversation,
             let sharingSession = self.sharingSession else {
                 sentCompletionHandler([])
                 return
         }
-        
-        
-        self.sendAttachments(sharingSession: sharingSession,
-                  conversation: conversation,
-                  text: self.contentText,
-                  completionHandler: sentCompletionHandler)
+
+        self.sendAttachments(
+            sharingSession: sharingSession,
+            conversation: conversation,
+            text: self.contentText,
+            preparationHandler: preparationHandler,
+            completionHandler: sentCompletionHandler
+        )
     }
-    
+
     /// Send all attachments
     fileprivate func sendAttachments(sharingSession: SharingSession,
                           conversation: Conversation,
                           text: String,
+                          preparationHandler: @escaping () -> Void,
                           completionHandler: @escaping ([Sendable])->()) {
         
         let sendingGroup = DispatchGroup()
@@ -267,13 +284,13 @@ extension ShareViewController {
                     if let url = url, !url.isFileURL == true { // remote URL, send as link
                         sendingGroup.leave()
                     } else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
-                        self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                        self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, preparationHandler: preparationHandler, completionHandler: completeAndAppendToMessages)
                     }
                 }
             }
             else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
                 sendingGroup.enter()
-                self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: nil, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: nil, attachment: attachment, preparationHandler: preparationHandler, completionHandler: completeAndAppendToMessages)
             }
         }
 
@@ -293,36 +310,32 @@ extension ShareViewController {
     }
     
     /// Appends a file message, and invokes the callback when the message is available
-    fileprivate func sendAsFile(sharingSession: SharingSession, conversation: Conversation, name: String?, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
+    fileprivate func sendAsFile(
+        sharingSession: SharingSession,
+        conversation: Conversation,
+        name: String?,
+        attachment: NSItemProvider,
+        preparationHandler: @escaping () -> Void,
+        completionHandler: @escaping (Sendable?)->()
+        ) {
         
         attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
+            guard let data = data, let UTIString = attachment.registeredTypeIdentifiers.first as? String, error == nil else {
+                return DispatchQueue.main.async {
+                    completionHandler(nil)
+                }
+            }
 
-            guard let data = data,
-                let UTIString = attachment.registeredTypeIdentifiers.first as? String,
-                error == nil else {
-                    DispatchQueue.main.async {
+            self.prepareForSending(data:data, UTIString: UTIString, name: name, preparationHandler: preparationHandler) { url, error in
+                guard let url = url, error == nil else {
+                    return DispatchQueue.main.async {
                         completionHandler(nil)
                     }
-                    return
-            }
-            
-            self.prepareForSending(data:data, UTIString: UTIString, name: name) { url, error in
-                
-                DispatchQueue.main.async {
-                    guard let url = url,
-                        error == nil else {
-                            completionHandler(nil)
-                            return
-                    }
+                }
 
-                    FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
-                        sharingSession.enqueue {
-                            if let message = conversation.appendFile(metadata) {
-                                completionHandler(message)
-                            } else {
-                                completionHandler(nil)
-                            }
-                        }
+                FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
+                    sharingSession.enqueue {
+                        completionHandler(conversation.appendFile(metadata))
                     }
                 }
             }
@@ -333,21 +346,15 @@ extension ShareViewController {
     fileprivate func sendAsImage(sharingSession: SharingSession, conversation: Conversation, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
         let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
         attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], imageCompletionHandler: { (image, error) in
-            DispatchQueue.main.async {
-                guard let image = image,
-                    let imageData = UIImageJPEGRepresentation(image, 0.9),
-                    error == nil else {
-                        completionHandler(nil)
-                        return
+
+            guard let image = image, let imageData = UIImageJPEGRepresentation(image, 0.9), error == nil else {
+                return DispatchQueue.main.async {
+                    completionHandler(nil)
                 }
-                
-                sharingSession.enqueue {
-                    if let message = conversation.appendImage(imageData) {
-                        completionHandler(message)
-                    } else {
-                        completionHandler(nil)
-                    }
-                }
+            }
+
+            sharingSession.enqueue {
+                completionHandler(conversation.appendImage(imageData))
             }
         })
     }
@@ -366,7 +373,13 @@ extension ShareViewController {
     }
     
     /// Process data to the right format to be sent
-    private func prepareForSending(data: Data, UTIString UTI: String, name: String?, completionHandler: @escaping (URL?, Error?) -> Void) {
+    private func prepareForSending(
+        data: Data,
+        UTIString UTI: String,
+        name: String?,
+        preparationHandler: @escaping () -> Void,
+        completionHandler: @escaping (URL?, Error?) -> Void
+        ) {
         guard let fileName = nameForFile(withUTI: UTI, name: name) else {
             return completionHandler(nil, nil)
         }
@@ -388,8 +401,15 @@ extension ShareViewController {
         }
 
         if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
-            AVAsset.wr_convertVideo(at: tempFileURL) { (url, _, error) in
-                completionHandler(url, error)
+            DispatchQueue.main.async(execute: preparationHandler)
+
+            AVAsset.wr_convertVideo(at: tempFileURL) { [weak self] (url, _, error) in
+                // Video conversaion can take a while, we need to ensure the user did not cancel
+                if self?.isCancelled == false {
+                    completionHandler(url, error)
+                } else {
+                    completionHandler(nil, error)
+                }
             }
         } else {
             completionHandler(tempFileURL, nil)

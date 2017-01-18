@@ -23,6 +23,10 @@ import Cartography
 
 class SendingProgressViewController : UIViewController {
 
+    enum ProgressMode {
+        case preparing, sending
+    }
+
     var cancelHandler : (() -> Void)?
     
     private var circularShadow  = CircularProgressView()
@@ -31,8 +35,26 @@ class SendingProgressViewController : UIViewController {
     
     var progress: Float = 0 {
         didSet {
+            mode = .sending
             let adjustedProgress = (progress / (1 + minimumProgress)) + minimumProgress
             circularProgress.setProgress(adjustedProgress, animated: true)
+        }
+    }
+
+    var mode: ProgressMode = .preparing {
+        didSet {
+            updateProgressMode()
+        }
+    }
+
+    func updateProgressMode() {
+        switch mode {
+        case .sending:
+            circularProgress.deterministic = true
+            self.title = "share_extension.sending_progress.title".localized
+        case .preparing:
+            circularProgress.deterministic = false
+            self.title = "share_extension.preparing.title".localized
         }
     }
     
@@ -46,8 +68,7 @@ class SendingProgressViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "share_extension.sending_progress.title".localized
+
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
@@ -70,6 +91,8 @@ class SendingProgressViewController : UIViewController {
             circularProgress.height == 48
             circularProgress.center == container.center
         }
+
+        updateProgressMode()
     }
     
     override func viewDidAppear(_ animated: Bool) {

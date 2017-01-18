@@ -26,6 +26,7 @@
 "share_extension.conversation_selection.empty.value" = "Choose";
 "share_extension.input.placeholder" = "Type a message";
 "share_extension.sending_progress.title" = "Sending…";
+"share_extension.preparing.title" = "Preparing…";
 "share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
 "share_extension.not_signed_in.close_button" = "Close";
 
