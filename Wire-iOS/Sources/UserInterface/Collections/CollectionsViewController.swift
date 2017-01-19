@@ -141,16 +141,30 @@ final public class CollectionsViewController: UIViewController {
         }
     }
     
-    private func reloadCollection() {
-        contentView.collectionViewLayout.invalidateLayout()
+    private func flushLayout() {
+        for cell in self.contentView.collectionView.visibleCells {
+            guard let cell = cell as? CollectionCell else {
+                continue
+            }
+            
+            cell.flushCachedSize()
+        }
+        
+        self.contentView.collectionViewLayout.invalidateLayout()
+        self.contentView.collectionViewLayout.finalizeCollectionViewUpdates()
+    }
+    
+    private func reloadData() {
         UIView.performWithoutAnimation {
             self.contentView.collectionView.performBatchUpdates({
-                for section in CollectionsSectionSet.visible {
+                for section in [CollectionsSectionSet.images, CollectionsSectionSet.videos] {
                     if self.numberOfElements(for: section) != 0 {
                         self.contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.index(of: section))!))
                     }
                 }
-            }, completion: .none)
+            }) { _ in
+                self.contentView.collectionView.reloadData()
+            }
         }
     }
     
@@ -160,8 +174,21 @@ final public class CollectionsViewController: UIViewController {
             self.lastLayoutSize = self.view.bounds.size
             
             DispatchQueue.main.async {
-                self.reloadCollection()
+                self.flushLayout()
+                self.reloadData()
             }
+        }
+    }
+
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        guard let _ = self.view.window else {
+            return
+        }
+        
+        coordinator.animate(alongsideTransition: { _ in
+            self.flushLayout()
+        }) { _ in
+            self.reloadData()
         }
     }
     
