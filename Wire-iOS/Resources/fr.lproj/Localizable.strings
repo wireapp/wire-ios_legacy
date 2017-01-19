@@ -784,4 +784,4 @@
 "collections.section.links.title" = "Liens";
 "collections.section.all.button" = "Afficher toutes les %d →";
 "collections.section.no_items" = "Aucun élément dans la bibliothèque";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "Image copiée";

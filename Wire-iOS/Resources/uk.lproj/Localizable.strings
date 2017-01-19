@@ -782,6 +782,6 @@
 "collections.section.files.title" = "Файли";
 "collections.section.videos.title" = "Відео";
 "collections.section.links.title" = "Посилання";
-"collections.section.all.button" = "Show all %d →";
+"collections.section.all.button" = "Показати всі %d →";
 "collections.section.no_items" = "Колекція порожня";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "Зображення скопійоване";

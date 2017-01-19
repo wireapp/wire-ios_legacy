@@ -26,8 +26,8 @@
 "share_extension.conversation_selection.empty.value" = "选择";
 "share_extension.input.placeholder" = "键入一条消息";
 "share_extension.sending_progress.title" = "正在发送...";
-"share_extension.preparing.title" = "Preparing…";
-"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.preparing.title" = "准备中...";
+"share_extension.not_signed_in.title" = "您在登录Wire后才可以使用分享功能";
 "share_extension.not_signed_in.close_button" = "关闭";
 
 "conversation.displayname.emptygroup" = "空聊天室";

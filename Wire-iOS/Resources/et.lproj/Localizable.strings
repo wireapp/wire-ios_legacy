@@ -784,4 +784,4 @@
 "collections.section.links.title" = "Lingid";
 "collections.section.all.button" = "Näita kõik: %d →";
 "collections.section.no_items" = "Kogumik on tühi";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "Pilt kopeeritud";

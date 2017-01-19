@@ -341,7 +341,7 @@
 "meta.degraded.dialog_message" = "Möchtest du die Nachricht noch senden?";
 "meta.degraded.show_device_button" = "Gerät anzeigen";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
-"meta.degraded.cancel_sending_button" = "ABBRECHEN";
+"meta.degraded.cancel_sending_button" = "Abbrechen";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Entfernen?";
@@ -784,4 +784,4 @@
 "collections.section.links.title" = "Links";
 "collections.section.all.button" = "Zeige alle %d →";
 "collections.section.no_items" = "Keine Elemente in dieser Sammlung";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "Foto kopiert";

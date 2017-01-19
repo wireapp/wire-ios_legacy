@@ -784,4 +784,4 @@
 "collections.section.links.title" = "链接";
 "collections.section.all.button" = "显示全部 %d →";
 "collections.section.no_items" = "在资源库中什么都没有";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "图片已复制";

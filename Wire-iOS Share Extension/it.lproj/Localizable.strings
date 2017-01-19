@@ -26,8 +26,8 @@
 "share_extension.conversation_selection.empty.value" = "Scegli";
 "share_extension.input.placeholder" = "Digita un messaggio";
 "share_extension.sending_progress.title" = "Invio in corso…";
-"share_extension.preparing.title" = "Preparing…";
-"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.preparing.title" = "Preparazione…";
+"share_extension.not_signed_in.title" = "È necessario registrarsi su Wire prima di poter condividere qualcosa";
 "share_extension.not_signed_in.close_button" = "Chiudi";
 
 "conversation.displayname.emptygroup" = "Conversazione di gruppo vuota";
