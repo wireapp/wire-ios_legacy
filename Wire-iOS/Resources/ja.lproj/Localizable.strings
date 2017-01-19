@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "まだメッセージを送信しますか？";
 "meta.degraded.show_device_button" = "デバイスを表示する。";
 "meta.degraded.send_anyway_button" = "このまま送信";
+"meta.degraded.cancel_sending_button" = "キャンセル";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "削除しますか?";
@@ -783,3 +784,4 @@
 "collections.section.links.title" = "リンク";
 "collections.section.all.button" = "全てを表示 %d →";
 "collections.section.no_items" = "コレクションにアイテムがありません。";
+"collections.image_viewer.copied.title" = "写真を保存しました";

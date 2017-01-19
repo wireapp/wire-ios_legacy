@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "Voulez-vous toujours envoyer votre message?";
 "meta.degraded.show_device_button" = "Afficher l'appareil";
 "meta.degraded.send_anyway_button" = "Envoyer quand même";
+"meta.degraded.cancel_sending_button" = "Annuler";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Supprimer ?";
@@ -783,3 +784,4 @@
 "collections.section.links.title" = "Liens";
 "collections.section.all.button" = "Afficher toutes les %d →";
 "collections.section.no_items" = "Aucun élément dans la bibliothèque";
+"collections.image_viewer.copied.title" = "Picture copied";

@@ -25,3 +25,9 @@
 "share_extension.send_button.title" = "Saada";
 "share_extension.conversation_selection.empty.value" = "Vali";
 "share_extension.input.placeholder" = "Kirjuta sõnum";
+"share_extension.sending_progress.title" = "Saadab…";
+"share_extension.preparing.title" = "Preparing…";
+"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.not_signed_in.close_button" = "Close";
+
+"conversation.displayname.emptygroup" = "Tühi grupivestlus";
