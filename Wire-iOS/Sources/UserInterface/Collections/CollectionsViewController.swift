@@ -408,7 +408,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     
     fileprivate func sectionInsets(in section: CollectionsSectionSet) -> UIEdgeInsets {
         if section == CollectionsSectionSet.loading {
-            return .zero
+            return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         }
         
         return self.elements(for: section).count > 0 ? UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16) : .zero
