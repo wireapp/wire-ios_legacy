@@ -35,6 +35,8 @@ class PostContent {
         }
     }
 
+    fileprivate var batchObserver : SendableBatchObserver?
+    
     /// List of attachments to post
     var attachments : [NSItemProvider]
     
@@ -65,7 +67,6 @@ extension PostContent {
               conversationDidDegrade: @escaping (Set<ZMUser>, @escaping DegradationStrategyChoice) -> Void
         ) {
         
-        var currentlySending : [Sendable] = []
         guard let conversation = self.target,
             let sharingSession = globalSharingSession else {
                 return
@@ -81,9 +82,11 @@ extension PostContent {
                 conversationDidDegrade(change.users) {
                     switch $0 {
                     case .sendAnyway:
-                        currentlySending.forEach { $0.resendIgnoringMissingClients() }
+                        conversation.resendMessagesThatCausedConversationSecurityDegradation()
                     case .cancelSending:
-                        currentlySending.forEach { $0.cancel() }
+                        conversation.doNotResendMessagesThatCausedDegradation()
+                        self.batchObserver = nil
+                        didFinishSending()
                     }
                 }
             })
@@ -94,19 +97,19 @@ extension PostContent {
                              text: text)
         {
             messages in
-            currentlySending = messages
             allMessagesEnqueuedGroup.leave()
 
-            let observer = SendableBatchObserver(sendables: messages)
-            observer.progressHandler = {
+            self.batchObserver = SendableBatchObserver(sendables: messages)
+            self.batchObserver?.progressHandler = {
                 newProgressAvailable($0)
             }
             
             didScheduleSending()
             
-            observer.sentHandler = {
+            self.batchObserver?.sentHandler = {
                 conversationObserverToken.tearDown()
                 didFinishSending()
+                self.batchObserver = nil
             }
         }
     }
