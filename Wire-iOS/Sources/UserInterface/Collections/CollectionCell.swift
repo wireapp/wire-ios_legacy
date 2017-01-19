@@ -69,6 +69,10 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     
     private var cachedSize: CGSize? = .none
     
+    public func flushCachedSize() {
+        cachedSize = .none
+    }
+    
     override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         if let cachedSize = self.cachedSize {
             var newFrame = layoutAttributes.frame
@@ -118,6 +122,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     override open func prepareForReuse() {
         super.prepareForReuse()
         self.cachedSize = .none
+        self.message = .none
     }
     
     func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {

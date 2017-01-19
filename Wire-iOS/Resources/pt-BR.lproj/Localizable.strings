@@ -256,7 +256,7 @@
 "content.message.like" = "Curtir";
 "content.message.unlike" = "Descurtir";
 "content.message.forward" = "Encaminhar";
-"content.message.go_to_conversation" = "Reveal";
+"content.message.go_to_conversation" = "Exibir";
 "content.message.forward.to" = "Enviar para...";
 
 "content.reactions_list.likers" = "Curtido por";
@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "Ainda quer enviar sua mensagem?";
 "meta.degraded.show_device_button" = "Mostrar o dispositivo";
 "meta.degraded.send_anyway_button" = "Enviar assim mesmo";
+"meta.degraded.cancel_sending_button" = "Cancelar";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Remover?";
@@ -781,5 +782,6 @@
 "collections.section.files.title" = "Arquivos";
 "collections.section.videos.title" = "Vídeos";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Show all %d →";
-"collections.section.no_items" = "No items in collection";
+"collections.section.all.button" = "Mostrar todos os %d →";
+"collections.section.no_items" = "Não há itens na coleção";
+"collections.image_viewer.copied.title" = "Picture copied";

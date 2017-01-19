@@ -95,6 +95,23 @@ import Cartography
         }
     }
     
+    public var desiredWidth: CGFloat = 0
+    public var desiredHeight: CGFloat = 0
+    
+    override open var intrinsicContentSize: CGSize {
+        get {
+            return CGSize(width: self.desiredWidth, height: self.desiredHeight)
+        }
+    }
+    
+    override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        var newFrame = layoutAttributes.frame
+        newFrame.size.width = intrinsicContentSize.width
+        newFrame.size.height = intrinsicContentSize.height
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
+    }
+    
     public func didSelect(_ button: UIButton!) {
         self.selectionAction?(self.section)
     }

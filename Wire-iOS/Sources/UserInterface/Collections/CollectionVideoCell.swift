@@ -54,9 +54,13 @@ final public class CollectionVideoCell: CollectionCell {
         }
     }
     
-    public override func prepareForReuse() {
-        super.prepareForReuse()
-        self.message = .none
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(CollectionCell.forward(_:)):
+            return self.message?.isFileDownloaded() ?? false
+        default:
+            return super.canPerformAction(action, withSender: sender)
+        }
     }
 }
 

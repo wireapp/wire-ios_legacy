@@ -42,6 +42,9 @@
         self.imageProcessingQueue = [[NSOperationQueue alloc] init];
         self.imageProcessingQueue.maxConcurrentOperationCount = 1;
         self.imageProcessingQueue.qualityOfService = NSQualityOfServiceUtility;
+        
+        _processingGroup = dispatch_group_create();
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMemoryWarning)
                                                      name:UIApplicationDidReceiveMemoryWarningNotification
@@ -151,7 +154,10 @@
     
     @weakify(self);
     
+    dispatch_group_enter(self.processingGroup);
+    
     NSOperation *pendingOperation = [self pendingOperationForCacheKey:cacheKey];
+    
     if (pendingOperation != nil) {
 
         NSOperation *callbackOperation = [NSBlockOperation blockOperationWithBlock:^{
@@ -160,44 +166,49 @@
             if (image != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{                    
                     completion(image, cacheKey);
+                    dispatch_group_leave(self.processingGroup);
                 });
+            }
+            else {
+                dispatch_group_leave(self.processingGroup);
             }
         }];
         [callbackOperation addDependency:pendingOperation];
         [self.imageProcessingQueue addOperation:callbackOperation];
-        return;
     }
-    
-    NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-        
-        @strongify(self);
-        
-        NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
-        
-        image = creation(imageData);
-        
-        if (image != nil) {
-            [self.cache setObject:image forKey:cacheKey];
-        }
-        else {
-            DDLogError(@"Error creating image from data");
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+    else {
+        NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
             
-            NSTimeInterval endTime = [NSDate timeIntervalSinceReferenceDate];
-            NSTimeInterval duration = endTime - startTime;
+            @strongify(self);
             
-            if (duration > 10) {
-                DDLogVerbose(@"Image took a really long time to create! (time: %.2f bytes: %ld)", duration, (unsigned long)imageData.length);
+            NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
+            
+            image = creation(imageData);
+            
+            if (image != nil) {
+                [self.cache setObject:image forKey:cacheKey];
+            }
+            else {
+                DDLogError(@"Error creating image from data");
             }
             
-            completion(image, cacheKey);
-        });
-    }];
-    
-    operation.name = cacheKey;
-    [self.imageProcessingQueue addOperation:operation];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSTimeInterval endTime = [NSDate timeIntervalSinceReferenceDate];
+                NSTimeInterval duration = endTime - startTime;
+                
+                if (duration > 10) {
+                    DDLogVerbose(@"Image took a really long time to create! (time: %.2f bytes: %ld)", duration, (unsigned long)imageData.length);
+                }
+                
+                completion(image, cacheKey);
+                dispatch_group_leave(self.processingGroup);
+            });
+        }];
+        
+        operation.name = cacheKey;
+        [self.imageProcessingQueue addOperation:operation];
+    }
 }
 
 // Return a running operation for a cachekey

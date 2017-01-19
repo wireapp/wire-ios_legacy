@@ -37,9 +37,14 @@ class NotSignedInViewController : UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(onCloseTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "share_extension.not_signed_in.close_button".localized,
+            style: .done,
+            target: self,
+            action: #selector(onCloseTapped)
+        )
         
-        messageLabel.text = "You need to sign into Wire before you can share anything";
+        messageLabel.text = "share_extension.not_signed_in.title".localized
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
         

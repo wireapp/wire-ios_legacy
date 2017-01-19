@@ -114,17 +114,17 @@ static NSSet *phoneWidths(void) {
     return container;
 }
 
-- (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
-    [self verifyView:view tolerance:0 file:file line:line identifier:nil];
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil];
 }
 
-- (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
 {
-    [self verifyView:view tolerance:0 file:file line:line identifier:identifier];
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:identifier];
 }
 
-- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
 {
     UIView *container = [self containerViewWithView:view];
     if ([self assertEmptyFrame:container file:file line:line]) {
@@ -137,6 +137,9 @@ static NSSet *phoneWidths(void) {
     }
     else {
         finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, NSStringFromCGSize(view.bounds.size)];
+    }
+    if (extraLayoutPass) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
     
     FBSnapshotVerifyViewWithOptions(container, finalIdentifier, FBSnapshotTestCaseDefaultSuffixes(), tolerance);
@@ -155,28 +158,28 @@ static NSSet *phoneWidths(void) {
     return NO;
 }
 
-- (void)verifyViewInAllDeviceSizes:(UIView *)view file:(const char[])file line:(NSUInteger)line
+- (void)verifyViewInAllDeviceSizes:(UIView *)view  extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
-    [self verifyViewInAllDeviceSizes:view file:file line:line configurationBlock:nil];
+    [self verifyViewInAllDeviceSizes:view extraLayoutPass:extraLayoutPass file:file line:line configurationBlock:nil];
 }
 
-- (void)verifyViewInAllPhoneWidths:(UIView *)view file:(const char[])file line:(NSUInteger)line
+- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
     [self assertAmbigousLayout:view file:file line:line];
     for (NSValue *value in phoneWidths()) {
-        [self verifyView:view width:value.CGSizeValue.width file:file line:line];
+        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.CGSizeValue.width file:file line:line];
     }
 }
 
-- (void)verifyViewInAllTabletWidths:(UIView *)view file:(const char[])file line:(NSUInteger)line
+- (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
     [self assertAmbigousLayout:view file:file line:line];
     for (NSValue *value in tabletSizes()) {
-        [self verifyView:view width:value.CGSizeValue.width file:file line:line];
+        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.CGSizeValue.width file:file line:line];
     }
 }
 
-- (void)verifyView:(UIView *)view width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
 {
     UIView *container = [self containerViewWithView:view];
     
@@ -188,15 +191,20 @@ static NSSet *phoneWidths(void) {
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }
+    if (extraLayoutPass) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+    
     FBSnapshotVerifyView(container, @(width).stringValue)
 }
 
 - (void)verifyViewInAllPhoneSizes:(UIView *)view
+                  extraLayoutPass:(BOOL)extraLayoutPass
                              file:(const char[])file
                              line:(NSUInteger)line
                configurationBlock:(void (^)(UIView * view))configuration;
 {
-    [self verifyView:view inSizes:phoneSizes() file:file line:line configuration:^(UIView *view,__unused BOOL isPad) {
+    [self verifyView:view extraLayoutPass:extraLayoutPass inSizes:phoneSizes() file:file line:line configuration:^(UIView *view,__unused BOOL isPad) {
         if (nil != configuration) {
             configuration(view);
         }
@@ -205,14 +213,16 @@ static NSSet *phoneWidths(void) {
 
 
 - (void)verifyViewInAllDeviceSizes:(UIView *)view
+                   extraLayoutPass:(BOOL)extraLayoutPass
                               file:(const char[])file
                               line:(NSUInteger)line
                 configurationBlock:(void (^)(UIView * view, BOOL isPad))configuration
 {
-    [self verifyView:view inSizes:deviceSizes() file:file line:line configuration:configuration];
+    [self verifyView:view extraLayoutPass:extraLayoutPass inSizes:deviceSizes() file:file line:line configuration:configuration];
 }
 
 - (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
            inSizes:(NSArray <NSValue *>*)sizes
               file:(const char[])file
               line:(NSUInteger)line
@@ -228,7 +238,7 @@ static NSSet *phoneWidths(void) {
             }];
         }
         
-        [self verifyView:view file:file line:line];
+        [self verifyView:view extraLayoutPass:extraLayoutPass file:file line:line];
     }
 }
 

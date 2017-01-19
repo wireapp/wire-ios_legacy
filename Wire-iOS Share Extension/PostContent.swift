@@ -34,6 +34,9 @@ class PostContent {
             // no-op. This is useful for debugging
         }
     }
+    
+    /// Whether the posting was canceled
+    var isCanceled : Bool = false
 
     fileprivate var batchObserver : SendableBatchObserver?
     
@@ -61,16 +64,14 @@ extension PostContent {
     
     /// Send the content to the selected conversation
     func send(text: String,
+              sharingSession: SharingSession,
               didScheduleSending: @escaping () -> Void,
               newProgressAvailable: @escaping (Float) -> Void,
               didFinishSending: @escaping (Void) -> Void,
               conversationDidDegrade: @escaping (Set<ZMUser>, @escaping DegradationStrategyChoice) -> Void
         ) {
         
-        guard let conversation = self.target,
-            let sharingSession = globalSharingSession else {
-                return
-        }
+        guard let conversation = self.target else { return }
         
         let allMessagesEnqueuedGroup = DispatchGroup()
         allMessagesEnqueuedGroup.enter()
@@ -177,57 +178,45 @@ extension PostContent {
         
         attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
             
-            guard let data = data,
-                let UTIString = attachment.registeredTypeIdentifiers.first as? String,
-                error == nil else {
-                    DispatchQueue.main.async {
-                        completionHandler(nil)
-                    }
-                    return
+            guard let data = data, let UTIString = attachment.registeredTypeIdentifiers.first as? String, error == nil else {
+                return DispatchQueue.main.async {
+                    completionHandler(nil)
+                }
             }
             
             self.prepareForSending(data:data, UTIString: UTIString, name: name) { url, error in
                 
-                DispatchQueue.main.async {
-                    guard let url = url,
-                        error == nil else {
-                            completionHandler(nil)
-                            return
+                
+                guard let url = url, error == nil else {
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                        return
                     }
-                    
-                    FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
-                        sharingSession.enqueue {
-                            if let message = conversation.appendFile(metadata) {
-                                completionHandler(message)
-                            } else {
-                                completionHandler(nil)
-                            }
-                        }
+                    return
+                }
+                
+                FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
+                    sharingSession.enqueue {
+                        completionHandler(conversation.appendFile(metadata))
                     }
                 }
             }
         })
     }
-    
+
     /// Appends an image message, and invokes the callback when the message is available
     fileprivate func sendAsImage(sharingSession: SharingSession, conversation: Conversation, attachment: NSItemProvider, completionHandler: @escaping (Sendable?)->()) {
         let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
         attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], imageCompletionHandler: { (image, error) in
-            DispatchQueue.main.async {
-                guard let image = image,
-                    let imageData = UIImageJPEGRepresentation(image, 0.9),
-                    error == nil else {
-                        completionHandler(nil)
-                        return
+
+            guard let image = image, let imageData = UIImageJPEGRepresentation(image, 0.9), error == nil else {
+                return DispatchQueue.main.async {
+                    completionHandler(nil)
                 }
-                
-                sharingSession.enqueue {
-                    if let message = conversation.appendImage(imageData) {
-                        completionHandler(message)
-                    } else {
-                        completionHandler(nil)
-                    }
-                }
+            }
+            
+            sharingSession.enqueue {
+                completionHandler(conversation.appendImage(imageData))
             }
         })
     }
@@ -269,8 +258,13 @@ extension PostContent {
         
         
         if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
-            AVAsset.wr_convertVideo(at: tempFileURL) { (url, _, error) in
-                completionHandler(url, error)
+            AVAsset.wr_convertVideo(at: tempFileURL) { [weak self] (url, _, error) in
+                // Video conversaion can take a while, we need to ensure the user did not cancel
+                if self?.isCanceled == false {
+                    completionHandler(url, error)
+                } else {
+                    completionHandler(nil, error)
+                }
             }
         } else {
             completionHandler(tempFileURL, nil)
