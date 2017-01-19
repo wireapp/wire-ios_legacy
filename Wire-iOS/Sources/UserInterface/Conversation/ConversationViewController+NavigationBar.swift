@@ -82,6 +82,21 @@ public extension ConversationViewController {
         return [UIBarButtonItem(customView: audioCallBarButtonItem)]
     }
     
+    private func shouldShowCollectionsButton() -> Bool {
+        switch self.conversation.conversationType {
+        case .group:
+            return true
+        case .oneOnOne:
+            if let connection = conversation.connection,
+                connection.status != .pending && connection.status != .sent {
+                return true
+            }
+        default: return false
+        }
+        
+        return false
+    }
+    
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
         
@@ -90,9 +105,13 @@ public extension ConversationViewController {
             backButton.hitAreaPadding = CGSize(width: 28, height: 20)
             items.append(UIBarButtonItem(customView: backButton))
         }
-        let collectionsButton = collectionsBarButtonItem
-        collectionsButton.hitAreaPadding = CGSize(width: 0, height: 20)
-        items.append(UIBarButtonItem(customView: collectionsButton))
+        
+        if self.shouldShowCollectionsButton() {
+            let collectionsButton = collectionsBarButtonItem
+            collectionsButton.hitAreaPadding = CGSize(width: 0, height: 20)
+            items.append(UIBarButtonItem(customView: collectionsButton))
+        }
+        
         return items
     }
     
@@ -187,6 +206,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 self.contentViewController.scroll(to: message)
             }
         default:
+            self.contentViewController.wants(toPerform: action, for: message)
             break
         }
     }

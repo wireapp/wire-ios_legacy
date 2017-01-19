@@ -886,6 +886,7 @@
     
     if (note.participantsChanged || note.connectionStateChanged) {
         [self updateRightNavigationItemsButtons];
+        [self updateLeftNavigationBarItems];
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
     }

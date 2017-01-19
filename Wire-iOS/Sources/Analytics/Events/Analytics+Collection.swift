@@ -98,7 +98,7 @@ extension Analytics {
         var attributes = conversation.conversationAttributes
         attributes["is_empty"] = itemCount == 0 ? "true" : "false"
 
-        tagEvent("collections.open_collections", attributes:attributes)
+        tagEvent("collections.opened_collections", attributes:attributes)
     }
     
     @objc(tagCollectionOpenItemForConversation:withItemType:)
@@ -108,7 +108,7 @@ extension Analytics {
         attributes["type"] = string(for: itemType)
         
         
-        tagEvent("collections.open_item", attributes:attributes)
+        tagEvent("collections.opened_item", attributes:attributes)
     }
     
     @objc(tagCollectionOpenItemMenyForConversation:withItemType:)
@@ -117,7 +117,7 @@ extension Analytics {
         var attributes = conversation.conversationAttributes
         attributes["type"] = string(for: itemType)
         
-        tagEvent("collections.open_item_menu", attributes:attributes)
+        tagEvent("collections.opened_item_menu", attributes:attributes)
     }
     
     @objc(tagCollectionDidItemActionForConversation:withItemType:actionType:)

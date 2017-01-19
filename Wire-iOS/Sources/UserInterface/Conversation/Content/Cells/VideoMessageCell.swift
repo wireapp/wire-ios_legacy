@@ -22,19 +22,6 @@ import Cartography
 import CocoaLumberjackSwift
 import Classy
 
-extension ZMConversationMessage {
-    public func videoCanBeSavedToCameraRoll() -> Bool {
-        if let fileMessageData = self.fileMessageData,
-            let fileURL = fileMessageData.fileURL,
-            UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(fileURL.path) && fileMessageData.isVideo() {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-}
-
 /// Displays the video message with different states
 public final class VideoMessageCell: ConversationCell {
   

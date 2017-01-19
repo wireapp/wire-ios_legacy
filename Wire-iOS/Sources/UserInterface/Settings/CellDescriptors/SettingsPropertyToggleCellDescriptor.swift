@@ -46,8 +46,8 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
         cell.titleText = self.title
         if let toggleCell = cell as? SettingsToggleCell {
             var boolValue = false
-            if let value = self.settingsProperty.value().value() as? Int {
-                boolValue = value > 0
+            if let value = self.settingsProperty.value().value() as? NSNumber {
+                boolValue = value.boolValue
             }
             else {
                 boolValue = false
@@ -64,11 +64,17 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
     func select(_ value: SettingsPropertyValue?) {
         var valueToSet = false
         
-        if let intValue = value?.value() as? Int {
-            valueToSet = intValue > 0
-        }
-        else if let boolValue = value?.value() as? Bool {
-            valueToSet = boolValue
+        if let value = value?.value() {
+            switch value {
+            case let numberValue as NSNumber:
+                valueToSet = numberValue.boolValue
+            case let intValue as Int:
+                valueToSet = intValue > 0
+            case let boolValue as Bool:
+                valueToSet = boolValue
+            default:
+                fatal("Unknown type: \(type(of: value))")
+            }
         }
         
         if self.inverse {

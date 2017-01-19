@@ -43,7 +43,7 @@ import Foundation
     
     fileprivate func setupShapeLayer() {
         self.createPath()
-        self.shapeLayer.lineWidth = 2
+        self.shapeLayer.lineWidth = CGFloat(lineWidth)
         self.shapeLayer.lineCap = kCALineCapSquare
         self.shapeLayer.strokeStart = 0.0
         self.shapeLayer.strokeEnd = CGFloat(self.progress)
@@ -58,6 +58,12 @@ import Foundation
     override open var tintColor: UIColor! {
         didSet {
             self.shapeLayer.strokeColor = self.tintColor.cgColor
+        }
+    }
+    
+    open var lineWidth : Float = 2 {
+        didSet {
+            setNeedsLayout()
         }
     }
     
