@@ -419,13 +419,13 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         case CollectionsSectionSet.filesAndAudio:
             desiredWidth = self.contentView.collectionView.bounds.size.width - self.horizontalInset(in: section)
             if !CollectionsView.useAutolayout {
-                desiredHeight = 100
+                desiredHeight = 96
             }
         
         case CollectionsSectionSet.links:
             desiredWidth = self.contentView.collectionView.bounds.size.width - self.horizontalInset(in: section)
             if !CollectionsView.useAutolayout {
-                desiredHeight = 100
+                desiredHeight = 98
             }
             
         case CollectionsSectionSet.loading:
