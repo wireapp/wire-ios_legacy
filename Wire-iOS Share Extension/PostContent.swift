@@ -29,11 +29,7 @@ class PostContent {
     var conversationObserverToken : Any?
     
     /// Conversation to post to
-    var target : Conversation? = nil {
-        didSet {
-            // no-op. This is useful for debugging
-        }
-    }
+    var target : Conversation? = nil
     
     /// Whether the posting was canceled
     var isCanceled : Bool = false
