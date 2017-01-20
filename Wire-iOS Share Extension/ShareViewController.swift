@@ -61,12 +61,6 @@ class ShareViewController: SLComposeServiceViewController {
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
-
-    deinit {
-        self.removeConversationObserver()
-        observer = nil
-        sharingSession = nil
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,11 +209,6 @@ class ShareViewController: SLComposeServiceViewController {
         }
         
         pushConfigurationViewController(notSignedInViewController)
-    }
-    
-    /// Unregister conversation observer
-    private func removeConversationObserver() {
-        self.conversationDegradationObserverToken = nil
     }
     
     private func presentChooseConversation() {
