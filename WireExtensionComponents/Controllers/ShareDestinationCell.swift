@@ -19,15 +19,20 @@
 import Foundation
 import Cartography
 
+
+private let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
+
+
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable {
     let checmarkSize: CGFloat = 24
     
     let titleLabel = UILabel()
     let checkImageView = UIImageView()
-    
+
     var destination: D? {
         didSet {
             self.titleLabel.text = destination?.displayName
+            self.accessoryView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
         }
     }
 
