@@ -160,14 +160,11 @@ class ShareViewController: SLComposeServiceViewController {
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
     private func appendTextToEditor() {
         self.postContent?.fetchURLAttachments { [weak self] (urls) in
-        guard let url = urls.first, let `self` = self else { return }
-            DispatchQueue.main.async {
-                if !url.isFileURL { // remote URL (not local file)
-                    let separator = self.textView.text.isEmpty ? "" : "\n"
-                    self.textView.text = self.textView.text + separator + url.absoluteString
-                    self.textView.delegate?.textViewDidChange?(self.textView)
-                }
-                
+            guard let url = urls.first, let `self` = self else { return }
+            if !url.isFileURL { // remote URL (not local file)
+                let separator = self.textView.text.isEmpty ? "" : "\n"
+                self.textView.text = self.textView.text + separator + url.absoluteString
+                self.textView.delegate?.textViewDidChange?(self.textView)
             }
         }
     }

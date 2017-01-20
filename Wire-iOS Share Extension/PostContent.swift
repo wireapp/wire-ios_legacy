@@ -262,13 +262,11 @@ extension PostContent {
     func fetchURLAttachments(callback: @escaping ([URL])->()) {
         var urls : [URL] = []
         let group = DispatchGroup()
-        let queue = DispatchQueue(label: "share extension URLs queue")
-        
         self.attachments.forEach { attachment in
             if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                 group.enter()
                 attachment.fetchURL { url in
-                    queue.async {
+                    DispatchQueue.main.async {
                         defer {  group.leave() }
                         guard let url = url else { return }
                         urls.append(url)
@@ -276,7 +274,7 @@ extension PostContent {
                 }
             }
         }
-        group.notify(queue: queue) { _ in callback(urls) }
+        group.notify(queue: .main) { _ in callback(urls) }
     }
 }
 
