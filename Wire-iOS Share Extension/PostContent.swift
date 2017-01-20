@@ -242,7 +242,7 @@ extension PostContent {
         
         if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
             AVAsset.wr_convertVideo(at: tempFileURL) { [weak self] (url, _, error) in
-                // Video conversaion can take a while, we need to ensure the user did not cancel
+                // Video conversation can take a while, we need to ensure the user did not cancel
                 if self?.isCanceled == false {
                     completionHandler(url, error)
                 } else {
