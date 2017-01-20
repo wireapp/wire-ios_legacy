@@ -126,10 +126,10 @@ extension PostContent {
             messages.append(sendable)
         }
         
-        self.attachments.forEach { [weak self] attachment in
+        self.attachments.forEach { attachment in
             if attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
                 sendingGroup.enter()
-                self?.sendAsImage(sharingSession: sharingSession, conversation: conversation, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                self.sendAsImage(sharingSession: sharingSession, conversation: conversation, attachment: attachment, completionHandler: completeAndAppendToMessages)
             }
             else if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                 sendingGroup.enter()
@@ -137,13 +137,13 @@ extension PostContent {
                     if let url = url, !url.isFileURL == true { // remote URL, send as link
                         sendingGroup.leave()
                     } else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
-                        self?.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                        self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: url?.lastPathComponent, attachment: attachment, completionHandler: completeAndAppendToMessages)
                     }
                 }
             }
             else if attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) {
                 sendingGroup.enter()
-                self?.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: nil, attachment: attachment, completionHandler: completeAndAppendToMessages)
+                self.sendAsFile(sharingSession: sharingSession, conversation: conversation, name: nil, attachment: attachment, completionHandler: completeAndAppendToMessages)
             }
         }
         
