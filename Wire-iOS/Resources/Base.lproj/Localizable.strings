@@ -255,9 +255,9 @@
 
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
-"content.message.forward" = "Forward";
+"content.message.forward" = "Share";
 "content.message.go_to_conversation" = "Reveal";
-"content.message.forward.to" = "Send to...";
+"content.message.forward.to" = "Search…";
 
 "content.reactions_list.likers" = "Liked by";
 
