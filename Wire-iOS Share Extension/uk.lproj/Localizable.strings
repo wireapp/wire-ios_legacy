@@ -25,3 +25,9 @@
 "share_extension.send_button.title" = "Надіслати";
 "share_extension.conversation_selection.empty.value" = "Вибрати";
 "share_extension.input.placeholder" = "Напишіть повідомлення";
+"share_extension.sending_progress.title" = "Надсилання…";
+"share_extension.preparing.title" = "Підготовка…";
+"share_extension.not_signed_in.title" = "Ви повинні увійти в Wire, щоб поділитися чим-небудь";
+"share_extension.not_signed_in.close_button" = "Закрити";
+
+"conversation.displayname.emptygroup" = "Групова розмова без учасників";

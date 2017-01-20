@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "Vil du stadig sende meddelelsen?";
 "meta.degraded.show_device_button" = "Vis enhed";
 "meta.degraded.send_anyway_button" = "Send alligevel";
+"meta.degraded.cancel_sending_button" = "Annuller";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Fjern?";
@@ -783,3 +784,4 @@
 "collections.section.links.title" = "Links";
 "collections.section.all.button" = "Show all %d →";
 "collections.section.no_items" = "No items in collection";
+"collections.image_viewer.copied.title" = "Picture copied";

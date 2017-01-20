@@ -23,32 +23,32 @@
 
 #define ZMVerifyViewInAllDeviceSizesWithBlock(view__, configuration__) \
 do { \
-    [self verifyViewInAllDeviceSizes:view__ file:__FILE__ line:__LINE__ configurationBlock:configuration__]; \
+    [self verifyViewInAllDeviceSizes:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__ configurationBlock:configuration__]; \
 } while (0)
 
 #define ZMVerifyViewInAllDeviceSizes(view__) \
 do { \
-    [self verifyViewInAllDeviceSizes:view__ file:__FILE__ line:__LINE__]; \
+    [self verifyViewInAllDeviceSizes:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__]; \
 } while(0)
 
 #define ZMVerifyViewInAllIPhoneWidths(view__) \
 do { \
-    [self verifyViewInAllPhoneWidths:view__ file:__FILE__ line:__LINE__]; \
+    [self verifyViewInAllPhoneWidths:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__]; \
 } while(0)
 
 #define ZMVerifyViewInAllIPhoneSizes(view__) \
 do { \
-    [self verifyViewInAllPhoneSizes:view__ file:__FILE__ line:__LINE__ configurationBlock:nil]; \
+    [self verifyViewInAllPhoneSizes:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__ configurationBlock:nil]; \
 } while(0)
 
 #define ZMVerifyViewInAllIPhoneSizesWithBlock(view__, configuration__) \
 do { \
-    [self verifyViewInAllPhoneSizes:view__ file:__FILE__ line:__LINE__ configurationBlock:configuration__]; \
+    [self verifyViewInAllPhoneSizes:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__ configurationBlock:configuration__]; \
 } while(0)
 
 #define ZMVerifyView(view__) \
 do { \
-    [self verifyView:view__ file:__FILE__ line:__LINE__]; \
+    [self verifyView:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__]; \
 } while(0)
 
 
@@ -66,24 +66,26 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ZMAccentColor accentColor;
 
 /// Performs an assertion with the given view and the recorded snapshot.
-- (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line;
-- (void)verifyView:(UIView *)view file:(const char[])file line:(NSUInteger)line identifier:(nullable NSString *)identifier;
-- (void)verifyView:(UIView *)view tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(nullable NSString *)identifier;
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line;
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line identifier:(nullable NSString *)identifier;
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(nullable NSString *)identifier;
 
 /// Performs multiple assertions with the given view using the screen sizes of
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.
 /// This method only makes sense for views that will be on presented fullscreen.
-- (void)verifyViewInAllDeviceSizes:(UIView *)view file:(const char[])file line:(NSUInteger)line;
+- (void)verifyViewInAllDeviceSizes:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line;
 
-- (void)verifyViewInAllPhoneWidths:(UIView *)view file:(const char[])file line:(NSUInteger)line;
-- (void)verifyViewInAllTabletWidths:(UIView *)view file:(const char[])file line:(NSUInteger)line;
+- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line;
+- (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line;
 
 - (void)verifyViewInAllPhoneSizes:(UIView *)view
+                  extraLayoutPass:(BOOL)extraLayoutPass
                              file:(const char[])file
                              line:(NSUInteger)line
                configurationBlock:(nullable void (^)(UIView * view))configuration;
 
 - (void)verifyViewInAllDeviceSizes:(UIView *)view
+                   extraLayoutPass:(BOOL)extraLayoutPass
                               file:(const char[])file
                               line:(NSUInteger)line
                 configurationBlock:(nullable void (^)(UIView *view, BOOL isPad))configuration;

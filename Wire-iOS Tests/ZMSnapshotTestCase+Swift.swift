@@ -81,18 +81,18 @@ extension StaticString {
 
 extension ZMSnapshotTestCase {
     func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
+        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneWidths: view, file: file.utf8SignedStart(), line: line)
+        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }
     
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllTabletWidths: view, file: file.utf8SignedStart(), line: line)
+        verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }
     
-    func verifyInAllIPhoneSizes(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneSizes: view, file: file.utf8SignedStart(), line: line, configurationBlock: nil)
+    func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
+        verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, configurationBlock: nil)
     }
 }

@@ -905,9 +905,10 @@
                                                    style:[ActionSheetController defaultStyle]
                                               completion:^(BOOL sendAnywayPressed, BOOL showDetailsPressed) {
                                                   if (sendAnywayPressed) {
-                                                      [self.conversation resendLastUnsentMessages];
+                                                      [self.conversation resendMessagesThatCausedConversationSecurityDegradation];
                                                       [self dismissViewControllerAnimated:YES completion:nil];
                                                   } else if (showDetailsPressed) {
+                                                      [self.conversation doNotResendMessagesThatCausedDegradation];
                                                       if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
                                                           ZMUser *user = self.conversation.connectedUser;
                                                           if (user.clients.count == 1) {
@@ -947,6 +948,7 @@
 
 - (void)degradedConversationDismissed:(id)sender
 {
+    [self.conversation doNotResendMessagesThatCausedDegradation];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

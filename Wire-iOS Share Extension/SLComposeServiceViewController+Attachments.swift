@@ -25,7 +25,7 @@ import MobileCoreServices
 extension SLComposeServiceViewController {
 
     /// Get all the attachments to this post
-    var attachments : [NSItemProvider] {
+    var allAttachments : [NSItemProvider] {
         guard let items = extensionContext?.inputItems as? [NSExtensionItem] else { return [] }
         return items.flatMap { $0.attachments as? [NSItemProvider] } // remove optional
             .flatMap { $0 } // flattens array
@@ -35,21 +35,18 @@ extension SLComposeServiceViewController {
     func fetchURLAttachments(callback: @escaping ([URL])->()) {
         var urls : [URL] = []
         let group = DispatchGroup()
-        let queue = DispatchQueue(label: "share extension URLs queue")
-
-        self.attachments.forEach { attachment in
+        allAttachments.forEach { attachment in
             if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                 group.enter()
                 attachment.fetchURL { url in
-                    defer { group.leave() }
-                    guard let url = url else { return }
-                    queue.async {
+                    DispatchQueue.main.async {
+                        defer {  group.leave() }
+                        guard let url = url else { return }
                         urls.append(url)
                     }
                 }
             }
         }
-        group.notify(queue: queue) { _ in callback(urls) }
+        group.notify(queue: .main) { _ in callback(urls) }
     }
-
 }

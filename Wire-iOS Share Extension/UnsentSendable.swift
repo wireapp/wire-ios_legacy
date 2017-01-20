@@ -174,6 +174,7 @@ class UnsentFileSendable: UnsentSendableAbstract, UnsentSendableType {
         })
     }
 
+    /// Process data to the right format to be sent
     private func prepareForSending(withUTI UTI: String, name: String?, data: Data, completion: @escaping (URL?, Error?) -> Void) {
         guard let fileName = nameForFile(withUTI: UTI, name: name) else { return completion(nil, nil) }
 

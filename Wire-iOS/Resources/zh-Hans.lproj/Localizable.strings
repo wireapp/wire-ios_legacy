@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "您仍然要发送您的信息吗？";
 "meta.degraded.show_device_button" = "显示设备";
 "meta.degraded.send_anyway_button" = "确定发送";
+"meta.degraded.cancel_sending_button" = "取消";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "移除？";
@@ -783,3 +784,4 @@
 "collections.section.links.title" = "链接";
 "collections.section.all.button" = "显示全部 %d →";
 "collections.section.no_items" = "在资源库中什么都没有";
+"collections.image_viewer.copied.title" = "图片已复制";

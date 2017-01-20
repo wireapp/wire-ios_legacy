@@ -21,7 +21,13 @@
 
 
 
-"share_extension.conversation_selection.title" = "Conversation:";
+"share_extension.conversation_selection.title" = "المُحادثة:";
 "share_extension.send_button.title" = "إرسال";
-"share_extension.conversation_selection.empty.value" = "Choose";
+"share_extension.conversation_selection.empty.value" = "اختيار";
 "share_extension.input.placeholder" = "اكتب الرسالة";
+"share_extension.sending_progress.title" = "جاري الإرسال...";
+"share_extension.preparing.title" = "Preparing…";
+"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.not_signed_in.close_button" = "إغلاق";
+
+"conversation.displayname.emptygroup" = "محادثة جماعية";

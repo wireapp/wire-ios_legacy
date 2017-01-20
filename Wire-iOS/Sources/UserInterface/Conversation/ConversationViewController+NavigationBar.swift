@@ -83,6 +83,8 @@ public extension ConversationViewController {
     }
     
     private func shouldShowCollectionsButton() -> Bool {
+        guard #available(iOS 8.3, *) else { return false }
+
         switch self.conversation.conversationType {
         case .group:
             return true

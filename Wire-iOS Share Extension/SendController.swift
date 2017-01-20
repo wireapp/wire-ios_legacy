@@ -19,18 +19,23 @@
 
 import Foundation
 import WireShareEngine
+import ZMCDataModel
+
+typealias DegradationStrategyChoice = (DegradationStrategy) -> ()
+
+
+enum ProgressType {
+    case preparing
+    case prepared
+    case sending(Float)
+    case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice))
+    case done
+}
+
+typealias Progress = (_ type: ProgressType) -> Void
 
 
 class SendController {
-
-    enum ProgressType {
-        case preparing
-        case prepared
-        case sending(Float)
-        case done
-    }
-
-    typealias Progress = (_ type: ProgressType) -> Void
 
     private var observer: SendableBatchObserver? = nil
     private var isCancelled = false

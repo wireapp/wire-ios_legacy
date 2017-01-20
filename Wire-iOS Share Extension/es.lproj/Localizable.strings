@@ -21,7 +21,13 @@
 
 
 
-"share_extension.conversation_selection.title" = "Conversation:";
+"share_extension.conversation_selection.title" = "Chat:";
 "share_extension.send_button.title" = "Enviar";
-"share_extension.conversation_selection.empty.value" = "Choose";
-"share_extension.input.placeholder" = "Escriba un mensaje";
+"share_extension.conversation_selection.empty.value" = "Seleccionar";
+"share_extension.input.placeholder" = "Escribe un mensaje";
+"share_extension.sending_progress.title" = "Enviando …";
+"share_extension.preparing.title" = "Preparing…";
+"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.not_signed_in.close_button" = "Cerrar";
+
+"conversation.displayname.emptygroup" = "Chat de grupo vacío";

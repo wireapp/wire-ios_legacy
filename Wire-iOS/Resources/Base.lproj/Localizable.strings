@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
 "meta.degraded.show_device_button" = "Show device";
 "meta.degraded.send_anyway_button" = "Send anyway";
+"meta.degraded.cancel_sending_button" = "Cancel";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Remove?";

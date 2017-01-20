@@ -25,3 +25,9 @@
 "share_extension.send_button.title" = "送信";
 "share_extension.conversation_selection.empty.value" = "選択する";
 "share_extension.input.placeholder" = "メッセージを入力";
+"share_extension.sending_progress.title" = "送信中…";
+"share_extension.preparing.title" = "準備中…";
+"share_extension.not_signed_in.title" = "共有するためにはWireにサインインする必要があります";
+"share_extension.not_signed_in.close_button" = "閉じる";
+
+"conversation.displayname.emptygroup" = "誰もいないグループ";

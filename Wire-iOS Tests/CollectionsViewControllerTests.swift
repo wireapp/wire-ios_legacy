@@ -46,37 +46,37 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: true)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
     }
     
     func testThatLoadingIsShownWhenFetching() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: false)
         controller.view.layer.speed = 0 // Disable animations so that the spinner would always be in the same phase
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
     }
     
     func testFilesSectionWhenNotFull() {
         let assetCollection = MockCollection(fileMessages: [fileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
     }
 
     func testFilesSectionWhenFull() {
         let assetCollection = MockCollection(fileMessages: [fileMessage, fileMessage, fileMessage, fileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
     }
 
     func testLinksSectionWhenNotFull() {
         let assetCollection = MockCollection(linkMessages: [linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
     }
 
     func testLinksSectionWhenFull() {
         let assetCollection = MockCollection(linkMessages: [linkMessage, linkMessage, linkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
     }
 
 }

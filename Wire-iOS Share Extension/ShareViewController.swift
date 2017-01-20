@@ -28,14 +28,12 @@ import Classy
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
 
-
 class ShareViewController: SLComposeServiceViewController {
     
     var conversationItem : SLComposeSheetConfigurationItem?
-    var selectedConversation : Conversation?
 
+    fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
-    fileprivate var sendController: SendController?
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -45,6 +43,7 @@ class ShareViewController: SLComposeServiceViewController {
         self.setupNavigationBar()
         self.appendTextToEditor()
         self.placeholder = "share_extension.input.placeholder".localized
+        self.postContent = PostContent(attachments: self.allAttachments)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,10 +59,6 @@ class ShareViewController: SLComposeServiceViewController {
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
-    }
-
-    deinit {
-        sharingSession = nil
     }
     
     override func viewDidLoad() {
@@ -92,46 +87,47 @@ class ShareViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        return sharingSession != nil && selectedConversation != nil
+        return sharingSession != nil && self.postContent?.target != nil
     }
 
     /// invoked when the user wants to post
     func appendPostTapped() {
-        guard let session = sharingSession, let conversation = selectedConversation else { return }
-        let sendController = SendController(text: contentText, attachments: attachments, conversation: conversation, sharingSession: session)
-
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
 
-        sendController.send { [weak self] progress in
+        postContent?.send(text: contentText, sharingSession: sharingSession!) { [weak self] progress in
+            guard let `self` = self, let postContent = self.postContent else { return }
+
             switch progress {
             case .preparing:
                 DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
-                    if sendController.sentAllSendables || nil != self?.progressViewController {
-                        return
-                    }
-                    self?.presentSendingProgress(mode: .preparing)
+                    guard !postContent.sentAllSendables && nil == self.progressViewController else { return }
+                    self.presentSendingProgress(mode: .preparing)
                 }
 
             case .prepared:
                 DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
-                    guard !sendController.sentAllSendables && nil == self?.progressViewController else { return }
-                    self?.presentSendingProgress(mode: .sending)
+                    guard postContent.sentAllSendables && nil == self.progressViewController else { return }
+                    self.presentSendingProgress(mode: .sending)
                 }
 
             case .sending(let progress):
-                self?.progressViewController?.progress = progress
+                self.progressViewController?.progress = progress
 
             case .done:
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                    self?.view.alpha = 0
-                    self?.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                    self.view.alpha = 0
+                    self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
                 }, completion: { _ in
-                    self?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
                 })
+
+            case .conversationDidDegrade((let users, let strategyChoice)):
+                self.conversationDidDegrade(
+                    change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
+                    callback: strategyChoice
+                )
             }
         }
-
-        self.sendController = sendController
     }
     
     /// Display a preview image
@@ -139,7 +135,7 @@ class ShareViewController: SLComposeServiceViewController {
         if let parentView = super.loadPreviewView() {
             return parentView
         }
-        let hasURL = self.attachments.first(where: { $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String) }) != nil
+        let hasURL = self.allAttachments.first(where: { $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String) }) != nil
         let hasEmptyText = self.textView.text.isEmpty
         // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
         // if it has no image, it has a URL and it has text, it must be a file
@@ -151,15 +147,12 @@ class ShareViewController: SLComposeServiceViewController {
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
     private func appendTextToEditor() {
-        self.fetchURLAttachments { [weak self] (urls) in
+        fetchURLAttachments { [weak self] (urls) in
             guard let url = urls.first, let `self` = self else { return }
-            DispatchQueue.main.async {
-                if !url.isFileURL { // remote URL (not local file)
-                    let separator = self.textView.text.isEmpty ? "" : "\n"
-                    self.textView.text = self.textView.text + separator + url.absoluteString
-                    self.textView.delegate?.textViewDidChange?(self.textView)
-                }
-                
+            if !url.isFileURL { // remote URL (not local file)
+                let separator = self.textView.text.isEmpty ? "" : "\n"
+                self.textView.text = self.textView.text + separator + url.absoluteString
+                self.textView.delegate?.textViewDidChange?(self.textView)
             }
         }
     }
@@ -182,7 +175,7 @@ class ShareViewController: SLComposeServiceViewController {
         progressViewController?.mode = mode
 
         progressSendingViewController.cancelHandler = { [weak self] in
-            self?.sendController?.cancel {
+            self?.postContent?.cancel {
                 self?.cancel()
             }
         }
@@ -207,13 +200,33 @@ class ShareViewController: SLComposeServiceViewController {
         let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
         let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
         
-        conversationSelectionViewController.selectionHandler = { [weak self] conversation in
+        conversationSelectionViewController.selectionHandler = { [weak self] conversation in            
             self?.conversationItem?.value = conversation.name
-            self?.selectedConversation = conversation
+            self?.postContent?.target = conversation
             self?.popConfigurationViewController()
             self?.validateContent()
         }
         
         pushConfigurationViewController(conversationSelectionViewController)
     }
+
+    
+    private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
+        let title = titleForMissingClients(users: change.users)
+        let alert = UIAlertController(title: title, message: "meta.degraded.dialog_message".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "meta.degraded.send_anyway_button".localized, style: .destructive, handler: { _ in
+            callback(.sendAnyway)
+        }))
+        alert.addAction(UIAlertAction(title: "meta.degraded.cancel_sending_button".localized, style: .cancel, handler: { _ in
+            callback(.cancelSending)
+        }))
+        self.present(alert, animated: true)
+    }
+}
+
+
+private func titleForMissingClients(users: Set<ZMUser>) -> String {
+    let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
+    let allUsers = (users.map { $0.displayName ?? "" } as NSArray).componentsJoined(by: ", ") as NSString
+    return NSString(format: template.localized as NSString, allUsers) as String
 }
