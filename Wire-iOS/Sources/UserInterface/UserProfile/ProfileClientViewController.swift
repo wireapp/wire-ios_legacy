@@ -43,7 +43,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     var resetButton: ButtonWithLargerHitArea!
     
     /// Used for debugging purposes, disabled in public builds
-    var deleteDeviceButton: ButtonWithLargerHitArea!
+    var deleteDeviceButton: ButtonWithLargerHitArea?
     
     var fromConversation: Bool = false
     
@@ -257,7 +257,6 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     func createVerifiedToggle() {
         let verifiedToggle = UISwitch()
-        verifiedToggle.translatesAutoresizingMaskIntoConstraints = false
         verifiedToggle.isOn = self.userClient.verified
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
@@ -266,7 +265,6 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     func createVerifiedToggleLabel() {
         let verifiedToggleLabel = UILabel()
-        verifiedToggleLabel.translatesAutoresizingMaskIntoConstraints = false
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
@@ -275,7 +273,6 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     func createResetButton() {
         let resetButton = ButtonWithLargerHitArea()
-        resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(resetButton)
@@ -283,17 +280,12 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     }
     
     func createDeleteButton() {
+        guard DeveloperMenuState.developerMenuEnabled() else { return }
         let deleteButton = ButtonWithLargerHitArea()
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        deleteButton.setTitle("DELETE (⚠️ this will cause decryption errors ⚠️)", for: UIControlState())
+        deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: UIControlState())
+        deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(deleteButton)
         self.deleteDeviceButton = deleteButton
-        if !DeveloperMenuState.developerMenuEnabled() {
-            deleteButton.isHidden = true
-        } else {
-            deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
-        }
-
     }
     
     func createConstraints() {
@@ -350,10 +342,12 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
                 spinner.bottom <= verifiedToggle.bottom - 32
             }
             
-            constrain(contentView, reviewInvitationTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
-                deleteDeviceButton.right == contentView.right
-                deleteDeviceButton.left == contentView.left
-                deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
+            if let deleteDeviceButton = self.deleteDeviceButton {
+                constrain(contentView, reviewInvitationTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
+                    deleteDeviceButton.right == contentView.right
+                    deleteDeviceButton.left == contentView.left
+                    deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
+                }
             }
         }
     }
