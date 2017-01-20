@@ -74,9 +74,19 @@ extension SettingsCellDescriptorFactory {
 
     func emailElement() -> SettingsCellDescriptorType {
         if let emailAddress = ZMUser.selfUser().emailAddress, !emailAddress.isEmpty {
-            return SettingsInfoCellDescriptor(title: "self.settings.account_section.email.title".localized, previewGenerator: { _ in
-                return SettingsCellPreview.text(ZMUser.selfUser().emailAddress)
-            })
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.account_section.email.title".localized,
+                isDestructive: false,
+                presentationStyle: .navigation,
+                presentationAction: { () -> (UIViewController?) in
+                    let changeEmailController = ChangeEmailViewController()
+                    return changeEmailController
+            },
+                previewGenerator: { _ in
+                    return SettingsCellPreview.text(ZMUser.selfUser().emailAddress)
+            },
+                hideAccesoryView: true
+            )
         }
         return SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
             let addEmailController = AddEmailPasswordViewController()

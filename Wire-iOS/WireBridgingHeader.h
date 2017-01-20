@@ -50,6 +50,7 @@
 #import "WAZUIMagicIOS.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
+#import "RegistrationTextField.h"
 #import "InvisibleInputAccessoryView.h"
 #import <SCSiriWaveformView/SCSiriWaveformView.h>
 #import "ConversationInputBarSendController.h"
