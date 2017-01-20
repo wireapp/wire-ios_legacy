@@ -42,6 +42,9 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     var verifiedToggleLabel: UILabel!
     var resetButton: ButtonWithLargerHitArea!
     
+    /// Used for debugging purposes, disabled in public builds
+    var deleteDeviceButton: ButtonWithLargerHitArea!
+    
     var fromConversation: Bool = false
     
     var showBackButton: Bool = true {
@@ -130,6 +133,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         self.createVerifiedToggle()
         self.createVerifiedToggleLabel()
         self.createResetButton()
+        self.createDeleteButton()
         self.createConstraints()
         self.updateFingerprintLabel()
     }
@@ -278,6 +282,20 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         self.resetButton = resetButton
     }
     
+    func createDeleteButton() {
+        let deleteButton = ButtonWithLargerHitArea()
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        deleteButton.setTitle("DELETE (⚠️ this will cause decryption errors ⚠️)", for: UIControlState())
+        self.contentView.addSubview(deleteButton)
+        self.deleteDeviceButton = deleteButton
+        if !DeveloperMenuState.developerMenuEnabled() {
+            deleteButton.isHidden = true
+        } else {
+            deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
+        }
+
+    }
+    
     func createConstraints() {
         if let view = self.view
         {
@@ -331,6 +349,12 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
                 spinner.top >= IDLabel.bottom + 24
                 spinner.bottom <= verifiedToggle.bottom - 32
             }
+            
+            constrain(contentView, reviewInvitationTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
+                deleteDeviceButton.right == contentView.right
+                deleteDeviceButton.left == contentView.left
+                deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
+            }
         }
     }
     
@@ -363,8 +387,21 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     }
     
     func onResetTapped(_ sender: AnyObject) {
-        self.userClient.resetSession()
+        ZMUserSession.shared()?.performChanges {
+            self.userClient.resetSession()
+        }
         self.resetSessionPending = true
+    }
+    
+    func onDeleteDeviceTapped(_ sender: AnyObject) {
+        let sync = self.userClient.managedObjectContext!.zm_sync!
+        sync.performGroupedBlockAndWait {
+            let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
+            client.deleteClientAndEndSession()
+            sync.saveOrRollback()
+        }
+        self.presentingViewController?.dismiss(animated: true, completion: .none)
+
     }
     
     // MARK: - UserClientObserver
