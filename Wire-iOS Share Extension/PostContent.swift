@@ -46,7 +46,6 @@ class PostContent {
     init(attachments: [NSItemProvider]) {
         self.attachments = attachments
     }
-
 }
 
 // MARK: - Send attachments
@@ -71,12 +70,12 @@ extension PostContent {
               conversationDidDegrade: @escaping (Set<ZMUser>, @escaping DegradationStrategyChoice) -> Void
         ) {
         
-        guard let conversation = self.target else { return }
+        let conversation = self.target!
         
         let allMessagesEnqueuedGroup = DispatchGroup()
         allMessagesEnqueuedGroup.enter()
         
-        let conversationObserverToken = conversation.add(conversationVerificationDegradedObserver: {
+        let conversationObserverToken = conversation.add(conversationVerificationDegradedObserver: { [weak self]
             change in
             // make sure that we notify only when we are done preparing all the ones to be sent
             allMessagesEnqueuedGroup.notify(queue: DispatchQueue.main, execute: { 
@@ -86,7 +85,7 @@ extension PostContent {
                         conversation.resendMessagesThatCausedConversationSecurityDegradation()
                     case .cancelSending:
                         conversation.doNotResendMessagesThatCausedDegradation()
-                        self.batchObserver = nil
+                        self?.batchObserver = nil
                         didFinishSending()
                     }
                 }
@@ -96,21 +95,21 @@ extension PostContent {
         self.sendAttachments(sharingSession: sharingSession,
                              conversation: conversation,
                              text: text)
-        {
+        { [weak self]
             messages in
             allMessagesEnqueuedGroup.leave()
 
-            self.batchObserver = SendableBatchObserver(sendables: messages)
-            self.batchObserver?.progressHandler = {
+            self?.batchObserver = SendableBatchObserver(sendables: messages)
+            self?.batchObserver?.progressHandler = {
                 newProgressAvailable($0)
             }
             
             didScheduleSending()
             
-            self.batchObserver?.sentHandler = {
+            self?.batchObserver?.sentHandler = {
                 conversationObserverToken.tearDown()
                 didFinishSending()
-                self.batchObserver = nil
+                self?.batchObserver = nil
             }
         }
     }
@@ -125,7 +124,7 @@ extension PostContent {
         
         var messages : [Sendable] = [] // this will always modifed on the main thread
         
-        let completeAndAppendToMessages : (Sendable?)->() = { sendable in
+        let completeAndAppendToMessages : (Sendable?)->() = { [weak self] sendable in
             defer { sendingGroup.leave() }
             guard let sendable = sendable else {
                 return
