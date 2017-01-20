@@ -31,8 +31,8 @@
 "share_extension.not_signed_in.close_button" = "Sulge";
 
 "conversation.displayname.emptygroup" = "Tühi grupivestlus";
-"meta.degraded.degradation_reason_message.singular" = "%@ hakkas kasutama uut seadet.";
-"meta.degraded.degradation_reason_message.plural" = "%@ hakkas kasutama uusi seadmeid.";
+"meta.degraded.degradation_reason_message.singular" = "%@ hakkas uut seadet kasutama.";
+"meta.degraded.degradation_reason_message.plural" = "%@ hakkas uusi seadmeid kasutama.";
 "meta.degraded.dialog_message" = "Kas tahad ikka seda sõnumit saata?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Ära saada";
 "meta.degraded.send_anyway_button" = "Saada";

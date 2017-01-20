@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@ je začel(-a) z uporabo nove naprave.";
 "meta.degraded.degradation_reason_message.plural" = "%@je začel(-a) z uporabo novih naprav.";
 "meta.degraded.dialog_message" = "Ali še vedno želite poslati vaše sporočilo?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Ne pošlji";
 "meta.degraded.send_anyway_button" = "Pošlji vseeno";

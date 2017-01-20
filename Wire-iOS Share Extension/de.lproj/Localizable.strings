@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
 "meta.degraded.degradation_reason_message.plural" = "%@ haben neue Geräte hinzugefügt.";
 "meta.degraded.dialog_message" = "Möchtest du die Nachricht noch senden?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Nicht senden";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
