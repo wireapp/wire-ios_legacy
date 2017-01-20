@@ -129,9 +129,7 @@ extension PostContent {
             guard let sendable = sendable else {
                 return
             }
-            DispatchQueue.main.async {
-                messages.append(sendable)
-            }
+            messages.append(sendable)
         }
         
         self.attachments.forEach { attachment in
@@ -165,9 +163,7 @@ extension PostContent {
             }
             
             sendingGroup.notify(queue: .main) {
-                DispatchQueue.main.async {
-                    didScheduleSending(messages)
-                }
+                didScheduleSending(messages)
             }
         }
     }
@@ -178,18 +174,17 @@ extension PostContent {
         attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
             
             guard let data = data, let UTIString = attachment.registeredTypeIdentifiers.first as? String, error == nil else {
-                return DispatchQueue.main.async {
+                sharingSession.enqueue {
                     completionHandler(nil)
                 }
+                return
             }
             
             self.prepareForSending(data:data, UTIString: UTIString, name: name) { url, error in
                 
-                
                 guard let url = url, error == nil else {
-                    DispatchQueue.main.async {
+                    sharingSession.enqueue {
                         completionHandler(nil)
-                        return
                     }
                     return
                 }
@@ -208,13 +203,12 @@ extension PostContent {
         let preferredSize = NSValue.init(cgSize: CGSize(width: 1024, height: 1024))
         attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: [NSItemProviderPreferredImageSizeKey : preferredSize], imageCompletionHandler: { (image, error) in
 
-            guard let image = image, let imageData = UIImageJPEGRepresentation(image, 0.9), error == nil else {
-                return DispatchQueue.main.async {
-                    completionHandler(nil)
-                }
-            }
-            
             sharingSession.enqueue {
+                guard let image = image, let imageData = UIImageJPEGRepresentation(image, 0.9), error == nil else {
+                    completionHandler(nil)
+                    return
+                }
+                
                 completionHandler(conversation.appendImage(imageData))
             }
         })
@@ -222,14 +216,8 @@ extension PostContent {
     
     /// Appends an image message, and invokes the callback when the message is available
     fileprivate func sendAsText(sharingSession: SharingSession, conversation: Conversation, text: String, completionHandler: @escaping (Sendable?)->()) {
-        DispatchQueue.main.async {
-            sharingSession.enqueue {
-                if let message = conversation.appendTextMessage(text) {
-                    completionHandler(message)
-                } else {
-                    completionHandler(nil)
-                }
-            }
+        sharingSession.enqueue {
+            completionHandler(conversation.appendTextMessage(text))
         }
     }
     
