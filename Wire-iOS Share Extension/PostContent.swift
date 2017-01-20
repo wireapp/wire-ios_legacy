@@ -268,9 +268,9 @@ extension PostContent {
             if attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                 group.enter()
                 attachment.fetchURL { url in
-                    defer { group.leave() }
-                    guard let url = url else { return }
                     queue.async {
+                        defer {  group.leave() }
+                        guard let url = url else { return }
                         urls.append(url)
                     }
                 }
