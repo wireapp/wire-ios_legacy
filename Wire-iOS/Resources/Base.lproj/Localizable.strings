@@ -351,7 +351,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Block?";
-"profile.block_dialog.message" = "%@ won’t be able to find or contact you on Wire.";
+"profile.block_dialog.message" = "%@ won’t be able to contact you or add you to group conversations.";
 "profile.block_dialog.button_cancel" = "Cancel";
 "profile.block_dialog.button_block" = "Block";
 

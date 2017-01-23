@@ -401,6 +401,45 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return 3
     }
     
+    fileprivate func sizeForCell(at indexPath: IndexPath) -> (CGFloat?, CGFloat?) {
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
+            fatal("Unknown section")
+        }
+        
+        let gridElementSize = self.gridElementSize(in: section)
+        
+        var desiredWidth: CGFloat?
+        var desiredHeight: CGFloat?
+        
+        switch(section) {
+        case CollectionsSectionSet.images, CollectionsSectionSet.videos:
+            desiredWidth = gridElementSize.width
+            desiredHeight = gridElementSize.height
+            
+        case CollectionsSectionSet.filesAndAudio:
+            desiredWidth = self.contentView.collectionView.bounds.size.width - self.horizontalInset(in: section)
+            if !CollectionsView.useAutolayout {
+                desiredHeight = 96
+            }
+        
+        case CollectionsSectionSet.links:
+            desiredWidth = self.contentView.collectionView.bounds.size.width - self.horizontalInset(in: section)
+            if !CollectionsView.useAutolayout {
+                desiredHeight = 98
+            }
+            
+        case CollectionsSectionSet.loading:
+            desiredWidth = self.contentView.collectionView.bounds.size.width - self.horizontalInset(in: section)
+            if !CollectionsView.useAutolayout {
+                desiredHeight = self.fetchingDone ? 24 : 88
+            }
+            
+        default: fatal("Unknown section")
+        }
+
+        return (desiredWidth, desiredHeight)
+    }
+    
     fileprivate func horizontalInset(in section: CollectionsSectionSet) -> CGFloat {
         let insets = self.sectionInsets(in: section)
         return insets.left + insets.right
@@ -426,77 +465,58 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return self.numberOfElements(for: section)
     }
     
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let (width, height) = self.sizeForCell(at: indexPath)
+        return CGSize(width: width ?? 0, height: height ?? 0)
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
         
-        let gridElementSize = self.gridElementSize(in: section)
+        let resultCell: CollectionCell
         
         switch(section) {
         case CollectionsSectionSet.images:
-            let message = self.message(for: indexPath)
-
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
-            cell.message = message
-            cell.delegate = self
-            cell.messageChangeDelegate = self
-            cell.desiredWidth = gridElementSize.width
-            cell.desiredHeight = gridElementSize.height
+            resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             
-            return cell
         case CollectionsSectionSet.filesAndAudio:
-            let message = self.message(for: indexPath)
-
-            if message.fileMessageData!.isAudio() {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
-                cell.message = message
-                cell.desiredWidth = collectionView.bounds.size.width - self.horizontalInset(in: section)
-                cell.desiredHeight = .none
-                cell.delegate = self
-                cell.messageChangeDelegate = self
-                return cell
+            if self.message(for: indexPath).fileMessageData!.isAudio() {
+                resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
             }
             else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFileCell.reuseIdentifier, for: indexPath) as! CollectionFileCell
-                cell.message = message
-                cell.desiredWidth = collectionView.bounds.size.width - self.horizontalInset(in: section)
-                cell.desiredHeight = .none
-                cell.delegate = self
-                cell.messageChangeDelegate = self
-                return cell
+                resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionFileCell.reuseIdentifier, for: indexPath) as! CollectionFileCell
             }
+            
         case CollectionsSectionSet.videos:
-            let message = self.message(for: indexPath)
-
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
-            cell.message = message
-            cell.desiredWidth = gridElementSize.width
-            cell.desiredHeight = gridElementSize.height
-            cell.delegate = self
-            cell.messageChangeDelegate = self
-
-            return cell
+            resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
     
         case CollectionsSectionSet.links:
-            let message = self.message(for: indexPath)
-
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
-            cell.message = message
-            cell.delegate = self
-            cell.messageChangeDelegate = self
-            cell.desiredWidth = collectionView.bounds.size.width - self.horizontalInset(in: section)
-            cell.desiredHeight = .none
-            return cell
-    
+            resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
+            
         case CollectionsSectionSet.loading:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLoadingCell.reuseIdentifier, for: indexPath) as! CollectionLoadingCell
-            cell.containerWidth = collectionView.bounds.size.width - self.horizontalInset(in: section)
             cell.collapsed = self.fetchingDone
+            cell.containerWidth = collectionView.bounds.size.width - self.horizontalInset(in: section)
             return cell
         
         default: fatal("Unknown section")
         }
+        
+        let message = self.message(for: indexPath)
+        resultCell.message = message
+        resultCell.delegate = self
+        resultCell.messageChangeDelegate = self
+        
+        if CollectionsView.useAutolayout {
+            let (width, height) = self.sizeForCell(at: indexPath)
+            
+            resultCell.desiredWidth = width
+            resultCell.desiredHeight = height
+        }
+        
+        return resultCell
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

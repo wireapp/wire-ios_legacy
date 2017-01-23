@@ -189,7 +189,7 @@ import Cartography
             showIndicator = false
             return
         }
-        showIndicator = user.clientsRequiringUserAttention.count > 0
+        showIndicator = user.clientsRequiringUserAttention?.count > 0
     }
     
     // MARK: - Target Action

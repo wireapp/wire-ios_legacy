@@ -24,12 +24,14 @@ import ZMCDataModel
 typealias DegradationStrategyChoice = (DegradationStrategy) -> ()
 
 
+/// This enum specifies the current state of the sending progress and is passed
+/// as a parameter in a `Progress` closure.
 enum ProgressType {
-    case preparing
-    case prepared
-    case sending(Float)
-    case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice))
-    case done
+    case preparing // Some attachments need to be prepared, this case is not always invoked.
+    case startingSending // The messages are about to be appended, the callback will always be invoked axecatly once.
+    case sending(Float) // The progress of the sending operation.
+    case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice)) // In case the conversation degrades this case will be passed.
+    case done // Sending either was cancelled (due to degradation for example) or finished.
 }
 
 typealias Progress = (_ type: ProgressType) -> Void
@@ -63,7 +65,8 @@ class SendController {
     }
 
     func send(progress: @escaping Progress) {
-        let completion: ([Sendable]) -> Void = { sendables in
+        let completion: ([Sendable]) -> Void = { [weak self] sendables in
+            guard let `self` = self else { return }
             self.observer = SendableBatchObserver(sendables: sendables)
             self.observer?.progressHandler = {
                 progress(.sending($0))
@@ -80,10 +83,11 @@ class SendController {
             prepare(unsentSendables: unsentSendables) { [weak self] in
                 guard let `self` = self else { return }
                 guard !self.isCancelled else { return progress(.done) }
-                progress(.prepared)
+                progress(.startingSending)
                 self.append(unsentSendables: self.unsentSendables, completion: completion)
             }
         } else {
+            progress(.startingSending)
             append(unsentSendables: unsentSendables, completion: completion)
         }
     }
@@ -120,12 +124,10 @@ class SendController {
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()
 
-        let appendToMessages: (Sendable?) -> () = { sendable in
+        let appendToMessages: (Sendable?) -> Void = { [weak self] sendable in
             defer { sendingGroup.leave() }
             guard let sendable = sendable else { return }
-            DispatchQueue.main.async {
-                messages.append(sendable)
-            }
+            messages.append(sendable)
         }
 
         unsentSendables.filter {
@@ -136,9 +138,7 @@ class SendController {
         }
 
         sendingGroup.notify(queue: .main) {
-            DispatchQueue.main.async {
-                completion(messages)
-            }
+            completion(messages)
         }
     }
 

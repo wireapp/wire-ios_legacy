@@ -26,6 +26,8 @@ import Cartography
     let noItemsLabel = UILabel()
     let noItemsIcon = UIImageView()
     
+    static public let useAutolayout = false
+    
     var noItemsInLibrary: Bool = false {
         didSet {
             self.noItemsLabel.isHidden = !self.noItemsInLibrary
@@ -78,7 +80,9 @@ import Cartography
         layout.minimumLineSpacing = 1
         layout.minimumInteritemSpacing = 1
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
-        layout.estimatedItemSize = CGSize(width: 64, height: 64)
+        if CollectionsView.useAutolayout {
+            layout.estimatedItemSize = CGSize(width: 64, height: 64)
+        }
         
         self.collectionViewLayout = layout
     }

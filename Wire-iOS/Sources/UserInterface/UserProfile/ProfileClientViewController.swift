@@ -42,6 +42,9 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     var verifiedToggleLabel: UILabel!
     var resetButton: ButtonWithLargerHitArea!
     
+    /// Used for debugging purposes, disabled in public builds
+    var deleteDeviceButton: ButtonWithLargerHitArea?
+    
     var fromConversation: Bool = false
     
     var showBackButton: Bool = true {
@@ -130,6 +133,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         self.createVerifiedToggle()
         self.createVerifiedToggleLabel()
         self.createResetButton()
+        self.createDeleteButton()
         self.createConstraints()
         self.updateFingerprintLabel()
     }
@@ -253,7 +257,6 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     func createVerifiedToggle() {
         let verifiedToggle = UISwitch()
-        verifiedToggle.translatesAutoresizingMaskIntoConstraints = false
         verifiedToggle.isOn = self.userClient.verified
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
@@ -262,7 +265,6 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     func createVerifiedToggleLabel() {
         let verifiedToggleLabel = UILabel()
-        verifiedToggleLabel.translatesAutoresizingMaskIntoConstraints = false
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
@@ -271,11 +273,19 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     
     func createResetButton() {
         let resetButton = ButtonWithLargerHitArea()
-        resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(resetButton)
         self.resetButton = resetButton
+    }
+    
+    func createDeleteButton() {
+        guard DeveloperMenuState.developerMenuEnabled() else { return }
+        let deleteButton = ButtonWithLargerHitArea()
+        deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: UIControlState())
+        deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
+        self.contentView.addSubview(deleteButton)
+        self.deleteDeviceButton = deleteButton
     }
     
     func createConstraints() {
@@ -331,6 +341,14 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
                 spinner.top >= IDLabel.bottom + 24
                 spinner.bottom <= verifiedToggle.bottom - 32
             }
+            
+            if let deleteDeviceButton = self.deleteDeviceButton {
+                constrain(contentView, reviewInvitationTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
+                    deleteDeviceButton.right == contentView.right
+                    deleteDeviceButton.left == contentView.left
+                    deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
+                }
+            }
         }
     }
     
@@ -363,8 +381,21 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
     }
     
     func onResetTapped(_ sender: AnyObject) {
-        self.userClient.resetSession()
+        ZMUserSession.shared()?.performChanges {
+            self.userClient.resetSession()
+        }
         self.resetSessionPending = true
+    }
+    
+    func onDeleteDeviceTapped(_ sender: AnyObject) {
+        let sync = self.userClient.managedObjectContext!.zm_sync!
+        sync.performGroupedBlockAndWait {
+            let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
+            client.deleteClientAndEndSession()
+            sync.saveOrRollback()
+        }
+        self.presentingViewController?.dismiss(animated: true, completion: .none)
+
     }
     
     // MARK: - UserClientObserver

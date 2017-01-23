@@ -40,10 +40,10 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.postContent = PostContent(attachments: self.allAttachments)
         self.setupNavigationBar()
         self.appendTextToEditor()
         self.placeholder = "share_extension.input.placeholder".localized
-        self.postContent = PostContent(attachments: self.allAttachments)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,7 +104,7 @@ class ShareViewController: SLComposeServiceViewController {
                     self.presentSendingProgress(mode: .preparing)
                 }
 
-            case .prepared:
+            case .startingSending:
                 DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
                     guard postContent.sentAllSendables && nil == self.progressViewController else { return }
                     self.presentSendingProgress(mode: .sending)

@@ -31,3 +31,8 @@
 "share_extension.not_signed_in.close_button" = "Luk";
 
 "conversation.displayname.emptygroup" = "Tom gruppechat";
+"meta.degraded.degradation_reason_message.singular" = "%@ begyndte at bruge en ny enhed.";
+"meta.degraded.degradation_reason_message.plural" = "%@ begyndte at bruge nye enheder.";
+"meta.degraded.dialog_message" = "Vil du stadig sende meddelelsen?";
+"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.send_anyway_button" = "Send alligevel";

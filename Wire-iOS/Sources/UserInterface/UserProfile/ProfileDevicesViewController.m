@@ -62,13 +62,20 @@
     [ParticipantDeviceCell registerIn:self.tableView];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 32, 0);
     [self setupTableHeaderView];
-    [self.user fetchUserClients];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self reloadData];
+    [self.user fetchUserClients];
+}
+
+- (void)reloadData
+{
+    [self refreshSortedClientsWithSet:self.user.clients];
     [self updateTableHeaderView];
+    [self.tableView reloadData];
 }
 
 - (void)dealloc
@@ -119,9 +126,7 @@
 - (void)userDidChange:(UserChangeInfo *)note
 {
     if (note.trustLevelChanged || note.clientsChanged) {
-        [self refreshSortedClientsWithSet:self.user.clients];
-        [self updateTableHeaderView];
-        [self.tableView reloadData];
+        [self reloadData];
     }
 }
 
@@ -141,7 +146,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.user.clients.allObjects.count;
+    return self.sortedClients.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

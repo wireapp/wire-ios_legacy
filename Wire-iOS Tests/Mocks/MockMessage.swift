@@ -122,6 +122,7 @@ import ZMCLinkPreview
     var imageMessageData: ZMImageMessageData? = .none
     var systemMessageData: ZMSystemMessageData? = .none
     var knockMessageData: ZMKnockMessageData? = .none
+    var causedSecurityLevelDegradation: Bool = false
 
     var fileMessageData: ZMFileMessageData? {
         return backingFileMessageData

@@ -20,6 +20,7 @@ import Foundation
 
 public protocol ShareDestination: Hashable {
     var displayName: String { get }
+    var securityLevel: ZMConversationSecurityLevel { get }
 }
 
 public protocol Shareable {

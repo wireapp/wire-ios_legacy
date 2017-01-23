@@ -63,6 +63,8 @@ final public class CollectionImageCell: CollectionCell {
     func loadView() {
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
+        self.imageView.accessibilityIdentifier = "image"
+        self.loadingView.accessibilityIdentifier = "loading"
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.loadingView)
         constrain(self, self.imageView, self.loadingView) { selfView, imageView, loadingView in

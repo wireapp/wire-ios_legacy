@@ -26,7 +26,7 @@ import MobileCoreServices
 /// Content that is shared on a share extension post attempt
 class PostContent {
     
-    var conversationObserverToken : Any?
+    var conversationObserverToken: TearDownCapable?
     
     /// Conversation to post to
     var target : Conversation? = nil
@@ -68,17 +68,16 @@ extension PostContent {
         allMessagesEnqueuedGroup.enter()
 
         sendController?.send {
-            switch $0 {
-            case .sending(_):
+            if case .startingSending = $0 {
                 allMessagesEnqueuedGroup.leave()
-                fallthrough
-            default: progress($0)
             }
+
+            progress($0)
         }
 
         conversationObserverToken = conversation.add { change in
             // make sure that we notify only when we are done preparing all the ones to be sent
-            allMessagesEnqueuedGroup.notify(queue: DispatchQueue.main, execute: {
+            allMessagesEnqueuedGroup.notify(queue: .main, execute: {
                 let degradationStrategy: DegradationStrategyChoice = {
                     switch $0 {
                     case .sendAnyway:
@@ -96,4 +95,5 @@ extension PostContent {
     func cancel(completion: @escaping () -> Void) {
         sendController?.cancel(completion: completion)
     }
+
 }
