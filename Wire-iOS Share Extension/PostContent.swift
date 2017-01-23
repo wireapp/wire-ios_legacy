@@ -26,8 +26,6 @@ import MobileCoreServices
 /// Content that is shared on a share extension post attempt
 class PostContent {
     
-    var conversationObserverToken: TearDownCapable?
-    
     /// Conversation to post to
     var target: Conversation? = nil
 
