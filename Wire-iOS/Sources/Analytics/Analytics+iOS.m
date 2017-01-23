@@ -48,7 +48,7 @@ static Analytics *sharedAnalytics = nil;
         return sharedAnalytics;
     }
 
-    BOOL useAnalytics = YES;//USE_ANALYTICS; // TODO: Silvan revert this!
+    BOOL useAnalytics = USE_ANALYTICS;
     // Don’t track events in debug configuration.
     if (useAnalytics && ![[Settings sharedSettings] disableAnalytics]) {
         static dispatch_once_t onceToken;
