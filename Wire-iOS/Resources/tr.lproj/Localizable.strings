@@ -341,6 +341,7 @@
 "meta.degraded.dialog_message" = "Hâlâ mesajınızı göndermek istiyor musunuz?";
 "meta.degraded.show_device_button" = "Cihazı göster";
 "meta.degraded.send_anyway_button" = "Yine de gönder";
+"meta.degraded.cancel_sending_button" = "İptal";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Sil?";
@@ -781,5 +782,6 @@
 "collections.section.files.title" = "Dosyalar";
 "collections.section.videos.title" = "Videolar";
 "collections.section.links.title" = "Bağlantılar";
-"collections.section.all.button" = "Tüm %dleri göster →";
+"collections.section.all.button" = "%d'nun tümünü göster →";
 "collections.section.no_items" = "Koleksiyonda hiçbir şey yok";
+"collections.image_viewer.copied.title" = "Picture copied";

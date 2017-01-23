@@ -82,6 +82,23 @@ public extension ConversationViewController {
         return [UIBarButtonItem(customView: audioCallBarButtonItem)]
     }
     
+    private func shouldShowCollectionsButton() -> Bool {
+        guard #available(iOS 8.3, *) else { return false }
+
+        switch self.conversation.conversationType {
+        case .group:
+            return true
+        case .oneOnOne:
+            if let connection = conversation.connection,
+                connection.status != .pending && connection.status != .sent {
+                return true
+            }
+        default: return false
+        }
+        
+        return false
+    }
+    
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
         
@@ -91,7 +108,7 @@ public extension ConversationViewController {
             items.append(UIBarButtonItem(customView: backButton))
         }
         
-        if let connection = conversation.connection, connection.status != .pending && connection.status != .sent {
+        if self.shouldShowCollectionsButton() {
             let collectionsButton = collectionsBarButtonItem
             collectionsButton.hitAreaPadding = CGSize(width: 0, height: 20)
             items.append(UIBarButtonItem(customView: collectionsButton))

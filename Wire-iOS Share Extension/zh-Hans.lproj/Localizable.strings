@@ -25,3 +25,14 @@
 "share_extension.send_button.title" = "发送";
 "share_extension.conversation_selection.empty.value" = "选择";
 "share_extension.input.placeholder" = "键入一条消息";
+"share_extension.sending_progress.title" = "正在发送...";
+"share_extension.preparing.title" = "准备中...";
+"share_extension.not_signed_in.title" = "您在登录Wire后才可以使用分享功能";
+"share_extension.not_signed_in.close_button" = "关闭";
+
+"conversation.displayname.emptygroup" = "空聊天室";
+"meta.degraded.degradation_reason_message.singular" = "%@ 开始使用新的设备。";
+"meta.degraded.degradation_reason_message.plural" = "%@ 开始使用新的设备。";
+"meta.degraded.dialog_message" = "您仍然要发送您的信息吗？";
+"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.send_anyway_button" = "确定发送";

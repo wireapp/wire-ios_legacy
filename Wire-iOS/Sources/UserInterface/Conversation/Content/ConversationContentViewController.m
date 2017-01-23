@@ -498,10 +498,12 @@
     }
     else {
         [cell.savableImage saveToLibraryWithCompletion:^{
-            UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
-            snapshot.translatesAutoresizingMaskIntoConstraints = YES;
-            CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
-            [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
+            if (nil != self.view.window) {
+                UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
+                snapshot.translatesAutoresizingMaskIntoConstraints = YES;
+                CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
+                [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
+            }
         }];
     }
 }

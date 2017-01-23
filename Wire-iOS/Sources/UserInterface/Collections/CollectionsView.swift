@@ -21,10 +21,12 @@ import Foundation
 import Cartography
 
 @objc public final class CollectionsView: UIView {
-    let collectionViewLayout = CollectionViewLeftAlignedFlowLayout()
-    var collectionView: UICollectionView
+    var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
+    var collectionView: UICollectionView!
     let noItemsLabel = UILabel()
     let noItemsIcon = UIImageView()
+    
+    static public let useAutolayout = false
     
     var noItemsInLibrary: Bool = false {
         didSet {
@@ -34,16 +36,11 @@ import Cartography
     }
     
     override init(frame: CGRect) {
-        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-
         super.init(frame: frame)
         
-        self.collectionViewLayout.scrollDirection = .vertical
-        self.collectionViewLayout.minimumLineSpacing = 1
-        self.collectionViewLayout.minimumInteritemSpacing = 1
-        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 24, left: 16, bottom: 8, right: 16)
-        self.collectionViewLayout.estimatedItemSize = CGSize(width: 64, height: 64)
-        self.collectionViewLayout.headerReferenceSize = CGSize(width: 100, height: 32)
+        self.recreateLayout()
+        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.collectionViewLayout)
+
         self.collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
         self.collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
         self.collectionView.register(CollectionAudioCell.self, forCellWithReuseIdentifier: CollectionAudioCell.reuseIdentifier)
@@ -75,6 +72,19 @@ import Cartography
         self.noItemsLabel.textColor = placeholderColor
         
         self.constrainViews()
+    }
+    
+    private func recreateLayout() {
+        let layout = CollectionViewLeftAlignedFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
+        if CollectionsView.useAutolayout {
+            layout.estimatedItemSize = CGSize(width: 64, height: 64)
+        }
+        
+        self.collectionViewLayout = layout
     }
     
     public required init?(coder aDecoder: NSCoder) {

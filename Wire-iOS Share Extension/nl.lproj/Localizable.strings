@@ -21,7 +21,18 @@
 
 
 
-"share_extension.conversation_selection.title" = "Conversation:";
+"share_extension.conversation_selection.title" = "Gesprek:";
 "share_extension.send_button.title" = "Stuur";
-"share_extension.conversation_selection.empty.value" = "Choose";
+"share_extension.conversation_selection.empty.value" = "Kies";
 "share_extension.input.placeholder" = "Typ een bericht";
+"share_extension.sending_progress.title" = "Verzenden…";
+"share_extension.preparing.title" = "Voorbereiden…";
+"share_extension.not_signed_in.title" = "Je moet bij Wire ingelogd zijn voordat je iets kan delen";
+"share_extension.not_signed_in.close_button" = "Sluiten";
+
+"conversation.displayname.emptygroup" = "Leeg groep gesprek";
+"meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";
+"meta.degraded.degradation_reason_message.plural" = "%@ zijn nieuwe apparaten gaan gebruiken.";
+"meta.degraded.dialog_message" = "Wil je het bericht nog steeds versturen?";
+"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.send_anyway_button" = "Toch verzenden";

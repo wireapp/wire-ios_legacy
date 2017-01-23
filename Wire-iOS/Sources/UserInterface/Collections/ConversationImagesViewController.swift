@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,7 +30,9 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     internal var pageViewController: UIPageViewController!
     internal var buttonsBar: InputBarButtonsView!
-    
+    internal let overlay = FeedbackOverlayView()
+    internal let separator = UIView()
+
     public weak var messageActionDelegate: MessageActionResponder? = .none
     
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage) {
@@ -46,6 +48,8 @@ internal final class ConversationImagesViewController: UIViewController {
         self.collection.assetCollectionDelegate.add(self)
         
         self.createNavigationTitle()
+
+        separator.cas_styleClass = "separator"
     }
     
     deinit {
@@ -61,8 +65,10 @@ internal final class ConversationImagesViewController: UIViewController {
         
         self.createPageController()
         self.createControlsBar()
+        view.addSubview(overlay)
+        view.addSubview(separator)
         
-        constrain(self.view, self.pageViewController.view, self.buttonsBar) { view, pageControllerView, buttonsBar in
+        constrain(self.view, self.pageViewController.view, self.buttonsBar, overlay, separator) { view, pageControllerView, buttonsBar, overlay, separator in
             pageControllerView.top == view.top
             pageControllerView.leading == view.leading
             pageControllerView.trailing == view.trailing
@@ -73,6 +79,13 @@ internal final class ConversationImagesViewController: UIViewController {
             buttonsBar.trailing == view.trailing
             buttonsBar.bottom == view.bottom
             buttonsBar.height == 84
+
+            overlay.edges == buttonsBar.edges
+
+            separator.height == .hairline
+            separator.top == buttonsBar.top
+            separator.leading == buttonsBar.leading
+            separator.trailing == buttonsBar.trailing
         }
     }
     
@@ -91,18 +104,22 @@ internal final class ConversationImagesViewController: UIViewController {
     private func createControlsBar() {
         let copyButton = IconButton.iconButtonDefault()
         copyButton.setIcon(.copy, with: .tiny, for: .normal)
+        copyButton.accessibilityLabel = "copy"
         copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
         
         let saveButton = IconButton.iconButtonDefault()
         saveButton.setIcon(.save, with: .tiny, for: .normal)
+        saveButton.accessibilityLabel = "save"
         saveButton.addTarget(self, action: #selector(ConversationImagesViewController.saveCurrent(_:)), for: .touchUpInside)
         
         let shareButton = IconButton.iconButtonDefault()
         shareButton.setIcon(.export, with: .tiny, for: .normal)
+        shareButton.accessibilityLabel = "share"
         shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
         
         let revealButton = IconButton.iconButtonDefault()
         revealButton.setIcon(.eye, with: .tiny, for: .normal)
+        revealButton.accessibilityLabel = "reveal in conversation"
         revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
         
         self.buttonsBar = InputBarButtonsView(buttons: [copyButton, saveButton, shareButton, revealButton])
@@ -141,6 +158,8 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     @objc public func copyCurrent(_ sender: AnyObject!) {
+        let text = "collections.image_viewer.copied.title".localized.uppercased()
+        overlay.show(text: text)
         self.messageActionDelegate?.wants(toPerform: .copy, for: self.currentMessage)
     }
     

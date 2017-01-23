@@ -20,6 +20,10 @@ import Foundation
 import WireExtensionComponents
 import WireShareEngine
 
+
+private let cellReuseIdentifier = "ConversationCell"
+
+
 class ConversationSelectionViewController : UITableViewController {
     
     fileprivate var allConversations : [Conversation]
@@ -36,7 +40,7 @@ class ConversationSelectionViewController : UITableViewController {
         
         super.init(style: .plain)
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ConversationCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -68,7 +72,7 @@ class ConversationSelectionViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let conversation = visibleConversations[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         
         cell.textLabel?.text = conversation.name
         cell.backgroundColor = .clear

@@ -441,6 +441,14 @@ ProfileClientViewController {
         }
     }
     
+    deleteDeviceButton: @{
+        titleColor[state:normal]: $color-accent-current;
+        titleLabel: @{
+            font: $font-small-light;
+        }
+    }
+    
+    
     fingerprintSmallFont: $font-small-light;
     fingerprintSmallBoldFont: $font-small-medium;
     
@@ -1527,6 +1535,14 @@ CollectionsView {
     backgroundColor: $color-background-new;
     noItemsLabel: @{
         font: $font-medium-medium;
+    }
+}
+
+FeedbackOverlayView {
+    backgroundColor: $color-background;
+    titleLabel: @{
+        font: $font-small-medium;
+        textColor: $color-text-foreground;
     }
 }
 

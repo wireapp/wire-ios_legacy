@@ -23,6 +23,7 @@
 + (MockMessage *)textMessageIncludingRichMedia:(BOOL)shouldIncludeRichMedia;
 + (MockMessage *)textMessageWithText:(NSString *)text;
 + (MockMessage *)pingMessage;
++ (MockMessage *)linkMessage;
 + (MockMessage *)imageMessage;
 + (MockMessage *)imageMessageWithImage:(UIImage *)image;
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType

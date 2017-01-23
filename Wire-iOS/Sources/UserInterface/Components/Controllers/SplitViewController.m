@@ -435,6 +435,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
+    [self.rightViewController dismissViewControllerAnimated:NO completion:nil];
+    
     UIViewController *removedViewController = self.rightViewController;
     
     BOOL transitionDidStart =

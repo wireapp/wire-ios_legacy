@@ -65,6 +65,23 @@
     return message;
 }
 
++ (MockMessage *)linkMessage {
+    MockMessage *message = [[MockMessage alloc] init];
+
+    MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
+    message.conversation = (ZMConversation *)conversation;
+    message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
+    message.sender = (id)[MockUser mockSelfUser];
+    conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
+
+    MockTextMessageData *textData = [[MockTextMessageData alloc] init];
+    Article *article = [[Article alloc] initWithOriginalURLString:@"http://foo.bar/baz" permamentURLString:@"http://foo.bar/baz" offset:0];
+    textData.linkPreview = article;
+    message.backingTextMessageData = textData;
+    
+    return message;
+}
+
 + (MockMessage *)imageMessageWithImage:(UIImage *)image {
     MockImageMessageData *imageData = [[MockImageMessageData alloc] init];
     imageData.mockImageData = image.data;

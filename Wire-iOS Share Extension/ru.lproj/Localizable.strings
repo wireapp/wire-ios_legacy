@@ -25,3 +25,14 @@
 "share_extension.send_button.title" = "Отправить";
 "share_extension.conversation_selection.empty.value" = "Выбрать";
 "share_extension.input.placeholder" = "Наберите сообщение";
+"share_extension.sending_progress.title" = "Отправка...";
+"share_extension.preparing.title" = "Подготовка…";
+"share_extension.not_signed_in.title" = "Необходимо войти в Wire, чтобы поделиться чем-либо";
+"share_extension.not_signed_in.close_button" = "Закрыть";
+
+"conversation.displayname.emptygroup" = "Пустая групповая беседа";
+"meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";
+"meta.degraded.degradation_reason_message.plural" = "%@ начал(-а) использовать новые устройства.";
+"meta.degraded.dialog_message" = "Вы все еще хотите отправить ваше сообщение?";
+"meta.degraded.cancel_sending_button" = "Не отправлять";
+"meta.degraded.send_anyway_button" = "Все равно отправить";
