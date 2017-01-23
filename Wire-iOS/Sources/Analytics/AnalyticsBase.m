@@ -146,15 +146,11 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     return self.disabled ? nil : self.provider;
 }
 
-- (void)upload {} // TODO: Silvan remove
-
-#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [self saveSessionBackgroundedDate:[NSDate new]];
     [self saveSessionSummary];
 }
-#endif
 
 - (void)setObservingConversationList:(BOOL)observingConversationList
 {

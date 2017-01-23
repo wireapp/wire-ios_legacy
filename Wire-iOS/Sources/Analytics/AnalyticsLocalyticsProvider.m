@@ -58,9 +58,8 @@
 
 - (void)createSessionWithLaunchOptions:(NSDictionary *)launchOptions
 {
-    // TODO: Silvan revert
     [Localytics setAnalyticsDelegate:self];
-    [Localytics setLoggingEnabled:YES];
+    [Localytics setLoggingEnabled:DeveloperMenuState.developerMenuEnabled];
     [Localytics autoIntegrate:@STRINGIZE(ANALYTICS_API_KEY) launchOptions:launchOptions];
 }
 
