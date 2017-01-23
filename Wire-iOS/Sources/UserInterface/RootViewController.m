@@ -160,8 +160,6 @@
     [self switchToViewController:self.registrationViewController animated:YES];
     
     self.zClientViewController = nil;
-    
-    [[Analytics shared] upload];
 }
 
 - (void)presentFrameworkFromRegistration:(BOOL)fromRegistration

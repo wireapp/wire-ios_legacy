@@ -128,14 +128,12 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     AnalyticsOptEvent *optEvent = [AnalyticsOptEvent eventForAnalyticsOptedOut:isOptedOut];
     if (isOptedOut) {
         [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
-        [self upload];
     }
     
     self.activeProvider.isOptedOut = isOptedOut;
 
     if (! isOptedOut) {
         [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
-        [self upload];
     }
 
     [Analytics updateAVSMetricsSettingsWithActiveProvider:self.activeProvider];

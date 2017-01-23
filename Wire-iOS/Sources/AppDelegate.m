@@ -85,9 +85,6 @@
 @interface AppDelegate (PushNotifications)
 @end
 
-@interface AppDelegate (ThirdPartyServicesDelegate) <ZMThirdPartyServicesDelegate>
-@end
-
 
 @implementation AppDelegate
 
@@ -238,7 +235,6 @@
 
 - (void)userSessionDidBecomeAvailable:(NSNotification *)notification
 {
-    self.zetaUserSession.thirdPartyServicesDelegate = self;
     [ZMUserSession addInitalSyncCompletionObserver:self];
     [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:self.zetaUserSession];
     [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
@@ -444,15 +440,6 @@
 - (void)initialSyncCompleted:(NSNotification *)notification
 {
     [self.zetaUserSession setInitialSyncOnceCompleted:@(YES)];
-}
-
-@end
-
-@implementation AppDelegate (ThirdPartyServicesDelegate)
-
-- (void)userSessionIsReadyToUploadServicesData:(ZMUserSession *)userSession;
-{
-    [[Analytics shared] upload];
 }
 
 @end
