@@ -29,7 +29,7 @@ class PostContent {
     var conversationObserverToken: TearDownCapable?
     
     /// Conversation to post to
-    var target : Conversation? = nil
+    var target: Conversation? = nil
 
     fileprivate var sendController: SendController?
 
@@ -44,6 +44,7 @@ class PostContent {
     init(attachments: [NSItemProvider]) {
         self.attachments = attachments
     }
+
 }
 
 
@@ -67,15 +68,7 @@ extension PostContent {
         let allMessagesEnqueuedGroup = DispatchGroup()
         allMessagesEnqueuedGroup.enter()
 
-        sendController?.send {
-            if case .startingSending = $0 {
-                allMessagesEnqueuedGroup.leave()
-            }
-
-            progress($0)
-        }
-
-        conversationObserverToken = conversation.add { change in
+        let conversationObserverToken = conversation.add { change in
             // make sure that we notify only when we are done preparing all the ones to be sent
             allMessagesEnqueuedGroup.notify(queue: .main, execute: {
                 let degradationStrategy: DegradationStrategyChoice = {
@@ -89,6 +82,16 @@ extension PostContent {
                 }
                 progress(.conversationDidDegrade((change.users, degradationStrategy)))
             })
+        }
+
+        sendController?.send {
+            switch $0 {
+            case .done: conversationObserverToken.tearDown()
+            case .startingSending: allMessagesEnqueuedGroup.leave()
+            default: break
+            }
+
+            progress($0)
         }
     }
 

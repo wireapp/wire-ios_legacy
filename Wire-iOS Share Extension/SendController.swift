@@ -21,7 +21,9 @@ import Foundation
 import WireShareEngine
 import ZMCDataModel
 
+
 typealias DegradationStrategyChoice = (DegradationStrategy) -> ()
+typealias Progress = (_ type: ProgressType) -> Void
 
 
 /// This enum specifies the current state of the sending progress and is passed
@@ -34,14 +36,12 @@ enum ProgressType {
     case done // Sending either was cancelled (due to degradation for example) or finished.
 }
 
-typealias Progress = (_ type: ProgressType) -> Void
-
 
 class SendController {
 
     private var observer: SendableBatchObserver? = nil
     private var isCancelled = false
-    private let unsentSendables: [UnsentSendableType]
+    private var unsentSendables: [UnsentSendableType]
     private weak var sharingSession: SharingSession?
 
     public var sentAllSendables = false
@@ -60,10 +60,6 @@ class SendController {
         unsentSendables = sendables
     }
 
-    deinit {
-        observer = nil
-    }
-
     func send(progress: @escaping Progress) {
         let completion: ([Sendable]) -> Void = { [weak self] sendables in
             guard let `self` = self else { return }
@@ -72,8 +68,8 @@ class SendController {
                 progress(.sending($0))
             }
 
-            self.observer?.sentHandler = {
-                self.sentAllSendables = true
+            self.observer?.sentHandler = { [weak self] in
+                self?.sentAllSendables = true
                 progress(.done)
             }
         }
@@ -124,7 +120,7 @@ class SendController {
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()
 
-        let appendToMessages: (Sendable?) -> Void = { [weak self] sendable in
+        let appendToMessages: (Sendable?) -> Void = { sendable in
             defer { sendingGroup.leave() }
             guard let sendable = sendable else { return }
             messages.append(sendable)

@@ -70,7 +70,8 @@ class UnsentTextSendable: UnsentSendableAbstract, UnsentSendableType {
     }
 
     func send(completion: @escaping (Sendable?) -> Void) {
-        sharingSession.enqueue {
+        sharingSession.enqueue { [weak self] in
+            guard let `self` = self else { return }
             completion(self.conversation.appendTextMessage(self.text))
         }
     }
@@ -106,7 +107,8 @@ class UnsentImageSendable: UnsentSendableAbstract, UnsentSendableType {
     }
 
     func send(completion: @escaping (Sendable?) -> Void) {
-        sharingSession.enqueue {
+        sharingSession.enqueue { [weak self] in
+            guard let `self` = self else { return }
             completion(self.imageData.flatMap(self.conversation.appendImage))
         }
     }
@@ -152,22 +154,23 @@ class UnsentFileSendable: UnsentSendableAbstract, UnsentSendableType {
     }
 
     func send(completion: @escaping (Sendable?) -> Void) {
-        sharingSession.enqueue {
+        sharingSession.enqueue { [weak self] in
+            guard let `self` = self else { return }
             completion(self.metadata.flatMap(self.conversation.appendFile))
         }
     }
 
     private func prepareAsFile(name: String?, completion: @escaping () -> Void) {
-        self.attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
-            guard let data = data, let UTIString = self.attachment.registeredTypeIdentifiers.first as? String, error == nil else {
+        self.attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { [weak self] (data, error) in
+            guard let data = data, let UTIString = self?.attachment.registeredTypeIdentifiers.first as? String, error == nil else {
                 return completion()
             }
 
-            self.prepareForSending(withUTI: UTIString, name: name, data: data) { (url, error) in
+            self?.prepareForSending(withUTI: UTIString, name: name, data: data) { (url, error) in
                 guard let url = url, error == nil else { return completion() }
 
-                FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { metadata -> Void in
-                    self.metadata = metadata
+                FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { [weak self] metadata in
+                    self?.metadata = metadata
                     completion()
                 }
             }
