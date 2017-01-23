@@ -33,11 +33,11 @@
 
 @implementation AnalyticsLocalyticsProvider
 
-- (instancetype)init
+- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions
 {
     self = [super init];
     if (self) {
-        [self createSession];
+        [self createSessionWithLaunchOptions:launchOptions];
     }
     return self;
 }
@@ -56,15 +56,12 @@
     return [Localytics isOptedOut];
 }
 
-- (void)createSession
+- (void)createSessionWithLaunchOptions:(NSDictionary *)launchOptions
 {
+    // TODO: Silvan revert
     [Localytics setAnalyticsDelegate:self];
-    [Localytics setLoggingEnabled:[DeveloperMenuState developerMenuEnabled]];
-
-    [Localytics integrate:@STRINGIZE(ANALYTICS_API_KEY)];
-    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
-        [Localytics openSession];
-    }
+    [Localytics setLoggingEnabled:YES];
+    [Localytics autoIntegrate:@STRINGIZE(ANALYTICS_API_KEY) launchOptions:launchOptions];
 }
 
 - (void)setCustomerID:(NSString *)customerID
@@ -93,43 +90,16 @@
     [Localytics tagEvent:event attributes:attributes customerValueIncrease:customerValueIncrease];
 }
 
-- (void)close
-{
-    [Localytics dismissCurrentInAppMessage];
-    [Localytics closeSession];
-}
-
-- (void)resumeWithHandler:(ResumeHandlerBlock)resumeHandler
+- (void)performAfterResume:(ResumeHandlerBlock)resumeHandler
 {
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
         self.resumeHandler = resumeHandler;
-        [Localytics openSession];
     }
-}
-
-- (void)upload
-{
-    [Localytics upload];
 }
 
 - (void)setCustomDimension:(int)dimension value:(NSString *)value
 {
     [Localytics setValue:value forCustomDimension:dimension];
-}
-
-- (void)setPushToken:(NSData *)token
-{
-    [Localytics setPushToken:token];
-}
-
-- (void)handleRemoteNotification:(NSDictionary *)userInfo
-{
-    [Localytics handleNotification:userInfo];
-}
-
-- (BOOL)handleOpenURL:(NSURL *)url
-{
-    return [Localytics handleTestModeURL:url];
 }
 
 - (void)localyticsSessionWillOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume

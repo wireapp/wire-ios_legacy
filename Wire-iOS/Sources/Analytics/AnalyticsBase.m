@@ -146,6 +146,7 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     return self.disabled ? nil : self.provider;
 }
 
+- (void)upload {} // TODO: Silvan remove
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -244,16 +245,15 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     [self tagEvent:tag attributes:[event attributesDump] source:source customerValueIncrease:[event customerValueIncrease]];
 }
 
-- (void)close
+- (void)persistCustomSessionSummary
 {
     [self saveSessionBackgroundedDate:[NSDate new]];
     [self saveSessionSummary];
-    [self.activeProvider close];
 }
 
-- (void)resume
+- (void)loadCustomSessionSummary
 {
-    [self.activeProvider resumeWithHandler:^(BOOL willResume) {
+    [self.activeProvider performAfterResume:^(BOOL willResume) {
         BOOL loaded = [self loadSessionSummary];
         
         if (! willResume) {
@@ -273,17 +273,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
             self.sessionSummary = [[AnalyticsSessionSummaryEvent alloc] init];
         }
     }];
-}
-
-- (void)upload
-{
-    [self.activeProvider upload];
-}
-
-- (void)closeAndUpload
-{
-    [self close];
-    [self upload];
 }
 
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
@@ -318,7 +307,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     NSString *composedConfigKey = [NSString stringWithFormat:@"%ld_%@_%@", (long)accent, config, networkType];
     
     [self.activeProvider setCustomDimension:4 value:composedConfigKey];
-    [self.activeProvider upload];
 }
 
 - (void)localyticsWillResumeSession:(BOOL)willResumeExistingSession
@@ -386,8 +374,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     if (self.sessionSummary) {
         [self tagEventObject:self.sessionSummary];
     }
-    
-    [self.activeProvider upload];
 }
 
 + (NSString *)eventSourceToString:(AnalyticsEventSource) source
@@ -497,33 +483,6 @@ static NSString * const UserDefaultAnalyticsSessionSummary          = @"Analytic
         result = YES;
     }
     return result;
-}
-
-@end
-
-
-
-@implementation Analytics (Push)
-
-- (void)setPushToken:(NSData *)token
-{
-    [self.activeProvider setPushToken:token];
-}
-
-- (void)handleRemoteNotification:(NSDictionary *)userInfo
-{
-    [self.activeProvider handleRemoteNotification:userInfo];
-}
-
-@end
-
-
-
-@implementation Analytics (OpenURL)
-
-- (BOOL)handleOpenURL:(NSURL *)url
-{
-    return [self.activeProvider handleOpenURL:url];
 }
 
 @end

@@ -24,17 +24,21 @@ fileprivate let tag = "<ANALYTICS>:"
     
     let zmLog = ZMSLog(tag: tag)
     var optedOut = false
-    
-    override init() {
+
+    public required init!(launchOptions: [AnyHashable : Any]! = [:]) {
         super.init()
         ZMSLog.set(level: .info, tag: tag)
     }
+
 }
 
-extension AnalyticsConsoleProvider : AnalyticsProvider {
+extension AnalyticsConsoleProvider: AnalyticsProvider {
+
+    public func perform(afterResume: ResumeHandlerBlock!) {
+        // no-op
+    }
 
     public var isOptedOut : Bool {
-        
         get {
             return optedOut
         }
@@ -45,8 +49,7 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
         }
     }
     
-    private func print(loggingData data: [String: Any])
-    {
+    private func print(loggingData data: [String: Any]) {
         if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: JSONSerialization.WritingOptions.prettyPrinted),
             let string = String(data: jsonData, encoding: .utf8) {
             zmLog.info(string)
@@ -54,7 +57,6 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     }
     
     func tagScreen(_ screen: String!) {
-        
         if screen != nil {
             print(loggingData:["screen" : screen])
         }
@@ -69,7 +71,6 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     }
     
     func tagEvent(_ event: String!, attributes: [AnyHashable : Any]! = [:], customerValueIncrease: NSNumber!) {
-        
         var printableAttributes = [AnyHashable : Any]()
         
         if attributes != nil {
@@ -109,26 +110,6 @@ extension AnalyticsConsoleProvider : AnalyticsProvider {
     func setCustomDimension(_ dimension: Int32, value: String!) {
         print(loggingData: ["customeDimension_\(dimension)" : value])
     }
-    
-    func upload() {
-        
-    }
-    
-    func resume(handler resumeHandler: ResumeHandlerBlock!) {
-        //no-op
-    }
-    
-    func handleRemoteNotification(_ userInfo: [AnyHashable : Any]!) {
-        //no-op
-    }
-    
-    func handleOpen(_ url: URL!) -> Bool {
-        print(loggingData: ["open_url" : url])
-        return false
-    }
-    
-    func close() {
-        
-    }
+
 }
 

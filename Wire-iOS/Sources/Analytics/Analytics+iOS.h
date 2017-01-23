@@ -25,6 +25,7 @@ extern NSString * _Nonnull const ZMConsoleAnalyticsArgumentKey;
 @interface Analytics (iOS)
 
 + (void)setConsoleAnayltics:(BOOL)shouldUseConsoleAnalytics;
++ (instancetype __nullable)setupSharedInstanceWithLaunchOptions:(NSDictionary * __nullable)launchOptions;
 + (instancetype __nullable)shared;
 
 @end
