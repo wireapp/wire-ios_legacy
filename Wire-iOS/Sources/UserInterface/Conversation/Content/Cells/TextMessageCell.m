@@ -69,7 +69,9 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {        
         [self createTextMessageViews];
-        [self createConstraints];
+        [NSLayoutConstraint autoCreateAndInstallConstraints:^{
+            [self createConstraints];
+        }];
     }
     
     return self;
