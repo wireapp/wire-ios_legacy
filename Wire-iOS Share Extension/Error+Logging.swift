@@ -20,7 +20,7 @@
 import ZMUtilities
 
 
-let zmLog = ZMSLog(tag: "share extension")
+private let zmLog = ZMSLog(tag: "share extension")
 
 
 extension Error {
