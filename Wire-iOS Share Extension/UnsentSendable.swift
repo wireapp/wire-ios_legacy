@@ -28,7 +28,7 @@ enum UnsentSendableError: Error {
 }
 
 
-protocol UnsentSendableType {
+protocol UnsentSendable {
     func prepare(completion: @escaping () -> Void)
     func send(completion: @escaping (Sendable?) -> Void)
 
@@ -37,14 +37,14 @@ protocol UnsentSendableType {
 }
 
 
-extension UnsentSendableType {
+extension UnsentSendable {
     func prepare(completion: @escaping () -> Void) {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
     }
 }
 
 
-class UnsentSendableAbstract {
+class UnsentSendableBase {
 
     let conversation: Conversation
     let sharingSession: SharingSession
@@ -60,7 +60,7 @@ class UnsentSendableAbstract {
 }
 
 
-class UnsentTextSendable: UnsentSendableAbstract, UnsentSendableType {
+class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
     private let text: String
 
@@ -79,7 +79,7 @@ class UnsentTextSendable: UnsentSendableAbstract, UnsentSendableType {
 }
 
 
-class UnsentImageSendable: UnsentSendableAbstract, UnsentSendableType {
+class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
     private let attachment: NSItemProvider
     private var imageData: Data?
@@ -97,7 +97,8 @@ class UnsentImageSendable: UnsentSendableAbstract, UnsentSendableType {
 
         let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: .init(width: 1024, height: 1024))]
 
-        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, _) in
+        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
+            error?.log(message: "Unable to load image from attachment")
             self?.imageData = image.flatMap {
                 UIImageJPEGRepresentation($0, 0.9)
             }
@@ -116,11 +117,10 @@ class UnsentImageSendable: UnsentSendableAbstract, UnsentSendableType {
 }
 
 
-class UnsentFileSendable: UnsentSendableAbstract, UnsentSendableType {
+class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
     private let attachment: NSItemProvider
     private var metadata: ZMFileMetadata?
-    private var fm = FileManager.default
 
     private let typeURL: Bool
     private let typeData: Bool
@@ -163,11 +163,15 @@ class UnsentFileSendable: UnsentSendableAbstract, UnsentSendableType {
     private func prepareAsFile(name: String?, completion: @escaping () -> Void) {
         self.attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { [weak self] (data, error) in
             guard let data = data, let UTIString = self?.attachment.registeredTypeIdentifiers.first as? String, error == nil else {
+                error?.log(message: "Unable to load file from attachment")
                 return completion()
             }
 
             self?.prepareForSending(withUTI: UTIString, name: name, data: data) { (url, error) in
-                guard let url = url, error == nil else { return completion() }
+                guard let url = url, error == nil else {
+                    error?.log(message: "Unable to prepare file attachment for sending")
+                    return completion()
+                }
 
                 FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { [weak self] metadata in
                     self?.metadata = metadata
@@ -181,16 +185,17 @@ class UnsentFileSendable: UnsentSendableAbstract, UnsentSendableType {
     private func prepareForSending(withUTI UTI: String, name: String?, data: Data, completion: @escaping (URL?, Error?) -> Void) {
         guard let fileName = nameForFile(withUTI: UTI, name: name) else { return completion(nil, nil) }
 
+        let fileManager = FileManager.default
         let tmp = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) // temp subdir
 
         do {
-            if !fm.fileExists(atPath: tmp.absoluteString) {
-                try fm.createDirectory(at: tmp, withIntermediateDirectories: true)
+            if !fileManager.fileExists(atPath: tmp.absoluteString) {
+                try fileManager.createDirectory(at: tmp, withIntermediateDirectories: true)
             }
             let tempFileURL = tmp.appendingPathComponent(fileName)
 
-            if fm.fileExists(atPath: tempFileURL.absoluteString) {
-                try fm.removeItem(at: tempFileURL)
+            if fileManager.fileExists(atPath: tempFileURL.absoluteString) {
+                try fileManager.removeItem(at: tempFileURL)
             }
 
             try data.write(to: tempFileURL)
