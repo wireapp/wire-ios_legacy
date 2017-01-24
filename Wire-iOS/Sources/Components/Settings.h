@@ -21,6 +21,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "CameraController.h"
 
+@import zmessaging;
+
 @class ZMLocationData;
 @class ZMConversation;
 @class ZMEmailCredentials;
@@ -71,7 +73,7 @@ extern NSString * const UserDefaultEnableBatchCollections;
 extern NSString * const UserDefaultSendButtonDisabled;
 
 extern NSString * const UserDefaultSendV3Assets;
-extern NSString * const UserDefaultEnableV3Calling;
+extern NSString * const UserDefaultCallingProtocol;
 
 extern NSString * const UserDefaultTwitterOpeningRawValue;
 extern NSString * const UserDefaultMapsOpeningRawValue;
@@ -90,7 +92,7 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 
 @property (nonatomic) BOOL disableCallKit;
 @property (nonatomic) BOOL sendV3Assets; // develop option
-@property (nonatomic) BOOL enableV3Calling;
+@property (nonatomic) CallingProtocol callingProtocol;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option
 
