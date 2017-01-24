@@ -446,7 +446,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
             self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
         }
     }
-    else if (self.countdownView) {
+    else {
         self.countdownContainerView.hidden = countdownContainerViewHidden;
     }
 }
