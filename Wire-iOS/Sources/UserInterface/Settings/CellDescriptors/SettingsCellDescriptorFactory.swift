@@ -161,6 +161,9 @@ import Foundation
         
         developerCellDescriptors.append(devController)
         
+        
+        let callingProtocolSetting = callingProtocolGroup(for: self.settingsPropertyFactory.property(.callingProtocol))
+        developerCellDescriptors.append(callingProtocolSetting)
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
         developerCellDescriptors.append(diableAVSSetting)
         let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
@@ -171,12 +174,30 @@ import Foundation
         developerCellDescriptors.append(diableAnalyticsSetting)
         let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
         developerCellDescriptors.append(enableAssetV3Setting)
-        let enableCallingV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableV3Calling))
-        developerCellDescriptors.append(enableCallingV3Setting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
+    }
+    
+    func callingProtocolGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
+        let cells = CallingProtocol.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+            
+            return SettingsPropertySelectValueCellDescriptor(
+                settingsProperty: property,
+                value: .number(value: Int(option.rawValue)),
+                title: option.displayString
+            )
+        }
+        
+        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
+        let preview: PreviewGeneratorType = { descriptor in
+            guard case .number(let intValue) = property.value(),  let option = CallingProtocol(rawValue: UInt(intValue)) else {
+                return .text(CallingProtocol.negotiate.displayString)
+            }
+            return .text(option.displayString)
+        }
+        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
     }
     
     func helpSection() -> SettingsCellDescriptorType {
