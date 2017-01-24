@@ -91,7 +91,7 @@
 
 #pragma mark - VoiceChannelStateObserver
 
-- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     self.lastVoiceChannelState = voiceChannelState;
     [self updateProximityMonitorState];
@@ -102,7 +102,7 @@
     
 }
 
-- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     
 }

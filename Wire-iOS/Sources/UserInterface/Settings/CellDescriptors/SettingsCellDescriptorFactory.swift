@@ -162,7 +162,7 @@ import Foundation
         developerCellDescriptors.append(devController)
         
         
-        let callingProtocolSetting = callingProtocolGroup(for: self.settingsPropertyFactory.property(.callingProtocol))
+        let callingProtocolSetting = callingProtocolStrategyGroup(for: self.settingsPropertyFactory.property(.callingProtocolStrategy))
         developerCellDescriptors.append(callingProtocolSetting)
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
         developerCellDescriptors.append(diableAVSSetting)
@@ -180,8 +180,8 @@ import Foundation
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
-    func callingProtocolGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = CallingProtocol.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+    func callingProtocolStrategyGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
+        let cells = CallingProtocolStrategy.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
             
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
@@ -192,8 +192,8 @@ import Foundation
         
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
         let preview: PreviewGeneratorType = { descriptor in
-            guard case .number(let intValue) = property.value(),  let option = CallingProtocol(rawValue: UInt(intValue)) else {
-                return .text(CallingProtocol.negotiate.displayString)
+            guard case .number(let intValue) = property.value(),  let option = CallingProtocolStrategy(rawValue: UInt(intValue)) else {
+                return .text(CallingProtocolStrategy.negotiate.displayString)
             }
             return .text(option.displayString)
         }

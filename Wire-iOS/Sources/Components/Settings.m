@@ -60,7 +60,7 @@ NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCol
 
 
 NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
-NSString * const UserDefaultCallingProtocol = @"CallingProtocol";
+NSString * const UserDefaultCallingProtocolStrategy = @"CallingProtocolStrategy";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -118,7 +118,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue,
              UserDefaultSendV3Assets,
-             UserDefaultCallingProtocol,
+             UserDefaultCallingProtocolStrategy,
              UserDefaultEnableBatchCollections,
              ];
 }
@@ -459,14 +459,14 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
     [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
 }
 
-- (void)setCallingProtocol:(CallingProtocol)callingProtocol
+- (void)setCallingProtocolStrategy:(CallingProtocolStrategy)callingProtocolStrategy
 {
-    [self.defaults setInteger:callingProtocol forKey:UserDefaultCallingProtocol];
+    [self.defaults setInteger:callingProtocolStrategy forKey:UserDefaultCallingProtocolStrategy];
 }
 
-- (CallingProtocol)callingProtocol
+- (CallingProtocolStrategy)callingProtocolStrategy
 {
-    return [self.defaults integerForKey:UserDefaultCallingProtocol];
+    return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 
 - (BOOL)enableBatchCollections

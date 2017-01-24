@@ -190,7 +190,7 @@
 
 #pragma mark - VoiceChannelStateObserver
 
-- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     DDLogVoice(@"SE: Voice channel state change to %d (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState));
     [self updateActiveCallConversation];
@@ -202,7 +202,7 @@
     
 }
 
-- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     
 }

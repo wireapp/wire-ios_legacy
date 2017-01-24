@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension CallingProtocol {
+extension CallingProtocolStrategy {
     
-    static var allOptions: [CallingProtocol] {
+    static var allOptions: [CallingProtocolStrategy] {
         return [.negotiate, .version2, .version3]
     }
     
