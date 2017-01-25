@@ -719,6 +719,7 @@
 		BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */; };
 		BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
+		BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0515241E390E10000D5C22 /* CopyableLabel.swift */; };
 		BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */; };
 		BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */; };
 		BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */; };
@@ -2113,6 +2114,7 @@
 		BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTechnicalReportViewController.swift; sourceTree = "<group>"; };
 		BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WireLocales.swift"; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
+		BF0515241E390E10000D5C22 /* CopyableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Ephemeral.swift"; sourceTree = "<group>"; };
 		BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedactedScript-Regular.ttf"; sourceTree = "<group>"; };
 		BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralKeyboardViewController.swift; sourceTree = "<group>"; };
@@ -4579,6 +4581,7 @@
 				BF999B5E1C0C984C008D5414 /* ProfileDevicesViewController.h */,
 				BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */,
 				87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */,
+				BF0515241E390E10000D5C22 /* CopyableLabel.swift */,
 				16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */,
 				16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */,
 				872CB8A019E58816006752B4 /* Views */,
@@ -5890,6 +5893,7 @@
 				87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */,
 				871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */,
 				87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */,
+				BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */,
 				871BC01D1D34F56300DF0793 /* AnalyticsTracker+Media.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
