@@ -1434,7 +1434,16 @@ ChangeEmailTableViewCell {
     }
 }
 
-DeleteEmailTableViewCell {
+ConfirmEmailDescriptionView {
+    backgroundColor: clear;
+    descriptionLabel: @{
+        font: $font-normal-medium;
+        textColor: $color-text-foreground-dark;
+        backgroundColor: clear
+    }
+}
+
+ShortLabelTableViewCell {
     backgroundColor: clear;
     textLabel: @{
         font: $font-normal-medium;

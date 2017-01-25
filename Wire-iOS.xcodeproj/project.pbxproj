@@ -868,6 +868,7 @@
 		DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE6F98D1B1DE51C00B7DD32 /* ziphy.framework */; };
 		DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		F11E94B81E376D71001AE6D3 /* ConfirmEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
 		F13FEA561E30FB6D00BE5454 /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */; };
@@ -2317,6 +2318,7 @@
 		EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+Private.h"; sourceTree = "<group>"; };
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
+		F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewController.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
 		F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
@@ -2358,10 +2360,10 @@
 			files = (
 				87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */,
 				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
+				F16C3D051E30D3D800596C8D /* zmessaging.framework in Frameworks */,
 				87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
 				872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */,
-				F16C3D051E30D3D800596C8D /* zmessaging.framework in Frameworks */,
 				873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
 				87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */,
@@ -4572,6 +4574,7 @@
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
 				F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */,
+				F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */,
 				F186D77E1E324CCE0090D349 /* AccountPasswordProvider.swift */,
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
@@ -5578,6 +5581,7 @@
 				8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */,
 				872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */,
 				871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */,
+				F11E94B81E376D71001AE6D3 /* ConfirmEmailViewController.swift in Sources */,
 				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
 				871BC2231D34F8F800DF0793 /* ActionSheetListView.m in Sources */,
 				BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */,

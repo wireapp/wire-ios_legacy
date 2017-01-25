@@ -63,10 +63,9 @@ final class ChangeEmailTableViewCell: UITableViewCell {
     }
 }
 
-final class DeleteEmailTableViewCell: UITableViewCell {
+final class ShortLabelTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        textLabel?.text = "self.settings.account_section.email.change.remove_email".localized
         let clearView = UIView()
         clearView.backgroundColor = UIColor(white: 0, alpha: 0.2)
         selectedBackgroundView = clearView
@@ -87,13 +86,20 @@ struct ChangeEmailState {
         return email != currentEmail
     }
     
+    var removeEmailAllowed: Bool {
+        if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     init(currentEmail: String = ZMUser.selfUser().emailAddress) {
         self.currentEmail = currentEmail
     }
     
     func removeEmail(withPassword password: String) { }
-    
-    func changeEmail(withPassword password: String) { }
+
 }
 
 final class ChangeEmailViewController: SettingsBaseTableViewController {
@@ -101,7 +107,8 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state = ChangeEmailState()
     let passwordProvider = AccountPasswordProvider()
-    
+    private var observerToken: AnyObject?
+
     init() {
         super.init(style: .grouped)
         CASStyler.default().styleItem(self)
@@ -112,9 +119,20 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        observerToken = userProfile?.add(observer: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let token = observerToken else { return }
+        userProfile?.removeObserver(token: token)
+    }
+    
     internal func setupViews() {
         ChangeEmailTableViewCell.register(in: tableView)
-        DeleteEmailTableViewCell.register(in: tableView)
+        ShortLabelTableViewCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.title".localized
         view.backgroundColor = .clear
@@ -129,19 +147,25 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         toggleSaveButton()
     }
     
-    func toggleSaveButton() {
-        navigationItem.rightBarButtonItem?.isEnabled = state.saveButtonEnabled
-    }
-    
-    func saveButtonTapped(sender: UIBarButtonItem) {
-        passwordProvider.askForAccountPassword(reason: .changingEmail, showInController: self) { [weak self] password in
-            guard let `self` = self else { return }
-            self.state.changeEmail(withPassword: password)
+    func toggleSaveButton(enabled: Bool? = nil) {
+        if let enabled = enabled {
+            navigationItem.rightBarButtonItem?.isEnabled = enabled
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = state.saveButtonEnabled
         }
     }
     
+    func saveButtonTapped(sender: UIBarButtonItem) {
+        guard let email = state.newEmail else { return }
+        do {
+            try userProfile?.requestEmailChange(email: email)
+            toggleSaveButton(enabled: false)
+            showLoadingView = true
+        } catch { }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return state.removeEmailAllowed ? 2 : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -157,7 +181,9 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
             cell.delegate = self
             return cell
         } else {
-            return tableView.dequeueReusableCell(withIdentifier: DeleteEmailTableViewCell.zm_reuseIdentifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
+            cell.textLabel?.text = "self.settings.account_section.email.change.remove_email".localized
+            return cell
         }
     }
     
@@ -171,6 +197,44 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
+}
+
+extension ChangeEmailViewController: UserProfileUpdateObserver {
+    
+    func emailUpdateDidFail(_ error: Error!) {
+        showLoadingView = false
+        toggleSaveButton()
+        presentFailureAlert()
+    }
+    
+    func didSentVerificationEmail() {
+        showLoadingView = false
+        toggleSaveButton()
+        if let newEmail = state.newEmail {
+            let confirmController = ConfirmEmailViewController(newEmail: newEmail, delegate: self)
+            navigationController?.pushViewController(confirmController, animated: true)
+        }
+    }
+    
+    private func presentFailureAlert() {
+        let alert = UIAlertController(
+            title: "self.settings.account_section.email.change.failure_alert.title".localized,
+            message: "self.settings.account_section.email.change.failure_alert.message".localized,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+extension ChangeEmailViewController: ConfirmEmailDelegate {
+    func didConfirmEmail(inController controller: ConfirmEmailViewController) {
+        if let viewControllers = navigationController?.viewControllers, viewControllers.count > 2 {
+            let accountController = viewControllers[1]
+            _ = navigationController?.popToViewController(accountController, animated: true)
+        }
+    }
 }
 
 extension ChangeEmailViewController: ChangeEmailTableViewCellDelegate {
