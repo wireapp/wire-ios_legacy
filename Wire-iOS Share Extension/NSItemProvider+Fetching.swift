@@ -40,25 +40,3 @@ extension NSItemProvider {
     }
 
 }
-
-
-extension NSItemProvider {
-
-    var isImage: Bool {
-        return hasItemConformingToTypeIdentifier(kUTTypeImage as String)
-    }
-
-    var isURL: Bool {
-
-    }
-
-    var isData: Bool {
-
-    }
-
-    var isVideo: Bool {
-        guard let uti = registeredTypeIdentifiers.first else { return false }
-        return UTTypeConformsTo(uti, kUTTypeMovie)
-    }
-
-}

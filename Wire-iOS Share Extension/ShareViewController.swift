@@ -34,6 +34,7 @@ class ShareViewController: SLComposeServiceViewController {
 
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
+    fileprivate var extensionActivity: ExtensionActivity? = nil
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -65,6 +66,7 @@ class ShareViewController: SLComposeServiceViewController {
         super.viewDidLoad()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
+        extensionActivity = ExtensionActivity(attachments: allAttachments)
     }
     
     override func presentationAnimationDidFinish() {
@@ -114,6 +116,7 @@ class ShareViewController: SLComposeServiceViewController {
                 self.progressViewController?.progress = progress
 
             case .done:
+                self.storeTrackingData(sent: true)
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                     self.view.alpha = 0
                     self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
@@ -122,12 +125,24 @@ class ShareViewController: SLComposeServiceViewController {
                 })
 
             case .conversationDidDegrade((let users, let strategyChoice)):
+                self.extensionActivity?.markConversationDidDegrade()
                 self.conversationDidDegrade(
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
             }
         }
+    }
+
+    override func cancel() {
+        storeTrackingData(sent: false)
+        super.cancel()
+    }
+
+    private func storeTrackingData(sent: Bool) {
+        extensionActivity?.text = !contentText.isEmpty
+        guard let event = extensionActivity?.eventDump(sent: sent) else { return }
+        sharingSession?.analyticsEventPersistence.store(event)
     }
     
     /// Display a preview image
@@ -203,6 +218,7 @@ class ShareViewController: SLComposeServiceViewController {
         conversationSelectionViewController.selectionHandler = { [weak self] conversation in            
             self?.conversationItem?.value = conversation.name
             self?.postContent?.target = conversation
+            self?.extensionActivity?.conversation = conversation
             self?.popConfigurationViewController()
             self?.validateContent()
         }
