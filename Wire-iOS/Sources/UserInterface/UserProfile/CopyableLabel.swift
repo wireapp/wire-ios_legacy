@@ -26,23 +26,14 @@ class CopyableLabel: UILabel {
     private let dimmedAlpha: CGFloat = 0.4
     private let dimmAnimationDuration: TimeInterval = 0.33
 
-    init() {
-        super.init(frame: .zero)
-        setup()
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        isUserInteractionEnabled = true
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setup() {
-        isUserInteractionEnabled = true
-        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
     }
 
     override var canBecomeFirstResponder: Bool {

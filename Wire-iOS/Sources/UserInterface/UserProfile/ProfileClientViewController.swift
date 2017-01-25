@@ -210,7 +210,7 @@ class ProfileClientViewController: UIViewController {
         self.contentView.addSubview(spinner)
     }
 
-    private func updateFingerprintLabel() {
+    fileprivate func updateFingerprintLabel() {
         if let fingerprintMonospaceFont = self.fingerprintFont?.monospaced(),
             let fingerprintBoldMonospaceFont = self.fingerprintBoldFont?.monospaced(),
             let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
