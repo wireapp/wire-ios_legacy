@@ -407,7 +407,7 @@
 
 #pragma mark - VoiceChannelV2StateObserver
 
-- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     DDLogVoice(@"SE: Voice channel state did change to %@", StringFromVoiceChannelV2State(voiceChannelState));
     
@@ -454,7 +454,7 @@
     DDLogVoice(@"SE: Voice channel join failed with error %@", error);
 }
 
- - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation
+ - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     DDLogVoice(@"SE: Voice channel did close with reason %i", reason);
 }

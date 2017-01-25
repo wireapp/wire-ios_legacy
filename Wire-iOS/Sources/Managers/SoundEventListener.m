@@ -157,7 +157,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     }
 }
 
-- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     VoiceChannelV2State state = voiceChannelState;
     VoiceChannelV2State previousState = self.previousVoiceChannelState[conversation.remoteIdentifier].integerValue ?: VoiceChannelV2StateInvalid;
@@ -253,7 +253,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     
 }
 
-- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     if (reason == VoiceChannelV2CallEndReasonDisconnected) {
         AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];

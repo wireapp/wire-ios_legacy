@@ -385,7 +385,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
     
     [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
-    [ZMUserSession setCallingProtocol:[[Settings sharedSettings] callingProtocol]];
+    [ZMUserSession setCallingProtocolStrategy:[[Settings sharedSettings] callingProtocolStrategy]];
     
     NSBundle *bundle = NSBundle.mainBundle;
     NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
