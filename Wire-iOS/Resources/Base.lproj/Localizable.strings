@@ -489,19 +489,15 @@
 "self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
 "self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
-// Asking for password
-
-"self.settings.account_section.ask_password.change_email.title" = "Edit email";
-"self.settings.account_section.ask_password.remove_email.title" = "Remove email";
-"self.settings.account_section.ask_password.ok" = "OK";
-"self.settings.account_section.ask_password.cancel" = "Cancel";
-"self.settings.account_section.ask_password.password_placeholder" = "Your password";
-
 // Change Email
 
 "self.settings.account_section.email.change.title" = "Email";
 "self.settings.account_section.email.change.save" = "Save";
+
 "self.settings.account_section.email.change.remove_email" = "Remove Email Address";
+
+"self.settings.account_section.email.change.remove_email.prompt.remove" = "Remove Email Address";
+"self.settings.account_section.email.change.remove_email.prompt.cancel" = "Cancel";
 
 "self.settings.account_section.email.change.verify.title" = "Verify email";
 "self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions";

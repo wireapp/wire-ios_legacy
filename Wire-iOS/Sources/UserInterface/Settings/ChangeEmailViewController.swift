@@ -107,8 +107,6 @@ struct ChangeEmailState {
     init(currentEmail: String = ZMUser.selfUser().emailAddress) {
         self.currentEmail = currentEmail
     }
-    
-    func removeEmail(withPassword password: String) { }
 
 }
 
@@ -116,7 +114,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state = ChangeEmailState()
-    let passwordProvider = AccountPasswordProvider()
     private var observerToken: AnyObject?
 
     init() {
@@ -199,10 +196,17 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            passwordProvider.askForAccountPassword(reason: .removingEmail, showInController: self) { [weak self] password in
+            let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let remove = UIAlertAction(title: "self.settings.account_section.email.change.remove_email.prompt.remove".localized, style: .destructive) { [weak self] _ in
                 guard let `self` = self else { return }
-                self.state.removeEmail(withPassword: password)
+                self.userProfile?.requestEmailRemoval()
+                self.toggleSaveButton(enabled: false)
+                self.showLoadingView = true
             }
+            let cancel = UIAlertAction(title: "self.settings.account_section.email.change.remove_email.prompt.cancel".localized, style: .cancel, handler: nil)
+            sheet.addAction(remove)
+            sheet.addAction(cancel)
+            present(sheet, animated: true, completion: nil)
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
@@ -210,6 +214,16 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 }
 
 extension ChangeEmailViewController: UserProfileUpdateObserver {
+    
+    func emailRemovalDidFail(_ error: Error!) {
+        showLoadingView = false
+        presentFailureAlert()
+    }
+    
+    func didRemoveEmail() {
+        ZMUser.selfUser().emailAddress = nil
+        _ = navigationController?.popViewController(animated: true)
+    }
     
     func emailUpdateDidFail(_ error: Error!) {
         showLoadingView = false
