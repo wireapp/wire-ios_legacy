@@ -176,8 +176,12 @@ public extension ConversationViewController {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
         
-        collections.onDismiss = { _ in
-            ZClientViewController.shared().dismiss(animated: true, completion: {
+        collections.onDismiss = { [weak self] _ in
+            guard let `self` = self, let collectionController = self.collectionController else {
+                return
+            }
+
+            collectionController.dismiss(animated: true, completion: {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })
         }
