@@ -80,9 +80,19 @@ struct ChangeEmailState {
     let currentEmail: String
     var newEmail: String?
     
+    var validatedEmail: String? {
+        var validatedEmail = newEmail as AnyObject?
+        let pointer = AutoreleasingUnsafeMutablePointer<AnyObject?>(&validatedEmail)
+        do {
+            try ZMUser.editableSelf().validateValue(pointer, forKey: #keyPath(ZMUser.emailAddress))
+            return validatedEmail as? String
+        } catch {
+            return nil
+        }
+    }
+    
     var saveButtonEnabled: Bool {
-        guard let email = newEmail else { return false }
-        if email.isEmpty { return false }
+        guard let email = validatedEmail, !email.isEmpty else { return false }
         return email != currentEmail
     }
     
