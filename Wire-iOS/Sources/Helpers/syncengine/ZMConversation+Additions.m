@@ -329,10 +329,10 @@
             __block BOOL joined = YES;
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 if (video) {
-                    joined = [self.voiceChannel joinWithVideo:YES];
+                    joined = [self.voiceChannel joinWithVideo:YES userSession:[ZMUserSession sharedSession]];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoCall inConversation:self];
                 } else {
-                    joined = [self.voiceChannel joinWithVideo:NO];
+                    joined = [self.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionAudioCall inConversation:self];
                 }
 
@@ -369,14 +369,14 @@
                 continue;
             }
             else if (conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall) {
-                [conversation.voiceChannel ignore];
+                [conversation.voiceChannel ignoreWithUserSession:[ZMUserSession sharedSession]];
             }
             else if (conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel ||
                      conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannel ||
                      conversation.voiceChannel.state == VoiceChannelV2StateDeviceTransferReady ||
                      conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCall ||
                      conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallInactive) {
-                [conversation.voiceChannel leave];
+                [conversation.voiceChannel leaveWithUserSession:[ZMUserSession sharedSession]];
             }
         }
     } completionHandler:completionHandler];

@@ -186,7 +186,7 @@
     DDLogVoice(@"UI: Ignore button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        [voiceChannel ignore];
+        [voiceChannel ignoreWithUserSession:[ZMUserSession sharedSession]];
     } completionHandler:^{
         [Analytics shared].sessionSummary.incomingCallsMuted++;
     }];
@@ -197,7 +197,7 @@
     DDLogVoice(@"UI: Leave button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        [voiceChannel leave];
+        [voiceChannel leaveWithUserSession:[ZMUserSession sharedSession]];
     }];
 }
 
@@ -327,9 +327,11 @@
 
 - (void)leaveConnectedVoiceChannels
 {
-    for (ZMConversation *conversation in [WireCallCenter activeCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
-        [conversation.voiceChannel leave];
-    }
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        for (ZMConversation *conversation in [WireCallCenter activeCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
+            [conversation.voiceChannel leaveWithUserSession:[ZMUserSession sharedSession]];
+        }
+    }];
 }
 
 - (void)joinCurrentVoiceChannel
