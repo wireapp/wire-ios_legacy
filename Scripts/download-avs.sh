@@ -118,11 +118,20 @@ fi
 echo "ℹ️  Installing in ${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK_NAME}..."
 mkdir "${AVS_FRAMEWORK_NAME}"
 
-if ! unzip -d "${AVS_FRAMEWORK_NAME}" "${AVS_FILENAME}" > /dev/null; then
+if ! unzip "${AVS_FILENAME}" "Carthage/Build/iOS/*" > /dev/null; then
 	rm -fr "${AVS_FILENAME}"
 	echo "❌  Failed to install, is the downloaded file valid? ⚠️"
 	exit 1
 fi
+
+if ! mv "${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK_NAME}" .; then
+	rm -rf "Carthage"
+	echo "❌  Failed to unpack framework, is the downloaded file valid? ⚠️"
+	exit 1
+fi
+
+rm -rf "Carthage"
+
 echo "✅  Done"
 
 popd  > /dev/null
