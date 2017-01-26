@@ -22,12 +22,17 @@ import WireShareEngine
 import MobileCoreServices
 import WireExtensionComponents
 
-
+/// Error that can happen during the preparation or sending operation
 enum UnsentSendableError: Error {
+    // The attachment is not supported to be sent, this can currently be the case if the user sends a URL
+    // which does not contain a File, e.g. an URL to a webpage, which instead will also be included in the text content.
+    // `UnsentSendables` that report this error should not be sent.
     case unsupportedAttachment
 }
 
-
+/// This protocol defines the basic methods that an Object needes to conform to 
+/// in order to be prepared and sent. A consumer should ask the objects if they need to perform
+/// perparation operations and call `prepare` before calling `send`.
 protocol UnsentSendable {
     func prepare(completion: @escaping () -> Void)
     func send(completion: @escaping (Sendable?) -> Void)
@@ -59,7 +64,7 @@ class UnsentSendableBase {
     }
 }
 
-
+/// `UnsentSendable` implementation to send text messages
 class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
     private let text: String
@@ -78,7 +83,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
 }
 
-
+/// `UnsentSendable` implementation to send image messages
 class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
     private let attachment: NSItemProvider
@@ -116,7 +121,7 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
 }
 
-
+/// `UnsentSendable` implementation to send file messages
 class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
     private let attachment: NSItemProvider

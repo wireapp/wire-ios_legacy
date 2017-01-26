@@ -82,6 +82,8 @@ extension PostContent {
             })
         }
 
+        // We intercept and forward the state callback to start listening for 
+        // conversation degradation and to tearDown the observer once done.
         sendController?.send {
             switch $0 {
             case .done: conversationObserverToken.tearDown()
