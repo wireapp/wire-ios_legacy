@@ -185,7 +185,7 @@ public extension ConversationViewController {
     
     internal func dismissCollectionIfNecessary() {
         if let _ = self.collectionController {
-            ZClientViewController.shared().dismiss(animated: false)
+            self.collectionController.dismiss(animated: false)
         }
     }
 }
@@ -194,7 +194,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
     public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
         switch action {
         case .forward:
-            ZClientViewController.shared().dismiss(animated: true) {
+            viewController.dismiss(animated: true) {
                 self.contentViewController.scroll(to: message) {[weak self] cell in
                     guard let `self` = self else {
                         return
@@ -205,7 +205,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
             
             
         case .showInConversation:
-            ZClientViewController.shared().dismiss(animated: true) { [weak self] in
+            viewController.dismiss(animated: true) { [weak self] in
                 guard let `self` = self else {
                     return
                 }
