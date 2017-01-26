@@ -24,6 +24,7 @@
 
 @class ConversationInputBarViewController;
 @class ConversationDetailsTransitioningDelegate;
+@class CollectionsViewController;
 
 @interface ConversationViewController (Private)
 
@@ -32,6 +33,7 @@
 @property (nonatomic, readonly) UIViewController *participantsController;
 @property (nonatomic, readonly) AnalyticsTracker *analyticsTracker;
 @property (nonatomic, readonly) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
+@property (nonatomic, weak)     CollectionsViewController *collectionController;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 @end

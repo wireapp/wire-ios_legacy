@@ -141,6 +141,7 @@
 
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
+@property (nonatomic, weak) CollectionsViewController *collectionController;
 
 @end
 
@@ -150,6 +151,8 @@
 
 - (void)dealloc
 {
+    [self dismissCollectionIfNecessary];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 
@@ -366,11 +369,6 @@
     return YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)openConversationList
 {
     BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
@@ -399,7 +397,6 @@
         self.conversationObserverToken = [self.conversation addConversationObserver:self];
     }
 }
-
 
 - (void)setupNavigatiomItem
 {
