@@ -106,7 +106,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ZMBackendEnvironmentType staging"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ZMBackendEnvironmentType edge"
