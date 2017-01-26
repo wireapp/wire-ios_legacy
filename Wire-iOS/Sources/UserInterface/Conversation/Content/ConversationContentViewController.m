@@ -70,7 +70,7 @@
 #import "Wire-Swift.h"
 
 
-@interface ConversationContentViewController (TableView) <UITableViewDelegate>
+@interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
 
 @end
 
@@ -161,6 +161,9 @@
     self.tableView.allowsMultipleSelection = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self.conversationMessageWindowTableViewAdapter;
+    if ([self.tableView respondsToSelector:@selector(setPrefetchDataSource:)]) {
+        self.tableView.prefetchDataSource = self;
+    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delaysContentTouches = NO;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
@@ -687,6 +690,17 @@
     // Make table view to update cells with animation
     [tableView beginUpdates];
     [tableView endUpdates];
+}
+
+- (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];
+    
+    NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
+    
+    if (latestIndexPath.row + 10 > (int)self.messageWindow.messages.count) {
+        [self expandMessageWindowUp];
+    }
 }
 
 @end
