@@ -240,6 +240,17 @@ class SettingsPropertyFactory {
                     }
             })
 
+        case .linkPreviewsInShareExtension:
+            return SettingsBlockProperty(
+                propertyName: .linkPreviewsInShareExtension,
+                getAction: { _ in return .bool(value: ExtensionSettings.shared.fetchLinkPreview) },
+                setAction: { _, value in
+                    switch value {
+                    case .bool(value: let fetch): ExtensionSettings.shared.fetchLinkPreview = fetch
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                }
+            })
+
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)

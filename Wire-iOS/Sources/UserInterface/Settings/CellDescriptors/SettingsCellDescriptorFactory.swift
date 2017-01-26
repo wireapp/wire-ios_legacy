@@ -173,6 +173,8 @@ import Foundation
         developerCellDescriptors.append(enableAssetV3Setting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
+        let linkPreviewsInShareExtension = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.linkPreviewsInShareExtension))
+        developerCellDescriptors.append(linkPreviewsInShareExtension)
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }

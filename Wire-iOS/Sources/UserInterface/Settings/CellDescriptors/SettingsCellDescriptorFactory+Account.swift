@@ -196,6 +196,7 @@ extension SettingsCellDescriptorFactory {
     func signOutElement() -> SettingsCellDescriptorType {
         return SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { _ in
             Settings.shared().reset()
+            ExtensionSettings.shared.reset()
             ZMUserSession.resetStateAndExit()
         }
     }

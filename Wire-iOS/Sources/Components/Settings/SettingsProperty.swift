@@ -77,6 +77,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case sendV3Assets = "SendV3Assets"
     
     case enableBatchCollections = "EnableBatchCollections"
+    case linkPreviewsInShareExtension = "LinkPreviewsInShareExtension"
 
     var changeNotificationName: String {
         return self.description + "ChangeNotification"

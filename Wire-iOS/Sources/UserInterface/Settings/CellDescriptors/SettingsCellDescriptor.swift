@@ -260,6 +260,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "Send assets using the v3 endpoint"
     case .enableBatchCollections:
         return "Use AssetCollectionBatched"
+    case .linkPreviewsInShareExtension:
+        return "Fetch link previews in share extension"
     }
 }
 

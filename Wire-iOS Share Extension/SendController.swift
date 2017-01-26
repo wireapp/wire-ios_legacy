@@ -101,9 +101,7 @@ class SendController {
     func cancel(completion: @escaping () -> Void) {
         isCancelled = true
 
-        let sendablesToCancel = self.observer?.sendables.lazy.filter {
-            $0.deliveryState != .sent && $0.deliveryState != .delivered
-        }
+        let sendablesToCancel = self.observer?.sendables.lazy.filter { !$0.isSent }
 
         sharingSession?.enqueue(changes: { 
             sendablesToCancel?.forEach {
