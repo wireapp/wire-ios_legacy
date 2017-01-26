@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationContentViewController (MessageWindow) <ZMConversationMessageWindowObserver>
 
 - (void)expandMessageWindowUp;
-- (void)prefetchNextMessages;
+- (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 
 @end
 

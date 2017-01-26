@@ -697,13 +697,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
-    NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];
-    
-    NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
-    
-    if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
-        [self prefetchNextMessages];
-    }
+    [self prefetchNextMessagesForIndexPaths:indexPaths];
 }
 
 @end
@@ -796,14 +790,22 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.conversationMessageWindowTableViewAdapter expandMessageWindow];
 }
 
-- (void)prefetchNextMessages
+- (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
-    [self expandMessageWindowUp];
+    NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];
+
+    NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
+
+    if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
+        [self expandMessageWindowUp];
+    }
     
-    for (int messageIndex = (int)self.messageWindow.messages.count - 1; messageIndex >= 0 && ((int)self.messageWindow.messages.count - messageIndex) < ConversationContentViewControllerMessagePrefetchDepth; messageIndex--) {
-        id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:messageIndex];
-        if ([Message isImageMessage:message] || [Message isTextMessage:message] || [Message isFileTransferMessage:message]) {
-            [message requestImageDownload];
+    for (NSIndexPath *upcomingIndexPath in indexPaths) {
+        if (upcomingIndexPath.row < (int)self.messageWindow.messages.count) {
+            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:upcomingIndexPath.row];
+            if ([Message isImageMessage:message] || [Message isTextMessage:message] || [Message isFileTransferMessage:message]) {
+                [message requestImageDownload];
+            }
         }
     }
 }
