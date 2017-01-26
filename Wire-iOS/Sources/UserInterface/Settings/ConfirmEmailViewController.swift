@@ -47,6 +47,7 @@ final class ConfirmEmailDescriptionView: UIView {
 }
 
 protocol ConfirmEmailDelegate: class {
+    func resendVerification(inController controller: ConfirmEmailViewController)
     func didConfirmEmail(inController controller: ConfirmEmailViewController)
 }
 
@@ -54,8 +55,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmEmailDelegate?
     let newEmail: String
-    var observer: UserCollectionObserverToken?
-    private var observerToken: AnyObject?
+    fileprivate var observer: UserCollectionObserverToken?
 
     init(newEmail: String, delegate: ConfirmEmailDelegate?) {
         self.newEmail = newEmail
@@ -69,21 +69,14 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        observerToken = userProfile?.add(observer: self)
         let context = ZMUserSession.shared()?.managedObjectContext
         observer = UserCollectionObserverToken(observer: self, users: [ZMUser.selfUser()], managedObjectContext: context!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let token = observerToken else { return }
-        userProfile?.removeObserver(token: token)
         observer?.tearDown()
     }
 
@@ -121,10 +114,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        do {
-            try userProfile?.requestEmailChange(email: newEmail)
-            showLoadingView = true
-        } catch { }
+        delegate?.resendVerification(inController: self)
         tableView.deselectRow(at: indexPath, animated: false)
     }
 }
@@ -140,27 +130,3 @@ extension ConfirmEmailViewController: ZMUserObserver {
         }
     }
 }
-
-extension ConfirmEmailViewController: UserProfileUpdateObserver {
-    
-    func emailUpdateDidFail(_ error: Error!) {
-        showLoadingView = false
-        presentFailureAlert()
-    }
-    
-    func didSentVerificationEmail() {
-        showLoadingView = false
-    }
-    
-    private func presentFailureAlert() {
-        let alert = UIAlertController(
-            title: "self.settings.account_section.email.change.failure_alert.title".localized,
-            message: "self.settings.account_section.email.change.failure_alert.message".localized,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-}
-

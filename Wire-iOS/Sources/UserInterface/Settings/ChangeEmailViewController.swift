@@ -259,6 +259,12 @@ extension ChangeEmailViewController: ConfirmEmailDelegate {
             _ = navigationController?.popToViewController(accountController, animated: true)
         }
     }
+    
+    func resendVerification(inController controller: ConfirmEmailViewController) {
+        if let validatedEmail = state.validatedEmail {
+            try? userProfile?.requestEmailChange(email: validatedEmail)
+        }
+    }
 }
 
 extension ChangeEmailViewController: ChangeEmailTableViewCellDelegate {
