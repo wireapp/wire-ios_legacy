@@ -70,6 +70,9 @@
 #import "Wire-Swift.h"
 
 
+const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
+
+
 @interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
 
 @end
@@ -698,8 +701,8 @@
     
     NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
     
-    if (latestIndexPath.row + 10 > (int)self.messageWindow.messages.count) {
-        [self expandMessageWindowUp];
+    if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
+        [self prefetchNextMessages];
     }
 }
 
@@ -791,6 +794,18 @@
 - (void)expandMessageWindowUp
 {
     [self.conversationMessageWindowTableViewAdapter expandMessageWindow];
+}
+
+- (void)prefetchNextMessages
+{
+    [self expandMessageWindowUp];
+    
+    for (int messageIndex = (int)self.messageWindow.messages.count - 1; messageIndex >= 0 && ((int)self.messageWindow.messages.count - messageIndex) < ConversationContentViewControllerMessagePrefetchDepth; messageIndex--) {
+        id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:messageIndex];
+        if ([Message isImageMessage:message] || [Message isTextMessage:message] || [Message isFileTransferMessage:message]) {
+            [message requestImageDownload];
+        }
+    }
 }
 
 - (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos
