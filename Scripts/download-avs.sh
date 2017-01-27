@@ -39,18 +39,15 @@ fi
 ##################################
 AVS_LOCAL_PATH="wire-avs-ios"
 
-if [ -z "${AVS_REPO}" ]; then
-	echo "ℹ️  Using wire open source iOS binary"
-	AVS_REPO="wireapp/avs-ios-binaries"
-	if [ -z "${AVS_VERSION}" ]; then
-		AVS_VERSION="${OPEN_SOURCE_AVS_VERSION}"
-	fi
-else 
+if [[ -n "${AVS_REPO}" ]]; then
 	echo "ℹ️  Using custom AVS binary"
 	AVS_VERSION="${AVS_CUSTOM_VERSION}"
 	if [ -z "${AVS_VERSION}" ]; then
 		AVS_VERSION="${APPSTORE_AVS_VERSION}"
 	fi
+else 
+	echo "ℹ️  No custom AVS binary specified"
+	exit 0
 fi
 
 ##################################
