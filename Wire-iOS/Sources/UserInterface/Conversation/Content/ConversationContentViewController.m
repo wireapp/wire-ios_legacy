@@ -803,7 +803,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     for (NSIndexPath *upcomingIndexPath in indexPaths) {
         if (upcomingIndexPath.row < (int)self.messageWindow.messages.count) {
             id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:upcomingIndexPath.row];
-            if ([Message isImageMessage:message] || [Message isTextMessage:message] || [Message isFileTransferMessage:message]) {
+            if ([Message canBePrefetched:message]) {
                 [message requestImageDownload];
             }
         }

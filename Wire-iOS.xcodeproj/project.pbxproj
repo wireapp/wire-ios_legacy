@@ -492,6 +492,7 @@
 		877316111B970A82007BA779 /* style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316021B970A82007BA779 /* style.plist */; };
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
+		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
 		8785CA5C1C567FCD00FD671C /* IconLabelButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 8785CA5A1C567FCD00FD671C /* IconLabelButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1695,6 +1696,7 @@
 		8774F0C61B4AB2DD002256A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
+		877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Properties.swift"; sourceTree = "<group>"; };
 		8781C94E1E2687590024F3F6 /* MessageAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageAction.h; sourceTree = "<group>"; };
 		8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSelfPictureViewController.h; sourceTree = "<group>"; };
 		8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSelfPictureViewController.m; sourceTree = "<group>"; };
@@ -4219,6 +4221,7 @@
 				8F41CFC6199297C600E3B032 /* Message.h */,
 				BF8EE55B1D64576400B0D6D7 /* Message+Private.h */,
 				8F41CFC7199297C600E3B032 /* Message.m */,
+				877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */,
 				8F41CFC119926B7A00E3B032 /* ZMUser+Additions.h */,
 				8F41CFC219926B7A00E3B032 /* ZMUser+Additions.m */,
 				BF8CADD81D6CAAFC007602B8 /* Conversation+SortedParticipants.swift */,
@@ -5771,6 +5774,7 @@
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
+				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				871BC2541D34F8F800DF0793 /* ActionSheetTransition.m in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
