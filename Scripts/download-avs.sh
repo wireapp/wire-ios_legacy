@@ -39,18 +39,15 @@ fi
 ##################################
 AVS_LOCAL_PATH="wire-avs-ios"
 
-if [ -z "${AVS_REPO}" ]; then
-	echo "ℹ️  Using wire open source iOS binary"
-	AVS_REPO="wireapp/avs-ios-binaries"
-	if [ -z "${AVS_VERSION}" ]; then
-		AVS_VERSION="${OPEN_SOURCE_AVS_VERSION}"
-	fi
-else 
+if [[ -n "${AVS_REPO}" ]]; then
 	echo "ℹ️  Using custom AVS binary"
 	AVS_VERSION="${AVS_CUSTOM_VERSION}"
 	if [ -z "${AVS_VERSION}" ]; then
 		AVS_VERSION="${APPSTORE_AVS_VERSION}"
 	fi
+else 
+	echo "ℹ️  No custom AVS binary specified"
+	exit 0
 fi
 
 ##################################
@@ -118,11 +115,20 @@ fi
 echo "ℹ️  Installing in ${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK_NAME}..."
 mkdir "${AVS_FRAMEWORK_NAME}"
 
-if ! unzip -d "${AVS_FRAMEWORK_NAME}" "${AVS_FILENAME}" > /dev/null; then
+if ! unzip "${AVS_FILENAME}" "Carthage/Build/iOS/*" > /dev/null; then
 	rm -fr "${AVS_FILENAME}"
 	echo "❌  Failed to install, is the downloaded file valid? ⚠️"
 	exit 1
 fi
+
+if ! mv "${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK_NAME}" .; then
+	rm -rf "Carthage"
+	echo "❌  Failed to unpack framework, is the downloaded file valid? ⚠️"
+	exit 1
+fi
+
+rm -rf "Carthage"
+
 echo "✅  Done"
 
 popd  > /dev/null
