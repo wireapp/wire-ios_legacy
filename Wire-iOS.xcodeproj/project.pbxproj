@@ -101,6 +101,7 @@
 		16D3631C1AAB63DB00471F5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3631B1AAB63DB00471F5F /* CameraViewController.m */; };
 		16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */; };
 		16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */; };
+		16D3FD041E3BCCF80052A535 /* BlurEffectTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */; };
 		16D453601B69131400675246 /* ConversationListCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D4535F1B69131400675246 /* ConversationListCollectionViewLayout.m */; };
 		16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */; };
 		16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */; };
@@ -1083,6 +1084,7 @@
 		16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraTopToolsViewController.m; sourceTree = "<group>"; };
 		16D363381AB073AC00471F5F /* CameraBottomToolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraBottomToolsViewController.h; sourceTree = "<group>"; };
 		16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraBottomToolsViewController.m; sourceTree = "<group>"; };
+		16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffectTransition.swift; sourceTree = "<group>"; };
 		16D4535E1B69131400675246 /* ConversationListCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListCollectionViewLayout.h; sourceTree = "<group>"; };
 		16D4535F1B69131400675246 /* ConversationListCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListCollectionViewLayout.m; sourceTree = "<group>"; };
 		16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentTests.m; sourceTree = "<group>"; };
@@ -3598,6 +3600,7 @@
 				876113E61DD1DE89007F5969 /* ShareViewController.swift */,
 				872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */,
 				876113E81DD1FC4F007F5969 /* ShareDestinationCell.swift */,
+				16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5415,6 +5418,7 @@
 			files = (
 				161541BC1E28FFAE00AC2FFB /* CircularProgressView.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
+				16D3FD041E3BCCF80052A535 /* BlurEffectTransition.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
 				1EB9BF3C1BC7ED5D002EF0F3 /* SharedAnalytics.m in Sources */,
