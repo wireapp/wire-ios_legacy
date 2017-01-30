@@ -55,6 +55,8 @@
 #import "StopWatch.h"
 
 
+static AppDelegate *sharedAppDelegate = nil;
+
 
 @interface AppDelegate (NetworkAvailabilityObserver) <ZMNetworkAvailabilityObserver>
 
@@ -90,7 +92,7 @@
 
 + (instancetype)sharedAppDelegate;
 {
-    return (AppDelegate *) [UIApplication sharedApplication].delegate;
+    return sharedAppDelegate;
 }
 
 - (void)dealloc
@@ -102,7 +104,8 @@
 - (instancetype)init
 {
     self = [super init];
-        if (self) {
+    if (self) {
+        sharedAppDelegate = self;
         self.appController = [[AppController alloc] init];
     }
     return self;
@@ -110,7 +113,6 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     DDLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupLogging];
