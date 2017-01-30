@@ -29,6 +29,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "zmessaging+iOS.h"
+#import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Navigation.h"
 
@@ -80,7 +81,8 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 - (void)createSelectCountryButton
 {
     self.selectCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.selectCountryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.selectCountryButton.contentHorizontalAlignment = [UIApplication isLeftToRightLayout] ? UIControlContentHorizontalAlignmentLeft : UIControlContentHorizontalAlignmentRight;
+    
     self.selectCountryButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
