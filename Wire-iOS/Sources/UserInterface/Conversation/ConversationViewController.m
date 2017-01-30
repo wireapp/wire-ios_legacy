@@ -423,6 +423,7 @@
 
 - (void)updateRightNavigationItemsButtons
 {
+    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
     if ([UIApplication isLeftToRightLayout]) {
         self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
     } else {
@@ -432,6 +433,7 @@
 
 - (void)updateLeftNavigationBarItems
 {
+    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
     if ([UIApplication isLeftToRightLayout]) {
         self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
     } else {
