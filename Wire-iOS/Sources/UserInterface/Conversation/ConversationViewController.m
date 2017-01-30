@@ -423,12 +423,20 @@
 
 - (void)updateRightNavigationItemsButtons
 {
-    self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    if ([UIApplication isLeftToRightLayout]) {
+        self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    } else {
+        self.navigationItem.rightBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    }
 }
 
 - (void)updateLeftNavigationBarItems
 {
-    self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    if ([UIApplication isLeftToRightLayout]) {
+        self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    } else {
+        self.navigationItem.leftBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    }
 }
 
 - (UIViewController *)participantsController
