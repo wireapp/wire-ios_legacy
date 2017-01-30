@@ -96,7 +96,6 @@
     [self.messageContentView addSubview:self.messageTextView];
 
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
-    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeNone;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
     self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
@@ -106,6 +105,7 @@
     self.messageTextView.userInteractionEnabled = YES;
     self.messageTextView.accessibilityIdentifier = @"Message";
     self.messageTextView.accessibilityElementsHidden = NO;
+    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeAll;
 
     self.linkAttachmentContainer = [[UIView alloc] init];
     self.linkAttachmentContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -423,7 +423,6 @@
 {
     [self showMenu];
 }
-
 
 @end
 

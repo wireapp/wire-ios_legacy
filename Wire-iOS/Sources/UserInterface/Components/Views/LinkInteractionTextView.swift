@@ -77,4 +77,17 @@ extension LinkInteractionTextView: UITextViewDelegate {
         return false
     }
     
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
+        return true
+    }
+    
+    @available(iOS 10.0, *)
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
+    }
+    
+    @available(iOS 10.0, *)
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
+    }
 }
