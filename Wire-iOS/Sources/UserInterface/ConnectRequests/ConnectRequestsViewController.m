@@ -45,8 +45,8 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 @interface ConnectRequestsViewController () <ZMConversationListObserver, ZMUserObserver, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *connectionRequests;
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> pendingConnectionsListObserverToken;
+@property (nonatomic) id userObserverToken;
+@property (nonatomic) id pendingConnectionsListObserverToken;
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) CGRect lastLayoutBounds;
@@ -58,9 +58,23 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 - (void)dealloc
 {
-    [[[SessionObjectCache sharedCache] pendingConnectionRequests] removeConversationListObserverForToken:self.pendingConnectionsListObserverToken];
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    [self unregisterAsListObserver];
+    [self unregisterAsUserObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)unregisterAsListObserver
+{
+    if (self.pendingConnectionsListObserverToken != nil) {
+        [ConversationListChangeInfo removeObserver:self.pendingConnectionsListObserverToken forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
+    }
+}
+
+- (void)unregisterAsUserObserver
+{
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:nil];
+    }
 }
 
 - (void)loadView
@@ -78,12 +92,12 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.dataSource = self;
     
     ZMConversationList *pendingConnectionsList = [[SessionObjectCache sharedCache] pendingConnectionRequests];
-    self.pendingConnectionsListObserverToken = [pendingConnectionsList addConversationListObserver:self];
+    self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self forList:pendingConnectionsList];
     
-    self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
     self.connectionRequests = [SessionObjectCache sharedCache].pendingConnectionRequests;
     
-    [self conversationListDidChange:nil];
+    [self reload];
     
     self.tableView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -187,9 +201,15 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     [self.tableView reloadData]; //may need a slightly different approach, like enumerating through table cells of type FirstTimeTableViewCell and setting their bgColor property
 }
 
+
 #pragma mark - ZMConversationsObserver
 
 - (void)conversationListDidChange:(ConversationListChangeInfo *)change
+{
+    [self reload];
+}
+
+- (void)reload
 {
     [self.tableView reloadData];
     

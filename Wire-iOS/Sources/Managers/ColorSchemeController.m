@@ -32,7 +32,7 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
 
 @interface ColorSchemeController () <ZMUserObserver>
 
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -44,7 +44,9 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
+    }
 }
 
 - (instancetype)init
@@ -52,7 +54,7 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
     self = [super init];
     
     if (self) {
-        self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsColorSchemeDidChange:) name:SettingsColorSchemeChangedNotification object:nil];
     }
     

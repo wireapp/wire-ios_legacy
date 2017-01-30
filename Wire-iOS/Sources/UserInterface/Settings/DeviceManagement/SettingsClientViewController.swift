@@ -39,7 +39,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     let userClient: UserClient
     var resetSessionPending: Bool = false
     
-    var userClientToken: UserClientObserverOpaqueToken!
+    var userClientToken: NSObjectProtocol!
     var credentials: ZMEmailCredentials?
 
     var tableView: UITableView!
@@ -59,7 +59,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = []
 
-        self.userClientToken = userClient.addObserver(self)
+        self.userClientToken = UserClientChangeInfo.add(observer: self, for: userClient)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueueChanges({ () -> Void in
                 userClient.markForFetchingPreKeys()
@@ -70,7 +70,9 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     deinit {
-        UserClient.removeObserverForUserClientToken(self.userClientToken)
+        if let token = userClientToken {
+            UserClientChangeInfo.remove(observer: token, for:nil)
+        }
     }
     
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {

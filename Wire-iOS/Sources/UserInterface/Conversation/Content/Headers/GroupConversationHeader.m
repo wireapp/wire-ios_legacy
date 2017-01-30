@@ -38,7 +38,7 @@
 @property (nonatomic) Button *inviteButton;
 @property (nonatomic) UIView *separatorView;
 @property (nonatomic) ParticipantsChangedView *participantsChangedView;
-@property (nonatomic) id<ZMConversationObserverOpaqueToken> conversationObserverToken;
+@property (nonatomic) id conversationObserverToken;
 
 @property (nonatomic, readonly) ZMConversation *conversation;
 
@@ -53,7 +53,9 @@
 
 - (void)dealloc
 {
-    [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
+    if (self.conversationObserverToken != nil) {
+        [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
+    }
 }
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
@@ -68,7 +70,7 @@
         
         [[CASStyler defaultStyler] styleItem:self];
         self.messageTextView.attributedText = [self attributedMessage];
-        self.conversationObserverToken = [conversation addConversationObserver:self];
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
     return self;

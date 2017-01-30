@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @property (nonatomic, readonly) ProfileViewControllerContext context;
 @property (nonatomic, readonly) ZMConversation *conversation;
 
-@property (nonatomic) id <ZMUserObserverOpaqueToken> observerToken;
+@property (nonatomic) id observerToken;
 @property (nonatomic) id <ZMCommonContactsSearchToken> commonContactsSearchToken;
 @property (nonatomic) ProfileHeaderView *headerView;
 @property (nonatomic) TabBarController *tabsController;
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.navigationController.delegate = self.navigationControllerDelegate;
     
     if (nil != self.fullUser) {
-        self.observerToken = [ZMUser addUserObserver:self forUsers:@[self.fullUser] inUserSession:[ZMUserSession sharedSession]];
+        self.observerToken = [UserChangeInfo addUserObserver:self forUser:self.fullUser];
     }
     
     [self setupHeader];
@@ -132,7 +132,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)dealloc
 {
-    [ZMUser removeUserObserverForToken:self.observerToken];
+    if (self.observerToken != nil) {
+        [UserChangeInfo removeUserObserver:self.observerToken forUser:self.fullUser];
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations

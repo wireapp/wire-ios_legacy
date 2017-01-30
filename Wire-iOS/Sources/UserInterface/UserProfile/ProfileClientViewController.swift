@@ -39,7 +39,7 @@ class ProfileClientViewController: UIViewController {
     let verifiedToggleLabel = UILabel()
     let resetButton = ButtonWithLargerHitArea()
 
-    var userClientToken: UserClientObserverOpaqueToken?
+    var userClientToken: NSObjectProtocol!
     var resetSessionPending: Bool = false
     var descriptionTextFont: UIFont?
     var fromConversation: Bool = false
@@ -87,7 +87,7 @@ class ProfileClientViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         
-        self.userClientToken = userClient.addObserver(self)
+        self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueueChanges({ () -> Void in
                 self.userClient.markForFetchingPreKeys()
@@ -111,7 +111,9 @@ class ProfileClientViewController: UIViewController {
     }
     
     deinit {
-        UserClient.removeObserverForUserClientToken(self.userClientToken!)
+        if let token = userClientToken {
+            UserClientChangeInfo.remove(observer: token, for:self.userClient)
+        }
     }
 
     override func viewDidLoad() {

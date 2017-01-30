@@ -38,7 +38,7 @@
 @property (nonatomic, readwrite) UIView *lineView;
 
 @property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 @end
 
 @implementation SearchView
@@ -53,9 +53,7 @@
         self.lineView = [[UIView alloc] initForAutoLayout];
         [self addSubview:self.lineView];
         
-
-        
-        self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
     }
     return self;
 }
@@ -90,7 +88,9 @@
 
 - (void)dealloc
 {
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
+    }
 }
 
 #pragma mark - ZMUserObserver

@@ -24,7 +24,7 @@
 
 @interface UserBackgroundView () <ZMUserObserver>
 
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -33,7 +33,9 @@
 
 - (void)dealloc
 {
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
+    }
 }
 
 - (void)setUser:(id<ZMBareUser>)user
@@ -52,12 +54,14 @@
         return;
     }
     
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
+    }
     
     _user = user;
 
     if ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]]) {
-        self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[user] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:user];
     }
     
     if (user.imageMediumData == nil) {

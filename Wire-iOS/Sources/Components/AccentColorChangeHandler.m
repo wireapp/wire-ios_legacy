@@ -31,7 +31,7 @@
 @property (atomic, unsafe_unretained) id observer;
 
 @property (nonatomic, strong) ZMUser *selfUser;
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 
 - (id)initWithObserver:(id)observer handlerBlock:(AccentColorChangeHandlerBlock)changeHandler;
 
@@ -59,7 +59,7 @@
         self.observer = observer;
         
         self.selfUser = [ZMUser selfUser];
-        self.userObserverToken = [self.selfUser.class addUserObserver:self forUsers:@[self.selfUser] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:self.selfUser];
     }
     return self;
 }
@@ -67,8 +67,9 @@
 - (void)dealloc
 {
     self.observer = nil;
-    
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:self.selfUser];
+    }
 }
 
 - (void)userDidChange:(UserChangeInfo *)change

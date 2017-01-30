@@ -31,7 +31,7 @@
 
 @interface ProfileDevicesViewController () <ZMUserObserver, ParticipantDeviceHeaderViewDelegate>
 
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 @property (strong, nonatomic, readwrite) ZMUser *user;
 @property (strong, nonatomic) NSArray <UserClient *> *sortedClients;
 
@@ -47,7 +47,7 @@
         return nil;
     }
     self.user = user;
-    self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[user] managedObjectContext:user.managedObjectContext];
+    self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:self.user];
     [self refreshSortedClientsWithSet:user.clients];
     return self;
 }
@@ -80,7 +80,9 @@
 
 - (void)dealloc
 {
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    if(self.userObserverToken != nil) {
+        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
+    }
 }
 
 #pragma mark - Setup

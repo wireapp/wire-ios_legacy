@@ -35,10 +35,12 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 @interface SoundEventListener () <VoiceChannelStateObserver, VoiceChannelParticipantObserver, ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver>
 
-@property (nonatomic) id <ZMNewUnreadMessageObserverOpaqueToken> unreadMessageObserverToken;
-@property (nonatomic) id <ZMNewUnreadKnockMessageObserverOpaqueToken> unreadKnockMessageObserverToken;
+
+@property (nonatomic) id unreadMessageObserverToken;
+@property (nonatomic) id unreadKnockMessageObserverToken;
 @property (nonatomic) id voiceChannelStateObserverToken;
-@property (nonatomic) id callParticipantsObserverToken;
+@property (nonatomic) id callParticipantsToken;
+
 @property (nonatomic) ZMConversation *currentlyActiveVoiceChannelConversation;
 @property (nonatomic) NSMutableDictionary<NSUUID *, NSNumber *> *previousVoiceChannelState;
 @property (nonatomic) SoundEventRulesWatchDog *watchDog;
@@ -59,8 +61,9 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     self = [super init];
     if (self) {
         self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
-        self.unreadMessageObserverToken = [ZMMessageNotification addNewMessagesObserver:self inUserSession:[ZMUserSession sharedSession]];
-        self.unreadKnockMessageObserverToken = [ZMMessageNotification addNewKnocksObserver:self inUserSession:[ZMUserSession sharedSession]];
+        self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
+        self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
+        [ZMCallEndedNotification addCallEndObserver:self];
         
         self.watchDog = [[SoundEventRulesWatchDog alloc] initWithIgnoreTime:SoundEventListenerIgnoreTimeForPushStart];
         self.watchDog.startIgnoreDate = [NSDate date];
@@ -73,8 +76,20 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 - (void)dealloc
 {
-    [ZMMessageNotification removeNewMessagesObserverForToken:self.unreadMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
-    [ZMMessageNotification removeNewKnocksObserverForToken:self.unreadKnockMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
+    if (self.callParticipantsToken != nil) {
+        // TODO Sabine remove token?
+    }
+    if (self.voiceChannelStateObserverToken != nil) {
+        // TODO Sabine remove token?
+    }
+    if (self.unreadMessageObserverToken != nil) {
+        [NewUnreadMessagesChangeInfo removeNewMessageObserver:self.unreadMessageObserverToken];
+    }
+    if (self.unreadKnockMessageObserverToken != nil) {
+        [NewUnreadKnockMessagesChangeInfo removeNewKnockObserver:self.unreadKnockMessageObserverToken];
+    }
+    [ZMCallEndedNotification removeCallEndObserver:self];
+
     [ZMUserSession removeInitalSyncCompletionObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -250,7 +265,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 - (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
-    
+
 }
 
 - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol

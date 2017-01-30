@@ -103,7 +103,7 @@
 
 @property (nonatomic, assign) BOOL forcePortraitMode;
 
-@property (nonatomic) id <ZMMessageObserverOpaqueToken> messageObserverToken;
+@property (nonatomic) id messageObserverToken;
 
 @end
 
@@ -120,7 +120,7 @@
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.messageObserverToken = [ZMMessageNotification addMessageObserver:self forMessage:message];
+        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message];
     }
 
     return self;
@@ -128,7 +128,9 @@
 
 - (void)dealloc
 {
-    [ZMMessageNotification removeMessageObserverForToken:self.messageObserverToken];
+    if (self.messageObserverToken != nil) {
+        [MessageChangeInfo removeObserver:self.messageObserverToken forMessage:self.message];
+    }
 }
 
 - (void)loadView
@@ -174,6 +176,7 @@
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -61,7 +61,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
-@property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
+@property (nonatomic) id messageWindowObserverToken;
 @property (nonatomic) NSMutableDictionary *cellLayoutPropertiesCache;
 @property (nonatomic) BOOL expandingWindow;
 
@@ -78,7 +78,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     if (self) {
         self.tableView = tableView;
         self.messageWindow = messageWindow;
-        self.messageWindowObserverToken = [self.messageWindow addConversationWindowObserver:self];
+        self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
         
         [self updateLastUnreadMessage];
         [self registerTableCellClasses];
@@ -90,7 +90,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 - (void)dealloc
 {
     if (self.messageWindowObserverToken != nil) {
-        [self.messageWindow removeConversationWindowObserverToken:self.messageWindowObserverToken];
+        [MessageWindowChangeInfo removeObserver:self.messageWindowObserverToken forWindow:self.messageWindow];
     }
 }
 
@@ -189,7 +189,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     }
 }
 
-- (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos
+- (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
 {
     BOOL needsToLayoutCells = NO;
     

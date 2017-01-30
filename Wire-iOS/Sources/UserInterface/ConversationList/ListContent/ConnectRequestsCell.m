@@ -39,7 +39,7 @@
 @property (nonatomic, assign) BOOL hasCreatedInitialConstraints;
 @property (nonatomic, assign) NSUInteger currentConnectionRequestsCount;
 @property (nonatomic, strong) AccentColorChangeHandler *accentColorHandler;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> conversationListObserverToken;
+@property (nonatomic) id conversationListObserverToken;
 
 @end
 
@@ -49,7 +49,9 @@
 
 - (void)dealloc
 {
-    [[SessionObjectCache sharedCache].pendingConnectionRequests removeConversationListObserverForToken:self.conversationListObserverToken];
+    if (self.conversationListObserverToken != nil) {
+        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
+    }
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -67,7 +69,7 @@
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
     [self addSubview:self.itemView];
     [self updateAppearance];
-    self.conversationListObserverToken = [[SessionObjectCache sharedCache].pendingConnectionRequests addConversationListObserver:self];
+    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
     
     self.accentColorHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConnectRequestsCell *cell) {
         cell.itemView.selectionColor = newColor;

@@ -136,7 +136,7 @@
          <EnvironmentVariable
             key = "ZMLOG_TAGS"
             value = "Network"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_LIBRARIES"

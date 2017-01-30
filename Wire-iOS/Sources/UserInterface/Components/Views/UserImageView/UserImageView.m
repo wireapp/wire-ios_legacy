@@ -75,7 +75,7 @@ static CIContext *ciContext(void)
 
 @interface UserImageView ()
 
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 @property (nonatomic) UIView *indicator;
 
 @end
@@ -86,8 +86,16 @@ static CIContext *ciContext(void)
 
 - (void)dealloc
 {
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    [self unregisterAsUserObserver];
 }
+
+- (void)unregisterAsUserObserver
+{
+    if (self.userObserverToken != nil) {
+        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
+    }
+}
+
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
@@ -144,12 +152,12 @@ static CIContext *ciContext(void)
 
 - (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
 {
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
+    [self unregisterAsUserObserver];
     
     _user = user;
     
     if (user != nil && ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]])) {
-        self.userObserverToken = [user.class addUserObserver:self forUsers:@[user] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:user];
     }
     
     self.initials.textColor = UIColor.whiteColor;
