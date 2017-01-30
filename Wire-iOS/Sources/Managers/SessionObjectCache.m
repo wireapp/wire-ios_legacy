@@ -62,6 +62,13 @@
     return self;
 }
 
+- (void)refetchConversationLists
+{
+    if (self.userSession != nil) {
+        [ZMConversationList refetchAllListsInUserSession:self.userSession];
+    }
+}
+
 - (ZMConversationList *)conversationList
 {
     if (_conversationList == nil && self.userSession != nil) {        
