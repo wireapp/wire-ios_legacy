@@ -155,6 +155,16 @@ open class CameraKeyboardViewController: UIViewController {
         }
     }
     
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // For right-to-left layout first cell is at the far right corner.
+        // We need to scroll to it when initially showing controller and it seems there is no other way...
+        DispatchQueue.main.async {
+            self.scrollToCamera(animated: false)
+        }
+    }
+    
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewWasHidden = true
@@ -178,8 +188,13 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionView.bounces = false
     }
     
+    func scrollToCamera(animated: Bool) {
+        let endOfListX = UIApplication.isLeftToRightLayout ? 0 : self.collectionView.contentSize.width - 10
+        self.collectionView.scrollRectToVisible(CGRect(x: endOfListX, y: 0, width: 10, height: 10), animated: animated)
+    }
+    
     func goBackPressed(_ sender: AnyObject) {
-        self.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 10, height: 10), animated: true)
+        scrollToCamera(animated: true)
     }
     
     func openCameraRollPressed(_ sender: AnyObject) {
