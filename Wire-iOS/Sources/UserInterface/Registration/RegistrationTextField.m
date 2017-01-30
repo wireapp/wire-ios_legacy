@@ -173,7 +173,11 @@ static const CGFloat GuidanceDotViewWidth = 40;
 
     // In case the text content should be center-aligned, we need to inset the text with the right accessory view size on the left
     if (self.rightAccessoryView != RegistrationTextFieldRightAccessoryViewNone && self.textAlignment == NSTextAlignmentCenter) {
-        textRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(0, [self rightViewRectForBounds:bounds].size.width, 0, 0));
+        if ([UIApplication isLeftToRightLayout]) {
+            textRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(0, [self rightViewRectForBounds:bounds].size.width, 0, 0));
+        } else {
+            textRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(0, 0, 0, [self leftViewRectForBounds:bounds].size.width));
+        }
     }
 
     return UIEdgeInsetsInsetRect(textRect, self.textInsets);
