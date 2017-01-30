@@ -87,7 +87,8 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
     
-    UIImage *icon = [UIImage imageForIcon:ZetaIconTypeChevronRight iconSize:ZetaIconSizeSmall color:UIColor.whiteColor];
+    ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronRight : ZetaIconTypeChevronLeft;
+    UIImage *icon = [UIImage imageForIcon:iconType iconSize:ZetaIconSizeSmall color:UIColor.whiteColor];
     self.selectCountryButtonIcon = [[UIImageView alloc] initWithImage:icon];
     self.selectCountryButtonIcon.translatesAutoresizingMaskIntoConstraints = NO;
     [self.selectCountryButton addSubview:self.selectCountryButtonIcon];

@@ -28,6 +28,7 @@
 #import "CountryCodeView.h"
 
 #import "NSAttributedString+Wire.h"
+#import "Wire-Swift.h"
 
 static const CGFloat ConfirmButtonWidth = 40;
 static const CGFloat CountryCodeViewWidth = 60;
@@ -78,7 +79,8 @@ static const CGFloat GuidanceDotViewWidth = 40;
 {
     self.confirmButton = [[IconButton alloc] init];
     [self.confirmButton setBackgroundImageColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.confirmButton setIcon:ZetaIconTypeChevronRight withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
+    ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronRight : ZetaIconTypeChevronLeft;
+    [self.confirmButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     [self.confirmButton setIconColor:[UIColor colorWithMagicIdentifier:@"style.color.foreground.normal"] forState:UIControlStateNormal];
     self.confirmButton.accessibilityIdentifier= @"RegistrationConfirmButton";
 }
