@@ -185,7 +185,7 @@ static const CGFloat GuidanceDotViewWidth = 40;
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds
 {
-    BOOL leftToRight = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
+    BOOL leftToRight = [UIApplication isLeftToRightLayout];
     if (leftToRight) {
         return [self rightAccessoryViewRectForBounds:bounds leftToRight:leftToRight];
     } else {
@@ -195,7 +195,7 @@ static const CGFloat GuidanceDotViewWidth = 40;
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds
 {
-    BOOL leftToRight = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
+    BOOL leftToRight = [UIApplication isLeftToRightLayout];
     if (leftToRight) {
         return [self leftAccessoryViewRectForBounds:bounds leftToRight:leftToRight];
     } else {
