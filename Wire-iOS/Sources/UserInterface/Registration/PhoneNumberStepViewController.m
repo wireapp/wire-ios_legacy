@@ -139,12 +139,12 @@
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{            
             [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:75 relation:NSLayoutRelationGreaterThanOrEqual];
         }];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
+        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
         
         [self.phoneNumberViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
+        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
         [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:51];
     }
 }

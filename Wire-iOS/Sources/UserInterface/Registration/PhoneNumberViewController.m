@@ -138,14 +138,14 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
         
         self.initialConstraintsCreated = YES;
         
-        [self.selectCountryButtonIcon autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+        [self.selectCountryButtonIcon autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
         [self.selectCountryButtonIcon autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.selectCountryButton.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.selectCountryButtonIcon withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+        [self.selectCountryButton.titleLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.selectCountryButtonIcon withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
         
         [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
-        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
         
-        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10];
+        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10];
 
         self.selectCountryButtonHeightConstraint = [self.selectCountryButton autoSetDimension:ALDimensionHeight toSize:SelectCountryButtonHeight];
         
