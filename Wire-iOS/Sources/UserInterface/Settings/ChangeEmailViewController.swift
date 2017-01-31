@@ -97,7 +97,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     init() {
         super.init(style: .grouped)
-        CASStyler.default().styleItem(self)
         setupViews()
     }
     

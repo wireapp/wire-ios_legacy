@@ -74,7 +74,6 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         self.newEmail = newEmail
         self.delegate = delegate
         super.init(style: .grouped)
-        CASStyler.default().styleItem(self)
         setupViews()
     }
     
