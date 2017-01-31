@@ -99,7 +99,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedSectionHeaderHeight = 60;
         tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
     }
