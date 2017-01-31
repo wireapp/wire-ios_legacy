@@ -21,6 +21,19 @@ import Classy
 import Cartography
 import ZMCDataModel
 
+final class ShortLabelTableViewCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        let clearView = UIView()
+        clearView.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        selectedBackgroundView = clearView
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 final class ConfirmEmailDescriptionView: UIView {
     let descriptionLabel = UILabel()
     

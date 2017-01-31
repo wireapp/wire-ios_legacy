@@ -63,19 +63,6 @@ final class ChangeEmailTableViewCell: UITableViewCell {
     }
 }
 
-final class ShortLabelTableViewCell: UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let clearView = UIView()
-        clearView.backgroundColor = UIColor(white: 0, alpha: 0.2)
-        selectedBackgroundView = clearView
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 struct ChangeEmailState {
     let currentEmail: String
     var newEmail: String?
@@ -94,14 +81,6 @@ struct ChangeEmailState {
     var saveButtonEnabled: Bool {
         guard let email = validatedEmail, !email.isEmpty else { return false }
         return email != currentEmail
-    }
-    
-    var removeEmailAllowed: Bool {
-        if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-            return true
-        } else {
-            return false
-        }
     }
     
     init(currentEmail: String = ZMUser.selfUser().emailAddress) {
@@ -172,7 +151,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return state.removeEmailAllowed ? 2 : 1
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -180,50 +159,17 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ChangeEmailTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeEmailTableViewCell
-            cell.emailTextField.text = state.currentEmail
-            cell.emailTextField.becomeFirstResponder()
-            cell.emailTextField.selectAll(nil)
-            cell.delegate = self
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
-            cell.textLabel?.text = "self.settings.account_section.email.change.remove_email".localized
-            return cell
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let remove = UIAlertAction(title: "self.settings.account_section.email.change.remove_email.prompt.remove".localized, style: .destructive) { [weak self] _ in
-                guard let `self` = self else { return }
-                self.userProfile?.requestEmailRemoval()
-                self.toggleSaveButton(enabled: false)
-                self.showLoadingView = true
-            }
-            let cancel = UIAlertAction(title: "self.settings.account_section.email.change.remove_email.prompt.cancel".localized, style: .cancel, handler: nil)
-            sheet.addAction(remove)
-            sheet.addAction(cancel)
-            present(sheet, animated: true, completion: nil)
-        }
-        tableView.deselectRow(at: indexPath, animated: false)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ChangeEmailTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeEmailTableViewCell
+        cell.emailTextField.text = state.currentEmail
+        cell.emailTextField.becomeFirstResponder()
+        cell.emailTextField.selectAll(nil)
+        cell.delegate = self
+        return cell
     }
 
 }
 
 extension ChangeEmailViewController: UserProfileUpdateObserver {
-    
-    func emailRemovalDidFail(_ error: Error!) {
-        showLoadingView = false
-        presentFailureAlert()
-    }
-    
-    func didRemoveEmail() {
-        ZMUser.selfUser().emailAddress = nil
-        _ = navigationController?.popViewController(animated: true)
-    }
     
     func emailUpdateDidFail(_ error: Error!) {
         showLoadingView = false

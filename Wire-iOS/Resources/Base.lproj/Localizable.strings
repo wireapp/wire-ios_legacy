@@ -494,11 +494,6 @@
 "self.settings.account_section.email.change.title" = "Email";
 "self.settings.account_section.email.change.save" = "Save";
 
-"self.settings.account_section.email.change.remove_email" = "Remove Email Address";
-
-"self.settings.account_section.email.change.remove_email.prompt.remove" = "Remove Email Address";
-"self.settings.account_section.email.change.remove_email.prompt.cancel" = "Cancel";
-
 "self.settings.account_section.email.change.verify.title" = "Verify email";
 "self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions";
 "self.settings.account_section.email.change.verify.resend" = "Resend to %@";
