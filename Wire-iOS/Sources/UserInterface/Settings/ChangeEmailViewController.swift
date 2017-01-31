@@ -129,10 +129,10 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
             target: self,
             action: #selector(saveButtonTapped)
         )
-        toggleSaveButton()
+        updateSaveButtonState()
     }
     
-    func toggleSaveButton(enabled: Bool? = nil) {
+    func updateSaveButtonState(enabled: Bool? = nil) {
         if let enabled = enabled {
             navigationItem.rightBarButtonItem?.isEnabled = enabled
         } else {
@@ -144,7 +144,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         guard let email = state.newEmail else { return }
         do {
             try userProfile?.requestEmailChange(email: email)
-            toggleSaveButton(enabled: false)
+            updateSaveButtonState(enabled: false)
             showLoadingView = true
         } catch { }
     }
@@ -171,13 +171,13 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
     
     func emailUpdateDidFail(_ error: Error!) {
         showLoadingView = false
-        toggleSaveButton()
+        updateSaveButtonState()
         presentFailureAlert()
     }
     
     func didSentVerificationEmail() {
         showLoadingView = false
-        toggleSaveButton()
+        updateSaveButtonState()
         if let newEmail = state.newEmail {
             let confirmController = ConfirmEmailViewController(newEmail: newEmail, delegate: self)
             navigationController?.pushViewController(confirmController, animated: true)
@@ -218,6 +218,6 @@ extension ChangeEmailViewController: ConfirmEmailDelegate {
 extension ChangeEmailViewController: ChangeEmailTableViewCellDelegate {
     func tableViewCellDidChangeText(cell: ChangeEmailTableViewCell, text: String) {
         state.newEmail = text
-        toggleSaveButton()
+        updateSaveButtonState()
     }
 }
