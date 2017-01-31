@@ -198,9 +198,13 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
 
 extension ChangeEmailViewController: ConfirmEmailDelegate {
     func didConfirmEmail(inController controller: ConfirmEmailViewController) {
-        if let viewControllers = navigationController?.viewControllers, viewControllers.count > 2 {
-            let accountController = viewControllers[1]
-            _ = navigationController?.popToViewController(accountController, animated: true)
+        if let viewControllers = navigationController?.viewControllers, let currentIdx = viewControllers.index(of: self) {
+            // We want to pop to previous view controller
+            let previousIdx = currentIdx - 1
+            if viewControllers.count > previousIdx {
+                let previousController = viewControllers[previousIdx]
+                _ = navigationController?.popToViewController(previousController, animated: true)
+            }
         }
     }
     
