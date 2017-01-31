@@ -162,7 +162,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChangeEmailTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeEmailTableViewCell
         cell.emailTextField.text = state.currentEmail
         cell.emailTextField.becomeFirstResponder()
-        cell.emailTextField.selectAll(nil)
         cell.delegate = self
         return cell
     }
