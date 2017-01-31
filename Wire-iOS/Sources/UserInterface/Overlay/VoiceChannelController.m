@@ -22,8 +22,10 @@
 #import <PureLayout/PureLayout.h>
 
 #import "VoiceChannelOverlayController.h"
+#import "PassthroughTouchesView.h"
 #import "zmessaging+iOS.h"
 #import "VoiceChannelV2+Additions.h"
+#import "VoiceChannelOverlay.h"
 @import  AudioToolbox;
 #import "Wire-Swift.h"
 
@@ -39,11 +41,12 @@
 
 @implementation VoiceChannelController
 
+- (void)loadView{
+    self.view = [[PassthroughTouchesView alloc] init];
+}
+
 - (void)viewDidLoad
 {
-    self.view.userInteractionEnabled = NO;
-    self.view.hidden = YES;
-    
     [super viewDidLoad];
     
     self.voiceChannelObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
@@ -78,10 +81,6 @@
     VoiceChannelOverlayController *previousVoiceChannelOverlayController = _primaryVoiceChannelOverlay;
     _primaryVoiceChannelOverlay = voiceChannelOverlayController;
     
-    self.view.userInteractionEnabled = self.primaryVoiceChannelOverlay != nil;
-    self.view.hidden = self.primaryVoiceChannelOverlay == nil;
-    
-    
     BOOL callIsStarting = previousVoiceChannelOverlayController == nil && voiceChannelOverlayController != nil;
     BOOL isVideoCall = voiceChannelOverlayController.conversation.voiceChannel.isVideoCall;
     
@@ -112,20 +111,29 @@
         
         [self addChildViewController:toController];
         toController.view.frame = self.view.frame;
+        [self.view addSubview:toController.view];
+        [toController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
         [toController.view layoutIfNeeded];
         
-        [UIView transitionWithView:self.view duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            [self.view addSubview:toController.view];
-            [self.primaryVoiceChannelOverlay.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        UIVisualEffect *visualEffect = toController.blurEffectView.effect;
+        toController.blurEffectView.effect = nil;
+        toController.overlayView.alpha = 0;
+        
+        [UIView animateWithDuration:0.35 animations:^{
+            toController.blurEffectView.effect = visualEffect;
+            toController.overlayView.alpha = 1;
         } completion:^(BOOL finished) {
             [toController didMoveToParentViewController:self];
         }];
     }
     else if (toController == nil) {
         [fromController willMoveToParentViewController:nil];
-        [UIView transitionWithView:self.view duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            [fromController.view removeFromSuperview];
+        
+        [UIView animateWithDuration:0.35 animations:^{
+            fromController.blurEffectView.effect = nil;
+            fromController.overlayView.alpha = 0;
         } completion:^(BOOL finished) {
+            [fromController.view removeFromSuperview];
             [fromController removeFromParentViewController];
         }];
     }

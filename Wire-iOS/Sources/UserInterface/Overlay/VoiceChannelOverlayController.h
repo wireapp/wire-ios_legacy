@@ -22,6 +22,7 @@
 
 
 @class ZMConversation;
+@class VoiceChannelOverlay;
 
 
 
@@ -32,5 +33,7 @@
 - (instancetype)initWithConversation:(ZMConversation *)conversation NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, readonly) ZMConversation *conversation;
+@property (nonatomic, readonly) UIVisualEffectView *blurEffectView;
+@property (nonatomic, readonly) VoiceChannelOverlay *overlayView;
 
 @end
