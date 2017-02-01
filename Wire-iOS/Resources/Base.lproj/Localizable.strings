@@ -498,8 +498,8 @@
 "self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions";
 "self.settings.account_section.email.change.verify.resend" = "Resend to %@";
 
-"self.settings.account_section.email.change.failure_alert.title" = "Unable to change email";
-"self.settings.account_section.email.change.failure_alert.message" = "There was an error changing your email. Please try again.";
+"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
