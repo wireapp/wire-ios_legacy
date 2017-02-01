@@ -498,6 +498,11 @@
 "self.settings.account_section.email.change.resend.title" = "Email resent";
 "self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Phone number";
+"self.settings.account_section.phone_number.change.save" = "Save";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
 "self.settings.notifications.push_notification.toogle" = "Message Previews";

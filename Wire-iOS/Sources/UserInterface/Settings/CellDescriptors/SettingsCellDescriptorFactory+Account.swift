@@ -102,21 +102,33 @@ extension SettingsCellDescriptorFactory {
     }
 
     func phoneElement() -> SettingsCellDescriptorType {
-        if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-            return SettingsInfoCellDescriptor(title: "self.settings.account_section.phone.title".localized, previewGenerator: { _ in
-                return SettingsCellPreview.text(ZMUser.selfUser().phoneNumber)
-            })
-        }
+        return SettingsExternalScreenCellDescriptor(
+            title: "self.settings.account_section.phone.title".localized,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            presentationAction: { () -> (UIViewController?) in
+                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+                    return ChangePhoneViewController()
+                } else {
+                    let addController = AddPhoneNumberViewController()
+                    addController.showsNavigationBar = false
+                    let stepDelegate = DismissStepDelegate()
+                    stepDelegate.strongCapture = stepDelegate
+                    
+                    addController.formStepDelegate = stepDelegate
+                    return addController
+                }
+        },
+            previewGenerator: { _ in
+                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+                    return SettingsCellPreview.text(phoneNumber)
+                } else {
+                    return SettingsCellPreview.text("self.add_phone_number".localized)
+                }
+        },
+            hideAccesoryView: true
+        )
 
-        return SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
-            let addController = AddPhoneNumberViewController()
-            addController.showsNavigationBar = false
-            let stepDelegate = DismissStepDelegate()
-            stepDelegate.strongCapture = stepDelegate
-
-            addController.formStepDelegate = stepDelegate
-            return addController
-        }
     }
 
     func handleElement() -> SettingsCellDescriptorType {
