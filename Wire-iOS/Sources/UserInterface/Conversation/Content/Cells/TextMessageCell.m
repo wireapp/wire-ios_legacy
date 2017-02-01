@@ -419,7 +419,7 @@
     return [url open];
 }
 
-- (void)textView:(LinkInteractionTextView *)textView didLongPressLink:(UILongPressGestureRecognizer *)recognizer
+- (void)textViewDidLongPress:(LinkInteractionTextView *)textView
 {
     [self showMenu];
 }

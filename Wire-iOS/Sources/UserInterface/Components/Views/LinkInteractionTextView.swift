@@ -22,7 +22,7 @@ import UIKit
 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
-    func textView(_ textView: LinkInteractionTextView, didLongPressLink recognizer: UILongPressGestureRecognizer)
+    func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
 
 
@@ -68,8 +68,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
             }
             } ?? []
 
-        for recognizer in beganLongPressRecognizers {
-            interactionDelegate?.textView(self, didLongPressLink: recognizer)
+        if beganLongPressRecognizers.count > 0 {
+            interactionDelegate?.textViewDidLongPress(self)
             return false
         }
         
@@ -82,11 +82,23 @@ extension LinkInteractionTextView: UITextViewDelegate {
     
     @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        return true
+        if interaction == .presentActions {
+            interactionDelegate?.textViewDidLongPress(self)
+            return false
+        }
+        else {
+            return true
+        }
     }
     
     @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        return true
+        if interaction == .presentActions {
+            interactionDelegate?.textViewDidLongPress(self)
+            return false
+        }
+        else {
+            return true
+        }
     }
 }
