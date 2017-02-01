@@ -42,6 +42,7 @@ final class ChangeEmailTableViewCell: UITableViewCell {
 
     func setupViews() {
         addSubview(emailTextField)
+        emailTextField.accessibilityIdentifier = "EmailField";
         emailTextField.keyboardType = .emailAddress
         emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
