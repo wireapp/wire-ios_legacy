@@ -21,7 +21,7 @@ import UIKit
 
 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
-    func textView(_ textView: LinkInteractionTextView, open url: URL)
+    func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textView(_ textView: LinkInteractionTextView, didLongPressLink recognizer: UILongPressGestureRecognizer)
 }
 
@@ -72,9 +72,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
             interactionDelegate?.textView(self, didLongPressLink: recognizer)
             return false
         }
-
-        interactionDelegate?.textView(self, open: URL)
-        return false
+        
+        return !(interactionDelegate?.textView(self, open: URL) ?? false)
     }
     
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
