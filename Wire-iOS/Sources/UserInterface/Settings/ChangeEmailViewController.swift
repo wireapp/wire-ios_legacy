@@ -173,7 +173,7 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
     func emailUpdateDidFail(_ error: Error!) {
         showLoadingView = false
         updateSaveButtonState()
-        presentFailureAlert()
+        showAlert(forError: error)
     }
     
     func didSentVerificationEmail() {
@@ -183,18 +183,7 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
             let confirmController = ConfirmEmailViewController(newEmail: newEmail, delegate: self)
             navigationController?.pushViewController(confirmController, animated: true)
         }
-    }
-    
-    private func presentFailureAlert() {
-        let alert = UIAlertController(
-            title: "self.settings.account_section.email.change.failure_alert.title".localized,
-            message: "self.settings.account_section.email.change.failure_alert.message".localized,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+    }    
 }
 
 extension ChangeEmailViewController: ConfirmEmailDelegate {
