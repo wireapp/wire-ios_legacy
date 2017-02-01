@@ -278,8 +278,10 @@
     self.previousVoiceChannelState = voiceChannelState;
     
     VoiceChannelOverlayState state = [self viewStateForVoiceChannelState:voiceChannelState previousVoiceChannelState:previousState];
-    [self.overlayView transitionToState:state];
-    self.overlayView.speakerActive = [[[AVSProvider shared] mediaManager] isSpeakerEnabled];
+    if (state != VoiceChannelOverlayStateInvalid) {
+        [self.overlayView transitionToState:state];
+        self.overlayView.speakerActive = [[[AVSProvider shared] mediaManager] isSpeakerEnabled];
+    }
 }
 
 - (VoiceChannelOverlayState)viewStateForVoiceChannelState:(VoiceChannelV2State)voiceChannelState previousVoiceChannelState:(VoiceChannelV2State)previousVoiceChannelState
@@ -317,7 +319,7 @@
             break;
             
         default:
-            overlayState = VoiceChannelOverlayStateIncomingCall;
+            overlayState = VoiceChannelOverlayStateInvalid;
     }
     
     DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState), (long)overlayState, StringFromVoiceChannelOverlayState(overlayState));
