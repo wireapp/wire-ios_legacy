@@ -68,6 +68,10 @@ struct ChangeEmailState {
     let currentEmail: String
     var newEmail: String?
     
+    var visibleEmail: String {
+        return newEmail ?? currentEmail
+    }
+    
     var validatedEmail: String? {
         var validatedEmail = newEmail as AnyObject?
         let pointer = AutoreleasingUnsafeMutablePointer<AnyObject?>(&validatedEmail)
@@ -160,9 +164,11 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChangeEmailTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeEmailTableViewCell
-        cell.emailTextField.text = state.currentEmail
+        
+        cell.emailTextField.text = state.visibleEmail
         cell.emailTextField.becomeFirstResponder()
         cell.delegate = self
+        updateSaveButtonState()
         return cell
     }
 
