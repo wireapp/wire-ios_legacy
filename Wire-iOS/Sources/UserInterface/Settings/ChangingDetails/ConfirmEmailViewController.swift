@@ -93,6 +93,16 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.resendVerification(inController: self)
         tableView.deselectRow(at: indexPath, animated: false)
+        
+        let message = String(format: "self.settings.account_section.email.change.resend.message".localized, newEmail)
+        let alert = UIAlertController(
+            title: "self.settings.account_section.email.change.resend.title".localized,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 

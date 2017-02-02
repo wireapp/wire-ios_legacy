@@ -245,18 +245,7 @@ extension ChangePhoneViewController: ConfirmPhoneDelegate {
     func resendVerificationCode(inController controller: ConfirmPhoneViewController) {
         if let newNumber = state.newNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
-            
-            let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
-            let alert = UIAlertController(
-                title: "self.settings.account_section.phone_number.change.resend.title".localized,
-                message: message,
-                preferredStyle: .alert
-            )
-            
-            alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
         }
-
     }
     
     func didConfirmPhone(inController controller: ConfirmPhoneViewController) {
