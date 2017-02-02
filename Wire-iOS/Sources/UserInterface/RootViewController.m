@@ -94,7 +94,7 @@
     [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
-- (void)setup;
+- (void)setup
 {
     self.keyboardFrameObserver = [[KeyboardFrameObserver alloc] init];
 

@@ -564,6 +564,9 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
+"self.settings.privacy_security.lock_app" = "Lock app";
+"self.settings.privacy_security.lock_app.description" = "Unlock the app";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
 "self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";

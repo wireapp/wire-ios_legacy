@@ -33,8 +33,8 @@ extension AVSMediaManager: AVSMediaManagerInterface {
 }
 
 protocol ZMUserSessionInterface {
-    func performChanges(_ block: @escaping () -> Swift.Void)
-    func enqueueChanges(_ block: @escaping () -> Swift.Void)
+    func performChanges(_ block: @escaping () -> ())
+    func enqueueChanges(_ block: @escaping () -> ())
     
     var isNotificationContentHidden : Bool { get set }
 }
@@ -250,7 +250,26 @@ class SettingsPropertyFactory {
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             })
-
+        case .lockApp:
+            return SettingsBlockProperty(
+                propertyName: .lockApp,
+                getAction: { _ in
+                    guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
+                            data.count != 0 else {
+                        return .bool(value: false)
+                    }
+                    
+                    return .bool(value: String(data: data, encoding: .utf8) == "YES")
+            },
+                setAction: { _, value in
+                    switch value {
+                    case .bool(value: let lockApp):
+                        let data = (lockApp ? "YES" : "NO").data(using: .utf8)!
+                        ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockApp.rawValue)
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+            
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)

@@ -541,6 +541,8 @@
 		87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A752161E002F6C004317DB /* ConversationRootViewController.swift */; };
 		87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */; };
 		87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */; };
+		87AAE4271E43622000E1D13A /* AppController+LocalAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE4261E43622000E1D13A /* AppController+LocalAuth.swift */; };
+		87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */; };
 		87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */; };
 		87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC77DA1DE48C01009F6D56 /* Copyable.swift */; };
 		87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */; };
@@ -1762,6 +1764,8 @@
 		87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscationView.swift; sourceTree = "<group>"; };
 		87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationInputBarViewController+Files.m"; sourceTree = "<group>"; };
 		87AAD74D1CF2E4FF002760FF /* ConversationInputBarViewController+Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationInputBarViewController+Files.h"; sourceTree = "<group>"; };
+		87AAE4261E43622000E1D13A /* AppController+LocalAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppController+LocalAuth.swift"; sourceTree = "<group>"; };
+		87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStyleNavigationController.swift; sourceTree = "<group>"; };
 		87AC77DA1DE48C01009F6D56 /* Copyable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Copyable.swift; sourceTree = "<group>"; };
 		87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailEditingTextField.swift; sourceTree = "<group>"; };
@@ -2358,6 +2362,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */,
 				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
 				87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */,
@@ -2832,6 +2837,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */,
 				54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */,
 				CE8E4FAF1DF0668A0009F437 /* ImageIO.framework */,
 				CE8E4FAD1DF066860009F437 /* MobileCoreServices.framework */,
@@ -4155,6 +4161,7 @@
 				872A7E8A1C1981A300E4B261 /* AppController.h */,
 				AF917BAE1C6E9D3F00491EA9 /* AppController+Internal.h */,
 				872A7E8B1C1981A300E4B261 /* AppController.m */,
+				87AAE4261E43622000E1D13A /* AppController+LocalAuth.swift */,
 				87582BA11C886BB90061FEB1 /* ClassyCache.swift */,
 				873337891DF5B43A006AE609 /* SwiftDependencies.swift */,
 			);
@@ -6050,6 +6057,7 @@
 				163BB60D1BEA976C00606381 /* BarController.m in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
+				87AAE4271E43622000E1D13A /* AppController+LocalAuth.swift in Sources */,
 				871BC00B1D34F56300DF0793 /* Analytics+CallEvents.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
 				87DCF4E11D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m in Sources */,

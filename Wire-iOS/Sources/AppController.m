@@ -67,6 +67,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 @property (nonatomic) ClassyCache *classyCache;
 
+@property (nonatomic) BOOL localAuthenticationSucceeded;
+
 @end
 
 
@@ -134,6 +136,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }];
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    self.localAuthenticationSucceeded = NO;
+}
+
 - (void)uploadAddressBookIfNeeded
 {
     BOOL addressBookDidBecomeGranted = [AddressBookHelper.sharedHelper accessStatusDidChangeToGranted];
@@ -144,6 +151,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [self showForceUpdateIfNeeeded];
+    [self checkAppLock];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
@@ -310,6 +318,20 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
 #endif
 
+}
+
+- (void)checkAppLock
+{
+    if ([self appLockActive] && !self.localAuthenticationSucceeded) {
+        self.notificationWindowController.dimContents = YES;
+        [self requireLocalAuthenticationIfNeededWith:^(BOOL granted) {
+            self.notificationWindowController.dimContents = !granted;
+            self.localAuthenticationSucceeded = granted;
+        }];
+    }
+    else {
+        self.notificationWindowController.dimContents = NO;
+    }
 }
 
 #pragma mark - SE Loading

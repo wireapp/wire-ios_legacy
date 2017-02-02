@@ -262,6 +262,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "Use AssetCollectionBatched"
     case .linkPreviewsInShareExtension:
         return "Fetch link previews in share extension"
+    case .lockApp:
+        return "self.settings.privacy_security.lock_app".localized
     }
 }
 

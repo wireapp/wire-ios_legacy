@@ -204,6 +204,8 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     DDLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
     
+    [self.appController applicationDidEnterBackground:application];
+    
     [Analytics.shared persistCustomSessionSummary];
     self.launchType = ApplicationLaunchUnknown;
     self.addressBookUploadShouldBeChecked = NO;
