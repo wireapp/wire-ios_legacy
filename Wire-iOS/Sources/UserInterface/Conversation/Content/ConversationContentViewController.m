@@ -104,7 +104,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
-@property (nonatomic) MessagePresenter* messagePresenter;
 @end
 
 
@@ -203,6 +202,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [AppDelegate sharedAppDelegate].notificationWindowController.showLoadMessages = self.wasFetchingMessages;
     
     [self updateVisibleMessagesWindow];
+    
+    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
+        [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        
+        [self registerForPreviewingWithDelegate:self sourceView:self.view.superview];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
