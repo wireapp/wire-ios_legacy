@@ -24,6 +24,29 @@ protocol ConfirmPhoneDelegate: class {
     func didConfirmPhone(inController controller: ConfirmPhoneViewController)
 }
 
+fileprivate enum Section: Int {
+    static var count: Int {
+        return 2
+    }
+    
+    var itemCount: Int {
+        switch self {
+        case .verificationCode:
+            return 1
+        case .buttons:
+            return 2
+        }
+    }
+    
+    case verificationCode = 0
+    case buttons = 1
+    
+    enum Buttons: Int {
+        case resend = 0
+        case callMe = 1
+    }
+}
+
 final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmPhoneDelegate?
@@ -80,51 +103,60 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         }
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Section(rawValue: section)!.itemCount
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
+        switch Section(rawValue: section)! {
+        case .verificationCode:
             let description = ConfirmEmailDescriptionView()
             return description
-        } else {
+        case .buttons:
             return nil
         }
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return 2
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        switch Section(rawValue: indexPath.section)! {
+        case .verificationCode:
             let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
             
             let format = "self.settings.account_section.email.change.verify.resend".localized
             let text = String(format: format, newNumber)
             cell.textLabel?.text = text
             return cell
-        } else {
+        case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
 
-            if indexPath.row == 0 {
+            switch Section.Buttons(rawValue: indexPath.row)! {
+            case .resend:
                 cell.textLabel?.text = "self.settings.account_section.phone_number.change.verify.resend".localized
-
-            } else {
+            case .callMe:
                 cell.textLabel?.text = "self.settings.account_section.phone_number.change.verify.call".localized
-            }
-            return cell
 
+            }
+
+            return cell
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.resendVerificationCode(inController: self)
+        switch Section(rawValue: indexPath.section)! {
+        case .verificationCode:
+            break
+        case .buttons:
+            switch Section.Buttons(rawValue: indexPath.row)! {
+            case .resend:
+                delegate?.resendVerificationCode(inController: self)
+            case .callMe:
+                break
+            }
+        }
         tableView.deselectRow(at: indexPath, animated: false)
     }
 }
