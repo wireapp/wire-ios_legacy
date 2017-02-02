@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import ZMUtilities
+import zmessaging
 
 struct PhoneNumber {
     
@@ -109,9 +110,11 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     let emailTextField = RegistrationTextField()
 
     var state = ChangePhoneNumberState()
+    let userProfile = ZMUserSession.shared()?.userProfile
 
     init() {
         super.init(style: .grouped)
+        userProfile?.add(observer: self)
         setupViews()
     }
     
@@ -142,7 +145,11 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     }
     
     func saveButtonTapped() {
-        
+        if let newNumber = state.newNumber?.fullNumber {
+            userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
+            updateSaveButtonState(enabled: false)
+            showLoadingView = true
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -207,5 +214,59 @@ extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
         viewController.dismiss(animated: true, completion: nil)
         state.newNumber = PhoneNumber(countryCode: country.e164 as UInt, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
         updateSaveButtonState()
+    }
+}
+
+extension ChangePhoneViewController: UserProfileUpdateObserver {
+    func phoneNumberVerificationCodeRequestDidSucceed() {
+        showLoadingView = false
+        updateSaveButtonState()
+        if let newNumber = state.newNumber?.fullNumber {
+            let confirmController = ConfirmPhoneViewController(newNumber: newNumber, delegate: self)
+            navigationController?.pushViewController(confirmController, animated: true)
+        }
+    }
+    
+    func phoneNumberVerificationCodeRequestDidFail(_ error: Error!) {
+        showLoadingView = false
+        updateSaveButtonState()
+        showAlert(forError: error)
+    }
+    
+    func emailUpdateDidFail(_ error: Error!) {
+        showLoadingView = false
+        updateSaveButtonState()
+        showAlert(forError: error)
+    }
+    
+}
+
+extension ChangePhoneViewController: ConfirmPhoneDelegate {
+    func resendVerificationCode(inController controller: ConfirmPhoneViewController) {
+        if let newNumber = state.newNumber?.fullNumber {
+            userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
+            
+            let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
+            let alert = UIAlertController(
+                title: "self.settings.account_section.phone_number.change.resend.title".localized,
+                message: message,
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+
+    }
+    
+    func didConfirmPhone(inController controller: ConfirmPhoneViewController) {
+        if let viewControllers = navigationController?.viewControllers, let currentIdx = viewControllers.index(of: self) {
+            // We want to pop to previous view controller
+            let previousIdx = currentIdx - 1
+            if viewControllers.count > previousIdx {
+                let previousController = viewControllers[previousIdx]
+                _ = navigationController?.popToViewController(previousController, animated: true)
+            }
+        }
     }
 }

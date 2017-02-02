@@ -879,6 +879,7 @@
 		F11E94B81E376D71001AE6D3 /* ConfirmEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
+		F12CDAD61E43761400CEFCEB /* ConfirmPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAD51E43761400CEFCEB /* ConfirmPhoneViewController.swift */; };
 		F13FEA561E30FB6D00BE5454 /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */; };
 		F184A4CE1E422AC800397DDA /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F184A4CD1E422AC700397DDA /* ChangePhoneViewController.swift */; };
 		F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */; };
@@ -2337,6 +2338,7 @@
 		F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewController.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
+		F12CDAD51E43761400CEFCEB /* ConfirmPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewController.swift; sourceTree = "<group>"; };
 		F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
 		F184A4CD1E422AC700397DDA /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
 		F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
@@ -4590,6 +4592,7 @@
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
 				F184A4CD1E422AC700397DDA /* ChangePhoneViewController.swift */,
+				F12CDAD51E43761400CEFCEB /* ConfirmPhoneViewController.swift */,
 				F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */,
 				F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */,
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
@@ -5897,6 +5900,7 @@
 				871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */,
 				871BC2201D34F8F800DF0793 /* ActionSheetAlertView.m in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
+				F12CDAD61E43761400CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				8FC1EFDF19DED50C0092488D /* VoiceChannelV2+Additions.m in Sources */,
