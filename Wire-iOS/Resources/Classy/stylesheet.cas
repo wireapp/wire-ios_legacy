@@ -1422,7 +1422,7 @@ SettingsClientViewController {
     }
 }
 
-ChangeEmailTableViewCell {
+RegistrationTextFieldCell {
     backgroundColor: clear;
     
     emailTextField: @{

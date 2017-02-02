@@ -20,14 +20,14 @@ import UIKit
 import Classy
 import Cartography
 
-protocol ChangeEmailTableViewCellDelegate: class {
-    func tableViewCellDidChangeText(cell: ChangeEmailTableViewCell, text: String)
+protocol RegistrationTextFieldCellDelegate: class {
+    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String)
 }
 
-final class ChangeEmailTableViewCell: UITableViewCell {
+final class RegistrationTextFieldCell: UITableViewCell {
     
-    let emailTextField = RegistrationTextField()
-    weak var delegate: ChangeEmailTableViewCellDelegate?
+    let textField = RegistrationTextField()
+    weak var delegate: RegistrationTextFieldCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,14 +41,12 @@ final class ChangeEmailTableViewCell: UITableViewCell {
     }
 
     func setupViews() {
-        addSubview(emailTextField)
-        emailTextField.accessibilityIdentifier = "EmailField"
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        addSubview(textField)
+        textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
     func createConstraints() {
-        constrain(self, emailTextField) { view, emailTextField in
+        constrain(self, textField) { view, emailTextField in
             emailTextField.top == view.top
             emailTextField.bottom == view.bottom
             emailTextField.trailing == view.trailing - 8
@@ -121,7 +119,8 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
     
     internal func setupViews() {
-        ChangeEmailTableViewCell.register(in: tableView)
+        RegistrationTextFieldCell.register(in: tableView)
+        ShortLabelTableViewCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.title".localized
         view.backgroundColor = .clear
@@ -162,10 +161,11 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ChangeEmailTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeEmailTableViewCell
-        
-        cell.emailTextField.text = state.visibleEmail
-        cell.emailTextField.becomeFirstResponder()
+        let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+        cell.textField.accessibilityIdentifier = "EmailField"
+        cell.textField.keyboardType = .emailAddress
+        cell.textField.text = state.visibleEmail
+        cell.textField.becomeFirstResponder()
         cell.delegate = self
         updateSaveButtonState()
         return cell
@@ -220,8 +220,8 @@ extension ChangeEmailViewController: ConfirmEmailDelegate {
     }
 }
 
-extension ChangeEmailViewController: ChangeEmailTableViewCellDelegate {
-    func tableViewCellDidChangeText(cell: ChangeEmailTableViewCell, text: String) {
+extension ChangeEmailViewController: RegistrationTextFieldCellDelegate {
+    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
         state.newEmail = text
         updateSaveButtonState()
     }
