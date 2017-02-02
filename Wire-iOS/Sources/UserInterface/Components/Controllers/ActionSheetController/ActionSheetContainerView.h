@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, ActionSheetViewStyle) {
 @interface ActionSheetContainerView : UIView
 
 @property (nonatomic) UIVisualEffectView *blurEffectView;
+@property (nonatomic) UIBlurEffect *blurEffect;
 @property (nonatomic) UIView *topContainerView;
 @property (nonatomic) UIView *sheetView;
 

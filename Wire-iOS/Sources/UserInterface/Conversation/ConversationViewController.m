@@ -141,6 +141,7 @@
 
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
+@property (nonatomic, weak) CollectionsViewController *collectionController;
 
 @end
 
@@ -150,6 +151,8 @@
 
 - (void)dealloc
 {
+    [self dismissCollectionIfNecessary];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [self hideAndDestroyParticipantsPopoverController];
@@ -365,11 +368,6 @@
     return YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)openConversationList
 {
     BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
@@ -398,7 +396,6 @@
     }
 }
 
-
 - (void)setupNavigatiomItem
 {
     self.titleView = [[ConversationTitleView alloc] initWithConversation:self.conversation interactive:YES];
@@ -424,12 +421,22 @@
 
 - (void)updateRightNavigationItemsButtons
 {
-    self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
+    if ([UIApplication isLeftToRightLayout]) {
+        self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    } else {
+        self.navigationItem.rightBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    }
 }
 
 - (void)updateLeftNavigationBarItems
 {
-    self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
+    if ([UIApplication isLeftToRightLayout]) {
+        self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    } else {
+        self.navigationItem.leftBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    }
 }
 
 - (UIViewController *)participantsController

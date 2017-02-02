@@ -28,6 +28,7 @@
 #import "CountryCodeView.h"
 
 #import "NSAttributedString+Wire.h"
+#import "Wire-Swift.h"
 
 static const CGFloat ConfirmButtonWidth = 40;
 static const CGFloat CountryCodeViewWidth = 60;
@@ -78,7 +79,8 @@ static const CGFloat GuidanceDotViewWidth = 40;
 {
     self.confirmButton = [[IconButton alloc] init];
     [self.confirmButton setBackgroundImageColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.confirmButton setIcon:ZetaIconTypeChevronRight withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
+    ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronRight : ZetaIconTypeChevronLeft;
+    [self.confirmButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     [self.confirmButton setIconColor:[UIColor colorWithMagicIdentifier:@"style.color.foreground.normal"] forState:UIControlStateNormal];
     self.confirmButton.accessibilityIdentifier= @"RegistrationConfirmButton";
 }
@@ -171,14 +173,37 @@ static const CGFloat GuidanceDotViewWidth = 40;
 
     // In case the text content should be center-aligned, we need to inset the text with the right accessory view size on the left
     if (self.rightAccessoryView != RegistrationTextFieldRightAccessoryViewNone && self.textAlignment == NSTextAlignmentCenter) {
-        textRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(0, [self rightViewRectForBounds:bounds].size.width, 0, 0));
+        if ([UIApplication isLeftToRightLayout]) {
+            textRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(0, [self rightViewRectForBounds:bounds].size.width, 0, 0));
+        } else {
+            textRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(0, 0, 0, [self leftViewRectForBounds:bounds].size.width));
+        }
     }
 
     return UIEdgeInsetsInsetRect(textRect, self.textInsets);
 }
 
+- (CGRect)rightViewRectForBounds:(CGRect)bounds
+{
+    BOOL leftToRight = [UIApplication isLeftToRightLayout];
+    if (leftToRight) {
+        return [self rightAccessoryViewRectForBounds:bounds leftToRight:leftToRight];
+    } else {
+        return [self leftAccessoryViewRectForBounds:bounds leftToRight:leftToRight];
+    }
+}
+
 - (CGRect)leftViewRectForBounds:(CGRect)bounds
 {
+    BOOL leftToRight = [UIApplication isLeftToRightLayout];
+    if (leftToRight) {
+        return [self leftAccessoryViewRectForBounds:bounds leftToRight:leftToRight];
+    } else {
+        return [self rightAccessoryViewRectForBounds:bounds leftToRight:leftToRight];
+    }
+}
+
+- (CGRect)leftAccessoryViewRectForBounds:(CGRect)bounds leftToRight:(BOOL)leftToRight {
     CGRect leftViewRect;
     
     switch (self.leftAccessoryView) {
@@ -187,15 +212,18 @@ static const CGFloat GuidanceDotViewWidth = 40;
             break;
             
         case RegistrationTextFieldLeftAccessoryViewCountryCode:
-            leftViewRect = CGRectMake(bounds.origin.x, bounds.origin.y, CountryCodeViewWidth, bounds.size.height);
+            if (leftToRight) {
+                leftViewRect = CGRectMake(bounds.origin.x, bounds.origin.y, CountryCodeViewWidth, bounds.size.height);
+            } else {
+                leftViewRect = CGRectMake(CGRectGetMaxX(bounds) - CountryCodeViewWidth, bounds.origin.y, CountryCodeViewWidth, bounds.size.height);
+            }
             break;
     }
     
     return leftViewRect;
 }
 
-- (CGRect)rightViewRectForBounds:(CGRect)bounds
-{
+- (CGRect)rightAccessoryViewRectForBounds:(CGRect)bounds leftToRight:(BOOL)leftToRight {
     CGRect rightViewRect;
     
     switch (self.rightAccessoryView) {
@@ -204,15 +232,27 @@ static const CGFloat GuidanceDotViewWidth = 40;
             break;
             
         case RegistrationTextFieldRightAccessoryViewGuidanceDot:
-            rightViewRect = CGRectMake(CGRectGetMaxX(bounds) - GuidanceDotViewWidth, bounds.origin.y, GuidanceDotViewWidth, bounds.size.height);
+            if (leftToRight) {
+                rightViewRect = CGRectMake(CGRectGetMaxX(bounds) - GuidanceDotViewWidth, bounds.origin.y, GuidanceDotViewWidth, bounds.size.height);
+            } else {
+                rightViewRect = CGRectMake(bounds.origin.x, bounds.origin.y, GuidanceDotViewWidth, bounds.size.height);
+            }
             break;
             
         case RegistrationTextFieldRightAccessoryViewConfirmButton:
-            rightViewRect = CGRectMake(CGRectGetMaxX(bounds) - ConfirmButtonWidth, bounds.origin.y, ConfirmButtonWidth, bounds.size.height);
+            if (leftToRight) {
+                rightViewRect = CGRectMake(CGRectGetMaxX(bounds) - ConfirmButtonWidth, bounds.origin.y, ConfirmButtonWidth, bounds.size.height);
+            } else {
+                rightViewRect = CGRectMake(bounds.origin.x, bounds.origin.y, ConfirmButtonWidth, bounds.size.height);
+            }
             break;
-        
+            
         case RegistrationTextFieldRightAccessoryViewCustom:
-            rightViewRect = CGRectMake(CGRectGetMaxX(bounds) - self.customRightView.intrinsicContentSize.width, bounds.origin.y, self.customRightView.intrinsicContentSize.width, bounds.size.height);
+            if (leftToRight) {
+                rightViewRect = CGRectMake(CGRectGetMaxX(bounds) - self.customRightView.intrinsicContentSize.width, bounds.origin.y, self.customRightView.intrinsicContentSize.width, bounds.size.height);
+            } else {
+                rightViewRect = CGRectMake(bounds.origin.x, bounds.origin.y, self.customRightView.intrinsicContentSize.width, bounds.size.height);
+            }
             break;
     }
     

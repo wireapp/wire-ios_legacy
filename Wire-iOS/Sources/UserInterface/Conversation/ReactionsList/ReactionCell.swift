@@ -58,6 +58,8 @@ import Classy
         self.contentView.addSubview(self.userDisplayNameLabel)
         self.contentView.addSubview(self.usernameLabel)
         self.contentView.addSubview(self.userImageView)
+
+        let verticalOffset: CGFloat = 3
         
         constrain(self.contentView, self.userImageView, self.userDisplayNameLabel, self.usernameLabel) { contentView, userImageView, userDisplayNameLabel, usernameLabel in
             userImageView.leading == contentView.leading + 24
@@ -68,11 +70,11 @@ import Classy
             userDisplayNameLabel.leading == userImageView.trailing + 24
             userDisplayNameLabel.trailing <= contentView.trailing - 24
 
-            usernameLabel.top == contentView.centerY
+            usernameLabel.top == contentView.centerY + verticalOffset
             usernameLabel.leading == userDisplayNameLabel.leading
             usernameLabel.trailing <= contentView.trailing - 24
 
-            displayNameTopConstraint = userDisplayNameLabel.bottom == contentView.centerY
+            displayNameTopConstraint = userDisplayNameLabel.bottom == contentView.centerY + verticalOffset
             displayNameVerticalConstraint = userDisplayNameLabel.centerY == userImageView.centerY
         }
         

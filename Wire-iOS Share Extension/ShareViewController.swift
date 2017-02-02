@@ -48,10 +48,16 @@ class ShareViewController: SLComposeServiceViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setupObserver()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupObserver()
+    }
+
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(extensionHostDidEnterBackground), name: .NSExtensionHostDidEnterBackground, object: nil)
     }
 
     private func setupNavigationBar() {
@@ -60,13 +66,23 @@ class ShareViewController: SLComposeServiceViewController {
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
     }
-    
+
+    @objc private func extensionHostDidEnterBackground() {
+        postContent?.cancel { [weak self] in
+            self?.cancel()
+        }
+    }
+
     override func presentationAnimationDidFinish() {
         guard let sharingSession = sharingSession, sharingSession.canShare else {
             return presentNotSignedInMessage()

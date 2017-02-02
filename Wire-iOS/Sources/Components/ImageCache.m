@@ -148,7 +148,9 @@
     
     __block UIImage *image = [self.cache objectForKey:cacheKey];
     if (image != nil) {
-        completion(image, cacheKey);
+        if (nil != completion) {
+            completion(image, cacheKey);
+        }
         return;
     }
     
@@ -164,8 +166,10 @@
             @strongify(self);
             __block UIImage *image = [self.cache objectForKey:cacheKey];
             if (image != nil) {
-                dispatch_async(dispatch_get_main_queue(), ^{                    
-                    completion(image, cacheKey);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (nil != completion) {
+                        completion(image, cacheKey);
+                    }
                     dispatch_group_leave(self.processingGroup);
                 });
             }
@@ -200,8 +204,9 @@
                 if (duration > 10) {
                     DDLogVerbose(@"Image took a really long time to create! (time: %.2f bytes: %ld)", duration, (unsigned long)imageData.length);
                 }
-                
-                completion(image, cacheKey);
+                if (nil != completion) {
+                    completion(image, cacheKey);
+                }
                 dispatch_group_leave(self.processingGroup);
             });
         }];

@@ -34,7 +34,13 @@ NS_ASSUME_NONNULL_BEGIN
         return [Country countryWithISO:carrier.isoCountryCode];
     } else {
         NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
-        NSString *ISO = [localeIdentifier substringFromIndex:[localeIdentifier rangeOfString:@"_"].location + 1];
+        NSString *ISO;
+        NSRange underscore = [localeIdentifier rangeOfString:@"_"];
+        if (underscore.location != NSNotFound) {
+            ISO = [localeIdentifier substringFromIndex:underscore.location + 1];
+        } else {
+            ISO = localeIdentifier;
+        }
         return [Country countryWithISO:ISO.lowercaseString];
     }
 }

@@ -107,10 +107,8 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
         }
     }
     
-    ZMAccentColor accentColor =[ZMUser selfUser].accentColorValue;
+    ZMAccentColor accentColor = [ZMUser selfUser].accentColorValue;
     NSString *networkType = @"";
-    
-#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 
     // Get network type: either wifi, 2G, 3G or 4G
     CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
@@ -133,9 +131,6 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     else if ([NetworkStatus sharedStatus].reachability == ServerReachabilityOK){
         networkType = @"wifi";
     }
-#else 
-    networkType = @"wifi";
-#endif
     
     NSString *soundIntensityType = @"";
     

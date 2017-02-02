@@ -76,21 +76,13 @@ extension ZMConversationMessage {
     fileprivate(set) weak var message: ZMConversationMessage?
     
     fileprivate var forceShowTimestamp: Bool = false
+    private var isConfigured: Bool = false
     
     override init(frame: CGRect) {
         
         super.init(frame: frame)
         self.isAccessibilityElement = true
         self.accessibilityElementsHidden = false
-        
-        CASStyler.default().styleItem(self)
-        
-        setupViews()
-        createConstraints()
-        
-        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
-        tapGestureRecogniser.delegate = self
-        addGestureRecognizer(tapGestureRecogniser)
     }
     
     private func setupViews() {
@@ -147,6 +139,18 @@ extension ZMConversationMessage {
     }
     
     open func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
+        if !self.isConfigured {
+            self.isConfigured = true
+            CASStyler.default().styleItem(self)
+            
+            setupViews()
+            createConstraints()
+            
+            tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
+            tapGestureRecogniser.delegate = self
+            addGestureRecognizer(tapGestureRecogniser)
+        }
+        
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         

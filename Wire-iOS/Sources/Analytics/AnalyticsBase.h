@@ -66,18 +66,11 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
 - (void)tagEventObject:(AnalyticsEvent *)event;
 - (void)tagEventObject:(AnalyticsEvent *)event source:(AnalyticsEventSource)source;
 
-/// Close the current session and store metadata to disk
-- (void)close;
 
-/// Resume the current session and restore metadata if the session hasn't expired
-/// If the session is already open, this call will have no effect
-- (void)resume;
+- (void)loadCustomSessionSummary;
 
-/// Upload the tracked data
-- (void)upload;
-
-/// A short cut method for @c close and @c upload cause this combination is needed often
-- (void)closeAndUpload;
+/// Store session summary to disk
+- (void)persistCustomSessionSummary;
 
 /// Set the custom dimensions values
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
@@ -85,26 +78,5 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
                                      accentColor:(NSInteger)accent
                                      networkType:(NSString *)networkType
                        notificationConfiguration:(NSString *)config;
-
-@end
-
-
-
-@interface Analytics (Push)
-
-/// Typically called from @c application:didRegisterForRemoteNotificationsWithDeviceToken:
-- (void)setPushToken:(NSData *)token;
-
-/// Typically called from @c application:didReceiveRemoteNotification:fetchCompletionHandler:
-- (void)handleRemoteNotification:(NSDictionary *)userInfo;
-
-@end
-
-
-
-@interface Analytics (OpenURL)
-
-/// Typically called from @c application:openURL:sourceApplication:annotation:
-- (BOOL)handleOpenURL:(NSURL *)url;
 
 @end

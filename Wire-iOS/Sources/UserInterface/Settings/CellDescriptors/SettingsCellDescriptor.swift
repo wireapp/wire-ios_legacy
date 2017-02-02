@@ -262,6 +262,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "Calling protocol"
     case .enableBatchCollections:
         return "Use AssetCollectionBatched"
+    case .linkPreviewsInShareExtension:
+        return "Fetch link previews in share extension"
     }
 }
 

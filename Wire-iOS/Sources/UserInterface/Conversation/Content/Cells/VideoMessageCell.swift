@@ -44,7 +44,7 @@ public final class VideoMessageCell: ConversationCell {
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.videoMessageView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, messageToolboxView])
+        currentElements.append(contentsOf: [likeButton, toolboxView])
         self.accessibilityElements = currentElements
 
         setNeedsLayout()

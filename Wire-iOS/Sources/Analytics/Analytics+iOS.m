@@ -28,6 +28,9 @@
 static BOOL useConsoleAnalytics = NO;
 NSString * const ZMConsoleAnalyticsArgumentKey = @"-ConsoleAnalytics";
 static NSString * const ZMEnableConsoleLog = @"ZMEnableAnalyticsLog";
+static Analytics *sharedAnalytics = nil;
+
+
 @implementation Analytics (iOS)
 
 + (void)setConsoleAnayltics:(BOOL)shouldUseConsoleAnalytics;
@@ -35,26 +38,23 @@ static NSString * const ZMEnableConsoleLog = @"ZMEnableAnalyticsLog";
     useConsoleAnalytics = shouldUseConsoleAnalytics;
 }
 
-
-+ (instancetype)shared
++ (instancetype)setupSharedInstanceWithLaunchOptions:(NSDictionary *)launchOptions
 {
-    static Analytics *sharedAnalytics = nil;
-    
     if (useConsoleAnalytics || [[NSUserDefaults standardUserDefaults] boolForKey:ZMEnableConsoleLog]) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            sharedAnalytics = [[Analytics alloc] initWithProvider:[AnalyticsConsoleProvider new]];
+            id <AnalyticsProvider> provider = [[AnalyticsConsoleProvider alloc] initWithLaunchOptions:launchOptions];
+            sharedAnalytics = [[Analytics alloc] initWithProvider:provider];
         });
         return sharedAnalytics;
     }
-    
+
     BOOL useAnalytics = USE_ANALYTICS;
     // Don’t track events in debug configuration.
     if (useAnalytics && ![[Settings sharedSettings] disableAnalytics]) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            
-            AnalyticsLocalyticsProvider *provider = [AnalyticsLocalyticsProvider new];
+            AnalyticsLocalyticsProvider *provider = [[AnalyticsLocalyticsProvider alloc] initWithLaunchOptions:launchOptions];
             sharedAnalytics = [[Analytics alloc] initWithProvider:provider];
         });
     }
@@ -64,7 +64,12 @@ static NSString * const ZMEnableConsoleLog = @"ZMEnableAnalyticsLog";
             [self updateAVSMetricsSettingsWithActiveProvider:nil];
         });
     }
-    
+
+    return sharedAnalytics;
+}
+
++ (instancetype)shared
+{
     return sharedAnalytics;
 }
 

@@ -90,7 +90,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         let report = VoiceChannelV2.voiceChannelDebugInformation()
         
         guard MFMailComposeViewController.canSendMail() else {
-            let activityViewController = UIActivityViewController(activityItems: [report], applicationActivities: nil)
+            let activityViewController = UIActivityViewController(activityItems: [report as Any], applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = sendReportCell.textLabel
             guard let bounds = sendReportCell.textLabel?.bounds else { return }
             activityViewController.popoverPresentationController?.sourceRect = bounds

@@ -80,7 +80,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) UILabel *authorLabel;
 @property (nonatomic, readonly) UIView *messageContentView;
 @property (nonatomic) LikeButton *likeButton;
-@property (nonatomic, readonly) MessageToolboxView *messageToolboxView;
+@property (nonatomic, readonly) MessageToolboxView *toolboxView;
 @property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;

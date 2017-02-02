@@ -77,7 +77,10 @@
 {
     self.backButton = [[IconButton alloc] initForAutoLayout];
     self.backButton.cas_styleClass = @"navigation";
-    [self.backButton setIcon:ZetaIconTypeChevronLeft withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
+    
+    ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronLeft : ZetaIconTypeChevronRight;
+
+    [self.backButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.backButton.accessibilityIdentifier = @"BackToWelcomeButton";
     [self.view addSubview:self.backButton];
 
@@ -118,20 +121,20 @@
         
         [self.logoImageView autoSetDimensionsToSize:CGSizeMake(76, 22)];
         [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:35];
-        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:26];
+        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:26];
         
         [self.backButton autoSetDimension:ALDimensionHeight toSize:32];
         [self.backButton autoSetDimension:ALDimensionWidth toSize:32 relation:NSLayoutRelationGreaterThanOrEqual];
         [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
+        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
         
         [self.rightTitledButton autoSetDimension:ALDimensionHeight toSize:28];
         [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
         
         [self.rightIconedButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
         [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
     }
 }
 

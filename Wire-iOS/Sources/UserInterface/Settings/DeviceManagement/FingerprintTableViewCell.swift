@@ -22,9 +22,9 @@ import Cartography
 import Classy
 
 class FingerprintTableViewCell: UITableViewCell {
-    let titleLabel: UILabel
-    let fingerprintLabel: UILabel
-    let spinner: UIActivityIndicatorView
+    let titleLabel = UILabel()
+    let fingerprintLabel = CopyableLabel()
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
     var fingerprintLabelFont: UIFont? {
         didSet {
@@ -44,15 +44,8 @@ class FingerprintTableViewCell: UITableViewCell {
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.titleLabel = UILabel(frame: CGRect.zero)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
-        self.fingerprintLabel = UILabel(frame: CGRect.zero)
-        self.fingerprintLabel.translatesAutoresizingMaskIntoConstraints = false
         self.fingerprintLabel.numberOfLines = 0
-        
-        self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        self.spinner.translatesAutoresizingMaskIntoConstraints = false
         self.spinner.hidesWhenStopped = true
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)

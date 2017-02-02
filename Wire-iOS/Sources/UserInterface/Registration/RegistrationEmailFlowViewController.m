@@ -201,8 +201,6 @@
 {
     [[ZMUserSession sharedSession] resendRegistrationVerificationEmail];
     [self.analyticsTracker tagResentEmailVerification];
-
-    [[Analytics shared] upload];
 }
 
 #pragma mark - ZMRegistrationObserver

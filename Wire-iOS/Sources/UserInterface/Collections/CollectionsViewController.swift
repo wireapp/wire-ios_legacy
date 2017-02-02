@@ -118,6 +118,9 @@ final public class CollectionsViewController: UIViewController {
 
         self.contentView.collectionView.delegate = self
         self.contentView.collectionView.dataSource = self
+        if #available(iOS 10.0, *) {
+            self.contentView.collectionView.prefetchDataSource = self
+        }
 
         self.setupNavigationItem()
         self.updateNoElementsState()
@@ -580,6 +583,29 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("Unknown section")
         }
         return self.sectionInsets(in: section)
+    }
+}
+
+extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
+    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
+                fatal("Unknown section")
+            }
+        
+            guard section != .loading else {
+                continue
+            }
+            
+            let message = self.message(for: indexPath)
+            if message.canBePrefetched() {
+                message.requestImageDownload()
+            }
+            
+            if Message.isImageMessage(message), let _ = message.imageMessageData?.imageData {
+                CollectionImageCell.loadImageThumbnail(for: message, completion: .none)
+            }
+        }
     }
 }
 

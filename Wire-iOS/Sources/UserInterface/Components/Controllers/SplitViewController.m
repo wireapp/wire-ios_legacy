@@ -435,7 +435,11 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
-    [self.rightViewController dismissViewControllerAnimated:NO completion:nil];
+    // To determine if self.rightViewController.presentedViewController is actually presented over it, or is it
+    // presented over one of it's parents.
+    if (self.rightViewController.presentedViewController.presentingViewController == self.rightViewController) {
+        [self.rightViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     
     UIViewController *removedViewController = self.rightViewController;
     
