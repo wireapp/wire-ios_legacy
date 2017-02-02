@@ -155,6 +155,15 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             switch Section.Buttons(rawValue: indexPath.row)! {
             case .resend:
                 delegate?.resendVerificationCode(inController: self)
+                let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
+                let alert = UIAlertController(
+                    title: "self.settings.account_section.phone_number.change.resend.title".localized,
+                    message: message,
+                    preferredStyle: .alert
+                )
+                
+                alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
             case .callMe:
                 break
             }
