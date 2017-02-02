@@ -73,7 +73,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let token = observerToken else { return }
-        userProfile?.removeObserver(token: token)
+        _ = userProfile?.removeObserver(token: token)
     }
     
     internal func setupViews() {
