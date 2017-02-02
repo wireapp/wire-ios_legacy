@@ -777,7 +777,6 @@
 		BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EF5441D953B3F003E3999 /* Date+Format.swift */; };
 		BF8042271BFC741F004CD789 /* NSURL+WireURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */; };
 		BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B4C1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift */; };
-		BF808B4F1DE5C25500718076 /* ChangeHandleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B4E1DE5C25500718076 /* ChangeHandleViewController.swift */; };
 		BF808B511DE605DF00718076 /* ChangeHandleViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B501DE605DF00718076 /* ChangeHandleViewControllerTests.swift */; };
 		BF808B571DE71F3000718076 /* UserNameTakeOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B561DE71F3000718076 /* UserNameTakeOverViewController.swift */; };
 		BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */; };
@@ -876,12 +875,13 @@
 		DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE6F98D1B1DE51C00B7DD32 /* ziphy.framework */; };
 		DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
-		F11E94B81E376D71001AE6D3 /* ConfirmEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
-		F12CDAD61E43761400CEFCEB /* ConfirmPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAD51E43761400CEFCEB /* ConfirmPhoneViewController.swift */; };
-		F13FEA561E30FB6D00BE5454 /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */; };
-		F184A4CE1E422AC800397DDA /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F184A4CD1E422AC700397DDA /* ChangePhoneViewController.swift */; };
+		F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */; };
+		F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADB1E43868200CEFCEB /* ChangePhoneViewController.swift */; };
+		F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADC1E43868200CEFCEB /* ConfirmEmailViewController.swift */; };
+		F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADD1E43868200CEFCEB /* ConfirmPhoneViewController.swift */; };
+		F12CDAE31E4386A100CEFCEB /* ChangeHandleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */; };
 		F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */; };
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
@@ -2205,7 +2205,6 @@
 		BF8042251BFC741F004CD789 /* NSURL+WireURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+WireURLs.h"; sourceTree = "<group>"; };
 		BF8042261BFC741F004CD789 /* NSURL+WireURLs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+WireURLs.m"; sourceTree = "<group>"; };
 		BF808B4C1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Account.swift"; sourceTree = "<group>"; };
-		BF808B4E1DE5C25500718076 /* ChangeHandleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeHandleViewController.swift; path = CellDescriptors/ChangeHandleViewController.swift; sourceTree = "<group>"; };
 		BF808B501DE605DF00718076 /* ChangeHandleViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeHandleViewControllerTests.swift; sourceTree = "<group>"; };
 		BF808B561DE71F3000718076 /* UserNameTakeOverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameTakeOverViewController.swift; sourceTree = "<group>"; };
 		BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameTakeOverViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2335,12 +2334,13 @@
 		EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+Private.h"; sourceTree = "<group>"; };
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
-		F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewController.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
-		F12CDAD51E43761400CEFCEB /* ConfirmPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewController.swift; sourceTree = "<group>"; };
-		F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
-		F184A4CD1E422AC700397DDA /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
+		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
+		F12CDADB1E43868200CEFCEB /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
+		F12CDADC1E43868200CEFCEB /* ConfirmEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewController.swift; sourceTree = "<group>"; };
+		F12CDADD1E43868200CEFCEB /* ConfirmPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewController.swift; sourceTree = "<group>"; };
+		F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeHandleViewController.swift; sourceTree = "<group>"; };
 		F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
 		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
@@ -4591,16 +4591,12 @@
 				87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */,
 				870815891BF4EADE00D321BC /* SettingsNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
-				F184A4CD1E422AC700397DDA /* ChangePhoneViewController.swift */,
-				F12CDAD51E43761400CEFCEB /* ConfirmPhoneViewController.swift */,
-				F13FEA551E30FB6D00BE5454 /* ChangeEmailViewController.swift */,
-				F11E94B71E376D71001AE6D3 /* ConfirmEmailViewController.swift */,
+				F12CDAD91E43868200CEFCEB /* ChangingDetails */,
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
 				8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */,
-				BF808B4E1DE5C25500718076 /* ChangeHandleViewController.swift */,
 				87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */,
 				87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.h */,
 				87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */,
@@ -4865,6 +4861,18 @@
 				BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */,
 			);
 			path = InputBar;
+			sourceTree = "<group>";
+		};
+		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
+			isa = PBXGroup;
+			children = (
+				F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */,
+				F12CDADB1E43868200CEFCEB /* ChangePhoneViewController.swift */,
+				F12CDADD1E43868200CEFCEB /* ConfirmPhoneViewController.swift */,
+				F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */,
+				F12CDADC1E43868200CEFCEB /* ConfirmEmailViewController.swift */,
+			);
+			path = ChangingDetails;
 			sourceTree = "<group>";
 		};
 		F5F52F6F1B11D6DB0053F1C8 /* Sketchpad */ = {
@@ -5601,7 +5609,6 @@
 				871BC2631D34F8F800DF0793 /* BackgroundView.m in Sources */,
 				871BC0041D34F56300DF0793 /* AnalyticsLocalyticsProvider.m in Sources */,
 				871BC2481D34F8F800DF0793 /* NSString+WAZUIMagic.m in Sources */,
-				F13FEA561E30FB6D00BE5454 /* ChangeEmailViewController.swift in Sources */,
 				871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */,
 				879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */,
 				871BC3571D34F94200DF0793 /* AudioTrackCell.m in Sources */,
@@ -5649,7 +5656,6 @@
 				8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */,
 				872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */,
 				871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */,
-				F11E94B81E376D71001AE6D3 /* ConfirmEmailViewController.swift in Sources */,
 				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
 				871BC2231D34F8F800DF0793 /* ActionSheetListView.m in Sources */,
 				BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */,
@@ -5695,6 +5701,7 @@
 				160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */,
 				874E27CB1E2912860079573D /* ConversationImagesViewController.swift in Sources */,
 				875A23101ADEA1A200111C88 /* CountryCodeBaseTableViewController.m in Sources */,
+				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */,
 				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
 				874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */,
@@ -5718,6 +5725,7 @@
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */,
+				F12CDAE31E4386A100CEFCEB /* ChangeHandleViewController.swift in Sources */,
 				8F8914121A9F287E0056AB0C /* ConversationListContentController.m in Sources */,
 				87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */,
 				1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */,
@@ -5767,6 +5775,7 @@
 				871BC24B1D34F8F800DF0793 /* UIView+WAZUIMagicExtensions.m in Sources */,
 				BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */,
 				87DCF4DE1D34EA4500BB420F /* SearchResultCell.m in Sources */,
+				F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */,
 				871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */,
 				87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */,
 				871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */,
@@ -5900,7 +5909,6 @@
 				871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */,
 				871BC2201D34F8F800DF0793 /* ActionSheetAlertView.m in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
-				F12CDAD61E43761400CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				8FC1EFDF19DED50C0092488D /* VoiceChannelV2+Additions.m in Sources */,
@@ -5910,6 +5918,7 @@
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				CE8E4FC01DF17BBE0009F437 /* UITextView+TextTransform.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
+				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				87555C851A85021C00A43E2E /* ChatHeadView.m in Sources */,
 				871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */,
 				87722C541ADFEDFA00842F18 /* EmailVerificationStepViewController.m in Sources */,
@@ -6084,7 +6093,7 @@
 				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				DBD990531B399B58000ACF94 /* NSString+Mentions.m in Sources */,
 				871BC2861D34F8F800DF0793 /* UIColor+WR_ColorScheme.m in Sources */,
-				BF808B4F1DE5C25500718076 /* ChangeHandleViewController.swift in Sources */,
+				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,
 				876113E01DD1DD19007F5969 /* ColorSchemeController.m in Sources */,
 				DBBC190F1B5E3C5D00E84607 /* StopWatch.m in Sources */,
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
@@ -6103,7 +6112,6 @@
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
-				F184A4CE1E422AC800397DDA /* ChangePhoneViewController.swift in Sources */,
 				871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */,
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				871BC0171D34F56300DF0793 /* AnalyticsGroupConversationEvent.m in Sources */,
