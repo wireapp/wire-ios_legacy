@@ -18,8 +18,18 @@
 
 import UIKit
 import Cartography
+import ZMUtilities
 
 struct PhoneNumber {
+    
+    enum ValidationResult {
+        case valid
+        case tooLong
+        case tooShort
+        case containsInvalidCharacters
+        case invalid
+    }
+    
     let countryCode: UInt
     let fullNumber: String
     let numberWithoutCode: String
@@ -27,7 +37,7 @@ struct PhoneNumber {
     init(countryCode: UInt, numberWithoutCode: String) {
         self.countryCode = countryCode
         self.numberWithoutCode = numberWithoutCode
-        fullNumber = "+\(countryCode)\(numberWithoutCode)"
+        fullNumber = NSString.phoneNumber(withE164: countryCode as NSNumber , number: numberWithoutCode)
     }
     
     init?(fullNumber: String) {
@@ -36,6 +46,32 @@ struct PhoneNumber {
         let prefix = country.e164PrefixString
         numberWithoutCode = fullNumber.substring(from: prefix.endIndex)
         self.fullNumber = fullNumber
+        
+    }
+    
+    func validate() -> ValidationResult {
+        var validatedNumber = fullNumber as NSString?
+        let pointer = AutoreleasingUnsafeMutablePointer<NSString?>(&validatedNumber)
+        do {
+            try ZMUser.validatePhoneNumber(pointer)
+        } catch let error as NSError {
+            guard let errorCode = ZMManagedObjectValidationErrorCode(rawValue: UInt(error.code)) else { return .invalid }
+            
+            switch errorCode {
+            case .objectValidationErrorCodeStringTooLong:
+                return .tooLong
+            case .objectValidationErrorCodeStringTooShort:
+                return .tooShort
+            case .objectValidationErrorCodePhoneNumberContainsInvalidCharacters:
+                return .containsInvalidCharacters
+            default:
+                return .invalid
+            }
+        } catch {
+            return .invalid
+        }
+        
+        return .valid
     }
 }
 
@@ -53,21 +89,14 @@ struct ChangePhoneNumberState {
         return newNumber ?? currentNumber
     }
     
-    var validatedPhoneNumber: PhoneNumber? {
-        var validatedEmail = newNumber?.fullNumber as AnyObject?
-        let pointer = AutoreleasingUnsafeMutablePointer<AnyObject?>(&validatedEmail)
-        do {
-            try ZMUser.editableSelf().validateValue(pointer, forKey: #keyPath(ZMUser.phoneNumber))
-            guard let fullNumber = validatedEmail as? String else { return nil }
-            return PhoneNumber(fullNumber: fullNumber)
-        } catch {
-            return nil
-        }
-    }
-    
     var saveButtonEnabled: Bool {
-        guard let phoneNumber = validatedPhoneNumber else { return false }
-        return phoneNumber != currentNumber
+        guard let phoneNumber = visibleNumber else { return false }
+        switch phoneNumber.validate() {
+        case .valid:
+            return phoneNumber != currentNumber
+        default:
+            return false
+        }
     }
     
     init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber) {
@@ -134,16 +163,49 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
             cell.textField.text = current.numberWithoutCode
         }
         cell.textField.becomeFirstResponder()
-        cell.delegate = self
+        cell.textField.delegate = self
+        cell.textField.countryCodeButton.addTarget(self, action: #selector(selectCountry), for: .touchUpInside)
         updateSaveButtonState()
         return cell
     }
+    
+    func selectCountry() {
+        let countryCodeController = CountryCodeTableViewController()
+        countryCodeController.delegate = self
+        
+        let navigationController = UINavigationController(rootViewController: countryCodeController)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationController.modalPresentationStyle = .formSheet
+        }
+        
+        present(navigationController, animated: true, completion: nil)
+    }
 }
 
-extension ChangePhoneViewController: RegistrationTextFieldCellDelegate {
-        func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
-            let textField = cell.textField
-            state.newNumber = PhoneNumber(countryCode: textField.countryCode, numberWithoutCode: textField.text ?? "")
-            updateSaveButtonState()
+extension ChangePhoneViewController: RegistrationTextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let registrationTextField = textField as! RegistrationTextField
+        let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
+        
+        let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)
+        switch number.validate() {
+        case .containsInvalidCharacters, .tooLong:
+            return false
+        default:
+            break
         }
+        
+        state.newNumber = number
+        updateSaveButtonState()
+        return true
+    }
+}
+
+extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
+    func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
+        viewController.dismiss(animated: true, completion: nil)
+        state.newNumber = PhoneNumber(countryCode: country.e164 as UInt, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
+        updateSaveButtonState()
+    }
 }
