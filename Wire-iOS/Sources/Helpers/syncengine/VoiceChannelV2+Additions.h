@@ -17,27 +17,9 @@
 // 
 
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "zmessaging+iOS.h"
 
 
-
-@class ZMConversation;
-@class ConversationListItemView;
-
-
-
-@interface TopItemsView : UIView
-
-- (void)setActiveVoiceChannelConversation:(ZMConversation *)conversation;
-
-- (void)addActiveVoiceChannelTarget:(id)target action:(SEL)action;
-
-/// @return YES if an active voice conv was selected
-- (BOOL)selectActiveVoiceConversation;
-- (void)deselectAll;
-- (void)ensureAnimationsRunning;
-
-// This updates the right accessory to account for rotation (ipad landscape hides it in some cases)
-- (void)updateForCurrentOrientation;
-
-@end
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state);
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2ConnectionState(VoiceChannelV2ConnectionState state);

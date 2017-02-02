@@ -88,6 +88,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
         SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets,
+        SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
     ]
     
@@ -237,6 +238,17 @@ class SettingsPropertyFactory {
                         Analytics.shared()?.tagSendButtonDisabled(disabled)
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+            
+        case .callingProtocolStrategy:
+            return SettingsBlockProperty(
+                propertyName: .callingProtocolStrategy,
+                getAction: { _ in return .number(value: Int(Settings.shared().callingProtocolStrategy.rawValue)) },
+                setAction: { _, value in
+                    if case .number(let intValue) = value, let callingProtocolStrategy = CallingProtocolStrategy(rawValue: UInt(intValue)) {
+                        Settings.shared().callingProtocolStrategy = callingProtocolStrategy
+                        ZMUserSession.callingProtocolStrategy = callingProtocolStrategy
                     }
             })
 

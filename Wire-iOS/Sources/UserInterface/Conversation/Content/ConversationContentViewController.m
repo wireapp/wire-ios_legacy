@@ -33,7 +33,7 @@
 
 // model
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "Message.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 

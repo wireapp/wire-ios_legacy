@@ -29,7 +29,7 @@
 #import "MockMessage+Creation.h"
 #import "SplitViewController.h"
 #import "WAZUIMagicIOS.h"
-#import <AVSAudioEffect.h>
+#import <avs/AVSAudioEffect.h>
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
 #import "TextMessageCell.h"

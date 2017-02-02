@@ -36,7 +36,7 @@
 
 // model
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "Message.h"
 
 // ui
@@ -99,7 +99,7 @@
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
-@interface ConversationViewController (VoiceChannelStateObserver) <ZMVoiceChannelStateObserver>
+@interface ConversationViewController (VoiceChannelStateObserver) <VoiceChannelStateObserver>
 @end
 
 @interface ConversationViewController (ChatHeadsViewControllerDelegate) <ChatHeadsViewControllerDelegate>
@@ -133,7 +133,7 @@
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
+@property (nonatomic) id voiceChannelStateObserverToken;
 
 @property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
 
@@ -154,7 +154,6 @@
     [self dismissCollectionIfNecessary];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
@@ -384,7 +383,6 @@
     }
 
     if (self.conversation != nil) {
-        [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
         [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
     }
 
@@ -393,7 +391,7 @@
     [self updateOutgoingConnectionVisibility];
     
     if (self.conversation != nil) {
-        self.voiceChannelStateObserverToken = [conversation.voiceChannel addVoiceChannelStateObserver:self];
+        self.voiceChannelStateObserverToken = [conversation.voiceChannel addStateObserver:self];
         self.conversationObserverToken = [self.conversation addConversationObserver:self];
     }
 }
@@ -804,14 +802,19 @@
 
 @implementation ConversationViewController (VoiceChannelStateObserver)
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-
+    
 }
 
-- (void)voiceChannelJoinFailedWithError:(NSError *)error
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
     [self showAlertForError:error];
+}
+
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
+{
+    
 }
 
 @end
