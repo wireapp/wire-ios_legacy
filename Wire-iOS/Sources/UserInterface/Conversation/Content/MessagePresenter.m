@@ -174,17 +174,7 @@
     if (message.imageMessageData == nil) {
         return;
     }
-    
-    FullscreenImageViewController *fullscreenImageViewController = [[FullscreenImageViewController alloc] initWithMessage:message];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        fullscreenImageViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        fullscreenImageViewController.snapshotBackgroundView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:YES];
-    } else {
-        fullscreenImageViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    fullscreenImageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    fullscreenImageViewController.delegate = delegate;
-    [self.modalTargetController presentViewController:fullscreenImageViewController animated:YES completion:nil];
+    [self openImagesViewControllerFor:message acitonResponder:delegate];
     [Analytics shared].sessionSummary.imageContentsClicks++;
 }
 

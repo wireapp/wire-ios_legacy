@@ -22,6 +22,9 @@ import zmessaging
 
 internal final class ConversationImagesViewController: UIViewController {
     internal let collection: AssetCollectionWrapper
+    public var swipeToDismiss: Bool = false
+    public var dismissAction: ((_ completion: (()->())?)->())? = .none
+    public var snapshotBackgroundView: UIView? = .none
     fileprivate var imageMessages: [ZMConversationMessage] = []
     internal var currentMessage: ZMConversationMessage {
         didSet {
@@ -89,6 +92,12 @@ internal final class ConversationImagesViewController: UIViewController {
         }
     }
     
+    override open var prefersStatusBarHidden: Bool {
+        get {
+            return false
+        }
+    }
+    
     private func createPageController() {
         self.pageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
         
@@ -129,8 +138,24 @@ internal final class ConversationImagesViewController: UIViewController {
     fileprivate func imageController(for message: ZMConversationMessage) -> FullscreenImageViewController {
         let imageViewController = FullscreenImageViewController(message: message)
         imageViewController.delegate = self
-        imageViewController.swipeToDismiss = false
+        imageViewController.swipeToDismiss = self.swipeToDismiss
         imageViewController.showCloseButton = false
+        if let snapshotBackgroundView = self.snapshotBackgroundView {
+            let innerSnapshot = UIView()
+            innerSnapshot.addSubview(snapshotBackgroundView)
+            let topInset: CGFloat = -64
+            
+            constrain(innerSnapshot, snapshotBackgroundView) { innerSnapshot, snapshotBackgroundView in
+                snapshotBackgroundView.left == innerSnapshot.left
+                snapshotBackgroundView.top == innerSnapshot.top + topInset
+                snapshotBackgroundView.right == innerSnapshot.right
+                snapshotBackgroundView.bottom == innerSnapshot.bottom + topInset
+            }
+            imageViewController.snapshotBackgroundView = innerSnapshot
+        }
+        if let dismissAction = self.dismissAction {
+            imageViewController.dismissAction = dismissAction
+        }
         return imageViewController
     }
     
