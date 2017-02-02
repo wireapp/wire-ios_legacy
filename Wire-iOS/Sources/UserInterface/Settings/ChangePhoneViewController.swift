@@ -19,14 +19,71 @@
 import UIKit
 import Cartography
 
-final class ChangePhoneViewController: UIViewController {
-    let phoneController: PhoneNumberViewController
+struct PhoneNumber {
+    let countryCode: UInt
+    let fullNumber: String
+    let numberWithoutCode: String
     
+    init(countryCode: UInt, numberWithoutCode: String) {
+        self.countryCode = countryCode
+        self.numberWithoutCode = numberWithoutCode
+        fullNumber = "+\(countryCode)\(numberWithoutCode)"
+    }
+    
+    init?(fullNumber: String) {
+        guard let country = Country.detect(forPhoneNumber: fullNumber) else { return nil }
+        countryCode = country.e164 as UInt
+        let prefix = country.e164PrefixString
+        numberWithoutCode = fullNumber.substring(from: prefix.endIndex)
+        self.fullNumber = fullNumber
+    }
+}
+
+extension PhoneNumber: Equatable {
+    static func ==(lhs: PhoneNumber, rhs: PhoneNumber) -> Bool {
+        return lhs.fullNumber == rhs.fullNumber
+    }
+}
+
+struct ChangePhoneNumberState {
+    let currentNumber: PhoneNumber?
+    var newNumber: PhoneNumber?
+    
+    var visibleNumber: PhoneNumber? {
+        return newNumber ?? currentNumber
+    }
+    
+    var validatedPhoneNumber: PhoneNumber? {
+        var validatedEmail = newNumber?.fullNumber as AnyObject?
+        let pointer = AutoreleasingUnsafeMutablePointer<AnyObject?>(&validatedEmail)
+        do {
+            try ZMUser.editableSelf().validateValue(pointer, forKey: #keyPath(ZMUser.phoneNumber))
+            guard let fullNumber = validatedEmail as? String else { return nil }
+            return PhoneNumber(fullNumber: fullNumber)
+        } catch {
+            return nil
+        }
+    }
+    
+    var saveButtonEnabled: Bool {
+        guard let phoneNumber = validatedPhoneNumber else { return false }
+        return phoneNumber != currentNumber
+    }
+    
+    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber) {
+        self.currentNumber = PhoneNumber(fullNumber: currentPhoneNumber)
+    }
+    
+}
+
+final class ChangePhoneViewController: SettingsBaseTableViewController {
+    let emailTextField = RegistrationTextField()
+
+    var state = ChangePhoneNumberState()
+
     init() {
-        phoneController = PhoneNumberViewController()
-        super.init(nibName: nil, bundle: nil)
+        super.init(style: .grouped)
         setupViews()
-        createConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,11 +91,8 @@ final class ChangePhoneViewController: UIViewController {
     }
     
     func setupViews() {
+        RegistrationTextFieldCell.register(in: tableView)
         title = "self.settings.account_section.phone_number.change.title".localized
-        
-        phoneController.willMove(toParentViewController: self)
-        view.addSubview(phoneController.view)
-        addChildViewController(phoneController)
         
         view.backgroundColor = .clear
         
@@ -50,18 +104,46 @@ final class ChangePhoneViewController: UIViewController {
         )
     }
     
-    func createConstraints() {
-        constrain(view, phoneController.view) { view, phoneView in
-            phoneView.top == view.top + 44 + 16
-            phoneView.leading == view.leading + 16
-            phoneView.trailing == view.trailing - 16
+    func updateSaveButtonState(enabled: Bool? = nil) {
+        if let enabled = enabled {
+            navigationItem.rightBarButtonItem?.isEnabled = enabled
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = state.saveButtonEnabled
         }
-        
     }
     
     func saveButtonTapped() {
         
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+        cell.textField.keyboardType = .phonePad
+        cell.textField.leftAccessoryView = .countryCode
+        cell.textField.accessibilityIdentifier = "PhoneNumberField"
+        if let current = state.visibleNumber {
+            cell.textField.countryCode = current.countryCode
+            cell.textField.text = current.numberWithoutCode
+        }
+        cell.textField.becomeFirstResponder()
+        cell.delegate = self
+        updateSaveButtonState()
+        return cell
+    }
+}
 
+extension ChangePhoneViewController: RegistrationTextFieldCellDelegate {
+        func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
+            let textField = cell.textField
+            state.newNumber = PhoneNumber(countryCode: textField.countryCode, numberWithoutCode: textField.text ?? "")
+            updateSaveButtonState()
+        }
 }
