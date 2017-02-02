@@ -61,7 +61,7 @@ import zmessaging
         self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.EnableAddressBookOnSimulator.rawValue)
         self.automationEmailCredentials = AutomationHelper.credentials(arguments)
         if arguments.hasFlag(AutomationKey.LogNetwork.rawValue) {
-            ZMSLog .set(level: .debug, tag: "Network")
+            ZMSLog.set(level: .debug, tag: "Network")
         }
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()

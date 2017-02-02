@@ -18,6 +18,7 @@
 
 
 import Foundation
+import avs
 
 extension AVSMediaManager {
     fileprivate func settingsPropertyFactory() -> SettingsPropertyFactory {
