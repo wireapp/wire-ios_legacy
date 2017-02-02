@@ -149,7 +149,8 @@
         durationSlot = @"[1h-infinite]";
     }
     
-    return @{ @"duration" : durationSlot };
+    return @{ @"duration" : durationSlot,
+              @"durationActual" : @(ceil(duration))};
 }
 
 - (NSString *)stringForCallEndReason:(VoiceChannelV2CallEndReason)reason
