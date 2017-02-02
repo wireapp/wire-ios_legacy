@@ -114,7 +114,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 
     init() {
         super.init(style: .grouped)
-        userProfile?.add(observer: self)
+        _ = userProfile?.add(observer: self)
         setupViews()
     }
     
