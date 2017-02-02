@@ -21,6 +21,7 @@
 #import "ZMSnapshotTestCase.h"
 #import "MockConversation.h"
 #import "VoiceChannelOverlay.h"
+#import "Wire_iOS_Tests-Swift.h"
 
 @import Classy;
 
@@ -68,7 +69,7 @@
 
 - (void)testIncomingVideoCall
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateIncomingCall conversation:self.conversation];
     ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
@@ -76,7 +77,7 @@
 
 - (void)testOutgoingVideoCall
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateOutgoingCall conversation:self.conversation];
     ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
@@ -90,7 +91,7 @@
 
 - (void)testConnectingVideoCall
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateJoiningCall conversation:self.conversation];
     ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
@@ -98,7 +99,7 @@
 
 - (void)testConnectingVideoCallVideoConnected
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateJoiningCall conversation:self.conversation];
     voiceChannelOverlay.incomingVideoActive = YES;
@@ -114,7 +115,7 @@
 
 - (void)testOngoingVideoCall
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateConnected conversation:self.conversation];
     voiceChannelOverlay.remoteIsSendingVideo = YES;
@@ -125,7 +126,7 @@
 
 - (void)testOngoingVideoCallWithoutIncomingVideo
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateConnected conversation:self.conversation];
     voiceChannelOverlay.remoteIsSendingVideo = NO;
@@ -136,7 +137,7 @@
 
 - (void)testOngoingVideoCallWithoutOutgoingVideo
 {
-    self.conversation.isVideoCall = YES;
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateConnected conversation:self.conversation];
     voiceChannelOverlay.remoteIsSendingVideo = YES;

@@ -60,11 +60,6 @@
     //NO-OP
 }
 
-- (VoiceChannelRouter *)voiceChannel;
-{
-    return nil;
-}
-
 - (NSArray *)messages;
 {
     return nil;

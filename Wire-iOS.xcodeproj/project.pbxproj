@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1600E2041AD5799400C0DBA8 /* PhoneNumberStepViewController.m */; };
+		160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160287AB1E434C460036FC5B /* MockVoiceChannel.swift */; };
 		160546DA1BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */; };
 		16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */; };
 		16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D011BDA6BF50097F62C /* GroupConversationHeader.m */; };
@@ -946,6 +947,7 @@
 		095275931B7E834400123BAF /* zmessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zmessaging.framework; path = Carthage/Build/iOS/zmessaging.framework; sourceTree = "<group>"; };
 		1600E2031AD5799400C0DBA8 /* PhoneNumberStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberStepViewController.h; sourceTree = "<group>"; };
 		1600E2041AD5799400C0DBA8 /* PhoneNumberStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberStepViewController.m; sourceTree = "<group>"; };
+		160287AB1E434C460036FC5B /* MockVoiceChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceChannel.swift; sourceTree = "<group>"; };
 		160546D81BF0DB9D001FE3F6 /* EmailInvitationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailInvitationStepViewController.h; sourceTree = "<group>"; };
 		160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailInvitationStepViewController.m; sourceTree = "<group>"; };
 		16063CE91BCFCEB70097F62C /* InviteBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteBannerViewController.h; sourceTree = "<group>"; };
@@ -3694,6 +3696,7 @@
 				BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */,
 				87BEB0D81C734D710094BFE9 /* MockConversation.h */,
 				87BEB0D91C734D710094BFE9 /* MockConversation.m */,
+				160287AB1E434C460036FC5B /* MockVoiceChannel.swift */,
 				87BEB0DA1C734D710094BFE9 /* MockUser.h */,
 				87BEB0DB1C734D710094BFE9 /* MockUser.m */,
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
@@ -6069,6 +6072,7 @@
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
 				BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */,
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
+				160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				164565F81CA2E79E00EE5504 /* ParticipantsChangedViewTests.m in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
