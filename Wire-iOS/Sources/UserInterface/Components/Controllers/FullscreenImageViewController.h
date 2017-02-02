@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak)   id <MessageActionResponder> delegate;
 @property (nonatomic) BOOL swipeToDismiss;
 @property (nonatomic) BOOL showCloseButton;
-@property (nonatomic, copy) void (^dismissAction)(__nullable dispatch_block_t);
+@property (nonatomic, copy, nullable) void (^dismissAction)(__nullable dispatch_block_t);
 
 - (instancetype)initWithMessage:(id<ZMConversationMessage>)message;
 

@@ -216,7 +216,7 @@
     self.snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.snapshotBackgroundView];
     [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
     self.snapshotBackgroundView.alpha = 0;
 }

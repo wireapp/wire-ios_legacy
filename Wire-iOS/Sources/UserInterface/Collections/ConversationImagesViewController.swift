@@ -20,10 +20,12 @@ import Foundation
 import Cartography
 import zmessaging
 
+typealias DismissAction = (_ completion: (()->())?)->()
+
 internal final class ConversationImagesViewController: UIViewController {
     internal let collection: AssetCollectionWrapper
     public var swipeToDismiss: Bool = false
-    public var dismissAction: ((_ completion: (()->())?)->())? = .none
+    public var dismissAction: DismissAction? = .none
     public var snapshotBackgroundView: UIView? = .none
     fileprivate var imageMessages: [ZMConversationMessage] = []
     internal var currentMessage: ZMConversationMessage {
@@ -93,9 +95,7 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     override open var prefersStatusBarHidden: Bool {
-        get {
-            return false
-        }
+        return false
     }
     
     private func createPageController() {
@@ -146,16 +146,14 @@ internal final class ConversationImagesViewController: UIViewController {
             let topInset: CGFloat = -64
             
             constrain(innerSnapshot, snapshotBackgroundView) { innerSnapshot, snapshotBackgroundView in
-                snapshotBackgroundView.left == innerSnapshot.left
+                snapshotBackgroundView.leading == innerSnapshot.leading
                 snapshotBackgroundView.top == innerSnapshot.top + topInset
-                snapshotBackgroundView.right == innerSnapshot.right
+                snapshotBackgroundView.trailing == innerSnapshot.trailing
                 snapshotBackgroundView.bottom == innerSnapshot.bottom + topInset
             }
             imageViewController.snapshotBackgroundView = innerSnapshot
         }
-        if let dismissAction = self.dismissAction {
-            imageViewController.dismissAction = dismissAction
-        }
+        imageViewController.dismissAction = self.dismissAction
         return imageViewController
     }
     
