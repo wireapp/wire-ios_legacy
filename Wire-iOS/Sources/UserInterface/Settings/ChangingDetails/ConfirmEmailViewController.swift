@@ -21,31 +21,6 @@ import Classy
 import Cartography
 import ZMCDataModel
 
-final class ConfirmEmailDescriptionView: UIView {
-    let descriptionLabel = UILabel()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        descriptionLabel.text = "self.settings.account_section.email.change.verify.description".localized
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .byWordWrapping
-        addSubview(descriptionLabel)
-        
-        constrain(self, descriptionLabel) { container, label in
-            label.trailing <= container.trailing - 16
-            label.leading >= container.leading + 16
-            label.top == container.top + 24
-            label.bottom == container.bottom - 24
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
 protocol ConfirmEmailDelegate: class {
     func resendVerification(inController controller: ConfirmEmailViewController)
     func didConfirmEmail(inController controller: ConfirmEmailViewController)
@@ -92,7 +67,9 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let description = ConfirmEmailDescriptionView()
+        let description = DescriptionHeaderView()
+        description.descriptionLabel.text = "self.settings.account_section.email.change.verify.description".localized
+
         return description
     }
     

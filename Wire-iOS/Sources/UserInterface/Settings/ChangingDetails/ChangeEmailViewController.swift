@@ -20,48 +20,6 @@ import UIKit
 import Classy
 import Cartography
 
-protocol RegistrationTextFieldCellDelegate: class {
-    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String)
-}
-
-final class RegistrationTextFieldCell: UITableViewCell {
-    
-    let textField = RegistrationTextField()
-    weak var delegate: RegistrationTextFieldCellDelegate?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
-        setupViews()
-        createConstraints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupViews() {
-        addSubview(textField)
-        textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-    }
-    
-    func createConstraints() {
-        constrain(self, textField) { view, emailTextField in
-            emailTextField.top == view.top
-            emailTextField.bottom == view.bottom
-            emailTextField.trailing == view.trailing - 8
-            emailTextField.leading == view.leading + 8
-        }
-    }
-    
-    func editingChanged(textField: UITextField) {
-        let lowercase = textField.text?.lowercased() ?? ""
-        let noSpaces = lowercase.components(separatedBy: .whitespacesAndNewlines).joined()
-        textField.text = noSpaces
-        delegate?.tableViewCellDidChangeText(cell: self, text: noSpaces)
-    }
-}
-
 struct ChangeEmailState {
     let currentEmail: String
     var newEmail: String?

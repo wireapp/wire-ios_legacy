@@ -114,7 +114,9 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch Section(rawValue: section)! {
         case .verificationCode:
-            let description = ConfirmEmailDescriptionView()
+            let description = DescriptionHeaderView()
+            let format = "self.settings.account_section.phone_number.change.verify.description".localized
+            description.descriptionLabel.text = String(format: format, newNumber)
             return description
         case .buttons:
             return nil
