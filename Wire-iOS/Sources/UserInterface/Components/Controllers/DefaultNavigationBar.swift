@@ -52,7 +52,7 @@ class DefaultNavigationBar : UINavigationBar {
 extension UIViewController {
     
     func wrapInNavigationController() -> UINavigationController {
-        return self.wrapInNavigationController(UINavigationController.self)
+        return self.wrapInNavigationController(RotationAwareNavigationController.self)
     }
     
     func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
