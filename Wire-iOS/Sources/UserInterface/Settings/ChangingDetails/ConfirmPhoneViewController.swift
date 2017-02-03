@@ -142,6 +142,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .verificationCode:
             let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
             cell.textField.accessibilityIdentifier = "ConfirmationCodeField"
+            cell.textField.placeholder = "self.settings.account_section.phone_number.change.verify.code_placeholder".localized
             cell.textField.keyboardType = .numberPad
             cell.textField.becomeFirstResponder()
             cell.delegate = self
