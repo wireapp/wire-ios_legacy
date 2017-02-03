@@ -60,6 +60,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @property (nonatomic) UIWindow *notificationsWindow;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) SessionObjectCache *sessionObjectCache;
+@property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
 @property (nonatomic) AVSLogObserver *logObserver;
 @property (nonatomic) NSString *groupIdentifier;
 
@@ -130,6 +131,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
         if (isLoggedIn) {
             [self uploadAddressBookIfNeeded];
+            [self trackShareExtensionEventsIfNeeded];
         }
     }];
 }
@@ -139,6 +141,20 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     BOOL addressBookDidBecomeGranted = [AddressBookHelper.sharedHelper accessStatusDidChangeToGranted];
     [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:!addressBookDidBecomeGranted];
     [AddressBookHelper.sharedHelper persistCurrentAccessStatus];
+}
+
+- (void)trackShareExtensionEventsIfNeeded
+{
+    if (nil == self.analyticsEventPersistence) {
+        return;
+    }
+
+    NSArray<StorableTrackingEvent *> *events = self.analyticsEventPersistence.storedTrackingEvents.copy;
+    [self.analyticsEventPersistence clear];
+
+    for (StorableTrackingEvent *event in events) {
+        [Analytics.shared tagStorableEvent:event];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -398,6 +414,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
     // Cache conversation lists etc.
     self.sessionObjectCache = [[SessionObjectCache alloc] initWithUserSession:[ZMUserSession sharedSession]];
+
+    self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:_zetaUserSession.sharedContainerURL];
         
     // Sign up for authentication notifications
     self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];

@@ -20,16 +20,22 @@
 import WireShareEngine
 import WireExtensionComponents
 import MobileCoreServices
+import ZMCDataModel
 
 
 class ExtensionActivity {
 
-    private var eventName = "share_extension_used"
+    static private var openedEventName = "share_extension_opened"
+    static private var sentEventName = "share_extension_sent"
+    static private var cancelledEventName = "share_extension_cancelled"
+
     private var verifiedConversation = false
     private var conversationDidDegrade = false
-    private let numberOfImages: Int
-    private let video, file: Bool
-    public var text = false
+    private var numberOfImages = 0
+    private var hasVideo = false
+    private var hasFile = false
+    public var hasText = false
+    private let attachments: [NSItemProvider]
 
     public var conversation: Conversation? = nil {
         didSet {
@@ -38,41 +44,93 @@ class ExtensionActivity {
     }
 
     init(attachments: [NSItemProvider]) {
-        video = attachments.contains { $0.hasVideo }
-        file = attachments.contains { $0.hasFile }
-        numberOfImages = attachments.filter { $0.hasImage }.count
+        self.attachments = attachments
     }
 
     func markConversationDidDegrade() {
         conversationDidDegrade = true
     }
 
-    func eventDump(sent: Bool) -> StorableTrackingEvent {
+    func openedEvent() -> StorableTrackingEvent {
         return StorableTrackingEvent(
-            name: eventName,
-            attributes: [
-                "verified_conversation": verifiedConversation,
-                "number_of_images": numberOfImages,
-                "video": video,
-                "file": file,
-                "text": text,
-                "conversation_did_degrade": conversationDidDegrade,
-                "sent": sent,
-                ]
+            name: ExtensionActivity.openedEventName,
+            attributes: [:]
         )
+    }
+
+    func cancelledEvent() -> StorableTrackingEvent {
+        return StorableTrackingEvent(
+            name: ExtensionActivity.cancelledEventName,
+            attributes: [:]
+        )
+    }
+
+    func sentEvent(completion: @escaping (StorableTrackingEvent) -> Void) {
+        populateAttachmentTypes { [weak self] in
+            guard let `self` = self else { return }
+            let event = StorableTrackingEvent(
+                name: ExtensionActivity.sentEventName,
+                attributes: [
+                    "verified_conversation": self.verifiedConversation,
+                    "number_of_images": self.numberOfImages,
+                    "video": self.hasVideo,
+                    "file": self.hasFile,
+                    "text": self.hasText,
+                    "conversation_did_degrade": self.conversationDidDegrade
+                ]
+            )
+
+            completion(event)
+        }
+    }
+
+    func populateAttachmentTypes(completion: @escaping () -> Void) {
+        hasVideo = attachments.contains { $0.hasVideo }
+        numberOfImages = attachments.filter { $0.hasImage }.count
+
+        let group = DispatchGroup()
+        attachments.forEach { _ in
+            group.enter()
+        }
+
+        attachments.forEach {
+            $0.hasFile { [weak self] in
+                guard let `self` = self else { return }
+                self.hasFile = self.hasFile || $0
+                group.leave()
+            }
+        }
+
+        group.notify(queue: .main) { 
+            completion()
+        }
     }
 
 }
 
 
-fileprivate extension NSItemProvider {
+extension NSItemProvider {
 
     var hasImage: Bool {
         return hasItemConformingToTypeIdentifier(kUTTypeImage as String)
     }
 
-    var hasFile: Bool {
-        return hasItemConformingToTypeIdentifier(kUTTypeData as String) && !hasImage && !hasVideo
+    func hasFile(completion: @escaping (Bool) -> Void) {
+        guard !hasImage && !hasVideo else { return completion(false) }
+        if hasURL {
+            fetchURL { [weak self] url in
+                if (url != nil && !url!.isFileURL) || self?.hasData == false {
+                    return completion(false)
+                }
+                completion(true)
+            }
+        } else {
+            completion(hasData)
+        }
+    }
+
+    private var hasData: Bool {
+        return hasItemConformingToTypeIdentifier(kUTTypeData as String)
     }
 
     var hasURL: Bool {

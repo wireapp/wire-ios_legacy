@@ -76,7 +76,9 @@ class ShareViewController: SLComposeServiceViewController {
         super.viewDidLoad()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
-        extensionActivity = ExtensionActivity(attachments: allAttachments)
+        let activity = ExtensionActivity(attachments: allAttachments)
+        sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
+        extensionActivity = activity
     }
 
     @objc private func extensionHostDidEnterBackground() {
@@ -132,13 +134,14 @@ class ShareViewController: SLComposeServiceViewController {
                 self.progressViewController?.progress = progress
 
             case .done:
-                self.storeTrackingData(sent: true)
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                    self.view.alpha = 0
-                    self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-                }, completion: { _ in
-                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-                })
+                self.storeTrackingData {
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                        self.view.alpha = 0
+                        self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                    }, completion: { _ in
+                        self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                    })
+                }
 
             case .conversationDidDegrade((let users, let strategyChoice)):
                 self.extensionActivity?.markConversationDidDegrade()
@@ -151,14 +154,18 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func cancel() {
-        storeTrackingData(sent: false)
+        if let event = extensionActivity?.cancelledEvent() {
+            sharingSession?.analyticsEventPersistence.add(event)
+        }
         super.cancel()
     }
 
-    private func storeTrackingData(sent: Bool) {
-        extensionActivity?.text = !contentText.isEmpty
-        guard let event = extensionActivity?.eventDump(sent: sent) else { return }
-        sharingSession?.analyticsEventPersistence.store(event)
+    private func storeTrackingData(completion: @escaping () -> Void) {
+        extensionActivity?.hasText = !contentText.isEmpty
+        extensionActivity?.sentEvent { [weak self] event in
+            self?.sharingSession?.analyticsEventPersistence.add(event)
+            completion()
+        }
     }
     
     /// Display a preview image
@@ -166,7 +173,7 @@ class ShareViewController: SLComposeServiceViewController {
         if let parentView = super.loadPreviewView() {
             return parentView
         }
-        let hasURL = self.allAttachments.first(where: { $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String) }) != nil
+        let hasURL = self.allAttachments.contains { $0.hasURL }
         let hasEmptyText = self.textView.text.isEmpty
         // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
         // if it has no image, it has a URL and it has text, it must be a file
