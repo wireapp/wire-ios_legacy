@@ -1443,15 +1443,6 @@ ConfirmEmailDescriptionView {
     }
 }
 
-ShortLabelTableViewCell {
-    backgroundColor: clear;
-    textLabel: @{
-        font: $font-normal-medium;
-        textColor: $color-text-foreground-dark;
-        backgroundColor: clear
-    }
-}
-
 ChangeHandleTableViewCell {
     backgroundColor: clear;
 
