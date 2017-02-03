@@ -29,7 +29,7 @@ protocol ConfirmEmailDelegate: class {
 final class ConfirmEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmEmailDelegate?
-    let newEmail: String
+    let newEmail: String 
     fileprivate var observer: UserCollectionObserverToken?
 
     init(newEmail: String, delegate: ConfirmEmailDelegate?) {
