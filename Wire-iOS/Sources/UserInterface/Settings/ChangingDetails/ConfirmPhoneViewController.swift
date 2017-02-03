@@ -19,11 +19,6 @@
 import UIKit
 import zmessaging
 
-protocol ConfirmPhoneDelegate: class {
-    func resendVerificationCode(inController controller: ConfirmPhoneViewController)
-    func didConfirmPhone(inController controller: ConfirmPhoneViewController)
-}
-
 fileprivate enum Section: Int {
     static var count: Int {
         return 2
@@ -47,11 +42,17 @@ fileprivate enum Section: Int {
     }
 }
 
+protocol ConfirmPhoneDelegate: class {
+    func resendVerificationCode(inController controller: ConfirmPhoneViewController)
+    func didConfirmPhone(inController controller: ConfirmPhoneViewController)
+}
+
 final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmPhoneDelegate?
     let newNumber: String
     fileprivate var observer: UserCollectionObserverToken?
+    fileprivate var observerToken: AnyObject?
     var verificationCode: String?
     
     init(newNumber: String, delegate: ConfirmPhoneDelegate?) {
@@ -68,16 +69,21 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let context = ZMUserSession.shared()?.managedObjectContext
+        observerToken = userProfile?.add(observer: self)
         observer = UserCollectionObserverToken(observer: self, users: [ZMUser.selfUser()], managedObjectContext: context!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observer?.tearDown()
+        if let token = observerToken  {
+            userProfile?.removeObserver(token: token)
+        }
     }
     
     internal func setupViews() {
         ShortLabelTableViewCell.register(in: tableView)
+        RegistrationTextFieldCell.register(in: tableView)
         
         title = "self.settings.account_section.phone_number.change.verify.title".localized
         view.backgroundColor = .clear
@@ -100,6 +106,14 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: verificationCode)
             userProfile?.requestPhoneNumberChange(credentials: credentials)
             showLoadingView = true
+        }
+    }
+    
+    func updateSaveButtonState(enabled: Bool? = nil) {
+        if let enabled = enabled {
+            navigationItem.rightBarButtonItem?.isEnabled = enabled
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = (verificationCode != nil)
         }
     }
     
@@ -126,11 +140,11 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section)! {
         case .verificationCode:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
-            
-            let format = "self.settings.account_section.email.change.verify.resend".localized
-            let text = String(format: format, newNumber)
-            cell.textLabel?.text = text
+            let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+            cell.textField.accessibilityIdentifier = "ConfirmationCodeField"
+            cell.textField.keyboardType = .numberPad
+            cell.textField.becomeFirstResponder()
+            cell.delegate = self
             return cell
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
@@ -176,6 +190,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
     
     func userDidChange(_ note: ZMCDataModel.UserChangeInfo!) {
         if note.user.isSelfUser {
+            showLoadingView = false
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
             if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, currentPhoneNumber == newNumber {
@@ -187,6 +202,15 @@ extension ConfirmPhoneViewController: ZMUserObserver {
 
 extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
-        
+        showLoadingView = false
+        showAlert(forError: error)
     }
 }
+
+extension ConfirmPhoneViewController: RegistrationTextFieldCellDelegate {
+    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
+        verificationCode = text
+        updateSaveButtonState()
+    }
+}
+
