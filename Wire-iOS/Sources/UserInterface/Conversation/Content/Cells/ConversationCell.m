@@ -438,14 +438,16 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     _countdownContainerViewHidden = countdownContainerViewHidden;
     
-    if (nil == self.countdownView && !countdownContainerViewHidden) {
-        self.countdownView = [[DestructionCountdownView alloc] init];
-        [self.countdownContainerView addSubview:self.countdownView];
-        [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-        self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
+    if (nil == self.countdownView) {
+        if (!countdownContainerViewHidden) {
+            self.countdownView = [[DestructionCountdownView alloc] init];
+            [self.countdownContainerView addSubview:self.countdownView];
+            [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+            self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
+        }
     }
-    else if (nil != self.countdownView && countdownContainerViewHidden) {
-        self.countdownContainerView.hidden = YES;
+    else {
+        self.countdownContainerView.hidden = countdownContainerViewHidden;
     }
 }
 

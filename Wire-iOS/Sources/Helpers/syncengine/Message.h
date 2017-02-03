@@ -52,4 +52,6 @@
 
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message;
 
++ (BOOL)canBePrefetched:(id<ZMConversationMessage>)message;
+
 @end

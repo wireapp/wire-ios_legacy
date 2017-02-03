@@ -21,8 +21,8 @@
 #import <PureLayout/PureLayout.h>
 @import Classy;
 @import WireExtensionComponents;
-#import <AVSVideoView.h>
-#import <AVSVideoPreview.h>
+#import <avs/AVSVideoView.h>
+#import <avs/AVSVideoPreview.h>
 
 #import "VoiceChannelOverlay.h"
 #import "VoiceChannelOverlayController.h"
@@ -473,7 +473,7 @@ static NSString *NotNilString(NSString *string) {
     self.videoButton.enabled = connected;
     self.videoButton.selected = self.videoButton.enabled && self.outgoingVideoActive;
 
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         self.videoViewFullScreen = ! connected;
     } else {
         self.videoView.hidden = YES;
@@ -650,7 +650,7 @@ static NSString *NotNilString(NSString *string) {
         self.cameraPreviewCenterHorisontally.constant = self.cameraPreviewPosition.x;
     }
     
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         self.leaveButtonPinRightConstraint.active = NO;
     }
     else {
@@ -664,7 +664,7 @@ static NSString *NotNilString(NSString *string) {
     
     // Construct visible views list based on:
     // Voice channel state & is video / group call
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         visibleViews = [self visibleViewsForStateInVideoCall:state];
     }
     else {

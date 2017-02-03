@@ -43,6 +43,7 @@
         self.style = style;
         self.cas_styleClass = style == ActionSheetViewStyleLight ? @"light" : @"dark";
         self.contentInsets = UIEdgeInsetsMake(24, 24, 24, 24);
+        self.blurEffect = [UIBlurEffect effectWithStyle:style == ActionSheetViewStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight];
         [self createViews];
         [self createInitialConstraints];
     }
@@ -52,7 +53,7 @@
 
 - (void)createViews
 {
-    self.blurEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:self.style == ActionSheetViewStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight]];
+    self.blurEffectView = [[UIVisualEffectView alloc] initWithEffect:self.blurEffect];
     self.blurEffectView.preservesSuperviewLayoutMargins = YES;
     self.blurEffectView.contentView.preservesSuperviewLayoutMargins = YES;
     self.blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;

@@ -489,6 +489,18 @@
 "self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
 "self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Save";
+
+"self.settings.account_section.email.change.verify.title" = "Verify email";
+"self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions";
+"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
 "self.settings.notifications.push_notification.toogle" = "Message Previews";

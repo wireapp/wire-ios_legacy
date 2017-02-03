@@ -32,6 +32,32 @@ final public class CollectionImageCell: CollectionCell {
         return cache
     }()
     
+    public static func loadImageThumbnail(for message: ZMConversationMessage, completion: ((_ image: Any?, _ cacheKey: String)->())?) {
+        
+        // If medium image is present, use the medium image
+        if let imageMessageData = message.imageMessageData, let imageData = imageMessageData.imageData, imageData.count > 0 {
+            
+            let isAnimatedGIF = imageMessageData.isAnimatedGIF
+            
+            self.imageCache.image(for: imageData, cacheKey: Message.nonNilImageDataIdentifier(message), creationBlock: { (data: Data) -> Any in
+                var image: AnyObject? = .none
+                
+                if (isAnimatedGIF) {
+                    image = FLAnimatedImage(animatedGIFData: data)
+                } else {
+                    image = UIImage(from: data, withMaxSize: CollectionImageCell.maxCellSize * UIScreen.main.scale)
+                }
+                
+                guard let finalImage = image else {
+                    fatal("Invalid image data cannot be loaded: \(message)")
+                }
+                
+                return finalImage
+                
+            }, completion: completion)
+        }
+    }
+    
     static let maxCellSize: CGFloat = 100
 
     override var message: ZMConversationMessage? {
@@ -137,7 +163,7 @@ final public class CollectionImageCell: CollectionCell {
     }
     
     fileprivate func loadImage() {
-        guard let imageMessageData = self.message?.imageMessageData else {
+        guard let message = self.message, let imageMessageData = message.imageMessageData else {
             self.imageView.image = .none
             return
         }
@@ -145,43 +171,22 @@ final public class CollectionImageCell: CollectionCell {
         self.imageView.isHidden = true
         self.loadingView.isHidden = false
         
-        // If medium image is present, use the medium image
-        if let imageData = imageMessageData.imageData, imageData.count > 0 {
-            
-            let isAnimatedGIF = imageMessageData.isAnimatedGIF
-            
-            type(of: self).imageCache.image(for: imageData, cacheKey: Message.nonNilImageDataIdentifier(self.message), creationBlock: { (data: Data) -> Any in
-                var image: AnyObject? = .none
+        type(of: self).loadImageThumbnail(for: message) { (image, cacheKey) in
+            // Double check that our cell's current image is still the same one
+            if let _ = self.message, cacheKey == Message.nonNilImageDataIdentifier(self.message) {
+                self.imageView.isHidden = false
+                self.loadingView.isHidden = true
                 
-                if (isAnimatedGIF) {
-                    image = FLAnimatedImage(animatedGIFData: data)
-                } else {
-                    image = UIImage(from: data, withMaxSize: CollectionImageCell.maxCellSize * UIScreen.main.scale)
+                if let image = image as? UIImage {
+                    self.imageView.image = image
                 }
-                
-                guard let finalImage = image else {
-                    fatal("Invalid image data cannot be loaded: \(self.message)")
+                if let image = image as? FLAnimatedImage {
+                    self.imageView.animatedImage = image
                 }
-                
-                return finalImage
-                
-                }, completion: { (image: Any?, cacheKey: String) in
-                    // Double check that our cell's current image is still the same one
-                    if let _ = self.message, cacheKey == Message.nonNilImageDataIdentifier(self.message) {
-                        self.imageView.isHidden = false
-                        self.loadingView.isHidden = true
-                        
-                        if let image = image as? UIImage {
-                            self.imageView.image = image
-                        }
-                        if let image = image as? FLAnimatedImage {
-                            self.imageView.animatedImage = image
-                        }
-                    }
-                    else {
-                        DDLogInfo("finished loading image but cell is no longer on screen.")
-                    }
-            })
+            }
+            else {
+                DDLogInfo("finished loading image but cell is no longer on screen.")
+            }
         }
     }
 }

@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import <AVSMediaManager.h>
+#import <avs/AVSMediaManager.h>
 
 
 

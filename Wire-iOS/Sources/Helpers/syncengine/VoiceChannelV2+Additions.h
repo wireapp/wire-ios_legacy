@@ -17,21 +17,9 @@
 // 
 
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "zmessaging+iOS.h"
 
-typedef NS_ENUM(NSUInteger, ActionSheetViewStyle) {
-    ActionSheetViewStyleLight,
-    ActionSheetViewStyleDark
-};
 
-@interface ActionSheetContainerView : UIView
-
-@property (nonatomic) UIVisualEffectView *blurEffectView;
-@property (nonatomic) UIBlurEffect *blurEffect;
-@property (nonatomic) UIView *topContainerView;
-@property (nonatomic) UIView *sheetView;
-
-- (instancetype)initWithStyle:(ActionSheetViewStyle)style;
-- (void)transitionFromSheetView:(UIView *)fromSheetView toSheetView:(UIView *)toSheetView completion:(void (^)(BOOL finished))completion;
-
-@end
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state);
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2ConnectionState(VoiceChannelV2ConnectionState state);

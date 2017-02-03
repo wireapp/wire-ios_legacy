@@ -90,22 +90,24 @@ extension ShareViewController {
         self.bottomSeparatorLine = UIView()
         self.bottomSeparatorLine.cas_styleClass = "separator"
         
-        [self.blurView, self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.view.addSubview)
+        [self.blurView, self.containerView].forEach(self.view.addSubview)
+        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.containerView.addSubview)
         
         if let shareablePreviewWrapper = self.shareablePreviewWrapper {
-            self.view.addSubview(shareablePreviewWrapper)
+            self.containerView.addSubview(shareablePreviewWrapper)
         }
     }
     
     internal func createConstraints() {
-        constrain(self.view, self.blurView) { view, blurView in
+        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
             blurView.edges == view.edges
+            containerView.edges == view.edges
         }
         
         if self.showPreview {
             let screenHeightCompact = (UIScreen.main.bounds.height <= 568)
 
-            constrain(self.view, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
+            constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
                 
                 shareablePreviewWrapper.top == view.top + 28
                 shareablePreviewWrapper.left == view.left + 16
@@ -118,7 +120,7 @@ extension ShareViewController {
             }
         }
         else {
-            constrain(self.view, self.tokenField) { view, tokenField in
+            constrain(self.containerView, self.tokenField) { view, tokenField in
                 tokenField.top == view.top + 28
             }
         }
@@ -136,7 +138,7 @@ extension ShareViewController {
         }
         
         
-        constrain(self.view, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
+        constrain(self.containerView, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
             
             tokenField.left == view.left + 8
             tokenField.right == -8 + view.right
@@ -152,7 +154,7 @@ extension ShareViewController {
             bottomSeparatorLine.height == 0.5
         }
         
-        constrain(self.view, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
+        constrain(self.containerView, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
             
             closeButton.left == view.left
             closeButton.centerY == sendButton.centerY

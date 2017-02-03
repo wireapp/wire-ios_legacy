@@ -161,12 +161,6 @@
 
 - (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate
 {
-    /// Don't open full screen images when there is an incoming call
-    ZMVoiceChannel *activeVoiceChannel = [SessionObjectCache sharedCache].firstActiveVoiceChannel;
-    if (IS_IPAD_LANDSCAPE_LAYOUT && activeVoiceChannel != nil && activeVoiceChannel.state == ZMVoiceChannelStateIncomingCall) {
-        return;
-    }
-    
     if (! [Message isImageMessage:message]) {
         return;
     }

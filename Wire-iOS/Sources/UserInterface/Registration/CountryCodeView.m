@@ -67,7 +67,7 @@
         
         [self.button autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
         [self.separatorLine autoSetDimension:ALDimensionWidth toSize:1];
-        [self.separatorLine autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeLeft];
+        [self.separatorLine autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeLeading];
     }
     
     [super updateConstraints];

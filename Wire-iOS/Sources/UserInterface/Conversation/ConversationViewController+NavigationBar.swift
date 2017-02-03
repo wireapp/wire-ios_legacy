@@ -167,21 +167,29 @@ public extension ConversationViewController {
         let collections = CollectionsViewController(conversation: conversation)
         collections.delegate = self
         
+        self.collectionController = collections
+        
         let navigationController = collections.wrap(inNavigationControllerClass: RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 
-        self.parent?.present(navigationController, animated: true, completion: {
+        ZClientViewController.shared().present(navigationController, animated: true, completion: {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
         
-        collections.onDismiss = {[weak self] _ in
-            guard let `self` = self else {
+        collections.onDismiss = { [weak self] _ in
+            guard let `self` = self, let collectionController = self.collectionController else {
                 return
             }
-            
-            self.parent?.dismiss(animated: true, completion: { 
+
+            collectionController.dismiss(animated: true, completion: {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })
+        }
+    }
+    
+    internal func dismissCollectionIfNecessary() {
+        if let _ = self.collectionController {
+            self.collectionController.dismiss(animated: false)
         }
     }
 }
@@ -190,7 +198,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
     public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
         switch action {
         case .forward:
-            self.parent?.dismiss(animated: true) {
+            viewController.dismiss(animated: true) {
                 self.contentViewController.scroll(to: message) {[weak self] cell in
                     guard let `self` = self else {
                         return
@@ -201,7 +209,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
             
             
         case .showInConversation:
-            self.parent?.dismiss(animated: true) { [weak self] in
+            viewController.dismiss(animated: true) { [weak self] in
                 guard let `self` = self else {
                     return
                 }

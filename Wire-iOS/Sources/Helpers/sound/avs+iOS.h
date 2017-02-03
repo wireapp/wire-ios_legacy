@@ -17,6 +17,6 @@
 // 
 
 
-#import <AVSMediaManager.h>
-#import <AVSMediaManager+Client.h>
+#import <avs/AVSMediaManager.h>
+#import <avs/AVSMediaManager+Client.h>
 #import "AVSMediaManager+Additions.h"

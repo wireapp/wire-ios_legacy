@@ -203,4 +203,11 @@
     return identifier;
 }
 
++ (BOOL)canBePrefetched:(id<ZMConversationMessage>)message
+{
+    return [Message isFileTransferMessage:message] ||
+           [Message isImageMessage:message] ||
+           [Message isTextMessage:message];
+}
+
 @end

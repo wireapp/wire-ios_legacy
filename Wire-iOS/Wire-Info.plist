@@ -135,5 +135,7 @@
 	<false/>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
 </dict>
 </plist>

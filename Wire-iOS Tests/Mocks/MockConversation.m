@@ -60,11 +60,6 @@
     //NO-OP
 }
 
-- (ZMVoiceChannel *)voiceChannel;
-{
-    return nil;
-}
-
 - (NSArray *)messages;
 {
     return nil;

@@ -96,7 +96,6 @@
     [self.messageContentView addSubview:self.messageTextView];
 
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
-    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeNone;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
     self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
@@ -106,6 +105,7 @@
     self.messageTextView.userInteractionEnabled = YES;
     self.messageTextView.accessibilityIdentifier = @"Message";
     self.messageTextView.accessibilityElementsHidden = NO;
+    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeAll;
 
     self.linkAttachmentContainer = [[UIView alloc] init];
     self.linkAttachmentContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -404,7 +404,7 @@
 
 #pragma mark - TextViewInteractionDelegate
 
-- (void)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
+- (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
     LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", url]].lastObject;
     
@@ -416,14 +416,13 @@
                                                          conversationType:self.message.conversation.conversationType];
     }
 
-    [url open];
+    return [url open];
 }
 
-- (void)textView:(LinkInteractionTextView *)textView didLongPressLink:(UILongPressGestureRecognizer *)recognizer
+- (void)textViewDidLongPress:(LinkInteractionTextView *)textView
 {
     [self showMenu];
 }
-
 
 @end
 

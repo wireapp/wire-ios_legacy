@@ -393,10 +393,10 @@ ProfileClientViewController {
     view: @{
         backgroundColor: $color-background;
     }
+
+    descriptionTextFont: $font-normal-light;
     
-    reviewInvitationTextFont: $font-normal-light;
-    
-    reviewInvitationTextView: @{
+    descriptionTextView: @{
         textColor: $color-text-foreground;
         backgroundColor: $color-text-background;
     }
@@ -1421,6 +1421,34 @@ SettingsClientViewController.conversation {
 SettingsClientViewController {
     tableView: @{
         separatorColor: rgb(255,255,255,0.1)
+    }
+}
+
+ChangeEmailTableViewCell {
+    backgroundColor: clear;
+    
+    emailTextField: @{
+        font: $font-normal;
+        textColor: $color-text-foreground-dark;
+        backgroundColor: clear
+    }
+}
+
+ConfirmEmailDescriptionView {
+    backgroundColor: clear;
+    descriptionLabel: @{
+        font: $font-normal-medium;
+        textColor: $color-text-foreground-dark;
+        backgroundColor: clear
+    }
+}
+
+ShortLabelTableViewCell {
+    backgroundColor: clear;
+    textLabel: @{
+        font: $font-normal-medium;
+        textColor: $color-text-foreground-dark;
+        backgroundColor: clear
     }
 }
 

@@ -33,7 +33,7 @@
 
 // model
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "Message.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 
@@ -70,7 +70,10 @@
 #import "Wire-Swift.h"
 
 
-@interface ConversationContentViewController (TableView) <UITableViewDelegate>
+const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
+
+
+@interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
 
 @end
 
@@ -161,6 +164,9 @@
     self.tableView.allowsMultipleSelection = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self.conversationMessageWindowTableViewAdapter;
+    if ([self.tableView respondsToSelector:@selector(setPrefetchDataSource:)]) {
+        self.tableView.prefetchDataSource = self;
+    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delaysContentTouches = NO;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
@@ -689,6 +695,11 @@
     [tableView endUpdates];
 }
 
+- (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    [self prefetchNextMessagesForIndexPaths:indexPaths];
+}
+
 @end
 
 
@@ -777,6 +788,26 @@
 - (void)expandMessageWindowUp
 {
     [self.conversationMessageWindowTableViewAdapter expandMessageWindow];
+}
+
+- (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];
+
+    NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
+
+    if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
+        [self expandMessageWindowUp];
+    }
+    
+    for (NSIndexPath *upcomingIndexPath in indexPaths) {
+        if (upcomingIndexPath.row < (int)self.messageWindow.messages.count) {
+            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:upcomingIndexPath.row];
+            if ([Message canBePrefetched:message]) {
+                [message requestImageDownload];
+            }
+        }
+    }
 }
 
 - (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos

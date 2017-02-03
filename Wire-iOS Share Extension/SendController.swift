@@ -37,6 +37,12 @@ enum SendingState {
 }
 
 
+/// This class encapsulates the preparation and sending of text an `NSItemProviders`.
+/// It creates `UnsentSendable` instances and queries them if they need preparation.
+/// If at least one of them does, it will call `prepare` on those who do before calling `send`.
+/// During the sending procress the current state of the operation is reported through the passed in
+/// `SendingCallState` in the `send` method. In comparison to the `PostContent` class, the `SendController`
+/// itself has no knowledge about conversation degradation.
 class SendController {
 
     private var observer: SendableBatchObserver? = nil
@@ -60,6 +66,8 @@ class SendController {
         unsentSendables = sendables
     }
 
+    /// Send (and prepare if needed) the text and attachment items passed into the initializer.
+    /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
     func send(progress: @escaping SendingStateCallback) {
         let completion: ([Sendable]) -> Void = { [weak self] sendables in
             guard let `self` = self else { return }
@@ -88,12 +96,12 @@ class SendController {
         }
     }
 
+    /// Cancels the sending operation. In case the current state is preparing,
+    /// a flag will be set to abort sending after the preparation is done.
     func cancel(completion: @escaping () -> Void) {
         isCancelled = true
 
-        let sendablesToCancel = self.observer?.sendables.lazy.filter {
-            $0.deliveryState != .sent && $0.deliveryState != .delivered
-        }
+        let sendablesToCancel = self.observer?.sendables.lazy.filter { !$0.isSent }
 
         sharingSession?.enqueue(changes: { 
             sendablesToCancel?.forEach {
@@ -102,7 +110,7 @@ class SendController {
         }, completionHandler: completion)
     }
 
-    func prepare(unsentSendables: [UnsentSendable], completion: @escaping () -> Void) {
+    private func prepare(unsentSendables: [UnsentSendable], completion: @escaping () -> Void) {
         let preparationGroup = DispatchGroup()
 
         unsentSendables.filter { $0.needsPreparation }.forEach {
@@ -115,7 +123,7 @@ class SendController {
         preparationGroup.notify(queue: .main, execute: completion)
     }
 
-    func append(unsentSendables: [UnsentSendable], completion: @escaping ([Sendable]) -> Void) {
+    private func append(unsentSendables: [UnsentSendable], completion: @escaping ([Sendable]) -> Void) {
         guard !isCancelled else { return completion([]) }
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()

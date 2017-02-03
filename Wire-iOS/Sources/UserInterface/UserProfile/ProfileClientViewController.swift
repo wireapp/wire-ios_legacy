@@ -23,35 +23,34 @@ import CocoaLumberjackSwift
 import Classy
 
 
-class ProfileClientViewController: UIViewController, UserClientObserver, UITextViewDelegate {
-    let userClient: UserClient!
-    var userClientToken: UserClientObserverOpaqueToken!
+class ProfileClientViewController: UIViewController {
+
+    let userClient: UserClient
+    let contentView = UIView()
+    let backButton = IconButton.iconButtonCircular()
+    let showMyDeviceButton = ButtonWithLargerHitArea()
+    let descriptionTextView = UITextView()
+    let separatorLineView = UIView()
+    let typeLabel = UILabel()
+    let IDLabel = UILabel()
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let fullIDLabel = CopyableLabel()
+    let verifiedToggle = UISwitch()
+    let verifiedToggleLabel = UILabel()
+    let resetButton = ButtonWithLargerHitArea()
+
+    var userClientToken: UserClientObserverOpaqueToken?
     var resetSessionPending: Bool = false
-    
-    var contentView: UIView!
-    var backButton: IconButton!
-    var showMyDeviceButton: ButtonWithLargerHitArea!
-    var reviewInvitationTextView: UITextView!
-    var reviewInvitationTextFont: UIFont?
-    var separatorLineView: UIView!
-    var typeLabel: UILabel!
-    var IDLabel: UILabel!
-    var spinner: UIActivityIndicatorView!
-    var fullIDLabel: UILabel!
-    var verifiedToggle: UISwitch!
-    var verifiedToggleLabel: UILabel!
-    var resetButton: ButtonWithLargerHitArea!
-    
+    var descriptionTextFont: UIFont?
+    var fromConversation: Bool = false
+
     /// Used for debugging purposes, disabled in public builds
     var deleteDeviceButton: ButtonWithLargerHitArea?
-    
-    var fromConversation: Bool = false
-    
+
     var showBackButton: Bool = true {
         didSet {
-            self.backButton?.isHidden = !self.showBackButton
+            self.backButton.isHidden = !self.showBackButton
         }
-    
     }
     
     var fingerprintSmallFont: UIFont? {
@@ -78,8 +77,7 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         }
     }
 
-    convenience init(client: UserClient, fromConversation: Bool)
-    {
+    convenience init(client: UserClient, fromConversation: Bool) {
         self.init(client: client)
         self.fromConversation = fromConversation
     }
@@ -108,12 +106,12 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
     
     deinit {
-        UserClient.removeObserverForUserClientToken(self.userClientToken)
+        UserClient.removeObserverForUserClientToken(self.userClientToken!)
     }
 
     override func viewDidLoad() {
@@ -121,91 +119,76 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         
         CASStyler.default().styleItem(self)
 
-        self.createContentView()
-        self.createBackButton()
-        self.createShowMyDeviceButton()
-        self.createReviewInvitationTextView()
-        self.createSeparatorLineView()
-        self.createTypeLabel()
-        self.createIDLabel()
-        self.createFullIDLabel()
-        self.createSpinner()
-        self.createVerifiedToggle()
-        self.createVerifiedToggleLabel()
-        self.createResetButton()
-        self.createDeleteButton()
+        self.setupContentView()
+        self.setupBackButton()
+        self.setupShowMyDeviceButton()
+        self.setupDescriptionTextView()
+        self.setupSeparatorLineView()
+        self.setupTypeLabel()
+        self.setupIDLabel()
+        self.setupFullIDLabel()
+        self.setupSpinner()
+        self.setupVerifiedToggle()
+        self.setupVerifiedToggleLabel()
+        self.setupResetButton()
+        self.setupDeleteButton()
         self.createConstraints()
         self.updateFingerprintLabel()
     }
     
-    func createContentView() {
-        let contentView = UIView()
+    private func setupContentView() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(contentView)
-        self.contentView = contentView
     }
 
-    func createBackButton() {
-        let backButton = IconButton.iconButtonCircular()
+    private func setupBackButton() {
         backButton.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
         backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.isHidden = !self.showBackButton
-        self.backButton = backButton
         self.view.addSubview(backButton)
     }
     
-    func createShowMyDeviceButton() {
-        let showMyDeviceButton = ButtonWithLargerHitArea()
+    private func setupShowMyDeviceButton() {
         showMyDeviceButton.translatesAutoresizingMaskIntoConstraints = false
         showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: UIControlState())
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         self.view.addSubview(showMyDeviceButton)
-        self.showMyDeviceButton = showMyDeviceButton
     }
     
-    func createReviewInvitationTextView() {
-        let reviewInvitationTextView = UITextView()
-        reviewInvitationTextView.isScrollEnabled = false
-        reviewInvitationTextView.isEditable = false
-        reviewInvitationTextView.delegate = self
-        reviewInvitationTextView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupDescriptionTextView() {
+        descriptionTextView.isScrollEnabled = false
+        descriptionTextView.isEditable = false
+        descriptionTextView.delegate = self
+        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         if let user = self.userClient.user,
-            let reviewInvitationTextFont = self.reviewInvitationTextFont {
-            reviewInvitationTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && reviewInvitationTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: reviewInvitationTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
+            let descriptionTextFont = self.descriptionTextFont {
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
+                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
         }
-        self.contentView.addSubview(reviewInvitationTextView)
-        self.reviewInvitationTextView = reviewInvitationTextView
+        self.contentView.addSubview(descriptionTextView)
     }
     
-    func createSeparatorLineView() {
-        let separatorLineView = UIView()
+    private func setupSeparatorLineView() {
         self.contentView.addSubview(separatorLineView)
-        self.separatorLineView = separatorLineView
     }
     
-    func createTypeLabel() {
-        let typeLabel = UILabel()
+    private func setupTypeLabel() {
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         self.contentView.addSubview(typeLabel)
-        self.typeLabel = typeLabel
     }
     
-    func createIDLabel() {
-        let IDLabel = UILabel()
+    private func setupIDLabel() {
         IDLabel.translatesAutoresizingMaskIntoConstraints = false
         IDLabel.numberOfLines = 1
         self.contentView.addSubview(IDLabel)
-        self.IDLabel = IDLabel
         self.updateIDLabel()
     }
     
-    func updateIDLabel() {
-        if let IDLabel = self.IDLabel,
-            let fingerprintSmallMonospaceFont = self.fingerprintSmallFont?.monospaced(),
+    private func updateIDLabel() {
+        if let fingerprintSmallMonospaceFont = self.fingerprintSmallFont?.monospaced(),
             let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont?.monospaced() {
                 IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
                     [NSFontAttributeName: fingerprintSmallMonospaceFont],
@@ -215,71 +198,55 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         }
     }
 
-    func createFullIDLabel() {
-        let fullIDLabel = UILabel()
+    private func setupFullIDLabel() {
         fullIDLabel.translatesAutoresizingMaskIntoConstraints = false
         fullIDLabel.numberOfLines = 0
         self.contentView.addSubview(fullIDLabel)
-        self.fullIDLabel = fullIDLabel
     }
     
-    func createSpinner() {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private func setupSpinner() {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
-
         self.contentView.addSubview(spinner)
-        self.spinner = spinner
     }
-    
-    func updateFingerprintLabel() {
 
-        if let fullIDLabel = self.fullIDLabel,
-            let spinner = self.spinner {
-            
-            if let fingerprintMonospaceFont = self.fingerprintFont?.monospaced(),
-                let fingerprintBoldMonospaceFont = self.fingerprintBoldFont?.monospaced(),
-                let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
-                    attributes: [NSFontAttributeName: fingerprintMonospaceFont],
-                    boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
-                    uppercase: false
-                )
-            {
-                fullIDLabel.attributedText = attributedFingerprint
-                spinner.stopAnimating()
-            }
-            else {
-                fullIDLabel.attributedText = NSAttributedString(string: "")
-                spinner.startAnimating()
-            }
+    fileprivate func updateFingerprintLabel() {
+        if let fingerprintMonospaceFont = self.fingerprintFont?.monospaced(),
+            let fingerprintBoldMonospaceFont = self.fingerprintBoldFont?.monospaced(),
+            let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
+                attributes: [NSFontAttributeName: fingerprintMonospaceFont],
+                boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
+                uppercase: false
+            )
+        {
+            fullIDLabel.attributedText = attributedFingerprint
+            spinner.stopAnimating()
+        }
+        else {
+            fullIDLabel.attributedText = NSAttributedString(string: "")
+            spinner.startAnimating()
         }
     }
-    
-    func createVerifiedToggle() {
-        let verifiedToggle = UISwitch()
+
+    private func setupVerifiedToggle() {
         verifiedToggle.isOn = self.userClient.verified
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
-        self.verifiedToggle = verifiedToggle
     }
     
-    func createVerifiedToggleLabel() {
-        let verifiedToggleLabel = UILabel()
+    private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
-        self.verifiedToggleLabel = verifiedToggleLabel
     }
     
-    func createResetButton() {
-        let resetButton = ButtonWithLargerHitArea()
+    private func setupResetButton() {
         resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(resetButton)
-        self.resetButton = resetButton
     }
     
-    func createDeleteButton() {
+    private func setupDeleteButton() {
         guard DeveloperMenuState.developerMenuEnabled() else { return }
         let deleteButton = ButtonWithLargerHitArea()
         deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: UIControlState())
@@ -288,106 +255,101 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
         self.deleteDeviceButton = deleteButton
     }
     
-    func createConstraints() {
-        if let view = self.view
-        {
-            constrain(view, contentView, reviewInvitationTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
-                contentView.left == view.left + 24
-                contentView.right == view.right - 24
-                contentView.bottom == view.bottom - 32
-                contentView.top >= view.top + 24
-                reviewInvitationTextView.top == contentView.top
-                reviewInvitationTextView.left == contentView.left
-                reviewInvitationTextView.right == contentView.right
-                reviewInvitationTextView.bottom == separatorLineView.top - 24
-                separatorLineView.left == contentView.left
-                separatorLineView.right == contentView.right
-                separatorLineView.height == 0.5
-            }
-            
-            constrain(contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel) { contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel in
-                typeLabel.left == contentView.left
-                typeLabel.right == contentView.right
-                typeLabel.top == separatorLineView.bottom + 24
-                IDLabel.left == contentView.left
-                IDLabel.right == contentView.right
-                IDLabel.top == typeLabel.bottom - 2
-                fullIDLabel.left == contentView.left
-                fullIDLabel.right == contentView.right
-                fullIDLabel.top == IDLabel.bottom + 24
-            }
-        
-            constrain(contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton) { contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton in
-                verifiedToggle.left == contentView.left
-                verifiedToggle.top == fullIDLabel.bottom + 32
-                verifiedToggle.bottom == contentView.bottom
-                verifiedToggleLabel.left == verifiedToggle.right + 10
-                verifiedToggleLabel.centerY == verifiedToggle.centerY
-                resetButton.right == contentView.right
-                resetButton.centerY == verifiedToggle.centerY
-            }
-        
-            constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
-                backButton.left == contentView.left
-                backButton.top == selfView.top + 24
-                backButton.width == 32
-                backButton.height == 32
-                showMyDeviceButton.centerY == backButton.centerY
-                showMyDeviceButton.right == contentView.right
-            }
-            
-            constrain(contentView, spinner, verifiedToggle, IDLabel) { contentView, spinner, verifiedToggle, IDLabel in
-                spinner.centerX == contentView.centerX
-                spinner.top >= IDLabel.bottom + 24
-                spinner.bottom <= verifiedToggle.bottom - 32
-            }
-            
-            if let deleteDeviceButton = self.deleteDeviceButton {
-                constrain(contentView, reviewInvitationTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
-                    deleteDeviceButton.right == contentView.right
-                    deleteDeviceButton.left == contentView.left
-                    deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
-                }
+    private func createConstraints() {
+        constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
+            contentView.left == view.left + 24
+            contentView.right == view.right - 24
+            contentView.bottom == view.bottom - 32
+            contentView.top >= view.top + 24
+            reviewInvitationTextView.top == contentView.top
+            reviewInvitationTextView.left == contentView.left
+            reviewInvitationTextView.right == contentView.right
+            reviewInvitationTextView.bottom == separatorLineView.top - 24
+            separatorLineView.left == contentView.left
+            separatorLineView.right == contentView.right
+            separatorLineView.height == 0.5
+        }
+
+        constrain(contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel) { contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel in
+            typeLabel.left == contentView.left
+            typeLabel.right == contentView.right
+            typeLabel.top == separatorLineView.bottom + 24
+            IDLabel.left == contentView.left
+            IDLabel.right == contentView.right
+            IDLabel.top == typeLabel.bottom - 2
+            fullIDLabel.left == contentView.left
+            fullIDLabel.right == contentView.right
+            fullIDLabel.top == IDLabel.bottom + 24
+        }
+
+        constrain(contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton) { contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton in
+            verifiedToggle.left == contentView.left
+            verifiedToggle.top == fullIDLabel.bottom + 32
+            verifiedToggle.bottom == contentView.bottom
+            verifiedToggleLabel.left == verifiedToggle.right + 10
+            verifiedToggleLabel.centerY == verifiedToggle.centerY
+            resetButton.right == contentView.right
+            resetButton.centerY == verifiedToggle.centerY
+        }
+
+        constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
+            backButton.left == contentView.left
+            backButton.top == selfView.top + 24
+            backButton.width == 32
+            backButton.height == 32
+            showMyDeviceButton.centerY == backButton.centerY
+            showMyDeviceButton.right == contentView.right
+        }
+
+        constrain(contentView, spinner, verifiedToggle, IDLabel) { contentView, spinner, verifiedToggle, IDLabel in
+            spinner.centerX == contentView.centerX
+            spinner.top >= IDLabel.bottom + 24
+            spinner.bottom <= verifiedToggle.bottom - 32
+        }
+
+        if let deleteDeviceButton = self.deleteDeviceButton {
+            constrain(contentView, descriptionTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
+                deleteDeviceButton.right == contentView.right
+                deleteDeviceButton.left == contentView.left
+                deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
             }
         }
     }
-    
+
     // MARK: Actions
-    
-    func onBackTapped(_ sender: AnyObject) {
+
+    @objc private func onBackTapped(_ sender: AnyObject) {
         self.presentingViewController?.dismiss(animated: true, completion: .none)
     }
-    
-    func onShowMyDeviceTapped(_ sender: AnyObject) {
+
+    @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(), fromConversation:self.fromConversation)
         let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
         navigationControllerWrapper.modalPresentationStyle = .currentContext
         self.present(navigationControllerWrapper, animated: true, completion: .none)
     }
-    
-    func onTrustChanged(_ sender: AnyObject) {
-        if let verifiedToggle = self.verifiedToggle {
-            let selfClient = ZMUserSession.shared()!.selfUserClient()
-            if(verifiedToggle.isOn) {
-                selfClient?.trustClient(self.userClient)
-            } else {
-                selfClient?.ignoreClient(self.userClient)
-            }
-            verifiedToggle.isOn = self.userClient.verified
-            
-            let verificationType : DeviceVerificationType = verifiedToggle.isOn ? .verified : .unverified
-            Analytics.shared()?.tagChange(verificationType, deviceOwner: .other)
+
+    @objc private func onTrustChanged(_ sender: AnyObject) {
+        let selfClient = ZMUserSession.shared()!.selfUserClient()
+        if(verifiedToggle.isOn) {
+            selfClient?.trustClient(self.userClient)
+        } else {
+            selfClient?.ignoreClient(self.userClient)
         }
+        verifiedToggle.isOn = self.userClient.verified
+
+        let verificationType: DeviceVerificationType = verifiedToggle.isOn ? .verified : .unverified
+        Analytics.shared()?.tagChange(verificationType, deviceOwner: .other)
     }
-    
-    func onResetTapped(_ sender: AnyObject) {
+
+    @objc private func onResetTapped(_ sender: AnyObject) {
         ZMUserSession.shared()?.performChanges {
             self.userClient.resetSession()
         }
         self.resetSessionPending = true
     }
     
-    func onDeleteDeviceTapped(_ sender: AnyObject) {
+    @objc private func onDeleteDeviceTapped(_ sender: AnyObject) {
         let sync = self.userClient.managedObjectContext!.zm_sync!
         sync.performGroupedBlockAndWait {
             let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
@@ -395,30 +357,39 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
             sync.saveOrRollback()
         }
         self.presentingViewController?.dismiss(animated: true, completion: .none)
-
     }
-    
-    // MARK: - UserClientObserver
-    
+
+}
+
+
+// MARK: - UserClientObserver
+
+
+extension ProfileClientViewController: UserClientObserver {
+
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
         if changeInfo.fingerprintChanged {
             self.updateFingerprintLabel()
         }
-        
+
         // This means the fingerprint is acquired
         if self.resetSessionPending && self.userClient.fingerprint != .none {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
-            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler:  { [unowned alert] (_) -> Void in
-                alert.dismiss(animated: true, completion: .none)
-                })
+            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler:  nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: .none)
             self.resetSessionPending = false
         }
     }
-    
-    // MARK: - UITextViewDelegate
-    
+
+}
+
+
+// MARK: - UITextViewDelegate
+
+
+extension ProfileClientViewController: UITextViewDelegate {
+
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         if URL == NSURL.wr_fingerprintHowToVerify() as URL {
             UIApplication.shared.openURL(URL)
@@ -428,4 +399,5 @@ class ProfileClientViewController: UIViewController, UserClientObserver, UITextV
             return false
         }
     }
+
 }
