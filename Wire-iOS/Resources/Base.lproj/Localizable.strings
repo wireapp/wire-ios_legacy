@@ -495,7 +495,7 @@
 "self.settings.account_section.email.change.save" = "Save";
 
 "self.settings.account_section.email.change.verify.title" = "Verify email";
-"self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions";
+"self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions.";
 "self.settings.account_section.email.change.verify.resend" = "Resend to %@";
 
 "self.settings.account_section.email.change.resend.title" = "Email resent";

@@ -1437,7 +1437,7 @@ ChangeEmailTableViewCell {
 ConfirmEmailDescriptionView {
     backgroundColor: clear;
     descriptionLabel: @{
-        font: $font-normal-medium;
+        font: $font-normal;
         textColor: $color-text-foreground-dark;
         backgroundColor: clear
     }
