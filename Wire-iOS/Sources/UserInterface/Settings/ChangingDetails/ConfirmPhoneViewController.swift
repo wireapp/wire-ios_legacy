@@ -18,6 +18,7 @@
 
 import UIKit
 import zmessaging
+import ZMUtilities
 
 fileprivate enum Section: Int {
     static var count: Int {
@@ -35,17 +36,25 @@ protocol ConfirmPhoneDelegate: class {
 
 final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
-    weak var delegate: ConfirmPhoneDelegate?
-    let newNumber: String
     fileprivate var observer: UserCollectionObserverToken?
     fileprivate var observerToken: AnyObject?
+    
+    weak var delegate: ConfirmPhoneDelegate?
+    var timer: ZMTimer?
+    
+    let newNumber: String
     var verificationCode: String?
+    var resendEnabled: Bool = false
     
     init(newNumber: String, delegate: ConfirmPhoneDelegate?) {
         self.newNumber = newNumber
         self.delegate = delegate
         super.init(style: .grouped)
         setupViews()
+    }
+    
+    deinit {
+        timer?.cancel()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +66,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         let context = ZMUserSession.shared()?.managedObjectContext
         observerToken = userProfile?.add(observer: self)
         observer = UserCollectionObserverToken(observer: self, users: [ZMUser.selfUser()], managedObjectContext: context!)
+        startTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,6 +95,18 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             target: self,
             action: #selector(saveButtonTapped)
         )
+    }
+    
+    func startTimer() {
+        resendEnabled = false
+        timer?.cancel()
+        timer = ZMTimer(target: self, operationQueue: .main)
+        timer?.fire(afterTimeInterval: 30)
+    }
+    
+    func reloadResendCell() {
+        let resend = IndexPath(item: 0, section: Section.buttons.rawValue)
+        tableView.reloadRows(at: [resend], with: .none)
     }
     
     func saveButtonTapped() {
@@ -136,7 +158,13 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
             cell.titleText = "self.settings.account_section.phone_number.change.verify.resend".localized
-            cell.titleColor = .white
+            if resendEnabled {
+                cell.titleColor = .white
+                cell.selectionStyle = .default
+            } else {
+                cell.titleColor = .darkGray
+                cell.selectionStyle = .none
+            }
             return cell
         }
     }
@@ -156,6 +184,8 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             
             alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
             present(alert, animated: true, completion: nil)
+            startTimer()
+            reloadResendCell()
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
@@ -186,6 +216,13 @@ extension ConfirmPhoneViewController: RegistrationTextFieldCellDelegate {
     func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
         verificationCode = text
         updateSaveButtonState()
+    }
+}
+
+extension ConfirmPhoneViewController: ZMTimerClient {
+    func timerDidFire(_ timer: ZMTimer!) {
+        resendEnabled = true
+        reloadResendCell()
     }
 }
 
