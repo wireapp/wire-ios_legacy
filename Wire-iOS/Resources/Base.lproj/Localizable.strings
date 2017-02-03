@@ -509,7 +509,6 @@
 
 "self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
 "self.settings.account_section.phone_number.change.verify.resend" = "Resend";
-"self.settings.account_section.phone_number.change.verify.call" = "Call me";
 
 "self.settings.account_section.phone_number.change.resend.title" = "Code resent";
 "self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";

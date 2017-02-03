@@ -883,7 +883,6 @@
 		F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADD1E43868200CEFCEB /* ConfirmPhoneViewController.swift */; };
 		F12CDAE31E4386A100CEFCEB /* ChangeHandleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */; };
 		F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */; };
-		F12CDAE91E43883200CEFCEB /* ShortLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE81E43883200CEFCEB /* ShortLabelTableViewCell.swift */; };
 		F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */; };
 		F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */; };
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
@@ -2345,7 +2344,6 @@
 		F12CDADD1E43868200CEFCEB /* ConfirmPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewController.swift; sourceTree = "<group>"; };
 		F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeHandleViewController.swift; sourceTree = "<group>"; };
 		F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTextViewCell.swift; sourceTree = "<group>"; };
-		F12CDAE81E43883200CEFCEB /* ShortLabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortLabelTableViewCell.swift; sourceTree = "<group>"; };
 		F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecriptionHeaderView.swift; sourceTree = "<group>"; };
 		F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
@@ -4886,7 +4884,6 @@
 			isa = PBXGroup;
 			children = (
 				F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */,
-				F12CDAE81E43883200CEFCEB /* ShortLabelTableViewCell.swift */,
 				F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */,
 			);
 			path = Views;
@@ -6073,7 +6070,6 @@
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
 				CE8C20301E0C30B400571635 /* Analytics+Collection.swift in Sources */,
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
-				F12CDAE91E43883200CEFCEB /* ShortLabelTableViewCell.swift in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */,
 				87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */,
