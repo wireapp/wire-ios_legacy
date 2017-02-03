@@ -507,7 +507,7 @@
 "self.settings.account_section.phone_number.change.verify.title" = "Verify phone";
 "self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to %@.";
 
-"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Resend";
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
 "self.settings.account_section.phone_number.change.verify.resend" = "Resend";
 "self.settings.account_section.phone_number.change.verify.call" = "Call me";
 
