@@ -327,20 +327,10 @@
     return overlayState;
 }
 
-- (void)leaveConnectedVoiceChannels
-{
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        for (ZMConversation *conversation in [WireCallCenter activeCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
-            [conversation.voiceChannel leaveWithUserSession:[ZMUserSession sharedSession]];
-        }
-    }];
-}
-
 - (void)joinCurrentVoiceChannel
 {
-    [self leaveConnectedVoiceChannels];
-    [self resetAudioState];
     DDLogVoice(@"UI: Accept button tap");
+    [self resetAudioState];
     [self.conversation acceptIncomingCall];
 }
 
