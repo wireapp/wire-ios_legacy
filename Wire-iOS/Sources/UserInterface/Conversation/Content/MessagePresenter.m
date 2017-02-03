@@ -174,7 +174,7 @@
     if (message.imageMessageData == nil) {
         return;
     }
-    [self openImagesViewControllerFor:message acitonResponder:delegate];
+    [self openImagesViewControllerFor:message actionResponder:delegate];
     [Analytics shared].sessionSummary.imageContentsClicks++;
 }
 

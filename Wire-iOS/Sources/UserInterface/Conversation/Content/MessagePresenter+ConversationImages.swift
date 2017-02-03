@@ -19,7 +19,7 @@
 import Foundation
 
 extension MessagePresenter {
-    func openImagesViewController(for message: ZMConversationMessage, acitonResponder: MessageActionResponder) {
+    func openImagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder) {
         
         guard let conversation = message.conversation else {
             fatal("Message \(message) has no conversation.")
@@ -42,7 +42,7 @@ extension MessagePresenter {
         closeButton.addTarget(self, action: #selector(MessagePresenter.closeImagesButtonPressed(_:)), for: .touchUpInside)
         
         imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-        imagesController.messageActionDelegate = acitonResponder
+        imagesController.messageActionDelegate = actionResponder
         imagesController.swipeToDismiss = true
         imagesController.dismissAction = { [weak self] completion in
             guard let `self` = self else {
