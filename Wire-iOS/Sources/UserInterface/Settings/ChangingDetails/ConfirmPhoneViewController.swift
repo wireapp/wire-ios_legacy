@@ -24,22 +24,8 @@ fileprivate enum Section: Int {
         return 2
     }
     
-    var itemCount: Int {
-        switch self {
-        case .verificationCode:
-            return 1
-        case .buttons:
-            return 2
-        }
-    }
-    
     case verificationCode = 0
     case buttons = 1
-    
-    enum Buttons: Int {
-        case resend = 0
-        case callMe = 1
-    }
 }
 
 protocol ConfirmPhoneDelegate: class {
@@ -82,8 +68,8 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     }
     
     internal func setupViews() {
-        ShortLabelTableViewCell.register(in: tableView)
         RegistrationTextFieldCell.register(in: tableView)
+        SettingsButtonCell.register(in: tableView)
         
         title = "self.settings.account_section.phone_number.change.verify.title".localized
         view.backgroundColor = .clear
@@ -122,7 +108,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Section(rawValue: section)!.itemCount
+        return 1
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -148,16 +134,9 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             cell.delegate = self
             return cell
         case .buttons:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
-
-            switch Section.Buttons(rawValue: indexPath.row)! {
-            case .resend:
-                cell.textLabel?.text = "self.settings.account_section.phone_number.change.verify.resend".localized
-            case .callMe:
-                cell.textLabel?.text = "self.settings.account_section.phone_number.change.verify.call".localized
-
-            }
-
+            let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
+            cell.titleText = "self.settings.account_section.phone_number.change.verify.resend".localized
+            cell.titleColor = .white
             return cell
         }
     }
@@ -167,21 +146,16 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .verificationCode:
             break
         case .buttons:
-            switch Section.Buttons(rawValue: indexPath.row)! {
-            case .resend:
-                delegate?.resendVerificationCode(inController: self)
-                let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
-                let alert = UIAlertController(
-                    title: "self.settings.account_section.phone_number.change.resend.title".localized,
-                    message: message,
-                    preferredStyle: .alert
-                )
-                
-                alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
-                present(alert, animated: true, completion: nil)
-            case .callMe:
-                break
-            }
+            delegate?.resendVerificationCode(inController: self)
+            let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
+            let alert = UIAlertController(
+                title: "self.settings.account_section.phone_number.change.resend.title".localized,
+                message: message,
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }

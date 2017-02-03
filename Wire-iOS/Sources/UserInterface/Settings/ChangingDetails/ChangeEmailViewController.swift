@@ -78,7 +78,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     
     internal func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
-        ShortLabelTableViewCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.title".localized
         view.backgroundColor = .clear
