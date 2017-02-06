@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@ ha iniziato a usare un nuovo dispositivo.";
 "meta.degraded.degradation_reason_message.plural" = "%@ ha iniziato a usare dei nuovi dispositivi.";
 "meta.degraded.dialog_message" = "Vuoi comunque mandare il messaggio?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Non inviare";
 "meta.degraded.send_anyway_button" = "Invia comunque";

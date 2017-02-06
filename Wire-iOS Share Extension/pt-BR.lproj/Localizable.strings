@@ -26,13 +26,13 @@
 "share_extension.conversation_selection.empty.value" = "Escolha";
 "share_extension.input.placeholder" = "Digite uma mensagem";
 "share_extension.sending_progress.title" = "Enviando…";
-"share_extension.preparing.title" = "Preparing…";
-"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.preparing.title" = "Preparando…";
+"share_extension.not_signed_in.title" = "É necessário inscrever-se no Wire antes que você possa compartilhar qualquer coisa";
 "share_extension.not_signed_in.close_button" = "Fechar";
 
 "conversation.displayname.emptygroup" = "Conversa em grupo vazia";
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";
 "meta.degraded.degradation_reason_message.plural" = "%@ começou a usar novos dispositivos.";
 "meta.degraded.dialog_message" = "Ainda quer enviar sua mensagem?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Não enviar";
 "meta.degraded.send_anyway_button" = "Enviar assim mesmo";

@@ -255,9 +255,9 @@
 
 "content.message.like" = "Mi piace";
 "content.message.unlike" = "Non mi piace più";
-"content.message.forward" = "Inoltra";
+"content.message.forward" = "Condividi";
 "content.message.go_to_conversation" = "Mostra";
-"content.message.forward.to" = "Invia a...";
+"content.message.forward.to" = "Ricerca…";
 
 "content.reactions_list.likers" = "Piace a";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
 "voice.network_error.body" = "È necessario essere online per chiamare. Controlla la connessione e riprova.";
-"voice.alert.call_in_progress.title" = "Chiamata in corso";
-"voice.alert.call_in_progress.message" = "Un altro dei tuoi dispositivi sta già partecipando alla chiamata";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Accetta";
 "voice.decline_button.title" = "Rifiuta";
 "voice.hang_up_button.title" = "Riattacca";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Blocca?";
-"profile.block_dialog.message" = "%@ non sarà più in grado di trovarti o contattarti su Wire.";
+"profile.block_dialog.message" = "%@ non sarà in grado di contattarti o aggiungerti alle conversazioni di gruppo.";
 "profile.block_dialog.button_cancel" = "Annulla";
 "profile.block_dialog.button_block" = "Blocca";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Impossibile scegliere username";
 "self.settings.account_section.handle.change.failure_alert.message" = "C'è stato un errore nella scelta del tuo username. Per favore riprova.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Salva";
+
+"self.settings.account_section.email.change.verify.title" = "Verifica email";
+"self.settings.account_section.email.change.verify.description" = "Verifica la tua casella di posta e segui le istruzioni.";
+"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifiche";

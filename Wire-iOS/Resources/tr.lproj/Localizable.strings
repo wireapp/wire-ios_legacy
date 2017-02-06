@@ -255,9 +255,9 @@
 
 "content.message.like" = "Beğen";
 "content.message.unlike" = "Beğenme";
-"content.message.forward" = "İlet";
+"content.message.forward" = "Paylaş";
 "content.message.go_to_conversation" = "Göster";
-"content.message.forward.to" = "Şuraya gönder...";
+"content.message.forward.to" = "Ara…";
 
 "content.reactions_list.likers" = "Beğenen";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Kötü bağlantı";
 "voice.network_error.title" = "Internet bağlantısı yok";
 "voice.network_error.body" = "Arama yapmak için çevrimiçi olmanız gerekir. Bağlantınızı kontrol edin ve yeniden deneyin.";
-"voice.alert.call_in_progress.title" = "Arama sürüyor";
-"voice.alert.call_in_progress.message" = "Cihazlarınızdan biri zaten konuşmada yer alıyor";
-"voice.alert.call_in_progress.confirm" = "Tamam";
 "voice.accept_button.title" = "Kabul et";
 "voice.decline_button.title" = "Reddet";
 "voice.hang_up_button.title" = "Aramayı sonlandır";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Engelle?";
-"profile.block_dialog.message" = "%@ sizi Wire'da bulamayacak ve sizinle iletişime geçemeyecek.";
+"profile.block_dialog.message" = "%@ sizinle iletişim kuramayacak ve sizi grup konuşmalarına ekleyemeyecek.";
 "profile.block_dialog.button_cancel" = "İptal";
 "profile.block_dialog.button_block" = "Engelle";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Kullanıcı adı ayarlanamadı";
 "self.settings.account_section.handle.change.failure_alert.message" = "Kullanıcı adınız ayarlanırken bir hata oluştu, lütfen daha sonra tekrar deneyiniz.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-posta";
+"self.settings.account_section.email.change.save" = "Kaydet";
+
+"self.settings.account_section.email.change.verify.title" = "E-postayı doğrula";
+"self.settings.account_section.email.change.verify.description" = "E-posta gelen kutunuzu kontrol edin ve talimatları izleyin.";
+"self.settings.account_section.email.change.verify.resend" = "%@ 'a tekrar gönder";
+
+"self.settings.account_section.email.change.resend.title" = "Maili tekrar gönder";
+"self.settings.account_section.email.change.resend.message" = "Doğrulama e-postası %@'a tekrar gönderildi. Gelen kutunuzu kontrol edin ve talimatları takip edin.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Bildirimler";
@@ -784,4 +793,4 @@
 "collections.section.links.title" = "Bağlantılar";
 "collections.section.all.button" = "%d'nun tümünü göster →";
 "collections.section.no_items" = "Koleksiyonda hiçbir şey yok";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "Resim kopyalandı";
