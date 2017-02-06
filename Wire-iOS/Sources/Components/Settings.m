@@ -466,6 +466,12 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 
 - (CallingProtocolStrategy)callingProtocolStrategy
 {
+    // Defaults to calling 2. This should be removed when we want to rollout
+    // calling 3 to all users.
+    if ([self.defaults objectForKey:UserDefaultCallingProtocolStrategy] == nil) {
+        return CallingProtocolStrategyVersion2;
+    }
+    
     return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 
