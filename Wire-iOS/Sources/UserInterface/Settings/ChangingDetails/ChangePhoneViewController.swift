@@ -21,8 +21,7 @@ import Cartography
 import ZMUtilities
 import zmessaging
 
-struct PhoneNumber {
-    
+fileprivate struct PhoneNumber {
     enum ValidationResult {
         case valid
         case tooLong
@@ -82,7 +81,7 @@ extension PhoneNumber: Equatable {
     }
 }
 
-struct ChangePhoneNumberState {
+fileprivate struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
     var newNumber: PhoneNumber?
     
@@ -107,10 +106,10 @@ struct ChangePhoneNumberState {
 }
 
 final class ChangePhoneViewController: SettingsBaseTableViewController {
-    let emailTextField = RegistrationTextField()
+    fileprivate let emailTextField = RegistrationTextField()
 
-    var state = ChangePhoneNumberState()
-    let userProfile = ZMUserSession.shared()?.userProfile
+    fileprivate var state = ChangePhoneNumberState()
+    fileprivate let userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observerToken: AnyObject?
 
     init() {
@@ -133,7 +132,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         _ = userProfile?.removeObserver(token: token)
     }
     
-    func setupViews() {
+    fileprivate func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
         title = "self.settings.account_section.phone_number.change.title".localized
         
@@ -147,7 +146,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         )
     }
     
-    func updateSaveButtonState(enabled: Bool? = nil) {
+    fileprivate func updateSaveButtonState(enabled: Bool? = nil) {
         if let enabled = enabled {
             navigationItem.rightBarButtonItem?.isEnabled = enabled
         } else {
