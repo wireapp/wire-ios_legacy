@@ -39,7 +39,7 @@ struct ChangeEmailState {
         }
     }
     
-    var saveButtonEnabled: Bool {
+    var isValid: Bool {
         guard let email = validatedEmail, !email.isEmpty else { return false }
         return email != currentEmail
     }
@@ -96,7 +96,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         if let enabled = enabled {
             navigationItem.rightBarButtonItem?.isEnabled = enabled
         } else {
-            navigationItem.rightBarButtonItem?.isEnabled = state.saveButtonEnabled
+            navigationItem.rightBarButtonItem?.isEnabled = state.isValid
         }
     }
     
