@@ -39,12 +39,12 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate var observer: UserCollectionObserverToken?
     fileprivate var observerToken: AnyObject?
     
+    fileprivate var verificationCode: String?
+    fileprivate var resendEnabled: Bool = false
+    fileprivate var timer: ZMTimer?
+
     weak var delegate: ConfirmPhoneDelegate?
-    var timer: ZMTimer?
-    
     let newNumber: String
-    var verificationCode: String?
-    var resendEnabled: Bool = false
     
     init(newNumber: String, delegate: ConfirmPhoneDelegate?) {
         self.newNumber = newNumber
@@ -77,7 +77,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         }
     }
     
-    internal func setupViews() {
+    fileprivate func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
         SettingsButtonCell.register(in: tableView)
         
@@ -97,14 +97,14 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         )
     }
     
-    func startTimer() {
+    fileprivate func startTimer() {
         resendEnabled = false
         timer?.cancel()
         timer = ZMTimer(target: self, operationQueue: .main)
         timer?.fire(afterTimeInterval: 30)
     }
     
-    func reloadResendCell() {
+    fileprivate func reloadResendCell() {
         let resend = IndexPath(item: 0, section: Section.buttons.rawValue)
         tableView.reloadRows(at: [resend], with: .none)
     }
@@ -117,7 +117,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         }
     }
     
-    func updateSaveButtonState(enabled: Bool? = nil) {
+    fileprivate func updateSaveButtonState(enabled: Bool? = nil) {
         if let enabled = enabled {
             navigationItem.rightBarButtonItem?.isEnabled = enabled
         } else {
