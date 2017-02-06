@@ -195,10 +195,10 @@ extension ConfirmPhoneViewController: ZMUserObserver {
     
     func userDidChange(_ note: ZMCDataModel.UserChangeInfo!) {
         if note.user.isSelfUser {
-            showLoadingView = false
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
             if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, currentPhoneNumber == newNumber {
+                showLoadingView = false
                 delegate?.didConfirmPhone(inController: self)
             }
         }
