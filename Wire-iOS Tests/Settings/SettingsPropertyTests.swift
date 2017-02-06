@@ -101,7 +101,7 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.chatHeadsDisabled, userDefaultsKey: UserDefaultChatHeadsDisabled, userDefaults: self.userDefaults)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: true))
+        try! self.saveAndCheck(property, value: NSNumber(value: true))
     }
     
     func testThatNamePropertySetsValue() {
