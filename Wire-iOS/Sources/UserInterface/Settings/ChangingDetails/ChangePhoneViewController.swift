@@ -95,7 +95,7 @@ fileprivate struct ChangePhoneNumberState {
         return newNumber ?? currentNumber
     }
     
-    var saveButtonEnabled: Bool {
+    var isValid: Bool {
         guard let phoneNumber = visibleNumber else { return false }
         switch phoneNumber.validate() {
         case .valid:
@@ -156,7 +156,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         if let enabled = enabled {
             navigationItem.rightBarButtonItem?.isEnabled = enabled
         } else {
-            navigationItem.rightBarButtonItem?.isEnabled = state.saveButtonEnabled
+            navigationItem.rightBarButtonItem?.isEnabled = state.isValid
         }
     }
     
