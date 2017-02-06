@@ -111,15 +111,26 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 
     var state = ChangePhoneNumberState()
     let userProfile = ZMUserSession.shared()?.userProfile
+    fileprivate var observerToken: AnyObject?
 
     init() {
         super.init(style: .grouped)
-        _ = userProfile?.add(observer: self)
         setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        observerToken = userProfile?.add(observer: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let token = observerToken else { return }
+        _ = userProfile?.removeObserver(token: token)
     }
     
     func setupViews() {
