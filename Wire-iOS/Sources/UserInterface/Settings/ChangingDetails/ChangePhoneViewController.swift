@@ -28,6 +28,25 @@ fileprivate struct PhoneNumber {
         case tooShort
         case containsInvalidCharacters
         case invalid
+        
+        init(error: Error) {
+            let code = (error as NSError).code
+            guard let errorCode = ZMManagedObjectValidationErrorCode(rawValue: UInt(code)) else {
+                self = .invalid
+                return
+            }
+            
+            switch errorCode {
+            case .objectValidationErrorCodeStringTooLong:
+                self = .tooLong
+            case .objectValidationErrorCodeStringTooShort:
+                self = .tooShort
+            case .objectValidationErrorCodePhoneNumberContainsInvalidCharacters:
+                self = .containsInvalidCharacters
+            default:
+                self = .invalid
+            }
+        }
     }
     
     let countryCode: UInt
@@ -54,21 +73,8 @@ fileprivate struct PhoneNumber {
         let pointer = AutoreleasingUnsafeMutablePointer<NSString?>(&validatedNumber)
         do {
             try ZMUser.validatePhoneNumber(pointer)
-        } catch let error as NSError {
-            guard let errorCode = ZMManagedObjectValidationErrorCode(rawValue: UInt(error.code)) else { return .invalid }
-            
-            switch errorCode {
-            case .objectValidationErrorCodeStringTooLong:
-                return .tooLong
-            case .objectValidationErrorCodeStringTooShort:
-                return .tooShort
-            case .objectValidationErrorCodePhoneNumberContainsInvalidCharacters:
-                return .containsInvalidCharacters
-            default:
-                return .invalid
-            }
-        } catch {
-            return .invalid
+        } catch let error {
+            return ValidationResult(error: error)
         }
         
         return .valid
