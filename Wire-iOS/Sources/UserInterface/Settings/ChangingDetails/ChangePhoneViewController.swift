@@ -111,6 +111,15 @@ fileprivate struct ChangePhoneNumberState {
     
 }
 
+fileprivate enum Section: Int {
+    static var count: Int {
+        return 2
+    }
+    
+    case phoneNumber = 0
+    case remove = 1
+}
+
 final class ChangePhoneViewController: SettingsBaseTableViewController {
     fileprivate let emailTextField = RegistrationTextField()
 
@@ -140,6 +149,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     
     fileprivate func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
+        SettingsButtonCell.register(in: tableView)
         title = "self.settings.account_section.phone_number.change.title".localized
         
         view.backgroundColor = .clear
@@ -169,7 +179,11 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+            return Section.count
+        } else {
+            return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -177,19 +191,40 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
-        cell.textField.keyboardType = .phonePad
-        cell.textField.leftAccessoryView = .countryCode
-        cell.textField.accessibilityIdentifier = "PhoneNumberField"
-        if let current = state.visibleNumber {
-            cell.textField.countryCode = current.countryCode
-            cell.textField.text = current.numberWithoutCode
+        switch Section(rawValue: indexPath.section)! {
+        case .phoneNumber:
+            let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+            cell.textField.keyboardType = .phonePad
+            cell.textField.leftAccessoryView = .countryCode
+            cell.textField.accessibilityIdentifier = "PhoneNumberField"
+            if let current = state.visibleNumber {
+                cell.textField.countryCode = current.countryCode
+                cell.textField.text = current.numberWithoutCode
+            }
+            cell.textField.becomeFirstResponder()
+            cell.textField.delegate = self
+            cell.textField.countryCodeButton.addTarget(self, action: #selector(selectCountry), for: .touchUpInside)
+            updateSaveButtonState()
+            return cell
+        case .remove:
+            let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
+            cell.titleText = "self.settings.account_section.phone_number.change.remove".localized
+            cell.titleColor = .white
+            cell.selectionStyle = .default
+            return cell
         }
-        cell.textField.becomeFirstResponder()
-        cell.textField.delegate = self
-        cell.textField.countryCodeButton.addTarget(self, action: #selector(selectCountry), for: .touchUpInside)
-        updateSaveButtonState()
-        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch Section(rawValue: indexPath.section)! {
+        case .phoneNumber:
+            break
+        case .remove:
+            userProfile?.requestPhoneNumberRemoval()
+            updateSaveButtonState(enabled: false)
+            showLoadingView = true
+        }
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     func selectCountry() {
@@ -255,6 +290,16 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
         showAlert(forError: error)
     }
     
+    func phoneNumberRemovalDidFail(_ error: Error!) {
+        showLoadingView = false
+        updateSaveButtonState()
+        showAlert(forError: error)
+    }
+    
+    func didRemovePhoneNumber() {
+        _ = navigationController?.popToPrevious(of: self)
+    }
+
 }
 
 extension ChangePhoneViewController: ConfirmPhoneDelegate {

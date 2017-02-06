@@ -502,6 +502,7 @@
 
 "self.settings.account_section.phone_number.change.title" = "Phone number";
 "self.settings.account_section.phone_number.change.save" = "Save";
+"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
 
 "self.settings.account_section.phone_number.change.verify.save" = "Save";
 "self.settings.account_section.phone_number.change.verify.title" = "Verify phone";
