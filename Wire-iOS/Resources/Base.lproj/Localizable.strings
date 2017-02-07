@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
 "voice.network_error.body" = "You must be online to call. Check your connection and try again.";
-"voice.alert.call_in_progress.title" = "Call in progress";
-"voice.alert.call_in_progress.message" = "Another of your devices is already participating in the call";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Accept";
 "voice.decline_button.title" = "Decline";
 "voice.hang_up_button.title" = "Hang Up";
@@ -495,7 +492,7 @@
 "self.settings.account_section.email.change.save" = "Save";
 
 "self.settings.account_section.email.change.verify.title" = "Verify email";
-"self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions";
+"self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions.";
 "self.settings.account_section.email.change.verify.resend" = "Resend to %@";
 
 "self.settings.account_section.email.change.resend.title" = "Email resent";

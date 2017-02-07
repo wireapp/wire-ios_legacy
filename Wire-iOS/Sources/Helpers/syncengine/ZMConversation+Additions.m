@@ -287,13 +287,6 @@
 
 - (void)joinVoiceChannelWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
-    if ([self warnAboutCallInProgress]) {
-        if (completion != nil) {
-            completion(NO);
-        }
-        return;
-    }
-
     if ([self warnAboutNoInternetConnection]) {
         if (completion != nil) {
             completion(NO);
@@ -321,6 +314,8 @@
 - (void)joinVoiceChannelWithoutAskingForPermissionWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
     [self leaveOtherActiveCallsWithCompletionHandler:^{
+        DDLogError(@"joining call");
+        
         VoiceChannelV2State voiceChannelState = self.voiceChannel.state;
         VoiceChannelV2ConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
 
@@ -416,19 +411,6 @@
                                                                                            message:NSLocalizedString(@"voice.network_error.body", "<voice failed because of network>")
                                                                                  cancelButtonTitle:NSLocalizedString(@"general.ok", "ok string")];
         [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noInternetConnectionAlert animated:YES completion:nil];
-        return YES;
-    }
-    return NO;
-}
-
-- (BOOL)warnAboutCallInProgress
-{
-    if ([AppDelegate sharedAppDelegate].notificationWindowController.voiceChannelController.voiceChannelIsJoined) {
-
-        UIAlertController *callInProgressAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.call_in_progress.title", @"Calling in progress")
-                                                                                     message:NSLocalizedString(@"voice.alert.call_in_progress.message", @"Another device already in call")
-                                                                           cancelButtonTitle:NSLocalizedString(@"general.ok", @"ok")];
-        [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:callInProgressAlert animated:YES completion:nil];
         return YES;
     }
     return NO;
