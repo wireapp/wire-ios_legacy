@@ -65,14 +65,26 @@ class ZMMockCrashlogManager: CrashlogManager {
 class SettingsPropertyTests: XCTestCase {
     let userDefaults: UserDefaults = UserDefaults.standard
     
-    func saveAndCheck<T: Any>( _ property: SettingsProperty, value: T) throws -> Bool where T: Equatable {
+    func saveAndCheck<T>(_ property: SettingsProperty, value: T, file: String = #file, line: UInt = #line) throws where T: Equatable {
         var property = property
         try property << value
         if let readValue : T = property.rawValue() as? T {
-            return value == readValue
+            if value != readValue {
+                recordFailure(
+                    withDescription: "Wrong property value, read \(readValue) but expected \(value)",
+                    inFile: file,
+                    atLine: line,
+                    expected: true
+                )
+            }
         }
         else {
-            return false
+            recordFailure(
+                withDescription: "Unable to read property value",
+                inFile: file,
+                atLine: line,
+                expected: true
+            )
         }
     }
     
@@ -82,14 +94,14 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.darkMode, userDefaultsKey: UserDefaultColorScheme, userDefaults: self.userDefaults)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: "light"))
+        try! self.saveAndCheck(property, value: "light")
     }
     
     func testThatBoolUserDefaultsSettingSave() {
         // given
         let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.chatHeadsDisabled, userDefaultsKey: UserDefaultChatHeadsDisabled, userDefaults: self.userDefaults)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: true))
+        try! self.saveAndCheck(property, value: NSNumber(value: true))
     }
     
     func testThatNamePropertySetsValue() {
@@ -103,7 +115,7 @@ class SettingsPropertyTests: XCTestCase {
         
         let property = factory.property(SettingsPropertyName.profileName)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: "Test"))
+        try! self.saveAndCheck(property, value: "Test")
     }
     
     func testThatSoundLevelPropertySetsValue() {
@@ -117,7 +129,7 @@ class SettingsPropertyTests: XCTestCase {
         
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: 1))
+        try! self.saveAndCheck(property, value: 1)
     }
     
     func testThatAnalyticsPropertySetsValue() {
@@ -132,7 +144,7 @@ class SettingsPropertyTests: XCTestCase {
         
         let property = factory.property(SettingsPropertyName.analyticsOptOut)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: true))
+        try! self.saveAndCheck(property, value: true)
     }
     
     func testThatIntegerBlockSettingSave() {
@@ -146,7 +158,22 @@ class SettingsPropertyTests: XCTestCase {
 
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
-        try! XCTAssertTrue(self.saveAndCheck(property, value: 1))
+        try! self.saveAndCheck(property, value: 1)
+    }
+
+    func testThatItCanSetAIntegerUserDefaultsSettingsPropertyLargerThanOne() {
+        // given
+        let factory = SettingsPropertyFactory(
+            userDefaults: userDefaults,
+            analytics: ZMMockAnalytics(),
+            mediaManager: ZMMockAVSMediaManager(),
+            userSession : MockZMUserSession(),
+            selfUser: MockZMEditableUser()
+        )
+
+        let property = factory.property(.tweetOpeningOption)
+        // when & then
+        try? saveAndCheck(property, value: 2)
     }
     
 }

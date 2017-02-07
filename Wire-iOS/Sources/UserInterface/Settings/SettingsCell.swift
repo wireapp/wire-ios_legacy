@@ -232,7 +232,7 @@ class SettingsToggleCell: SettingsTableCell {
     }
     
     func onSwitchChanged(_ sender: UIResponder) {
-        self.descriptor?.select(SettingsPropertyValue.bool(value: self.switchView.isOn))
+        self.descriptor?.select(SettingsPropertyValue(self.switchView.isOn))
     }
 }
 

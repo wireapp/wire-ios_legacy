@@ -255,9 +255,9 @@
 
 "content.message.like" = "Synes om";
 "content.message.unlike" = "Synes ikke godt om";
-"content.message.forward" = "Videresend";
+"content.message.forward" = "Del";
 "content.message.go_to_conversation" = "Reveal";
-"content.message.forward.to" = "Send til...";
+"content.message.forward.to" = "Search…";
 
 "content.reactions_list.likers" = "Synes godt af";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Dårlig forbindelse";
 "voice.network_error.title" = "Ingen internetforbindelse";
 "voice.network_error.body" = "Du skal være online for at foretage opkald. Tjek din forbindelse og prøv igen.";
-"voice.alert.call_in_progress.title" = "Opkald i gang";
-"voice.alert.call_in_progress.message" = "En anden af dine enheder deltager allerede i opkaldet";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Besvar";
 "voice.decline_button.title" = "Afvis";
 "voice.hang_up_button.title" = "Læg på";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Blokér?";
-"profile.block_dialog.message" = "%@ vil ikke være i stand til at finde, eller kontakte dig på Wire.";
+"profile.block_dialog.message" = "%@ won’t be able to contact you or add you to group conversations.";
 "profile.block_dialog.button_cancel" = "Annuller";
 "profile.block_dialog.button_block" = "Blokér";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ikke angive brugernavnet";
 "self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Gem";
+
+"self.settings.account_section.email.change.verify.title" = "Bekræft e-mail adresse";
+"self.settings.account_section.email.change.verify.description" = "Tjek din email indbakke og følg anvisningerne.";
+"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifikationer";

@@ -21,19 +21,6 @@ import Classy
 import Cartography
 import ZMCDataModel
 
-final class ShortLabelTableViewCell: UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let clearView = UIView()
-        clearView.backgroundColor = UIColor(white: 0, alpha: 0.2)
-        selectedBackgroundView = clearView
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 final class ConfirmEmailDescriptionView: UIView {
     let descriptionLabel = UILabel()
     
@@ -94,7 +81,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     }
 
     internal func setupViews() {
-        ShortLabelTableViewCell.register(in: tableView)
+        SettingsButtonCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.verify.title".localized
         view.backgroundColor = .clear
@@ -119,10 +106,11 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ShortLabelTableViewCell.zm_reuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
         let format = "self.settings.account_section.email.change.verify.resend".localized
         let text = String(format: format, newEmail)
-        cell.textLabel?.text = text
+        cell.titleText = text
+        cell.titleColor = .white
         return cell
     }
     

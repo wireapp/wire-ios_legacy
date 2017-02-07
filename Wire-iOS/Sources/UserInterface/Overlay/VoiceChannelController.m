@@ -57,16 +57,6 @@
     return YES;
 }
 
-- (BOOL)voiceChannelIsJoined
-{
-    if (self.activeCallConversation == nil) {
-        return NO;
-    }
-    
-    VoiceChannelV2State voiceChannelState = self.activeCallConversation.voiceChannel.state;
-    return voiceChannelState == VoiceChannelV2StateSelfIsJoiningActiveChannel || voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel;
-}
-
 - (BOOL)voiceChannelIsActive
 {
     return self.activeCallConversation != nil;

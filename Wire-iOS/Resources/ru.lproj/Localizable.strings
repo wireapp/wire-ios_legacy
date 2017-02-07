@@ -255,9 +255,9 @@
 
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
-"content.message.forward" = "Переслать";
+"content.message.forward" = "Поделиться";
 "content.message.go_to_conversation" = "Показать в разговоре";
-"content.message.forward.to" = "Отправить...";
+"content.message.forward.to" = "Поиск…";
 
 "content.reactions_list.likers" = "Понравилось";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
-"voice.alert.call_in_progress.title" = "Идет вызов";
-"voice.alert.call_in_progress.message" = "Другое ваше устройство уже участвует в этом звонке";
-"voice.alert.call_in_progress.confirm" = "OK";
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Заблокировать?";
-"profile.block_dialog.message" = "%@ больше не сможет найти вас или подключиться к вам в Wire.";
+"profile.block_dialog.message" = "%@ больше не сможет связаться с вами или добавить вас в групповые разговоры.";
 "profile.block_dialog.button_cancel" = "Отменить";
 "profile.block_dialog.button_block" = "Заблокировать";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Не удается задать имя пользователя";
 "self.settings.account_section.handle.change.failure_alert.message" = "Произошла ошибка при регистрации вашего имени пользователя. Пожалуйста, попробуйте еще раз.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Сохранить";
+
+"self.settings.account_section.email.change.verify.title" = "Подтвердить email";
+"self.settings.account_section.email.change.verify.description" = "Проверьте свой почтовый ящик и следуйте инструкциям.";
+"self.settings.account_section.email.change.verify.resend" = "Отправить заново на %@";
+
+"self.settings.account_section.email.change.resend.title" = "Отправить email заново";
+"self.settings.account_section.email.change.resend.message" = "Письмо с подтверждением было отправлено на %@ еще раз. Пожалуйста, проверьте ваш почтовый ящик и следуйте инструкциям в письме.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Уведомления";

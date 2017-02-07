@@ -255,9 +255,9 @@
 
 "content.message.like" = "Všeč mi je";
 "content.message.unlike" = "Ni mi všeč";
-"content.message.forward" = "Posreduj";
+"content.message.forward" = "Deli";
 "content.message.go_to_conversation" = "Razkrij";
-"content.message.forward.to" = "Pošlji...";
+"content.message.forward.to" = "Išči…";
 
 "content.reactions_list.likers" = "Všečkali so";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Slaba povezava";
 "voice.network_error.title" = "Ni spletne povezave";
 "voice.network_error.body" = "Morate biti na spletu za klicanje. Preverite vašo povezavo in poizkusite ponovno.";
-"voice.alert.call_in_progress.title" = "Klic v teku";
-"voice.alert.call_in_progress.message" = "Ena izmed vaših naprav že sodeluje v klicu";
-"voice.alert.call_in_progress.confirm" = "V redu";
 "voice.accept_button.title" = "Sprejmi";
 "voice.decline_button.title" = "Zavrni";
 "voice.hang_up_button.title" = "Odloži";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Blokiraj?";
-"profile.block_dialog.message" = "%@ vas ne bo mogel najti in kontaktirati na Wire.";
+"profile.block_dialog.message" = "%@ vas ne bo mogel kontaktirati ali dodati v skupinske pogovore.";
 "profile.block_dialog.button_cancel" = "Prekliči";
 "profile.block_dialog.button_block" = "Blokiraj";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ni mogoče nastaviti uporabniškega imena";
 "self.settings.account_section.handle.change.failure_alert.message" = "Napaka pri nastavitvi vašega uporabniškega imena. Prosimo poizkusite znova.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-pošta";
+"self.settings.account_section.email.change.save" = "Shrani";
+
+"self.settings.account_section.email.change.verify.title" = "Preverite e-pošto";
+"self.settings.account_section.email.change.verify.description" = "Preverite vašo e-pošto in sledite navodilom.";
+"self.settings.account_section.email.change.verify.resend" = "Ponovno pošlji na %@";
+
+"self.settings.account_section.email.change.resend.title" = "E-pošta ponovno poslana";
+"self.settings.account_section.email.change.resend.message" = "Potrditvena e-pošta je bila ponovno poslana na %@. Preverite vaš e-poštni predal in sledite navodilom.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Obvestila";

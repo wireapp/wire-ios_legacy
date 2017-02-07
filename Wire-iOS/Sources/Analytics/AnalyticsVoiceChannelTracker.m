@@ -27,6 +27,7 @@
 @property (nonatomic) BOOL initiatedCall;
 @property (nonatomic) BOOL isVideoCall;
 @property (nonatomic) NSDate *callEstablishedDate;
+@property (nonatomic) NSDate *callAnsweredDate;
 
 @property (nonatomic) Analytics *analytics;
 @property (nonatomic) id voiceChannelStateObserverToken;
@@ -65,11 +66,13 @@
         [self.analytics tagReceivedCallInConversation:conversation video:self.isVideoCall callingProtocol:callingProtocol];
     }
     else if (voiceChannelState == VoiceChannelV2StateSelfIsJoiningActiveChannel) {
+        self.callAnsweredDate = [NSDate date];
         [self.analytics tagJoinedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall callingProtocol:callingProtocol];
     }
     else if (voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel && nil == self.callEstablishedDate) {
         self.callEstablishedDate = [NSDate date];
-        [self.analytics tagEstablishedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall callingProtocol:callingProtocol];
+        NSTimeInterval setupDuration = [self.callEstablishedDate timeIntervalSinceDate:self.callAnsweredDate];
+        [self.analytics tagEstablishedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall setupDuration:setupDuration callingProtocol:callingProtocol];
     }
 }
 
@@ -86,6 +89,7 @@
                                       duration:-[self.callEstablishedDate timeIntervalSinceNow]
                                         reason:reason
                                callingProtocol:callingProtocol];
+    self.callAnsweredDate = nil;
     self.callEstablishedDate = nil;
 }
 

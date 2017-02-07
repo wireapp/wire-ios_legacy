@@ -90,7 +90,7 @@ class ProfileClientViewController: UIViewController {
         self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueueChanges({ () -> Void in
-                self.userClient.markForFetchingPreKeys()
+                self.userClient.fetchFingerprintOrPrekeys()
             })
         }
         self.updateFingerprintLabel()
@@ -370,10 +370,8 @@ class ProfileClientViewController: UIViewController {
 extension ProfileClientViewController: UserClientObserver {
 
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
-        if changeInfo.fingerprintChanged {
-            self.updateFingerprintLabel()
-        }
-
+        self.updateFingerprintLabel()
+        
         // This means the fingerprint is acquired
         if self.resetSessionPending && self.userClient.fingerprint != .none {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
