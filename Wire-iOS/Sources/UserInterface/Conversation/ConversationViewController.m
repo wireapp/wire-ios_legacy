@@ -163,7 +163,11 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardFrameWillChange:)
+                                                 name:UIKeyboardWillChangeFrameNotification
+                                               object:nil];
+    
     [UIView performWithoutAnimation:^{
         self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
     }];
@@ -261,7 +265,8 @@
         [self.outgoingConnectionViewController willMoveToParentViewController:self];
         [self.view addSubview:self.outgoingConnectionViewController.view];
         [self addChildViewController:self.outgoingConnectionViewController];
-        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero
+                                                                             excludingEdge:ALEdgeTop];
     } else {
         [self.outgoingConnectionViewController willMoveToParentViewController:nil];
         [self.outgoingConnectionViewController.view removeFromSuperview];

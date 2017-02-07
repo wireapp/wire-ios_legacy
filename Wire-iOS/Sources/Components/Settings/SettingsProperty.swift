@@ -79,6 +79,8 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case enableBatchCollections = "EnableBatchCollections"
     case linkPreviewsInShareExtension = "LinkPreviewsInShareExtension"
 
+    case lockApp = "lockApp"
+    
     var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }

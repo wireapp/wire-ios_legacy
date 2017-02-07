@@ -41,5 +41,6 @@
 + (instancetype)sharedCache;
 
 - (instancetype)initWithUserSession:(ZMUserSession *)session;
+- (void)refetchConversationLists;
 
 @end
