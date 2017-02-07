@@ -101,13 +101,15 @@
 
 @property (nonatomic) CGFloat lastZoomScale;
 
-@property (nonatomic, assign) BOOL forcePortraitMode;
+@property (nonatomic) BOOL forcePortraitMode;
+@property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 
 @property (nonatomic) id <ZMMessageObserverOpaqueToken> messageObserverToken;
 
 @end
 
-
+@interface FullscreenImageViewController (PanGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
+@end
 
 @implementation FullscreenImageViewController
 
@@ -149,7 +151,10 @@
 
 - (void)dismissWithCompletion:(dispatch_block_t)completion
 {
-    if (nil != self.navigationController) {
+    if (nil != self.dismissAction) {
+        self.dismissAction(completion);
+    }
+    else if (nil != self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
         if (completion) {
             completion();
@@ -207,7 +212,9 @@
 {
     self.snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.snapshotBackgroundView];
-    [self.snapshotBackgroundView addConstraintsFittingToView:self.view];
+    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
     self.snapshotBackgroundView.alpha = 0;
 }
 
@@ -327,15 +334,15 @@
     [self.view addGestureRecognizer:self.longPressGestureRecognizer];
 
     if (self.swipeToDismiss) {
-        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] init];
-        panRecognizer.maximumNumberOfTouches = 1;
-        panRecognizer.delegate = self;
-        [panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
-        [self.scrollView addGestureRecognizer:panRecognizer];
+        self.panRecognizer = [[UIPanGestureRecognizer alloc] init];
+        self.panRecognizer.maximumNumberOfTouches = 1;
+        self.panRecognizer.delegate = self;
+        [self.panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
+        [self.scrollView addGestureRecognizer:self.panRecognizer];
         
-        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-        [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
-        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
+        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:self.panRecognizer];
+        [self.tapGestureRecognzier requireGestureRecognizerToFail:self.panRecognizer];
+        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:self.panRecognizer];
     }
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
 }
@@ -614,6 +621,22 @@
         self.loadingSpinner = nil;
         
         [self loadImageAndSetupImageView];
+    }
+}
+
+@end
+
+@implementation FullscreenImageViewController (PanGestureRecognizerDelegate)
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer == self.panRecognizer) {
+        CGPoint offset = [self.panRecognizer translationInView:self.view];
+
+        return fabs(offset.y) > fabs(offset.x);
+    }
+    else {
+        return YES;
     }
 }
 

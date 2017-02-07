@@ -270,7 +270,7 @@ final public class CollectionsViewController: UIViewController {
 
                 imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
                 imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-               
+                imagesController.swipeToDismiss = false
                 imagesController.messageActionDelegate = self
                 self.navigationController?.pushViewController(imagesController, animated: true)
             }

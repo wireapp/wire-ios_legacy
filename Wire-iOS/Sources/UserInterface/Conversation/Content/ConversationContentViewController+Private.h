@@ -28,6 +28,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationCell;
+@class MessagePresenter;
 
 @interface ConversationContentViewController ()
 
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage>messageWithExpandedTools;
 
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
+@property (nonatomic) MessagePresenter* messagePresenter;
 @property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
 @property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
 

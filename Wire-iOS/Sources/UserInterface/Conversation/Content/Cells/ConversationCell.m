@@ -202,7 +202,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     
     [self createLikeButton];
     
-    self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeMessage:)];
+    self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTapMessage:)];
     self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     self.doubleTapGestureRecognizer.delaysTouchesBegan = YES;
     [self.contentView addGestureRecognizer:self.doubleTapGestureRecognizer];

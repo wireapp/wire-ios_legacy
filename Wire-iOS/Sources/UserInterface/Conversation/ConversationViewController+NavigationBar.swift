@@ -169,7 +169,7 @@ public extension ConversationViewController {
         
         self.collectionController = collections
         
-        let navigationController = collections.wrap(inNavigationControllerClass: RotationAwareNavigationController.self)
+        let navigationController = collections.wrapInNavigationController(RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 
         ZClientViewController.shared().present(navigationController, animated: true, completion: {
