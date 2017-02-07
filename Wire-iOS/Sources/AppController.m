@@ -93,12 +93,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         self.logObserver = [[AVSLogObserver alloc] init];
         self.classyCache = [[ClassyCache alloc] init];
         self.groupIdentifier = [NSString stringWithFormat:@"group.%@", NSBundle.mainBundle.bundleIdentifier];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contentSizeCategoryDidChange:)
+                                                     name:UIContentSizeCategoryDidChangeNotification
+                                                   object:nil];
     }
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.zetaUserSession removeAuthenticationObserverForToken:self.authToken];
 }
 
@@ -306,6 +312,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [CASStyler bootstrapClassyWithTargetWindows:windows];
     [[CASStyler defaultStyler] applyColorScheme:colorScheme];
     
+    [self applyFontScheme];
     
 #if TARGET_IPHONE_SIMULATOR
     NSString *absoluteFilePath = CASAbsoluteFilePath(@"../Resources/Classy/stylesheet.cas");
@@ -332,6 +339,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     else {
         self.notificationWindowController.dimContents = NO;
     }
+}
+
+- (void)applyFontScheme
+{
+    FontScheme *fontScheme = [[FontScheme alloc] initWithContentSizeCategory:[[UIApplication sharedApplication] preferredContentSizeCategory]];
+    [[CASStyler defaultStyler] applyWithFontScheme:fontScheme];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification
+{
+    [UIFont wr_flushFontCache];
+    [self applyFontScheme];
 }
 
 #pragma mark - SE Loading

@@ -121,7 +121,6 @@
 
 - (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview
 {
-    
     if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
         NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
         DDLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
@@ -159,14 +158,15 @@
     }
 }
 
-- (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate
+- (nullable UIViewController *)viewControllerForImageMessage:(id<ZMConversationMessage>)message
+                                    actionResponder:(nullable id<MessageActionResponder>)delegate
 {
     if (! [Message isImageMessage:message]) {
-        return;
+        return nil;
     }
     
     if (message.imageMessageData == nil) {
-        return;
+        return nil;
     }
     
     FullscreenImageViewController *fullscreenImageViewController = [[FullscreenImageViewController alloc] initWithMessage:message];
@@ -178,7 +178,14 @@
     }
     fullscreenImageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     fullscreenImageViewController.delegate = delegate;
-    [self.modalTargetController presentViewController:fullscreenImageViewController animated:YES completion:nil];
+    
+    return fullscreenImageViewController;
+}
+
+- (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate
+{
+    UIViewController *imageViewController = [self viewControllerForImageMessage:message actionResponder:delegate];
+    [self.modalTargetController presentViewController:imageViewController animated:YES completion:nil];
     [Analytics shared].sessionSummary.imageContentsClicks++;
 }
 
