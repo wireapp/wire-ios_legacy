@@ -21,7 +21,7 @@ import LocalAuthentication
 import CocoaLumberjackSwift
 
 extension AppController {
-    var appLockActive: Bool {
+    static var settingsPropertyFactory: SettingsPropertyFactory {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
                                                               analytics: Analytics.shared(),
                                                               mediaManager: AVSProvider.shared.mediaManager,
@@ -29,45 +29,41 @@ extension AppController {
                                                               selfUser: ZMUser.selfUser(),
                                                               crashlogManager: BITHockeyManager.shared())
         
-        let lockApp = settingsPropertyFactory.property(.lockApp)
+        return settingsPropertyFactory
+    }
+    
+    var appLockActive: Bool {
+        let lockApp = type(of: self).settingsPropertyFactory.property(.lockApp)
         
-        return lockApp.value() == SettingsPropertyValue.bool(value: true)
+        return lockApp.value() == SettingsPropertyValue(true)
     }
     
     /// @param callback confirmation; if auth is not needed called with 'true'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool)->()) {
-        if #available(iOS 9.0, *) {
-            
-            if (self.appLockActive) {
-            
-                let context: LAContext = LAContext()
-                var error: NSError?
-                let description = "self.settings.privacy_security.lock_app.description".localized
-                
-                if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-                    context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
-                        DispatchQueue.main.async {
-                            callback(success)
-                            
-                            if !success {
-                                DDLogError("Local authentication error: \(error?.localizedDescription)")
-                            }
-                        }
-                    })
-                }
-               
-                if error != nil {
-                    DDLogError("Local authentication error: \(error?.localizedDescription)")
-                    callback(false)
-                }
-            }
-            else {
-                callback(true)
-            }
-        }
-        else {
-            // the auth with pin is not supported
+        guard #available(iOS 9.0, *), self.appLockActive else {
             callback(true)
+            return
+        }
+        
+        let context: LAContext = LAContext()
+        var error: NSError?
+        let description = "self.settings.privacy_security.lock_app.description".localized
+        
+        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
+                DispatchQueue.main.async {
+                    callback(success)
+                    
+                    if !success {
+                        DDLogError("Local authentication error: \(error?.localizedDescription)")
+                    }
+                }
+            })
+        }
+       
+        if error != nil {
+            DDLogError("Local authentication error: \(error?.localizedDescription)")
+            callback(false)
         }
     }
 }

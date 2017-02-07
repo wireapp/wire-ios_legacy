@@ -265,15 +265,15 @@ class SettingsPropertyFactory {
                 getAction: { _ in
                     guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
                             data.count != 0 else {
-                        return .bool(value: false)
+                        return SettingsPropertyValue(false)
                     }
                     
-                    return .bool(value: String(data: data, encoding: .utf8) == "YES")
+                    return SettingsPropertyValue(String(data: data, encoding: .utf8) == "YES")
             },
                 setAction: { _, value in
                     switch value {
-                    case .bool(value: let lockApp):
-                        let data = (lockApp ? "YES" : "NO").data(using: .utf8)!
+                    case .number(value: let lockApp):
+                        let data = (lockApp.boolValue ? "YES" : "NO").data(using: .utf8)!
                         ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockApp.rawValue)
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
