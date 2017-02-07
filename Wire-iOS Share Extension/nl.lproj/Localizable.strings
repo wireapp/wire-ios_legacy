@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";
 "meta.degraded.degradation_reason_message.plural" = "%@ zijn nieuwe apparaten gaan gebruiken.";
 "meta.degraded.dialog_message" = "Wil je het bericht nog steeds versturen?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Niet verzenden";
 "meta.degraded.send_anyway_button" = "Toch verzenden";

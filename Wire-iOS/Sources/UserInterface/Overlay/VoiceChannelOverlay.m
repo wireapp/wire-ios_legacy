@@ -573,21 +573,23 @@ static NSString *NotNilString(NSString *string) {
         [mutableVisibleViews removeObject:self.speakerButton];
     }
     
-    if (! self.remoteIsSendingVideo && state == VoiceChannelOverlayStateConnected) {
-        [mutableVisibleViews addObjectsFromArray:@[self.centerStatusLabel, self.videoNotAvailableBackground]];
-    }
-    else if (self.incomingVideoActive) {
-        if (self.controlsHidden) {
-            mutableVisibleViews = [NSMutableArray arrayWithArray:@[self.cameraPreviewView]];
+    if (state == VoiceChannelOverlayStateConnected) {
+        if (! self.remoteIsSendingVideo) {
+            [mutableVisibleViews addObjectsFromArray:@[self.centerStatusLabel, self.videoNotAvailableBackground]];
         }
-        else {
-            [mutableVisibleViews removeObjectsInArray:@[self.callingUserImage, self.callingTopUserImage, self.topStatusLabel]];
-            [mutableVisibleViews addObject:self.shadow];
+        else if (self.incomingVideoActive) {
+            if (self.controlsHidden) {
+                mutableVisibleViews = [NSMutableArray arrayWithArray:@[self.cameraPreviewView]];
+            }
+            else {
+                [mutableVisibleViews removeObjectsInArray:@[self.callingUserImage, self.callingTopUserImage, self.topStatusLabel]];
+                [mutableVisibleViews addObject:self.shadow];
+            }
         }
-    }
-    
-    if (! self.outgoingVideoActive && self.state == VoiceChannelOverlayStateConnected) {
-        [mutableVisibleViews removeObject:self.cameraPreviewView];
+        
+        if (! self.outgoingVideoActive) {
+            [mutableVisibleViews removeObject:self.cameraPreviewView];
+        }
     }
     
     return [NSSet setWithArray:mutableVisibleViews];

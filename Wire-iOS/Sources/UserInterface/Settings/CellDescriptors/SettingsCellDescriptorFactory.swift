@@ -187,7 +187,7 @@ import Foundation
             
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
-                value: .number(value: Int(option.rawValue)),
+                value: SettingsPropertyValue(option.rawValue),
                 title: option.displayString
             )
         }
@@ -274,7 +274,7 @@ import Foundation
     
     func colorsSubgroup() -> SettingsSectionDescriptorType {
         let cellDescriptors = ZMAccentColor.all().map { (color) -> SettingsCellDescriptorType in
-            let value = SettingsPropertyValue.number(value: Int(color.rawValue))
+            let value = SettingsPropertyValue(color.rawValue)
             return SettingsPropertySelectValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.accentColor), value: value, title: "", identifier: .none, selectAction: { _ in
                 
                 }, backgroundColor: color.color) as SettingsCellDescriptorType
