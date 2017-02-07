@@ -38,14 +38,6 @@ class ShareViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.postContent = PostContent(attachments: self.allAttachments)
-        self.setupNavigationBar()
-        self.appendTextToEditor()
-        self.placeholder = "share_extension.input.placeholder".localized
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupObserver()
@@ -54,17 +46,6 @@ class ShareViewController: SLComposeServiceViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupObserver()
-    }
-
-    private func setupObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(extensionHostDidEnterBackground), name: .NSExtensionHostDidEnterBackground, object: nil)
-    }
-
-    private func setupNavigationBar() {
-        guard let item = navigationController?.navigationBar.items?.first else { return }
-        item.rightBarButtonItem?.action = #selector(appendPostTapped)
-        item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
 
     deinit {
@@ -76,6 +57,25 @@ class ShareViewController: SLComposeServiceViewController {
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.postContent = PostContent(attachments: self.allAttachments)
+        self.setupNavigationBar()
+        self.appendTextToEditor()
+        self.placeholder = "share_extension.input.placeholder".localized
+    }
+
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(extensionHostDidEnterBackground), name: .NSExtensionHostDidEnterBackground, object: nil)
+    }
+
+    private func setupNavigationBar() {
+        guard let item = navigationController?.navigationBar.items?.first else { return }
+        item.rightBarButtonItem?.action = #selector(appendPostTapped)
+        item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
+        item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
 
     @objc private func extensionHostDidEnterBackground() {
