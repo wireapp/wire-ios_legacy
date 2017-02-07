@@ -29,7 +29,7 @@ private var didSetupHockey = false
 class CrashReporter {
 
     static func setupHockeyIfNeeded() {
-        guard !didSetupHockey, hockeyEnabled, let hockeyIdentifier = hockeyAppId() else { return }
+        guard !didSetupHockey, hockeyEnabled, let hockeyIdentifier = wr_hockeyAppId() else { return }
         didSetupHockey = true
 
         // See https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
@@ -43,7 +43,7 @@ class CrashReporter {
     }
 
     private static var hockeyEnabled: Bool {
-        let configUseHockey = useHockey() // The preprocessor macro USE_HOCKEY (from the .xcconfig files)
+        let configUseHockey = wr_useHockey() // The preprocessor macro USE_HOCKEY (from the .xcconfig files)
         let automationUseHockey = AutomationHelper.sharedHelper.useHockey // Command line argument used by automation
         let settingsDisableHockey = ExtensionSettings.shared.disableHockey // Developer option menu toggle
 

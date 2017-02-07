@@ -25,11 +25,11 @@
 #define STRINGIZE(x) STRINGIZE_INTERNAL(x)
 
 
-NSString * hockeyAppId() {
+NSString * wr_hockeyAppId() {
     return @STRINGIZE(HOCKEY_APP_ID_KEY);
 }
 
-BOOL useHockey() {
+BOOL wr_useHockey() {
 #if USE_HOCKEY
     return YES;
 #else

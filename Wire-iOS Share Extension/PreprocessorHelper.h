@@ -18,5 +18,5 @@
 
 #import <Foundation/Foundation.h>
 
-NSString * hockeyAppId(void);
-BOOL useHockey(void);
+NSString * wr_hockeyAppId(void);
+BOOL wr_useHockey(void);
