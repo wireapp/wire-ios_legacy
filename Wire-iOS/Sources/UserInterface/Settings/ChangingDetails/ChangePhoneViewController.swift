@@ -220,9 +220,21 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         case .phoneNumber:
             break
         case .remove:
-            userProfile?.requestPhoneNumberRemoval()
-            updateSaveButtonState(enabled: false)
-            showLoadingView = true
+            let alert = UIAlertController(
+                title: "self.settings.account_section.phone_number.change.remove.message".localized,
+                message: nil,
+                preferredStyle: .actionSheet
+            )
+            
+            alert.addAction(.init(title: "general.cancel".localized, style: .cancel, handler: nil))
+            alert.addAction(.init(title: "self.settings.account_section.phone_number.change.remove.action".localized, style: .destructive) { [weak self] _ in
+                guard let `self` = self else { return }
+                self.userProfile?.requestPhoneNumberRemoval()
+                self.updateSaveButtonState(enabled: false)
+                self.showLoadingView = true
+            })
+
+            present(alert, animated: true, completion: nil)
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
