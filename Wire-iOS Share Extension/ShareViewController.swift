@@ -25,8 +25,10 @@ import ZMCDataModel
 import WireExtensionComponents
 import Classy
 
+
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
+
 
 class ShareViewController: SLComposeServiceViewController {
     
@@ -73,6 +75,7 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
     }
