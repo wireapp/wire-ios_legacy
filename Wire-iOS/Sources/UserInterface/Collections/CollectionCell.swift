@@ -35,9 +35,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     
     var message: ZMConversationMessage? = .none {
         didSet {
-            if let token = self.messageObserverToken {
-                self.messageObserverToken = nil
-            }
+            self.messageObserverToken = nil
             if let newMessage = message {
                 self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage)
             }
