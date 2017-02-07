@@ -24,14 +24,11 @@ import MobileCoreServices
 import ZMCDataModel
 import WireExtensionComponents
 import Classy
-import HockeySDK
 
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
 
-/// Flag to determine if the HockeySDK has alreday been initialized (https://github.com/bitstadium/HockeySDK-iOS#34-ios-extensions)
-private var didSetupHockey = false
 
 class ShareViewController: SLComposeServiceViewController {
     
@@ -78,7 +75,7 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupHockeyIfNeeded()
+        CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
     }
@@ -105,29 +102,6 @@ class ShareViewController: SLComposeServiceViewController {
             applicationGroupIdentifier: applicationGroupIdentifier,
             hostBundleIdentifier: hostBundleIdentifier
         )
-    }
-
-    private var hockeyEnabled: Bool {
-        let configUseHockey = useHockey()
-        let automationUseHockey = AutomationHelper.sharedHelper.useHockey
-        let settingsDisableHockey = ExtensionSettings.shared.disableHockey
-
-        return (automationUseHockey || (!automationUseHockey && configUseHockey))
-            && !settingsDisableHockey
-    }
-
-    private func setupHockeyIfNeeded() {
-        guard !didSetupHockey, hockeyEnabled, let hockeyIdentifier = hockeyAppId() else { return }
-        didSetupHockey = true
-
-        // see https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
-        UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")
-
-        let manager = BITHockeyManager.shared()
-        manager.isCrashManagerDisabled = ExtensionSettings.shared.disableCrashAndAnalyticsSharing
-        manager.configure(withIdentifier: hockeyIdentifier)
-        manager.crashManager.crashManagerStatus = .autoSend
-        manager.start()
     }
 
     override func isContentValid() -> Bool {

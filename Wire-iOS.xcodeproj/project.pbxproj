@@ -829,6 +829,7 @@
 		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
+		BFF7EDCA1E49DFB80090A0A3 /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7EDC91E49DFB80090A0A3 /* CrashReporter.swift */; };
 		BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */; };
 		CE06C93F1DF5C3D900497685 /* AVAsset+VideoConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = CE06C93C1DF5C3D900497685 /* AVAsset+VideoConvert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06C93D1DF5C3D900497685 /* AVAsset+VideoConvert.m */; };
@@ -2125,8 +2126,8 @@
 		BF016E181E48B8D1003C02C2 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		BF016E1C1E48B900003C02C2 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		BF016E1D1E48B900003C02C2 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
-		BF016E211E48BE6F003C02C2 /* PreprocessorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreprocessorHelper.h; path = ../WireExtensionComponents/Utilities/PreprocessorHelper.h; sourceTree = "<group>"; };
-		BF016E221E48BE6F003C02C2 /* PreprocessorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreprocessorHelper.m; path = ../WireExtensionComponents/Utilities/PreprocessorHelper.m; sourceTree = "<group>"; };
+		BF016E211E48BE6F003C02C2 /* PreprocessorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreprocessorHelper.h; sourceTree = "<group>"; };
+		BF016E221E48BE6F003C02C2 /* PreprocessorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreprocessorHelper.m; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
 		BF0515241E390E10000D5C22 /* CopyableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Ephemeral.swift"; sourceTree = "<group>"; };
@@ -2260,6 +2261,7 @@
 		BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImageMessageCell+Internal.h"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
 		BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = audio_sample.m4a; sourceTree = "<group>"; };
+		BFF7EDC91E49DFB80090A0A3 /* CrashReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
 		BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RightToLeft.swift"; sourceTree = "<group>"; };
 		C88A846215D617F8CCFBEB80 /* libPods-Wire-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2523,8 +2525,6 @@
 				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
 				168A16AB1D9597C2005CFA6C /* ShareViewController.swift */,
 				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
-				BF016E211E48BE6F003C02C2 /* PreprocessorHelper.h */,
-				BF016E221E48BE6F003C02C2 /* PreprocessorHelper.m */,
 				BF96A6C31E2F845E0057974A /* UnsentSendable.swift */,
 				543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */,
 				543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */,
@@ -2532,7 +2532,10 @@
 				BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */,
 				BF96A6C71E2FC7B60057974A /* SendController.swift */,
 				545BA2181E2D3C4900AA373E /* PostContent.swift */,
+				BFF7EDC91E49DFB80090A0A3 /* CrashReporter.swift */,
 				543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */,
+				BF016E211E48BE6F003C02C2 /* PreprocessorHelper.h */,
+				BF016E221E48BE6F003C02C2 /* PreprocessorHelper.m */,
 				BF2ADF481E27C3DB00E81B1E /* Localizable.strings */,
 				165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */,
 				165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */,
@@ -5445,6 +5448,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFF7EDCA1E49DFB80090A0A3 /* CrashReporter.swift in Sources */,
 				BF96A6CA1E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift in Sources */,
 				BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */,
 				BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */,
