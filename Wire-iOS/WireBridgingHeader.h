@@ -20,11 +20,8 @@
 
 // Data model
 @import zmessaging;
+@import avs;
 #import "ZMUserSession+iOS.h"
-#import <AVSMediaManager+Client.h>
-#import <AVSMediaManager.h>
-#import <AVSFlowManager.h>
-#import <AVSAudioEffect.h>
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"

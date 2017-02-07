@@ -105,14 +105,14 @@
     [self.nameLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
-- (void)configureForUser:(ZMUser *)user participantState:(ZMVoiceChannelParticipantState *)participantState
+- (void)configureForUser:(ZMUser *)user participantState:(VoiceChannelV2ParticipantState *)participantState
 {
     if (! [self.userImage.user isEqual:user]) {        
         self.userImage.user = user;
     }
     self.nameLabel.text = [user.displayName uppercasedWithCurrentLocale];
     
-    if (participantState.connectionState == ZMVoiceChannelConnectionStateConnecting) {
+    if (participantState.connectionState == VoiceChannelV2ConnectionStateConnecting) {
         self.userImage.state = VoiceUserImageViewStateConnecting;
     } else {
         self.userImage.state = VoiceUserImageViewStateTalking;

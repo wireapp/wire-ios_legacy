@@ -88,6 +88,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
         SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets,
+        SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
     ]
     
@@ -126,13 +127,13 @@ class SettingsPropertyFactory {
 
         case .accentColor:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.number(value: Int(self.selfUser.accentColorValue.rawValue))
+                return SettingsPropertyValue(self.selfUser.accentColorValue.rawValue)
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
-                case .number(let intValue):
+                case .number(let number):
                     self.userSession.enqueueChanges({
-                        self.selfUser.accentColorValue = ZMAccentColor(rawValue: Int16(intValue))!
+                        self.selfUser.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
                     })
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
@@ -142,12 +143,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.bool(value: self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
+                return SettingsPropertyValue(self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
-                case .bool(let boolValue):
-                    self.userDefaults.set(boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
+                case .number(let number):
+                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
@@ -159,10 +160,10 @@ class SettingsPropertyFactory {
         case .soundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
-                    return SettingsPropertyValue.number(value: Int(mediaManager.intensityLevel.rawValue))
+                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
                 }
                 else {
-                    return SettingsPropertyValue.number(value: 0)
+                    return SettingsPropertyValue(0)
                 }
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
@@ -184,22 +185,19 @@ class SettingsPropertyFactory {
         case .analyticsOptOut:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let analytics = self.analytics {
-                    return .bool(value: analytics.isOptedOut)
+                    return SettingsPropertyValue(analytics.isOptedOut)
                 }
                 else {
-                    return .bool(value: false)
+                    return SettingsPropertyValue(false)
                 }
             }
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 if var analytics = self.analytics,
                     var crashlogManager = self.crashlogManager {
                     switch(value) {
-                    case .number(let intValue):
-                        analytics.isOptedOut = Bool(intValue)
-                        crashlogManager.isCrashManagerDisabled = Bool(intValue)
-                    case .bool(let boolValue):
-                        analytics.isOptedOut = boolValue
-                        crashlogManager.isCrashManagerDisabled = boolValue
+                    case .number(let number):
+                        analytics.isOptedOut = number.boolValue
+                        crashlogManager.isCrashManagerDisabled = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -209,14 +207,14 @@ class SettingsPropertyFactory {
             
         case .notificationContentVisible:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return .bool(value: self.userSession.isNotificationContentHidden)
+                return .number(value: NSNumber(value: self.userSession.isNotificationContentHidden))
             }
             
             let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
-                    case .bool(let boolValue):
+                    case .number(let number):
                         self.userSession.performChanges {
-                            self.userSession.isNotificationContentHidden = boolValue
+                            self.userSession.isNotificationContentHidden = number.boolValue
                         }
                     
                     default:
@@ -229,24 +227,35 @@ class SettingsPropertyFactory {
         case .disableSendButton:
             return SettingsBlockProperty(
                 propertyName: .disableSendButton,
-                getAction: { _ in return .bool(value: Settings.shared().disableSendButton) },
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableSendButton) },
                 setAction: { _, value in
                     switch value {
-                    case .bool(value: let disabled):
-                        Settings.shared().disableSendButton = disabled
-                        Analytics.shared()?.tagSendButtonDisabled(disabled)
+                    case .number(value: let number):
+                        Settings.shared().disableSendButton = number.boolValue
+                        Analytics.shared()?.tagSendButtonDisabled(number.boolValue)
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+            
+        case .callingProtocolStrategy:
+            return SettingsBlockProperty(
+                propertyName: .callingProtocolStrategy,
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().callingProtocolStrategy.rawValue) },
+                setAction: { _, value in
+                    if case .number(let intValue) = value, let callingProtocolStrategy = CallingProtocolStrategy(rawValue: UInt(intValue)) {
+                        Settings.shared().callingProtocolStrategy = callingProtocolStrategy
+                        ZMUserSession.callingProtocolStrategy = callingProtocolStrategy
                     }
             })
 
         case .linkPreviewsInShareExtension:
             return SettingsBlockProperty(
                 propertyName: .linkPreviewsInShareExtension,
-                getAction: { _ in return .bool(value: ExtensionSettings.shared.fetchLinkPreview) },
+                getAction: { _ in return SettingsPropertyValue(ExtensionSettings.shared.fetchLinkPreview) },
                 setAction: { _, value in
                     switch value {
-                    case .bool(value: let fetch): ExtensionSettings.shared.fetchLinkPreview = fetch
+                    case .number(value: let number): ExtensionSettings.shared.fetchLinkPreview = number.boolValue
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             })

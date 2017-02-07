@@ -78,7 +78,8 @@
 
 @end
 
-@interface FullscreenImageViewController () <UIScrollViewDelegate, ZMVoiceChannelStateObserver>
+
+@interface FullscreenImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
 
@@ -103,7 +104,6 @@
 @property (nonatomic) BOOL forcePortraitMode;
 @property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
 @property (nonatomic) id <ZMMessageObserverOpaqueToken> messageObserverToken;
 
 @end
@@ -131,7 +131,6 @@
 - (void)dealloc
 {
     [ZMMessageNotification removeMessageObserverForToken:self.messageObserverToken];
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)loadView
@@ -180,8 +179,6 @@
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
-
-    self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -592,7 +589,6 @@
     [self setSelectedByMenu:NO animated:YES];
 }
 
-
 #pragma mark - Utilities, custom UI
 
 - (void)performSaveImageAnimationFromView:(UIView *)saveView
@@ -612,14 +608,6 @@
     }                completion:^{
         [ghostImageView removeFromSuperview];
     }];
-}
-
-/// Special check in case we get an incoming voice call and we are looking at this view in ipad landscape
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
-{
-    if (change.voiceChannel.state == ZMVoiceChannelStateIncomingCall && IS_IPAD_LANDSCAPE_LAYOUT) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 @end

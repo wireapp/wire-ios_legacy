@@ -17,20 +17,9 @@
 // 
 
 
-@import Foundation;
-@import zmessaging;
-#import "MockLoader.h"
+#import <Foundation/Foundation.h>
+#import "zmessaging+iOS.h"
 
 
-@interface MockConversation : NSObject<Mockable>    
-
-@property (nonatomic, copy) NSString *displayName;
-@property (nonatomic) ZMConversationType conversationType;
-@property (nonatomic) BOOL isVideoCall;
-@property (nonatomic) NSOrderedSet *activeParticipants;
-@property (nonatomic) ZMConversationSecurityLevel securityLevel;
-@property (nonatomic) NSTimeInterval messageDestructionTimeout;
-@property (nonatomic) ZMConnectionStatus relatedConnectionState;
-@property (nonatomic) id<VoiceChannel> voiceChannel;
-
-@end
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state);
+FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2ConnectionState(VoiceChannelV2ConnectionState state);

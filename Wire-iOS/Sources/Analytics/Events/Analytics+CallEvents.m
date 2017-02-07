@@ -20,31 +20,38 @@
 #import "Analytics+CallEvents.h"
 #import "zmessaging+iOS.h"
 #import "NetworkConditionHelper.h"
+#import "Wire-Swift.h"
 
 
 
 @implementation Analytics (CallEvents)
 
-- (void)tagInitiatedCallInConversation:(ZMConversation *)conversation video:(BOOL)video
+- (void)tagInitiatedCallInConversation:(ZMConversation *)conversation video:(BOOL)video callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    [self tagEvent:video ? @"calling.initiated_video_call" : @"calling.initiated_call" attributes:[self attributesForConversation:conversation]];
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+    [attributes addEntriesFromDictionary:[self attributesForConversation:conversation]];
+    [attributes addEntriesFromDictionary:[self attributesForCallingProtocol:callingProtocol]];
+    
+    [self tagEvent:video ? @"calling.initiated_video_call" : @"calling.initiated_call" attributes:attributes];
 }
 
-- (void)tagReceivedCallInConversation:(ZMConversation *)conversation video:(BOOL)video
+- (void)tagReceivedCallInConversation:(ZMConversation *)conversation video:(BOOL)video callingProtocol:(enum CallingProtocol)callingProtocol
 {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     
     [attributes addEntriesFromDictionary:[self attributesForConversation:conversation]];
+    [attributes addEntriesFromDictionary:[self attributesForCallingProtocol:callingProtocol]];
     [attributes addEntriesFromDictionary:[self attributesForAppIsActive]];
     
     [self tagEvent:video ? @"calling.received_video_call" : @"calling.received_call" attributes:attributes];
 }
 
-- (void)tagJoinedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall
+- (void)tagJoinedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall callingProtocol:(enum CallingProtocol)callingProtocol
 {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     
     [attributes addEntriesFromDictionary:[self attributesForConversation:conversation]];
+    [attributes addEntriesFromDictionary:[self attributesForCallingProtocol:callingProtocol]];
     [attributes addEntriesFromDictionary:[self attributesParticipantsInConversation:conversation]];
     [attributes addEntriesFromDictionary:[self attributesForAppIsActive]];
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
@@ -52,23 +59,26 @@
     [self tagEvent:video ? @"calling.joined_video_call" : @"calling.joined_call" attributes:attributes];
 }
 
-- (void)tagEstablishedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall
+- (void)tagEstablishedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall setupDuration:(NSTimeInterval)setupDuration callingProtocol:(enum CallingProtocol)callingProtocol
 {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     
     [attributes addEntriesFromDictionary:[self attributesForConversation:conversation]];
+    [attributes addEntriesFromDictionary:[self attributesForCallingProtocol:callingProtocol]];
     [attributes addEntriesFromDictionary:[self attributesParticipantsInConversation:conversation]];
     [attributes addEntriesFromDictionary:[self attributesForAppIsActive]];
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
+    [attributes addEntriesFromDictionary:[self attributesForCallSetupDuration:setupDuration]];
     
     [self tagEvent:video ? @"calling.established_successful_video_call" : @"calling.established_successful_call" attributes:attributes];
 }
 
-- (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration reason:(ZMVoiceChannelCallEndReason)reason
+- (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration reason:(VoiceChannelV2CallEndReason)reason callingProtocol:(enum CallingProtocol)callingProtocol
 {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     
     [attributes addEntriesFromDictionary:[self attributesForConversation:conversation]];
+    [attributes addEntriesFromDictionary:[self attributesForCallingProtocol:callingProtocol]];
     [attributes addEntriesFromDictionary:[self attributesParticipantsInConversation:conversation]];
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
     [attributes addEntriesFromDictionary:[self attributesForCallEndReason:reason]];
@@ -79,6 +89,16 @@
 
 #pragma mark - Attributes
 
+- (NSDictionary *)attributesForCallingProtocol:(enum CallingProtocol)callingProtocol
+{
+    switch (callingProtocol) {
+        case CallingProtocolVersion2:
+            return @{ @"version" : @"C2" };
+        case CallingProtocolVersion3:
+            return @{ @"version" : @"C3" };
+    }
+}
+
 - (NSDictionary *)attributesParticipantsInConversation:(ZMConversation *)conversation
 {
     return @{ @"conversation_participants" : @(conversation.activeParticipants.count) };
@@ -86,7 +106,8 @@
 
 - (NSDictionary *)attributesForConversation:(ZMConversation *)conversation
 {
-    return @{ @"conversation_type" : [self stringForConversationType:conversation.conversationType] };
+    return @{ @"conversation_type" : [self stringForConversationType:conversation.conversationType],
+              @"with_bot"          : conversation.isBotConversation ? @"true" : @"false" };
 }
 
 - (NSDictionary *)attributesForInitiatedCall:(BOOL)initiatedCall
@@ -99,9 +120,17 @@
     return @{ @"app_is_active" : [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive ? @"true" : @"false" };
 }
 
-- (NSDictionary *)attributesForCallEndReason:(ZMVoiceChannelCallEndReason)reason
+- (NSDictionary *)attributesForCallEndReason:(VoiceChannelV2CallEndReason)reason
 {
     return @{ @"reason" : [self stringForCallEndReason:reason] };
+}
+
+- (NSDictionary *)attributesForCallSetupDuration:(NSTimeInterval)duration
+{
+    TimeIntervalClusterizer *clusterizer = [TimeIntervalClusterizer callSetupDurationClusterizer];
+    
+    return @{ @"setup_time" : [clusterizer clusterizeTimeInterval:duration],
+              @"setup_time_actual" : @(ceil(duration)) };
 }
 
 - (NSDictionary *)attributesForCallDuration:(NSTimeInterval)duration
@@ -115,7 +144,7 @@
         durationSlot = @"[15s-30s]";
     }
     else if (duration <= 60) {
-        durationSlot = @"[15s-30s]";
+        durationSlot = @"[30s-60s]";
     }
     else if (duration <= 60 * 3) {
         durationSlot = @"[61s-3min]";
@@ -129,28 +158,29 @@
         durationSlot = @"[1h-infinite]";
     }
     
-    return @{ @"duration" : durationSlot };
+    return @{ @"duration" : durationSlot,
+              @"durationActual" : @(ceil(duration))};
 }
 
-- (NSString *)stringForCallEndReason:(ZMVoiceChannelCallEndReason)reason
+- (NSString *)stringForCallEndReason:(VoiceChannelV2CallEndReason)reason
 {
     NSString *result = nil;
     switch (reason) {
-        case ZMVoiceChannelCallEndReasonRequestedSelf:
+        case VoiceChannelV2CallEndReasonRequestedSelf:
             result = @"self";
             break;
             
-        case ZMVoiceChannelCallEndReasonRequested:
+        case VoiceChannelV2CallEndReasonRequested:
             result = @"other";
             break;
             
-        case ZMVoiceChannelCallEndReasonInterrupted:
+        case VoiceChannelV2CallEndReasonInterrupted:
             result = @"gsm_call";
             break;
             
-        case ZMVoiceChannelCallEndReasonOtherLostMedia:
-        case ZMVoiceChannelCallEndReasonDisconnected:
-        case ZMVoiceChannelCallEndReasonRequestedAVS:
+        case VoiceChannelV2CallEndReasonOtherLostMedia:
+        case VoiceChannelV2CallEndReasonDisconnected:
+        case VoiceChannelV2CallEndReasonRequestedAVS:
             result = [self stringForDroppedCall];
             break;
     }

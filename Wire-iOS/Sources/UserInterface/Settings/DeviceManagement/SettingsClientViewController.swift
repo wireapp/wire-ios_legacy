@@ -62,7 +62,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         self.userClientToken = userClient.addObserver(self)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueueChanges({ () -> Void in
-                userClient.markForFetchingPreKeys()
+                userClient.fetchFingerprintOrPrekeys()
             })
         }
         self.title = userClient.deviceClass?.capitalized(with: NSLocale.current)

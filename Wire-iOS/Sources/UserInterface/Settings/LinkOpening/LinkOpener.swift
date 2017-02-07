@@ -22,7 +22,7 @@ import Foundation
 
 public extension NSURL {
 
-    @objc func open() -> Bool {
+    @discardableResult @objc func open() -> Bool {
         return (self as URL).open()
     }
 

@@ -32,7 +32,7 @@
 @import Classy;
 @import WireExtensionComponents;
 @import CallKit;
-#import <AVSFlowManager.h>
+#import <avs/AVSFlowManager.h>
 #import "avs+iOS.h"
 #import "MediaPlaybackManager.h"
 #import "StopWatch.h"
@@ -91,12 +91,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         self.logObserver = [[AVSLogObserver alloc] init];
         self.classyCache = [[ClassyCache alloc] init];
         self.groupIdentifier = [NSString stringWithFormat:@"group.%@", NSBundle.mainBundle.bundleIdentifier];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contentSizeCategoryDidChange:)
+                                                     name:UIContentSizeCategoryDidChangeNotification
+                                                   object:nil];
     }
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.zetaUserSession removeAuthenticationObserverForToken:self.authToken];
 }
 
@@ -298,6 +304,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [CASStyler bootstrapClassyWithTargetWindows:windows];
     [[CASStyler defaultStyler] applyColorScheme:colorScheme];
     
+    [self applyFontScheme];
     
 #if TARGET_IPHONE_SIMULATOR
     NSString *absoluteFilePath = CASAbsoluteFilePath(@"../Resources/Classy/stylesheet.cas");
@@ -310,6 +317,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
 #endif
 
+}
+
+- (void)applyFontScheme
+{
+    FontScheme *fontScheme = [[FontScheme alloc] initWithContentSizeCategory:[[UIApplication sharedApplication] preferredContentSizeCategory]];
+    [[CASStyler defaultStyler] applyWithFontScheme:fontScheme];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification
+{
+    [UIFont wr_flushFontCache];
+    [self applyFontScheme];
 }
 
 #pragma mark - SE Loading
@@ -380,11 +399,12 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
     
     (void)[Settings sharedSettings];
-    
+
     BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
     BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
     
     [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
+    [ZMUserSession setCallingProtocolStrategy:[[Settings sharedSettings] callingProtocolStrategy]];
     
     NSBundle *bundle = NSBundle.mainBundle;
     NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];

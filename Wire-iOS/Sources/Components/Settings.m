@@ -60,6 +60,7 @@ NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCol
 
 
 NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
+NSString * const UserDefaultCallingProtocolStrategy = @"CallingProtocolStrategy";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
@@ -117,6 +118,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue,
              UserDefaultSendV3Assets,
+             UserDefaultCallingProtocolStrategy,
              UserDefaultEnableBatchCollections,
              ];
 }
@@ -455,6 +457,22 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (void)setSendV3Assets:(BOOL)sendV3Assets
 {
     [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
+}
+
+- (void)setCallingProtocolStrategy:(CallingProtocolStrategy)callingProtocolStrategy
+{
+    [self.defaults setInteger:callingProtocolStrategy forKey:UserDefaultCallingProtocolStrategy];
+}
+
+- (CallingProtocolStrategy)callingProtocolStrategy
+{
+    // Defaults to calling 2. This should be removed when we want to rollout
+    // calling 3 to all users.
+    if ([self.defaults objectForKey:UserDefaultCallingProtocolStrategy] == nil) {
+        return CallingProtocolStrategyVersion2;
+    }
+    
+    return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 
 - (BOOL)enableBatchCollections

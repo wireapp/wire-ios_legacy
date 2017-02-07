@@ -255,9 +255,9 @@
 
 "content.message.like" = "Подобається";
 "content.message.unlike" = "Не подобається";
-"content.message.forward" = "Переслати";
+"content.message.forward" = "Поділитись";
 "content.message.go_to_conversation" = "Показати в розмові";
-"content.message.forward.to" = "Переслати в...";
+"content.message.forward.to" = "Пошук…";
 
 "content.reactions_list.likers" = "Сподобалося";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
 "voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
-"voice.alert.call_in_progress.title" = "Активний дзвінок";
-"voice.alert.call_in_progress.message" = "Один з ваших пристроїв уже бере участь у даному дзвінку";
-"voice.alert.call_in_progress.confirm" = "ОК";
 "voice.accept_button.title" = "Прийняти";
 "voice.decline_button.title" = "Скасувати";
 "voice.hang_up_button.title" = "Завершити";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Заблокувати?";
-"profile.block_dialog.message" = "%@ більше не зможе знайти вас або зв'язатися з вами у Wire.";
+"profile.block_dialog.message" = "%@ не буде мати можливості зв'язатися з вами або додати вас до групових розмов.";
 "profile.block_dialog.button_cancel" = "Скасувати";
 "profile.block_dialog.button_block" = "Заблокувати";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Не вдалося зарезервувати нік";
 "self.settings.account_section.handle.change.failure_alert.message" = "Сталася помилка під час резервації вашого ніка. Будь ласка, спробуйте ще раз.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Зберегти";
+
+"self.settings.account_section.email.change.verify.title" = "Підтвердити email";
+"self.settings.account_section.email.change.verify.description" = "Перевірте вашу поштову скриньку і дотримуйтесь надісланих інструкцій.";
+"self.settings.account_section.email.change.verify.resend" = "Повторно надіслати на %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email було надіслано повторно";
+"self.settings.account_section.email.change.resend.message" = "Email з кододом верифікації було повторно надіслано на %@. Перевірте вашу поштову скриньку та дотримуйтесь надісланих інструкцій.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Сповіщення";

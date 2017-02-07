@@ -20,7 +20,6 @@
 #import <Foundation/Foundation.h>
 
 @class ZMUserSession;
-@class ZMVoiceChannel;
 @class ZMConversationList;
 
 
@@ -35,11 +34,6 @@
 @property (nonatomic, readonly) ZMConversationList *allConversations;
 @property (nonatomic, readonly) ZMConversationList *clearedConversations;
 @property (nonatomic, readonly) ZMConversationList *pendingConnectionRequests;
-@property (nonatomic, readonly) ZMConversationList *activeCallConversations;
-@property (nonatomic, readonly) ZMConversationList *nonIdleVoiceChannelConversations;
-
-/// Helpers
-@property (nonatomic, readonly) ZMVoiceChannel *firstActiveVoiceChannel;
 
 /// count of list + archived
 @property (nonatomic, readonly) NSUInteger totalConversationsCount;
@@ -47,5 +41,6 @@
 + (instancetype)sharedCache;
 
 - (instancetype)initWithUserSession:(ZMUserSession *)session;
+- (void)refetchConversationLists;
 
 @end
