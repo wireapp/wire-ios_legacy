@@ -59,7 +59,7 @@
     [self tagEvent:video ? @"calling.joined_video_call" : @"calling.joined_call" attributes:attributes];
 }
 
-- (void)tagEstablishedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall callingProtocol:(enum CallingProtocol)callingProtocol
+- (void)tagEstablishedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall setupDuration:(NSTimeInterval)setupDuration callingProtocol:(enum CallingProtocol)callingProtocol
 {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     
@@ -68,6 +68,7 @@
     [attributes addEntriesFromDictionary:[self attributesParticipantsInConversation:conversation]];
     [attributes addEntriesFromDictionary:[self attributesForAppIsActive]];
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
+    [attributes addEntriesFromDictionary:[self attributesForCallSetupDuration:setupDuration]];
     
     [self tagEvent:video ? @"calling.established_successful_video_call" : @"calling.established_successful_call" attributes:attributes];
 }
@@ -124,6 +125,14 @@
     return @{ @"reason" : [self stringForCallEndReason:reason] };
 }
 
+- (NSDictionary *)attributesForCallSetupDuration:(NSTimeInterval)duration
+{
+    TimeIntervalClusterizer *clusterizer = [TimeIntervalClusterizer callSetupDurationClusterizer];
+    
+    return @{ @"setup_time" : [clusterizer clusterizeTimeInterval:duration],
+              @"setup_time_actual" : @(ceil(duration)) };
+}
+
 - (NSDictionary *)attributesForCallDuration:(NSTimeInterval)duration
 {
     NSString *durationSlot;
@@ -135,7 +144,7 @@
         durationSlot = @"[15s-30s]";
     }
     else if (duration <= 60) {
-        durationSlot = @"[15s-30s]";
+        durationSlot = @"[30s-60s]";
     }
     else if (duration <= 60 * 3) {
         durationSlot = @"[61s-3min]";

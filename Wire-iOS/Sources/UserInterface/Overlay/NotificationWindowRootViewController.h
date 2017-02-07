@@ -36,4 +36,6 @@
 
 @property (nonatomic) BOOL hideNetworkActivityView;
 
+@property (nonatomic) BOOL dimContents;
+
 @end

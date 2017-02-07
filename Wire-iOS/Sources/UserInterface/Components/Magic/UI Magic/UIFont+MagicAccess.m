@@ -20,9 +20,11 @@
 
 #import "UIFont+MagicAccess.h"
 #import "WAZUIMagic.h"
+#import "Wire-Swift.h"
 
-#import <CoreText/CoreText.h>
+@import CoreText;
 
+static NSMutableDictionary *fontCache;
 
 @implementation UIFont (MagicAccess)
 
@@ -54,18 +56,15 @@
 
 + (UIFont *)fontWithMagicIdentifier:(NSString *)identifier
 {
-    static NSMutableDictionary *fontCache;
-
     WAZUIMagic *magic = [WAZUIMagic sharedMagic];
     NSDictionary *attributes = magic[identifier];
     NSString *fontName = attributes[@"font"];
     NSNumber *fontSize = attributes[@"size"];
-    CGFloat fontSizeFloat = [fontSize floatValue];
+    CGFloat fontSizeFloat = [fontSize floatValue] * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
 
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    if (fontCache == nil) {
         fontCache = [NSMutableDictionary dictionary];
-    });
+    }
 
     UIFont *cached = fontCache[identifier];
     if (cached) {return cached;}
@@ -118,23 +117,9 @@
     return nil;
 }
 
-+ (UIFont *)fontWithMagicIdentifierFontNameKey:(NSString *)fontNameKey fontSizeKey:(NSString *)fontSizeKey
++ (void)wr_flushFontCache
 {
-    WAZUIMagic *magic = [WAZUIMagic sharedMagic];
-    NSString *fontName = magic[fontNameKey];
-    CGFloat fontSize = [WAZUIMagic cgFloatForIdentifier:fontSizeKey];
-    if (fontName && fontSize > 0) {
-        return [UIFont fontWithName:fontName size:fontSize];
-    }
-    return nil;
-}
-
-+ (UIFont *)fontWithMagicIdentifierPrefixPath:(NSString *)path
-{
-    if (0 == [path length]) {
-        return nil;
-    }
-    return [[self class] fontWithMagicIdentifierFontNameKey:[NSString stringWithFormat:@"%@_font", path] fontSizeKey:[NSString stringWithFormat:@"%@_font_size", path]];
+    fontCache = nil;
 }
 
 @end

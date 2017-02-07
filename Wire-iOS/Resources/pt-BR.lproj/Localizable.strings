@@ -255,9 +255,9 @@
 
 "content.message.like" = "Curtir";
 "content.message.unlike" = "Descurtir";
-"content.message.forward" = "Encaminhar";
+"content.message.forward" = "Compartilhar";
 "content.message.go_to_conversation" = "Exibir";
-"content.message.forward.to" = "Enviar para...";
+"content.message.forward.to" = "Procurar…";
 
 "content.reactions_list.likers" = "Curtido por";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Conexão ruim";
 "voice.network_error.title" = "Sem conexão de internet";
 "voice.network_error.body" = "Você deve estar on-line para ligar. Verifique sua conexão e tente novamente.";
-"voice.alert.call_in_progress.title" = "Chamada em andamento";
-"voice.alert.call_in_progress.message" = "Outro dispositivo seu já está participando dessa chamada";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Aceitar";
 "voice.decline_button.title" = "Rejeitar";
 "voice.hang_up_button.title" = "Desligar";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Bloquear?";
-"profile.block_dialog.message" = "%@ não será capaz de encontra-lo ou contatá-lo no Wire.";
+"profile.block_dialog.message" = "%@ não será capaz de entrar em contato com você ou convidá-lo para uma conversa em grupo.";
 "profile.block_dialog.button_cancel" = "Cancelar";
 "profile.block_dialog.button_block" = "Bloquear";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Não é possível definir o nome de usuário";
 "self.settings.account_section.handle.change.failure_alert.message" = "Houve um erro ao configurar seu nome de usuário. Por favor, tente novamente.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-mail";
+"self.settings.account_section.email.change.save" = "Salvar";
+
+"self.settings.account_section.email.change.verify.title" = "Verificar e-mail";
+"self.settings.account_section.email.change.verify.description" = "Verifique sua caixa de e-mail e siga as instruções.";
+"self.settings.account_section.email.change.verify.resend" = "Reenvie para %@";
+
+"self.settings.account_section.email.change.resend.title" = "E-mail reenviado";
+"self.settings.account_section.email.change.resend.message" = "Um e-mail de confirmação foi reenviado para %@. Verifique sua caixa de entrada do e-mail e siga as instruções.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notificações";
@@ -784,4 +793,4 @@
 "collections.section.links.title" = "Links";
 "collections.section.all.button" = "Mostrar todos os %d →";
 "collections.section.no_items" = "Não há itens na coleção";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "Imagem copiada";

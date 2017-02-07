@@ -65,6 +65,7 @@ NSString * const UserDefaultCallingProtocolStrategy = @"CallingProtocolStrategy"
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
 NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
 NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
+NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHockeySettingInitially";
 
 
 @interface Settings ()
@@ -120,6 +121,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
              UserDefaultSendV3Assets,
              UserDefaultCallingProtocolStrategy,
              UserDefaultEnableBatchCollections,
+             UserDefaultDidMigrateHockeySettingInitially
              ];
 }
 
@@ -138,6 +140,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 {
     self = [super init];
     if (self) {
+        [self migrateHockeyAndOptOutSettingsToSharedDefaults];
         [self restoreLastUsedIntensityLevel];
         [self loadEnabledLogs];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -153,6 +156,15 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (NSUserDefaults *)defaults
 {
     return [NSUserDefaults standardUserDefaults];
+}
+
+- (void)migrateHockeyAndOptOutSettingsToSharedDefaults
+{
+    if (! [self.defaults boolForKey:UserDefaultDidMigrateHockeySettingInitially]) {
+        ExtensionSettings.shared.disableHockey = self.disableHockey;
+        ExtensionSettings.shared.disableCrashAndAnalyticsSharing = self.disableAnalytics;
+        [self.defaults setBool:YES forKey:UserDefaultDidMigrateHockeySettingInitially];
+    }
 }
 
 - (BOOL)enableExtras
@@ -435,6 +447,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (void)setDisableHockey:(BOOL)disableHockey
 {
     [self.defaults setBool:disableHockey forKey:UserDefaultDisableHockey];
+    ExtensionSettings.shared.disableHockey = disableHockey;
     [self.defaults synchronize];
 }
 
@@ -446,6 +459,7 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 - (void)setDisableAnalytics:(BOOL)disableAnalytics
 {
     [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
+    ExtensionSettings.shared.disableCrashAndAnalyticsSharing = disableAnalytics;
     [self.defaults synchronize];
 }
 
@@ -466,6 +480,12 @@ NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 
 - (CallingProtocolStrategy)callingProtocolStrategy
 {
+    // Defaults to calling 2. This should be removed when we want to rollout
+    // calling 3 to all users.
+    if ([self.defaults objectForKey:UserDefaultCallingProtocolStrategy] == nil) {
+        return CallingProtocolStrategyVersion2;
+    }
+    
     return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 

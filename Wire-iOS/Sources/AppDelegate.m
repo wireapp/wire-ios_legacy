@@ -41,8 +41,6 @@
 #import "Application+runDuration.h"
 
 #import "AppDelegate+Logging.h"
-#import "AppDelegate+ExtensionAnalytics.h"
-
 
 #import "ZClientViewController.h"
 #import "SessionObjectCache.h"
@@ -190,8 +188,6 @@ static AppDelegate *sharedAppDelegate = nil;
     
     self.trackedResumeEvent = NO;
     
-    [self uploadExtensionAnalytics];
-    
     DDLogInfo(@"applicationDidBecomeActive END");
 }
 
@@ -203,6 +199,8 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     DDLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
+    
+    [self.appController applicationDidEnterBackground:application];
     
     [Analytics.shared persistCustomSessionSummary];
     self.launchType = ApplicationLaunchUnknown;

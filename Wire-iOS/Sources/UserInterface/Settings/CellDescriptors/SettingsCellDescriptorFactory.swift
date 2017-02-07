@@ -18,6 +18,7 @@
 
 
 import Foundation
+import LocalAuthentication
 
 @objc class SettingsCellDescriptorFactory: NSObject {
     static let settingsDevicesCellIdentifier: String = "devices"
@@ -103,7 +104,19 @@ import Foundation
     }
 
     func advancedGroup() -> SettingsCellDescriptorType {
-
+        var items: [SettingsSectionDescriptor] = []
+        
+        if #available(iOS 9.0, *) {
+            let context: LAContext = LAContext()
+            var error: NSError?
+            
+            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+                let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
+                let lockAppSection = SettingsSectionDescriptor(cellDescriptors: [lockApp])
+                items.append(lockAppSection)
+            }
+        }
+        
         let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.analyticsOptOut), inverse: true)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized
         let usageInfo = "self.settings.privacy_analytics_menu.description.title".localized
@@ -144,8 +157,10 @@ import Foundation
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
 
+        items.append(contentsOf: [sendUsageSection, troubleshootingSection, pushSection, versionSection])
+        
         return SettingsGroupCellDescriptor(
-            items: [sendUsageSection, troubleshootingSection, pushSection, versionSection],
+            items: items,
             title: "self.settings.advanced.title".localized,
             icon: .settingsAdvanced
         )
@@ -187,7 +202,7 @@ import Foundation
             
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
-                value: .number(value: Int(option.rawValue)),
+                value: SettingsPropertyValue(option.rawValue),
                 title: option.displayString
             )
         }
@@ -274,7 +289,7 @@ import Foundation
     
     func colorsSubgroup() -> SettingsSectionDescriptorType {
         let cellDescriptors = ZMAccentColor.all().map { (color) -> SettingsCellDescriptorType in
-            let value = SettingsPropertyValue.number(value: Int(color.rawValue))
+            let value = SettingsPropertyValue(color.rawValue)
             return SettingsPropertySelectValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.accentColor), value: value, title: "", identifier: .none, selectAction: { _ in
                 
                 }, backgroundColor: color.color) as SettingsCellDescriptorType

@@ -255,9 +255,9 @@
 
 "content.message.like" = "いいね！";
 "content.message.unlike" = "いいね！を取消す";
-"content.message.forward" = "転送";
+"content.message.forward" = "共有";
 "content.message.go_to_conversation" = "開く";
-"content.message.forward.to" = "…に送信";
+"content.message.forward.to" = "検索...";
 
 "content.reactions_list.likers" = "いいね！しました";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "接続不良";
 "voice.network_error.title" = "インターネット接続がありません";
 "voice.network_error.body" = "オンラインにしてから通話する必要が有ります。接続を確認してもう一度やり直して下さい。";
-"voice.alert.call_in_progress.title" = "通話中です";
-"voice.alert.call_in_progress.message" = "あなたの別のデバイスが電話を受けています";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "承諾";
 "voice.decline_button.title" = "辞退";
 "voice.hang_up_button.title" = "電話を切る";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "ブロックしますか?";
-"profile.block_dialog.message" = "%@はWireであなたを見つけるか連絡することができません。";
+"profile.block_dialog.message" = "%@ は、あなたにコンタクトをすることやグループ会話にあなたを追加することができません。";
 "profile.block_dialog.button_cancel" = "キャンセル";
 "profile.block_dialog.button_block" = "ブロック";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "ユーザーネームを設定できません";
 "self.settings.account_section.handle.change.failure_alert.message" = "ユーザーネームの設定にエラーがありました。再設定してください。";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "メール";
+"self.settings.account_section.email.change.save" = "保存";
+
+"self.settings.account_section.email.change.verify.title" = "メール アドレスを確認";
+"self.settings.account_section.email.change.verify.description" = "メールの受信トレイを確認して、手順に従ってください。";
+"self.settings.account_section.email.change.verify.resend" = "%@ に再送";
+
+"self.settings.account_section.email.change.resend.title" = "メールを再送信";
+"self.settings.account_section.email.change.resend.message" = "確認メールが%@ に再送されました。メールボックスを確認し、記載されている手続きを行って。";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "通知センター";

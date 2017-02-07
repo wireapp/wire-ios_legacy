@@ -28,7 +28,7 @@ import Classy
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
 
-class ShareViewController: SLComposeServiceViewController {
+class ShareExtensionViewController: SLComposeServiceViewController {
     
     var conversationItem : SLComposeSheetConfigurationItem?
 
@@ -38,14 +38,6 @@ class ShareViewController: SLComposeServiceViewController {
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.postContent = PostContent(attachments: self.allAttachments)
-        self.setupNavigationBar()
-        self.appendTextToEditor()
-        self.placeholder = "share_extension.input.placeholder".localized
-    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,6 +49,28 @@ class ShareViewController: SLComposeServiceViewController {
         setupObserver()
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CrashReporter.setupHockeyIfNeeded()
+        navigationController?.view.backgroundColor = .white
+        recreateSharingSession()
+        let activity = ExtensionActivity(attachments: allAttachments)
+        sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
+        extensionActivity = activity
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.postContent = PostContent(attachments: self.allAttachments)
+        self.setupNavigationBar()
+        self.appendTextToEditor()
+        self.placeholder = "share_extension.input.placeholder".localized
+    }
+
     private func setupObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(extensionHostDidEnterBackground), name: .NSExtensionHostDidEnterBackground, object: nil)
     }
@@ -66,19 +80,6 @@ class ShareViewController: SLComposeServiceViewController {
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.view.backgroundColor = .white
-        recreateSharingSession()
-        let activity = ExtensionActivity(attachments: allAttachments)
-        sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
-        extensionActivity = activity
     }
 
     @objc private func extensionHostDidEnterBackground() {
