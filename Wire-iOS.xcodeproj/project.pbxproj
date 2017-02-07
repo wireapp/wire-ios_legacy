@@ -67,7 +67,7 @@
 		168635321ADFB20900EDC7D9 /* ShareContactsStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168635311ADFB20900EDC7D9 /* ShareContactsStepViewController.m */; };
 		168635421AE018B300EDC7D9 /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168635411AE018B300EDC7D9 /* RegistrationFormController.m */; };
 		1688F35A1C68F0A700A68D8E /* VoiceChannelOverlayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1688F3581C68F0A700A68D8E /* VoiceChannelOverlayTests.m */; };
-		168A16AC1D9597C2005CFA6C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareViewController.swift */; };
+		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
 		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		168DDD041AFA81820056A5EF /* CheckmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168DDD031AFA81820056A5EF /* CheckmarkViewController.m */; };
@@ -160,13 +160,8 @@
 		1E8C253C1BBC279B00FC373F /* UIViewController+LoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */; };
 		1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */; };
-		1EB9BF3B1BC7ED5D002EF0F3 /* SharedAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB9BF371BC7ED5D002EF0F3 /* SharedAnalytics.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EB9BF3C1BC7ED5D002EF0F3 /* SharedAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB9BF381BC7ED5D002EF0F3 /* SharedAnalytics.m */; };
-		1EB9BF3D1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB9BF391BC7ED5D002EF0F3 /* SharedAnalyticsEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EB9BF3E1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB9BF3A1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.m */; };
 		1EB9BF401BC7F1A6002EF0F3 /* SharedAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB9BF3F1BC7F1A6002EF0F3 /* SharedAnalyticsTests.m */; };
 		1EB9BF411BC7F796002EF0F3 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
-		1EB9BF461BC81547002EF0F3 /* AppDelegate+ExtensionAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB9BF431BC81082002EF0F3 /* AppDelegate+ExtensionAnalytics.m */; };
 		1EBA8C681B70C15D0089CC44 /* common-controls.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EBA8C671B70C15D0089CC44 /* common-controls.cas */; };
 		1ED28CD71A94E26D00B96189 /* group-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED28CD41A94E26D00B96189 /* group-icon.png */; };
 		1ED28CD81A94E26D00B96189 /* group-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED28CD51A94E26D00B96189 /* group-icon@2x.png */; };
@@ -1038,7 +1033,7 @@
 		1688F3581C68F0A700A68D8E /* VoiceChannelOverlayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelOverlayTests.m; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
 		168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		168A16AB1D9597C2005CFA6C /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewController.swift; sourceTree = "<group>"; };
 		168A16AE1D9597C2005CFA6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		168A16B01D9597C2005CFA6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		168DDD021AFA81820056A5EF /* CheckmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkViewController.h; sourceTree = "<group>"; };
@@ -1161,13 +1156,7 @@
 		1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LoadingView.h"; sourceTree = "<group>"; };
 		1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LoadingView.m"; sourceTree = "<group>"; };
 		1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSourceTests.m; sourceTree = "<group>"; };
-		1EB9BF371BC7ED5D002EF0F3 /* SharedAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedAnalytics.h; path = SharedAnalytics/SharedAnalytics.h; sourceTree = "<group>"; };
-		1EB9BF381BC7ED5D002EF0F3 /* SharedAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedAnalytics.m; path = SharedAnalytics/SharedAnalytics.m; sourceTree = "<group>"; };
-		1EB9BF391BC7ED5D002EF0F3 /* SharedAnalyticsEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedAnalyticsEvent.h; path = SharedAnalytics/SharedAnalyticsEvent.h; sourceTree = "<group>"; };
-		1EB9BF3A1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedAnalyticsEvent.m; path = SharedAnalytics/SharedAnalyticsEvent.m; sourceTree = "<group>"; };
 		1EB9BF3F1BC7F1A6002EF0F3 /* SharedAnalyticsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedAnalyticsTests.m; sourceTree = "<group>"; };
-		1EB9BF421BC81082002EF0F3 /* AppDelegate+ExtensionAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+ExtensionAnalytics.h"; sourceTree = "<group>"; };
-		1EB9BF431BC81082002EF0F3 /* AppDelegate+ExtensionAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+ExtensionAnalytics.m"; sourceTree = "<group>"; };
 		1EBA8C671B70C15D0089CC44 /* common-controls.cas */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "common-controls.cas"; path = "Classy/common-controls.cas"; sourceTree = "<group>"; };
 		1EBA8C6C1B70CCB10089CC44 /* stylesheet-share-ext.cas */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "stylesheet-share-ext.cas"; path = "Classy/stylesheet-share-ext.cas"; sourceTree = "<group>"; };
 		1EBA8C721B74EAB10089CC44 /* ZMUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZMUtilities.framework; path = Carthage/Build/iOS/ZMUtilities.framework; sourceTree = "<group>"; };
@@ -2514,7 +2503,7 @@
 			isa = PBXGroup;
 			children = (
 				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
-				168A16AB1D9597C2005CFA6C /* ShareViewController.swift */,
+				168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */,
 				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
 				BF96A6C31E2F845E0057974A /* UnsentSendable.swift */,
 				543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */,
@@ -2717,7 +2706,6 @@
 				8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */,
 				BF4A15D11D4900930051E8BA /* AutomationHelper.swift */,
 				878607161D33E3FF00971A19 /* weakify */,
-				1EB9BF361BC7ED3D002EF0F3 /* SharedAnalytics */,
 				871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */,
 				871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */,
 				BF7EF5441D953B3F003E3999 /* Date+Format.swift */,
@@ -2748,17 +2736,6 @@
 				1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */,
 			);
 			path = Loading;
-			sourceTree = "<group>";
-		};
-		1EB9BF361BC7ED3D002EF0F3 /* SharedAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				1EB9BF371BC7ED5D002EF0F3 /* SharedAnalytics.h */,
-				1EB9BF381BC7ED5D002EF0F3 /* SharedAnalytics.m */,
-				1EB9BF391BC7ED5D002EF0F3 /* SharedAnalyticsEvent.h */,
-				1EB9BF3A1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.m */,
-			);
-			name = SharedAnalytics;
 			sourceTree = "<group>";
 		};
 		1EE85C511B5F96FC008E084B /* WireExtensionComponents */ = {
@@ -4143,8 +4120,6 @@
 				BA9AA4341B84D553000A484B /* AppDelegate+Logging.h */,
 				BA9AA4351B84D553000A484B /* AppDelegate+Logging.m */,
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
-				1EB9BF421BC81082002EF0F3 /* AppDelegate+ExtensionAnalytics.h */,
-				1EB9BF431BC81082002EF0F3 /* AppDelegate+ExtensionAnalytics.m */,
 				872A7E8A1C1981A300E4B261 /* AppController.h */,
 				AF917BAE1C6E9D3F00491EA9 /* AppController+Internal.h */,
 				872A7E8B1C1981A300E4B261 /* AppController.m */,
@@ -4883,8 +4858,6 @@
 				1E5E0CB01B6B83C6003B0CAC /* ButtonWithLargerHitArea.h in Headers */,
 				1E5E0CFE1B6B8EDB003B0CAC /* FileManager.h in Headers */,
 				1E05C2431B6F7E0600616A66 /* Button.h in Headers */,
-				1EB9BF3D1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.h in Headers */,
-				1EB9BF3B1BC7ED5D002EF0F3 /* SharedAnalytics.h in Headers */,
 				CE8E4FC51DF17CFE0009F437 /* NSString+TextTransform.h in Headers */,
 				1677FD331BBC19A400491481 /* ColorScheme.h in Headers */,
 				1E5E0CFB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h in Headers */,
@@ -5406,7 +5379,7 @@
 				165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */,
 				543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */,
 				BF96A6CC1E2FD3BA0057974A /* NSItemProvider+Fetching.swift in Sources */,
-				168A16AC1D9597C2005CFA6C /* ShareViewController.swift in Sources */,
+				168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */,
 				543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */,
 				BF96A6C81E2FC7B60057974A /* SendController.swift in Sources */,
 				545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */,
@@ -5423,7 +5396,6 @@
 				16D3FD041E3BCCF80052A535 /* BlurEffectTransition.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
-				1EB9BF3C1BC7ED5D002EF0F3 /* SharedAnalytics.m in Sources */,
 				160A9CAA1C3D62EF00B644AA /* TabBarController.swift in Sources */,
 				876113E91DD1FC4F007F5969 /* ShareDestinationCell.swift in Sources */,
 				878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */,
@@ -5471,7 +5443,6 @@
 				CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */,
 				871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
-				1EB9BF3E1BC7ED5D002EF0F3 /* SharedAnalyticsEvent.m in Sources */,
 				1E05C2441B6F7E0600616A66 /* Button.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5712,7 +5683,6 @@
 				16A761371AD568A600A999D0 /* RegistrationStepViewController.m in Sources */,
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */,
 				8719FD691C888044005FBEC0 /* NSData+MD5.swift in Sources */,
-				1EB9BF461BC81547002EF0F3 /* AppDelegate+ExtensionAnalytics.m in Sources */,
 				8FC8549F199245770008B66B /* ParticipantsFooterView.m in Sources */,
 				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
 				BA9AA4361B84D553000A484B /* AppDelegate+Logging.m in Sources */,

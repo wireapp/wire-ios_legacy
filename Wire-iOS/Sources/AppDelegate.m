@@ -41,8 +41,6 @@
 #import "Application+runDuration.h"
 
 #import "AppDelegate+Logging.h"
-#import "AppDelegate+ExtensionAnalytics.h"
-
 
 #import "ZClientViewController.h"
 #import "SessionObjectCache.h"
@@ -189,8 +187,6 @@ static AppDelegate *sharedAppDelegate = nil;
     }
     
     self.trackedResumeEvent = NO;
-    
-    [self uploadExtensionAnalytics];
     
     DDLogInfo(@"applicationDidBecomeActive END");
 }
