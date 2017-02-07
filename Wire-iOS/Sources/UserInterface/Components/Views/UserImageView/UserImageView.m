@@ -84,19 +84,6 @@ static CIContext *ciContext(void)
 
 @implementation UserImageView
 
-- (void)dealloc
-{
-    [self unregisterAsUserObserver];
-}
-
-- (void)unregisterAsUserObserver
-{
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
-    }
-}
-
-
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
@@ -151,9 +138,7 @@ static CIContext *ciContext(void)
 }
 
 - (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
-{
-    [self unregisterAsUserObserver];
-    
+{    
     _user = user;
     
     if (user != nil && ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]])) {

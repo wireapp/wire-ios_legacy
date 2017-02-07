@@ -130,13 +130,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self updateShowVerifiedShield];
 }
 
-- (void)dealloc
-{
-    if (self.observerToken != nil) {
-        [UserChangeInfo removeUserObserver:self.observerToken forUser:self.fullUser];
-    }
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;

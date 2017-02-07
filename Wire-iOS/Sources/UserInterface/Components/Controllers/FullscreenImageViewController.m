@@ -126,13 +126,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    if (self.messageObserverToken != nil) {
-        [MessageChangeInfo removeObserver:self.messageObserverToken forMessage:self.message];
-    }
-}
-
 - (void)loadView
 {
     self.view = [[FirstReponderView alloc] init];

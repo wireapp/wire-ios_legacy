@@ -61,9 +61,6 @@
 - (void)dealloc
 {
     [self.userProfile removeObserverWithToken:self.userEditingToken];
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
-    }
 }
 
 - (instancetype)init

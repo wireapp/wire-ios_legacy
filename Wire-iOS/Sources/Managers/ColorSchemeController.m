@@ -44,9 +44,6 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
-    }
 }
 
 - (instancetype)init

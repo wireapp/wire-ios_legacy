@@ -87,13 +87,6 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     return self;
 }
 
-- (void)dealloc
-{
-    if (self.messageWindowObserverToken != nil) {
-        [MessageWindowChangeInfo removeObserver:self.messageWindowObserverToken forWindow:self.messageWindow];
-    }
-}
-
 - (void)updateLastUnreadMessage
 {
     ZMMessage *lastReadMessage = self.messageWindow.conversation.lastReadMessage;

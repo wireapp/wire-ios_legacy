@@ -67,9 +67,7 @@
 - (void)dealloc
 {
     self.observer = nil;
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:self.selfUser];
-    }
+    self.userObserverToken = nil;
 }
 
 - (void)userDidChange:(UserChangeInfo *)change

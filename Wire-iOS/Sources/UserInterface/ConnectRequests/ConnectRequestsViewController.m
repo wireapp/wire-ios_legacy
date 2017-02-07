@@ -58,23 +58,7 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 - (void)dealloc
 {
-    [self unregisterAsListObserver];
-    [self unregisterAsUserObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)unregisterAsListObserver
-{
-    if (self.pendingConnectionsListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.pendingConnectionsListObserverToken forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
-    }
-}
-
-- (void)unregisterAsUserObserver
-{
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:nil];
-    }
 }
 
 - (void)loadView

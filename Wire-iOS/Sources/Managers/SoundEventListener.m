@@ -63,7 +63,6 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
         self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
         self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
         self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
-        [ZMCallEndedNotification addCallEndObserver:self];
         
         self.watchDog = [[SoundEventRulesWatchDog alloc] initWithIgnoreTime:SoundEventListenerIgnoreTimeForPushStart];
         self.watchDog.startIgnoreDate = [NSDate date];
@@ -76,20 +75,6 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 - (void)dealloc
 {
-    if (self.callParticipantsToken != nil) {
-        // TODO Sabine remove token?
-    }
-    if (self.voiceChannelStateObserverToken != nil) {
-        // TODO Sabine remove token?
-    }
-    if (self.unreadMessageObserverToken != nil) {
-        [NewUnreadMessagesChangeInfo removeNewMessageObserver:self.unreadMessageObserverToken];
-    }
-    if (self.unreadKnockMessageObserverToken != nil) {
-        [NewUnreadKnockMessagesChangeInfo removeNewKnockObserver:self.unreadKnockMessageObserverToken];
-    }
-    [ZMCallEndedNotification removeCallEndObserver:self];
-
     [ZMUserSession removeInitalSyncCompletionObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -280,11 +265,11 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 {
     if (voiceChannel.conversation == self.currentlyActiveVoiceChannelConversation) {
         if (voiceChannel.state == VoiceChannelV2StateNoActiveUsers) {
-            self.callParticipantsObserverToken = nil;
+            self.callParticipantsToken = nil;
         }
     } else {
         if (voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel) {
-            self.callParticipantsObserverToken = [voiceChannel addParticipantObserver:self];
+            self.callParticipantsToken = [voiceChannel addParticipantObserver:self];
         }
     }
 }

@@ -78,12 +78,6 @@
     [self.tableView reloadData];
 }
 
-- (void)dealloc
-{
-    if(self.userObserverToken != nil) {
-        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
-    }
-}
 
 #pragma mark - Setup
 

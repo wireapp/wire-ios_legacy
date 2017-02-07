@@ -68,7 +68,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmEmailDelegate?
     let newEmail: String
-    fileprivate var observer: UserCollectionObserverToken?
+    fileprivate var observer: NSObjectProtocol?
 
     init(newEmail: String, delegate: ConfirmEmailDelegate?) {
         self.newEmail = newEmail
@@ -83,13 +83,14 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let context = ZMUserSession.shared()?.managedObjectContext
-        observer = UserCollectionObserverToken(observer: self, users: [ZMUser.selfUser()], managedObjectContext: context!)
+        observer = UserChangeInfo.add(observer: self, forBareUser:ZMUser.selfUser())
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        observer?.tearDown()
+        if let observer = observer {
+            UserChangeInfo.remove(observer: observer, forBareUser: nil)
+        }
     }
 
     internal func setupViews() {
@@ -132,7 +133,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
 }
 
 extension ConfirmEmailViewController: ZMUserObserver {
-    func userDidChange(_ note: ZMCDataModel.UserChangeInfo!) {
+    func userDidChange(_ note: ZMCDataModel.UserChangeInfo) {
         if note.user.isSelfUser {
             // we need to check if the notification really happened because 
             // the email got changed to what we expected

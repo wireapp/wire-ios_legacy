@@ -65,10 +65,6 @@
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification removeObserver:self];
     }
-
-    if (self.voiceChannelStateObserverToken != nil) {
-        // TODO Sabine remove token?
-    }
 }
 
 - (void)updateProximityMonitorState

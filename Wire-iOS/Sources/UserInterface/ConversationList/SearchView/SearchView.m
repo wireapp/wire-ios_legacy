@@ -86,12 +86,6 @@
     [super updateConstraints];
 }
 
-- (void)dealloc
-{
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
-    }
-}
 
 #pragma mark - ZMUserObserver
 

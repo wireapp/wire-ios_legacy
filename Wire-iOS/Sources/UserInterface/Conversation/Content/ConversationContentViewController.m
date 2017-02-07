@@ -133,10 +133,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
     }
-    
-    if (self.messageWindowObserverToken != nil) {
-        [MessageWindowChangeInfo removeObserver:self.messageWindowObserverToken forWindow:self.messageWindow];
-    }
 }
 
 - (void)loadView
@@ -790,7 +786,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.conversationMessageWindowTableViewAdapter expandMessageWindow];
 }
 
-<<<<<<< Updated upstream
 - (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
     NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];

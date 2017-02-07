@@ -51,13 +51,6 @@
 
 @implementation GroupConversationHeader
 
-- (void)dealloc
-{
-    if (self.conversationObserverToken != nil) {
-        [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
-    }
-}
-
 - (instancetype)initWithConversation:(ZMConversation *)conversation
 {
     self = [super initWithFrame:CGRectZero];

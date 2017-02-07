@@ -34,11 +34,7 @@
 @property (nonatomic, strong) UIButton *missedCallButton;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) NSParagraphStyle *subtitleParagraphStyle;
-<<<<<<< HEAD
-@property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
-=======
 @property (nonatomic) id conversationObserverToken;
->>>>>>> WIP
 @property (nonatomic) id voiceChannelStateObserverToken;
 
 @end
@@ -63,18 +59,10 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation: nil];
-    // TODO Sabine: remove other observer
-}
 
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    
-    [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation: nil];
-    // TODO Sabine: remove other observer
 }
 
 - (void)createMissedCallViews
@@ -113,10 +101,6 @@
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
 {
     if (message.conversation != self.message.conversation) {
-        // TODO Sabine: remove other observer
-        if (self.conversationObserverToken != nil) {
-            [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation: nil];
-        }
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:message.conversation];
         self.voiceChannelStateObserverToken = [self.message.conversation.voiceChannel addStateObserver:self];
     }

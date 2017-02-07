@@ -62,15 +62,6 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
 
 @implementation ChatHeadsViewController
 
-- (void)dealloc
-{
-    if (self.unreadMessageObserverToken != nil) {
-        [NewUnreadMessagesChangeInfo removeNewMessageObserver:self.unreadMessageObserverToken];
-    }
-    if (self.unreadKnockMessageObserverToken != nil) {
-        [NewUnreadKnockMessagesChangeInfo removeNewKnockObserver:self.unreadKnockMessageObserverToken];
-    }
-}
 
 - (void)loadView
 {

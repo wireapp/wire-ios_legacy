@@ -31,12 +31,6 @@
 
 @implementation UserBackgroundView
 
-- (void)dealloc
-{
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
-    }
-}
 
 - (void)setUser:(id<ZMBareUser>)user
 {
@@ -52,10 +46,6 @@
     }
     if ([user isEqual:_user]) {
         return;
-    }
-    
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeObserver:self.userObserverToken forBareUser:self.user];
     }
     
     _user = user;

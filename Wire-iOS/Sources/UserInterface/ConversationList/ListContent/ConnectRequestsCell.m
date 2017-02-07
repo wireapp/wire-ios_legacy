@@ -47,13 +47,6 @@
 
 @implementation ConnectRequestsCell
 
-- (void)dealloc
-{
-    if (self.conversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
-    }
-}
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

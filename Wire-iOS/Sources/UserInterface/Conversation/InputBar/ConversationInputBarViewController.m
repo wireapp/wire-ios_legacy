@@ -170,9 +170,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    if (self.conversationObserverToken != nil) {
-        [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
-    }
     if ([self.conversation shouldDisplayIsTyping]) {
         [ZMConversation removeTypingObserver:self];
     }

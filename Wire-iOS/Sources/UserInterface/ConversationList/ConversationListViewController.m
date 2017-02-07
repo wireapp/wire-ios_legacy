@@ -148,13 +148,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
-    if (self.allConversationsObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.allConversationsObserverToken forList:[SessionObjectCache sharedCache].allConversations];
-    }
     [ZMUserSession removeInitalSyncCompletionObserver:self];
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
-    }
 }
 
 - (void)removeUserProfileObserver

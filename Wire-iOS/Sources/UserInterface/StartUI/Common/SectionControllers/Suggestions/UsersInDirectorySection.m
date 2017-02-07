@@ -40,9 +40,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 - (void)dealloc
 {
     [self.searchDirectory removeSearchResultObserver:self];
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:nil];
-    }
 }
 
 - (BOOL)hasSearchResults
@@ -59,7 +56,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 
 - (void)setSearchDirectory:(ZMSearchDirectory *)searchDirectory
 {
-    // TODO Sabine: Check that the snapshots are actually torn down
     [self.searchDirectory removeSearchResultObserver:self];
     _searchDirectory = searchDirectory;
     [self.searchDirectory addSearchResultObserver:self];

@@ -59,9 +59,6 @@
 
 - (void)dealloc
 {
-    if (self.conversationObserverToken != nil) {
-        [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
-    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -217,13 +214,9 @@
 - (void)setConversation:(ZMConversation *)conversation
 {
     if (_conversation != conversation) {
-        if (self.conversationObserverToken != nil) {
-            [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
-        }
         _conversation = conversation;
         if (_conversation != nil) {
             self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
-
         }
         [self updateBackgroundForConversation];
     }

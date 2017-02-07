@@ -125,13 +125,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     return self;
 }
 
-- (void)dealloc
-{
-    if (self.conversationObserverToken != nil) {
-        [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -284,9 +277,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (void)setConversation:(ZMConversation *)conversation
 {
-    if (self.conversationObserverToken != nil) {
-        [ConversationChangeInfo removeObserver:self.conversationObserverToken forConversation:self.conversation];
-    }
     _conversation = conversation;
     
     if (conversation != nil) {

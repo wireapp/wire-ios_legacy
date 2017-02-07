@@ -70,16 +70,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)dealloc
 {
-    SessionObjectCache *cache = [SessionObjectCache sharedCache];
-    if (self.pendingConversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.pendingConversationListObserverToken forList:cache.pendingConnectionRequests];
-    }
-    if (self.conversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:cache.conversationList];
-    }
-    if (self.clearedConversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.clearedConversationListObserverToken forList:cache.clearedConversations];
-    }
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 

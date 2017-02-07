@@ -91,9 +91,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authToken];
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
-    }
 }
 
 - (void)setup;

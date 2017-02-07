@@ -85,12 +85,6 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
     return self;
 }
 
-- (void)dealloc
-{
-    if (self.userObserverToken != nil) {
-        [UserChangeInfo removeUserObserver:self.userObserverToken forUser:[ZMUser selfUser]];
-    }
-}
 
 - (void)addCameraButton
 {

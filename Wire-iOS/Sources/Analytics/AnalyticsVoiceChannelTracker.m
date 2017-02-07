@@ -50,14 +50,6 @@
 }
 
 
-- (void)dealloc
-{
-    if (self.voiceChannelStateObserverToken != nil) {
-        // TODO Sabine remove token?
-    }
-}
-
-
 #pragma mark - VoiceChannelStateObserver
 
 - (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol

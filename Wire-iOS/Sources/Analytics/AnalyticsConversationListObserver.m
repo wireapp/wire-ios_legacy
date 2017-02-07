@@ -65,18 +65,6 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     return self;
 }
 
-- (void)dealloc
-{
-    [self unregisterAsListObserver];
-}
-
-- (void)unregisterAsListObserver
-{
-    if (self.conversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:[SessionObjectCache sharedCache].allConversations];
-    }
-}
-
 - (void)setObserving:(BOOL)observing
 {
     if (_observing == observing) {
@@ -93,9 +81,6 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
         [self performSelector:@selector(probablyReceivedFullConversationList)
                    withObject:nil
                    afterDelay:PermantentConversationListObserverObservationFinalTime];
-    }
-    else {
-        [self unregisterAsListObserver];
     }
 }
 
