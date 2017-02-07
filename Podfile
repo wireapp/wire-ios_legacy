@@ -1,6 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 def ios_pods
+    pod "HockeySDK"
     pod 'GoogleAPIClient/YouTube', '1.0.4', :inhibit_warnings => true
     pod 'CocoaSecurity', '1.2.4', :inhibit_warnings => true
     pod 'Localytics', '4.2.0', :inhibit_warnings => true
@@ -37,5 +38,7 @@ target 'WireExtensionComponents' do
     platform :ios, '8.0'
 end
 
-
+target 'Wire Share Extension' do
+  pod "HockeySDK", :subspecs => ['CrashOnlyExtensionsLib']
+end
 
