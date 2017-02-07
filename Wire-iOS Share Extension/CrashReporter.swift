@@ -17,8 +17,8 @@
 //
 
 
-import HockeySDK
 import WireExtensionComponents
+import HockeySDK.BITHockeyManager
 
 
 /// Flag to determine if the HockeySDK has alreday been initialized (https://github.com/bitstadium/HockeySDK-iOS#34-ios-extensions)

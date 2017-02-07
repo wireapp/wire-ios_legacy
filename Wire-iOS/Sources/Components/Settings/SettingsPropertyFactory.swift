@@ -14,7 +14,10 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
+
+
+import HockeySDK.BITHockeyManager
 
 
 protocol AnalyticsInterface {
@@ -60,8 +63,7 @@ protocol CrashlogManager {
    var isCrashManagerDisabled: Bool { get set }
 }
 
-extension BITHockeyManager: CrashlogManager {
-}
+extension BITHockeyManager: CrashlogManager {}
 
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
