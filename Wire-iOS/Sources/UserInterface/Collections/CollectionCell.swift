@@ -36,19 +36,12 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     var message: ZMConversationMessage? = .none {
         didSet {
             if let token = self.messageObserverToken {
-                MessageChangeInfo.remove(observer: token, for: oldValue)
                 self.messageObserverToken = nil
             }
             if let newMessage = message {
                 self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage)
             }
             self.updateForMessage(changeInfo: .none)
-        }
-    }
-    
-    deinit {
-        if let token = self.messageObserverToken {
-            MessageChangeInfo.remove(observer: token, for: message)
         }
     }
     

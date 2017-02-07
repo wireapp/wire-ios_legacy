@@ -93,9 +93,6 @@ import Cartography
     }
     
     deinit {
-        if let token = userObserverToken {
-            UserChangeInfo.remove(observer: token, forBareUser: self.user)
-        }
         accentColorHandler = nil
     }
     

@@ -69,12 +69,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         self.credentials = credentials
     }
     
-    deinit {
-        if let token = userClientToken {
-            UserClientChangeInfo.remove(observer: token, for:nil)
-        }
-    }
-    
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return [.portrait]
     }

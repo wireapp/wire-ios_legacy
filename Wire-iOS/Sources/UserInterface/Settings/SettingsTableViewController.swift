@@ -129,12 +129,6 @@ class SettingsTableViewController: SettingsBaseTableViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError()
     }
-    
-    deinit {
-        if let token = selfUserObserver {
-            UserChangeInfo.remove(observer: token, forBareUser: nil)
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

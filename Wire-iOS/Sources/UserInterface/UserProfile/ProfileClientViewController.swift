@@ -109,12 +109,6 @@ class ProfileClientViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
-    
-    deinit {
-        if let token = userClientToken {
-            UserClientChangeInfo.remove(observer: token, for:self.userClient)
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

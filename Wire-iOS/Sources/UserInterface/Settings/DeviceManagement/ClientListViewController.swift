@@ -96,9 +96,6 @@ import CocoaLumberjackSwift
     
     deinit {
         ZMUserSession.shared()?.removeClientUpdateObserver(self.clientsObserverToken)
-        if let token = self.userObserverToken {
-            UserChangeInfo.remove(observer: token, forBareUser:nil)
-        }
     }
     
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {

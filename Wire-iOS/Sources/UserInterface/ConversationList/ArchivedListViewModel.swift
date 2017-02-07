@@ -39,12 +39,6 @@ import Foundation
         }
     }
     
-    deinit {
-        if let token = archivedConversationListObserverToken {
-            ConversationListChangeInfo.remove(observer: token, for: sessionCache?.archivedConversations)
-        }
-    }
-    
     var count: Int {
         return archivedConversations.count
     }
