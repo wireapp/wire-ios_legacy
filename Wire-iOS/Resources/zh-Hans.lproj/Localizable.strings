@@ -255,9 +255,9 @@
 
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
-"content.message.forward" = "转发";
+"content.message.forward" = "共享";
 "content.message.go_to_conversation" = "显示";
-"content.message.forward.to" = "发送给...";
+"content.message.forward.to" = "搜索";
 
 "content.reactions_list.likers" = "被赞";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "连接质量不佳";
 "voice.network_error.title" = "没有互联网讯号";
 "voice.network_error.body" = "使用语音通话，您必须连接到互联网。请检查您的网路然后重试。";
-"voice.alert.call_in_progress.title" = "通话中";
-"voice.alert.call_in_progress.message" = "您已有另一个设备在此通话中";
-"voice.alert.call_in_progress.confirm" = "确认";
 "voice.accept_button.title" = "接听";
 "voice.decline_button.title" = "拒绝";
 "voice.hang_up_button.title" = "结束通话";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "拉黑？";
-"profile.block_dialog.message" = "%@将无法在Wire上搜寻或与您联系。";
+"profile.block_dialog.message" = "%@ 将不能联系您或将您加入到任何群组中。";
 "profile.block_dialog.button_cancel" = "取消";
 "profile.block_dialog.button_block" = "加入黑名单";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "无法设置您的用户名";
 "self.settings.account_section.handle.change.failure_alert.message" = "设置用户名出错。请您重试。";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "电邮箱地址";
+"self.settings.account_section.email.change.save" = "保存";
+
+"self.settings.account_section.email.change.verify.title" = "验证电子邮箱";
+"self.settings.account_section.email.change.verify.description" = "检查您的电子邮箱收件箱并按照说明进行操作。";
+"self.settings.account_section.email.change.verify.resend" = "重新发送至%@";
+
+"self.settings.account_section.email.change.resend.title" = "重新发送邮件";
+"self.settings.account_section.email.change.resend.message" = "确认邮件已经发送至%@。 请检查您的收件箱并按照说明进行操作。";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "通知";

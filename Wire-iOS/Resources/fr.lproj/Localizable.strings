@@ -255,9 +255,9 @@
 
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
-"content.message.forward" = "Faire suivre";
+"content.message.forward" = "Partager";
 "content.message.go_to_conversation" = "Révéler";
-"content.message.forward.to" = "Envoyer à ...";
+"content.message.forward.to" = "Rechercher…";
 
 "content.reactions_list.likers" = "Aimé par";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Mauvaise connexion";
 "voice.network_error.title" = "Pas de connexion Internet";
 "voice.network_error.body" = "Vous devez être connecté pour pouvoir appeler. Vérifiez votre connexion et réessayez.";
-"voice.alert.call_in_progress.title" = "Appel en cours";
-"voice.alert.call_in_progress.message" = "Un de vos autres appareils participe déjà à l’appel";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Accepter";
 "voice.decline_button.title" = "Refuser";
 "voice.hang_up_button.title" = "Raccrocher";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Bloquer?";
-"profile.block_dialog.message" = "%@ ne pourra pas ni vous trouver ni vous contacter sur Wire.";
+"profile.block_dialog.message" = "%@ ne sera plus en mesure de vous contacter ou de vous ajouter à des conversations de groupe.";
 "profile.block_dialog.button_cancel" = "Annuler";
 "profile.block_dialog.button_block" = "Bloquer";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Impossible d'enregistrer le nom d'utilisateur";
 "self.settings.account_section.handle.change.failure_alert.message" = "Une erreur s'est produite lors de l'enregistrement de votre nom d'utilisateur. Veuillez réessayer.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Enregistrer";
+
+"self.settings.account_section.email.change.verify.title" = "Vérifier l'adresse email";
+"self.settings.account_section.email.change.verify.description" = "Vérifiez votre boîte mail et suivez les instructions.";
+"self.settings.account_section.email.change.verify.resend" = "Renvoyer à %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email renvoyé";
+"self.settings.account_section.email.change.resend.message" = "L'email de confirmation a été renvoyé à %@. Vérifiez votre boîte de réception et suivez les instructions.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
