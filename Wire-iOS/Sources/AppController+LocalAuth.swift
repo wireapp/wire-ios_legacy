@@ -19,6 +19,7 @@
 import Foundation
 import LocalAuthentication
 import CocoaLumberjackSwift
+import HockeySDK.BITHockeyManager
 
 extension AppController {
     static var settingsPropertyFactory: SettingsPropertyFactory {

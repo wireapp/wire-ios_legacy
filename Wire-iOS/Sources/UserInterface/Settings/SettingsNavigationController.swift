@@ -18,6 +18,8 @@
 
 
 import Foundation
+import HockeySDK.BITHockeyManager
+
 
 @objc class SettingsNavigationController: UINavigationController {
 

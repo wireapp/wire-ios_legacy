@@ -38,14 +38,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.postContent = PostContent(attachments: self.allAttachments)
-        self.setupNavigationBar()
-        self.appendTextToEditor()
-        self.placeholder = "share_extension.input.placeholder".localized
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupObserver()
@@ -54,6 +46,25 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupObserver()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CrashReporter.setupHockeyIfNeeded()
+        navigationController?.view.backgroundColor = .white
+        recreateSharingSession()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.postContent = PostContent(attachments: self.allAttachments)
+        self.setupNavigationBar()
+        self.appendTextToEditor()
+        self.placeholder = "share_extension.input.placeholder".localized
     }
 
     private func setupObserver() {
@@ -65,16 +76,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.view.backgroundColor = .white
-        recreateSharingSession()
     }
 
     @objc private func extensionHostDidEnterBackground() {

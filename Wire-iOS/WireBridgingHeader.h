@@ -132,7 +132,6 @@
 #import "UIImagePickerController+GetImage.h"
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
-@import HockeySDK;
 
 // Camera
 #import "CameraController.h"
