@@ -194,6 +194,7 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DDLogInfo(@"applicationWillResignActive:  (applicationState = %ld)", (long)application.applicationState);
+    [self.appController applicationWillResignActive:application];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

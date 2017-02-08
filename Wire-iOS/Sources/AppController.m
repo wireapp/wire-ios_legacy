@@ -142,6 +142,13 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }];
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    if ([self appLockActive]) {
+        self.notificationWindowController.dimContents = YES;
+    }
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     self.localAuthenticationSucceeded = NO;
