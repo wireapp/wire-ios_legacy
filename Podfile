@@ -26,13 +26,14 @@ target 'Wire-iOS' do
                 config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
             end
         end
-    end
+    end  
+    
 end
 
 target 'Wire-iOS-Tests' do
     platform :ios, '8.0'
+    pod "HockeySDK"
 end
-
 
 target 'WireExtensionComponents' do
     platform :ios, '8.0'

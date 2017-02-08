@@ -19,7 +19,6 @@
 
 #import "ZMSnapshotTestCase.h"
 #import "Wire_iOS_Tests-Swift.h"
-#import "Wire-Swift.h"
 #import "ProfilePictureStepViewController.h"
 #import "ProfilePictureStepViewController+Testing.h"
 #import <PureLayout/PureLayout.h>

@@ -35,6 +35,8 @@
     self.snapshotBackgroundColor = [UIColor colorWithWhite:0.2 alpha:1];
     self.sut = [[ArchivedNavigationBar alloc] initWithTitle:@"ARCHIVE"];
     [CASStyler.defaultStyler styleItem:self.sut];
+    // Wait until fonts are loaded in Classy
+    [[NSRunLoop currentRunLoop] runUntilDate:[[NSDate date] dateByAddingTimeInterval:0.1]];
 }
 
 - (void)testThatItRendersTheNavigationBarCorrectInitially {

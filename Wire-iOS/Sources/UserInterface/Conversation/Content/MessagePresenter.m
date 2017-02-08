@@ -169,17 +169,7 @@
         return nil;
     }
     
-    FullscreenImageViewController *fullscreenImageViewController = [[FullscreenImageViewController alloc] initWithMessage:message];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        fullscreenImageViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        fullscreenImageViewController.snapshotBackgroundView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:YES];
-    } else {
-        fullscreenImageViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    fullscreenImageViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    fullscreenImageViewController.delegate = delegate;
-    
-    return fullscreenImageViewController;
+    return [self imagesViewControllerFor:message actionResponder:delegate];
 }
 
 - (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate

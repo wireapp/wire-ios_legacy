@@ -19,7 +19,7 @@
 import Foundation
 
 extension MessagePresenter {
-    func openImagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder) {
+    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder) -> UIViewController {
         
         guard let conversation = message.conversation else {
             fatal("Message \(message) has no conversation.")
@@ -50,7 +50,7 @@ extension MessagePresenter {
             }
             self.modalTargetController?.dismiss(animated: true, completion: completion)
         }
-        self.modalTargetController?.present(imagesController.wrapInNavigationController(), animated: true)
+        return imagesController.wrapInNavigationController()
     }
     
     @objc func closeImagesButtonPressed(_ sender: AnyObject!) {
