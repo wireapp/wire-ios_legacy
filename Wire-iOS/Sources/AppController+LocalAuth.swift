@@ -63,7 +63,8 @@ extension AppController {
         let lastAuthDate = self.lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
-        if (Date().timeIntervalSinceReferenceDate - lastAuthDate.timeIntervalSinceReferenceDate) < type(of: self).authenticationPersistancePeriod {
+        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        if timeSinceAuth >= 0 && timeSinceAuth < type(of: self).authenticationPersistancePeriod {
             callback(true)
             return
         }

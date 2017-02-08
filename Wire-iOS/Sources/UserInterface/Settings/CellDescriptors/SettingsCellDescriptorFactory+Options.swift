@@ -158,16 +158,6 @@ extension SettingsCellDescriptorFactory {
             popularDemandDescriptors.insert(darkThemeElement, at: 0)
         }
         
-        if #available(iOS 9.0, *) {
-            let context: LAContext = LAContext()
-            var error: NSError?
-            
-            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-                let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                popularDemandDescriptors.insert(lockApp, at: 0)
-            }
-        }
-        
         let byPopularDemandSection = SettingsSectionDescriptor(
             cellDescriptors: popularDemandDescriptors,
             header: "self.settings.popular_demand.title".localized,
@@ -180,6 +170,18 @@ extension SettingsCellDescriptorFactory {
 
         cellDescriptors.append(byPopularDemandSection)
 
+        
+        if #available(iOS 9.0, *) {
+            let context: LAContext = LAContext()
+            var error: NSError?
+            
+            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+                let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
+                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp])
+                cellDescriptors.append(section)
+            }
+        }
+        
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
 

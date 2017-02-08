@@ -34,6 +34,7 @@
 #import "zmessaging+iOS.h"
 #import "UIViewController+Orientation.h"
 #import "BarController.h"
+#import "Wire-Swift.h"
 
 
 
@@ -55,7 +56,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
 @property (nonatomic, strong) NSLayoutConstraint *notificationRightMargin;
 
-@property (nonatomic) UIView *dimView;
+@property (nonatomic) DimView *dimView;
 
 @end
 
@@ -84,11 +85,8 @@
     [self addViewController:self.networkStatusViewController toView:self.view];
     
     self.invitationStatusController = [[InvitationStatusController alloc] initWithBarController:self.notificationBarController];
-    
-    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    
-    self.dimView = [[UIVisualEffectView alloc] initWithEffect:blur];
-    self.dimView.translatesAutoresizingMaskIntoConstraints = NO;
+       
+    self.dimView = [[DimView alloc] initForAutoLayout];
     self.dimView.hidden = !self.dimContents;
     [self.view addSubview:self.dimView];
     

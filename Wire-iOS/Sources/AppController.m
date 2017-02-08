@@ -67,8 +67,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 @property (nonatomic) ClassyCache *classyCache;
 
-@property (nonatomic) BOOL localAuthenticationSucceeded;
-
+@property (nonatomic) BOOL localAuthenticationCancelled;
+@property (nonatomic) BOOL localAuthenticationNeeded;
 @end
 
 
@@ -98,6 +98,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
                                                  selector:@selector(contentSizeCategoryDidChange:)
                                                      name:UIContentSizeCategoryDidChangeNotification
                                                    object:nil];
+        
+        self.localAuthenticationNeeded = YES;
     }
     return self;
 }
@@ -151,7 +153,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    self.localAuthenticationSucceeded = NO;
+    self.localAuthenticationNeeded = YES;
     if ([self appLockActive]) {
         self.notificationWindowController.dimContents = YES;
     }
@@ -310,7 +312,15 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.notificationWindowController = [NotificationWindowRootViewController new];
     self.notificationsWindow.rootViewController = self.notificationWindowController;
     self.notificationsWindow.accessibilityIdentifier = @"ZClientNotificationWindow";
+    
     [self.notificationsWindow setHidden:NO];
+    
+    @weakify(self);
+    self.notificationWindowController.dimView.onReauthRequested = ^{
+        @strongify(self);
+        self.localAuthenticationCancelled = NO;
+        [self checkAppLock];
+    };
 }
 
 - (void)setupClassyWithWindows:(NSArray *)windows
@@ -340,14 +350,23 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)checkAppLock
 {
-    if ([self appLockActive] && !self.localAuthenticationSucceeded) {
+    if ([self appLockActive] && self.localAuthenticationNeeded) {
         self.notificationWindowController.dimContents = YES;
-        [self requireLocalAuthenticationIfNeededWith:^(BOOL granted) {
-            self.notificationWindowController.dimContents = !granted;
-            self.localAuthenticationSucceeded = granted;
-        }];
+        
+        if (self.localAuthenticationCancelled) {
+            self.notificationWindowController.dimView.showReauth = YES;
+        }
+        else {
+            self.notificationWindowController.dimView.showReauth = NO;
+            [self requireLocalAuthenticationIfNeededWith:^(BOOL granted) {
+                self.notificationWindowController.dimContents = !granted;
+                self.localAuthenticationCancelled = !granted;
+                self.localAuthenticationNeeded = !granted;
+            }];
+        }
     }
     else {
+        self.notificationWindowController.dimView.showReauth = NO;
         self.notificationWindowController.dimContents = NO;
     }
 }

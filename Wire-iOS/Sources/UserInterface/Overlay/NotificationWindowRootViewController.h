@@ -23,7 +23,7 @@
 @class VoiceChannelController;
 @class NetworkActivityViewController;
 @class BarController;
-
+@class DimView;
 
 
 @interface NotificationWindowRootViewController : UIViewController
@@ -31,6 +31,7 @@
 @property (nonatomic, readonly) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) VoiceChannelController *voiceChannelController;
 @property (nonatomic, readonly) BarController *notificationBarController;
+@property (nonatomic, readonly) DimView *dimView;
 
 @property (nonatomic) BOOL showLoadMessages;
 

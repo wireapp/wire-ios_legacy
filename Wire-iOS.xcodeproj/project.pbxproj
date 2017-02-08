@@ -415,6 +415,7 @@
 		8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */; };
 		8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873337891DF5B43A006AE609 /* SwiftDependencies.swift */; };
 		873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 873478061D34EE5100CB200F /* libstdc++.tbd */; };
+		8736F1841E4B67F0001CBA62 /* DimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8736F1831E4B67F0001CBA62 /* DimView.swift */; };
 		87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */; };
 		873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C5FE31C10426A00D5132A /* ClientListViewController.swift */; };
 		873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C5FE41C10426A00D5132A /* ClientTableViewCell.swift */; };
@@ -1600,6 +1601,7 @@
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873337891DF5B43A006AE609 /* SwiftDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDependencies.swift; sourceTree = "<group>"; };
 		873478061D34EE5100CB200F /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		8736F1831E4B67F0001CBA62 /* DimView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimView.swift; sourceTree = "<group>"; };
 		87371C181B7355C400807499 /* ConversationListViewController+StartUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+StartUI.h"; sourceTree = "<group>"; };
 		87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationListViewController+StartUI.m"; sourceTree = "<group>"; };
 		873C5FE31C10426A00D5132A /* ClientListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListViewController.swift; sourceTree = "<group>"; };
@@ -4515,6 +4517,7 @@
 				167AEA141B1603EC00890435 /* VoiceChannelParticipantsController.m */,
 				16EBBEFD1BEBBCF40087DA60 /* InvitationStatusController.h */,
 				16EBBEFE1BEBBCF40087DA60 /* InvitationStatusController.m */,
+				8736F1831E4B67F0001CBA62 /* DimView.swift */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -5608,6 +5611,7 @@
 				8FC8549C199245770008B66B /* NetworkStatusViewController.m in Sources */,
 				BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */,
 				87F18BBE1E015BBB00C69D9B /* TransferView.swift in Sources */,
+				8736F1841E4B67F0001CBA62 /* DimView.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */,
 				1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */,

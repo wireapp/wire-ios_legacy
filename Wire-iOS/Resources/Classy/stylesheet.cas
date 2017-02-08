@@ -1605,3 +1605,10 @@ ConversationImagesViewController {
         backgroundColor: $color-background;
     }
 }
+
+DimView {
+    authenticateLabel: @{
+        font: $font-small-medium;
+        textColor: $color-text-foreground-dark;
+    }
+}
