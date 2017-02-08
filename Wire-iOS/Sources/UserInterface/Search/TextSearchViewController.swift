@@ -95,11 +95,12 @@ final internal class TextSearchViewController: UIViewController {
             }
             
             let predicate = NSPredicate(block: { (object, _) -> Bool in
-                guard let object = object as? ZMTextMessageData else {
+                guard let object = object as? ZMTextMessageData,
+                      let text = object.messageText else {
                     return false
                 }
                 
-                return object.messageText.localizedCaseInsensitiveContains(query)
+                return text.localizedCaseInsensitiveContains(query)
             })
             self.results = self.conversation.messages.filtered(using: predicate).array as! [ZMConversationMessage]
         }

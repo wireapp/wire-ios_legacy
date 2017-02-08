@@ -84,7 +84,8 @@ import Cartography
             if currentRange.location != NSNotFound {
                 queryRange.location = currentRange.location + currentRange.length
                 queryRange.length = textString.length - queryRange.location
-                attributedText.setAttributes([NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)], range: currentRange)
+                attributedText.setAttributes([NSFontAttributeName: font,
+                                              NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)], range: currentRange)
             }
         }
         while currentRange.location != NSNotFound
