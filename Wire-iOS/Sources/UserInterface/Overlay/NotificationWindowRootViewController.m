@@ -85,8 +85,10 @@
     
     self.invitationStatusController = [[InvitationStatusController alloc] initWithBarController:self.notificationBarController];
     
-    self.dimView = [[UIView alloc] initForAutoLayout];
-    self.dimView.backgroundColor = [UIColor blackColor];
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    self.dimView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    self.dimView.translatesAutoresizingMaskIntoConstraints = NO;
     self.dimView.hidden = !self.dimContents;
     [self.view addSubview:self.dimView];
     

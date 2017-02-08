@@ -80,6 +80,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case linkPreviewsInShareExtension = "LinkPreviewsInShareExtension"
 
     case lockApp = "lockApp"
+    case lockAppLastDate = "lockAppLastDate"
     
     var changeNotificationName: String {
         return self.description + "ChangeNotification"
@@ -110,7 +111,11 @@ enum SettingsPropertyValue: Equatable {
     init(_ int: Int16) {
         self = .number(value: NSNumber(value: int))
     }
-
+    
+    init(_ int: UInt32) {
+        self = .number(value: NSNumber(value: int))
+    }
+    
     static func propertyValue(_ object: Any?) -> SettingsPropertyValue {
         switch(object) {
         case let number as NSNumber:

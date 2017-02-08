@@ -145,6 +145,10 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     self.localAuthenticationSucceeded = NO;
+    if ([self appLockActive]) {
+        self.notificationWindowController.dimContents = YES;
+    }
+    self.lastUnlockedDate = [[NSDate alloc] init];
 }
 
 - (void)uploadAddressBookIfNeeded

@@ -18,6 +18,7 @@
 
 
 import Foundation
+import LocalAuthentication
 
 
 extension SettingsCellDescriptorFactory {
@@ -156,6 +157,17 @@ extension SettingsCellDescriptorFactory {
             let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.darkMode))
             popularDemandDescriptors.insert(darkThemeElement, at: 0)
         }
+        
+        if #available(iOS 9.0, *) {
+            let context: LAContext = LAContext()
+            var error: NSError?
+            
+            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+                let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
+                popularDemandDescriptors.insert(lockApp, at: 0)
+            }
+        }
+        
         let byPopularDemandSection = SettingsSectionDescriptor(
             cellDescriptors: popularDemandDescriptors,
             header: "self.settings.popular_demand.title".localized,

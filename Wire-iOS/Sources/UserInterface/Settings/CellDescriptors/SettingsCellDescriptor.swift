@@ -266,6 +266,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "Fetch link previews in share extension"
     case .lockApp:
         return "self.settings.privacy_security.lock_app".localized
+    case .lockAppLastDate:
+        return "Last app lock date"
     }
 }
 

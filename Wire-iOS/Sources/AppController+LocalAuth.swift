@@ -39,9 +39,31 @@ extension AppController {
         return lockApp.value() == SettingsPropertyValue(true)
     }
     
+    static let authenticationPersistancePeriod: TimeInterval = 10
+    
+    var lastUnlockedDate: Date {
+        get {
+            let lastAuthDateProperty = type(of: self).settingsPropertyFactory.property(.lockAppLastDate)
+            return Date(timeIntervalSinceReferenceDate: TimeInterval(lastAuthDateProperty.value().value() as! UInt32))
+        }
+        
+        set {
+            let lastAuthDateProperty = type(of: self).settingsPropertyFactory.property(.lockAppLastDate)
+            try! lastAuthDateProperty.set(newValue: SettingsPropertyValue(UInt32(newValue.timeIntervalSinceReferenceDate)))
+        }
+    }
+    
     /// @param callback confirmation; if auth is not needed called with 'true'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool)->()) {
         guard #available(iOS 9.0, *), self.appLockActive else {
+            callback(true)
+            return
+        }
+        
+        let lastAuthDate = self.lastUnlockedDate
+        
+        // The app was authenticated at least N seconds ago
+        if (Date().timeIntervalSinceReferenceDate - lastAuthDate.timeIntervalSinceReferenceDate) < type(of: self).authenticationPersistancePeriod {
             callback(true)
             return
         }
@@ -57,6 +79,9 @@ extension AppController {
                     
                     if !success {
                         DDLogError("Local authentication error: \(error?.localizedDescription)")
+                    }
+                    else {
+                        self.lastUnlockedDate = Date()
                     }
                 }
             })
