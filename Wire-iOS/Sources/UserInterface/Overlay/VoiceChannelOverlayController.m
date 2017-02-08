@@ -473,7 +473,12 @@
     if (self.conversation.voiceChannel.isVideoCall) {
         self.outgoingVideoWasActiveBeforeBackgrounding = self.outgoingVideoActive;
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            self.conversation.isSendingVideo = NO;
+            NSError *error = nil;
+            [self.conversation.voiceChannel toggleVideoActive:NO error:&error];
+            
+            if (error != nil) {
+                DDLogError(@"Error toggling video: %@", error);
+            }
         }];
     }
 }
@@ -482,7 +487,12 @@
 {
     if (self.conversation.voiceChannel.isVideoCall) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            self.conversation.isSendingVideo = self.outgoingVideoWasActiveBeforeBackgrounding;
+            NSError *error = nil;
+            [self.conversation.voiceChannel toggleVideoActive:self.outgoingVideoWasActiveBeforeBackgrounding error:&error];
+            
+            if (error != nil) {
+                DDLogError(@"Error toggling video: %@", error);
+            }
         }];
     }
 }
