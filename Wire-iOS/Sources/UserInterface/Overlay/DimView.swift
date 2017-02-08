@@ -70,7 +70,7 @@ import Cartography
             authenticateLabel.centerX == selfView.centerX
             
             authenticateButton.top == authenticateLabel.bottom + 24
-            authenticateButton.width == 120
+            authenticateButton.width >= 120
             authenticateButton.height == 40
             authenticateButton.centerX == selfView.centerX
             authenticateButton.bottom == selfView.bottom - 24
