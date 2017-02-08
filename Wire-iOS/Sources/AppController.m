@@ -153,11 +153,14 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    if (!self.localAuthenticationNeeded) {
+        self.lastUnlockedDate = [[NSDate alloc] init];
+    }
+    
     self.localAuthenticationNeeded = YES;
     if ([self appLockActive]) {
         self.notificationWindowController.dimContents = YES;
     }
-    self.lastUnlockedDate = [[NSDate alloc] init];
 }
 
 - (void)uploadAddressBookIfNeeded
@@ -319,6 +322,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.notificationWindowController.dimView.onReauthRequested = ^{
         @strongify(self);
         self.localAuthenticationCancelled = NO;
+        self.localAuthenticationNeeded = YES;
         [self checkAppLock];
     };
 }
