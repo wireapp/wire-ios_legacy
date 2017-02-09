@@ -73,6 +73,11 @@ final internal class TextSearchViewController: UIViewController {
             tableView.bottom == view.bottom
         }
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        textSearchQuery?.cancel()
+    }
     
     fileprivate func scheduleSearch() {
         let searchSelector = #selector(TextSearchViewController.search)
@@ -119,6 +124,10 @@ extension TextSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         self.search()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        textSearchQuery?.cancel()
     }
 }
 
