@@ -27,6 +27,7 @@
 #import "Settings.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSString+Emoji.h"
+#import "Wire-Swift.h"
 
 @import WireExtensionComponents;
 @import ZMCLinkPreview;
@@ -96,11 +97,10 @@ static inline NSDataDetector *linkDataDetector(void)
     
     text = [text trimmedCopy];
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    if (nil == cellParagraphStyle) {
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
-        cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"];
-    });
+        cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"] * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
+    }
 
     UIFont *font;
     UIColor *foregroundColor;
@@ -184,6 +184,11 @@ static inline NSDataDetector *linkDataDetector(void)
     }
     
     return (nil != markdownStr) ? markdownStr: [[NSAttributedString alloc] initWithAttributedString:attributedString];
+}
+
++ (void)wr_flushCellParagraphStyleCache
+{
+    cellParagraphStyle = nil;
 }
 
 @end

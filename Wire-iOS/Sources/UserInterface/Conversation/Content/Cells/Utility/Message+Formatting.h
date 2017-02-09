@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
                                                 forMessage:(id<ZMTextMessageData>)message
                                                    isGiphy:(BOOL)isGiphy
                                                 obfuscated:(BOOL)obfuscated;
+
+/// This method needs to be called when preferred content size is changed.
++ (void)wr_flushCellParagraphStyleCache;
+
 @end
 
 @interface Message (Formatting)

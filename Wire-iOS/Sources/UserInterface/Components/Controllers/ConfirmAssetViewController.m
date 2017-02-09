@@ -315,7 +315,7 @@ static const CGFloat MarginInset = 24;
     canvasViewController.title = self.previewTitle;
     [canvasViewController selectWithEditMode:editMode animated:NO];
     
-    UIViewController *navigationController = canvasViewController.wrapInNavigationController;
+    UIViewController *navigationController = [canvasViewController wrapInNavigationController];
     navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     [self presentViewController:navigationController animated:YES completion:nil];

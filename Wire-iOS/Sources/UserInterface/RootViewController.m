@@ -93,7 +93,7 @@
     [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authToken];
 }
 
-- (void)setup;
+- (void)setup
 {
     self.keyboardFrameObserver = [[KeyboardFrameObserver alloc] init];
 

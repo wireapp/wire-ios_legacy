@@ -87,6 +87,7 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"
+#import "AppController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -130,7 +131,6 @@
 #import "UIImagePickerController+GetImage.h"
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
-@import HockeySDK;
 
 // Camera
 #import "CameraController.h"

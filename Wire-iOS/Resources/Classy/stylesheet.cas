@@ -672,7 +672,7 @@ FullscreenImageViewController {
         minimumDismissMagnitude: 250
     }
 
-    view @{
+    view: @{
         backgroundColor: $color-background;
     }
     
