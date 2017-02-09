@@ -22,7 +22,7 @@ import ZMCDataModel
 import Cartography
 
 
-final internal class TextSearchViewController: UIViewController {
+final internal class TextSearchViewController: UIViewController, TextSearchQueryDelegate {
     private var tableView: UITableView!
     private var searchBar: UISearchBar!
     
@@ -31,6 +31,8 @@ final internal class TextSearchViewController: UIViewController {
     public var searchQuery: String? {
         return self.searchBar.text
     }
+
+    private var textSearchQuery: TextSearchQuery?
     
     fileprivate var results: [ZMConversationMessage] = []
     
@@ -75,36 +77,38 @@ final internal class TextSearchViewController: UIViewController {
     fileprivate func scheduleSearch() {
         let searchSelector = #selector(TextSearchViewController.search)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: searchSelector, object: .none)
-        self.perform(searchSelector, with: .none, afterDelay: 2.0)
+        self.perform(searchSelector, with: .none, afterDelay: 0.3)
     }
     
     @objc fileprivate func search() {
         let searchSelector = #selector(TextSearchViewController.search)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: searchSelector, object: .none)
-        
+        textSearchQuery?.cancel()
+        textSearchQuery = nil
+
+        guard let query = self.searchQuery, !query.isEmpty else {
+            self.results = []
+            return
+        }
+
+        textSearchQuery = TextSearchQuery(conversation: conversation, query: query, delegate: self)
+        textSearchQuery?.execute()
         self.showLoadingView = true
-        delay(0.01) {
-            defer {
-                self.showLoadingView = false
-                self.tableView.reloadData()
-            }
-            
-            guard let query = self.searchQuery, !query.isEmpty else {
-                self.results = []
-                return
-            }
-            
-            let predicate = NSPredicate(block: { (object, _) -> Bool in
-                guard let object = object as? ZMTextMessageData,
-                      let text = object.messageText else {
-                    return false
-                }
-                
-                return text.localizedCaseInsensitiveContains(query)
-            })
-            self.results = self.conversation.messages.filtered(using: predicate).array as! [ZMConversationMessage]
+    }
+
+}
+
+extension TextSearchViewController: TextSearchQueryDelegate {
+
+    func textSearchQueryDidReceive(result: TextQueryResult) {
+        guard result.query == textSearchQuery else { return }
+        if result.matches.count > 0 || !result.hasMore {
+            showLoadingView = false
+            results = result.matches
+            tableView.reloadData()
         }
     }
+
 }
 
 extension TextSearchViewController: UISearchBarDelegate {
