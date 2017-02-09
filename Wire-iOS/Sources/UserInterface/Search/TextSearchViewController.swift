@@ -22,8 +22,8 @@ import ZMCDataModel
 import Cartography
 
 
-final internal class TextSearchViewController: UIViewController, TextSearchQueryDelegate {
-    private var tableView: UITableView!
+final internal class TextSearchViewController: UIViewController {
+    fileprivate var tableView: UITableView!
     private var searchBar: UISearchBar!
     
     public weak var delegate: MessageActionResponder? = .none
@@ -32,7 +32,7 @@ final internal class TextSearchViewController: UIViewController, TextSearchQuery
         return self.searchBar.text
     }
 
-    private var textSearchQuery: TextSearchQuery?
+    fileprivate var textSearchQuery: TextSearchQuery?
     
     fileprivate var results: [ZMConversationMessage] = []
     
