@@ -44,7 +44,7 @@
 
 #import <NSObject+ObjectMap.h>
 #import <CocoaSecurity/CocoaSecurity.h>
-#import <AVSFlowManager.h>
+#import <avs/AVSFlowManager.h>
 
 #import "Wire-Swift.h"
 

@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@ 开始使用新的设备。";
 "meta.degraded.degradation_reason_message.plural" = "%@ 开始使用新的设备。";
 "meta.degraded.dialog_message" = "您仍然要发送您的信息吗？";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "不发送";
 "meta.degraded.send_anyway_button" = "确定发送";

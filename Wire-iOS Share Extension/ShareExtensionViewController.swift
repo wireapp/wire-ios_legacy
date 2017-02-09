@@ -28,23 +28,16 @@ import Classy
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
 
-class ShareViewController: SLComposeServiceViewController {
+class ShareExtensionViewController: SLComposeServiceViewController {
     
     var conversationItem : SLComposeSheetConfigurationItem?
 
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
+    fileprivate var extensionActivity: ExtensionActivity? = nil
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.postContent = PostContent(attachments: self.allAttachments)
-        self.setupNavigationBar()
-        self.appendTextToEditor()
-        self.placeholder = "share_extension.input.placeholder".localized
-    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -56,6 +49,28 @@ class ShareViewController: SLComposeServiceViewController {
         setupObserver()
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CrashReporter.setupHockeyIfNeeded()
+        navigationController?.view.backgroundColor = .white
+        recreateSharingSession()
+        let activity = ExtensionActivity(attachments: allAttachments)
+        sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
+        extensionActivity = activity
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.postContent = PostContent(attachments: self.allAttachments)
+        self.setupNavigationBar()
+        self.appendTextToEditor()
+        self.placeholder = "share_extension.input.placeholder".localized
+    }
+
     private func setupObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(extensionHostDidEnterBackground), name: .NSExtensionHostDidEnterBackground, object: nil)
     }
@@ -65,16 +80,6 @@ class ShareViewController: SLComposeServiceViewController {
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.view.backgroundColor = .white
-        recreateSharingSession()
     }
 
     @objc private func extensionHostDidEnterBackground() {
@@ -130,19 +135,37 @@ class ShareViewController: SLComposeServiceViewController {
                 self.progressViewController?.progress = progress
 
             case .done:
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                    self.view.alpha = 0
-                    self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-                }, completion: { _ in
-                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-                })
+                self.storeTrackingData {
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                        self.view.alpha = 0
+                        self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                    }, completion: { _ in
+                        self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                    })
+                }
 
             case .conversationDidDegrade((let users, let strategyChoice)):
+                self.extensionActivity?.markConversationDidDegrade()
                 self.conversationDidDegrade(
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
             }
+        }
+    }
+
+    override func cancel() {
+        if let event = extensionActivity?.cancelledEvent() {
+            sharingSession?.analyticsEventPersistence.add(event)
+        }
+        super.cancel()
+    }
+
+    private func storeTrackingData(completion: @escaping () -> Void) {
+        extensionActivity?.hasText = !contentText.isEmpty
+        extensionActivity?.sentEvent { [weak self] event in
+            self?.sharingSession?.analyticsEventPersistence.add(event)
+            completion()
         }
     }
     
@@ -151,7 +174,7 @@ class ShareViewController: SLComposeServiceViewController {
         if let parentView = super.loadPreviewView() {
             return parentView
         }
-        let hasURL = self.allAttachments.first(where: { $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String) }) != nil
+        let hasURL = self.allAttachments.contains { $0.hasURL }
         let hasEmptyText = self.textView.text.isEmpty
         // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
         // if it has no image, it has a URL and it has text, it must be a file
@@ -219,6 +242,7 @@ class ShareViewController: SLComposeServiceViewController {
         conversationSelectionViewController.selectionHandler = { [weak self] conversation in            
             self?.conversationItem?.value = conversation.name
             self?.postContent?.target = conversation
+            self?.extensionActivity?.conversation = conversation
             self?.popConfigurationViewController()
             self?.validateContent()
         }

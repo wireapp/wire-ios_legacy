@@ -83,6 +83,7 @@ if __name__ == "__main__":
             print "Can't find",path,", please run from project root folder"
             exit(1)
         # reset file
+    for path in [_PROJECT_FILE, _DEV_XCCONFIG]:
         subprocess.check_call(["/usr/bin/git", "checkout", "--", path])
     if reset:
         exit(0)

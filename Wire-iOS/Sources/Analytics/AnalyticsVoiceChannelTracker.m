@@ -20,18 +20,17 @@
 #import "AnalyticsVoiceChannelTracker.h"
 #import "Analytics.h"
 #import "zmessaging+iOS.h"
-#import <ZMCDataModel/ZMVoiceChannelNotifications.h>
 
 
-
-@interface AnalyticsVoiceChannelTracker () <ZMVoiceChannelStateObserver, ZMCallEndObserver>
+@interface AnalyticsVoiceChannelTracker () <VoiceChannelStateObserver>
 
 @property (nonatomic) BOOL initiatedCall;
 @property (nonatomic) BOOL isVideoCall;
 @property (nonatomic) NSDate *callEstablishedDate;
+@property (nonatomic) NSDate *callAnsweredDate;
 
 @property (nonatomic) Analytics *analytics;
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
+@property (nonatomic) id voiceChannelStateObserverToken;
 
 @end
 
@@ -45,55 +44,52 @@
     
     if (self) {
         self.analytics = analytics;
-        self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
-        [ZMCallEndedNotification addCallEndObserver:self];
+        self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
     }
     
     return self;
 }
 
-- (void)dealloc
-{
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
-    [ZMCallEndedNotification removeCallEndObserver:self];
-}
 
 #pragma mark - VoiceChannelStateObserver
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    ZMVoiceChannelState currentState = change.currentState;
-    ZMVoiceChannelState previousState = change.previousState;
-    ZMConversation *conversation = change.voiceChannel.conversation;
-    
-    if (currentState == ZMVoiceChannelStateOutgoingCall) {
+    if (voiceChannelState == VoiceChannelV2StateOutgoingCall) {
         self.initiatedCall = YES;
-        self.isVideoCall = conversation.isVideoCall;
-        [self.analytics tagInitiatedCallInConversation:conversation video:self.isVideoCall];
+        self.isVideoCall = conversation.voiceChannel.isVideoCall;
+        [self.analytics tagInitiatedCallInConversation:conversation video:self.isVideoCall callingProtocol:callingProtocol];
     }
-    else if (currentState == ZMVoiceChannelStateIncomingCall) {
-        self.isVideoCall = conversation.isVideoCall;
-        [self.analytics tagReceivedCallInConversation:conversation video:self.isVideoCall];
+    else if (voiceChannelState == VoiceChannelV2StateIncomingCall) {
+        self.initiatedCall = NO;
+        self.isVideoCall = conversation.voiceChannel.isVideoCall;
+        [self.analytics tagReceivedCallInConversation:conversation video:self.isVideoCall callingProtocol:callingProtocol];
     }
-    else if (currentState == ZMVoiceChannelStateSelfIsJoiningActiveChannel) {
-        self.initiatedCall = (previousState == ZMVoiceChannelStateOutgoingCall || previousState == ZMVoiceChannelStateOutgoingCallInactive);
-        [self.analytics tagJoinedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall];
+    else if (voiceChannelState == VoiceChannelV2StateSelfIsJoiningActiveChannel) {
+        self.callAnsweredDate = [NSDate date];
+        [self.analytics tagJoinedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall callingProtocol:callingProtocol];
     }
-    else if (currentState == ZMVoiceChannelStateSelfConnectedToActiveChannel && nil == self.callEstablishedDate) {
+    else if (voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel && nil == self.callEstablishedDate) {
         self.callEstablishedDate = [NSDate date];
-        [self.analytics tagEstablishedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall];
+        NSTimeInterval setupDuration = [self.callEstablishedDate timeIntervalSinceDate:self.callAnsweredDate];
+        [self.analytics tagEstablishedCallInConversation:conversation video:self.isVideoCall initiatedCall:self.initiatedCall setupDuration:setupDuration callingProtocol:callingProtocol];
     }
 }
 
-#pragma mark - ZMCallEndObserver
-
-- (void)didEndCall:(ZMCallEndedNotification *)note
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
-    [self.analytics tagEndedCallInConversation:note.conversation
+    
+}
+
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
+{
+    [self.analytics tagEndedCallInConversation:conversation
                                          video:self.isVideoCall
                                  initiatedCall:self.initiatedCall
                                       duration:-[self.callEstablishedDate timeIntervalSinceNow]
-                                        reason:note.reason];
+                                        reason:reason
+                               callingProtocol:callingProtocol];
+    self.callAnsweredDate = nil;
     self.callEstablishedDate = nil;
 }
 

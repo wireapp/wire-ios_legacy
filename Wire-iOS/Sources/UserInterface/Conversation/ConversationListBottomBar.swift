@@ -46,7 +46,7 @@ import Cartography
     let heightConstant: CGFloat = 56
     let user: ZMUser?
     
-    var userObserverToken: ZMUserObserverOpaqueToken?
+    var userObserverToken: NSObjectProtocol?
     var accentColorHandler: AccentColorChangeHandler?
     
     var showArchived: Bool = false {
@@ -84,7 +84,7 @@ import Cartography
         createConstraints()
         updateIndicator()
         if let user = user {
-            userObserverToken = ZMUser.add(self, forUsers: [user], in: .shared())
+            userObserverToken = UserChangeInfo.add(observer: self, forBareUser: user)
         }
     }
 
@@ -93,7 +93,6 @@ import Cartography
     }
     
     deinit {
-        ZMUser.removeObserver(for: userObserverToken)
         accentColorHandler = nil
     }
     
@@ -132,18 +131,18 @@ import Cartography
             view.height == heightConstant ~ 750
             
             separator.height == 0.5
-            separator.left == view.left
-            separator.right == view.right
+            separator.leading == view.leading
+            separator.trailing == view.trailing
             separator.top == view.top
         }
         
         constrain(view, contactsButtonContainer, contactsButton) { view, container, contactsButton in
-            container.left == view.left
+            container.leading == view.leading
             container.top == view.top
             container.bottom == view.bottom
             
-            contactsButton.left == container.left + 18
-            contactsButton.right == container.right - 18
+            contactsButton.leading == container.leading + 18
+            contactsButton.trailing == container.trailing - 18
             contactsButton.centerY == container.centerY
         }
         
@@ -152,18 +151,18 @@ import Cartography
             container.top == view.top
             container.bottom == view.bottom
             
-            archivedButton.left == container.left + 18
-            archivedButton.right == container.right - 18
+            archivedButton.leading == container.leading + 18
+            archivedButton.trailing == container.trailing - 18
             archivedButton.centerY == container.centerY
         }
         
         constrain(view, settingsButtonContainer, settingsButton) { view, container, settingsButton in
-            container.right == view.right
+            container.trailing == view.trailing
             container.top == view.top
             container.bottom == view.bottom
             
-            settingsButton.right == container.right - 24
-            settingsButton.left == container.left + 24
+            settingsButton.trailing == container.trailing - 24
+            settingsButton.leading == container.leading + 24
             settingsButton.centerY == container.centerY
         }
         
@@ -173,7 +172,7 @@ import Cartography
         
         constrain(indicator, settingsImageView) { indicator, imageView in
             indicator.top == imageView.top - 3
-            indicator.right == imageView.right + 3
+            indicator.trailing == imageView.trailing + 3
             indicator.width == 8
             indicator.height == 8
         }
@@ -211,7 +210,7 @@ import Cartography
 // MARK: - User Observer
 
 extension ConversationListBottomBarController: ZMUserObserver {
-    func userDidChange(_ note: UserChangeInfo!) {
+    func userDidChange(_ note: UserChangeInfo) {
         guard note.trustLevelChanged || note.clientsChanged else { return }
         updateIndicator()
     }

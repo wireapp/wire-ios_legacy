@@ -73,38 +73,62 @@ extension SettingsCellDescriptorFactory {
     }
 
     func emailElement() -> SettingsCellDescriptorType {
-        if let emailAddress = ZMUser.selfUser().emailAddress, !emailAddress.isEmpty {
-            return SettingsInfoCellDescriptor(title: "self.settings.account_section.email.title".localized, previewGenerator: { _ in
-                return SettingsCellPreview.text(ZMUser.selfUser().emailAddress)
-            })
-        }
-        return SettingsExternalScreenCellDescriptor(title: "self.add_email_password".localized) { () -> (UIViewController?) in
-            let addEmailController = AddEmailPasswordViewController()
-            addEmailController.showsNavigationBar = false
-            let stepDelegate = DismissStepDelegate()
-            stepDelegate.strongCapture = stepDelegate
-
-            addEmailController.formStepDelegate = stepDelegate
-            return addEmailController
-        }
+        return SettingsExternalScreenCellDescriptor(
+            title: "self.settings.account_section.email.title".localized,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            presentationAction: { () -> (UIViewController?) in
+             if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+                return ChangeEmailViewController()
+             } else {
+                let addEmailController = AddEmailPasswordViewController()
+                addEmailController.showsNavigationBar = false
+                let stepDelegate = DismissStepDelegate()
+                stepDelegate.strongCapture = stepDelegate
+                
+                addEmailController.formStepDelegate = stepDelegate
+                return addEmailController
+            }
+        },
+            previewGenerator: { _ in
+                if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+                    return SettingsCellPreview.text(email)
+                } else {
+                    return SettingsCellPreview.text("self.add_email_password".localized)
+                }
+        },
+            hideAccesoryView: true
+        )
     }
 
     func phoneElement() -> SettingsCellDescriptorType {
-        if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-            return SettingsInfoCellDescriptor(title: "self.settings.account_section.phone.title".localized, previewGenerator: { _ in
-                return SettingsCellPreview.text(ZMUser.selfUser().phoneNumber)
-            })
-        }
+        return SettingsExternalScreenCellDescriptor(
+            title: "self.settings.account_section.phone.title".localized,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            presentationAction: { () -> (UIViewController?) in
+                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+                    return ChangePhoneViewController()
+                } else {
+                    let addController = AddPhoneNumberViewController()
+                    addController.showsNavigationBar = false
+                    let stepDelegate = DismissStepDelegate()
+                    stepDelegate.strongCapture = stepDelegate
+                    
+                    addController.formStepDelegate = stepDelegate
+                    return addController
+                }
+        },
+            previewGenerator: { _ in
+                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+                    return SettingsCellPreview.text(phoneNumber)
+                } else {
+                    return SettingsCellPreview.text("self.add_phone_number".localized)
+                }
+        },
+            hideAccesoryView: true
+        )
 
-        return SettingsExternalScreenCellDescriptor(title: "self.add_phone_number".localized) { () -> (UIViewController?) in
-            let addController = AddPhoneNumberViewController()
-            addController.showsNavigationBar = false
-            let stepDelegate = DismissStepDelegate()
-            stepDelegate.strongCapture = stepDelegate
-
-            addController.formStepDelegate = stepDelegate
-            return addController
-        }
     }
 
     func handleElement() -> SettingsCellDescriptorType {

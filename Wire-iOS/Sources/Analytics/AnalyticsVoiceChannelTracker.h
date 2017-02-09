@@ -18,11 +18,8 @@
 
 
 #import <Foundation/Foundation.h>
-#import <ZMCDataModel/ZMVoiceChannelNotifications.h>
-
 
 @class Analytics;
-
 
 @interface AnalyticsVoiceChannelTracker : NSObject 
 

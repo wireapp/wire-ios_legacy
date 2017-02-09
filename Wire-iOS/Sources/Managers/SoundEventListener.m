@@ -33,13 +33,16 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 
 
-@interface SoundEventListener () <ZMVoiceChannelStateObserver, ZMVoiceChannelParticipantsObserver, ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver, ZMCallEndObserver>
+@interface SoundEventListener () <VoiceChannelStateObserver, VoiceChannelParticipantObserver, ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver>
 
-@property (nonatomic) id <ZMNewUnreadMessageObserverOpaqueToken> unreadMessageObserverToken;
-@property (nonatomic) id <ZMNewUnreadKnockMessageObserverOpaqueToken> unreadKnockMessageObserverToken;
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-@property (nonatomic) id <ZMVoiceChannelParticipantsObserverOpaqueToken> callParticipantsToken;
+
+@property (nonatomic) id unreadMessageObserverToken;
+@property (nonatomic) id unreadKnockMessageObserverToken;
+@property (nonatomic) id voiceChannelStateObserverToken;
+@property (nonatomic) id callParticipantsToken;
+
 @property (nonatomic) ZMConversation *currentlyActiveVoiceChannelConversation;
+@property (nonatomic) NSMutableDictionary<NSUUID *, NSNumber *> *previousVoiceChannelState;
 @property (nonatomic) SoundEventRulesWatchDog *watchDog;
 
 @end
@@ -57,13 +60,13 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 {
     self = [super init];
     if (self) {
-        self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
-        self.unreadMessageObserverToken = [ZMMessageNotification addNewMessagesObserver:self inUserSession:[ZMUserSession sharedSession]];
-        self.unreadKnockMessageObserverToken = [ZMMessageNotification addNewKnocksObserver:self inUserSession:[ZMUserSession sharedSession]];
-        [ZMCallEndedNotification addCallEndObserver:self];
+        self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
+        self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
+        self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
         
         self.watchDog = [[SoundEventRulesWatchDog alloc] initWithIgnoreTime:SoundEventListenerIgnoreTimeForPushStart];
         self.watchDog.startIgnoreDate = [NSDate date];
+        self.previousVoiceChannelState = [[NSMutableDictionary alloc] init];
         [ZMUserSession addInitalSyncCompletionObserver:self];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     }
@@ -72,13 +75,6 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 - (void)dealloc
 {
-    if (self.currentlyActiveVoiceChannelConversation != nil) {
-        [self.currentlyActiveVoiceChannelConversation.voiceChannel removeCallParticipantsObserverForToken:self.callParticipantsToken];
-    }
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
-    [ZMMessageNotification removeNewMessagesObserverForToken:self.unreadMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
-    [ZMMessageNotification removeNewKnocksObserverForToken:self.unreadKnockMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
-    [ZMCallEndedNotification removeCallEndObserver:self];
     [ZMUserSession removeInitalSyncCompletionObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -161,16 +157,20 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     }
 }
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    ZMVoiceChannelState state = change.currentState;
+    VoiceChannelV2State state = voiceChannelState;
+    VoiceChannelV2State previousState = self.previousVoiceChannelState[conversation.remoteIdentifier].integerValue ?: VoiceChannelV2StateInvalid;
+    self.previousVoiceChannelState[conversation.remoteIdentifier] = @(voiceChannelState);
+    
+    [self changeObservedVoiceChannelConversation: conversation.voiceChannel];
+    
     AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
     
-    [self changeObservedVoiceChannelConversation: change.voiceChannel];
     switch (state) {
             
-        case ZMVoiceChannelStateOutgoingCall: {
-            if (change.voiceChannel.conversation.isVideoCall) {
+        case VoiceChannelV2StateOutgoingCall: {
+            if (conversation.voiceChannel.isVideoCall) {
                 [mediaManager playSound:MediaManagerSoundRingingFromMeVideoSound];
             }
             else {
@@ -178,13 +178,13 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             }
             break;
         }
-        case ZMVoiceChannelStateOutgoingCallInactive: {
+        case VoiceChannelV2StateOutgoingCallInactive: {
             [mediaManager stopSound:MediaManagerSoundRingingFromMeSound];
             [mediaManager stopSound:MediaManagerSoundRingingFromMeVideoSound];
             break;
         }
-        case ZMVoiceChannelStateSelfConnectedToActiveChannel: {
-            if (change.previousState == ZMVoiceChannelStateDeviceTransferReady) {
+        case VoiceChannelV2StateSelfConnectedToActiveChannel: {
+            if (previousState == VoiceChannelV2StateDeviceTransferReady) {
                 [mediaManager playSound:MediaManagerSoundTransferVoiceToHereSound];
             }
             else {
@@ -192,26 +192,25 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             }
             break;
         }
-        case ZMVoiceChannelStateNoActiveUsers: {
-            if ((change.previousState == ZMVoiceChannelStateSelfConnectedToActiveChannel) ||
-                (change.previousState == ZMVoiceChannelStateOutgoingCall)) {
+        case VoiceChannelV2StateNoActiveUsers: {
+            if ((previousState == VoiceChannelV2StateSelfConnectedToActiveChannel) ||
+                (previousState == VoiceChannelV2StateOutgoingCall)) {
                 [mediaManager playSound:MediaManagerSoundUserLeavesVoiceChannelSound];
             }
             break;
         }
-        case ZMVoiceChannelStateIncomingCall: {
-            if (![ZMUserSession useCallKit] && ! change.voiceChannel.conversation.isSilenced) {
+        case VoiceChannelV2StateIncomingCall: {
+            if (![ZMUserSession useCallKit] && ! conversation.isSilenced) {
                 
                 BOOL otherVoiceChannelIsActive = NO;
                 
-                for (ZMConversation *conv in [ZMConversationList activeCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
-                    // If other voice channel is active
-                    if (conv.voiceChannel != change.voiceChannel && conv.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel) {
+                for (ZMConversation *activeCallConversation in [WireCallCenter activeCallConversationsInUserSession:[ZMUserSession sharedSession]]) {
+                    if (conversation != activeCallConversation) {
                         otherVoiceChannelIsActive = YES;
                         break;
                     }
                 }
-                
+                                
                 if (otherVoiceChannelIsActive) {
                     [mediaManager playSound:MediaManagerSoundRingingFromThemInCallSound];
                 }
@@ -221,26 +220,26 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             }
             break;
         }
-        case ZMVoiceChannelStateIncomingCallInactive: {
+        case VoiceChannelV2StateIncomingCallInactive: {
             [mediaManager stopSound:MediaManagerSoundRingingFromThemInCallSound];
             [mediaManager stopSound:MediaManagerSoundRingingFromThemSound];
             break;
         }
-        case ZMVoiceChannelStateSelfIsJoiningActiveChannel: {
+        case VoiceChannelV2StateSelfIsJoiningActiveChannel: {
             
-            if (change.previousState == ZMVoiceChannelStateDeviceTransferReady) {
+            if (previousState == VoiceChannelV2StateDeviceTransferReady) {
                 [mediaManager playSound:MediaManagerSoundTransferVoiceToHereSound];
             }
             break;
         }
-        case ZMVoiceChannelStateDeviceTransferReady:
-        case ZMVoiceChannelStateInvalid: {
+        case VoiceChannelV2StateDeviceTransferReady:
+        case VoiceChannelV2StateInvalid: {
             break;
         }
     }
-    if ((state != ZMVoiceChannelStateOutgoingCall) &&
-        (state != ZMVoiceChannelStateIncomingCall) &&
-        !(state == ZMVoiceChannelStateSelfIsJoiningActiveChannel && change.previousState == ZMVoiceChannelStateOutgoingCall)) // Hide connecting phase
+    if ((state != VoiceChannelV2StateOutgoingCall) &&
+        (state != VoiceChannelV2StateIncomingCall) &&
+        !(state == VoiceChannelV2StateSelfIsJoiningActiveChannel && previousState == VoiceChannelV2StateOutgoingCall)) // Hide connecting phase
     {
         [mediaManager stopSound:MediaManagerSoundRingingFromThemInCallSound];
         [mediaManager stopSound:MediaManagerSoundRingingFromMeSound];
@@ -249,44 +248,41 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     }
 }
 
-- (void)changeObservedVoiceChannelConversation:(ZMVoiceChannel *)voiceChannel
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
-    if (voiceChannel.conversation == self.currentlyActiveVoiceChannelConversation) {
-        if (voiceChannel.state == ZMVoiceChannelStateNoActiveUsers) {
-            [self unregisterAsCallParticipantObserver];
-        }
-    } else {
-        if (voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel) {
-            [self unregisterAsCallParticipantObserver];
-            self.callParticipantsToken = [voiceChannel addCallParticipantsObserver:self];
-            self.currentlyActiveVoiceChannelConversation = voiceChannel.conversation;
-        }
-    }
+
 }
 
-- (void)unregisterAsCallParticipantObserver
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    [self.currentlyActiveVoiceChannelConversation.voiceChannel removeCallParticipantsObserverForToken:self.callParticipantsToken];
-    self.currentlyActiveVoiceChannelConversation = nil;
-}
-
-- (void)didEndCall:(ZMCallEndedNotification *)note
-{
-    if (note.reason == ZMVoiceChannelCallEndReasonDisconnected) {
+    if (reason == VoiceChannelV2CallEndReasonDisconnected) {
         AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
         [mediaManager stopSound:MediaManagerSoundCallDropped];
     }
 }
 
-- (void)voiceChannelParticipantsDidChange:(VoiceChannelParticipantsChangeInfo *)change
+- (void)changeObservedVoiceChannelConversation:(VoiceChannelRouter *)voiceChannel
 {
-    if (change.insertedIndexes.count > 0 || change.deletedIndexes.count > 0) {
-        
-        if (change.insertedIndexes.count > 0) {
-            [[[AVSProvider shared] mediaManager] stopSound:MediaManagerSoundSomeoneJoinsVoiceChannelSound];
+    if (voiceChannel.conversation == self.currentlyActiveVoiceChannelConversation) {
+        if (voiceChannel.state == VoiceChannelV2StateNoActiveUsers) {
+            self.callParticipantsToken = nil;
         }
-        else if (change.deletedIndexes.count > 0) {
-            [[[AVSProvider shared] mediaManager] stopSound:MediaManagerSoundSomeoneLeavesVoiceChannelSound];
+    } else {
+        if (voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel) {
+            self.callParticipantsToken = [voiceChannel addParticipantObserver:self];
+        }
+    }
+}
+
+- (void)voiceChannelParticipantsDidChange:(SetChangeInfo *)changeInfo
+{
+    if (changeInfo.insertedIndexes.count > 0 || changeInfo.deletedIndexes.count > 0) {
+        
+        if (changeInfo.insertedIndexes.count > 0) {
+            [[[AVSProvider shared] mediaManager] playSound:MediaManagerSoundSomeoneJoinsVoiceChannelSound];
+        }
+        else if (changeInfo.deletedIndexes.count > 0) {
+            [[[AVSProvider shared] mediaManager] playSound:MediaManagerSoundSomeoneLeavesVoiceChannelSound];
         }
     }
 }

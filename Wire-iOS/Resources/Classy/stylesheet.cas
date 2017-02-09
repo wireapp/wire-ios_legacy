@@ -17,8 +17,6 @@
 */ 
 
 
-
-@import "fonts.cas";
 @import "colors.cas";
 @import "common-controls.cas";
 
@@ -674,7 +672,7 @@ FullscreenImageViewController {
         minimumDismissMagnitude: 250
     }
 
-    view @{
+    view: @{
         backgroundColor: $color-background;
     }
     
@@ -1424,6 +1422,25 @@ SettingsClientViewController {
     }
 }
 
+RegistrationTextFieldCell {
+    backgroundColor: clear;
+    
+    textField: @{
+        font: $font-normal;
+        textColor: $color-text-foreground-dark;
+        backgroundColor: clear
+    }
+}
+
+DescriptionHeaderView {
+    backgroundColor: clear;
+    descriptionLabel: @{
+        font: $font-normal;
+        textColor: $color-text-foreground-dark;
+        backgroundColor: clear
+    }
+}
+
 ChangeHandleTableViewCell {
     backgroundColor: clear;
 
@@ -1585,6 +1602,25 @@ TwoLineTitleView {
 
 ConversationImagesViewController {
     view: @{
+        backgroundColor: $color-background;
+    }
+}
+
+TextSearchViewController {
+    view: @{
+        backgroundColor: $color-background;
+    }
+}
+
+TextSearchResultCell {
+    messageFont: $font-normal;
+    
+    textView: @{
+        backgroundColor: $color-background;
+        textColor: $color-text-foreground;
+    }
+    
+    contentView: @{
         backgroundColor: $color-background;
     }
 }

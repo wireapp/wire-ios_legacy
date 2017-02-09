@@ -23,9 +23,6 @@
 
 @interface VoiceChannelController : UIViewController
 
-/// Returns YES if the user currently connected / connecting to any voice channel.
-@property (nonatomic, readonly) BOOL voiceChannelIsJoined;
-
 /// Returns YES if any voice channel activity is happening
 @property (nonatomic, readonly) BOOL voiceChannelIsActive;
 

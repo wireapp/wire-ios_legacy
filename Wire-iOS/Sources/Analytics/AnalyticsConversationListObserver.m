@@ -47,7 +47,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
 
 @property (nonatomic, strong) NSDate *observationStartDate;
 @property (nonatomic, strong) Analytics *analytics;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> conversationListObserverToken;
+@property (nonatomic) id conversationListObserverToken;
 
 @end
 
@@ -65,11 +65,6 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     return self;
 }
 
-- (void)dealloc
-{
-    [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.conversationListObserverToken];
-}
-
 - (void)setObserving:(BOOL)observing
 {
     if (_observing == observing) {
@@ -81,14 +76,15 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     if (self.observing) {
         self.observationStartDate = [NSDate date];
 
-        self.conversationListObserverToken = [[SessionObjectCache sharedCache].allConversations addConversationListObserver:self];
+        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].allConversations];
 
         [self performSelector:@selector(probablyReceivedFullConversationList)
                    withObject:nil
                    afterDelay:PermantentConversationListObserverObservationFinalTime];
-    }
-    else {
-        [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.conversationListObserverToken];
+    } else {
+        if (self.conversationListObserverToken != nil) {
+            [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:[SessionObjectCache sharedCache].allConversations];
+        }
     }
 }
 

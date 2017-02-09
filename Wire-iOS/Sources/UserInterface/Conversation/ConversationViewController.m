@@ -36,7 +36,7 @@
 
 // model
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "Message.h"
 
 // ui
@@ -99,7 +99,7 @@
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
-@interface ConversationViewController (VoiceChannelStateObserver) <ZMVoiceChannelStateObserver>
+@interface ConversationViewController (VoiceChannelStateObserver) <VoiceChannelStateObserver>
 @end
 
 @interface ConversationViewController (ChatHeadsViewControllerDelegate) <ChatHeadsViewControllerDelegate>
@@ -133,9 +133,8 @@
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-
-@property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
+@property (nonatomic) id voiceChannelStateObserverToken;
+@property (nonatomic) id conversationObserverToken;
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 
@@ -154,7 +153,6 @@
     [self dismissCollectionIfNecessary];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
 
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
@@ -164,7 +162,11 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardFrameWillChange:)
+                                                 name:UIKeyboardWillChangeFrameNotification
+                                               object:nil];
+    
     [UIView performWithoutAnimation:^{
         self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
     }];
@@ -262,7 +264,8 @@
         [self.outgoingConnectionViewController willMoveToParentViewController:self];
         [self.view addSubview:self.outgoingConnectionViewController.view];
         [self addChildViewController:self.outgoingConnectionViewController];
-        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero
+                                                                             excludingEdge:ALEdgeTop];
     } else {
         [self.outgoingConnectionViewController willMoveToParentViewController:nil];
         [self.outgoingConnectionViewController.view removeFromSuperview];
@@ -383,18 +386,13 @@
         return;
     }
 
-    if (self.conversation != nil) {
-        [self.conversation.voiceChannel removeVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken];
-        [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-    }
-
     _conversation = conversation;
     [self setupNavigatiomItem];
     [self updateOutgoingConnectionVisibility];
     
     if (self.conversation != nil) {
-        self.voiceChannelStateObserverToken = [conversation.voiceChannel addVoiceChannelStateObserver:self];
-        self.conversationObserverToken = [self.conversation addConversationObserver:self];
+        self.voiceChannelStateObserverToken = [conversation.voiceChannel addStateObserver:self];
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
 }
 
@@ -423,12 +421,22 @@
 
 - (void)updateRightNavigationItemsButtons
 {
-    self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
+    if ([UIApplication isLeftToRightLayout]) {
+        self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    } else {
+        self.navigationItem.rightBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    }
 }
 
 - (void)updateLeftNavigationBarItems
 {
-    self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
+    if ([UIApplication isLeftToRightLayout]) {
+        self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
+    } else {
+        self.navigationItem.leftBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
+    }
 }
 
 - (UIViewController *)participantsController
@@ -794,14 +802,19 @@
 
 @implementation ConversationViewController (VoiceChannelStateObserver)
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-
+    
 }
 
-- (void)voiceChannelJoinFailedWithError:(NSError *)error
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
     [self showAlertForError:error];
+}
+
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
+{
+    
 }
 
 @end

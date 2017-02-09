@@ -244,7 +244,7 @@ static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.1;
 {
     // AUDIO-548 AVMediaManager notifications arrive on a background thread.
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (notification.microphoneMuteChanged && (self.conversation.voiceChannel.state > ZMVoiceChannelStateNoActiveUsers)) {
+        if (notification.microphoneMuteChanged && (self.conversation.voiceChannel.state > VoiceChannelV2StateNoActiveUsers)) {
             [self updateAccessoryViews];
         }
     });

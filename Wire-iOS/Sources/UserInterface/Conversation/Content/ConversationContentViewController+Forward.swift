@@ -157,7 +157,9 @@ extension ZMConversationList {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell?) {
-        self.view.window!.endEditing(true)
+        if let window = self.view.window {
+            window.endEditing(true)
+        }
         
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         

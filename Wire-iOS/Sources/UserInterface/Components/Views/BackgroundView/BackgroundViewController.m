@@ -49,7 +49,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *backgroundViewSidebarConstraint;
 
 @property (nonatomic, strong) AccentColorChangeHandler *accentColorHandler;
-@property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
+@property (nonatomic) id conversationObserverToken;
 
 @end
 
@@ -59,7 +59,6 @@
 
 - (void)dealloc
 {
-    [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -215,13 +214,10 @@
 - (void)setConversation:(ZMConversation *)conversation
 {
     if (_conversation != conversation) {
-        [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-        
         _conversation = conversation;
         if (_conversation != nil) {
-            self.conversationObserverToken = [conversation addConversationObserver:self];
+            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
         }
-        
         [self updateBackgroundForConversation];
     }
 }

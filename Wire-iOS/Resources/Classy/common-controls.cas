@@ -18,7 +18,6 @@
 
 /*  All custom classes refered here should be stored in WireExtensionComponents binary */
 
-@import "fonts.cas";
 @import "colors.cas";
 
 Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome, Button.dialogue-button-full-monochrome {

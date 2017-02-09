@@ -255,9 +255,9 @@
 
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
-"content.message.forward" = "Doorsturen";
+"content.message.forward" = "Delen";
 "content.message.go_to_conversation" = "Tonen";
-"content.message.forward.to" = "Verzenden naar...";
+"content.message.forward.to" = "Zoeken…";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Slechte verbinding";
 "voice.network_error.title" = "Geen verbinding met internet";
 "voice.network_error.body" = "Je moet online zijn om te bellen. Controleer je verbinding en probeer opnieuw.";
-"voice.alert.call_in_progress.title" = "Bezig met bellen";
-"voice.alert.call_in_progress.message" = "Eén van je andere apparaten heeft de oproep al beantwoord";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Blokkeren?";
-"profile.block_dialog.message" = "%@ kan je niet meer vinden of berichten sturen op Wire.";
+"profile.block_dialog.message" = "%@ zal niet in staat zijn u te contacten of je toe te voegen aan een groepsgesprek.";
 "profile.block_dialog.button_cancel" = "Annuleer";
 "profile.block_dialog.button_block" = "Blokkeer";
 
@@ -396,7 +393,7 @@
 // Device detail
 "profile.devices.detail.verify_message" = "Verifieer dat deze digitale vingerafdruk overeenkomt met %@'s zijn apparaat.";
 "profile.devices.detail.verify_message.link" = "Hoe doe ik dat?";
-"profile.devices.detail.show_my_device.title" = "Toon de digitale vingerafdruk van mijn apparaat";
+"profile.devices.detail.show_my_device.title" = "Toon mijn apparaat vingerafdruk";
 "device.verified" = "Geverifieerd";
 "device.not_verified" = "Niet geverifieerd";
 "device.class.desktop" = "Desktop";
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Niet mogelijk om je gebruikersnaam te registreren";
 "self.settings.account_section.handle.change.failure_alert.message" = "Er ging iets mis met het registeren van je gebruikersnaam. Probeer opnieuw.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-mail";
+"self.settings.account_section.email.change.save" = "Opslaan";
+
+"self.settings.account_section.email.change.verify.title" = "Verifieer e-mail";
+"self.settings.account_section.email.change.verify.description" = "Controleer je inbox en volg de instructies.";
+"self.settings.account_section.email.change.verify.resend" = "Opnieuw verstuurd naar %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email opnieuw verstuurd";
+"self.settings.account_section.email.change.resend.message" = "Een bevestigings email is opnieuw verstuurd naar %@. Je vind verdere instructies in deze email.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Meldingen";

@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";
 "meta.degraded.degradation_reason_message.plural" = "%@が新しいデバイスを使い始めました。";
 "meta.degraded.dialog_message" = "まだメッセージを送信しますか？";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "送信しない";
 "meta.degraded.send_anyway_button" = "このまま送信";

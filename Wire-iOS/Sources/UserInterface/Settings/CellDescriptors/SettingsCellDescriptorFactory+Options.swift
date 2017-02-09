@@ -75,15 +75,15 @@ extension SettingsCellDescriptorFactory {
             let soundAlertProperty = self.settingsPropertyFactory.property(.soundAlerts)
 
             let allAlerts = SettingsPropertySelectValueCellDescriptor(settingsProperty: soundAlertProperty,
-                                                                      value: SettingsPropertyValue.number(value: Int(AVSIntensityLevel.full.rawValue)),
+                                                                      value: SettingsPropertyValue(AVSIntensityLevel.full.rawValue),
                                                                       title: "self.settings.sound_menu.all_sounds.title".localized)
 
             let someAlerts = SettingsPropertySelectValueCellDescriptor(settingsProperty: soundAlertProperty,
-                                                                       value: SettingsPropertyValue.number(value: Int(AVSIntensityLevel.some.rawValue)),
+                                                                       value: SettingsPropertyValue(AVSIntensityLevel.some.rawValue),
                                                                        title: "self.settings.sound_menu.mute_while_talking.title".localized)
 
             let noneAlerts = SettingsPropertySelectValueCellDescriptor(settingsProperty: soundAlertProperty,
-                                                                       value: SettingsPropertyValue.number(value: Int(AVSIntensityLevel.none.rawValue)),
+                                                                       value: SettingsPropertyValue(AVSIntensityLevel.none.rawValue),
                                                                        title: "self.settings.sound_menu.no_sounds.title".localized)
 
             let alertsSection = SettingsSectionDescriptor(cellDescriptors: [allAlerts, someAlerts, noneAlerts], header: titleLabel, footer: .none)
@@ -176,7 +176,7 @@ extension SettingsCellDescriptorFactory {
 
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
-                value: .number(value: option.rawValue),
+                value: SettingsPropertyValue(option.rawValue),
                 title: option.displayString
             )
         }
@@ -195,7 +195,7 @@ extension SettingsCellDescriptorFactory {
 
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
-                value: .number(value: option.rawValue),
+                value: SettingsPropertyValue(option.rawValue),
                 title: option.displayString
             )
         }
@@ -214,7 +214,7 @@ extension SettingsCellDescriptorFactory {
 
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
-                value: .number(value: option.rawValue),
+                value: SettingsPropertyValue(option.rawValue),
                 title: option.displayString
             )
         }

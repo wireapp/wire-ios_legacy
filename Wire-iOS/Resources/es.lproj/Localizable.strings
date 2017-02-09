@@ -33,7 +33,7 @@
 "peoplepicker.header.contacts" = "Contactos";
 "peoplepicker.header.directory" = "Conectar";
 "peoplepicker.title.create_conversation" = "Crear grupo";
-"peoplepicker.title.add_to_conversation" = "Agregar contactos";
+"peoplepicker.title.add_to_conversation" = "Añadir contactos";
 
 "peoplepicker.no_contacts_title" = "No hay contactos.";
 
@@ -105,12 +105,12 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
-"notifications.shared_a_photo" = "compartió una foto";
+"notifications.shared_a_photo" = "envió una foto";
 "notifications.pinged" = "hizo ping";
-"notifications.sent_file" = "compartió un archivo";
-"notifications.sent_location" = "compartió una ubicación";
-"notifications.sent_video" = "compartió un vídeo";
-"notifications.sent_audio" = "compartió un audio";
+"notifications.sent_file" = "envió un archivo";
+"notifications.sent_location" = "envió una ubicación";
+"notifications.sent_video" = "envió un vídeo";
+"notifications.sent_audio" = "envió un mensaje de audio";
 "notifications.in_conversation" = "%@ - %@";
 "notifications.this_conversation" = "%@ en este chat";
 
@@ -255,9 +255,9 @@
 
 "content.message.like" = "Me gusta";
 "content.message.unlike" = "Ya no me gusta";
-"content.message.forward" = "Reenviar";
+"content.message.forward" = "Compartir";
 "content.message.go_to_conversation" = "Mostrar en chat";
-"content.message.forward.to" = "Enviar a ...";
+"content.message.forward.to" = "Buscar ...";
 
 "content.reactions_list.likers" = "Le ha gustado a";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Mala conexión";
 "voice.network_error.title" = "No hay conexión a Internet";
 "voice.network_error.body" = "Debes estar en línea para llamar. Comprueba tu conexión y vuelve a intentarlo.";
-"voice.alert.call_in_progress.title" = "Llamada en curso";
-"voice.alert.call_in_progress.message" = "Otro de tus dispositivos ya está participando en la llamada";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Aceptar";
 "voice.decline_button.title" = "Rechazar";
 "voice.hang_up_button.title" = "Colgar";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "¿Bloquear?";
-"profile.block_dialog.message" = "%@ no te podrá encontrar o contactar en Wire.";
+"profile.block_dialog.message" = "%@ no podrá ponerse en contacto contigo o añadirte a chats de grupo.";
 "profile.block_dialog.button_cancel" = "Cancelar";
 "profile.block_dialog.button_block" = "Bloquear";
 
@@ -489,13 +486,25 @@
 "self.settings.account_section.handle.change.failure_alert.title" = "No se puede usar el nombre de usuario";
 "self.settings.account_section.handle.change.failure_alert.message" = "Fallo al crear tu nombre de usuario. Por favor inténtalo nuevamente.";
 
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Guardar";
+
+"self.settings.account_section.email.change.verify.title" = "Verificar email";
+"self.settings.account_section.email.change.verify.description" = "Revisa tu email y sige las instrucciones.";
+"self.settings.account_section.email.change.verify.resend" = "Reenviar a %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email reenviado";
+"self.settings.account_section.email.change.resend.message" = "Email de confirmación reenviado a %@. Revisa tu buzón de email y sigue las instrucciones.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notificaciones";
 "self.settings.notifications.push_notification.toogle" = "Vista previa de mensajes";
-"self.settings.notifications.push_notification.footer" = "Ver nombre de contacto y mensaje con pantalla bloqueada y en centro de notificaciones.";
+"self.settings.notifications.push_notification.footer" = "Ver nombre de contacto y mensaje en la pantalla bloqueada y en el centro de notificaciones.";
 
 "self.settings.notifications.chat_alerts.toggle" = "Notificaciones internas";
-"self.settings.notifications.chat_alerts.footer" = "Ver tira con mensajes recibidos en otros chats en el chat activo.";
+"self.settings.notifications.chat_alerts.footer" = "Ver tira con mensajes recibidos en otros chats desde el chat activo.";
 
 "self.settings.sound_menu.sounds.title" = "Sonidos";
 "self.settings.sound_menu.ringtone.title" = "Tono de llamada";
@@ -504,18 +513,18 @@
 "self.settings.sound_menu.ringtones.title" = "Tonos de llamada";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 
-"self.settings.callkit.title" = "Llamadas";
-"self.settings.callkit.caption" = "Proporcionar en iOS";
-"self.settings.callkit.description" = "Muestra las llamadas de Wire en la pantalla bloqueada y en el historial de llamadas de iOS (CallKit). Si iCloud está activado, el historial de llamadas se guarda en el servidor de Apple. Por favor, reinicia Wire tras modificar esta opción.";
+"self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
+"self.settings.callkit.caption" = "A pantalla completa";
+"self.settings.callkit.description" = "Esta opción muestra las notificaciones de (vídeo)llamadas de Wire como una llamada normal en la pantalla bloqueada y en el historial de llamadas del teléfono. Con iCloud activado, el historial de llamadas se almacena en los servidores de Apple. Necesitas reiniciar Wire tras modificar esta opción.";
 
-"self.settings.sound_menu.sounds.wire_call" = "Tono de llamada de Wire";
-"self.settings.sound_menu.sounds.wire_message" = "Tono de mensaje de Wire";
-"self.settings.sound_menu.sounds.wire_ping" = "Tono de ping de Wire";
+"self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
+"self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";
+"self.settings.sound_menu.sounds.wire_ping" = "Tono de Wire";
 
 // By popular demand
 "self.settings.popular_demand.title" = "Por demanda popular";
 "self.settings.popular_demand.send_button.title" = "Botón de enviar";
-"self.settings.popular_demand.send_button.footer" = "Deshabilitar para enviar mensajes con la tecla 'Enviar' del teclado.";
+"self.settings.popular_demand.send_button.footer" = "Deshabilitar esta opción para enviar mensajes con la tecla 'Enviar' del teclado.";
 
 // Open in
 "self.settings.external_apps.header" = "Abrir con";
@@ -676,7 +685,7 @@
 "registration.devices.active_list_header" = "Activo";
 "registration.devices.current_list_header" = "Este dispositivo";
 "registration.devices.active_list_subtitle" = "Si no reconoces un dispositivo de la lista, elimínalo y cambia la contraseña de Wire.";
-"registration.devices.activated_in" = "Activado el";
+"registration.devices.activated_in" = "Activado en";
 "registration.devices.id" = "ID:";
 
 "signin.forgot_password" = "¿Olvidaste tu contraseña?";

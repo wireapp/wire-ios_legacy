@@ -29,7 +29,7 @@ public protocol Shareable {
     func previewView() -> UIView
 }
 
-final public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate {
+final public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
     public let destinations: [D]
     public let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
@@ -46,7 +46,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         self.filteredDestinations = destinations
         self.shareable = shareable
         super.init(nibName: nil, bundle: nil)
-        self.modalTransitionStyle = .crossDissolve
+        self.transitioningDelegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -54,6 +54,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     }
     
     internal var blurView: UIVisualEffectView!
+    internal var containerView  = UIView()
     internal var shareablePreviewView: UIView?
     internal var shareablePreviewWrapper: UIView?
     internal var searchIcon: UIImageView!
@@ -163,6 +164,16 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     
     public func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
         self.filterString = text
+    }
+    
+    // MARK: - UIViewControllerTransitioningDelegate
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: false)
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
 }

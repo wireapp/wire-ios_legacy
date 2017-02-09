@@ -104,7 +104,7 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
 class SettingsTableViewController: SettingsBaseTableViewController {
 
     let group: SettingsInternalGroupCellDescriptorType
-    fileprivate var selfUserObserver: AnyObject!
+    fileprivate var selfUserObserver: NSObjectProtocol!
     @objc var dismissAction: ((SettingsTableViewController) -> ())? = .none
 
 
@@ -119,7 +119,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
             }
         }
 
-        self.selfUserObserver = ZMUser.add(self, forUsers: [ZMUser.selfUser()], in: ZMUserSession.shared())
+        self.selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -206,7 +206,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
 }
 
 extension SettingsTableViewController: ZMUserObserver {
-    func userDidChange(_ note: UserChangeInfo!) {
+    func userDidChange(_ note: UserChangeInfo) {
         if note.accentColorValueChanged {
             self.tableView.reloadData()
         }

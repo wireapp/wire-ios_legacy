@@ -39,6 +39,10 @@ public extension ConversationCell {
         self.likeButton.setSelected(message.liked, animated: false)
     }
     
+    @objc public func didDoubleTapMessage(_ sender: AnyObject!) {
+        self.likeMessage(sender)
+    }
+    
     @objc public func likeMessage(_ sender: AnyObject!) {
         guard message.canBeLiked else { return }
 

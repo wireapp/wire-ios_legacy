@@ -55,6 +55,8 @@
 @property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
 @property (nonatomic, strong) NSLayoutConstraint *notificationRightMargin;
 
+@property (nonatomic) UIView *dimView;
+
 @end
 
 
@@ -83,6 +85,11 @@
     
     self.invitationStatusController = [[InvitationStatusController alloc] initWithBarController:self.notificationBarController];
     
+    self.dimView = [[UIView alloc] initForAutoLayout];
+    self.dimView.backgroundColor = [UIColor blackColor];
+    self.dimView.hidden = !self.dimContents;
+    [self.view addSubview:self.dimView];
+    
     [self setupConstraints];
     [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
     [self updateAppearanceForNetworkState];
@@ -110,11 +117,20 @@
     [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.notificationRightMargin = [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    
+    [self.dimView autoPinEdgesToSuperviewEdges];
 }
 
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+- (void)setDimContents:(BOOL)dimContents
+{
+    _dimContents = dimContents;
+    
+    self.dimView.hidden = !self.dimContents;
 }
 
 - (void)addViewController:(UIViewController *)viewController toView:(UIView *)view

@@ -26,10 +26,11 @@
 #import "Wire-Swift.h"
 
 
-@interface ProximityMonitorManager() <ZMVoiceChannelStateObserver, AVSMediaManagerClientObserver>
+@interface ProximityMonitorManager() <VoiceChannelStateObserver, AVSMediaManagerClientObserver>
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-@property (nonatomic) ZMVoiceChannelState lastVoiceChannelState;
+@property (nonatomic) id voiceChannelStateObserverToken;
+@property (nonatomic) VoiceChannelV2State lastVoiceChannelState;
+
 
 @end
 
@@ -42,12 +43,13 @@
     self = [super init];
     
     if (self) {
-        self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
+        self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
+
 
         // Wait and then update initial state so that getting the voice channel doesn't affect startup time
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            ZMVoiceChannel *activeVoiceChannel = [SessionObjectCache sharedCache].firstActiveVoiceChannel;
-            self.lastVoiceChannelState = activeVoiceChannel.state;
+            ZMConversation *activeCallConversation = [WireCallCenter activeCallConversationsInUserSession:[ZMUserSession sharedSession]].firstObject;
+            self.lastVoiceChannelState = activeCallConversation.voiceChannel.state;
             [self updateProximityMonitorState];
         });
         
@@ -63,7 +65,6 @@
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification removeObserver:self];
     }
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)updateProximityMonitorState
@@ -73,13 +74,13 @@
         return;
     }
     
-    if (self.lastVoiceChannelState == ZMVoiceChannelStateOutgoingCall) {
+    if (self.lastVoiceChannelState == VoiceChannelV2StateOutgoingCall) {
         [UIDevice currentDevice].proximityMonitoringEnabled = YES;
     }
     else {
-        BOOL isConnectingOrActive = self.lastVoiceChannelState == ZMVoiceChannelStateSelfConnectedToActiveChannel ||
-                                    self.lastVoiceChannelState == ZMVoiceChannelStateSelfIsJoiningActiveChannel ||
-                                    self.lastVoiceChannelState == ZMVoiceChannelStateOutgoingCallInactive;
+        BOOL isConnectingOrActive = self.lastVoiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel ||
+                                    self.lastVoiceChannelState == VoiceChannelV2StateSelfIsJoiningActiveChannel ||
+                                    self.lastVoiceChannelState == VoiceChannelV2StateOutgoingCallInactive;
         
         if (isConnectingOrActive && [[AVSProvider shared] mediaManager].speakerEnabled == NO) {
             [UIDevice currentDevice].proximityMonitoringEnabled = YES;
@@ -90,12 +91,22 @@
     }
 }
 
-#pragma mark - ZMVoiceChannelStateObserver
+#pragma mark - VoiceChannelStateObserver
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    self.lastVoiceChannelState = change.voiceChannel.state;
+    self.lastVoiceChannelState = voiceChannelState;
     [self updateProximityMonitorState];
+}
+
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
+{
+    
+}
+
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
+{
+    
 }
 
 #pragma mark - AVSMediaManagerClientObserver

@@ -26,7 +26,7 @@
 @class ConversationViewController;
 @class ConversationListViewController;
 @class ZMConversation;
-@class ZMVoiceChannel;
+@class VoiceChannelV2;
 @class SplitViewController;
 @class UserClient;
 @class ZMUser;

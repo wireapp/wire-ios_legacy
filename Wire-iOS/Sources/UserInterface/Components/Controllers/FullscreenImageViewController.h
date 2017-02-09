@@ -32,10 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
-@property (nonatomic, strong) UIView *snapshotBackgroundView;
+@property (nonatomic) UIView *snapshotBackgroundView;
 @property (nonatomic, weak)   id <MessageActionResponder> delegate;
 @property (nonatomic) BOOL swipeToDismiss;
 @property (nonatomic) BOOL showCloseButton;
+@property (nonatomic, copy, nullable) void (^dismissAction)(__nullable dispatch_block_t);
 
 - (instancetype)initWithMessage:(id<ZMConversationMessage>)message;
 

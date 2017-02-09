@@ -26,7 +26,7 @@
 "share_extension.conversation_selection.empty.value" = "Seç";
 "share_extension.input.placeholder" = "Bir mesaj yazın";
 "share_extension.sending_progress.title" = "Gönderiliyor…";
-"share_extension.preparing.title" = "Preparing…";
+"share_extension.preparing.title" = "Hazırlanıyor…";
 "share_extension.not_signed_in.title" = "Bir şey paylaşabilmek için Wire'a giriş yapmanız gerekir";
 "share_extension.not_signed_in.close_button" = "Kapat";
 
@@ -34,5 +34,5 @@
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";
 "meta.degraded.degradation_reason_message.plural" = "%@ yeni cihazlar kullanmaya başladı.";
 "meta.degraded.dialog_message" = "Hâlâ mesajınızı göndermek istiyor musunuz?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Gönderme";
 "meta.degraded.send_anyway_button" = "Yine de gönder";

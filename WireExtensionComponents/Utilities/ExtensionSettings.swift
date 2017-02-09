@@ -23,14 +23,22 @@ import Foundation
 private enum ExtensionSettingsKey: String {
 
     case fetchLinkPreview = "fetchLinkPreview"
+    case disableHockey = "disableHockey"
+    case disableCrashAndAnalyticsSharing = "disableCrashAndAnalyticsSharing"
 
     static var all: [ExtensionSettingsKey] {
-        return [.fetchLinkPreview]
+        return [.fetchLinkPreview, .disableHockey, .disableCrashAndAnalyticsSharing]
     }
 
     private var defaultValue: Any? {
         switch self {
         case .fetchLinkPreview: return true
+
+            // In case the user opted out and we did not yet migrate the opt out value
+        // into the shared settings (which is only done from the main app).
+        case .disableHockey: return true
+        case .disableCrashAndAnalyticsSharing: return true
+
         }
     }
 
@@ -80,4 +88,24 @@ public class ExtensionSettings: NSObject {
         }
     }
 
+    public var disableHockey: Bool {
+        get {
+            return defaults?.bool(forKey: ExtensionSettingsKey.disableHockey.rawValue) ?? false
+        }
+
+        set {
+            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableHockey.rawValue)
+        }
+    }
+
+    public var disableCrashAndAnalyticsSharing: Bool {
+        get {
+            return defaults?.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue) ?? false
+        }
+
+        set {
+            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
+        }
+    }
+    
 }

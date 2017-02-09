@@ -21,8 +21,8 @@
 #import <PureLayout/PureLayout.h>
 @import Classy;
 @import WireExtensionComponents;
-#import <AVSVideoView.h>
-#import <AVSVideoPreview.h>
+#import <avs/AVSVideoView.h>
+#import <avs/AVSVideoPreview.h>
 
 #import "VoiceChannelOverlay.h"
 #import "VoiceChannelOverlayController.h"
@@ -473,7 +473,7 @@ static NSString *NotNilString(NSString *string) {
     self.videoButton.enabled = connected;
     self.videoButton.selected = self.videoButton.enabled && self.outgoingVideoActive;
 
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         self.videoViewFullScreen = ! connected;
     } else {
         self.videoView.hidden = YES;
@@ -573,21 +573,23 @@ static NSString *NotNilString(NSString *string) {
         [mutableVisibleViews removeObject:self.speakerButton];
     }
     
-    if (! self.remoteIsSendingVideo && state == VoiceChannelOverlayStateConnected) {
-        [mutableVisibleViews addObjectsFromArray:@[self.centerStatusLabel, self.videoNotAvailableBackground]];
-    }
-    else if (self.incomingVideoActive) {
-        if (self.controlsHidden) {
-            mutableVisibleViews = [NSMutableArray arrayWithArray:@[self.cameraPreviewView]];
+    if (state == VoiceChannelOverlayStateConnected) {
+        if (! self.remoteIsSendingVideo) {
+            [mutableVisibleViews addObjectsFromArray:@[self.centerStatusLabel, self.videoNotAvailableBackground]];
         }
-        else {
-            [mutableVisibleViews removeObjectsInArray:@[self.callingUserImage, self.callingTopUserImage, self.topStatusLabel]];
-            [mutableVisibleViews addObject:self.shadow];
+        else if (self.incomingVideoActive) {
+            if (self.controlsHidden) {
+                mutableVisibleViews = [NSMutableArray arrayWithArray:@[self.cameraPreviewView]];
+            }
+            else {
+                [mutableVisibleViews removeObjectsInArray:@[self.callingUserImage, self.callingTopUserImage, self.topStatusLabel]];
+                [mutableVisibleViews addObject:self.shadow];
+            }
         }
-    }
-    
-    if (! self.outgoingVideoActive && self.state == VoiceChannelOverlayStateConnected) {
-        [mutableVisibleViews removeObject:self.cameraPreviewView];
+        
+        if (! self.outgoingVideoActive) {
+            [mutableVisibleViews removeObject:self.cameraPreviewView];
+        }
     }
     
     return [NSSet setWithArray:mutableVisibleViews];
@@ -650,7 +652,7 @@ static NSString *NotNilString(NSString *string) {
         self.cameraPreviewCenterHorisontally.constant = self.cameraPreviewPosition.x;
     }
     
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         self.leaveButtonPinRightConstraint.active = NO;
     }
     else {
@@ -664,7 +666,7 @@ static NSString *NotNilString(NSString *string) {
     
     // Construct visible views list based on:
     // Voice channel state & is video / group call
-    if (self.callingConversation.isVideoCall) {
+    if (self.callingConversation.voiceChannel.isVideoCall) {
         visibleViews = [self visibleViewsForStateInVideoCall:state];
     }
     else {

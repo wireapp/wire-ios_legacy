@@ -22,17 +22,18 @@
 #import <PureLayout/PureLayout.h>
 
 #import "VoiceChannelOverlayController.h"
+#import "PassthroughTouchesView.h"
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
+#import "VoiceChannelOverlay.h"
 @import  AudioToolbox;
 #import "Wire-Swift.h"
 
 
-@interface VoiceChannelController () <ZMVoiceChannelStateObserver, ZMConversationListObserver>
+@interface VoiceChannelController () <VoiceChannelStateObserver>
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> conversationListObserverToken;
 @property (nonatomic) ZMConversation *activeCallConversation;
+@property (nonatomic) id voiceChannelObserverToken;
 
 @property (nonatomic) VoiceChannelOverlayController *primaryVoiceChannelOverlay;
 
@@ -40,23 +41,15 @@
 
 @implementation VoiceChannelController
 
-- (void)dealloc
-{
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
+- (void)loadView{
+    self.view = [[PassthroughTouchesView alloc] init];
 }
 
 - (void)viewDidLoad
 {
-    self.view.userInteractionEnabled = NO;
-    self.view.hidden = YES;
-    
     [super viewDidLoad];
     
-    if (self.voiceChannelStateObserverToken == nil) {
-        self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
-    }
-    
-    self.conversationListObserverToken = [[[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations] addConversationListObserver:self];
+    self.voiceChannelObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -64,26 +57,9 @@
     return YES;
 }
 
-- (BOOL)voiceChannelIsJoined
-{
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
-    NSArray *activeCallConversations = [nonIdleConversations objectsAtIndexes:[nonIdleConversations indexesOfObjectsPassingTest:^BOOL(ZMConversation *conversation, NSUInteger idx, BOOL *stop) {
-        return conversation.voiceChannel.state == ZMVoiceChannelStateSelfIsJoiningActiveChannel ||
-               conversation.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel;
-    }]];
-    
-    return activeCallConversations.count > 0;
-}
-
 - (BOOL)voiceChannelIsActive
 {
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
-    NSArray *activeCallConversations = [nonIdleConversations objectsAtIndexes:[nonIdleConversations indexesOfObjectsPassingTest:^BOOL(ZMConversation *conversation, NSUInteger idx, BOOL *stop) {
-        return conversation.voiceChannel.state != ZMVoiceChannelStateNoActiveUsers && 
-               conversation.voiceChannel.state != ZMVoiceChannelStateInvalid;
-    }]];
-    
-    return activeCallConversations.count > 0;
+    return self.activeCallConversation != nil;
 }
 
 - (void)setPrimaryVoiceChannelOverlay:(VoiceChannelOverlayController *)voiceChannelOverlayController
@@ -95,18 +71,16 @@
     VoiceChannelOverlayController *previousVoiceChannelOverlayController = _primaryVoiceChannelOverlay;
     _primaryVoiceChannelOverlay = voiceChannelOverlayController;
     
-    self.view.userInteractionEnabled = self.primaryVoiceChannelOverlay != nil;
-    self.view.hidden = self.primaryVoiceChannelOverlay == nil;
-    
-    
     BOOL callIsStarting = previousVoiceChannelOverlayController == nil && voiceChannelOverlayController != nil;
-    BOOL isVideoCall = voiceChannelOverlayController.conversation.isVideoCall;
-    // If call is starting and is video call, select front camera as default
+    BOOL isVideoCall = voiceChannelOverlayController.conversation.voiceChannel.isVideoCall;
+    
     if (callIsStarting && isVideoCall) {
-        NSError* cameraSetError = nil;
-        [voiceChannelOverlayController.conversation.voiceChannel setVideoCaptureDevice:ZMFrontCameraDeviceID error:&cameraSetError];
-        if (nil != cameraSetError) {
-            DDLogError(@"Cannot set default front camera: %@", cameraSetError);
+        // If call is starting and is video call, select front camera as default
+        NSError *error = nil;
+        [voiceChannelOverlayController.conversation.voiceChannel setVideoCaptureDeviceWithDevice:ZMCaptureDeviceFront error:&error];
+        
+        if (nil != error) {
+            DDLogError(@"Cannot set default front camera: %@", error);
         }
     }
     
@@ -127,20 +101,29 @@
         
         [self addChildViewController:toController];
         toController.view.frame = self.view.frame;
+        [self.view addSubview:toController.view];
+        [toController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
         [toController.view layoutIfNeeded];
         
-        [UIView transitionWithView:self.view duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            [self.view addSubview:toController.view];
-            [self.primaryVoiceChannelOverlay.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        UIVisualEffect *visualEffect = toController.blurEffectView.effect;
+        toController.blurEffectView.effect = nil;
+        toController.overlayView.alpha = 0;
+        
+        [UIView animateWithDuration:0.35 animations:^{
+            toController.blurEffectView.effect = visualEffect;
+            toController.overlayView.alpha = 1;
         } completion:^(BOOL finished) {
             [toController didMoveToParentViewController:self];
         }];
     }
     else if (toController == nil) {
         [fromController willMoveToParentViewController:nil];
-        [UIView transitionWithView:self.view duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            [fromController.view removeFromSuperview];
+        
+        [UIView animateWithDuration:0.35 animations:^{
+            fromController.blurEffectView.effect = nil;
+            fromController.overlayView.alpha = 0;
         } completion:^(BOOL finished) {
+            [fromController.view removeFromSuperview];
             [fromController removeFromParentViewController];
         }];
     }
@@ -177,10 +160,9 @@
 
 - (ZMConversation *)primaryVoiceChannelConversation
 {
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
-    NSArray *incomingCallConversations = [nonIdleConversations objectsAtIndexes:[nonIdleConversations indexesOfObjectsPassingTest:^BOOL(ZMConversation *conversation, NSUInteger idx, BOOL *stop) {
-        return conversation.voiceChannel.state == ZMVoiceChannelStateIncomingCall;
-    }]];
+    NSArray *incomingCallConversations = [[WireCallCenter nonIdleCallConversationsInUserSession:[ZMUserSession sharedSession]] filterWithBlock:^BOOL(ZMConversation *conversation) {
+        return conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall;
+    }];
     
     if (incomingCallConversations.count > 0) {
         return incomingCallConversations.lastObject;
@@ -194,32 +176,33 @@
 
 - (void)updateActiveCallConversation
 {
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
-    NSArray *activeCallConversations = [nonIdleConversations objectsAtIndexes:[nonIdleConversations indexesOfObjectsPassingTest:^BOOL(ZMConversation *conversation, NSUInteger idx, BOOL *stop) {
-        return conversation.voiceChannel.state == ZMVoiceChannelStateOutgoingCall |
-        conversation.voiceChannel.state == ZMVoiceChannelStateOutgoingCallInactive |
-        conversation.voiceChannel.state == ZMVoiceChannelStateSelfIsJoiningActiveChannel |
-        conversation.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel;
-    }]];
-    
+    NSArray *activeCallConversations = [[WireCallCenter nonIdleCallConversationsInUserSession:[ZMUserSession sharedSession]] filterWithBlock:^BOOL(ZMConversation *conversation) {
+        return conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCall |
+        conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallInactive |
+        conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannel |
+        conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel;
+    }];
+        
     self.activeCallConversation = activeCallConversations.firstObject;
 }
 
-#pragma mark - ZMVoiceChannelStateObserver
+#pragma mark - VoiceChannelStateObserver
 
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)info
+- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    DDLogVoice(@"SE: Voice channel state change from %d (%@) to %d (%@)", info.currentState, StringFromZMVoiceChannelState(info.currentState), info.previousState, StringFromZMVoiceChannelState(info.previousState));
+    DDLogVoice(@"SE: Voice channel state change to %d (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState));
     [self updateActiveCallConversation];
     [self updateVoiceChannelOverlays];
 }
 
-#pragma mark - ZMConversationListObserver
-
-- (void)conversationListDidChange:(ConversationListChangeInfo *)changeInfo
+- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
-    [self updateActiveCallConversation];
-    [self updateVoiceChannelOverlays];
+    
+}
+
+- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
+{
+    
 }
 
 @end

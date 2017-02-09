@@ -29,6 +29,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "zmessaging+iOS.h"
+#import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Navigation.h"
 
@@ -80,12 +81,14 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 - (void)createSelectCountryButton
 {
     self.selectCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.selectCountryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.selectCountryButton.contentHorizontalAlignment = [UIApplication isLeftToRightLayout] ? UIControlContentHorizontalAlignmentLeft : UIControlContentHorizontalAlignmentRight;
+    
     self.selectCountryButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
     
-    UIImage *icon = [UIImage imageForIcon:ZetaIconTypeChevronRight iconSize:ZetaIconSizeSmall color:UIColor.whiteColor];
+    ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronRight : ZetaIconTypeChevronLeft;
+    UIImage *icon = [UIImage imageForIcon:iconType iconSize:ZetaIconSizeSmall color:UIColor.whiteColor];
     self.selectCountryButtonIcon = [[UIImageView alloc] initWithImage:icon];
     self.selectCountryButtonIcon.translatesAutoresizingMaskIntoConstraints = NO;
     [self.selectCountryButton addSubview:self.selectCountryButtonIcon];
@@ -138,14 +141,14 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
         
         self.initialConstraintsCreated = YES;
         
-        [self.selectCountryButtonIcon autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+        [self.selectCountryButtonIcon autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
         [self.selectCountryButtonIcon autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.selectCountryButton.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.selectCountryButtonIcon withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+        [self.selectCountryButton.titleLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.selectCountryButtonIcon withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
         
         [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
-        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
         
-        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10];
+        [self.selectCountryButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10];
 
         self.selectCountryButtonHeightConstraint = [self.selectCountryButton autoSetDimension:ALDimensionHeight toSize:SelectCountryButtonHeight];
         

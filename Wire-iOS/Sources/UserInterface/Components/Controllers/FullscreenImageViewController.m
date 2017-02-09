@@ -78,7 +78,8 @@
 
 @end
 
-@interface FullscreenImageViewController () <UIScrollViewDelegate, ZMVoiceChannelStateObserver>
+
+@interface FullscreenImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
 
@@ -100,14 +101,15 @@
 
 @property (nonatomic) CGFloat lastZoomScale;
 
-@property (nonatomic, assign) BOOL forcePortraitMode;
+@property (nonatomic) BOOL forcePortraitMode;
+@property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 
-@property (nonatomic) id <ZMVoiceChannelStateObserverOpaqueToken> voiceChannelStateObserverToken;
-@property (nonatomic) id <ZMMessageObserverOpaqueToken> messageObserverToken;
+@property (nonatomic) id messageObserverToken;
 
 @end
 
-
+@interface FullscreenImageViewController (PanGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
+@end
 
 @implementation FullscreenImageViewController
 
@@ -120,16 +122,10 @@
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.messageObserverToken = [ZMMessageNotification addMessageObserver:self forMessage:message];
+        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message];
     }
 
     return self;
-}
-
-- (void)dealloc
-{
-    [ZMMessageNotification removeMessageObserverForToken:self.messageObserverToken];
-    [ZMVoiceChannel removeGlobalVoiceChannelStateObserverForToken:self.voiceChannelStateObserverToken inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)loadView
@@ -150,7 +146,10 @@
 
 - (void)dismissWithCompletion:(dispatch_block_t)completion
 {
-    if (nil != self.navigationController) {
+    if (nil != self.dismissAction) {
+        self.dismissAction(completion);
+    }
+    else if (nil != self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
         if (completion) {
             completion();
@@ -176,7 +175,6 @@
     [self setupGestureRecognizers];
     [self showChrome:YES];
 
-    self.voiceChannelStateObserverToken = [ZMVoiceChannel addGlobalVoiceChannelStateObserver:self inUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -210,7 +208,9 @@
 {
     self.snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.snapshotBackgroundView];
-    [self.snapshotBackgroundView addConstraintsFittingToView:self.view];
+    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
     self.snapshotBackgroundView.alpha = 0;
 }
 
@@ -330,15 +330,15 @@
     [self.view addGestureRecognizer:self.longPressGestureRecognizer];
 
     if (self.swipeToDismiss) {
-        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] init];
-        panRecognizer.maximumNumberOfTouches = 1;
-        panRecognizer.delegate = self;
-        [panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
-        [self.scrollView addGestureRecognizer:panRecognizer];
+        self.panRecognizer = [[UIPanGestureRecognizer alloc] init];
+        self.panRecognizer.maximumNumberOfTouches = 1;
+        self.panRecognizer.delegate = self;
+        [self.panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
+        [self.scrollView addGestureRecognizer:self.panRecognizer];
         
-        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:panRecognizer];
-        [self.tapGestureRecognzier requireGestureRecognizerToFail:panRecognizer];
-        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:panRecognizer];
+        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:self.panRecognizer];
+        [self.tapGestureRecognzier requireGestureRecognizerToFail:self.panRecognizer];
+        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:self.panRecognizer];
     }
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
 }
@@ -585,7 +585,6 @@
     [self setSelectedByMenu:NO animated:YES];
 }
 
-
 #pragma mark - Utilities, custom UI
 
 - (void)performSaveImageAnimationFromView:(UIView *)saveView
@@ -607,14 +606,6 @@
     }];
 }
 
-/// Special check in case we get an incoming voice call and we are looking at this view in ipad landscape
-- (void)voiceChannelStateDidChange:(VoiceChannelStateChangeInfo *)change
-{
-    if (change.voiceChannel.state == ZMVoiceChannelStateIncomingCall && IS_IPAD_LANDSCAPE_LAYOUT) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
 @end
 
 @implementation FullscreenImageViewController (MessageObserver)
@@ -626,6 +617,22 @@
         self.loadingSpinner = nil;
         
         [self loadImageAndSetupImageView];
+    }
+}
+
+@end
+
+@implementation FullscreenImageViewController (PanGestureRecognizerDelegate)
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer == self.panRecognizer) {
+        CGPoint offset = [self.panRecognizer translationInView:self.view];
+
+        return fabs(offset.y) > fabs(offset.x);
+    }
+    else {
+        return YES;
     }
 }
 

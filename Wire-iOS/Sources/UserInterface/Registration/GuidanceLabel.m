@@ -33,7 +33,7 @@
         self.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
         self.textColor = [UIColor whiteColor];
         self.numberOfLines = 0;
-        self.textAlignment = NSTextAlignmentLeft;
+        self.textAlignment = NSTextAlignmentNatural;
     }
     
     return self;

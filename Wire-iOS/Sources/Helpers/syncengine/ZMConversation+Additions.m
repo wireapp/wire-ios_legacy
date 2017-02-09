@@ -278,7 +278,7 @@
 
 - (void)acceptIncomingCall
 {
-    [self joinVoiceChannelWithVideo:self.isVideoCall completionHandler:^(BOOL joined) {
+    [self joinVoiceChannelWithVideo:self.voiceChannel.isVideoCall completionHandler:^(BOOL joined) {
         if (joined) {
             [Analytics shared].sessionSummary.incomingCallsAccepted++;
         }
@@ -287,13 +287,6 @@
 
 - (void)joinVoiceChannelWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
-    if ([self warnAboutCallInProgress]) {
-        if (completion != nil) {
-            completion(NO);
-        }
-        return;
-    }
-
     if ([self warnAboutNoInternetConnection]) {
         if (completion != nil) {
             completion(NO);
@@ -321,18 +314,20 @@
 - (void)joinVoiceChannelWithoutAskingForPermissionWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
 {
     [self leaveOtherActiveCallsWithCompletionHandler:^{
-        ZMVoiceChannelState voiceChannelState = self.voiceChannel.state;
-        ZMVoiceChannelConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
+        DDLogError(@"joining call");
+        
+        VoiceChannelV2State voiceChannelState = self.voiceChannel.state;
+        VoiceChannelV2ConnectionState connectionState = self.voiceChannel.selfUserConnectionState;
 
-        if (connectionState == ZMVoiceChannelConnectionStateNotConnected) {
+        if (connectionState == VoiceChannelV2ConnectionStateNotConnected) {
 
             __block BOOL joined = YES;
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 if (video) {
-                    joined = [self.voiceChannel joinVideoCall:nil inUserSession:[ZMUserSession sharedSession]];
+                    joined = [self.voiceChannel joinWithVideo:YES userSession:[ZMUserSession sharedSession]];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoCall inConversation:self];
                 } else {
-                    [self.voiceChannel joinInUserSession:[ZMUserSession sharedSession]];
+                    joined = [self.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionAudioCall inConversation:self];
                 }
 
@@ -343,7 +338,7 @@
             }];
         } else {
 
-            if (voiceChannelState == ZMVoiceChannelStateDeviceTransferReady) {
+            if (voiceChannelState == VoiceChannelV2StateDeviceTransferReady) {
                 UIAlertController *callInProgressAlert =
                 [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.call_in_progress.title", nil)
                                                     message:NSLocalizedString(@"voice.alert.call_in_progress.message", nil)
@@ -361,22 +356,22 @@
 
 - (void)leaveOtherActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler
 {
-    NSArray *nonIdleConversations = [[SessionObjectCache sharedCache] nonIdleVoiceChannelConversations];
+    NSArray *nonIdleConversations = [WireCallCenter nonIdleCallConversationsInUserSession:[ZMUserSession sharedSession]];
 
     [[ZMUserSession sharedSession] enqueueChanges:^{
         for (ZMConversation *conversation in nonIdleConversations) {
             if (conversation == self) {
                 continue;
             }
-            else if (conversation.voiceChannel.state == ZMVoiceChannelStateIncomingCall) {
-                [conversation.voiceChannel ignoreIncomingCall];
+            else if (conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall) {
+                [conversation.voiceChannel ignoreWithUserSession:[ZMUserSession sharedSession]];
             }
-            else if (conversation.voiceChannel.state == ZMVoiceChannelStateSelfConnectedToActiveChannel ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateSelfIsJoiningActiveChannel ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateDeviceTransferReady ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateOutgoingCall ||
-                     conversation.voiceChannel.state == ZMVoiceChannelStateOutgoingCallInactive) {
-                [conversation.voiceChannel leave];
+            else if (conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannel ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateDeviceTransferReady ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCall ||
+                     conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallInactive) {
+                [conversation.voiceChannel leaveWithUserSession:[ZMUserSession sharedSession]];
             }
         }
     } completionHandler:completionHandler];
@@ -416,19 +411,6 @@
                                                                                            message:NSLocalizedString(@"voice.network_error.body", "<voice failed because of network>")
                                                                                  cancelButtonTitle:NSLocalizedString(@"general.ok", "ok string")];
         [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noInternetConnectionAlert animated:YES completion:nil];
-        return YES;
-    }
-    return NO;
-}
-
-- (BOOL)warnAboutCallInProgress
-{
-    if ([AppDelegate sharedAppDelegate].notificationWindowController.voiceChannelController.voiceChannelIsJoined) {
-
-        UIAlertController *callInProgressAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.call_in_progress.title", @"Calling in progress")
-                                                                                     message:NSLocalizedString(@"voice.alert.call_in_progress.message", @"Another device already in call")
-                                                                           cancelButtonTitle:NSLocalizedString(@"general.ok", @"ok")];
-        [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:callInProgressAlert animated:YES completion:nil];
         return YES;
     }
     return NO;

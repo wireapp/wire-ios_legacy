@@ -63,10 +63,6 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     let emojiKeyboardViewController =  EmojiKeyboardViewController()
     let colorPickerController = SketchColorPickerController()
     
-    public var wrapInNavigationController : UINavigationController {
-        return wrap(inNavigationControllerClass: RotationAwareNavigationController.self)
-    }
-    
     override var shouldAutorotate: Bool {
         return false
     }

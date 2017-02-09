@@ -29,6 +29,9 @@ RangeSet VideoMessageTimeIntervalRanges = {VideoMessageTimeIntervalRangesRanges,
 IntRange MessageEditTimeIntervalRangesRanges[] = {{0,0}, {1, 60}, {61, 300}, {601, 1800}, {1801, 3600}, {3601, 86400}};
 RangeSet MessageEditTimeIntervalRanges = {MessageEditTimeIntervalRangesRanges, 6};
 
+IntRange CallSetupTimeIntervalRangesRanges[] = {{0,0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 10}, {11, 30}};
+RangeSet CallSetupTimeIntervalRanges = {CallSetupTimeIntervalRangesRanges, 7};
+
 
 @implementation TimeIntervalClusterizer
 
@@ -63,6 +66,18 @@ RangeSet MessageEditTimeIntervalRanges = {MessageEditTimeIntervalRangesRanges, 6
     dispatch_once(&onceToken, ^{
         clusterizer = [TimeIntervalClusterizer new];
         clusterizer.rangeSet = MessageEditTimeIntervalRanges;
+    });
+    
+    return clusterizer;
+}
+
++ (instancetype)callSetupDurationClusterizer
+{
+    static TimeIntervalClusterizer *clusterizer = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        clusterizer = [TimeIntervalClusterizer new];
+        clusterizer.rangeSet = CallSetupTimeIntervalRanges;
     });
     
     return clusterizer;

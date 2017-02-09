@@ -18,7 +18,7 @@
 
 
 #import "AVSMediaManager+Additions.h"
-#import <AVSMediaManager+Client.h>
+#import <avs/AVSMediaManager+Client.h>
 #import "Wire-Swift.h"
 
 

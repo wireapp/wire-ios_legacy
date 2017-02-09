@@ -190,9 +190,17 @@
 {
     _titleImageSpacing = titleImageSpacing;
     
-    CGFloat inset = titleImageSpacing / 2.0f;
-    self.imageEdgeInsets = UIEdgeInsetsMake(self.imageEdgeInsets.top, -inset, self.imageEdgeInsets.bottom, inset);
-    self.titleEdgeInsets = UIEdgeInsetsMake(self.titleEdgeInsets.top, inset, self.titleEdgeInsets.bottom, -inset);
+    BOOL isLeftToRight = YES;
+    if ([[UIView class] respondsToSelector:@selector(userInterfaceLayoutDirectionForSemanticContentAttribute:)]) {
+        isLeftToRight = [UIView userInterfaceLayoutDirectionForSemanticContentAttribute: UISemanticContentAttributeUnspecified] == UIUserInterfaceLayoutDirectionLeftToRight;
+    }
+    
+    CGFloat inset = titleImageSpacing / 2.0f ;
+    CGFloat leftInset = isLeftToRight ? -inset : inset;
+    CGFloat rightInset = isLeftToRight ? inset : -inset;
+    
+    self.imageEdgeInsets = UIEdgeInsetsMake(self.imageEdgeInsets.top, leftInset, self.imageEdgeInsets.bottom, rightInset);
+    self.titleEdgeInsets = UIEdgeInsetsMake(self.titleEdgeInsets.top, rightInset, self.titleEdgeInsets.bottom, leftInset);
 
     CGFloat horizontal = inset + horizontalMargin;
     self.contentEdgeInsets = UIEdgeInsetsMake(self.contentEdgeInsets.top, horizontal, self.contentEdgeInsets.bottom, horizontal);

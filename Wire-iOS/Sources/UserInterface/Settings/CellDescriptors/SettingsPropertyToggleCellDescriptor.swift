@@ -82,7 +82,7 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
         }
         
         do {
-            try self.settingsProperty << SettingsPropertyValue.bool(value: valueToSet)
+            try self.settingsProperty << SettingsPropertyValue(valueToSet)
         }
         catch(let e) {
             DDLogError("Cannot set property: \(e)")

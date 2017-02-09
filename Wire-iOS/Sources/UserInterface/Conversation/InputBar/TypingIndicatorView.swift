@@ -64,6 +64,12 @@ class AnimatedPenView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        
+        startWritingAnimation()
+    }
+    
     func setupConstraints() {
         constrain(self, dots, pen) { container, dots, pen in
             distribute(by: 2, horizontally: dots, pen)

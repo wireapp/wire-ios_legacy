@@ -82,7 +82,11 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 - (void)setSuggestions:(NSArray *)suggestions
 {
     _suggestions = suggestions;
-    self.userObserverToken = [ZMUser addUserObserver:self forUsers:self.suggestions inUserSession:[ZMUserSession sharedSession]];
+    
+    if (self.userObserverToken == nil) {
+        // We only need to subscribe once for all searchUsers
+        self.userObserverToken = [UserChangeInfo addSearchUserObserver:self forSearchUser:nil];
+    }
 }
 
 - (void)loadMoreSuggestions
@@ -120,38 +124,42 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 
 - (void)userDidChange:(UserChangeInfo *)change
 {
-    if (change.connectionStateChanged) {
-        NSNumber *idx = self.searchResultUsersInDirectoryMap[[NSString stringWithFormat:@"%p", change.user]];
-        
-        if (idx != nil) {
-            __block NSUInteger userIndex =  [idx integerValue];
-            ZMSearchUser *user = [self.suggestions objectAtIndex:userIndex];
-            if ([user isPendingApprovalByOtherUser]) {
-                const NSArray *oldSuggestions = [self.suggestions copy];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.55f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    NSMutableArray *newSearchResult = [NSMutableArray arrayWithArray:self.suggestions];
-                    if (![oldSuggestions isEqualToArray:self.suggestions]) {
-                        userIndex = [self.suggestions indexOfObject:user];
-                        if (userIndex == NSNotFound) {
-                            [self.collectionView reloadData];
-                            return;
-                        }
-                    }
-                    [newSearchResult removeObjectAtIndex:userIndex];
-
-                    if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:indexPathForItemIndex:)]) {
-                        NSIndexPath *indexPath = [self.delegate collectionViewSectionController:self indexPathForItemIndex:userIndex];
-                        
-                        [self animateSingleDeleteOnPeopleYouMayKnowFrom:self.suggestions to:newSearchResult inSection:indexPath.section];
-                    }
-                    else {
-                        [self.collectionView reloadData];
-                    }
-                });
+    if (!change.connectionStateChanged) {
+        return;
+    }
+    
+    NSNumber *idx = self.searchResultUsersInDirectoryMap[[NSString stringWithFormat:@"%p", change.user]];
+    if (idx == nil) {
+        return;
+    }
+    __block NSUInteger userIndex =  [idx integerValue];
+    ZMSearchUser *user = [self.suggestions objectAtIndex:userIndex];
+    if (![user isPendingApprovalByOtherUser]) {
+        return;
+    }
+    
+    const NSArray *oldSuggestions = [self.suggestions copy];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.55f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSMutableArray *newSearchResult = [NSMutableArray arrayWithArray:self.suggestions];
+        if (![oldSuggestions isEqualToArray:self.suggestions]) {
+            userIndex = [self.suggestions indexOfObject:user];
+            if (userIndex == NSNotFound) {
+                [self.collectionView reloadData];
+                return;
             }
         }
-    }
+        [newSearchResult removeObjectAtIndex:userIndex];
+        
+        if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:indexPathForItemIndex:)]) {
+            NSIndexPath *indexPath = [self.delegate collectionViewSectionController:self indexPathForItemIndex:userIndex];
+            
+            [self animateSingleDeleteOnPeopleYouMayKnowFrom:self.suggestions to:newSearchResult inSection:indexPath.section];
+        }
+        else {
+            [self.collectionView reloadData];
+        }
+    });
+    
 }
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
 

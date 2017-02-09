@@ -99,6 +99,9 @@
             case ZMUserSessionClientDeletedRemotely:
                 message = NSLocalizedString(@"error.user.device_deleted_remotely", @"");
                 break;
+            case ZMUserSessionLastUserIdentityCantBeDeleted:
+                message = NSLocalizedString(@"error.user.last_identity_cant_be_deleted", @"");
+                break;
                 
             default:
             case ZMUserSessionUnkownError:

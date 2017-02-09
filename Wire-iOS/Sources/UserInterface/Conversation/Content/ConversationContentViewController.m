@@ -33,7 +33,7 @@
 
 // model
 #import "zmessaging+iOS.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 #import "Message.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 
@@ -101,10 +101,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL wasFetchingMessages;
 @property (nonatomic) BOOL hasDoneInitialLayout;
-@property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
+@property (nonatomic) id messageWindowObserverToken;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
-@property (nonatomic) MessagePresenter* messagePresenter;
 @end
 
 
@@ -133,10 +132,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
     }
-    
-    if (self.messageWindowObserverToken != nil) {
-        [self.messageWindow removeConversationWindowObserverToken:self.messageWindowObserverToken];
-    }
 }
 
 - (void)loadView
@@ -156,7 +151,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.conversationMessageWindowTableViewAdapter.analyticsTracker = self.analyticsTracker;
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
     
-    self.messageWindowObserverToken = [self.messageWindow addConversationWindowObserver:self];
+    self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
     
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -203,6 +198,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [AppDelegate sharedAppDelegate].notificationWindowController.showLoadMessages = self.wasFetchingMessages;
     
     [self updateVisibleMessagesWindow];
+    
+    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
+        [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        
+        [self registerForPreviewingWithDelegate:self sourceView:self.view.superview];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -304,125 +305,136 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell
 {
-    switch (actionId) {
-        case MessageActionCancel:
-        {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [cell.message.fileMessageData cancelTransfer];
-                [self.analyticsTracker tagCancelledFileUploadWithSize:cell.message.fileMessageData.size
-                                                        fileExtension:[cell.message.fileMessageData.filename pathExtension]];
-            }];
-        }
-            break;
-            
-        case MessageActionResend:
-        {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [cell.message resend];
-            }];
-        }
-            break;
-            
-        case MessageActionDelete:
-        {
-            [self presentDeletionAlertControllerForMessage:cell.message completion:^{
-                cell.beingEdited = NO;
-            }];
-        }
-            break;
-        case MessageActionPresent:
-        {
-            self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
-            [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
-        }
-            break;
-        case MessageActionSave:
-        {
-            if ([Message isImageMessage:message]) {
-                [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
-            } else {
-                self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
-                
-                UIView *targetView = nil;
-                
-                if ([cell isKindOfClass:[FileTransferCell class]]) {
-                    FileTransferCell *fileCell = (FileTransferCell *)cell;
-                    targetView = fileCell.actionButton;
-                }
-                else if ([cell isKindOfClass:[AudioMessageCell class]]) {
-                    AudioMessageCell *audioCell = (AudioMessageCell *)cell;
-                    targetView = audioCell.contentView;
-                }
-                else {
-                    targetView = cell;
-                }
-                
-                [self.messagePresenter openDocumentControllerForMessage:cell.message targetView:targetView withPreview:NO];
+    dispatch_block_t action = ^{
+        switch (actionId) {
+            case MessageActionCancel:
+            {
+                [[ZMUserSession sharedSession] enqueueChanges:^{
+                    [cell.message.fileMessageData cancelTransfer];
+                    [self.analyticsTracker tagCancelledFileUploadWithSize:cell.message.fileMessageData.size
+                                                            fileExtension:[cell.message.fileMessageData.filename pathExtension]];
+                }];
             }
-        }
-            break;
-        case MessageActionEdit:
-        {
-            self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
-            [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
-        }
-            break;
-        case MessageActionSketchDraw:
-        {
-            [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
-        }
-            break;
-        case MessageActionSketchEmoji:
-        {
-            [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
-        }
-            break;
-        case MessageActionSketchText:
-        {
-            // Not implemented yet
-        }
-            break;
-        case MessageActionLike:
-        {
-            BOOL liked = ![Message isLikedMessage:cell.message];
-            
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [Message setLikedMessage:cell.message liked:liked];
+                break;
                 
-                if (liked) {
-                    // Deselect if necessary to show list of likers
-                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                    }
+            case MessageActionResend:
+            {
+                [[ZMUserSession sharedSession] enqueueChanges:^{
+                    [cell.message resend];
+                }];
+            }
+                break;
+                
+            case MessageActionDelete:
+            {
+                [self presentDeletionAlertControllerForMessage:cell.message completion:^{
+                    cell.beingEdited = NO;
+                }];
+            }
+                break;
+            case MessageActionPresent:
+            {
+                self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
+            }
+                break;
+            case MessageActionSave:
+            {
+                if ([Message isImageMessage:message]) {
+                    [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
                 } else {
-                    // Select if necessary to prevent message from collapsing
-                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message && ![Message hasReactions:cell.message]) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                    
+                    UIView *targetView = nil;
+                    
+                    if ([cell isKindOfClass:[FileTransferCell class]]) {
+                        FileTransferCell *fileCell = (FileTransferCell *)cell;
+                        targetView = fileCell.actionButton;
                     }
+                    else if ([cell isKindOfClass:[AudioMessageCell class]]) {
+                        AudioMessageCell *audioCell = (AudioMessageCell *)cell;
+                        targetView = audioCell.contentView;
+                    }
+                    else {
+                        targetView = cell;
+                    }
+                    
+                    [self.messagePresenter openDocumentControllerForMessage:cell.message targetView:targetView withPreview:NO];
                 }
-            }];
+            }
+                break;
+            case MessageActionEdit:
+            {
+                self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
+                [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
+            }
+                break;
+            case MessageActionSketchDraw:
+            {
+                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
+            }
+                break;
+            case MessageActionSketchEmoji:
+            {
+                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
+            }
+                break;
+            case MessageActionSketchText:
+            {
+                // Not implemented yet
+            }
+                break;
+            case MessageActionLike:
+            {
+                BOOL liked = ![Message isLikedMessage:cell.message];
+                
+                NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                
+                [[ZMUserSession sharedSession] enqueueChanges:^{
+                    [Message setLikedMessage:cell.message liked:liked];
+                    
+                    if (liked) {
+                        // Deselect if necessary to show list of likers
+                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
+                            [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                        }
+                    } else {
+                        // Select if necessary to prevent message from collapsing
+                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message && ![Message hasReactions:cell.message]) {
+                            [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                        }
+                    }
+                }];
+            }
+                break;
+            case MessageActionForward:
+            {
+                [self showForwardForMessage:cell.message fromCell:cell];
+            }
+                
+                break;
+            case MessageActionShowInConversation:
+                // Not supported from cell
+            case MessageActionCopy:
+            {
+                [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
+                [[Analytics shared] tagMessageCopy];
+                
+                NSData *imageData = cell.message.imageMessageData.imageData;
+                [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+            }
+                break;
         }
-            break;
-        case MessageActionForward:
-        {
-            [self showForwardForMessage:cell.message fromCell:cell];
-        }
-            
-            break;
-        case MessageActionShowInConversation:
-            // Not supported from cell
-        case MessageActionCopy:
-        {
-            [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-            [[Analytics shared] tagMessageCopy];
-            
-            NSData *imageData = cell.message.imageMessageData.imageData;
-            [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
-        }
-            break;
+    };
+    
+    if (self.messagePresenter.modalTargetController.presentedViewController != nil) {
+        [self.messagePresenter.modalTargetController dismissViewControllerAnimated:YES completion:^{
+            action();
+        }];
+    }
+    else {
+        action();
     }
 }
 
@@ -522,7 +534,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     canvasViewController.title = message.conversation.displayName.uppercaseString;
     [canvasViewController selectWithEditMode:editMode animated:NO];
     
-    [self presentViewController:canvasViewController.wrapInNavigationController animated:YES completion:nil];
+    [self presentViewController:[canvasViewController wrapInNavigationController] animated:YES completion:nil];
 }
 
 - (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
@@ -708,7 +720,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view
 {
-    if (! cell || !view) {
+    if (!cell || !view) {
         return;
     }
 
@@ -810,7 +822,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos
+- (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
 {
     if (self.messagePresenter.waitingForFileDownload) {
         id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;

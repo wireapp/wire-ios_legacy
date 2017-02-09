@@ -504,7 +504,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     CanvasViewController *viewController = [[CanvasViewController alloc] init];
     viewController.delegate = self;
     viewController.sketchImage = self.imagePreviewView.image;
-    [self presentViewController:viewController.wrapInNavigationController animated:YES completion:nil];
+    [self presentViewController:[viewController wrapInNavigationController] animated:YES completion:nil];
 }
 
 #pragma mark - CameraBottomToolsViewControllerDelegate

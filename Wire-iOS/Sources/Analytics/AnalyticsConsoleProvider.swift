@@ -103,10 +103,6 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: ["customerID" : customerID])
     }
     
-    func setPushToken(_ token: Data!) {
-        print(loggingData: ["pushToken" : token.base64String()])
-    }
-    
     func setCustomDimension(_ dimension: Int32, value: String!) {
         print(loggingData: ["customeDimension_\(dimension)" : value])
     }

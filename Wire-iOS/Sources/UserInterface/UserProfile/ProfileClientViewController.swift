@@ -39,7 +39,7 @@ class ProfileClientViewController: UIViewController {
     let verifiedToggleLabel = UILabel()
     let resetButton = ButtonWithLargerHitArea()
 
-    var userClientToken: UserClientObserverOpaqueToken?
+    var userClientToken: NSObjectProtocol!
     var resetSessionPending: Bool = false
     var descriptionTextFont: UIFont?
     var fromConversation: Bool = false
@@ -87,10 +87,10 @@ class ProfileClientViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         
-        self.userClientToken = userClient.addObserver(self)
+        self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueueChanges({ () -> Void in
-                self.userClient.markForFetchingPreKeys()
+                self.userClient.fetchFingerprintOrPrekeys()
             })
         }
         self.updateFingerprintLabel()
@@ -108,10 +108,6 @@ class ProfileClientViewController: UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
-    }
-    
-    deinit {
-        UserClient.removeObserverForUserClientToken(self.userClientToken!)
     }
 
     override func viewDidLoad() {
@@ -368,10 +364,8 @@ class ProfileClientViewController: UIViewController {
 extension ProfileClientViewController: UserClientObserver {
 
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
-        if changeInfo.fingerprintChanged {
-            self.updateFingerprintLabel()
-        }
-
+        self.updateFingerprintLabel()
+        
         // This means the fingerprint is acquired
         if self.resetSessionPending && self.userClient.fingerprint != .none {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)

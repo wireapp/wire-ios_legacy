@@ -20,11 +20,8 @@
 
 // Data model
 @import zmessaging;
+@import avs;
 #import "ZMUserSession+iOS.h"
-#import <AVSMediaManager+Client.h>
-#import <AVSMediaManager.h>
-#import <AVSFlowManager.h>
-#import <AVSAudioEffect.h>
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
@@ -50,6 +47,7 @@
 #import "WAZUIMagicIOS.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
+#import "RegistrationTextField.h"
 #import "InvisibleInputAccessoryView.h"
 #import <SCSiriWaveformView/SCSiriWaveformView.h>
 #import "ConversationInputBarSendController.h"
@@ -63,6 +61,7 @@
 #import "ConversationDetailsTransitioningDelegate.h"
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
+#import "Country.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -89,6 +88,10 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"
+#import "KeyboardAvoidingViewController.h"
+#import "AppController.h"
+#import "PhoneNumberViewController.h"
+#import "CountryCodeTableViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -132,7 +135,6 @@
 #import "UIImagePickerController+GetImage.h"
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
-@import HockeySDK;
 
 // Camera
 #import "CameraController.h"

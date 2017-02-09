@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
 "voice.network_error.body" = "You must be online to call. Check your connection and try again.";
-"voice.alert.call_in_progress.title" = "Call in progress";
-"voice.alert.call_in_progress.message" = "Another of your devices is already participating in the call";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Accept";
 "voice.decline_button.title" = "Decline";
 "voice.hang_up_button.title" = "Hang Up";
@@ -489,6 +486,37 @@
 "self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";
 "self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
 
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Save";
+
+"self.settings.account_section.email.change.verify.title" = "Verify email";
+"self.settings.account_section.email.change.verify.description" = "Check your email inbox and follow the instructions.";
+"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Phone number";
+"self.settings.account_section.phone_number.change.save" = "Save";
+"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+
+"self.settings.account_section.phone_number.change.remove.message" = "Do you really want to remove your phone?";
+"self.settings.account_section.phone_number.change.remove.action" = "Remove";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Save";
+"self.settings.account_section.phone_number.change.verify.title" = "Verify phone";
+"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
+"self.settings.account_section.phone_number.change.verify.resend" = "Resend";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Code resent";
+"self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
 "self.settings.notifications.push_notification.toogle" = "Message Previews";
@@ -551,6 +579,9 @@
 "self.settings.privacy_contacts_section.title" = "Contacts";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
+
+"self.settings.privacy_security.lock_app" = "Lock app";
+"self.settings.privacy_security.lock_app.description" = "Unlock the app";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
@@ -726,7 +757,7 @@
 "error.user.phone_code_too_many" = "We already sent you a code via SMS. Tap Resend after 10 minutes to get a new one.";
 "error.user.registration_unknown_error" = "Something went wrong. Please try again.";
 "error.user.device_deleted_remotely" = "You have been logged out from another device.";
-
+"error.user.last_identity_cant_be_deleted" = "You need to have both an email and phone number to be able to remove one of them";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

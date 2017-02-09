@@ -49,7 +49,6 @@
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
     UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
     UIView *containerView = [transitionContext containerView];
     
@@ -70,19 +69,23 @@
             self.actionSheetContainerView.sheetView.transform = offscreenSheet;
             self.actionSheetContainerView.topContainerView.alpha = 0;
         } completion:^(BOOL finished) {
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.55 delay:0 animations:^{
-                fromView.alpha = 0;
+            
+            [UIView animateWithDuration:0.35 animations:^{
+                self.actionSheetContainerView.blurEffectView.effect = nil;
+                self.actionSheetContainerView.sheetView.alpha = 0;
             } completion:^(BOOL finished) {
                 [transitionContext completeTransition:YES];
             }];
         }];
     } else {
-        toView.alpha = 0;
+        self.actionSheetContainerView.blurEffectView.effect = nil;
+        self.actionSheetContainerView.sheetView.alpha = 0;
         self.actionSheetContainerView.topContainerView.alpha = 0;
         self.actionSheetContainerView.sheetView.transform = offscreenSheet;
         
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.35 delay:0 animations:^{
-            toView.alpha = 1;
+        [UIView animateWithDuration:0.35 animations:^{
+            self.actionSheetContainerView.sheetView.alpha = 1;
+            self.actionSheetContainerView.blurEffectView.effect = self.actionSheetContainerView.blurEffect;
         } completion:^(BOOL finished) {
             [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55 delay:0 animations:^{
                 self.actionSheetContainerView.sheetView.transform = CGAffineTransformIdentity;

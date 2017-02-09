@@ -235,6 +235,12 @@ final public class CollectionsViewController: UIViewController {
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
+        if DeveloperMenuState.developerMenuEnabled() {
+            let searchButton = CollectionsView.searchButton()
+            searchButton.addTarget(self, action: #selector(CollectionsViewController.searchButtonPressed(_:)), for: .touchUpInside)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchButton)
+        }
+        
         if !self.inOverviewMode && self.navigationController?.viewControllers.count > 1 {
             let backButton = CollectionsView.backButton()
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
@@ -264,7 +270,7 @@ final public class CollectionsViewController: UIViewController {
 
                 imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
                 imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-               
+                imagesController.swipeToDismiss = false
                 imagesController.messageActionDelegate = self
                 self.navigationController?.pushViewController(imagesController, animated: true)
             }
@@ -279,6 +285,12 @@ final public class CollectionsViewController: UIViewController {
     
     @objc func closeButtonPressed(_ button: UIButton) {
         self.onDismiss?(self)
+    }
+    
+    @objc func searchButtonPressed(_ button: UIButton) {
+        let searchController = TextSearchViewController(conversation: self.collection.conversation)
+        searchController.delegate = self
+        self.navigationController?.pushViewController(KeyboardAvoidingViewController(viewController: searchController), animated: true)
     }
     
     @objc func backButtonPressed(_ button: UIButton) {

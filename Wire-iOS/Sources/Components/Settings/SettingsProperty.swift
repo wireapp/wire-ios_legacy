@@ -75,10 +75,12 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case disableAnalytics = "DisableAnalytics"
     case disableCallKit = "DisableCallKit"
     case sendV3Assets = "SendV3Assets"
-    
+    case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
     case linkPreviewsInShareExtension = "LinkPreviewsInShareExtension"
 
+    case lockApp = "lockApp"
+    
     var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }
@@ -89,21 +91,33 @@ enum SettingsPropertyName: String, CustomStringConvertible {
 }
 
 enum SettingsPropertyValue: Equatable {
-    case number(value: Int)
+    case number(value: NSNumber)
     case string(value: Swift.String)
-    case bool(value: Swift.Bool)
     case none
-    
+
+    init(_ bool: Bool) {
+        self = .number(value: NSNumber(value: bool))
+    }
+
+    init(_ uint: UInt) {
+        self = .number(value: NSNumber(value: uint))
+    }
+
+    init(_ int: Int) {
+        self = .number(value: NSNumber(value: int))
+    }
+
+    init(_ int: Int16) {
+        self = .number(value: NSNumber(value: int))
+    }
+
     static func propertyValue(_ object: Any?) -> SettingsPropertyValue {
         switch(object) {
-        case let intValue as Int:
-            return SettingsPropertyValue.number(value: intValue)
+        case let number as NSNumber:
+            return SettingsPropertyValue.number(value: number)
             
         case let stringValue as Swift.String:
             return SettingsPropertyValue.string(value: stringValue)
-            
-        case let boolValue as Swift.Bool:
-            return SettingsPropertyValue.bool(value: boolValue)
             
         default:
             return .none
@@ -116,8 +130,6 @@ enum SettingsPropertyValue: Equatable {
             return value as AnyObject?
         case .string(let value):
             return value as AnyObject?
-        case .bool(let value):
-            return value as AnyObject?
         case .none:
             return .none
         }
@@ -126,22 +138,10 @@ enum SettingsPropertyValue: Equatable {
 
 func ==(a: SettingsPropertyValue, b: SettingsPropertyValue) -> Bool {
     switch (a, b) {
-    case (.string(let a), .string(let b)) where a == b: return true
-    case (.number(let a), .number(let b)) where a == b: return true
-    case (.bool(let a), .bool(let b)) where a == b: return true
+    case (.string(let a), .string(let b)): return a == b
+    case (.number(let a), .number(let b)): return a == b
     case (.none, .none): return true
-    
-    case (.number(let a), .bool(let b)) where ((a == 0) && (b == false)) || ((a > 0) && (b == true)): return true
-    case (.bool(let a), .number(let b)) where ((a == false) && (b == 0)) || ((a == true) && (b > 0)): return true
-        
     default: return false
-    }
-}
-
-// To enable simple Bool creation
-extension Bool {
-    init<T : Integer>(_ integer: T){
-        self.init(integer != 0)
     }
 }
 
@@ -203,8 +203,6 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     
     internal func value() -> SettingsPropertyValue {
         switch self.userDefaults.object(forKey: self.userDefaultsKey) as AnyObject? {
-        case let boolValue as Bool:
-            return SettingsPropertyValue.propertyValue(boolValue as AnyObject?)
         case let numberValue as NSNumber:
             return SettingsPropertyValue.propertyValue(numberValue.intValue as AnyObject?)
         case let stringValue as String:

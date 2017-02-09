@@ -64,8 +64,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UIControl+Wire.h>
 #import <WireExtensionComponents/FileManager.h>
 #import <WireExtensionComponents/ColorScheme.h>
-#import <WireExtensionComponents/SharedAnalytics.h>
-#import <WireExtensionComponents/SharedAnalyticsEvent.h>
 #import <WireExtensionComponents/ColorScheme.h>
 #import <WireExtensionComponents/NSDate+WRFormat.h>
 #import <WireExtensionComponents/Geometry.h>

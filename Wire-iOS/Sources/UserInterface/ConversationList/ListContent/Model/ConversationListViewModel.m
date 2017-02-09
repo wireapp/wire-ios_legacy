@@ -38,9 +38,9 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 // Local copies of the lists.
 @property (nonatomic, copy) NSArray *inbox;
 @property (nonatomic, copy) NSArray *conversations;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> pendingConversationListObserverToken;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> conversationListObserverToken;
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> clearedConversationListObserverToken;
+@property (nonatomic) id pendingConversationListObserverToken;
+@property (nonatomic) id conversationListObserverToken;
+@property (nonatomic) id clearedConversationListObserverToken;
 
 @end
 
@@ -56,9 +56,10 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
         [self updateSection:SectionIndexAll];
         
-        self.pendingConversationListObserverToken = [[SessionObjectCache sharedCache].pendingConnectionRequests addConversationListObserver:self];
-        self.conversationListObserverToken = [[SessionObjectCache sharedCache].conversationList addConversationListObserver:self];
-        self.clearedConversationListObserverToken = [[SessionObjectCache sharedCache].clearedConversations addConversationListObserver:self];
+        SessionObjectCache *cache = [SessionObjectCache sharedCache];
+        self.pendingConversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:cache.pendingConnectionRequests];
+        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:cache.conversationList];
+        self.clearedConversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:cache.clearedConversations];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(applicationWillEnterForeground:)
                                                    name:UIApplicationWillEnterForegroundNotification
@@ -69,9 +70,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)dealloc
 {
-    [[SessionObjectCache sharedCache].pendingConnectionRequests removeConversationListObserverForToken:self.pendingConversationListObserverToken];
-    [[SessionObjectCache sharedCache].conversationList removeConversationListObserverForToken:self.conversationListObserverToken];
-    [[SessionObjectCache sharedCache].clearedConversations removeConversationListObserverForToken:self.clearedConversationListObserverToken];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
@@ -257,11 +255,12 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)applicationWillEnterForeground:(NSNotification *)note
 {
-    [SessionObjectCache.sharedCache.conversationList resort];
+    [SessionObjectCache.sharedCache refetchConversationLists];
     [self reloadConversationListViewModel];
 }
 
-- (void)conversationInsideList:(ZMConversationList*)list didChange:(ConversationChangeInfo *)changeInfo;
+
+- (void)conversationInsideList:(ZMConversationList *)list didChange:(ConversationChangeInfo *)changeInfo;
 {
     if ([self.delegate respondsToSelector:@selector(listViewModel:didUpdateConversationWithChange:)]) {
         [self.delegate listViewModel:self didUpdateConversationWithChange:changeInfo];

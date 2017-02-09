@@ -25,7 +25,7 @@
 
 @interface VoiceChannelParticipantCell : UICollectionViewCell
 
-- (void)configureForUser:(ZMUser *)user participantState:(ZMVoiceChannelParticipantState *)participantState;
+- (void)configureForUser:(ZMUser *)user participantState:(VoiceChannelV2ParticipantState *)participantState;
 - (void)updateVoiceGain:(CGFloat)voiceGain;
 
 @end

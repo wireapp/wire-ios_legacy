@@ -43,7 +43,7 @@
 
 #import "zmessaging+iOS.h"
 #import "ZMConversation+Additions.h"
-#import "ZMVoiceChannel+Additions.h"
+#import "VoiceChannelV2+Additions.h"
 
 #import "AppDelegate.h"
 #import "VoiceChannelController.h"
@@ -110,6 +110,10 @@
         self.soundEventListener = [SoundEventListener new];
         self.proximityMonitorManager = [ProximityMonitorManager new];
         [[ZMUserSession sharedSession] setRequestToOpenViewDelegate:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contentSizeCategoryDidChange:)
+                                                     name:UIContentSizeCategoryDidChangeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -529,13 +533,23 @@
 
 #pragma mark - ColorSchemeControllerDidApplyChangesNotification
 
+- (void)reloadCurrentConversation
+{
+    // Need to reload conversation to apply color scheme changes
+    ConversationRootViewController *currentConversationViewController = [self conversationRootControllerForConversation:self.currentConversation];
+    [self pushContentViewController:currentConversationViewController focusOnView:NO animated:NO completion:nil];
+}
+
 - (void)colorSchemeControllerDidApplyChanges:(NSNotification *)notification
 {
     if (self.currentConversation) {
-        // Need to reload conversation to apply color scheme changes
-        ConversationRootViewController *currentConversationViewController = [self conversationRootControllerForConversation:self.currentConversation];
-        [self pushContentViewController:currentConversationViewController focusOnView:NO animated:NO completion:nil];
+        [self reloadCurrentConversation];
     }
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification
+{
+    [self reloadCurrentConversation];
 }
 
 #pragma mark - Network Loop notification

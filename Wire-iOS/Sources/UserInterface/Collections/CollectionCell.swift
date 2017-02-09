@@ -28,21 +28,19 @@ protocol CollectionCellMessageChangeDelegate: class {
 }
 
 open class CollectionCell: UICollectionViewCell, Reusable {
-    var messageObserverToken: ZMMessageObserverOpaqueToken? = .none
+    var messageObserverToken: NSObjectProtocol? = .none
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate
     weak var messageChangeDelegate: CollectionCellMessageChangeDelegate?
     
     var message: ZMConversationMessage? = .none {
         didSet {
-            ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
-            self.messageObserverToken = ZMMessageNotification.add(self, for: self.message)
+            self.messageObserverToken = nil
+            if let newMessage = message {
+                self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage)
+            }
             self.updateForMessage(changeInfo: .none)
         }
-    }
-    
-    deinit {
-        ZMMessageNotification.removeMessageObserver(for: self.messageObserverToken)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -204,7 +202,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
 }
 
 extension CollectionCell: ZMMessageObserver {
-    public func messageDidChange(_ changeInfo: MessageChangeInfo!) {
+    public func messageDidChange(_ changeInfo: MessageChangeInfo) {
         self.updateForMessage(changeInfo: changeInfo)
         self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }

@@ -22,21 +22,29 @@ import Foundation
 
 public extension NSURL {
 
-    @objc func open() {
-        (self as URL).open()
+    @discardableResult @objc func open() -> Bool {
+        return (self as URL).open()
     }
 
 }
 
 public extension URL {
 
-    func open() {
-        let openened = openAsTweet() || openAsLink()
-        if !openened {
-            UIApplication.shared.openURL(self)
+    @discardableResult func open() -> Bool {
+        let opened = openAsTweet() || openAsLink()
+        if opened {
+            return true
+        }
+        else {
+            if UIApplication.shared.canOpenURL(self) {
+                UIApplication.shared.openURL(self)
+                return true
+            }
+            else {
+                return false
+            }
         }
     }
-
 }
 
 protocol LinkOpeningOption {

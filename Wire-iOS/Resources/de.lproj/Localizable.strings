@@ -255,9 +255,9 @@
 
 "content.message.like" = "Gefällt mir";
 "content.message.unlike" = "Gefällt mir nicht mehr";
-"content.message.forward" = "Weiterleiten";
+"content.message.forward" = "Teilen";
 "content.message.go_to_conversation" = "Öffnen";
-"content.message.forward.to" = "Senden an...";
+"content.message.forward.to" = "Suche…";
 
 "content.reactions_list.likers" = "Gefällt";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Schlechte Verbindung";
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.network_error.body" = "Du brauchst eine Internetverbindung, um anzurufen. Überprüfe die Verbindung und versuche es erneut.";
-"voice.alert.call_in_progress.title" = "Laufendes Gespräch";
-"voice.alert.call_in_progress.message" = "Ein anderes deiner Geräte nimmt bereits an diesem Gespräch teil";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Annehmen";
 "voice.decline_button.title" = "Ablehnen";
 "voice.hang_up_button.title" = "Beenden";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Blockieren?";
-"profile.block_dialog.message" = "%@ wird dich auf Wire nicht finden können.";
+"profile.block_dialog.message" = "%@ wird dich nicht mehr kontaktieren oder zu Gruppenunterhaltungen hinzufügen können.";
 "profile.block_dialog.button_cancel" = "Abbrechen";
 "profile.block_dialog.button_block" = "Blockieren";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Speichern fehlgeschlagen";
 "self.settings.account_section.handle.change.failure_alert.message" = "Es gab einen Fehler beim Speichern deines Benutzernamens. Bitte versuche es erneut.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-Mail";
+"self.settings.account_section.email.change.save" = "Speichern";
+
+"self.settings.account_section.email.change.verify.title" = "E-Mail bestätigen";
+"self.settings.account_section.email.change.verify.description" = "Schaue in deinen Posteingang und folge den Anweisungen.";
+"self.settings.account_section.email.change.verify.resend" = "Erneut an %@ senden";
+
+"self.settings.account_section.email.change.resend.title" = "Die E-Mail wurde erneut gesendet";
+"self.settings.account_section.email.change.resend.message" = "Eine Bestätigung wurde an %@ gesendet. Bitte überprüfe deinen Posteingang und folge den in der Nachricht enthaltenen Anweisungen.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Benachrichtigungen";

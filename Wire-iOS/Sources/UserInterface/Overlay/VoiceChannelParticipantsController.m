@@ -25,29 +25,20 @@
 #import "zmessaging+iOS.h"
 
 #import <Classy/Classy.h>
-#import <ZMCDataModel/ZMVoiceChannelNotifications.h>
 
 
 
-@interface VoiceChannelParticipantsController () <ZMVoiceChannelParticipantsObserver, ZMVoiceChannelVoiceGainObserver>
+@interface VoiceChannelParticipantsController () <VoiceChannelParticipantObserver, VoiceGainObserver>
 
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) id<ZMVoiceChannelParticipantsObserverOpaqueToken> participantsStateObserverToken;
+@property (nonatomic) id participantsStateObserverToken;
+@property (nonatomic) id voiceGainObserverToken;
 
 @end
 
 
 @implementation VoiceChannelParticipantsController
-
-- (void)dealloc
-{
-    if (self.participantsStateObserverToken) {
-        [self.conversation.voiceChannel removeCallParticipantsObserverForToken:self.participantsStateObserverToken];
-    }
-    
-    [ZMVoiceChannelParticipantVoiceGainChangedNotification removeObserver:self];
-}
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation collectionView:(UICollectionView *)collectionView
 {
@@ -57,15 +48,15 @@
         self.conversation = conversation;
         self.collectionView = collectionView;
         
-        self.participantsStateObserverToken = [self.conversation.voiceChannel addCallParticipantsObserver:self];
+        self.participantsStateObserverToken = [self.conversation.voiceChannel addParticipantObserver:self];
+        self.voiceGainObserverToken = [self.conversation.voiceChannel addVoiceGainObserver:self];
+        
         [self.collectionView registerClass:[VoiceChannelParticipantCell class] forCellWithReuseIdentifier:@"VoiceChannelParticipantCell"];
         self.collectionView.dataSource = self;
         
         // Force the collection view to sync with the datasource since we might get notifications before
         // the next layout pass, which is when the collection view normally queries the data source.
         [self.collectionView performBatchUpdates:nil completion:nil];
-        
-        [ZMVoiceChannelParticipantVoiceGainChangedNotification addObserver:self forVoiceChannel:self.conversation.voiceChannel];
     }
     
     return self;
@@ -74,8 +65,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ZMUser *user = [self.conversation.voiceChannel.participants objectAtIndex:indexPath.row];
-    
-    ZMVoiceChannelParticipantState *participantState = [self.conversation.voiceChannel participantStateForUser:user];
+    VoiceChannelV2ParticipantState *participantState = [self.conversation.voiceChannel stateForParticipant:user];
         
     VoiceChannelParticipantCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"VoiceChannelParticipantCell" forIndexPath:indexPath];
     [cell configureForUser:user participantState:participantState];
@@ -88,48 +78,48 @@
     return self.conversation.voiceChannel.participants.count;
 }
 
-#pragma mark - ZMVoiceChannelParticipantStateObserver
+#pragma mark - VoiceChannelParticipantStateObserver
 
-- (void)voiceChannelParticipantsDidChange:(VoiceChannelParticipantsChangeInfo *)info
+- (void)voiceChannelParticipantsDidChange:(SetChangeInfo *)changeInfo
 {
     if (self.conversation.conversationType != ZMConversationTypeGroup) {
         return;
     }
     
-    if (info.needsReload) {
+    if (changeInfo.needsReload) {
         [self.collectionView reloadData];
     } else {
         [self.collectionView performBatchUpdates:^{
-            [self.collectionView insertItemsAtIndexPaths:info.insertedIndexes.indexPaths];
-            [self.collectionView deleteItemsAtIndexPaths:info.deletedIndexes.indexPaths];
+            [self.collectionView insertItemsAtIndexPaths:changeInfo.insertedIndexes.indexPaths];
+            [self.collectionView deleteItemsAtIndexPaths:changeInfo.deletedIndexes.indexPaths];
             
-            [info.movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
+            [changeInfo.movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
                 NSIndexPath *from = [NSIndexPath indexPathForRow:moved.from inSection:0];
                 NSIndexPath *to = [NSIndexPath indexPathForRow:moved.to inSection:0];
                 [self.collectionView moveItemAtIndexPath:from toIndexPath:to];
             }];
         } completion:nil];
         
-        [info.updatedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [changeInfo.updatedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             VoiceChannelParticipantCell *cell = (VoiceChannelParticipantCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:idx inSection:0]];
             ZMUser *user = [self.conversation.voiceChannel.participants objectAtIndex:idx];
-            ZMVoiceChannelParticipantState *participantState = [self.conversation.voiceChannel participantStateForUser:user];
+            VoiceChannelV2ParticipantState *participantState = [self.conversation.voiceChannel stateForParticipant:user];
             
             [cell configureForUser:user participantState:participantState];
         }];
     }
 }
 
-#pragma mark - ZMVoiceChannelVoiceGainObserver
+#pragma mark - VoiceGainObserver
 
-- (void)voiceChannelParticipantVoiceGainDidChange:(ZMVoiceChannelParticipantVoiceGainChangedNotification *)info
+- (void)voiceGainDidChangeForParticipant:(ZMUser *)participant volume:(float)volume
 {
     // Workaround for AUDIO-508
-    if (info.voiceGain > 0.01) {
+    if (volume > 0.01) {
         
-        NSUInteger index = [self.conversation.voiceChannel.participants indexOfObject:info.participant];
+        NSUInteger index = [self.conversation.voiceChannel.participants indexOfObject:participant];
         VoiceChannelParticipantCell *cell = (VoiceChannelParticipantCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        [cell updateVoiceGain:info.voiceGain];
+        [cell updateVoiceGain:volume];
     }
 }
 

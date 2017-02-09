@@ -508,6 +508,12 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.fullImageView mediaAsset]];
 }
 
+// @override from ConversationCell
+- (void)didDoubleTapMessage:(id)sender
+{
+    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
+}
+
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
     DDLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));

@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "Huono yhteys";
 "voice.network_error.title" = "Ei internet-yhteyttä";
 "voice.network_error.body" = "Sinun pitää olla online-tilassa soittaaksesi puheluja. Tarkista yhteytesi ja yritä uudelleen.";
-"voice.alert.call_in_progress.title" = "Puhelu käynnissä";
-"voice.alert.call_in_progress.message" = "Toinen laitteesi on jo ottamassa osaa puheluun";
-"voice.alert.call_in_progress.confirm" = "Ok";
 "voice.accept_button.title" = "Hyväksy";
 "voice.decline_button.title" = "Kieltäydy";
 "voice.hang_up_button.title" = "Katkaise puhelu";
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ei pysty asettamaan käyttäjänimeä";
 "self.settings.account_section.handle.change.failure_alert.message" = "Virhe yrittäessä asettaa käyttäjänimeä. Yritä uudelleen.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Sähköposti";
+"self.settings.account_section.email.change.save" = "Tallenna";
+
+"self.settings.account_section.email.change.verify.title" = "Vahvista sähköpostiosoite";
+"self.settings.account_section.email.change.verify.description" = "Tarkista sähköpostisi saapuneet-kansio ja seuraa ohjeita.";
+"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Ilmoitukset";

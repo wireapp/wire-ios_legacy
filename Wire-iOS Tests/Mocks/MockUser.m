@@ -69,11 +69,6 @@
     return newClients;
 }
 
-+ (id<ZMUserObserverOpaqueToken>)addUserObserver:(id<ZMUserObserver>)observer forUsers:(NSArray *)users inUserSession:(ZMUserSession *)userSession
-{
-    return nil;
-}
-
 - (NSString *)emailAddress
 {
     return @"test@email.com";

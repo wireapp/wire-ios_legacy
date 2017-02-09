@@ -41,8 +41,6 @@
 #import "Application+runDuration.h"
 
 #import "AppDelegate+Logging.h"
-#import "AppDelegate+ExtensionAnalytics.h"
-
 
 #import "ZClientViewController.h"
 #import "SessionObjectCache.h"
@@ -54,6 +52,8 @@
 // Performance Measurement
 #import "StopWatch.h"
 
+
+static AppDelegate *sharedAppDelegate = nil;
 
 
 @interface AppDelegate (NetworkAvailabilityObserver) <ZMNetworkAvailabilityObserver>
@@ -90,7 +90,7 @@
 
 + (instancetype)sharedAppDelegate;
 {
-    return (AppDelegate *) [UIApplication sharedApplication].delegate;
+    return sharedAppDelegate;
 }
 
 - (void)dealloc
@@ -102,7 +102,8 @@
 - (instancetype)init
 {
     self = [super init];
-        if (self) {
+    if (self) {
+        sharedAppDelegate = self;
         self.appController = [[AppController alloc] init];
     }
     return self;
@@ -110,7 +111,6 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     DDLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupLogging];
@@ -188,8 +188,6 @@
     
     self.trackedResumeEvent = NO;
     
-    [self uploadExtensionAnalytics];
-    
     DDLogInfo(@"applicationDidBecomeActive END");
 }
 
@@ -201,6 +199,8 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     DDLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
+    
+    [self.appController applicationDidEnterBackground:application];
     
     [Analytics.shared persistCustomSessionSummary];
     self.launchType = ApplicationLaunchUnknown;

@@ -255,9 +255,9 @@
 
 "content.message.like" = "اعجاب";
 "content.message.unlike" = "إلغاء إعجابي";
-"content.message.forward" = "أرسل";
+"content.message.forward" = "شارك";
 "content.message.go_to_conversation" = "إظهار";
-"content.message.forward.to" = "إرسال إلى...";
+"content.message.forward.to" = "بحث…";
 
 "content.reactions_list.likers" = "إعجاب من  ";
 
@@ -288,9 +288,6 @@
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
 "voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
-"voice.alert.call_in_progress.title" = "يتم إجراء المكالمة";
-"voice.alert.call_in_progress.message" = "يتم بالفعل إجراء مُكالمة من خلال أحد أجهزتك الأخرى";
-"voice.alert.call_in_progress.confirm" = "موافق";
 "voice.accept_button.title" = "قبول";
 "voice.decline_button.title" = "رفض";
 "voice.hang_up_button.title" = "إنهاء الاتصال";
@@ -351,7 +348,7 @@
 
 // Block dialog
 "profile.block_dialog.title" = "حظر؟\n";
-"profile.block_dialog.message" = "لن يتمكن %@ من إيجادك أو الإتصال بك على Wire.";
+"profile.block_dialog.message" = "لن يتمكن %@ من التواصل معك أو إضافتك إلى محادثات جماعية.";
 "profile.block_dialog.button_cancel" = "إلغاء";
 "profile.block_dialog.button_block" = "حظر \n";
 
@@ -488,6 +485,18 @@
 
 "self.settings.account_section.handle.change.failure_alert.title" = "تعذَّر تعيين المُعرّف";
 "self.settings.account_section.handle.change.failure_alert.message" = "حدث خطأ في إعداد مُعرّفك. من فضلك حاول مرة أخرى.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "البريد الإلكتروني";
+"self.settings.account_section.email.change.save" = "حفظ";
+
+"self.settings.account_section.email.change.verify.title" = "تأكيد البريدالإلكتروني";
+"self.settings.account_section.email.change.verify.description" = "تحقق من بريدك الإلكتروني الوارد واتبع الإرشادات التي تظهر.";
+"self.settings.account_section.email.change.verify.resend" = "إعادة الإرسال إلى %@";
+
+"self.settings.account_section.email.change.resend.title" = "تمّت إعادة إرسال البريد";
+"self.settings.account_section.email.change.resend.message" = "تم إعادة إرسال رسالة التأكيد إلى %@. تحقق من صندوق الوارد واتّبع الإرشادات.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "إشعارات";
@@ -784,4 +793,4 @@
 "collections.section.links.title" = "روابط";
 "collections.section.all.button" = "عرض كل %d ←";
 "collections.section.no_items" = "لا توجد عناصر في المختارات";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.image_viewer.copied.title" = "تم نسخ الصورة";

@@ -99,7 +99,7 @@
 
         self.nameLabel = [[UILabel alloc] initForAutoLayout];
         self.nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        self.nameLabel.textAlignment = NSTextAlignmentLeft;
+        self.nameLabel.textAlignment = NSTextAlignmentNatural;
         [self.swipeView addSubview:self.nameLabel];
 
         self.subtitleLabel = [[UILabel alloc] initForAutoLayout];

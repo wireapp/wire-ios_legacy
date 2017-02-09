@@ -26,13 +26,13 @@
 "share_extension.conversation_selection.empty.value" = "اختيار";
 "share_extension.input.placeholder" = "اكتب الرسالة";
 "share_extension.sending_progress.title" = "جاري الإرسال...";
-"share_extension.preparing.title" = "Preparing…";
-"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.preparing.title" = "جارٍ الإعداد…";
+"share_extension.not_signed_in.title" = "لِج لـ Wire لتستطيع مشاركة أي شيء";
 "share_extension.not_signed_in.close_button" = "إغلاق";
 
 "conversation.displayname.emptygroup" = "محادثة جماعية";
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";
 "meta.degraded.degradation_reason_message.plural" = "%@ بدأ باستخدام جهاز جديد.";
 "meta.degraded.dialog_message" = "ألا زلت تريد إرسال رسالتك؟";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "لا ترسل";
 "meta.degraded.send_anyway_button" = "أرسل على أي حال";

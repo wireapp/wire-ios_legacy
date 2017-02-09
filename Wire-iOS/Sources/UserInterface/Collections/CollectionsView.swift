@@ -109,6 +109,15 @@ import Cartography
         return button
     }
     
+    public static func searchButton() -> IconButton {
+        let button = IconButton.iconButtonDefault()
+        button.setIcon(.search, with: .tiny, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 38, height: 20)
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
+        button.accessibilityIdentifier = "search"
+        return button
+    }
+    
     private func constrainViews() {
         constrain(self, self.collectionView, self.noItemsLabel, self.noItemsIcon) { (selfView: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy, noItemsIcon: LayoutProxy) -> () in
             collectionView.edges == selfView.edges

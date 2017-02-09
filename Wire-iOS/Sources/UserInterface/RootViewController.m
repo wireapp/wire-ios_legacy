@@ -64,7 +64,7 @@
 @property (nonatomic, assign) UIInterfaceOrientation lastVisibleInterfaceOrientation;
 
 @property (nonatomic) id<ZMAuthenticationObserverToken> authToken;
-@property (nonatomic) id <ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -91,10 +91,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authToken];
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
-- (void)setup;
+- (void)setup
 {
     self.keyboardFrameObserver = [[KeyboardFrameObserver alloc] init];
 
@@ -106,8 +105,7 @@
     [super viewDidLoad];
     
     // observe future accent color changes
-    ZMUser *selfUser = [ZMUser selfUser];
-    self.userObserverToken = [selfUser.class addUserObserver:self forUsers:@[selfUser] inUserSession:[ZMUserSession sharedSession]];
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
     
     if (self.isLoggedIn) {
         [self presentFrameworkFromRegistration:NO];

@@ -20,7 +20,7 @@
 #import "Analytics+iOS.h"
 #import "Analytics+Metrics.h"
 #import "AnalyticsLocalyticsProvider.h"
-#import <AVSFlowManager.h>
+#import <avs/AVSFlowManager.h>
 #import "Settings.h"
 #import "Wire-Swift.h"
 
