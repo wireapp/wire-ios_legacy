@@ -36,7 +36,7 @@ protocol ConfirmPhoneDelegate: class {
 
 final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
-    fileprivate var observer: UserCollectionObserverToken?
+    fileprivate var observer: NSObjectProtocol?
     fileprivate var observerToken: AnyObject?
     
     fileprivate var verificationCode: String?
@@ -63,17 +63,16 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let context = ZMUserSession.shared()?.managedObjectContext
         observerToken = userProfile?.add(observer: self)
-        observer = UserCollectionObserverToken(observer: self, users: [ZMUser.selfUser()], managedObjectContext: context!)
+        observer = UserChangeInfo.add(observer: self, forBareUser:ZMUser.selfUser())
         startTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        observer?.tearDown()
-        if let token = observerToken  {
-            userProfile?.removeObserver(token: token)
+
+        if let observer = observer {
+            UserChangeInfo.remove(observer: observer, forBareUser: nil)
         }
     }
     
