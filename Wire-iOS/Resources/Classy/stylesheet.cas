@@ -848,6 +848,15 @@ MessageDeletedCell {
     trashColor: $color-icon-normal;
 }
 
+UnknownMessageCell {
+    messageLabelFont: $font-small-light;
+    messageLabelTextColor: $color-text-foreground;
+    
+    messageLabel: @{
+        textTransform: upper;
+    }
+}
+
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
