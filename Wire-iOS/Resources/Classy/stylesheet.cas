@@ -1606,7 +1606,7 @@ ConversationImagesViewController {
     }
 }
 
-DimView {
+AppLockView {
     authenticateLabel: @{
         font: $font-small-medium;
         textColor: $color-text-foreground-dark;

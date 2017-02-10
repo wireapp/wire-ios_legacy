@@ -23,7 +23,7 @@
 @class VoiceChannelController;
 @class NetworkActivityViewController;
 @class BarController;
-@class DimView;
+@class AppLockViewController;
 
 
 @interface NotificationWindowRootViewController : UIViewController
@@ -31,12 +31,10 @@
 @property (nonatomic, readonly) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) VoiceChannelController *voiceChannelController;
 @property (nonatomic, readonly) BarController *notificationBarController;
-@property (nonatomic, readonly) DimView *dimView;
+@property (nonatomic, readonly) AppLockViewController *appLockViewController;
 
 @property (nonatomic) BOOL showLoadMessages;
 
 @property (nonatomic) BOOL hideNetworkActivityView;
-
-@property (nonatomic) BOOL dimContents;
 
 @end

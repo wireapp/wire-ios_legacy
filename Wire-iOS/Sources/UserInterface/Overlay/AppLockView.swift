@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc internal final class DimView: UIView {
+@objc internal final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()
@@ -60,7 +60,7 @@ import Cartography
         
         self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description".localized
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
-        self.authenticateButton.addTarget(self, action: #selector(DimView.onReauthenticatePressed(_:)), for: .touchUpInside)
+        self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
         
         constrain(self, self.shieldViewContainer, self.blurView, self.authenticateLabel, self.authenticateButton) { selfView, shieldViewContainer, blurView, authenticateLabel, authenticateButton in
             shieldViewContainer.edges == selfView.edges

@@ -17,11 +17,23 @@
 //
 
 import Foundation
+import Cartography
 import LocalAuthentication
 import CocoaLumberjackSwift
 import HockeySDK.BITHockeyManager
 
-extension AppController {
+
+@objc final class AppLockViewController: UIViewController {
+    fileprivate var lockView: AppLockView!
+    fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
+    fileprivate var localAuthenticationCancelled: Bool = false
+    fileprivate var localAuthenticationNeeded: Bool = true
+    fileprivate var dimContents: Bool = false {
+        didSet {
+            self.view.isHidden = !self.dimContents
+        }
+    }
+
     static var settingsPropertyFactory: SettingsPropertyFactory {
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
                                                               analytics: Analytics.shared(),
@@ -33,15 +45,13 @@ extension AppController {
         return settingsPropertyFactory
     }
     
-    var appLockActive: Bool {
+    fileprivate var appLockActive: Bool {
         let lockApp = type(of: self).settingsPropertyFactory.property(.lockApp)
         
         return lockApp.value() == SettingsPropertyValue(true)
     }
     
-    static let authenticationPersistancePeriod: TimeInterval = 10
-    
-    var lastUnlockedDate: Date {
+    fileprivate var lastUnlockedDate: Date {
         get {
             let lastAuthDateProperty = type(of: self).settingsPropertyFactory.property(.lockAppLastDate)
             return Date(timeIntervalSinceReferenceDate: TimeInterval(lastAuthDateProperty.value().value() as! UInt32))
@@ -53,6 +63,51 @@ extension AppController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.lockView = AppLockView()
+        self.lockView.onReauthRequested = { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.localAuthenticationCancelled = false
+            self.localAuthenticationNeeded = true
+            self.showUnlockIfNeeded()
+        }
+        
+        self.view.addSubview(self.lockView)
+        
+        constrain(self.view, self.lockView) { view, lockView in
+            lockView.edges == view.edges
+        }
+        
+        self.showUnlockIfNeeded()
+    }
+    
+    fileprivate func showUnlockIfNeeded() {
+        if self.appLockActive && self.localAuthenticationNeeded {
+            self.dimContents = true
+        
+            if self.localAuthenticationCancelled {
+                self.lockView.showReauth = true
+            }
+            else {
+                self.lockView.showReauth = false
+                self.requireLocalAuthenticationIfNeeded { granted in
+                    self.dimContents = !granted
+                    self.localAuthenticationCancelled = !granted
+                    self.localAuthenticationNeeded = !granted
+                }
+            }
+        }
+        else {
+            self.lockView.showReauth = false
+            self.dimContents = false
+        }
+    }
+
     /// @param callback confirmation; if auth is not needed called with 'true'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool)->()) {
         guard #available(iOS 9.0, *), self.appLockActive else {
@@ -87,10 +142,33 @@ extension AppController {
                 }
             })
         }
-       
+        
         if error != nil {
             DDLogError("Local authentication error: \(error?.localizedDescription)")
             callback(false)
         }
+    }
+}
+
+extension AppLockViewController: UIApplicationDelegate {
+    func applicationWillResignActive(_ application: UIApplication) {
+        if self.appLockActive {
+            self.dimContents = true
+        }
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        if !self.localAuthenticationNeeded {
+            self.lastUnlockedDate = Date()
+        }
+        
+        self.localAuthenticationNeeded = true
+        if self.appLockActive {
+            self.dimContents = true
+        }
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        self.showUnlockIfNeeded()
     }
 }

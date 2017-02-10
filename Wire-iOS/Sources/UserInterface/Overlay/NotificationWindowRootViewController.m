@@ -50,13 +50,12 @@
 @property (nonatomic) NetworkActivityViewController *networkActivityViewController;
 @property (nonatomic) InvitationStatusController *invitationStatusController;
 @property (nonatomic) BarController *notificationBarController;
+@property (nonatomic) AppLockViewController *appLockViewController;
 
 @property (nonatomic, strong) NSLayoutConstraint *overlayContainerLeftMargin;
 @property (nonatomic, strong) NSLayoutConstraint *networkStatusRightMargin;
 @property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
 @property (nonatomic, strong) NSLayoutConstraint *notificationRightMargin;
-
-@property (nonatomic) DimView *dimView;
 
 @end
 
@@ -86,9 +85,9 @@
     
     self.invitationStatusController = [[InvitationStatusController alloc] initWithBarController:self.notificationBarController];
        
-    self.dimView = [[DimView alloc] initForAutoLayout];
-    self.dimView.hidden = !self.dimContents;
-    [self.view addSubview:self.dimView];
+    self.appLockViewController = [[AppLockViewController alloc] init];
+    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.appLockViewController toView:self.view];
     
     [self setupConstraints];
     [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
@@ -118,19 +117,12 @@
     [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.notificationRightMargin = [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     
-    [self.dimView autoPinEdgesToSuperviewEdges];
+    [self.appLockViewController.view autoPinEdgesToSuperviewEdges];
 }
 
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
-}
-
-- (void)setDimContents:(BOOL)dimContents
-{
-    _dimContents = dimContents;
-    
-    self.dimView.hidden = !self.dimContents;
 }
 
 - (void)addViewController:(UIViewController *)viewController toView:(UIView *)view

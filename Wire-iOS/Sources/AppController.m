@@ -69,8 +69,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 @property (nonatomic) ClassyCache *classyCache;
 
-@property (nonatomic) BOOL localAuthenticationCancelled;
-@property (nonatomic) BOOL localAuthenticationNeeded;
 @end
 
 
@@ -100,8 +98,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
                                                  selector:@selector(contentSizeCategoryDidChange:)
                                                      name:UIContentSizeCategoryDidChangeNotification
                                                    object:nil];
-        
-        self.localAuthenticationNeeded = YES;
     }
     return self;
 }
@@ -149,21 +145,12 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    if ([self appLockActive]) {
-        self.notificationWindowController.dimContents = YES;
-    }
+    [self.notificationWindowController.appLockViewController applicationWillResignActive:application];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    if (!self.localAuthenticationNeeded) {
-        self.lastUnlockedDate = [[NSDate alloc] init];
-    }
-    
-    self.localAuthenticationNeeded = YES;
-    if ([self appLockActive]) {
-        self.notificationWindowController.dimContents = YES;
-    }
+    [self.notificationWindowController.appLockViewController applicationDidEnterBackground:application];
 }
 
 - (void)uploadAddressBookIfNeeded
@@ -190,7 +177,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [self showForceUpdateIfNeeeded];
-    [self checkAppLock];
+    [self.notificationWindowController.appLockViewController applicationDidBecomeActive:application];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
@@ -334,14 +321,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.notificationsWindow.accessibilityIdentifier = @"ZClientNotificationWindow";
     
     [self.notificationsWindow setHidden:NO];
-    
-    @weakify(self);
-    self.notificationWindowController.dimView.onReauthRequested = ^{
-        @strongify(self);
-        self.localAuthenticationCancelled = NO;
-        self.localAuthenticationNeeded = YES;
-        [self checkAppLock];
-    };
 }
 
 - (void)setupClassyWithWindows:(NSArray *)windows
@@ -367,29 +346,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
 #endif
 
-}
-
-- (void)checkAppLock
-{
-    if ([self appLockActive] && self.localAuthenticationNeeded) {
-        self.notificationWindowController.dimContents = YES;
-        
-        if (self.localAuthenticationCancelled) {
-            self.notificationWindowController.dimView.showReauth = YES;
-        }
-        else {
-            self.notificationWindowController.dimView.showReauth = NO;
-            [self requireLocalAuthenticationIfNeededWith:^(BOOL granted) {
-                self.notificationWindowController.dimContents = !granted;
-                self.localAuthenticationCancelled = !granted;
-                self.localAuthenticationNeeded = !granted;
-            }];
-        }
-    }
-    else {
-        self.notificationWindowController.dimView.showReauth = NO;
-        self.notificationWindowController.dimContents = NO;
-    }
 }
 
 - (void)applyFontScheme
