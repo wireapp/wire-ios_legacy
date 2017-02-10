@@ -415,7 +415,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
                 break;
             case MessageActionShowInConversation:
-                // Not supported from cell
+                [self scrollTo:message completion:nil];
+                break;
             case MessageActionCopy:
             {
                 [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
@@ -562,7 +563,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.messageWindow.messages indexOfObject:message] inSection:0];
+    NSUInteger messageIndex = [self.messageWindow.messages indexOfObject:message];
+    if (messageIndex == NSNotFound) {
+        return nil;
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messageIndex inSection:0];
     ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }

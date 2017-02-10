@@ -201,6 +201,7 @@
 		54F7C27F1D74367E004D8087 /* AddressBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */; };
 		54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
+		6DC7310EF4FE22057C3A6DC8 /* libPods-Wire-iOS-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
 		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
@@ -2058,6 +2059,7 @@
 		8FC856B019925B680008B66B /* zmessaging+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zmessaging+iOS.h"; sourceTree = "<group>"; };
 		8FD5A08419F0490500550525 /* ZMUserSession+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMUserSession+Additions.h"; sourceTree = "<group>"; };
 		8FD5A08519F0490500550525 /* ZMUserSession+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMUserSession+Additions.m"; sourceTree = "<group>"; };
+		9F6E03BF56D0DC66F9853634 /* Pods-Wire-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		AF1D126A1C7CF02A00959DF5 /* ParticipantDeviceCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceCellTests.m; sourceTree = "<group>"; };
 		AF65A25B1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsListViewControllerTests.swift; sourceTree = "<group>"; };
 		AF917BAC1C6E9B2F00491EA9 /* AppControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppControllerTests.m; sourceTree = "<group>"; };
@@ -2300,6 +2302,7 @@
 		CED176461D0074610005234F /* ConversationParticipantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationParticipantsCell.swift; sourceTree = "<group>"; };
 		CEE02EAB1DDDD15200BA2BE2 /* avs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = avs.framework; path = Carthage/Build/iOS/avs.framework; sourceTree = "<group>"; };
 		CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderConversationViewController.swift; sourceTree = "<group>"; };
+		D66DB0AA3B05E4047DF18402 /* Pods-Wire-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DB0782201B00E98F00C6B140 /* FormFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormFlowViewController.h; sourceTree = "<group>"; };
 		DB0782211B00E98F00C6B140 /* FormFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormFlowViewController.m; sourceTree = "<group>"; };
 		DB29BD3F1AE1094E00DCEF6D /* EmailSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailSignInViewController.h; sourceTree = "<group>"; };
@@ -2423,6 +2426,7 @@
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				1E2267E81B382EB2003980E3 /* ziphy.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
+				6DC7310EF4FE22057C3A6DC8 /* libPods-Wire-iOS-Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4665,6 +4669,8 @@
 				64D671EBEE8C57217EB00733 /* Pods-Wire-iOS.release.xcconfig */,
 				7190BAB91AC2BC0874284A71 /* Pods-WireExtensionComponents.debug.xcconfig */,
 				597184FEC66FBCEC21973EDC /* Pods-WireExtensionComponents.release.xcconfig */,
+				D66DB0AA3B05E4047DF18402 /* Pods-Wire-iOS-Tests.debug.xcconfig */,
+				9F6E03BF56D0DC66F9853634 /* Pods-Wire-iOS-Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -5031,10 +5037,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BACB88591AF7C48900DDCDB0 /* Build configuration list for PBXNativeTarget "Wire-iOS-Tests" */;
 			buildPhases = (
+				64F427518CDD22708EE04F0E /* [CP] Check Pods Manifest.lock */,
 				BACB884D1AF7C48900DDCDB0 /* Sources */,
 				BACB884E1AF7C48900DDCDB0 /* Frameworks */,
 				BACB884F1AF7C48900DDCDB0 /* Resources */,
 				871BE95D1CD0C44A002267E8 /* CopyFiles */,
+				783B15BA51E5BFF2D24E2C0F /* [CP] Embed Pods Frameworks */,
+				82847050AB64B470DA7D5D5F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -5275,6 +5284,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wire-iOS/Pods-Wire-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		64F427518CDD22708EE04F0E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		783B15BA51E5BFF2D24E2C0F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82847050AB64B470DA7D5D5F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		873AA0501D05A74B0038343B /* Strip BitCode */ = {
@@ -6571,6 +6625,7 @@
 		};
 		BACB885A1AF7C48900DDCDB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D66DB0AA3B05E4047DF18402 /* Pods-Wire-iOS-Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -6623,6 +6678,7 @@
 		};
 		BACB885B1AF7C48900DDCDB0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F6E03BF56D0DC66F9853634 /* Pods-Wire-iOS-Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;

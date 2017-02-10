@@ -29,6 +29,11 @@ target 'Wire-iOS' do
     
 end
 
+
+target 'Wire-iOS-Tests' do
+    platform :ios, '8.0'
+end
+
 target 'WireExtensionComponents' do
     platform :ios, '8.0'
 end
