@@ -23,8 +23,6 @@ import Classy
 
 public final class UnknownMessageCell : ConversationCell {
     
-    private let supportURL = URL(string: "http://support.wire.com/error/unknown-message") // TODO update final link
-    
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
     public var messageLabelFont : UIFont?
     public var messageLabelTextColor : UIColor?
@@ -54,6 +52,7 @@ public final class UnknownMessageCell : ConversationCell {
         
         CASStyler.default().styleItem(self)
         
+        messageLabel.delegate = self
         messageLabel.font = messageLabelFont
         messageLabel.textColor = messageLabelTextColor
         
@@ -63,10 +62,14 @@ public final class UnknownMessageCell : ConversationCell {
         let range : NSRange = NSMakeRange(text.characters.count + 1, link.characters.count)
         
         messageLabel.text = message
-        
-        if let supportURL = supportURL {
-            messageLabel.addLink(to: supportURL, with: range)
-        }
+        messageLabel.addLink(to: NSURL.wr_unknownMessageHelp() as URL, with: range)
     }
         
+}
+
+extension UnknownMessageCell : TTTAttributedLabelDelegate {
+    
+    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        UIApplication.shared.openURL(url)
+    }
 }
