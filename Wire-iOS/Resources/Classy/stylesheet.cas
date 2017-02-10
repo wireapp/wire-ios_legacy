@@ -851,7 +851,7 @@ MessageDeletedCell {
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
-    titleFont: $font-normal-bold;
+    titleFont: $font-normal-medium;
     authorTextColor: $color-text-dimmed;
     authorFont: $font-small-light;
     authorHighlightTextColor: $color-text-dimmed;
@@ -1603,6 +1603,13 @@ TwoLineTitleView {
 ConversationImagesViewController {
     view: @{
         backgroundColor: $color-background;
+    }
+}
+
+AppLockView {
+    authenticateLabel: @{
+        font: $font-large-thin;
+        textColor: $color-text-foreground-dark;
     }
 }
 

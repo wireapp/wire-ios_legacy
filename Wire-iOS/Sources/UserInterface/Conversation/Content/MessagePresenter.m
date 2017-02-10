@@ -159,7 +159,7 @@
 }
 
 - (nullable UIViewController *)viewControllerForImageMessage:(id<ZMConversationMessage>)message
-                                    actionResponder:(nullable id<MessageActionResponder>)delegate
+                                             actionResponder:(nullable id<MessageActionResponder>)delegate
 {
     if (! [Message isImageMessage:message]) {
         return nil;

@@ -105,7 +105,12 @@
     self.messageTextView.userInteractionEnabled = YES;
     self.messageTextView.accessibilityIdentifier = @"Message";
     self.messageTextView.accessibilityElementsHidden = NO;
-    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeAll;
+    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeLink |
+                                             UIDataDetectorTypeAddress |
+                                             UIDataDetectorTypePhoneNumber |
+                                             UIDataDetectorTypeFlightNumber |
+                                             UIDataDetectorTypeCalendarEvent |
+                                             UIDataDetectorTypeShipmentTrackingNumber;
 
     self.linkAttachmentContainer = [[UIView alloc] init];
     self.linkAttachmentContainer.translatesAutoresizingMaskIntoConstraints = NO;
