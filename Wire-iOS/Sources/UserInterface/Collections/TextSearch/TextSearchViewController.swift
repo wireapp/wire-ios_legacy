@@ -22,9 +22,9 @@ import ZMCDataModel
 import Cartography
 
 
-final internal class TextSearchViewController: UIViewController {
-    fileprivate var tableView: UITableView!
-    private var searchBar: UISearchBar!
+final public class TextSearchViewController: NSObject {
+    public var tableView: UITableView!
+    public var searchBar: UISearchBar!
     
     public weak var delegate: MessageActionResponder? = .none
     public let conversation: ZMConversation
@@ -34,19 +34,20 @@ final internal class TextSearchViewController: UIViewController {
 
     fileprivate var textSearchQuery: TextSearchQuery?
     
-    fileprivate var results: [ZMConversationMessage] = []
+    fileprivate var results: [ZMConversationMessage] = [] {
+        didSet {
+            self.tableView.isHidden = results.count == 0
+            self.tableView.reloadData()
+        }
+    }
     
     init(conversation: ZMConversation) {
         self.conversation = conversation
-        super.init(nibName: .none, bundle: .none)
+        super.init()
+        self.loadViews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatal("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func loadViews() {
         self.tableView = UITableView()
         self.tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
         self.tableView.delegate = self
@@ -54,28 +55,13 @@ final internal class TextSearchViewController: UIViewController {
         self.tableView.estimatedRowHeight = 44
         self.tableView.separatorStyle = .none
         self.tableView.keyboardDismissMode = .interactive
-        
-        self.view.addSubview(self.tableView)
+        self.tableView.isHidden = results.count == 0
         
         self.searchBar = UISearchBar()
         self.searchBar.delegate = self
-        self.view.addSubview(self.searchBar)
-        
-        constrain(self.view, self.tableView, self.searchBar) { view, tableView, searchBar in
-            searchBar.top == view.top
-            searchBar.leading == view.leading
-            searchBar.trailing == view.trailing
-            
-            tableView.top == searchBar.bottom
-            
-            tableView.leading == view.leading
-            tableView.trailing == view.trailing
-            tableView.bottom == view.bottom
-        }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    public func teardown() {
         textSearchQuery?.cancel()
     }
     
@@ -98,52 +84,49 @@ final internal class TextSearchViewController: UIViewController {
 
         textSearchQuery = TextSearchQuery(conversation: conversation, query: query, delegate: self)
         textSearchQuery?.execute()
-        self.showLoadingView = true
     }
 
 }
 
 extension TextSearchViewController: TextSearchQueryDelegate {
 
-    func textSearchQueryDidReceive(result: TextQueryResult) {
+    public func textSearchQueryDidReceive(result: TextQueryResult) {
         guard result.query == textSearchQuery else { return }
         if result.matches.count > 0 || !result.hasMore {
-            showLoadingView = false
             results = result.matches
-            tableView.reloadData()
         }
     }
 
 }
 
 extension TextSearchViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.scheduleSearch()
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         self.search()
     }
 
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         textSearchQuery?.cancel()
     }
 }
 
 extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.results.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextSearchResultCell.reuseIdentifier) as! TextSearchResultCell
         cell.query = self.searchQuery
         cell.message = self.results[indexPath.row]
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.wants(toPerform: .showInConversation, for: self.results[indexPath.row])
     }
 }

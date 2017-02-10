@@ -70,8 +70,6 @@ import Cartography
         
         self.noItemsIcon.image = UIImage(for: .library, fontSize: 160, color: placeholderColor)
         self.noItemsLabel.textColor = placeholderColor
-        
-        self.constrainViews()
     }
     
     private func recreateLayout() {
@@ -118,16 +116,34 @@ import Cartography
         return button
     }
     
-    private func constrainViews() {
-        constrain(self, self.collectionView, self.noItemsLabel, self.noItemsIcon) { (selfView: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy, noItemsIcon: LayoutProxy) -> () in
-            collectionView.edges == selfView.edges
+    public func constrainViews(searchViewController: TextSearchViewController) {
+        self.addSubview(searchViewController.tableView)
+        self.addSubview(searchViewController.searchBar)
+        
+        constrain(self, searchViewController.searchBar, self.collectionView, self.noItemsLabel, self.noItemsIcon) { (selfView: LayoutProxy, searchBar: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy, noItemsIcon: LayoutProxy) -> () in
+            
+            searchBar.top == selfView.top
+            searchBar.leading == selfView.leading
+            searchBar.trailing == selfView.trailing
+            searchBar.height == 40
+            
+            collectionView.top == searchBar.bottom
+            
+            collectionView.leading == selfView.leading
+            collectionView.trailing == selfView.trailing
+            collectionView.bottom == selfView.bottom
+            
             noItemsLabel.centerX == selfView.centerX
             noItemsLabel.centerY == selfView.centerY + 64
-            noItemsLabel.left >= selfView.left + 24
-            noItemsLabel.right <= selfView.right - 24
+            noItemsLabel.leading >= selfView.leading + 24
+            noItemsLabel.trailing <= selfView.trailing - 24
             
             noItemsIcon.centerX == selfView.centerX
             noItemsIcon.bottom == noItemsLabel.top - 24
+        }
+        
+        constrain(self.collectionView, searchViewController.tableView) { collectionView, tableView in
+            tableView.edges == collectionView.edges
         }
     }
     

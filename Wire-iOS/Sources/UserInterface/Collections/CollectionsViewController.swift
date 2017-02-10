@@ -65,6 +65,8 @@ final public class CollectionsViewController: UIViewController {
         return self.sections == .all
     }
     
+    fileprivate var textSearchController: TextSearchViewController!
+    
     convenience init(conversation: ZMConversation) {
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
         let matchFiles = CategoryMatch(including: .file, excluding: .video)
@@ -112,7 +114,11 @@ final public class CollectionsViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.textSearchController = TextSearchViewController(conversation: self.collection.conversation)
+        self.textSearchController.delegate = self
+        self.contentView.constrainViews(searchViewController: self.textSearchController)
+        
         self.messagePresenter.targetViewController = self
         self.messagePresenter.modalTargetController = self
 
@@ -124,6 +130,11 @@ final public class CollectionsViewController: UIViewController {
 
         self.setupNavigationItem()
         self.updateNoElementsState()
+    }
+    
+    override public func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.textSearchController.teardown()
     }
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -235,12 +246,6 @@ final public class CollectionsViewController: UIViewController {
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
-        if DeveloperMenuState.developerMenuEnabled() {
-            let searchButton = CollectionsView.searchButton()
-            searchButton.addTarget(self, action: #selector(CollectionsViewController.searchButtonPressed(_:)), for: .touchUpInside)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchButton)
-        }
-        
         if !self.inOverviewMode && self.navigationController?.viewControllers.count > 1 {
             let backButton = CollectionsView.backButton()
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
@@ -285,12 +290,6 @@ final public class CollectionsViewController: UIViewController {
     
     @objc func closeButtonPressed(_ button: UIButton) {
         self.onDismiss?(self)
-    }
-    
-    @objc func searchButtonPressed(_ button: UIButton) {
-        let searchController = TextSearchViewController(conversation: self.collection.conversation)
-        searchController.delegate = self
-        self.navigationController?.pushViewController(KeyboardAvoidingViewController(viewController: searchController), animated: true)
     }
     
     @objc func backButtonPressed(_ button: UIButton) {

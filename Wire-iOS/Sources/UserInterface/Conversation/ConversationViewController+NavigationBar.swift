@@ -65,7 +65,7 @@ public extension ConversationViewController {
     }
     
     var collectionsBarButtonItem: IconButton {
-        return barButtonItem(withType: .library,
+        return barButtonItem(withType: .search,
                              target: self,
                              action: #selector(ConversationViewController.onCollectionButtonPressed(_:)),
                              accessibilityIdentifier: "collection",
