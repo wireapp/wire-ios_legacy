@@ -498,6 +498,25 @@
 "self.settings.account_section.email.change.resend.title" = "Email resent";
 "self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Phone number";
+"self.settings.account_section.phone_number.change.save" = "Save";
+"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+
+"self.settings.account_section.phone_number.change.remove.message" = "Do you really want to remove your phone?";
+"self.settings.account_section.phone_number.change.remove.action" = "Remove";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Save";
+"self.settings.account_section.phone_number.change.verify.title" = "Verify phone";
+"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
+"self.settings.account_section.phone_number.change.verify.resend" = "Resend";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Code resent";
+"self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
 "self.settings.notifications.push_notification.toogle" = "Message Previews";
@@ -741,7 +760,7 @@
 "error.user.phone_code_too_many" = "We already sent you a code via SMS. Tap Resend after 10 minutes to get a new one.";
 "error.user.registration_unknown_error" = "Something went wrong. Please try again.";
 "error.user.device_deleted_remotely" = "You have been logged out from another device.";
-
+"error.user.last_identity_cant_be_deleted" = "You need to have both an email and phone number to be able to remove one of them";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

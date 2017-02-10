@@ -34,6 +34,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
+    fileprivate var extensionActivity: ExtensionActivity? = nil
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -57,6 +58,9 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()
+        let activity = ExtensionActivity(attachments: allAttachments)
+        sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
+        extensionActivity = activity
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -131,19 +135,37 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                 self.progressViewController?.progress = progress
 
             case .done:
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                    self.view.alpha = 0
-                    self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-                }, completion: { _ in
-                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-                })
+                self.storeTrackingData {
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                        self.view.alpha = 0
+                        self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                    }, completion: { _ in
+                        self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                    })
+                }
 
             case .conversationDidDegrade((let users, let strategyChoice)):
+                self.extensionActivity?.markConversationDidDegrade()
                 self.conversationDidDegrade(
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
             }
+        }
+    }
+
+    override func cancel() {
+        if let event = extensionActivity?.cancelledEvent() {
+            sharingSession?.analyticsEventPersistence.add(event)
+        }
+        super.cancel()
+    }
+
+    private func storeTrackingData(completion: @escaping () -> Void) {
+        extensionActivity?.hasText = !contentText.isEmpty
+        extensionActivity?.sentEvent { [weak self] event in
+            self?.sharingSession?.analyticsEventPersistence.add(event)
+            completion()
         }
     }
     
@@ -152,7 +174,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         if let parentView = super.loadPreviewView() {
             return parentView
         }
-        let hasURL = self.allAttachments.first(where: { $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String) }) != nil
+        let hasURL = self.allAttachments.contains { $0.hasURL }
         let hasEmptyText = self.textView.text.isEmpty
         // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
         // if it has no image, it has a URL and it has text, it must be a file
@@ -220,6 +242,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         conversationSelectionViewController.selectionHandler = { [weak self] conversation in            
             self?.conversationItem?.value = conversation.name
             self?.postContent?.target = conversation
+            self?.extensionActivity?.conversation = conversation
             self?.popConfigurationViewController()
             self?.validateContent()
         }

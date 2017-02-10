@@ -100,7 +100,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 // Cosmetic
 
 @property (nonatomic) CGFloat insetMargin;
-@property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
+@property (nonatomic) id conversationObserverToken;
 
 @end
 
@@ -123,11 +123,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
     
     return self;
-}
-
-- (void)dealloc
-{
-    [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
 }
 
 - (void)viewDidLoad
@@ -282,11 +277,10 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (void)setConversation:(ZMConversation *)conversation
 {
-    [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
     _conversation = conversation;
     
     if (conversation != nil) {
-        self.conversationObserverToken = [conversation addConversationObserver:self];
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
     self.participants = self.conversation.sortedOtherActiveParticipants;

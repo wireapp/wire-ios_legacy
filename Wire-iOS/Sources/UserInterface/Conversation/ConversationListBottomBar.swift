@@ -46,7 +46,7 @@ import Cartography
     let heightConstant: CGFloat = 56
     let user: ZMUser?
     
-    var userObserverToken: ZMUserObserverOpaqueToken?
+    var userObserverToken: NSObjectProtocol?
     var accentColorHandler: AccentColorChangeHandler?
     
     var showArchived: Bool = false {
@@ -84,7 +84,7 @@ import Cartography
         createConstraints()
         updateIndicator()
         if let user = user {
-            userObserverToken = ZMUser.add(self, forUsers: [user], in: .shared())
+            userObserverToken = UserChangeInfo.add(observer: self, forBareUser: user)
         }
     }
 
@@ -93,7 +93,6 @@ import Cartography
     }
     
     deinit {
-        ZMUser.removeObserver(for: userObserverToken)
         accentColorHandler = nil
     }
     
@@ -211,7 +210,7 @@ import Cartography
 // MARK: - User Observer
 
 extension ConversationListBottomBarController: ZMUserObserver {
-    func userDidChange(_ note: UserChangeInfo!) {
+    func userDidChange(_ note: UserChangeInfo) {
         guard note.trustLevelChanged || note.clientsChanged else { return }
         updateIndicator()
     }

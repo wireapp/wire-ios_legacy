@@ -163,7 +163,7 @@ final public class CollectionImageCell: CollectionCell {
     }
     
     fileprivate func loadImage() {
-        guard let message = self.message, let _ = message.imageMessageData else {
+        guard let message = self.message, message.imageMessageData != nil else {
             self.imageView.image = .none
             return
         }

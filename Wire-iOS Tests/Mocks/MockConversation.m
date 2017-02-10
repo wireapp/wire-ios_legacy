@@ -50,16 +50,6 @@
     return nil;
 }
 
-- (id<ZMConversationObserverOpaqueToken>)addConversationObserver:(id<ZMConversationObserver>)observer;
-{
-    return (id<ZMConversationObserverOpaqueToken>)[[NSObject alloc] init];
-}
-
-+ (void)removeConversationObserverForToken:(id<ZMConversationObserverOpaqueToken>)token;
-{
-    //NO-OP
-}
-
 - (NSArray *)messages;
 {
     return nil;

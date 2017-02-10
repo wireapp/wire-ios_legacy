@@ -54,19 +54,14 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
-@property (nonatomic) id <ZMNewUnreadMessageObserverOpaqueToken> unreadMessageObserverToken;
-@property (nonatomic) id <ZMNewUnreadKnockMessageObserverOpaqueToken> unreadKnockMessageObserverToken;
+@property (nonatomic) id unreadMessageObserverToken;
+@property (nonatomic) id unreadKnockMessageObserverToken;
 
 
 @end
 
 @implementation ChatHeadsViewController
 
-- (void)dealloc
-{
-    [ZMMessageNotification removeNewMessagesObserverForToken:self.unreadMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
-    [ZMMessageNotification removeNewKnocksObserverForToken:self.unreadKnockMessageObserverToken inUserSession:[ZMUserSession sharedSession]];
-}
 
 - (void)loadView
 {
@@ -93,8 +88,8 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
                                                   withInset:[WAZUIMagic cgFloatForIdentifier:@"notifications.inset_right"]];
     [self.chatHeadsContainerView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    self.unreadMessageObserverToken = [ZMMessageNotification addNewMessagesObserver:self inUserSession:[ZMUserSession sharedSession]];
-    self.unreadKnockMessageObserverToken = [ZMMessageNotification addNewKnocksObserver:self inUserSession:[ZMUserSession sharedSession]];
+    self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
+    self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
 }
 
 - (void)tryToDisplayNotificationForMessage:(id<ZMConversationMessage>)message

@@ -1422,17 +1422,17 @@ SettingsClientViewController {
     }
 }
 
-ChangeEmailTableViewCell {
+RegistrationTextFieldCell {
     backgroundColor: clear;
     
-    emailTextField: @{
+    textField: @{
         font: $font-normal;
         textColor: $color-text-foreground-dark;
         backgroundColor: clear
     }
 }
 
-ConfirmEmailDescriptionView {
+DescriptionHeaderView {
     backgroundColor: clear;
     descriptionLabel: @{
         font: $font-normal;
@@ -1610,5 +1610,24 @@ DimView {
     authenticateLabel: @{
         font: $font-small-medium;
         textColor: $color-text-foreground-dark;
+    }
+}
+
+TextSearchViewController {
+    view: @{
+        backgroundColor: $color-background;
+    }
+}
+
+TextSearchResultCell {
+    messageFont: $font-normal;
+    
+    textView: @{
+        backgroundColor: $color-background;
+        textColor: $color-text-foreground;
+    }
+    
+    contentView: @{
+        backgroundColor: $color-background;
     }
 }

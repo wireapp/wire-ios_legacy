@@ -79,11 +79,12 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
             [self setSelfImageToData:imageData];
         };
         
-        self.userObserverToken = [[ZMUser selfUser].class addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
     }
     
     return self;
 }
+
 
 - (void)addCameraButton
 {

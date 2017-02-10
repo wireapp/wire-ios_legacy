@@ -52,7 +52,7 @@
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
 @property (nonatomic) id userEditingToken;
-@property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 @property (nonatomic) UIButton *closeButton;
 @property (nonatomic) UIButton *skipButton;
 @property (nonatomic, weak) id<UserProfile> userProfile;
@@ -64,7 +64,6 @@
 - (void)dealloc
 {
     [self.userProfile removeObserverWithToken:self.userEditingToken];
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
 - (instancetype)init
@@ -74,7 +73,7 @@
     if (self) {
         self.userProfile = ZMUserSession.sharedSession.userProfile;
         self.userEditingToken = [self.userProfile addObserver:self];
-        self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[[ZMUser selfUser]] inUserSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
     }
     
     return self;

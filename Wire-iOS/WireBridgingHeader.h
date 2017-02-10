@@ -61,6 +61,7 @@
 #import "ConversationDetailsTransitioningDelegate.h"
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
+#import "Country.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -87,7 +88,10 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"
+#import "KeyboardAvoidingViewController.h"
 #import "AppController.h"
+#import "PhoneNumberViewController.h"
+#import "CountryCodeTableViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

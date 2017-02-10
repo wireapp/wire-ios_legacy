@@ -104,7 +104,7 @@
 @property (nonatomic) BOOL forcePortraitMode;
 @property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 
-@property (nonatomic) id <ZMMessageObserverOpaqueToken> messageObserverToken;
+@property (nonatomic) id messageObserverToken;
 
 @end
 
@@ -122,15 +122,10 @@
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.messageObserverToken = [ZMMessageNotification addMessageObserver:self forMessage:message];
+        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message];
     }
 
     return self;
-}
-
-- (void)dealloc
-{
-    [ZMMessageNotification removeMessageObserverForToken:self.messageObserverToken];
 }
 
 - (void)loadView
@@ -179,6 +174,7 @@
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated

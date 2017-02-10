@@ -57,7 +57,7 @@ import CocoaLumberjackSwift
     let detailedView: Bool
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: ZMClientUpdateObserverToken?
-    var userObserverToken : ZMUserObserverOpaqueToken?
+    var userObserverToken : NSObjectProtocol?
         
     required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .none, detailedView: Bool = false, showTemporary: Bool = true) {
         let selfClient = ZMUserSession.shared()!.selfUserClient()
@@ -78,7 +78,7 @@ import CocoaLumberjackSwift
         self.initalizeProperties(clientsList ?? [])
 
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
-        self.userObserverToken = ZMUser.add(self, forUsers: [ZMUser.selfUser()], in: ZMUserSession.shared())
+        self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         
         if clientsList == nil {
             self.showLoadingView = true
@@ -96,7 +96,6 @@ import CocoaLumberjackSwift
     
     deinit {
         ZMUserSession.shared()?.removeClientUpdateObserver(self.clientsObserverToken)
-        ZMUser.removeObserver(for: self.userObserverToken)
     }
     
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
@@ -395,7 +394,7 @@ import CocoaLumberjackSwift
 
 extension ClientListViewController : ZMUserObserver {
     
-    func userDidChange(_ note: UserChangeInfo!) {
+    func userDidChange(_ note: UserChangeInfo) {
         if (note.clientsChanged || note.trustLevelChanged) {
             guard let selfClient = ZMUser.selfUser().selfClient() else { return }
             var clients = ZMUser.selfUser().clients ?? Set()

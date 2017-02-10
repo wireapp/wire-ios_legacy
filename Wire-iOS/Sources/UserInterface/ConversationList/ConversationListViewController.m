@@ -107,7 +107,7 @@
 @property (nonatomic) UIViewController *displayedAlternativeViewController;
 @property (nonatomic) ToolTipViewController *tooltipViewController;
 
-@property (nonatomic) id <ZMConversationListObserverOpaqueToken> allConversationsObserverToken;
+@property (nonatomic) id allConversationsObserverToken;
 
 @property (nonatomic, strong) UIViewController *visibleViewController;
 
@@ -133,7 +133,7 @@
 
 @property (nonatomic) BOOL initialSyncCompleted;
 
-@property (nonatomic) id<ZMUserObserverOpaqueToken> userObserverToken;
+@property (nonatomic) id userObserverToken;
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
@@ -148,9 +148,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
-    [[SessionObjectCache sharedCache].allConversations removeConversationListObserverForToken:self.allConversationsObserverToken];
     [ZMUserSession removeInitalSyncCompletionObserver:self];
-    [ZMUser removeUserObserverForToken:self.userObserverToken];
 }
 
 - (void)removeUserProfileObserver
@@ -174,7 +172,7 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userObserverToken = [ZMUser addUserObserver:self forUsers:@[ZMUser.selfUser] inUserSession:ZMUserSession.sharedSession];
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
@@ -196,7 +194,7 @@
     [self updateNoConversationVisibility];
     [self updateArchiveButtonVisibility];
     
-    self.allConversationsObserverToken = [[SessionObjectCache sharedCache].allConversations addConversationListObserver:self];
+    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].allConversations];
 
     [self showPushPermissionDeniedDialogIfNeeded];
 }

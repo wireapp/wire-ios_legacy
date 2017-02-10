@@ -20,50 +20,6 @@ import UIKit
 import Classy
 import Cartography
 
-protocol ChangeEmailTableViewCellDelegate: class {
-    func tableViewCellDidChangeText(cell: ChangeEmailTableViewCell, text: String)
-}
-
-final class ChangeEmailTableViewCell: UITableViewCell {
-    
-    let emailTextField = RegistrationTextField()
-    weak var delegate: ChangeEmailTableViewCellDelegate?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
-        setupViews()
-        createConstraints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupViews() {
-        addSubview(emailTextField)
-        emailTextField.accessibilityIdentifier = "EmailField"
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-    }
-    
-    func createConstraints() {
-        constrain(self, emailTextField) { view, emailTextField in
-            emailTextField.top == view.top
-            emailTextField.bottom == view.bottom
-            emailTextField.trailing == view.trailing - 8
-            emailTextField.leading == view.leading + 8
-        }
-    }
-    
-    func editingChanged(textField: UITextField) {
-        let lowercase = textField.text?.lowercased() ?? ""
-        let noSpaces = lowercase.components(separatedBy: .whitespacesAndNewlines).joined()
-        textField.text = noSpaces
-        delegate?.tableViewCellDidChangeText(cell: self, text: noSpaces)
-    }
-}
-
 struct ChangeEmailState {
     let currentEmail: String
     var newEmail: String?
@@ -83,7 +39,7 @@ struct ChangeEmailState {
         }
     }
     
-    var saveButtonEnabled: Bool {
+    var isValid: Bool {
         guard let email = validatedEmail, !email.isEmpty else { return false }
         return email != currentEmail
     }
@@ -117,11 +73,11 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let token = observerToken else { return }
-        userProfile?.removeObserver(token: token)
+        _ = userProfile?.removeObserver(token: token)
     }
     
     internal func setupViews() {
-        ChangeEmailTableViewCell.register(in: tableView)
+        RegistrationTextFieldCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.title".localized
         view.backgroundColor = .clear
@@ -140,7 +96,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         if let enabled = enabled {
             navigationItem.rightBarButtonItem?.isEnabled = enabled
         } else {
-            navigationItem.rightBarButtonItem?.isEnabled = state.saveButtonEnabled
+            navigationItem.rightBarButtonItem?.isEnabled = state.isValid
         }
     }
     
@@ -162,10 +118,11 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ChangeEmailTableViewCell.zm_reuseIdentifier, for: indexPath) as! ChangeEmailTableViewCell
-        
-        cell.emailTextField.text = state.visibleEmail
-        cell.emailTextField.becomeFirstResponder()
+        let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+        cell.textField.accessibilityIdentifier = "EmailField"
+        cell.textField.keyboardType = .emailAddress
+        cell.textField.text = state.visibleEmail
+        cell.textField.becomeFirstResponder()
         cell.delegate = self
         updateSaveButtonState()
         return cell
@@ -193,35 +150,18 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
 
 extension ChangeEmailViewController: ConfirmEmailDelegate {
     func didConfirmEmail(inController controller: ConfirmEmailViewController) {
-        if let viewControllers = navigationController?.viewControllers, let currentIdx = viewControllers.index(of: self) {
-            // We want to pop to previous view controller
-            let previousIdx = currentIdx - 1
-            if viewControllers.count > previousIdx {
-                let previousController = viewControllers[previousIdx]
-                _ = navigationController?.popToViewController(previousController, animated: true)
-            }
-        }
+        _ = navigationController?.popToPrevious(of: self)
     }
     
     func resendVerification(inController controller: ConfirmEmailViewController) {
         if let validatedEmail = state.validatedEmail {
-            try? userProfile?.requestEmailChange(email: validatedEmail)
-            
-            let message = String(format: "self.settings.account_section.email.change.resend.message".localized, validatedEmail)
-            let alert = UIAlertController(
-                title: "self.settings.account_section.email.change.resend.title".localized,
-                message: message,
-                preferredStyle: .alert
-            )
-            
-            alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
+            try? userProfile?.requestEmailChange(email: validatedEmail)            
         }
     }
 }
 
-extension ChangeEmailViewController: ChangeEmailTableViewCellDelegate {
-    func tableViewCellDidChangeText(cell: ChangeEmailTableViewCell, text: String) {
+extension ChangeEmailViewController: RegistrationTextFieldCellDelegate {
+    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
         state.newEmail = text
         updateSaveButtonState()
     }

@@ -101,7 +101,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL wasFetchingMessages;
 @property (nonatomic) BOOL hasDoneInitialLayout;
-@property (nonatomic) id <ZMConversationMessageWindowObserverOpaqueToken> messageWindowObserverToken;
+@property (nonatomic) id messageWindowObserverToken;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 @end
@@ -132,10 +132,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
     }
-    
-    if (self.messageWindowObserverToken != nil) {
-        [self.messageWindow removeConversationWindowObserverToken:self.messageWindowObserverToken];
-    }
 }
 
 - (void)loadView
@@ -155,7 +151,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.conversationMessageWindowTableViewAdapter.analyticsTracker = self.analyticsTracker;
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
     
-    self.messageWindowObserverToken = [self.messageWindow addConversationWindowObserver:self];
+    self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
     
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -826,7 +822,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)messagesInsideWindowDidChange:(NSArray *)messageChangeInfos
+- (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
 {
     if (self.messagePresenter.waitingForFileDownload) {
         id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;

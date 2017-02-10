@@ -138,7 +138,7 @@
 @property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic) NSSet *typingUsers;
-@property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
+@property (nonatomic) id conversationObserverToken;
 
 @property (nonatomic) UIViewController *inputController;
 
@@ -154,7 +154,7 @@
     if (self) {
         self.conversation = conversation;
         self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
-        self.conversationObserverToken = [self.conversation addConversationObserver:self];
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
         if ([self.conversation shouldDisplayIsTyping]) {
             [conversation addTypingObserver:self];
@@ -170,7 +170,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
     if ([self.conversation shouldDisplayIsTyping]) {
         [ZMConversation removeTypingObserver:self];
     }
@@ -209,7 +208,7 @@
     [self.locationButton addTarget:self action:@selector(locationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.conversationObserverToken == nil) {
-        self.conversationObserverToken = [self.conversation addConversationObserver:self];
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
     [self updateAccessoryViews];

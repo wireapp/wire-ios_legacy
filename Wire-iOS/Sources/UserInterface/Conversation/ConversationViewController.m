@@ -134,8 +134,7 @@
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
 @property (nonatomic) id voiceChannelStateObserverToken;
-
-@property (nonatomic) id <ZMConversationObserverOpaqueToken> conversationObserverToken;
+@property (nonatomic) id conversationObserverToken;
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 
@@ -387,17 +386,13 @@
         return;
     }
 
-    if (self.conversation != nil) {
-        [ZMConversation removeConversationObserverForToken:self.conversationObserverToken];
-    }
-
     _conversation = conversation;
     [self setupNavigatiomItem];
     [self updateOutgoingConnectionVisibility];
     
     if (self.conversation != nil) {
         self.voiceChannelStateObserverToken = [conversation.voiceChannel addStateObserver:self];
-        self.conversationObserverToken = [self.conversation addConversationObserver:self];
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
 }
 
