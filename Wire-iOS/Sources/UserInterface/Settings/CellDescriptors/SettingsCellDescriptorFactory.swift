@@ -18,7 +18,6 @@
 
 
 import Foundation
-import LocalAuthentication
 
 @objc class SettingsCellDescriptorFactory: NSObject {
     static let settingsDevicesCellIdentifier: String = "devices"
@@ -105,17 +104,6 @@ import LocalAuthentication
 
     func advancedGroup() -> SettingsCellDescriptorType {
         var items: [SettingsSectionDescriptor] = []
-        
-        if #available(iOS 9.0, *) {
-            let context: LAContext = LAContext()
-            var error: NSError?
-            
-            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-                let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                let lockAppSection = SettingsSectionDescriptor(cellDescriptors: [lockApp])
-                items.append(lockAppSection)
-            }
-        }
         
         let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.analyticsOptOut), inverse: true)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized

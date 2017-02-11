@@ -280,6 +280,36 @@ class SettingsPropertyFactory {
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
+        case .lockAppLastDate:
+            return SettingsBlockProperty(
+                propertyName: .lockAppLastDate,
+                getAction: { _ in
+                    guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockAppLastDate.rawValue),
+                        data.count != 0 else {
+                            return SettingsPropertyValue(0)
+                    }
+                    
+                    let intBits = data.withUnsafeBytes({(bytePointer: UnsafePointer<UInt8>) -> UInt32 in
+                        bytePointer.withMemoryRebound(to: UInt32.self, capacity: 4) { pointer in
+                            return pointer.pointee
+                        }
+                    })
+                    
+                    return SettingsPropertyValue(UInt32(littleEndian: intBits))
+            },
+                setAction: { _, value in
+                    switch value {
+                    case .number(value: let lockAppLastDate):
+                        var value: UInt32 = lockAppLastDate as UInt32
+                        let data = withUnsafePointer(to: &value) {
+                            Data(bytes: UnsafePointer($0), count: MemoryLayout.size(ofValue: lockAppLastDate))
+                        }
+                        
+                        ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockAppLastDate.rawValue)
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+            
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {

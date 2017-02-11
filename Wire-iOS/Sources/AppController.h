@@ -52,8 +52,6 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 @property (nonatomic, readonly) UIWindow *notificationsWindow;
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
 
-@property (nonatomic, readonly) BOOL localAuthenticationSucceeded;
-           
 - (void)performAfterUserSessionIsInitialized:(dispatch_block_t)block;
 - (void)uploadAddressBookIfNeeded;
 

@@ -69,8 +69,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 @property (nonatomic) ClassyCache *classyCache;
 
-@property (nonatomic) BOOL localAuthenticationSucceeded;
-
 @end
 
 
@@ -145,9 +143,14 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }];
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    [self.notificationWindowController.appLockViewController applicationWillResignActive:application];
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    self.localAuthenticationSucceeded = NO;
+    [self.notificationWindowController.appLockViewController applicationDidEnterBackground:application];
 }
 
 - (void)uploadAddressBookIfNeeded
@@ -174,7 +177,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [self showForceUpdateIfNeeeded];
-    [self checkAppLock];
+    [self.notificationWindowController.appLockViewController applicationDidBecomeActive:application];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
@@ -316,6 +319,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.notificationWindowController = [NotificationWindowRootViewController new];
     self.notificationsWindow.rootViewController = self.notificationWindowController;
     self.notificationsWindow.accessibilityIdentifier = @"ZClientNotificationWindow";
+    
     [self.notificationsWindow setHidden:NO];
 }
 
@@ -342,20 +346,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
 #endif
 
-}
-
-- (void)checkAppLock
-{
-    if ([self appLockActive] && !self.localAuthenticationSucceeded) {
-        self.notificationWindowController.dimContents = YES;
-        [self requireLocalAuthenticationIfNeededWith:^(BOOL granted) {
-            self.notificationWindowController.dimContents = !granted;
-            self.localAuthenticationSucceeded = granted;
-        }];
-    }
-    else {
-        self.notificationWindowController.dimContents = NO;
-    }
 }
 
 - (void)applyFontScheme
