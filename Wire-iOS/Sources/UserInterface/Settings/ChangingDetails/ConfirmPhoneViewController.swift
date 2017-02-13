@@ -137,7 +137,12 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .verificationCode:
             let description = DescriptionHeaderView()
             let format = "self.settings.account_section.phone_number.change.verify.description".localized
-            description.descriptionLabel.text = String(format: format, newNumber)
+            let text = String(format: format, newNumber)
+            if let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold") {
+                let attributedString = NSAttributedString(string: text).addAttributes([NSFontAttributeName : font], toSubstring: newNumber)
+                description.descriptionLabel.font = UIFont(magicIdentifier: "style.text.normal.font_spec_medium")
+                description.descriptionLabel.attributedText = attributedString
+            }
             return description
         case .buttons:
             return nil
