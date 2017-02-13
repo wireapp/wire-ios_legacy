@@ -30,17 +30,14 @@
 #import "PingCell.h"
 #import "MissedCallCell.h"
 #import "ConnectionRequestCell.h"
-#import "EmptyCell.h"
 
 #import "Wire-Swift.h"
-
 
 
 static NSString *const ConversationNameChangedCellId        = @"ConversationNameChangedCell";
 static NSString *const ConversationTextCellId               = @"ConversationTextCell";
 static NSString *const ConversationImageCellId              = @"ConversationImageCell";
 static NSString *const ConversationConnectionRequestCellId  = @"ConversationConnectionRequestCellId";
-static NSString *const ConversationUnknownCellId            = @"ConversationUnkownCell";
 static NSString *const ConversationMissedCallCellId         = @"ConversationMissedCallCell";
 static NSString *const ConversationPingCellId               = @"conversationPingCellId";
 static NSString *const ConversationNewDeviceCellId          = @"ConversationNewDeviceCellId";
@@ -54,7 +51,7 @@ static NSString *const ConversationAudioMessageCellId       = @"conversationAudi
 static NSString *const ConversationParticipantsCellId       = @"conversationParticipantsCellId";
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
 static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
-
+static NSString *const ConversationUnknownMessageCellId     = @"conversationUnknownMessageCellId";
 
 
 @interface ConversationMessageWindowTableViewAdapter () <ZMConversationMessageWindowObserver>
@@ -221,7 +218,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
 {
     id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
     
-    NSString *cellIdentifier = ConversationUnknownCellId;
+    NSString *cellIdentifier = ConversationUnknownMessageCellId;
     
     if ([Message isTextMessage:message]) {
         cellIdentifier = ConversationTextCellId;
@@ -346,9 +343,7 @@ static NSString *const ConversationMessageDeletedCellId     = @"conversationMess
     [self.tableView registerClass:[ConversationParticipantsCell class] forCellReuseIdentifier:ConversationParticipantsCellId];
     [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
     [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
-
-    // unknown message types
-    [self.tableView registerClass:[EmptyCell class] forCellReuseIdentifier:ConversationUnknownCellId];
+    [self.tableView registerClass:[UnknownMessageCell class] forCellReuseIdentifier:ConversationUnknownMessageCellId];
 }
 
 - (void)expandMessageWindow

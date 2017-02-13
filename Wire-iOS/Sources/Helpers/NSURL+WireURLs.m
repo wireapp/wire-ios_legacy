@@ -83,4 +83,9 @@
     return  [self URLWithString:@"https://wire.com/privacy/error-2"];
 }
 
++ (instancetype)wr_unknownMessageHelpURL
+{
+    return  [self URLWithString:@"https://wire.com/compatibility/unknown-message"];
+}
+
 @end

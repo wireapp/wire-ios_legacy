@@ -36,7 +36,7 @@
     self.sut = [[ArchivedNavigationBar alloc] initWithTitle:@"ARCHIVE"];
     [CASStyler.defaultStyler styleItem:self.sut];
     // Wait until fonts are loaded in Classy
-    [[NSRunLoop currentRunLoop] runUntilDate:[[NSDate date] dateByAddingTimeInterval:0.1]];
+    [[NSRunLoop currentRunLoop] runUntilDate:[[NSDate date] dateByAddingTimeInterval:0.5]];
 }
 
 - (void)testThatItRendersTheNavigationBarCorrectInitially {

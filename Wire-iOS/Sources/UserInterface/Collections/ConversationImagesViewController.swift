@@ -157,10 +157,16 @@ internal final class ConversationImagesViewController: UIViewController {
         return imageViewController
     }
     
-    fileprivate func indexOf(message messageToFind: ZMConversationMessage) -> Int {
+    fileprivate func indexOf(message messageToFind: ZMConversationMessage) -> Int? {
+        guard let messageToFind = messageToFind as? ZMMessage else {
+            return .none
+        }
         return self.imageMessages.index(where: { (message: ZMConversationMessage) -> (Bool) in
-            (message as! ZMMessage) == (messageToFind as! ZMMessage)
-        })!
+            guard let message = message as? ZMMessage else {
+                return false
+            }
+            return message == messageToFind
+        })
     }
     
     private func createNavigationTitle() {
@@ -246,7 +252,9 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             fatal("Unknown controller \(viewController)")
         }
         
-        let messageIndex = self.indexOf(message: imageController.message)
+        guard let messageIndex = self.indexOf(message: imageController.message) else {
+            return .none
+        }
         
         let nextIndex = messageIndex + 1
         guard self.imageMessages.count > nextIndex else {
@@ -261,7 +269,9 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             fatal("Unknown controller \(viewController)")
         }
         
-        let messageIndex = self.indexOf(message: imageController.message)
+        guard let messageIndex = self.indexOf(message: imageController.message) else {
+            return .none
+        }
         
         let nextIndex = messageIndex - 1
         guard nextIndex >= 0 else {

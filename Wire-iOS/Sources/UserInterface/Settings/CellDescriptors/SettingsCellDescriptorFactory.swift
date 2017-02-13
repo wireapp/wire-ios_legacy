@@ -162,6 +162,23 @@ import Foundation
             return DeveloperOptionsController()
         }
         
+        let sendBrokenMessage = { (type: SettingsCellDescriptorType) -> Void in
+            guard
+                let userSession = ZMUserSession.shared(),
+                let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
+            else {
+                return
+            }
+
+            let builder = ZMExternal.builder()
+            _ = builder?.setOtrKey("broken_key".data(using: .utf8))
+            let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
+            
+            userSession.enqueueChanges {
+                conversation.append(genericMessage, expires: false, hidden: false)
+            }
+        }
+        
         developerCellDescriptors.append(devController)
         
         
@@ -181,6 +198,8 @@ import Foundation
         developerCellDescriptors.append(enableBatchCollections)
         let linkPreviewsInShareExtension = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.linkPreviewsInShareExtension))
         developerCellDescriptors.append(linkPreviewsInShareExtension)
+        let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: sendBrokenMessage)
+        developerCellDescriptors.append(sendBrokenMessageButton)
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
