@@ -25,6 +25,7 @@ import Cartography
     var collectionView: UICollectionView!
     let noItemsLabel = UILabel()
     let noItemsIcon = UIImageView()
+    let separatorView = UIView()
     
     static public let useAutolayout = false
     
@@ -64,6 +65,9 @@ import Cartography
         self.addSubview(self.noItemsLabel)
         self.noItemsIcon.isHidden = true
         self.addSubview(self.noItemsIcon)
+        
+        self.separatorView.cas_styleClass = "separator"
+        self.addSubview(self.separatorView)
         
         let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         let placeholderColor = backgroundColor.mix(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), amount: 0.16)
@@ -120,6 +124,8 @@ import Cartography
         self.addSubview(searchViewController.tableView)
         self.addSubview(searchViewController.searchBar)
         
+        self.bringSubview(toFront: self.separatorView)
+        
         constrain(self, searchViewController.searchBar, self.collectionView, self.noItemsLabel, self.noItemsIcon) { (selfView: LayoutProxy, searchBar: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy, noItemsIcon: LayoutProxy) -> () in
             
             searchBar.top == selfView.top
@@ -144,6 +150,13 @@ import Cartography
         
         constrain(self.collectionView, searchViewController.tableView) { collectionView, tableView in
             tableView.edges == collectionView.edges
+        }
+        
+        constrain(searchViewController.searchBar, self.separatorView) { searchBar, separatorView in
+            separatorView.leading == searchBar.leading
+            separatorView.trailing == searchBar.trailing
+            separatorView.bottom == searchBar.bottom
+            separatorView.height == CGFloat.hairline
         }
     }
     

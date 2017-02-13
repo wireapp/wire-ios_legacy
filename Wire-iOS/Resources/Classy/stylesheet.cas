@@ -1622,9 +1622,16 @@ AppLockView {
     }
 }
 
-TextSearchViewController {
-    view: @{
-        backgroundColor: $color-background;
+TextSearchView {
+    backgroundColor: $color-background;
+    
+    searchInput: @{
+        font: $font-normal;
+        textColor: $color-text-foreground;
+    }
+    placeholderLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-dimmed;
     }
 }
 

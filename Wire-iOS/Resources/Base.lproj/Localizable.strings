@@ -822,3 +822,5 @@
 "collections.section.all.button" = "Show all %d →";
 "collections.section.no_items" = "No items in collection";
 "collections.image_viewer.copied.title" = "Picture copied";
+
+"collections.search.field.placeholder" = "Search text messages";

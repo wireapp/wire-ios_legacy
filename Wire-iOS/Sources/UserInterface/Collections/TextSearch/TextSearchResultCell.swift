@@ -19,9 +19,69 @@
 import Foundation
 import Cartography
 
+extension String {
+    func nsRange(from range: Range<String.Index>) -> NSRange {
+        let from = range.lowerBound.samePosition(in: utf16)
+        let to = range.upperBound.samePosition(in: utf16)
+        return NSRange(location: utf16.distance(from: utf16.startIndex, to: from),
+                       length: utf16.distance(from: from, to: to))
+    }
+    
+    static let ellipsis: String = "…"
+}
+
+extension NSAttributedString {
+    func layoutSize() -> CGSize {
+        let framesetter = CTFramesetterCreateWithAttributedString(self)
+        let targetSize = CGSize(width: 10000, height: CGFloat.greatestFiniteMagnitude)
+        let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, self.length), nil, targetSize, nil)
+        
+        return labelSize
+    }
+    
+    func prefixWithEllipsis(from: Int, fittingIntoWidth: CGFloat) -> NSAttributedString {
+        let text = self.string as NSString
+        
+        let nextSpace = text.rangeOfCharacter(from: .whitespacesAndNewlines, options: [.backwards], range: NSRange(location: 0, length: from))
+        
+        // There is no prior whitespace
+        if nextSpace.location == NSNotFound {
+            return self.attributedSubstring(from: NSRange(location: from, length: self.length - from))
+        }
+        
+        let textFromNextSpace = self.attributedSubstring(from: NSRange(location: nextSpace.location + nextSpace.length, length: from - (nextSpace.location + nextSpace.length)))
+        
+        let textSize = textFromNextSpace.layoutSize()
+        
+        if textSize.width > fittingIntoWidth {
+            return self.attributedSubstring(from: NSRange(location: from, length: self.length - from)).prefixWithEllipsis()
+        }
+        else {
+            return self.attributedSubstring(from: NSRange(location: nextSpace.location + nextSpace.length, length: self.length - (nextSpace.location + nextSpace.length))).prefixWithEllipsis()
+        }
+    }
+    
+    func prefixWithEllipsis() -> NSAttributedString {
+        guard !self.string.isEmpty else {
+            return self
+        }
+        
+        var attributes = self.attributes(at: 0, effectiveRange: .none)
+        attributes[NSBackgroundColorAttributeName] = .none
+        
+        let ellipsisString = NSAttributedString(string: String.ellipsis, attributes: attributes)
+        return ellipsisString + self
+    }
+}
+
 @objc internal class TextSearchResultCell: UITableViewCell, Reusable {
-    fileprivate let textView = UITextView()
+    fileprivate let messageTextLabel = UILabel()
     fileprivate let header = CollectionCellHeader()
+    fileprivate let userImageViewContainer = UIView()
+    fileprivate let userImageView = UserImageView(magicPrefix: "content.author_image")
+    fileprivate let separatorView = UIView()
+    fileprivate let resultCountView = UILabel()
+    fileprivate var previousLayoutBounds: CGRect = .zero
     
     public var messageFont: UIFont? {
         didSet {
@@ -34,24 +94,43 @@ import Cartography
         
         self.contentView.addSubview(self.header)
         
-        self.textView.isEditable = false
-        self.textView.isSelectable = false
-        self.textView.isScrollEnabled = false
-        self.textView.textContainerInset = .zero
-        self.textView.textContainer.lineFragmentPadding = 0
-        self.textView.isUserInteractionEnabled = false
+        self.messageTextLabel.numberOfLines = 1
+        self.messageTextLabel.lineBreakMode = .byTruncatingTail
         
-        self.contentView.addSubview(self.textView)
+        self.contentView.addSubview(self.messageTextLabel)
         
-        constrain(self.contentView, self.header, self.textView) { contentView, header, textView in
-            header.top == contentView.top + 8
-            header.leading == contentView.leading + 24
-            header.trailing == contentView.trailing - 24
+        self.userImageViewContainer.addSubview(self.userImageView)
+        
+        self.contentView.addSubview(self.userImageViewContainer)
+        
+        self.separatorView.cas_styleClass = "separator"
+        self.contentView.addSubview(self.separatorView)
+        
+        constrain(self.userImageView, self.userImageViewContainer) { userImageView, userImageViewContainer in
+            userImageView.height == 24
+            userImageView.width == userImageView.height
+            userImageView.center == userImageViewContainer.center
+        }
+        
+        constrain(self.contentView, self.header, self.messageTextLabel, self.userImageViewContainer, self.separatorView) { contentView, header, messageTextLabel, userImageViewContainer, separatorView in
+            userImageViewContainer.leading == contentView.leading
+            userImageViewContainer.top == contentView.top
+            userImageViewContainer.bottom == contentView.bottom
+            userImageViewContainer.width == 48
             
-            textView.top == header.bottom
-            textView.leading == contentView.leading + 24
-            textView.trailing == contentView.trailing - 24
-            textView.bottom == contentView.bottom
+            messageTextLabel.top == contentView.top + 8
+            messageTextLabel.leading == userImageViewContainer.trailing
+            messageTextLabel.trailing == contentView.trailing - 24
+            messageTextLabel.bottom == header.top - 8
+            
+            header.leading == userImageViewContainer.trailing
+            header.trailing == contentView.trailing - 24
+            header.bottom == contentView.bottom - 8
+            
+            separatorView.leading == userImageViewContainer.trailing
+            separatorView.trailing == contentView.trailing
+            separatorView.bottom == contentView.bottom
+            separatorView.height == CGFloat.hairline
         }
     }
     
@@ -64,40 +143,62 @@ import Cartography
         self.message = .none
     }
     
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        guard !self.bounds.equalTo(self.previousLayoutBounds) else {
+            return
+        }
+        
+        self.previousLayoutBounds = self.bounds
+        
+        self.updateTextView()
+    }
+    
     private func updateTextView() {
-        guard let text = message?.textMessageData?.messageText,
+        
+        guard !self.bounds.equalTo(CGRect.zero),
+            let text = message?.textMessageData?.messageText,
             let query = self.query,
             let font = self.messageFont else {
-                self.textView.attributedText = .none
+                self.messageTextLabel.attributedText = .none
                 return
         }
         
-        
         let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font])
         
-        let textString = text as NSString
-        var queryRange = NSMakeRange(0, textString.length)
-        var currentRange: NSRange = NSMakeRange(NSNotFound, 0)
+        let currentRange = text.range(of: query,
+                                      options: [.diacriticInsensitive, .caseInsensitive],
+                                      range: text.startIndex..<text.endIndex,
+                                      locale: nil)
         
-        repeat {
-            currentRange = textString.range(of: query, options: .caseInsensitive, range: queryRange)
-            if currentRange.location != NSNotFound {
-                queryRange.location = currentRange.location + currentRange.length
-                queryRange.length = textString.length - queryRange.location
-                attributedText.setAttributes([NSFontAttributeName: font,
-                                              NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)], range: currentRange)
+        if let range = currentRange {
+            let nsRange = text.nsRange(from: range)
+            
+            attributedText.setAttributes([NSFontAttributeName: font,
+                                          NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)],
+                                         range: nsRange)
+            if self.fits(attributedText: attributedText, fromRange: nsRange) {
+                self.messageTextLabel.attributedText = attributedText
+            }
+            else {
+                self.messageTextLabel.attributedText = attributedText.prefixWithEllipsis(from: nsRange.location, fittingIntoWidth: messageTextLabel.bounds.width)
             }
         }
-        while currentRange.location != NSNotFound
+    }
+    
+    fileprivate func fits(attributedText: NSAttributedString, fromRange: NSRange) -> Bool {
+        let textCutToRange = attributedText.attributedSubstring(from: NSRange(location: 0, length: fromRange.location + fromRange.length))
         
-        self.textView.attributedText = attributedText
-        self.textView.layoutIfNeeded()
+        let labelSize = textCutToRange.layoutSize()
+        
+        return labelSize.width <= messageTextLabel.bounds.width
     }
     
     var message: ZMConversationMessage? = .none {
         didSet {
             self.updateTextView()
             self.header.message = self.message
+            self.userImageView.user = self.message?.sender
         }
     }
     

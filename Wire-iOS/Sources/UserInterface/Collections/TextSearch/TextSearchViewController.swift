@@ -24,12 +24,12 @@ import Cartography
 
 final public class TextSearchViewController: NSObject {
     public var tableView: UITableView!
-    public var searchBar: UISearchBar!
+    public var searchBar: TextSearchView!
     
     public weak var delegate: MessageActionResponder? = .none
     public let conversation: ZMConversation
     public var searchQuery: String? {
-        return self.searchBar.text
+        return self.searchBar.query
     }
 
     fileprivate var textSearchQuery: TextSearchQuery?
@@ -57,8 +57,9 @@ final public class TextSearchViewController: NSObject {
         self.tableView.keyboardDismissMode = .interactive
         self.tableView.isHidden = results.count == 0
         
-        self.searchBar = UISearchBar()
+        self.searchBar = TextSearchView()
         self.searchBar.delegate = self
+        self.searchBar.placeholderString = "collections.search.field.placeholder".localized.uppercased()
     }
 
     public func teardown() {
@@ -99,18 +100,14 @@ extension TextSearchViewController: TextSearchQueryDelegate {
 
 }
 
-extension TextSearchViewController: UISearchBarDelegate {
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.scheduleSearch()
-    }
-    
-    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        self.search()
-    }
-
-    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        textSearchQuery?.cancel()
+extension TextSearchViewController: TextSearchViewDelegate {
+    public func searchView(_ searchView: TextSearchView, didChangeQueryTo query: String) {
+        if query.isEmpty {
+            textSearchQuery?.cancel()
+        }
+        else {
+            self.scheduleSearch()
+        }
     }
 }
 

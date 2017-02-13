@@ -430,6 +430,7 @@
 		873DC95C1D479A0500C1C9B0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */; };
 		8740205C1BF4CF7E001F2D4C /* AVSStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 8740205A1BF4CF1D001F2D4C /* AVSStub.m */; };
 		8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */; };
+		8742C2E21E51BD7900329FB6 /* TextSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8742C2E11E51BD7900329FB6 /* TextSearchView.swift */; };
 		874448811C22F64900E7B947 /* IconSystemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448801C22F64900E7B947 /* IconSystemCell.swift */; };
 		874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */; };
 		874448851C22FC6200E7B947 /* ConversationVerifiedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */; };
@@ -1654,6 +1655,7 @@
 		8740205A1BF4CF1D001F2D4C /* AVSStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVSStub.m; sourceTree = "<group>"; };
 		8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8742C2E11E51BD7900329FB6 /* TextSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchView.swift; sourceTree = "<group>"; };
 		874448801C22F64900E7B947 /* IconSystemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSystemCell.swift; sourceTree = "<group>"; };
 		874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationNewDeviceCell.swift; sourceTree = "<group>"; };
 		874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationVerifiedCell.swift; sourceTree = "<group>"; };
@@ -3307,6 +3309,7 @@
 				871BC1DC1D34F8F800DF0793 /* UserImageView */,
 				871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */,
 				871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */,
+				8742C2E11E51BD7900329FB6 /* TextSearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5989,6 +5992,7 @@
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
 				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,
 				1670AFE81B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m in Sources */,
+				8742C2E21E51BD7900329FB6 /* TextSearchView.swift in Sources */,
 				DB5206491B06355300138586 /* MentionsCollectionViewController.m in Sources */,
 				87DCF4EF1D34EA4500BB420F /* TopPeopleLineSection.m in Sources */,
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
