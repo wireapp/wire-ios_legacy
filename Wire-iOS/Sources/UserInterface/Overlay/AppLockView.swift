@@ -23,9 +23,15 @@ import Cartography
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()
+    public let contentContainerView = UIView()
     public let blurView: UIVisualEffectView!
     public let authenticateLabel = UILabel()
     public let authenticateButton = Button(style: .fullMonochrome)
+    
+    private var contentWidthConstraint: NSLayoutConstraint!
+    private var contentCenterConstraint: NSLayoutConstraint!
+    private var contentLeadingConstraint: NSLayoutConstraint!
+    private var contentTrailingConstraint: NSLayoutConstraint!
     
     public var showReauth: Bool = false {
         didSet {
@@ -55,25 +61,60 @@ import Cartography
         self.authenticateLabel.numberOfLines = 0
         self.authenticateButton.isHidden = true
         
-        self.addSubview(self.authenticateLabel)
-        self.addSubview(self.authenticateButton)
+        self.addSubview(self.contentContainerView)
+        
+        self.contentContainerView.addSubview(self.authenticateLabel)
+        self.contentContainerView.addSubview(self.authenticateButton)
         
         self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description".localized
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
         
-        constrain(self, self.shieldViewContainer, self.blurView, self.authenticateLabel, self.authenticateButton) { selfView, shieldViewContainer, blurView, authenticateLabel, authenticateButton in
+        constrain(self, self.shieldViewContainer, self.blurView) { selfView, shieldViewContainer, blurView in
             shieldViewContainer.edges == selfView.edges
             blurView.edges == selfView.edges
+        }
+        
+        constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
+            contentContainerView.top == selfView.top
+            contentContainerView.bottom == selfView.bottom
             
-            authenticateLabel.leading == selfView.leading + 24
-            authenticateLabel.trailing == selfView.trailing - 24
+            self.contentLeadingConstraint = contentContainerView.leading == selfView.leading
+            self.contentTrailingConstraint = contentContainerView.trailing == selfView.trailing
+            
+            self.contentCenterConstraint = contentContainerView.centerX == selfView.centerX
+            self.contentWidthConstraint = contentContainerView.width == 320
+            
+            authenticateLabel.leading == contentContainerView.leading + 24
+            authenticateLabel.trailing == contentContainerView.trailing - 24
             
             authenticateButton.top == authenticateLabel.bottom + 24
-            authenticateButton.leading == selfView.leading + 24
-            authenticateButton.trailing == selfView.trailing - 24
-            authenticateButton.bottom == selfView.bottom - 24
+            authenticateButton.leading == contentContainerView.leading + 24
+            authenticateButton.trailing == contentContainerView.trailing - 24
+            authenticateButton.bottom == contentContainerView.bottom - 24
             authenticateButton.height == 40
+        }
+        self.updateConstraintsForSizeClass()
+    }
+    
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateConstraintsForSizeClass();
+    }
+    
+    private func updateConstraintsForSizeClass() {
+        if self.traitCollection.horizontalSizeClass == .compact {
+            self.contentCenterConstraint.isActive = false
+            self.contentWidthConstraint.isActive = false
+            
+            self.contentLeadingConstraint.isActive = true
+            self.contentTrailingConstraint.isActive = true
+        }
+        else {
+            self.contentLeadingConstraint.isActive = false
+            self.contentTrailingConstraint.isActive = false
+            self.contentCenterConstraint.isActive = true
+            self.contentWidthConstraint.isActive = true
         }
     }
     
