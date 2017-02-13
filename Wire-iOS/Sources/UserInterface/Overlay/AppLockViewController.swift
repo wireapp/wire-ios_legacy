@@ -107,13 +107,7 @@ import HockeySDK.BITHockeyManager
                 self.lockView.showReauth = false
                 self.requireLocalAuthenticationIfNeeded { grantedOptional in
                     
-                    let granted: Bool
-                    if let grantedUnwrap = grantedOptional {
-                        granted = grantedUnwrap
-                    }
-                    else {
-                        granted = true
-                    }
+                    let granted = grantedOptional ?? true
                     
                     self.dimContents = !granted
                     self.localAuthenticationCancelled = !granted
@@ -127,7 +121,7 @@ import HockeySDK.BITHockeyManager
         }
     }
 
-    /// @param callback confirmation; if auth is not needed called with 'true'
+    /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
         guard #available(iOS 9.0, *), self.appLockActive else {
             callback(.none)
