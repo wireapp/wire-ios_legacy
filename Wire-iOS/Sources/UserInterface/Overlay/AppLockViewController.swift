@@ -90,9 +90,13 @@ import HockeySDK.BITHockeyManager
     
     fileprivate func resignKeyboardIfNeeded() {
         if self.dimContents {
-            delay(1) {
-                UIApplication.shared.keyWindow?.endEditing(true)
-            }
+            self.resignKeyboard()
+        }
+    }
+    
+    fileprivate func resignKeyboard() {
+        delay(1) {
+            UIApplication.shared.keyWindow?.endEditing(true)
         }
     }
     
@@ -166,6 +170,9 @@ extension AppLockViewController: UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         if self.appLockActive {
             self.dimContents = true
+        }
+        if self.appLockActive {
+            self.resignKeyboard()
         }
     }
     
