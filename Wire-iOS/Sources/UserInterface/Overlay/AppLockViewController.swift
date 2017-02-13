@@ -84,6 +84,16 @@ import HockeySDK.BITHockeyManager
         }
         
         self.showUnlockIfNeeded()
+        
+        self.resignKeyboardIfNeeded()
+    }
+    
+    fileprivate func resignKeyboardIfNeeded() {
+        if self.dimContents {
+            delay(1) {
+                UIApplication.shared.keyWindow?.endEditing(true)
+            }
+        }
     }
     
     fileprivate func showUnlockIfNeeded() {
@@ -95,7 +105,16 @@ import HockeySDK.BITHockeyManager
             }
             else {
                 self.lockView.showReauth = false
-                self.requireLocalAuthenticationIfNeeded { granted in
+                self.requireLocalAuthenticationIfNeeded { grantedOptional in
+                    
+                    let granted: Bool
+                    if let grantedUnwrap = grantedOptional {
+                        granted = grantedUnwrap
+                    }
+                    else {
+                        granted = true
+                    }
+                    
                     self.dimContents = !granted
                     self.localAuthenticationCancelled = !granted
                     self.localAuthenticationNeeded = !granted
@@ -109,9 +128,9 @@ import HockeySDK.BITHockeyManager
     }
 
     /// @param callback confirmation; if auth is not needed called with 'true'
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool)->()) {
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
         guard #available(iOS 9.0, *), self.appLockActive else {
-            callback(true)
+            callback(.none)
             return
         }
         
@@ -142,10 +161,9 @@ import HockeySDK.BITHockeyManager
                 }
             })
         }
-        
-        if error != nil {
+        else {
             DDLogError("Local authentication error: \(error?.localizedDescription)")
-            callback(false)
+            callback(.none)
         }
     }
 }
@@ -170,5 +188,6 @@ extension AppLockViewController: UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         self.showUnlockIfNeeded()
+        self.resignKeyboardIfNeeded()
     }
 }
