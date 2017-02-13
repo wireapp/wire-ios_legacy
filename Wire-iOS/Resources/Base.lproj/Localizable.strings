@@ -507,15 +507,14 @@
 "self.settings.account_section.phone_number.change.save" = "Save";
 "self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
 
-"self.settings.account_section.phone_number.change.remove.message" = "Do you really want to remove your phone?";
-"self.settings.account_section.phone_number.change.remove.action" = "Remove";
+"self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
 
 "self.settings.account_section.phone_number.change.verify.save" = "Save";
 "self.settings.account_section.phone_number.change.verify.title" = "Verify phone";
-"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to %@.";
+"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to: %@.";
 
 "self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
-"self.settings.account_section.phone_number.change.verify.resend" = "Resend";
+"self.settings.account_section.phone_number.change.verify.resend" = "Resend Code";
 
 "self.settings.account_section.phone_number.change.resend.title" = "Code resent";
 "self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";
