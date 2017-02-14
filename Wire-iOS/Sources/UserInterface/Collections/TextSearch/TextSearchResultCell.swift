@@ -55,13 +55,12 @@ internal class SearchResultCountBadge: UIView {
 }
 
 @objc internal class TextSearchResultCell: UITableViewCell, Reusable {
-    fileprivate let messageTextLabel = UILabel()
+    fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let header = CollectionCellHeader()
     fileprivate let userImageViewContainer = UIView()
     fileprivate let userImageView = UserImageView(magicPrefix: "content.author_image")
     fileprivate let separatorView = UIView()
     fileprivate let resultCountView = SearchResultCountBadge()
-    fileprivate var previousLayoutBounds: CGRect = .zero
     
     public var messageFont: UIFont? {
         didSet {
@@ -76,7 +75,8 @@ internal class SearchResultCountBadge: UIView {
         
         self.messageTextLabel.accessibilityIdentifier = "text search result"
         self.messageTextLabel.numberOfLines = 1
-        self.messageTextLabel.lineBreakMode = .byTruncatingTail
+        self.messageTextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        self.messageTextLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         
         self.contentView.addSubview(self.messageTextLabel)
         
@@ -132,71 +132,29 @@ internal class SearchResultCountBadge: UIView {
         self.message = .none
     }
     
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        guard !self.bounds.equalTo(self.previousLayoutBounds) else {
+    private func updateTextView() {
+        guard let text = message?.textMessageData?.messageText, let query = self.query, let font = self.messageFont else {
             return
         }
         
-        self.previousLayoutBounds = self.bounds
+        self.messageTextLabel.font = font
+        self.messageTextLabel.query = self.query
+        self.messageTextLabel.resultText = text
         
-        self.updateTextView()
-    }
-    
-    private func updateTextView() {
-        
-        guard !self.bounds.equalTo(CGRect.zero),
-            let text = message?.textMessageData?.messageText,
-            let query = self.query,
-            let font = self.messageFont else {
-                self.messageTextLabel.attributedText = .none
-                return
-        }
-        
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font])
         let queryComponents = query.components(separatedBy: .whitespacesAndNewlines)
         
-        let currentRange = text.range(of: queryComponents,
-                                      options: [.diacriticInsensitive, .caseInsensitive],
-                                      range: text.startIndex..<text.endIndex)
+        let totalMatches = (text as NSString).allRanges(of: queryComponents, options: [.diacriticInsensitive, .caseInsensitive]).map { $1.count }.reduce(0, +)
         
-        if let range = currentRange {
-            let nsRange = text.nsRange(from: range)
-            
-            let highlightedAttributes = [NSFontAttributeName: font,
-                                         NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
-            
-            var totalMatches: Int = 0
-            
-            if self.fits(attributedText: attributedText, fromRange: nsRange) {
-                self.messageTextLabel.attributedText = attributedText.highlightingAppearances(of: queryComponents, with: highlightedAttributes, totalMatches: &totalMatches, upToWidth: messageTextLabel.bounds.width)
-            }
-            else {
-                self.messageTextLabel.attributedText = attributedText.cutAndPrefixedWithEllipsis(from: nsRange.location, fittingIntoWidth: messageTextLabel.bounds.width)
-                    .highlightingAppearances(of: queryComponents, with: highlightedAttributes, totalMatches: &totalMatches, upToWidth: messageTextLabel.bounds.width)
-            }
-            
-            resultCountView.isHidden = totalMatches <= 1
-            resultCountView.textLabel.text = "\(totalMatches)"
-        }
-        else {
-            self.messageTextLabel.attributedText = attributedText
-        }
-    }
-    
-    fileprivate func fits(attributedText: NSAttributedString, fromRange: NSRange) -> Bool {
-        let textCutToRange = attributedText.attributedSubstring(from: NSRange(location: 0, length: fromRange.location + fromRange.length))
-        
-        let labelSize = textCutToRange.layoutSize()
-        
-        return labelSize.height <= messageTextLabel.bounds.height && labelSize.width <= messageTextLabel.bounds.width
+        self.resultCountView.isHidden = totalMatches <= 1
+        self.resultCountView.textLabel.text = "\(totalMatches)"
     }
     
     var message: ZMConversationMessage? = .none {
         didSet {
-            self.updateTextView()
-            self.header.message = self.message
             self.userImageView.user = self.message?.sender
+            self.header.message = self.message
+
+            self.updateTextView()
         }
     }
     

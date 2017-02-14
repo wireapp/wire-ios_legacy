@@ -18,6 +18,13 @@
 
 import Foundation
 
+extension NSRange: Equatable {
+}
+
+public func ==(left: NSRange, right: NSRange) -> Bool {
+    return left.location == right.location && left.length == right.length
+}
+
 extension String {
     func nsRange(from range: Range<String.Index>) -> NSRange {
         let from = range.lowerBound.samePosition(in: utf16)
@@ -30,7 +37,7 @@ extension String {
         return self.rangeOfCharacter(from: characterSet) != .none
     }
     
-    func range(of strings: [String], options: CompareOptions, range: Range<String.Index>) -> Range<String.Index>? {
+    func range(of strings: [String], options: CompareOptions = [], range: Range<String.Index>? = .none) -> Range<String.Index>? {
         return strings.flatMap {
                 self.range(of: $0,
                            options: options,
@@ -43,13 +50,43 @@ extension String {
 }
 
 extension NSString {
-    func range(of strings: [String], options: NSString.CompareOptions, range: NSRange) -> NSRange {
+    func range(of strings: [String], options: NSString.CompareOptions = [], range: NSRange? = .none) -> NSRange {
+        let queryRange = range ?? NSRange(location: 0, length: self.length)
+
         return strings.flatMap {
             self.range(of: $0,
                        options: options,
-                       range: range,
+                       range: queryRange,
                        locale: nil)
             }.sorted { $0.location < $1.location }.first ?? NSRange(location: NSNotFound, length: 0)
+    }
+    
+    func allRanges(of strings: [String], options: NSString.CompareOptions = [], range: NSRange? = .none) -> [String: [NSRange]] {
+        let initialQueryRange = range ?? NSRange(location: 0, length: self.length)
+        var result = [String: [NSRange]]()
+        
+        for query in strings {
+            var queryRange = initialQueryRange
+            var currentRange: NSRange = NSMakeRange(NSNotFound, 0)
+        
+            var queryResult = [NSRange]()
+            
+            repeat {
+                currentRange = self.range(of: query, options: [.caseInsensitive, .diacriticInsensitive], range: queryRange)
+                if currentRange.location != NSNotFound {
+                    queryRange.location = currentRange.location + currentRange.length
+                    queryRange.length = self.length - queryRange.location
+                    
+                    queryResult.append(currentRange)
+                }
+            }
+            while currentRange.location != NSNotFound
+            if queryResult.count > 0 {
+                result[query] = queryResult
+            }
+        }
+        
+        return result
     }
 }
 
@@ -70,7 +107,7 @@ extension NSAttributedString {
         
         // There is no prior whitespace
         if previousSpace.location == NSNotFound {
-            return self.attributedSubstring(from: NSRange(location: from, length: self.length - from))
+            return self.attributedSubstring(from: NSRange(location: from, length: self.length - from)).prefixedWithEllipsis()
         }
         else {
             // Check if we accidentally jumped to the previous line
@@ -78,7 +115,7 @@ extension NSAttributedString {
             let skippedNewline = textSkipped.containsCharacters(from: .newlines)
             
             if skippedNewline {
-                return self.attributedSubstring(from: NSRange(location: from, length: self.length - from))
+                return self.attributedSubstring(from: NSRange(location: from, length: self.length - from)).prefixedWithEllipsis()
             }
         }
         
@@ -129,33 +166,18 @@ extension NSAttributedString {
         return ellipsisString + self
     }
     
-    func highlightingAppearances(of query: [String], with attributes: [String: Any], totalMatches resultTotalMatches: inout Int, upToWidth: CGFloat?) -> NSAttributedString {
+    func highlightingAppearances(of query: [String], with attributes: [String: Any], upToWidth: CGFloat?) -> NSAttributedString {
         let attributedText = self.mutableCopy() as! NSMutableAttributedString
         
-        let textString = self.string as NSString
-        var queryRange = NSMakeRange(0, textString.length)
-        var currentRange: NSRange = NSMakeRange(NSNotFound, 0)
-        
-        var totalMatches: Int = 0
-        
-        repeat {
-            currentRange = textString.range(of: query, options: [.caseInsensitive, .diacriticInsensitive], range: queryRange)
-            if currentRange.location != NSNotFound {
-                queryRange.location = currentRange.location + currentRange.length
-                queryRange.length = textString.length - queryRange.location
-                
+        (self.string as NSString).allRanges(of: query, options: [.caseInsensitive, .diacriticInsensitive]).forEach { (query, results) in
+            results.forEach { currentRange in
                 let substring = self.attributedSubstring(from: NSRange(location: 0, length: currentRange.location + currentRange.length))
-                
+
                 if upToWidth == nil || substring.layoutSize().width < upToWidth {
                     attributedText.setAttributes(attributes, range: currentRange)
                 }
-                
-                totalMatches = totalMatches + 1
             }
         }
-            while currentRange.location != NSNotFound
-        
-        resultTotalMatches = totalMatches
         
         return NSAttributedString(attributedString: attributedText)
     }

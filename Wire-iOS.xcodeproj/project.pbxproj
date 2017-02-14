@@ -431,6 +431,8 @@
 		8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */; };
 		8742C2E21E51BD7900329FB6 /* TextSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8742C2E11E51BD7900329FB6 /* TextSearchView.swift */; };
 		8742C2EA1E5309FC00329FB6 /* NSAttributedString+Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8742C2E91E5309FC00329FB6 /* NSAttributedString+Highlight.swift */; };
+		8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8742C2ED1E533AA200329FB6 /* NSAttributedStringHighlightTests.swift */; };
+		8742C2F31E534ED500329FB6 /* SearchResultLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8742C2F21E534ED500329FB6 /* SearchResultLabel.swift */; };
 		874448811C22F64900E7B947 /* IconSystemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448801C22F64900E7B947 /* IconSystemCell.swift */; };
 		874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */; };
 		874448851C22FC6200E7B947 /* ConversationVerifiedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */; };
@@ -1629,6 +1631,8 @@
 		8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8742C2E11E51BD7900329FB6 /* TextSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchView.swift; sourceTree = "<group>"; };
 		8742C2E91E5309FC00329FB6 /* NSAttributedString+Highlight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Highlight.swift"; sourceTree = "<group>"; };
+		8742C2ED1E533AA200329FB6 /* NSAttributedStringHighlightTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringHighlightTests.swift; sourceTree = "<group>"; };
+		8742C2F21E534ED500329FB6 /* SearchResultLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultLabel.swift; sourceTree = "<group>"; };
 		874448801C22F64900E7B947 /* IconSystemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSystemCell.swift; sourceTree = "<group>"; };
 		874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationNewDeviceCell.swift; sourceTree = "<group>"; };
 		874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationVerifiedCell.swift; sourceTree = "<group>"; };
@@ -3281,6 +3285,7 @@
 				871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */,
 				871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */,
 				8742C2E11E51BD7900329FB6 /* TextSearchView.swift */,
+				8742C2F21E534ED500329FB6 /* SearchResultLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4750,6 +4755,7 @@
 				874941CC1DE458DF006CF32B /* CombinationTest.swift */,
 				870916DA1E2CFFC100D10FA3 /* ImageCacheTests.swift */,
 				87AAE4201E42441B00E1D13A /* FontSchemeTests.swift */,
+				8742C2ED1E533AA200329FB6 /* NSAttributedStringHighlightTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -5637,6 +5643,7 @@
 				BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */,
 				8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */,
 				872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */,
+				8742C2F31E534ED500329FB6 /* SearchResultLabel.swift in Sources */,
 				871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */,
 				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
 				871BC2231D34F8F800DF0793 /* ActionSheetListView.m in Sources */,
@@ -6198,6 +6205,7 @@
 				BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				870916DC1E2CFFC500D10FA3 /* ImageCacheTests.swift in Sources */,
+				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,
 				874941CD1DE458DF006CF32B /* CombinationTest.swift in Sources */,
 				1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */,
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
