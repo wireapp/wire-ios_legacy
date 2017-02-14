@@ -503,19 +503,19 @@
 
 // Change Phone Number
 
-"self.settings.account_section.phone_number.change.title" = "Phone number";
+"self.settings.account_section.phone_number.change.title" = "Phone";
 "self.settings.account_section.phone_number.change.save" = "Save";
 "self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
 
 "self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
 
 "self.settings.account_section.phone_number.change.verify.save" = "Save";
-"self.settings.account_section.phone_number.change.verify.title" = "Verify phone";
+"self.settings.account_section.phone_number.change.verify.title" = "Verify";
 "self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to: %@.";
 
 "self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
 "self.settings.account_section.phone_number.change.verify.resend" = "Resend Code";
-"self.settings.account_section.phone_number.change.verify.resend_description" = "No code showing up?\nYou can request a new code every 30 seconds.";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "No code showing up?\nYou can request a new one every 30 seconds.";
 
 "self.settings.account_section.phone_number.change.resend.title" = "Code resent";
 "self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";
