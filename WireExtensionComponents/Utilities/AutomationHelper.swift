@@ -63,6 +63,9 @@ import zmessaging
         if arguments.hasFlag(AutomationKey.LogNetwork.rawValue) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
+        if arguments.hasFlag(AutomationKey.LogTags.rawValue) {
+            AutomationHelper.enableLogTags(arguments)
+        }
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
     }
@@ -71,6 +74,7 @@ import zmessaging
         case Email = "loginemail"
         case Password = "loginpassword"
         case LogNetwork = "debug-log-network"
+        case LogTags = "debug-log"
         case DisableAutocorrection = "disable-autocorrection"
         case EnableAddressBookOnSimulator = "addressbook-on-simulator"
         case AddressBookRemoteSearchDelay = "addressbook-search-delay"
@@ -83,6 +87,13 @@ import zmessaging
             return nil
         }
         return ZMEmailCredentials(email: email, password: password)
+    }
+    
+    // Switches on all flags that you would like to log listed after `--debug-log=` tags should be separated by comma
+    fileprivate static func enableLogTags(_ arguments: ArgumentsType) {
+        guard let tagsString = arguments.flagValueIfPresent(AutomationKey.LogTags.rawValue) else { return }
+        let tags = tagsString.replacingOccurrences(of: " ", with: "").components(separatedBy: ",")
+        tags.forEach{ ZMSLog.set(level: .debug, tag: $0) }
     }
     
     /// Returns the custom time interval for address book search delay if it set in the given arguments
