@@ -73,6 +73,7 @@ internal class SearchResultCountBadge: UIView {
         
         self.contentView.addSubview(self.header)
         
+        self.messageTextLabel.accessibilityIdentifier = "text search result"
         self.messageTextLabel.numberOfLines = 1
         self.messageTextLabel.lineBreakMode = .byTruncatingTail
         
@@ -85,6 +86,7 @@ internal class SearchResultCountBadge: UIView {
         self.separatorView.cas_styleClass = "separator"
         self.contentView.addSubview(self.separatorView)
         
+        self.resultCountView.textLabel.accessibilityIdentifier = "count of matches"
         self.contentView.addSubview(self.resultCountView)
         
         constrain(self.userImageView, self.userImageViewContainer) { userImageView, userImageViewContainer in

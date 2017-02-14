@@ -47,19 +47,21 @@ public final class TextSearchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-     
+        
         let colorScheme = ColorScheme.default()
         iconView.image = UIImage(for: .search, iconSize: .tiny, color: colorScheme.color(withName: ColorSchemeColorTextForeground))
         iconView.contentMode = .center
         
         searchInput.borderStyle = .none
         searchInput.delegate = self
+        searchInput.accessibilityIdentifier = "search input"
         
         placeholderLabel.textAlignment = .center
         
         cancelButton.setIcon(.cancel, with: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
+        cancelButton.accessibilityIdentifier = "cancel search"
         [iconView, searchInput, cancelButton, placeholderLabel].forEach(self.addSubview)
         
         self.createConstraints()
