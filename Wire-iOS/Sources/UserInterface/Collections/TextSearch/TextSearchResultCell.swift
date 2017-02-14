@@ -40,6 +40,7 @@ internal class SearchResultCountBadge: UIView {
         }
         
         self.layer.masksToBounds = true
+        self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -153,11 +154,11 @@ internal class SearchResultCountBadge: UIView {
         }
         
         let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font])
+        let queryComponents = query.components(separatedBy: .whitespacesAndNewlines)
         
-        let currentRange = text.range(of: query,
+        let currentRange = text.range(of: queryComponents,
                                       options: [.diacriticInsensitive, .caseInsensitive],
-                                      range: text.startIndex..<text.endIndex,
-                                      locale: nil)
+                                      range: text.startIndex..<text.endIndex)
         
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
@@ -168,15 +169,18 @@ internal class SearchResultCountBadge: UIView {
             var totalMatches: Int = 0
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
-                self.messageTextLabel.attributedText = attributedText.highlightingAppearances(of: query, with: highlightedAttributes, totalMatches: &totalMatches, upToWidth: messageTextLabel.bounds.width)
+                self.messageTextLabel.attributedText = attributedText.highlightingAppearances(of: queryComponents, with: highlightedAttributes, totalMatches: &totalMatches, upToWidth: messageTextLabel.bounds.width)
             }
             else {
                 self.messageTextLabel.attributedText = attributedText.cutAndPrefixedWithEllipsis(from: nsRange.location, fittingIntoWidth: messageTextLabel.bounds.width)
-                    .highlightingAppearances(of: query, with: highlightedAttributes, totalMatches: &totalMatches, upToWidth: messageTextLabel.bounds.width)
+                    .highlightingAppearances(of: queryComponents, with: highlightedAttributes, totalMatches: &totalMatches, upToWidth: messageTextLabel.bounds.width)
             }
             
             resultCountView.isHidden = totalMatches <= 1
             resultCountView.textLabel.text = "\(totalMatches)"
+        }
+        else {
+            self.messageTextLabel.attributedText = attributedText
         }
     }
     
