@@ -85,7 +85,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         tableView.isScrollEnabled = false
         
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
-        tableView.estimatedSectionHeaderHeight = 60;
+        tableView.estimatedSectionHeaderHeight = 60
         tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -137,10 +137,30 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .verificationCode:
             let description = DescriptionHeaderView()
             let format = "self.settings.account_section.phone_number.change.verify.description".localized
-            description.descriptionLabel.text = String(format: format, newNumber)
+            let text = String(format: format, newNumber)
+            if let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold") {
+                let attributedString = NSAttributedString(string: text).addAttributes([NSFontAttributeName : font], toSubstring: newNumber)
+                description.descriptionLabel.font = UIFont(magicIdentifier: "style.text.normal.font_spec_medium")
+                description.descriptionLabel.attributedText = attributedString
+            }
             return description
         case .buttons:
             return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch Section(rawValue: section)! {
+        case .verificationCode:
+            return nil
+        case .buttons:
+            return "self.settings.account_section.phone_number.change.verify.resend_description".localized
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerFooterView = view as? UITableViewHeaderFooterView {
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
         }
     }
     
@@ -161,7 +181,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
                 cell.titleColor = .white
                 cell.selectionStyle = .default
             } else {
-                cell.titleColor = .darkGray
+                cell.titleColor = UIColor(white: 1, alpha: 0.4)
                 cell.selectionStyle = .none
             }
             return cell

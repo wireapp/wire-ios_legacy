@@ -1444,7 +1444,6 @@ RegistrationTextFieldCell {
 DescriptionHeaderView {
     backgroundColor: clear;
     descriptionLabel: @{
-        font: $font-normal;
         textColor: $color-text-foreground-dark;
         backgroundColor: clear
     }
