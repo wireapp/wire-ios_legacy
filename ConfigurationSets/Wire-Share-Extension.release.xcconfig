@@ -18,4 +18,3 @@
 
 
 #include "Wire-Share-Extension.base.xcconfig"
-#include "Pods/Target Support Files/Pods-Wire Share Extension/Pods-Wire Share Extension.release.xcconfig"

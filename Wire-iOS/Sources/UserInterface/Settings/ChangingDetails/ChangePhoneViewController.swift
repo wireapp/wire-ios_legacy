@@ -221,7 +221,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
             break
         case .remove:
             let alert = UIAlertController(
-                title: "self.settings.account_section.phone_number.change.remove.message".localized,
+                title: nil,
                 message: nil,
                 preferredStyle: .actionSheet
             )
