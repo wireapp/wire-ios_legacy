@@ -326,16 +326,20 @@ class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onTrustChanged(_ sender: AnyObject) {
-        let selfClient = ZMUserSession.shared()!.selfUserClient()
-        if(verifiedToggle.isOn) {
-            selfClient?.trustClient(self.userClient)
-        } else {
-            selfClient?.ignoreClient(self.userClient)
-        }
-        verifiedToggle.isOn = self.userClient.verified
-
-        let verificationType: DeviceVerificationType = verifiedToggle.isOn ? .verified : .unverified
-        Analytics.shared()?.tagChange(verificationType, deviceOwner: .other)
+        ZMUserSession.shared()?.enqueueChanges({ [weak self] in
+            guard let `self` = self else { return }
+            let selfClient = ZMUserSession.shared()!.selfUserClient()
+            if(self.verifiedToggle.isOn) {
+                selfClient?.trustClient(self.userClient)
+            } else {
+                selfClient?.ignoreClient(self.userClient)
+            }
+        }, completionHandler: {
+            self.verifiedToggle.isOn = self.userClient.verified
+            
+            let verificationType: DeviceVerificationType = self.verifiedToggle.isOn ? .verified : .unverified
+            Analytics.shared()?.tagChange(verificationType, deviceOwner: .other)
+        })
     }
 
     @objc private func onResetTapped(_ sender: AnyObject) {
