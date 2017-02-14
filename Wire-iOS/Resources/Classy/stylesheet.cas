@@ -1647,3 +1647,12 @@ TextSearchResultCell {
         backgroundColor: $color-background;
     }
 }
+
+SearchResultCountBadge {
+    textLabel: @{
+        textColor: $color-background;
+        font: $font-small-medium;
+    }
+    
+    backgroundColor: $color-graphite-light;
+}
