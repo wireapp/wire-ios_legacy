@@ -21,17 +21,17 @@ import Foundation
 import Cartography
 import UIKit
 
-public protocol TextSearchViewDelegate: class {
-    func searchView(_ searchView: TextSearchView, didChangeQueryTo: String)
+public protocol TextSearchInputViewDelegate: class {
+    func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)
 }
 
-public final class TextSearchView: UIView {
+public final class TextSearchInputView: UIView {
     public let iconView = UIImageView()
     public let searchInput = UITextField()
     public let placeholderLabel = UILabel()
     public let cancelButton = IconButton.iconButtonDefault()
     
-    public weak var delegate: TextSearchViewDelegate?
+    public weak var delegate: TextSearchInputViewDelegate?
     public var query: String = "" {
         didSet {
             self.updateForSearchQuery()
@@ -59,7 +59,7 @@ public final class TextSearchView: UIView {
         placeholderLabel.textAlignment = .center
         
         cancelButton.setIcon(.cancel, with: .tiny, for: .normal)
-        cancelButton.addTarget(self, action: #selector(TextSearchView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
         cancelButton.accessibilityIdentifier = "cancel search"
         [iconView, searchInput, cancelButton, placeholderLabel].forEach(self.addSubview)
@@ -109,7 +109,7 @@ public final class TextSearchView: UIView {
     }
 }
 
-extension TextSearchView: UITextFieldDelegate {
+extension TextSearchInputView: UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else {
             return true

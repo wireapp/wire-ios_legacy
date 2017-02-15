@@ -62,17 +62,11 @@ internal class SearchResultCountBadge: UIView {
     fileprivate let separatorView = UIView()
     fileprivate let resultCountView = SearchResultCountBadge()
     
-    public var messageFont: UIFont? {
-        didSet {
-            self.updateTextView()
-        }
-    }
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.contentView.addSubview(self.header)
-        
+        self.selectionStyle = .none
         self.messageTextLabel.accessibilityIdentifier = "text search result"
         self.messageTextLabel.numberOfLines = 1
         self.messageTextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
@@ -133,17 +127,14 @@ internal class SearchResultCountBadge: UIView {
     }
     
     private func updateTextView() {
-        guard let text = message?.textMessageData?.messageText, let query = self.query, let font = self.messageFont else {
+        guard let text = message?.textMessageData?.messageText, let query = self.query else {
             return
         }
         
-        self.messageTextLabel.font = font
-        self.messageTextLabel.query = self.query
+        self.messageTextLabel.query = query
         self.messageTextLabel.resultText = text
         
-        let queryComponents = query.components(separatedBy: .whitespacesAndNewlines)
-        
-        let totalMatches = (text as NSString).allRanges(of: queryComponents, options: [.diacriticInsensitive, .caseInsensitive]).map { $1.count }.reduce(0, +)
+        let totalMatches = self.messageTextLabel.estimatedMatchesCount
         
         self.resultCountView.isHidden = totalMatches <= 1
         self.resultCountView.textLabel.text = "\(totalMatches)"
@@ -162,5 +153,14 @@ internal class SearchResultCountBadge: UIView {
         didSet {
             self.updateTextView()
         }
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        let foregroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        
+        self.contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
     }
 }

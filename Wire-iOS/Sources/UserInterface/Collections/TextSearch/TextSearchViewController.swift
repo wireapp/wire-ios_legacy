@@ -21,10 +21,9 @@ import zmessaging
 import ZMCDataModel
 import Cartography
 
-
 final public class TextSearchViewController: NSObject {
-    public var tableView: UITableView!
-    public var searchBar: TextSearchView!
+    public var resultsView: TextSearchResultsView!
+    public var searchBar: TextSearchInputView!
     
     public weak var delegate: MessageActionResponder? = .none
     public let conversation: ZMConversation
@@ -36,8 +35,9 @@ final public class TextSearchViewController: NSObject {
     
     fileprivate var results: [ZMConversationMessage] = [] {
         didSet {
-            self.tableView.isHidden = results.count == 0
-            self.tableView.reloadData()
+            self.resultsView.tableView.isHidden = results.count == 0
+            self.resultsView.noResultsView.isHidden = results.count != 0
+            self.resultsView.tableView.reloadData()
         }
     }
     
@@ -48,16 +48,15 @@ final public class TextSearchViewController: NSObject {
     }
     
     private func loadViews() {
-        self.tableView = UITableView()
-        self.tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.estimatedRowHeight = 44
-        self.tableView.separatorStyle = .none
-        self.tableView.keyboardDismissMode = .interactive
-        self.tableView.isHidden = results.count == 0
+        self.resultsView = TextSearchResultsView()
+        self.resultsView.isHidden = results.count == 0
+        self.resultsView.tableView.isHidden = results.count == 0
+        self.resultsView.noResultsView.isHidden = results.count != 0
+
+        self.resultsView.tableView.delegate = self
+        self.resultsView.tableView.dataSource = self
         
-        self.searchBar = TextSearchView()
+        self.searchBar = TextSearchInputView()
         self.searchBar.delegate = self
         self.searchBar.placeholderString = "collections.search.field.placeholder".localized.uppercased()
     }
@@ -90,23 +89,23 @@ final public class TextSearchViewController: NSObject {
 }
 
 extension TextSearchViewController: TextSearchQueryDelegate {
-
     public func textSearchQueryDidReceive(result: TextQueryResult) {
         guard result.query == textSearchQuery else { return }
         if result.matches.count > 0 || !result.hasMore {
             results = result.matches
         }
     }
-
 }
 
-extension TextSearchViewController: TextSearchViewDelegate {
-    public func searchView(_ searchView: TextSearchView, didChangeQueryTo query: String) {
+extension TextSearchViewController: TextSearchInputViewDelegate {
+    public func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
         if query.isEmpty {
             textSearchQuery?.cancel()
+            self.resultsView.isHidden = true
         }
         else {
             self.scheduleSearch()
+            self.resultsView.isHidden = false
         }
     }
 }

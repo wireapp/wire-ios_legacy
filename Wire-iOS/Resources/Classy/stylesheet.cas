@@ -1558,7 +1558,10 @@ TokenField.share {
 
 CollectionsView {
     backgroundColor: $color-background-new;
-    noItemsLabel: @{
+}
+
+NoResultsView {
+    label: @{
         font: $font-medium-medium;
     }
 }
@@ -1621,7 +1624,7 @@ AppLockView {
     }
 }
 
-TextSearchView {
+TextSearchInputView {
     backgroundColor: $color-background;
     
     searchInput: @{
@@ -1634,17 +1637,19 @@ TextSearchView {
     }
 }
 
+TextSearchResultsView {
+    backgroundColor: $color-background;
+}
+
 TextSearchResultCell {
-    messageFont: $font-normal;
-    
-    textView: @{
-        backgroundColor: $color-background;
-        textColor: $color-text-foreground;
-    }
-    
     contentView: @{
         backgroundColor: $color-background;
     }
+}
+
+SearchResultLabel {
+    font: $font-normal;
+    textColor: $color-text-foreground;
 }
 
 SearchResultCountBadge {

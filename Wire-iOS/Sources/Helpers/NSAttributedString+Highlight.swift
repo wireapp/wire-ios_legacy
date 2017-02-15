@@ -166,15 +166,22 @@ extension NSAttributedString {
         return ellipsisString + self
     }
     
-    func highlightingAppearances(of query: [String], with attributes: [String: Any], upToWidth: CGFloat?) -> NSAttributedString {
+    func highlightingAppearances(of query: [String], with attributes: [String: Any], upToWidth: CGFloat?, totalMatches: inout Int) -> NSAttributedString {
         let attributedText = self.mutableCopy() as! NSMutableAttributedString
         
-        (self.string as NSString).allRanges(of: query, options: [.caseInsensitive, .diacriticInsensitive]).forEach { (query, results) in
-            results.forEach { currentRange in
+        let allRanges = (self.string as NSString).allRanges(of: query, options: [.caseInsensitive, .diacriticInsensitive])
+        
+        totalMatches = allRanges.map { $1.count }.reduce(0, +)
+        
+        for (_, results) in allRanges {
+            for currentRange in results {
                 let substring = self.attributedSubstring(from: NSRange(location: 0, length: currentRange.location + currentRange.length))
 
                 if upToWidth == nil || substring.layoutSize().width < upToWidth {
                     attributedText.setAttributes(attributes, range: currentRange)
+                }
+                else {
+                    break
                 }
             }
         }

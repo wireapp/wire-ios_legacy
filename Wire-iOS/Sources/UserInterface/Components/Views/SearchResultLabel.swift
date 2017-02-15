@@ -18,7 +18,7 @@
 
 import Foundation
 
-final public class SearchResultLabel: UILabel {
+@objc final public class SearchResultLabel: UILabel {
     public var resultText: String? = .none {
         didSet {
             self.updateText()
@@ -30,8 +30,22 @@ final public class SearchResultLabel: UILabel {
         }
     }
     
+    public override var font: UIFont! {
+        didSet {
+            self.updateText()
+        }
+    }
+    
+    public override var textColor: UIColor! {
+        didSet {
+            self.updateText()
+        }
+    }
+    
+    public var estimatedMatchesCount: Int = 0
+    
     fileprivate var previousLayoutBounds: CGRect = .zero
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.lineBreakMode = .byTruncatingTail
@@ -56,12 +70,13 @@ final public class SearchResultLabel: UILabel {
         guard !self.bounds.equalTo(CGRect.zero),
             let text = self.resultText,
             let query = self.query,
-            let font = self.font else {
+            let font = self.font,
+            let color = self.textColor else {
                 self.attributedText = .none
                 return
         }
         
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font])
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color])
         let queryComponents = query.components(separatedBy: .whitespacesAndNewlines)
         
         let currentRange = text.range(of: queryComponents,
@@ -74,11 +89,17 @@ final public class SearchResultLabel: UILabel {
                                          NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
-                self.attributedText = attributedText.highlightingAppearances(of: queryComponents, with: highlightedAttributes, upToWidth: self.bounds.width)
+                self.attributedText = attributedText.highlightingAppearances(of: queryComponents,
+                                                                             with: highlightedAttributes,
+                                                                             upToWidth: self.bounds.width,
+                                                                             totalMatches: &estimatedMatchesCount)
             }
             else {
                 self.attributedText = attributedText.cutAndPrefixedWithEllipsis(from: nsRange.location, fittingIntoWidth: self.bounds.width)
-                    .highlightingAppearances(of: queryComponents, with: highlightedAttributes, upToWidth: self.bounds.width)
+                    .highlightingAppearances(of: queryComponents,
+                                             with: highlightedAttributes,
+                                             upToWidth: self.bounds.width,
+                                             totalMatches: &estimatedMatchesCount)
             }
         }
         else {
