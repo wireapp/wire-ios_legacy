@@ -18,6 +18,7 @@
 
 
 #import "MockUser.h"
+#import "MockConversation.h"
 
 @implementation MockUser
 
@@ -193,6 +194,11 @@
 - (void)requestMediumProfileImageInUserSession:(ZMUserSession *)userSession
 {
     // no-op
+}
+
+- (NSString *)displayNameInConversation:(MockConversation *)conversation
+{
+    return self.displayName;
 }
 
 #pragma mark - ZMBareUserConnection

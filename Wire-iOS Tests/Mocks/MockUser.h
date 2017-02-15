@@ -22,6 +22,7 @@
 #import "MockLoader.h"
 #import "MockUserClient.h"
 
+@class MockConversation;
 
 @interface MockUser : NSObject<ZMBareUser, ZMBareUserConnection, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
@@ -48,5 +49,6 @@
 @property (nonatomic) NSUUID *remoteIdentifier;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
+- (NSString *)displayNameInConversation:(MockConversation *)conversation;
 
 @end
