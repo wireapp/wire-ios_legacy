@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+
 
 #import <UIKit/UIKit.h>
 
@@ -143,6 +144,7 @@
 + (void)drawIcon_0x736_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x260_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x234_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x261_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -247,6 +249,7 @@
 + (UIImage*)imageOfIcon_0x736_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x260_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x234_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x261_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
