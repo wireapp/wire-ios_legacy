@@ -37,12 +37,15 @@ internal final class ConversationImagesViewController: UIViewController {
     internal var buttonsBar: InputBarButtonsView!
     internal let overlay = FeedbackOverlayView()
     internal let separator = UIView()
-
+    
+    internal let inverse: Bool
+    
     public weak var messageActionDelegate: MessageActionResponder? = .none
     
-    init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage) {
+    init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
         assert(Message.isImageMessage(initialMessage))
         
+        self.inverse = inverse
         self.collection = collection
         self.currentMessage = initialMessage
 
@@ -108,6 +111,43 @@ internal final class ConversationImagesViewController: UIViewController {
         self.addChildViewController(self.pageViewController)
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMove(toParentViewController: self)
+    }
+    
+    fileprivate func logicalPreviousIndex(for index: Int) -> Int? {
+        if self.inverse {
+            return self.nextIndex(for: index)
+        }
+        else {
+            return self.previousIndex(for: index)
+        }
+    }
+    
+    fileprivate func previousIndex(for index: Int) -> Int? {
+        let nextIndex = index - 1
+
+        guard nextIndex >= 0 else {
+            return .none
+        }
+        
+        return nextIndex
+    }
+    
+    fileprivate func logicalNextIndex(for index: Int) -> Int? {
+        if self.inverse {
+            return self.previousIndex(for: index)
+        }
+        else {
+            return self.nextIndex(for: index)
+        }
+    }
+    
+    fileprivate func nextIndex(for index: Int) -> Int? {
+        let nextIndex = index + 1
+        guard self.imageMessages.count > nextIndex else {
+            return .none
+        }
+        
+        return nextIndex
     }
     
     private func createControlsBar() {
@@ -252,12 +292,8 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             fatal("Unknown controller \(viewController)")
         }
         
-        guard let messageIndex = self.indexOf(message: imageController.message) else {
-            return .none
-        }
-        
-        let nextIndex = messageIndex + 1
-        guard self.imageMessages.count > nextIndex else {
+        guard let messageIndex = self.indexOf(message: imageController.message),
+              let nextIndex = self.logicalNextIndex(for: messageIndex) else {
             return .none
         }
         
@@ -269,16 +305,12 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             fatal("Unknown controller \(viewController)")
         }
         
-        guard let messageIndex = self.indexOf(message: imageController.message) else {
+        guard let messageIndex = self.indexOf(message: imageController.message),
+              let previousIndex = self.logicalPreviousIndex(for: messageIndex) else {
             return .none
         }
         
-        let nextIndex = messageIndex - 1
-        guard nextIndex >= 0 else {
-            return .none
-        }
-        
-        return self.imageController(for: self.imageMessages[nextIndex])
+        return self.imageController(for: self.imageMessages[previousIndex])
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {

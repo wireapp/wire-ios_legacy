@@ -29,7 +29,8 @@ extension MessagePresenter {
         
         let collection = AssetCollectionWrapper(conversation: conversation, matchingCategories: [imagesCategoryMatch])
         
-        let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message)
+        let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
+        
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)
