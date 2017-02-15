@@ -50,7 +50,7 @@ import HockeySDK.BITHockeyManager
     
     fileprivate var appLockActive: Bool {
         guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
-            return false
+            return true
         }
         
         let lockApp = settingsPropertyFactory.property(.lockApp)

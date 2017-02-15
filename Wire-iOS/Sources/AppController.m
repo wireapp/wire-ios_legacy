@@ -145,12 +145,16 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    [self.notificationWindowController.appLockViewController applicationWillResignActive:application];
+    [self performAfterUserSessionIsInitialized:^{
+        [self.notificationWindowController.appLockViewController applicationWillResignActive:application];
+    }];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [self.notificationWindowController.appLockViewController applicationDidEnterBackground:application];
+    [self performAfterUserSessionIsInitialized:^{
+        [self.notificationWindowController.appLockViewController applicationDidEnterBackground:application];
+    }];
 }
 
 - (void)uploadAddressBookIfNeeded
@@ -177,7 +181,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [self showForceUpdateIfNeeeded];
-    [self.notificationWindowController.appLockViewController applicationDidBecomeActive:application];
+    [self performAfterUserSessionIsInitialized:^{
+        [self.notificationWindowController.appLockViewController applicationDidBecomeActive:application];
+    }];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
