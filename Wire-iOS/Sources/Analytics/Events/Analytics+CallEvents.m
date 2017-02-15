@@ -178,6 +178,10 @@
             result = @"gsm_call";
             break;
             
+        case VoiceChannelV2CallEndReasonInputOutputError:
+            result = @"io_error";
+            break;
+            
         case VoiceChannelV2CallEndReasonOtherLostMedia:
         case VoiceChannelV2CallEndReasonDisconnected:
         case VoiceChannelV2CallEndReasonRequestedAVS:
