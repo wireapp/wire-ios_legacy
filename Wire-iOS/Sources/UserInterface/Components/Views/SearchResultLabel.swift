@@ -18,12 +18,21 @@
 
 import Foundation
 
-@objc final public class SearchResultLabel: UILabel {
+@objc final public class SearchResultLabel: UILabel, Copyable {
+    public convenience init(instance: SearchResultLabel) {
+        self.init()
+        self.font = instance.font
+        self.textColor = instance.textColor
+        self.resultText = instance.resultText
+        self.query = instance.query
+    }
+
     public var resultText: String? = .none {
         didSet {
             self.updateText()
         }
     }
+    
     public var query: String? = .none {
         didSet {
             self.updateText()
@@ -67,11 +76,10 @@ import Foundation
     }
     
     private func updateText() {
-        guard !self.bounds.equalTo(CGRect.zero),
-            let text = self.resultText,
-            let query = self.query,
-            let font = self.font,
-            let color = self.textColor else {
+        guard let text = self.resultText,
+              let query = self.query,
+              let font = self.font,
+              let color = self.textColor else {
                 self.attributedText = .none
                 return
         }
