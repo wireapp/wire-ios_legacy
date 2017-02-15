@@ -72,6 +72,10 @@
         [NSLayoutConstraint autoCreateAndInstallConstraints:^{
             [self createConstraints];
         }];
+        
+        ColorScheme *scheme = ColorScheme.defaultColorScheme;
+
+        self.contentView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
     }
     
     return self;
@@ -98,7 +102,7 @@
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
-    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
+    self.messageTextView.backgroundColor = UIColor.clearColor;
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.textContainerInset = UIEdgeInsetsZero;
     self.messageTextView.textContainer.lineFragmentPadding = 0;
@@ -181,6 +185,17 @@
                                                                                             forMessage:message.textMessageData
                                                                                                isGiphy:isGiphy
                                                                                             obfuscated:message.isObfuscated];
+    if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
+        
+        NSMutableDictionary<NSString *, id> *highlightStyle = [NSMutableDictionary dictionaryWithDictionary:[attributedMessageText attributesAtIndex:0
+                                                                                                                                     effectiveRange:nil]];
+        highlightStyle[NSBackgroundColorAttributeName] = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken];
+        attributedMessageText = [attributedMessageText highlightingAppearancesOf:self.searchQueries
+                                                                            with:highlightStyle
+                                                                       upToWidth:0
+                                                                    totalMatches:nil];
+    }
+    
     self.messageTextView.attributedText = attributedMessageText;
     [self.messageTextView layoutIfNeeded];
     self.textViewHeightConstraint.active = attributedMessageText.length == 0;

@@ -31,8 +31,9 @@
 @property (nonatomic) id<ZMConversationMessage> editingMessage;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) id<ConversationCellDelegate> conversationCellDelegate;
+@property (nonatomic) NSArray<NSString *> *searchQueries;
 
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;
 - (void)expandMessageWindow;
-
+- (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths;
 @end

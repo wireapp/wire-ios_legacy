@@ -329,6 +329,8 @@
         [Settings sharedSettings].lastViewedConversation = self.conversation;
     }
 
+    self.contentViewController.searchQueries = self.collectionController.currentTextSearchQuery;
+    
     self.isAppearing = NO;
 }
 
@@ -551,8 +553,6 @@
                         withLatestMessage:(id<ZMConversationMessage>)message
 {
     self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
-    
-    
 }
 
 - (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view

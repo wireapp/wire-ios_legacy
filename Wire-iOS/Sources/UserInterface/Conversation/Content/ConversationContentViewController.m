@@ -274,6 +274,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView.tableHeaderView = headerView;
 }
 
+- (void)setSearchQueries:(NSArray<NSString *> *)searchQueries
+{
+    if (_searchQueries.count == 0 && searchQueries.count == 0) {
+        return;
+    }
+    
+    _searchQueries = searchQueries;
+    self.conversationMessageWindowTableViewAdapter.searchQueries = self.searchQueries;
+//    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil];
+}
+
 #pragma mark - Get/set
 
 - (void)setBottomMargin:(CGFloat)bottomMargin
@@ -412,10 +423,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 [self showForwardForMessage:cell.message fromCell:cell];
             }
-                
                 break;
             case MessageActionShowInConversation:
-                [self scrollTo:message completion:nil];
+                [self scrollTo:message completion:^(ConversationCell *cell) {
+                    [cell flashBackground];
+                }];
                 break;
             case MessageActionCopy:
             {

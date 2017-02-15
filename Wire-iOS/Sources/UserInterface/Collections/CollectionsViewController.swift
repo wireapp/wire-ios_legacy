@@ -38,6 +38,14 @@ final public class CollectionsViewController: UIViewController {
         return !resultsView.isHidden
     }
     
+    public var currentTextSearchQuery: [String] {
+        guard let textSearchController = self.textSearchController else {
+            return []
+        }
+        
+        return textSearchController.searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? []
+    }
+    
     fileprivate var contentView: CollectionsView! {
         return self.view as! CollectionsView
     }

@@ -38,6 +38,7 @@
 @property (nonatomic, weak) ConversationMediaController *mediaController;
 @property (nonatomic) UpsideDownTableView *tableView;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
+@property (nonatomic) NSArray<NSString *> *searchQueries;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
