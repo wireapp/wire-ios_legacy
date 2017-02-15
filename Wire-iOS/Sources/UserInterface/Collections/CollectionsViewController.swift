@@ -30,6 +30,13 @@ final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?
+    public var isShowingSearchResults: Bool {
+        guard let textSearchController = self.textSearchController,
+              let resultsView = textSearchController.resultsView else {
+            return false
+        }
+        return !resultsView.isHidden
+    }
     
     fileprivate var contentView: CollectionsView! {
         return self.view as! CollectionsView
