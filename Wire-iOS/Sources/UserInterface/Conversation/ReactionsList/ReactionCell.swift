@@ -38,7 +38,7 @@ import Classy
             }
             
             self.userImageView.user = user
-            self.userDisplayNameLabel.text = user.displayName
+            self.userDisplayNameLabel.text = user.name
 
             if let handle = user.handle {
                 displayNameTopConstraint?.isActive = true
