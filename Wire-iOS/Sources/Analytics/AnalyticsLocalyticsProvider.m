@@ -23,12 +23,6 @@
 #import "DeveloperMenuState.h"
 
 
-@interface AnalyticsLocalyticsProvider () <LLAnalyticsDelegate>
-
-@property (nonatomic, copy) ResumeHandlerBlock resumeHandler;
-
-@end
-
 
 
 @implementation AnalyticsLocalyticsProvider
@@ -58,7 +52,6 @@
 
 - (void)createSessionWithLaunchOptions:(NSDictionary *)launchOptions
 {
-    [Localytics setAnalyticsDelegate:self];
     [Localytics setLoggingEnabled:DeveloperMenuState.developerMenuEnabled];
     [Localytics autoIntegrate:@STRINGIZE(ANALYTICS_API_KEY) launchOptions:launchOptions];
 }
@@ -89,25 +82,10 @@
     [Localytics tagEvent:event attributes:attributes customerValueIncrease:customerValueIncrease];
 }
 
-- (void)performAfterResume:(ResumeHandlerBlock)resumeHandler
-{
-    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
-        self.resumeHandler = resumeHandler;
-    }
-}
 
 - (void)setCustomDimension:(int)dimension value:(NSString *)value
 {
     [Localytics setValue:value forCustomDimension:dimension];
-}
-
-- (void)localyticsSessionWillOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume
-{
-    if (self.resumeHandler) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.resumeHandler(isResume);
-        });
-    }
 }
 
 @end

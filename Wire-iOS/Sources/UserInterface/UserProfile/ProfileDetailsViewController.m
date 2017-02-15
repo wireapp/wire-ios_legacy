@@ -457,8 +457,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self dismissViewControllerWithCompletion:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [user accept];
-        } completionHandler:^{
-            [Analytics shared].sessionSummary.connectRequestsAccepted++;
         }];
     }];
 }
@@ -496,7 +494,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         } completionHandler:^{
             AnalyticsConnectionRequestMethod method = [self connectionRequestMethodForContext:self.context];
             [Analytics.shared tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:method connectRequestCount:self.bareUser.totalCommonConnections]];
-            [Analytics shared].sessionSummary.connectRequestsSent++;
         }];
     }];
 }

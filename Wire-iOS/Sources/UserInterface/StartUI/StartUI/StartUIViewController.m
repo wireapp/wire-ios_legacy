@@ -524,8 +524,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)presentAddressBookUploadDialogue
 {
-    [Analytics shared].sessionSummary.openedSearchBeforeABDecision++;
-    
     [self.peopleInputController.tokenField resignFirstResponder];
     
     ShareContactsViewController *shareContactsViewController = [[ShareContactsViewController alloc] init];

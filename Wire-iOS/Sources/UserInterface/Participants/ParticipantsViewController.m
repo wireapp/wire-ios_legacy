@@ -469,7 +469,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     if ( ! couldSetName) {
         [self reloadUI];
     }
-    [Analytics shared].sessionSummary.conversationRenames++;
     
     return YES;
 }

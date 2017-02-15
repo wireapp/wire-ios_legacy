@@ -17,12 +17,6 @@
 // 
 
 
-
-typedef void (^ResumeHandlerBlock)(BOOL willResume);
-
-
-
-
 @protocol AnalyticsProvider <NSObject>
 
 @property (nonatomic, assign) BOOL isOptedOut;
@@ -40,8 +34,6 @@ typedef void (^ResumeHandlerBlock)(BOOL willResume);
 
 /// Record an event with optional attributes.
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
-
-- (void)performAfterResume:(ResumeHandlerBlock)resumeHandler;
 
 /// Record an event with optional attributes and customer lifetime value increase
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes

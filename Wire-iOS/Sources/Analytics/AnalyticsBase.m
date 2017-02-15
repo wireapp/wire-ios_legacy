@@ -21,7 +21,6 @@
 #import "AnalyticsLocalyticsProvider.h"
 #import "Analytics+SessionEvents.h"
 #import "Analytics+Metrics.h"
-#import "AnalyticsSessionSummaryEvent.h"
 #import "AnalyticsVoiceChannelTracker.h"
 #import "AnalyticsConversationListObserver.h"
 #import "AnalyticsConversationVerifiedObserver.h"
@@ -239,35 +238,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     [self tagEvent:tag attributes:[event attributesDump] source:source customerValueIncrease:[event customerValueIncrease]];
 }
 
-- (void)persistCustomSessionSummary
-{
-    [self saveSessionBackgroundedDate:[NSDate new]];
-    [self saveSessionSummary];
-}
-
-- (void)loadCustomSessionSummary
-{
-    [self.activeProvider performAfterResume:^(BOOL willResume) {
-        BOOL loaded = [self loadSessionSummary];
-        
-        if (! willResume) {
-            
-            if (loaded) {
-                [self sendSessionEndData];
-            }
-            
-            // Clear out the session meta data on disk
-            self.sessionSummary = nil;
-            [self saveSessionSummary];
-            
-            // create new session meta
-            NSDate *nowDate = [NSDate new];
-            [self saveSessionStartDate:nowDate];
-            
-            self.sessionSummary = [[AnalyticsSessionSummaryEvent alloc] init];
-        }
-    }];
-}
 
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
                               groupConversations:(NSUInteger)groupConv
@@ -303,73 +273,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     [self.activeProvider setCustomDimension:4 value:composedConfigKey];
 }
 
-- (void)localyticsWillResumeSession:(BOOL)willResumeExistingSession
-{
-    BOOL loaded = [self loadSessionSummary];
-    
-    if (! willResumeExistingSession) {
-        
-        if (loaded) {
-            // delay session summary so as not to slow down startup with getting the conv lists.
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self sendSessionEndData];
-            });
-        }
-        
-        // Clear out the session meta data on disk
-        self.sessionSummary = nil;
-        [self saveSessionSummary];
-        
-        // create new session meta
-        NSDate *nowDate = [NSDate new];
-        [self saveSessionStartDate:nowDate];
-        
-        self.sessionSummary = [[AnalyticsSessionSummaryEvent alloc] init];
-    }
-}
-
-- (void)sendSessionEndData
-{
-    NSDate *startDate = [self loadSessionStartDate];
-    NSDate *backgroundedDate = [self loadSessionBackgroundedDate];
-    
-    if (startDate != nil && backgroundedDate != nil) {
-        // calculate elapsed session time
-        NSTimeInterval elapsedTime = [backgroundedDate timeIntervalSinceDate:startDate];
-        self.sessionSummary.sessionDuration = elapsedTime;
-    }
-
-    // Create summary information
-    self.sessionSummary.totalContacts = 0;
-    self.sessionSummary.totalGroupConversations = 0;
-    self.sessionSummary.totalSilencedConversations = 0;
-    self.sessionSummary.totalOutgoingConnectionRequests = 0;
-    
-    for (ZMConversation *conv in [SessionObjectCache sharedCache].allConversations) {
-        if (conv.conversationType == ZMConversationTypeOneOnOne) {
-            self.sessionSummary.totalContacts++;
-        }
-        else if (conv.conversationType == ZMConversationTypeGroup) {
-            self.sessionSummary.totalGroupConversations++;
-        }
-        else if (conv.conversationType == ZMConversationTypeConnection) {
-            self.sessionSummary.totalOutgoingConnectionRequests++;
-        }
-        
-        if (conv.isSilenced) {
-            self.sessionSummary.totalSilencedConversations++;
-        }
-    }
-
-    self.sessionSummary.totalIncomingConnectionRequests = [SessionObjectCache sharedCache].pendingConnectionRequests.count;
-    self.sessionSummary.totalArchivedConversations = [SessionObjectCache sharedCache].archivedConversations.count;
-
-    // send session summary event
-    if (self.sessionSummary) {
-        [self tagEventObject:self.sessionSummary];
-    }
-}
-
 + (NSString *)eventSourceToString:(AnalyticsEventSource) source
 {
     
@@ -394,88 +297,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
             break;
     }
     
-    return result;
-}
-
-@end
-
-
-
-static NSString * const UserDefaultAnalyticsSessionStartDate        = @"AnalyticsSessionStartDate";
-static NSString * const UserDefaultAnalyticsSessionBackgroundedDate = @"AnalyticsSessionBackgroundedDate";
-static NSString * const UserDefaultAnalyticsSessionSummary          = @"AnalyticsSessionSummary";
-
-@implementation Analytics (Serialization)
-
-- (void)saveSessionStartDate:(NSDate *)startDate
-{
-    NSTimeInterval time = [startDate timeIntervalSinceReferenceDate];
-    
-    [[NSUserDefaults standardUserDefaults] setDouble:time forKey:UserDefaultAnalyticsSessionStartDate];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (NSDate *)loadSessionStartDate
-{
-    NSTimeInterval time = [[NSUserDefaults standardUserDefaults] doubleForKey:UserDefaultAnalyticsSessionStartDate];
-    if (time == 0) {
-        return nil;
-    }
-    return [NSDate dateWithTimeIntervalSinceReferenceDate:time];
-}
-
-- (void)saveSessionBackgroundedDate:(NSDate *)date
-{
-    NSTimeInterval time = [date timeIntervalSinceReferenceDate];
-    
-    [[NSUserDefaults standardUserDefaults] setDouble:time forKey:UserDefaultAnalyticsSessionBackgroundedDate];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (NSDate *)loadSessionBackgroundedDate
-{
-    NSTimeInterval time = [[NSUserDefaults standardUserDefaults] doubleForKey:UserDefaultAnalyticsSessionBackgroundedDate];
-    if (time == 0) {
-        return nil;
-    }
-    return [NSDate dateWithTimeIntervalSinceReferenceDate:time];
-}
-
-- (void)saveSessionSummary
-{
-    if (self.sessionSummary != nil) {
-        NSData *jsonData = [self.sessionSummary JSONData];
-        
-        CocoaSecurityEncoder *encoder = [[CocoaSecurityEncoder alloc] init];
-        NSString *encodedJSON = [encoder base64:jsonData];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:encodedJSON forKey:UserDefaultAnalyticsSessionSummary];
-    }
-    else {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:UserDefaultAnalyticsSessionSummary];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-/// Load the session summary that was saved on exit.  If something is loaded, returns YES, otherwise returns NO
-- (BOOL)loadSessionSummary
-{
-    NSData *jsonData = nil;
-    BOOL result = NO;
-    
-    NSString *encodedJSON = [[NSUserDefaults standardUserDefaults] objectForKey:UserDefaultAnalyticsSessionSummary];
-    if (encodedJSON != nil) {
-        CocoaSecurityDecoder *decoder = [[CocoaSecurityDecoder alloc] init];
-        jsonData = [decoder base64:encodedJSON];
-    }
-    
-    if (jsonData == nil) {
-        self.sessionSummary = [[AnalyticsSessionSummaryEvent alloc] init];
-    }
-    else {
-        self.sessionSummary = [[AnalyticsSessionSummaryEvent alloc] initWithJSONData:jsonData];
-        result = YES;
-    }
     return result;
 }
 

@@ -247,10 +247,6 @@
 - (void)startAudioCallWithCompletionHandler:(void (^)(BOOL))completion
 {
     [self joinVoiceChannelWithVideo:NO completionHandler:^(BOOL joined) {
-        if (joined) {
-            [Analytics shared].sessionSummary.voiceCallsInitiated++;
-        }
-
         if (completion) {
             completion(joined);
         }
@@ -265,12 +261,8 @@
         }
 
         [self joinVoiceChannelWithVideo:YES completionHandler:^(BOOL joined) {
-            if (joined) {
-                [Analytics shared].sessionSummary.videoCallsInitiated++;
-
-                if (completion) {
-                    completion(joined);
-                }
+            if (completion) {
+                completion(joined);
             }
         }];
     }];
@@ -278,11 +270,7 @@
 
 - (void)acceptIncomingCall
 {
-    [self joinVoiceChannelWithVideo:self.voiceChannel.isVideoCall completionHandler:^(BOOL joined) {
-        if (joined) {
-            [Analytics shared].sessionSummary.incomingCallsAccepted++;
-        }
-    }];
+    [self joinVoiceChannelWithVideo:self.voiceChannel.isVideoCall completionHandler:nil];
 }
 
 - (void)joinVoiceChannelWithVideo:(BOOL)video completionHandler:(void(^)(BOOL joined))completion
