@@ -29,7 +29,6 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
         super.setUp()
         accentColor = .violet
         CASStyler.default().styleItem(sut)
-        self.recordMode = true
     }
     
     func testThatItShowsStringWithoutHighlight() {
