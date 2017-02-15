@@ -116,8 +116,7 @@ static inline NSDataDetector *linkDataDetector(void)
     NSDictionary *attributes = @{
                                 NSFontAttributeName : font,
                                 NSForegroundColorAttributeName : foregroundColor,
-                                NSParagraphStyleAttributeName : cellParagraphStyle,
-                                NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground]
+                                NSParagraphStyleAttributeName : cellParagraphStyle
                                 };
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];

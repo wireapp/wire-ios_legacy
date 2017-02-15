@@ -304,6 +304,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
         conversationCell = (ConversationCell *)cell;
     }
     
+    conversationCell.searchQueries = self.searchQueries;
     conversationCell.delegate = self.conversationCellDelegate;
     conversationCell.analyticsTracker = self.analyticsTracker;
     

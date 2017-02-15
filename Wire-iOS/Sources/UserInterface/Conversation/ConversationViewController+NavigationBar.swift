@@ -216,7 +216,9 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 guard let `self` = self else {
                     return
                 }
-                self.contentViewController.scroll(to: message)
+                self.contentViewController.scroll(to: message) { cell in
+                    cell.flashBackground()
+                }
             }
         default:
             self.contentViewController.wants(toPerform: action, for: message)
