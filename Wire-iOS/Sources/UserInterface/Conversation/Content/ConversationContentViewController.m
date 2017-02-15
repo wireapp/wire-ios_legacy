@@ -282,7 +282,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     _searchQueries = searchQueries;
     self.conversationMessageWindowTableViewAdapter.searchQueries = self.searchQueries;
-//    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil];
+    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil];
 }
 
 #pragma mark - Get/set
