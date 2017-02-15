@@ -29,6 +29,8 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
         super.setUp()
         accentColor = .violet
         CASStyler.default().styleItem(sut)
+        // Give Classy time to style the view
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
     }
     
     func testThatItShowsStringWithoutHighlight() {
