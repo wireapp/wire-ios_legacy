@@ -50,20 +50,6 @@
 
 static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefaultsDisabledKey";
 
-@interface Analytics (Serialization)
-
-- (void)saveSessionStartDate:(NSDate *)startDate;
-- (NSDate *)loadSessionStartDate;
-
-- (void)saveSessionBackgroundedDate:(NSDate *)date;
-- (NSDate *)loadSessionBackgroundedDate;
-
-- (void)saveSessionSummary;
-- (BOOL)loadSessionSummary;
-
-@end
-
-
 
 @interface Analytics ()
 
@@ -98,7 +84,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackingIdentifierChanged:) name:ZMUserSessionTrackingIdentifierDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSessionDidBecomeAvailable:) name:ZMUserSessionDidBecomeAvailableNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
 }
@@ -141,12 +126,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
 - (id<AnalyticsProvider>)activeProvider
 {
     return self.disabled ? nil : self.provider;
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    [self saveSessionBackgroundedDate:[NSDate new]];
-    [self saveSessionSummary];
 }
 
 - (void)setObservingConversationList:(BOOL)observingConversationList
