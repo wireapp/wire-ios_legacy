@@ -20,7 +20,7 @@
 #import "WAZUIMagicIOS.h"
 #import "zmessaging+iOS.h"
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationInputBarViewController;
 @class ConversationDetailsTransitioningDelegate;
@@ -33,8 +33,9 @@
 @property (nonatomic, readonly) UIViewController *participantsController;
 @property (nonatomic, readonly) AnalyticsTracker *analyticsTracker;
 @property (nonatomic, readonly) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
-@property (nonatomic, weak)     CollectionsViewController *collectionController;
+@property (nonatomic, nullable) CollectionsViewController *collectionController;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 @end
 
+NS_ASSUME_NONNULL_END

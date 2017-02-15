@@ -19,39 +19,101 @@
 import Foundation
 import Cartography
 
-@objc internal class TextSearchResultCell: UITableViewCell, Reusable {
-    fileprivate let textView = UITextView()
-    fileprivate let header = CollectionCellHeader()
+internal class SearchResultCountBadge: UIView {
+    public var textLabel = UILabel()
     
-    public var messageFont: UIFont? {
-        didSet {
-            self.updateTextView()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.addSubview(textLabel)
+        
+        textLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        textLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        
+        constrain(self, textLabel) { selfView, textLabel in
+            textLabel.leading == selfView.leading + 4
+            textLabel.trailing == selfView.trailing - 4
+            textLabel.top == selfView.top + 2
+            textLabel.bottom == selfView.bottom - 2
+            
+            selfView.width >= selfView.height
         }
+        
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
+    }
+}
+
+@objc internal class TextSearchResultCell: UITableViewCell, Reusable {
+    fileprivate let messageTextLabel = SearchResultLabel()
+    fileprivate let header = CollectionCellHeader()
+    fileprivate let userImageViewContainer = UIView()
+    fileprivate let userImageView = UserImageView(magicPrefix: "content.author_image")
+    fileprivate let separatorView = UIView()
+    fileprivate let resultCountView = SearchResultCountBadge()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.contentView.addSubview(self.header)
+        self.selectionStyle = .none
+        self.messageTextLabel.accessibilityIdentifier = "text search result"
+        self.messageTextLabel.numberOfLines = 1
+        self.messageTextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        self.messageTextLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         
-        self.textView.isEditable = false
-        self.textView.isSelectable = false
-        self.textView.isScrollEnabled = false
-        self.textView.textContainerInset = .zero
-        self.textView.textContainer.lineFragmentPadding = 0
-        self.textView.isUserInteractionEnabled = false
+        self.contentView.addSubview(self.messageTextLabel)
         
-        self.contentView.addSubview(self.textView)
+        self.userImageViewContainer.addSubview(self.userImageView)
         
-        constrain(self.contentView, self.header, self.textView) { contentView, header, textView in
-            header.top == contentView.top + 8
-            header.leading == contentView.leading + 24
-            header.trailing == contentView.trailing - 24
+        self.contentView.addSubview(self.userImageViewContainer)
+        
+        self.separatorView.cas_styleClass = "separator"
+        self.contentView.addSubview(self.separatorView)
+        
+        self.resultCountView.textLabel.accessibilityIdentifier = "count of matches"
+        self.contentView.addSubview(self.resultCountView)
+        
+        constrain(self.userImageView, self.userImageViewContainer) { userImageView, userImageViewContainer in
+            userImageView.height == 24
+            userImageView.width == userImageView.height
+            userImageView.center == userImageViewContainer.center
+        }
+        
+        constrain(self.contentView, self.header, self.messageTextLabel, self.userImageViewContainer, self.resultCountView) { contentView, header, messageTextLabel, userImageViewContainer, resultCountView in
+            userImageViewContainer.leading == contentView.leading
+            userImageViewContainer.top == contentView.top
+            userImageViewContainer.bottom == contentView.bottom
+            userImageViewContainer.width == 48
             
-            textView.top == header.bottom
-            textView.leading == contentView.leading + 24
-            textView.trailing == contentView.trailing - 24
-            textView.bottom == contentView.bottom
+            messageTextLabel.top == contentView.top + 8
+            messageTextLabel.leading == userImageViewContainer.trailing
+            messageTextLabel.trailing == resultCountView.leading - 16
+            messageTextLabel.bottom == header.top - 8
+            
+            header.leading == userImageViewContainer.trailing
+            header.trailing == contentView.trailing - 16
+            header.bottom == contentView.bottom - 8
+            
+            resultCountView.trailing == contentView.trailing - 16
+            resultCountView.centerY == messageTextLabel.centerY
+        }
+        
+        constrain(self.contentView, self.separatorView, self.userImageViewContainer) { contentView, separatorView, userImageViewContainer in
+            separatorView.leading == userImageViewContainer.trailing
+            separatorView.trailing == contentView.trailing
+            separatorView.bottom == contentView.bottom
+            separatorView.height == CGFloat.hairline
         }
     }
     
@@ -65,39 +127,25 @@ import Cartography
     }
     
     private func updateTextView() {
-        guard let text = message?.textMessageData?.messageText,
-            let query = self.query,
-            let font = self.messageFont else {
-                self.textView.attributedText = .none
-                return
+        guard let text = message?.textMessageData?.messageText, let query = self.query else {
+            return
         }
         
+        self.messageTextLabel.query = query
+        self.messageTextLabel.resultText = text
         
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font])
+        let totalMatches = self.messageTextLabel.estimatedMatchesCount
         
-        let textString = text as NSString
-        var queryRange = NSMakeRange(0, textString.length)
-        var currentRange: NSRange = NSMakeRange(NSNotFound, 0)
-        
-        repeat {
-            currentRange = textString.range(of: query, options: .caseInsensitive, range: queryRange)
-            if currentRange.location != NSNotFound {
-                queryRange.location = currentRange.location + currentRange.length
-                queryRange.length = textString.length - queryRange.location
-                attributedText.setAttributes([NSFontAttributeName: font,
-                                              NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)], range: currentRange)
-            }
-        }
-        while currentRange.location != NSNotFound
-        
-        self.textView.attributedText = attributedText
-        self.textView.layoutIfNeeded()
+        self.resultCountView.isHidden = totalMatches <= 1
+        self.resultCountView.textLabel.text = "\(totalMatches)"
     }
     
     var message: ZMConversationMessage? = .none {
         didSet {
-            self.updateTextView()
+            self.userImageView.user = self.message?.sender
             self.header.message = self.message
+
+            self.updateTextView()
         }
     }
     
@@ -105,5 +153,14 @@ import Cartography
         didSet {
             self.updateTextView()
         }
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        let foregroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        
+        self.contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
     }
 }

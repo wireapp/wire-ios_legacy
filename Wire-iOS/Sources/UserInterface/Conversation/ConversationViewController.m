@@ -140,7 +140,7 @@
 
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
-@property (nonatomic, weak) CollectionsViewController *collectionController;
+@property (nonatomic) CollectionsViewController *collectionController;
 
 @end
 
@@ -372,6 +372,14 @@
     return YES;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    if (self.collectionController.view.window == nil) {
+        self.collectionController = nil;
+    }
+}
+
 - (void)openConversationList
 {
     BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
@@ -497,6 +505,13 @@
         @strongify(self);
         [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
     }];
+}
+
+- (void)setCollectionController:(CollectionsViewController *)collectionController
+{
+    _collectionController = collectionController;
+    
+    [self updateLeftNavigationBarItems];
 }
 
 #pragma mark - SwipeNavigationController's panning

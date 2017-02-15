@@ -360,7 +360,7 @@ extension ZMConversationMessage {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        guard let message = self.message , !self.bounds.equalTo(self.previousLayoutBounds) else {
+        guard let message = self.message, !self.bounds.equalTo(self.previousLayoutBounds) else {
             return
         }
         

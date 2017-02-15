@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeMinus                           = 0x101,
     ZetaIconTypeCheckmark                       = 0x102,
     ZetaIconTypeX                               = 0x103,
-    ZetaIconTypeElipsis                         = 0x125,
+    ZetaIconTypeEllipsis                        = 0x125,
     ZetaIconTypeGear                            = 0x164,
     ZetaIconTypeEnvelope                        = 0x172,
     ZetaIconTypeLeftArrow                       = 0x108,
@@ -164,6 +164,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeEffectRollerCoaster             = 0x247,
 
     ZetaIconTypeLibrary                         = 0x260,
+    ZetaIconTypeSearchOngoing                   = 0x261,
     
     // Emoji Categories
     ZetaIconTypeFlower                          = 0x250,

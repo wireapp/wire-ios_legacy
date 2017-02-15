@@ -114,7 +114,7 @@ class InputBarTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: inputBar)
     }
     
-    func testButtonsWrapsWithElipsis() {
+    func testButtonsWrapsWithEllipsis() {
         let inputBar = InputBar(buttons: buttons() + buttons())
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.text = ""

@@ -70,6 +70,11 @@
     return [self.viewController supportedInterfaceOrientations];
 }
 
+- (UINavigationItem *)navigationItem
+{
+    return [self.viewController navigationItem];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

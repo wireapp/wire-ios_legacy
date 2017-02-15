@@ -214,6 +214,23 @@
     return image;
 }
 
++ (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color
+{
+    const CGFloat middleSize = 10.0f;
+    
+    CGRect rect = CGRectMake(0.0f, 0.0f, ceilf(inset * 2.0f + middleSize), 1.0f);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 1.0f);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, CGRectMake(inset, 0, middleSize, 1.0f));
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 + (UIImage *)deviceOptimizedImageFromData:(NSData *)imageData
 {
     return [self imageFromData:imageData withMaxSize:[UIScreen mainScreen].nativeBounds.size.height];

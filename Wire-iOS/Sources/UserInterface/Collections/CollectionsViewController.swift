@@ -30,6 +30,13 @@ final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?
+    public var isShowingSearchResults: Bool {
+        guard let textSearchController = self.textSearchController,
+              let resultsView = textSearchController.resultsView else {
+            return false
+        }
+        return !resultsView.isHidden
+    }
     
     fileprivate var contentView: CollectionsView! {
         return self.view as! CollectionsView
@@ -250,6 +257,12 @@ final public class CollectionsViewController: UIViewController {
             let backButton = CollectionsView.backButton()
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        }
+        
+        if let navBar = self.navigationController?.navigationBar {
+            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))!
+            let scaleImageToStretch = UIImage(cgImage: imageToStretch.cgImage!, scale: UIScreen.main.scale, orientation: .up)
+            navBar.shadowImage = scaleImageToStretch.stretchableImage(withLeftCapWidth: 20, topCapHeight: 0)
         }
     }
     
