@@ -141,8 +141,8 @@ NS_ASSUME_NONNULL_END
     _searchUser = searchUser;
     
     self.userImageView.user = _searchUser;
-    if (_searchUser.displayName.length > 0) {
-        self.userNameLabel.text = _searchUser.displayName;
+    if (_searchUser.name.length > 0) {
+        self.userNameLabel.text = _searchUser.name;
     } else if (_searchUser.contact.emailAddresses.count > 0) {
         self.userNameLabel.text = _searchUser.contact.emailAddresses[0];
     } else if (_searchUser.contact.phoneNumbers.count > 0) {
