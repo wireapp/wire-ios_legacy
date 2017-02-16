@@ -890,7 +890,7 @@
 
 - (void)conversationDidChange:(ConversationChangeInfo *)note
 {
-    if (note.didDegradeSecurityLevelBecauseOfMissingClients) {
+    if (note.didNotSendMessagesBecauseOfConversationSecurityLevel) {
         [self presentConversationDegradedActionSheetControllerForUsers:note.usersThatCausedConversationToDegrade];
     }
     
