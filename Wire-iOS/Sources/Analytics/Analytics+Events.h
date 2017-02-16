@@ -20,7 +20,6 @@
 #import "AnalyticsGroupConversationEvent.h"
 #import "AnalyticsConnectionRequestEvent.h"
 #import "AnalyticsSearchResultEvent.h"
-#import "AnalyticsSessionSummaryEvent.h"
 
 #import "Analytics+Screens.h"
 #import "Analytics+SessionEvents.h"

@@ -18,7 +18,6 @@
 
 
 #import "Analytics+SessionEvents.h"
-#import "AnalyticsSessionSummaryEvent.h"
 #import "TimeIntervalClusterizer.h"
 
 

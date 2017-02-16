@@ -262,7 +262,6 @@
 		871BC0171D34F56300DF0793 /* AnalyticsGroupConversationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFDC1D34F56300DF0793 /* AnalyticsGroupConversationEvent.m */; };
 		871BC0181D34F56300DF0793 /* AnalyticsOptEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFDE1D34F56300DF0793 /* AnalyticsOptEvent.m */; };
 		871BC0191D34F56300DF0793 /* AnalyticsSearchResultEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFE01D34F56300DF0793 /* AnalyticsSearchResultEvent.m */; };
-		871BC01A1D34F56300DF0793 /* AnalyticsSessionSummaryEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFE21D34F56300DF0793 /* AnalyticsSessionSummaryEvent.m */; };
 		871BC01B1D34F56300DF0793 /* AnalyticsTracker+FileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFE51D34F56300DF0793 /* AnalyticsTracker+FileTransfer.m */; };
 		871BC01C1D34F56300DF0793 /* AnalyticsTracker+Invitations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFE81D34F56300DF0793 /* AnalyticsTracker+Invitations.m */; };
 		871BC01D1D34F56300DF0793 /* AnalyticsTracker+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFEB1D34F56300DF0793 /* AnalyticsTracker+Media.m */; };
@@ -1322,8 +1321,6 @@
 		871BBFDE1D34F56300DF0793 /* AnalyticsOptEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsOptEvent.m; sourceTree = "<group>"; };
 		871BBFDF1D34F56300DF0793 /* AnalyticsSearchResultEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsSearchResultEvent.h; sourceTree = "<group>"; };
 		871BBFE01D34F56300DF0793 /* AnalyticsSearchResultEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsSearchResultEvent.m; sourceTree = "<group>"; };
-		871BBFE11D34F56300DF0793 /* AnalyticsSessionSummaryEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsSessionSummaryEvent.h; sourceTree = "<group>"; };
-		871BBFE21D34F56300DF0793 /* AnalyticsSessionSummaryEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsSessionSummaryEvent.m; sourceTree = "<group>"; };
 		871BBFE41D34F56300DF0793 /* AnalyticsTracker+FileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AnalyticsTracker+FileTransfer.h"; sourceTree = "<group>"; };
 		871BBFE51D34F56300DF0793 /* AnalyticsTracker+FileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AnalyticsTracker+FileTransfer.m"; sourceTree = "<group>"; };
 		871BBFE71D34F56300DF0793 /* AnalyticsTracker+Invitations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AnalyticsTracker+Invitations.h"; sourceTree = "<group>"; };
@@ -3022,8 +3019,6 @@
 				871BBFDE1D34F56300DF0793 /* AnalyticsOptEvent.m */,
 				871BBFDF1D34F56300DF0793 /* AnalyticsSearchResultEvent.h */,
 				871BBFE01D34F56300DF0793 /* AnalyticsSearchResultEvent.m */,
-				871BBFE11D34F56300DF0793 /* AnalyticsSessionSummaryEvent.h */,
-				871BBFE21D34F56300DF0793 /* AnalyticsSessionSummaryEvent.m */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -5627,7 +5622,6 @@
 				87DCF4F31D34EA4500BB420F /* StartUIQuickActionsBar.m in Sources */,
 				8F8914181A9F287E0056AB0C /* PingAnimationLayer.m in Sources */,
 				BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */,
-				871BC01A1D34F56300DF0793 /* AnalyticsSessionSummaryEvent.m in Sources */,
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
 				8FC85451199245770008B66B /* ConversationContentViewController+Scrolling.m in Sources */,

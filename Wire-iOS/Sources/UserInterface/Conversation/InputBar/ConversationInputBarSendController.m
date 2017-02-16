@@ -50,14 +50,11 @@
 {
     if (imageData != nil) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            
             [self.conversation appendMessageWithImageData:imageData version3:Settings.sharedSettings.sendV3Assets];
         } completionHandler:^{
-            
             if (completionHandler){
                 completionHandler();
             }
-            [Analytics shared].sessionSummary.imagesSent++;
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
 
         }];
@@ -88,7 +85,6 @@
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
-        [Analytics shared].sessionSummary.textMessagesSent++;
         [self tagExternalLinkPostEventsForMessage:textMessage];
     }];
 }
@@ -103,8 +99,6 @@
         [self.conversation appendMessageWithImageData:data version3:Settings.sharedSettings.sendV3Assets];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
-        [Analytics shared].sessionSummary.textMessagesSent++;
-        [Analytics shared].sessionSummary.imagesSent++;
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
         [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];

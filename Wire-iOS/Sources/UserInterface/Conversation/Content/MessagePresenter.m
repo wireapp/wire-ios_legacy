@@ -176,7 +176,6 @@
 {
     UIViewController *imageViewController = [self viewControllerForImageMessage:message actionResponder:delegate];
     [self.modalTargetController presentViewController:imageViewController animated:YES completion:nil];
-    [Analytics shared].sessionSummary.imageContentsClicks++;
 }
 
 @end

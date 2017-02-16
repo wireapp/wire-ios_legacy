@@ -561,7 +561,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         } completionHandler:^{
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionSketch inConversation:self.conversation];
             [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
-            [Analytics shared].sessionSummary.imagesSent++;
         }];
     }
 }
