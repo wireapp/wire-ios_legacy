@@ -54,15 +54,12 @@ FOUNDATION_EXPORT NSString *SplitLayoutObservableDidChangeToLayoutSizeNotificati
 @property (nonatomic, nullable) UIViewController *leftViewController;
 @property (nonatomic, nullable) UIViewController *rightViewController;
 
-@property (nonatomic, getter=isLeftViewControllerExpanded) BOOL leftViewControllerExpanded;
 @property (nonatomic, getter=isLeftViewControllerRevealed) BOOL leftViewControllerRevealed;
 
 @property (nonatomic, weak, nullable) id<SplitViewControllerDelegate> delegate;
 
 - (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated expanded:(BOOL)expanded completion:(nullable dispatch_block_t)completion;
 - (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerIsExpanded animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 @end

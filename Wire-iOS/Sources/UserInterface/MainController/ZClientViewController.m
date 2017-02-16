@@ -260,7 +260,7 @@
     [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
     
     @weakify(self);
-    [self.splitViewController setLeftViewController:self.conversationListViewController animated:animated expanded:NO completion:^{
+    [self.splitViewController setLeftViewController:self.conversationListViewController animated:animated completion:^{
         @strongify(self);
         [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
     }];
