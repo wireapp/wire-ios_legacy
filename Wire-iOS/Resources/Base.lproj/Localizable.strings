@@ -824,5 +824,5 @@
 "collections.image_viewer.copied.title" = "Picture copied";
 
 "collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No text messages matching";
+"collections.search.no_items" = "No results";
 

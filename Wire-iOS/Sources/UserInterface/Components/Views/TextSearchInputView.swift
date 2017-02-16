@@ -23,6 +23,7 @@ import UIKit
 
 public protocol TextSearchInputViewDelegate: class {
     func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)
+    func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }
 
 public final class TextSearchInputView: UIView {
@@ -120,5 +121,13 @@ extension TextSearchInputView: UITextFieldDelegate {
         self.query = containsReturn ? text : newText
         
         return !containsReturn
+    }
+
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let shouldReturn = delegate?.searchViewShouldReturn(self) ?? true
+        if shouldReturn {
+            textField.resignFirstResponder()
+        }
+        return shouldReturn
     }
 }

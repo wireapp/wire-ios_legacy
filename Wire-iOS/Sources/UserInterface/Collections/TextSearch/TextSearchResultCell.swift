@@ -96,14 +96,14 @@ internal class SearchResultCountBadge: UIView {
             userImageViewContainer.bottom == contentView.bottom
             userImageViewContainer.width == 48
             
-            messageTextLabel.top == contentView.top + 8
+            messageTextLabel.top == contentView.top + 10
             messageTextLabel.leading == userImageViewContainer.trailing
             messageTextLabel.trailing == resultCountView.leading - 16
-            messageTextLabel.bottom == header.top - 8
+            messageTextLabel.bottom == header.top - 4
             
             header.leading == userImageViewContainer.trailing
             header.trailing == contentView.trailing - 16
-            header.bottom == contentView.bottom - 8
+            header.bottom == contentView.bottom - 10
             
             resultCountView.trailing == contentView.trailing - 16
             resultCountView.centerY == messageTextLabel.centerY

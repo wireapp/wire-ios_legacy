@@ -108,6 +108,10 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
             self.resultsView.isHidden = false
         }
     }
+
+    public func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
+        return searchView.query.characters.count >= 2
+    }
 }
 
 extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
@@ -124,5 +128,10 @@ extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.wants(toPerform: .showInConversation, for: self.results[indexPath.row])
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard searchBar.searchInput.isEditing else { return }
+        searchBar.searchInput.endEditing(true)
     }
 }
