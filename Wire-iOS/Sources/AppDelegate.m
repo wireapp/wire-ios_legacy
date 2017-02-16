@@ -170,9 +170,6 @@ static AppDelegate *sharedAppDelegate = nil;
     [self.appController applicationDidBecomeActive:application];
     self.addressBookUploadShouldBeChecked = YES;
     
-    // Resume any analytics work after migration
-    [Analytics.shared loadCustomSessionSummary];
-    
     switch (self.launchType) {
         case ApplicationLaunchURL:
         case ApplicationLaunchPush:
@@ -202,8 +199,7 @@ static AppDelegate *sharedAppDelegate = nil;
     DDLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
     
     [self.appController applicationDidEnterBackground:application];
-    
-    [Analytics.shared persistCustomSessionSummary];
+
     self.launchType = ApplicationLaunchUnknown;
     self.addressBookUploadShouldBeChecked = NO;
     

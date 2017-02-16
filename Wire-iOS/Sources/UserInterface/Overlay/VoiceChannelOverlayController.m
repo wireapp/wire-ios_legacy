@@ -187,8 +187,6 @@
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel ignoreWithUserSession:[ZMUserSession sharedSession]];
-    } completionHandler:^{
-        [Analytics shared].sessionSummary.incomingCallsMuted++;
     }];
 }
 

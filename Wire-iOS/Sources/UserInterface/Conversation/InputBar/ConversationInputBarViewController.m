@@ -1016,7 +1016,6 @@
         if (knockMessage) {
             [Analytics.shared tagMediaAction:ConversationMediaActionPing inConversation:self.conversation];
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
-            Analytics.shared.sessionSummary.pingsSent++;
             
             [[[AVSProvider shared] mediaManager] playSound:MediaManagerSoundOutgoingKnockSound];
         }

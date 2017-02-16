@@ -34,10 +34,6 @@ fileprivate let tag = "<ANALYTICS>:"
 
 extension AnalyticsConsoleProvider: AnalyticsProvider {
 
-    public func perform(afterResume: ResumeHandlerBlock!) {
-        // no-op
-    }
-
     public var isOptedOut : Bool {
         get {
             return optedOut

@@ -66,12 +66,6 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
 - (void)tagEventObject:(AnalyticsEvent *)event;
 - (void)tagEventObject:(AnalyticsEvent *)event source:(AnalyticsEventSource)source;
 
-
-- (void)loadCustomSessionSummary;
-
-/// Store session summary to disk
-- (void)persistCustomSessionSummary;
-
 /// Set the custom dimensions values
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
                               groupConversations:(NSUInteger)groupConv

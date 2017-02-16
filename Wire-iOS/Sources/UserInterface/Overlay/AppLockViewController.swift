@@ -34,11 +34,14 @@ import HockeySDK.BITHockeyManager
         }
     }
 
-    static var settingsPropertyFactory: SettingsPropertyFactory {
+    static var settingsPropertyFactory: SettingsPropertyFactory? {
+        guard let session = ZMUserSession.shared() else {
+            return .none
+        }
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
                                                               analytics: Analytics.shared(),
                                                               mediaManager: AVSProvider.shared.mediaManager,
-                                                              userSession: ZMUserSession.shared()!,
+                                                              userSession: session,
                                                               selfUser: ZMUser.selfUser(),
                                                               crashlogManager: BITHockeyManager.shared())
         
@@ -46,19 +49,31 @@ import HockeySDK.BITHockeyManager
     }
     
     fileprivate var appLockActive: Bool {
-        let lockApp = type(of: self).settingsPropertyFactory.property(.lockApp)
+        guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
+            return true
+        }
+        
+        let lockApp = settingsPropertyFactory.property(.lockApp)
         
         return lockApp.value() == SettingsPropertyValue(true)
     }
     
     fileprivate var lastUnlockedDate: Date {
         get {
-            let lastAuthDateProperty = type(of: self).settingsPropertyFactory.property(.lockAppLastDate)
+            guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
+                return Date.distantPast
+            }
+            
+            let lastAuthDateProperty = settingsPropertyFactory.property(.lockAppLastDate)
             return Date(timeIntervalSinceReferenceDate: TimeInterval(lastAuthDateProperty.value().value() as! UInt32))
         }
         
         set {
-            let lastAuthDateProperty = type(of: self).settingsPropertyFactory.property(.lockAppLastDate)
+            guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
+                return
+            }
+            
+            let lastAuthDateProperty = settingsPropertyFactory.property(.lockAppLastDate)
             try! lastAuthDateProperty.set(newValue: SettingsPropertyValue(UInt32(newValue.timeIntervalSinceReferenceDate)))
         }
     }
