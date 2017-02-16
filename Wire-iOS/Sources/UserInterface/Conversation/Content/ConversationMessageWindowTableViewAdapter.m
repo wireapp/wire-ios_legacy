@@ -174,7 +174,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
                 continue;
             }
         }
-        
+        cell.searchQueries = self.searchQueries;
         [self configureConversationCell:cell withMessage:cell.message];
     }
 }

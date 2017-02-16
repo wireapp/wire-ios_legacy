@@ -619,19 +619,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self updateToolboxVisibilityAnimated:YES];
 }
 
-- (void)flashBackground
-{
-    UIColor *oldBackgroundColor = self.contentView.backgroundColor;
- 
-    [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.contentView.backgroundColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken];
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1.0f delay:1.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.contentView.backgroundColor = oldBackgroundColor;
-        } completion:nil];
-    }];
-}
-
 #pragma mark - UserImageView delegate
 
 - (void)userImageViewTouchUpInside:(UserImageView *)userImageView

@@ -29,6 +29,7 @@ internal class SearchResultCountBadge: UIView {
         
         textLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        textLabel.textAlignment = .center
         
         constrain(self, textLabel) { selfView, textLabel in
             textLabel.leading == selfView.leading + 4
@@ -40,6 +41,10 @@ internal class SearchResultCountBadge: UIView {
         }
         
         self.layer.masksToBounds = true
+        updateCornerRadius()
+    }
+    
+    func updateCornerRadius() {
         self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
     }
     
@@ -49,14 +54,13 @@ internal class SearchResultCountBadge: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
+        updateCornerRadius()
     }
 }
 
 @objc internal class TextSearchResultCell: UITableViewCell, Reusable {
     fileprivate let messageTextLabel = SearchResultLabel()
-    fileprivate let header = CollectionCellHeader()
+    fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
     fileprivate let userImageView = UserImageView(magicPrefix: "content.author_image")
     fileprivate let separatorView = UIView()
@@ -65,7 +69,7 @@ internal class SearchResultCountBadge: UIView {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubview(self.header)
+        self.contentView.addSubview(self.footerView)
         self.selectionStyle = .none
         self.messageTextLabel.accessibilityIdentifier = "text search result"
         self.messageTextLabel.numberOfLines = 1
@@ -90,7 +94,7 @@ internal class SearchResultCountBadge: UIView {
             userImageView.center == userImageViewContainer.center
         }
         
-        constrain(self.contentView, self.header, self.messageTextLabel, self.userImageViewContainer, self.resultCountView) { contentView, header, messageTextLabel, userImageViewContainer, resultCountView in
+        constrain(self.contentView, self.footerView, self.messageTextLabel, self.userImageViewContainer, self.resultCountView) { contentView, footerView, messageTextLabel, userImageViewContainer, resultCountView in
             userImageViewContainer.leading == contentView.leading
             userImageViewContainer.top == contentView.top
             userImageViewContainer.bottom == contentView.bottom
@@ -99,14 +103,16 @@ internal class SearchResultCountBadge: UIView {
             messageTextLabel.top == contentView.top + 8
             messageTextLabel.leading == userImageViewContainer.trailing
             messageTextLabel.trailing == resultCountView.leading - 16
-            messageTextLabel.bottom == header.top - 8
+            messageTextLabel.bottom == footerView.top - 8
             
-            header.leading == userImageViewContainer.trailing
-            header.trailing == contentView.trailing - 16
-            header.bottom == contentView.bottom - 8
+            footerView.leading == userImageViewContainer.trailing
+            footerView.trailing == contentView.trailing - 16
+            footerView.bottom == contentView.bottom - 8
             
             resultCountView.trailing == contentView.trailing - 16
-            resultCountView.centerY == messageTextLabel.centerY
+            resultCountView.centerY == contentView.centerY
+            resultCountView.height == 20
+            resultCountView.width >= 24
         }
         
         constrain(self.contentView, self.separatorView, self.userImageViewContainer) { contentView, separatorView, userImageViewContainer in
@@ -124,15 +130,15 @@ internal class SearchResultCountBadge: UIView {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.message = .none
+        self.queries = []
     }
     
     private func updateTextView() {
-        guard let text = message?.textMessageData?.messageText, let query = self.query else {
+        guard let text = message?.textMessageData?.messageText else {
             return
         }
         
-        self.messageTextLabel.query = query
-        self.messageTextLabel.resultText = text
+        self.messageTextLabel.configure(with: text, queries: queries)
         
         let totalMatches = self.messageTextLabel.estimatedMatchesCount
         
@@ -140,20 +146,18 @@ internal class SearchResultCountBadge: UIView {
         self.resultCountView.textLabel.text = "\(totalMatches)"
     }
     
-    var message: ZMConversationMessage? = .none {
-        didSet {
-            self.userImageView.user = self.message?.sender
-            self.header.message = self.message
-
-            self.updateTextView()
-        }
+    public func configure(with message: ZMConversationMessage, queries: [String]) {
+        self.message = message
+        self.queries = queries
+        
+        self.userImageView.user = self.message?.sender
+        self.footerView.message = self.message
+        
+        self.updateTextView()
     }
     
-    var query: String? = .none {
-        didSet {
-            self.updateTextView()
-        }
-    }
+    var message: ZMConversationMessage? = .none
+    var queries: [String] = []
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
         super.setHighlighted(highlighted, animated: animated)

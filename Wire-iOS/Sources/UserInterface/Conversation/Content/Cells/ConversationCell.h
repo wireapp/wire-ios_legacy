@@ -104,7 +104,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)didEndDisplayingInTableView;
 
 - (void)forward:(id)sender;
-- (void)flashBackground;
 
 #pragma mark - For deleted menu, meant to be implmented by subclass
 

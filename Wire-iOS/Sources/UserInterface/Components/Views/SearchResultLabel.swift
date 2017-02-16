@@ -24,20 +24,11 @@ import Foundation
         self.font = instance.font
         self.textColor = instance.textColor
         self.resultText = instance.resultText
-        self.query = instance.query
+        self.queries = instance.queries
     }
 
-    public var resultText: String? = .none {
-        didSet {
-            self.updateText()
-        }
-    }
-    
-    public var query: String? = .none {
-        didSet {
-            self.updateText()
-        }
-    }
+    public var resultText: String? = .none
+    public var queries: [String] = []
     
     public override var font: UIFont! {
         didSet {
@@ -75,19 +66,19 @@ import Foundation
         self.updateText()
     }
     
-    private func updateText() {
-        guard let text = self.resultText,
-              let query = self.query,
-              let font = self.font,
+    public func configure(with text: String, queries: [String]) {
+        guard let font = self.font,
               let color = self.textColor else {
                 self.attributedText = .none
                 return
         }
         
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color])
-        let queryComponents = query.components(separatedBy: .whitespacesAndNewlines)
+        self.resultText = text
+        self.queries = queries
         
-        let currentRange = text.range(of: queryComponents,
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color])
+        
+        let currentRange = text.range(of: queries,
                                       options: [.diacriticInsensitive, .caseInsensitive])
         
         if let range = currentRange {
@@ -97,14 +88,14 @@ import Foundation
                                          NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
-                self.attributedText = attributedText.highlightingAppearances(of: queryComponents,
+                self.attributedText = attributedText.highlightingAppearances(of: queries,
                                                                              with: highlightedAttributes,
                                                                              upToWidth: self.bounds.width,
                                                                              totalMatches: &estimatedMatchesCount)
             }
             else {
                 self.attributedText = attributedText.cutAndPrefixedWithEllipsis(from: nsRange.location, fittingIntoWidth: self.bounds.width)
-                    .highlightingAppearances(of: queryComponents,
+                    .highlightingAppearances(of: queries,
                                              with: highlightedAttributes,
                                              upToWidth: self.bounds.width,
                                              totalMatches: &estimatedMatchesCount)
@@ -113,6 +104,14 @@ import Foundation
         else {
             self.attributedText = attributedText
         }
+    }
+    
+    private func updateText() {
+        guard let text = self.resultText else {
+                self.attributedText = .none
+                return
+        }
+        self.configure(with: text, queries: self.queries)
     }
     
     fileprivate func fits(attributedText: NSAttributedString, fromRange: NSRange) -> Bool {

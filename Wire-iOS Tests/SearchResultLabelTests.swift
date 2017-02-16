@@ -28,9 +28,8 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         accentColor = .violet
-        CASStyler.default().styleItem(sut)
-        // Give Classy time to style the view
-        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        sut.font = UIFont.systemFont(ofSize: 17)
+        sut.textColor = UIColor.black
     }
     
     func testThatItShowsStringWithoutHighlight() {
@@ -43,13 +42,15 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             new.resultText = value
             return new
         }
+        
         let firstMutator = Mutator<SearchResultLabel, String>(applicator: firstMutation, combinations: textCombinations)
         
         let secondMutation = { (proto: SearchResultLabel, value: String) -> SearchResultLabel in
             let new = proto.copyInstance()
-            new.query = value
+            new.queries = value.components(separatedBy: .whitespaces)
             return new
         }
+        
         let secondMutator = Mutator<SearchResultLabel, String>(applicator: secondMutation, combinations: queryCombinations)
         
         let combinator = CombinationTest(mutable: self.sut, mutators: [firstMutator, secondMutator])
@@ -57,6 +58,9 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
         XCTAssertEqual(combinator.testAll {
             let identifier = "\($0.combinationChain)"
             print("Testing combination " + identifier)
+            
+            $0.result.configure(with: $0.result.resultText!, queries: $0.result.queries)
+
             constrain($0.result) { label in
                 label.width <= 320
             }

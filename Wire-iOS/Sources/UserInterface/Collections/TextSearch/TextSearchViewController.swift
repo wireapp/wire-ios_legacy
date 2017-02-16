@@ -117,8 +117,7 @@ extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextSearchResultCell.reuseIdentifier) as! TextSearchResultCell
-        cell.query = self.searchQuery
-        cell.message = self.results[indexPath.row]
+        cell.configure(with: self.results[indexPath.row], queries: self.searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? [])
         return cell
     }
     

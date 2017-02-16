@@ -1599,6 +1599,17 @@ CollectionCellHeader {
     }
 }
 
+TextSearchResultFooter {
+    nameLabel: @{
+        font: $font-small-medium;
+    }
+    
+    dateLabel: @{
+        font: $font-small-light;
+        textColor: $color-text-dimmed;
+    }
+}
+
 TwoLineTitleView {
     titleLabel: @{
         font: $font-small-medium;

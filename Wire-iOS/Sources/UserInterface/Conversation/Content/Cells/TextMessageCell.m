@@ -72,10 +72,6 @@
         [NSLayoutConstraint autoCreateAndInstallConstraints:^{
             [self createConstraints];
         }];
-        
-        ColorScheme *scheme = ColorScheme.defaultColorScheme;
-
-        self.contentView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
     }
     
     return self;
@@ -102,7 +98,7 @@
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
-    self.messageTextView.backgroundColor = UIColor.clearColor;
+    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.textContainerInset = UIEdgeInsetsZero;
     self.messageTextView.textContainer.lineFragmentPadding = 0;
@@ -165,6 +161,11 @@
     if (hasLinkAttachment && hasContentBeforeAttachment) {
         self.mediaPlayerTopMarginConstraint.constant = 12;
     }
+}
+
+- (void)flashBackground
+{
+    [self.messageTextView flashBackground];
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties

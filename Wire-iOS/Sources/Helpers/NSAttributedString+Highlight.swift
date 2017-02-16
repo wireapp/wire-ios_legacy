@@ -99,6 +99,8 @@ extension NSAttributedString {
         return labelSize
     }
     
+    // This method cuts the prefix from `self` up to the beginning of the word prior to the word on position @c from.
+    // The result is then prefixed with ellipsis of the same style as the beginning of the string.
     func cutAndPrefixedWithEllipsis(from: Int, fittingIntoWidth: CGFloat) -> NSAttributedString {
         let text = self.string as NSString
         
@@ -154,7 +156,7 @@ extension NSAttributedString {
         }
     }
     
-    func prefixedWithEllipsis() -> NSAttributedString {
+    private func prefixedWithEllipsis() -> NSAttributedString {
         guard !self.string.isEmpty else {
             return self
         }

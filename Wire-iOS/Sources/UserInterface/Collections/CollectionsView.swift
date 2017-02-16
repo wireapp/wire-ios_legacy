@@ -102,15 +102,6 @@ import Cartography
         return button
     }
     
-    public static func searchButton() -> IconButton {
-        let button = IconButton.iconButtonDefault()
-        button.setIcon(.search, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 38, height: 20)
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
-        button.accessibilityIdentifier = "search"
-        return button
-    }
-    
     public func constrainViews(searchViewController: TextSearchViewController) {
         self.addSubview(searchViewController.resultsView)
         self.addSubview(searchViewController.searchBar)
