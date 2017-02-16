@@ -65,6 +65,11 @@ static NSSet *phoneWidths(void) {
     [super setUp];
     [MagicConfig sharedConfig];
     XCTAssertEqual(UIScreen.mainScreen.scale, 2, @"Snapshot tests need to be run on a device with a 2x scale");
+
+    if ([UIDevice.currentDevice.systemVersion compare:@"10" options:NSNumericSearch] == NSOrderedAscending) {
+        XCTFail(@"Snapshot tests need to be run on a device running at least iOS 10");
+    }
+
     [UIView setAnimationsEnabled:NO];
     self.snapshotBackgroundColor = UIColor.clearColor;
     // Enable when the design of the view has changed in order to update the reference snapshots
