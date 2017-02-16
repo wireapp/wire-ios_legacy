@@ -122,7 +122,7 @@ import Cartography
             searchBar.top == selfView.top
             searchBar.leading == selfView.leading
             searchBar.trailing == selfView.trailing
-            searchBar.height == 40
+            searchBar.height == 44
             
             collectionView.top == searchBar.bottom
             
