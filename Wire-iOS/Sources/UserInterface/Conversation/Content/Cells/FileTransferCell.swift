@@ -129,9 +129,9 @@ public final class FileTransferCell: ConversationCell {
         
         if let fileMessageData = message.fileMessageData,
             let _ = fileMessageData.fileURL {
-            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))
-            
-            additionalItems.append(forwardItem)
+            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward))
+            let openItem = UIMenuItem(title:"content.message.open".localized, action:#selector(open))
+            additionalItems.append(contentsOf: [forwardItem, openItem])
         }
         
         properties.additionalItems = additionalItems
@@ -140,13 +140,23 @@ public final class FileTransferCell: ConversationCell {
     }
     
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(forward(_:)) {
+        switch action {
+        case #selector(forward):
             if let fileMessageData = message.fileMessageData,
                 let _ = fileMessageData.fileURL {
                 return true
             }
+        case #selector(open):
+            return true
+        default: break
         }
+
         return super.canPerformAction(action, withSender: sender)
+    }
+
+    func open(_ sender: Any) {
+        showsMenu = false
+        delegate?.conversationCell?(self, didSelect: .present)
     }
     
     override open func messageType() -> MessageType {
