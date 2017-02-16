@@ -181,7 +181,9 @@ public extension ConversationViewController {
             }
             self.collectionController = collections
         }
-        
+
+        collectionController?.shouldTrackOnNextOpen = true
+
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController).wrapInNavigationController(RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 

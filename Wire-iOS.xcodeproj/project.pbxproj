@@ -746,6 +746,7 @@
 		BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */; };
 		BF1A81281C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */; };
 		BF1D5D001E55AB420063B4B4 /* InviteButtonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1D5CFF1E55AB420063B4B4 /* InviteButtonController.swift */; };
+		BF1D5D021E55BA3D0063B4B4 /* Analytics+LocalSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1D5D011E55BA3D0063B4B4 /* Analytics+LocalSearch.swift */; };
 		BF2756DB1E38E16D00082786 /* ShareExtensionAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2756DA1E38E16D00082786 /* ShareExtensionAnalytics.swift */; };
 		BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */; };
 		BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */; };
@@ -2169,6 +2170,7 @@
 		BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockConversationFactory.m; sourceTree = "<group>"; };
 		BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+NavigationBar.swift"; sourceTree = "<group>"; };
 		BF1D5CFF1E55AB420063B4B4 /* InviteButtonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteButtonController.swift; sourceTree = "<group>"; };
+		BF1D5D011E55BA3D0063B4B4 /* Analytics+LocalSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+LocalSearch.swift"; sourceTree = "<group>"; };
 		BF2756DA1E38E16D00082786 /* ShareExtensionAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareExtensionAnalytics.swift; sourceTree = "<group>"; };
 		BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMSnapshotTestCase.h; sourceTree = "<group>"; };
 		BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMSnapshotTestCase.m; sourceTree = "<group>"; };
@@ -2992,6 +2994,7 @@
 			isa = PBXGroup;
 			children = (
 				CE8C202F1E0C30B400571635 /* Analytics+Collection.swift */,
+				BF1D5D011E55BA3D0063B4B4 /* Analytics+LocalSearch.swift */,
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */,
 				871BBFC41D34F56300DF0793 /* Analytics+CallEvents.h */,
@@ -6048,6 +6051,7 @@
 				8FC854A4199245770008B66B /* ParticipantsViewController.m in Sources */,
 				871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */,
 				8FC8549B199245770008B66B /* NetworkActivityViewController.m in Sources */,
+				BF1D5D021E55BA3D0063B4B4 /* Analytics+LocalSearch.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationList+Handles.swift in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,

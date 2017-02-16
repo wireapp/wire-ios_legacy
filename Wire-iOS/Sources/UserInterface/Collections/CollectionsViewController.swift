@@ -37,6 +37,8 @@ final public class CollectionsViewController: UIViewController {
         }
         return !resultsView.isHidden
     }
+
+    public var shouldTrackOnNextOpen = false
     
     public var currentTextSearchQuery: [String] {
         guard let textSearchController = self.textSearchController else {
@@ -58,8 +60,7 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
     fileprivate let collection: AssetCollectionWrapper
-    
-    fileprivate var openCollectionsIsTracked: Bool = false
+
     fileprivate var lastLayoutSize: CGSize = .zero
     
     fileprivate var fetchingDone: Bool = false {
@@ -69,10 +70,7 @@ final public class CollectionsViewController: UIViewController {
                 self.contentView.collectionView.reloadData()
             }
             
-            if self.inOverviewMode && self.fetchingDone && !self.openCollectionsIsTracked {
-                Analytics.shared()?.tagCollectionOpen(for: self.collection.conversation, itemCount: UInt(self.totalNumberOfElements()))
-                self.openCollectionsIsTracked = true
-            }
+            trackOpeningIfNeeded()
         }
     }
     
@@ -182,7 +180,17 @@ final public class CollectionsViewController: UIViewController {
         self.contentView.collectionViewLayout.invalidateLayout()
         self.contentView.collectionViewLayout.finalizeCollectionViewUpdates()
     }
-    
+
+    private func trackOpeningIfNeeded() {
+        guard shouldTrackOnNextOpen && fetchingDone else { return }
+        Analytics.shared()?.tagCollectionOpen(
+            for: self.collection.conversation,
+            itemCount: UInt(self.totalNumberOfElements()),
+            withSearchResults: isShowingSearchResults
+        )
+        shouldTrackOnNextOpen = false
+    }
+
     private func reloadData() {
         UIView.performWithoutAnimation {
             self.contentView.collectionView.performBatchUpdates({
@@ -207,6 +215,11 @@ final public class CollectionsViewController: UIViewController {
                 self.reloadData()
             }
         }
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackOpeningIfNeeded()
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
