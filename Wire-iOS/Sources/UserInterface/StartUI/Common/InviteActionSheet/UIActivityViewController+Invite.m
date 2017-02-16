@@ -34,6 +34,8 @@ NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext) 
             return @"startui_search";
         case GenericInviteContextStartUISearch:
             return @"startui_banner";
+        case GenericInviteContextSettings:
+            return @"settings";
     }
 }
 

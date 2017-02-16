@@ -23,7 +23,8 @@ typedef NS_ENUM(NSUInteger, GenericInviteContext) {
     GenericInviteContextConversationList,
     GenericInviteContextInvitesSearch,
     GenericInviteContextStartUISearch,
-    GenericInviteContextStartUIBanner
+    GenericInviteContextStartUIBanner,
+    GenericInviteContextSettings
 };
 
 

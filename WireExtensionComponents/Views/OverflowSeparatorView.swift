@@ -21,7 +21,11 @@ import Foundation
 import Cartography
 import Classy
 
-@objc public class OverflowSeparatorView: UIView {    
+
+@objc public class OverflowSeparatorView: UIView {
+
+    public var inverse: Bool = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.applyStyle()
@@ -40,12 +44,20 @@ import Classy
     
     override open var intrinsicContentSize: CGSize {
         get {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: 0.5)
+            return CGSize(width: UIViewNoIntrinsicMetric, height: 1.0 / UIScreen.main.scale)
         }
     }
     
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
+        if !inverse {
+            self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
+        } else {
+            let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)
+            let offsetY = scrollView.contentOffset.y
+            print(contentHeight, offsetY, height, contentHeight - offsetY)
+            let showSeparator = contentHeight - offsetY > height
+            alpha = showSeparator ? 1 : 0
+        }
     }
 }
 

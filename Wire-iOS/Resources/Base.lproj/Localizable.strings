@@ -618,6 +618,9 @@
 // Password reset
 "self.settings.password_reset_menu.title" = "Reset Password";
 
+// Invite from Settings
+"self.settings.invite_friends.title" = "Invite friends";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "No Internet";

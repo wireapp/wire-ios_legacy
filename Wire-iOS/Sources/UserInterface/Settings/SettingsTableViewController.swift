@@ -24,7 +24,14 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
 
     var tableView: UITableView
     let topSeparator = OverflowSeparatorView()
+    let footerSeparator = OverflowSeparatorView()
+    private let footerContainer = UIView()
 
+    public var footer: UIView? {
+        didSet {
+            updateFooter(footer)
+        }
+    }
 
     init(style: UITableViewStyle) {
         tableView = UITableView(frame: .zero, style: style)
@@ -53,7 +60,7 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
         self.tableView.reloadData()
     }
 
-    func createTableView() {
+    private func createTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
@@ -61,18 +68,39 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         view.addSubview(tableView)
+        view.addSubview(footerContainer)
+        footerContainer.addSubview(footerSeparator)
+        footerSeparator.inverse = true
     }
 
-    func createConstraints() {
-        constrain(self.view, tableView, self.topSeparator) { selfView, aTableView, topSeparator in
-            aTableView.left == selfView.left
-            aTableView.right == selfView.right
-            aTableView.top == selfView.top
-            aTableView.bottom == selfView.bottom
+    private func createConstraints() {
+        constrain(view, tableView, topSeparator, footerContainer, footerSeparator) { view, tableView, topSeparator, footerContainer, footerSeparator in
+            tableView.left == view.left
+            tableView.right == view.right
+            tableView.top == view.top
 
-            topSeparator.left == aTableView.left
-            topSeparator.right == aTableView.right
-            topSeparator.top == aTableView.top
+            topSeparator.left == tableView.left
+            topSeparator.right == tableView.right
+            topSeparator.top == tableView.top
+
+            footerContainer.top == tableView.bottom
+            footerContainer.left == tableView.left
+            footerContainer.right == tableView.right
+            footerContainer.bottom == view.bottom
+
+            footerSeparator.left == footerContainer.left
+            footerSeparator.right == footerContainer.right
+            footerSeparator.top == footerContainer.top
+        }
+    }
+
+    private func updateFooter(_ newFooter: UIView?) {
+        footer?.removeFromSuperview()
+        footerSeparator.isHidden = newFooter == nil
+        guard let newFooter = newFooter else { return }
+        footerContainer.addSubview(newFooter)
+        constrain(footerContainer, newFooter) { container, footer in
+            footer.edges == container.edges
         }
     }
 
@@ -82,6 +110,7 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
+        self.footerSeparator.scrollViewDidScroll(scrollView: scrollView)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {

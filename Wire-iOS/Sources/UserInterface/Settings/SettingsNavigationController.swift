@@ -131,6 +131,11 @@ import HockeySDK.BITHockeyManager
             Analytics.shared()?.tagScreen("SETTINGS")
             self.pushViewController(rootViewController, animated: false)
             if let settingsTableController = rootViewController as? SettingsTableViewController {
+                let inviteView = InviteButtonView(frame: .zero)
+                inviteView.onTap = { [weak self] in
+                    self?.wr_presentInviteActivityViewController(withSourceView: $0, logicalContext: .settings)
+                }
+                settingsTableController.footer = inviteView
                 settingsTableController.dismissAction = { [unowned self] _ in
                     self.dismissAction?(self)
                 }
