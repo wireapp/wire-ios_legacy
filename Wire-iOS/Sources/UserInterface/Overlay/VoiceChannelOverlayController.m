@@ -275,6 +275,8 @@
     VoiceChannelV2State previousState = self.previousVoiceChannelState;
     self.previousVoiceChannelState = voiceChannelState;
     
+    [self startCallDurationTimerIfNeeded];
+    
     VoiceChannelOverlayState state = [self viewStateForVoiceChannelState:voiceChannelState previousVoiceChannelState:previousState];
     if (state != VoiceChannelOverlayStateInvalid) {
         [self.overlayView transitionToState:state];
@@ -339,8 +341,11 @@
     mediaManager.microphoneMuted = NO;
 }
 
-- (void)startCallDurationTimer
+- (void)startCallDurationTimerIfNeeded
 {
+    if (self.conversation.voiceChannel.state != VoiceChannelV2StateSelfConnectedToActiveChannel || self.callStartedTimestamp != nil || self.conversation.voiceChannel.isVideoCall) {
+        return;
+    }
     self.callStartedTimestamp = self.conversation.voiceChannel.callStartDate ? self.conversation.voiceChannel.callStartDate : [NSDate date];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self updateCallDuration];
@@ -403,9 +408,7 @@
 {
     DDLogVoice(@"SE: Voice channel state did change to %@", StringFromVoiceChannelV2State(voiceChannelState));
     
-    if (voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel && self.callStartedTimestamp == nil && !self.conversation.voiceChannel.isVideoCall) {
-        [self startCallDurationTimer];
-    }
+    [self startCallDurationTimerIfNeeded];
     
     if ((voiceChannelState == VoiceChannelV2StateSelfConnectedToActiveChannel ||
         voiceChannelState == VoiceChannelV2StateIncomingCall ||
