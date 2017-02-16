@@ -54,7 +54,6 @@ import Classy
         } else {
             let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)
             let offsetY = scrollView.contentOffset.y
-            print(contentHeight, offsetY, height, contentHeight - offsetY)
             let showSeparator = contentHeight - offsetY > height
             alpha = showSeparator ? 1 : 0
         }
