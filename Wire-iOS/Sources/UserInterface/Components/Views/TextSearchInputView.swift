@@ -55,6 +55,7 @@ public final class TextSearchInputView: UIView {
         
         searchInput.borderStyle = .none
         searchInput.delegate = self
+        searchInput.autocorrectionType = .no
         searchInput.accessibilityLabel = "Search"
         searchInput.accessibilityIdentifier = "search input"
         
