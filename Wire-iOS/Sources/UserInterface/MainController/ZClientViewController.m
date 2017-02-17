@@ -653,16 +653,6 @@
            (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
 }
 
-- (void)splitViewControllerWillExpandLeftViewController:(SplitViewController *)splitViewController
-{
-    [self.backgroundViewController setForceFullScreen:YES animated:YES];
-}
-
-- (void)splitViewControllerWillCollapseLeftViewController:(SplitViewController *)splitViewController
-{
-    [self.backgroundViewController setForceFullScreen:NO animated:YES];
-}
-
 @end
 
 @implementation ZClientViewController (ZMRequestsToOpenViewsDelegate)

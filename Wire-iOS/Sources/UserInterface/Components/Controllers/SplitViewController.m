@@ -158,7 +158,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
 @property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
-@property (nonatomic) NSLayoutConstraint *expandLeftViewConstraint;
 
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
@@ -215,9 +214,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         self.leftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         self.rightViewOffsetConstraint = [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     }];
-    
-    self.expandLeftViewConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.expandLeftViewConstraint.active = NO;
     
     self.leftViewWidthConstraint = [self.leftView autoSetDimension:ALDimensionWidth toSize:0];
     self.rightViewWidthConstraint = [self.rightView autoSetDimension:ALDimensionWidth toSize:0];
@@ -345,9 +341,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
         [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
     }
-    
-    [constraints addObjectsFromArray:@[self.expandLeftViewConstraint]];
-    
+        
     return [constraints allObjects];
 }
 

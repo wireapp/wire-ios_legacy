@@ -39,8 +39,6 @@ FOUNDATION_EXPORT NSString *SplitLayoutObservableDidChangeToLayoutSizeNotificati
 
 @protocol SplitViewControllerDelegate <NSObject>
 - (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController;
-- (void)splitViewControllerWillExpandLeftViewController:(SplitViewController *)splitViewController;
-- (void)splitViewControllerWillCollapseLeftViewController:(SplitViewController *)splitViewController;
 @end
 
 
