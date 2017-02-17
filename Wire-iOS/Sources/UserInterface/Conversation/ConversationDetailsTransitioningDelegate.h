@@ -18,7 +18,12 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+@protocol VerticalTransitionDataSource;
 
 @interface ConversationDetailsTransitioningDelegate : NSObject<UIViewControllerTransitioningDelegate>
-
+@property (nonatomic, weak, nullable) id<VerticalTransitionDataSource> dataSource;
 @end
+
+NS_ASSUME_NONNULL_END

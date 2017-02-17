@@ -23,7 +23,9 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
-    return [[VerticalTransition alloc] initWithOffset:-88];
+    VerticalTransition *transition = [[VerticalTransition alloc] initWithOffset:-88];
+    transition.dataSource = self.dataSource;
+    return transition;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
