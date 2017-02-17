@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "您正在使用旧版本的Wire，因此无法显示该信息。";
+"content.system.unknown_message.body.link" = "为什么出现这个问题？";
+
 "content.file.uploading" = "上传...";
 "content.file.downloading" = "正在下载...";
 "content.file.upload_failed" = "上传失败";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "重新发送邮件";
 "self.settings.account_section.email.change.resend.message" = "确认邮件已经发送至%@。 请检查您的收件箱并按照说明进行操作。";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "电话";
+"self.settings.account_section.phone_number.change.save" = "保存";
+"self.settings.account_section.phone_number.change.remove" = "移除手机号码";
+
+"self.settings.account_section.phone_number.change.remove.action" = "移除手机号码";
+
+"self.settings.account_section.phone_number.change.verify.save" = "保存";
+"self.settings.account_section.phone_number.change.verify.title" = "验证";
+"self.settings.account_section.phone_number.change.verify.description" = "请输入我们发送至 %@ 的验证码。";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "输入验证码";
+"self.settings.account_section.phone_number.change.verify.resend" = "重新发送验证码";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "没有收到验证码？\n您可以每30秒重新获取一次。";
+
+"self.settings.account_section.phone_number.change.resend.title" = "验证码已重新发送";
+"self.settings.account_section.phone_number.change.resend.message" = "验证码已重新发送至%@。";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "通知";
 "self.settings.notifications.push_notification.toogle" = "信息预览";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "打开联系人设置";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "这将帮助您找到其他好友。 我们将您的所有信息匿名处理并且不会泄漏给任何第三方。请通过设置 > 隐私 > 联系人来授权通讯录访问权限。";
 
+"self.settings.privacy_security.lock_app" = "通过Touch ID锁定";
+"self.settings.privacy_security.lock_app.description" = "解锁Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "请使用Touch ID解锁Wire";
+"self.settings.privacy_security.lock_cancelled.action" = "解锁";
+
 "self.settings.privacy_analytics_menu.devices.title" = "設備";
 
 "self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "重设密码";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "邀请好友";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "我们已经将验证码通过短信发送给您。如需重新获取验证码，请等候10分钟后点击重新发送。";
 "error.user.registration_unknown_error" = "出了点问题，请再试一次。";
 "error.user.device_deleted_remotely" = "您的另一台设备已被登出。";
-
+"error.user.last_identity_cant_be_deleted" = "您需要同时拥有邮箱地址以及手机号码，从而可以移除其中之一。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "显示全部 %d →";
 "collections.section.no_items" = "在资源库中什么都没有";
 "collections.image_viewer.copied.title" = "图片已复制";
+
+"collections.search.field.placeholder" = "搜索文字信息";
+"collections.search.no_items" = "没有找到";

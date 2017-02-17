@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(seade %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Kasutad vana versiooni, mis ei oska seda sõnumitüüpi näidata.";
+"content.system.unknown_message.body.link" = "Mis selle põhjus on?";
+
 "content.file.uploading" = "Üleslaadimine…";
 "content.file.downloading" = "Allalaadimine…";
 "content.file.upload_failed" = "Üleslaadimine ebaõnnestus";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Saadetud korduskiri";
 "self.settings.account_section.email.change.resend.message" = "Korduskiri saadeti aadressil %@. Kontrolli oma postkasti ja järgi juhiseid.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefon";
+"self.settings.account_section.phone_number.change.save" = "Salvesta";
+"self.settings.account_section.phone_number.change.remove" = "Eemalda telefoninumber";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Eemalda telefoninumber";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Salvesta";
+"self.settings.account_section.phone_number.change.verify.title" = "Kinnita";
+"self.settings.account_section.phone_number.change.verify.description" = "Sisesta kinnituskood, mille saatsime numbrile %@";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Sisesta kood";
+"self.settings.account_section.phone_number.change.verify.resend" = "Saada kood uuesti";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Koodi ei tulnud kohale?\nIga 30 sekundi järel saad proovida uue koodi tellida.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Kood uuesti saadetud";
+"self.settings.account_section.phone_number.change.resend.message" = "Kinnituskood saadeti uuesti numbril %@";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Teavitused";
 "self.settings.notifications.push_notification.toogle" = "Sõnumi eelvaade";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Ava Kontaktide Seaded";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "See lubab sul teistega ühenduda. Me muudame kõik info anonüümseks ja ei jaga seda kellegi teisega. Mine Seaded > Privaatsus > Kontaktid, et lubada ligipääs.";
 
+"self.settings.privacy_security.lock_app" = "Lukusta Touch ID ja parooliga";
+"self.settings.privacy_security.lock_app.description" = "Tee lukust lahti";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Ava Wire Touch ID või parooliga";
+"self.settings.privacy_security.lock_cancelled.action" = "Vabasta lukust";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Seadmed";
 
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Lähtesta salasõna";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Kutsu sõpru";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Saatsime koodi juba SMS-iga. Toksi 10 minuti pärast \"Saada uuesti\", kui kood ei laeku.";
 "error.user.registration_unknown_error" = "Midagi läks valesti. Palun proovi uuesti.";
 "error.user.device_deleted_remotely" = "Sind on teisest seadmest välja logitud.";
-
+"error.user.last_identity_cant_be_deleted" = "Nii e-posti aadress kui telefoninumber peavad sisestatud olema, et saaksid ühe neist eemaldada.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Näita kõik: %d →";
 "collections.section.no_items" = "Kogumik on tühi";
 "collections.image_viewer.copied.title" = "Pilt kopeeritud";
+
+"collections.search.field.placeholder" = "Tekstiotsing";
+"collections.search.no_items" = "Tulemusi ei leitud.";

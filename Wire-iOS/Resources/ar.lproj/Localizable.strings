@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(جهاز %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "أنت تستخدم إصدار قديم من Wire لا يستطيع عرض هذه الرسالة.";
+"content.system.unknown_message.body.link" = "لِمَ هذا؟";
+
 "content.file.uploading" = "تحميل...";
 "content.file.downloading" = "تنزيل...";
 "content.file.upload_failed" = "فشلت عملية الرفع";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "تمّت إعادة إرسال البريد";
 "self.settings.account_section.email.change.resend.message" = "تم إعادة إرسال رسالة التأكيد إلى %@. تحقق من صندوق الوارد واتّبع الإرشادات.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "الهاتف";
+"self.settings.account_section.phone_number.change.save" = "حفظ";
+"self.settings.account_section.phone_number.change.remove" = "إزالة رقم الهاتف";
+
+"self.settings.account_section.phone_number.change.remove.action" = "إزالة رقم الهاتف";
+
+"self.settings.account_section.phone_number.change.verify.save" = "حفظ";
+"self.settings.account_section.phone_number.change.verify.title" = "تحقق";
+"self.settings.account_section.phone_number.change.verify.description" = "أدخل رمز التحقق الذي أرسلناه إلى: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "أدخل الرمز";
+"self.settings.account_section.phone_number.change.verify.resend" = "إعادة إرسال الرمز";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "لم يظهر لك الرمز؟\nبإمكانك طلب رمز جديد كل ٣٠ ثانية.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "تمت إعادة إرسال الرمز";
+"self.settings.account_section.phone_number.change.resend.message" = "تمّ إرسال رمز التحقق إلى %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "إشعارات";
 "self.settings.notifications.push_notification.toogle" = "استعراض الرسائل";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "فتح إعدادات جهات الإتصال";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
+"self.settings.privacy_security.lock_app" = "غَلق بإستخدام Touch ID وكلمة مرور";
+"self.settings.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "من فضلك ألغ تأمين Wire بإستخدام Touch ID أو كلمة المرور";
+"self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
+
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
 
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "دعوة الأصدقاء";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "لقد قمنا بإرسال رمز إليك عبر رسالة قصيرة . انقر فوق إعادة إرسال بعد 10 دقائق للحصول على رمز جديد.";
 "error.user.registration_unknown_error" = "حدث خطأ ما. برجاء إعادة المحاولة.";
 "error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
-
+"error.user.last_identity_cant_be_deleted" = "تحتاج إلى امتلاك كلٍ من بريد إلكتروني ورقم هاتف لتتمكن من إزالة أحدهما";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "عرض كل %d ←";
 "collections.section.no_items" = "لا توجد عناصر في المختارات";
 "collections.image_viewer.copied.title" = "تم نسخ الصورة";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

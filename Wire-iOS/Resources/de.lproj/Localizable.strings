@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(Gerät %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Du verwendest eine ältere Version von Wire, die diese Nachricht nicht anzeigen kann.";
+"content.system.unknown_message.body.link" = "Why is this happening?";
+
 "content.file.uploading" = "Hochladen…";
 "content.file.downloading" = "Herunterladen…";
 "content.file.upload_failed" = "Hochladen fehlgeschlagen";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Die E-Mail wurde erneut gesendet";
 "self.settings.account_section.email.change.resend.message" = "Eine Bestätigung wurde an %@ gesendet. Bitte überprüfe deinen Posteingang und folge den in der Nachricht enthaltenen Anweisungen.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Handy";
+"self.settings.account_section.phone_number.change.save" = "Speichern";
+"self.settings.account_section.phone_number.change.remove" = "Telefonnummer entfernen";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Telefonnummer entfernen";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Speichern";
+"self.settings.account_section.phone_number.change.verify.title" = "Überprüfe";
+"self.settings.account_section.phone_number.change.verify.description" = "Bitte gib den Verifizierungs-Code ein, den wir an %@ gesendet haben.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Verifizierungs-Code eingeben";
+"self.settings.account_section.phone_number.change.verify.resend" = "Verifizierungs-Code erneut senden";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Du hast keinen Code erhalten?\nDu kannst in 30 Sekunden einen Neuen anfordern.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Der Verifizierungs-Code wurde erneut gesendet";
+"self.settings.account_section.phone_number.change.resend.message" = "Verifizierungs-Code wurde erneut an %@ gesendet.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Benachrichtigungen";
 "self.settings.notifications.push_notification.toogle" = "Nachrichtenvorschau";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Kontakteinstellungen öffnen";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
 
+"self.settings.privacy_security.lock_app" = "Zugang mit TouchID & Passwort sichern";
+"self.settings.privacy_security.lock_app.description" = "Wire entsperren";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Bitte entsperre Wire mit TouchID oder Passwort";
+"self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
 
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Passwort zurücksetzen";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Freunde einladen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Wir haben dir bereits einen Code per SMS geschickt. Tippe nach 10 Minuten auf  \"Erneut senden\", um einen neuen Code zu erhalten.";
 "error.user.registration_unknown_error" = "Ein Fehler ist aufgetreten, bitte versuche es erneut.";
 "error.user.device_deleted_remotely" = "Du wurdest durch ein anderes Gerät abgemeldet.";
-
+"error.user.last_identity_cant_be_deleted" = "Du musst eine E-Mail und Telefonnummer angegeben haben, um eine der beiden entfernen zu können";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Zeige alle %d →";
 "collections.section.no_items" = "Keine Elemente in dieser Sammlung";
 "collections.image_viewer.copied.title" = "Foto kopiert";
+
+"collections.search.field.placeholder" = "Textnachrichten suchen";
+"collections.search.no_items" = "Keine Ergebnisse";

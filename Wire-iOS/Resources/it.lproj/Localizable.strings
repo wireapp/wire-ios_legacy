@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Stai utilizzando una versione precedente di Wire che non può mostrare questo messaggio.";
+"content.system.unknown_message.body.link" = "Perché succede?";
+
 "content.file.uploading" = "Caricamento…";
 "content.file.downloading" = "Download in corso…";
 "content.file.upload_failed" = "Caricamento fallito";
@@ -493,10 +496,29 @@
 
 "self.settings.account_section.email.change.verify.title" = "Verifica email";
 "self.settings.account_section.email.change.verify.description" = "Verifica la tua casella di posta e segui le istruzioni.";
-"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+"self.settings.account_section.email.change.verify.resend" = "Invia di nuovo a %@";
 
-"self.settings.account_section.email.change.resend.title" = "Email resent";
-"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
+"self.settings.account_section.email.change.resend.title" = "Email inviata di nuovo";
+"self.settings.account_section.email.change.resend.message" = "Email di conferma è stata inviata nuovamente a %@. Verifica la tua casella di posta e segui le istruzioni.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefono";
+"self.settings.account_section.phone_number.change.save" = "Salva";
+"self.settings.account_section.phone_number.change.remove" = "Rimuovi il numero di telefono";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Rimuovi il numero di telefono";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Salva";
+"self.settings.account_section.phone_number.change.verify.title" = "Verifica";
+"self.settings.account_section.phone_number.change.verify.description" = "Inserisci il codice di verifica che abbiamo inviato a %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Inserisci codice";
+"self.settings.account_section.phone_number.change.verify.resend" = "Invia di nuovo il codice";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Non ti è arrivato nulla?\nPuoi richiedere un nuovo codice ogni 30 secondi.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Codice inviato di nuovo";
+"self.settings.account_section.phone_number.change.resend.message" = "Il codice di verifica è stato inviato a %@.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifiche";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Apri impostazioni contatti";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
+"self.settings.privacy_security.lock_app" = "Proteggi con Touch ID & Passcode";
+"self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Per favore sblocca Wire con Touch ID o Passcode";
+"self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
 
 "self.settings.privacy_analytics_section.title" = "Segnalazioni di crash e dati di utilizzo";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Reimposta password";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Invita amici";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Ti abbiamo già inviato un codice via SMS. Tocca Invia di nuovo dopo 10 minuti per ottenerne un altro.";
 "error.user.registration_unknown_error" = "Qualcosa è andato storto. Si prega di riprovare.";
 "error.user.device_deleted_remotely" = "Sei stato disconnesso da un altro dispositivo.";
-
+"error.user.last_identity_cant_be_deleted" = "È necessario avere sia un indirizzo e-mail che un numero di telefono per essere in grado di rimuovere uno di essi";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Mostra tutti %d →";
 "collections.section.no_items" = "Nessun elemento nella raccolta";
 "collections.image_viewer.copied.title" = "Foto copiata";
+
+"collections.search.field.placeholder" = "Cerca messaggi";
+"collections.search.no_items" = "Nessun risultato trovato";

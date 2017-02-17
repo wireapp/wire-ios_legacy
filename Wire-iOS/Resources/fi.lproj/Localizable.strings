@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(laite %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
+"content.system.unknown_message.body.link" = "Miksi näin tapahtuu?";
+
 "content.file.uploading" = "Lähetetään…";
 "content.file.downloading" = "Ladataan…";
 "content.file.upload_failed" = "Lähettäminen epäonnistui";
@@ -257,7 +260,7 @@
 "content.message.unlike" = "Poista tykkäys";
 "content.message.forward" = "Jaa";
 "content.message.go_to_conversation" = "Näytä";
-"content.message.forward.to" = "Search…";
+"content.message.forward.to" = "Etsi…";
 
 "content.reactions_list.likers" = "Tykätty";
 
@@ -495,8 +498,27 @@
 "self.settings.account_section.email.change.verify.description" = "Tarkista sähköpostisi saapuneet-kansio ja seuraa ohjeita.";
 "self.settings.account_section.email.change.verify.resend" = "Resend to %@";
 
-"self.settings.account_section.email.change.resend.title" = "Email resent";
+"self.settings.account_section.email.change.resend.title" = "Sähköposti lähetetty";
 "self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Puhelinnumero";
+"self.settings.account_section.phone_number.change.save" = "Tallenna";
+"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Tallenna";
+"self.settings.account_section.phone_number.change.verify.title" = "Vahvista";
+"self.settings.account_section.phone_number.change.verify.description" = "Syötä vahvistuskoodi jonka lähetimme numeroon: %@";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Syötä koodi";
+"self.settings.account_section.phone_number.change.verify.resend" = "Lähetä koodi uudelleen";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "No code showing up?\nYou can request a new one every 30 seconds.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Code resent";
+"self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Ilmoitukset";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Avaa Yhteystieto-asetukset";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tämä auttaa sinua löytämään tuttuja. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle. Anna lupa Asetuksista > Yksityisyys > Yhteystiedot.";
 
+"self.settings.privacy_security.lock_app" = "Lock with Touch ID & Passcode";
+"self.settings.privacy_security.lock_app.description" = "Avata Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Please unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.action" = "Avaa lukitus";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Laitteet";
 
 "self.settings.privacy_analytics_section.title" = "Käyttö- ja vikaraportit";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Vaihda Salasana";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Kutsu ystäviä";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Olemme lähettäneet jo sinulle koodin tekstiviestillä. Napauta Lähetä Uudelleen 10 minuutin päästä saadaksesi uuden koodin.";
 "error.user.registration_unknown_error" = "Jotain meni pieleen. Yritä uudelleen.";
 "error.user.device_deleted_remotely" = "Olet kirjautunut ulos toisesta laitteesta.";
-
+"error.user.last_identity_cant_be_deleted" = "You need to have both an email and phone number to be able to remove one of them";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Näytä kaikki %d→";
 "collections.section.no_items" = "Ei kohteita kokoelmassa";
 "collections.image_viewer.copied.title" = "Picture copied";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

@@ -21,18 +21,18 @@
 
 
 
-"share_extension.conversation_selection.title" = "Conversation:";
+"share_extension.conversation_selection.title" = "Samtale:";
 "share_extension.send_button.title" = "Send";
-"share_extension.conversation_selection.empty.value" = "Choose";
+"share_extension.conversation_selection.empty.value" = "Vælg";
 "share_extension.input.placeholder" = "Skriv en besked";
 "share_extension.sending_progress.title" = "Sender…";
-"share_extension.preparing.title" = "Preparing…";
-"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.preparing.title" = "Forbereder…";
+"share_extension.not_signed_in.title" = "Du skal logge på Wire, før du kan dele noget";
 "share_extension.not_signed_in.close_button" = "Luk";
 
 "conversation.displayname.emptygroup" = "Tom gruppechat";
 "meta.degraded.degradation_reason_message.singular" = "%@ begyndte at bruge en ny enhed.";
 "meta.degraded.degradation_reason_message.plural" = "%@ begyndte at bruge nye enheder.";
 "meta.degraded.dialog_message" = "Vil du stadig sende meddelelsen?";
-"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.cancel_sending_button" = "Send ikke";
 "meta.degraded.send_anyway_button" = "Send alligevel";

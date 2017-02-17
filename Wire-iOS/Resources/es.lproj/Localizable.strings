@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Estás usando una versión antigua de Wire que no permite mostrar este mensaje.";
+"content.system.unknown_message.body.link" = "¿Por qué sucede esto?";
+
 "content.file.uploading" = "Cargando …";
 "content.file.downloading" = "Descargando …";
 "content.file.upload_failed" = "Fallo al cargar";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Email reenviado";
 "self.settings.account_section.email.change.resend.message" = "Email de confirmación reenviado a %@. Revisa tu buzón de email y sigue las instrucciones.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Teléfono";
+"self.settings.account_section.phone_number.change.save" = "Guardar";
+"self.settings.account_section.phone_number.change.remove" = "Eliminar número de teléfono";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Eliminar número de teléfono";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Guardar";
+"self.settings.account_section.phone_number.change.verify.title" = "Verificar";
+"self.settings.account_section.phone_number.change.verify.description" = "Introduce el código de verificación que hemos enviado a %@";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Introducir código";
+"self.settings.account_section.phone_number.change.verify.resend" = "Reenviar código";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "¿No recibes el código? \nPuedes solicitar uno nuevo en 30 segundos.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Código reenviado";
+"self.settings.account_section.phone_number.change.resend.message" = "El código de verificación se reenvió a %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notificaciones";
 "self.settings.notifications.push_notification.toogle" = "Vista previa de mensajes";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir ajustes de contactos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos permite a Wire encontrar amigos que ya son usuarios de Wire. Toda la información es anónima y no la compartimos con nadie. Permite acceder a Wire en Ajustes > Privacidad > Contactos.";
 
+"self.settings.privacy_security.lock_app" = "Bloquear con Touch ID o código";
+"self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Por favor, desbloquea Wire usando Touch ID o el código";
+"self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
 "self.settings.privacy_analytics_section.title" = "Informes de uso y fallos";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Cambiar contraseña de Wire";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Invitar contactos";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Ya te enviamos un código vía SMS. Pulsa en reenviar pasados 10 minutos para obtener uno nuevo.";
 "error.user.registration_unknown_error" = "Algo salió mal. Por favor inténtalo de nuevo.";
 "error.user.device_deleted_remotely" = "Se ha cerrado la sesión en otro dispositivo.";
-
+"error.user.last_identity_cant_be_deleted" = "Necesitas tener registrado un email y un número de teléfono para poder eliminar uno de ellos";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Mostrar todo %d →";
 "collections.section.no_items" = "Sin elementos en la colección";
 "collections.image_viewer.copied.title" = "Foto copiada";
+
+"collections.search.field.placeholder" = "Buscar mensajes";
+"collections.search.no_items" = "Ningún resultado";
