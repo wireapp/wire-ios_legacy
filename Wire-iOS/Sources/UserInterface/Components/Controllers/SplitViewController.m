@@ -566,6 +566,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         case UIGestureRecognizerStateBegan:
             [self.leftViewController beginAppearanceTransition:! self.leftViewControllerRevealed animated:YES];
             [self.rightViewController beginAppearanceTransition:self.leftViewControllerRevealed animated:YES];
+            self.leftView.hidden = NO;
             break;
             
         case UIGestureRecognizerStateChanged:
