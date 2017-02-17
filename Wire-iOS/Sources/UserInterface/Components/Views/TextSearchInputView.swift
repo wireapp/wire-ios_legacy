@@ -104,8 +104,12 @@ public final class TextSearchInputView: UIView {
         self.searchInput.resignFirstResponder()
     }
     
+    fileprivate func updatePlaceholderLabel() {
+        self.placeholderLabel.isHidden = !self.query.isEmpty || self.searchInput.isEditing
+    }
+    
     fileprivate func updateForSearchQuery() {
-        self.placeholderLabel.isHidden = !self.query.isEmpty
+        self.updatePlaceholderLabel()
         cancelButton.isHidden = self.query.isEmpty
     }
 }
@@ -129,5 +133,13 @@ extension TextSearchInputView: UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return shouldReturn
+    }
+    
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.updatePlaceholderLabel()
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        self.updatePlaceholderLabel()
     }
 }
