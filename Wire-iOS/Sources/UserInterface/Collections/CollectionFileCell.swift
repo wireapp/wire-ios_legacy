@@ -19,8 +19,39 @@
 
 import Foundation
 import Cartography
+import WireExtensionComponents
 
-final public class CollectionFileCell: CollectionCell {
+open class CollectionForwardableSaveableFileCell: CollectionCell {
+
+    override func menuConfigurationProperties() -> MenuConfigurationProperties? {
+        guard let properties = super.menuConfigurationProperties() else { return nil }
+        if message?.isFileDownloaded() == true {
+            var mutableItems = properties.additionalItems ?? []
+            let saveItem = UIMenuItem(title: "content.message.save".localized, action: #selector(save))
+            mutableItems.append(saveItem)
+            properties.additionalItems = mutableItems
+        }
+        return properties
+    }
+
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(forward), #selector(save):
+            return self.message?.isFileDownloaded() ?? false
+        default:
+            return super.canPerformAction(action, withSender: sender)
+        }
+    }
+
+    func save(_ sender: AnyObject) {
+        guard message?.isFileDownloaded() == true else { return }
+        delegate?.collectionCell(self, performAction: .save)
+    }
+
+}
+
+
+final public class CollectionFileCell: CollectionForwardableSaveableFileCell {
     private let fileTransferView = FileTransferView()
     private let headerView = CollectionCellHeader()
     
@@ -45,16 +76,13 @@ final public class CollectionFileCell: CollectionCell {
     }
     
     func loadView() {
-        
         self.fileTransferView.delegate = self
         self.fileTransferView.layer.cornerRadius = 4
         self.fileTransferView.clipsToBounds = true
 
         self.contentView.cas_styleClass = "container-view"
         self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
-        
         self.contentView.addSubview(self.headerView)
-        
         self.contentView.addSubview(self.fileTransferView)
 
         constrain(self.contentView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
@@ -69,15 +97,7 @@ final public class CollectionFileCell: CollectionCell {
             fileTransferView.bottom == contentView.bottomMargin
         }
     }
-    
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(CollectionCell.forward(_:)):
-            return self.message?.isFileDownloaded() ?? false
-        default:
-            return super.canPerformAction(action, withSender: sender)
-        }
-    }
+
 }
 
 extension CollectionFileCell: TransferViewDelegate {

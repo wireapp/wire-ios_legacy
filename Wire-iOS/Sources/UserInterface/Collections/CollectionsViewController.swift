@@ -320,6 +320,10 @@ final public class CollectionsViewController: UIViewController {
             else {
                 self.messagePresenter.open(message, targetView: view, actionResponder: self)
             }
+
+        case .save:
+            guard let saveController = UIActivityViewController(message: message, from: view) else { return }
+            present(saveController, animated: true, completion: nil)
             
         default:
             break

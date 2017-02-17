@@ -793,6 +793,7 @@
 		BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */; };
 		BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
 		BF8CADD91D6CAAFC007602B8 /* Conversation+SortedParticipants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CADD81D6CAAFC007602B8 /* Conversation+SortedParticipants.swift */; };
+		BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8ECC2C1E570A920015177D /* UIActivityViewController+FileSaving.swift */; };
 		BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */; };
 		BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */; };
 		BF8EE55A1D636F4600B0D6D7 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
@@ -2237,6 +2238,7 @@
 		BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameTakeOverViewControllerTests.swift; sourceTree = "<group>"; };
 		BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserClient+Fingerprint.swift"; sourceTree = "<group>"; };
 		BF8CADD81D6CAAFC007602B8 /* Conversation+SortedParticipants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Conversation+SortedParticipants.swift"; sourceTree = "<group>"; };
+		BF8ECC2C1E570A920015177D /* UIActivityViewController+FileSaving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityViewController+FileSaving.swift"; sourceTree = "<group>"; };
 		BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Editing.swift"; sourceTree = "<group>"; };
 		BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarEditViewTests.swift; sourceTree = "<group>"; };
 		BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCellTests.swift; sourceTree = "<group>"; };
@@ -4247,6 +4249,7 @@
 				8719FD661C88802C005FBEC0 /* Delay.swift */,
 				8719FD681C888044005FBEC0 /* NSData+MD5.swift */,
 				F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */,
+				BF8ECC2C1E570A920015177D /* UIActivityViewController+FileSaving.swift */,
 				1693D9661CEDB26200D1F13C /* UIApplication+Permissions.h */,
 				1693D9671CEDB26200D1F13C /* UIApplication+Permissions.m */,
 				871BC0241D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.h */,
@@ -5770,6 +5773,7 @@
 				8710673F1C0DC5570035603B /* SettingsPropertySelectValueCellDescriptor.swift in Sources */,
 				87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */,
 				16DDA1441B259CB900E1F1FC /* VoiceChannelController.m in Sources */,
+				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
 				871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */,

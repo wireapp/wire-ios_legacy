@@ -369,8 +369,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                     else {
                         targetView = cell;
                     }
-                    
-                    [self.messagePresenter openDocumentControllerForMessage:cell.message targetView:targetView withPreview:NO];
+
+                    UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
+                    [self presentViewController:saveController animated:YES completion:nil];
                 }
             }
                 break;

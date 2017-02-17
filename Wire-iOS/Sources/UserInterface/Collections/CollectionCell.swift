@@ -133,10 +133,17 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         let properties = MenuConfigurationProperties()
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
-        
+
+        let likeKey = message?.liked == true ? "content.message.unlike" : "content.message.like"
+        let likeItem = UIMenuItem(title: likeKey.localized, action: #selector(like))
         let forwardItem = UIMenuItem(title: "content.message.forward".localized, action: #selector(CollectionCell.forward(_:)))
         let goToConversation = UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(CollectionCell.showInConversation(_:)))
-        properties.additionalItems = [forwardItem, goToConversation]
+
+        var additionalItems = [forwardItem, goToConversation]
+        if message?.canBeLiked == true {
+            additionalItems.insert(likeItem, at: 0)
+        }
+        properties.additionalItems = additionalItems
         return properties
     }
     
@@ -171,9 +178,10 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
-        case #selector(CollectionCell.forward(_:)): fallthrough
-        case #selector(CollectionCell.showInConversation(_:)):
+        case #selector(forward), #selector(showInConversation):
             return true
+        case #selector(like):
+            return message?.canBeLiked == true
         default:
             return false
         }
@@ -183,7 +191,12 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     func updateForMessage(changeInfo: MessageChangeInfo?) {
         // no-op
     }
-    
+
+    func like(_ sender: AnyObject!) {
+        guard let message = message else { return }
+        Message.setLikedMessage(message, liked: !message.liked)
+    }
+
     func forward(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .forward)
         guard let message = self.message else {

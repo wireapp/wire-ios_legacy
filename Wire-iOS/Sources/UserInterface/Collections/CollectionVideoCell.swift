@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-final public class CollectionVideoCell: CollectionCell {
+final public class CollectionVideoCell: CollectionForwardableSaveableFileCell {
     private let videoMessageView = VideoMessageView()
 
     public required init?(coder aDecoder: NSCoder) {
@@ -53,15 +53,7 @@ final public class CollectionVideoCell: CollectionCell {
             videoMessageView.edges == contentView.edges
         }
     }
-    
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(CollectionCell.forward(_:)):
-            return self.message?.isFileDownloaded() ?? false
-        default:
-            return super.canPerformAction(action, withSender: sender)
-        }
-    }
+
 }
 
 extension CollectionVideoCell: TransferViewDelegate {

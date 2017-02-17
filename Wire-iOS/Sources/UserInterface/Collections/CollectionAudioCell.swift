@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-final public class CollectionAudioCell: CollectionCell {
+final public class CollectionAudioCell: CollectionForwardableSaveableFileCell {
     private let audioMessageView = AudioMessageView()
     private let headerView = CollectionCellHeader()
 
@@ -51,7 +51,6 @@ final public class CollectionAudioCell: CollectionCell {
         
         self.contentView.cas_styleClass = "container-view"
         self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
-        
         self.contentView.addSubview(self.headerView)
         self.contentView.addSubview(self.audioMessageView)
         
@@ -67,15 +66,7 @@ final public class CollectionAudioCell: CollectionCell {
             audioMessageView.bottom == contentView.bottomMargin
         }
     }
-    
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(CollectionCell.forward(_:)):
-            return self.message?.isFileDownloaded() ?? false
-        default:
-            return super.canPerformAction(action, withSender: sender)
-        }
-    }
+
 }
 
 extension CollectionAudioCell: TransferViewDelegate {

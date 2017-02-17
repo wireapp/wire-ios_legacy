@@ -255,6 +255,7 @@
 "content.image.save_image" = "Save";
 
 "content.message.delete" = "Delete";
+"content.message.save" = "Save";
 
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
