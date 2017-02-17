@@ -40,6 +40,8 @@ final public class TextSearchViewController: NSObject {
             self.resultsView.tableView.reloadData()
         }
     }
+
+    fileprivate var searchStartedDate: Date?
     
     init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -84,6 +86,7 @@ final public class TextSearchViewController: NSObject {
 
         textSearchQuery = TextSearchQuery(conversation: conversation, query: query, delegate: self)
         if let query = textSearchQuery {
+            searchStartedDate = Date()
             query.execute()
             resultsView.isLoading = true
         }
@@ -100,7 +103,7 @@ extension TextSearchViewController: TextSearchQueryDelegate {
         }
 
         if !result.hasMore {
-            Analytics.shared()?.tag(searchEvent: .receivedResult)
+            Analytics.shared()?.tag(searchEvent: .receivedResult(startedAt: searchStartedDate))
         }
     }
 }
@@ -108,6 +111,7 @@ extension TextSearchViewController: TextSearchQueryDelegate {
 extension TextSearchViewController: TextSearchInputViewDelegate {
     public func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
         textSearchQuery?.cancel()
+        searchStartedDate = nil
 
         if query.isEmpty {
             self.resultsView.isHidden = true
