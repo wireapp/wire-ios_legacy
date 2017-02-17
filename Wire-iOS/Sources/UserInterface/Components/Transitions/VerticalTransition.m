@@ -69,11 +69,20 @@
     fromView.transform = fromTransform;
     toView.transform = toTransfrom;
     
+    NSArray <UIView *> *viewsToHide = [self.dataSource viewsToHideDuringVerticalTransition:self];
+    
+    [viewsToHide enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.hidden = YES;
+    }];
+    
     [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:[self transitionDuration:transitionContext] delay:0 animations:^{
         fromView.transform = CGAffineTransformMakeTranslation(0.0f, sign * finalRect.size.height);
         toView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
         fromView.transform = CGAffineTransformIdentity;
+        [viewsToHide enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.hidden = NO;
+        }];
         [transitionContext completeTransition:YES];
     }];
 }

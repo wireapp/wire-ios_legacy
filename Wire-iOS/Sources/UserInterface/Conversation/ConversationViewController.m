@@ -114,6 +114,8 @@
 @interface ConversationViewController (UINavigationControllerDelegate) <UINavigationControllerDelegate>
 @end
 
+@interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
+@end
 
 @interface ConversationViewController ()
 
@@ -173,7 +175,8 @@
 
     self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextConversation];
     self.conversationDetailsTransitioningDelegate = [[ConversationDetailsTransitioningDelegate alloc] init];
-
+    self.conversationDetailsTransitioningDelegate.dataSource = self;
+    
     [self createInputBarController];
     [self createContentViewController];
     [self createConversationBarController];
@@ -995,6 +998,24 @@
     } else {
         navController.rightButtonEnabled = YES;
     }
+}
+
+@end
+
+@implementation ConversationViewController (VerticalTransitionDataSource)
+
+- (NSArray<UIView *> *)viewsToHideDuringVerticalTransition:(VerticalTransition *)transition
+{
+    NSMutableArray<UIView *> *viewsToHide = [[NSMutableArray alloc] init];
+    
+    if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
+        ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
+        [viewsToHide addObject:convRootViewController.customNavBar];
+    }
+    
+    [viewsToHide addObject:self.inputBarController.view];
+    
+    return viewsToHide;
 }
 
 @end

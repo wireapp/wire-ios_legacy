@@ -18,21 +18,18 @@
 
 
 #import "ConversationContentViewControllerDelegate.h"
-#import "ZClientViewController.h"
 
 @class ZMConversation;
-@protocol ZMConversationMessage;
-@class ZMUser;
-@class ConversationMediaController;
-@class AnalyticsTracker;
-@protocol ConversationViewControllerDelegate;
+@class ZClientViewController;
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ConversationViewController : UIViewController
 
-@property (nonatomic, weak) ZClientViewController *zClientViewController;
-@property (nonatomic, strong) ZMConversation *conversation;
+@property (nonatomic, weak, nullable) ZClientViewController *zClientViewController;
+@property (nonatomic) ZMConversation *conversation;
 @property (nonatomic, getter=isFocused) BOOL focused;
 
 @end
+
+NS_ASSUME_NONNULL_END

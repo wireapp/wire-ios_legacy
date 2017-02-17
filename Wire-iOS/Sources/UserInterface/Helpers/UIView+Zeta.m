@@ -119,10 +119,10 @@ static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboa
 {
     UIColor *oldBackgroundColor = self.backgroundColor;
     
-    [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.backgroundColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken];
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1.0f delay:1.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:1.0f delay:0.55f options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.backgroundColor = oldBackgroundColor;
         } completion:nil];
     }];

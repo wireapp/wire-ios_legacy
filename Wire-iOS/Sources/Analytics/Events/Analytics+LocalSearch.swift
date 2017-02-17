@@ -18,16 +18,35 @@
 
 
 // ZIOS-8041
-enum LocalSearchEvent: String {
-    case receivedResult = "collection.entered_search" // Whenever the app returns a search result
-    case selected = "collection.selected_search_result " // User selects a search result
+enum LocalSearchEvent {
+
+    case receivedResult(startedAt: Date?)
+    case selected
+
+    var name: String {
+        switch self {
+        case .receivedResult: return "collection.entered_search" // Whenever the app returns a search result
+        case .selected: return "collection.selected_search_result " // User selects a search result
+        }
+    }
+
+    var attributes: [String: String]? {
+        switch self {
+        case .receivedResult(startedAt: let date):
+            guard let date = date else { return nil }
+            guard let clusterized = TimeIntervalClusterizer.default().clusterizeTimeInterval(-date.timeIntervalSinceNow) else { return nil }
+            return ["search_duration": clusterized]
+        default: return nil
+        }
+    }
+
 }
 
 
 extension Analytics {
 
     func tag(searchEvent: LocalSearchEvent) {
-        tagEvent(searchEvent.rawValue)
+        tagEvent(searchEvent.name, attributes: searchEvent.attributes)
     }
 
 }

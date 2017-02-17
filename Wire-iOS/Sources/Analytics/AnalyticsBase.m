@@ -82,7 +82,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
         NSNumber *isDisabledNumber = [[NSUserDefaults standardUserDefaults] valueForKey:AnalyticsUserDefaultsDisabledKey];
         _disabled = (isDisabledNumber == nil) ? NO : isDisabledNumber.boolValue;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackingIdentifierChanged:) name:ZMUserSessionTrackingIdentifierDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSessionDidBecomeAvailable:) name:ZMUserSessionDidBecomeAvailableNotification object:nil];
     }
     return self;
@@ -134,11 +133,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     self.conversationListObserver.observing = observingConversationList;
 }
 
-- (void)trackingIdentifierChanged:(NSNotification *)note
-{
-    [self setTrackingIDFromUserSession];
-}
-
 - (void)userSessionDidBecomeAvailable:(NSNotification *)note
 {
     self.voiceChannelTracker            = [[AnalyticsVoiceChannelTracker alloc] initWithAnalytics:self];
@@ -146,16 +140,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     self.decryptionFailedObserver       = [[AnalyticsDecryptionFailedObserver alloc] initWithAnalytics:self];
     self.fileTransferObserver           = [[AnalyticsFileTransferObserver alloc] init];
     self.conversationVerifiedObserver   = [[AnalyticsConversationVerifiedObserver alloc] initWithAnalytics:self];
-    
-    [self setTrackingIDFromUserSession];
-}
-
-- (void)setTrackingIDFromUserSession
-{
-    NSString *trackingID = [ZMUserSession sharedSession].trackingIdentifier;
-    if (trackingID.length > 0) {
-        [self.activeProvider setCustomerID:trackingID];
-    }
 }
 
 - (void)tagScreen:(NSString *)screen

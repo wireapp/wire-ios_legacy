@@ -69,6 +69,8 @@ internal class SearchResultCountBadge: UIView {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.accessibilityIdentifier = "search result cell"
+        
         self.contentView.addSubview(self.footerView)
         self.selectionStyle = .none
         self.messageTextLabel.accessibilityIdentifier = "text search result"

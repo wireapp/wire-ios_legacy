@@ -24,7 +24,7 @@ import Cartography
 @objc open class ConversationRootViewController: UIViewController {
     
     fileprivate var navigationSeparator = UIView()
-    fileprivate var customNavBar = UINavigationBar()
+    fileprivate(set) var customNavBar = UINavigationBar()
     fileprivate var contentView = UIView()
     
     open fileprivate(set) weak var conversationViewController: ConversationViewController?

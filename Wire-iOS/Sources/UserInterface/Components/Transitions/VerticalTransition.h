@@ -19,8 +19,19 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+@class VerticalTransition;
+
+@protocol VerticalTransitionDataSource <NSObject>
+- (NSArray <UIView *>*)viewsToHideDuringVerticalTransition:(VerticalTransition *)transition;
+@end
+
 @interface VerticalTransition : NSObject <UIViewControllerAnimatedTransitioning>
+@property (nonatomic, weak, nullable) id<VerticalTransitionDataSource> dataSource;
 
 - initWithOffset:(CGFloat)offset;
 
 @end
+
+NS_ASSUME_NONNULL_END

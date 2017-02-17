@@ -38,7 +38,6 @@ import Cartography
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.isAccessibilityElement = true
         self.accessibilityElements = [self.label]
         
         self.label.numberOfLines = 0
