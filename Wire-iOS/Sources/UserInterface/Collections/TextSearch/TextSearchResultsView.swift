@@ -20,34 +20,48 @@ import Foundation
 import Cartography
 
 @objc final public class TextSearchResultsView: UIView {
-    internal var tableView: UITableView!
-    internal var noResultsView: NoResultsView!
+    internal var tableView = UITableView()
+    internal var noResultsView = NoResultsView()
+    private var spinner = ProgressSpinner()
+
+    var isLoading: Bool = false {
+        didSet {
+            spinner.isAnimating = isLoading
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.tableView = UITableView()
+        setupViews()
+        createConstraints()
+    }
+
+    func setupViews() {
         self.tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
-        
         self.tableView.estimatedRowHeight = 44
         self.tableView.separatorStyle = .none
         self.tableView.keyboardDismissMode = .interactive
         self.tableView.backgroundColor = .clear
         self.addSubview(self.tableView)
-        
-        self.noResultsView = NoResultsView()
-        
+
         self.noResultsView.label.accessibilityLabel = "no text messages"
         self.noResultsView.label.text = "collections.search.no_items".localized.uppercased()
         self.noResultsView.icon = .search
         self.addSubview(self.noResultsView)
-        
-        constrain(self, self.tableView, self.noResultsView) { resultsView, tableView, noResultsView in
+
+        spinner.color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        addSubview(spinner)
+    }
+
+    func createConstraints() {
+        constrain(self, self.tableView, self.noResultsView, spinner) { resultsView, tableView, noResultsView, spinner in
             tableView.edges == resultsView.edges
-            
+
             noResultsView.top >= resultsView.top + 12
             noResultsView.bottom <= resultsView.bottom - 12
             noResultsView.center == resultsView.center
+
+            spinner.center == resultsView.center
         }
     }
     

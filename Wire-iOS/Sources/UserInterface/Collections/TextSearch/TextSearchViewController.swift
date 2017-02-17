@@ -68,7 +68,7 @@ final public class TextSearchViewController: NSObject {
     fileprivate func scheduleSearch() {
         let searchSelector = #selector(TextSearchViewController.search)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: searchSelector, object: .none)
-        self.perform(searchSelector, with: .none, afterDelay: 0.3)
+        self.perform(searchSelector, with: .none, afterDelay: 0.2)
     }
     
     @objc fileprivate func search() {
@@ -83,7 +83,10 @@ final public class TextSearchViewController: NSObject {
         }
 
         textSearchQuery = TextSearchQuery(conversation: conversation, query: query, delegate: self)
-        textSearchQuery?.execute()
+        if let query = textSearchQuery {
+            query.execute()
+            resultsView.isLoading = true
+        }
     }
 
 }
@@ -92,6 +95,7 @@ extension TextSearchViewController: TextSearchQueryDelegate {
     public func textSearchQueryDidReceive(result: TextQueryResult) {
         guard result.query == textSearchQuery else { return }
         if result.matches.count > 0 || !result.hasMore {
+            resultsView.isLoading = false
             results = result.matches
         }
 
@@ -103,13 +107,18 @@ extension TextSearchViewController: TextSearchQueryDelegate {
 
 extension TextSearchViewController: TextSearchInputViewDelegate {
     public func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
+        textSearchQuery?.cancel()
+
         if query.isEmpty {
-            textSearchQuery?.cancel()
             self.resultsView.isHidden = true
         }
         else {
             self.scheduleSearch()
             self.resultsView.isHidden = false
+        }
+
+        if query.characters.count < 2 {
+            resultsView.isLoading = false
         }
     }
 
