@@ -59,7 +59,7 @@ public final class TextSearchInputView: UIView {
         
         placeholderLabel.textAlignment = .center
         
-        cancelButton.setIcon(.cancel, with: .tiny, for: .normal)
+        cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
         cancelButton.accessibilityIdentifier = "cancel search"

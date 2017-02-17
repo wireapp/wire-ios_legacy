@@ -66,12 +66,29 @@ public extension ConversationViewController {
     
     var collectionsBarButtonItem: IconButton {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
-        return barButtonItem(withType: showingSearchResults ? .searchOngoing : .search,
-                             target: self,
-                             action: #selector(ConversationViewController.onCollectionButtonPressed(_:)),
-                             accessibilityIdentifier: "collection",
-                             width: 30,
-                             imageEdgeInsets: UIEdgeInsetsMake(0, -8, 0, 0))
+        let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
+        let accessibilityIdentifier = "collection"
+        let imageEdgeInsets = UIEdgeInsetsMake(0, -8, 0, 0)
+        
+        if showingSearchResults {
+            let button = IconButton()
+            button.setIcon(.searchOngoing, with: .tiny, for: .normal, renderingMode: .alwaysOriginal)
+            button.setIconColor(UIColor.accent(), for: .normal)
+            button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+            button.addTarget(self, action: action, for: .touchUpInside)
+            button.accessibilityIdentifier = accessibilityIdentifier
+            button.imageEdgeInsets = imageEdgeInsets
+            
+            return button
+        }
+        else {
+            return barButtonItem(withType:.search,
+                                       target: self,
+                                       action: action,
+                                       accessibilityIdentifier: accessibilityIdentifier,
+                                       width: 30,
+                                       imageEdgeInsets: imageEdgeInsets)
+        }
     }
     
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {

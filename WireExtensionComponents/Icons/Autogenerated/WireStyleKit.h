@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 #import <UIKit/UIKit.h>
 
 
@@ -145,6 +144,7 @@
 + (void)drawIcon_0x260_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x234_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x261_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x262_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -250,6 +250,7 @@
 + (UIImage*)imageOfIcon_0x260_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x234_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x261_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x262_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
