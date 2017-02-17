@@ -23,9 +23,6 @@
 
 - (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions;
 
-/// Set a cross platform customer ID
-- (void)setCustomerID:(NSString *)customerID;
-
 /// Record a screen (page view).
 - (void)tagScreen:(NSString *)screen;
 

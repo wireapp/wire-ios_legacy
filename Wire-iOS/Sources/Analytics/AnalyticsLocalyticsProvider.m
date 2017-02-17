@@ -56,11 +56,6 @@
     [Localytics autoIntegrate:@STRINGIZE(ANALYTICS_API_KEY) launchOptions:launchOptions];
 }
 
-- (void)setCustomerID:(NSString *)customerID
-{
-    [Localytics setCustomerId:customerID];
-}
-
 - (void)tagScreen:(NSString *)screen
 {
     [Localytics tagScreen:screen];
