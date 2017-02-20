@@ -21,11 +21,10 @@
 
 @class ZMUser;
 @class ZMConversation;
-@class VoiceChannelOverlay;
+@class VoiceChannelOverlay_Old;
 @class VoiceChannelCollectionViewLayout;
 @class CameraPreviewView;
 @class AVSVideoView;
-
 @class AVSVideoPreview;
 @class IconLabelButton;
 @class UserImageView;
@@ -42,7 +41,7 @@ typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
 
 FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverlayState state);
 
-@interface VoiceChannelOverlay : UIView <UICollectionViewDelegateFlowLayout>
+@interface VoiceChannelOverlay_Old : UIView <UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) NSTimeInterval callDuration;
 @property (nonatomic) ZMConversation *callingConversation;

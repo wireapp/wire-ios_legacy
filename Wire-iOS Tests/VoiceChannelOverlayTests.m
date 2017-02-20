@@ -22,6 +22,7 @@
 #import "MockConversation.h"
 #import "VoiceChannelOverlay.h"
 #import "Wire_iOS_Tests-Swift.h"
+#import "Wire-Swift.h"
 
 @import Classy;
 

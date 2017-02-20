@@ -25,7 +25,17 @@ let GroupCallAvatarSize: CGFloat = 120.0;
 let GroupCallAvatarGainRadius: CGFloat = 14.0;
 let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 
-extension VoiceChannelOverlay {
+@objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupVoiceOverlay()
+        createConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public func setupVoiceOverlay() {
         clipsToBounds = true

@@ -76,7 +76,7 @@ static NSString *NotNilString(NSString *string) {
 }
 
 
-@interface VoiceChannelOverlay () 
+@interface VoiceChannelOverlay_Old ()
 
 
 
@@ -86,23 +86,11 @@ static NSString *NotNilString(NSString *string) {
 
 
 
-@implementation VoiceChannelOverlay
+@implementation VoiceChannelOverlay_Old
 
 - (void)dealloc
 {
     [self cancelHideControlsAfterElapsedTime];
-}
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        [self setupVoiceOverlay];
-        [self createConstraints];
-    }
-    
-    return self;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
