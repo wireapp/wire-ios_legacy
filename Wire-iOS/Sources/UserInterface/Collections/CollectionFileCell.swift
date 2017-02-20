@@ -27,8 +27,7 @@ open class CollectionForwardableSaveableFileCell: CollectionCell {
         guard let properties = super.menuConfigurationProperties() else { return nil }
         if message?.isFileDownloaded() == true {
             var mutableItems = properties.additionalItems ?? []
-            let saveItem = UIMenuItem(title: "content.message.save".localized, action: #selector(save))
-            mutableItems.append(saveItem)
+            mutableItems.append(.save(with: #selector(save)))
             properties.additionalItems = mutableItems
         }
         return properties

@@ -151,9 +151,7 @@ public final class AudioMessageCell: ConversationCell {
         
         if let fileMessageData = message.fileMessageData,
             let _ = fileMessageData.fileURL {
-            let forwardItem = UIMenuItem(title: "content.message.forward".localized, action:#selector(forward(_:)))
-            
-            additionalItems.append(forwardItem)
+            additionalItems.append(.forward(with: #selector(forward)))
         }
         
         properties.additionalItems = additionalItems

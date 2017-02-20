@@ -473,21 +473,18 @@
          */
         [self.view.window makeKeyWindow];
         [self.view.window becomeFirstResponder];
-        
         [self.view becomeFirstResponder];
         
         UIMenuController *menuController = UIMenuController.sharedMenuController;
-
-        NSString *likeKey = [Message isLikedMessage:self.message] ? @"content.message.unlike" : @"content.message.like";
-        UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(likeKey, @"") action:@selector(likeImage)];
-        UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
-        UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward)];
-        UIMenuItem *revealInConversation = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.go_to_conversation", @"") action:@selector(revealInConversation)];
-        menuController.menuItems = @[likeItem, saveItem, forwardItem, revealInConversation];
+        menuController.menuItems = @[
+                                     [UIMenuItem likeItemForMessage:self.message action:@selector(likeImage)],
+                                     [UIMenuItem saveItemWithAction:@selector(saveImage)],
+                                     [UIMenuItem forwardItemWithAction:@selector(forward)],
+                                     [UIMenuItem revealItemWithAction:@selector(revealInConversation)]
+                                     ];
         
         [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
         [menuController setMenuVisible:YES animated:YES];
-
         [self setSelectedByMenu:YES animated:YES];
     }
 }

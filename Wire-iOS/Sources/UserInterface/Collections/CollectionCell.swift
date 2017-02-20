@@ -133,10 +133,8 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         let properties = MenuConfigurationProperties()
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
-
         if message?.canBeLiked == true {
-            let likeKey = message?.liked == true ? "content.message.unlike" : "content.message.like"
-            properties.additionalItems = [UIMenuItem(title: likeKey.localized, action: #selector(like))]
+            properties.additionalItems = [UIMenuItem.like(for: message, with: #selector(like))]
         }
 
         return properties
@@ -158,10 +156,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         self.becomeFirstResponder()
         
         let menuController = UIMenuController.shared
-
-        let forwardItem = UIMenuItem(title: "content.message.forward".localized, action: #selector(CollectionCell.forward(_:)))
-        let goToConversation = UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(CollectionCell.showInConversation(_:)))
-        menuController.menuItems = menuConfigurationProperties.additionalItems + [forwardItem, goToConversation]
+        menuController.menuItems = menuConfigurationProperties.additionalItems + [.forward(with:  #selector(forward)), .reveal(with: #selector(showInConversation))]
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
         

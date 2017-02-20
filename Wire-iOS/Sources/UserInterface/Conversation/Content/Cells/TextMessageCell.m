@@ -388,8 +388,8 @@
     if (isEditableMessage) {
          [additionalItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
     }
-    
-    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward:)];
+
+    UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
     [additionalItems addObject:forwardItem];
     
     properties.additionalItems = additionalItems;

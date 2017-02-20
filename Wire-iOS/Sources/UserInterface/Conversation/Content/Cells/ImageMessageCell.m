@@ -544,8 +544,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
-    UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
-    UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward:)];
+    UIMenuItem *saveItem = [UIMenuItem saveItemWithAction:@selector(saveImage)];
+    UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
     properties.additionalItems = @[saveItem, forwardItem];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];

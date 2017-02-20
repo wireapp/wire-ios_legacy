@@ -551,14 +551,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
 
     if ([Message messageCanBeLiked:self.message]) {
-        NSString *likeTitleKey = [Message isLikedMessage:self.message] ? @"content.message.unlike" : @"content.message.like";
-        UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(likeTitleKey, @"") action:@selector(likeMessage:)];
+        UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
         [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
     }
 
     if (self.message.canBeDeleted) {
-        NSString *deleteTitle = NSLocalizedString(@"content.message.delete", @"");
-        UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:deleteTitle action:@selector(deleteMessage:)];
+        UIMenuItem *deleteItem = [UIMenuItem deleteItemWithAction:@selector(deleteMessage:)];
         [items addObject:deleteItem];
     }
 

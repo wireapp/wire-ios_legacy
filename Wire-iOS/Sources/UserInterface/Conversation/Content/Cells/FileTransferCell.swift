@@ -129,10 +129,11 @@ public final class FileTransferCell: ConversationCell {
         
         if let fileMessageData = message.fileMessageData,
             let _ = fileMessageData.fileURL {
-            let openItem = UIMenuItem(title:"content.message.open".localized, action:#selector(open))
-            let saveItem = UIMenuItem(title:"content.message.save".localized, action:#selector(save))
-            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward))
-            additionalItems.append(contentsOf: [openItem, saveItem, forwardItem])
+            additionalItems.append(contentsOf: [
+                .open(with: #selector(open)),
+                .save(with: #selector(save)),
+                .forward(with: #selector(forward))
+            ])
         }
 
         properties.likeItemIndex = 1 // Open should be first

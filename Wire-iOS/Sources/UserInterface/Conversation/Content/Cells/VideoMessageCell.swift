@@ -132,15 +132,12 @@ public final class VideoMessageCell: ConversationCell {
         var additionalItems = [UIMenuItem]()
         
         if message.videoCanBeSavedToCameraRoll() {
-            let saveItem = UIMenuItem(title:"content.file.save_video".localized, action:#selector(wr_saveVideo))
-            additionalItems.append(saveItem)
+            additionalItems.append(.save(with: #selector(wr_saveVideo)))
         }
         
         if let fileMessageData = message.fileMessageData,
             let _ = fileMessageData.fileURL {
-            let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))
-
-            additionalItems.append(forwardItem)
+            additionalItems.append(.forward(with: #selector(forward)))
         }
         
         properties.additionalItems = additionalItems

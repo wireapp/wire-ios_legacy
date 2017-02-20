@@ -201,8 +201,7 @@ public final class LocationMessageCell: ConversationCell {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
-        
-        properties.additionalItems = [UIMenuItem(title:"content.message.forward".localized, action:#selector(forward(_:)))]
+        properties.additionalItems = [.forward(with: #selector(forward))]
         return properties
     }
     
