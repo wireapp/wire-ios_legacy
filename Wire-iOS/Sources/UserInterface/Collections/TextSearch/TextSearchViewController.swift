@@ -87,23 +87,35 @@ final public class TextSearchViewController: NSObject {
         textSearchQuery = TextSearchQuery(conversation: conversation, query: query, delegate: self)
         if let query = textSearchQuery {
             searchStartedDate = Date()
+            perform(#selector(showLoadingSpinner), with: nil, afterDelay: 2)
             query.execute()
-            resultsView.isLoading = true
+
         }
+    }
+
+    @objc fileprivate func showLoadingSpinner() {
+        searchBar.isLoading = true
+    }
+
+    fileprivate func hideLoadingSpinner() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showLoadingSpinner), object: nil)
+        searchBar.isLoading = false
     }
 
 }
 
 extension TextSearchViewController: TextSearchQueryDelegate {
     public func textSearchQueryDidReceive(result: TextQueryResult) {
-        guard result.query == textSearchQuery else { return }
-        if result.matches.count > 0 || !result.hasMore {
-            resultsView.isLoading = false
-            results = result.matches
-        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            guard result.query == self.textSearchQuery else { return }
+            if result.matches.count > 0 || !result.hasMore {
+                self.hideLoadingSpinner()
+                self.results = result.matches
+            }
 
-        if !result.hasMore {
-            Analytics.shared()?.tag(searchEvent: .receivedResult(startedAt: searchStartedDate))
+            if !result.hasMore {
+                Analytics.shared()?.tag(searchEvent: .receivedResult(startedAt: self.searchStartedDate))
+            }
         }
     }
 }
@@ -122,7 +134,7 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
         }
 
         if query.characters.count < 2 {
-            resultsView.isLoading = false
+            hideLoadingSpinner()
         }
     }
 

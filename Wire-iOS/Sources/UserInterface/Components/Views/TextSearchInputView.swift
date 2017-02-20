@@ -31,6 +31,8 @@ public final class TextSearchInputView: UIView {
     public let searchInput = UITextField()
     public let placeholderLabel = UILabel()
     public let cancelButton = IconButton.iconButtonDefault()
+
+    private let spinner = ProgressSpinner()
     
     public weak var delegate: TextSearchInputViewDelegate?
     public var query: String = "" {
@@ -43,6 +45,12 @@ public final class TextSearchInputView: UIView {
     public var placeholderString: String = "" {
         didSet {
             self.placeholderLabel.text = placeholderString
+        }
+    }
+
+    var isLoading: Bool = false {
+        didSet {
+            spinner.isAnimating = isLoading
         }
     }
     
@@ -66,14 +74,16 @@ public final class TextSearchInputView: UIView {
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
         cancelButton.accessibilityIdentifier = "cancel search"
-        [iconView, searchInput, cancelButton, placeholderLabel].forEach(self.addSubview)
-        
+
+        spinner.color = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: .light)
+        spinner.iconSize = .tiny
+        [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
+
         self.createConstraints()
     }
     
     private func createConstraints() {
-        
-        constrain(self, iconView, searchInput, cancelButton, placeholderLabel) { selfView, iconView, searchInput, cancelButton, placeholderLabel in
+        constrain(self, iconView, searchInput, placeholderLabel) { selfView, iconView, searchInput, placeholderLabel in
             iconView.leading == selfView.leading
             iconView.width == 48
             iconView.height >= 48
@@ -86,14 +96,20 @@ public final class TextSearchInputView: UIView {
             searchInput.leading == iconView.trailing
             searchInput.top == selfView.top
             searchInput.bottom == selfView.bottom
-            searchInput.trailing == cancelButton.leading
-            
+
             placeholderLabel.edges == searchInput.edges
-            
-            cancelButton.centerY == selfView.centerY
-            cancelButton.trailing == selfView.trailing
+        }
+
+        constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
+            cancelButton.centerY == view.centerY
+            cancelButton.trailing == view.trailing
             cancelButton.width == 48
             cancelButton.height == 48
+
+            spinner.trailing == cancelButton.leading
+            spinner.centerY == cancelButton.centerY
+
+            searchInput.trailing <= spinner.leading - 12
         }
     }
     
