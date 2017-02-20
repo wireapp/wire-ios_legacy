@@ -685,27 +685,6 @@ static NSString *NotNilString(NSString *string) {
     }
 }
 
-#pragma mark - UICollectionViewDelegate
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    NSInteger numberOfItems = [self.participantsCollectionView numberOfItemsInSection:0];
-    CGFloat contentWidth = numberOfItems * self.participantsCollectionViewLayout.itemSize.width + (MAX(numberOfItems - 1, 0)) * self.participantsCollectionViewLayout.minimumLineSpacing;
-    CGFloat frameWidth = self.participantsCollectionView.frame.size.width;
-    
-    
-    UIEdgeInsets contentInsets;
-    if (contentWidth < frameWidth) {
-        // Align content in center of frame
-        CGFloat horizontalInset = frameWidth - contentWidth;
-        contentInsets = UIEdgeInsetsMake(0, horizontalInset / 2, 0, horizontalInset / 2);
-    } else {
-        contentInsets = UIEdgeInsetsMake(0, 24, 0, 24);
-    }
-    
-    return contentInsets;
-}
-
 #pragma mark - Camera preview pan
 
 - (void)onCameraPreviewPan:(UIPanGestureRecognizer *)panGestureRecognizer

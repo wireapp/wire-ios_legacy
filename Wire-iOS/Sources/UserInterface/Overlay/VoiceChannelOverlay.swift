@@ -239,3 +239,24 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     }
     
 }
+
+extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        let numberOfItems = CGFloat(collectionView.numberOfItems(inSection: 0))
+        let contentWidth = numberOfItems * participantsCollectionViewLayout.itemSize.width + max(numberOfItems - 1, 0) * participantsCollectionViewLayout.minimumLineSpacing
+        let frameWidth = participantsCollectionView.frame.size.width
+        
+        let insets: UIEdgeInsets
+        
+        if contentWidth < frameWidth {
+            // Align content in center of frame
+            let horizontalInset = frameWidth - contentWidth
+            insets = UIEdgeInsets(top: 0, left: horizontalInset / 2, bottom: 0, right: horizontalInset / 2)
+        } else {
+            insets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        }
+        
+        return insets
+    }
+}
