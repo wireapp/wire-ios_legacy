@@ -480,6 +480,7 @@
                                      [UIMenuItem likeItemForMessage:self.message action:@selector(likeImage)],
                                      [UIMenuItem saveItemWithAction:@selector(saveImage)],
                                      [UIMenuItem forwardItemWithAction:@selector(forward)],
+                                     [UIMenuItem deleteItemWithAction:@selector(deleteImage)],
                                      [UIMenuItem revealItemWithAction:@selector(revealInConversation)]
                                      ];
         
@@ -512,6 +513,9 @@
     }
     else if (action == @selector(likeImage)) {
         return [Message messageCanBeLiked:self.message];
+    }
+    else if (action == @selector(deleteImage)) {
+        return self.message.canBeDeleted;
     }
     else if (action == @selector(paste:)) {
         return NO;
@@ -550,6 +554,11 @@
 - (void)likeImage
 {
     [self.delegate wantsToPerformAction:MessageActionLike forMessage:self.message];
+}
+
+-(void)deleteImage
+{
+    [self.delegate wantsToPerformAction:MessageActionDelete forMessage:self.message];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated

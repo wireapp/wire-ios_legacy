@@ -737,6 +737,11 @@ extension CollectionsViewController: MessageActionResponder {
         switch action {
         case .like, .forward, .copy, .save, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
+        case .delete:
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] in
+                _ = self?.navigationController?.popViewController(animated: true)
+                self?.refetchCollection()
+            }
         default: break
         }
     }
