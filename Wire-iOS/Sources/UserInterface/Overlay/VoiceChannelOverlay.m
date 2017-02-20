@@ -46,9 +46,7 @@
 NSString *const VoiceChannelOverlayVideoFeedPositionKey = @"VideoFeedPosition";
 
 static const CGFloat CameraPreviewContainerSize = 72.0f;
-static const CGFloat OverlayButtonWidth = 56.0f;
 static const CGFloat GroupCallAvatarSize = 120.0f;
-static const CGFloat GroupCallAvatarGainRadius = 14.0f;
 static const CGFloat GroupCallAvatarLabelHeight = 30.0f;
 
 
@@ -86,37 +84,11 @@ static NSString *NotNilString(NSString *string) {
 @interface VoiceChannelOverlay () <UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) AVSVideoView *videoView;
-@property (nonatomic) AVSVideoPreview *videoPreview;
-
-@property (nonatomic) UIView *contentContainer;
-@property (nonatomic) UIView *avatarContainer;
 @property (nonatomic) CameraPreviewView *cameraPreviewView;
-
-@property (nonatomic) NSLayoutConstraint *cameraPreviewCenterHorisontally;
-@property (nonatomic) CGFloat cameraPreviewInitialPositionX;
-
-@property (nonatomic) UIView *shadow;
-@property (nonatomic) UIView *videoNotAvailableBackground;
-
-@property (nonatomic) UILabel *topStatusLabel;
-@property (nonatomic) UILabel *centerStatusLabel;
-@property (nonatomic) NSLayoutConstraint *statusLabelToTopUserImageInset;
-@property (nonatomic) NSDateComponentsFormatter *callDurationFormatter;
-
-@property (nonatomic) UserImageView *callingUserImage;
-@property (nonatomic) UserImageView *callingTopUserImage;
-
-@property (nonatomic) IconLabelButton *acceptButton;
-@property (nonatomic) IconLabelButton *acceptVideoButton;
-@property (nonatomic) IconLabelButton *ignoreButton;
-@property (nonatomic) IconLabelButton *leaveButton;
-@property (nonatomic) NSLayoutConstraint *leaveButtonPinRightConstraint;
-@property (nonatomic) IconLabelButton *muteButton;
-@property (nonatomic) IconLabelButton *speakerButton;
-@property (nonatomic) IconLabelButton *videoButton;
 
 @property (nonatomic) UICollectionView *participantsCollectionView;
 @property (nonatomic) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
+
 
 @property (nonatomic) BOOL videoViewFullScreen;
 @end
@@ -197,10 +169,12 @@ static NSString *NotNilString(NSString *string) {
     
     self.callingUserImage = [[UserImageView alloc] initForAutoLayout];
     self.callingUserImage.suggestedImageSize = UserImageViewSizeBig;
+    self.callingUserImage.accessibilityIdentifier = @"CallingUsersImage";
     [self.avatarContainer addSubview:self.callingUserImage];
     
     self.callingTopUserImage = [[UserImageView alloc] initForAutoLayout];
     self.callingTopUserImage.suggestedImageSize = UserImageViewSizeSmall;
+    self.callingTopUserImage.accessibilityIdentifier = @"CallingTopUsersImage";
     [self.contentContainer addSubview:self.callingTopUserImage];
     
     self.participantsCollectionViewLayout = [[VoiceChannelCollectionViewLayout alloc] init];
@@ -219,36 +193,43 @@ static NSString *NotNilString(NSString *string) {
     self.acceptButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.acceptButton.iconButton setIcon:ZetaIconTypePhone withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.acceptButton.subtitleLabel.text = NSLocalizedString(@"voice.accept_button.title", @"");
+    self.acceptButton.accessibilityIdentifier = @"AcceptButton";
     [self.contentContainer addSubview:self.acceptButton];
 
     self.acceptVideoButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.acceptVideoButton.iconButton setIcon:ZetaIconTypeVideoCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.acceptVideoButton.subtitleLabel.text = NSLocalizedString(@"voice.accept_button.title", @"");
+    self.acceptVideoButton.accessibilityIdentifier = @"AcceptVideoButton";
     [self.contentContainer addSubview:self.acceptVideoButton];
     
     self.ignoreButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.ignoreButton.iconButton setIcon:ZetaIconTypeEndCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.ignoreButton.subtitleLabel.text = NSLocalizedString(@"voice.decline_button.title", @"");
+    self.ignoreButton.accessibilityIdentifier = @"IgnoreButton";
     [self.contentContainer addSubview:self.ignoreButton];
     
     self.leaveButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.leaveButton.iconButton setIcon:ZetaIconTypeEndCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.leaveButton.subtitleLabel.text = NSLocalizedString(@"voice.hang_up_button.title", @"");
+    self.leaveButton.accessibilityIdentifier = @"LeaveCallButton";
     [self.contentContainer addSubview:self.leaveButton];
     
     self.muteButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.muteButton.iconButton setIcon:ZetaIconTypeMicrophoneWithStrikethrough withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.muteButton.subtitleLabel.text = NSLocalizedString(@"voice.mute_button.title", @"");
+    self.muteButton.accessibilityIdentifier = @"CallMuteButton";
     [self.contentContainer addSubview:self.muteButton];
     
     self.videoButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.videoButton.iconButton setIcon:ZetaIconTypeVideoCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.videoButton.subtitleLabel.text = NSLocalizedString(@"voice.video_button.title", @"");;
+    self.videoButton.subtitleLabel.text = NSLocalizedString(@"voice.video_button.title", @"");
+    self.videoButton.accessibilityIdentifier = @"CallVideoButton";
     [self.contentContainer addSubview:self.videoButton];
     
     self.speakerButton = [[IconLabelButton alloc] initForAutoLayout];
     [self.speakerButton.iconButton setIcon:ZetaIconTypeSpeaker withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.speakerButton.subtitleLabel.text = NSLocalizedString(@"voice.speaker_button.title", @"");
+    self.speakerButton.accessibilityIdentifier = @"CallSpeakerButton";
     [self.contentContainer addSubview:self.speakerButton];
     
     self.topStatusLabel = [[UILabel alloc] initForAutoLayout];
@@ -280,114 +261,6 @@ static NSString *NotNilString(NSString *string) {
 {
     UIPanGestureRecognizer *videoFeedPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onCameraPreviewPan:)];
     [self.cameraPreviewView addGestureRecognizer:videoFeedPan];
-}
-
-- (void)createConstraints
-{
-    [self.videoView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    [self.shadow autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.videoNotAvailableBackground autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.contentContainer autoSetDimension:ALDimensionWidth toSize:320];
-    }];
-    
-    [self.contentContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.contentContainer autoSetDimension:ALDimensionWidth toSize:320 relation:NSLayoutRelationLessThanOrEqual];
-    [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    
-    [self.callingTopUserImage autoPinEdgeToSuperviewMargin:ALEdgeTop];
-    [self.callingTopUserImage autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.callingTopUserImage autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.callingTopUserImage];
-    [self.callingTopUserImage autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    self.callingTopUserImage.accessibilityIdentifier = @"CallingTopUsersImage";
-
-    self.statusLabelToTopUserImageInset = [self.topStatusLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.callingTopUserImage withOffset:12.0f];
-    self.statusLabelToTopUserImageInset.active = NO;
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.topStatusLabel autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    }];
-    [self.topStatusLabel autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.topStatusLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:50];
-    
-    [self.centerStatusLabel autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.centerStatusLabel autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.centerStatusLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    
-    [self.avatarContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topStatusLabel withOffset:24];
-    [self.avatarContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.avatarContainer autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.callingUserImage autoSetDimensionsToSize:CGSizeMake(320, 320)];
-    }];
-    
-    [self.callingUserImage autoCenterInSuperview];
-    [self.callingUserImage autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.callingUserImage];
-    [self.callingUserImage autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.callingUserImage autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.callingUserImage autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.callingUserImage autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    
-    self.callingUserImage.accessibilityIdentifier = @"CallingUsersImage";
-    
-    [self.participantsCollectionView autoSetDimension:ALDimensionHeight toSize:GroupCallAvatarSize + GroupCallAvatarGainRadius + GroupCallAvatarLabelHeight];
-    [self.participantsCollectionView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.participantsCollectionView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.participantsCollectionView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-    
-    [self.leaveButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.leaveButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    }];
-    self.leaveButtonPinRightConstraint = [self.leaveButton autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    self.leaveButtonPinRightConstraint.active = NO;
-    
-    [self.leaveButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.avatarContainer withOffset:32];
-    [self.leaveButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.leaveButton.accessibilityIdentifier = @"LeaveCallButton";
-    
-    [self.acceptButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [self.acceptButton autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.acceptButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.acceptButton.accessibilityIdentifier = @"AcceptButton";
-    
-    [self.acceptVideoButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [self.acceptVideoButton autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.acceptVideoButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.acceptVideoButton.accessibilityIdentifier = @"AcceptVideoButton";
-    
-    [self.ignoreButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [self.ignoreButton autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.ignoreButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.ignoreButton.accessibilityIdentifier = @"IgnoreButton";
-    
-    [self.muteButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [self.muteButton autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.muteButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.muteButton.accessibilityIdentifier = @"CallMuteButton";
-    
-    [self.videoButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [self.videoButton autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.videoButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.videoButton.accessibilityIdentifier = @"CallVideoButton";
-    
-    [self.speakerButton autoSetDimension:ALDimensionWidth toSize:OverlayButtonWidth];
-    [self.speakerButton autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.speakerButton autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    self.speakerButton.accessibilityIdentifier = @"CallSpeakerButton";
-
-    [self.cameraPreviewView autoSetDimension:ALDimensionWidth toSize:CameraPreviewContainerSize];
-    [self.cameraPreviewView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:24];
-    [self.cameraPreviewView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:24 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.cameraPreviewView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-24 relation:NSLayoutRelationLessThanOrEqual];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.cameraPreviewCenterHorisontally = [self.cameraPreviewView autoAlignAxis:ALAxisVertical toSameAxisOfView:self withOffset:0];
-    }];
 }
 
 - (void)setVideoViewFullScreen:(BOOL)videoViewFullScreen

@@ -26,6 +26,13 @@
 @class CameraPreviewView;
 @class AVSVideoView;
 
+@class AVSVideoPreview;
+@class IconLabelButton;
+@class UserImageView;
+
+
+
+
 
 typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
     VoiceChannelOverlayStateInvalid,
@@ -72,5 +79,36 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 - (void)setSwitchCameraButtonTarget:(id)target action:(SEL)action;
 
 - (void)animateCameraChangeWithChangeAction:(dispatch_block_t)action completion:(dispatch_block_t)completion;
+
+
+// Views that need to be visible from Swift
+
+@property (nonatomic) AVSVideoPreview *videoPreview;
+
+@property (nonatomic) UIView *contentContainer;
+@property (nonatomic) UIView *avatarContainer;
+
+@property (nonatomic) NSLayoutConstraint *cameraPreviewCenterHorisontally;
+@property (nonatomic) CGFloat cameraPreviewInitialPositionX;
+
+@property (nonatomic) UIView *shadow;
+@property (nonatomic) UIView *videoNotAvailableBackground;
+
+@property (nonatomic) UILabel *topStatusLabel;
+@property (nonatomic) UILabel *centerStatusLabel;
+@property (nonatomic) NSLayoutConstraint *statusLabelToTopUserImageInset;
+@property (nonatomic) NSDateComponentsFormatter *callDurationFormatter;
+
+@property (nonatomic) UserImageView *callingUserImage;
+@property (nonatomic) UserImageView *callingTopUserImage;
+
+@property (nonatomic) IconLabelButton *acceptButton;
+@property (nonatomic) IconLabelButton *acceptVideoButton;
+@property (nonatomic) IconLabelButton *ignoreButton;
+@property (nonatomic) IconLabelButton *leaveButton;
+@property (nonatomic) NSLayoutConstraint *leaveButtonPinRightConstraint;
+@property (nonatomic) IconLabelButton *muteButton;
+@property (nonatomic) IconLabelButton *speakerButton;
+@property (nonatomic) IconLabelButton *videoButton;
 
 @end

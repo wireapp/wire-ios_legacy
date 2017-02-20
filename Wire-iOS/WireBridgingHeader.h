@@ -61,6 +61,8 @@
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
 #import "Country.h"
+#import "VoiceChannelOverlay.h"
+#import "CameraPreviewView.h"
 
 // View Controllers
 #import "ZClientViewController.h"
