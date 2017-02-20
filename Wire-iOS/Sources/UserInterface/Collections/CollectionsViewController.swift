@@ -735,7 +735,7 @@ extension CollectionsViewController: MessageActionResponder {
     
     public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
-        case .like, .forward, .copy, .save, .showInConversation:
+        case .forward, .copy, .save, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         case .delete:
             deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] in

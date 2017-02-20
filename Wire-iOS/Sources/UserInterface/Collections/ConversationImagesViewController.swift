@@ -37,6 +37,7 @@ internal final class ConversationImagesViewController: UIViewController {
     internal var buttonsBar: InputBarButtonsView!
     internal let overlay = FeedbackOverlayView()
     internal let separator = UIView()
+    fileprivate let likeButton = IconButton.iconButtonDefault()
     
     internal let inverse: Bool
     
@@ -155,6 +156,9 @@ internal final class ConversationImagesViewController: UIViewController {
         copyButton.setIcon(.copy, with: .tiny, for: .normal)
         copyButton.accessibilityLabel = "copy"
         copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
+
+        likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
+        updateLikeButton()
         
         let saveButton = IconButton.iconButtonDefault()
         saveButton.setIcon(.save, with: .tiny, for: .normal)
@@ -165,14 +169,24 @@ internal final class ConversationImagesViewController: UIViewController {
         shareButton.setIcon(.export, with: .tiny, for: .normal)
         shareButton.accessibilityLabel = "share"
         shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
+
+        let deleteButton = IconButton.iconButtonDefault()
+        deleteButton.setIcon(.trash, with: .tiny, for: .normal)
+        deleteButton.accessibilityLabel = "delete"
+        deleteButton.addTarget(self, action: #selector(deleteCurrent), for: .touchUpInside)
         
         let revealButton = IconButton.iconButtonDefault()
         revealButton.setIcon(.eye, with: .tiny, for: .normal)
         revealButton.accessibilityLabel = "reveal in conversation"
         revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
         
-        self.buttonsBar = InputBarButtonsView(buttons: [copyButton, saveButton, shareButton, revealButton])
+        self.buttonsBar = InputBarButtonsView(buttons: [copyButton, likeButton, saveButton, shareButton, deleteButton, revealButton])
         self.view.addSubview(self.buttonsBar)
+    }
+
+    fileprivate func updateLikeButton() {
+        likeButton.setIcon(currentMessage.liked ? .liked : .like, with: .tiny, for: .normal)
+        likeButton.accessibilityLabel = currentMessage.liked ? "unlike" : "like"
     }
     
     fileprivate func imageController(for message: ZMConversationMessage) -> FullscreenImageViewController {
@@ -238,11 +252,19 @@ internal final class ConversationImagesViewController: UIViewController {
     }
 
     @objc public func likeCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.wants(toPerform: .like, for: self.currentMessage)
+        ZMUserSession.shared()?.enqueueChanges({
+            self.currentMessage.liked = !self.currentMessage.liked
+        }, completionHandler: {
+            self.updateLikeButton()
+        })
     }
     
     @objc public func shareCurrent(_ sender: AnyObject!) {
         self.messageActionDelegate?.wants(toPerform: .forward, for: self.currentMessage)
+    }
+
+    @objc public func deleteCurrent(_ sender: AnyObject!) {
+        self.messageActionDelegate?.wants(toPerform: .delete, for: self.currentMessage)
     }
     
     @objc public func revealCurrent(_ sender: AnyObject!) {
@@ -320,6 +342,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if finished && completed {
             self.currentMessage = self.currentController.message
+            updateLikeButton()
         }
     }
 }
