@@ -221,11 +221,11 @@
 "content.system.started_using" = "started using";
 "content.system.is_verified" = "All fingerprints are verified";
 
-"content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "your devices";
-"content.system.other_devices" = "%@'s devices";
+"content.system.other_devices" = "%@’s devices";
 
-"content.system.missing_messages.title" = "You haven't used this device for a while. Some messages may not appear here.";
+"content.system.missing_messages.title" = "You haven’t used this device for a while. Some messages may not appear here.";
 "content.system.missing_messages.subtitle_start" = "Meanwhile,";
 
 "content.system.cannot_decrypt" = "A message from %@ was not received.";
@@ -235,12 +235,12 @@
 
 "content.system.cannot_decrypt.identity" = "%@ device identity changed. Undelivered message.";
 "content.system.cannot_decrypt.identity.you_part" = "Your";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@'s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Learn More";
 "content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
+"content.system.unknown_message.body" = "You are using an older version of Wire that can’t display this message.";
 "content.system.unknown_message.body.link" = "Why is this happening?";
 
 "content.file.uploading" = "Uploading…";
@@ -394,7 +394,7 @@
 "profile.devices.fingerprint_message.link" = "Why verify conversations?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@'s device.";
+"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
 "profile.devices.detail.verify_message.link" = "How do I do that?";
 "profile.devices.detail.show_my_device.title" = "Show my device fingerprint";
 "device.verified" = "Verified";
@@ -656,7 +656,7 @@
 "registration.verify_phone_number.resend_placeholder" = "No code showing up?\nYou can request a new one in %.0f seconds";
 
 "registration.verify_email.instructions" = "We sent an email to %@.\n Follow the link to verify your address.";
-"registration.verify_email.resend.instructions" = "Didn't get the message?";
+"registration.verify_email.resend.instructions" = "Didn’t get the message?";
 "registration.verify_email.resend.button_title" = "Re-send";
 
 "registration.select_picture.subtitle" = "Wire is so much nicer with a picture.";
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
 "registration.no_history.got_it" = "OK";
 
-"registration.no_history.logged_out.hero" = "You've used Wire on this device before.";
+"registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";
 "registration.no_history.logged_out.got_it" = "OK";
 
@@ -770,7 +770,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.updating_password" = "Couldn't update your password.";
+"error.updating_password" = "Couldn’t update your password.";
 
 "error.group_call.too_many_members_in_conversation.title" = "Too many people to call";
 "error.group_call.too_many_members_in_conversation" = "Calls work in conversations with up to %d people.";
