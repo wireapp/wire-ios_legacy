@@ -75,15 +75,14 @@ class RecentlyUsedEmojiPeristenceCoordinator {
     }
 
     private static func createDirectoryIfNeeded() {
-        guard var url = directoryURL else { return }
+        guard let url = directoryURL else { return }
         
         do {
             if !FileManager.default.fileExists(atPath: url.path) {
                 try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
             }
-            var values = URLResourceValues()
-            values.isExcludedFromBackup = true
-            try url.setResourceValues(values)
+
+            try url.wr_excludeFromBackup()
         }
         catch (let exception) {
             DDLogError("Error creating \(directoryURL): \(exception)")

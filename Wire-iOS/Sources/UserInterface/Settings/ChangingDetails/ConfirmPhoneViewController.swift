@@ -212,7 +212,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
 
 extension ConfirmPhoneViewController: ZMUserObserver {
     
-    func userDidChange(_ note: ZMCDataModel.UserChangeInfo!) {
+    func userDidChange(_ note: ZMCDataModel.UserChangeInfo) {
         if note.user.isSelfUser {
             // we need to check if the notification really happened because
             // the phone got changed to what we expected

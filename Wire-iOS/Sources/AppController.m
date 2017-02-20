@@ -68,6 +68,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @property (nonatomic) NSMutableArray <dispatch_block_t> *blocksToExecute;
 
 @property (nonatomic) ClassyCache *classyCache;
+@property (nonatomic) FileBackupExcluder *fileBackupExcluder;
 
 @end
 
@@ -92,6 +93,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         self.blocksToExecute = [NSMutableArray array];
         self.logObserver = [[AVSLogObserver alloc] init];
         self.classyCache = [[ClassyCache alloc] init];
+        self.fileBackupExcluder = [[FileBackupExcluder alloc] init];
         self.groupIdentifier = [NSString stringWithFormat:@"group.%@", NSBundle.mainBundle.bundleIdentifier];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
