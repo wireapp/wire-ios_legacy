@@ -228,6 +228,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [self updateForSize:size];
+    [self updateLeftViewVisibility];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -237,6 +238,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     
     [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
     [self updateActiveConstraints];
+    
+    [self updateLeftViewVisibility];
 }
 
 - (void)updateForSize:(CGSize)size
@@ -279,6 +282,19 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     else {
         self.leftViewWidthConstraint.constant = MIN(CGRound(size.width * 0.43), 336);
         self.rightViewWidthConstraint.constant = size.width - self.leftViewWidthConstraint.constant;
+    }
+}
+
+- (void)updateLeftViewVisibility
+{
+    switch(self.layoutSize) {
+        case SplitViewControllerLayoutSizeCompact: // fallthrough
+        case SplitViewControllerLayoutSizeRegularPortrait:
+            self.leftView.hidden = self.openPercentage == 0;
+            break;
+        case SplitViewControllerLayoutSizeRegularLandscape:
+            self.leftView.hidden = NO;
+            break;
     }
 }
 
