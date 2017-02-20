@@ -106,16 +106,14 @@ final public class TextSearchViewController: NSObject {
 
 extension TextSearchViewController: TextSearchQueryDelegate {
     public func textSearchQueryDidReceive(result: TextQueryResult) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            guard result.query == self.textSearchQuery else { return }
-            if result.matches.count > 0 || !result.hasMore {
-                self.hideLoadingSpinner()
-                self.results = result.matches
-            }
+        guard result.query == self.textSearchQuery else { return }
+        if result.matches.count > 0 || !result.hasMore {
+            self.hideLoadingSpinner()
+            self.results = result.matches
+        }
 
-            if !result.hasMore {
-                Analytics.shared()?.tag(searchEvent: .receivedResult(startedAt: self.searchStartedDate))
-            }
+        if !result.hasMore {
+            Analytics.shared()?.tag(searchEvent: .receivedResult(startedAt: self.searchStartedDate))
         }
     }
 }
