@@ -87,7 +87,6 @@ final public class TextSearchViewController: NSObject {
             searchStartedDate = Date()
             perform(#selector(showLoadingSpinner), with: nil, afterDelay: 2)
             query.execute()
-
         }
     }
 
@@ -136,7 +135,6 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
         textSearchQuery?.cancel()
         searchStartedDate = nil
         hideLoadingSpinner()
-        reloadResults()
 
         if query.characters.count < 2 {
             // We reset the results to avoid showing the previous 
