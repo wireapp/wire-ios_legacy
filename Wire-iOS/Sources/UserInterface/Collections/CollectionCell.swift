@@ -134,7 +134,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
         if message?.canBeLiked == true {
-            properties.additionalItems = [UIMenuItem.like(for: message, with: #selector(like))]
+            properties.additionalItems = [.like(for: message, with: #selector(like))]
         }
 
         return properties
