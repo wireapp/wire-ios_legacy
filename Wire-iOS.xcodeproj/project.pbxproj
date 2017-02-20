@@ -722,7 +722,6 @@
 		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */; };
 		BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */; };
 		BA9AA4361B84D553000A484B /* AppDelegate+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AA4351B84D553000A484B /* AppDelegate+Logging.m */; };
-		BA9EAFAB1AD8121800279A40 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9EAFAA1AD8121800279A40 /* AdSupport.framework */; };
 		BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA1F7E31B610D89002402B6 /* SketchColorCollectionViewCell.m */; };
 		BAA432301B39BB8E00F1CD2A /* MarkdownParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA4322F1B39BB8E00F1CD2A /* MarkdownParser.framework */; };
 		BACB88561AF7C48900DDCDB0 /* AggregateArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BACB88551AF7C48900DDCDB0 /* AggregateArrayTests.m */; };
@@ -2418,7 +2417,6 @@
 				1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */,
 				87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */,
 				DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */,
-				BA9EAFAB1AD8121800279A40 /* AdSupport.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
 				87FEE0D01D76D65700265A9C /* VIMNetworkingFramework.framework in Frameworks */,
 				BAA432301B39BB8E00F1CD2A /* MarkdownParser.framework in Frameworks */,
