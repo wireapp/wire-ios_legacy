@@ -58,6 +58,7 @@ public final class TextSearchInputView: UIView {
         searchInput.autocorrectionType = .no
         searchInput.accessibilityLabel = "Search"
         searchInput.accessibilityIdentifier = "search input"
+        searchInput.keyboardAppearance = ColorScheme.default().keyboardAppearance
         
         placeholderLabel.textAlignment = .center
         placeholderLabel.isAccessibilityElement = false
