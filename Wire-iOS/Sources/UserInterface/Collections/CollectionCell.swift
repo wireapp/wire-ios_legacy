@@ -156,7 +156,12 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         self.becomeFirstResponder()
         
         let menuController = UIMenuController.shared
-        menuController.menuItems = menuConfigurationProperties.additionalItems + [.forward(with:  #selector(forward)), .reveal(with: #selector(showInConversation)), .delete(with: #selector(deleteMessage))]
+        let menuItems: [UIMenuItem] = [
+            .forward(with: #selector(forward)),
+            .delete(with: #selector(deleteMessage)),
+            .reveal(with: #selector(showInConversation)),
+        ]
+        menuController.menuItems = menuConfigurationProperties.additionalItems + menuItems
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
         
