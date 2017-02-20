@@ -29,10 +29,7 @@
 @class AVSVideoPreview;
 @class IconLabelButton;
 @class UserImageView;
-
-
-
-
+@class CameraPreviewView;
 
 typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
     VoiceChannelOverlayStateInvalid,
@@ -45,15 +42,10 @@ typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
 
 FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverlayState state);
 
-@interface VoiceChannelOverlay : UIView
+@interface VoiceChannelOverlay : UIView <UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, readonly) AVSVideoView *videoView;
-@property (nonatomic, readonly) CameraPreviewView *cameraPreviewView;
 @property (nonatomic) NSTimeInterval callDuration;
 @property (nonatomic) ZMConversation *callingConversation;
-
-@property (nonatomic, readonly) UICollectionView *participantsCollectionView;
-@property (nonatomic, readonly) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
 
 @property (nonatomic, assign, readonly) VoiceChannelOverlayState state;
 
@@ -83,7 +75,14 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 // Views that need to be visible from Swift
 
+@property (nonatomic) CameraPreviewView *cameraPreviewView;
+@property (nonatomic) BOOL videoViewFullscreen;
+
+@property (nonatomic) UICollectionView *participantsCollectionView;
+@property (nonatomic) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
+
 @property (nonatomic) AVSVideoPreview *videoPreview;
+@property (nonatomic) AVSVideoView *videoView;
 
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *avatarContainer;
@@ -110,5 +109,7 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) IconLabelButton *muteButton;
 @property (nonatomic) IconLabelButton *speakerButton;
 @property (nonatomic) IconLabelButton *videoButton;
+
+- (void)setupCameraFeedPanGestureRecognizer;
 
 @end

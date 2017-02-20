@@ -45,11 +45,6 @@
 
 NSString *const VoiceChannelOverlayVideoFeedPositionKey = @"VideoFeedPosition";
 
-static const CGFloat CameraPreviewContainerSize = 72.0f;
-static const CGFloat GroupCallAvatarSize = 120.0f;
-static const CGFloat GroupCallAvatarLabelHeight = 30.0f;
-
-
 NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverlayState state)
 {
     if (VoiceChannelOverlayStateInvalid == state) {
@@ -81,13 +76,9 @@ static NSString *NotNilString(NSString *string) {
 }
 
 
-@interface VoiceChannelOverlay () <UICollectionViewDelegateFlowLayout>
+@interface VoiceChannelOverlay () 
 
-@property (nonatomic) AVSVideoView *videoView;
-@property (nonatomic) CameraPreviewView *cameraPreviewView;
 
-@property (nonatomic) UICollectionView *participantsCollectionView;
-@property (nonatomic) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
 
 
 @property (nonatomic) BOOL videoViewFullScreen;
@@ -130,131 +121,6 @@ static NSString *NotNilString(NSString *string) {
     [super touchesBegan:touches withEvent:event];
     
     [self backgroundWasTapped];
-}
-
-- (void)setupVoiceOverlay
-{
-    self.clipsToBounds = YES;
-    self.backgroundColor = [UIColor clearColor];
-    self.callDurationFormatter = [[NSDateComponentsFormatter alloc] init];
-    self.callDurationFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorNone;
-    self.callDurationFormatter.allowedUnits = NSCalendarUnitMinute | NSCalendarUnitSecond;
-    
-    if (![[Settings sharedSettings] disableAVS]) {
-        self.videoView = [[AVSVideoView alloc] initForAutoLayout];
-        self.videoView.shouldFill = YES;
-        self.videoView.userInteractionEnabled = NO;
-        self.videoView.backgroundColor = [UIColor colorWithPatternImage:[UIImage dot:9]];
-        [self addSubview:self.videoView];
-    }
-
-    _videoViewFullScreen = YES;
-    
-    self.shadow = [[UIView alloc] initForAutoLayout];
-    self.shadow.userInteractionEnabled = NO;
-    self.shadow.backgroundColor = [UIColor colorWithWhite:0 alpha:0.40];
-    [self addSubview:self.shadow];
-    
-    self.videoNotAvailableBackground = [[UIView alloc] initForAutoLayout];
-    self.videoNotAvailableBackground.userInteractionEnabled = NO;
-    self.videoNotAvailableBackground.backgroundColor = [UIColor blackColor];
-    [self addSubview:self.videoNotAvailableBackground];
-    
-    self.contentContainer = [[UIView alloc] initForAutoLayout];
-    self.contentContainer.layoutMargins = UIEdgeInsetsMake(48, 32, 40, 32);
-    [self addSubview:self.contentContainer];
-    
-    self.avatarContainer = [[UIView alloc] initForAutoLayout];
-    [self.contentContainer addSubview:self.avatarContainer];
-    
-    self.callingUserImage = [[UserImageView alloc] initForAutoLayout];
-    self.callingUserImage.suggestedImageSize = UserImageViewSizeBig;
-    self.callingUserImage.accessibilityIdentifier = @"CallingUsersImage";
-    [self.avatarContainer addSubview:self.callingUserImage];
-    
-    self.callingTopUserImage = [[UserImageView alloc] initForAutoLayout];
-    self.callingTopUserImage.suggestedImageSize = UserImageViewSizeSmall;
-    self.callingTopUserImage.accessibilityIdentifier = @"CallingTopUsersImage";
-    [self.contentContainer addSubview:self.callingTopUserImage];
-    
-    self.participantsCollectionViewLayout = [[VoiceChannelCollectionViewLayout alloc] init];
-    self.participantsCollectionViewLayout.itemSize = CGSizeMake(GroupCallAvatarSize, GroupCallAvatarSize + GroupCallAvatarLabelHeight);
-    self.participantsCollectionViewLayout.minimumInteritemSpacing = 24;
-    self.participantsCollectionViewLayout.minimumLineSpacing = 24;
-    self.participantsCollectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-
-    self.participantsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.participantsCollectionViewLayout];
-    self.participantsCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.participantsCollectionView.alwaysBounceHorizontal = YES;
-    self.participantsCollectionView.backgroundColor = [UIColor clearColor];
-    self.participantsCollectionView.delegate = self;
-    [self addSubview:self.participantsCollectionView];
-    
-    self.acceptButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.acceptButton.iconButton setIcon:ZetaIconTypePhone withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.acceptButton.subtitleLabel.text = NSLocalizedString(@"voice.accept_button.title", @"");
-    self.acceptButton.accessibilityIdentifier = @"AcceptButton";
-    [self.contentContainer addSubview:self.acceptButton];
-
-    self.acceptVideoButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.acceptVideoButton.iconButton setIcon:ZetaIconTypeVideoCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.acceptVideoButton.subtitleLabel.text = NSLocalizedString(@"voice.accept_button.title", @"");
-    self.acceptVideoButton.accessibilityIdentifier = @"AcceptVideoButton";
-    [self.contentContainer addSubview:self.acceptVideoButton];
-    
-    self.ignoreButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.ignoreButton.iconButton setIcon:ZetaIconTypeEndCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.ignoreButton.subtitleLabel.text = NSLocalizedString(@"voice.decline_button.title", @"");
-    self.ignoreButton.accessibilityIdentifier = @"IgnoreButton";
-    [self.contentContainer addSubview:self.ignoreButton];
-    
-    self.leaveButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.leaveButton.iconButton setIcon:ZetaIconTypeEndCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.leaveButton.subtitleLabel.text = NSLocalizedString(@"voice.hang_up_button.title", @"");
-    self.leaveButton.accessibilityIdentifier = @"LeaveCallButton";
-    [self.contentContainer addSubview:self.leaveButton];
-    
-    self.muteButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.muteButton.iconButton setIcon:ZetaIconTypeMicrophoneWithStrikethrough withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.muteButton.subtitleLabel.text = NSLocalizedString(@"voice.mute_button.title", @"");
-    self.muteButton.accessibilityIdentifier = @"CallMuteButton";
-    [self.contentContainer addSubview:self.muteButton];
-    
-    self.videoButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.videoButton.iconButton setIcon:ZetaIconTypeVideoCall withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.videoButton.subtitleLabel.text = NSLocalizedString(@"voice.video_button.title", @"");
-    self.videoButton.accessibilityIdentifier = @"CallVideoButton";
-    [self.contentContainer addSubview:self.videoButton];
-    
-    self.speakerButton = [[IconLabelButton alloc] initForAutoLayout];
-    [self.speakerButton.iconButton setIcon:ZetaIconTypeSpeaker withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.speakerButton.subtitleLabel.text = NSLocalizedString(@"voice.speaker_button.title", @"");
-    self.speakerButton.accessibilityIdentifier = @"CallSpeakerButton";
-    [self.contentContainer addSubview:self.speakerButton];
-    
-    self.topStatusLabel = [[UILabel alloc] initForAutoLayout];
-    self.topStatusLabel.accessibilityIdentifier = @"CallStatusLabel";
-    self.topStatusLabel.textAlignment = NSTextAlignmentCenter;
-    [self.topStatusLabel setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    [self.topStatusLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    
-    [self.topStatusLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    [self.topStatusLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    self.topStatusLabel.numberOfLines = 0;
-    [self.contentContainer addSubview:self.topStatusLabel];
-    
-    self.centerStatusLabel = [[UILabel alloc] initForAutoLayout];
-    self.centerStatusLabel.accessibilityIdentifier = @"CenterStatusLabel";
-    self.centerStatusLabel.textAlignment = NSTextAlignmentCenter;
-    self.centerStatusLabel.numberOfLines = 2;
-    self.centerStatusLabel.text = [NSLocalizedString(@"voice.status.video_not_available", nil) uppercasedWithCurrentLocale];
-    [self.contentContainer addSubview:self.centerStatusLabel];
-    
-    self.cameraPreviewView = [[CameraPreviewView alloc] initWithWidth:CameraPreviewContainerSize];
-    [self addSubview:self.cameraPreviewView];
-    
-    [self setupCameraFeedPanGestureRecognizer];
-
 }
 
 - (void)setupCameraFeedPanGestureRecognizer

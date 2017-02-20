@@ -27,6 +27,119 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 
 extension VoiceChannelOverlay {
     
+    public func setupVoiceOverlay() {
+        clipsToBounds = true
+        backgroundColor = .clear
+        callDurationFormatter = DateComponentsFormatter()
+        callDurationFormatter.allowedUnits = [.minute, .second]
+        callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
+        
+        if !Settings.shared().disableAVS {
+            videoView = AVSVideoView()
+            videoView.shouldFill = true
+            videoView.isUserInteractionEnabled = false
+            videoView.backgroundColor = UIColor(patternImage: .dot(9))
+            addSubview(videoView)
+        }
+
+        videoViewFullscreen = true
+        
+        shadow = UIView()
+        shadow.isUserInteractionEnabled = false
+        shadow.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        addSubview(shadow)
+
+        videoNotAvailableBackground = UIView()
+        videoNotAvailableBackground.isUserInteractionEnabled = false
+        videoNotAvailableBackground.backgroundColor = .black
+        addSubview(videoNotAvailableBackground)
+        
+        contentContainer = UIView()
+        contentContainer.layoutMargins = UIEdgeInsets(top: 48, left: 32, bottom: 40, right: 32)
+        addSubview(contentContainer)
+        
+        avatarContainer = UIView()
+        contentContainer.addSubview(avatarContainer)
+        
+        callingUserImage = UserImageView()
+        callingUserImage.suggestedImageSize = .big
+        callingUserImage.accessibilityIdentifier = "CallingUsersImage"
+        avatarContainer.addSubview(callingUserImage)
+        
+        callingTopUserImage = UserImageView()
+        callingTopUserImage.suggestedImageSize = .small
+        callingTopUserImage.accessibilityIdentifier = "CallingTopUsersImage"
+        contentContainer.addSubview(callingTopUserImage)
+        
+        participantsCollectionViewLayout = createParticipantsCollectionViewLayout()
+        participantsCollectionView = createParticipantsCollectionView(layout: participantsCollectionViewLayout)
+        addSubview(participantsCollectionView)
+        
+        createButtons()
+        createLabels()
+        
+        cameraPreviewView = CameraPreviewView(width: CameraPreviewContainerSize)
+        addSubview(cameraPreviewView)
+        setupCameraFeedPanGestureRecognizer()
+    }
+    
+    fileprivate func createLabels() {
+        topStatusLabel = UILabel()
+        topStatusLabel.accessibilityIdentifier = "CallStatusLabel"
+        topStatusLabel.textAlignment = .center
+        topStatusLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        topStatusLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        topStatusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        topStatusLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        topStatusLabel.numberOfLines = 0
+        contentContainer.addSubview(topStatusLabel)
+        
+        centerStatusLabel = UILabel()
+        centerStatusLabel.accessibilityIdentifier = "CenterStatusLabel"
+        centerStatusLabel.textAlignment = .center
+        centerStatusLabel.numberOfLines = 2
+        centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
+        
+        [topStatusLabel, centerStatusLabel].forEach(contentContainer.addSubview)
+    }
+    
+    fileprivate func createButtons() {
+        acceptButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptButton")
+        acceptVideoButton = createButton(icon: .videoCall, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptVideoButton")
+        ignoreButton = createButton(icon: .endCall, label: "voice.decline_button.title".localized, accessibilityIdentifier: "IgnoreButton")
+        leaveButton = createButton(icon: .endCall, label: "voice.hang_up_button.title".localized, accessibilityIdentifier: "LeaveCallButton")
+        muteButton = createButton(icon: .microphoneWithStrikethrough, label: "voice.mute_button.title".localized, accessibilityIdentifier: "CallMuteButton")
+        videoButton = createButton(icon: .videoCall, label: "voice.video_button.title".localized, accessibilityIdentifier: "CallVideoButton")
+        speakerButton = createButton(icon: .speaker, label: "voice.speaker_button.title".localized, accessibilityIdentifier: "CallSpeakerButton")
+        
+        [acceptButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton].forEach(contentContainer.addSubview)
+    }
+    
+    fileprivate func createButton(icon: ZetaIconType, label: String, accessibilityIdentifier: String) -> IconLabelButton {
+        let button = IconLabelButton()
+        button.iconButton.setIcon(icon, with: .small, for: .normal)
+        button.subtitleLabel.text = label
+        button.accessibilityIdentifier = accessibilityIdentifier
+        return button
+    }
+    
+    fileprivate func createParticipantsCollectionViewLayout() -> VoiceChannelCollectionViewLayout {
+        let layout = VoiceChannelCollectionViewLayout()
+        layout.itemSize = CGSize(width: GroupCallAvatarSize, height: GroupCallAvatarSize + GroupCallAvatarLabelHeight)
+        layout.minimumInteritemSpacing = 24
+        layout.minimumLineSpacing = 24
+        layout.scrollDirection = .horizontal
+        return layout
+    }
+    
+    fileprivate func createParticipantsCollectionView(layout: UICollectionViewLayout) -> UICollectionView {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.alwaysBounceHorizontal = true
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        return collectionView
+    }
+    
     public func createConstraints(){
         
         constrain([videoView, shadow, videoNotAvailableBackground]) { views in
