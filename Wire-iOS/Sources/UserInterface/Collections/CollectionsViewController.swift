@@ -167,10 +167,6 @@ final public class CollectionsViewController: UIViewController {
         self.textSearchController.teardown()
     }
     
-    override public func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if self.traitCollection.horizontalSizeClass == .regular {
             return .all
