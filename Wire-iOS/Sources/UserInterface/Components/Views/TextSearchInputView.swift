@@ -83,7 +83,7 @@ public final class TextSearchInputView: UIView {
     }
     
     private func createConstraints() {
-        constrain(self, iconView, searchInput, placeholderLabel) { selfView, iconView, searchInput, placeholderLabel in
+        constrain(self, iconView, searchInput, placeholderLabel, cancelButton) { selfView, iconView, searchInput, placeholderLabel, cancelButton in
             iconView.leading == selfView.leading
             iconView.width == 48
             iconView.height >= 48
@@ -97,6 +97,10 @@ public final class TextSearchInputView: UIView {
             searchInput.top == selfView.top
             searchInput.bottom == selfView.bottom
 
+            placeholderLabel.leading == searchInput.leading
+            placeholderLabel.top == searchInput.top
+            placeholderLabel.bottom == searchInput.bottom
+            placeholderLabel.trailing == cancelButton.leading
             placeholderLabel.edges == searchInput.edges
         }
 
@@ -109,7 +113,7 @@ public final class TextSearchInputView: UIView {
             spinner.trailing == cancelButton.leading
             spinner.centerY == cancelButton.centerY
 
-            searchInput.trailing <= spinner.leading - 12
+            searchInput.trailing == spinner.leading - 12
         }
     }
     
