@@ -101,7 +101,6 @@ public final class TextSearchInputView: UIView {
             placeholderLabel.top == searchInput.top
             placeholderLabel.bottom == searchInput.bottom
             placeholderLabel.trailing == cancelButton.leading
-            placeholderLabel.edges == searchInput.edges
         }
 
         constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
@@ -112,8 +111,9 @@ public final class TextSearchInputView: UIView {
 
             spinner.trailing == cancelButton.leading - 6
             spinner.centerY == cancelButton.centerY
+            spinner.width == CGFloat(ZetaIconSize.tiny.rawValue)
 
-            searchInput.trailing == spinner.leading - 12
+            searchInput.trailing == spinner.leading - 6
         }
     }
     
