@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Reset Password";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Invite friends";
+"self.settings.invite_friends.title" = "Invite people";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
