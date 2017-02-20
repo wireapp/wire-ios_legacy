@@ -265,12 +265,13 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             completion();
         }
         else {
-            [ZMUserSession.sharedSession performChanges:^{
-                [self.analyticsTracker tagInitiatedFileUploadWithSize:[attributes[NSFileSize] unsignedLongLongValue]
-                                                        fileExtension:[url pathExtension]
-                                                              context:FileTransferContextApp];
-                
-                [FileMetaDataGenerator metadataForFileAtURL:url UTI:url.UTI name:url.lastPathComponent completion:^(ZMFileMetadata * _Nonnull metadata) {
+            [self.analyticsTracker tagInitiatedFileUploadWithSize:[attributes[NSFileSize] unsignedLongLongValue]
+                                                    fileExtension:[url pathExtension]
+                                                          context:FileTransferContextApp];
+            
+            [FileMetaDataGenerator metadataForFileAtURL:url UTI:url.UTI name:url.lastPathComponent completion:^(ZMFileMetadata * _Nonnull metadata) {
+                [ZMUserSession.sharedSession performChanges:^{
+
                     id<ZMConversationMessage> message = [self.conversation appendMessageWithFileMetadata:metadata
                                                                                                 version3:Settings.sharedSettings.sendV3Assets];
                     
