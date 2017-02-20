@@ -97,8 +97,8 @@ final public class TextSearchViewController: NSObject {
 
         // We hide the results when we either have none or the query is too short
         resultsView.tableView.isHidden = noResults || !validQuery
-        // We only show the no results view if there are no results
-        resultsView.noResultsView.isHidden = !noResults
+        // We only show the no results view if there are no results and a valid query
+        resultsView.noResultsView.isHidden = !noResults || !validQuery
         // If the user did not enter any search query we show the collection again
         resultsView.isHidden = query.isEmpty
 
@@ -132,6 +132,9 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
         }
 
         if query.characters.count < 2 {
+            // We reset the results to avoid showing the previous 
+            // results for a short period for subsequential searches
+            results = []
             resultsView.isLoading = false
         }
     }
