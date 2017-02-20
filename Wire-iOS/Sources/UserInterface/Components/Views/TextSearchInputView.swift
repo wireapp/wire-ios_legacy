@@ -110,7 +110,7 @@ public final class TextSearchInputView: UIView {
             cancelButton.width == 48
             cancelButton.height == 48
 
-            spinner.trailing == cancelButton.leading
+            spinner.trailing == cancelButton.leading - 6
             spinner.centerY == cancelButton.centerY
 
             searchInput.trailing == spinner.leading - 12
