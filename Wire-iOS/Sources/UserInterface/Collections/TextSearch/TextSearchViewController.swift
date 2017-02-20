@@ -35,9 +35,7 @@ final public class TextSearchViewController: NSObject {
     
     fileprivate var results: [ZMConversationMessage] = [] {
         didSet {
-            self.resultsView.tableView.isHidden = results.count == 0
-            self.resultsView.noResultsView.isHidden = results.count != 0
-            self.resultsView.tableView.reloadData()
+            reloadResults()
         }
     }
 
@@ -92,6 +90,21 @@ final public class TextSearchViewController: NSObject {
         }
     }
 
+    fileprivate func reloadResults() {
+        let query = searchQuery ?? ""
+        let noResults = results.isEmpty
+        let validQuery = query.characters.count >= 2
+
+        // We hide the results when we either have none or the query is too short
+        resultsView.tableView.isHidden = noResults || !validQuery
+        // We only show the no results view if there are no results
+        resultsView.noResultsView.isHidden = !noResults
+        // If the user did not enter any search query we show the collection again
+        resultsView.isHidden = query.isEmpty
+
+        resultsView.tableView.reloadData()
+    }
+
 }
 
 extension TextSearchViewController: TextSearchQueryDelegate {
@@ -112,13 +125,10 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
     public func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
         textSearchQuery?.cancel()
         searchStartedDate = nil
+        reloadResults()
 
-        if query.isEmpty {
-            self.resultsView.isHidden = true
-        }
-        else {
-            self.scheduleSearch()
-            self.resultsView.isHidden = false
+        if !query.isEmpty {
+            scheduleSearch()
         }
 
         if query.characters.count < 2 {
