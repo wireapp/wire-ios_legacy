@@ -98,7 +98,7 @@
 
 "send_invitation.subject" = "Connect with me on Wire";
 "send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
-"send_invitation_no_email.text" = "I’m on Wire, search for %@ or visit get.wire.com";
+"send_invitation_no_email.text" = "I’m on Wire. Visit get.wire.com to connect with me.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
