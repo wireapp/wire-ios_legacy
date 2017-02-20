@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "We already sent you a code via SMS. Tap Resend after 10 minutes to get a new one.";
 "error.user.registration_unknown_error" = "Something went wrong. Please try again.";
 "error.user.device_deleted_remotely" = "You have been logged out from another device.";
-"error.user.last_identity_cant_be_deleted" = "You need to have both an email and phone number to be able to remove one of them";
+"error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
