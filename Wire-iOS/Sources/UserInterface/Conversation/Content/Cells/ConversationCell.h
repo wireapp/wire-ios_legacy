@@ -77,10 +77,11 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) ConversationCellLayoutProperties *layoutProperties;
 
 @property (nonatomic, readonly) id<ZMConversationMessage>message;
+@property (nonatomic)           NSArray<NSString *> *searchQueries;
 @property (nonatomic, readonly) UILabel *authorLabel;
 @property (nonatomic, readonly) UserImageView *authorImageView;
 @property (nonatomic, readonly) UIView *messageContentView;
-@property (nonatomic) LikeButton *likeButton;
+@property (nonatomic)           LikeButton *likeButton;
 @property (nonatomic, readonly) MessageToolboxView *toolboxView;
 @property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;

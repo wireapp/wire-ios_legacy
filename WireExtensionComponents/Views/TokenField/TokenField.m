@@ -364,13 +364,7 @@ CGFloat const accessoryButtonSize = 32.0f;
         return;
     }
     
-    CGFloat tokenMaxSizeWidth = self.textView.textContainer.size.width;
-    if (self.currentTokens.count == 0) {
-        tokenMaxSizeWidth -= self.toLabel.frame.size.width + (self.hasAccessoryButton ? self.accessoryButton.frame.size.width : 0.0f) + self.tokenOffset;
-    } else if (self.currentTokens.count == 1) {
-        tokenMaxSizeWidth -= (self.hasAccessoryButton ? self.accessoryButton.frame.size.width : 0.0f);
-    }
-    token.maxTitleWidth = tokenMaxSizeWidth;
+    [self updateMaxTitleWidthForToken:token];
     
     if (! self.isCollapsed) {
         self.textView.attributedText = [self stringForTokens:self.currentTokens];
@@ -400,6 +394,17 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (void)removeToken:(Token *)token
 {
     [self removeTokens:@[token]];
+}
+
+- (void)updateMaxTitleWidthForToken:(Token *)token
+{
+    CGFloat tokenMaxSizeWidth = self.textView.textContainer.size.width;
+    if (self.currentTokens.count == 0) {
+        tokenMaxSizeWidth -= self.toLabel.frame.size.width + (self.hasAccessoryButton ? self.accessoryButton.frame.size.width : 0.0f) + self.tokenOffset;
+    } else if (self.currentTokens.count == 1) {
+        tokenMaxSizeWidth -= (self.hasAccessoryButton ? self.accessoryButton.frame.size.width : 0.0f);
+    }
+    token.maxTitleWidth = tokenMaxSizeWidth;
 }
 
 - (void)removeAllTokens
@@ -564,6 +569,23 @@ CGFloat const accessoryButtonSize = 32.0f;
         self.accessoryButtonTopMargin.constant = self.accessoryButtonTop;
     }
     [self layoutIfNeeded];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    BOOL anyTokenUpdated = NO;
+    for (Token *token in self.currentTokens) {
+        if (token.maxTitleWidth == 0) {
+            [self updateMaxTitleWidthForToken:token];
+            anyTokenUpdated = YES;
+        }
+    }
+    
+    if (anyTokenUpdated) {
+        [self updateTokenAttachments];
+    }
 }
 
 #pragma mark - Utility

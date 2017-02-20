@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(Apparaat %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Je gebruik een oudere versie van Wire die dit type bericht niet kan tonen.";
+"content.system.unknown_message.body.link" = "Waarom gebeurt dit?";
+
 "content.file.uploading" = "Uploaden…";
 "content.file.downloading" = "Downloaden…";
 "content.file.upload_failed" = "Upload mislukt";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Email opnieuw verstuurd";
 "self.settings.account_section.email.change.resend.message" = "Een bevestigings email is opnieuw verstuurd naar %@. Je vind verdere instructies in deze email.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefoonnummer";
+"self.settings.account_section.phone_number.change.save" = "Opslaan";
+"self.settings.account_section.phone_number.change.remove" = "Verwijder Telefoon nummer";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Verwijder Telefoon Nummer";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Opslaan";
+"self.settings.account_section.phone_number.change.verify.title" = "Verifiëer";
+"self.settings.account_section.phone_number.change.verify.description" = "Voer de verificatiecode die we naar %@ hebben gestuurd.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Voer code in";
+"self.settings.account_section.phone_number.change.verify.resend" = "Code opnieuw verzenden";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Krijg je geen code?\nJe kan elke 30 seconde een nieuwe aanvragen.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Verstuur code opnieuw";
+"self.settings.account_section.phone_number.change.resend.message" = "Verificatie code was opnieuw verstuurd naar %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Meldingen";
 "self.settings.notifications.push_notification.toogle" = "Toon voorvertoning";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open instellingen voor Wire";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dit helpt je te verbinden met anderen. We anonimiseren alle informatie en delen dit nooit met derde partijen. Geef toegang via Instellingen > Privacy > Contacten.";
 
+"self.settings.privacy_security.lock_app" = "Vergrendel met Touch ID & Wachtwoord";
+"self.settings.privacy_security.lock_app.description" = "Ontgrendel Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Ontgrendel Wire met Touch ID of Wachtwoord";
+"self.settings.privacy_security.lock_cancelled.action" = "Ontgrendel";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Apparaten";
 
 "self.settings.privacy_analytics_section.title" = "Diagnose en gebruik";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Herstel wachtwoord";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Nodig vrienden uit";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "We hebben je al een code via SMS verstuurd. Klik op Opnieuw sturen na 10 minuten om een nieuwe code te krijgen.";
 "error.user.registration_unknown_error" = "Er ging iets mis. Probeer het nogmaals.";
 "error.user.device_deleted_remotely" = "Je bent uitgelogd door een ander apparaat.";
-
+"error.user.last_identity_cant_be_deleted" = "Je moet een email adres of een telefoon nummer hebben om er een van te verwijderen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Toon alle %d →";
 "collections.section.no_items" = "Geen items in de verzameling";
 "collections.image_viewer.copied.title" = "Afbeelding gekopieerd";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

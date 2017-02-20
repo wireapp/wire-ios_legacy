@@ -40,4 +40,6 @@
 
 + (CGRect)keyboardFrameInView:(UIView *)view forKeyboardInfo:(NSDictionary *)keyboardInfo;
 
+- (void)flashBackground;
+
 @end

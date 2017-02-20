@@ -114,6 +114,8 @@
 @interface ConversationViewController (UINavigationControllerDelegate) <UINavigationControllerDelegate>
 @end
 
+@interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
+@end
 
 @interface ConversationViewController ()
 
@@ -140,7 +142,7 @@
 
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
-@property (nonatomic, weak) CollectionsViewController *collectionController;
+@property (nonatomic) CollectionsViewController *collectionController;
 
 @end
 
@@ -173,7 +175,8 @@
 
     self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextConversation];
     self.conversationDetailsTransitioningDelegate = [[ConversationDetailsTransitioningDelegate alloc] init];
-
+    self.conversationDetailsTransitioningDelegate.dataSource = self;
+    
     [self createInputBarController];
     [self createContentViewController];
     [self createConversationBarController];
@@ -329,6 +332,8 @@
         [Settings sharedSettings].lastViewedConversation = self.conversation;
     }
 
+    self.contentViewController.searchQueries = self.collectionController.currentTextSearchQuery;
+    
     self.isAppearing = NO;
 }
 
@@ -370,6 +375,14 @@
 - (BOOL)definesPresentationContext
 {
     return YES;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    if (self.collectionController.view.window == nil) {
+        self.collectionController = nil;
+    }
 }
 
 - (void)openConversationList
@@ -499,6 +512,13 @@
     }];
 }
 
+- (void)setCollectionController:(CollectionsViewController *)collectionController
+{
+    _collectionController = collectionController;
+    
+    [self updateLeftNavigationBarItems];
+}
+
 #pragma mark - SwipeNavigationController's panning
 
 - (BOOL)frameworkShouldRecognizePan:(UIPanGestureRecognizer *)gestureRecognizer
@@ -536,8 +556,6 @@
                         withLatestMessage:(id<ZMConversationMessage>)message
 {
     self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
-    
-    
 }
 
 - (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view
@@ -980,6 +998,24 @@
     } else {
         navController.rightButtonEnabled = YES;
     }
+}
+
+@end
+
+@implementation ConversationViewController (VerticalTransitionDataSource)
+
+- (NSArray<UIView *> *)viewsToHideDuringVerticalTransition:(VerticalTransition *)transition
+{
+    NSMutableArray<UIView *> *viewsToHide = [[NSMutableArray alloc] init];
+    
+    if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
+        ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
+        [viewsToHide addObject:convRootViewController.customNavBar];
+    }
+    
+    [viewsToHide addObject:self.inputBarController.view];
+    
+    return viewsToHide;
 }
 
 @end

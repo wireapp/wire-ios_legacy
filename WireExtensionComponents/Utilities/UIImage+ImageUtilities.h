@@ -45,6 +45,7 @@
 - (UIImage *)imageWithInsets:(UIEdgeInsets)insets backgroundColor:(UIColor *)backgroundColor;
 
 + (UIImage *)singlePixelImageWithColor:(UIColor *)color;
++ (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color;
 + (UIImage *)deviceOptimizedImageFromData:(NSData *)imageData;
 + (UIImage *)imageFromData:(NSData *)imageData withMaxSize:(CGFloat)maxSize;
 

@@ -239,7 +239,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             break;
             
         case ProfileUserActionPresentMenu:
-            return ZetaIconTypeElipsis;
+            return ZetaIconTypeEllipsis;
             break;
             
         case ProfileUserActionUnblock:

@@ -95,10 +95,6 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: loggingDict)
     }
     
-    func setCustomerID(_ customerID: String!) {
-        print(loggingData: ["customerID" : customerID])
-    }
-    
     func setCustomDimension(_ dimension: Int32, value: String!) {
         print(loggingData: ["customeDimension_\(dimension)" : value])
     }

@@ -248,7 +248,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         [self.footerView setIconTypeForLeftButton:ZetaIconTypeNone];
     }
     
-    [self.footerView setIconTypeForRightButton:ZetaIconTypeElipsis];
+    [self.footerView setIconTypeForRightButton:ZetaIconTypeEllipsis];
     
     self.footerView.delegate = self;
 }

@@ -23,8 +23,8 @@
 
 @interface KeyboardFrameObserver ()
 
-@property (nonatomic, strong) NSDictionary *currentKeyboardInfo;
-
+@property (nonatomic) NSDictionary *currentKeyboardInfo;
+@property (nonatomic) BOOL keyboardWasShown;
 @end
 
 
@@ -35,9 +35,13 @@
 {
     self = [super init];
     if (self) {
+        self.keyboardWasShown = NO;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     }
     return self;
 }
@@ -52,14 +56,24 @@
     self.currentKeyboardInfo = [notification.userInfo copy];
 }
 
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    self.keyboardWasShown = YES;
+}
+
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     self.currentKeyboardInfo = nil;
 }
 
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    self.keyboardWasShown = NO;
+}
+
 - (CGRect)keyboardFrame
 {
-    if (self.currentKeyboardInfo) {
+    if (self.currentKeyboardInfo && self.keyboardIsVisible) {
         return [[self.currentKeyboardInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     } else {
         return CGRectZero;
@@ -68,11 +82,19 @@
 
 - (CGRect)keyboardFrameInView:(UIView *)view
 {
-    return [UIView keyboardFrameInView:view forKeyboardInfo:self.currentKeyboardInfo];
+    if (self.currentKeyboardInfo && self.keyboardIsVisible) {
+        return [UIView keyboardFrameInView:view forKeyboardInfo:self.currentKeyboardInfo];
+    } else {
+        return CGRectZero;
+    }
 }
 
 - (BOOL)keyboardIsVisible
 {
+    if (!self.keyboardWasShown) {
+        return NO;
+    }
+    
     CGRect screenRect = [[self.currentKeyboardInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect visibleRect = CGRectIntersection([UIScreen mainScreen].bounds, screenRect);
     

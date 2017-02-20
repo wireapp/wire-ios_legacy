@@ -23,15 +23,14 @@ import Cartography
 @objc public final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
-    let noItemsLabel = UILabel()
-    let noItemsIcon = UIImageView()
+    let noResultsView = NoResultsView()
+    let separatorView = UIView()
     
     static public let useAutolayout = false
     
     var noItemsInLibrary: Bool = false {
         didSet {
-            self.noItemsLabel.isHidden = !self.noItemsInLibrary
-            self.noItemsIcon.isHidden = !self.noItemsInLibrary
+            self.noResultsView.isHidden = !self.noItemsInLibrary
         }
     }
     
@@ -57,21 +56,15 @@ import Cartography
         self.collectionView.backgroundColor = UIColor.clear
         self.addSubview(self.collectionView)
 
-        self.noItemsLabel.accessibilityLabel = "no items"
-        self.noItemsLabel.text = "collections.section.no_items".localized.uppercased()
-        self.noItemsLabel.numberOfLines = 0
-        self.noItemsLabel.isHidden = true
-        self.addSubview(self.noItemsLabel)
-        self.noItemsIcon.isHidden = true
-        self.addSubview(self.noItemsIcon)
-        
-        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-        let placeholderColor = backgroundColor.mix(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), amount: 0.16)
-        
-        self.noItemsIcon.image = UIImage(for: .library, fontSize: 160, color: placeholderColor)
-        self.noItemsLabel.textColor = placeholderColor
-        
-        self.constrainViews()
+
+        self.separatorView.cas_styleClass = "separator"
+        self.addSubview(self.separatorView)
+   
+        self.noResultsView.label.accessibilityLabel = "no items"
+        self.noResultsView.label.text = "collections.section.no_items".localized.uppercased()
+        self.noResultsView.icon = .library
+        self.noResultsView.isHidden = true
+        self.addSubview(self.noResultsView)
     }
     
     private func recreateLayout() {
@@ -109,25 +102,42 @@ import Cartography
         return button
     }
     
-    public static func searchButton() -> IconButton {
-        let button = IconButton.iconButtonDefault()
-        button.setIcon(.search, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 38, height: 20)
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
-        button.accessibilityIdentifier = "search"
-        return button
-    }
-    
-    private func constrainViews() {
-        constrain(self, self.collectionView, self.noItemsLabel, self.noItemsIcon) { (selfView: LayoutProxy, collectionView: LayoutProxy, noItemsLabel: LayoutProxy, noItemsIcon: LayoutProxy) -> () in
-            collectionView.edges == selfView.edges
-            noItemsLabel.centerX == selfView.centerX
-            noItemsLabel.centerY == selfView.centerY + 64
-            noItemsLabel.left >= selfView.left + 24
-            noItemsLabel.right <= selfView.right - 24
+    public func constrainViews(searchViewController: TextSearchViewController) {
+        self.addSubview(searchViewController.resultsView)
+        self.addSubview(searchViewController.searchBar)
+        
+        self.bringSubview(toFront: self.separatorView)
+        
+        constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { (selfView: LayoutProxy, searchBar: LayoutProxy, collectionView: LayoutProxy, noResultsView: LayoutProxy) -> () in
             
-            noItemsIcon.centerX == selfView.centerX
-            noItemsIcon.bottom == noItemsLabel.top - 24
+            searchBar.top == selfView.top
+            searchBar.leading == selfView.leading
+            searchBar.trailing == selfView.trailing
+            searchBar.height == 44
+            
+            collectionView.top == searchBar.bottom
+            
+            collectionView.leading == selfView.leading
+            collectionView.trailing == selfView.trailing
+            collectionView.bottom == selfView.bottom
+
+            noResultsView.top >= searchBar.bottom + 12
+            noResultsView.centerX == selfView.centerX
+            noResultsView.centerY == selfView.centerY ~ UILayoutPriorityDefaultLow
+            noResultsView.bottom <= selfView.bottom - 12
+            noResultsView.leading >= selfView.leading + 24
+            noResultsView.trailing <= selfView.trailing - 24
+        }
+        
+        constrain(self.collectionView, searchViewController.resultsView) { collectionView, resultsView in
+            resultsView.edges == collectionView.edges
+        }
+        
+        constrain(searchViewController.searchBar, self.separatorView) { searchBar, separatorView in
+            separatorView.leading == searchBar.leading
+            separatorView.trailing == searchBar.trailing
+            separatorView.bottom == searchBar.bottom
+            separatorView.height == CGFloat.hairline
         }
     }
     

@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Você está usando uma versão antiga do Wire que não pode exibir esta mensagem.";
+"content.system.unknown_message.body.link" = "Por que isso acontece?";
+
 "content.file.uploading" = "Enviando…";
 "content.file.downloading" = "Baixando…";
 "content.file.upload_failed" = "Falha de envio";
@@ -446,7 +449,7 @@
 "self.settings.account_section.name.title" = "Nome";
 "self.settings.account_section.email.title" = "E-mail";
 "self.settings.account_section.phone.title" = "Telefone";
-"self.settings.account_section.handle.title" = "Nome do Usuário";
+"self.settings.account_section.handle.title" = "Nome de usuário";
 "self.settings.account_section.add_handle.title" = "Adicionar nome de usuário";
 
 "self.settings.account_details_group.info.footer" = "Pessoas podem te encontrar com esses detalhes.";
@@ -459,7 +462,7 @@
 "self.settings.account_details.remove_device.password.error" = "Senha errada";
 
 "self.settings.account_appearance_group.title" = "Aparência";
-"self.settings.account_picture_group.picture" = "Imagem";
+"self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Cor";
 
 "self.settings.account_picture_group.theme" = "Tema Escuro";
@@ -478,7 +481,7 @@
 
 // Change Username
 
-"self.settings.account_section.handle.change.title" = "Nome do Usuário";
+"self.settings.account_section.handle.change.title" = "Nome de usuário";
 "self.settings.account_section.handle.change.save" = "Salvar";
 "self.settings.account_section.handle.change.footer" = "Ao menos 2 caracteres. a—z, 0—9 e _ apenas.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Já está sendo usado";
@@ -497,6 +500,25 @@
 
 "self.settings.account_section.email.change.resend.title" = "E-mail reenviado";
 "self.settings.account_section.email.change.resend.message" = "Um e-mail de confirmação foi reenviado para %@. Verifique sua caixa de entrada do e-mail e siga as instruções.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefone";
+"self.settings.account_section.phone_number.change.save" = "Salvar";
+"self.settings.account_section.phone_number.change.remove" = "Remover Número de telefone";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Remover número de telefone";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Salvar";
+"self.settings.account_section.phone_number.change.verify.title" = "Verificar";
+"self.settings.account_section.phone_number.change.verify.description" = "Digite o código de verificação que nós enviamos para %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Digite o código";
+"self.settings.account_section.phone_number.change.verify.resend" = "Reenviar código";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Nenhum código aparecendo?\nVocê pode solicitar um novo a cada 30 segundos.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Código reenviado";
+"self.settings.account_section.phone_number.change.resend.message" = "O código de verificação foi reenviado pata %@.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notificações";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir Ajustes de Contatos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Isso ajuda a você se conectar com outros. Nós tornamos secretas todas as informações e não compartilhamos com ninguém. Permita o acesso em Ajustes > Privacidade > Contatos.";
 
+"self.settings.privacy_security.lock_app" = "Bloquear com Touch ID e Código";
+"self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Por favor, desbloqueie o Wire com Touch ID ou Código";
+"self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
 "self.settings.privacy_analytics_section.title" = "Relatórios de Uso e Erro";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Redefinir senha";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Convidar amigos";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Nós já enviamos um código via SMS. Toque em 'Re-enviar' após 10 minutos para conseguir um novo.";
 "error.user.registration_unknown_error" = "Algo deu errado. Por favor, tente novamente.";
 "error.user.device_deleted_remotely" = "Você foi desconectado através de um outro aparelho.";
-
+"error.user.last_identity_cant_be_deleted" = "Você precisa ter um e-mail e um número de telefone para ser capaz de remover um deles";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Mostrar todos os %d →";
 "collections.section.no_items" = "Não há itens na coleção";
 "collections.image_viewer.copied.title" = "Imagem copiada";
+
+"collections.search.field.placeholder" = "Buscar mensagens de texto";
+"collections.search.no_items" = "Não há resultados";

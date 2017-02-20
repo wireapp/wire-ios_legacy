@@ -20,6 +20,7 @@
 #import "AnalyticsVoiceChannelTracker.h"
 #import "Analytics.h"
 #import "zmessaging+iOS.h"
+#import "DeveloperMenuState.h"
 
 
 @interface AnalyticsVoiceChannelTracker () <VoiceChannelStateObserver>
@@ -83,6 +84,14 @@
 
 - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
+    if (reason == VoiceChannelV2CallEndReasonInputOutputError && [DeveloperMenuState developerMenuEnabled]) {
+        UIAlertView* view = [[UIAlertView alloc] initWithTitle:@"Calling error"
+                                                       message:@"AVS I/O error"
+                                                      delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+        [view show];
+    }
     [self.analytics tagEndedCallInConversation:conversation
                                          video:self.isVideoCall
                                  initiatedCall:self.initiatedCall

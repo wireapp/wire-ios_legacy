@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
+"content.system.unknown_message.body.link" = "Why is this happening?";
+
 "content.file.uploading" = "Завантаження…";
 "content.file.downloading" = "Скачування…";
 "content.file.upload_failed" = "Не вдалося завантажити";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Email було надіслано повторно";
 "self.settings.account_section.email.change.resend.message" = "Email з кододом верифікації було повторно надіслано на %@. Перевірте вашу поштову скриньку та дотримуйтесь надісланих інструкцій.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Номер телефону";
+"self.settings.account_section.phone_number.change.save" = "Зберегти";
+"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Зберегти";
+"self.settings.account_section.phone_number.change.verify.title" = "Verify";
+"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
+"self.settings.account_section.phone_number.change.verify.resend" = "Resend Code";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Код не показується?\nВи можете надіслати запит на новий кожні 30 секунд.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Код верифікації було надіслано повторно";
+"self.settings.account_section.phone_number.change.resend.message" = "Код верифікації було надіслано на %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Сповіщення";
 "self.settings.notifications.push_notification.toogle" = "Попередній перегляд сповіщень";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам установити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
+"self.settings.privacy_security.lock_app" = "Заблокувати з використанням Touch ID та коду допуску";
+"self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Будь ласка, розблокуйте Wire за допомогою Touch ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
 
 "self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Запросити друзів";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Ми вже надіслали SMS з кодом. Щоб отримати новий код, натисніть \"Надіслати ще раз\" через 10 хвилин.";
 "error.user.registration_unknown_error" = "Щось пішло не так. Будь ласка спробуйте ще раз.";
 "error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
-
+"error.user.last_identity_cant_be_deleted" = "Для вашого акаунту повинні бути зареєстровані як email-адреса, так і номер телефону, щоб можна було видалити що-небудь";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Показати всі %d →";
 "collections.section.no_items" = "Колекція порожня";
 "collections.image_viewer.copied.title" = "Зображення скопійоване";
+
+"collections.search.field.placeholder" = "Шукайте текстові повідомлення";
+"collections.search.no_items" = "Нічого не знайдено";

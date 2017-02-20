@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(устройство %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Вы используете старую версию Wire, которая не может отображать это сообщение.";
+"content.system.unknown_message.body.link" = "Почему это происходит?";
+
 "content.file.uploading" = "Отправка…";
 "content.file.downloading" = "Загрузка…";
 "content.file.upload_failed" = "Сбой отправки";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Отправить email заново";
 "self.settings.account_section.email.change.resend.message" = "Письмо с подтверждением было отправлено на %@ еще раз. Пожалуйста, проверьте ваш почтовый ящик и следуйте инструкциям в письме.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Телефон";
+"self.settings.account_section.phone_number.change.save" = "Сохранить";
+"self.settings.account_section.phone_number.change.remove" = "Удалить номер телефона";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Удалить номер телефона";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Сохранить";
+"self.settings.account_section.phone_number.change.verify.title" = "Подтвердить";
+"self.settings.account_section.phone_number.change.verify.description" = "Введите код подтверждения, который был отправлен на номер %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Введите код";
+"self.settings.account_section.phone_number.change.verify.resend" = "Запросить код повторно";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Код не показывается?\nВы можете запросить новый через 30 секунд.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Код отправлен повторно";
+"self.settings.account_section.phone_number.change.resend.message" = "Код подтверждения был повторно отправлен на номер %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Уведомления";
 "self.settings.notifications.push_notification.toogle" = "Предварительный просмотр сообщения";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Открыть настройки контактов";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет вам связаться с другими людьми. Мы анонимизируем всю информацию и не передаем ее третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
+"self.settings.privacy_security.lock_app" = "Заблокировать при помощи Touch ID & пароля";
+"self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Пожалуйста разблокируйте Wire с помощью Touch ID или пароля";
+"self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
 "self.settings.privacy_analytics_section.title" = "Отчеты о сбоях и использовании";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Пригласить друзей";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Мы уже отправили вам код через SMS. Нажмите \"Отправить повторно\" через 10 минут, чтобы получить новый.";
 "error.user.registration_unknown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз.";
 "error.user.device_deleted_remotely" = "Вы вышли на другом устройстве.";
-
+"error.user.last_identity_cant_be_deleted" = "Должны быть указаны и email, и номер телефона, чтобы имелась возможность удалить один из них";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Показать все %d →";
 "collections.section.no_items" = "Ничего нет";
 "collections.image_viewer.copied.title" = "Изображение скопировано";
+
+"collections.search.field.placeholder" = "Поиск в текстовых сообщениях";
+"collections.search.no_items" = "Ничего не найдено";

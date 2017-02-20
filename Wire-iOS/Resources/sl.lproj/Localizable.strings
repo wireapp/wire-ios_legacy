@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(naprava%@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Uporabljate starejšo različico Wire, ki ne more prikazati tega sporočila.";
+"content.system.unknown_message.body.link" = "Zakaj se to dogaja?";
+
 "content.file.uploading" = "Nalaganje…";
 "content.file.downloading" = "Prenašanje…";
 "content.file.upload_failed" = "Nalaganje ni uspelo";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "E-pošta ponovno poslana";
 "self.settings.account_section.email.change.resend.message" = "Potrditvena e-pošta je bila ponovno poslana na %@. Preverite vaš e-poštni predal in sledite navodilom.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefon";
+"self.settings.account_section.phone_number.change.save" = "Shrani";
+"self.settings.account_section.phone_number.change.remove" = "Odstrani telefonsko številko";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Odstrani telefonsko številko";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Shrani";
+"self.settings.account_section.phone_number.change.verify.title" = "Preveri";
+"self.settings.account_section.phone_number.change.verify.description" = "Vnesite verifikacijsko kodo, ki smo jo poslali na: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Vnesite kodo";
+"self.settings.account_section.phone_number.change.verify.resend" = "Ponovno pošlji kodo";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Koda ni prispela?\nLahko zahtevate novo vsakih 30 sekund.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Koda ponovno poslana";
+"self.settings.account_section.phone_number.change.resend.message" = "Verifikacijska koda je bila ponovno poslana na %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Obvestila";
 "self.settings.notifications.push_notification.toogle" = "Predogledi sporočil";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Odpri nastavitve stikov";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "To vam pomaga pri povezovanju z drugimi. Vse informacije anonimiziramo in ne delimo z drugimi. Dovolite dostop preko Nastavitve > Zasebnost > Stiki.";
 
+"self.settings.privacy_security.lock_app" = "Zakleni s Touch ID in geslom";
+"self.settings.privacy_security.lock_app.description" = "Odkleni Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Prosimo odklenite Wire s Touch ID ali geslom";
+"self.settings.privacy_security.lock_cancelled.action" = "Odkleni";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Naprave";
 
 "self.settings.privacy_analytics_section.title" = "Podatki o uporabi in poročila o prisilnih ustavitvah";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Ponastavi geslo";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Povabi prijatelje";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Kodo smo vam že poslali preko SMS. Tapnite Pošlji ponovno po 10 minutah za novo.";
 "error.user.registration_unknown_error" = "Nekaj je šlo narobe, prosimo poizkusite znova.";
 "error.user.device_deleted_remotely" = "Odjavljeni ste bili iz druge naprave.";
-
+"error.user.last_identity_cant_be_deleted" = "Imeti morate dodan e-poštni naslov in telefonsko številko za odstranitev enega od njiju";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Prikaži vse %d →";
 "collections.section.no_items" = "Ni predmetov v zbirki";
 "collections.image_viewer.copied.title" = "Slika kopirana";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

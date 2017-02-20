@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(デバイス %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "古いバージョンのWireを利用されているため、このメッセージは表示されません。";
+"content.system.unknown_message.body.link" = "なぜこれが起こるのか？";
+
 "content.file.uploading" = "アップロード中...";
 "content.file.downloading" = "ダウンロード中…";
 "content.file.upload_failed" = "アップロードに失敗しました";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "メールを再送信";
 "self.settings.account_section.email.change.resend.message" = "確認メールが%@ に再送されました。メールボックスを確認し、記載されている手続きを行って。";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "電話";
+"self.settings.account_section.phone_number.change.save" = "保存";
+"self.settings.account_section.phone_number.change.remove" = "電話番号を削除する";
+
+"self.settings.account_section.phone_number.change.remove.action" = "電話番号を削除する";
+
+"self.settings.account_section.phone_number.change.verify.save" = "保存";
+"self.settings.account_section.phone_number.change.verify.title" = "認証";
+"self.settings.account_section.phone_number.change.verify.description" = "%@ に送信した認証コードを入力してください";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "コードを入力する";
+"self.settings.account_section.phone_number.change.verify.resend" = "コードを再送信";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "コードが表示されませんか？\n新しいコードを30秒ごとにリクエストすることができます。";
+
+"self.settings.account_section.phone_number.change.resend.title" = "コードの再送";
+"self.settings.account_section.phone_number.change.resend.message" = "%@ に認証コードを再送しました";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "通知センター";
 "self.settings.notifications.push_notification.toogle" = "メッセージプレビュー";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "連絡先の設定を開く";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "これはあなたが友人とつながるを容易にします。私たちはすべての情報を匿名化し、他の第三者と共有することはしません。アクセスを許可するためには、設定>プライバシー>連絡先で設定します。";
 
+"self.settings.privacy_security.lock_app" = "Touch ID と パスコードでロック";
+"self.settings.privacy_security.lock_app.description" = "Wireのロックを解除する";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Touch ID またはパスコードでWireのロックを解除してください。";
+"self.settings.privacy_security.lock_cancelled.action" = "ロックを解除";
+
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";
 
 "self.settings.privacy_analytics_section.title" = "使用状況データと障害報告";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "パスワードをリセット";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "友達を招待する";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "すでに SMS 経由でコードを送信しました。新しいものを取得するには 10 分後に、再送信をタップします。";
 "error.user.registration_unknown_error" = "何か問題が起きたようです。もう一度やり直してください。";
 "error.user.device_deleted_remotely" = "別のデバイスからログアウトしました。";
-
+"error.user.last_identity_cant_be_deleted" = "メールまたは電話番号のいずれかを削除するためには、それらが登録されている必要があります。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "全てを表示 %d →";
 "collections.section.no_items" = "コレクションにアイテムがありません。";
 "collections.image_viewer.copied.title" = "写真を保存しました";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

@@ -25,11 +25,7 @@
 
 - (void)wr_presentInviteActivityViewControllerWithSourceView:(UIView *)sourceView logicalContext:(GenericInviteContext)logicalContext
 {
-    UIActivityViewController *activity = [UIActivityViewController shareInviteActivityViewControllerWithCompletion:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        if (completed && ! [activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-            [self presentViewController:[ActionSheetController sharedInvitesActionSheet] animated:YES completion:nil];
-        }
-    } logicalContext:logicalContext];
+    UIActivityViewController *activity = [UIActivityViewController shareInviteActivityViewControllerWithCompletion:nil logicalContext:logicalContext];
     
     activity.modalPresentationStyle = UIModalPresentationPopover;
     UIPopoverPresentationController *popoverPresentation = activity.popoverPresentationController;

@@ -260,7 +260,7 @@
     [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
     
     @weakify(self);
-    [self.splitViewController setLeftViewController:self.conversationListViewController animated:animated expanded:NO completion:^{
+    [self.splitViewController setLeftViewController:self.conversationListViewController animated:animated completion:^{
         @strongify(self);
         [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
     }];
@@ -651,16 +651,6 @@
            splitViewController.leftViewController == self.conversationListViewController &&
            self.conversationListViewController.state == ConversationListStateConversationList &&
            (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
-}
-
-- (void)splitViewControllerWillExpandLeftViewController:(SplitViewController *)splitViewController
-{
-    [self.backgroundViewController setForceFullScreen:YES animated:YES];
-}
-
-- (void)splitViewControllerWillCollapseLeftViewController:(SplitViewController *)splitViewController
-{
-    [self.backgroundViewController setForceFullScreen:NO animated:YES];
 }
 
 @end

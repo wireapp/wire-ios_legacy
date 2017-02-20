@@ -30,6 +30,23 @@ final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?
+    public var isShowingSearchResults: Bool {
+        guard let textSearchController = self.textSearchController,
+              let resultsView = textSearchController.resultsView else {
+            return false
+        }
+        return !resultsView.isHidden
+    }
+
+    public var shouldTrackOnNextOpen = false
+    
+    public var currentTextSearchQuery: [String] {
+        guard let textSearchController = self.textSearchController else {
+            return []
+        }
+        
+        return textSearchController.searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? []
+    }
     
     fileprivate var contentView: CollectionsView! {
         return self.view as! CollectionsView
@@ -43,8 +60,7 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
     fileprivate let collection: AssetCollectionWrapper
-    
-    fileprivate var openCollectionsIsTracked: Bool = false
+
     fileprivate var lastLayoutSize: CGSize = .zero
     
     fileprivate var fetchingDone: Bool = false {
@@ -54,16 +70,15 @@ final public class CollectionsViewController: UIViewController {
                 self.contentView.collectionView.reloadData()
             }
             
-            if self.inOverviewMode && self.fetchingDone && !self.openCollectionsIsTracked {
-                Analytics.shared()?.tagCollectionOpen(for: self.collection.conversation, itemCount: UInt(self.totalNumberOfElements()))
-                self.openCollectionsIsTracked = true
-            }
+            trackOpeningIfNeeded()
         }
     }
     
     fileprivate var inOverviewMode: Bool {
         return self.sections == .all
     }
+    
+    fileprivate var textSearchController: TextSearchViewController!
     
     convenience init(conversation: ZMConversation) {
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
@@ -112,7 +127,11 @@ final public class CollectionsViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.textSearchController = TextSearchViewController(conversation: self.collection.conversation)
+        self.textSearchController.delegate = self
+        self.contentView.constrainViews(searchViewController: self.textSearchController)
+        
         self.messagePresenter.targetViewController = self
         self.messagePresenter.modalTargetController = self
 
@@ -122,8 +141,17 @@ final public class CollectionsViewController: UIViewController {
             self.contentView.collectionView.prefetchDataSource = self
         }
 
-        self.setupNavigationItem()
         self.updateNoElementsState()
+    }
+    
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupNavigationItem()
+    }
+    
+    override public func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.textSearchController.teardown()
     }
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -156,7 +184,17 @@ final public class CollectionsViewController: UIViewController {
         self.contentView.collectionViewLayout.invalidateLayout()
         self.contentView.collectionViewLayout.finalizeCollectionViewUpdates()
     }
-    
+
+    private func trackOpeningIfNeeded() {
+        guard shouldTrackOnNextOpen && fetchingDone else { return }
+        Analytics.shared()?.tagCollectionOpen(
+            for: self.collection.conversation,
+            itemCount: UInt(self.totalNumberOfElements()),
+            withSearchResults: isShowingSearchResults
+        )
+        shouldTrackOnNextOpen = false
+    }
+
     private func reloadData() {
         UIView.performWithoutAnimation {
             self.contentView.collectionView.performBatchUpdates({
@@ -181,6 +219,11 @@ final public class CollectionsViewController: UIViewController {
                 self.reloadData()
             }
         }
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackOpeningIfNeeded()
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -235,16 +278,16 @@ final public class CollectionsViewController: UIViewController {
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
-        if DeveloperMenuState.developerMenuEnabled() {
-            let searchButton = CollectionsView.searchButton()
-            searchButton.addTarget(self, action: #selector(CollectionsViewController.searchButtonPressed(_:)), for: .touchUpInside)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchButton)
-        }
-        
         if !self.inOverviewMode && self.navigationController?.viewControllers.count > 1 {
             let backButton = CollectionsView.backButton()
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        }
+        
+        if let navBar = self.navigationController?.navigationBar {
+            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))!
+            let scaleImageToStretch = UIImage(cgImage: imageToStretch.cgImage!, scale: UIScreen.main.scale, orientation: .up)
+            navBar.shadowImage = scaleImageToStretch.stretchableImage(withLeftCapWidth: 20, topCapHeight: 0)
         }
     }
     
@@ -285,12 +328,6 @@ final public class CollectionsViewController: UIViewController {
     
     @objc func closeButtonPressed(_ button: UIButton) {
         self.onDismiss?(self)
-    }
-    
-    @objc func searchButtonPressed(_ button: UIButton) {
-        let searchController = TextSearchViewController(conversation: self.collection.conversation)
-        searchController.delegate = self
-        self.navigationController?.pushViewController(KeyboardAvoidingViewController(viewController: searchController), animated: true)
     }
     
     @objc func backButtonPressed(_ button: UIButton) {

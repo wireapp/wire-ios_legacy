@@ -75,8 +75,8 @@ public final class InputBarButtonsView: UIView {
         
         buttonContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
-        expandRowButton.setIcon(.elipsis, with: .tiny, for: UIControlState())
-        expandRowButton.addTarget(self, action: #selector(elipsisButtonPressed), for: .touchUpInside)
+        expandRowButton.setIcon(.ellipsis, with: .tiny, for: UIControlState())
+        expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
         addSubview(expandRowButton)
     }
     
@@ -228,7 +228,7 @@ extension InputBarButtonsView {
         showRow(0, animated: true)
     }
     
-    @objc fileprivate func elipsisButtonPressed(_ button: UIButton!) {
+    @objc fileprivate func ellipsisButtonPressed(_ button: UIButton!) {
         showRow(currentRow == 0 ? 1 : 0, animated: true)
     }
 }

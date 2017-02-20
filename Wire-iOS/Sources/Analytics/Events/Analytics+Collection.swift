@@ -92,11 +92,12 @@ extension ZMConversation {
 
 extension Analytics {
     
-    @objc(tagCollectionOpenForConversation:withItemCount:)
-    func tagCollectionOpen(for conversation:ZMConversation, itemCount: UInt)
+    @objc(tagCollectionOpenForConversation:withItemCount:withSearchResults:)
+    func tagCollectionOpen(for conversation:ZMConversation, itemCount: UInt, withSearchResults: Bool)
     {
         var attributes = conversation.conversationAttributes
         attributes["is_empty"] = itemCount == 0 ? "true" : "false"
+        attributes["with_search_result"] = withSearchResults ? "true" : "false" // Whether the collection is pre-filled with existing search
 
         tagEvent("collections.opened_collections", attributes:attributes)
     }

@@ -52,7 +52,7 @@ import Cartography
             
             if shouldDisplayEllipsis {
                 let iconColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-                let imageView = UIImageView(image: UIImage(for: .elipsis, iconSize: .like, color:iconColor))
+                let imageView = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:iconColor))
                 imageView.contentMode = .center
                 constrain(imageView) { imageView in
                     imageView.width == imageView.height

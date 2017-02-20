@@ -115,4 +115,17 @@ static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboa
     return intersection;
 }
 
+- (void)flashBackground
+{
+    UIColor *oldBackgroundColor = self.backgroundColor;
+    
+    [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.backgroundColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.0f delay:0.55f options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.backgroundColor = oldBackgroundColor;
+        } completion:nil];
+    }];
+}
+
 @end

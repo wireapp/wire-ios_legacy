@@ -158,7 +158,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
 @property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
-@property (nonatomic) NSLayoutConstraint *expandLeftViewConstraint;
 
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
@@ -215,9 +214,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         self.leftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         self.rightViewOffsetConstraint = [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     }];
-    
-    self.expandLeftViewConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.expandLeftViewConstraint.active = NO;
     
     self.leftViewWidthConstraint = [self.leftView autoSetDimension:ALDimensionWidth toSize:0];
     self.rightViewWidthConstraint = [self.rightView autoSetDimension:ALDimensionWidth toSize:0];
@@ -333,11 +329,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
     }
     
-    if (self.leftViewControllerExpanded) {
-        [constraints addObjectsFromArray:@[self.expandLeftViewConstraint, self.sideBySideConstraint]];
-    } else {
-        [constraints addObjectsFromArray:@[self.leftViewWidthConstraint]];
-    }
+    [constraints addObjectsFromArray:@[self.leftViewWidthConstraint]];
     
     return [constraints allObjects];
 }
@@ -349,33 +341,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
         [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
     }
-    
-    if (self.leftViewControllerExpanded) {
-        [constraints addObjectsFromArray:@[self.leftViewWidthConstraint]];
-    } else {
-        [constraints addObjectsFromArray:@[self.expandLeftViewConstraint]];
-    }
-    
+        
     return [constraints allObjects];
-}
-
-- (void)setLeftViewController:(UIViewController *)leftViewController animated:(BOOL)animated expanded:(BOOL)expanded completion:(nullable dispatch_block_t)completion
-{
-    if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad && self.leftViewControllerExpanded != expanded) {
-        @weakify(self);
-        [self setLeftViewController:nil animated:animated completion:^{
-            @strongify(self);
-            @weakify(self);
-            [self setLeftViewControllerExpanded:expanded animated:animated completion:^{
-                @strongify(self);
-                [self setLeftViewController:leftViewController animated:animated completion:completion];
-            }];
-            
-        }];
-    } else {
-        SplitViewControllerTransition transition = expanded ? SplitViewControllerTransitionPresent : SplitViewControllerTransitionDismiss;
-        [self setLeftViewController:leftViewController animated:animated transition:transition completion:completion];
-    }
 }
 
 - (void)setLeftViewController:(nullable UIViewController *)leftViewController
@@ -504,36 +471,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     return YES;
 }
 
-- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerIsExpanded
-{
-    [self setLeftViewControllerExpanded:leftViewControllerIsExpanded animated:YES completion:nil];
-}
-
-- (void)setLeftViewControllerExpanded:(BOOL)leftViewControllerExpanded animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
-{
-    _leftViewControllerExpanded = leftViewControllerExpanded;
-    
-    if (leftViewControllerExpanded) {
-        if ([self.delegate respondsToSelector:@selector(splitViewControllerWillExpandLeftViewController:)]) {
-            [self.delegate splitViewControllerWillExpandLeftViewController:self];
-        }
-    } else {
-        if ([self.delegate respondsToSelector:@selector(splitViewControllerWillCollapseLeftViewController:)]) {
-            [self.delegate splitViewControllerWillCollapseLeftViewController:self];
-        }
-    }
-    
-    [self updateActiveConstraints];
-    
-    if (animated) {
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35 animations:^{
-            [self.view layoutIfNeeded];
-        } completion:^(BOOL finished) {
-            if (completion != nil) completion();
-        }];
-    }
-}
-
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
 {
     [self setLeftViewControllerRevealed:leftViewControllerIsRevealed animated:YES completion:nil];
@@ -544,6 +481,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     if (animated) {
         [self.view layoutIfNeeded];
     }
+    
+    self.leftView.hidden = NO;
     
     _leftViewControllerRevealed = leftViewControllerRevealed;
     self.openPercentage = leftViewControllerRevealed ? 1 : 0;
@@ -558,7 +497,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
         }
         
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55 animations:^{
+        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55f animations:^{
             [self.view layoutIfNeeded];
             if (!leftViewControllerRevealed) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -572,7 +511,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
                 [self.leftViewController endAppearanceTransition];
                 [self.rightViewController endAppearanceTransition];
             }
-          
+            
+            if (self.openPercentage == 0) {
+                self.leftView.hidden = YES;
+            }
         }];
     }
     else {
@@ -591,7 +533,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self] || self.isLeftViewControllerExpanded) {
+    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self]) {
         return NO;
     }
     
@@ -604,7 +546,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self] || self.isLeftViewControllerExpanded) {
+    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self]) {
         return;
     }
     
@@ -618,6 +560,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         case UIGestureRecognizerStateBegan:
             [self.leftViewController beginAppearanceTransition:! self.leftViewControllerRevealed animated:YES];
             [self.rightViewController beginAppearanceTransition:self.leftViewControllerRevealed animated:YES];
+            self.leftView.hidden = NO;
             break;
             
         case UIGestureRecognizerStateChanged:
