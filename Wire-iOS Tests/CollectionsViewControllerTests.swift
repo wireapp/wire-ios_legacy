@@ -38,7 +38,7 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
         let delegate = AssetCollectionMulticastDelegate()
-        emptyCollection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
+        emptyCollection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate, matchingCategories: [])
         
         fileMessage = MockMessageFactory.fileTransferMessage()
         linkMessage = MockMessageFactory.linkMessage()
@@ -86,7 +86,7 @@ extension CollectionsViewControllerTests {
     func createController(showingCollection assetCollection: MockCollection) -> CollectionsViewController {
         let conversation = MockConversation() as Any as! ZMConversation
         let delegate = AssetCollectionMulticastDelegate()
-        let collection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
+        let collection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate, matchingCategories: [])
 
         let controller = CollectionsViewController(collection: collection)
         _ = controller.view

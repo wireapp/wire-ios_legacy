@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(appareil %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Vous utilisez une ancienne version de Wire qui ne peut pas afficher ce message.";
+"content.system.unknown_message.body.link" = "Pourquoi cela s'est-il produit?";
+
 "content.file.uploading" = "Envoi en cours…";
 "content.file.downloading" = "Téléchargement en cours…";
 "content.file.upload_failed" = "Échec de l'envoi";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Email renvoyé";
 "self.settings.account_section.email.change.resend.message" = "L'email de confirmation a été renvoyé à %@. Vérifiez votre boîte de réception et suivez les instructions.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Téléphone";
+"self.settings.account_section.phone_number.change.save" = "Enregistrer";
+"self.settings.account_section.phone_number.change.remove" = "Supprimer le numéro de téléphone";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Supprimer le numéro de téléphone";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Enregistrer";
+"self.settings.account_section.phone_number.change.verify.title" = "Vérifier ";
+"self.settings.account_section.phone_number.change.verify.description" = "Entrez le code de vérification que nous avons envoyé au : %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Entrez le code";
+"self.settings.account_section.phone_number.change.verify.resend" = "Renvoyer le code";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Aucun code ne s'affiche ?\nVous pouvez en demander un nouveau toutes les 30 secondes.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Code renvoyé";
+"self.settings.account_section.phone_number.change.resend.message" = "Le code de vérification a été renvoyé à %@.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifications";
 "self.settings.notifications.push_notification.toogle" = "Aperçus";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Ouvrir les paramètres de Contacts";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Cela vous permet de vous connecter avec les autres. Nous rendons anonymes toutes les informations et ne les partageons pas, en aucun cas. Autorisez l'accès via Paramètres > Confidentialité > Contacts.";
 
+"self.settings.privacy_security.lock_app" = "Verrouiller avec Touch ID & code";
+"self.settings.privacy_security.lock_app.description" = "Déverrouillage Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
+"self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Appareils";
 
 "self.settings.privacy_analytics_section.title" = "Rapports d’utilisation et de plantage";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Réinitialiser votre mot de passe";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Invitez vos amis";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Nous vous avons déjà envoyé un code par SMS. Appuyez sur renvoyer après 10 minutes pour en obtenir un nouveau.";
 "error.user.registration_unknown_error" = "Quelque chose n'a pas fonctionné. Veuillez essayer de nouveau.";
 "error.user.device_deleted_remotely" = "Vous avez été déconnecté d’un autre appareil.";
-
+"error.user.last_identity_cant_be_deleted" = "Vous devez avoir une adresse mail et un numéro de téléphone pour pouvoir enlever l’un d'entre eux";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "Afficher toutes les %d →";
 "collections.section.no_items" = "Aucun élément dans la bibliothèque";
 "collections.image_viewer.copied.title" = "Image copiée";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

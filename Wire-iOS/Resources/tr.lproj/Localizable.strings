@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(cihaz %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Wire'ın bu mesajı gösteremeyecek kadar eski bir sürümünü kullanıyorsunuz.";
+"content.system.unknown_message.body.link" = "Bu neden oluyor?";
+
 "content.file.uploading" = "Yükleniyor…";
 "content.file.downloading" = "İndiriliyor…";
 "content.file.upload_failed" = "Yükleme başarısız oldu";
@@ -498,6 +501,25 @@
 "self.settings.account_section.email.change.resend.title" = "Maili tekrar gönder";
 "self.settings.account_section.email.change.resend.message" = "Doğrulama e-postası %@'a tekrar gönderildi. Gelen kutunuzu kontrol edin ve talimatları takip edin.";
 
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefon";
+"self.settings.account_section.phone_number.change.save" = "Kaydet";
+"self.settings.account_section.phone_number.change.remove" = "Telefon numarasını kaldır";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Telefon Numarasını Kaldır";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Kaydet";
+"self.settings.account_section.phone_number.change.verify.title" = "Doğrula";
+"self.settings.account_section.phone_number.change.verify.description" = "%@'a gönderdiğimiz doğrulama kodunuzu girin.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Kodu gir";
+"self.settings.account_section.phone_number.change.verify.resend" = "Kodu Tekrar Gönder";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Kod gelmedi mi?\nHer 30 saniyede bir yeni kod isteğinde bulunabilirsiniz.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Kodu tekrar gönder";
+"self.settings.account_section.phone_number.change.resend.message" = "Doğrulama %@'a tekrar gönderildi.";
+
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Bildirimler";
 "self.settings.notifications.push_notification.toogle" = "Mesaj önizlemeleri";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Rehber Ayarlarını açın";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Kişilerinizi paylaşmak, başkalarına bağlanmanızı kolaylaştırır. Biz size ait tüm bilgileri gizler ve başkalarıyla paylaşmayız. Ayarlar > Gizlilik > Kişiler'den bu erişimi aktifleştirebilirsiniz.";
 
+"self.settings.privacy_security.lock_app" = "Touch ID & Şifre ile kilitle";
+"self.settings.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
+"self.settings.privacy_security.lock_cancelled.action" = "Kilidi aç";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Cihazlar";
 
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Parolayı Sıfırla";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Arkadaş davet et";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Size SMS ile bir kod zaten gönderdik. Yenisini almak için 10 dakika sonra Yeniden Gönder'e basın.";
 "error.user.registration_unknown_error" = "Bir şeyler ters gitti, lütfen tekrar deneyin.";
 "error.user.device_deleted_remotely" = "Başka bir cihaz tarafından oturumunuz kapatıldı.";
-
+"error.user.last_identity_cant_be_deleted" = "Telefon numarası veya e-postadan birini dikebilmek için ikisine de sahip olman gerekiyor";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -794,3 +825,6 @@
 "collections.section.all.button" = "%d'nun tümünü göster →";
 "collections.section.no_items" = "Koleksiyonda hiçbir şey yok";
 "collections.image_viewer.copied.title" = "Resim kopyalandı";
+
+"collections.search.field.placeholder" = "Search text messages";
+"collections.search.no_items" = "No results";

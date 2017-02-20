@@ -240,7 +240,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(urządzenie %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
+"content.system.unknown_message.body" = "Używasz starszej wersji Wire, dlatego nie możesz wyświetlić tej wiadomości.";
 "content.system.unknown_message.body.link" = "Dlaczego tak się dzieje?";
 
 "content.file.uploading" = "Wysyłanie…";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Reset hasła";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Invite friends";
+"self.settings.invite_friends.title" = "Zaproś znajomych";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -825,3 +825,6 @@
 "collections.section.all.button" = "Pokaż wszystkie %d →";
 "collections.section.no_items" = "Brak elementów w kolekcji";
 "collections.image_viewer.copied.title" = "Skopiowano zdjęcie";
+
+"collections.search.field.placeholder" = "Wyszukiwanie wiadomości";
+"collections.search.no_items" = "Brak wyników";

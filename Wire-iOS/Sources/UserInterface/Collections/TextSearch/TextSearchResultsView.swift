@@ -22,13 +22,6 @@ import Cartography
 @objc final public class TextSearchResultsView: UIView {
     internal var tableView = UITableView()
     internal var noResultsView = NoResultsView()
-    private var spinner = ProgressSpinner()
-
-    var isLoading: Bool = false {
-        didSet {
-            spinner.isAnimating = isLoading
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,20 +41,15 @@ import Cartography
         self.noResultsView.label.text = "collections.search.no_items".localized.uppercased()
         self.noResultsView.icon = .search
         self.addSubview(self.noResultsView)
-
-        spinner.color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
-        addSubview(spinner)
     }
 
     func createConstraints() {
-        constrain(self, self.tableView, self.noResultsView, spinner) { resultsView, tableView, noResultsView, spinner in
+        constrain(self, self.tableView, self.noResultsView) { resultsView, tableView, noResultsView in
             tableView.edges == resultsView.edges
 
             noResultsView.top >= resultsView.top + 12
             noResultsView.bottom <= resultsView.bottom - 12
             noResultsView.center == resultsView.center
-
-            spinner.center == resultsView.center
         }
     }
     

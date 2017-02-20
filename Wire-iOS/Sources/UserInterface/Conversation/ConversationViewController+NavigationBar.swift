@@ -198,6 +198,9 @@ public extension ConversationViewController {
             }
             self.collectionController = collections
         }
+        else {
+            self.collectionController?.refetchCollection()
+        }
 
         collectionController?.shouldTrackOnNextOpen = true
 

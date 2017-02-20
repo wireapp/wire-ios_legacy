@@ -53,7 +53,7 @@
 "peoplepicker.share_contacts.no_results.title" = "Find personer ved navn eller e-mail adresse";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sendt";
-"peoplepicker.send_invitation.dialog.message" = "Den kan bruges i 2 uger. Send en ny, hvis den udløber.";
+"peoplepicker.send_invitation.dialog.message" = "Den kan anvendes i 2 uger. Send en ny, hvis den udløber.";
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invitér flere personer";
@@ -76,7 +76,7 @@
 "contacts_ui.no_contact.message" = "Tryk på kontakter for at starte en samtale";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "mennesker";
+"bottom_bar.contacts_button.title" = "personer";
 
 
 // Profile Header View
@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Skjuler…";
 
 "send_invitation.subject" = "Forbind dig med mig på Wire";
-"send_invitation.text" = "Jeg bruger Wire. Søg efter %@ eller besøg get.wire.com.";
+"send_invitation.text" = "Jeg er på Wire. Søg efter %@ eller besøg get.wire.com.";
 "send_invitation_no_email.text" = "Jeg er på Wire. Besøg get.wire.com for at forbinde dig med mig.";
 
 "send_personal_invitation.text" = "Jeg er på Wire, vi tales ved derinde: get.wire.com.";
@@ -112,7 +112,7 @@
 "notifications.sent_video" = "delte en video";
 "notifications.sent_audio" = "delte en lyd";
 "notifications.in_conversation" = "%@ - %@";
-"notifications.this_conversation" = "%@ i denne chatsamtale";
+"notifications.this_conversation" = "%@ i denne samtale";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -129,7 +129,7 @@
 "conversation.invite_more_people.button_title" = "Tilføj personer";
 
 // Conversation names
-"conversation.displayname.emptygroup" = "Tom gruppechat";
+"conversation.displayname.emptygroup" = "Tom gruppesamtale";
 
 "conversation.input_bar.verified" = "Verificeret";
 "conversation.input_bar.placeholder" = "Skriv en besked";
@@ -175,7 +175,7 @@
 "twitter_status.on_twitter" = "%@ på Twitter";
 
 // Ephemeral message
-"input.ephemeral.timeout.none" = "Slået fra";
+"input.ephemeral.timeout.none" = "Fra";
 "input.ephemeral.title" = "Sæt en timer for midlertidige beskeder";
 
 // System messages
@@ -203,7 +203,7 @@
 "content.system.message_sent_timestamp" = "Sendt";
 "content.system.message_delivered_timestamp" = "Leveret";
 "content.system.failedtosend_message_timestamp" = "Send mislykkedes.";
-"content.system.failedtosend_message_timestamp_resend" = "Gensend";
+"content.system.failedtosend_message_timestamp_resend" = "Send igen";
 "content.system.like_tooltip" = "Tryk for at syntes om";
 "content.system.deleted_message_prefix_timestamp" = "Slettet d. %@";
 "content.system.edited_message_prefix_timestamp" = "Redigeret d. %@";
@@ -240,6 +240,9 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(enhed %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
+"content.system.unknown_message.body" = "Du anvender en ældre version af Wire, der ikke kan vise denne meddelelse.";
+"content.system.unknown_message.body.link" = "Hvorfor sker dette?";
+
 "content.file.uploading" = "Uploader…";
 "content.file.downloading" = "Downloader…";
 "content.file.upload_failed" = "Upload mislykkedes";
@@ -256,8 +259,8 @@
 "content.message.like" = "Synes om";
 "content.message.unlike" = "Synes ikke godt om";
 "content.message.forward" = "Del";
-"content.message.go_to_conversation" = "Reveal";
-"content.message.forward.to" = "Search…";
+"content.message.go_to_conversation" = "Vis";
+"content.message.forward.to" = "Send til…";
 
 "content.reactions_list.likers" = "Synes godt af";
 
@@ -269,7 +272,7 @@
 "content.ping.you.text" = "DU PINGEDE";
 
 // Inline Player
-"content.player.unable_to_play" = "UDE AF STAND TIL AT AFSPILLE SPOR";
+"content.player.unable_to_play" = "KAN IKKE AFSPILLE NUMMER";
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Forbind til %@"; // check UPPERCASE implementation in code
@@ -320,7 +323,7 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Slet indhold?";
-"meta.menu.delete_content.dialog_message" = "Dette vil fjerne chathistorikken samt fjerne den fra listen.";
+"meta.menu.delete_content.dialog_message" = "Dette vil fjerne samtalehistorikken samt fjerne den fra listen.";
 "meta.menu.delete_content.leave_as_well_message" = "Forlad også samtalen";
 "meta.menu.delete_content.button_cancel" = "Annuller";
 "meta.menu.delete_content.button_delete" = "Slet";
@@ -328,7 +331,7 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Forlad samtalen?";
 "meta.leave_conversation_dialog_message" = "Deltagerne vil blive meddelt og samtalen vil blive fjernet fra din liste.";
-"meta.leave_conversation.delete_content_as_well_message" = "Slet også alt indholdet";
+"meta.leave_conversation.delete_content_as_well_message" = "Slet også al indhold";
 "meta.leave_conversation_button_cancel" = "Annuller";
 "meta.leave_conversation_button_leave" = "Forlad";
 
@@ -348,15 +351,15 @@
 
 // Block dialog
 "profile.block_dialog.title" = "Blokér?";
-"profile.block_dialog.message" = "%@ won’t be able to contact you or add you to group conversations.";
+"profile.block_dialog.message" = "%@ vil ikke kunne kontakte dig eller tilføje dig til gruppesamtaler.";
 "profile.block_dialog.button_cancel" = "Annuller";
 "profile.block_dialog.button_block" = "Blokér";
 
 // Delete message dialog
 "message.delete_dialog.message" = "Dette kan ikke fortrydes.";
 "message.delete_dialog.action.cancel" = "Annuller";
-"message.delete_dialog.action.hide" = "Slette for mig";
-"message.delete_dialog.action.delete" = "Slette for alle";
+"message.delete_dialog.action.hide" = "Slet for mig";
+"message.delete_dialog.action.delete" = "Slet for alle";
 
 // Edit message
 "message.menu.edit.title" = "Rediger";
@@ -484,7 +487,7 @@
 "self.settings.account_section.handle.change.footer.unavailable" = "Allerede i brug";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ikke angive brugernavnet";
-"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
+"self.settings.account_section.handle.change.failure_alert.message" = "Der opstod en fejl under opsætning af brugernavn. Prøv venligst igen.";
 
 // Change Email
 
@@ -493,10 +496,29 @@
 
 "self.settings.account_section.email.change.verify.title" = "Bekræft e-mail adresse";
 "self.settings.account_section.email.change.verify.description" = "Tjek din email indbakke og følg anvisningerne.";
-"self.settings.account_section.email.change.verify.resend" = "Resend to %@";
+"self.settings.account_section.email.change.verify.resend" = "Send igen til %@";
 
-"self.settings.account_section.email.change.resend.title" = "Email resent";
-"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
+"self.settings.account_section.email.change.resend.title" = "E-mail sendt igen";
+"self.settings.account_section.email.change.resend.message" = "Bekræftelses e-mail er sendt til %@. Tjek din e-mail og følg instruktionerne.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefon";
+"self.settings.account_section.phone_number.change.save" = "Gem";
+"self.settings.account_section.phone_number.change.remove" = "Fjern telefonnummer";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Fjern telefonnummer";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Gem";
+"self.settings.account_section.phone_number.change.verify.title" = "Bekræft";
+"self.settings.account_section.phone_number.change.verify.description" = "Indtast bekræftelseskoden vi har sendt til: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Indtast kode";
+"self.settings.account_section.phone_number.change.verify.resend" = "Send kode igen";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Ingen kode modtaget?\nDu kan anmode om en ny hver 30. sekund.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Kode sendt igen";
+"self.settings.account_section.phone_number.change.resend.message" = "Bekræftelseskoden er sendt til %@.";
 
 // Chat alerts
 "self.settings.notifications.push_notification.title" = "Notifikationer";
@@ -561,6 +583,12 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Åbn indstillinger for kontakter";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dette hjælper dig med at oprette forbindelse med andre. Vi anonymiserer alle informationer og deler ikke med andre. Tillad adgang via Indstillinger > Privatliv > Kontakter.";
 
+"self.settings.privacy_security.lock_app" = "Lås med Touch ID & adgangskode";
+"self.settings.privacy_security.lock_app.description" = "Åben Wire";
+
+"self.settings.privacy_security.lock_cancelled.description" = "Åben Wire med Touch ID eller adgangskode";
+"self.settings.privacy_security.lock_cancelled.action" = "Åben";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Enheder";
 
 "self.settings.privacy_analytics_section.title" = "Forbrug og crash rapporter";
@@ -589,6 +617,9 @@
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Nulstil adgangskode";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Invitér venner";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -636,7 +667,7 @@
 "registration.cancel_action.title" = "Annuller";
 
 "registration.no_history.hero" = "Det er første gang du bruger Wire på denne enhed.";
-"registration.no_history.subtitle" = "Af hensyn til fortrolighed, vil din chathistorik ikke vises her.";
+"registration.no_history.subtitle" = "Af hensyn til fortrolighed, vil din samtalehistorik ikke vises her.";
 "registration.no_history.got_it" = "OK";
 
 "registration.no_history.logged_out.hero" = "Du har brugt Wire på denne enhed før.";
@@ -735,7 +766,7 @@
 "error.user.phone_code_too_many" = "Vi har allerede sendt dig en kode via SMS. Tryk på Gensend efter 10 minutter for at få en ny.";
 "error.user.registration_unknown_error" = "Noget gik galt. Venligst prøv igen.";
 "error.user.device_deleted_remotely" = "Du er blevet logget af fra en anden enhed.";
-
+"error.user.last_identity_cant_be_deleted" = "Du skal angive både e-mail og telefonnummer for at kunne fjerne en af dem";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -791,6 +822,9 @@
 "collections.section.files.title" = "Filer";
 "collections.section.videos.title" = "Videoer";
 "collections.section.links.title" = "Links";
-"collections.section.all.button" = "Show all %d →";
-"collections.section.no_items" = "No items in collection";
-"collections.image_viewer.copied.title" = "Picture copied";
+"collections.section.all.button" = "Vis alle %d →";
+"collections.section.no_items" = "Ingen emner i samlingen";
+"collections.image_viewer.copied.title" = "Billedet er kopieret";
+
+"collections.search.field.placeholder" = "Søg i tekstbeskeder";
+"collections.search.no_items" = "Intet resultat";
