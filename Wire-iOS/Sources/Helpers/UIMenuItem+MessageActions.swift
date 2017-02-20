@@ -37,7 +37,7 @@ public extension UIMenuItem {
 
     @objc(revealItemWithAction:)
     class func reveal(with selector: Selector) -> UIMenuItem {
-        return UIMenuItem(title: "content.message.got_to_conversation".localized, action: selector)
+        return UIMenuItem(title: "content.message.go_to_conversation".localized, action: selector)
     }
 
     @objc(deleteItemWithAction:)
