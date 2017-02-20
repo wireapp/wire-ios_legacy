@@ -100,9 +100,6 @@
 "send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
 "send_invitation_no_email.text" = "I’m on Wire, search for %@ or visit get.wire.com";
 
-"send_personal_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
-
-
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "shared a picture";

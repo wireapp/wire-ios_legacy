@@ -67,8 +67,6 @@ NSString *ActivityToAnalyticsString(NSString *activity) {
     if (nil != fullSelfUser.handle) {
         NSString *displayHandle = [NSString stringWithFormat:@"@%@", fullSelfUser.handle];
         return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), displayHandle];
-    } else if (fullSelfUser.emailAddress.length > 0) {
-        return [NSString stringWithFormat:NSLocalizedString(@"send_invitation.text", @""), fullSelfUser.emailAddress];
     }
 
     return NSLocalizedString(@"send_invitation_no_email.text", @"");

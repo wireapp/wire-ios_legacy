@@ -44,7 +44,8 @@ extension ZMAddressBookContact {
         let composeController = MFMailComposeViewController()
         composeController.mailComposeDelegate = EmailInvitePresenter.sharedInstance
         composeController.modalPresentationStyle = .formSheet
-        composeController.setMessageBody("send_personal_invitation.text".localized, isHTML: false)
+
+        composeController.setMessageBody(invitationBody(), isHTML: false)
         composeController.setToRecipients([email])
         ZClientViewController.shared().present(composeController, animated: true, completion: .none)
     }
@@ -57,8 +58,16 @@ extension ZMAddressBookContact {
         let composeController = MFMessageComposeViewController()
         composeController.messageComposeDelegate = EmailInvitePresenter.sharedInstance
         composeController.modalPresentationStyle = .formSheet
-        composeController.body = "send_personal_invitation.text".localized
+        composeController.body = invitationBody()
         composeController.recipients = [phoneNumber]
         ZClientViewController.shared().present(composeController, animated: true, completion: .none)
+    }
+
+    private func invitationBody() -> String {
+        if let handle = ZMUser.selfUser(inUserSession: ZMUserSession.shared()).handle {
+            return "send_invitation.text".localized(args: "@" + handle)
+        } else {
+            return "send_invitation_no_email.text".localized
+        }
     }
 }
