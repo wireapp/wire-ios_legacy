@@ -156,7 +156,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         self.becomeFirstResponder()
         
         let menuController = UIMenuController.shared
-        menuController.menuItems = menuConfigurationProperties.additionalItems + [.forward(with:  #selector(forward)), .reveal(with: #selector(showInConversation))]
+        menuController.menuItems = menuConfigurationProperties.additionalItems + [.forward(with:  #selector(forward)), .reveal(with: #selector(showInConversation)), .delete(with: #selector(deleteMessage))]
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
         
@@ -173,6 +173,8 @@ open class CollectionCell: UICollectionViewCell, Reusable {
             return true
         case #selector(like):
             return message?.canBeLiked == true
+        case #selector(deleteMessage):
+            return message?.canBeDeleted == true
         default:
             return false
         }
@@ -181,6 +183,11 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     /// To be implemented in the subclass
     func updateForMessage(changeInfo: MessageChangeInfo?) {
         // no-op
+    }
+
+    func deleteMessage(_ sender: AnyObject!) {
+        guard message?.canBeDeleted == true else { return }
+        delegate?.collectionCell(self, performAction: .delete)
     }
 
     func like(_ sender: AnyObject!) {

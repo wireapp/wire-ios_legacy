@@ -62,6 +62,7 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var collection: AssetCollectionWrapper!
 
     fileprivate var lastLayoutSize: CGSize = .zero
+    fileprivate var deletionDialogPresenter: DeletionDialogPresenter?
     
     fileprivate var fetchingDone: Bool = false {
         didSet {
@@ -111,6 +112,7 @@ final public class CollectionsViewController: UIViewController {
         
         super.init(nibName: .none, bundle: .none)
         self.collection.assetCollectionDelegate.add(self)
+        self.deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self)
     }
     
     deinit {
@@ -551,7 +553,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             
         case CollectionsSectionSet.filesAndAudio:
-            if self.message(for: indexPath).fileMessageData!.isAudio() {
+            if self.message(for: indexPath).fileMessageData?.isAudio() == true {
                 resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
             }
             else {
@@ -684,6 +686,10 @@ extension CollectionsViewController: CollectionCellDelegate {
         switch action {
         case .forward, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
+        case .delete:
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: cell) { [weak self] in
+                self?.refetchCollection()
+            }
         default:
             if Message.isFileTransferMessage(message) {
                 self.perform(action, for: message, from: cell)
