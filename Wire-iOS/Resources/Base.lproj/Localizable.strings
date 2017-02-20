@@ -586,7 +586,7 @@
 "self.settings.privacy_security.lock_app" = "Lock with Touch ID & Passcode";
 "self.settings.privacy_security.lock_app.description" = "Unlock Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Please unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Unlock";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
