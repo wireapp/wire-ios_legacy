@@ -134,16 +134,11 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
 
-        let likeKey = message?.liked == true ? "content.message.unlike" : "content.message.like"
-        let likeItem = UIMenuItem(title: likeKey.localized, action: #selector(like))
-        let forwardItem = UIMenuItem(title: "content.message.forward".localized, action: #selector(CollectionCell.forward(_:)))
-        let goToConversation = UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(CollectionCell.showInConversation(_:)))
-
-        var additionalItems = [forwardItem, goToConversation]
         if message?.canBeLiked == true {
-            additionalItems.insert(likeItem, at: 0)
+            let likeKey = message?.liked == true ? "content.message.unlike" : "content.message.like"
+            properties.additionalItems = [UIMenuItem(title: likeKey.localized, action: #selector(like))]
         }
-        properties.additionalItems = additionalItems
+
         return properties
     }
     
@@ -163,9 +158,10 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         self.becomeFirstResponder()
         
         let menuController = UIMenuController.shared
-        
-        menuController.menuItems = menuConfigurationProperties.additionalItems
-        
+
+        let forwardItem = UIMenuItem(title: "content.message.forward".localized, action: #selector(CollectionCell.forward(_:)))
+        let goToConversation = UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(CollectionCell.showInConversation(_:)))
+        menuController.menuItems = menuConfigurationProperties.additionalItems + [forwardItem, goToConversation]
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
         

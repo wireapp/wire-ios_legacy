@@ -236,6 +236,10 @@ internal final class ConversationImagesViewController: UIViewController {
         self.currentController.performSaveImageAnimation(from: sender)
         self.messageActionDelegate?.wants(toPerform: .save, for: self.currentMessage)
     }
+
+    @objc public func likeCurrent(_ sender: AnyObject!) {
+        self.messageActionDelegate?.wants(toPerform: .like, for: self.currentMessage)
+    }
     
     @objc public func shareCurrent(_ sender: AnyObject!) {
         self.messageActionDelegate?.wants(toPerform: .forward, for: self.currentMessage)

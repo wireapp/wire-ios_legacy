@@ -42,6 +42,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) UIView *targetView;
 @property (nonatomic) SelectedMenuBlock selectedMenuBlock;
 @property (nonatomic) NSArray <UIMenuItem *> *additionalItems;
+@property (nonatomic) NSUInteger likeItemIndex;
 
 @end
 

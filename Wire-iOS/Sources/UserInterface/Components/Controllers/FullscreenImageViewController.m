@@ -477,10 +477,13 @@
         [self.view becomeFirstResponder];
         
         UIMenuController *menuController = UIMenuController.sharedMenuController;
+
+        NSString *likeKey = [Message isLikedMessage:self.message] ? @"content.message.unlike" : @"content.message.like";
+        UIMenuItem *likeItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(likeKey, @"") action:@selector(likeImage)];
         UIMenuItem *saveItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.image.save_image", @"") action:@selector(saveImage)];
         UIMenuItem *forwardItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.forward", @"") action:@selector(forward)];
         UIMenuItem *revealInConversation = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"content.message.go_to_conversation", @"") action:@selector(revealInConversation)];
-        menuController.menuItems = @[saveItem, forwardItem, revealInConversation];
+        menuController.menuItems = @[likeItem, saveItem, forwardItem, revealInConversation];
         
         [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
         [menuController setMenuVisible:YES animated:YES];
@@ -509,6 +512,9 @@
     }
     else if (action == @selector(revealInConversation)) {
         return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionShowInConversation forMessage:self.message];
+    }
+    else if (action == @selector(likeImage)) {
+        return [Message messageCanBeLiked:self.message];
     }
     else if (action == @selector(paste:)) {
         return NO;
@@ -542,6 +548,11 @@
 - (void)saveImage
 {
     [self.delegate wantsToPerformAction:MessageActionSave forMessage:self.message];
+}
+
+- (void)likeImage
+{
+    [self.delegate wantsToPerformAction:MessageActionLike forMessage:self.message];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated

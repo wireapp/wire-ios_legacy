@@ -134,7 +134,8 @@ public final class FileTransferCell: ConversationCell {
             let forwardItem = UIMenuItem(title:"content.message.forward".localized, action:#selector(forward))
             additionalItems.append(contentsOf: [openItem, saveItem, forwardItem])
         }
-        
+
+        properties.likeItemIndex = 1 // Open should be first
         properties.additionalItems = additionalItems
         
         return properties
