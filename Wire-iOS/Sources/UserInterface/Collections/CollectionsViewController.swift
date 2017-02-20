@@ -59,7 +59,7 @@ final public class CollectionsViewController: UIViewController {
     fileprivate var linkMessages: [ZMConversationMessage] = []
     fileprivate var fileAndAudioMessages: [ZMConversationMessage] = []
     
-    fileprivate let collection: AssetCollectionWrapper
+    fileprivate var collection: AssetCollectionWrapper!
 
     fileprivate var lastLayoutSize: CGSize = .zero
     
@@ -121,6 +121,17 @@ final public class CollectionsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func refetchCollection() {
+        self.collection.assetCollectionDelegate.remove(self)
+        self.imageMessages = []
+        self.videoMessages = []
+        self.linkMessages = []
+        self.fileAndAudioMessages = []
+        self.collection = AssetCollectionWrapper(conversation: self.collection.conversation, matchingCategories: self.collection.matchingCategories)
+        self.collection.assetCollectionDelegate.add(self)
+        self.contentView.collectionView.reloadData()
+    }
+    
     override public func loadView() {
         self.view = CollectionsView()
     }
@@ -147,11 +158,17 @@ final public class CollectionsViewController: UIViewController {
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationItem()
+        self.flushLayout()
+
     }
     
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.textSearchController.teardown()
+    }
+    
+    override public func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {

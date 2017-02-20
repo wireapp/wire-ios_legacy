@@ -59,11 +59,13 @@ final class AssetCollectionWrapper: NSObject {
     let conversation: ZMConversation
     let assetCollection: ZMCollection
     let assetCollectionDelegate: AssetCollectionMulticastDelegate
+    let matchingCategories: [CategoryMatch]
     
-    init(conversation: ZMConversation, assetCollection: ZMCollection, assetCollectionDelegate: AssetCollectionMulticastDelegate) {
+    init(conversation: ZMConversation, assetCollection: ZMCollection, assetCollectionDelegate: AssetCollectionMulticastDelegate, matchingCategories: [CategoryMatch]) {
         self.conversation = conversation
         self.assetCollection = assetCollection
         self.assetCollectionDelegate = assetCollectionDelegate
+        self.matchingCategories = matchingCategories
     }
     
     convenience init(conversation: ZMConversation, matchingCategories: [CategoryMatch]) {
@@ -75,7 +77,7 @@ final class AssetCollectionWrapper: NSObject {
         else {
             assetCollection = AssetCollection(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
         }
-        self.init(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate)
+        self.init(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate, matchingCategories: matchingCategories)
     }
     
     deinit {
