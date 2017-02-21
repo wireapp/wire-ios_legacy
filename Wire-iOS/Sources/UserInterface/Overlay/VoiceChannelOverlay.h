@@ -57,7 +57,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) BOOL controlsHidden;
 @property (nonatomic) BOOL hidesSpeakerButton; // Defaults to NO
 
-- (void)updateVisibleViewsForCurrentState;
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action;
 - (void)setAcceptVideoButtonTarget:(id)target action:(SEL)action;
@@ -73,6 +72,9 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 
 // Views that need to be visible from Swift
+
+- (void)hideControlsAfterElapsedTime;
+- (void)updateVisibleViewsForCurrentState;
 
 @property (nonatomic) CameraPreviewView *cameraPreviewView;
 @property (nonatomic) BOOL videoViewFullscreen;

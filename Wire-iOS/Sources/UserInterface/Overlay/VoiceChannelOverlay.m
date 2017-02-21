@@ -157,12 +157,6 @@ static NSString *NotNilString(NSString *string) {
     self.centerStatusLabel.text = [NSLocalizedString(_lowBandwidth ? @"voice.status.low_connection" : @"voice.status.video_not_available", nil) uppercasedWithCurrentLocale];
 }
 
-- (void)setHidesSpeakerButton:(BOOL)hidesSpeakerButton
-{
-    _hidesSpeakerButton = hidesSpeakerButton;
-    [self updateVisibleViewsForCurrentState];
-}
-
 - (void)updateVisibleViewsForCurrentStateAnimated:(BOOL)animated
 {
     if (animated) {
@@ -556,27 +550,6 @@ static NSString *NotNilString(NSString *string) {
 {
     _speakerActive = speakerActive;
     self.speakerButton.selected = speakerActive;
-}
-
-- (void)setRemoteIsSendingVideo:(BOOL)remoteIsSendingVideo
-{
-    _remoteIsSendingVideo = remoteIsSendingVideo;
-    [self updateVisibleViewsForCurrentState];
-}
-
-- (void)setIncomingVideoActive:(BOOL)incomingVideoActive
-{
-    _incomingVideoActive = incomingVideoActive;
-    
-    [self updateVisibleViewsForCurrentState];
-    [self hideControlsAfterElapsedTime];
-}
-
-- (void)setOutgoingVideoActive:(BOOL)outgoingVideoActive;
-{
-    _outgoingVideoActive = outgoingVideoActive;
-    
-    [self updateVisibleViewsForCurrentState];
 }
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action

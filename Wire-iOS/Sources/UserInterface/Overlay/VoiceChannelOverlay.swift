@@ -26,7 +26,7 @@ let GroupCallAvatarGainRadius: CGFloat = 14.0;
 let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 
 @objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupVoiceOverlay()
@@ -37,6 +37,37 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension VoiceChannelOverlay {
+    override public var hidesSpeakerButton: Bool {
+        didSet {
+            updateVisibleViewsForCurrentState()
+        }
+    }
+    
+    override public var remoteIsSendingVideo: Bool {
+        didSet {
+            updateVisibleViewsForCurrentState()
+        }
+    }
+    
+    override public var incomingVideoActive: Bool {
+        didSet {
+            updateVisibleViewsForCurrentState()
+            hideControlsAfterElapsedTime()
+        }
+    }
+    
+    override public var outgoingVideoActive: Bool {
+        didSet {
+            updateVisibleViewsForCurrentState()
+        }
+    }
+}
+
+extension VoiceChannelOverlay {
+
     public func setupVoiceOverlay() {
         clipsToBounds = true
         backgroundColor = .clear
