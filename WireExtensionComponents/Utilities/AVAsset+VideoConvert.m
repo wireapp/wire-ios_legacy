@@ -62,6 +62,8 @@
     exportSession.outputURL = outputURL;
     exportSession.shouldOptimizeForNetworkUse = YES;
     exportSession.outputFileType = AVFileTypeMPEG4;
+    exportSession.metadata = @[];
+    exportSession.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
     @weakify(exportSession);
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
         @strongify(exportSession);
