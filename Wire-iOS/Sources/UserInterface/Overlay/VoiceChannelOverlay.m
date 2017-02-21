@@ -142,28 +142,6 @@ static NSString *NotNilString(NSString *string) {
     }
 }
 
-- (void)hideDisappearingViewsForState:(VoiceChannelOverlayState)state
-{
-    NSSet *hiddenViews = [self hiddenViewsForState:state];
-    
-    for (UIView *hiddenView in hiddenViews) {
-        hiddenView.alpha = 0;
-    }
-    
-    DDLogVoice(@"hidden views: %@", hiddenViews);
-}
-
-- (void)showAppearingViewsForState:(VoiceChannelOverlayState)state
-{
-    NSSet *visibleViews = [self visibleViewsForState:state];
-    
-    for (UIView *visibleView in visibleViews) {
-        visibleView.alpha = 1;
-    }
-    
-    DDLogVoice(@"visible views: %@", visibleViews);
-}
-
 - (void)updateCallingUserImage
 {
     ZMUser *callingUser = nil;
@@ -180,11 +158,6 @@ static NSString *NotNilString(NSString *string) {
     
     self.callingUserImage.user = callingUser;
     self.callingTopUserImage.user = callingUser;
-}
-
-- (NSSet *)allOverlayViews
-{
-    return [NSSet setWithArray:@[self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView]];
 }
 
 - (NSSet *)visibleViewsForStateInVideoCall:(VoiceChannelOverlayState)state
@@ -246,48 +219,6 @@ static NSString *NotNilString(NSString *string) {
     return [NSSet setWithArray:mutableVisibleViews];
 }
 
-- (NSSet *)visibleViewsForStateInAudioCall:(VoiceChannelOverlayState)state
-{
-    NSArray *visibleViews;
-    switch (state) {
-            
-        case VoiceChannelOverlayStateInvalid:
-            visibleViews = @[];
-            break;
-            
-        case VoiceChannelOverlayStateOutgoingCall:
-            visibleViews = @[self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
-            break;
-            
-        case VoiceChannelOverlayStateIncomingCall:
-            visibleViews = @[self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton];
-            break;
-            
-        case VoiceChannelOverlayStateIncomingCallInactive:
-            visibleViews = @[];
-            break;
-            
-        case VoiceChannelOverlayStateJoiningCall:
-            visibleViews = @[self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
-            break;
-            
-        case VoiceChannelOverlayStateConnected:
-            if (self.callingConversation.conversationType == ZMConversationTypeGroup) {
-                visibleViews = @[self.participantsCollectionView, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
-            } else {
-                visibleViews = @[self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
-            }
-            break;
-    }
-    NSMutableArray *mutableVisibleViews = [visibleViews mutableCopy];
-
-    if (self.hidesSpeakerButton) {
-        [mutableVisibleViews removeObject:self.speakerButton];
-    }
-    
-    return [NSSet setWithArray:mutableVisibleViews];
-}
-
 - (void)updateViewsStateAndLayoutForVisibleViews:(NSSet *)visibleViews
 {
     if ([visibleViews containsObject:self.callingTopUserImage]) {
@@ -309,34 +240,6 @@ static NSString *NotNilString(NSString *string) {
     else {
         self.leaveButtonPinRightConstraint.active = self.hidesSpeakerButton;
     }
-}
-
-- (NSSet *)visibleViewsForState:(VoiceChannelOverlayState)state
-{
-    NSSet *visibleViews = nil;
-    
-    // Construct visible views list based on:
-    // Voice channel state & is video / group call
-    if (self.callingConversation.voiceChannel.isVideoCall) {
-        visibleViews = [self visibleViewsForStateInVideoCall:state];
-    }
-    else {
-        visibleViews = [self visibleViewsForStateInAudioCall:state];
-    }
-
-    // (Extra) Update
-    [self updateViewsStateAndLayoutForVisibleViews:visibleViews];
-    
-    return visibleViews;
-}
-
-- (NSSet *)hiddenViewsForState:(VoiceChannelOverlayState)state
-{
-    NSSet *visibleViews = [self visibleViewsForState:state];
-    NSMutableSet *hiddenViews = [[self allOverlayViews] mutableCopy];
-    [hiddenViews minusSet:visibleViews];
-    
-    return hiddenViews;
 }
 
 - (NSAttributedString *)attributedStatus

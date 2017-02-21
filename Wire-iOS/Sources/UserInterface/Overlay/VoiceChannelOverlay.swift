@@ -334,6 +334,15 @@ extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
 }
 
 extension VoiceChannelOverlay {
+    
+    var isVideoCall: Bool {
+        return callingConversation.voiceChannel?.isVideoCall ?? false
+    }
+    
+    var isGroupCall: Bool {
+        return callingConversation.conversationType == .group
+    }
+    
     @objc(transitionToState:)
     public func transition(to state: VoiceChannelOverlayState) {
         guard state != self.state else { return }
@@ -364,7 +373,7 @@ extension VoiceChannelOverlay {
         videoButton.isEnabled = connected
         videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
         
-        if let channel = callingConversation.voiceChannel, channel.isVideoCall {
+        if isVideoCall {
             videoViewFullscreen = !connected
         } else {
             videoView.isHidden = true
@@ -372,5 +381,68 @@ extension VoiceChannelOverlay {
         }
         
         cameraPreviewView.mutedPreviewOverlay.isHidden = !outgoingVideoActive || !muted
+    }
+    
+    func showAppearingViews(for state: VoiceChannelOverlayState) {
+        let visible = visibleViews(for: state)
+        visible.forEach {
+            $0.alpha = 1.0
+        }
+    }
+    
+    func hideDisappearingViews(for state: VoiceChannelOverlayState) {
+        let visible = hiddenViews(for: state)
+        visible.forEach {
+            $0.alpha = 0.0
+        }
+    }
+    
+    func hiddenViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
+        let visible = visibleViews(for: state)
+        let hidden = allOverlayViews.subtracting(visible)
+        return hidden
+    }
+    
+    func visibleViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
+        let visible: Set<UIView>
+        if isVideoCall {
+            visible = (visibleViewsForState(inVideoCall: state) as? Set<UIView>) ?? Set<UIView>()
+        } else {
+            visible = visibleViewsForState(inAudioCall: state)
+        }
+        updateViewsStateAndLayout(forVisibleViews: visible)
+        return visible
+    }
+    
+    
+    var allOverlayViews: Set<UIView> {
+        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView]
+    }
+    
+    func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
+        let visibleViews: Set<UIView>
+        
+        switch state {
+        case .invalid, .incomingCallInactive:
+            visibleViews = []
+        case .outgoingCall:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
+        case .incomingCall:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton]
+        case .joiningCall:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
+        case .connected:
+            if isGroupCall {
+                visibleViews = [self.participantsCollectionView, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
+            } else {
+                visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
+            }
+        }
+        
+        if hidesSpeakerButton {
+            return visibleViews.subtracting([speakerButton])
+        } else {
+            return visibleViews
+        }
     }
 }
