@@ -364,8 +364,13 @@ extension VoiceChannelOverlay {
     func updateVisibleViewsForCurrentState() {
         updateStatusLabelText()
         updateCallingUserImage()
-        showAppearingViews(for: state)
-        hideDisappearingViews(for: state)
+        
+        visibleViews(for: state).forEach {
+            $0.alpha = 1.0
+        }
+        hiddenViews(for: state).forEach {
+            $0.alpha = 0.0
+        }
         
         let connected = (state == .connected)
         
@@ -381,20 +386,6 @@ extension VoiceChannelOverlay {
         }
         
         cameraPreviewView.mutedPreviewOverlay.isHidden = !outgoingVideoActive || !muted
-    }
-    
-    func showAppearingViews(for state: VoiceChannelOverlayState) {
-        let visible = visibleViews(for: state)
-        visible.forEach {
-            $0.alpha = 1.0
-        }
-    }
-    
-    func hideDisappearingViews(for state: VoiceChannelOverlayState) {
-        let visible = hiddenViews(for: state)
-        visible.forEach {
-            $0.alpha = 0.0
-        }
     }
     
     func hiddenViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
@@ -413,7 +404,6 @@ extension VoiceChannelOverlay {
         updateViewsStateAndLayout(forVisibleViews: visible)
         return visible
     }
-    
     
     var allOverlayViews: Set<UIView> {
         return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView]
@@ -459,29 +449,28 @@ extension VoiceChannelOverlay {
         case .joiningCall:
             visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .connected:
-            visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView];
-        }
-        
-        if hidesSpeakerButton || outgoingVideoActive {
-            visibleViews.subtract([speakerButton])
-        }
-        
-        if state == .connected {
             if !remoteIsSendingVideo {
-                visibleViews.formUnion([self.centerStatusLabel, self.videoNotAvailableBackground])
+                visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.centerStatusLabel, self.videoNotAvailableBackground]
             } else if incomingVideoActive {
                 if controlsHidden {
                     visibleViews = [cameraPreviewView]
                 } else {
-                    visibleViews.subtract([self.callingUserImage, self.callingTopUserImage, self.topStatusLabel])
-                    visibleViews.insert(shadow)
+                    visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, shadow]
+
                 }
+            } else {
+                visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView]
             }
             
             if !outgoingVideoActive {
                 visibleViews.remove(cameraPreviewView)
             }
         }
+        
+        if hidesSpeakerButton || outgoingVideoActive {
+            visibleViews.subtract([speakerButton])
+        }
+        
         return visibleViews
     }
 }
