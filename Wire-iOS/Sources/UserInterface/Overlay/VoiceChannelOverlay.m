@@ -88,29 +88,6 @@ static NSString *NotNilString(NSString *string) {
 
 @implementation VoiceChannelOverlay_Old
 
-- (void)dealloc
-{
-    [self cancelHideControlsAfterElapsedTime];
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-{
-    BOOL pointInside = [super pointInside:point withEvent:event];
-    if (pointInside && self.incomingVideoActive) {
-        if (! self.controlsHidden) {
-            [self hideControlsAfterElapsedTime];
-        }
-    }
-    return pointInside;
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [super touchesBegan:touches withEvent:event];
-    
-    [self backgroundWasTapped];
-}
-
 - (void)setupCameraFeedPanGestureRecognizer
 {
     UIPanGestureRecognizer *videoFeedPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onCameraPreviewPan:)];
@@ -155,18 +132,6 @@ static NSString *NotNilString(NSString *string) {
     DDLogVoice(@"Low bandwidth: %d -> %d", _lowBandwidth, lowBandwidth);
     _lowBandwidth = lowBandwidth;
     self.centerStatusLabel.text = [NSLocalizedString(_lowBandwidth ? @"voice.status.low_connection" : @"voice.status.video_not_available", nil) uppercasedWithCurrentLocale];
-}
-
-- (void)updateVisibleViewsForCurrentStateAnimated:(BOOL)animated
-{
-    if (animated) {
-        [UIView animateWithDuration:0.20 animations:^{
-            [self updateVisibleViewsForCurrentState];
-        }];
-    }
-    else {
-        [self updateVisibleViewsForCurrentState];
-    }
 }
 
 - (void)updateVisibleViewsForCurrentState
@@ -614,37 +579,6 @@ static NSString *NotNilString(NSString *string) {
                             }
                         }];
     });
-}
-
-#pragma mark - Hiding Controls
-
-- (void)hideControls
-{
-    self.controlsHidden = YES;
-    [self updateVisibleViewsForCurrentStateAnimated:YES];
-}
-
-- (void)hideControlsAfterElapsedTime
-{
-    [self cancelHideControlsAfterElapsedTime];
-    [self performSelector:@selector(hideControls) withObject:nil afterDelay:4];
-}
-
-- (void)cancelHideControlsAfterElapsedTime
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls) object:nil];
-}
-
-#pragma mark - Tap
-
-- (void)backgroundWasTapped
-{
-    self.controlsHidden = ! self.controlsHidden;
-    [self updateVisibleViewsForCurrentStateAnimated:YES];
-    
-    if (! self.controlsHidden) {
-        [self hideControlsAfterElapsedTime];
-    }
 }
 
 #pragma mark - Camera preview pan

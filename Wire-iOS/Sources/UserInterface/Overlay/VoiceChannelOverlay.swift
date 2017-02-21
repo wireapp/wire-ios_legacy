@@ -37,6 +37,9 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        cancelHideControlsAfterElapsedTime()
+    }
 }
 
 extension VoiceChannelOverlay {
@@ -62,6 +65,44 @@ extension VoiceChannelOverlay {
     override public var outgoingVideoActive: Bool {
         didSet {
             updateVisibleViewsForCurrentState()
+        }
+    }
+}
+
+extension VoiceChannelOverlay {
+
+    public func hideControls() {
+        controlsHidden = true
+        updateVisibleViewsForCurrentState(animated: true)
+    }
+    
+    public func hideControlsAfterElapsedTime() {
+        cancelHideControlsAfterElapsedTime()
+        perform(#selector(hideControls), with: nil, afterDelay: 4)
+    }
+    
+    public func cancelHideControlsAfterElapsedTime() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideControls), object: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        backgroundWasTapped()
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let pointInside = super.point(inside: point, with: event)
+        if pointInside && incomingVideoActive {
+            hideControlsAfterElapsedTime()
+        }
+        return pointInside
+    }
+    
+    public func backgroundWasTapped() {
+        controlsHidden = !controlsHidden
+        updateVisibleViewsForCurrentState(animated: true)
+        if !controlsHidden {
+            hideControlsAfterElapsedTime()
         }
     }
 }
@@ -298,5 +339,16 @@ extension VoiceChannelOverlay {
         guard state != self.state else { return }
         self.state = state
         updateVisibleViewsForCurrentState()
+    }
+    
+    func updateVisibleViewsForCurrentState(animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.2) {
+                self.updateVisibleViewsForCurrentState()
+            }
+
+        } else {
+            updateVisibleViewsForCurrentState()
+        }
     }
 }

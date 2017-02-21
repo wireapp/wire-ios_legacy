@@ -73,7 +73,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 // Views that need to be visible from Swift
 
-- (void)hideControlsAfterElapsedTime;
 - (void)updateVisibleViewsForCurrentState;
 
 @property (nonatomic) CameraPreviewView *cameraPreviewView;
