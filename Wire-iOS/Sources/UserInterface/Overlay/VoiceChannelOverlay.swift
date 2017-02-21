@@ -351,4 +351,26 @@ extension VoiceChannelOverlay {
             updateVisibleViewsForCurrentState()
         }
     }
+    
+    func updateVisibleViewsForCurrentState() {
+        updateStatusLabelText()
+        updateCallingUserImage()
+        showAppearingViews(for: state)
+        hideDisappearingViews(for: state)
+        
+        let connected = (state == .connected)
+        
+        muteButton.isEnabled = connected
+        videoButton.isEnabled = connected
+        videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
+        
+        if let channel = callingConversation.voiceChannel, channel.isVideoCall {
+            videoViewFullscreen = !connected
+        } else {
+            videoView.isHidden = true
+            videoPreview?.isHidden = true
+        }
+        
+        cameraPreviewView.mutedPreviewOverlay.isHidden = !outgoingVideoActive || !muted
+    }
 }

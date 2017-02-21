@@ -73,7 +73,10 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 // Views that need to be visible from Swift
 
-- (void)updateVisibleViewsForCurrentState;
+- (void)updateStatusLabelText;
+- (void)updateCallingUserImage;
+- (void)showAppearingViewsForState:(VoiceChannelOverlayState)state;
+- (void)hideDisappearingViewsForState:(VoiceChannelOverlayState)state;
 
 @property (nonatomic) CameraPreviewView *cameraPreviewView;
 @property (nonatomic) BOOL videoViewFullscreen;

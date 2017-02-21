@@ -134,30 +134,6 @@ static NSString *NotNilString(NSString *string) {
     self.centerStatusLabel.text = [NSLocalizedString(_lowBandwidth ? @"voice.status.low_connection" : @"voice.status.video_not_available", nil) uppercasedWithCurrentLocale];
 }
 
-- (void)updateVisibleViewsForCurrentState
-{
-    [self updateStatusLabelText];
-    [self updateCallingUserImage];
-    
-    [self showAppearingViewsForState:self.state];
-    [self hideDisappearingViewsForState:self.state];
-    
-    BOOL connected = self.state == VoiceChannelOverlayStateConnected;
-    
-    self.muteButton.enabled = connected;
-    self.videoButton.enabled = connected;
-    self.videoButton.selected = self.videoButton.enabled && self.outgoingVideoActive;
-
-    if (self.callingConversation.voiceChannel.isVideoCall) {
-        self.videoViewFullScreen = ! connected;
-    } else {
-        self.videoView.hidden = YES;
-        self.videoPreview.hidden = YES;
-    }
-    
-    self.cameraPreviewView.mutedPreviewOverlay.hidden = !self.outgoingVideoActive || !self.muted;
-}
-
 - (void)updateStatusLabelText
 {
     NSAttributedString *statusText = [self attributedStatus];
