@@ -46,7 +46,7 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) NSTimeInterval callDuration;
 @property (nonatomic) ZMConversation *callingConversation;
 
-@property (nonatomic, assign, readonly) VoiceChannelOverlayState state;
+@property (nonatomic, assign) VoiceChannelOverlayState state;
 
 @property (nonatomic) BOOL muted;
 @property (nonatomic) BOOL speakerActive;
@@ -57,7 +57,7 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) BOOL controlsHidden;
 @property (nonatomic) BOOL hidesSpeakerButton; // Defaults to NO
 
-- (void)transitionToState:(VoiceChannelOverlayState)state;
+- (void)updateVisibleViewsForCurrentState;
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action;
 - (void)setAcceptVideoButtonTarget:(id)target action:(SEL)action;

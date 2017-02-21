@@ -163,17 +163,6 @@ static NSString *NotNilString(NSString *string) {
     [self updateVisibleViewsForCurrentState];
 }
 
-- (void)transitionToState:(VoiceChannelOverlayState)state
-{
-    if (_state == state) {
-        return;
-    }
-    
-    _state = state;
-    
-    [self updateVisibleViewsForCurrentState];
-}
-
 - (void)updateVisibleViewsForCurrentStateAnimated:(BOOL)animated
 {
     if (animated) {

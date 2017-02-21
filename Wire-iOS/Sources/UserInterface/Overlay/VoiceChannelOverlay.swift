@@ -260,3 +260,12 @@ extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
         return insets
     }
 }
+
+extension VoiceChannelOverlay {
+    @objc(transitionToState:)
+    public func transition(to state: VoiceChannelOverlayState) {
+        guard state != self.state else { return }
+        self.state = state
+        updateVisibleViewsForCurrentState()
+    }
+}
