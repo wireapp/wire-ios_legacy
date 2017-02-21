@@ -75,7 +75,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 - (void)updateStatusLabelText;
 - (void)updateCallingUserImage;
-- (NSSet *)visibleViewsForStateInVideoCall:(VoiceChannelOverlayState)state;
 
 - (void)updateViewsStateAndLayoutForVisibleViews:(NSSet *)visibleViews;
 

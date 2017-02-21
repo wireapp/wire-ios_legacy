@@ -406,7 +406,7 @@ extension VoiceChannelOverlay {
     func visibleViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
         let visible: Set<UIView>
         if isVideoCall {
-            visible = (visibleViewsForState(inVideoCall: state) as? Set<UIView>) ?? Set<UIView>()
+            visible = visibleViewsForState(inVideoCall: state)
         } else {
             visible = visibleViewsForState(inAudioCall: state)
         }
@@ -444,5 +444,44 @@ extension VoiceChannelOverlay {
         } else {
             return visibleViews
         }
+    }
+    
+    func visibleViewsForState(inVideoCall state: VoiceChannelOverlayState) -> Set<UIView> {
+        var visibleViews: Set<UIView>
+        
+        switch state {
+        case .invalid, .incomingCallInactive:
+            visibleViews = []
+        case .outgoingCall:
+            visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
+        case .incomingCall:
+            visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
+        case .joiningCall:
+            visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
+        case .connected:
+            visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView];
+        }
+        
+        if hidesSpeakerButton || outgoingVideoActive {
+            visibleViews.subtract([speakerButton])
+        }
+        
+        if state == .connected {
+            if !remoteIsSendingVideo {
+                visibleViews.formUnion([self.centerStatusLabel, self.videoNotAvailableBackground])
+            } else if incomingVideoActive {
+                if controlsHidden {
+                    visibleViews = [cameraPreviewView]
+                } else {
+                    visibleViews.subtract([self.callingUserImage, self.callingTopUserImage, self.topStatusLabel])
+                    visibleViews.insert(shadow)
+                }
+            }
+            
+            if !outgoingVideoActive {
+                visibleViews.remove(cameraPreviewView)
+            }
+        }
+        return visibleViews
     }
 }
