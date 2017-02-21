@@ -72,8 +72,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
-	<key>FacebookAppID</key>
-	<string>12345677</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemaps</string>
@@ -135,7 +133,7 @@
 	<false/>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
-    <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
