@@ -190,6 +190,7 @@ static NSString *NotNilString(NSString *string) {
             break;
         }
             
+        case VoiceChannelOverlayStateIncomingCallDegraded:
         case VoiceChannelOverlayStateOutgoingCallDegraded:
             return [self labelTextWithFormat:@"%@\n" name:conversationName];
             break;

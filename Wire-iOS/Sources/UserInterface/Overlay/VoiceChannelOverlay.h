@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
     VoiceChannelOverlayStateInvalid,
     VoiceChannelOverlayStateIncomingCall,
     VoiceChannelOverlayStateIncomingCallInactive,
+    VoiceChannelOverlayStateIncomingCallDegraded,
     VoiceChannelOverlayStateJoiningCall,
     VoiceChannelOverlayStateOutgoingCall,
     VoiceChannelOverlayStateOutgoingCallDegraded,

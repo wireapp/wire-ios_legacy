@@ -264,7 +264,7 @@ extension VoiceChannelOverlay {
             callingTopUserImage.width == 56
         }
         
-        constrain(contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel) { contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel in
+        constrain(contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel, callButton) { contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel, callButton in
             
             degradationTopLabel.leading >= contentContainer.leadingMargin
             degradationTopLabel.trailing <= contentContainer.trailingMargin
@@ -275,6 +275,7 @@ extension VoiceChannelOverlay {
             degradationBottomLabel.trailing <= contentContainer.trailingMargin
             degradationBottomLabel.centerX == contentContainer.centerX
             degradationBottomLabel.top == callingUserImage.bottom + 16
+            degradationBottomLabel.bottom == callButton.top - 8
         }
         
         constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel in
@@ -457,6 +458,8 @@ extension VoiceChannelOverlay {
             visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
         case .incomingCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton]
+        case .incomingCallDegraded:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel]
         case .joiningCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
         case .connected:
@@ -486,6 +489,8 @@ extension VoiceChannelOverlay {
             visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
         case .incomingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
+        case .incomingCallDegraded:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel]
         case .joiningCall:
             visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .connected:
