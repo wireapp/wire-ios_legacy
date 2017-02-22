@@ -204,6 +204,7 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     internal func set(newValue: SettingsPropertyValue) throws {
         self.userDefaults.set(newValue.value(), forKey: self.userDefaultsKey)
         NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
+        self.trackNewValue()
     }
     
     internal func value() -> SettingsPropertyValue {
@@ -217,6 +218,10 @@ class SettingsUserDefaultsProperty : SettingsProperty {
         }
     }
 
+    internal func trackNewValue() {
+        Analytics.shared()?.tagSettingsChanged(for: self.propertyName, to: self.value())
+    }
+    
     let propertyName : SettingsPropertyName
     let userDefaults : UserDefaults
     
@@ -242,6 +247,11 @@ open class SettingsBlockProperty : SettingsProperty {
     func set(newValue: SettingsPropertyValue) throws {
         try self.setAction(self, newValue)
         NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
+        self.trackNewValue()
+    }
+    
+    internal func trackNewValue() {
+        Analytics.shared()?.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     fileprivate let getAction : GetAction

@@ -255,10 +255,10 @@ extension LinkPreview {
     var openableURL: NSURL? {
         let application = UIApplication.shared
 
-        if let permanentURL = permanentURL, application.canOpenURL(permanentURL) {
-            return permanentURL as NSURL?
-        } else if let originalURL = NSURL(string: originalURLString), application.canOpenURL(originalURL as URL) {
+        if let originalURL = NSURL(string: originalURLString), application.canOpenURL(originalURL as URL) {
             return originalURL
+        } else if let permanentURL = permanentURL, application.canOpenURL(permanentURL) {
+            return permanentURL as NSURL?
         }
 
         return nil

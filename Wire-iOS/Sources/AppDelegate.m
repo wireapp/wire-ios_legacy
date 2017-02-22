@@ -36,7 +36,6 @@
 #import "AppController.h"
 #import "AppController+Internal.h"
 #import "Constants.h"
-#import <AdSupport/AdSupport.h>
 #import "AppDelegate+Hockey.h"
 #import "Application+runDuration.h"
 

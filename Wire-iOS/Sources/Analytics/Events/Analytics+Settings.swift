@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,14 +19,19 @@
 
 import Foundation
 
-
-private let sendButtonEvent = "settings.changed_send_button_option"
-
+private let settingsChangeEvent = "settings.changed_value"
+private let settingsChangeEventPropertyName = "property"
+private let settingsChangeEventPropertyValue = "new_value"
 
 extension Analytics {
-
-    @objc public func tagSendButtonDisabled(_ disabled: Bool) {
-        tagEvent(sendButtonEvent, attributes: ["outcome": disabled ? "off" : "on"])
+    
+    internal func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
+        guard let value = value.value(),
+              propertyName != SettingsPropertyName.lockAppLastDate else {
+            return
+        }
+        let attributes = [settingsChangeEventPropertyName: propertyName,
+                          settingsChangeEventPropertyValue: value]
+        tagEvent(settingsChangeEvent, attributes: attributes)
     }
-
 }
