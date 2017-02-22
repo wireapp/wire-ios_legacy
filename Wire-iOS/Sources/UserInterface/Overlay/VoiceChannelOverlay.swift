@@ -31,6 +31,7 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     var callButton: IconLabelButton!
     var degradationTopLabel: UILabel!
     var degradationBottomLabel: UILabel!
+    var shieldOverlay: DegradationOverlayView!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -152,6 +153,9 @@ extension VoiceChannelOverlay {
         callingUserImage.suggestedImageSize = .big
         callingUserImage.accessibilityIdentifier = "CallingUsersImage"
         avatarContainer.addSubview(callingUserImage)
+        
+        shieldOverlay = DegradationOverlayView()
+        avatarContainer.addSubview(shieldOverlay)
         
         callingTopUserImage = UserImageView()
         callingTopUserImage.suggestedImageSize = .small
@@ -291,7 +295,7 @@ extension VoiceChannelOverlay {
             centerStatusLabel.centerY == contentContainer.centerY
         }
 
-        constrain(contentContainer, avatarContainer, topStatusLabel, callingUserImage) { contentContainer, avatarContainer, topStatusLabel, callingUserImage in
+        constrain(contentContainer, avatarContainer, topStatusLabel, callingUserImage, shieldOverlay) { contentContainer, avatarContainer, topStatusLabel, callingUserImage, shieldOverlay in
             avatarContainer.top == topStatusLabel.bottom + 24
             avatarContainer.leading == contentContainer.leadingMargin
             avatarContainer.trailing == contentContainer.trailingMargin
@@ -304,6 +308,8 @@ extension VoiceChannelOverlay {
             callingUserImage.trailing <= avatarContainer.trailing
             callingUserImage.top >= avatarContainer.top
             callingUserImage.bottom <= avatarContainer.bottom
+            
+            shieldOverlay.edges == callingUserImage.edges
         }
         
         constrain(self, participantsCollectionView, cameraPreviewView) { view, participantsCollectionView, cameraPreviewView in
@@ -443,7 +449,7 @@ extension VoiceChannelOverlay {
     }
     
     var allOverlayViews: Set<UIView> {
-        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
+        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
     }
     
     func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
@@ -455,11 +461,11 @@ extension VoiceChannelOverlay {
         case .outgoingCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
         case .outgoingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
+            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .incomingCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel]
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
         case .connected:
@@ -486,11 +492,11 @@ extension VoiceChannelOverlay {
         case .outgoingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .outgoingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
+            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .incomingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel]
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
             visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .connected:
