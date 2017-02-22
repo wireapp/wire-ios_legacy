@@ -125,7 +125,7 @@ class SettingsPropertyFactory {
                 }
             }
             
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
 
         case .accentColor:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
@@ -142,7 +142,7 @@ class SettingsPropertyFactory {
                 }
             }
             
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue(self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
@@ -158,7 +158,7 @@ class SettingsPropertyFactory {
                 NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self)
             }
             
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction , setAction: setAction)
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .soundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
@@ -234,7 +234,6 @@ class SettingsPropertyFactory {
                     switch value {
                     case .number(value: let number):
                         Settings.shared().disableSendButton = number.boolValue
-                        Analytics.shared()?.tagSendButtonDisabled(number.boolValue)
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
