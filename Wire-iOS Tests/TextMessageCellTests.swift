@@ -121,21 +121,21 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     func testThatItRendersATextMessage_LikedReceiver() {
         let message = mockMessage(state: .sent)
-        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [otherUsers.first!]]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUsers.first!]]
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSender() {
         let message = mockMessage(state: .sent)
-        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSelected() {
         let message = mockMessage(state: .sent)
-        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser]]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
         sut.setSelected(true, animated: false)
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -143,21 +143,21 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     func testThatItRendersATextMessage_LikedByTwoPeople() {
         let message = mockMessage(state: .sent)
-        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: Array(otherUsers[0..<2])]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(otherUsers[0..<2])]
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_LikedByTwoPeopleIncludingSelf() {
         let message = mockMessage(state: .sent)
-        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + [otherUsers.first!]]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser] + [otherUsers.first!]]
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedByALotOfPeople() {
         let message = mockMessage(state: .sent)
-        message.backingUsersReaction = [ZMMessageReaction.Like.rawValue: [selfUser] + otherUsers]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser] + otherUsers]
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }

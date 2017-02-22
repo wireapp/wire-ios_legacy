@@ -49,7 +49,7 @@ class ReactionsListViewControllerTests: ZMSnapshotTestCase {
         
         let users = MockUser.mockUsers().map { $0 }
         message?.backingUsersReaction = [
-            ZMMessageReaction.Like.rawValue: users
+            MessageReaction.like.unicodeValue: users
         ]
 
         return message!
