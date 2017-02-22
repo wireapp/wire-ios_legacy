@@ -190,6 +190,10 @@ static NSString *NotNilString(NSString *string) {
             break;
         }
             
+        case VoiceChannelOverlayStateOutgoingCallDegraded:
+            return [self labelTextWithFormat:@"%@\n" name:conversationName];
+            break;
+            
         case VoiceChannelOverlayStateJoiningCall: {
             NSString *statusText = NSLocalizedString(@"voice.status.joining", nil);
             statusText = [statusText lowercasedWithCurrentLocale];

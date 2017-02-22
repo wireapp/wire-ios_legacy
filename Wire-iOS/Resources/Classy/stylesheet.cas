@@ -71,6 +71,14 @@ VoiceChannelOverlay {
         imageEdgeInsets: 0 0 0 8;
     }
     
+    degradationTopLabel: @{
+        textColor: $color-text-foreground-dark;
+    }
+    
+    degradationBottomLabel: @{
+        textColor: $color-text-foreground-dark;
+    }
+
     topStatusLabel: @{
         textColor: $color-text-foreground-dark;
     }

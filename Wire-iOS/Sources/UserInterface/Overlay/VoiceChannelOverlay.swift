@@ -26,6 +26,11 @@ let GroupCallAvatarGainRadius: CGFloat = 14.0;
 let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 
 @objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
+    
+    var cancelButton: IconLabelButton!
+    var callButton: IconLabelButton!
+    var degradationTopLabel: UILabel!
+    var degradationBottomLabel: UILabel!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -166,15 +171,8 @@ extension VoiceChannelOverlay {
     }
     
     fileprivate func createLabels() {
-        topStatusLabel = UILabel()
+        topStatusLabel = createMultilineLabel()
         topStatusLabel.accessibilityIdentifier = "CallStatusLabel"
-        topStatusLabel.textAlignment = .center
-        topStatusLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        topStatusLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        topStatusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        topStatusLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        topStatusLabel.numberOfLines = 0
-        contentContainer.addSubview(topStatusLabel)
         
         centerStatusLabel = UILabel()
         centerStatusLabel.accessibilityIdentifier = "CenterStatusLabel"
@@ -182,7 +180,26 @@ extension VoiceChannelOverlay {
         centerStatusLabel.numberOfLines = 2
         centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
         
-        [topStatusLabel, centerStatusLabel].forEach(contentContainer.addSubview)
+        degradationTopLabel = createMultilineLabel()
+        degradationTopLabel.text = "You started usign a new device"
+        degradationTopLabel.accessibilityIdentifier = "CallDegradationTopLabel"
+        
+        degradationBottomLabel = createMultilineLabel()
+        degradationBottomLabel.accessibilityIdentifier = "CallDegradationBottomLabel"
+        degradationBottomLabel.text = "voice.degradation.prompt".localized
+
+        [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)
+    }
+    
+    fileprivate func createMultilineLabel() -> UILabel {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        label.numberOfLines = 0
+        return label
     }
     
     fileprivate func createButtons() {
@@ -193,8 +210,10 @@ extension VoiceChannelOverlay {
         muteButton = createButton(icon: .microphoneWithStrikethrough, label: "voice.mute_button.title".localized, accessibilityIdentifier: "CallMuteButton")
         videoButton = createButton(icon: .videoCall, label: "voice.video_button.title".localized, accessibilityIdentifier: "CallVideoButton")
         speakerButton = createButton(icon: .speaker, label: "voice.speaker_button.title".localized, accessibilityIdentifier: "CallSpeakerButton")
-        
-        [acceptButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton].forEach(contentContainer.addSubview)
+        cancelButton = createButton(icon: .X, label: "voice.cancel_button.title".localized, accessibilityIdentifier: "SecurityCancelButton")
+        callButton = createButton(icon: .phone, label: "voice.call_button.title".localized, accessibilityIdentifier: "SecurityCallButton")
+
+        [acceptButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton, cancelButton, callButton].forEach(contentContainer.addSubview)
     }
     
     fileprivate func createButton(icon: ZetaIconType, label: String, accessibilityIdentifier: String) -> IconLabelButton {
@@ -229,7 +248,8 @@ extension VoiceChannelOverlay {
             views.forEach { $0.edges == superview.edges }
         }
         
-        constrain(self, contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel) { view, contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel in
+        constrain(self, contentContainer, callingTopUserImage) { view, contentContainer, callingTopUserImage in
+            
             contentContainer.width == 320 ~ LayoutPriority(750)
             contentContainer.width <= 320
             contentContainer.top == view.top
@@ -242,7 +262,23 @@ extension VoiceChannelOverlay {
             callingTopUserImage.leading == contentContainer.leadingMargin
             callingTopUserImage.height == callingTopUserImage.width
             callingTopUserImage.width == 56
+        }
+        
+        constrain(contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel) { contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel in
+            
+            degradationTopLabel.leading >= contentContainer.leadingMargin
+            degradationTopLabel.trailing <= contentContainer.trailingMargin
+            degradationTopLabel.bottom == callingUserImage.top - 16
+            degradationTopLabel.centerX == contentContainer.centerX
 
+            degradationBottomLabel.leading >= contentContainer.leadingMargin
+            degradationBottomLabel.trailing <= contentContainer.trailingMargin
+            degradationBottomLabel.centerX == contentContainer.centerX
+            degradationBottomLabel.top == callingUserImage.bottom + 16
+        }
+        
+        constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel in
+            
             topStatusLabel.leading == contentContainer.leadingMargin ~ 750
             topStatusLabel.trailing == contentContainer.trailingMargin
             topStatusLabel.top == contentContainer.top + 50
@@ -253,7 +289,7 @@ extension VoiceChannelOverlay {
             centerStatusLabel.trailing == contentContainer.trailingMargin
             centerStatusLabel.centerY == contentContainer.centerY
         }
-        
+
         constrain(contentContainer, avatarContainer, topStatusLabel, callingUserImage) { contentContainer, avatarContainer, topStatusLabel, callingUserImage in
             avatarContainer.top == topStatusLabel.bottom + 24
             avatarContainer.leading == contentContainer.leadingMargin
@@ -291,7 +327,7 @@ extension VoiceChannelOverlay {
             self.leaveButtonPinRightConstraint.isActive = false
         }
         
-        constrain([ignoreButton, muteButton]) { buttons in
+        constrain([ignoreButton, muteButton, cancelButton]) { buttons in
             let superview = (buttons.first?.superview)!
             buttons.forEach {
                 $0.width == OverlayButtonWidth
@@ -300,7 +336,7 @@ extension VoiceChannelOverlay {
             }
         }
         
-        constrain([acceptButton, acceptVideoButton, videoButton, speakerButton]) { buttons in
+        constrain([acceptButton, acceptVideoButton, videoButton, speakerButton, callButton]) { buttons in
             let superview = (buttons.first?.superview)!
             buttons.forEach {
                 $0.width == OverlayButtonWidth
@@ -406,7 +442,7 @@ extension VoiceChannelOverlay {
     }
     
     var allOverlayViews: Set<UIView> {
-        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView]
+        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
     }
     
     func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
@@ -417,6 +453,8 @@ extension VoiceChannelOverlay {
             visibleViews = []
         case .outgoingCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
+        case .outgoingCallDegraded:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
         case .incomingCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton]
         case .joiningCall:
@@ -444,6 +482,8 @@ extension VoiceChannelOverlay {
             visibleViews = []
         case .outgoingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
+        case .outgoingCallDegraded:
+            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel]
         case .incomingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
         case .joiningCall:
