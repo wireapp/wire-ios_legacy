@@ -160,29 +160,6 @@ static NSString *NotNilString(NSString *string) {
     self.callingTopUserImage.user = callingUser;
 }
 
-- (void)updateViewsStateAndLayoutForVisibleViews:(NSSet *)visibleViews
-{
-    if ([visibleViews containsObject:self.callingTopUserImage]) {
-        self.topStatusLabel.textAlignment = NSTextAlignmentLeft;
-        self.statusLabelToTopUserImageInset.active = YES;
-    }
-    else {
-        self.topStatusLabel.textAlignment = NSTextAlignmentCenter;
-        self.statusLabelToTopUserImageInset.active = NO;
-    }
-    
-    if ([visibleViews containsObject:self.cameraPreviewView]) {
-        self.cameraPreviewCenterHorisontally.constant = self.cameraPreviewPosition.x;
-    }
-    
-    if (self.callingConversation.voiceChannel.isVideoCall) {
-        self.leaveButtonPinRightConstraint.active = NO;
-    }
-    else {
-        self.leaveButtonPinRightConstraint.active = self.hidesSpeakerButton;
-    }
-}
-
 - (NSAttributedString *)attributedStatus
 {
     NSString *conversationName = self.callingConversation.displayName;

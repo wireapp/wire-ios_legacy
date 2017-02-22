@@ -473,4 +473,24 @@ extension VoiceChannelOverlay {
         
         return visibleViews
     }
+    
+    func updateViewsStateAndLayout(forVisibleViews visibleViews: Set<UIView>) {
+        if visibleViews.contains(callingTopUserImage) {
+            topStatusLabel.textAlignment = .left
+            statusLabelToTopUserImageInset.isActive = true
+        } else {
+            topStatusLabel.textAlignment = .center
+            statusLabelToTopUserImageInset.isActive = false
+        }
+        
+        if visibleViews.contains(cameraPreviewView) {
+            cameraPreviewCenterHorisontally.constant = cameraPreviewPosition().x
+        }
+        
+        if isVideoCall {
+            leaveButtonPinRightConstraint.isActive = false
+        } else {
+            leaveButtonPinRightConstraint.isActive = hidesSpeakerButton
+        }
+    }
 }
