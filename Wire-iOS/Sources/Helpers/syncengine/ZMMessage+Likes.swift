@@ -20,10 +20,6 @@
 import Foundation
 import zmessaging
 
-public enum ZMMessageReaction: String {
-    case Like = "❤️"
-}
-
 extension ZMConversationMessage {
 
     var canBeLiked: Bool {
@@ -40,7 +36,7 @@ extension ZMConversationMessage {
     var liked: Bool {
         set {
             if newValue {
-                ZMMessage.addReaction(ZMMessageReaction.Like.rawValue, toMessage: self)
+                ZMMessage.addReaction(.like, toMessage: self)
             }
             else {
                 ZMMessage.removeReaction(onMessage: self)
@@ -59,7 +55,7 @@ extension ZMConversationMessage {
     
     func likers() -> [ZMUser] {
         return usersReaction.filter { (reaction, _) -> Bool in
-            reaction == ZMMessageReaction.Like.rawValue
+            reaction == MessageReaction.like.unicodeValue
             }.map { (_, users) in
                 return users
             }.first ?? []
