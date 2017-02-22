@@ -22,8 +22,6 @@
 
 @interface AnalyticsTracker (SelfUser)
 
-- (void)tagNameChanged:(NSString *)name;
 - (void)tagPictureChanged;
-- (void)tagSwitchColorScheme:(SettingsColorScheme)colorScheme;
 
 @end

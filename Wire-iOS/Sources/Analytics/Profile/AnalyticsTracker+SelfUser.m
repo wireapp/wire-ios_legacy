@@ -21,20 +21,6 @@
 
 @implementation AnalyticsTracker (SelfUser)
 
-
-- (void)tagNameChanged:(NSString *)name
-{
-    NSUInteger components = [name componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].count;
-    
-    NSDictionary *attributes = @{
-                                 AnalyticsEventTypeEditSelfUserFieldKey : AnalyticsEventTypeEditSelfUserFieldName,
-                                 AnalyticsEventTypeEditSelfUserActionKey : AnalyticsEventTypeEditSelfUserActionModified,
-                                 AnalyticsEventTypeEditSelfUserComponentsKey : @(components)
-                                 };
-    
-    [self tagEvent:AnalyticsEventTypeEditSelfUser attributes:attributes];
-}
-
 - (void)tagPictureChanged
 {
 
@@ -46,13 +32,5 @@
     [self tagEvent:AnalyticsEventTypeEditSelfUser attributes:attributes];
     
 }
-
-- (void)tagSwitchColorScheme:(SettingsColorScheme)colorScheme
-{
-    NSDictionary *attributes = @{ AnalyticsEventTypeThemeSelectedKey : colorScheme == SettingsColorSchemeLight ? AnalyticsEventTypeThemeLight : AnalyticsEventTypeThemeDark };
-    
-    [self tagEvent:AnalyticsEventTypeTheme attributes:attributes];
-}
-
 
 @end

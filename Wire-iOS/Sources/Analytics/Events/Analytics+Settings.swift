@@ -26,7 +26,8 @@ private let settingsChangeEventPropertyValue = "new_value"
 extension Analytics {
     
     internal func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
-        guard let value = value.value() else {
+        guard let value = value.value(),
+              propertyName != SettingsPropertyName.lockAppLastDate else {
             return
         }
         let attributes = [settingsChangeEventPropertyName: propertyName,

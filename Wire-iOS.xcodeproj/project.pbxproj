@@ -741,7 +741,6 @@
 		BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */; };
 		BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */; };
 		BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */; };
-		BF0BDF991DAD3800003C61DE /* Analytics+SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */; };
 		BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */; };
 		BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */; };
 		BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */; };
@@ -2292,7 +2291,6 @@
 		BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecentlyUsedEmojis.swift; path = Emoji/RecentlyUsedEmojis.swift; sourceTree = "<group>"; };
 		BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Options.swift"; sourceTree = "<group>"; };
 		BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeight.swift; sourceTree = "<group>"; };
-		BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+SendButton.swift"; sourceTree = "<group>"; };
 		BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+EmojiKeyboard.swift"; sourceTree = "<group>"; };
 		BFD9B9551DEDEE0400E47534 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCell.swift; sourceTree = "<group>"; };
@@ -3009,7 +3007,6 @@
 				871BBFC71D34F56300DF0793 /* Analytics+ConversationEvents.m */,
 				F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */,
 				871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */,
-				BFCF31DE1DA64AD40039B3DC /* Analytics+SendButton.swift */,
 				BF7ED2DD1DF59974003A4397 /* Analytics+Usernames.swift */,
 				BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */,
 				871BBFC91D34F56300DF0793 /* Analytics+Navigation.h */,
@@ -5906,7 +5903,6 @@
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
-				BF0BDF991DAD3800003C61DE /* Analytics+SendButton.swift in Sources */,
 				875A23171ADEA1AD00111C88 /* CountryCodeView.m in Sources */,
 				87F18BBC1E01577C00C69D9B /* FileMessageViewState.swift in Sources */,
 				BF808B571DE71F3000718076 /* UserNameTakeOverViewController.swift in Sources */,

@@ -177,7 +177,8 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
     id <ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
-    
+    [self.analyticsTracker tagPictureChanged];
+
     [[ZMUserSession sharedSession] enqueueChanges:^{
         editableSelf.originalProfileImageData = selfImageData;
         [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
@@ -257,7 +258,6 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self.analyticsTracker tagPictureChanged];
     [self setSelfImageToData:imageData];
 }
 
