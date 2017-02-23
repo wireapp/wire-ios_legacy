@@ -77,7 +77,6 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case sendV3Assets = "SendV3Assets"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
-    case linkPreviewsInShareExtension = "LinkPreviewsInShareExtension"
 
     case lockApp = "lockApp"
     case lockAppLastDate = "lockAppLastDate"

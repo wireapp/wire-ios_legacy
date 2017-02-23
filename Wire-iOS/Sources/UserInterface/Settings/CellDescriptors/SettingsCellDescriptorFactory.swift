@@ -181,7 +181,6 @@ import Foundation
         
         developerCellDescriptors.append(devController)
         
-        
         let callingProtocolSetting = callingProtocolStrategyGroup(for: self.settingsPropertyFactory.property(.callingProtocolStrategy))
         developerCellDescriptors.append(callingProtocolSetting)
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
@@ -196,8 +195,6 @@ import Foundation
         developerCellDescriptors.append(enableAssetV3Setting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
-        let linkPreviewsInShareExtension = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.linkPreviewsInShareExtension))
-        developerCellDescriptors.append(linkPreviewsInShareExtension)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
         

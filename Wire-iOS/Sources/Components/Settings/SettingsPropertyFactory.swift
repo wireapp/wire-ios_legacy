@@ -249,17 +249,6 @@ class SettingsPropertyFactory {
                         ZMUserSession.callingProtocolStrategy = callingProtocolStrategy
                     }
             })
-
-        case .linkPreviewsInShareExtension:
-            return SettingsBlockProperty(
-                propertyName: .linkPreviewsInShareExtension,
-                getAction: { _ in return SettingsPropertyValue(ExtensionSettings.shared.fetchLinkPreview) },
-                setAction: { _, value in
-                    switch value {
-                    case .number(value: let number): ExtensionSettings.shared.fetchLinkPreview = number.boolValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
-                }
-            })
         case .lockApp:
             return SettingsBlockProperty(
                 propertyName: .lockApp,

@@ -69,7 +69,6 @@ class UnsentSendableBase {
 class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
     private let text: String
-    let fetchPreview = ExtensionSettings.shared.fetchLinkPreview
 
     init(conversation: Conversation, sharingSession: SharingSession, text: String) {
         self.text = text
@@ -79,7 +78,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
     func send(completion: @escaping (Sendable?) -> Void) {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
-            completion(self.conversation.appendTextMessage(self.text, fetchLinkPreview: self.fetchPreview))
+            completion(self.conversation.appendTextMessage(self.text, fetchLinkPreview: true))
         }
     }
 
