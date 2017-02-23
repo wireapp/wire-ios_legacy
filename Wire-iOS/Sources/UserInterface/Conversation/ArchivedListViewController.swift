@@ -141,10 +141,10 @@ extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
 // MARK: - ArchivedListViewModelDelegate
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
-    internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, usingBlock: @escaping () -> ()) {
+    internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
   
         guard initialSyncCompleted else { return }
-        
+        applyChangesClosure()
         collectionView.reloadData()
     }
     
