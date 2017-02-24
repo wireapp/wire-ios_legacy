@@ -53,9 +53,7 @@
     }
 
     if (self.conversationType == ZMConversationTypeGroup) {
-        for (ZMUser *user in participants) {
-            [self addParticipant:user];
-        }
+        [self addParticipants:participants];
         
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForAddParticipantsWithCount:participants.count];
         [[Analytics shared] tagEventObject:event];
@@ -116,10 +114,8 @@
 
 - (void)removeParticipants:(NSArray *)participants
 {
-    for (ZMUser *user in participants) {
-        NSAssert([user isKindOfClass:ZMUser.class], @"Trying to remove a participant that is not a ZMUser!");
-        [self removeParticipant:user];
-    }
+    NSAssert([user isKindOfClass:ZMUser.class], @"Trying to remove a participant that is not a ZMUser!");
+    [self removeParticipants:[NSSet setWithArray:participants]];
 }
 
 - (ZMUser *)firstActiveParticipantOtherThanSelf
