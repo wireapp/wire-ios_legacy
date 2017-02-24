@@ -197,6 +197,15 @@ import Foundation
         developerCellDescriptors.append(enableBatchCollections)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
+        let shareDatabaseCellDescriptor = SettingsButtonCellDescriptor(title: "Share database", isDestructive: false) { _ in
+            let shareDatabaseDocumentController = UIDocumentInteractionController(url: ZMUserSession.shared()!.managedObjectContext.zm_storeURL)
+//            documentInteractionController.delegate
+            shareDatabaseDocumentController.presentOpenInMenu(from: CGRect(x: 0, y: 0, width: 300, height: 300  ), in: UIApplication.shared.keyWindow!.rootViewController!.view!, animated: true)
+            type(of: self).shareDatabaseDocumentController = shareDatabaseDocumentController
+        
+        }
+        developerCellDescriptors.append(shareDatabaseCellDescriptor)
+
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
@@ -301,4 +310,10 @@ import Foundation
         let colorsSection = SettingsSectionDescriptor(cellDescriptors: cellDescriptors)
         return colorsSection
     }
+    
+    /// Used to share database
+    static private var shareDatabaseDocumentController: UIDocumentInteractionController?
+
 }
+
+
