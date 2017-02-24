@@ -251,7 +251,7 @@ internal final class ConversationImagesViewController: UIViewController {
         self.messageActionDelegate?.wants(toPerform: .save, for: self.currentMessage)
     }
 
-    @objc public func likeCurrent(_ sender: AnyObject!) {
+    @objc public func likeCurrent() {
         ZMUserSession.shared()?.enqueueChanges({
             self.currentMessage.liked = !self.currentMessage.liked
         }, completionHandler: {
@@ -278,7 +278,10 @@ extension ConversationImagesViewController: MessageActionResponder {
     }
 
     func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
-        self.messageActionDelegate?.wants(toPerform: action, for: message)
+        switch action {
+        case .like: likeCurrent()
+        default: self.messageActionDelegate?.wants(toPerform: action, for: message)
+        }
     }
 }
 

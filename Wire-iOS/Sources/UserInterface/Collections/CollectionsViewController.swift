@@ -687,7 +687,8 @@ extension CollectionsViewController: CollectionCellDelegate {
         case .forward, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         case .delete:
-            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: cell) { [weak self] in
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: cell) { [weak self] deleted in
+                guard deleted else { return }
                 self?.refetchCollection()
             }
         default:
@@ -738,7 +739,8 @@ extension CollectionsViewController: MessageActionResponder {
         case .forward, .copy, .save, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         case .delete:
-            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] in
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] deleted in
+                guard deleted else { return }
                 _ = self?.navigationController?.popViewController(animated: true)
                 self?.refetchCollection()
             }

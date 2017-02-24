@@ -122,7 +122,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
         self.messagePresenter.analyticsTracker = self.analyticsTracker;
-        self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self];
     }
     
     return self;
@@ -340,7 +339,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
             case MessageActionDelete:
             {
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^{
+                self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
+                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^(BOOL deleted) {
+                    if (self.presentedViewController && deleted) {
+                        [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+                    }
                     cell.beingEdited = NO;
                 }];
             }
@@ -443,8 +446,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
         }
     };
-    
-    if (self.messagePresenter.modalTargetController.presentedViewController != nil) {
+
+    BOOL shouldDismissModal = actionId != MessageActionDelete;
+
+    if (self.messagePresenter.modalTargetController.presentedViewController != nil && shouldDismissModal) {
         [self.messagePresenter.modalTargetController dismissViewControllerAnimated:YES completion:^{
             action();
         }];
@@ -927,7 +932,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
     ConversationCell *cell = [self cellForMessage:message];
-    
     [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 
