@@ -218,6 +218,9 @@
 "content.system.started_using" = "started using";
 "content.system.is_verified" = "All fingerprints are verified";
 
+"content.system.new_users" = "New user joined.";
+"content.system.verify_devices" = "Verify devices";
+
 "content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "your devices";
 "content.system.other_devices" = "%@’s devices";
