@@ -177,7 +177,7 @@ extension SettingsCellDescriptorFactory {
             
             if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
                 let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp])
+                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: "self.settings.privacy_security.lock_app.subtitle".localized)
                 cellDescriptors.append(section)
             }
         }

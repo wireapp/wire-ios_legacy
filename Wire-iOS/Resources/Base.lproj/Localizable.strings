@@ -582,7 +582,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
-"self.settings.privacy_security.lock_app" = "Lock with Touch ID & Passcode";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Unlock Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";

@@ -184,10 +184,8 @@ import HockeySDK.BITHockeyManager
 extension AppLockViewController: UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         if self.appLockActive {
-            self.dimContents = true
-        }
-        if self.appLockActive {
             self.resignKeyboard()
+            self.dimContents = true
         }
     }
     
