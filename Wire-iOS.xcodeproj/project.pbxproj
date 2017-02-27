@@ -742,6 +742,7 @@
 		BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */; };
 		BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */; };
 		BF10B5891E64328100E7036E /* ZMCDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF10B5881E64328100E7036E /* ZMCDataModel.framework */; };
+		BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10B58C1E6452B800E7036E /* ZMMessage+Likes.swift */; };
 		BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */; };
 		BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */; };
 		BF1A81281C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */; };
@@ -2169,6 +2170,7 @@
 		BF0BDF871DABEF3B003C61DE /* DestructionCountdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestructionCountdownView.swift; sourceTree = "<group>"; };
 		BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestructionCountdownViewTests.swift; sourceTree = "<group>"; };
 		BF10B5881E64328100E7036E /* ZMCDataModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZMCDataModel.framework; path = "../wire-ios-data-model/build/Debug-iphoneos/ZMCDataModel.framework"; sourceTree = "<group>"; };
+		BF10B58C1E6452B800E7036E /* ZMMessage+Likes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Likes.swift"; sourceTree = "<group>"; };
 		BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockConversationFactory.h; sourceTree = "<group>"; };
 		BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockConversationFactory.m; sourceTree = "<group>"; };
@@ -4305,6 +4307,7 @@
 				8FC1EFDD19DED50C0092488D /* VoiceChannelV2+Additions.h */,
 				8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */,
 				8FD5A08419F0490500550525 /* ZMUserSession+Additions.h */,
+				BF10B58C1E6452B800E7036E /* ZMMessage+Likes.swift */,
 				8FD5A08519F0490500550525 /* ZMUserSession+Additions.m */,
 				BAED82B71B307AEE004D027F /* ZMUserSession+RequestProxy.h */,
 				BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */,
@@ -6105,6 +6108,7 @@
 				870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */,
 				AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */,
 				8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */,
+				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				165B47ED1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
 				871BC2781D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m in Sources */,
