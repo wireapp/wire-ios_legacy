@@ -46,7 +46,8 @@
 
 
 static const CGFloat MaxVisualDrawerOffsetRevealDistance = 48;
-static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.1;
+static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
+static const NSTimeInterval OverscrollRatio = 2.5;
 
 
 
@@ -256,7 +257,7 @@ static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.1;
 {
     if (self.animatedListView.progress >= 1) {
         BOOL overscrolled = NO;
-        if (offset > (CGRectGetWidth(self.frame) / 2)) {
+        if (offset > (CGRectGetWidth(self.frame) / OverscrollRatio)) {
             overscrolled = YES;
         } else if (self.overscrollStartDate) {
             NSTimeInterval diff = [[NSDate date] timeIntervalSinceDate:self.overscrollStartDate];
