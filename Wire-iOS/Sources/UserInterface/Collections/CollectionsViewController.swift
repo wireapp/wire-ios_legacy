@@ -317,7 +317,7 @@ final public class CollectionsViewController: UIViewController {
             self.selectedMessage = message
             Analytics.shared()?.tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
             
-            if Message.isImage(message) {
+            if message.isImage {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
             
                 let backButton = CollectionsView.backButton()
@@ -670,7 +670,7 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
                 message.requestImageDownload()
             }
             
-            if Message.isImage(message), let _ = message.imageMessageData?.imageData {
+            if message.isImage, let _ = message.imageMessageData?.imageData {
                 CollectionImageCell.loadImageThumbnail(for: message, completion: .none)
             }
         }
@@ -692,7 +692,7 @@ extension CollectionsViewController: CollectionCellDelegate {
                 self?.refetchCollection()
             }
         default:
-            if Message.isFileTransfer(message) {
+            if message.isFile {
                 self.perform(action, for: message, from: cell)
             }
             else if let linkPreview = message.textMessageData?.linkPreview {
@@ -710,7 +710,7 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
               let fileMessageData = message.fileMessageData,
               fileMessageData.transferState == .downloaded,
               self.messagePresenter.waitingForFileDownload,
-              Message.isFileTransfer(message) || Message.isVideo(message) || Message.isAudio(message) else {
+              message.isFile || message.isVideo || message.isAudio else {
             return
         }
         
@@ -721,7 +721,7 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
 
 extension CollectionsViewController: MessageActionResponder {
     public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
-        if Message.isImage(message) {
+        if message.isImage {
             switch action {
             case .like, .forward, .copy, .save, .showInConversation:
                 return true

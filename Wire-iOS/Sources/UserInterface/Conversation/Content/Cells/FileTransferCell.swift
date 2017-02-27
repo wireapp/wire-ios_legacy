@@ -83,7 +83,7 @@ public final class FileTransferCell: ConversationCell {
     override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
-        if Message.isFileTransfer(message) {
+        if message.isFile {
             self.configureForFileTransferMessage(message, initialConfiguration: true)
         }
     }
