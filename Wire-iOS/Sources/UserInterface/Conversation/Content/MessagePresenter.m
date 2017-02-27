@@ -18,7 +18,6 @@
 
 #import "MessagePresenter.h"
 #import "zmessaging+iOS.h"
-#import "Message.h"
 #import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+FileTransfer.h"

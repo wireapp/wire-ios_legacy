@@ -18,7 +18,6 @@
 
 
 #import "ZMConversationMessageWindow+Formatting.h"
-#import "Message.h"
 #import "Message+Formatting.h"
 #import "ConversationCell.h"
 #import "Wire-Swift.h"

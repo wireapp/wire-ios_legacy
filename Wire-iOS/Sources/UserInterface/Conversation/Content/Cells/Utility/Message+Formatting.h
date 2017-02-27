@@ -19,7 +19,6 @@
 
 #import <Foundation/Foundation.h>
 #import <zmessaging/zmessaging.h>
-#import "Message.h"
 
 @class ConversationCellLayoutProperties;
 @class LinkAttachment;

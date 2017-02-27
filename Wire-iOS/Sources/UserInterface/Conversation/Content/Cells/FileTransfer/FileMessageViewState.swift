@@ -49,7 +49,7 @@ public enum FileMessageViewState {
     
     // Value mapping from message consolidated state (transfer state, previewData, fileURL) to FileMessageViewState
     static func fromConversationMessage(_ message: ZMConversationMessage) -> FileMessageViewState? {
-        guard let fileMessageData = message.fileMessageData, Message.isFileTransferMessage(message) else {
+        guard let fileMessageData = message.fileMessageData, Message.isFileTransfer(message) else {
             return .none
         }
 

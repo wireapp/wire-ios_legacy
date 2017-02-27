@@ -78,7 +78,7 @@ public final class VideoMessageCell: ConversationCell {
         super.configure(for: message, layoutProperties: layoutProperties)
         self.obfuscationView.isHidden = !message.isObfuscated
 
-        if Message.isVideoMessage(message), let fileMessageData = message.fileMessageData {
+        if Message.isVideo(message), let fileMessageData = message.fileMessageData {
             self.configureForVideoMessage(fileMessageData, isInitial: true)
         }
         else {

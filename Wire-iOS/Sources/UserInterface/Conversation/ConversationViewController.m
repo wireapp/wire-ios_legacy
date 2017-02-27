@@ -37,7 +37,7 @@
 // model
 #import "zmessaging+iOS.h"
 #import "VoiceChannelV2+Additions.h"
-#import "Message.h"
+#import "Message+UI.h"
 
 // ui
 #import "ConversationContentViewController.h"

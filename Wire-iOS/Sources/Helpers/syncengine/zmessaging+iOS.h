@@ -23,6 +23,5 @@
 #import "ZMUserSession+iOS.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "ZMUser+Additions.h"
-#import "Message.h"
 #import "ZMConversation+Additions.h"
 #import "SessionObjectCache.h"
