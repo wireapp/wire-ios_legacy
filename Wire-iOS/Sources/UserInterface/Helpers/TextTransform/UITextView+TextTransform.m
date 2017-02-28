@@ -28,6 +28,7 @@
 + (void)initialize
 {
     if (self == [UITextView self]) {
+        [UILabel class];
         // Add textTransform property to Classy
         CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self];
         

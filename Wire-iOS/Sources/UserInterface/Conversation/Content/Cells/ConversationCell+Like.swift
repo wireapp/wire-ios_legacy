@@ -36,7 +36,7 @@ public extension ConversationCell {
     }
     
     @objc public func configureLikeButtonForMessage(_ message: ZMConversationMessage) {
-        self.likeButton.setSelected(message.liked, animated: false)
+        self.likeButton?.setSelected(message.liked, animated: false)
     }
     
     @objc public func didDoubleTapMessage(_ sender: AnyObject!) {
