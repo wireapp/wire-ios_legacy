@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Прячу…";
 
 "send_invitation.subject" = "Добавь меня в Wire";
-"send_invitation.text" = "Я в Wire, ищи %@ или зайди на get.wire.com.";
+"send_invitation.text" = "Я использую Wire. Ищите меня там по имени %@ или посетите сайт get.wire.com";
 "send_invitation_no_email.text" = "Я уже в Wire. Посетите get.wire.com, чтобы добавить меня.";
-
-"send_personal_invitation.text" = "Я в Wire, поговорим там get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,11 +218,11 @@
 "content.system.started_using" = "начал(-а) использовать";
 "content.system.is_verified" = "Все отпечатки верифицированы";
 
-"content.system.unverified" = "%@ деверифицировал(-а) одно из %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ деверифицировал(-а) одно из %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "ваши устройства";
-"content.system.other_devices" = "устройства %@";
+"content.system.other_devices" = "Устройства, которыми пользуется %@";
 
-"content.system.missing_messages.title" = "Вы не использовали это устройство некоторое время. Некоторые сообщения могут не отображаться.";
+"content.system.missing_messages.title" = "Вы не использовали это устройство некоторое время. Некоторые сообщения могут не отображаться здесь.";
 "content.system.missing_messages.subtitle_start" = "Тем временем,";
 
 "content.system.cannot_decrypt" = "Сообщение от %@ не было получено.";
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Сохранить";
 
 "content.message.delete" = "Удалить";
+"content.message.save" = "Сохранить";
 
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
 "content.message.forward" = "Поделиться";
 "content.message.go_to_conversation" = "Показать в разговоре";
 "content.message.forward.to" = "Поиск…";
+"content.message.open" = "Открыть";
 
 "content.reactions_list.likers" = "Понравилось";
 
@@ -394,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "Зачем верифицировать разговоры?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Убедитесь, что этот отпечаток соответствует отпечатку, показанному на устройстве %@.";
+"profile.devices.detail.verify_message" = "Убедитесь, что этот отпечаток совпадает с отпечатком, показанном на устройстве %@.";
 "profile.devices.detail.verify_message.link" = "Как это сделать?";
 "profile.devices.detail.show_my_device.title" = "Показать отпечаток моего устройства";
 "device.verified" = "Верифицировано";
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Открыть настройки контактов";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет вам связаться с другими людьми. Мы анонимизируем всю информацию и не передаем ее третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
-"self.settings.privacy_security.lock_app" = "Заблокировать при помощи Touch ID & пароля";
+"self.settings.privacy_security.lock_app" = "Заблокировать с помощью пароля";
+"self.settings.privacy_security.lock_app.subtitle" = "Заблокировать Wire после 10 секунд нахождения в фоновом режиме. Разблокировать приложение можно с помощью Touch ID или пароля.";
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Пожалуйста разблокируйте Wire с помощью Touch ID или пароля";
+"self.settings.privacy_security.lock_cancelled.description" = "Разблокируйте Wire с помощью Touch ID или пароля";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Пригласить друзей";
+"self.settings.invite_friends.title" = "Пригласить людей";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Мы уже отправили вам код через SMS. Нажмите \"Отправить повторно\" через 10 минут, чтобы получить новый.";
 "error.user.registration_unknown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз.";
 "error.user.device_deleted_remotely" = "Вы вышли на другом устройстве.";
-"error.user.last_identity_cant_be_deleted" = "Должны быть указаны и email, и номер телефона, чтобы имелась возможность удалить один из них";
+"error.user.last_identity_cant_be_deleted" = "Необходимо оставить либо адрес электронной почты, либо номер телефона.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

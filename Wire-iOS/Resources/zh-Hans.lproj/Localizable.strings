@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "躲藏......";
 
 "send_invitation.subject" = "和我Wire上成为好友吧";
-"send_invitation.text" = "我在使用Wire，搜索%@或者访问get.wire.com 。";
+"send_invitation.text" = "我在使用Wire，搜索%@或者访问get.wire.com";
 "send_invitation_no_email.text" = "我在使用Wire。访问 get.wire.com 来添加我为好友。";
-
-"send_personal_invitation.text" = "我在使用Wire，让我们在这里聊天吧： get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "开始使用";
 "content.system.is_verified" = "所有的指纹完成验证";
 
-"content.system.unverified" = "%@ 未经证实 %@ 之一"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ 未经证实 %@ 之一"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "您的设备";
 "content.system.other_devices" = "%@ 的设备";
 
@@ -235,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ 设备标识改变。未送达的信息。";
 "content.system.cannot_decrypt.identity.you_part" = "你";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@ 的"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "了解更多信息";
 "content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,12 +252,14 @@
 "content.image.save_image" = "保存";
 
 "content.message.delete" = "删除";
+"content.message.save" = "保存";
 
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
 "content.message.forward" = "共享";
 "content.message.go_to_conversation" = "显示";
 "content.message.forward.to" = "搜索";
+"content.message.open" = "开启";
 
 "content.reactions_list.likers" = "被赞";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "打开联系人设置";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "这将帮助您找到其他好友。 我们将您的所有信息匿名处理并且不会泄漏给任何第三方。请通过设置 > 隐私 > 联系人来授权通讯录访问权限。";
 
-"self.settings.privacy_security.lock_app" = "通过Touch ID锁定";
+"self.settings.privacy_security.lock_app" = "通过Passcode锁定";
+"self.settings.privacy_security.lock_app.subtitle" = "在处于后台运行10秒后锁定Wire，通过Touch ID或Passcode解锁。";
 "self.settings.privacy_security.lock_app.description" = "解锁Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "请使用Touch ID解锁Wire";
+"self.settings.privacy_security.lock_cancelled.description" = "通过Touch ID或Passcode解锁";
 "self.settings.privacy_security.lock_cancelled.action" = "解锁";
 
 "self.settings.privacy_analytics_menu.devices.title" = "設備";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "重设密码";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "邀请好友";
+"self.settings.invite_friends.title" = "邀请联系人";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "我们已经将验证码通过短信发送给您。如需重新获取验证码，请等候10分钟后点击重新发送。";
 "error.user.registration_unknown_error" = "出了点问题，请再试一次。";
 "error.user.device_deleted_remotely" = "您的另一台设备已被登出。";
-"error.user.last_identity_cant_be_deleted" = "您需要同时拥有邮箱地址以及手机号码，从而可以移除其中之一。";
+"error.user.last_identity_cant_be_deleted" = "邮箱地址或手机号码是必填项。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

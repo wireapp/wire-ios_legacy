@@ -100,9 +100,6 @@
 "send_invitation.text" = "Używam Wire, moja nazwa użytkownika to %@. Odwiedź get.wire.com i zacznij używać Wire.";
 "send_invitation_no_email.text" = "Używam Wire. Wejdź na get.wire.com aby się ze mną połączyć.";
 
-"send_personal_invitation.text" = "Jestem dostępny na Wire, porozmawiam z Tobą tutaj: get.wire.com";
-
-
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "udostępniane zdjęcie";
@@ -221,7 +218,7 @@
 "content.system.started_using" = "rozpocznij korzystając z";
 "content.system.is_verified" = "Wszystkie odciski palców są zweryfikowane";
 
-"content.system.unverified" = "%@ nie zweryfikował jednego z %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ nie zweryfikował jednego z %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "twoje urządzenia";
 "content.system.other_devices" = "urządzenie %@a";
 
@@ -235,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "Urządzenie %@ zostało zmienione. Wiadomość nie została dostarczona.";
 "content.system.cannot_decrypt.identity.you_part" = "Ty";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Dowiedz się więcej";
 "content.system.cannot_decrypt.otherDevice_part" = "(urządzenie %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Zapisz";
 
 "content.message.delete" = "Usuń";
+"content.message.save" = "Zapisz";
 
 "content.message.like" = "Polub";
 "content.message.unlike" = "Przestań lubić";
 "content.message.forward" = "Udostepnij";
 "content.message.go_to_conversation" = "Pokaż";
 "content.message.forward.to" = "Szukaj…";
+"content.message.open" = "Otwórz";
 
 "content.reactions_list.likers" = "Lubiany przez";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Otwórz ustawienia kontaktów";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Pozwala połączyć się z innymi. Wszystkie informacje są anonimowe i nie przekazujemy ich nikomu. Zezwól na dostęp za pośrednictwem Ustawienia > Prywatność > Kontakty.";
 
-"self.settings.privacy_security.lock_app" = "Blokuj z Touch ID i hasłem";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Odblokuj Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Proszę odblokować Wire za pomocą Touch ID lub hasłem";
+"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Odblokuj";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Urządzenia";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Reset hasła";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Zaproś znajomych";
+"self.settings.invite_friends.title" = "Zaproś osoby";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "Ze względu na prywatność, poprzednie konwersacje nie będą tutaj widoczne.";
 "registration.no_history.got_it" = "OK";
 
-"registration.no_history.logged_out.hero" = "Używałeś wcześniej Wire na tym urządzeniu";
+"registration.no_history.logged_out.hero" = "Używałeś wcześniej Wire na tym urządzeniu.";
 "registration.no_history.logged_out.subtitle" = "Wiadomości wysłane w międzyczasie nie pojawią się.";
 "registration.no_history.logged_out.got_it" = "OK";
 
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Wysłaliśmy już kod SMS. Wyślij ponownie po 10 minutach, aby uzyskać nowy kod.";
 "error.user.registration_unknown_error" = "Coś poszło nie tak. Spróbuj ponownie.";
 "error.user.device_deleted_remotely" = "Zostałeś wylogowany na tym urządzeniu!";
-"error.user.last_identity_cant_be_deleted" = "Musisz podać zarówno e-mail jak i numer telefonu, aby móc usunąć jeden z nich";
+"error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

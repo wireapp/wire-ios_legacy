@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Ocultando …";
 
 "send_invitation.subject" = "Conectar conmigo en Wire";
-"send_invitation.text" = "Uso Wire, búscame como %@ o visita get.wire.com.";
+"send_invitation.text" = "Uso Wire, búscame como %@ o visita get.wire.com";
 "send_invitation_no_email.text" = "Uso Wire. Visita get.wire.com para conectar conmigo.";
-
-"send_personal_invitation.text" = "¿Nos comunicamos a través de Wire?: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "comenzaste a utilizar";
 "content.system.is_verified" = "Se han verificado todas la huellas digitales";
 
-"content.system.unverified" = "%@ ha(s) revocado un dispositivo de %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ ha(s) revocado un dispositivo de %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "tus dispositivos";
 "content.system.other_devices" = "dispositivos de %@";
 
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Guardar";
 
 "content.message.delete" = "Eliminar";
+"content.message.save" = "Guardar";
 
 "content.message.like" = "Me gusta";
 "content.message.unlike" = "Ya no me gusta";
 "content.message.forward" = "Compartir";
 "content.message.go_to_conversation" = "Mostrar en chat";
 "content.message.forward.to" = "Buscar ...";
+"content.message.open" = "Abrir";
 
 "content.reactions_list.likers" = "Le ha gustado a";
 
@@ -394,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "¿Para qué verificar los chats?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verifica que esta coincida con la huella digital que se muestra en el dispositivo de %@.";
+"profile.devices.detail.verify_message" = "Verifica que ésta coincida con la huella digital que se muestra en el dispositivo de %@.";
 "profile.devices.detail.verify_message.link" = "¿Cómo lo hago?";
 "profile.devices.detail.show_my_device.title" = "Mostrar la huella digital de mi dispositivo";
 "device.verified" = "Verificado";
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir ajustes de contactos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos permite a Wire encontrar amigos que ya son usuarios de Wire. Toda la información es anónima y no la compartimos con nadie. Permite acceder a Wire en Ajustes > Privacidad > Contactos.";
 
-"self.settings.privacy_security.lock_app" = "Bloquear con Touch ID o código";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Por favor, desbloquea Wire usando Touch ID o el código";
+"self.settings.privacy_security.lock_cancelled.description" = "Desbloquea Wire con Touch ID o el código";
 "self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Ya te enviamos un código vía SMS. Pulsa en reenviar pasados 10 minutos para obtener uno nuevo.";
 "error.user.registration_unknown_error" = "Algo salió mal. Por favor inténtalo de nuevo.";
 "error.user.device_deleted_remotely" = "Se ha cerrado la sesión en otro dispositivo.";
-"error.user.last_identity_cant_be_deleted" = "Necesitas tener registrado un email y un número de teléfono para poder eliminar uno de ellos";
+"error.user.last_identity_cant_be_deleted" = "Wire necesita una dirección de email o un número de teléfono.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

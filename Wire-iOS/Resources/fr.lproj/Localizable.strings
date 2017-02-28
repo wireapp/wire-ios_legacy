@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Masquage…";
 
 "send_invitation.subject" = "Connectez-vous avec moi sur Wire";
-"send_invitation.text" = "Je suis sur Wire, recherchez %@ ou visitez get.wire.com.";
+"send_invitation.text" = "Je suis sur Wire, recherchez %@ ou visitez get.wire.com";
 "send_invitation_no_email.text" = "Je suis sur Wire. Visitez get.wire.com pour vous connecter avec moi.";
-
-"send_personal_invitation.text" = "Je suis sur Wire, on se parle là : https://get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "a commencé à utiliser";
 "content.system.is_verified" = "Toutes les empreintes sont vérifiées";
 
-"content.system.unverified" = "%@ n'avez pas vérifié un des %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ n'avez pas vérifié un des %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "vos appareils";
 "content.system.other_devices" = "appareils de %@";
 
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Enregistrer";
 
 "content.message.delete" = "Supprimer";
+"content.message.save" = "Enregistrer";
 
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
 "content.message.forward" = "Partager";
 "content.message.go_to_conversation" = "Révéler";
 "content.message.forward.to" = "Rechercher…";
+"content.message.open" = "Ouvrir";
 
 "content.reactions_list.likers" = "Aimé par";
 
@@ -583,7 +582,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Ouvrir les paramètres de Contacts";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Cela vous permet de vous connecter avec les autres. Nous rendons anonymes toutes les informations et ne les partageons pas, en aucun cas. Autorisez l'accès via Paramètres > Confidentialité > Contacts.";
 
-"self.settings.privacy_security.lock_app" = "Verrouiller avec Touch ID & code";
+"self.settings.privacy_security.lock_app" = "Verrouiller avec un code";
+"self.settings.privacy_security.lock_app.subtitle" = "Verrouiller Wire après 10 secondes en arrière-plan. Déverrouiller avec Touch ID ou entrer un code.";
 "self.settings.privacy_security.lock_app.description" = "Déverrouillage Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Réinitialiser votre mot de passe";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Invitez vos amis";
+"self.settings.invite_friends.title" = "Inviter des personnes";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Nous vous avons déjà envoyé un code par SMS. Appuyez sur renvoyer après 10 minutes pour en obtenir un nouveau.";
 "error.user.registration_unknown_error" = "Quelque chose n'a pas fonctionné. Veuillez essayer de nouveau.";
 "error.user.device_deleted_remotely" = "Vous avez été déconnecté d’un autre appareil.";
-"error.user.last_identity_cant_be_deleted" = "Vous devez avoir une adresse mail et un numéro de téléphone pour pouvoir enlever l’un d'entre eux";
+"error.user.last_identity_cant_be_deleted" = "Une adresse e-mail ou un numéro de téléphone est requis.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +826,5 @@
 "collections.section.no_items" = "Aucun élément dans la bibliothèque";
 "collections.image_viewer.copied.title" = "Image copiée";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "Chercher dans les messages";
+"collections.search.no_items" = "Aucun résultat";

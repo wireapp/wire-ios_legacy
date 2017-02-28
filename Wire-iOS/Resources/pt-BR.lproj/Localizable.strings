@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Escondendo...";
 
 "send_invitation.subject" = "Conecte-se comigo no Wire";
-"send_invitation.text" = "Eu estou no Wire, pesquise por %@ ou visite get.wire.com.";
+"send_invitation.text" = "Eu estou no Wire, pesquise por %@ ou visite get.wire.com";
 "send_invitation_no_email.text" = "Estou no Wire. Visite get.wire.com para se conectar comigo.";
-
-"send_personal_invitation.text" = "Estou no Wire, falo com você lá. get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "começou a usar";
 "content.system.is_verified" = "Todas as impressões digitais são verificadas";
 
-"content.system.unverified" = "%@ desautorizou um dos %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ desautorizou um dos %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "seus dispositivos";
 "content.system.other_devices" = "dispositivos de %@";
 
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Salvar";
 
 "content.message.delete" = "Apagar";
+"content.message.save" = "Salvar";
 
 "content.message.like" = "Curtir";
 "content.message.unlike" = "Descurtir";
 "content.message.forward" = "Compartilhar";
 "content.message.go_to_conversation" = "Exibir";
 "content.message.forward.to" = "Procurar…";
+"content.message.open" = "Abrir";
 
 "content.reactions_list.likers" = "Curtido por";
 
@@ -505,7 +504,7 @@
 
 "self.settings.account_section.phone_number.change.title" = "Telefone";
 "self.settings.account_section.phone_number.change.save" = "Salvar";
-"self.settings.account_section.phone_number.change.remove" = "Remover Número de telefone";
+"self.settings.account_section.phone_number.change.remove" = "Remover número de telefone";
 
 "self.settings.account_section.phone_number.change.remove.action" = "Remover número de telefone";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir Ajustes de Contatos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Isso ajuda a você se conectar com outros. Nós tornamos secretas todas as informações e não compartilhamos com ninguém. Permita o acesso em Ajustes > Privacidade > Contatos.";
 
-"self.settings.privacy_security.lock_app" = "Bloquear com Touch ID e Código";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Por favor, desbloqueie o Wire com Touch ID ou Código";
+"self.settings.privacy_security.lock_cancelled.description" = "Desbloqueie o Wire com o Touch ID ou Código";
 "self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Redefinir senha";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Convidar amigos";
+"self.settings.invite_friends.title" = "Convidar pessoas";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "Por questões de privacidade, o seu histórico de conversa não aparecerá aqui.";
 "registration.no_history.got_it" = "OK";
 
-"registration.no_history.logged_out.hero" = "Você usou o Wire neste dispositivo antes.";
+"registration.no_history.logged_out.hero" = "Você não usou o Wire nesse dispositivo antes.";
 "registration.no_history.logged_out.subtitle" = "Mensagens enviadas nesse meio tempo não irão aparecer.";
 "registration.no_history.logged_out.got_it" = "OK";
 
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Nós já enviamos um código via SMS. Toque em 'Re-enviar' após 10 minutos para conseguir um novo.";
 "error.user.registration_unknown_error" = "Algo deu errado. Por favor, tente novamente.";
 "error.user.device_deleted_remotely" = "Você foi desconectado através de um outro aparelho.";
-"error.user.last_identity_cant_be_deleted" = "Você precisa ter um e-mail e um número de telefone para ser capaz de remover um deles";
+"error.user.last_identity_cant_be_deleted" = "Um número de telefone ou um endereço de e-mail é necessário.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "جارٍ الإخفاء…";
 
 "send_invitation.subject" = "تواصل معي على Wire";
-"send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو لِج get.wire.com.";
+"send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو لِج get.wire.com";
 "send_invitation_no_email.text" = "أنا أستخدم Wire. لِج get.wire.com لتتواصل معي.";
-
-"send_personal_invitation.text" = "أنا أستخدم Wire، تحدث معي هُناك: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "بدأت استخدام";
 "content.system.is_verified" = "تم التّحقق من رمز التشفير";
 
-"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "أجهزتك";
 "content.system.other_devices" = "أجهزة %@";
 
@@ -235,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "تغيّرت هوية جهاز %@. رسالة غير مُستلمة.";
 "content.system.cannot_decrypt.identity.you_part" = "الخاص بك";
-"content.system.cannot_decrypt.identity.otherUser_part" = "الخاص بـ%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "خاص بـ%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "معرفة المزيد";
 "content.system.cannot_decrypt.otherDevice_part" = "(جهاز %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,12 +252,14 @@
 "content.image.save_image" = "حفظ";
 
 "content.message.delete" = "حذف";
+"content.message.save" = "حفظ";
 
 "content.message.like" = "اعجاب";
 "content.message.unlike" = "إلغاء إعجابي";
 "content.message.forward" = "شارك";
 "content.message.go_to_conversation" = "إظهار";
 "content.message.forward.to" = "بحث…";
+"content.message.open" = "افتح";
 
 "content.reactions_list.likers" = "إعجاب من  ";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "فتح إعدادات جهات الإتصال";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
-"self.settings.privacy_security.lock_app" = "غَلق بإستخدام Touch ID وكلمة مرور";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "من فضلك ألغ تأمين Wire بإستخدام Touch ID أو كلمة المرور";
+"self.settings.privacy_security.lock_cancelled.description" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
 "self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "دعوة الأصدقاء";
+"self.settings.invite_friends.title" = "دعوة أُناس";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "لقد قمنا بإرسال رمز إليك عبر رسالة قصيرة . انقر فوق إعادة إرسال بعد 10 دقائق للحصول على رمز جديد.";
 "error.user.registration_unknown_error" = "حدث خطأ ما. برجاء إعادة المحاولة.";
 "error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
-"error.user.last_identity_cant_be_deleted" = "تحتاج إلى امتلاك كلٍ من بريد إلكتروني ورقم هاتف لتتمكن من إزالة أحدهما";
+"error.user.last_identity_cant_be_deleted" = "مطلوب إمّا عنوان بريد إلكتروني أو رقم هاتف.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +826,5 @@
 "collections.section.no_items" = "لا توجد عناصر في المختارات";
 "collections.image_viewer.copied.title" = "تم نسخ الصورة";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "بحث في الرسائل النصية";
+"collections.search.no_items" = "لا توجد نتائج";

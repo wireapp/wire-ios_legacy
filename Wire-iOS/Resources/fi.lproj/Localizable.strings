@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Piilotetaan…";
 
 "send_invitation.subject" = "Ota minuun yhteys Wiressä";
-"send_invitation.text" = "Olen Wiressä, etsi %@ tai mene osoitteeseen get.wire.com.";
+"send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
 "send_invitation_no_email.text" = "Olen Wiressä. Mene osoitteeseen get.wire.com ottaaksesi minuun yhteyttä.";
-
-"send_personal_invitation.text" = "Olen Wiressä, keskustellaan siellä: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,11 +218,11 @@
 "content.system.started_using" = "aloittettiin käyttämään";
 "content.system.is_verified" = "Kaikki sormenjäljet on vahvistettu";
 
-"content.system.unverified" = "%@ poisti vahvistuksen yhdestä %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ poisti vahvistuksen yhdestä %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "sinun laitteista";
-"content.system.other_devices" = "%@ n laitteista";
+"content.system.other_devices" = "%@’s devices";
 
-"content.system.missing_messages.title" = "Et ole käyttänyt tätä laitetta pitkään aikaan. Jotkut viestit eivät saata näkyä täällä.";
+"content.system.missing_messages.title" = "You haven’t used this device for a while. Some messages may not appear here.";
 "content.system.missing_messages.subtitle_start" = "Sillä aikaa";
 
 "content.system.cannot_decrypt" = "Viesti käyttäjältä: %@ ei tullut perille.";
@@ -235,12 +232,12 @@
 
 "content.system.cannot_decrypt.identity" = "%@ laitteen identiteetti muuttui. Perilletoimittamaton viesti.";
 "content.system.cannot_decrypt.identity.you_part" = "Sinun";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@ n"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Lisätietoja";
 "content.system.cannot_decrypt.otherDevice_part" = "(laite %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
+"content.system.unknown_message.body" = "You are using an older version of Wire that can’t display this message.";
 "content.system.unknown_message.body.link" = "Miksi näin tapahtuu?";
 
 "content.file.uploading" = "Lähetetään…";
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Tallenna";
 
 "content.message.delete" = "Poista";
+"content.message.save" = "Tallenna";
 
 "content.message.like" = "Tykkää";
 "content.message.unlike" = "Poista tykkäys";
 "content.message.forward" = "Jaa";
 "content.message.go_to_conversation" = "Näytä";
 "content.message.forward.to" = "Etsi…";
+"content.message.open" = "Avaa";
 
 "content.reactions_list.likers" = "Tykätty";
 
@@ -394,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "Miksi vahvistaa keskusteluja?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Vahvista että tämä vastaa sormenjälkeä joka näkyy %@ n laitteella.";
+"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
 "profile.devices.detail.verify_message.link" = "Miten teen sen?";
 "profile.devices.detail.show_my_device.title" = "Näytä laitteeni sormenjälki";
 "device.verified" = "Vahvistettu";
@@ -505,7 +504,7 @@
 
 "self.settings.account_section.phone_number.change.title" = "Puhelinnumero";
 "self.settings.account_section.phone_number.change.save" = "Tallenna";
-"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+"self.settings.account_section.phone_number.change.remove" = "Remove Phone Number";
 
 "self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Avaa Yhteystieto-asetukset";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tämä auttaa sinua löytämään tuttuja. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle. Anna lupa Asetuksista > Yksityisyys > Yhteystiedot.";
 
-"self.settings.privacy_security.lock_app" = "Lock with Touch ID & Passcode";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Avata Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Please unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Avaa lukitus";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Laitteet";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Vaihda Salasana";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Kutsu ystäviä";
+"self.settings.invite_friends.title" = "Kutsu ihmisiä";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -656,7 +656,7 @@
 "registration.verify_phone_number.resend_placeholder" = "Eikö koodi saavu perille?\nVoit pyytää uutta koodia %.0f sekunnin päästä";
 
 "registration.verify_email.instructions" = "Lähetimme sähköpostia osoitteeseen: %@\nKlikkaa viestissä olevaa linkkiä vahvistaaksesi sähköpostiosoitteesi.";
-"registration.verify_email.resend.instructions" = "Etkö saanut sähköpostiviestiä?";
+"registration.verify_email.resend.instructions" = "Didn’t get the message?";
 "registration.verify_email.resend.button_title" = "Lähetä uudelleen";
 
 "registration.select_picture.subtitle" = "Wire on niin paljon mukavampi kuvalla.";
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "Tietosuojasyistä keskusteluhistoriasi ei näy täällä.";
 "registration.no_history.got_it" = "OK";
 
-"registration.no_history.logged_out.hero" = "Olet käyttänyt Wireä tällä laitteella aiemmin.";
+"registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Sillä välin lähetetyt viestit eivät näy.";
 "registration.no_history.logged_out.got_it" = "OK";
 
@@ -766,11 +766,11 @@
 "error.user.phone_code_too_many" = "Olemme lähettäneet jo sinulle koodin tekstiviestillä. Napauta Lähetä Uudelleen 10 minuutin päästä saadaksesi uuden koodin.";
 "error.user.registration_unknown_error" = "Jotain meni pieleen. Yritä uudelleen.";
 "error.user.device_deleted_remotely" = "Olet kirjautunut ulos toisesta laitteesta.";
-"error.user.last_identity_cant_be_deleted" = "You need to have both an email and phone number to be able to remove one of them";
+"error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.updating_password" = "Salasanaasi ei voitu uusia.";
+"error.updating_password" = "Couldn’t update your password.";
 
 "error.group_call.too_many_members_in_conversation.title" = "Liian monta ihmistä puheluun";
 "error.group_call.too_many_members_in_conversation" = "Puhelut toimivat keskusteluissa joissa on korkeintaan %d käyttäjää.";
