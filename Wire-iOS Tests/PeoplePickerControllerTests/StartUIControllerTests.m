@@ -77,7 +77,8 @@
     // Mocked users
     NSArray *mockedUsersInContacts = [MockLoader mockObjectsOfClass:[MockUser class]
                                                            fromFile:@"people-01.json"];
-    self.searchResultTopConversations = [mockedUsersInContacts subarrayWithRange:NSMakeRange(0, 9)];
+    self.searchResultTopConversations = [MockLoader mockObjectsOfClass:[MockConversation class]
+                                                              fromFile:@"conversations-01.json"];
     self.searchResultUsersInContacts = mockedUsersInContacts;
     self.searchResultUsersInDirectory = [MockLoader mockObjectsOfClass:[MockUser class]
                                                               fromFile:@"people-02.json"];
