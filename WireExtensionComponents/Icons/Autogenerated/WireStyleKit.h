@@ -19,6 +19,19 @@
 #import <UIKit/UIKit.h>
 
 
+
+typedef enum : NSInteger
+{
+    WireStyleKitResizingBehaviorAspectFit, //!< The content is proportionally resized to fit into the target rectangle.
+    WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
+    WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
+    WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
+
+} WireStyleKitResizingBehavior;
+
+extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
+
+
 @interface WireStyleKit : NSObject
 
 // iOS Controls Customization Outlets
@@ -145,6 +158,7 @@
 + (void)drawIcon_0x234_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x261_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x262_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x263_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -156,6 +170,8 @@
 + (void)drawShieldverified;
 + (void)drawShieldnotverified;
 + (void)drawShieldWithColor: (UIColor*)color;
++ (void)drawDegradation;
++ (void)drawDegradationWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing;
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor;
 + (void)drawTabWithColor: (UIColor*)color;
 
@@ -251,6 +267,7 @@
 + (UIImage*)imageOfIcon_0x234_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x261_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x262_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x263_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

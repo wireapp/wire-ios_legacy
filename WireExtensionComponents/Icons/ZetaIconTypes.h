@@ -114,6 +114,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeVideoMulticolor                 = 0x2260,
 
     ZetaIconTypeBackArrow                       = 0x110,
+    ZetaIconTypeBackArrowWithDot                = 0x263,
     ZetaIconTypeForwardArrow                    = 0x111,
     ZetaIconTypeDownArrow                       = 0x113,
     
