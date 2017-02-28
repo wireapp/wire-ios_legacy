@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "Piilotetaan…";
 
 "send_invitation.subject" = "Ota minuun yhteys Wiressä";
-"send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
+"send_invitation.text" = "Olen Wiressä, etsi %@ tai mene osoitteeseen get.wire.com";
 "send_invitation_no_email.text" = "Olen Wiressä. Mene osoitteeseen get.wire.com ottaaksesi minuun yhteyttä.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -220,9 +220,9 @@
 
 "content.system.unverified" = "%@ poisti vahvistuksen yhdestä %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "sinun laitteista";
-"content.system.other_devices" = "%@’s devices";
+"content.system.other_devices" = "%@ n laitteista";
 
-"content.system.missing_messages.title" = "You haven’t used this device for a while. Some messages may not appear here.";
+"content.system.missing_messages.title" = "Et ole käyttänyt tätä laitetta pitkään aikaan. Jotkut viestit eivät saata näkyä täällä.";
 "content.system.missing_messages.subtitle_start" = "Sillä aikaa";
 
 "content.system.cannot_decrypt" = "Viesti käyttäjältä: %@ ei tullut perille.";
@@ -232,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ laitteen identiteetti muuttui. Perilletoimittamaton viesti.";
 "content.system.cannot_decrypt.identity.you_part" = "Sinun";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@ n"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Lisätietoja";
 "content.system.cannot_decrypt.otherDevice_part" = "(laite %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -393,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "Miksi vahvistaa keskusteluja?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
+"profile.devices.detail.verify_message" = "Vahvista että tämä vastaa sormenjälkeä joka näkyy %@ n laitteella.";
 "profile.devices.detail.verify_message.link" = "Miten teen sen?";
 "profile.devices.detail.show_my_device.title" = "Näytä laitteeni sormenjälki";
 "device.verified" = "Vahvistettu";
@@ -656,7 +656,7 @@
 "registration.verify_phone_number.resend_placeholder" = "Eikö koodi saavu perille?\nVoit pyytää uutta koodia %.0f sekunnin päästä";
 
 "registration.verify_email.instructions" = "Lähetimme sähköpostia osoitteeseen: %@\nKlikkaa viestissä olevaa linkkiä vahvistaaksesi sähköpostiosoitteesi.";
-"registration.verify_email.resend.instructions" = "Didn’t get the message?";
+"registration.verify_email.resend.instructions" = "Etkö saanut sähköpostiviestiä?";
 "registration.verify_email.resend.button_title" = "Lähetä uudelleen";
 
 "registration.select_picture.subtitle" = "Wire on niin paljon mukavampi kuvalla.";
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "Tietosuojasyistä keskusteluhistoriasi ei näy täällä.";
 "registration.no_history.got_it" = "OK";
 
-"registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
+"registration.no_history.logged_out.hero" = "Olet käyttänyt Wireä tällä laitteella aiemmin.";
 "registration.no_history.logged_out.subtitle" = "Sillä välin lähetetyt viestit eivät näy.";
 "registration.no_history.logged_out.got_it" = "OK";
 
@@ -770,7 +770,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.updating_password" = "Couldn’t update your password.";
+"error.updating_password" = "Salasanaasi ei voitu uusia.";
 
 "error.group_call.too_many_members_in_conversation.title" = "Liian monta ihmistä puheluun";
 "error.group_call.too_many_members_in_conversation" = "Puhelut toimivat keskusteluissa joissa on korkeintaan %d käyttäjää.";

@@ -97,7 +97,7 @@
 "peoplepicker.hide_search_result_progress" = "隠しています...";
 
 "send_invitation.subject" = "Wireで繋がります";
-"send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
+"send_invitation.text" = "私はWireにいます。%@ で検索するか、get.wire.com. にアクセスしてください";
 "send_invitation_no_email.text" = "私はWireにいます。https://get.wire.com にアクセスして私とつながりましょう。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -220,9 +220,9 @@
 
 "content.system.unverified" = "%@%@デバイスの一つは認証されませんでした。"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "あなたのデバイス";
-"content.system.other_devices" = "%@’s devices";
+"content.system.other_devices" = "%@ のデバイス";
 
-"content.system.missing_messages.title" = "You haven’t used this device for a while. Some messages may not appear here.";
+"content.system.missing_messages.title" = "しばらくの間、このデバイスでWireを利用していなかったため、いくつかのメッセージがここに表示されない可能性があります。";
 "content.system.missing_messages.subtitle_start" = "同時に";
 
 "content.system.cannot_decrypt" = "%@からのメッセージは受信されませんでした。";
@@ -237,7 +237,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(デバイス %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can’t display this message.";
+"content.system.unknown_message.body" = "古いバージョンのWireを利用されているため、このメッセージは表示されません。";
 "content.system.unknown_message.body.link" = "なぜこれが起こるのか？";
 
 "content.file.uploading" = "アップロード中...";
@@ -393,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "なぜ会話を確認するのですか? _";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
+"profile.devices.detail.verify_message" = "%@のデバイスに表示されるフィンガー プリントと一致することを確認します。";
 "profile.devices.detail.verify_message.link" = "どうすればいいですか?";
 "profile.devices.detail.show_my_device.title" = "自分のデバイスのフィンガープリントを表示";
 "device.verified" = "検証済み";
@@ -582,7 +582,7 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "連絡先の設定を開く";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "これはあなたが友人とつながるを容易にします。私たちはすべての情報を匿名化し、他の第三者と共有することはしません。アクセスを許可するためには、設定>プライバシー>連絡先で設定します。";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app" = "コードでロック";
 "self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Wireのロックを解除する";
 
@@ -656,7 +656,7 @@
 "registration.verify_phone_number.resend_placeholder" = "コードが表示されませんか？\n新しいコードを%.0f秒以内にリクエストすることができます。";
 
 "registration.verify_email.instructions" = "%@にメールを送信しました。\n リンクに従ってあなたのメールアドレスを確認してください。";
-"registration.verify_email.resend.instructions" = "Didn’t get the message?";
+"registration.verify_email.resend.instructions" = "メッセージを取得できませんでしたか?";
 "registration.verify_email.resend.button_title" = "再送信";
 
 "registration.select_picture.subtitle" = "Wire は写真があると素敵です。";
@@ -766,11 +766,11 @@
 "error.user.phone_code_too_many" = "すでに SMS 経由でコードを送信しました。新しいものを取得するには 10 分後に、再送信をタップします。";
 "error.user.registration_unknown_error" = "何か問題が起きたようです。もう一度やり直してください。";
 "error.user.device_deleted_remotely" = "別のデバイスからログアウトしました。";
-"error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
+"error.user.last_identity_cant_be_deleted" = "メールまたは電話番号のいずれかを削除するためには、それらが登録されている必要があります。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
-"error.updating_password" = "Couldn’t update your password.";
+"error.updating_password" = "パスワードの更新ができませんでした。";
 
 "error.group_call.too_many_members_in_conversation.title" = "呼び出す人が多すぎます";
 "error.group_call.too_many_members_in_conversation" = "電話は最大%d人までとの間ですることができます。";
