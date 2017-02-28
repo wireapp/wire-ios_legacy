@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationContentViewController ()
 
 /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
-@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage>messageWithExpandedTools;
+@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage> messageWithExpandedTools;
 
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
 @property (nonatomic) MessagePresenter* messagePresenter;
@@ -57,6 +57,5 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
 
 @end
-
 
 NS_ASSUME_NONNULL_END

@@ -511,7 +511,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 // @override from ConversationCell
 - (void)didDoubleTapMessage:(id)sender
 {
-    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated

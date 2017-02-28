@@ -725,7 +725,19 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
+    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    BOOL isFile = [Message isFileTransferMessage:message] &&
+                 ![Message isVideoMessage:message] &&
+                 ![Message isAudioMessage:message];
+    
+    BOOL isImage = [Message isImageMessage:message];
+    
+    if (isFile || isImage) {
+        [self wantsToPerformAction:MessageActionPresent
+                        forMessage:message
+                              cell:[tableView cellForRowAtIndexPath:indexPath]];
+    }
     // Make table view to update cells with animation
     [tableView beginUpdates];
     [tableView endUpdates];
