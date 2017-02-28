@@ -417,7 +417,9 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)updateSenderAndSenderImage:(id<ZMConversationMessage>)message
 {
-    self.authorLabel.text = [message.sender displayNameInConversation:message.conversation].uppercaseString;
+    self.authorLabel.text = [message.sender displayNameInConversation:message.conversation];
+    self.authorLabel.textColor = [[ColorScheme defaultColorScheme] nameAccentForColor:message.sender.accentColorValue
+                                                                              variant:[ColorScheme defaultColorScheme].variant];
     self.authorImageView.user = message.sender;
 }
 

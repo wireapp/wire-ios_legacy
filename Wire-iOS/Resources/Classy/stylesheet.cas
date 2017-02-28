@@ -759,7 +759,6 @@ MessageToolboxView {
 
     authorLabel: @{
         font: $font-small-medium;
-        textColor: $color-text-foreground;
     }
     burstTimestampLabel: @{
         font: $font-small-light;
