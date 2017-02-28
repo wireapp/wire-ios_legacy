@@ -123,6 +123,8 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 {
     [self removeTopConversationObserverIfNeeded];
     _topConversationDirectory = topConversationDirectory;
+    // The directory can have cached conversations which we want to display immediately.
+    [self updateTopPeople];
     self.observerToken = [self.topConversationDirectory addObserver:self];
     [self.topConversationDirectory refreshTopConversations];
 }
@@ -130,6 +132,12 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 - (void)reloadData
 {
     [self.innerCollectionView reloadData];
+}
+
+- (void)updateTopPeople
+{
+    self.topPeople = self.topConversationDirectory.topConversations;
+    [self reloadData];
 }
 
 - (BOOL)isHidden
@@ -202,8 +210,7 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 
 - (void)topConversationsDidChange
 {
-    self.topPeople = self.topConversationDirectory.topConversations;
-    [self.innerCollectionView reloadData];
+    [self updateTopPeople];
 }
 
 #pragma mark - PeopleSelectionDelegate
