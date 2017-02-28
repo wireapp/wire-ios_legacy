@@ -19,6 +19,7 @@
 
 #import "ConversationContentViewController+Private.h"
 #import "ConversationContentViewController+Scrolling.h"
+#import "ConversationContentViewController+PinchZoom.h"
 
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
@@ -136,8 +137,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)loadView
 {
+    [super loadView];
+    
     self.tableView = [[UpsideDownTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    self.view = self.tableView;
+    [self.view addSubview:self.tableView];
+    
+    [self.tableView autoPinEdgesToSuperviewEdges];
 }
 
 - (void)viewDidLoad
@@ -169,6 +174,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [UIView performWithoutAnimation:^{
         self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
     }];
+    
+    UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
+    pinchImageGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:pinchImageGestureRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated

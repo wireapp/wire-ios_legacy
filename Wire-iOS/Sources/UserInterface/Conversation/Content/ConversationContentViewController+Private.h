@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationCell;
 @class MessagePresenter;
+@class FLAnimatedImageView;
 
 @interface ConversationContentViewController ()
 
@@ -39,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) MessagePresenter* messagePresenter;
 @property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
 @property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
+@property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
 
 - (void)removeHighlightsAndMenu;
 - (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
