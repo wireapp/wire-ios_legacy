@@ -730,10 +730,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     BOOL isFile = [Message isFileTransferMessage:message] &&
                  ![Message isVideoMessage:message] &&
                  ![Message isAudioMessage:message];
-    
-    BOOL isImage = [Message isImageMessage:message];
-    
-    if (isFile || isImage) {
+
+    if (isFile) {
         [self wantsToPerformAction:MessageActionPresent
                         forMessage:message
                               cell:[tableView cellForRowAtIndexPath:indexPath]];

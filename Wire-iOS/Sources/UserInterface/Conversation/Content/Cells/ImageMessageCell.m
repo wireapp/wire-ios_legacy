@@ -48,6 +48,7 @@
 @property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) SavableImage *savableImage;
+@property (nonatomic) UITapGestureRecognizer *imageTapRecognizer;
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic, strong) id<MediaAsset> image;
@@ -174,6 +175,9 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
     self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
+
+    self.imageTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapped:)];
+    [self.imageViewContainer addGestureRecognizer:self.imageTapRecognizer];
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
@@ -448,6 +452,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 - (void)onTextSketchPressed:(id)sender {
     [self.delegate conversationCell:self didSelectAction:MessageActionSketchText];
+}
+
+- (void)imageTapped:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
 }
 
 #pragma mark - Message updates
