@@ -123,7 +123,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
             cell.unreadDotView.backgroundColor = newColor;
         }];
         
-        self.contentLayoutMargins = self.layoutDirectionAwareLayoutMargins;
+        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
     }
     
     return self;

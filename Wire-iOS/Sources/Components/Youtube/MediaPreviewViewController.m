@@ -30,6 +30,7 @@
 #import "LinkAttachment.h"
 #import "LinkAttachmentCache.h"
 #import "YoutubeService.h"
+#import <Classy/Classy.h>
 #import "VimeoService.h"
 
 
@@ -37,6 +38,7 @@
 @interface MediaPreviewViewController ()
 
 @property (nonatomic, readonly) MediaPreviewView *mediaPreviewView;
+@property (nonatomic) CGFloat viewHeight;
 
 @end
 
@@ -52,10 +54,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self.mediaPreviewView.playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.view withMultiplier:(9.f / 16.f)];
+
+    [CASStyler.defaultStyler styleItem:self];
+    [self.view autoSetDimension:ALDimensionHeight toSize:self.viewHeight relation:NSLayoutRelationEqual];
 }
 
 - (void)tearDown;

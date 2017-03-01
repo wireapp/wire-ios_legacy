@@ -24,10 +24,11 @@ import Classy
 
 /// Displays the video message with different states
 public final class VideoMessageCell: ConversationCell {
-  
-    
+
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
+
+    public var videoViewHeight = 160
 
     private var topMargin: NSLayoutConstraint!
     
@@ -40,6 +41,7 @@ public final class VideoMessageCell: ConversationCell {
         self.contentView.addSubview(self.obfuscationView)
         
         self.createConstraints()
+        videoMessageView.clipsToBounds = true
         
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.videoMessageView.accessibilityElements ?? []
@@ -55,12 +57,21 @@ public final class VideoMessageCell: ConversationCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func createConstraints() {
+    private func createConstraints() {
         constrain(self.messageContentView, self.videoMessageView, self.obfuscationView) { messageContentView, videoMessageView, obfuscationView in
-            messageContentView.width == messageContentView.height * (4.0 / 3.0)
-            topMargin = (videoMessageView.edges == messageContentView.edges).first
+            topMargin = videoMessageView.top == messageContentView.top
+            videoMessageView.bottom == messageContentView.bottom
+            videoMessageView.leading == messageContentView.leadingMargin
+            videoMessageView.trailing == messageContentView.trailingMargin
+            videoMessageView.height == CGFloat(videoViewHeight)
+
             obfuscationView.edges == videoMessageView.edges
         }
+    }
+
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        videoMessageView.layer.cornerRadius = 4
     }
     
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {

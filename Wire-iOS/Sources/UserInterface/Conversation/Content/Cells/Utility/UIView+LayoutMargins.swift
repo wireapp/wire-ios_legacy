@@ -20,9 +20,9 @@
 import UIKit
 
 
-extension ConversationCell {
+extension UITableViewCell {
 
-    var layoutDirectionAwareLayoutMargins: UIEdgeInsets {
+    class var layoutDirectionAwareLayoutMargins: UIEdgeInsets {
         var left = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
         var right = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
 

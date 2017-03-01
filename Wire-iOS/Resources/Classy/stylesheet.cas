@@ -602,6 +602,18 @@ ToolTipViewController {
     }
 }
 
+/* MediaPreviewViewController */
+
+MediaPreviewViewController {
+    @device ipad {
+        minimumDismissMagnitude: 240
+    }
+
+    @device iphone {
+        viewHeight: 160
+    }
+}
+
 /* Conversation detail / participants */
 
 ParticipantsHeaderView.editing {
@@ -700,6 +712,16 @@ ConversationListContentController UILabel.empty-list-message {
 SearchView {
     lineView: @{
         backgroundColor: $color-accent-current;
+    }
+}
+
+VideoMessageCell {
+    @device ipad {
+        videoViewHeight: 240
+    }
+
+    @device iphone {
+        videoViewHeight: 160
     }
 }
 

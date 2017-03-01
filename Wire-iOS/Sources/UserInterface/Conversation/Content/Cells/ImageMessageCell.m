@@ -232,17 +232,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         
         if (self.autoStretchVertically) {
             self.imageRightConstraint.active = NO;
-            
-            CGRect screen = UIScreen.mainScreen.bounds;
-            CGFloat screenRatio = CGRectGetHeight(screen) / CGRectGetWidth(screen);
-            CGFloat imageRatio = self.imageSize.height / self.imageSize.width;
-            CGFloat lowerBound = screenRatio * 0.84, upperBound = screenRatio * 1.2;
-            
-            BOOL imageWidthExceedsBounds = self.imageSize.width > self.bounds.size.width;
-            BOOL similarRatio = lowerBound < imageRatio && imageRatio < upperBound;
-            BOOL displayEdgeToEdge = imageWidthExceedsBounds && !similarRatio;
-            
-            self.messageContentView.layoutMargins = displayEdgeToEdge ? UIEdgeInsetsZero : self.defaultLayoutMargins;
+            self.messageContentView.layoutMargins = self.defaultLayoutMargins;
             self.imageWidthConstraint.constant = self.imageSize.width;
             
             if (! self.imageAspectConstraint) {
