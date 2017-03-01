@@ -45,16 +45,14 @@
 
 @implementation ZMConversation (Additions)
 
-- (ZMConversation *)addParticipants:(NSSet *)participants
+- (ZMConversation *)addParticipantsOrCreateConversation:(NSSet *)participants
 {
     if (! participants || participants.count == 0) {
         return self;
     }
 
     if (self.conversationType == ZMConversationTypeGroup) {
-        for (ZMUser *user in participants) {
-            [self addParticipant:user];
-        }
+        [self addParticipants:participants];
         
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForAddParticipantsWithCount:participants.count];
         [[Analytics shared] tagEventObject:event];
@@ -111,14 +109,6 @@
     }
     
     return lastUserMessage;
-}
-
-- (void)removeParticipants:(NSArray *)participants
-{
-    for (ZMUser *user in participants) {
-        NSAssert([user isKindOfClass:ZMUser.class], @"Trying to remove a participant that is not a ZMUser!");
-        [self removeParticipant:user];
-    }
 }
 
 - (ZMUser *)firstActiveParticipantOtherThanSelf

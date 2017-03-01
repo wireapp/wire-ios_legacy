@@ -264,7 +264,12 @@
 - (void)setIconColor:(UIColor *)color forState:(UIControlState)state
 {
     [self expandState:state block:^(UIControlState state) {
-        [self.iconColorsByState setObject:[color copy] forKey:@(state)];
+        if (nil != color) {
+            [self.iconColorsByState setObject:[color copy] forKey:@(state)];
+        }
+        else {
+            [self.iconColorsByState removeObjectForKey:@(state)];
+        }
     }];
     
     IconDefinition *currentIcon = self.iconDefinitionsByState[@(state)];

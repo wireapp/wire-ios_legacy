@@ -510,7 +510,7 @@
 
     @weakify(self);
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        newConversation = [self.conversation addParticipants:participants];
+        newConversation = [self.conversation addParticipantsOrCreateConversation:participants];
     } completionHandler:^{
         @strongify(self);
         [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
