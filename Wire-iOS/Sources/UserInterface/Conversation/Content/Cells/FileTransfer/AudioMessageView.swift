@@ -341,7 +341,7 @@ final class AudioMessageView: UIView, TransferView {
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    dynamic private func onActionButtonPressed(_ sender: UIButton) {
         
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
         
@@ -369,15 +369,15 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     // MARK: - Audio state observer
-    
-    func audioProgressChanged(_ change: NSDictionary) {
+
+    dynamic private func audioProgressChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayerProgressAnimated(false)
             self.updateTimeLabel()
         }
     }
-    
-    func audioPlayerStateChanged(_ change: NSDictionary) {
+
+    dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayButton()
             self.updateActivePlayerProgressAnimated(false)

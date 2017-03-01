@@ -138,8 +138,12 @@ private struct InputBarConstants {
         
     override public func didMoveToWindow() {
         super.didMoveToWindow()
-        textView.isScrollEnabled = false
-        textView.isScrollEnabled = true
+        // This is a workaround for UITextView truncating long contents.
+        // However, this breaks the text view on iOS 8 ¯\_(ツ)_/¯.
+        if #available(iOS 9, *) {
+            textView.isScrollEnabled = false
+            textView.isScrollEnabled = true
+        }
         startCursorBlinkAnimation()
     }
     
