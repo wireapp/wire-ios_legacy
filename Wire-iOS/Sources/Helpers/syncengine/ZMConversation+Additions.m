@@ -45,7 +45,7 @@
 
 @implementation ZMConversation (Additions)
 
-- (ZMConversation *)addParticipants:(NSSet *)participants
+- (ZMConversation *)addParticipantsOrCreateConversation:(NSSet *)participants
 {
     if (! participants || participants.count == 0) {
         return self;
@@ -109,12 +109,6 @@
     }
     
     return lastUserMessage;
-}
-
-- (void)removeParticipants:(NSArray *)participants
-{
-    NSAssert([user isKindOfClass:ZMUser.class], @"Trying to remove a participant that is not a ZMUser!");
-    [self removeParticipants:[NSSet setWithArray:participants]];
 }
 
 - (ZMUser *)firstActiveParticipantOtherThanSelf
