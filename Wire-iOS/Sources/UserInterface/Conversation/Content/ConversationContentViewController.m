@@ -455,7 +455,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         }
     };
 
-    BOOL shouldDismissModal = actionId != MessageActionDelete;
+    BOOL shouldDismissModal = actionId != MessageActionDelete && actionId != MessageActionCopy;
 
     if (self.messagePresenter.modalTargetController.presentedViewController != nil && shouldDismissModal) {
         [self.messagePresenter.modalTargetController dismissViewControllerAnimated:YES completion:^{
