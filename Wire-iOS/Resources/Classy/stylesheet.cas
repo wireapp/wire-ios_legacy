@@ -606,7 +606,7 @@ ToolTipViewController {
 
 MediaPreviewViewController {
     @device ipad {
-        minimumDismissMagnitude: 240
+        viewHeight: 240
     }
 
     @device iphone {
