@@ -29,6 +29,11 @@
 
 @end
 
+
+@interface FullscreenImageViewController (PanGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
+@end
+
+
 @implementation FullscreenImageViewController (PullToDismiss)
 
 - (void)dismissingPanGestureRecognizerPanned:(UIPanGestureRecognizer *)panner
@@ -213,13 +218,27 @@
     }
 }
 
-#pragma mark - UIGestureRecognizerDelegate
+@end
+
+
+@implementation FullscreenImageViewController (PanGestureRecognizerDelegate)
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    // tiny inset threshold
-    return CGRectContainsRect(CGRectInset(self.view.bounds, -10, -10),
-                              [self.view convertRect:self.imageView.bounds fromView:self.imageView]);
+    if (!CGRectContainsRect(CGRectInset(self.view.bounds, -10, -10),
+                            [self.view convertRect:self.imageView.bounds fromView:self.imageView])) {
+        return NO;
+    }
+    
+    if (gestureRecognizer == self.panRecognizer) {
+        CGPoint offset = [self.panRecognizer translationInView:self.view];
+        
+        return fabs(offset.y) > fabs(offset.x);
+    }
+    else {
+        return YES;
+    }
 }
 
 @end
+

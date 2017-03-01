@@ -102,13 +102,9 @@
 @property (nonatomic) CGFloat lastZoomScale;
 
 @property (nonatomic) BOOL forcePortraitMode;
-@property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 
 @property (nonatomic) id messageObserverToken;
 
-@end
-
-@interface FullscreenImageViewController (PanGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 @end
 
 @implementation FullscreenImageViewController
@@ -634,22 +630,6 @@
         self.loadingSpinner = nil;
         
         [self loadImageAndSetupImageView];
-    }
-}
-
-@end
-
-@implementation FullscreenImageViewController (PanGestureRecognizerDelegate)
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer == self.panRecognizer) {
-        CGPoint offset = [self.panRecognizer translationInView:self.view];
-
-        return fabs(offset.y) > fabs(offset.x);
-    }
-    else {
-        return YES;
     }
 }
 
