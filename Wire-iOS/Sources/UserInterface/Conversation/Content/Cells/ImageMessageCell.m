@@ -86,6 +86,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _autoStretchVertically = YES;
+        self.doubleTapGestureRecognizer.enabled = NO;
         [self createImageMessageViews];
         [self createConstraints];
         

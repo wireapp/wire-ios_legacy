@@ -65,7 +65,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 @property (nonatomic) AccentColorChangeHandler *accentColorChangeHandler;
 
-@property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
+@property (nonatomic, readwrite) UITapGestureRecognizer *doubleTapGestureRecognizer;
 
 @property (nonatomic, readwrite) ConversationCellLayoutProperties *layoutProperties;
 
