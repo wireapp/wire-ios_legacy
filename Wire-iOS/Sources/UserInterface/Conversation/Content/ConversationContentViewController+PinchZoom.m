@@ -24,12 +24,14 @@
 #import <FLAnimatedImage/FLAnimatedImage.h>
 #import <RBBEasingFunction.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @import zmessaging;
 @import ZMCDataModel;
 
 @implementation ConversationContentViewController (GestureRecognizerDelegate)
 
-- (id<ZMConversationMessage>)messageAtPoint:(CGPoint)point
+- (nullable id<ZMConversationMessage>)messageAtPoint:(CGPoint)point
 {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
     id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
@@ -40,7 +42,10 @@
 {
     CGPoint locationOfTouch = [touch locationInView:self.tableView];
     id<ZMConversationMessage> message = [self messageAtPoint:locationOfTouch];
-    return [Message isImageMessage:message] && message.imageMessageData != nil && message.imageMessageData.imageData != nil;
+    return message != nil &&
+           [Message isImageMessage:message] &&
+           message.imageMessageData != nil &&
+           message.imageMessageData.imageData != nil;
 }
 
 - (void)onPinchZoom:(UIPinchGestureRecognizer *)pinchGestureRecognizer
@@ -105,3 +110,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
