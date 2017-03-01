@@ -44,7 +44,7 @@ internal final class ConversationImagesViewController: UIViewController {
     public weak var messageActionDelegate: MessageActionResponder? = .none
     
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
-        assert(Message.isImageMessage(initialMessage))
+        assert(initialMessage.isImage)
         
         self.inverse = inverse
         self.collection = collection

@@ -100,9 +100,6 @@
 "send_invitation.text" = "Wire'dayım, %@ olarak arat ya da get.wire.com adresini ziyaret et.";
 "send_invitation_no_email.text" = "Wire'dayım. get.wire.com 'u ziyaret ederek bana bağlanabilirsin.";
 
-"send_personal_invitation.text" = "Wire kullanıyorum, buradan görüşelim: get.wire.com.";
-
-
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "bir resim paylaştı";
@@ -221,7 +218,7 @@
 "content.system.started_using" = "kullanmaya başladı";
 "content.system.is_verified" = "Tüm parmak izleri doğrulanmış";
 
-"content.system.unverified" = "%@, %@dan birini doğrulamadı"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@, %@dan birini doğrulamadı"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "senin cihazların";
 "content.system.other_devices" = "%@'nin cihazların";
 
@@ -235,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ cihazı kimlik değiştirdi. Teslim edilmeyen mesaj.";
 "content.system.cannot_decrypt.identity.you_part" = "Senin";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@'nin"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@'ın"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Daha Fazla";
 "content.system.cannot_decrypt.otherDevice_part" = "(cihaz %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Kaydet";
 
 "content.message.delete" = "Sil";
+"content.message.save" = "Kaydet";
 
 "content.message.like" = "Beğen";
 "content.message.unlike" = "Beğenme";
 "content.message.forward" = "Paylaş";
 "content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Ara…";
+"content.message.open" = "Aç";
 
 "content.reactions_list.likers" = "Beğenen";
 
@@ -505,7 +504,7 @@
 
 "self.settings.account_section.phone_number.change.title" = "Telefon";
 "self.settings.account_section.phone_number.change.save" = "Kaydet";
-"self.settings.account_section.phone_number.change.remove" = "Telefon numarasını kaldır";
+"self.settings.account_section.phone_number.change.remove" = "Telefon Numarasını Kaldır";
 
 "self.settings.account_section.phone_number.change.remove.action" = "Telefon Numarasını Kaldır";
 
@@ -583,7 +582,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Rehber Ayarlarını açın";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Kişilerinizi paylaşmak, başkalarına bağlanmanızı kolaylaştırır. Biz size ait tüm bilgileri gizler ve başkalarıyla paylaşmayız. Ayarlar > Gizlilik > Kişiler'den bu erişimi aktifleştirebilirsiniz.";
 
-"self.settings.privacy_security.lock_app" = "Touch ID & Şifre ile kilitle";
+"self.settings.privacy_security.lock_app" = "Sistem şifresi ile kilitle";
+"self.settings.privacy_security.lock_app.subtitle" = "Kapandıktan 10 saniye sonra Wire'ı kilitle.\nTouch ID veya şifreniz girilerek açılabilir.";
 "self.settings.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Parolayı Sıfırla";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Arkadaş davet et";
+"self.settings.invite_friends.title" = "İnsanları davet et";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "Gizlilik nedenleriyle, konuşma geçmişiniz burada görünmeyecek.";
 "registration.no_history.got_it" = "TAMAM";
 
-"registration.no_history.logged_out.hero" = "Daha önce bu aygıtta Wire kullanmışsınız.";
+"registration.no_history.logged_out.hero" = "Bu cihazdan daha önce Wire kullanmışsınız.";
 "registration.no_history.logged_out.subtitle" = "Bu sürede gönderilen mesajlar gözükmeyecektir.";
 "registration.no_history.logged_out.got_it" = "TAMAM";
 
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Size SMS ile bir kod zaten gönderdik. Yenisini almak için 10 dakika sonra Yeniden Gönder'e basın.";
 "error.user.registration_unknown_error" = "Bir şeyler ters gitti, lütfen tekrar deneyin.";
 "error.user.device_deleted_remotely" = "Başka bir cihaz tarafından oturumunuz kapatıldı.";
-"error.user.last_identity_cant_be_deleted" = "Telefon numarası veya e-postadan birini dikebilmek için ikisine de sahip olman gerekiyor";
+"error.user.last_identity_cant_be_deleted" = "E-posta adresinizden veya telefon numaranızdan en az biri gerekli.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +826,5 @@
 "collections.section.no_items" = "Koleksiyonda hiçbir şey yok";
 "collections.image_viewer.copied.title" = "Resim kopyalandı";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "Yazılı mesajlarda arayın";
+"collections.search.no_items" = "Sonuç yok";

@@ -20,7 +20,6 @@
 #import "ZMConversation+Additions.h"
 
 #import "zmessaging+iOS.h"
-#import "Message.h"
 #import "ZMUserSession+iOS.h"
 #import "ZMUserSession+Additions.h"
 #import <AVFoundation/AVFoundation.h>

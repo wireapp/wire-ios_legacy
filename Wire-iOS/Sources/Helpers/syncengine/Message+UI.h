@@ -21,28 +21,9 @@
 #import "Analytics+ConversationEvents.h"
 
 
-@interface Message : NSObject
+@interface Message (UI)
 
 + (MessageType)messageType:(id<ZMConversationMessage>)message;
-
-/// Returns YES, if the message has text to display.
-/// This also includes linkPreviews or links to soundcloud, youtube or vimeo
-+ (BOOL)isTextMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isImageMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isKnockMessage:(id<ZMConversationMessage>)message;
-
-/// Returns YES, if the message is a file transfer message
-/// This also includes audio messages and video messages
-+ (BOOL)isFileTransferMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isVideoMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isAudioMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isLocationMessage:(id<ZMConversationMessage>)message;
-
-+ (BOOL)isSystemMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isNormalMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isConnectionRequestMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isMissedCallMessage:(id<ZMConversationMessage>)message;
-+ (BOOL)isDeletedMessage:(id<ZMConversationMessage>)message;
 
 + (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message;
 

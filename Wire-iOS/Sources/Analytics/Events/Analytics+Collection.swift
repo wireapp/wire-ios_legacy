@@ -26,16 +26,16 @@
 
 extension CollectionItemType {
     init(message: ZMConversationMessage) {
-        if Message.isImageMessage(message) {
+        if message.isImage {
             self = .image
         }
-        else if Message.isVideoMessage(message) {
+        else if message.isVideo {
             self = .video
         }
-        else if Message.isAudioMessage(message) {
+        else if message.isAudio {
             self = .audio
         }
-        else if Message.isFileTransferMessage(message) {
+        else if message.isFile {
             self = .file
         }
         else if let _ = message.textMessageData?.linkPreview {

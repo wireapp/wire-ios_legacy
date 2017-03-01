@@ -28,7 +28,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             return .none
         }
         
-        if message.isImageMessage() {
+        if message.isImage {
             let controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
             return controller
         }

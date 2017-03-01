@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Приховування…";
 
 "send_invitation.subject" = "Додай мене в Wire";
-"send_invitation.text" = "Я в Wire. Шукайте мене як %@ або відвідайте get.wire.com.";
+"send_invitation.text" = "Я в Wire. Шукайте мене як %@ або відвідайте get.wire.com";
 "send_invitation_no_email.text" = "Я уже в Wire. Відвідайте get.wire.com, щоб додати мене.";
-
-"send_personal_invitation.text" = "Я уже в Wire, порозмовляємо там: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,11 +218,11 @@
 "content.system.started_using" = "почали використовувати";
 "content.system.is_verified" = "Всі ідентифікатори були верифіковані";
 
-"content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "ваші пристрої";
-"content.system.other_devices" = "пристрої, які належать %@";
+"content.system.other_devices" = "Пристрої, що належать %@";
 
-"content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом періоду часу. Деякі повідомлення можуть не відображатися тут.";
+"content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом певного часу. Деякі повідомлення можуть не відображатися тут.";
 "content.system.missing_messages.subtitle_start" = "Тим часом";
 
 "content.system.cannot_decrypt" = "Повідомлення від %@ не було отримане.";
@@ -240,8 +237,8 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
-"content.system.unknown_message.body.link" = "Why is this happening?";
+"content.system.unknown_message.body" = "Ви використовуєте застарілу версію Wire, яка не здатна відобразити це повідомлення.";
+"content.system.unknown_message.body.link" = "Чому так сталося?";
 
 "content.file.uploading" = "Завантаження…";
 "content.file.downloading" = "Скачування…";
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Зберегти";
 
 "content.message.delete" = "Видалити";
+"content.message.save" = "Зберегти";
 
 "content.message.like" = "Подобається";
 "content.message.unlike" = "Не подобається";
 "content.message.forward" = "Поділитись";
 "content.message.go_to_conversation" = "Показати в розмові";
 "content.message.forward.to" = "Пошук…";
+"content.message.open" = "Вiдкрити";
 
 "content.reactions_list.likers" = "Сподобалося";
 
@@ -394,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "Навіщо верифікувати розмови?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Переконайтеся, що цей ідентифікатор співпадає з ідентифікатором на пристрої контакту %@.";
+"profile.devices.detail.verify_message" = "Переконайтеся, що цей ідентифікатор співпадає з ідентифікатором на пристрої користувача %@.";
 "profile.devices.detail.verify_message.link" = "Як це зробити?";
 "profile.devices.detail.show_my_device.title" = "Показати ідентиф. мого пристрою";
 "device.verified" = "Верифікований";
@@ -505,16 +504,16 @@
 
 "self.settings.account_section.phone_number.change.title" = "Номер телефону";
 "self.settings.account_section.phone_number.change.save" = "Зберегти";
-"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+"self.settings.account_section.phone_number.change.remove" = "Видалити номер телефону";
 
-"self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
+"self.settings.account_section.phone_number.change.remove.action" = "Видалити номер телефону";
 
 "self.settings.account_section.phone_number.change.verify.save" = "Зберегти";
-"self.settings.account_section.phone_number.change.verify.title" = "Verify";
-"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to: %@.";
+"self.settings.account_section.phone_number.change.verify.title" = "Верифікувати";
+"self.settings.account_section.phone_number.change.verify.description" = "Введіть код, який ми вислали на %@.";
 
-"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
-"self.settings.account_section.phone_number.change.verify.resend" = "Resend Code";
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Введіть код";
+"self.settings.account_section.phone_number.change.verify.resend" = "Надіслати код повторно";
 "self.settings.account_section.phone_number.change.verify.resend_description" = "Код не показується?\nВи можете надіслати запит на новий кожні 30 секунд.";
 
 "self.settings.account_section.phone_number.change.resend.title" = "Код верифікації було надіслано повторно";
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам установити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
-"self.settings.privacy_security.lock_app" = "Заблокувати з використанням Touch ID та коду допуску";
+"self.settings.privacy_security.lock_app" = "Заблокувати кодом допуску";
+"self.settings.privacy_security.lock_app.subtitle" = "Блокувати Wire після 10 секунд в фоновому режимі. Розблокування можливе за допомгою Touch ID або коду допуску.";
 "self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Будь ласка, розблокуйте Wire за допомогою Touch ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.description" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Скинути пароль";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Запросити друзів";
+"self.settings.invite_friends.title" = "Запросити людей";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Ми вже надіслали SMS з кодом. Щоб отримати новий код, натисніть \"Надіслати ще раз\" через 10 хвилин.";
 "error.user.registration_unknown_error" = "Щось пішло не так. Будь ласка спробуйте ще раз.";
 "error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
-"error.user.last_identity_cant_be_deleted" = "Для вашого акаунту повинні бути зареєстровані як email-адреса, так і номер телефону, щоб можна було видалити що-небудь";
+"error.user.last_identity_cant_be_deleted" = "Необхідна або email-адреса або номер телефону.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

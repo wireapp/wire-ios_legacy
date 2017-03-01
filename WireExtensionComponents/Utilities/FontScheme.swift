@@ -60,7 +60,7 @@ extension FontWeight {
     public init(weight: CGFloat) {
         self = (type(of: self).weightMapping.filter {
             $0.value == weight
-            }.first?.key)!
+            }.first?.key) ?? FontWeight.regular
     }
 }
 

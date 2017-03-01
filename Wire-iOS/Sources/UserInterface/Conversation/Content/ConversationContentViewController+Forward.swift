@@ -39,17 +39,17 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     
     let conversations = to as! [ZMConversation]
     
-    if Message.isTextMessage(message) {
+    if message.isText {
         ZMUserSession.shared()?.performChanges {
             forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
         }
     }
-    else if Message.isImageMessage(message) {
+    else if message.isImage {
         ZMUserSession.shared()?.performChanges {
             forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
         }
     }
-    else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
+    else if message.isVideo || message.isAudio || message.isFile {
             FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI(), name: message.fileMessageData!.fileURL.lastPathComponent) { fileMetadata in
 
                 ZMUserSession.shared()?.performChanges {
@@ -57,7 +57,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
                     }
             }
     }
-    else if Message.isLocationMessage(message) {
+    else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
         ZMUserSession.shared()?.performChanges {
             forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: locationData) }
@@ -79,7 +79,7 @@ extension ZMMessage: Shareable {
     public func previewView() -> UIView {
         let cell: ConversationCell
 
-        if Message.isTextMessage(self) {
+        if isText {
             let textMessageCell = TextMessageCell(style: .default, reuseIdentifier: "")
             textMessageCell.smallLinkAttachments = true
             textMessageCell.contentLayoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -92,28 +92,28 @@ extension ZMMessage: Shareable {
             textMessageCell.messageTextView.textContainer.maximumNumberOfLines = 2
             cell = textMessageCell
         }
-        else if Message.isImageMessage(self) {
+        else if isImage {
             let imageMessageCell = ImageMessageCell(style: .default, reuseIdentifier: "")
             imageMessageCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             imageMessageCell.autoStretchVertically = false
             imageMessageCell.defaultLayoutMargins = .zero
             cell = imageMessageCell
         }
-        else if Message.isVideoMessage(self) {
+        else if isVideo {
             cell = VideoMessageCell(style: .default, reuseIdentifier: "")
             cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
-        else if Message.isAudioMessage(self) {
+        else if isAudio {
             cell = AudioMessageCell(style: .default, reuseIdentifier: "")
             cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
-        else if Message.isLocationMessage(self) {
+        else if isLocation {
             let locationCell = LocationMessageCell(style: .default, reuseIdentifier: "")
             locationCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             locationCell.containerHeightConstraint.constant = 120
             cell = locationCell
         }
-        else if Message.isFileTransferMessage(self) {
+        else if isFile {
             cell = FileTransferCell(style: .default, reuseIdentifier: "")
             cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }

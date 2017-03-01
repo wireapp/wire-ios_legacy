@@ -23,7 +23,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "Message.h"
+#import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "UIView+Borders.h"
 #import "Wire-Swift.h"

@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Nascondendo…";
 
 "send_invitation.subject" = "Connettiti con me su Wire";
-"send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com.";
+"send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com";
 "send_invitation_no_email.text" = "Sono su Wire. Visita get.wire.com per connetterti con me.";
-
-"send_personal_invitation.text" = "Sono su Wire, ci sentiamo lì. get.wire.com";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "iniziato ad utilizzare";
 "content.system.is_verified" = "Tutte le impronte digitali sono state verificate";
 
-"content.system.unverified" = "%@ hai tolto la verifica di %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ hai tolto la verifica di %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "i tuoi dispositivi";
 "content.system.other_devices" = "dispositivi di %@";
 
@@ -235,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ ha cambiato identità del dispositivo. Messaggio non recapitato.";
 "content.system.cannot_decrypt.identity.you_part" = "Il tuo";
-"content.system.cannot_decrypt.identity.otherUser_part" = "di %@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Ulteriori informazioni";
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Salva";
 
 "content.message.delete" = "Elimina";
+"content.message.save" = "Salva";
 
 "content.message.like" = "Mi piace";
 "content.message.unlike" = "Non mi piace più";
 "content.message.forward" = "Condividi";
 "content.message.go_to_conversation" = "Mostra";
 "content.message.forward.to" = "Ricerca…";
+"content.message.open" = "Apri";
 
 "content.reactions_list.likers" = "Piace a";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Apri impostazioni contatti";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
-"self.settings.privacy_security.lock_app" = "Proteggi con Touch ID & Passcode";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Per favore sblocca Wire con Touch ID o Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Reimposta password";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Invita amici";
+"self.settings.invite_friends.title" = "Invita persone";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Ti abbiamo già inviato un codice via SMS. Tocca Invia di nuovo dopo 10 minuti per ottenerne un altro.";
 "error.user.registration_unknown_error" = "Qualcosa è andato storto. Si prega di riprovare.";
 "error.user.device_deleted_remotely" = "Sei stato disconnesso da un altro dispositivo.";
-"error.user.last_identity_cant_be_deleted" = "È necessario avere sia un indirizzo e-mail che un numero di telefono per essere in grado di rimuovere uno di essi";
+"error.user.last_identity_cant_be_deleted" = "È richiesto un numero di telefono oppure un'indirizzo email.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

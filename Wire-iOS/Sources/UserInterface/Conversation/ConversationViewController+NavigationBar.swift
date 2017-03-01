@@ -21,10 +21,31 @@ import UIKit
 import zmessaging
 import Cartography
 
+public extension ZMConversationList {
+    func hasUnreadMessages(excluding: ZMConversation) -> Bool {
+        return self.conversations().filter { $0 != excluding }.map { $0.estimatedUnreadCount }.reduce(0, +) > 0
+    }
+    
+    func conversations() -> [ZMConversation] {
+        return self.flatMap { $0 as? ZMConversation }
+    }
+}
+
 public extension ConversationViewController {
     
     func barButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, width: CGFloat = 30, imageEdgeInsets: UIEdgeInsets = .zero) -> IconButton {
         let button = IconButton.iconButtonDefault()
+        button.setIcon(type, with: .tiny, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: width, height: 20)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        button.accessibilityIdentifier = accessibilityIdentifier
+        button.imageEdgeInsets = imageEdgeInsets
+        return button
+    }
+    
+    func accentBarButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, width: CGFloat = 30, imageEdgeInsets: UIEdgeInsets = .zero) -> IconButton {
+        let button = IconButton()
+        button.setIconColor(UIColor.accent(), for: .normal)
         button.setIcon(type, with: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: width, height: 20)
         button.addTarget(target, action: action, for: .touchUpInside)
@@ -54,14 +75,32 @@ public extension ConversationViewController {
     }
     
     var backBarButtonItem: IconButton {
-        let leftButtonIcon: ZetaIconType = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? .backArrow : .hamburger
+        let hasUnreadInOtherConversations = self.hasUnreadMessagesInOtherConversations
+        let arrowIcon: ZetaIconType = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
         
-        return barButtonItem(withType: leftButtonIcon,
-                             target: self,
-                             action: #selector(ConversationViewController.onBackButtonPressed(_:)),
-                             accessibilityIdentifier: "ConversationBackButton",
-                             width: 38,
-                             imageEdgeInsets: UIEdgeInsetsMake(0, -16, 0, 0))
+        let leftButtonIcon: ZetaIconType = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
+
+        let action = #selector(ConversationViewController.onBackButtonPressed(_:))
+        let accessibilityId = "ConversationBackButton"
+        let width: CGFloat = 38
+        let imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
+        
+        if hasUnreadInOtherConversations {
+            return accentBarButtonItem(withType: leftButtonIcon,
+                                 target: self,
+                                 action: action,
+                                 accessibilityIdentifier: accessibilityId,
+                                 width: width,
+                                 imageEdgeInsets: imageEdgeInsets)
+        }
+        else {
+            return barButtonItem(withType: leftButtonIcon,
+                                 target: self,
+                                 action: action,
+                                 accessibilityIdentifier: accessibilityId,
+                                 width: width,
+                                 imageEdgeInsets: imageEdgeInsets)
+        }
     }
     
     var collectionsBarButtonItem: IconButton {
@@ -71,15 +110,12 @@ public extension ConversationViewController {
         let imageEdgeInsets = UIEdgeInsetsMake(0, -8, 0, 0)
         
         if showingSearchResults {
-            let button = IconButton()
-            button.setIcon(.searchOngoing, with: .tiny, for: .normal, renderingMode: .alwaysOriginal)
-            button.setIconColor(UIColor.accent(), for: .normal)
-            button.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
-            button.addTarget(self, action: action, for: .touchUpInside)
-            button.accessibilityIdentifier = accessibilityIdentifier
-            button.imageEdgeInsets = imageEdgeInsets
-            
-            return button
+            return accentBarButtonItem(withType:.searchOngoing,
+                                       target: self,
+                                       action: action,
+                                       accessibilityIdentifier: accessibilityIdentifier,
+                                       width: 30,
+                                       imageEdgeInsets: imageEdgeInsets)
         }
         else {
             return barButtonItem(withType:.search,
@@ -89,6 +125,10 @@ public extension ConversationViewController {
                                        width: 30,
                                        imageEdgeInsets: imageEdgeInsets)
         }
+    }
+    
+    var hasUnreadMessagesInOtherConversations: Bool {
+        return SessionObjectCache.shared().conversationList.hasUnreadMessages(excluding: self.conversation)
     }
     
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {

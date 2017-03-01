@@ -24,7 +24,8 @@
 
 @import WireExtensionComponents;
 
-@implementation Message
+
+@implementation Message (UI)
 
 + (MessageType)messageType:(id<ZMConversationMessage>)message
 {
@@ -56,72 +57,6 @@
         return MessageTypeLocation;
     }
     return MessageTypeUnknown;
-}
-
-+ (BOOL)isTextMessage:(id<ZMConversationMessage>)message
-{
-    return message.textMessageData != nil;
-}
-
-+ (BOOL)isImageMessage:(id<ZMConversationMessage>)message
-{
-    return message.imageMessageData != nil || (message.fileMessageData != nil && message.fileMessageData.v3_isImage);
-}
-
-+ (BOOL)isKnockMessage:(id<ZMConversationMessage>)message
-{
-    return message.knockMessageData != nil;
-}
-
-+ (BOOL)isFileTransferMessage:(id<ZMConversationMessage>)message
-{
-    return message.fileMessageData != nil && !message.fileMessageData.v3_isImage;
-}
-
-+ (BOOL)isVideoMessage:(id<ZMConversationMessage>)message
-{
-    return [self isFileTransferMessage:message] && [message.fileMessageData isVideo];
-}
-
-+ (BOOL)isAudioMessage:(id<ZMConversationMessage>)message
-{
-    return [self isFileTransferMessage:message] && [message.fileMessageData isAudio];
-}
-
-+ (BOOL)isLocationMessage:(id<ZMConversationMessage>)message
-{
-    return message.locationMessageData != nil;
-}
-
-+ (BOOL)isSystemMessage:(id<ZMConversationMessage>)message
-{
-    return message.systemMessageData != nil;
-}
-
-+ (BOOL)isNormalMessage:(id<ZMConversationMessage>)message
-{
-    return [self isTextMessage:message] || [self isImageMessage:message] || [self isKnockMessage:message] || [self isFileTransferMessage:message] || [self isVideoMessage:message] || [self isAudioMessage:message] || [self isLocationMessage:message];
-}
-
-+ (BOOL)isConnectionRequestMessage:(id<ZMConversationMessage>)message
-{
-    if ([self isSystemMessage:message]) {
-        return message.systemMessageData.systemMessageType == ZMSystemMessageTypeConnectionRequest;
-    }
-    return NO;
-}
-
-+ (BOOL)isMissedCallMessage:(id<ZMConversationMessage>)message
-{
-    if ([self isSystemMessage:message]) {
-        return message.systemMessageData.systemMessageType == ZMSystemMessageTypeMissedCall;
-    }
-    return NO;
-}
-
-+ (BOOL)isDeletedMessage:(id<ZMConversationMessage>)message
-{
-    return [Message isSystemMessage:message] && ((ZMSystemMessage *)message).systemMessageType == ZMSystemMessageTypeMessageDeletedForEveryone;
 }
 
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message

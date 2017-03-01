@@ -25,7 +25,6 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "Message.h"
 #import "Message+Private.h"
 
 // UI

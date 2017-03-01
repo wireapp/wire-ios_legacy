@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "löschen…";
 
 "send_invitation.subject" = "Füge mich auf Wire als Kontakt hinzu";
-"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf get.wire.com.";
+"send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf get.wire.com";
 "send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf get.wire.com, um mich als Kontakt hinzuzufügen.";
-
-"send_personal_invitation.text" = "Lass uns zu Wire wechseln: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "benutzt";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
-"content.system.unverified" = "%@ hast die Überprüfung für ein Gerät von %@ widerrufen"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ hast die Überprüfung für ein Gerät von %@ widerrufen"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "deine Geräte";
 "content.system.other_devices" = "%@s Geräte";
 
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Speichern";
 
 "content.message.delete" = "Löschen";
+"content.message.save" = "Speichern";
 
 "content.message.like" = "Gefällt mir";
 "content.message.unlike" = "Gefällt mir nicht mehr";
 "content.message.forward" = "Teilen";
 "content.message.go_to_conversation" = "Öffnen";
 "content.message.forward.to" = "Suche…";
+"content.message.open" = "Öffnen";
 
 "content.reactions_list.likers" = "Gefällt";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Kontakteinstellungen öffnen";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
 
-"self.settings.privacy_security.lock_app" = "Zugang mit TouchID & Passwort sichern";
+"self.settings.privacy_security.lock_app" = "Mit Passwort sperren";
+"self.settings.privacy_security.lock_app.subtitle" = "Sperre Wire nach 10 Sekunden im Hintergrund. Entsperre mit Touch ID oder deinem Passwort.";
 "self.settings.privacy_security.lock_app.description" = "Wire entsperren";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Bitte entsperre Wire mit TouchID oder Passwort";
+"self.settings.privacy_security.lock_cancelled.description" = "Entsperre Wire mit Touch ID oder Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
@@ -656,7 +656,7 @@
 "registration.verify_phone_number.resend_placeholder" = "Du hast keinen Code erhalten?\nDu kannst in %.0f Sekunden einen Neuen anfordern";
 
 "registration.verify_email.instructions" = "Wir habe eine E-Mail an %@ gesendet. \nBitte gehe auf den Link, um deine Adresse zu bestätigen.";
-"registration.verify_email.resend.instructions" = "Nachricht nicht bekommen?";
+"registration.verify_email.resend.instructions" = "E-Mail nicht erhalten?";
 "registration.verify_email.resend.button_title" = "Erneut senden";
 
 "registration.select_picture.subtitle" = "Wire ist so viel netter mit einem Bild.";
@@ -670,7 +670,7 @@
 "registration.no_history.subtitle" = "Aus Datenschutzgründen wird dein bisheriger Gesprächsverlauf nicht angezeigt.";
 "registration.no_history.got_it" = "OK";
 
-"registration.no_history.logged_out.hero" = "Du hast Wire auf diesem Gerät bereits genutzt.";
+"registration.no_history.logged_out.hero" = "Du hast Wire auf diesem Gerät bereits früher genutzt.";
 "registration.no_history.logged_out.subtitle" = "Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 "registration.no_history.logged_out.got_it" = "OK";
 
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Wir haben dir bereits einen Code per SMS geschickt. Tippe nach 10 Minuten auf  \"Erneut senden\", um einen neuen Code zu erhalten.";
 "error.user.registration_unknown_error" = "Ein Fehler ist aufgetreten, bitte versuche es erneut.";
 "error.user.device_deleted_remotely" = "Du wurdest durch ein anderes Gerät abgemeldet.";
-"error.user.last_identity_cant_be_deleted" = "Du musst eine E-Mail und Telefonnummer angegeben haben, um eine der beiden entfernen zu können";
+"error.user.last_identity_cant_be_deleted" = "Es ist entweder eine E-Mail-Adresse oder eine Telefonnummer erforderlich.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

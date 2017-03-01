@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Skrivanje…";
 
 "send_invitation.subject" = "Poveži se z mano na Wire";
-"send_invitation.text" = "Sem na Wire, poišči %@ ali obišči get.wire.com.";
+"send_invitation.text" = "Sem na Wire, poišči %@ ali obišči get.wire.com";
 "send_invitation_no_email.text" = "Sem na Wire. Obišči get.wire.com za povezavo z mano.";
-
-"send_personal_invitation.text" = "Sem na Wire, se slišiva tam: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,7 +218,7 @@
 "content.system.started_using" = "začel(-a) uporabljati";
 "content.system.is_verified" = "Vsi prstni odtisi naprav so preverjeni";
 
-"content.system.unverified" = "%@ odstranil(-a) preveritev ene izmed %@"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ odstranil(-a) preveritev ene izmed %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "tvoje naprave";
 "content.system.other_devices" = "naprave od %@";
 
@@ -235,7 +232,7 @@
 
 "content.system.cannot_decrypt.identity" = "Identita naprave od %@ je bila spremenjena. Sporočilo ni dostavljeno.";
 "content.system.cannot_decrypt.identity.you_part" = "Tvoja";
-"content.system.cannot_decrypt.identity.otherUser_part" = "od %@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Nauči se več";
 "content.system.cannot_decrypt.otherDevice_part" = "(naprava%@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Shrani";
 
 "content.message.delete" = "Izbriši";
+"content.message.save" = "Shrani";
 
 "content.message.like" = "Všeč mi je";
 "content.message.unlike" = "Ni mi všeč";
 "content.message.forward" = "Deli";
 "content.message.go_to_conversation" = "Razkrij";
 "content.message.forward.to" = "Išči…";
+"content.message.open" = "Odpri";
 
 "content.reactions_list.likers" = "Všečkali so";
 
@@ -583,10 +582,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Odpri nastavitve stikov";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "To vam pomaga pri povezovanju z drugimi. Vse informacije anonimiziramo in ne delimo z drugimi. Dovolite dostop preko Nastavitve > Zasebnost > Stiki.";
 
-"self.settings.privacy_security.lock_app" = "Zakleni s Touch ID in geslom";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Odkleni Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Prosimo odklenite Wire s Touch ID ali geslom";
+"self.settings.privacy_security.lock_cancelled.description" = "Odkleni Wire s Touch ID ali geslom";
 "self.settings.privacy_security.lock_cancelled.action" = "Odkleni";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Naprave";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Ponastavi geslo";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Povabi prijatelje";
+"self.settings.invite_friends.title" = "Povabite osebe";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "Kodo smo vam že poslali preko SMS. Tapnite Pošlji ponovno po 10 minutah za novo.";
 "error.user.registration_unknown_error" = "Nekaj je šlo narobe, prosimo poizkusite znova.";
 "error.user.device_deleted_remotely" = "Odjavljeni ste bili iz druge naprave.";
-"error.user.last_identity_cant_be_deleted" = "Imeti morate dodan e-poštni naslov in telefonsko številko za odstranitev enega od njiju";
+"error.user.last_identity_cant_be_deleted" = "Zahtevan je ali e-poštni naslov ali telefonska številka.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +826,5 @@
 "collections.section.no_items" = "Ni predmetov v zbirki";
 "collections.image_viewer.copied.title" = "Slika kopirana";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "Išči po sporočilih";
+"collections.search.no_items" = "Ni rezultatov";

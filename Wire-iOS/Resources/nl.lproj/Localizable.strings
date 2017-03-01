@@ -97,11 +97,8 @@
 "peoplepicker.hide_search_result_progress" = "Verbergen…";
 
 "send_invitation.subject" = "Verbind met mij op Wire";
-"send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com.";
+"send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com";
 "send_invitation_no_email.text" = "Ik gebruik Wire. Ga naar get.wire.com om met mij te verbinden.";
-
-"send_personal_invitation.text" = "Ik ben op Wire, praat met mij daar: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,9 +218,9 @@
 "content.system.started_using" = "begon met het gebruik van";
 "content.system.is_verified" = "Alle vingerafdrukken zijn geverifieerd";
 
-"content.system.unverified" = "%@ trok de verificatie van %@ in"; // example "You unverified one of Jule's devices"
+"content.system.unverified" = "%@ trok de verificatie van %@ in"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "jouw apparaten";
-"content.system.other_devices" = "%@'s apparaten";
+"content.system.other_devices" = "%@’s apparaten";
 
 "content.system.missing_messages.title" = "Je hebt dit apparaat een tijdje niet gebruikt. Sommige berichten worden hier niet getoond.";
 "content.system.missing_messages.subtitle_start" = "Tijdens,";
@@ -235,12 +232,12 @@
 
 "content.system.cannot_decrypt.identity" = "%@'s apparaatidentiteit is veranderd. Het bericht is niet afgeleverd.";
 "content.system.cannot_decrypt.identity.you_part" = "Jouw";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@'s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Leer meer";
 "content.system.cannot_decrypt.otherDevice_part" = "(Apparaat %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "Je gebruik een oudere versie van Wire die dit type bericht niet kan tonen.";
+"content.system.unknown_message.body" = "Je gebruik een oudere versie van Wire die dit type bericht niet kan weergeven.";
 "content.system.unknown_message.body.link" = "Waarom gebeurt dit?";
 
 "content.file.uploading" = "Uploaden…";
@@ -255,12 +252,14 @@
 "content.image.save_image" = "Opslaan";
 
 "content.message.delete" = "Verwijderen";
+"content.message.save" = "Opslaan";
 
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
 "content.message.forward" = "Delen";
 "content.message.go_to_conversation" = "Tonen";
 "content.message.forward.to" = "Zoeken…";
+"content.message.open" = "Openen";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
 
@@ -394,7 +393,7 @@
 "profile.devices.fingerprint_message.link" = "Waarom gesprekken verifiëren?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verifieer dat deze digitale vingerafdruk overeenkomt met %@'s zijn apparaat.";
+"profile.devices.detail.verify_message" = "Verifieer dat deze digitale vingerafdruk overeenkomt met %@’s zijn apparaat.";
 "profile.devices.detail.verify_message.link" = "Hoe doe ik dat?";
 "profile.devices.detail.show_my_device.title" = "Toon mijn apparaat vingerafdruk";
 "device.verified" = "Geverifieerd";
@@ -505,7 +504,7 @@
 
 "self.settings.account_section.phone_number.change.title" = "Telefoonnummer";
 "self.settings.account_section.phone_number.change.save" = "Opslaan";
-"self.settings.account_section.phone_number.change.remove" = "Verwijder Telefoon nummer";
+"self.settings.account_section.phone_number.change.remove" = "Verwijder Telefoon Nummer";
 
 "self.settings.account_section.phone_number.change.remove.action" = "Verwijder Telefoon Nummer";
 
@@ -583,7 +582,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open instellingen voor Wire";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dit helpt je te verbinden met anderen. We anonimiseren alle informatie en delen dit nooit met derde partijen. Geef toegang via Instellingen > Privacy > Contacten.";
 
-"self.settings.privacy_security.lock_app" = "Vergrendel met Touch ID & Wachtwoord";
+"self.settings.privacy_security.lock_app" = "Vergrendel Met Wachtwoord";
+"self.settings.privacy_security.lock_app.subtitle" = "Vergrendel Wire na dat hij 10 seconden in de achtergrond is. Ontgrendelen kan met Touch ID of door je wachtwoord in te vullen.";
 "self.settings.privacy_security.lock_app.description" = "Ontgrendel Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Ontgrendel Wire met Touch ID of Wachtwoord";
@@ -619,7 +619,7 @@
 "self.settings.password_reset_menu.title" = "Herstel wachtwoord";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Nodig vrienden uit";
+"self.settings.invite_friends.title" = "Nodig anderen uit";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +766,7 @@
 "error.user.phone_code_too_many" = "We hebben je al een code via SMS verstuurd. Klik op Opnieuw sturen na 10 minuten om een nieuwe code te krijgen.";
 "error.user.registration_unknown_error" = "Er ging iets mis. Probeer het nogmaals.";
 "error.user.device_deleted_remotely" = "Je bent uitgelogd door een ander apparaat.";
-"error.user.last_identity_cant_be_deleted" = "Je moet een email adres of een telefoon nummer hebben om er een van te verwijderen";
+"error.user.last_identity_cant_be_deleted" = "Een email adres of een telefoon nummer is verplicht.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +826,5 @@
 "collections.section.no_items" = "Geen items in de verzameling";
 "collections.image_viewer.copied.title" = "Afbeelding gekopieerd";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "Zoek berichten";
+"collections.search.no_items" = "Geen resultaten";

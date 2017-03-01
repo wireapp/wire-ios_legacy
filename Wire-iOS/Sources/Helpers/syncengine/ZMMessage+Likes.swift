@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@
 
 
 import Foundation
-import zmessaging
 
-extension ZMConversationMessage {
+
+public extension ZMConversationMessage {
 
     var canBeLiked: Bool {
         guard let conversation = self.conversation else {
@@ -29,7 +29,7 @@ extension ZMConversationMessage {
 
         let participatesInConversation = conversation.activeParticipants.contains(ZMUser.selfUser())
         let sentOrDelivered = [ZMDeliveryState.sent, ZMDeliveryState.delivered].contains(deliveryState)
-        let likableType = Message.isNormalMessage(self) && !Message.isKnock(self)
+        let likableType = isNormal && !isKnock
         return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
     }
 
@@ -49,10 +49,10 @@ extension ZMConversationMessage {
 
     func hasReactions() -> Bool {
         return self.usersReaction.map { (_, users) in
-                return users.count
+            return users.count
             }.reduce(0, +) > 0
     }
-    
+
     func likers() -> [ZMUser] {
         return usersReaction.filter { (reaction, _) -> Bool in
             reaction == MessageReaction.like.unicodeValue
@@ -60,11 +60,11 @@ extension ZMConversationMessage {
                 return users
             }.first ?? []
     }
-
+    
 }
 
 public extension Message {
-    
+
     @objc static func setLikedMessage(_ message: ZMConversationMessage, liked: Bool) {
         return message.liked = liked
     }
@@ -72,11 +72,11 @@ public extension Message {
     @objc static func isLikedMessage(_ message: ZMConversationMessage) -> Bool {
         return message.liked
     }
-    
+
     @objc static func hasReactions(_ message: ZMConversationMessage) -> Bool {
         return message.hasReactions()
     }
-    
+
     @objc static func hasLikers(_ message: ZMConversationMessage) -> Bool {
         return !message.likers().isEmpty
     }
@@ -84,5 +84,5 @@ public extension Message {
     class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
         return message.canBeLiked
     }
-
+    
 }
