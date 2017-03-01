@@ -552,7 +552,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
     if ([Message messageCanBeLiked:self.message]) {
         UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
-        [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
+        
+        if (items.count > 0) {
+            [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
+        } else {
+            [items addObject:likeItem];
+        }
     }
 
     if (self.message.canBeDeleted) {
