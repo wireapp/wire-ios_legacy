@@ -34,6 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id<ZMConversationMessage>)messageAtPoint:(CGPoint)point
 {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    if (indexPath == nil || indexPath.row >= (NSInteger)self.messageWindow.messages.count) {
+        return nil;
+    }
     id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
     return message;
 }
@@ -63,6 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
             }
             
             ImageMessageCell *imageCell = (ImageMessageCell *)cell;
+            self.pinchImageCell = imageCell;
             CGRect imageFrame = [self.view.window convertRect:imageCell.fullImageView.bounds fromView:imageCell.fullImageView];
             
             BOOL isAnimatedGIF = message.imageMessageData.isAnimatedGIF;
@@ -77,30 +81,49 @@ NS_ASSUME_NONNULL_BEGIN
                 image = [UIImage imageWithData:message.imageMessageData.imageData];
             }
             
+            self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
+            
+            self.dimView = [[UIView alloc] initWithFrame:self.view.window.bounds];
+            self.dimView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            self.dimView.backgroundColor = [UIColor blackColor];
+            self.dimView.alpha = 0.0f;
+            [self.view.window addSubview:self.dimView];
+            
             self.pinchImageView = [[FLAnimatedImageView alloc] initWithFrame:imageFrame];
             [self.pinchImageView setMediaAsset:image];
             self.pinchImageView.contentMode = UIViewContentModeScaleAspectFit;
             self.pinchImageView.clipsToBounds = YES;
             self.pinchImageView.image = [UIImage imageWithData:message.imageMessageData.imageData];
             [self.view.window addSubview:self.pinchImageView];
+            
+            imageCell.fullImageView.hidden = YES;
         }
             break;
         case UIGestureRecognizerStateChanged:
         {
             CGFloat scale = MAX(pinchGestureRecognizer.scale, 1.0f);
-            self.pinchImageView.transform = CGAffineTransformMakeScale(scale, scale);
+            CGPoint newLocation = [pinchGestureRecognizer locationInView:self.view];
+            
+            CGAffineTransform translation = CGAffineTransformMakeTranslation(newLocation.x - self.initialPinchLocation.x, newLocation.y - self.initialPinchLocation.y);
+            
+            self.pinchImageView.transform = CGAffineTransformScale(translation, scale, scale);
+            
+            self.dimView.alpha = MIN(1.0f, (scale - 1.0f) / 2.0f) * 0.48f + 0.16f;
         }
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
         {
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.2 animations:^{
+            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.2 animations:^{
                 self.pinchImageView.transform = CGAffineTransformIdentity;
-                self.pinchImageView.alpha = 0.0f;
+                self.dimView.alpha = 0.0f;
             } completion:^(BOOL finished) {
                 [self.pinchImageView removeFromSuperview];
                 self.pinchImageView = nil;
+                [self.dimView removeFromSuperview];
+                self.dimView = nil;
+                self.pinchImageCell.fullImageView.hidden = NO;
             }];
         }
             break;

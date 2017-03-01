@@ -133,6 +133,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
     }
+    
+    [self.pinchImageView removeFromSuperview];
+    [self.dimView removeFromSuperview];
 }
 
 - (void)loadView
