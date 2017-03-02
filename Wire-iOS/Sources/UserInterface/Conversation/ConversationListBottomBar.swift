@@ -47,6 +47,7 @@ import Cartography
     let user: ZMUser?
     
     var userObserverToken: NSObjectProtocol?
+    var clientsObserverTokens: [NSObjectProtocol] = []
     var accentColorHandler: AccentColorChangeHandler?
     
     var showArchived: Bool = false {
@@ -85,6 +86,7 @@ import Cartography
         updateIndicator()
         if let user = user {
             userObserverToken = UserChangeInfo.add(observer: self, forBareUser: user)
+            self.createClientObservers()
         }
     }
 
@@ -94,6 +96,12 @@ import Cartography
     
     deinit {
         accentColorHandler = nil
+    }
+    
+    fileprivate func createClientObservers() {
+        if let user = user {
+            clientsObserverTokens = user.clients.map { UserClientChangeInfo.add(observer: self, for: $0) }
+        }
     }
     
     fileprivate func createViews() {
@@ -212,6 +220,18 @@ import Cartography
 extension ConversationListBottomBarController: ZMUserObserver {
     func userDidChange(_ note: UserChangeInfo) {
         guard note.trustLevelChanged || note.clientsChanged else { return }
+        updateIndicator()
+        if note.clientsChanged {
+            createClientObservers()
+        }
+    }
+}
+
+// MARK: - Clients observer
+
+extension ConversationListBottomBarController: UserClientObserver {
+    func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
+        guard changeInfo.needsToNotifyUserChanged else { return }
         updateIndicator()
     }
 }
