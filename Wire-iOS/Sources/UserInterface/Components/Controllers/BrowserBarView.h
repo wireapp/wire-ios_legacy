@@ -30,4 +30,6 @@
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) CGFloat progress;
 
+- (instancetype)initForUseWithStatusBar:(BOOL)statusBar;
+
 @end
