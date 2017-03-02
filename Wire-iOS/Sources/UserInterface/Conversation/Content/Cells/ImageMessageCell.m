@@ -87,7 +87,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _autoStretchVertically = YES;
-        self.doubleTapGestureRecognizer.enabled = NO;
         [self createImageMessageViews];
         [self createConstraints];
         
@@ -178,6 +177,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
     self.imageTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapped:)];
     [self.imageViewContainer addGestureRecognizer:self.imageTapRecognizer];
+    [self.imageTapRecognizer requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";

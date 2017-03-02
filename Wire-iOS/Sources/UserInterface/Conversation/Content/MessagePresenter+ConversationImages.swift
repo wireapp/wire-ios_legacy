@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import Classy
 
 extension MessagePresenter {
     func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder) -> UIViewController {
@@ -30,6 +31,8 @@ extension MessagePresenter {
         let collection = AssetCollectionWrapper(conversation: conversation, matchingCategories: [imagesCategoryMatch])
         
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
+        
+        CASStyler.default().styleItem(imagesController)
         
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;

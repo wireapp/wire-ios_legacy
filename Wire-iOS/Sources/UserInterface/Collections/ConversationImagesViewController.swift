@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import zmessaging
+import Classy
 
 typealias DismissAction = (_ completion: (()->())?)->()
 
@@ -208,6 +209,7 @@ internal final class ConversationImagesViewController: UIViewController {
             imageViewController.snapshotBackgroundView = innerSnapshot
         }
         imageViewController.dismissAction = self.dismissAction
+        CASStyler.default().styleItem(imageViewController)
         return imageViewController
     }
     
