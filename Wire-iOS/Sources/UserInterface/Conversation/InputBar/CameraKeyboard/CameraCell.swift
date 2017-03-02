@@ -167,11 +167,12 @@ open class CameraCell: UICollectionViewCell, Reusable {
             newOrientation = .portrait;
         }
         
-        if let connection = cameraController.previewLayer.connection , connection.isVideoOrientationSupported {
-            connection.videoOrientation = newOrientation
-        }
-        
         if UIDevice.current.userInterfaceIdiom == .pad {
+            if let connection = cameraController.previewLayer.connection,
+                connection.isVideoOrientationSupported {
+                connection.videoOrientation = newOrientation
+            }
+            
             cameraController.snapshotVideoOrientation = newOrientation
         }
         else {
