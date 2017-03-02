@@ -229,6 +229,8 @@ class SettingsToggleCell: SettingsTableCell {
         self.switchView = UISwitch(frame: CGRect.zero)
         self.switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         self.accessoryView = self.switchView
+        self.accessoryView?.isAccessibilityElement = false
+        self.switchView.isAccessibilityElement = true
     }
     
     func onSwitchChanged(_ sender: UIResponder) {

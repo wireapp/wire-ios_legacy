@@ -45,7 +45,9 @@ class FingerprintTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
+        self.titleLabel.accessibilityIdentifier = "fingerprint title"
         self.fingerprintLabel.numberOfLines = 0
+        self.fingerprintLabel.accessibilityIdentifier = "fingerprint"
         self.spinner.hidesWhenStopped = true
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)

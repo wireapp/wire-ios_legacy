@@ -80,7 +80,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         self.createTableView()
         self.createConstraints()
         
-        ///presented modally (from conversation
+        // presented modally from conversation
         if let navController = self.navigationController, navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
             if fromConversation {
@@ -99,7 +99,6 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = UIColor.clear
@@ -216,7 +215,9 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
             else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).verifiedCellReuseIdentifier, for: indexPath) as? SettingsToggleCell {
                     cell.titleText = NSLocalizedString("device.verified", comment: "")
+                    cell.cellNameLabel.accessibilityIdentifier = "device verified label"
                     cell.switchView.addTarget(self, action: #selector(SettingsClientViewController.onVerifiedChanged(_:)), for: .touchUpInside)
+                    cell.switchView.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
                    styler(cell)
                     return cell
@@ -226,6 +227,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .resetSession:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
+                cell.accessibilityIdentifier = "reset session"
                 styler(cell)
                 return cell
             }
@@ -234,6 +236,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         case .removeDevice:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
+                cell.accessibilityIdentifier = "remove device"
                 styler(cell)
                 return cell
             }
