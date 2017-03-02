@@ -268,10 +268,10 @@
 
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGED";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "YOU PINGED";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "UNABLE TO PLAY TRACK";

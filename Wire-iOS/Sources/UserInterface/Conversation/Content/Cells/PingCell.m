@@ -94,7 +94,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
         pingText = NSLocalizedString(@"content.ping.you.text", @"");
     }
     else {
-        NSString *userName = [self.message.sender.displayName uppercaseString];
+        NSString *userName = self.message.sender.displayName;
         NSString *localizedStringKey = @"content.ping.text";
         pingText = [NSString stringWithFormat:NSLocalizedString(localizedStringKey, @""), userName, nil];
     }
