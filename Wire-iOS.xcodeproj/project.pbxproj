@@ -202,6 +202,7 @@
 		54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
 		6DC7310EF4FE22057C3A6DC8 /* libPods-Wire-iOS-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */; };
+		71E8B990D898AE0C6D33913D /* libPods-ImageNotificationExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA64F89A9A2B5975159F31D1 /* libPods-ImageNotificationExtension.a */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
 		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
@@ -563,6 +564,11 @@
 		87AEDB271DBA619D00010451 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB241DBA619D00010451 /* logo.png */; };
 		87AEDB281DBA619D00010451 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB251DBA619D00010451 /* logo@2x.png */; };
 		87AEDB291DBA619D00010451 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB261DBA619D00010451 /* logo@3x.png */; };
+		87B7DAA31E696E4E005F5140 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B7DAA21E696E4E005F5140 /* UserNotifications.framework */; };
+		87B7DAA51E696E4E005F5140 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B7DAA41E696E4E005F5140 /* UserNotificationsUI.framework */; };
+		87B7DAA81E696E4E005F5140 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B7DAA71E696E4E005F5140 /* NotificationViewController.swift */; };
+		87B7DAAF1E696E4E005F5140 /* ImageNotificationExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 87B7DAA11E696E4E005F5140 /* ImageNotificationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		87B7DAB51E696F64005F5140 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */; };
 		87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */; };
 		87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33D1DF9788B0015EC89 /* MapOpening.swift */; };
@@ -923,6 +929,20 @@
 			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
 			remoteInfo = ZetaFramework;
 		};
+		87B7DAAD1E696E4E005F5140 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F42C530199244A700288E4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87B7DAA01E696E4E005F5140;
+			remoteInfo = ImageNotificationExtension;
+		};
+		87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F42C530199244A700288E4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
+			remoteInfo = WireExtensionComponents;
+		};
 		BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -950,6 +970,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				87B7DAAF1E696E4E005F5140 /* ImageNotificationExtension.appex in Embed App Extensions */,
 				168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -969,6 +990,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01FDD61ABFC665C2EE660051 /* Pods-ImageNotificationExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageNotificationExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageNotificationExtension/Pods-ImageNotificationExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		095275931B7E834400123BAF /* zmessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zmessaging.framework; path = Carthage/Build/iOS/zmessaging.framework; sourceTree = "<group>"; };
 		09840860C07422F288E71923 /* libPods-Wire Share Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire Share Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1600E2031AD5799400C0DBA8 /* PhoneNumberStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberStepViewController.h; sourceTree = "<group>"; };
@@ -1808,6 +1830,11 @@
 		87AEDB241DBA619D00010451 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		87AEDB251DBA619D00010451 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		87AEDB261DBA619D00010451 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		87B7DAA11E696E4E005F5140 /* ImageNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		87B7DAA21E696E4E005F5140 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		87B7DAA41E696E4E005F5140 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		87B7DAA71E696E4E005F5140 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		87B7DAAC1E696E4E005F5140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserOpening.swift; sourceTree = "<group>"; };
 		87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkOpener.swift; sourceTree = "<group>"; };
 		87B8C33D1DF9788B0015EC89 /* MapOpening.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapOpening.swift; sourceTree = "<group>"; };
@@ -2366,7 +2393,9 @@
 		DBE6F98D1B1DE51C00B7DD32 /* ziphy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ziphy.framework; path = Carthage/Build/iOS/ziphy.framework; sourceTree = "<group>"; };
 		DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "icon-no-appstore.xcassets"; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		E5B5B7935BBA53C4D19921F7 /* Pods-ImageNotificationExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageNotificationExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageNotificationExtension/Pods-ImageNotificationExtension.release.xcconfig"; sourceTree = "<group>"; };
 		EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+Private.h"; sourceTree = "<group>"; };
+		EA64F89A9A2B5975159F31D1 /* libPods-ImageNotificationExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageNotificationExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2406,6 +2435,17 @@
 				CE8E4FAE1DF066860009F437 /* MobileCoreServices.framework in Frameworks */,
 				1E65799D1B8F3698002E0869 /* CocoaLumberjack.framework in Frameworks */,
 				374561E93C8454D5EA46EA22 /* libPods-WireExtensionComponents.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87B7DA9E1E696E4E005F5140 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87B7DAB51E696F64005F5140 /* WireExtensionComponents.framework in Frameworks */,
+				87B7DAA51E696E4E005F5140 /* UserNotificationsUI.framework in Frameworks */,
+				87B7DAA31E696E4E005F5140 /* UserNotifications.framework in Frameworks */,
+				71E8B990D898AE0C6D33913D /* libPods-ImageNotificationExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2920,6 +2960,9 @@
 				C88A846215D617F8CCFBEB80 /* libPods-Wire-iOS.a */,
 				CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */,
 				09840860C07422F288E71923 /* libPods-Wire Share Extension.a */,
+				87B7DAA21E696E4E005F5140 /* UserNotifications.framework */,
+				87B7DAA41E696E4E005F5140 /* UserNotificationsUI.framework */,
+				EA64F89A9A2B5975159F31D1 /* libPods-ImageNotificationExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3721,6 +3764,15 @@
 			path = Layers;
 			sourceTree = "<group>";
 		};
+		87B7DAA61E696E4E005F5140 /* ImageNotificationExtension */ = {
+			isa = PBXGroup;
+			children = (
+				87B7DAA71E696E4E005F5140 /* NotificationViewController.swift */,
+				87B7DAAC1E696E4E005F5140 /* Info.plist */,
+			);
+			path = ImageNotificationExtension;
+			sourceTree = "<group>";
+		};
 		87B8C33A1DF9788B0015EC89 /* LinkOpening */ = {
 			isa = PBXGroup;
 			children = (
@@ -4021,6 +4073,7 @@
 				BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */,
 				1EE85C511B5F96FC008E084B /* WireExtensionComponents */,
 				168A16AA1D9597C2005CFA6C /* Wire-iOS Share Extension */,
+				87B7DAA61E696E4E005F5140 /* ImageNotificationExtension */,
 				8F42C539199244A700288E4D /* Products */,
 				8286E48D7CC440448CBD8F48 /* Frameworks */,
 				8FC856501992523C0008B66B /* Podfile */,
@@ -4039,6 +4092,7 @@
 				BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */,
 				1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */,
 				168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */,
+				87B7DAA11E696E4E005F5140 /* ImageNotificationExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4708,6 +4762,8 @@
 				597184FEC66FBCEC21973EDC /* Pods-WireExtensionComponents.release.xcconfig */,
 				D66DB0AA3B05E4047DF18402 /* Pods-Wire-iOS-Tests.debug.xcconfig */,
 				9F6E03BF56D0DC66F9853634 /* Pods-Wire-iOS-Tests.release.xcconfig */,
+				01FDD61ABFC665C2EE660051 /* Pods-ImageNotificationExtension.debug.xcconfig */,
+				E5B5B7935BBA53C4D19921F7 /* Pods-ImageNotificationExtension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -5044,6 +5100,26 @@
 			productReference = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		87B7DAA01E696E4E005F5140 /* ImageNotificationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87B7DAB21E696E4E005F5140 /* Build configuration list for PBXNativeTarget "ImageNotificationExtension" */;
+			buildPhases = (
+				638000CC523D17C7B9B11ADF /* [CP] Check Pods Manifest.lock */,
+				87B7DA9D1E696E4E005F5140 /* Sources */,
+				87B7DA9E1E696E4E005F5140 /* Frameworks */,
+				87B7DA9F1E696E4E005F5140 /* Resources */,
+				33E1C8054BB4AF5EE818C03C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				87B7DAB41E696F5D005F5140 /* PBXTargetDependency */,
+			);
+			name = ImageNotificationExtension;
+			productName = ImageNotificationExtension;
+			productReference = 87B7DAA11E696E4E005F5140 /* ImageNotificationExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8F42C537199244A700288E4D /* Wire-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F42C558199244A700288E4D /* Build configuration list for PBXNativeTarget "Wire-iOS" */;
@@ -5066,6 +5142,7 @@
 			dependencies = (
 				1EE85C661B5F96FC008E084B /* PBXTargetDependency */,
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
+				87B7DAAE1E696E4E005F5140 /* PBXTargetDependency */,
 			);
 			name = "Wire-iOS";
 			productName = "ZClient iOS";
@@ -5101,7 +5178,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Zeta Project Germany GmbH";
 				TargetAttributes = {
@@ -5120,6 +5197,11 @@
 						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
+					};
+					87B7DAA01E696E4E005F5140 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = W5KEQBF9B5;
+						ProvisioningStyle = Automatic;
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
@@ -5174,6 +5256,7 @@
 				BACB88501AF7C48900DDCDB0 /* Wire-iOS-Tests */,
 				1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */,
 				168A16A81D9597C2005CFA6C /* Wire Share Extension */,
+				87B7DAA01E696E4E005F5140 /* ImageNotificationExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -5189,6 +5272,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1EE85C4E1B5F96FB008E084B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87B7DA9F1E696E4E005F5140 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5311,6 +5401,21 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 		};
+		33E1C8054BB4AF5EE818C03C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageNotificationExtension/Pods-ImageNotificationExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4DFF5716E7324BEEA41AB599 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5324,6 +5429,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wire-iOS/Pods-Wire-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		638000CC523D17C7B9B11ADF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		64F427518CDD22708EE04F0E /* [CP] Check Pods Manifest.lock */ = {
@@ -5572,6 +5692,14 @@
 				871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
 				1E05C2441B6F7E0600616A66 /* Button.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87B7DA9D1E696E4E005F5140 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87B7DAA81E696E4E005F5140 /* NotificationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6274,6 +6402,16 @@
 			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
 			targetProxy = 1EE85C651B5F96FC008E084B /* PBXContainerItemProxy */;
 		};
+		87B7DAAE1E696E4E005F5140 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87B7DAA01E696E4E005F5140 /* ImageNotificationExtension */;
+			targetProxy = 87B7DAAD1E696E4E005F5140 /* PBXContainerItemProxy */;
+		};
+		87B7DAB41E696F5D005F5140 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
+			targetProxy = 87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */;
+		};
 		BACB88581AF7C48900DDCDB0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8F42C537199244A700288E4D /* Wire-iOS */;
@@ -6513,6 +6651,53 @@
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		87B7DAB01E696E4E005F5140 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01FDD61ABFC665C2EE660051 /* Pods-ImageNotificationExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				INFOPLIST_FILE = ImageNotificationExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wearezeta.zclient.ios.ImageNotificationExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		87B7DAB11E696E4E005F5140 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5B5B7935BBA53C4D19921F7 /* Pods-ImageNotificationExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = EDF3JCE8BC;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				INFOPLIST_FILE = ImageNotificationExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wearezeta.zclient.ios.ImageNotificationExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -6795,6 +6980,15 @@
 			buildConfigurations = (
 				1EE85C6A1B5F96FC008E084B /* Debug */,
 				1EE85C6B1B5F96FC008E084B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87B7DAB21E696E4E005F5140 /* Build configuration list for PBXNativeTarget "ImageNotificationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87B7DAB01E696E4E005F5140 /* Debug */,
+				87B7DAB11E696E4E005F5140 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

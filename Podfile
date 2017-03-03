@@ -37,3 +37,9 @@ end
 target 'WireExtensionComponents' do
     platform :ios, '8.0'
 end
+
+target 'ImageNotificationExtension' do
+    platform :ios, '8.0'
+    pod 'FLAnimatedImage', :git => 'https://github.com/wireapp/FLAnimatedImage', :tag => '1.0.12'
+end
+    
