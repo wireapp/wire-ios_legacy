@@ -43,13 +43,23 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BFAD54021E6972CD0015C677"
+               BuildableName = "NotificationFetchComponentsTests.xctest"
+               BlueprintName = "NotificationFetchComponentsTests"
+               ReferencedContainer = "container:Wire-iOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "168A16A81D9597C2005CFA6C"
-            BuildableName = "Wire Share Extension.appex"
-            BlueprintName = "Wire Share Extension"
+            BlueprintIdentifier = "8F42C537199244A700288E4D"
+            BuildableName = "Wire.app"
+            BlueprintName = "Wire-iOS"
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
