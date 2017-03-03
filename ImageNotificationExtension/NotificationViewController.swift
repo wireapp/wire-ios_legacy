@@ -36,7 +36,7 @@ fileprivate extension Bundle {
 let log = ZMSLog(tag: "notification image extension")
 
 @objc(NotificationViewController)
-class NotificationViewController: UIViewController, UNNotificationContentExtension {
+public class NotificationViewController: UIViewController, UNNotificationContentExtension {
 
     private var imageView: FLAnimatedImageView!
     private var userImageView: UserImageView!
@@ -55,12 +55,12 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             }
         }
     }
-    
-    private var message: ZMConversationMessage? {
+
+    private var message: ZMAssetClientMessage? {
         didSet {
             if let message = self.message {
                 self.user = message.sender
-                
+
                 self.updateForImage()
             }
         }
@@ -71,7 +71,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             let imageMessageData = message.imageMessageData {
             
             self.loadingView.isHidden = true
-            
+
             if (imageMessageData.isAnimatedGIF) {
                 self.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageMessageData.imageData)
             }
@@ -83,8 +83,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             self.loadingView.isHidden = false
         }
     }
-    
-    override func viewDidLoad() {
+
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.imageView = FLAnimatedImageView()
@@ -92,6 +92,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         self.imageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         
         self.userImageViewContainer = UIView()
+        view.backgroundColor = .lightGray
         
         self.userImageView = UserImageView(size: .tiny)
         self.userImageViewContainer.addSubview(self.userImageView)
@@ -101,7 +102,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         [self.imageView, self.userImageViewContainer, self.userNameLabel].forEach(self.view.addSubview)
         
         constrain(self.view, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
-            
             userImageViewContainer.left == selfView.left
             userImageViewContainer.width == 48
             userImageViewContainer.height == 24
@@ -130,29 +130,42 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         }
         
         self.updateForImage()
-        
-        do {
-            try createFetchEngine()
-        } catch {
-            log.error("Failed to initialize NotificationFetchEngine: \(error)")
-        }
     }
 
-    private func createFetchEngine() throws {
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        createFetchEngine()
+    }
+
+    private func createFetchEngine() {
         guard let groupIdentifier = Bundle.main.groupIdentifier,
             let hostIdentifier = Bundle.main.hostBundleIdentifier else { return }
 
-        fetchEngine = try NotificationFetchEngine(
-            applicationGroupIdentifier: groupIdentifier,
-            hostBundleIdentifier: hostIdentifier
-        )
+        do {
+            fetchEngine = try NotificationFetchEngine(
+                applicationGroupIdentifier: groupIdentifier,
+                hostBundleIdentifier: hostIdentifier
+            )
+        } catch {
+            log.error("Failed to initialize NotificationFetchEngine: \(error)")
+        }
+
+        fetchEngine?.saveClosure = { [weak self] in
+            self?.updateForImage()
+        }
     }
     
-    func didReceive(_ notification: UNNotification) {
-        dump(notification)
-        dump(notification.request)
-        dump(notification.request.content)
-        dump(notification.request.content.userInfo)
+    public func didReceive(_ notification: UNNotification) {
+
+        guard let nonceString = notification.request.content.userInfo["nonce"] as? String,
+            let conversationString = notification.request.content.userInfo["conversation"] as? String,
+            let nonce = UUID(uuidString: nonceString),
+            let conversation = UUID(uuidString: conversationString) else { return }
+
+        if let assetMessage = fetchEngine?.fetch(nonce, conversation: conversation) {
+            message = assetMessage
+            assetMessage.requestImageDownload()
+        }
     }
 
 }

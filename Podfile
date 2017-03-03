@@ -41,5 +41,7 @@ end
 target 'ImageNotificationExtension' do
     platform :ios, '8.0'
     pod 'FLAnimatedImage', :git => 'https://github.com/wireapp/FLAnimatedImage', :tag => '1.0.12'
+    pod 'PureLayout', :git => 'https://github.com/wireapp/PureLayout', :tag => 'v3.0.0'
+
 end
     

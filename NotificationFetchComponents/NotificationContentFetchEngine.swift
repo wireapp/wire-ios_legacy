@@ -45,6 +45,10 @@ public class NotificationFetchEngine {
 
     let transportSession: ZMTransportSession
 
+    private var contextSaveObserverToken: NSObjectProtocol?
+
+    public var saveClosure: (() -> Void)?
+
     /// Whether all prerequsisties are met
     public var authenticated: Bool {
         return authenticationStatus.state == .authenticated && clientRegistrationStatus.clientIsReadyForRequests
@@ -66,6 +70,8 @@ public class NotificationFetchEngine {
 
         let storeURL = sharedContainerURL.appendingPathComponent(hostBundleIdentifier, isDirectory: true).appendingPathComponent("store.wiredatabase")
         let keyStoreURL = sharedContainerURL
+
+        ZMSLog.set(level: .debug, tag: "Network")
 
         guard !NSManagedObjectContext.needsToPrepareLocalStore(at: storeURL) else { throw InitializationError.needsMigration }
 
@@ -93,7 +99,6 @@ public class NotificationFetchEngine {
             transportSession: transportSession,
             sharedContainerURL: sharedContainerURL
         )
-
     }
 
     internal init(userInterfaceContext: NSManagedObjectContext,
@@ -114,6 +119,7 @@ public class NotificationFetchEngine {
         guard authenticationStatus.state == .authenticated else { throw InitializationError.loggedOut }
 
         setupCaches(atContainerURL: sharedContainerURL)
+        setupObservers()
     }
 
     public convenience init(userInterfaceContext: NSManagedObjectContext, syncContext: NSManagedObjectContext, transportSession: ZMTransportSession, sharedContainerURL: URL) throws {
@@ -150,6 +156,7 @@ public class NotificationFetchEngine {
 
     deinit {
         transportSession.tearDown()
+        contextSaveObserverToken.apply(NotificationCenter.default.removeObserver)
     }
 
     private func setupCaches(atContainerURL containerURL: URL) {
@@ -168,8 +175,9 @@ public class NotificationFetchEngine {
         syncContext.zm_fileAssetCache = fileAssetcache
     }
 
-    public func enqueue(changes: @escaping () -> Void) {
-        enqueue(changes: changes, completionHandler: nil)
+    public func fetch(_ nonce: UUID, conversation: UUID) -> ZMAssetClientMessage? {
+        guard let conversation = ZMConversation.fetch(withRemoteIdentifier: conversation, in: userInterfaceContext) else { return nil }
+        return ZMAssetClientMessage.fetch(withNonce: nonce, for: conversation, in: userInterfaceContext)
     }
 
     public func enqueue(changes: @escaping () -> Void, completionHandler: (() -> Void)?) {
@@ -177,6 +185,27 @@ public class NotificationFetchEngine {
             changes()
             self?.userInterfaceContext.saveOrRollback()
             completionHandler?()
+        }
+    }
+
+    private func setupObservers() {
+        contextSaveObserverToken = NotificationCenter.default.addObserver(
+            forName: contextWasMergedNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] note in self?.saveClosure?() }
+        )
+    }
+
+}
+
+
+fileprivate extension Optional {
+
+    func apply(_ closure: (Wrapped) -> Void) {
+        switch self {
+        case .some(let unwrapped): closure(unwrapped)
+        case .none: break
         }
     }
 
