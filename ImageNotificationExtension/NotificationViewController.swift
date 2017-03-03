@@ -42,16 +42,14 @@ public class NotificationViewController: UIViewController, UNNotificationContent
     private var userImageView: UserImageView!
     private var userNameLabel: UILabel!
     private var userImageViewContainer: UIView!
-    private var loadingDotsView: ThreeDotsLoadingView!
     private var fetchEngine: NotificationFetchEngine?
-    private let infoDict = Bundle.main.infoDictionary
     
     private var user: ZMUser? {
         didSet {
             if let user = self.user {
-                self.userNameLabel.textColor = ColorScheme.default().nameAccent(for: user.accentColorValue, variant: .light)
+//                self.userNameLabel.textColor = ColorScheme.default().nameAccent(for: user.accentColorValue, variant: .light)
                 self.userNameLabel.text = user.displayName
-                self.userImageView.user = user
+//                self.userImageView.user = user
             }
         }
     }
@@ -68,19 +66,15 @@ public class NotificationViewController: UIViewController, UNNotificationContent
     
     private func updateForImage() {
         if let message = self.message,
-            let imageMessageData = message.imageMessageData {
-            
-            self.loadingView.isHidden = true
+            let imageMessageData = message.imageMessageData,
+            let imageData = imageMessageData.imageData {
 
             if (imageMessageData.isAnimatedGIF) {
-                self.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageMessageData.imageData)
+                self.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
             }
             else {
-                self.imageView.image = UIImage(data: imageMessageData.imageData)
+                self.imageView.image = UIImage(data: imageData)
             }
-        }
-        else {
-            self.loadingView.isHidden = false
         }
     }
 
@@ -120,8 +114,7 @@ public class NotificationViewController: UIViewController, UNNotificationContent
             imageView.right == selfView.right
             imageView.bottom == selfView.bottom
         }
-        
-        self.loadingDotsView = ThreeDotsLoadingView()
+
         self.view.addSubview(self.loadingView)
         
         constrain(self.imageView, self.loadingView) { imageView, loadingView in
@@ -147,16 +140,15 @@ public class NotificationViewController: UIViewController, UNNotificationContent
                 hostBundleIdentifier: hostIdentifier
             )
         } catch {
-            log.error("Failed to initialize NotificationFetchEngine: \(error)")
+            fatal("Failed to initialize NotificationFetchEngine: \(error)")
         }
 
-        fetchEngine?.saveClosure = { [weak self] in
+        fetchEngine?.changeClosure = { [weak self] in
             self?.updateForImage()
         }
     }
     
     public func didReceive(_ notification: UNNotification) {
-
         guard let nonceString = notification.request.content.userInfo["nonce"] as? String,
             let conversationString = notification.request.content.userInfo["conversation"] as? String,
             let nonce = UUID(uuidString: nonceString),

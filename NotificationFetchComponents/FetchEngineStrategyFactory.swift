@@ -37,8 +37,8 @@ class StrategyFactory {
     func createStrategies() -> [AnyObject] {
         return [
             createImageDownloadRequestStrategy(),
-            createAssetV3DownloadRequestStrategy(),
-            createAssetV3PreviewDownloadRequestStrategy()
+//            createAssetV3DownloadRequestStrategy(),
+//            createAssetV3PreviewDownloadRequestStrategy()
         ]
     }
 

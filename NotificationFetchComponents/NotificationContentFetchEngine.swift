@@ -45,9 +45,9 @@ public class NotificationFetchEngine {
 
     let transportSession: ZMTransportSession
 
-    private var contextSaveObserverToken: NSObjectProtocol?
+    private var observerToken: NSObjectProtocol?
 
-    public var saveClosure: (() -> Void)?
+    public var changeClosure: (() -> Void)?
 
     /// Whether all prerequsisties are met
     public var authenticated: Bool {
@@ -70,8 +70,6 @@ public class NotificationFetchEngine {
 
         let storeURL = sharedContainerURL.appendingPathComponent(hostBundleIdentifier, isDirectory: true).appendingPathComponent("store.wiredatabase")
         let keyStoreURL = sharedContainerURL
-
-        ZMSLog.set(level: .debug, tag: "Network")
 
         guard !NSManagedObjectContext.needsToPrepareLocalStore(at: storeURL) else { throw InitializationError.needsMigration }
 
@@ -156,7 +154,6 @@ public class NotificationFetchEngine {
 
     deinit {
         transportSession.tearDown()
-        contextSaveObserverToken.apply(NotificationCenter.default.removeObserver)
     }
 
     private func setupCaches(atContainerURL containerURL: URL) {
@@ -189,24 +186,12 @@ public class NotificationFetchEngine {
     }
 
     private func setupObservers() {
-        contextSaveObserverToken = NotificationCenter.default.addObserver(
-            forName: contextWasMergedNotification,
+        observerToken = NotificationCenterObserverToken(
+            name: .NonCoreDataChangeInManagedObject,
             object: nil,
             queue: .main,
-            using: { [weak self] note in self?.saveClosure?() }
+            block: { [weak self] note in self?.changeClosure?() }
         )
-    }
-
-}
-
-
-fileprivate extension Optional {
-
-    func apply(_ closure: (Wrapped) -> Void) {
-        switch self {
-        case .some(let unwrapped): closure(unwrapped)
-        case .none: break
-        }
     }
 
 }
