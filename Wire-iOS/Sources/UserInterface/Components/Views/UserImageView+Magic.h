@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,16 +17,14 @@
 //
 
 
-#import "ImageMessageCell.h"
-@import WireExtensionComponents;
+#import <WireExtensionComponents/WireExtensionComponents.h>
 
-@interface ImageMessageCell (Interal)
+NS_ASSUME_NONNULL_BEGIN
 
-- (void)setImage:(id<MediaAsset>)image;
-
+@interface UserImageView (Magic)
+- (instancetype)initWithMagicPrefix:(NSString *)magicPrefix;
+- (void)setupWithMagicPrefix:(NSString *)prefix;
 @end
 
-@interface ImageMessageCell ()
-@property (nonatomic) BOOL autoStretchVertically;
-@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
-@end
+NS_ASSUME_NONNULL_END
+

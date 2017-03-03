@@ -179,7 +179,7 @@ extension SettingsCellDescriptorFactory {
             isDestructive: false,
             presentationStyle: .modal,
             presentationAction: AccentColorPickerController.init,
-            previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) }
+            previewGenerator: { _ in .color(ZMUser.selfUser().accentColor()) }
         )
     }
 

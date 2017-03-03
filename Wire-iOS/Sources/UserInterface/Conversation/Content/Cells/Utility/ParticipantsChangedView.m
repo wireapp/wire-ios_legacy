@@ -27,6 +27,7 @@
 #import "BadgeUserImageView.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSAttributedString+Wire.h"
+#import "UserImageView+Magic.h"
 
 
 static CGFloat const MaxVisibleUserViews        = 4;

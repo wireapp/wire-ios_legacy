@@ -16,8 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import WireExtensionComponents;
 #import "SwipeMenuCollectionCell.h"
 
 @protocol ZMBareUser;
@@ -25,7 +25,7 @@
 @class ZMConversation;
 
 @interface SearchResultCell : SwipeMenuCollectionCell
-@property (nonatomic, strong) id<ZMBareUser, ZMSearchableUser> user;
+@property (nonatomic, strong) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> user;
 @property (nonatomic, strong) ZMConversation *conversation;
 @property (nonatomic, copy)   NSString *displayName;
 @property (nonatomic, copy)   void (^doubleTapAction)(SearchResultCell *);

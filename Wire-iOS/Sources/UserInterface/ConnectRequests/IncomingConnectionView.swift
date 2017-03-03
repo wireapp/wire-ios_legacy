@@ -78,7 +78,7 @@ public final class IncomingConnectionView: UIView {
 
         self.userImageView.accessibilityLabel = "user image"
         self.userImageView.shouldDesaturate = false
-        self.userImageView.suggestedImageSize = .big
+        self.userImageView.size = .big
         self.userImageView.user = self.user
 
         self.incomingConnectionFooter.addSubview(self.acceptButton)

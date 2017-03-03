@@ -25,7 +25,7 @@
 #import "zmessaging+iOS.h"
 #import "UIView+Borders.h"
 #import <ZMCDataModel/ZMBareUser.h>
-
+#import "UserImageView+Magic.h"
 
 @interface TopPeopleCell ()
 
@@ -81,7 +81,7 @@
     [self.badgeUserImageView removeFromSuperview];
 
     self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.top_conversations_mode"];
-    self.badgeUserImageView.suggestedImageSize = UserImageViewSizeSmall;
+    self.badgeUserImageView.size = UserImageViewSizeSmall;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.userInteractionEnabled = NO;
     self.badgeUserImageView.badgeIconSize = ZetaIconSizeTiny;
@@ -148,7 +148,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     _user = user;
     self.badgeUserImageView.user = user;

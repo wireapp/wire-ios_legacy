@@ -27,6 +27,8 @@
 #import "zmessaging+iOS.h"
 #import <libkern/OSAtomic.h>
 
+#import "UserImageView+Magic.h"
+
 
 
 @interface ParticipantsListCell ()

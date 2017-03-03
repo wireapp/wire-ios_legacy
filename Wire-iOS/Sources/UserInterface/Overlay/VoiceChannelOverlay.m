@@ -196,11 +196,11 @@ static NSString *NotNilString(NSString *string) {
     [self.contentContainer addSubview:self.avatarContainer];
     
     self.callingUserImage = [[UserImageView alloc] initForAutoLayout];
-    self.callingUserImage.suggestedImageSize = UserImageViewSizeBig;
+    self.callingUserImage.size = UserImageViewSizeBig;
     [self.avatarContainer addSubview:self.callingUserImage];
     
     self.callingTopUserImage = [[UserImageView alloc] initForAutoLayout];
-    self.callingTopUserImage.suggestedImageSize = UserImageViewSizeSmall;
+    self.callingTopUserImage.size = UserImageViewSizeSmall;
     [self.contentContainer addSubview:self.callingTopUserImage];
     
     self.participantsCollectionViewLayout = [[VoiceChannelCollectionViewLayout alloc] init];

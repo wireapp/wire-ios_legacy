@@ -18,15 +18,13 @@
 
 
 #import "UserImageView.h"
-#import <zmessaging/ZMBareUser+UserSession.h>
-#import <ZMCDataModel/ZMBareUser.h>
 #import <PureLayout/PureLayout.h>
 
-#import "zmessaging+iOS.h"
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "WAZUIMagicIOS.h"
+
+#import "weakify.h"
 
 
 CGFloat PixelSizeForUserImageSize(UserImageViewSize size);
@@ -102,12 +100,12 @@ static CIContext *ciContext(void)
     return self;
 }
 
-- (instancetype)initWithMagicPrefix:(NSString *)magicPrefix
+- (instancetype)initWithSize:(UserImageViewSize)size
 {
     self = [self initWithFrame:CGRectZero];
 
     if (self) {
-        [self setupWithMagicPrefix:magicPrefix];
+        self.size = size;
     }
 
     return self;
@@ -120,12 +118,10 @@ static CIContext *ciContext(void)
     self.indicator.layer.cornerRadius = self.indicator.bounds.size.width / 2;
 }
 
-
 - (void)setupBasicProperties
 {
-    _borderColorMatchesAccentColor = YES;
     _shouldDesaturate = YES;
-    _suggestedImageSize = UserImageViewSizeNormal;
+    _size = UserImageViewSizeNormal;
     
     [self createIndicator];
     [self createConstraints];
@@ -133,11 +129,11 @@ static CIContext *ciContext(void)
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat imageSize = PointSizeForUserImageSize(self.suggestedImageSize);
+    CGFloat imageSize = PointSizeForUserImageSize(self.size);
     return CGSizeMake(imageSize, imageSize);
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {    
     _user = user;
     
@@ -151,7 +147,6 @@ static CIContext *ciContext(void)
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     [self setUserImage:nil];
-    [self updateBorderColor];
     [self updateIndicatorColor];
     [self updateUserImage];
 }
@@ -178,39 +173,26 @@ static CIContext *ciContext(void)
     self.indicator.backgroundColor = [(id)self.user accentColor];
 }
 
-- (void)updateBorderColor
-{
-    if (! self.borderColorMatchesAccentColor) {
-        return;
-    }
-    
-    if (self.user.isConnected || self.user.isSelfUser) {
-        self.borderColor = [(id)self.user accentColor];
-    } else {
-        self.borderColor = [UIColor clearColor];
-    }
-}
-
 - (void)updateUserImage
 {
-    if (self.suggestedImageSize == UserImageViewSizeBig &&
+    if (self.size == UserImageViewSizeBig &&
         self.user.imageMediumData == nil) {
         
-        [self.user requestMediumProfileImageInUserSession:[ZMUserSession sharedSession]];
+        [self.user requestMediumProfileImageInUserSession:self.userSession];
         return;
     }
     
-    if (self.suggestedImageSize != UserImageViewSizeBig &&
+    if (self.size != UserImageViewSizeBig &&
         self.user.imageSmallProfileData == nil) {
         
-        [self.user requestSmallProfileImageInUserSession:[ZMUserSession sharedSession]];
+        [self.user requestSmallProfileImageInUserSession:self.userSession];
         return;
     }
     
     NSData *imageData = nil;
     NSString *imageCacheKey = nil;
     
-    if (self.suggestedImageSize == UserImageViewSizeBig) {
+    if (self.size == UserImageViewSizeBig) {
         imageData = self.user.imageMediumData;
         imageCacheKey = self.user.imageMediumIdentifier;
     }
@@ -227,7 +209,7 @@ static CIContext *ciContext(void)
     // cache key is not changed when user change his own image
     if (self.user.isSelfUser) {
         
-        UIImage *image = [UIImage imageFromData:imageData withMaxSize:PixelSizeForUserImageSize(self.suggestedImageSize)];
+        UIImage *image = [UIImage imageFromData:imageData withMaxSize:PixelSizeForUserImageSize(self.size)];
 
         [self setUserImage:image];
         return;
@@ -241,7 +223,7 @@ static CIContext *ciContext(void)
         
         NSString *updatedCacheKey = nil;
         
-        if (self.suggestedImageSize == UserImageViewSizeBig) {
+        if (self.size == UserImageViewSizeBig) {
             updatedCacheKey = self.user.imageMediumIdentifier;
         }
         else {
@@ -254,23 +236,23 @@ static CIContext *ciContext(void)
     };
     
     if (userIsConnected || ! self.shouldDesaturate) {
-        [[UserImageView sharedFullColorImageCacheForSize:self.suggestedImageSize] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
+        [[UserImageView sharedFullColorImageCacheForSize:self.size] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
             
-            UIImage *image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.suggestedImageSize)];
+            UIImage *image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
             return image;
             
         } completion:completionBlock];
     }
     else {
-        [[UserImageView sharedDesaturatedImageCacheForSize:self.suggestedImageSize] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
+        [[UserImageView sharedDesaturatedImageCacheForSize:self.size] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
             
-            UIImage *image = [[UserImageView sharedFullColorImageCacheForSize:self.suggestedImageSize] imageForCacheKey:imageCacheKey];
+            UIImage *image = [[UserImageView sharedFullColorImageCacheForSize:self.size] imageForCacheKey:imageCacheKey];
             
             if (! image) {
-                image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.suggestedImageSize)];
+                image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
             }
             image = [image desaturatedImageWithContext:ciContext()
-                                            saturation:[WAZUIMagic sharedMagic][@"background.image_target_saturation"]];
+                                            saturation:0];
           
             return image;
             
@@ -288,10 +270,10 @@ static CIContext *ciContext(void)
         self.containerView.backgroundColor = UIColor.clearColor;
     }
     else if (self.user.isConnected || self.user.isSelfUser) {
-        self.containerView.backgroundColor = [(id)self.user accentColor];
+        self.containerView.backgroundColor = [self.user accentColor];
     }
     else {
-        self.containerView.backgroundColor = [UIColor colorWithMagicIdentifier:@"connect.user_not_connected_color"];
+        self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
     }
 }
 
@@ -317,21 +299,18 @@ static CIContext *ciContext(void)
 
 - (void)userDidChange:(UserChangeInfo *)change
 {
-    if (self.suggestedImageSize == UserImageViewSizeBig) {
+    if (self.size == UserImageViewSizeBig) {
         if (change.imageMediumDataChanged || change.connectionStateChanged) {
-            [self updateBorderColor];
             [self updateUserImage];
         }
     }
     else {
         if (change.imageSmallProfileDataChanged || change.connectionStateChanged) {
-            [self updateBorderColor];
             [self updateUserImage];
         }
     }
     
     if (change.accentColorValueChanged) {
-        [self updateBorderColor];
         [self updateIndicatorColor];
     }
 }
@@ -378,24 +357,6 @@ static CIContext *ciContext(void)
         desaturatedImageCaches = desaturatedImageCachesMutable;
     });
     return desaturatedImageCaches[size];
-}
-
-@end
-
-@implementation UserImageView (Magic)
-
-- (void)setupWithMagicPrefix:(NSString *)prefix
-{
-    if (0 < [prefix length]) {
-        self.borderWidth = [WAZUIMagic cgFloatForIdentifier:[self magicPathForKey:@"stroke_width" withPrefix:prefix]];
-        self.initials.font = [UIFont fontWithMagicIdentifier:[self magicPathForKey:@"user_initials_font" withPrefix:prefix]];
-        self.initials.textColor = [UIColor colorWithMagicIdentifier:[self magicPathForKey:@"user_initials_font_color" withPrefix:prefix]];
-    }
-}
-
-- (NSString *)magicPathForKey:(NSString *)key withPrefix:(NSString *)prefix
-{
-    return [NSString stringWithFormat:@"%@.%@", prefix, key];
 }
 
 @end

@@ -18,8 +18,12 @@
 
 
 #import "ImageCache.h"
+#import "weakify.h"
+
+@import CocoaLumberjack;
 
 
+static const int ddLogLevel = LOG_LEVEL_CONFIG;
 
 @interface ImageCache ()
 
@@ -48,11 +52,11 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMemoryWarning)
                                                      name:UIApplicationDidReceiveMemoryWarningNotification
-                                                   object:[UIApplication sharedApplication]];
+                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
                                                      name:UIApplicationDidEnterBackgroundNotification
-                                                   object:[UIApplication sharedApplication]];
+                                                   object:nil];
     }
     return self;
 }
@@ -61,11 +65,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidReceiveMemoryWarningNotification
-                                                  object:[UIApplication sharedApplication]];
+                                                  object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
-                                                  object:[UIApplication sharedApplication]];
+                                                  object:nil];
 }
 
 - (NSUInteger)countLimit

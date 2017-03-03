@@ -16,17 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@import ZMCDataModel;
 
-#import "ImageMessageCell.h"
-@import WireExtensionComponents;
+NS_ASSUME_NONNULL_BEGIN
 
-@interface ImageMessageCell (Interal)
-
-- (void)setImage:(id<MediaAsset>)image;
-
+@protocol AccentColorProvider <NSObject>
+- (UIColor *)accentColor;
 @end
 
-@interface ImageMessageCell ()
-@property (nonatomic) BOOL autoStretchVertically;
-@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@interface ZMUser (AccentColorProvider) <AccentColorProvider>
 @end
+
+@interface ZMSearchUser (AccentColorProvider) <AccentColorProvider>
+@end
+
+NS_ASSUME_NONNULL_END

@@ -134,7 +134,7 @@
     [self.badgeUserImageView removeFromSuperview];
 
     self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.search_results_mode"];
-    self.badgeUserImageView.suggestedImageSize = UserImageViewSizeTiny;
+    self.badgeUserImageView.size = UserImageViewSizeTiny;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.badgeIconSize = ZetaIconSizeTiny;
 
@@ -333,7 +333,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     _user = user;
 
