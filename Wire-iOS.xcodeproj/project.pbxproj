@@ -828,6 +828,15 @@
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
 		BFAD3A201CD10D6000F0FBED /* MockEditableUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A1F1CD10D6000F0FBED /* MockEditableUser.m */; };
+		BFAD54041E6972CD0015C677 /* NotificationFetchComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */; };
+		BFAD540B1E6972CD0015C677 /* NotificationFetchComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD540A1E6972CD0015C677 /* NotificationFetchComponentsTests.swift */; };
+		BFAD540D1E6972CD0015C677 /* NotificationFetchComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BFAD54101E6972CD0015C677 /* NotificationFetchComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */; };
+		BFAD54111E6972CD0015C677 /* NotificationFetchComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFAD54191E6972F40015C677 /* NotificationContentFetchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD54181E6972F40015C677 /* NotificationContentFetchEngine.swift */; };
+		BFAD541B1E69734F0015C677 /* FetchEngineStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD541A1E69734F0015C677 /* FetchEngineStrategyFactory.swift */; };
+		BFAD541D1E6973DE0015C677 /* Dummies.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD541C1E6973DE0015C677 /* Dummies.swift */; };
+		BFAD541F1E6977430015C677 /* OperationLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD541E1E6977430015C677 /* OperationLoop.swift */; };
 		BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CAC1CEB670F00780537 /* AudioRecordViewController.swift */; };
 		BFAF4CAF1CEB791B00780537 /* AudioRecordViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */; };
 		BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB21CECA68200780537 /* AudioRecorder.swift */; };
@@ -950,6 +959,27 @@
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
 		};
+		BFAD54051E6972CD0015C677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F42C530199244A700288E4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFAD53FA1E6972CC0015C677;
+			remoteInfo = NotificationFetchComponents;
+		};
+		BFAD54071E6972CD0015C677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F42C530199244A700288E4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F42C537199244A700288E4D;
+			remoteInfo = "Wire-iOS";
+		};
+		BFAD540E1E6972CD0015C677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F42C530199244A700288E4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFAD53FA1E6972CC0015C677;
+			remoteInfo = NotificationFetchComponents;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -959,6 +989,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BFAD54111E6972CD0015C677 /* NotificationFetchComponents.framework in Embed Frameworks */,
 				1EE85C691B5F96FC008E084B /* WireExtensionComponents.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -2304,6 +2335,16 @@
 		BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn.jpg; sourceTree = "<group>"; };
 		BFAD3A1E1CD10D6000F0FBED /* MockEditableUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockEditableUser.h; sourceTree = "<group>"; };
 		BFAD3A1F1CD10D6000F0FBED /* MockEditableUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockEditableUser.m; sourceTree = "<group>"; };
+		BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NotificationFetchComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationFetchComponents.h; sourceTree = "<group>"; };
+		BFAD53FE1E6972CD0015C677 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFAD54031E6972CD0015C677 /* NotificationFetchComponentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotificationFetchComponentsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFAD540A1E6972CD0015C677 /* NotificationFetchComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFetchComponentsTests.swift; sourceTree = "<group>"; };
+		BFAD540C1E6972CD0015C677 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFAD54181E6972F40015C677 /* NotificationContentFetchEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationContentFetchEngine.swift; sourceTree = "<group>"; };
+		BFAD541A1E69734F0015C677 /* FetchEngineStrategyFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEngineStrategyFactory.swift; sourceTree = "<group>"; };
+		BFAD541C1E6973DE0015C677 /* Dummies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dummies.swift; sourceTree = "<group>"; };
+		BFAD541E1E6977430015C677 /* OperationLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationLoop.swift; sourceTree = "<group>"; };
 		BFAF4CAC1CEB670F00780537 /* AudioRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordViewController.swift; sourceTree = "<group>"; };
 		BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordViewControllerTests.swift; sourceTree = "<group>"; };
 		BFAF4CB21CECA68200780537 /* AudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -2461,6 +2502,7 @@
 				872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */,
 				873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
+				BFAD54101E6972CD0015C677 /* NotificationFetchComponents.framework in Frameworks */,
 				87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */,
@@ -2493,6 +2535,21 @@
 				1E2267E81B382EB2003980E3 /* ziphy.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
 				6DC7310EF4FE22057C3A6DC8 /* libPods-Wire-iOS-Tests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFAD53F71E6972CC0015C677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFAD54001E6972CD0015C677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFAD54041E6972CD0015C677 /* NotificationFetchComponents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4074,6 +4131,8 @@
 				1EE85C511B5F96FC008E084B /* WireExtensionComponents */,
 				168A16AA1D9597C2005CFA6C /* Wire-iOS Share Extension */,
 				87B7DAA61E696E4E005F5140 /* ImageNotificationExtension */,
+				BFAD53FC1E6972CD0015C677 /* NotificationFetchComponents */,
+				BFAD54091E6972CD0015C677 /* NotificationFetchComponentsTests */,
 				8F42C539199244A700288E4D /* Products */,
 				8286E48D7CC440448CBD8F48 /* Frameworks */,
 				8FC856501992523C0008B66B /* Podfile */,
@@ -4093,6 +4152,8 @@
 				1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */,
 				168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */,
 				87B7DAA11E696E4E005F5140 /* ImageNotificationExtension.appex */,
+				BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */,
+				BFAD54031E6972CD0015C677 /* NotificationFetchComponentsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4921,6 +4982,28 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		BFAD53FC1E6972CD0015C677 /* NotificationFetchComponents */ = {
+			isa = PBXGroup;
+			children = (
+				BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */,
+				BFAD54181E6972F40015C677 /* NotificationContentFetchEngine.swift */,
+				BFAD541E1E6977430015C677 /* OperationLoop.swift */,
+				BFAD541A1E69734F0015C677 /* FetchEngineStrategyFactory.swift */,
+				BFAD541C1E6973DE0015C677 /* Dummies.swift */,
+				BFAD53FE1E6972CD0015C677 /* Info.plist */,
+			);
+			path = NotificationFetchComponents;
+			sourceTree = "<group>";
+		};
+		BFAD54091E6972CD0015C677 /* NotificationFetchComponentsTests */ = {
+			isa = PBXGroup;
+			children = (
+				BFAD540A1E6972CD0015C677 /* NotificationFetchComponentsTests.swift */,
+				BFAD540C1E6972CD0015C677 /* Info.plist */,
+			);
+			path = NotificationFetchComponentsTests;
+			sourceTree = "<group>";
+		};
 		CE8E4FB61DF17BBE0009F437 /* TextTransform */ = {
 			isa = PBXGroup;
 			children = (
@@ -5060,6 +5143,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BFAD53F81E6972CC0015C677 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFAD540D1E6972CD0015C677 /* NotificationFetchComponents.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -5143,6 +5234,7 @@
 				1EE85C661B5F96FC008E084B /* PBXTargetDependency */,
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 				87B7DAAE1E696E4E005F5140 /* PBXTargetDependency */,
+				BFAD540F1E6972CD0015C677 /* PBXTargetDependency */,
 			);
 			name = "Wire-iOS";
 			productName = "ZClient iOS";
@@ -5171,6 +5263,43 @@
 			productReference = BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		BFAD53FA1E6972CC0015C677 /* NotificationFetchComponents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFAD54161E6972CD0015C677 /* Build configuration list for PBXNativeTarget "NotificationFetchComponents" */;
+			buildPhases = (
+				BFAD53F61E6972CC0015C677 /* Sources */,
+				BFAD53F71E6972CC0015C677 /* Frameworks */,
+				BFAD53F81E6972CC0015C677 /* Headers */,
+				BFAD53F91E6972CC0015C677 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationFetchComponents;
+			productName = NotificationFetchComponents;
+			productReference = BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BFAD54021E6972CD0015C677 /* NotificationFetchComponentsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFAD54171E6972CD0015C677 /* Build configuration list for PBXNativeTarget "NotificationFetchComponentsTests" */;
+			buildPhases = (
+				BFAD53FF1E6972CD0015C677 /* Sources */,
+				BFAD54001E6972CD0015C677 /* Frameworks */,
+				BFAD54011E6972CD0015C677 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFAD54061E6972CD0015C677 /* PBXTargetDependency */,
+				BFAD54081E6972CD0015C677 /* PBXTargetDependency */,
+			);
+			name = NotificationFetchComponentsTests;
+			productName = NotificationFetchComponentsTests;
+			productReference = BFAD54031E6972CD0015C677 /* NotificationFetchComponentsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -5184,7 +5313,7 @@
 				TargetAttributes = {
 					168A16A81D9597C2005CFA6C = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -5194,7 +5323,7 @@
 					};
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 					};
@@ -5205,7 +5334,7 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -5218,6 +5347,18 @@
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
+						TestTargetID = 8F42C537199244A700288E4D;
+					};
+					BFAD53FA1E6972CC0015C677 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = W5KEQBF9B5;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
+					};
+					BFAD54021E6972CD0015C677 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = W5KEQBF9B5;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 8F42C537199244A700288E4D;
 					};
 				};
@@ -5257,6 +5398,8 @@
 				1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */,
 				168A16A81D9597C2005CFA6C /* Wire Share Extension */,
 				87B7DAA01E696E4E005F5140 /* ImageNotificationExtension */,
+				BFAD53FA1E6972CC0015C677 /* NotificationFetchComponents */,
+				BFAD54021E6972CD0015C677 /* NotificationFetchComponentsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -5367,6 +5510,20 @@
 				1E2268061B3957A7003980E3 /* conversations-01.json in Resources */,
 				1E2267F81B38489F003980E3 /* people-02.json in Resources */,
 				BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFAD53F91E6972CC0015C677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFAD54011E6972CD0015C677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6389,6 +6546,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BFAD53F61E6972CC0015C677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFAD541D1E6973DE0015C677 /* Dummies.swift in Sources */,
+				BFAD541F1E6977430015C677 /* OperationLoop.swift in Sources */,
+				BFAD541B1E69734F0015C677 /* FetchEngineStrategyFactory.swift in Sources */,
+				BFAD54191E6972F40015C677 /* NotificationContentFetchEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFAD53FF1E6972CD0015C677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFAD540B1E6972CD0015C677 /* NotificationFetchComponentsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -6416,6 +6592,21 @@
 			isa = PBXTargetDependency;
 			target = 8F42C537199244A700288E4D /* Wire-iOS */;
 			targetProxy = BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */;
+		};
+		BFAD54061E6972CD0015C677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFAD53FA1E6972CC0015C677 /* NotificationFetchComponents */;
+			targetProxy = BFAD54051E6972CD0015C677 /* PBXContainerItemProxy */;
+		};
+		BFAD54081E6972CD0015C677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F42C537199244A700288E4D /* Wire-iOS */;
+			targetProxy = BFAD54071E6972CD0015C677 /* PBXContainerItemProxy */;
+		};
+		BFAD540F1E6972CD0015C677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFAD53FA1E6972CC0015C677 /* NotificationFetchComponents */;
+			targetProxy = BFAD540E1E6972CD0015C677 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6963,6 +7154,116 @@
 			};
 			name = Release;
 		};
+		BFAD54121E6972CD0015C677 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = NotificationFetchComponents/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BFAD54131E6972CD0015C677 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = EDF3JCE8BC;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = NotificationFetchComponents/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BFAD54141E6972CD0015C677 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				INFOPLIST_FILE = NotificationFetchComponentsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponentsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
+			};
+			name = Debug;
+		};
+		BFAD54151E6972CD0015C677 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				INFOPLIST_FILE = NotificationFetchComponentsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponentsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -7016,6 +7317,24 @@
 			buildConfigurations = (
 				BACB885A1AF7C48900DDCDB0 /* Debug */,
 				BACB885B1AF7C48900DDCDB0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFAD54161E6972CD0015C677 /* Build configuration list for PBXNativeTarget "NotificationFetchComponents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFAD54121E6972CD0015C677 /* Debug */,
+				BFAD54131E6972CD0015C677 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFAD54171E6972CD0015C677 /* Build configuration list for PBXNativeTarget "NotificationFetchComponentsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFAD54141E6972CD0015C677 /* Debug */,
+				BFAD54151E6972CD0015C677 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
