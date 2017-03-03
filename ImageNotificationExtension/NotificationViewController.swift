@@ -21,6 +21,7 @@ import UserNotifications
 import UserNotificationsUI
 import WireExtensionComponents
 import NotificationFetchComponents
+import Cartography
 
 
 fileprivate extension Bundle {
@@ -39,15 +40,58 @@ let log = ZMSLog(tag: "notification image extension")
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
 
     private var imageView: UIImageView!
+    private var userImageView: UserImageView!
+    private var userNameLabel: UILabel!
+    private var userImageViewContainer: UIView!
     private var fetchEngine: NotificationFetchEngine?
     private let infoDict = Bundle.main.infoDictionary
+    
+    private var user: ZMUser? {
+        didSet {
+            if let user = self.user {
+                self.userNameLabel.textColor = ColorScheme.default().nameAccent(for: user.accentColorValue, variant: .light)
+                self.userNameLabel.text = user.displayName
+                self.userImageView.user = user
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.imageView = UIImageView()
-        self.view.addSubview(self.imageView)
-
+        self.imageView.contentMode = .scaleAspectFit
+        
+        self.userImageViewContainer = UIView()
+        
+        self.userImageView = UserImageView(size: .tiny)
+        self.userImageViewContainer.addSubview(self.userImageView)
+        
+        self.userNameLabel = UILabel()
+        
+        [self.imageView, self.userImageViewContainer, self.userNameLabel].forEach(self.view.addSubview)
+        
+        constrain(self.view, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
+            
+            userImageViewContainer.left == selfView.left
+            userImageViewContainer.width == 48
+            userImageViewContainer.height == 24
+            userImageViewContainer.top == selfView.top
+            
+            userImageView.top == userImageViewContainer.top
+            userImageView.bottom == userImageViewContainer.bottom
+            userImageView.centerX == userImageViewContainer.centerX
+            
+            userNameLabel.left == userImageViewContainer.right
+            userNameLabel.right == selfView.right
+            userNameLabel.centerY == userImageView.centerY
+            
+            imageView.top == userImageViewContainer.bottom
+            imageView.left == userImageViewContainer.right
+            imageView.right == selfView.right
+            imageView.bottom == selfView.bottom
+        }
+        
         do {
             try createFetchEngine()
         } catch {
