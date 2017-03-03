@@ -21,7 +21,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol AccentColorProvider <NSObject>
-- (UIColor *)accentColor;
+@property (nonatomic) UIColor *accentColor;
 @end
 
 @interface ZMUser (AccentColorProvider) <AccentColorProvider>

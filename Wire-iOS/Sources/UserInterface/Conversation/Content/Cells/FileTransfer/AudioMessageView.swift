@@ -187,7 +187,7 @@ final class AudioMessageView: UIView, TransferView {
         if (fileMessageData.normalizedLoudness.count > 0) {
             waveformProgressView.samples = fileMessageData.normalizedLoudness
             if let accentColor = fileMessage.sender?.accentColor {
-                waveformProgressView.barColor = accentColor()
+                waveformProgressView.barColor = accentColor
                 waveformProgressView.highlightedBarColor = UIColor.gray
             }
             visibleViews.append(self.waveformProgressView)
