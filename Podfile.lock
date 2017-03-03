@@ -1,7 +1,6 @@
 PODS:
   - ARCollectionViewMasonryLayout (2.3.0)
   - CocoaSecurity (1.2.4)
-  - FLAnimatedImage (1.0.11)
   - GoogleAPIClient/Core (1.0.4):
     - GTMSessionFetcher (~> 1.1)
   - GoogleAPIClient/YouTube (1.0.4):
@@ -22,7 +21,6 @@ PODS:
 DEPENDENCIES:
   - ARCollectionViewMasonryLayout (from `https://github.com/wireapp/ARCollectionViewMasonryLayout`, tag `2.3.0`)
   - CocoaSecurity (= 1.2.4)
-  - FLAnimatedImage (from `https://github.com/wireapp/FLAnimatedImage`, tag `1.0.12`)
   - GoogleAPIClient/YouTube (= 1.0.4)
   - Localytics (= 4.2.0)
   - MTAnimation (from `https://github.com/wireapp/MTAnimation`, tag `1.2.2-crash-fix`)
@@ -35,9 +33,6 @@ EXTERNAL SOURCES:
   ARCollectionViewMasonryLayout:
     :git: https://github.com/wireapp/ARCollectionViewMasonryLayout
     :tag: 2.3.0
-  FLAnimatedImage:
-    :git: https://github.com/wireapp/FLAnimatedImage
-    :tag: 1.0.12
   MTAnimation:
     :git: https://github.com/wireapp/MTAnimation
     :tag: 1.2.2-crash-fix
@@ -58,9 +53,6 @@ CHECKOUT OPTIONS:
   ARCollectionViewMasonryLayout:
     :git: https://github.com/wireapp/ARCollectionViewMasonryLayout
     :tag: 2.3.0
-  FLAnimatedImage:
-    :git: https://github.com/wireapp/FLAnimatedImage
-    :tag: 1.0.12
   MTAnimation:
     :git: https://github.com/wireapp/MTAnimation
     :tag: 1.2.2-crash-fix
@@ -80,7 +72,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ARCollectionViewMasonryLayout: 97cb468434b546b79a98c7c0908447ff803eb85e
   CocoaSecurity: d288a6f87e0f363823d2cb83e753814a6944f71a
-  FLAnimatedImage: 8c79566df04f8ff07438076cea43839f7dcd261c
   GoogleAPIClient: 4dedb6af613eb7d171814c343f8a82ee5411e13b
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
   Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
@@ -90,6 +81,6 @@ SPEC CHECKSUMS:
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: 39d70031db577f780ca7aa0e2f81e85f6fcb31a2
+PODFILE CHECKSUM: 4cccb49b0e8d8b54b4319a4bea3ba9fd4aa44b3b
 
 COCOAPODS: 1.2.0

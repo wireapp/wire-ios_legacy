@@ -27,8 +27,7 @@
 #import "WAZUIMagic.h"
 #import "UIColor+MagicAccess.h"
 #import "UIColor+WAZExtensions.h"
-#import "FLAnimatedImageView.h"
-#import "FLAnimatedImage.h"
+@import FLAnimatedImage;
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"

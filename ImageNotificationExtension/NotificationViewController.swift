@@ -38,91 +38,24 @@ let log = ZMSLog(tag: "notification image extension")
 @objc(NotificationViewController)
 public class NotificationViewController: UIViewController, UNNotificationContentExtension {
 
-    private var imageView: FLAnimatedImageView!
-    private var userImageView: UserImageView!
-    private var userNameLabel: UILabel!
-    private var userImageViewContainer: UIView!
     private var fetchEngine: NotificationFetchEngine?
+    private var imageMessageView: ImageMessageView!
     
-    private var user: ZMUser? {
-        didSet {
-            if let user = self.user {
-//                self.userNameLabel.textColor = ColorScheme.default().nameAccent(for: user.accentColorValue, variant: .light)
-                self.userNameLabel.text = user.displayName
-//                self.userImageView.user = user
-            }
-        }
-    }
-
     private var message: ZMAssetClientMessage? {
         didSet {
-            if let message = self.message {
-                self.user = message.sender
-
-                self.updateForImage()
-            }
+            self.imageMessageView.message = self.message
         }
     }
-    
-    private func updateForImage() {
-        if let message = self.message,
-            let imageMessageData = message.imageMessageData,
-            let imageData = imageMessageData.imageData {
-
-            if (imageMessageData.isAnimatedGIF) {
-                self.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
-            }
-            else {
-                self.imageView.image = UIImage(data: imageData)
-            }
-        }
-    }
-
+   
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.imageView = FLAnimatedImageView()
-        self.imageView.contentMode = .scaleAspectFit
-        self.imageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        self.imageMessageView = ImageMessageView()
+        self.view.addSubview(self.imageMessageView)
         
-        self.userImageViewContainer = UIView()
-        view.backgroundColor = .lightGray
-        
-        self.userImageView = UserImageView(size: .tiny)
-        self.userImageViewContainer.addSubview(self.userImageView)
-        
-        self.userNameLabel = UILabel()
-        
-        [self.imageView, self.userImageViewContainer, self.userNameLabel].forEach(self.view.addSubview)
-        
-        constrain(self.view, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
-            userImageViewContainer.left == selfView.left
-            userImageViewContainer.width == 48
-            userImageViewContainer.height == 24
-            userImageViewContainer.top == selfView.top
-            
-            userImageView.top == userImageViewContainer.top
-            userImageView.bottom == userImageViewContainer.bottom
-            userImageView.centerX == userImageViewContainer.centerX
-            
-            userNameLabel.left == userImageViewContainer.right
-            userNameLabel.right == selfView.right
-            userNameLabel.centerY == userImageView.centerY
-            
-            imageView.top == userImageViewContainer.bottom
-            imageView.left == userImageViewContainer.right
-            imageView.right == selfView.right
-            imageView.bottom == selfView.bottom
+        constrain(self.view, self.imageMessageView) { selfView, imageMessageView in
+            imageMessageView.edges == selfView.edges
         }
-
-        self.view.addSubview(self.loadingView)
-        
-        constrain(self.imageView, self.loadingView) { imageView, loadingView in
-            loadingView.center == imageView.center
-            imageView.height >= loadingView.height + 48
-        }
-        
-        self.updateForImage()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -144,7 +77,7 @@ public class NotificationViewController: UIViewController, UNNotificationContent
         }
 
         fetchEngine?.changeClosure = { [weak self] in
-            self?.updateForImage()
+            self?.imageMessageView.updateForImage()
         }
     }
     

@@ -47,7 +47,7 @@
 #import "Settings.h"
 #import "GiphyViewController.h"
 #import "ConversationInputBarSendController.h"
-#import "FLAnimatedImage.h"
+@import FLAnimatedImage;
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Borders.h"

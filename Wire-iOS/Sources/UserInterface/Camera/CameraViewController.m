@@ -31,8 +31,7 @@
 #import "CameraConfirmationView.h"
 
 @import WireExtensionComponents;
-#import "FLAnimatedImage.h"
-#import "FLAnimatedImageView.h"
+@import FLAnimatedImage;
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIImage+ImageUtilities.h"
 #import "WAZUIMagicIOS.h"
