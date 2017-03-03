@@ -21,7 +21,7 @@ import UIKit
 import Foundation
 import Cartography
 
-class ThreeDotsLoadingView: UIView {
+public class ThreeDotsLoadingView: UIView {
     
     let loadingAnimationKey = "loading"
     let dotRadius = 2
@@ -36,7 +36,7 @@ class ThreeDotsLoadingView: UIView {
         NotificationCenter.default.removeObserver(self)
     }
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(dot1)
@@ -50,7 +50,7 @@ class ThreeDotsLoadingView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(ThreeDotsLoadingView.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -82,7 +82,7 @@ class ThreeDotsLoadingView: UIView {
         }
     }
     
-    override var isHidden: Bool{
+    public override var isHidden: Bool{
         didSet {
             updateLoadingAnimation()
         }

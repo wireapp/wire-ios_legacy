@@ -23,7 +23,6 @@ import WireExtensionComponents
 import NotificationFetchComponents
 import Cartography
 
-
 fileprivate extension Bundle {
     var groupIdentifier: String? {
         return infoDictionary?["ApplicationGroupIdentifier"] as? String
@@ -39,10 +38,11 @@ let log = ZMSLog(tag: "notification image extension")
 @objc(NotificationViewController)
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
 
-    private var imageView: UIImageView!
+    private var imageView: FLAnimatedImageView!
     private var userImageView: UserImageView!
     private var userNameLabel: UILabel!
     private var userImageViewContainer: UIView!
+    private var loadingDotsView: ThreeDotsLoadingView!
     private var fetchEngine: NotificationFetchEngine?
     private let infoDict = Bundle.main.infoDictionary
     
@@ -56,11 +56,40 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         }
     }
     
+    private var message: ZMConversationMessage? {
+        didSet {
+            if let message = self.message {
+                self.user = message.sender
+                
+                self.updateForImage()
+            }
+        }
+    }
+    
+    private func updateForImage() {
+        if let message = self.message,
+            let imageMessageData = message.imageMessageData {
+            
+            self.loadingView.isHidden = true
+            
+            if (imageMessageData.isAnimatedGIF) {
+                self.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageMessageData.imageData)
+            }
+            else {
+                self.imageView.image = UIImage(data: imageMessageData.imageData)
+            }
+        }
+        else {
+            self.loadingView.isHidden = false
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.imageView = UIImageView()
+        self.imageView = FLAnimatedImageView()
         self.imageView.contentMode = .scaleAspectFit
+        self.imageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         
         self.userImageViewContainer = UIView()
         
@@ -91,6 +120,16 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             imageView.right == selfView.right
             imageView.bottom == selfView.bottom
         }
+        
+        self.loadingDotsView = ThreeDotsLoadingView()
+        self.view.addSubview(self.loadingView)
+        
+        constrain(self.imageView, self.loadingView) { imageView, loadingView in
+            loadingView.center == imageView.center
+            imageView.height >= loadingView.height + 48
+        }
+        
+        self.updateForImage()
         
         do {
             try createFetchEngine()

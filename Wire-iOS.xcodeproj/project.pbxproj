@@ -96,7 +96,6 @@
 		16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B2DE2D1CCFB3B0000D7C30 /* InputBar.swift */; };
 		16B2DE301CCFB845000D7C30 /* InputBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B2DE2F1CCFB845000D7C30 /* InputBarTests.swift */; };
 		16BCF4311A0A457900A2D3D6 /* GuidanceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BCF4301A0A457900A2D3D6 /* GuidanceLabel.m */; };
-		16BEBC3D1D006A6B006FFD3E /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */; };
 		16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBC3E1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift */; };
 		16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */; };
 		16D316581BC28ED90050B835 /* ZMConversation+Actions.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D316571BC28ED90050B835 /* ZMConversation+Actions.m */; };
@@ -351,7 +350,6 @@
 		871BC2831D34F8F800DF0793 /* UIAlertView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FB1D34F8F800DF0793 /* UIAlertView+Zeta.m */; };
 		871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */; };
 		871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */; };
-		871BC2861D34F8F800DF0793 /* UIColor+WR_ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2001D34F8F800DF0793 /* UIColor+WR_ColorScheme.m */; };
 		871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */; };
 		871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */; };
 		871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2041D34F8F800DF0793 /* UIImage+Transform.m */; };
@@ -495,6 +493,9 @@
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
 		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
+		87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */; };
+		87831A9A1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		87831A9B1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
 		8785CA5C1C567FCD00FD671C /* IconLabelButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 8785CA5A1C567FCD00FD671C /* IconLabelButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1189,7 +1190,6 @@
 		16B2DE2F1CCFB845000D7C30 /* InputBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarTests.swift; sourceTree = "<group>"; };
 		16BCF42F1A0A457900A2D3D6 /* GuidanceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceLabel.h; sourceTree = "<group>"; };
 		16BCF4301A0A457900A2D3D6 /* GuidanceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceLabel.m; sourceTree = "<group>"; };
-		16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingView.swift; sourceTree = "<group>"; };
 		16BEBC3E1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingViewTests.swift; sourceTree = "<group>"; };
 		16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNavigationBar.swift; sourceTree = "<group>"; };
 		16D316561BC28ED90050B835 /* ZMConversation+Actions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMConversation+Actions.h"; sourceTree = "<group>"; };
@@ -1592,8 +1592,6 @@
 		871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
 		871BC1FD1D34F8F800DF0793 /* UIColor+WAZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WAZExtensions.h"; sourceTree = "<group>"; };
 		871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WAZExtensions.m"; sourceTree = "<group>"; };
-		871BC1FF1D34F8F800DF0793 /* UIColor+WR_ColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WR_ColorScheme.h"; sourceTree = "<group>"; };
-		871BC2001D34F8F800DF0793 /* UIColor+WR_ColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WR_ColorScheme.m"; sourceTree = "<group>"; };
 		871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MonoSpaced.swift"; sourceTree = "<group>"; };
 		871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Dotted.swift"; sourceTree = "<group>"; };
 		871BC2031D34F8F800DF0793 /* UIImage+Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Transform.h"; sourceTree = "<group>"; };
@@ -1809,6 +1807,10 @@
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
 		877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Properties.swift"; sourceTree = "<group>"; };
 		8781C94E1E2687590024F3F6 /* MessageAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageAction.h; sourceTree = "<group>"; };
+		87831A931E69B2B200DDF3C3 /* ImageNotificationExtensionBridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageNotificationExtensionBridgingHeader.h; sourceTree = "<group>"; };
+		87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingView.swift; sourceTree = "<group>"; };
+		87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WR_ColorScheme.h"; sourceTree = "<group>"; };
+		87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WR_ColorScheme.m"; sourceTree = "<group>"; };
 		8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSelfPictureViewController.h; sourceTree = "<group>"; };
 		8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSelfPictureViewController.m; sourceTree = "<group>"; };
 		8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+NewSelfClients.h"; sourceTree = "<group>"; };
@@ -2920,6 +2922,8 @@
 				87B7DABA1E6976C1005F5140 /* ImageCache.h */,
 				87B7DABB1E6976C1005F5140 /* ImageCache.m */,
 				87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */,
+				87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */,
+				87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2986,6 +2990,7 @@
 				1EDE4B161BA9993200380349 /* FlexibleNavigationBar.h */,
 				1EDE4B171BA9993200380349 /* FlexibleNavigationBar.m */,
 				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
+				87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3527,8 +3532,6 @@
 				871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */,
 				871BC1FD1D34F8F800DF0793 /* UIColor+WAZExtensions.h */,
 				871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */,
-				871BC1FF1D34F8F800DF0793 /* UIColor+WR_ColorScheme.h */,
-				871BC2001D34F8F800DF0793 /* UIColor+WR_ColorScheme.m */,
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
 				871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */,
 				BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */,
@@ -3739,7 +3742,6 @@
 				16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */,
 				BF02CDC21D79A98000C87D38 /* SavableImage.swift */,
 				BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */,
-				16BEBC3C1D006A6B006FFD3E /* ThreeDotsLoadingView.swift */,
 				87DE06B01D256CF50009411F /* DeviceProximityListener.swift */,
 				875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */,
 				875F89131D6DD6D000D8748E /* ReactionsView.swift */,
@@ -3865,6 +3867,7 @@
 			children = (
 				87B7DAA71E696E4E005F5140 /* NotificationViewController.swift */,
 				87B7DAAC1E696E4E005F5140 /* Info.plist */,
+				87831A931E69B2B200DDF3C3 /* ImageNotificationExtensionBridgingHeader.h */,
 			);
 			path = ImageNotificationExtension;
 			sourceTree = "<group>";
@@ -5188,6 +5191,7 @@
 				1EE9DCC71B5F9A6D00E347DF /* TokenTextAttachment.h in Headers */,
 				871878BD1C1ACA72001FFCC5 /* NSDate+WRFormat.h in Headers */,
 				8795A5C81D34D09E0024101B /* UserConnectingLayer.h in Headers */,
+				87831A9A1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h in Headers */,
 				1EDE4B181BA9993200380349 /* FlexibleNavigationBar.h in Headers */,
 				1EE9DCC31B5F9A6D00E347DF /* Token.h in Headers */,
 				8795A5C41D34D09E0024101B /* KnockAnimationLayer.h in Headers */,
@@ -5367,7 +5371,7 @@
 				TargetAttributes = {
 					168A16A81D9597C2005CFA6C = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = EDF3JCE8BC;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -5377,7 +5381,7 @@
 					};
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = EDF3JCE8BC;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 					};
@@ -5388,7 +5392,7 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = EDF3JCE8BC;
+						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -5902,6 +5906,7 @@
 				16F9EB351BCBB0270021EF39 /* CheckBoxButton.m in Sources */,
 				87B7DABD1E6976C1005F5140 /* ImageCache.m in Sources */,
 				CE06C9411DF5C3D900497685 /* AVAsset+VideoConvert.swift in Sources */,
+				87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */,
 				CE8E4FC61DF17CFE0009F437 /* NSString+TextTransform.m in Sources */,
 				8795A5C91D34D09E0024101B /* UserConnectingLayer.m in Sources */,
 				1EE9DCC41B5F9A6D00E347DF /* Token.m in Sources */,
@@ -5913,6 +5918,7 @@
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
 				870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */,
+				87831A9B1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m in Sources */,
 				160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */,
 				1EE9DCCA1B5F9A6D00E347DF /* TokenizedTextView.m in Sources */,
 				1E5E0CB31B6B83C6003B0CAC /* IconButton.m in Sources */,
@@ -6473,7 +6479,6 @@
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift in Sources */,
 				8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */,
 				CED176471D0074610005234F /* ConversationParticipantsCell.swift in Sources */,
-				16BEBC3D1D006A6B006FFD3E /* ThreeDotsLoadingView.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
 				F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */,
@@ -6495,7 +6500,6 @@
 				871BC0161D34F56300DF0793 /* AnalyticsEvent.m in Sources */,
 				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				DBD990531B399B58000ACF94 /* NSString+Mentions.m in Sources */,
-				871BC2861D34F8F800DF0793 /* UIColor+WR_ColorScheme.m in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,
 				876113E01DD1DD19007F5969 /* ColorSchemeController.m in Sources */,
 				DBBC190F1B5E3C5D00E84607 /* StopWatch.m in Sources */,
@@ -6954,6 +6958,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ImageNotificationExtensionBridgingHeader.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -6978,6 +6983,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.wearezeta.zclient.ios.ImageNotificationExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ImageNotificationExtensionBridgingHeader.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

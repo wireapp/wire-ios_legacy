@@ -78,3 +78,5 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/NSString+TextTransform.h>
 #import <WireExtensionComponents/AVAsset+VideoConvert.h>
 #import <WireExtensionComponents/AccentColorProvider.h>
+#import <WireExtensionComponents/UIColor+WR_ColorScheme.h>
+
