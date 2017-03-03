@@ -20,26 +20,56 @@ import UIKit
 import UserNotifications
 import UserNotificationsUI
 import WireExtensionComponents
+import NotificationFetchComponents
 
 
+fileprivate extension Bundle {
+    var groupIdentifier: String? {
+        return infoDictionary?["ApplicationGroupIdentifier"] as? String
+    }
+
+    var hostBundleIdentifier: String? {
+        return infoDictionary?["HostBundleIdentifier"] as? String
+    }
+}
+
+let log = ZMSLog(tag: "notification image extension")
+
+@objc(NotificationViewController)
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
-    
+
     private var imageView: UIImageView!
+    private var fetchEngine: NotificationFetchEngine?
+    private let infoDict = Bundle.main.infoDictionary
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.imageView = UIImageView()
         self.view.addSubview(self.imageView)
-        // Do any required interface initialization here.
+
+        do {
+            try createFetchEngine()
+        } catch {
+            log.error("Failed to initialize NotificationFetchEngine: \(error)")
+        }
+    }
+
+    private func createFetchEngine() throws {
+        guard let groupIdentifier = Bundle.main.groupIdentifier,
+            let hostIdentifier = Bundle.main.hostBundleIdentifier else { return }
+
+        fetchEngine = try NotificationFetchEngine(
+            applicationGroupIdentifier: groupIdentifier,
+            hostBundleIdentifier: hostIdentifier
+        )
     }
     
     func didReceive(_ notification: UNNotification) {
-        
+        dump(notification)
+        dump(notification.request)
+        dump(notification.request.content)
+        dump(notification.request.content.userInfo)
     }
-    
-    func didReceive(_ response: UNNotificationResponse, completionHandler completion: @escaping (UNNotificationContentExtensionResponseOption) -> Void) {
-        
-        
-    }
+
 }
