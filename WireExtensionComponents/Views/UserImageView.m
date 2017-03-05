@@ -115,7 +115,7 @@ static CIContext *ciContext(void)
 {
     [super layoutSubviews];
     
-    self.indicator.layer.cornerRadius = self.indicator.bounds.size.width / 2;
+    [self updateIndicatorCornerRadius];
 }
 
 - (void)setupBasicProperties
@@ -125,6 +125,12 @@ static CIContext *ciContext(void)
     
     [self createIndicator];
     [self createConstraints];
+    [self updateIndicatorCornerRadius];
+}
+
+- (void)updateIndicatorCornerRadius
+{
+    self.indicator.layer.cornerRadius = self.indicator.bounds.size.width / 2;
 }
 
 - (CGSize)intrinsicContentSize

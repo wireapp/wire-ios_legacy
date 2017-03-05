@@ -23,42 +23,107 @@ import FLAnimatedImage
 
 @objc public class ImageMessageView: UIView {
     
-    private var imageView: FLAnimatedImageView!
-    private var userImageView: UserImageView!
-    private var userNameLabel: UILabel!
-    private var userImageViewContainer: UIView!
-    private var dotsLoadingView: ThreeDotsLoadingView!
+    private let imageView = FLAnimatedImageView()
+    private let userImageView = UserImageView(size: .tiny)
+    private let userNameLabel = UILabel()
+    private let userImageViewContainer = UIView()
+    private let dotsLoadingView = ThreeDotsLoadingView()
+    private var aspectRatioConstraint: NSLayoutConstraint? = .none
+    private var imageSize: CGSize = .zero
     
-    public func updateForImage() {
-        if let message = self.message,
-            let imageMessageData = message.imageMessageData,
-            let imageData = imageMessageData.imageData {
-            
-            if (imageMessageData.isAnimatedGIF) {
-                self.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
-            }
-            else {
-                self.imageView.image = UIImage(data: imageData)
+    typealias GenericUser = ZMBareUser & ZMSearchableUser & AccentColorProvider
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.createViews()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var user: GenericUser? {
+        didSet {
+            if let user = self.user {
+                
+                self.userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
+                self.userNameLabel.text = user.displayName
+                self.userImageView.user = user
             }
         }
     }
     
+    public var message: ZMConversationMessage? {
+        didSet {
+            if let message = self.message {
+                self.user = message.sender
+                
+                self.updateForImage()
+            }
+        }
+    }
+    
+    public func updateForImage() {
+        if let message = self.message,
+            let imageMessageData = message.imageMessageData,
+            let imageData = imageMessageData.imageData,
+            imageData.count > 0 {
+            
+            self.dotsLoadingView.stopProgressAnimation()
+            self.dotsLoadingView.isHidden = true
+            
+            if (imageMessageData.isAnimatedGIF) {
+                let image = FLAnimatedImage(animatedGIFData: imageData)
+                self.imageSize = image?.size ?? .zero
+                self.imageView.animatedImage = image
+            }
+            else {
+                let image = UIImage(data: imageData, scale: 2.0)
+                self.imageSize = image?.size ?? .zero
+                self.imageView.image = image
+            }
+        }
+        else {
+            self.dotsLoadingView.isHidden = false
+            self.dotsLoadingView.startProgressAnimation()
+        }
+        self.updateImageLayout()
+    }
+    
+    private func updateImageLayout() {
+        guard self.bounds.width != 0, self.aspectRatioConstraint == .none, self.imageSize.width != 0 else {
+            return
+        }
+        
+        if self.imageSize.width / 2.0 > self.imageView.bounds.width {
+
+            constrain(self.imageView) { imageView in
+                self.aspectRatioConstraint = imageView.height == imageView.width * (self.imageSize.height / self.imageSize.width)
+            }
+        }
+        else {
+            self.imageView.contentMode = .left
+
+            constrain(self.imageView) { imageView in
+                self.aspectRatioConstraint = imageView.height == self.imageSize.height
+            }
+        }
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+    
     private func createViews() {
         
-        self.imageView = FLAnimatedImageView()
-        self.imageView.contentMode = .scaleAspectFit
-        self.imageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        
-        self.userImageViewContainer = UIView()
-        
-        self.userImageView = UserImageView(size: .tiny)
         self.userImageViewContainer.addSubview(self.userImageView)
         
-        self.userNameLabel = UILabel()
+        [self.imageView, self.userImageViewContainer, self.userNameLabel].forEach(self.addSubview)
         
-        self.dotsLoadingView = ThreeDotsLoadingView()
+        self.imageView.contentMode = .scaleAspectFit
+        self.imageView.clipsToBounds = true
         
-        [self.imageView, self.userImageViewContainer, self.userNameLabel, self.dotsLoadingView].forEach(self.addSubview)
+        self.userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
+        
+        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
         
         constrain(self, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
             userImageViewContainer.left == selfView.left
@@ -69,45 +134,32 @@ import FLAnimatedImage
             userImageView.top == userImageViewContainer.top
             userImageView.bottom == userImageViewContainer.bottom
             userImageView.centerX == userImageViewContainer.centerX
+            userImageView.width == userImageViewContainer.height
             
             userNameLabel.left == userImageViewContainer.right
-            userNameLabel.right == selfView.right
+            userNameLabel.right <= selfView.right
             userNameLabel.centerY == userImageView.centerY
             
-            imageView.top == userImageViewContainer.bottom
+            imageView.top == userImageViewContainer.bottom + 12
             imageView.left == userImageViewContainer.right
             imageView.right == selfView.right
-            imageView.bottom == selfView.bottom
+            selfView.bottom == imageView.bottom
+            imageView.height >= 64
         }
         
         self.addSubview(self.dotsLoadingView)
         
-        constrain(self.imageView, self.dotsLoadingView) { imageView, dotsLoadingView in
-            dotsLoadingView.center == imageView.center
-            imageView.height >= dotsLoadingView.height + 48
+        constrain(self, self.dotsLoadingView) { selfView, dotsLoadingView in
+            dotsLoadingView.center == selfView.center
         }
         
         self.updateForImage()
     }
-    
-    private var user: ZMUser? {
-        didSet {
-            if let user = self.user {
-                self.userNameLabel.textColor = ColorScheme.default().nameAccent(for: user.accentColorValue, variant: .light)
-                self.userNameLabel.text = user.displayName
-                self.userImageView.user = user
-            }
-        }
-    }
 
-    public var message: ZMAssetClientMessage? {
-        didSet {
-            if let message = self.message {
-                self.user = message.sender
-                
-                self.updateForImage()
-            }
-        }
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.updateImageLayout()
     }
 }
 
