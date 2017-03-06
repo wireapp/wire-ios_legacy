@@ -79,6 +79,8 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 - (void)updateCallingUserImage;
 - (CGPoint)cameraPreviewPosition;
 
+@property (nonatomic) ZMUser *selfUser;
+
 @property (nonatomic) CameraPreviewView *cameraPreviewView;
 @property (nonatomic) BOOL videoViewFullscreen;
 
