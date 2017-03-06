@@ -34,6 +34,7 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, copy) NSString *subtitleText;
 
 @property (nonatomic, readonly) ConversationListIndicator *statusIndicator;
+@property (nonatomic, strong, readonly) ListItemRightAccessoryView *rightAccessory;
 
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, readonly) BOOL enableSubtitles;

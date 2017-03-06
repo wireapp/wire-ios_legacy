@@ -37,7 +37,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @interface ConversationListItemView ()
 
 @property (nonatomic, strong, readwrite) ConversationListIndicator *statusIndicator;
-@property (nonatomic, strong) ListItemRightAccessoryView *rightAccessory;
+@property (nonatomic, strong, readwrite) ListItemRightAccessoryView *rightAccessory;
 @property (nonatomic, strong) UILabel *titleField;
 @property (nonatomic, strong) UILabel *subtitleField;
 @property (nonatomic, strong) UIView *lineView;

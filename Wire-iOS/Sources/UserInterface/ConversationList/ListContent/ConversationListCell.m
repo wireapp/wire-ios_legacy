@@ -50,6 +50,9 @@ static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
 static const NSTimeInterval OverscrollRatio = 2.5;
 
 
+@interface ConversationListCell (RightAccesory) <ListItemRightAccessoryViewDelegate>
+@end
+
 
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
 
@@ -93,16 +96,18 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance;
     self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
     self.canOpenDrawer = NO;
+    self.clipsToBounds = YES;
     
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
-    self.clipsToBounds = YES;
     [self.swipeView addSubview:self.itemView];
-    
+
     AnimatedListMenuView *animatedView = [[AnimatedListMenuView alloc] initForAutoLayout];
     
     [self.menuView addSubview:animatedView];
     self.animatedListView = animatedView;
     [self.animatedListView enable1PixelBlueBorder];
+
+    self.itemView.rightAccessory.delegate = self;
     
     self.accentColorHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConversationListCell *cell) {
         cell.itemView.selectionColor = newColor;
@@ -282,6 +287,13 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 @implementation ConversationListCell (RightAccessory)
 
+
+- (void)accessoryViewWantsToJoinCall:(ListItemRightAccessoryView *)accessoryView
+{
+    // TODO: Ensure there is an ongoing call just to be sure?
+    [self.conversation startAudioCallWithCompletionHandler:nil];
+}
+
 - (void)updateRightAccessory
 {
     if ([self shouldShowMediaButton]) {
@@ -290,10 +302,13 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     else if (self.conversation.isSilenced) {
         self.itemView.rightAccessoryType = ConversationListRightAccessorySilencedIcon;
     }
+    else if (self.conversation.conversationListIndicator == ZMConversationListIndicatorInactiveCall) {
+        self.itemView.rightAccessoryType = ConversationListRightAccessoryJoinCall;
+    }
     else {
         self.itemView.rightAccessoryType = ConversationListRightAccessoryNone;
     }
-    
+
     [self.itemView updateRightAccessoryAppearance];
 }
 

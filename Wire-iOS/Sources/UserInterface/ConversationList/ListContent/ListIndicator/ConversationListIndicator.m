@@ -26,6 +26,7 @@
 #import "MissedCallIndicatorLayer.h"
 #import "UIColor+WAZExtensions.h"
 #import <WireExtensionComponents/WireStyleKit.h>
+#import "UIImage+ZetaIconsNeue.h"
 
 
 @interface ConversationListIndicator (ShowHide)
@@ -34,11 +35,9 @@
 - (void)showUnsentIndicator;
 - (void)showConnectionRequestIndicator;
 - (void)showMissedCallIndicator;
-- (void)showVoiceIndicator;
-- (void)hideVoiceIndicator;
+- (void)showCallIndicator;
 - (void)showPingIndicator;
 - (void)hidePingIndicator;
-- (void)showInactiveCallIndicator;
 
 @end
 
@@ -49,10 +48,9 @@
 @property (nonatomic, strong) UnreadIndicatorLayer *unreadIndicator;
 @property (nonatomic, strong) UnsentIndicatorLayer *unsentIndicator;
 @property (nonatomic, strong) ConnectionRequestIndicatorLayer *connectionRequestIndicator;
-@property (nonatomic, strong) MissedCallIndicatorLayer *missedCallIndicator;
-@property (nonatomic, strong) VoiceIndicatorLayer *voiceIndicatorLayer;
+@property (nonatomic, strong) CALayer *missedCallIndicatorLayer;
+@property (nonatomic, strong) CALayer *callIndicatorLayer;
 @property (nonatomic, strong) PingAnimationLayer *pingLayer;
-@property (nonatomic, strong) CALayer *inactiveCallIndicatorLayer;
 
 @end
 
@@ -60,19 +58,6 @@
 
 @implementation ConversationListIndicator
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (void)layoutSubviews
 {
@@ -91,9 +76,8 @@
     [self centerLayer:self.unsentIndicator];
     [self centerLayer:self.connectionRequestIndicator];
     [self centerLayer:self.pingLayer];
-    [self centerLayer:self.voiceIndicatorLayer];
-    [self centerLayer:self.missedCallIndicator];
-    [self centerLayer:self.inactiveCallIndicatorLayer];
+    [self centerLayer:self.callIndicatorLayer];
+    [self centerLayer:self.missedCallIndicatorLayer];
 }
 
 - (void)centerLayer:(CALayer *)layer
@@ -110,12 +94,11 @@
     [CATransaction setDisableActions: YES];
     
     [self.unreadIndicator setHidden:YES];
-    [self.missedCallIndicator setHidden:YES];
+    [self.missedCallIndicatorLayer setHidden:YES];
     [self.connectionRequestIndicator setHidden:YES];
     [self.unsentIndicator setHidden:YES];
-    [self.inactiveCallIndicatorLayer setHidden:YES];
-    
-    [self hideVoiceIndicator];
+    [self.callIndicatorLayer setHidden:YES];
+
     [self hidePingIndicator];
     
     [CATransaction commit];
@@ -129,7 +112,7 @@
     _indicatorType = indicatorType;
     
     [self hideAllIndicators];
-    
+
     switch (indicatorType) {
             
         case ZMConversationListIndicatorUnreadMessages:
@@ -137,7 +120,8 @@
             break;
            
         case ZMConversationListIndicatorActiveCall:
-            [self showVoiceIndicator];
+        case ZMConversationListIndicatorInactiveCall:
+            [self showCallIndicator];
             break;
 
         case ZMConversationListIndicatorKnock:
@@ -154,10 +138,6 @@
 
         case ZMConversationListIndicatorPending:
             [self showConnectionRequestIndicator];
-            break;
-            
-        case ZMConversationListIndicatorInactiveCall:
-            [self showInactiveCallIndicator];
             break;
             
         default:
@@ -182,30 +162,11 @@
     self.unreadIndicator.color = foregroundColor;
     self.connectionRequestIndicator.color = foregroundColor;
     self.pingLayer.color = foregroundColor;
-    self.voiceIndicatorLayer.circleColor = foregroundColor;
-
-    if (self.inactiveCallIndicatorLayer) {
-        UIImage *image = [WireStyleKit imageOfJoinongoingcallWithColor:foregroundColor];
-        self.inactiveCallIndicatorLayer.contents = (id)image.CGImage;
-    }
-}
-
-- (void)ensureAnimationsRunning
-{
-    if (self.indicatorType == ZMConversationListIndicatorActiveCall) {
-        [self.voiceIndicatorLayer stopAnimating];
-        [self.voiceIndicatorLayer startAnimating];
-    }
 }
 
 - (BOOL)isDisplayingAnyIndicators
 {
     return (self.indicatorType != ZMConversationListIndicatorNone || self.unreadCount != 0);
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [self ensureAnimationsRunning];
 }
 
 @end
@@ -244,46 +205,25 @@
     [self.connectionRequestIndicator setHidden:NO];
 }
 
-- (void)showInactiveCallIndicator
-{
-    if (! self.inactiveCallIndicatorLayer) {
-        self.inactiveCallIndicatorLayer = [CALayer layer];
-        UIImage *image = [WireStyleKit imageOfJoinongoingcallWithColor:[UIColor accentColor]];
-        self.inactiveCallIndicatorLayer.contents = (id)image.CGImage;
-        self.inactiveCallIndicatorLayer.bounds = (CGRect){CGPointZero, image.size};
-        [self.layer addSublayer:self.inactiveCallIndicatorLayer];
-        [self centerLayer:self.inactiveCallIndicatorLayer];
-    }
-    [self.inactiveCallIndicatorLayer setHidden:NO];
-}
-
 - (void)showMissedCallIndicator
 {
-    if (self.missedCallIndicator == nil) {
-        self.missedCallIndicator = [MissedCallIndicatorLayer layer];
-        [self.layer addSublayer:self.missedCallIndicator];
-        [self centerLayer:self.missedCallIndicator];
+    if (self.missedCallIndicatorLayer == nil) {
+        self.missedCallIndicatorLayer = [self layerForIcon:ZetaIconTypeEndCall color:ZMAccentColorVividRed];
+        [self.layer addSublayer:self.missedCallIndicatorLayer];
+        [self centerLayer:self.missedCallIndicatorLayer];
     }
-    [self.missedCallIndicator setHidden:NO];
+    [self.missedCallIndicatorLayer setHidden:NO];
 }
 
-- (void)showVoiceIndicator
+- (void)showCallIndicator
 {
-    if (self.voiceIndicatorLayer == nil ) {
-        self.voiceIndicatorLayer = [VoiceIndicatorLayer voiceIndicatorLayerForVoiceIndicatorWithMagicValuesWithRingColor:[UIColor accentColor]];
-        self.voiceIndicatorLayer.bounds = CGRectMake(0, 0, 12, 12);
-        [self.layer addSublayer:self.voiceIndicatorLayer];
-        [self centerLayer:self.voiceIndicatorLayer];
+    if (self.callIndicatorLayer == nil ) {
+        self.callIndicatorLayer = [self layerForIcon:ZetaIconTypeCallAudio color:ZMAccentColorStrongLimeGreen];
+        [self.layer addSublayer:self.callIndicatorLayer];
+        [self centerLayer:self.callIndicatorLayer];
     }
     
-    [self.voiceIndicatorLayer setHidden:NO];
-    [self.voiceIndicatorLayer startAnimating];
-}
-
-- (void)hideVoiceIndicator
-{
-    [self.voiceIndicatorLayer stopAnimating];
-    [self.voiceIndicatorLayer setHidden:YES];
+    [self.callIndicatorLayer setHidden:NO];
 }
 
 - (void)showPingIndicator
@@ -302,6 +242,15 @@
 {
     [self.pingLayer stopAnimating];
     [self.pingLayer setHidden:YES];
+}
+
+- (CALayer *)layerForIcon:(ZetaIconType)icon color:(ZMAccentColor)color
+{
+    CALayer *layer = [CALayer layer];
+    UIImage *image = [UIImage imageForIcon:icon iconSize:ZetaIconSizeTiny color:[UIColor colorForZMAccentColor:color]];
+    layer.contents = (id)image.CGImage;
+    layer.bounds = (CGRect){CGPointZero, image.size};
+    return layer;
 }
 
 @end
