@@ -28,7 +28,6 @@
 #import "ImageMessageCell.h"
 #import "NameChangedCell.h"
 #import "PingCell.h"
-#import "MissedCallCell.h"
 #import "ConnectionRequestCell.h"
 
 #import "Wire-Swift.h"

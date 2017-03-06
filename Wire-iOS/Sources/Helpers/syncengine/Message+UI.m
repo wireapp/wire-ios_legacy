@@ -79,8 +79,9 @@
                         [Message isFileTransferMessage:message] ||
                         [Message isKnockMessage:message] ||
                         [Message isLocationMessage:message] ||
-                        [Message isDeletedMessage:message];
-    
+                        [Message isDeletedMessage:message] ||
+                        [Message isMissedCallMessage:message];
+
     return allowedType;
 }
 
