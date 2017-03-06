@@ -293,6 +293,8 @@
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
 "voice.network_error.body" = "You must be online to call. Check your connection and try again.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ started using a new device.";
 "voice.degradation.prompt" = "Do you still want to place the call?";
 "voice.accept_button.title" = "Accept";
 "voice.decline_button.title" = "Decline";

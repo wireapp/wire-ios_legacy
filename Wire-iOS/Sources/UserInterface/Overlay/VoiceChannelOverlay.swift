@@ -196,7 +196,6 @@ extension VoiceChannelOverlay {
         centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
         
         degradationTopLabel = createMultilineLabel()
-        degradationTopLabel.text = "You started usign a new device"
         degradationTopLabel.accessibilityIdentifier = "CallDegradationTopLabel"
         
         degradationBottomLabel = createMultilineLabel()
@@ -415,9 +414,27 @@ extension VoiceChannelOverlay {
         }
     }
     
+    func updateCallDegradedLabels() {
+        
+        switch state {
+        case .outgoingCallDegraded, .incomingCallDegraded:
+            if ZMUser.selfUser().untrusted() {
+                degradationTopLabel.text = "voice.degradation.new_self_device".localized
+            } else {
+                guard let user = callingConversation.connectedUser else { return }
+                let format = "voice.degradation.new_user_device".localized
+                degradationTopLabel.text = String(format: format, user.displayName)
+            }
+            break
+        default:
+            break
+        }
+    }
+    
     func updateVisibleViewsForCurrentState() {
         updateStatusLabelText()
         updateCallingUserImage()
+        updateCallDegradedLabels()
         
         visibleViews(for: state).forEach {
             $0.alpha = 1.0
