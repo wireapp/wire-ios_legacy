@@ -216,8 +216,6 @@
 		870916DC1E2CFFC500D10FA3 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870916DA1E2CFFC100D10FA3 /* ImageCacheTests.swift */; };
 		870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A8C6A1CF719C400874B16 /* RecordingDotView.swift */; };
 		870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */; };
-		870CFB801E6C996900B1E113 /* ZMCDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870CFB7E1E6C996900B1E113 /* ZMCDataModel.framework */; };
-		870CFB811E6C996900B1E113 /* zmessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870CFB7F1E6C996900B1E113 /* zmessaging.framework */; };
 		870CFB821E6C997000B1E113 /* zimages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EC71A271B6A1B9200700A14 /* zimages.framework */; };
 		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */; };
 		870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */; };
@@ -497,7 +495,6 @@
 		8773160F1B970A82007BA779 /* profile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316001B970A82007BA779 /* profile.plist */; };
 		877316111B970A82007BA779 /* style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316021B970A82007BA779 /* style.plist */; };
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
-		8776B7DF1E6C7500004AE97B /* zmessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8776B7DE1E6C7500004AE97B /* zmessaging.framework */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
 		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
 		87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */; };
@@ -1316,8 +1313,6 @@
 		870A8C6A1CF719C400874B16 /* RecordingDotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingDotView.swift; sourceTree = "<group>"; };
 		870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextResponderTextView.m; sourceTree = "<group>"; };
 		870C97C41D670CA700F6FD7D /* NextResponderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NextResponderTextView.h; sourceTree = "<group>"; };
-		870CFB7E1E6C996900B1E113 /* ZMCDataModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZMCDataModel.framework; path = "../../../Library/Developer/Xcode/DerivedData/Wire-iOS-bbagkeegjkdzkuajuiifbwiknjmp/Build/Products/Debug-iphonesimulator/ZMCDataModel.framework"; sourceTree = "<group>"; };
-		870CFB7F1E6C996900B1E113 /* zmessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zmessaging.framework; path = "../../../Library/Developer/Xcode/DerivedData/Wire-iOS-bbagkeegjkdzkuajuiifbwiknjmp/Build/Products/Debug-iphonesimulator/zmessaging.framework"; sourceTree = "<group>"; };
 		870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVSLogObserver.h; sourceTree = "<group>"; };
 		870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVSLogObserver.m; sourceTree = "<group>"; };
 		870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CannotDecryptCell.swift; sourceTree = "<group>"; };
@@ -1789,7 +1784,6 @@
 		877316021B970A82007BA779 /* style.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = style.plist; sourceTree = "<group>"; };
 		877316031B970A82007BA779 /* tutorial.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tutorial.plist; sourceTree = "<group>"; };
 		8774F0C61B4AB2DD002256A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8776B7DE1E6C7500004AE97B /* zmessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zmessaging.framework; path = "../wire-ios-sync-engine/build/Debug-iphoneos/zmessaging.framework"; sourceTree = "<group>"; };
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
 		877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Properties.swift"; sourceTree = "<group>"; };
@@ -2549,7 +2543,6 @@
 				871608431E4DF7B000461934 /* HockeySDK.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
-				8776B7DF1E6C7500004AE97B /* zmessaging.framework in Frameworks */,
 				39260D2402C36A8DE422A998 /* libPods-Wire-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2582,8 +2575,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				870CFB801E6C996900B1E113 /* ZMCDataModel.framework in Frameworks */,
-				870CFB811E6C996900B1E113 /* zmessaging.framework in Frameworks */,
 				870CFB821E6C997000B1E113 /* zimages.framework in Frameworks */,
 				BFAD54041E6972CD0015C677 /* NotificationFetchComponents.framework in Frameworks */,
 			);
@@ -3023,9 +3014,6 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				870CFB7E1E6C996900B1E113 /* ZMCDataModel.framework */,
-				870CFB7F1E6C996900B1E113 /* zmessaging.framework */,
-				8776B7DE1E6C7500004AE97B /* zmessaging.framework */,
 				8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */,
 				BFAD54231E698CD20015C677 /* ZMCDataModel.framework */,
 				BFAD54201E69801F0015C677 /* zmessaging.framework */,
@@ -5800,12 +5788,12 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ZMProtos.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ProtocolBuffers.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
-				"$(BUILT_PRODUCTS_DIR)/zmessaging.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/zmessaging.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PINCache.framework",
-				"$(BUILT_PRODUCTS_DIR)/ZMCDataModel.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ZMCDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZMCLinkPreview.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Ono.framework",
