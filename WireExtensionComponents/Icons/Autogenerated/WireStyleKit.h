@@ -22,20 +22,6 @@ typedef NS_ENUM(NSInteger, WireStyleKitResizingBehavior)
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
 
-
-
-typedef enum : NSInteger
-{
-    WireStyleKitResizingBehaviorAspectFit, //!< The content is proportionally resized to fit into the target rectangle.
-    WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
-    WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
-    WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
-
-} WireStyleKitResizingBehavior;
-
-extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
-
-
 @interface WireStyleKit : NSObject
 
 // iOS Controls Customization Outlets
