@@ -210,6 +210,8 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             [mediaManager stopSound:MediaManagerSoundRingingFromThemSound];
             break;
         }
+        case VoiceChannelV2StateIncomingCallDegraded:
+        case VoiceChannelV2StateOutgoingCallDegraded:
         case VoiceChannelV2StateNoActiveUsers:
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
         case VoiceChannelV2StateDeviceTransferReady:
