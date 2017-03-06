@@ -209,7 +209,20 @@ internal final class ConversationImagesViewController: UIViewController {
         revealButton.accessibilityLabel = "reveal in conversation"
         revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
         
-        self.buttonsBar = InputBarButtonsView(buttons: [copyButton, likeButton, saveButton, shareButton, deleteButton, revealButton])
+        let sketchButton = IconButton.iconButtonDefault()
+        sketchButton.setIcon(.brush, with: .tiny, for: .normal)
+        sketchButton.accessibilityLabel = "sketch over image"
+        sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
+        
+        let emojiSketchButton = IconButton.iconButtonDefault()
+        emojiSketchButton.setIcon(.emoji, with: .tiny, for: .normal)
+        emojiSketchButton.accessibilityLabel = "sketch emoji over image"
+        emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
+        
+        
+        self.buttonsBar = InputBarButtonsView(buttons: [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton])
+        self.buttonsBar.clipsToBounds = true
+        self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
         self.view.addSubview(self.buttonsBar)
     }
 
@@ -286,6 +299,14 @@ internal final class ConversationImagesViewController: UIViewController {
     
     @objc public func revealCurrent(_ sender: AnyObject!) {
         self.messageActionDelegate?.wants(toPerform: .showInConversation, for: self.currentMessage)
+    }
+    
+    @objc public func sketchCurrent(_ sender: AnyObject!) {
+        self.messageActionDelegate?.wants(toPerform: .sketchDraw, for: self.currentMessage)
+    }
+    
+    @objc public func sketchCurrentEmoji(_ sender: AnyObject!) {
+        self.messageActionDelegate?.wants(toPerform: .sketchEmoji, for: self.currentMessage)
     }
 }
 
