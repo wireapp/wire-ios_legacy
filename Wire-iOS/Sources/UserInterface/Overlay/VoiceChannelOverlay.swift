@@ -46,6 +46,17 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     deinit {
         cancelHideControlsAfterElapsedTime()
     }
+    
+    @objc(setCancelButtonTarget:action:)
+    func setCancelButton(target: Any, action: Selector) {
+        cancelButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setCallButtonTarget:action:)
+    func setCallButton(target: Any, action: Selector) {
+        callButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+
 }
 
 extension VoiceChannelOverlay {
