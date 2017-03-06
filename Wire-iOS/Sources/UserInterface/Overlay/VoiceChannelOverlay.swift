@@ -32,7 +32,7 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     var degradationTopLabel: UILabel!
     var degradationBottomLabel: UILabel!
     var shieldOverlay: DegradationOverlayView!
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupVoiceOverlay()
@@ -200,7 +200,6 @@ extension VoiceChannelOverlay {
         
         degradationBottomLabel = createMultilineLabel()
         degradationBottomLabel.accessibilityIdentifier = "CallDegradationBottomLabel"
-        degradationBottomLabel.text = "voice.degradation.prompt".localized
 
         [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)
     }
@@ -415,17 +414,19 @@ extension VoiceChannelOverlay {
     }
     
     func updateCallDegradedLabels() {
+        if selfUser.untrusted() {
+            degradationTopLabel.text = "voice.degradation.new_self_device".localized
+        } else {
+            guard let user = callingConversation.connectedUser else { return }
+            let format = "voice.degradation.new_user_device".localized
+            degradationTopLabel.text = String(format: format, user.displayName)
+        }
         
         switch state {
-        case .outgoingCallDegraded, .incomingCallDegraded:
-            if ZMUser.selfUser().untrusted() {
-                degradationTopLabel.text = "voice.degradation.new_self_device".localized
-            } else {
-                guard let user = callingConversation.connectedUser else { return }
-                let format = "voice.degradation.new_user_device".localized
-                degradationTopLabel.text = String(format: format, user.displayName)
-            }
-            break
+        case .outgoingCallDegraded:
+            degradationBottomLabel.text = "voice.degradation_outgoing.prompt".localized
+        case .incomingCallDegraded:
+            degradationBottomLabel.text = "voice.degradation_incoming.prompt".localized
         default:
             break
         }
