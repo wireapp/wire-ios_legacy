@@ -64,7 +64,7 @@ internal final class ConversationImagesViewController: UIViewController {
             self.createNavigationTitle()
         }
     }
-    internal var pageViewController: UIPageViewController?
+    internal var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     internal var buttonsBar: InputBarButtonsView!
     internal let overlay = FeedbackOverlayView()
     internal let separator = UIView()
@@ -108,7 +108,7 @@ internal final class ConversationImagesViewController: UIViewController {
         view.addSubview(overlay)
         view.addSubview(separator)
         
-        constrain(self.view, self.pageViewController!.view, self.buttonsBar, overlay, separator) { view, pageControllerView, buttonsBar, overlay, separator in
+        constrain(self.view, self.pageViewController.view, self.buttonsBar, overlay, separator) { view, pageControllerView, buttonsBar, overlay, separator in
             pageControllerView.top == view.top
             pageControllerView.leading == view.leading
             pageControllerView.trailing == view.trailing
@@ -134,13 +134,9 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     private func createPageController() {
-        let pageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
-        
         pageViewController.delegate = self
         pageViewController.dataSource = self
         pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
-        
-        self.pageViewController = pageViewController
         
         self.addChildViewController(pageViewController)
         self.view.addSubview(pageViewController.view)
@@ -253,7 +249,7 @@ internal final class ConversationImagesViewController: UIViewController {
     
     var currentController: FullscreenImageViewController? {
         get {
-            guard let imageController = self.pageViewController?.viewControllers?.first as? FullscreenImageViewController else {
+            guard let imageController = self.pageViewController.viewControllers?.first as? FullscreenImageViewController else {
                 return .none
             }
             
