@@ -46,6 +46,7 @@ public class NotificationFetchEngine {
     let transportSession: ZMTransportSession
 
     private var observerToken: NSObjectProtocol?
+    private let strategyFactory: StrategyFactory
 
     public var changeClosure: (() -> Void)?
 
@@ -105,7 +106,9 @@ public class NotificationFetchEngine {
                   sharedContainerURL: URL,
                   authenticationStatus: AuthenticationStatusProvider,
                   clientRegistrationStatus: ClientRegistrationStatus,
-                  operationLoop: RequestGeneratingOperationLoop) throws {
+                  operationLoop: RequestGeneratingOperationLoop,
+                  strategyFactory: StrategyFactory
+                  ) throws {
 
         self.userInterfaceContext = userInterfaceContext
         self.syncContext = syncContext
@@ -113,6 +116,7 @@ public class NotificationFetchEngine {
         self.authenticationStatus = authenticationStatus
         self.clientRegistrationStatus = clientRegistrationStatus
         self.operationLoop = operationLoop
+        self.strategyFactory = strategyFactory
 
         guard authenticationStatus.state == .authenticated else { throw InitializationError.loggedOut }
 
@@ -125,13 +129,13 @@ public class NotificationFetchEngine {
         let authenticationStatus = AuthenticationStatus(transportSession: transportSession)
         let clientRegistrationStatus = ClientRegistrationStatus(context: syncContext)
 
-        let strategyFactory = StrategyFactory(
+        let factory = StrategyFactory(
             syncContext: syncContext,
             registrationStatus: clientRegistrationStatus,
             cancellationProvider: transportSession
         )
 
-        let requestGeneratorStore = RequestGeneratorStore(strategies: strategyFactory.createStrategies())
+        let requestGeneratorStore = RequestGeneratorStore(strategies: factory.strategies)
 
         let operationLoop = RequestGeneratingOperationLoop(
             userContext: userInterfaceContext,
@@ -148,12 +152,14 @@ public class NotificationFetchEngine {
             sharedContainerURL: sharedContainerURL,
             authenticationStatus: authenticationStatus,
             clientRegistrationStatus: clientRegistrationStatus,
-            operationLoop: operationLoop
+            operationLoop: operationLoop,
+            strategyFactory: factory
         )
     }
 
     deinit {
         transportSession.tearDown()
+        strategyFactory.tearDown()
     }
 
     private func setupCaches(atContainerURL containerURL: URL) {
@@ -175,14 +181,6 @@ public class NotificationFetchEngine {
     public func fetch(_ nonce: UUID, conversation: UUID) -> ZMAssetClientMessage? {
         guard let conversation = ZMConversation.fetch(withRemoteIdentifier: conversation, in: userInterfaceContext) else { return nil }
         return ZMAssetClientMessage.fetch(withNonce: nonce, for: conversation, in: userInterfaceContext)
-    }
-
-    public func enqueue(changes: @escaping () -> Void, completionHandler: (() -> Void)?) {
-        userInterfaceContext.performGroupedBlock { [weak self] in
-            changes()
-            self?.userInterfaceContext.saveOrRollback()
-            completionHandler?()
-        }
     }
 
     private func setupObservers() {
