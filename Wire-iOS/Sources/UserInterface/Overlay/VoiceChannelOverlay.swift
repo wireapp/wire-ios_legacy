@@ -540,11 +540,11 @@ extension VoiceChannelOverlay {
         case .outgoingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .outgoingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [self.shadow, self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .incomingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptDegradedButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [self.shadow, self.callingUserImage, self.topStatusLabel, self.acceptDegradedButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
             visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .connected:
