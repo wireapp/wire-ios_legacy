@@ -28,7 +28,7 @@ extension ConversationInputBarViewController {
     func sendEditedMessageAndUpdateState(withText text: String) {
         delegate.conversationInputBarViewControllerDidFinishEditing?(editingMessage, withText: text)
         editingMessage = nil
-        updateWritingState()
+        updateWritingState(animated: true)
     }
     
     func editMessage(_ message: ZMConversationMessage) {
@@ -53,7 +53,7 @@ extension ConversationInputBarViewController {
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation.draftMessageText = ""
         }
-        updateWritingState()
+        updateWritingState(animated: true)
 
         NotificationCenter.default.removeObserver(
             self,
@@ -66,9 +66,15 @@ extension ConversationInputBarViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: endEditingNotificationName), object: nil)
     }
 
-    public func updateWritingState() {
+    @objc(updateWritingStateAnimated:)
+    public func updateWritingState(animated: Bool) {
         guard nil == editingMessage else { return }
-        inputBar.inputBarState = .writing(ephemeral: conversation.destructionEnabled)
+        inputBar.updateInputBar(
+            withState: .writing(ephemeral: conversation.destructionEnabled),
+            oldState: inputBar.inputBarState,
+            animated: animated
+        )
+
         updateRightAccessoryView()
         updateButtonIconsForEphemeral()
     }
