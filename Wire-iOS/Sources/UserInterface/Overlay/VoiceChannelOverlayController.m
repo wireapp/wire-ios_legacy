@@ -87,12 +87,12 @@
 - (void)loadView
 {
     VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initForAutoLayout];
-    [overlayView setCallButtonTarget:self         action:@selector(callButtonClicked:)];
+    [overlayView setCallButtonTarget:self           action:@selector(callButtonClicked:)];
     [overlayView setAcceptButtonTarget:self         action:@selector(acceptButtonClicked:)];
     [overlayView setAcceptVideoButtonTarget:self    action:@selector(acceptVideoButtonClicked:)];
     [overlayView setIgnoreButtonTarget:self         action:@selector(ignoreButtonClicked:)];
     [overlayView setLeaveButtonTarget:self          action:@selector(leaveButtonClicked:)];
-    [overlayView setCancelButtonTarget:self          action:@selector(cancelButtonClicked:)];
+    [overlayView setCancelButtonTarget:self         action:@selector(cancelButtonClicked:)];
     [overlayView setMuteButtonTarget:self           action:@selector(muteButtonClicked:)];
     [overlayView setSpeakerButtonTarget:self        action:@selector(speakerButtonClicked:)];
     [overlayView setVideoButtonTarget:self          action:@selector(videoButtonClicked:)];
