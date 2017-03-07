@@ -218,6 +218,9 @@
 "content.system.started_using" = "开始使用";
 "content.system.is_verified" = "所有的指纹完成验证";
 
+"content.system.new_users" = "New user joined.";
+"content.system.verify_devices" = "Verify devices";
+
 "content.system.unverified" = "%@ 未经证实 %@ 之一"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "您的设备";
 "content.system.other_devices" = "%@ 的设备";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "您可以发送最大%@的文件。";
 // Someone pinged
-"content.ping.text" = "%1$@ ping了一下";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "您PING了一下";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "无法播放";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "连接质量不佳";
 "voice.network_error.title" = "没有互联网讯号";
 "voice.network_error.body" = "使用语音通话，您必须连接到互联网。请检查您的网路然后重试。";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ 开始使用新的设备。";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "接听";
 "voice.decline_button.title" = "拒绝";
 "voice.hang_up_button.title" = "结束通话";
 "voice.mute_button.title" = "静音";
 "voice.video_button.title" = "视频";
 "voice.speaker_button.title" = "免提";
+"voice.cancel_button.title" = "取消";
+"voice.call_button.title" = "通话";
 
 "voice.alert.microphone_warning.title" = "Wire需要使用麦克风的权限。";
 "voice.alert.microphone_warning.explanation" = "在Wire设置中激活。";

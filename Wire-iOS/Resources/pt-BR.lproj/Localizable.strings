@@ -218,6 +218,9 @@
 "content.system.started_using" = "começou a usar";
 "content.system.is_verified" = "Todas as impressões digitais são verificadas";
 
+"content.system.new_users" = "Novo usuário juntou-se.";
+"content.system.verify_devices" = "Verifique dispositivos";
+
 "content.system.unverified" = "%@ desautorizou um dos %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "seus dispositivos";
 "content.system.other_devices" = "dispositivos de %@";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Você pode enviar arquivos de até %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGOU";
+"content.ping.text" = "%1$@ pingou";
 
 // Current user pinged
-"content.ping.you.text" = "VOCÊ PINGOU";
+"content.ping.you.text" = "Você pingou";
 
 // Inline Player
 "content.player.unable_to_play" = "NÃO É POSSÍVEL REPRODUZIR FAIXA";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Conexão ruim";
 "voice.network_error.title" = "Sem conexão de internet";
 "voice.network_error.body" = "Você deve estar on-line para ligar. Verifique sua conexão e tente novamente.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ começou a usar um novo dispositivo.";
+"voice.degradation_outgoing.prompt" = "Você ainda quer fazer a ligação?";
+"voice.degradation_incoming.prompt" = "Você ainda quer aceitar a ligação?";
 "voice.accept_button.title" = "Aceitar";
 "voice.decline_button.title" = "Rejeitar";
 "voice.hang_up_button.title" = "Desligar";
 "voice.mute_button.title" = "Silenciar";
 "voice.video_button.title" = "Vídeo";
 "voice.speaker_button.title" = "Alto-falante";
+"voice.cancel_button.title" = "Cancelar";
+"voice.call_button.title" = "Chamada";
 
 "voice.alert.microphone_warning.title" = "Wire precisa de acesso ao microfone.";
 "voice.alert.microphone_warning.explanation" = "Habilite nas configurações do Wire.";
@@ -582,8 +591,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir Ajustes de Contatos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Isso ajuda a você se conectar com outros. Nós tornamos secretas todas as informações e não compartilhamos com ninguém. Permita o acesso em Ajustes > Privacidade > Contatos.";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app" = "Bloquear Com Código";
+"self.settings.privacy_security.lock_app.subtitle" = "Bloquear Wire depois de 10 segundos em plano de fundo. Debloqueie com o Touch ID ou entre seu código.";
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Desbloqueie o Wire com o Touch ID ou Código";

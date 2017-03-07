@@ -218,6 +218,9 @@
 "content.system.started_using" = "začel(-a) uporabljati";
 "content.system.is_verified" = "Vsi prstni odtisi naprav so preverjeni";
 
+"content.system.new_users" = "Nov(-a) uporabnik(-ca) se je pridružil(-a).";
+"content.system.verify_devices" = "Preveri naprave";
+
 "content.system.unverified" = "%@ odstranil(-a) preveritev ene izmed %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "tvoje naprave";
 "content.system.other_devices" = "naprave od %@";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Lahko pošljete zbirke do %@";
 // Someone pinged
-"content.ping.text" = "%1$@ JE PINGAL(-A)";
+"content.ping.text" = "%1$@ je pingal(-a)";
 
 // Current user pinged
-"content.ping.you.text" = "SI PINGAL(-A)";
+"content.ping.you.text" = "Ti si pingal(-a)";
 
 // Inline Player
 "content.player.unable_to_play" = "NI MOŽNO PREDVAJATI ZVOČNE SLEDI";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Slaba povezava";
 "voice.network_error.title" = "Ni spletne povezave";
 "voice.network_error.body" = "Morate biti na spletu za klicanje. Preverite vašo povezavo in poizkusite ponovno.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ je začel(-a) z uporabo nove naprave.";
+"voice.degradation_outgoing.prompt" = "Ali še vedno želite klicati?";
+"voice.degradation_incoming.prompt" = "Ali še vedno želite sprejeti klic?";
 "voice.accept_button.title" = "Sprejmi";
 "voice.decline_button.title" = "Zavrni";
 "voice.hang_up_button.title" = "Odloži";
 "voice.mute_button.title" = "Utišaj";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Zvočnik";
+"voice.cancel_button.title" = "Prekliči";
+"voice.call_button.title" = "Klic";
 
 "voice.alert.microphone_warning.title" = "Wire potrebuje dostop do mikrofona.";
 "voice.alert.microphone_warning.explanation" = "Omogoči v nastavitvah Wire.";
@@ -582,8 +591,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Odpri nastavitve stikov";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "To vam pomaga pri povezovanju z drugimi. Vse informacije anonimiziramo in ne delimo z drugimi. Dovolite dostop preko Nastavitve > Zasebnost > Stiki.";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app" = "Zakleni z geslom";
+"self.settings.privacy_security.lock_app.subtitle" = "Zakleni Wire po 10 sekundah v ozadju. Odklenite s Touch ID ali vnesite svoje geslo.";
 "self.settings.privacy_security.lock_app.description" = "Odkleni Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Odkleni Wire s Touch ID ali geslom";

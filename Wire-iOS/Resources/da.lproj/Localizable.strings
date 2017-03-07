@@ -218,6 +218,9 @@
 "content.system.started_using" = "er begyndt at bruge";
 "content.system.is_verified" = "Alle fingeraftryk er bekræftet";
 
+"content.system.new_users" = "Ny bruger tilsluttet.";
+"content.system.verify_devices" = "Verificer enheder";
+
 "content.system.unverified" = "%@ har ubekræftet en af %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "dine enheder";
 "content.system.other_devices" = "%@'s enheder";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Du kan sende filer op til %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGED";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "DU PINGEDE";
+"content.ping.you.text" = "Du pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "KAN IKKE AFSPILLE NUMMER";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Dårlig forbindelse";
 "voice.network_error.title" = "Ingen internetforbindelse";
 "voice.network_error.body" = "Du skal være online for at foretage opkald. Tjek din forbindelse og prøv igen.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ begyndte at bruge en ny enhed.";
+"voice.degradation_outgoing.prompt" = "Vil du stadig placere opkaldet?";
+"voice.degradation_incoming.prompt" = "Vil du stadig besvare opkaldet?";
 "voice.accept_button.title" = "Besvar";
 "voice.decline_button.title" = "Afvis";
 "voice.hang_up_button.title" = "Læg på";
 "voice.mute_button.title" = "Lyd fra";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Højtaler";
+"voice.cancel_button.title" = "Annuller";
+"voice.call_button.title" = "Ring op";
 
 "voice.alert.microphone_warning.title" = "Wire kræver adgang til Mikrofonen.";
 "voice.alert.microphone_warning.explanation" = "Aktiver det i Wire Indstillinger.";
@@ -582,8 +591,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Åbn indstillinger for kontakter";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dette hjælper dig med at oprette forbindelse med andre. Vi anonymiserer alle informationer og deler ikke med andre. Tillad adgang via Indstillinger > Privatliv > Kontakter.";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app" = "Lås med adgangskode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lås Wire efter 10 sekunder i baggrunden. Låse op med Touch ID eller indtaste din adgangskode.";
 "self.settings.privacy_security.lock_app.description" = "Åben Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Åben Wire med Touch ID eller adgangskode";
