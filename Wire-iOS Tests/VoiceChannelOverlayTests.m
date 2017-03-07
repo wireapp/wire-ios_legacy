@@ -58,6 +58,7 @@
     voiceChannelOverlay.callingConversation = (ZMConversation *)conversation;
     [voiceChannelOverlay transitionToState:state];
     [CASStyler.defaultStyler styleItem:voiceChannelOverlay];
+    voiceChannelOverlay.backgroundColor = [UIColor darkGrayColor];
     return voiceChannelOverlay;
 }
 
