@@ -508,6 +508,19 @@ extension VoiceChannelOverlay {
         }
     }
     
+    func updateCallingUserImage() {
+        let callingUser: ZMUser?
+        if callingConversation.conversationType == .oneOnOne {
+            callingUser = callingConversation.firstActiveParticipantOtherThanSelf()
+        } else if state == .outgoingCall || state == .outgoingCallDegraded {
+            callingUser = ZMUser.selfUser()
+        } else {
+            callingUser = self.callingConversation.firstActiveCallingParticipantOtherThanSelf()
+        }
+        self.callingUserImage.user = callingUser
+        self.callingTopUserImage.user = callingUser
+    }
+    
     func updateVisibleViewsForCurrentState() {
         updateStatusLabelText()
         updateCallingUserImage()

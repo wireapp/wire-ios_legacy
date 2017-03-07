@@ -63,7 +63,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 // Views that need to be visible from Swift
 - (void)updateStatusLabelText;
-- (void)updateCallingUserImage;
 
 @property (nonatomic) ZMUser *selfUser;
 

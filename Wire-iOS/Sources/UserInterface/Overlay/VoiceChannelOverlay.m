@@ -92,24 +92,6 @@ static NSString *NotNilString(NSString *string) {
     }
 }
 
-- (void)updateCallingUserImage
-{
-    ZMUser *callingUser = nil;
-    
-    if (self.callingConversation.conversationType == ZMConversationTypeOneOnOne) {
-        callingUser = self.callingConversation.firstActiveParticipantOtherThanSelf;
-    }
-    else if (self.state == VoiceChannelOverlayStateOutgoingCall) {
-        callingUser = [ZMUser selfUser];
-    }
-    else {
-        callingUser = self.callingConversation.firstActiveCallingParticipantOtherThanSelf;
-    }
-    
-    self.callingUserImage.user = callingUser;
-    self.callingTopUserImage.user = callingUser;
-}
-
 - (NSAttributedString *)attributedStatus
 {
     NSString *conversationName = self.callingConversation.displayName;
