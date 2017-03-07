@@ -38,7 +38,6 @@
 #import "ConversationMessageWindowTableViewAdapter.h"
 
 // ui
-#import "FullscreenImageViewController.h"
 #import "ZClientViewController.h"
 #import "UIView+MTAnimation.h"
 #import "GroupConversationHeader.h"

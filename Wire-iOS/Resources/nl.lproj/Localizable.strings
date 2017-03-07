@@ -103,7 +103,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "deelde een foto";
-"notifications.pinged" = "pingde";
+"notifications.pinged" = "gepinged";
 "notifications.sent_file" = "deelde een bestand";
 "notifications.sent_location" = "deelde een locatie";
 "notifications.sent_video" = "deelde een video";
@@ -218,6 +218,9 @@
 "content.system.started_using" = "begon met het gebruik van";
 "content.system.is_verified" = "Alle vingerafdrukken zijn geverifieerd";
 
+"content.system.new_users" = "Nieuwe gebruiker toegevoegd.";
+"content.system.verify_devices" = "Controleer apparaten";
+
 "content.system.unverified" = "%@ trok de verificatie van %@ in"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "jouw apparaten";
 "content.system.other_devices" = "%@’s apparaten";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "U kunt bestanden versturen tot %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGDE";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "JIJ PINGDE";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "NIET MOGELIJK OM AF TE SPELEN";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Slechte verbinding";
 "voice.network_error.title" = "Geen verbinding met internet";
 "voice.network_error.body" = "Je moet online zijn om te bellen. Controleer je verbinding en probeer opnieuw.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ is een ander apparaat gaan gebruiken.";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
 "voice.mute_button.title" = "Dempen";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Luidspreker";
+"voice.cancel_button.title" = "Annuleer";
+"voice.call_button.title" = "Oproep";
 
 "voice.alert.microphone_warning.title" = "Wire heeft toegang nodig tot de microfoon.";
 "voice.alert.microphone_warning.explanation" = "Open instellingen voor Wire om toegang tot de microfoon te geven.";
@@ -604,7 +613,7 @@
 "self.settings.advanced.reset_push_token.title" = "Herstel de Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervindt met push-notificaties, kan Wire je vragen om deze token te herstellen.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push token is gereset";
-"self.settings.advanced.reset_push_token_alert.message" = "Notificaties zullen worden hersteld over een paar seconden.";
+"self.settings.advanced.reset_push_token_alert.message" = "Notificaties zullen over een paar seconden worden hersteld.";
 "self.settings.advanced.version_technical_details.title" = "Technische details van deze versie";
 
 // Technical Report

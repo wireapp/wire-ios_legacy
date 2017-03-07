@@ -218,6 +218,9 @@
 "content.system.started_using" = "a commencé à utiliser";
 "content.system.is_verified" = "Toutes les empreintes sont vérifiées";
 
+"content.system.new_users" = "Un nouvel utilisateur a rejoint.";
+"content.system.verify_devices" = "Vérifier les périphériques";
+
 "content.system.unverified" = "%@ n'avez pas vérifié un des %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "vos appareils";
 "content.system.other_devices" = "appareils de %@";
@@ -265,7 +268,7 @@
 
 "content.file.too_big" = "Vous pouvez envoyer des fichiers jusqu'à %@";
 // Someone pinged
-"content.ping.text" = "%1$@ VOUS A FAIT UN SIGNE";
+"content.ping.text" = "%1$@ a fait un signe";
 
 // Current user pinged
 "content.ping.you.text" = "Vous avez fait un signe";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Mauvaise connexion";
 "voice.network_error.title" = "Pas de connexion Internet";
 "voice.network_error.body" = "Vous devez être connecté pour pouvoir appeler. Vérifiez votre connexion et réessayez.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ a commencé à utiliser un nouvel appareil.";
+"voice.degradation_outgoing.prompt" = "Voulez-vous toujours appeler ?";
+"voice.degradation_incoming.prompt" = "Voulez-vous toujours prendre l'appel ?";
 "voice.accept_button.title" = "Accepter";
 "voice.decline_button.title" = "Refuser";
 "voice.hang_up_button.title" = "Raccrocher";
 "voice.mute_button.title" = "Silence";
 "voice.video_button.title" = "Vidéo";
 "voice.speaker_button.title" = "Haut-parleur";
+"voice.cancel_button.title" = "Annuler";
+"voice.call_button.title" = "Appel";
 
 "voice.alert.microphone_warning.title" = "Wire a besoin d’accéder au Micro.";
 "voice.alert.microphone_warning.explanation" = "Activez-le dans les paramètres de Wire.";

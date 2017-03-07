@@ -218,6 +218,9 @@
 "content.system.started_using" = "начал(-а) использовать";
 "content.system.is_verified" = "Все отпечатки верифицированы";
 
+"content.system.new_users" = "Присоединился новый участник.";
+"content.system.verify_devices" = "Верифицируйте устройства";
+
 "content.system.unverified" = "%@ деверифицировал(-а) одно из %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "ваши устройства";
 "content.system.other_devices" = "Устройства, которыми пользуется %@";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Вы можете отправлять файлы до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ ОТПРАВИЛ ПИНГ";
+"content.ping.text" = "%1$@ отправил(а) пинг";
 
 // Current user pinged
-"content.ping.you.text" = "ВЫ ОТПРАВИЛИ ПИНГ";
+"content.ping.you.text" = "Вы отправили пинг";
 
 // Inline Player
 "content.player.unable_to_play" = "Невозможно проиграть трек";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
+"voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
+"voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
+"voice.degradation_outgoing.prompt" = "Вы действительно хотите позвонить?";
+"voice.degradation_incoming.prompt" = "Вы действительно хотите принять вызов?";
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
 "voice.mute_button.title" = "Выкл.звук";
 "voice.video_button.title" = "Видео";
 "voice.speaker_button.title" = "Динамик";
+"voice.cancel_button.title" = "Отменить";
+"voice.call_button.title" = "Позвонить";
 
 "voice.alert.microphone_warning.title" = "Wire необходим доступ к микрофону.";
 "voice.alert.microphone_warning.explanation" = "Включите его в настройках Wire.";

@@ -218,6 +218,9 @@
 "content.system.started_using" = "почали використовувати";
 "content.system.is_verified" = "Всі ідентифікатори були верифіковані";
 
+"content.system.new_users" = "Приєднався новий учасник.";
+"content.system.verify_devices" = "Верифікувати пристрої";
+
 "content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "ваші пристрої";
 "content.system.other_devices" = "Пристрої, що належать %@";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Ви можете надсилати файли до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ ВІДПРАВИВ(-ЛА) ПІНГ";
+"content.ping.text" = "%1$@ надіслав(-ла) пінг";
 
 // Current user pinged
-"content.ping.you.text" = "ВИ ВІДПРАВИЛИ ПІНГ";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "НЕМОЖЛИВО ВІДТВОРИТИ ТРЕК";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
 "voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ почав(-ла) використовувати новий пристрій.";
+"voice.degradation_outgoing.prompt" = "Ви все ще хочете здійснити дзвінок?";
+"voice.degradation_incoming.prompt" = "Ви все ще хочете прийняти дзвінок?";
 "voice.accept_button.title" = "Прийняти";
 "voice.decline_button.title" = "Скасувати";
 "voice.hang_up_button.title" = "Завершити";
 "voice.mute_button.title" = "Вимкнути звук";
 "voice.video_button.title" = "Відео";
 "voice.speaker_button.title" = "Гучномовець";
+"voice.cancel_button.title" = "Скасувати";
+"voice.call_button.title" = "Аудіодзвінок";
 
 "voice.alert.microphone_warning.title" = "Wire необхідний доступ до мікрофона.";
 "voice.alert.microphone_warning.explanation" = "Дозвольте доступ до мікрофона в налаштуваннях Wire.";

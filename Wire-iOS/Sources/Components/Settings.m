@@ -479,13 +479,7 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
 }
 
 - (CallingProtocolStrategy)callingProtocolStrategy
-{
-    // NOTE Defaults to calling 3. This should be removed when we want to rollout
-    // calling 3 to all users.
-    if ([self.defaults objectForKey:UserDefaultCallingProtocolStrategy] == nil) {
-        return CallingProtocolStrategyVersion3;
-    }
-    
+{    
     return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 

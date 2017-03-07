@@ -215,7 +215,7 @@
     [self updateInputBarVisibility];
     [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
-    [self updateWritingState];
+    [self updateWritingStateAnimated:NO];
     [self updateButtonIconsForEphemeral];
 }
 

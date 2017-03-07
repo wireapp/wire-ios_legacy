@@ -218,6 +218,9 @@
 "content.system.started_using" = "بدأت استخدام";
 "content.system.is_verified" = "تم التّحقق من رمز التشفير";
 
+"content.system.new_users" = "انضمّ مستخدم جديد.";
+"content.system.verify_devices" = "التحقق من الأجهزة";
+
 "content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "أجهزتك";
 "content.system.other_devices" = "أجهزة %@";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGED";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "YOU PINGED";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "غير قادر على تشغيل المقطع";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
 "voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ بدأ باستخدام جهاز جديد.";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "قبول";
 "voice.decline_button.title" = "رفض";
 "voice.hang_up_button.title" = "إنهاء الاتصال";
 "voice.mute_button.title" = "كتم الصوت";
 "voice.video_button.title" = "فيديو";
 "voice.speaker_button.title" = "مكبّر الصوت";
+"voice.cancel_button.title" = "إلغاء";
+"voice.call_button.title" = "اتصال";
 
 "voice.alert.microphone_warning.title" = "Wire يحتاج للوصول للميكرفون.";
 "voice.alert.microphone_warning.explanation" = "تَفعيلها من إعدادات Wire.";
@@ -582,8 +591,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "فتح إعدادات جهات الإتصال";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app" = "قفل برمز المرور";
+"self.settings.privacy_security.lock_app.subtitle" = "قفل Wire بعد ١٠ ثواني في الخلفية.\nفك القفل بإستخدام Touch ID أو أدخل رمز المرور.";
 "self.settings.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";

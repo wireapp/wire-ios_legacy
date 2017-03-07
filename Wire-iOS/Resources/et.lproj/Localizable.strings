@@ -218,6 +218,9 @@
 "content.system.started_using" = "hakkasid kasutama";
 "content.system.is_verified" = "Kontrollitakse kõiki sõrmejälgi";
 
+"content.system.new_users" = "Uus kasutaja liitus.";
+"content.system.verify_devices" = "Kinnita seadmed";
+
 "content.system.unverified" = "%@ tunnistas valeks ühe %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "sinu seadmetest";
 "content.system.other_devices" = "kasutaja %@ seadmed";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Saad saata faile suurusega %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGIS";
+"content.ping.text" = "%1$@ pingis";
 
 // Current user pinged
-"content.ping.you.text" = "SINA PINGISID";
+"content.ping.you.text" = "Sina pingisid";
 
 // Inline Player
 "content.player.unable_to_play" = "EI ÕNNESTU MÄNGIDA";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Kehv ühendus";
 "voice.network_error.title" = "Ühendus puudub";
 "voice.network_error.body" = "Helistamiseks pead online olema. Kontrolli ühendust ja proovi uuesti.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ hakkas uut seadet kasutama.";
+"voice.degradation_outgoing.prompt" = "Kas sa soovid siiski kõne teha?";
+"voice.degradation_incoming.prompt" = "Kas sa soovid siiski kõne vastu võtta?";
 "voice.accept_button.title" = "Vasta";
 "voice.decline_button.title" = "Keeldu";
 "voice.hang_up_button.title" = "Lõpeta kõne";
 "voice.mute_button.title" = "Hääletu";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Kõlar";
+"voice.cancel_button.title" = "Tühista";
+"voice.call_button.title" = "Kõne";
 
 "voice.alert.microphone_warning.title" = "Wire vajab lisipääsu mikrofonile.";
 "voice.alert.microphone_warning.explanation" = "Lülita see sisse Wire seadetest.";

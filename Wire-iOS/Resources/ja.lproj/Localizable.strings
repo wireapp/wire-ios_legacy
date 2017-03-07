@@ -218,6 +218,9 @@
 "content.system.started_using" = "使用を始めます";
 "content.system.is_verified" = "すべてのフィンガープリントは確認済みです";
 
+"content.system.new_users" = "新しいユーザーが参加しました。";
+"content.system.verify_devices" = "デバイスを認証する";
+
 "content.system.unverified" = "%@%@デバイスの一つは認証されませんでした。"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "あなたのデバイス";
 "content.system.other_devices" = "%@ のデバイス";
@@ -232,7 +235,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@のデバイスIDが変更されました。配信不能なメッセージです。";
 "content.system.cannot_decrypt.identity.you_part" = "あなたの";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@ のデバイス"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "もっと知る";
 "content.system.cannot_decrypt.otherDevice_part" = "(デバイス %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "%@までのファイルを送信できます。";
 // Someone pinged
-"content.ping.text" = "%1$@がPINGをしました";
+"content.ping.text" = "%1$@ pingしました";
 
 // Current user pinged
-"content.ping.you.text" = "あなたがPINGしました";
+"content.ping.you.text" = "あなたが ping しました";
 
 // Inline Player
 "content.player.unable_to_play" = "トラックを再生できません";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "接続不良";
 "voice.network_error.title" = "インターネット接続がありません";
 "voice.network_error.body" = "オンラインにしてから通話する必要が有ります。接続を確認してもう一度やり直して下さい。";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@が新しいデバイスを使い始めました。";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "承諾";
 "voice.decline_button.title" = "辞退";
 "voice.hang_up_button.title" = "電話を切る";
 "voice.mute_button.title" = "ミュート";
 "voice.video_button.title" = "ビデオ";
 "voice.speaker_button.title" = "スピーカー";
+"voice.cancel_button.title" = "キャンセル";
+"voice.call_button.title" = "通話";
 
 "voice.alert.microphone_warning.title" = "Wireはマイクにアクセスする必要が有ります";
 "voice.alert.microphone_warning.explanation" = "Wireの設定で有効にして下さい";
@@ -583,10 +592,10 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "これはあなたが友人とつながるを容易にします。私たちはすべての情報を匿名化し、他の第三者と共有することはしません。アクセスを許可するためには、設定>プライバシー>連絡先で設定します。";
 
 "self.settings.privacy_security.lock_app" = "コードでロック";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle" = "バックグラウンドでWireを10秒後にロックします。Touch ID またはパスコードを入力しロックを解除します。";
 "self.settings.privacy_security.lock_app.description" = "Wireのロックを解除する";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Touch ID またはパスコードでWireのロックを解除する";
 "self.settings.privacy_security.lock_cancelled.action" = "ロックを解除";
 
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";

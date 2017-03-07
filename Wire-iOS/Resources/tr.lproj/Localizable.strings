@@ -218,6 +218,9 @@
 "content.system.started_using" = "kullanmaya başladı";
 "content.system.is_verified" = "Tüm parmak izleri doğrulanmış";
 
+"content.system.new_users" = "Yeni biri katıldı.";
+"content.system.verify_devices" = "Cihazları doğrula";
+
 "content.system.unverified" = "%@, %@dan birini doğrulamadı"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "senin cihazların";
 "content.system.other_devices" = "%@'nin cihazların";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "En fazla %@ dosya yükleyebilirsin";
 // Someone pinged
-"content.ping.text" = "%1$@ PİNGLEDİ";
+"content.ping.text" = "%1$@ pingledi";
 
 // Current user pinged
-"content.ping.you.text" = "SEN PİNGLEDİN";
+"content.ping.you.text" = "Pingledin";
 
 // Inline Player
 "content.player.unable_to_play" = "PARÇA OYNATILAMIYOR";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Kötü bağlantı";
 "voice.network_error.title" = "Internet bağlantısı yok";
 "voice.network_error.body" = "Arama yapmak için çevrimiçi olmanız gerekir. Bağlantınızı kontrol edin ve yeniden deneyin.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ yeni bir cihaz kullanmaya başladı.";
+"voice.degradation_outgoing.prompt" = "Hala aramayı istiyor musunuz?";
+"voice.degradation_incoming.prompt" = "Hala aramayı kabul etmek istiyor musunuz?";
 "voice.accept_button.title" = "Kabul et";
 "voice.decline_button.title" = "Reddet";
 "voice.hang_up_button.title" = "Aramayı sonlandır";
 "voice.mute_button.title" = "Sustur";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Hoparlör";
+"voice.cancel_button.title" = "İptal";
+"voice.call_button.title" = "Ara";
 
 "voice.alert.microphone_warning.title" = "Wire'ın mikrofona erişmesi gerek.";
 "voice.alert.microphone_warning.explanation" = "Wire Ayarları'ndan etkinleştirin.";

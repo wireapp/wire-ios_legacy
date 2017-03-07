@@ -48,7 +48,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-
+        self.accessibilityIdentifier = @"TopPeopleCell";
+        self.isAccessibilityElement = YES;
         self.avatarContainer = [[UIView alloc] initWithFrame:CGRectZero];
         self.avatarContainer.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:self.avatarContainer];
@@ -153,6 +154,7 @@
     _user = user;
     self.badgeUserImageView.user = user;
     self.displayName = user.displayName;
+    self.accessibilityLabel = user.displayName;
 }
 
 - (void)setConversation:(ZMConversation *)conversation

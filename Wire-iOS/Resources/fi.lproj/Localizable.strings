@@ -218,6 +218,9 @@
 "content.system.started_using" = "aloittettiin käyttämään";
 "content.system.is_verified" = "Kaikki sormenjäljet on vahvistettu";
 
+"content.system.new_users" = "New user joined.";
+"content.system.verify_devices" = "Verify devices";
+
 "content.system.unverified" = "%@ poisti vahvistuksen yhdestä %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "sinun laitteista";
 "content.system.other_devices" = "%@ n laitteista";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Voit lähettää maksimissaan %@ n kokoisia tiedostoja";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGGASI";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "SINÄ PINGASIT";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "EI VOI SOITTAA KAPPALETTA";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Huono yhteys";
 "voice.network_error.title" = "Ei internet-yhteyttä";
 "voice.network_error.body" = "Sinun pitää olla online-tilassa soittaaksesi puheluja. Tarkista yhteytesi ja yritä uudelleen.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ aloitti käyttämään uutta laitetta.";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "Hyväksy";
 "voice.decline_button.title" = "Kieltäydy";
 "voice.hang_up_button.title" = "Katkaise puhelu";
 "voice.mute_button.title" = "Mykistä";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Kaiutin";
+"voice.cancel_button.title" = "Peruuta";
+"voice.call_button.title" = "Puhelu";
 
 "voice.alert.microphone_warning.title" = "Wire tarvitsee luvan käyttää mikrofonia.";
 "voice.alert.microphone_warning.explanation" = "Salli se Wiren asetuksissa.";
