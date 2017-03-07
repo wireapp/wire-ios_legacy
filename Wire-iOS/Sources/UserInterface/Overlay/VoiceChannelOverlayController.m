@@ -87,7 +87,8 @@
 - (void)loadView
 {
     VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initForAutoLayout];
-    [overlayView setCallButtonTarget:self           action:@selector(callButtonClicked:)];
+    [overlayView setCallButtonTarget:self           action:@selector(makeDegradedCallClicked:)];
+    [overlayView setAcceptDegradedButtonTarget:self action:@selector(acceptDegradedCallClicked:)];
     [overlayView setAcceptButtonTarget:self         action:@selector(acceptButtonClicked:)];
     [overlayView setAcceptVideoButtonTarget:self    action:@selector(acceptVideoButtonClicked:)];
     [overlayView setIgnoreButtonTarget:self         action:@selector(ignoreButtonClicked:)];
@@ -170,12 +171,23 @@
                                                                                     collectionView:self.overlayView.participantsCollectionView];
 }
 
-- (void)callButtonClicked:(id)sender
+- (void)makeDegradedCallClicked:(id)sender
 {
-    DDLogVoice(@"UI: Call button tap");
+    DDLogVoice(@"UI: Make degraded call button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
+    }];
+}
+
+- (void)acceptDegradedCallClicked:(id)sender
+{
+    DDLogVoice(@"UI: Accept degraded call button tap");
+    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
+    } completionHandler:^{
+        [self joinCurrentVoiceChannel];
     }];
 }
 

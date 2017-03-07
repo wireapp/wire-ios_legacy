@@ -96,6 +96,14 @@ VoiceChannelOverlay {
         }
     }
     
+    acceptDegradedButton: @{
+        iconButton: @{
+            backgroundImageColor[state:normal]: $color-accent-green;
+            iconColor[state:normal]: white;
+            borderWidth: 0;
+        }
+    }
+    
     callButton: @{
         iconButton: @{
             backgroundImageColor[state:normal]: $color-accent-green;

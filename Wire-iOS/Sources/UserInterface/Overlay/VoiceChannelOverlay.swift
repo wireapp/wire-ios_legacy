@@ -28,6 +28,7 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 @objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
     
     var cancelButton: IconLabelButton!
+    var acceptDegradedButton: IconLabelButton!
     var callButton: IconLabelButton!
     var degradationTopLabel: UILabel!
     var degradationBottomLabel: UILabel!
@@ -57,6 +58,11 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     @objc(setCallButtonTarget:action:)
     func setCallButton(target: Any, action: Selector) {
         callButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setAcceptDegradedButtonTarget:action:)
+    func setAcceptDegradedButton(target: Any, action: Selector) {
+        acceptDegradedButton.addTarget(target, action: action, for: .touchUpInside)
     }
 
 }
@@ -219,6 +225,7 @@ extension VoiceChannelOverlay {
     
     fileprivate func createButtons() {
         acceptButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptButton")
+        acceptDegradedButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptDegradedButton")
         acceptVideoButton = createButton(icon: .videoCall, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptVideoButton")
         ignoreButton = createButton(icon: .endCall, label: "voice.decline_button.title".localized, accessibilityIdentifier: "IgnoreButton")
         leaveButton = createButton(icon: .endCall, label: "voice.hang_up_button.title".localized, accessibilityIdentifier: "LeaveCallButton")
@@ -228,7 +235,7 @@ extension VoiceChannelOverlay {
         cancelButton = createButton(icon: .X, label: "voice.cancel_button.title".localized, accessibilityIdentifier: "SecurityCancelButton")
         callButton = createButton(icon: .phone, label: "voice.call_button.title".localized, accessibilityIdentifier: "SecurityCallButton")
 
-        [acceptButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton, cancelButton, callButton].forEach(contentContainer.addSubview)
+        [acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton, cancelButton, callButton].forEach(contentContainer.addSubview)
     }
     
     fileprivate func createButton(icon: ZetaIconType, label: String, accessibilityIdentifier: String) -> IconLabelButton {
@@ -357,7 +364,7 @@ extension VoiceChannelOverlay {
             }
         }
         
-        constrain([acceptButton, acceptVideoButton, videoButton, speakerButton, callButton]) { buttons in
+        constrain([acceptButton, acceptDegradedButton, acceptVideoButton, videoButton, speakerButton, callButton]) { buttons in
             let superview = (buttons.first?.superview)!
             buttons.forEach {
                 $0.width == OverlayButtonWidth
@@ -490,7 +497,7 @@ extension VoiceChannelOverlay {
     }
     
     var allOverlayViews: Set<UIView> {
-        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptDegradedButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
     }
     
     func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
@@ -506,7 +513,7 @@ extension VoiceChannelOverlay {
         case .incomingCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptDegradedButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
             visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
         case .connected:
@@ -537,7 +544,7 @@ extension VoiceChannelOverlay {
         case .incomingCall:
             visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptDegradedButton, self.ignoreButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
             visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
         case .connected:
