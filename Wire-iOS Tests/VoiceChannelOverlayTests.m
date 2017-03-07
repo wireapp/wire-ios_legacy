@@ -22,6 +22,7 @@
 #import "MockConversation.h"
 #import "VoiceChannelOverlay.h"
 #import "Wire_iOS_Tests-Swift.h"
+#import "Wire-Swift.h"
 
 @import Classy;
 
@@ -40,19 +41,30 @@
     self.conversation = [[MockConversation alloc] init];
     self.conversation.conversationType = ZMConversationTypeOneOnOne;
     self.conversation.displayName = @"John Doe";
+    self.conversation.connectedUser = [[MockUser mockUsers] lastObject];
     
     self.configurationBlock = ^(UIView *view, BOOL isPad) {
         ((VoiceChannelOverlay *)view).hidesSpeakerButton = isPad;
     };
 }
 
-- (VoiceChannelOverlay *)voiceChannelOverlayForState:(VoiceChannelOverlayState)state conversation:(MockConversation *)conversation
+- (VoiceChannelOverlay *)voiceChannelOverlayForState:(VoiceChannelOverlayState)state conversation:(MockConversation *)conversation selfUntrusted:(BOOL)untrusted
 {
     VoiceChannelOverlay *voiceChannelOverlay = [[VoiceChannelOverlay alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    
+    MockUser *selfUser = [MockUser mockSelfUser];
+    selfUser.untrusted = untrusted;
+    voiceChannelOverlay.selfUser = (ZMUser *)selfUser;
     voiceChannelOverlay.callingConversation = (ZMConversation *)conversation;
     [voiceChannelOverlay transitionToState:state];
     [CASStyler.defaultStyler styleItem:voiceChannelOverlay];
+    voiceChannelOverlay.backgroundColor = [UIColor darkGrayColor];
     return voiceChannelOverlay;
+}
+
+- (VoiceChannelOverlay *)voiceChannelOverlayForState:(VoiceChannelOverlayState)state conversation:(MockConversation *)conversation
+{
+    return [self voiceChannelOverlayForState:state conversation:conversation selfUntrusted:NO];
 }
 
 - (void)testIncomingAudioCall
@@ -64,6 +76,32 @@
 - (void)testOutgoingAudioCall
 {
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateOutgoingCall conversation:self.conversation];
+    ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
+}
+
+- (void)testOutgoingAudioCallDegraded
+{
+    VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateOutgoingCallDegraded conversation:self.conversation];
+    ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
+}
+
+- (void)testOutgoingAudioCallDegradedSelfUntrustedDevices
+{
+    VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateOutgoingCallDegraded conversation:self.conversation selfUntrusted: YES];
+    ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
+}
+
+- (void)testIncomingAudioCallDegraded
+{
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
+    VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateIncomingCallDegraded conversation:self.conversation];
+    ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
+}
+
+- (void)testIncomingAudioCallDegradedSelfUntrustedDevices
+{
+    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
+    VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateIncomingCallDegraded conversation:self.conversation selfUntrusted: YES];
     ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
 }
 

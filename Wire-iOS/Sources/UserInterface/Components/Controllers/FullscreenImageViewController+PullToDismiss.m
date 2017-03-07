@@ -83,6 +83,7 @@
 
 - (void)initiateImageDragFromLocation:(CGPoint)panGestureLocationInView translationOffset:(UIOffset)translationOffset
 {
+    [self setupSnapshotBackgroundView];
     [self showChrome:NO];
     
     self.initialImageViewCenter = self.imageView.center;

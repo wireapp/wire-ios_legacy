@@ -218,6 +218,9 @@
 "content.system.started_using" = "iniziato ad utilizzare";
 "content.system.is_verified" = "Tutte le impronte digitali sono state verificate";
 
+"content.system.new_users" = "Un nuovo utente é entrato.";
+"content.system.verify_devices" = "Verifica i dispositivi";
+
 "content.system.unverified" = "%@ hai tolto la verifica di %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "i tuoi dispositivi";
 "content.system.other_devices" = "dispositivi di %@";
@@ -232,7 +235,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ ha cambiato identità del dispositivo. Messaggio non recapitato.";
 "content.system.cannot_decrypt.identity.you_part" = "Il tuo";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "di %@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Ulteriori informazioni";
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Puoi inviare file fino a %@";
 // Someone pinged
-"content.ping.text" = "%1$@ HA FATTO UN TRILLO";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "HAI FATTO UN TRILLO";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSSIBILE RIPRODURRE LA TRACCIA";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
 "voice.network_error.body" = "È necessario essere online per chiamare. Controlla la connessione e riprova.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ ha iniziato a usare un nuovo dispositivo.";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "Accetta";
 "voice.decline_button.title" = "Rifiuta";
 "voice.hang_up_button.title" = "Riattacca";
 "voice.mute_button.title" = "Silenzia";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Altoparlante";
+"voice.cancel_button.title" = "Annulla";
+"voice.call_button.title" = "Chiama";
 
 "voice.alert.microphone_warning.title" = "Wire ha bisogno di accedere al microfono.";
 "voice.alert.microphone_warning.explanation" = "Abilitalo nelle impostazioni di Wire.";

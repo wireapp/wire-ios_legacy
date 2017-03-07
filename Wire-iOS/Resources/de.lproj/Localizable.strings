@@ -218,6 +218,9 @@
 "content.system.started_using" = "benutzt";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
+"content.system.new_users" = "Teilnehmer hinzugefügt.";
+"content.system.verify_devices" = "Überprüfe Geräte";
+
 "content.system.unverified" = "%@ hast die Überprüfung für ein Gerät von %@ widerrufen"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "deine Geräte";
 "content.system.other_devices" = "%@s Geräte";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
 // Someone pinged
-"content.ping.text" = "%1$@ HAT GEPINGT";
+"content.ping.text" = "%1$@ hat gepingt";
 
 // Current user pinged
-"content.ping.you.text" = "DU HAST GEPINGT";
+"content.ping.you.text" = "Du hast gepingt";
 
 // Inline Player
 "content.player.unable_to_play" = "MUSIK NICHT ABSPIELBAR";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Schlechte Verbindung";
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.network_error.body" = "Du brauchst eine Internetverbindung, um anzurufen. Überprüfe die Verbindung und versuche es erneut.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ hat ein neues Gerät hinzugefügt.";
+"voice.degradation_outgoing.prompt" = "Möchtest du noch anrufen?";
+"voice.degradation_incoming.prompt" = "Möchtest du den Anruf noch annehmen?";
 "voice.accept_button.title" = "Annehmen";
 "voice.decline_button.title" = "Ablehnen";
 "voice.hang_up_button.title" = "Beenden";
 "voice.mute_button.title" = "Stumm";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Lautsprecher";
+"voice.cancel_button.title" = "ABBRECHEN";
+"voice.call_button.title" = "Anruf";
 
 "voice.alert.microphone_warning.title" = "Wire benötigt Zugriff auf dein Mikrofon.";
 "voice.alert.microphone_warning.explanation" = "Aktiviere es in den Wire-Einstellungen.";

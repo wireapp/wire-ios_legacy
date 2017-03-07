@@ -32,8 +32,6 @@ extension MessagePresenter {
         
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
         
-        CASStyler.default().styleItem(imagesController)
-        
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)
@@ -41,7 +39,9 @@ extension MessagePresenter {
             imagesController.modalPresentationStyle = .overFullScreen
         }
         imagesController.modalTransitionStyle = .crossDissolve
-        
+
+        CASStyler.default().styleItem(imagesController)
+
         let closeButton = CollectionsView.closeButton()
         closeButton.addTarget(self, action: #selector(MessagePresenter.closeImagesButtonPressed(_:)), for: .touchUpInside)
         

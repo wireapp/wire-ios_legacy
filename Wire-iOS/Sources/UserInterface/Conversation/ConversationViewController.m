@@ -190,18 +190,21 @@
 
     [self addChildViewController:self.contentViewController];
     [self.view addSubview:self.contentViewController.view];
+    [self.contentViewController didMoveToParentViewController:self];
 
     [self addChildViewController:self.inputBarController];
     [self.view addSubview:self.inputBarController.view];
+    [self.inputBarController didMoveToParentViewController:self];
 
     [self addChildViewController:self.conversationBarController];
     [self.view addSubview:self.conversationBarController.view];
+    [self.conversationBarController didMoveToParentViewController:self];
 
     [self addChildViewController:self.chatHeadsViewController];
     [self.view addSubview:self.chatHeadsViewController.view];
+    [self.chatHeadsViewController didMoveToParentViewController:self];
 
     [self updateOutgoingConnectionVisibility];
-
     self.isAppearing = NO;
 
     [self createConstraints];

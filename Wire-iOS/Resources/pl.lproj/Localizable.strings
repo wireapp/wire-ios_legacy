@@ -218,6 +218,9 @@
 "content.system.started_using" = "rozpocznij korzystając z";
 "content.system.is_verified" = "Wszystkie odciski palców są zweryfikowane";
 
+"content.system.new_users" = "New user joined.";
+"content.system.verify_devices" = "Verify devices";
+
 "content.system.unverified" = "%@ nie zweryfikował jednego z %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "twoje urządzenia";
 "content.system.other_devices" = "urządzenie %@a";
@@ -265,10 +268,10 @@
 
 "content.file.too_big" = "Możesz wysyłać pliki do %@";
 // Someone pinged
-"content.ping.text" = "%1$@ zaczepił";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "Zaczepiłeś";
+"content.ping.you.text" = "You pinged";
 
 // Inline Player
 "content.player.unable_to_play" = "NIE MOŻNA ODTWORZYĆ";
@@ -290,12 +293,18 @@
 "voice.status.low_connection" = "Błąd połączenia";
 "voice.network_error.title" = "Brak połączenia z Internetem";
 "voice.network_error.body" = "Musisz być online, aby połączyć. Sprawdź połączenie i spróbuj ponownie.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ rozpoczął korzystanie z nowego urządzenia.";
+"voice.degradation_outgoing.prompt" = "Czy nadal chcesz nawiązać połączenie?";
+"voice.degradation_incoming.prompt" = "Czy nadal chcesz odebrać połączenie?";
 "voice.accept_button.title" = "Odbierz";
 "voice.decline_button.title" = "Odrzuć";
 "voice.hang_up_button.title" = "Rozłącz";
 "voice.mute_button.title" = "Wycisz";
 "voice.video_button.title" = "Wideo";
 "voice.speaker_button.title" = "Głośnik";
+"voice.cancel_button.title" = "Anuluj";
+"voice.call_button.title" = "Połączenie";
 
 "voice.alert.microphone_warning.title" = "Wire potrzebuje dostępu do mikrofonu.";
 "voice.alert.microphone_warning.explanation" = "Włącz to w ustawieniach";

@@ -26,6 +26,16 @@ NSString *const CollectionViewContainerCellReuseIdentifier = @"CollectionViewCon
 
 @implementation CollectionViewContainerCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.accessibilityIdentifier = @"topPeopleSection";
+    }
+
+    return self;
+}
+
 - (void)setCollectionView:(UICollectionView *)collectionView
 {
     [_collectionView removeFromSuperview];

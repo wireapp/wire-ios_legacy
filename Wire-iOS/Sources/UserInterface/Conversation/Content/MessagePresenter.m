@@ -21,7 +21,6 @@
 #import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+FileTransfer.h"
-#import "FullscreenImageViewController.h"
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
 

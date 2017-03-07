@@ -369,14 +369,13 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     // MARK: - Audio state observer
-    
     dynamic private func audioProgressChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayerProgressAnimated(false)
             self.updateTimeLabel()
         }
     }
-    
+
     dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayButton()

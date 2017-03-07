@@ -21,34 +21,34 @@
 
 @class ZMUser;
 @class ZMConversation;
-@class VoiceChannelOverlay;
+@class VoiceChannelOverlay_Old;
 @class VoiceChannelCollectionViewLayout;
 @class CameraPreviewView;
 @class AVSVideoView;
-
+@class AVSVideoPreview;
+@class IconLabelButton;
+@class UserImageView;
+@class CameraPreviewView;
 
 typedef NS_ENUM(NSInteger, VoiceChannelOverlayState) {
     VoiceChannelOverlayStateInvalid,
     VoiceChannelOverlayStateIncomingCall,
     VoiceChannelOverlayStateIncomingCallInactive,
+    VoiceChannelOverlayStateIncomingCallDegraded,
     VoiceChannelOverlayStateJoiningCall,
     VoiceChannelOverlayStateOutgoingCall,
+    VoiceChannelOverlayStateOutgoingCallDegraded,
     VoiceChannelOverlayStateConnected,
 };
 
 FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverlayState state);
 
-@interface VoiceChannelOverlay : UIView
+@interface VoiceChannelOverlay_Old : UIView
 
-@property (nonatomic, readonly) AVSVideoView *videoView;
-@property (nonatomic, readonly) CameraPreviewView *cameraPreviewView;
 @property (nonatomic) NSTimeInterval callDuration;
 @property (nonatomic) ZMConversation *callingConversation;
 
-@property (nonatomic, readonly) UICollectionView *participantsCollectionView;
-@property (nonatomic, readonly) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
-
-@property (nonatomic, assign, readonly) VoiceChannelOverlayState state;
+@property (nonatomic, assign) VoiceChannelOverlayState state;
 
 @property (nonatomic) BOOL muted;
 @property (nonatomic) BOOL speakerActive;
@@ -59,7 +59,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) BOOL controlsHidden;
 @property (nonatomic) BOOL hidesSpeakerButton; // Defaults to NO
 
-- (void)transitionToState:(VoiceChannelOverlayState)state;
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action;
 - (void)setAcceptVideoButtonTarget:(id)target action:(SEL)action;
@@ -72,5 +71,51 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 - (void)setSwitchCameraButtonTarget:(id)target action:(SEL)action;
 
 - (void)animateCameraChangeWithChangeAction:(dispatch_block_t)action completion:(dispatch_block_t)completion;
+
+
+// Views that need to be visible from Swift
+
+- (void)updateStatusLabelText;
+- (void)updateCallingUserImage;
+- (CGPoint)cameraPreviewPosition;
+
+@property (nonatomic) ZMUser *selfUser;
+
+@property (nonatomic) CameraPreviewView *cameraPreviewView;
+@property (nonatomic) BOOL videoViewFullscreen;
+
+@property (nonatomic) UICollectionView *participantsCollectionView;
+@property (nonatomic) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
+
+@property (nonatomic) AVSVideoPreview *videoPreview;
+@property (nonatomic) AVSVideoView *videoView;
+
+@property (nonatomic) UIView *contentContainer;
+@property (nonatomic) UIView *avatarContainer;
+
+@property (nonatomic) NSLayoutConstraint *cameraPreviewCenterHorisontally;
+@property (nonatomic) CGFloat cameraPreviewInitialPositionX;
+
+@property (nonatomic) UIView *shadow;
+@property (nonatomic) UIView *videoNotAvailableBackground;
+
+@property (nonatomic) UILabel *topStatusLabel;
+@property (nonatomic) UILabel *centerStatusLabel;
+@property (nonatomic) NSLayoutConstraint *statusLabelToTopUserImageInset;
+@property (nonatomic) NSDateComponentsFormatter *callDurationFormatter;
+
+@property (nonatomic) UserImageView *callingUserImage;
+@property (nonatomic) UserImageView *callingTopUserImage;
+
+@property (nonatomic) IconLabelButton *acceptButton;
+@property (nonatomic) IconLabelButton *acceptVideoButton;
+@property (nonatomic) IconLabelButton *ignoreButton;
+@property (nonatomic) IconLabelButton *leaveButton;
+@property (nonatomic) NSLayoutConstraint *leaveButtonPinRightConstraint;
+@property (nonatomic) IconLabelButton *muteButton;
+@property (nonatomic) IconLabelButton *speakerButton;
+@property (nonatomic) IconLabelButton *videoButton;
+
+- (void)setupCameraFeedPanGestureRecognizer;
 
 @end
