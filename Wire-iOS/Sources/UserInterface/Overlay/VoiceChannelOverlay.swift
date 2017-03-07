@@ -73,6 +73,42 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
             self.centerStatusLabel.text = (lowBandwidth ? "voice.status.low_connection".localized : "voice.status.video_not_available".localized).uppercasedWithCurrentLocale
         }
     }
+    
+    var callDuration: TimeInterval = 0 {
+        didSet {
+            updateStatusLabelText()
+        }
+    }
+    
+    var attributedStatus: NSAttributedString? {
+        let conversationName = callingConversation.displayName
+        switch state {
+        case .incomingCall:
+            if callingConversation.conversationType == .oneOnOne {
+                let statusText = "voice.status.one_to_one.incoming".localized.lowercasedWithCurrentLocale
+                return labelText(withFormat: statusText, name: conversationName)
+            } else {
+                let statusText = "voice.status.group_call.incoming".localized.lowercasedWithCurrentLocale
+                return labelText(withFormat: statusText, name: conversationName)
+
+            }
+        case .outgoingCall:
+            let statusText = "voice.status.one_to_one.outgoing".localized.lowercasedWithCurrentLocale
+            return labelText(withFormat: statusText, name: conversationName)
+        case .incomingCallDegraded, .outgoingCallDegraded:
+            return labelText(withFormat: "%@\n", name: conversationName)
+        case .joiningCall:
+            let statusText = "voice.status.joining".localized.lowercasedWithCurrentLocale
+            return labelText(withFormat: statusText, name: conversationName)
+        case .connected:
+            guard let duration = callDurationFormatter.string(from: callDuration) else { return nil }
+            let statusText = String(format:"%%@\n%@", duration)
+            return labelText(withFormat: statusText, name: conversationName)
+        case .invalid, .incomingCallInactive:
+            return nil
+        }
+    }
+    
     var controlsHidden = false
 
     var cancelButton: IconLabelButton!
@@ -133,6 +169,11 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
         callButton.addTarget(target, action: action, for: .touchUpInside)
     }
 
+    func updateStatusLabelText() {
+        if let statusText = attributedStatus {
+            topStatusLabel.attributedText = statusText
+        }
+    }
 }
 
 // MARK: - Showing/hiding controls

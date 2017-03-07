@@ -84,64 +84,6 @@ static NSString *NotNilString(NSString *string) {
 
 @implementation VoiceChannelOverlay_Old
 
-- (void)updateStatusLabelText
-{
-    NSAttributedString *statusText = [self attributedStatus];
-    if (statusText != nil) {
-        self.topStatusLabel.attributedText = statusText;
-    }
-}
-
-- (NSAttributedString *)attributedStatus
-{
-    NSString *conversationName = self.callingConversation.displayName;
-    
-    switch (self.state) {
-        
-        case VoiceChannelOverlayStateInvalid:
-        case VoiceChannelOverlayStateIncomingCallInactive:
-            return nil;
-            
-        case VoiceChannelOverlayStateIncomingCall: {
-            if (self.callingConversation.conversationType == ZMConversationTypeOneOnOne) {
-                NSString *statusText = NSLocalizedString(@"voice.status.one_to_one.incoming", nil);
-                statusText = [statusText lowercasedWithCurrentLocale];
-                return [self labelTextWithFormat:statusText name:conversationName];
-            } else {
-                NSString *statusText = NSLocalizedString(@"voice.status.group_call.incoming", nil);
-                statusText = [statusText lowercasedWithCurrentLocale];
-                return [self labelTextWithFormat:statusText name:conversationName];
-            }
-            break;
-        }
-            
-        case VoiceChannelOverlayStateOutgoingCall: {
-            NSString *statusText = NSLocalizedString(@"voice.status.one_to_one.outgoing", nil);
-            statusText = [statusText lowercasedWithCurrentLocale];
-            return [self labelTextWithFormat:statusText name:conversationName];
-            break;
-        }
-            
-        case VoiceChannelOverlayStateIncomingCallDegraded:
-        case VoiceChannelOverlayStateOutgoingCallDegraded:
-            return [self labelTextWithFormat:@"%@\n" name:conversationName];
-            break;
-            
-        case VoiceChannelOverlayStateJoiningCall: {
-            NSString *statusText = NSLocalizedString(@"voice.status.joining", nil);
-            statusText = [statusText lowercasedWithCurrentLocale];
-            return [self labelTextWithFormat:statusText name:conversationName];
-            break;
-        }
-            
-        case VoiceChannelOverlayStateConnected: {
-            NSString *statusText = [NSString stringWithFormat:@"%%@\n%@", [self.callDurationFormatter stringFromTimeInterval:self.callDuration]];
-            return [self labelTextWithFormat:statusText name:conversationName];
-            break;
-        }
-    }
-}
-
 #pragma mark - Message formating
 
 - (NSDictionary *)baseAttributes
@@ -177,19 +119,6 @@ static NSString *NotNilString(NSString *string) {
     
     NSAttributedString *attributedName = [[NSAttributedString alloc] initWithString:NotNilString(name) attributes:self.nameAttributes];
     return [NSAttributedString attributedStringWithDefaultAttributes:self.messageAttributes format:format, attributedName];
-}
-
-- (void)setCallDuration:(NSTimeInterval)callDuration
-{
-    callDuration = round(callDuration);
-    
-    if (_callDuration == callDuration) {
-        return;
-    }
-    
-    _callDuration = callDuration;
-    
-    [self updateStatusLabelText];
 }
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action

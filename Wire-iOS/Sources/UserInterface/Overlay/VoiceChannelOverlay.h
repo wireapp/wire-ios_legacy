@@ -45,7 +45,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 @interface VoiceChannelOverlay_Old : UIView
 
-@property (nonatomic) NSTimeInterval callDuration;
 @property (nonatomic) ZMConversation *callingConversation;
 
 @property (nonatomic, assign) VoiceChannelOverlayState state;
@@ -62,7 +61,8 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 
 // Views that need to be visible from Swift
-- (void)updateStatusLabelText;
+- (NSAttributedString *)labelTextWithFormat:(NSString*)format name:(NSString *)name;
+
 
 @property (nonatomic) ZMUser *selfUser;
 
