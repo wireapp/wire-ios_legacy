@@ -32,6 +32,8 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     var degradationTopLabel: UILabel!
     var degradationBottomLabel: UILabel!
     var shieldOverlay: DegradationOverlayView!
+    var degradationTopConstraint: NSLayoutConstraint!
+    var degradationBottomConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -281,13 +283,16 @@ extension VoiceChannelOverlay {
             
             degradationTopLabel.leading >= contentContainer.leadingMargin
             degradationTopLabel.trailing <= contentContainer.trailingMargin
-            degradationTopLabel.bottom == callingUserImage.top - 16
+            
+            self.degradationTopConstraint = (degradationTopLabel.bottom == callingUserImage.top - 16)
+            self.degradationTopConstraint.isActive = false
             degradationTopLabel.centerX == contentContainer.centerX
 
             degradationBottomLabel.leading >= contentContainer.leadingMargin
             degradationBottomLabel.trailing <= contentContainer.trailingMargin
             degradationBottomLabel.centerX == contentContainer.centerX
-            degradationBottomLabel.top == callingUserImage.bottom + 16
+            self.degradationBottomConstraint = (degradationBottomLabel.top == callingUserImage.bottom + 16)
+            self.degradationBottomConstraint.isActive = false
             degradationBottomLabel.bottom == callButton.top - 8
         }
         
@@ -413,6 +418,11 @@ extension VoiceChannelOverlay {
         }
     }
     
+    private func setDegradationLabelConstraints(active: Bool) {
+        self.degradationTopConstraint.isActive = active
+        self.degradationBottomConstraint.isActive = active
+    }
+    
     func updateCallDegradedLabels() {
         if selfUser.untrusted() {
             degradationTopLabel.text = "voice.degradation.new_self_device".localized
@@ -425,10 +435,12 @@ extension VoiceChannelOverlay {
         switch state {
         case .outgoingCallDegraded:
             degradationBottomLabel.text = "voice.degradation_outgoing.prompt".localized
+            setDegradationLabelConstraints(active: true)
         case .incomingCallDegraded:
             degradationBottomLabel.text = "voice.degradation_incoming.prompt".localized
+            setDegradationLabelConstraints(active: true)
         default:
-            break
+            setDegradationLabelConstraints(active: false)
         }
     }
     
