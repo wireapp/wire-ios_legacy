@@ -70,14 +70,11 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 - (void)setVideoButtonTarget:(id)target action:(SEL)action;
 - (void)setSwitchCameraButtonTarget:(id)target action:(SEL)action;
 
-- (void)animateCameraChangeWithChangeAction:(dispatch_block_t)action completion:(dispatch_block_t)completion;
-
 
 // Views that need to be visible from Swift
 
 - (void)updateStatusLabelText;
 - (void)updateCallingUserImage;
-- (CGPoint)cameraPreviewPosition;
 
 @property (nonatomic) ZMUser *selfUser;
 
@@ -115,7 +112,5 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) IconLabelButton *muteButton;
 @property (nonatomic) IconLabelButton *speakerButton;
 @property (nonatomic) IconLabelButton *videoButton;
-
-- (void)setupCameraFeedPanGestureRecognizer;
 
 @end

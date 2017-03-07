@@ -18,12 +18,15 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 let CameraPreviewContainerSize: CGFloat = 72.0;
 let OverlayButtonWidth: CGFloat = 56.0;
 let GroupCallAvatarSize: CGFloat = 120.0;
 let GroupCallAvatarGainRadius: CGFloat = 14.0;
 let GroupCallAvatarLabelHeight: CGFloat = 30.0;
+
+fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
 
 @objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
     
@@ -34,6 +37,19 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     var shieldOverlay: DegradationOverlayView!
     var degradationTopConstraint: NSLayoutConstraint!
     var degradationBottomConstraint: NSLayoutConstraint!
+    var cameraPreviewPosition: CGPoint {
+        get {
+            if let positionString = UserDefaults.standard.string(forKey: VoiceChannelOverlayVideoFeedPositionKey)   {
+                return CGPointFromString(positionString)
+            } else {
+                return cameraRightPosition()
+            }
+        }
+        set {
+            let position = NSStringFromCGPoint(newValue)
+            UserDefaults.standard.set(position, forKey: VoiceChannelOverlayVideoFeedPositionKey)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -576,13 +592,89 @@ extension VoiceChannelOverlay {
         }
         
         if visibleViews.contains(cameraPreviewView) {
-            cameraPreviewCenterHorisontally.constant = cameraPreviewPosition().x
+            cameraPreviewCenterHorisontally.constant = cameraPreviewPosition.x
         }
         
         if isVideoCall {
             leaveButtonPinRightConstraint.isActive = false
         } else {
             leaveButtonPinRightConstraint.isActive = hidesSpeakerButton
+        }
+    }
+}
+
+extension VoiceChannelOverlay {
+    func setupCameraFeedPanGestureRecognizer() {
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(onCameraPreviewPan(_:)))
+        cameraPreviewView.addGestureRecognizer(pan)
+    }
+    
+    func cameraRightPosition() -> CGPoint {
+        let inset: CGFloat = 24
+        let sideInset = (bounds.width - inset) / 2
+        return CGPoint(x: sideInset, y: 0)
+    }
+
+    func cameraLeftPosition() -> CGPoint {
+        let inset: CGFloat = 24
+        let sideInset = (bounds.width - inset) / 2
+        return CGPoint(x: -sideInset, y: 0)
+    }
+    
+    func onCameraPreviewPan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        let offset = gestureRecognizer.translation(in: self)
+        let newPositionX = cameraPreviewInitialPositionX + offset.x;
+        let dragThreshold: CGFloat = 180
+        
+        switch gestureRecognizer.state {
+        case .began:
+            cameraPreviewInitialPositionX = cameraPreviewCenterHorisontally.constant
+        case .changed:
+            cameraPreviewInitialPositionX = newPositionX
+            layoutIfNeeded()
+        case .ended:
+            UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.7) {
+                var endPosition = CGPoint.zero
+                if (self.cameraPreviewInitialPositionX < 0) {
+                    if fabs(offset.x) > dragThreshold {
+                        // move to new position
+                        endPosition = self.cameraRightPosition()
+                    } else {
+                        // bounce back
+                        endPosition = self.cameraLeftPosition()
+                    }
+                }
+                else { // camera was on the right
+                    if fabs(offset.x) > dragThreshold {
+                        // move to new position
+                        endPosition = self.cameraLeftPosition()
+                    }
+                    else {
+                        // bounce back
+                        endPosition = self.cameraRightPosition()
+                    }
+                }
+                self.cameraPreviewPosition = endPosition
+                self.cameraPreviewCenterHorisontally.constant = endPosition.x
+                self.layoutIfNeeded()
+            }
+        default:
+            break;
+        }
+    }
+    
+    func animateCameraChange(changeAction action: (() -> Void)?, completion: ((Bool) -> Void)?) {
+        let snapshot = cameraPreviewView.videoFeedContainer.snapshotView(afterScreenUpdates: true)!
+        cameraPreviewView.addSubview(snapshot)
+        if let action = action {
+            action()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            let initialTransform = CATransform3DRotate(self.cameraPreviewView.switchCameraButton.layer.transform, CGFloat.pi, 0, 1, 0)
+            self.cameraPreviewView.switchCameraButton.layer.transform = CATransform3DRotate(initialTransform, CGFloat.pi, 1, 0, 0)
+            UIView.transition(with: self.cameraPreviewView, duration: 0.8, options: [.transitionFlipFromLeft], animations: {
+                snapshot.removeFromSuperview()
+            }, completion: completion)
         }
     }
 }

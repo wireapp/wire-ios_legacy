@@ -84,12 +84,6 @@ static NSString *NotNilString(NSString *string) {
 
 @implementation VoiceChannelOverlay_Old
 
-- (void)setupCameraFeedPanGestureRecognizer
-{
-    UIPanGestureRecognizer *videoFeedPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onCameraPreviewPan:)];
-    [self.cameraPreviewView addGestureRecognizer:videoFeedPan];
-}
-
 - (void)setVideoViewFullscreen:(BOOL)videoViewFullscreen
 {
     [self createVideoPreviewIfNeeded];
@@ -206,52 +200,6 @@ static NSString *NotNilString(NSString *string) {
     }
 }
 
-#pragma mark - Camera preview position storage
-
-- (CGPoint)normalizedCameraPreviewPositionFromPosition:(CGPoint)position
-{
-    CGPoint center = CGPointZero;
-
-    if (position.x < - 0) {
-        center = [self cameraLeftPosition];
-    }
-    else {
-        center = [self cameraRightPosition];
-    }
-    
-    return center;
-}
-
-- (CGPoint)cameraRightPosition
-{
-    const CGFloat inset = 24.0f;
-    CGFloat sideInset = (self.bounds.size.width - inset) / 2.0f;
-    
-    return CGPointMake(sideInset, 0);
-}
-
-- (CGPoint)cameraLeftPosition
-{
-    const CGFloat inset = 24.0f;
-    CGFloat sideInset = (self.bounds.size.width - inset) / 2.0f;
-    
-    return CGPointMake(- sideInset, 0);
-}
-
-- (CGPoint)cameraPreviewPosition
-{
-    NSString *positionString = [[NSUserDefaults standardUserDefaults] objectForKey:VoiceChannelOverlayVideoFeedPositionKey];
-    if (positionString.length == 0) {
-        return [self cameraRightPosition];
-    }
-    return CGPointFromString(positionString);
-}
-
-- (void)setCameraPreviewPosition:(CGPoint)position
-{
-    [[NSUserDefaults standardUserDefaults] setObject:NSStringFromCGPoint(position) forKey:VoiceChannelOverlayVideoFeedPositionKey];
-}
-
 #pragma mark - Message formating
 
 - (NSDictionary *)baseAttributes
@@ -353,91 +301,6 @@ static NSString *NotNilString(NSString *string) {
 - (void)setSwitchCameraButtonTarget:(id)target action:(SEL)action;
 {
     [self.cameraPreviewView.switchCameraButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)animateCameraChangeWithChangeAction:(dispatch_block_t)action completion:(dispatch_block_t)completion
-{
-    UIView *snapshot = [self.cameraPreviewView.videoFeedOuterContainer snapshotViewAfterScreenUpdates:YES];
-    [self.cameraPreviewView addSubview:snapshot];
-    if (action) {
-        action();
-    }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.cameraPreviewView.switchCameraButton.layer.transform = CATransform3DRotate(CATransform3DRotate(self.cameraPreviewView.switchCameraButton.layer.transform, M_PI, 0, 1, 0), M_PI, 1, 0, 0);
-        [UIView transitionWithView:self.cameraPreviewView
-                          duration:0.8f
-                           options:UIViewAnimationOptionTransitionFlipFromLeft
-                        animations:^{
-
-                            [snapshot removeFromSuperview];
-                        }
-                        completion:^(BOOL finished) {
-                            if (completion) {
-                                completion();
-                            }
-                        }];
-    });
-}
-
-#pragma mark - Camera preview pan
-
-- (void)onCameraPreviewPan:(UIPanGestureRecognizer *)panGestureRecognizer
-{
-    CGPoint offset = [panGestureRecognizer translationInView:self];
-    CGFloat newPositionX = self.cameraPreviewInitialPositionX + offset.x;
-    const CGFloat dragThreshold = 180.0f;
-    
-    switch (panGestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:
-            self.cameraPreviewInitialPositionX = self.cameraPreviewCenterHorisontally.constant;
-            break;
-            
-        case UIGestureRecognizerStateChanged:
-            self.cameraPreviewCenterHorisontally.constant = newPositionX;
-            [self layoutIfNeeded];
-            break;
-            
-        case UIGestureRecognizerStateEnded:
-        {
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.7f animations:^() {
-                CGPoint endPosition = CGPointZero;
-                
-                // camera was on the left
-                if (self.cameraPreviewInitialPositionX < 0) {
-                    if (fabs(offset.x) > dragThreshold) {
-                        // move to new position
-                        endPosition = [self cameraRightPosition];
-                    }
-                    else {
-                        // bounce back
-                        endPosition = [self cameraLeftPosition];
-                    }
-                }
-                else { // camera was on the right
-                    if (fabs(offset.x) > dragThreshold) {
-                        // move to new position
-                        endPosition = [self cameraLeftPosition];
-                    }
-                    else {
-                        // bounce back
-                        endPosition = [self cameraRightPosition];
-                    }
-                }
-                self.cameraPreviewPosition = endPosition;
-                self.cameraPreviewCenterHorisontally.constant = endPosition.x;
-                [self layoutIfNeeded];
-            }];
-        }
-            break;
-            
-        case UIGestureRecognizerStateCancelled:
-        case UIGestureRecognizerStateFailed:
-            
-            break;
-            
-        default:
-            break;
-    }
 }
 
 @end
