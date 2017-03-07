@@ -50,16 +50,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 @property (nonatomic, assign) VoiceChannelOverlayState state;
 
-@property (nonatomic) BOOL muted;
-@property (nonatomic) BOOL speakerActive;
-@property (nonatomic) BOOL remoteIsSendingVideo;
-@property (nonatomic) BOOL incomingVideoActive;
-@property (nonatomic) BOOL outgoingVideoActive;
-@property (nonatomic) BOOL lowBandwidth;
-@property (nonatomic) BOOL controlsHidden;
-@property (nonatomic) BOOL hidesSpeakerButton; // Defaults to NO
-
-
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action;
 - (void)setAcceptVideoButtonTarget:(id)target action:(SEL)action;
 - (void)setIgnoreButtonTarget:(id)target action:(SEL)action;

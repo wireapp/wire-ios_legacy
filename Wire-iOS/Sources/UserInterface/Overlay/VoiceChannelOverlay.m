@@ -84,13 +84,6 @@ static NSString *NotNilString(NSString *string) {
 
 @implementation VoiceChannelOverlay_Old
 
-- (void)setLowBandwidth:(BOOL)lowBandwidth
-{
-    DDLogVoice(@"Low bandwidth: %d -> %d", _lowBandwidth, lowBandwidth);
-    _lowBandwidth = lowBandwidth;
-    self.centerStatusLabel.text = [NSLocalizedString(_lowBandwidth ? @"voice.status.low_connection" : @"voice.status.video_not_available", nil) uppercasedWithCurrentLocale];
-}
-
 - (void)updateStatusLabelText
 {
     NSAttributedString *statusText = [self attributedStatus];
@@ -215,19 +208,6 @@ static NSString *NotNilString(NSString *string) {
     _callDuration = callDuration;
     
     [self updateStatusLabelText];
-}
-
-- (void)setMuted:(BOOL)muted
-{
-    _muted = muted;
-    self.muteButton.selected = muted;
-    self.cameraPreviewView.mutedPreviewOverlay.hidden = !self.outgoingVideoActive || !muted;
-}
-
-- (void)setSpeakerActive:(BOOL)speakerActive
-{
-    _speakerActive = speakerActive;
-    self.speakerButton.selected = speakerActive;
 }
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action

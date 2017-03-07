@@ -31,6 +31,50 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
 
 @objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
     
+    var muted = false {
+        didSet {
+            self.muteButton.isSelected = muted
+            self.cameraPreviewView.mutedPreviewOverlay.isHidden = !self.outgoingVideoActive || !muted
+        }
+    }
+    var speakerActive = false {
+        didSet {
+            self.speakerButton.isSelected = speakerActive
+        }
+    }
+    
+    var hidesSpeakerButton: Bool = false {
+        didSet {
+            updateVisibleViewsForCurrentState()
+        }
+    }
+    
+    var remoteIsSendingVideo: Bool = false {
+        didSet {
+            updateVisibleViewsForCurrentState()
+        }
+    }
+    
+    var incomingVideoActive: Bool = false {
+        didSet {
+            updateVisibleViewsForCurrentState()
+            hideControlsAfterElapsedTime()
+        }
+    }
+    
+    var outgoingVideoActive: Bool = false {
+        didSet {
+            updateVisibleViewsForCurrentState()
+        }
+    }
+    
+    var lowBandwidth = false {
+        didSet {
+            self.centerStatusLabel.text = (lowBandwidth ? "voice.status.low_connection".localized : "voice.status.video_not_available".localized).uppercasedWithCurrentLocale
+        }
+    }
+    var controlsHidden = false
+
     var cancelButton: IconLabelButton!
     var callButton: IconLabelButton!
     var degradationTopLabel: UILabel!
@@ -89,34 +133,6 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
         callButton.addTarget(target, action: action, for: .touchUpInside)
     }
 
-}
-
-// MARK: - Updating state after setting flags
-extension VoiceChannelOverlay {
-    override public var hidesSpeakerButton: Bool {
-        didSet {
-            updateVisibleViewsForCurrentState()
-        }
-    }
-    
-    override public var remoteIsSendingVideo: Bool {
-        didSet {
-            updateVisibleViewsForCurrentState()
-        }
-    }
-    
-    override public var incomingVideoActive: Bool {
-        didSet {
-            updateVisibleViewsForCurrentState()
-            hideControlsAfterElapsedTime()
-        }
-    }
-    
-    override public var outgoingVideoActive: Bool {
-        didSet {
-            updateVisibleViewsForCurrentState()
-        }
-    }
 }
 
 // MARK: - Showing/hiding controls
