@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import UIKit
+import CocoaLumberjackSwift
 
 let CameraPreviewContainerSize: CGFloat = 72.0;
 let OverlayButtonWidth: CGFloat = 56.0;
@@ -48,6 +49,19 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
         set {
             let position = NSStringFromCGPoint(newValue)
             UserDefaults.standard.set(position, forKey: VoiceChannelOverlayVideoFeedPositionKey)
+        }
+    }
+    
+    var videoViewFullscreen: Bool = false {
+        didSet {
+            createVideoPreviewIfNeeded()
+            if videoViewFullscreen {
+                videoPreview.frame = bounds
+                insertSubview(videoPreview, aboveSubview: videoView)
+            } else {
+                videoPreview.frame = cameraPreviewView.videoFeedContainer.bounds
+                cameraPreviewView.videoFeedContainer.addSubview(videoPreview)
+            }
         }
     }
     
@@ -143,6 +157,19 @@ extension VoiceChannelOverlay {
 }
 
 extension VoiceChannelOverlay {
+    
+    func createVideoPreviewIfNeeded() {
+        if !Settings.shared().disableAVS && videoPreview == nil {
+            // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
+            // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
+            // therefore we use @c autoresizingMask here
+            videoPreview = AVSVideoPreview(frame: bounds)
+            videoPreview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            videoPreview.isUserInteractionEnabled = false
+            videoPreview.backgroundColor = .clear
+            insertSubview(videoPreview, aboveSubview: videoView)
+        }
+    }
 
     public func setupVoiceOverlay() {
         clipsToBounds = true
