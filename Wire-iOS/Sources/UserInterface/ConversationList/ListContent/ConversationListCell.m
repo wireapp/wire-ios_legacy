@@ -290,8 +290,11 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)accessoryViewWantsToJoinCall:(ListItemRightAccessoryView *)accessoryView
 {
-    // TODO: Ensure there is an ongoing call just to be sure?
-    [self.conversation startAudioCallWithCompletionHandler:nil];
+    if (self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCallInactive) {
+        [self.conversation startAudioCallWithCompletionHandler:nil];
+    } else {
+        DDLogError(@"Cannot join a call in a conversation without ongoing call");
+    }
 }
 
 - (void)updateRightAccessory

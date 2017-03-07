@@ -143,11 +143,12 @@
     if (!self.joinCallButton) {
         self.joinCallButton = [Button buttonWithStyle:ButtonStyleFullMonochrome];
         self.joinCallButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.joinCallButton setTitle:NSLocalizedString(@"Join", nil) forState:UIControlStateNormal];
+        [self.joinCallButton setTitle:NSLocalizedString(@"conversation_list.right_accessory.join_button.title", nil) forState:UIControlStateNormal];
         self.joinCallButton.accessibilityLabel = @"joinCallButton";
         [self addSubview:self.joinCallButton];
         [self.joinCallButton addTarget:self action:@selector(joinCallButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.joinCallButton autoCenterInSuperview];
+        [self.joinCallButton autoSetDimension:ALDimensionHeight toSize:28];
+        [self.joinCallButton autoPinEdgesToSuperviewEdges];
     }
 
     self.joinCallButton.hidden = NO;

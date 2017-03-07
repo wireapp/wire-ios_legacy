@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "No active conversations\n";
 "contacts_ui.no_contact.message" = "Tap contacts to start a conversation";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Join";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "people";
 
