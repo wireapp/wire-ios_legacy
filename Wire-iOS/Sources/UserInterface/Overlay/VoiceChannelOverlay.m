@@ -78,10 +78,6 @@ static NSString *NotNilString(NSString *string) {
 
 @interface VoiceChannelOverlay_Old ()
 
-
-
-
-@property (nonatomic) BOOL videoViewFullScreen;
 @end
 
 
@@ -94,16 +90,16 @@ static NSString *NotNilString(NSString *string) {
     [self.cameraPreviewView addGestureRecognizer:videoFeedPan];
 }
 
-- (void)setVideoViewFullScreen:(BOOL)videoViewFullScreen
+- (void)setVideoViewFullscreen:(BOOL)videoViewFullscreen
 {
     [self createVideoPreviewIfNeeded];
 
-    if (_videoViewFullScreen == videoViewFullScreen) {
+    if (_videoViewFullscreen == videoViewFullscreen) {
         return;
     }
-    DDLogVoice(@"videoViewFullScreen: %d -> %d", _videoViewFullScreen, videoViewFullScreen);
-    _videoViewFullScreen = videoViewFullScreen;
-    if (_videoViewFullScreen) {
+    DDLogVoice(@"videoViewFullScreen: %d -> %d", _videoViewFullscreen, videoViewFullscreen);
+    _videoViewFullscreen = videoViewFullscreen;
+    if (_videoViewFullscreen) {
         self.videoPreview.frame = self.bounds;
         [self insertSubview:self.videoPreview aboveSubview:self.videoView];
     }
