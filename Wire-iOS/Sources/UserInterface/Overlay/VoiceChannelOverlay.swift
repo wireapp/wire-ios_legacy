@@ -91,6 +91,7 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
 
 }
 
+// MARK: - Updating state after setting flags
 extension VoiceChannelOverlay {
     override public var hidesSpeakerButton: Bool {
         didSet {
@@ -118,6 +119,7 @@ extension VoiceChannelOverlay {
     }
 }
 
+// MARK: - Showing/hiding controls
 extension VoiceChannelOverlay {
 
     public func hideControls() {
@@ -156,6 +158,7 @@ extension VoiceChannelOverlay {
     }
 }
 
+// MARK: - Creating views
 extension VoiceChannelOverlay {
     
     func createVideoPreviewIfNeeded() {
@@ -412,6 +415,7 @@ extension VoiceChannelOverlay {
     
 }
 
+// MARK: - CollectionViewDelegate
 extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
@@ -433,6 +437,7 @@ extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - State transitions
 extension VoiceChannelOverlay {
     
     var isVideoCall: Bool {
@@ -630,6 +635,7 @@ extension VoiceChannelOverlay {
     }
 }
 
+// MARK: - Camera overlay
 extension VoiceChannelOverlay {
     func setupCameraFeedPanGestureRecognizer() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(onCameraPreviewPan(_:)))
