@@ -286,21 +286,21 @@ extension VoiceChannelOverlay {
             callingTopUserImage.width == 56
         }
         
-        constrain(contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel, callButton) { contentContainer, callingUserImage, degradationTopLabel, degradationBottomLabel, callButton in
+        constrain(self, callingUserImage, degradationTopLabel, degradationBottomLabel, callButton) { view, callingUserImage, degradationTopLabel, degradationBottomLabel, callButton in
             
-            degradationTopLabel.leading >= contentContainer.leadingMargin
-            degradationTopLabel.trailing <= contentContainer.trailingMargin
+            degradationTopLabel.leading >= view.leadingMargin
+            degradationTopLabel.trailing <= view.trailingMargin
             
             self.degradationTopConstraint = (degradationTopLabel.bottom == callingUserImage.top - 16)
             self.degradationTopConstraint.isActive = false
-            degradationTopLabel.centerX == contentContainer.centerX
+            degradationTopLabel.centerX == view.centerX
 
-            degradationBottomLabel.leading >= contentContainer.leadingMargin
-            degradationBottomLabel.trailing <= contentContainer.trailingMargin
-            degradationBottomLabel.centerX == contentContainer.centerX
+            degradationBottomLabel.leading >= view.leadingMargin
+            degradationBottomLabel.trailing <= view.trailingMargin
+            degradationBottomLabel.centerX == view.centerX
             self.degradationBottomConstraint = (degradationBottomLabel.top == callingUserImage.bottom + 16)
             self.degradationBottomConstraint.isActive = false
-            degradationBottomLabel.bottom == callButton.top - 8
+            degradationBottomLabel.bottom <= callButton.top - 16
         }
         
         constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel in
