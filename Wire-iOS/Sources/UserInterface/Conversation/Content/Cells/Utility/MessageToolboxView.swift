@@ -308,7 +308,12 @@ extension ZMSystemMessageData {
         if let childMessages = message.systemMessageData?.childMessages,
             !childMessages.isEmpty,
             let timestamp = timestampString(message) {
-            let childrenTimestamps = childMessages.flatMap { timestampString($0 as! ZMConversationMessage) }
+            let childrenTimestamps = childMessages.flatMap {
+                $0 as? ZMConversationMessage
+            }.sorted {
+                $0.0.serverTimestamp < $0.1.serverTimestamp
+            }.flatMap(timestampString)
+
             finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
                 return "\(text)\n\(current)"
             }
