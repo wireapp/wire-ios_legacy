@@ -93,14 +93,12 @@
 
 - (void)testIncomingAudioCallDegraded
 {
-    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateIncomingCallDegraded conversation:self.conversation];
     ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
 }
 
 - (void)testIncomingAudioCallDegradedSelfUntrustedDevices
 {
-    self.conversation.voiceChannel = [[MockVoiceChannel alloc] initWithVideoCall:YES];
     VoiceChannelOverlay *voiceChannelOverlay = [self voiceChannelOverlayForState:VoiceChannelOverlayStateIncomingCallDegraded conversation:self.conversation selfUntrusted: YES];
     ZMVerifyViewInAllDeviceSizesWithBlock(voiceChannelOverlay, self.configurationBlock);
 }
