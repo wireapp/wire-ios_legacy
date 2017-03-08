@@ -73,10 +73,12 @@ VoiceChannelOverlay {
     
     degradationTopLabel: @{
         textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
     }
     
     degradationBottomLabel: @{
         textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
     }
 
     topStatusLabel: @{
