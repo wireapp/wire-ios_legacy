@@ -215,8 +215,8 @@
 "content.system.you_started" = "You";
 "content.system.this_device" = "this device";
 
-"content.system.missed_call.you" = "You";
-"content.system.missed_call.called" = "called";
+"content.system.call.you" = "You";
+"content.system.call.called" = "called";
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 

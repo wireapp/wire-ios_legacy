@@ -735,7 +735,7 @@
 		BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
 		BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0515241E390E10000D5C22 /* CopyableLabel.swift */; };
-		BF0555BD1E6D785C00D3E9D4 /* MissedCallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0555BC1E6D785C00D3E9D4 /* MissedCallCell.swift */; };
+		BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */; };
 		BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */; };
 		BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */; };
 		BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */; };
@@ -2166,7 +2166,7 @@
 		BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WireLocales.swift"; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
 		BF0515241E390E10000D5C22 /* CopyableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
-		BF0555BC1E6D785C00D3E9D4 /* MissedCallCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissedCallCell.swift; sourceTree = "<group>"; };
+		BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallCells.swift; sourceTree = "<group>"; };
 		BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Ephemeral.swift"; sourceTree = "<group>"; };
 		BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedactedScript-Regular.ttf"; sourceTree = "<group>"; };
 		BF0BDF7F1DAB8923003C61DE /* EphemeralKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralKeyboardViewController.swift; sourceTree = "<group>"; };
@@ -4473,7 +4473,7 @@
 				87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */,
 				8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */,
 				872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */,
-				BF0555BC1E6D785C00D3E9D4 /* MissedCallCell.swift */,
+				BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */,
 				160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */,
 				BFC914911D1814AF001F068B /* LocationMessageCell.swift */,
 				CED176461D0074610005234F /* ConversationParticipantsCell.swift */,
@@ -6162,7 +6162,7 @@
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,
-				BF0555BD1E6D785C00D3E9D4 /* MissedCallCell.swift in Sources */,
+				BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */,
 				871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
