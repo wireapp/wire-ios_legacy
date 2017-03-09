@@ -89,7 +89,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
-        SettingsPropertyName.sendV3Assets               : UserDefaultSendV3Assets,
         SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
     ]
@@ -297,7 +296,16 @@ class SettingsPropertyFactory {
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
-            
+
+        case .sendV3Assets:
+            return SettingsBlockProperty(
+                propertyName: .sendV3Assets,
+                getAction: { _ in return SettingsPropertyValue(ExtensionSettings.shared.useAssetsV3) },
+                setAction: { _, value in
+                    if case .number(let v3) = value {
+                        ExtensionSettings.shared.useAssetsV3 = v3.boolValue
+                    }
+            })
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {

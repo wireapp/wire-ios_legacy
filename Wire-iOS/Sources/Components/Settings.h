@@ -72,7 +72,6 @@ extern NSString * const UserDefaultEnableBatchCollections;
 
 extern NSString * const UserDefaultSendButtonDisabled;
 
-extern NSString * const UserDefaultSendV3Assets;
 extern NSString * const UserDefaultCallingProtocolStrategy;
 
 extern NSString * const UserDefaultTwitterOpeningRawValue;
@@ -91,7 +90,6 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 @property (nonatomic) BOOL disableSendButton;
 
 @property (nonatomic) BOOL disableCallKit;
-@property (nonatomic) BOOL sendV3Assets; // develop option
 @property (nonatomic) CallingProtocolStrategy callingProtocolStrategy;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option

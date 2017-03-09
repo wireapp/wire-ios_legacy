@@ -59,7 +59,6 @@ NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCollections";
 
 
-NSString * const UserDefaultSendV3Assets = @"SendV3Assets";
 NSString * const UserDefaultCallingProtocolStrategy = @"CallingProtocolStrategy";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
@@ -118,7 +117,6 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
              UserDefaultTwitterOpeningRawValue,
              UserDefaultMapsOpeningRawValue,
              UserDefaultBrowserOpeningRawValue,
-             UserDefaultSendV3Assets,
              UserDefaultCallingProtocolStrategy,
              UserDefaultEnableBatchCollections,
              UserDefaultDidMigrateHockeySettingInitially
@@ -461,16 +459,6 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
     [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
     ExtensionSettings.shared.disableCrashAndAnalyticsSharing = disableAnalytics;
     [self.defaults synchronize];
-}
-
-- (BOOL)sendV3Assets
-{
-    return [self.defaults boolForKey:UserDefaultSendV3Assets];
-}
-
-- (void)setSendV3Assets:(BOOL)sendV3Assets
-{
-    [self.defaults setBool:sendV3Assets forKey:UserDefaultSendV3Assets];
 }
 
 - (void)setCallingProtocolStrategy:(CallingProtocolStrategy)callingProtocolStrategy
