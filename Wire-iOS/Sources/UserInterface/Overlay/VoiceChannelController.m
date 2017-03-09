@@ -161,7 +161,7 @@
 {
     NSArray *incomingCallConversations = [[WireCallCenter nonIdleCallConversationsInUserSession:[ZMUserSession sharedSession]] filterWithBlock:^BOOL(ZMConversation *conversation) {
         return conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall ||
-            conversation.voiceChannel.state == VoiceChannelOverlayStateIncomingCallDegraded;
+               conversation.voiceChannel.state == VoiceChannelV2StateIncomingCallDegraded;
     }];
     
     if (incomingCallConversations.count > 0) {
@@ -181,7 +181,8 @@
         conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallInactive ||
         conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannel ||
         conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel ||
-        conversation.voiceChannel.state == VoiceChannelOverlayStateOutgoingCallDegraded;
+        conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallDegraded ||
+        conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded;
     }];
         
     self.activeCallConversation = activeCallConversations.firstObject;

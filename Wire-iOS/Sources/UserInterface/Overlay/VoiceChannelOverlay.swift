@@ -176,9 +176,10 @@ class VoiceChannelOverlay: UIView {
         }
     }
     
-    var videoViewFullscreen: Bool = false {
+    var videoViewFullscreen: Bool = true {
         didSet {
             createVideoPreviewIfNeeded()
+            guard let videoPreview = videoPreview, let videoView = videoView else { return }
             if videoViewFullscreen {
                 videoPreview.frame = bounds
                 insertSubview(videoPreview, aboveSubview: videoView)
@@ -195,8 +196,8 @@ class VoiceChannelOverlay: UIView {
     var cameraPreviewView: CameraPreviewView!
     var participantsCollectionView: UICollectionView!
     var participantsCollectionViewLayout: VoiceChannelCollectionViewLayout!
-    var videoPreview: AVSVideoPreview!
-    var videoView: AVSVideoView!
+    var videoPreview: AVSVideoPreview?
+    var videoView: AVSVideoView?
     var contentContainer: UIView!
     var avatarContainer: UIView!
     var cameraPreviewCenterHorisontally: NSLayoutConstraint!
@@ -368,11 +369,13 @@ extension VoiceChannelOverlay {
             // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
             // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
             // therefore we use @c autoresizingMask here
-            videoPreview = AVSVideoPreview(frame: bounds)
-            videoPreview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            videoPreview.isUserInteractionEnabled = false
-            videoPreview.backgroundColor = .clear
-            insertSubview(videoPreview, aboveSubview: videoView)
+            guard let videoView = videoView else { return }
+            let preview = AVSVideoPreview(frame: bounds)
+            preview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            preview.isUserInteractionEnabled = false
+            preview.backgroundColor = .clear
+            insertSubview(preview, aboveSubview: videoView)
+            videoPreview = preview
         }
     }
 
@@ -384,14 +387,13 @@ extension VoiceChannelOverlay {
         callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
         
         if !Settings.shared().disableAVS {
-            videoView = AVSVideoView()
-            videoView.shouldFill = true
-            videoView.isUserInteractionEnabled = false
-            videoView.backgroundColor = UIColor(patternImage: .dot(9))
-            addSubview(videoView)
+            let video = AVSVideoView()
+            video.shouldFill = true
+            video.isUserInteractionEnabled = false
+            video.backgroundColor = UIColor(patternImage: .dot(9))
+            addSubview(video)
+            self.videoView = video
         }
-
-        videoViewFullscreen = true
         
         shadow = UIView()
         shadow.isUserInteractionEnabled = false
@@ -507,7 +509,9 @@ extension VoiceChannelOverlay {
     
     public func createConstraints(){
         
-        constrain([videoView, shadow, videoNotAvailableBackground]) { views in
+        let videoViews: [UIView?] = [videoView, shadow, videoNotAvailableBackground]
+        
+        constrain(videoViews.flatMap{ $0 }) { views in
             let superview = (views.first?.superview)!
             views.forEach { $0.edges == superview.edges }
         }
@@ -729,7 +733,7 @@ extension VoiceChannelOverlay {
         if isVideoCall {
             videoViewFullscreen = !connected
         } else {
-            videoView.isHidden = true
+            videoView?.isHidden = true
             videoPreview?.isHidden = true
         }
         
