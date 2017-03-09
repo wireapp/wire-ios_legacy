@@ -49,16 +49,6 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 
 @property (nonatomic, assign) VoiceChannelOverlayState state;
 
-- (void)setAcceptButtonTarget:(id)target action:(SEL)action;
-- (void)setAcceptVideoButtonTarget:(id)target action:(SEL)action;
-- (void)setIgnoreButtonTarget:(id)target action:(SEL)action;
-
-- (void)setLeaveButtonTarget:(id)target action:(SEL)action;
-- (void)setMuteButtonTarget:(id)target action:(SEL)action;
-- (void)setSpeakerButtonTarget:(id)target action:(SEL)action;
-- (void)setVideoButtonTarget:(id)target action:(SEL)action;
-- (void)setSwitchCameraButtonTarget:(id)target action:(SEL)action;
-
 @property (nonatomic) ZMUser *selfUser;
 
 @property (nonatomic) CameraPreviewView *cameraPreviewView;

@@ -170,6 +170,17 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     deinit {
         cancelHideControlsAfterElapsedTime()
     }
+
+    func updateStatusLabelText() {
+        if let statusText = attributedStatus {
+            topStatusLabel.attributedText = statusText
+            CASStyler.default().styleItem(topStatusLabel)
+        }
+    }
+}
+
+// MARK: - Button actions
+extension VoiceChannelOverlay {
     
     @objc(setCancelButtonTarget:action:)
     func setCancelButton(target: Any, action: Selector) {
@@ -185,12 +196,45 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     func setAcceptDegradedButton(target: Any, action: Selector) {
         acceptDegradedButton.addTarget(target, action: action, for: .touchUpInside)
     }
-
-    func updateStatusLabelText() {
-        if let statusText = attributedStatus {
-            topStatusLabel.attributedText = statusText
-            CASStyler.default().styleItem(topStatusLabel)
-        }
+    
+    @objc(setAcceptButtonTarget:action:)
+    func setAcceptButton(target: Any, action: Selector) {
+        acceptButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setAcceptVideoButtonTarget:action:)
+    func setAcceptVideoButton(target: Any, action: Selector) {
+        acceptVideoButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setIgnoreButtonTarget:action:)
+    func setIgnoreButton(target: Any, action: Selector) {
+        ignoreButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setLeaveButtonTarget:action:)
+    func setLeaveButton(target: Any, action: Selector) {
+        leaveButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setMuteButtonTarget:action:)
+    func setMuteButton(target: Any, action: Selector) {
+        muteButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setSpeakerButtonTarget:action:)
+    func setSpeakerButton(target: Any, action: Selector) {
+        speakerButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setVideoButtonTarget:action:)
+    func setVideoButton(target: Any, action: Selector) {
+        videoButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    @objc(setSwitchCameraButtonTarget:action:)
+    func setSwitchCameraButton(target: Any, action: Selector) {
+        cameraPreviewView.switchCameraButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
 

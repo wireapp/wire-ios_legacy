@@ -78,44 +78,4 @@ NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverlayState state)
 
 #pragma mark - Message formating
 
-- (void)setAcceptButtonTarget:(id)target action:(SEL)action
-{
-    [self.acceptButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setAcceptVideoButtonTarget:(id)target action:(SEL)action
-{
-    [self.acceptVideoButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setIgnoreButtonTarget:(id)target action:(SEL)action
-{
-    [self.ignoreButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setLeaveButtonTarget:(id)target action:(SEL)action
-{
-    [self.leaveButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setMuteButtonTarget:(id)target action:(SEL)action
-{
-    [self.muteButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setSpeakerButtonTarget:(id)target action:(SEL)action
-{
-    [self.speakerButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setVideoButtonTarget:(id)target action:(SEL)action
-{
-    [self.videoButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setSwitchCameraButtonTarget:(id)target action:(SEL)action;
-{
-    [self.cameraPreviewView.switchCameraButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
 @end
