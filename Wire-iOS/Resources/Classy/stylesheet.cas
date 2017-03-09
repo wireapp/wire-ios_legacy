@@ -73,10 +73,12 @@ VoiceChannelOverlay {
     
     degradationTopLabel: @{
         textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
     }
     
     degradationBottomLabel: @{
         textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
     }
 
     topStatusLabel: @{
@@ -89,6 +91,14 @@ VoiceChannelOverlay {
     }
 
     acceptButton: @{
+        iconButton: @{
+            backgroundImageColor[state:normal]: $color-accent-green;
+            iconColor[state:normal]: white;
+            borderWidth: 0;
+        }
+    }
+    
+    acceptDegradedButton: @{
         iconButton: @{
             backgroundImageColor[state:normal]: $color-accent-green;
             iconColor[state:normal]: white;
