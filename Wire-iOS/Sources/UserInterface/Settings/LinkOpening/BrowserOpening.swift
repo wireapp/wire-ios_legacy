@@ -17,6 +17,9 @@
 //
 
 
+private let log = ZMSLog(tag: "link opening")
+
+
 enum BrowserOpeningOption: Int, LinkOpeningOption {
 
     case safari, chrome, firefox
@@ -46,14 +49,19 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
 extension URL {
 
     func openAsLink() -> Bool {
+        log.debug("Trying to open \"\(self)\" in thrid party browser")
         let saved = BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
+        log.debug("Saved option to open a regular link: \(saved.displayString)")
+
         switch saved {
         case .safari: return false
         case .chrome:
             guard let url = chromeURL else { return false }
+            log.debug("Trying to open chrome app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
         case .firefox:
             guard let url = firefoxURL else { return false }
+            log.debug("Trying to open firefox app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
         }
     }
