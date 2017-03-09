@@ -35,6 +35,21 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
     var shieldOverlay: DegradationOverlayView!
     var degradationTopConstraint: NSLayoutConstraint!
     var degradationBottomConstraint: NSLayoutConstraint!
+    var videoView: AVSVideoView!
+    var videoPreview: AVSVideoPreview!
+    
+    var videoViewFullscreen: Bool = true {
+        didSet {
+            createVideoPreviewIfNeeded()
+            if videoViewFullscreen {
+                videoPreview.frame = bounds
+                insertSubview(videoPreview, aboveSubview: videoView)
+            } else {
+                videoPreview.frame = cameraPreviewView.videoFeedContainer.bounds
+                cameraPreviewView.videoFeedContainer.addSubview(videoPreview)
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,6 +110,19 @@ extension VoiceChannelOverlay {
 }
 
 extension VoiceChannelOverlay {
+    
+    func createVideoPreviewIfNeeded() {
+        if !Settings.shared().disableAVS && videoPreview == nil {
+            // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
+            // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
+            // therefore we use @c autoresizingMask here
+            videoPreview = AVSVideoPreview(frame: bounds)
+            videoPreview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            videoPreview.isUserInteractionEnabled = false
+            videoPreview.backgroundColor = .clear
+            insertSubview(videoPreview, aboveSubview: videoView)
+        }
+    }
 
     public func hideControls() {
         controlsHidden = true
@@ -148,8 +176,6 @@ extension VoiceChannelOverlay {
             videoView.backgroundColor = UIColor(patternImage: .dot(9))
             addSubview(videoView)
         }
-
-        videoViewFullscreen = true
         
         shadow = UIView()
         shadow.isUserInteractionEnabled = false
