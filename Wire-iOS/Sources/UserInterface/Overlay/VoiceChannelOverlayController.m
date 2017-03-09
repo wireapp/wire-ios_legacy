@@ -21,7 +21,6 @@
 #import <avs/AVSFlowManager.h>
 
 #import "VoiceChannelOverlayController.h"
-#import "VoiceChannelOverlay.h"
 #import "zmessaging+iOS.h"
 #import "avs+iOS.h"
 #import "VoiceChannelV2+Additions.h"
@@ -56,8 +55,6 @@
 
 @property (nonatomic) BOOL cameraSwitchInProgress;
 @end
-
-
 
 @implementation VoiceChannelOverlayController
 
@@ -356,7 +353,7 @@
             break;
     }
     
-    DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState), (long)overlayState, StringFromVoiceChannelOverlayState(overlayState));
+    DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState), (long)overlayState, [VoiceChannelOverlay stringFromState:overlayState]);
     
     return overlayState;
 }

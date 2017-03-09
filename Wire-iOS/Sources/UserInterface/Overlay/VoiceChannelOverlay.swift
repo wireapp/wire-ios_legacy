@@ -30,7 +30,39 @@ let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 
 fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
 
-@objc class VoiceChannelOverlay: VoiceChannelOverlay_Old {
+@objc enum VoiceChannelOverlayState: Int {
+    case invalid
+    case incomingCall
+    case incomingCallInactive
+    case incomingCallDegraded
+    case joiningCall
+    case outgoingCall
+    case outgoingCallDegraded
+    case connected
+}
+
+class VoiceChannelOverlay: UIView {
+    
+    static func stringFrom(state: VoiceChannelOverlayState) -> String {
+        switch state {
+        case .invalid:
+            return "OverlayInvalid"
+        case .incomingCall:
+            return "OverlayIncomingCall"
+        case .incomingCallInactive:
+            return "OverlayIncomingCallInactive"
+        case .incomingCallDegraded:
+            return "OverlayIncomingCallDegraded"
+        case .joiningCall:
+            return "OverlayJoiningCall"
+        case .outgoingCall:
+            return "OverlayOutgoingCall"
+        case .outgoingCallDegraded:
+            return "OverlayOutgoingCallDegraded"
+        case .connected:
+            return "OverlayConnected"
+        }
+    }
     
     var muted = false {
         didSet {
@@ -156,6 +188,36 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
             }
         }
     }
+    
+    var callingConversation: ZMConversation!
+    var state: VoiceChannelOverlayState = .invalid
+    var selfUser: ZMUser = ZMUser.selfUser()
+    var cameraPreviewView: CameraPreviewView!
+    var participantsCollectionView: UICollectionView!
+    var participantsCollectionViewLayout: VoiceChannelCollectionViewLayout!
+    var videoPreview: AVSVideoPreview!
+    var videoView: AVSVideoView!
+    var contentContainer: UIView!
+    var avatarContainer: UIView!
+    var cameraPreviewCenterHorisontally: NSLayoutConstraint!
+    var cameraPreviewInitialPositionX: CGFloat = 0
+    var shadow: UIView!
+    var videoNotAvailableBackground: UIView!
+    var topStatusLabel: UILabel!
+    var centerStatusLabel: UILabel!
+    var statusLabelToTopUserImageInset: NSLayoutConstraint!
+    var callDurationFormatter: DateComponentsFormatter!
+    var callingUserImage: UserImageView!
+    var callingTopUserImage: UserImageView!
+    var acceptButton: IconLabelButton!
+    var acceptVideoButton: IconLabelButton!
+    var ignoreButton: IconLabelButton!
+    var leaveButton: IconLabelButton!
+    var leaveButtonPinRightConstraint: NSLayoutConstraint!
+    var muteButton: IconLabelButton!
+    var speakerButton: IconLabelButton!
+    var videoButton: IconLabelButton!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

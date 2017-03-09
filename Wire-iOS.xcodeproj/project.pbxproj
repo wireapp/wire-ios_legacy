@@ -664,7 +664,6 @@
 		8F0EE70A1A667F9A0070E1E8 /* NameChangedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EE7091A667F9A0070E1E8 /* NameChangedCell.m */; };
 		8F17CD141A0520010077DC1B /* SessionObjectCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F17CD131A0520010077DC1B /* SessionObjectCache.m */; };
 		8F264BA119E808A8005FF4BE /* ProximityMonitorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F264BA019E808A8005FF4BE /* ProximityMonitorManager.m */; };
-		8F3C945219D1A8EC00288AFE /* VoiceChannelOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3C945119D1A8EC00288AFE /* VoiceChannelOverlay.m */; };
 		8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3C945419D1CC5600288AFE /* VoiceChannelOverlayController.m */; };
 		8F41CFC319926B7A00E3B032 /* ZMUser+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41CFC219926B7A00E3B032 /* ZMUser+Additions.m */; };
 		8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */; };
@@ -1966,8 +1965,6 @@
 		8F17CD131A0520010077DC1B /* SessionObjectCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionObjectCache.m; sourceTree = "<group>"; };
 		8F264B9F19E808A8005FF4BE /* ProximityMonitorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityMonitorManager.h; sourceTree = "<group>"; };
 		8F264BA019E808A8005FF4BE /* ProximityMonitorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityMonitorManager.m; sourceTree = "<group>"; };
-		8F3C945019D1A8EC00288AFE /* VoiceChannelOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceChannelOverlay.h; sourceTree = "<group>"; };
-		8F3C945119D1A8EC00288AFE /* VoiceChannelOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelOverlay.m; sourceTree = "<group>"; };
 		8F3C945319D1CC5600288AFE /* VoiceChannelOverlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceChannelOverlayController.h; sourceTree = "<group>"; };
 		8F3C945419D1CC5600288AFE /* VoiceChannelOverlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelOverlayController.m; sourceTree = "<group>"; };
 		8F41CFC119926B7A00E3B032 /* ZMUser+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMUser+Additions.h"; sourceTree = "<group>"; };
@@ -4575,8 +4572,6 @@
 				8FC85256199245760008B66B /* NotificationWindowRootViewController.m */,
 				1670AFE61B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.h */,
 				1670AFE71B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m */,
-				8F3C945019D1A8EC00288AFE /* VoiceChannelOverlay.h */,
-				8F3C945119D1A8EC00288AFE /* VoiceChannelOverlay.m */,
 				F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */,
 				F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */,
 				87D0F8611C6DF0910071769E /* CameraPreviewView.h */,
@@ -5842,7 +5837,6 @@
 				87D5E4421C3E79C600EB8289 /* NSData+Fingerprint.swift in Sources */,
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
 				BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */,
-				8F3C945219D1A8EC00288AFE /* VoiceChannelOverlay.m in Sources */,
 				CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */,
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
 				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
