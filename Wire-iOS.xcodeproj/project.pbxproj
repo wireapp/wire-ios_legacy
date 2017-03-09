@@ -780,6 +780,7 @@
 		BF732A781D9C14C7003077DB /* emoji_people.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A701D9C14C7003077DB /* emoji_people.plist */; };
 		BF732A791D9C14C7003077DB /* emoji_symbols.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A711D9C14C7003077DB /* emoji_symbols.plist */; };
 		BF732A7A1D9C14C7003077DB /* emoji_travel.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A721D9C14C7003077DB /* emoji_travel.plist */; };
+		BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF735D001E716816003BC61F /* CallSystemMessageTests.swift */; };
 		BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78687D1D86B36D0063762F /* LocationDataTests.swift */; };
 		BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */; };
 		BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */; };
@@ -2230,6 +2231,7 @@
 		BF732A701D9C14C7003077DB /* emoji_people.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_people.plist; sourceTree = "<group>"; };
 		BF732A711D9C14C7003077DB /* emoji_symbols.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_symbols.plist; sourceTree = "<group>"; };
 		BF732A721D9C14C7003077DB /* emoji_travel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_travel.plist; sourceTree = "<group>"; };
+		BF735D001E716816003BC61F /* CallSystemMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallSystemMessageTests.swift; sourceTree = "<group>"; };
 		BF78687D1D86B36D0063762F /* LocationDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataTests.swift; sourceTree = "<group>"; };
 		BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameDetailView.swift; sourceTree = "<group>"; };
 		BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingConnectionView.swift; sourceTree = "<group>"; };
@@ -4768,6 +4770,7 @@
 				BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */,
 				16EB9B391CE1DBB400883FCF /* VideoMessageCellTests.swift */,
 				874B5DB11CEDF7B80010474C /* AudioMessageCellTests.swift */,
+				BF735D001E716816003BC61F /* CallSystemMessageTests.swift */,
 				160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */,
 				BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */,
 				162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */,
@@ -6241,6 +6244,7 @@
 				BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */,
 				BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */,
 				1E12C04C1BFA6342001A8A26 /* ContactsDataSource+Testing.m in Sources */,
+				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
 				87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */,
