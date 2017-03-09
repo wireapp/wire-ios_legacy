@@ -183,11 +183,15 @@
 - (void)acceptDegradedCallClicked:(id)sender
 {
     DDLogVoice(@"UI: Accept degraded call button tap");
+    
+    BOOL hasAlreadyAcceptedCall = self.conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded;
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
     } completionHandler:^{
-        [self joinCurrentVoiceChannel];
+        if (!hasAlreadyAcceptedCall) {
+            [self joinCurrentVoiceChannel];
+        }
     }];
 }
 
@@ -325,6 +329,7 @@
             overlayState = VoiceChannelOverlayStateIncomingCall;
             break;
         case VoiceChannelV2StateIncomingCallDegraded:
+        case VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded:
             overlayState = VoiceChannelOverlayStateIncomingCallDegraded;
             break;
             
