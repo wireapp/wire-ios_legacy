@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 import CocoaLumberjackSwift
+import Classy
 
 let CameraPreviewContainerSize: CGFloat = 72.0;
 let OverlayButtonWidth: CGFloat = 56.0;
@@ -109,6 +110,16 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
         }
     }
     
+    func labelText(withFormat format: String?, name: String) -> NSAttributedString {
+        guard let format = format else { return NSAttributedString(string: "") }
+        let string = String(format: format, name)
+        let attributedString = NSMutableAttributedString(string: string, attributes: messageAttributes)
+        let nameRange = (string as NSString).range(of: name)
+        attributedString.addAttributes(nameAttributes, range: nameRange)
+
+        return attributedString
+    }
+    
     var controlsHidden = false
 
     var cancelButton: IconLabelButton!
@@ -178,6 +189,7 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     func updateStatusLabelText() {
         if let statusText = attributedStatus {
             topStatusLabel.attributedText = statusText
+            CASStyler.default().styleItem(topStatusLabel)
         }
     }
 }
@@ -224,6 +236,27 @@ extension VoiceChannelOverlay {
 // MARK: - Creating views
 extension VoiceChannelOverlay {
     
+    var baseAttributes: [String : Any] {
+        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.alignment = .center
+        paragraphStyle.paragraphSpacingBefore = 8
+        return [ NSParagraphStyleAttributeName : paragraphStyle ]
+    }
+    
+    var nameAttributes: [String : Any] {
+        let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
+        var attributes = baseAttributes
+        attributes[NSFontAttributeName] = font
+        return attributes
+    }
+    
+    var messageAttributes: [String : Any] {
+        let font = UIFont(magicIdentifier: "style.text.normal.font_spec")!
+        var attributes = baseAttributes
+        attributes[NSFontAttributeName] = font
+        return attributes
+    }
+
     func createVideoPreviewIfNeeded() {
         if !Settings.shared().disableAVS && videoPreview == nil {
             // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view

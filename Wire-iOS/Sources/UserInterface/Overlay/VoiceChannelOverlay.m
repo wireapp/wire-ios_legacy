@@ -68,14 +68,6 @@ NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverlayState state)
     return @"unknown";
 }
 
-static NSString *NotNilString(NSString *string) {
-    if (! string) {
-        return @"";
-    }
-    return string;
-}
-
-
 @interface VoiceChannelOverlay_Old ()
 
 @end
@@ -85,41 +77,6 @@ static NSString *NotNilString(NSString *string) {
 @implementation VoiceChannelOverlay_Old
 
 #pragma mark - Message formating
-
-- (NSDictionary *)baseAttributes
-{
-    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    paragraphStyle.paragraphSpacingBefore = 8;
-    
-    return @{ NSParagraphStyleAttributeName : paragraphStyle };
-}
-
-- (NSDictionary *)messageAttributes
-{
-    UIFont *statusFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
-    NSMutableDictionary *attributes = [@{ NSFontAttributeName : statusFont } mutableCopy];
-    [attributes addEntriesFromDictionary:self.baseAttributes];
-    return attributes;
-}
-
-- (NSDictionary *)nameAttributes
-{
-    UIFont *nameFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
-    NSMutableDictionary *attributes = [@{ NSFontAttributeName : nameFont } mutableCopy];
-    [attributes addEntriesFromDictionary:self.baseAttributes];
-    return attributes;
-}
-
-- (NSAttributedString *)labelTextWithFormat:(NSString*)format name:(NSString *)name
-{
-    if (name.length == 0 || format.length == 0) {
-        return [[NSAttributedString alloc] initWithString:@""];
-    }
-    
-    NSAttributedString *attributedName = [[NSAttributedString alloc] initWithString:NotNilString(name) attributes:self.nameAttributes];
-    return [NSAttributedString attributedStringWithDefaultAttributes:self.messageAttributes format:format, attributedName];
-}
 
 - (void)setAcceptButtonTarget:(id)target action:(SEL)action
 {
