@@ -42,9 +42,9 @@ struct CallCellViewModel {
             systemMessageData.systemMessageType == systemMessageType
             else { return nil }
 
-        let senderString = string(for: sender) && labelBoldFont
-        let calledString = " \(string(for: "called"))" && labelFont
-        var title = senderString + calledString
+        let senderString = string(for: sender)
+        let called = key(with: "called").localized(args:  senderString).uppercased() && labelFont
+        var title = called.adding(font: labelBoldFont, to: senderString)
 
         if systemMessageData.childMessages.count > 0 {
             title += " (\(systemMessageData.childMessages.count + 1))" && labelFont
@@ -54,11 +54,11 @@ struct CallCellViewModel {
     }
 
     private func string(for user: ZMUser) -> String {
-        return (user.isSelfUser ? string(for: "you") : user.displayName).uppercased()
+        return (user.isSelfUser ? key(with: "you").localized : user.displayName).uppercased()
     }
 
-    private func string(for key: String) -> String {
-        return "content.system.call.\(key)".localized.uppercased()
+    private func key(with component: String) -> String {
+        return "content.system.call.\(component)"
     }
 
 }
