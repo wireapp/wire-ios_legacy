@@ -106,11 +106,7 @@ private struct InputBarConstants {
         return inputBarState.isEditing
     }
     
-    var inputBarState: InputBarState = .writing(ephemeral: false) {
-        didSet(oldValue) {
-            updateInputBar(withState: inputBarState, oldState: oldValue)
-        }
-    }
+    private var inputBarState: InputBarState = .writing(ephemeral: false)
     
     fileprivate var textIsOverflowing = false {
         didSet {

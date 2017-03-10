@@ -37,7 +37,8 @@ extension ConversationInputBarViewController {
         editingMessage = message
         updateRightAccessoryView()
 
-        inputBar.inputBarState = .editing(originalText: text)
+        inputBar.setInputBarState(.editing(originalText: text), animated: true)
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(endEditingMessageIfNeeded),
