@@ -54,7 +54,10 @@ public class NotificationViewController: UIViewController, UNNotificationContent
         self.view.addSubview(self.imageMessageView)
         
         constrain(self.view, self.imageMessageView) { selfView, imageMessageView in
-            imageMessageView.edges == selfView.edges
+            imageMessageView.top == selfView.top + 10
+            imageMessageView.leading == selfView.leading
+            imageMessageView.trailing == selfView.trailing
+            imageMessageView.bottom == selfView.bottom
         }
     }
 
@@ -91,6 +94,28 @@ public class NotificationViewController: UIViewController, UNNotificationContent
             message = assetMessage
             assetMessage.requestImageDownload()
         }
+    }
+
+}
+
+
+extension ZMUser {
+
+    @objc func accentColor() -> UIColor {
+        return UIColor.gray
+    }
+
+
+    var nameAccentColor: UIColor {
+        return UIColor.gray
+    }
+
+}
+
+extension UIColor {
+
+    @objc func colorForZMAccentColor(_ color: ZMAccentColor) -> UIColor? {
+        return UIColor.gray
     }
 
 }

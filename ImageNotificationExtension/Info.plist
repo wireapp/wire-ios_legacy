@@ -32,6 +32,8 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
+			<key>UNNotificationExtensionDefaultContentHidden</key>
+			<true/>
 			<key>UNNotificationExtensionCategory</key>
 			<string>conversationCategoryRichImage</string>
 			<key>UNNotificationExtensionInitialContentSizeRatio</key>
