@@ -18,6 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
+NS_ASSUME_NONNULL_BEGIN
 
 @class IconButton;
 
@@ -29,3 +30,5 @@
 @property (nonatomic, readonly) IconButton *switchCameraButton;
 @property (nonatomic, readonly) UIImageView *mutedPreviewOverlay;
 @end
+
+NS_ASSUME_NONNULL_END

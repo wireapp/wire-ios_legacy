@@ -41,6 +41,28 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     case connected
 }
 
+fileprivate extension IconLabelButton {
+    convenience init(icon: ZetaIconType, label: String, accessibilityIdentifier: String) {
+        self.init()
+        self.iconButton.setIcon(icon, with: .small, for: .normal)
+        self.subtitleLabel.text = label
+        self.accessibilityIdentifier = accessibilityIdentifier
+    }
+}
+
+fileprivate extension UILabel {
+    static var multiline: UILabel {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        label.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        label.numberOfLines = 0
+        return label
+    }
+}
+
 class VoiceChannelOverlay: UIView {
     
     var muted = false {
@@ -95,14 +117,6 @@ class VoiceChannelOverlay: UIView {
     
     var controlsHidden = false
 
-    var cancelButton: IconLabelButton!
-    var acceptDegradedButton: IconLabelButton!
-    var callButton: IconLabelButton!
-    var degradationTopLabel: UILabel!
-    var degradationBottomLabel: UILabel!
-    var shieldOverlay: DegradationOverlayView!
-    var degradationTopConstraint: NSLayoutConstraint!
-    var degradationBottomConstraint: NSLayoutConstraint!
     var cameraPreviewPosition: CGPoint {
         get {
             if let positionString = UserDefaults.standard.string(forKey: VoiceChannelOverlayVideoFeedPositionKey)   {
@@ -131,36 +145,53 @@ class VoiceChannelOverlay: UIView {
         }
     }
     
-    var callingConversation: ZMConversation!
-    var state: VoiceChannelOverlayState = .invalid
-    var selfUser: ZMUser = ZMUser.selfUser()
-    var cameraPreviewView: CameraPreviewView!
-    var participantsCollectionView: UICollectionView!
-    var participantsCollectionViewLayout: VoiceChannelCollectionViewLayout!
     var videoPreview: AVSVideoPreview?
     var videoView: AVSVideoView?
-    var contentContainer: UIView!
-    var avatarContainer: UIView!
     var cameraPreviewCenterHorisontally: NSLayoutConstraint!
     var cameraPreviewInitialPositionX: CGFloat = 0
-    var shadow: UIView!
-    var videoNotAvailableBackground: UIView!
-    var topStatusLabel: UILabel!
-    var centerStatusLabel: UILabel!
-    var statusLabelToTopUserImageInset: NSLayoutConstraint!
-    var callDurationFormatter: DateComponentsFormatter!
-    var callingUserImage: UserImageView!
-    var callingTopUserImage: UserImageView!
-    var acceptButton: IconLabelButton!
-    var acceptVideoButton: IconLabelButton!
-    var ignoreButton: IconLabelButton!
-    var leaveButton: IconLabelButton!
-    var leaveButtonPinRightConstraint: NSLayoutConstraint!
-    var muteButton: IconLabelButton!
-    var speakerButton: IconLabelButton!
-    var videoButton: IconLabelButton!
     
-    override init(frame: CGRect) {
+    let callingConversation: ZMConversation
+    var state: VoiceChannelOverlayState = .invalid
+    var selfUser: ZMUser = ZMUser.selfUser()
+    
+    let participantsCollectionView: UICollectionView
+    let participantsCollectionViewLayout: VoiceChannelCollectionViewLayout
+    
+    let callDurationFormatter = DateComponentsFormatter()
+    let cameraPreviewView = CameraPreviewView(width: CameraPreviewContainerSize)
+    let contentContainer = UIView()
+    let avatarContainer = UIView()
+    let shadow = UIView()
+    let videoNotAvailableBackground = UIView()
+    let callingUserImage = UserImageView()
+    let shieldOverlay = DegradationOverlayView()
+    let callingTopUserImage = UserImageView()
+    
+    let cancelButton = IconLabelButton(icon: .X, label: "voice.cancel_button.title".localized, accessibilityIdentifier: "SecurityCancelButton")
+    let acceptDegradedButton = IconLabelButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptDegradedButton")
+    let callButton = IconLabelButton(icon: .phone, label: "voice.call_button.title".localized, accessibilityIdentifier: "SecurityCallButton")
+    let acceptButton = IconLabelButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptButton")
+    let acceptVideoButton = IconLabelButton(icon: .videoCall, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptVideoButton")
+    let ignoreButton = IconLabelButton(icon: .endCall, label: "voice.decline_button.title".localized, accessibilityIdentifier: "IgnoreButton")
+    let leaveButton = IconLabelButton(icon: .endCall, label: "voice.hang_up_button.title".localized, accessibilityIdentifier: "LeaveCallButton")
+    let muteButton = IconLabelButton(icon: .microphoneWithStrikethrough, label: "voice.mute_button.title".localized, accessibilityIdentifier: "CallMuteButton")
+    let speakerButton = IconLabelButton(icon: .speaker, label: "voice.speaker_button.title".localized, accessibilityIdentifier: "CallSpeakerButton")
+    let videoButton = IconLabelButton(icon: .videoCall, label: "voice.video_button.title".localized, accessibilityIdentifier: "CallVideoButton")
+
+    let degradationTopLabel = UILabel.multiline
+    let degradationBottomLabel = UILabel.multiline
+    let topStatusLabel = UILabel.multiline
+    let centerStatusLabel = UILabel()
+    
+    var statusLabelToTopUserImageInset: NSLayoutConstraint?
+    var degradationTopConstraint: NSLayoutConstraint?
+    var degradationBottomConstraint: NSLayoutConstraint?
+    var leaveButtonPinRightConstraint: NSLayoutConstraint?
+    
+    init(frame: CGRect, callingConversation: ZMConversation) {
+        self.callingConversation = callingConversation
+        self.participantsCollectionViewLayout = VoiceChannelCollectionViewLayout()
+        self.participantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: participantsCollectionViewLayout)
         super.init(frame: frame)
         setupVoiceOverlay()
         createConstraints()
@@ -363,7 +394,6 @@ extension VoiceChannelOverlay {
     fileprivate func setupVoiceOverlay() {
         clipsToBounds = true
         backgroundColor = .clear
-        callDurationFormatter = DateComponentsFormatter()
         callDurationFormatter.allowedUnits = [.minute, .second]
         callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
         
@@ -376,116 +406,64 @@ extension VoiceChannelOverlay {
             self.videoView = video
         }
         
-        shadow = UIView()
         shadow.isUserInteractionEnabled = false
         shadow.backgroundColor = UIColor(white: 0, alpha: 0.4)
         addSubview(shadow)
 
-        videoNotAvailableBackground = UIView()
         videoNotAvailableBackground.isUserInteractionEnabled = false
         videoNotAvailableBackground.backgroundColor = .black
         addSubview(videoNotAvailableBackground)
         
-        contentContainer = UIView()
         contentContainer.layoutMargins = UIEdgeInsets(top: 48, left: 32, bottom: 40, right: 32)
         addSubview(contentContainer)
         
-        avatarContainer = UIView()
         contentContainer.addSubview(avatarContainer)
         
-        callingUserImage = UserImageView()
         callingUserImage.suggestedImageSize = .big
         callingUserImage.accessibilityIdentifier = "CallingUsersImage"
         avatarContainer.addSubview(callingUserImage)
         
-        shieldOverlay = DegradationOverlayView()
         avatarContainer.addSubview(shieldOverlay)
         
-        callingTopUserImage = UserImageView()
         callingTopUserImage.suggestedImageSize = .small
         callingTopUserImage.accessibilityIdentifier = "CallingTopUsersImage"
         contentContainer.addSubview(callingTopUserImage)
         
-        participantsCollectionViewLayout = createParticipantsCollectionViewLayout()
-        participantsCollectionView = createParticipantsCollectionView(layout: participantsCollectionViewLayout)
+        configureParticipantsCollectionViewLayout(layout: participantsCollectionViewLayout)
+        configureParticipantsCollectionView(collectionView: participantsCollectionView)
         addSubview(participantsCollectionView)
         
-        createButtons()
+        [acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton, cancelButton, callButton].forEach(contentContainer.addSubview)
         createLabels()
         
-        cameraPreviewView = CameraPreviewView(width: CameraPreviewContainerSize)
         addSubview(cameraPreviewView)
         setupCameraFeedPanGestureRecognizer()
     }
     
     private func createLabels() {
-        topStatusLabel = createMultilineLabel()
         topStatusLabel.accessibilityIdentifier = "CallStatusLabel"
-        
-        centerStatusLabel = UILabel()
+        degradationTopLabel.accessibilityIdentifier = "CallDegradationTopLabel"
+        degradationBottomLabel.accessibilityIdentifier = "CallDegradationBottomLabel"
+
         centerStatusLabel.accessibilityIdentifier = "CenterStatusLabel"
         centerStatusLabel.textAlignment = .center
         centerStatusLabel.numberOfLines = 2
         centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
-        
-        degradationTopLabel = createMultilineLabel()
-        degradationTopLabel.accessibilityIdentifier = "CallDegradationTopLabel"
-        
-        degradationBottomLabel = createMultilineLabel()
-        degradationBottomLabel.accessibilityIdentifier = "CallDegradationBottomLabel"
 
         [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)
     }
     
-    private func createMultilineLabel() -> UILabel {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        label.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        label.numberOfLines = 0
-        return label
-    }
-    
-    private func createButtons() {
-        acceptButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptButton")
-        acceptDegradedButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptDegradedButton")
-        acceptVideoButton = createButton(icon: .videoCall, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptVideoButton")
-        ignoreButton = createButton(icon: .endCall, label: "voice.decline_button.title".localized, accessibilityIdentifier: "IgnoreButton")
-        leaveButton = createButton(icon: .endCall, label: "voice.hang_up_button.title".localized, accessibilityIdentifier: "LeaveCallButton")
-        muteButton = createButton(icon: .microphoneWithStrikethrough, label: "voice.mute_button.title".localized, accessibilityIdentifier: "CallMuteButton")
-        videoButton = createButton(icon: .videoCall, label: "voice.video_button.title".localized, accessibilityIdentifier: "CallVideoButton")
-        speakerButton = createButton(icon: .speaker, label: "voice.speaker_button.title".localized, accessibilityIdentifier: "CallSpeakerButton")
-        cancelButton = createButton(icon: .X, label: "voice.cancel_button.title".localized, accessibilityIdentifier: "SecurityCancelButton")
-        callButton = createButton(icon: .phone, label: "voice.call_button.title".localized, accessibilityIdentifier: "SecurityCallButton")
-
-        [acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton, cancelButton, callButton].forEach(contentContainer.addSubview)
-    }
-    
-    private func createButton(icon: ZetaIconType, label: String, accessibilityIdentifier: String) -> IconLabelButton {
-        let button = IconLabelButton()
-        button.iconButton.setIcon(icon, with: .small, for: .normal)
-        button.subtitleLabel.text = label
-        button.accessibilityIdentifier = accessibilityIdentifier
-        return button
-    }
-    
-    private func createParticipantsCollectionViewLayout() -> VoiceChannelCollectionViewLayout {
-        let layout = VoiceChannelCollectionViewLayout()
+    private func configureParticipantsCollectionViewLayout(layout: VoiceChannelCollectionViewLayout) {
         layout.itemSize = CGSize(width: GroupCallAvatarSize, height: GroupCallAvatarSize + GroupCallAvatarLabelHeight)
         layout.minimumInteritemSpacing = 24
         layout.minimumLineSpacing = 24
         layout.scrollDirection = .horizontal
-        return layout
     }
     
-    private func createParticipantsCollectionView(layout: UICollectionViewLayout) -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    private func configureParticipantsCollectionView(collectionView: UICollectionView) {
         collectionView.alwaysBounceHorizontal = true
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
-        return collectionView
     }
     
     fileprivate func createConstraints(){
@@ -519,14 +497,14 @@ extension VoiceChannelOverlay {
             degradationTopLabel.trailing <= view.trailingMargin
             
             self.degradationTopConstraint = (degradationTopLabel.bottom == callingUserImage.top - 16)
-            self.degradationTopConstraint.isActive = false
+            self.degradationTopConstraint?.isActive = false
             degradationTopLabel.centerX == view.centerX
 
             degradationBottomLabel.leading >= view.leadingMargin
             degradationBottomLabel.trailing <= view.trailingMargin
             degradationBottomLabel.centerX == view.centerX
             self.degradationBottomConstraint = (degradationBottomLabel.top == callingUserImage.bottom + 16)
-            self.degradationBottomConstraint.isActive = false
+            self.degradationBottomConstraint?.isActive = false
             degradationBottomLabel.bottom <= callButton.top - 16
         }
         
@@ -536,7 +514,7 @@ extension VoiceChannelOverlay {
             topStatusLabel.trailing == contentContainer.trailingMargin
             topStatusLabel.top == contentContainer.top + 50
             self.statusLabelToTopUserImageInset = topStatusLabel.leading == callingTopUserImage.trailing + 12
-            self.statusLabelToTopUserImageInset.isActive = false
+            self.statusLabelToTopUserImageInset?.isActive = false
             
             centerStatusLabel.leading == contentContainer.leadingMargin
             centerStatusLabel.trailing == contentContainer.trailingMargin
@@ -579,7 +557,7 @@ extension VoiceChannelOverlay {
             leave.top == avatarContainer.bottom + 32
             leave.bottom == view.bottomMargin
             leaveButtonPinRightConstraint = leave.trailing == view.trailingMargin
-            leaveButtonPinRightConstraint.isActive = false
+            leaveButtonPinRightConstraint?.isActive = false
         }
         
         constrain([ignoreButton, muteButton, cancelButton]) { buttons in
@@ -655,8 +633,8 @@ extension VoiceChannelOverlay {
     }
     
     private func setDegradationLabelConstraints(active: Bool) {
-        self.degradationTopConstraint.isActive = active
-        self.degradationBottomConstraint.isActive = active
+        self.degradationTopConstraint?.isActive = active
+        self.degradationBottomConstraint?.isActive = active
     }
     
     fileprivate func updateCallDegradedLabels() {
@@ -820,10 +798,10 @@ extension VoiceChannelOverlay {
     fileprivate func updateViewsStateAndLayout(forVisibleViews visibleViews: Set<UIView>) {
         if visibleViews.contains(callingTopUserImage) {
             topStatusLabel.textAlignment = .left
-            statusLabelToTopUserImageInset.isActive = true
+            statusLabelToTopUserImageInset?.isActive = true
         } else {
             topStatusLabel.textAlignment = .center
-            statusLabelToTopUserImageInset.isActive = false
+            statusLabelToTopUserImageInset?.isActive = false
         }
         
         if visibleViews.contains(cameraPreviewView) {
@@ -831,9 +809,9 @@ extension VoiceChannelOverlay {
         }
         
         if isVideoCall {
-            leaveButtonPinRightConstraint.isActive = false
+            leaveButtonPinRightConstraint?.isActive = false
         } else {
-            leaveButtonPinRightConstraint.isActive = hidesSpeakerButton
+            leaveButtonPinRightConstraint?.isActive = hidesSpeakerButton
         }
     }
 }

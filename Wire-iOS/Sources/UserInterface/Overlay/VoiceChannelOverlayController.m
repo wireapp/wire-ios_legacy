@@ -83,7 +83,8 @@
 
 - (void)loadView
 {
-    VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initForAutoLayout];
+    VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initWithFrame:CGRectZero callingConversation:self.conversation];
+    overlayView.translatesAutoresizingMaskIntoConstraints = false;
     [overlayView setCallButtonTarget:self           action:@selector(makeDegradedCallClicked:)];
     [overlayView setAcceptDegradedButtonTarget:self action:@selector(acceptDegradedCallClicked:)];
     [overlayView setAcceptButtonTarget:self         action:@selector(acceptButtonClicked:)];
@@ -95,8 +96,6 @@
     [overlayView setSpeakerButtonTarget:self        action:@selector(speakerButtonClicked:)];
     [overlayView setVideoButtonTarget:self          action:@selector(videoButtonClicked:)];
     [overlayView setSwitchCameraButtonTarget:self   action:@selector(switchCameraButtonClicked:)];
-    [overlayView setCallingConversation:self.conversation];
-    overlayView.selfUser = [ZMUser selfUser];
     overlayView.hidesSpeakerButton = IS_IPAD;
     self.overlayView = overlayView;
     

@@ -38,14 +38,13 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
     }
     
     private func voiceChannelOverlay(state: VoiceChannelOverlayState, videoCall: Bool = false, conversation: MockConversation, selfUntrusted: Bool = false) -> VoiceChannelOverlay {
-        let overlay = VoiceChannelOverlay(frame: UIScreen.main.bounds)
         let mockUser = MockUser.mockSelf()
         mockUser?.untrusted = selfUntrusted
         if videoCall {
             conversation.voiceChannel = MockVoiceChannel(videoCall: true)
         }
+        let overlay = VoiceChannelOverlay(frame: UIScreen.main.bounds, callingConversation: (conversation as Any) as! ZMConversation)
         overlay.selfUser = (mockUser as Any) as! ZMUser
-        overlay.callingConversation = (conversation as Any) as! ZMConversation
         overlay.transition(to: state)
         CASStyler.default().styleItem(overlay)
         overlay.backgroundColor = .darkGray
