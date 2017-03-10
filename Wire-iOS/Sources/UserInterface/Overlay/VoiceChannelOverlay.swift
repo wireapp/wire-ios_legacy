@@ -22,11 +22,11 @@ import UIKit
 import CocoaLumberjackSwift
 import Classy
 
-let CameraPreviewContainerSize: CGFloat = 72.0;
-let OverlayButtonWidth: CGFloat = 56.0;
-let GroupCallAvatarSize: CGFloat = 120.0;
-let GroupCallAvatarGainRadius: CGFloat = 14.0;
-let GroupCallAvatarLabelHeight: CGFloat = 30.0;
+fileprivate let CameraPreviewContainerSize: CGFloat = 72.0;
+fileprivate let OverlayButtonWidth: CGFloat = 56.0;
+fileprivate let GroupCallAvatarSize: CGFloat = 120.0;
+fileprivate let GroupCallAvatarGainRadius: CGFloat = 14.0;
+fileprivate let GroupCallAvatarLabelHeight: CGFloat = 30.0;
 
 fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
 
@@ -49,6 +49,7 @@ class VoiceChannelOverlay: UIView {
             self.cameraPreviewView.mutedPreviewOverlay.isHidden = !self.outgoingVideoActive || !muted
         }
     }
+    
     var speakerActive = false {
         didSet {
             speakerButton.isSelected = speakerActive
@@ -310,15 +311,6 @@ extension VoiceChannelOverlay {
         updateVisibleViewsForCurrentState(animated: true)
     }
     
-    public func hideControlsAfterElapsedTime() {
-        cancelHideControlsAfterElapsedTime()
-        perform(#selector(hideControls), with: nil, afterDelay: 4)
-    }
-    
-    public func cancelHideControlsAfterElapsedTime() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideControls), object: nil)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         backgroundWasTapped()
@@ -332,7 +324,16 @@ extension VoiceChannelOverlay {
         return pointInside
     }
     
-    public func backgroundWasTapped() {
+    fileprivate func cancelHideControlsAfterElapsedTime() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideControls), object: nil)
+    }
+    
+    fileprivate func hideControlsAfterElapsedTime() {
+        cancelHideControlsAfterElapsedTime()
+        perform(#selector(hideControls), with: nil, afterDelay: 4)
+    }
+    
+    private func backgroundWasTapped() {
         controlsHidden = !controlsHidden
         updateVisibleViewsForCurrentState(animated: true)
         if !controlsHidden {
@@ -344,8 +345,7 @@ extension VoiceChannelOverlay {
 // MARK: - Creating views
 extension VoiceChannelOverlay {
     
-
-    func createVideoPreviewIfNeeded() {
+    fileprivate func createVideoPreviewIfNeeded() {
         if !Settings.shared().disableAVS && videoPreview == nil {
             // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
             // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
@@ -360,7 +360,7 @@ extension VoiceChannelOverlay {
         }
     }
 
-    public func setupVoiceOverlay() {
+    fileprivate func setupVoiceOverlay() {
         clipsToBounds = true
         backgroundColor = .clear
         callDurationFormatter = DateComponentsFormatter()
@@ -418,7 +418,7 @@ extension VoiceChannelOverlay {
         setupCameraFeedPanGestureRecognizer()
     }
     
-    fileprivate func createLabels() {
+    private func createLabels() {
         topStatusLabel = createMultilineLabel()
         topStatusLabel.accessibilityIdentifier = "CallStatusLabel"
         
@@ -437,7 +437,7 @@ extension VoiceChannelOverlay {
         [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)
     }
     
-    fileprivate func createMultilineLabel() -> UILabel {
+    private func createMultilineLabel() -> UILabel {
         let label = UILabel()
         label.textAlignment = .center
         label.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
@@ -448,7 +448,7 @@ extension VoiceChannelOverlay {
         return label
     }
     
-    fileprivate func createButtons() {
+    private func createButtons() {
         acceptButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptButton")
         acceptDegradedButton = createButton(icon: .phone, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptDegradedButton")
         acceptVideoButton = createButton(icon: .videoCall, label: "voice.accept_button.title".localized, accessibilityIdentifier: "AcceptVideoButton")
@@ -463,7 +463,7 @@ extension VoiceChannelOverlay {
         [acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, muteButton, videoButton, speakerButton, cancelButton, callButton].forEach(contentContainer.addSubview)
     }
     
-    fileprivate func createButton(icon: ZetaIconType, label: String, accessibilityIdentifier: String) -> IconLabelButton {
+    private func createButton(icon: ZetaIconType, label: String, accessibilityIdentifier: String) -> IconLabelButton {
         let button = IconLabelButton()
         button.iconButton.setIcon(icon, with: .small, for: .normal)
         button.subtitleLabel.text = label
@@ -471,7 +471,7 @@ extension VoiceChannelOverlay {
         return button
     }
     
-    fileprivate func createParticipantsCollectionViewLayout() -> VoiceChannelCollectionViewLayout {
+    private func createParticipantsCollectionViewLayout() -> VoiceChannelCollectionViewLayout {
         let layout = VoiceChannelCollectionViewLayout()
         layout.itemSize = CGSize(width: GroupCallAvatarSize, height: GroupCallAvatarSize + GroupCallAvatarLabelHeight)
         layout.minimumInteritemSpacing = 24
@@ -480,7 +480,7 @@ extension VoiceChannelOverlay {
         return layout
     }
     
-    fileprivate func createParticipantsCollectionView(layout: UICollectionViewLayout) -> UICollectionView {
+    private func createParticipantsCollectionView(layout: UICollectionViewLayout) -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.alwaysBounceHorizontal = true
         collectionView.backgroundColor = .clear
@@ -488,7 +488,7 @@ extension VoiceChannelOverlay {
         return collectionView
     }
     
-    public func createConstraints(){
+    fileprivate func createConstraints(){
         
         let videoViews: [UIView?] = [videoView, shadow, videoNotAvailableBackground]
         
@@ -628,11 +628,11 @@ extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
 // MARK: - State transitions
 extension VoiceChannelOverlay {
     
-    var isVideoCall: Bool {
+    private var isVideoCall: Bool {
         return callingConversation.voiceChannel?.isVideoCall ?? false
     }
     
-    var isGroupCall: Bool {
+    private var isGroupCall: Bool {
         return callingConversation.conversationType == .group
     }
     
@@ -643,7 +643,7 @@ extension VoiceChannelOverlay {
         updateVisibleViewsForCurrentState()
     }
     
-    func updateVisibleViewsForCurrentState(animated: Bool) {
+    fileprivate func updateVisibleViewsForCurrentState(animated: Bool) {
         if animated {
             UIView.animate(withDuration: 0.2) {
                 self.updateVisibleViewsForCurrentState()
@@ -659,7 +659,7 @@ extension VoiceChannelOverlay {
         self.degradationBottomConstraint.isActive = active
     }
     
-    func updateCallDegradedLabels() {
+    fileprivate func updateCallDegradedLabels() {
         if selfUser.untrusted() {
             degradationTopLabel.text = "voice.degradation.new_self_device".localized
         } else {
@@ -680,7 +680,7 @@ extension VoiceChannelOverlay {
         }
     }
     
-    func updateCallingUserImage() {
+    fileprivate func updateCallingUserImage() {
         let callingUser: ZMUser?
         if callingConversation.conversationType == .oneOnOne {
             callingUser = callingConversation.firstActiveParticipantOtherThanSelf()
@@ -693,7 +693,7 @@ extension VoiceChannelOverlay {
         callingTopUserImage.user = callingUser
     }
     
-    func updateVisibleViewsForCurrentState() {
+    fileprivate func updateVisibleViewsForCurrentState() {
         updateStatusLabelText()
         updateCallingUserImage()
         updateCallDegradedLabels()
@@ -721,13 +721,13 @@ extension VoiceChannelOverlay {
         cameraPreviewView.mutedPreviewOverlay.isHidden = !outgoingVideoActive || !muted
     }
     
-    func hiddenViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
+    fileprivate func hiddenViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
         let visible = visibleViews(for: state)
         let hidden = allOverlayViews.subtracting(visible)
         return hidden
     }
     
-    func visibleViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
+    fileprivate func visibleViews(for state: VoiceChannelOverlayState) -> Set<UIView> {
         let visible: Set<UIView>
         if isVideoCall {
             visible = visibleViewsForState(inVideoCall: state)
@@ -738,12 +738,11 @@ extension VoiceChannelOverlay {
         return visible
     }
     
-    var allOverlayViews: Set<UIView> {
+    fileprivate var allOverlayViews: Set<UIView> {
         return [callingUserImage, callingTopUserImage, topStatusLabel, centerStatusLabel, acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, speakerButton, muteButton, leaveButton, videoButton, cameraPreviewView, shadow, videoNotAvailableBackground, participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
     }
     
-    
-    func connectedStateVisibleViews(videoEnabled: Bool) -> Set<UIView> {
+    fileprivate func connectedStateVisibleViews(videoEnabled: Bool) -> Set<UIView> {
         if videoEnabled {
             if !remoteIsSendingVideo {
                 return [muteButton, leaveButton, videoButton, cameraPreviewView, centerStatusLabel, videoNotAvailableBackground]
@@ -765,7 +764,7 @@ extension VoiceChannelOverlay {
         }
     }
     
-    func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
+    fileprivate func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
         let visibleViews: Set<UIView>
         
         switch state {
@@ -792,7 +791,7 @@ extension VoiceChannelOverlay {
         }
     }
     
-    func visibleViewsForState(inVideoCall state: VoiceChannelOverlayState) -> Set<UIView> {
+    fileprivate func visibleViewsForState(inVideoCall state: VoiceChannelOverlayState) -> Set<UIView> {
         var visibleViews: Set<UIView>
         
         switch state {
@@ -818,7 +817,7 @@ extension VoiceChannelOverlay {
         return visibleViews
     }
     
-    func updateViewsStateAndLayout(forVisibleViews visibleViews: Set<UIView>) {
+    fileprivate func updateViewsStateAndLayout(forVisibleViews visibleViews: Set<UIView>) {
         if visibleViews.contains(callingTopUserImage) {
             topStatusLabel.textAlignment = .left
             statusLabelToTopUserImageInset.isActive = true
@@ -841,24 +840,24 @@ extension VoiceChannelOverlay {
 
 // MARK: - Camera overlay
 extension VoiceChannelOverlay {
-    func setupCameraFeedPanGestureRecognizer() {
+    fileprivate func setupCameraFeedPanGestureRecognizer() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(onCameraPreviewPan(_:)))
         cameraPreviewView.addGestureRecognizer(pan)
     }
     
-    func cameraRightPosition() -> CGPoint {
+    fileprivate func cameraRightPosition() -> CGPoint {
         let inset: CGFloat = 24
         let sideInset = (bounds.width - inset) / 2
         return CGPoint(x: sideInset, y: 0)
     }
 
-    func cameraLeftPosition() -> CGPoint {
+    fileprivate func cameraLeftPosition() -> CGPoint {
         let inset: CGFloat = 24
         let sideInset = (bounds.width - inset) / 2
         return CGPoint(x: -sideInset, y: 0)
     }
     
-    func onCameraPreviewPan(_ gestureRecognizer: UIPanGestureRecognizer) {
+    public func onCameraPreviewPan(_ gestureRecognizer: UIPanGestureRecognizer) {
         let offset = gestureRecognizer.translation(in: self)
         let newPositionX = cameraPreviewInitialPositionX + offset.x;
         let dragThreshold: CGFloat = 180
@@ -900,7 +899,7 @@ extension VoiceChannelOverlay {
         }
     }
     
-    func animateCameraChange(changeAction action: (() -> Void)?, completion: ((Bool) -> Void)?) {
+    public func animateCameraChange(changeAction action: (() -> Void)?, completion: ((Bool) -> Void)?) {
         let snapshot = cameraPreviewView.videoFeedContainer.snapshotView(afterScreenUpdates: true)!
         cameraPreviewView.addSubview(snapshot)
         if let action = action {
