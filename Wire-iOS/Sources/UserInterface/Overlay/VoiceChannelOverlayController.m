@@ -35,7 +35,7 @@
 #import "Settings.h"
 #import "Wire-Swift.h"
 
-@interface VoiceChannelOverlayController () <VoiceChannelStateObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, ReceivedVideoObserver>
+@interface VoiceChannelOverlayController () <VoiceChannelStateObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, ReceivedVideoObserver, VoiceChannelOverlayDelegate>
 
 @property (nonatomic) UIVisualEffectView *blurEffectView;
 @property (nonatomic) VoiceChannelOverlay *overlayView;
@@ -85,17 +85,7 @@
 {
     VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initWithFrame:CGRectZero callingConversation:self.conversation];
     overlayView.translatesAutoresizingMaskIntoConstraints = false;
-    [overlayView setCallButtonTarget:self           action:@selector(makeDegradedCallClicked:)];
-    [overlayView setAcceptDegradedButtonTarget:self action:@selector(acceptDegradedCallClicked:)];
-    [overlayView setAcceptButtonTarget:self         action:@selector(acceptButtonClicked:)];
-    [overlayView setAcceptVideoButtonTarget:self    action:@selector(acceptVideoButtonClicked:)];
-    [overlayView setIgnoreButtonTarget:self         action:@selector(ignoreButtonClicked:)];
-    [overlayView setLeaveButtonTarget:self          action:@selector(leaveButtonClicked:)];
-    [overlayView setCancelButtonTarget:self         action:@selector(cancelButtonClicked:)];
-    [overlayView setMuteButtonTarget:self           action:@selector(muteButtonClicked:)];
-    [overlayView setSpeakerButtonTarget:self        action:@selector(speakerButtonClicked:)];
-    [overlayView setVideoButtonTarget:self          action:@selector(videoButtonClicked:)];
-    [overlayView setSwitchCameraButtonTarget:self   action:@selector(switchCameraButtonClicked:)];
+    overlayView.delegate = self;
     overlayView.hidesSpeakerButton = IS_IPAD;
     self.overlayView = overlayView;
     
@@ -167,7 +157,9 @@
                                                                                     collectionView:self.overlayView.participantsCollectionView];
 }
 
-- (void)makeDegradedCallClicked:(id)sender
+#pragma mark - VoiceChannelOverlayDelegate
+
+- (void)makeDegradedCallTapped
 {
     DDLogVoice(@"UI: Make degraded call button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
@@ -176,7 +168,7 @@
     }];
 }
 
-- (void)acceptDegradedCallClicked:(id)sender
+- (void)acceptDegradedButtonTapped
 {
     DDLogVoice(@"UI: Accept degraded call button tap");
     
@@ -191,21 +183,21 @@
     }];
 }
 
-- (void)acceptButtonClicked:(id)sender
+- (void)acceptButtonTapped
 {
     DDLogVoice(@"UI: Accept button tap");
 
     [self joinCurrentVoiceChannel];
 }
 
-- (void)acceptVideoButtonClicked:(id)sender
+- (void)acceptVideoButtonTapped
 {
     DDLogVoice(@"UI: Accept video button tap");
 
     [self joinCurrentVoiceChannel];
 }
 
-- (void)ignoreButtonClicked:(id)sender
+- (void)ignoreButtonTapped
 {
     DDLogVoice(@"UI: Ignore button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
@@ -214,7 +206,7 @@
     }];
 }
 
-- (void)cancelButtonClicked:(id)sender
+- (void)cancelButtonTapped
 {
     DDLogVoice(@"UI: Cancel button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
@@ -223,7 +215,7 @@
     }];
 }
 
-- (void)leaveButtonClicked:(id)sender
+- (void)leaveButtonTapped
 {
     DDLogVoice(@"UI: Leave button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
@@ -232,7 +224,7 @@
     }];
 }
 
-- (void)muteButtonClicked:(id)sender
+- (void)muteButtonTapped
 {
     DDLogVoice(@"UI: Mute button tap");
     AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
@@ -240,7 +232,7 @@
     self.overlayView.muted = mediaManager.microphoneMuted;
 }
 
-- (void)speakerButtonClicked:(id)sender
+- (void)speakerButtonTapped
 {
     DDLogVoice(@"UI: Speaker button tap");
     AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
@@ -249,7 +241,7 @@
     self.overlayView.speakerActive = mediaManager.speakerEnabled;
 }
 
-- (void)videoButtonClicked:(id)sender
+- (void)videoButtonTapped
 {
     [[ZMUserSession sharedSession] enqueueChanges:^{ // Calling V2 requires enqueueChanges
         BOOL active = !self.outgoingVideoActive;
@@ -265,7 +257,7 @@
     }];    
 }
 
-- (void)switchCameraButtonClicked:(id)sender;
+- (void)switchCameraButtonTapped
 {
     if (self.cameraSwitchInProgress) {
         return;

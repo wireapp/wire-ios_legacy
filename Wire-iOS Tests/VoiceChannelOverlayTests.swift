@@ -21,6 +21,69 @@ import XCTest
 import Classy
 @testable import Wire
 
+fileprivate extension UIButton {
+    func tap() {
+        sendActions(for: .touchUpInside)
+    }
+}
+
+fileprivate class MockDelegate: NSObject, VoiceChannelOverlayDelegate {
+    var cancel = false
+    func cancelButtonTapped() {
+        cancel = true
+    }
+    
+    var makeDegraded = false
+    func makeDegradedCallTapped() {
+        makeDegraded = true
+    }
+    
+    var accept = false
+    func acceptButtonTapped() {
+        accept = true
+    }
+    
+    var acceptDegraded = false
+    func acceptDegradedButtonTapped() {
+        acceptDegraded = true
+    }
+    
+    var acceptVideo = false
+    func acceptVideoButtonTapped() {
+        acceptVideo = true
+    }
+    
+    var ignore = false
+    func ignoreButtonTapped() {
+        ignore = true
+    }
+    
+    var leave = false
+    func leaveButtonTapped() {
+        leave = true
+    }
+    
+    var mute = false
+    func muteButtonTapped() {
+        mute = true
+    }
+    
+    var speaker = false
+    func speakerButtonTapped() {
+        speaker = true
+    }
+    
+    var video = false
+    func videoButtonTapped() {
+        video = true
+    }
+    
+    var switchCamera = false
+    func switchCameraButtonTapped() {
+        switchCamera = true
+    }
+}
+
 class VoiceChannelOverlayTests: ZMSnapshotTestCase {
     var conversation: MockConversation!
     
@@ -49,6 +112,61 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         CASStyler.default().styleItem(overlay)
         overlay.backgroundColor = .darkGray
         return overlay
+    }
+    
+    private func assert(overlay: VoiceChannelOverlay, buttonToTap: UIButton, file: StaticString = #file, line: UInt = #line, value: (MockDelegate) -> Bool) {
+        let delegate = MockDelegate()
+        overlay.delegate = delegate
+        buttonToTap.tap()
+        XCTAssert(value(delegate), "Should register tap", file: file, line: line)
+    }
+    
+    func testButtonActions() {
+        let overlay = voiceChannelOverlay(state: .incomingCall, conversation: conversation)
+
+        assert(overlay: overlay, buttonToTap: overlay.cancelButton) { delegate in
+            delegate.cancel
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.makeDegradedCallButton) { delegate in
+            delegate.makeDegraded
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.acceptButton) { delegate in
+            delegate.accept
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.acceptDegradedButton) { delegate in
+            delegate.acceptDegraded
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.acceptVideoButton) { delegate in
+            delegate.acceptVideo
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.ignoreButton) { delegate in
+            delegate.ignore
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.leaveButton) { delegate in
+            delegate.leave
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.muteButton) { delegate in
+            delegate.mute
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.speakerButton) { delegate in
+            delegate.speaker
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.videoButton) { delegate in
+            delegate.video
+        }
+        
+        assert(overlay: overlay, buttonToTap: overlay.cameraPreviewView.switchCameraButton) { delegate in
+            delegate.switchCamera
+        }
     }
 
     func testIncomingAudioCall() {
