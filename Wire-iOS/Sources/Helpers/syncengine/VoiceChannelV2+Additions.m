@@ -42,6 +42,8 @@ NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state)
             return @"IncomingCallInactive:";
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
             return @"JoiningActiveChannel";
+        case VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded:
+            return @"JoiningActiveChannelDegraded";
         case VoiceChannelV2StateSelfConnectedToActiveChannel:
             return @"ConnectedToActiveChannel";
         case VoiceChannelV2StateDeviceTransferReady:

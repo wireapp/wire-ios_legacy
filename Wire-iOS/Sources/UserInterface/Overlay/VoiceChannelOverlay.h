@@ -82,13 +82,9 @@ FOUNDATION_EXPORT NSString *StringFromVoiceChannelOverlayState(VoiceChannelOverl
 @property (nonatomic) ZMUser *selfUser;
 
 @property (nonatomic) CameraPreviewView *cameraPreviewView;
-@property (nonatomic) BOOL videoViewFullscreen;
 
 @property (nonatomic) UICollectionView *participantsCollectionView;
 @property (nonatomic) VoiceChannelCollectionViewLayout *participantsCollectionViewLayout;
-
-@property (nonatomic) AVSVideoPreview *videoPreview;
-@property (nonatomic) AVSVideoView *videoView;
 
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *avatarContainer;

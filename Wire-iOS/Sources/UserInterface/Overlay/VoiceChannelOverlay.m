@@ -21,8 +21,6 @@
 #import <PureLayout/PureLayout.h>
 @import Classy;
 @import WireExtensionComponents;
-#import <avs/AVSVideoView.h>
-#import <avs/AVSVideoPreview.h>
 
 #import "VoiceChannelOverlay.h"
 #import "VoiceChannelOverlayController.h"
@@ -88,39 +86,6 @@ static NSString *NotNilString(NSString *string) {
 {
     UIPanGestureRecognizer *videoFeedPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onCameraPreviewPan:)];
     [self.cameraPreviewView addGestureRecognizer:videoFeedPan];
-}
-
-- (void)setVideoViewFullscreen:(BOOL)videoViewFullscreen
-{
-    [self createVideoPreviewIfNeeded];
-
-    if (_videoViewFullscreen == videoViewFullscreen) {
-        return;
-    }
-    DDLogVoice(@"videoViewFullScreen: %d -> %d", _videoViewFullscreen, videoViewFullscreen);
-    _videoViewFullscreen = videoViewFullscreen;
-    if (_videoViewFullscreen) {
-        self.videoPreview.frame = self.bounds;
-        [self insertSubview:self.videoPreview aboveSubview:self.videoView];
-    }
-    else {
-        self.videoPreview.frame = self.cameraPreviewView.videoFeedContainer.bounds;
-        [self.cameraPreviewView.videoFeedContainer addSubview:self.videoPreview];
-    }
-}
-
-- (void)createVideoPreviewIfNeeded
-{
-    if (![[Settings sharedSettings] disableAVS] && nil == self.videoPreview) {
-        // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
-        // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
-        // therefore we use @c autoresizingMask here
-        self.videoPreview = [[AVSVideoPreview alloc] initWithFrame:self.bounds];
-        self.videoPreview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.videoPreview.userInteractionEnabled = NO;
-        self.videoPreview.backgroundColor = [UIColor clearColor];
-        [self insertSubview:self.videoPreview aboveSubview:self.videoView];
-    }
 }
 
 - (void)setLowBandwidth:(BOOL)lowBandwidth

@@ -170,7 +170,7 @@ static inline NSDataDetector *linkDataDetector(void)
     
     
     NSAttributedString *markdownStr = nil;
-    if ([[Settings sharedSettings] enableMarkdown]) {
+    if (! Settings.sharedSettings.disableMarkdown) {
         if (! WireMarkdownParser) {
             WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
         }

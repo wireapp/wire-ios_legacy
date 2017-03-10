@@ -208,8 +208,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.notifications.chat_alerts.toggle".localized
     case .notificationContentVisible:
         return "self.settings.notifications.push_notification.toogle".localized
-    case .markdown:
-        return "Markdown support"
+    case .disableMarkdown:
+        return "Disable Markdown support"
         
     case .skipFirstTimeUseChecks:
         return "Skip first time use checks"

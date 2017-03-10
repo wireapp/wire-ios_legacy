@@ -74,7 +74,7 @@ class SettingsPropertyFactory {
     var crashlogManager: CrashlogManager?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
-        SettingsPropertyName.markdown                   : UserDefaultMarkdown,
+        SettingsPropertyName.disableMarkdown                   : UserDefaultDisableMarkdown,
         SettingsPropertyName.chatHeadsDisabled          : UserDefaultChatHeadsDisabled,
         SettingsPropertyName.preferredFlashMode         : UserDefaultPreferredCameraFlashMode,
         SettingsPropertyName.messageSoundName           : UserDefaultMessageSoundName,

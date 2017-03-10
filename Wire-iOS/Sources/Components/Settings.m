@@ -27,7 +27,7 @@ NSString * const SettingsColorSchemeChangedNotification = @"SettingsColorSchemeC
 
 // NB!!! After adding the key here please make sure to add it to @m +allDefaultsKeys as well
 NSString * const UserDefaultExtras = @"ZDevOptionExtras";
-NSString * const UserDefaultMarkdown = @"UserDefaultMarkdown";
+NSString * const UserDefaultDisableMarkdown = @"UserDefaultDisableMarkdown";
 NSString * const UserDefaultChatHeadsDisabled = @"ZDevOptionChatHeadsDisabled";
 NSString * const UserDefaultLikeTutorialCompleted = @"LikeTutorialCompleted";
 NSString * const UserDefaultLastPushAlertDate = @"LastPushAlertDate";
@@ -92,7 +92,7 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
 
 + (NSArray *)allDefaultsKeys
 {
-    return @[UserDefaultMarkdown,
+    return @[UserDefaultDisableMarkdown,
              UserDefaultChatHeadsDisabled,
              UserDefaultLikeTutorialCompleted,
              UserDefaultLastViewedConversation,
@@ -187,14 +187,14 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
     [self.defaults synchronize];
 }
 
-- (BOOL)enableMarkdown
+- (BOOL)disableMarkdown
 {
-    return [self.defaults boolForKey:UserDefaultMarkdown];
+    return [self.defaults boolForKey:UserDefaultDisableMarkdown];
 }
 
-- (void)setEnableMarkdown:(BOOL)enableMarkdown
+- (void)setDisableMarkdown:(BOOL)disableMarkdown
 {
-    [self.defaults setBool:enableMarkdown forKey:UserDefaultMarkdown];
+    [self.defaults setBool:disableMarkdown forKey:UserDefaultDisableMarkdown];
     [self.defaults synchronize];
 }
 
