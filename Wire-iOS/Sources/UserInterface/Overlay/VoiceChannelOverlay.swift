@@ -43,36 +43,15 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
 
 class VoiceChannelOverlay: UIView {
     
-    static func stringFrom(state: VoiceChannelOverlayState) -> String {
-        switch state {
-        case .invalid:
-            return "OverlayInvalid"
-        case .incomingCall:
-            return "OverlayIncomingCall"
-        case .incomingCallInactive:
-            return "OverlayIncomingCallInactive"
-        case .incomingCallDegraded:
-            return "OverlayIncomingCallDegraded"
-        case .joiningCall:
-            return "OverlayJoiningCall"
-        case .outgoingCall:
-            return "OverlayOutgoingCall"
-        case .outgoingCallDegraded:
-            return "OverlayOutgoingCallDegraded"
-        case .connected:
-            return "OverlayConnected"
-        }
-    }
-    
     var muted = false {
         didSet {
-            self.muteButton.isSelected = muted
+            muteButton.isSelected = muted
             self.cameraPreviewView.mutedPreviewOverlay.isHidden = !self.outgoingVideoActive || !muted
         }
     }
     var speakerActive = false {
         didSet {
-            self.speakerButton.isSelected = speakerActive
+            speakerButton.isSelected = speakerActive
         }
     }
     
@@ -111,45 +90,6 @@ class VoiceChannelOverlay: UIView {
         didSet {
             updateStatusLabelText()
         }
-    }
-    
-    var attributedStatus: NSAttributedString? {
-        let conversationName = callingConversation.displayName
-        switch state {
-        case .incomingCall:
-            if callingConversation.conversationType == .oneOnOne {
-                let statusText = "voice.status.one_to_one.incoming".localized.lowercasedWithCurrentLocale
-                return labelText(withFormat: statusText, name: conversationName)
-            } else {
-                let statusText = "voice.status.group_call.incoming".localized.lowercasedWithCurrentLocale
-                return labelText(withFormat: statusText, name: conversationName)
-
-            }
-        case .outgoingCall:
-            let statusText = "voice.status.one_to_one.outgoing".localized.lowercasedWithCurrentLocale
-            return labelText(withFormat: statusText, name: conversationName)
-        case .incomingCallDegraded, .outgoingCallDegraded:
-            return labelText(withFormat: "%@\n", name: conversationName)
-        case .joiningCall:
-            let statusText = "voice.status.joining".localized.lowercasedWithCurrentLocale
-            return labelText(withFormat: statusText, name: conversationName)
-        case .connected:
-            guard let duration = callDurationFormatter.string(from: callDuration) else { return nil }
-            let statusText = String(format:"%%@\n%@", duration)
-            return labelText(withFormat: statusText, name: conversationName)
-        case .invalid, .incomingCallInactive:
-            return nil
-        }
-    }
-    
-    func labelText(withFormat format: String?, name: String) -> NSAttributedString {
-        guard let format = format else { return NSAttributedString(string: "") }
-        let string = String(format: format, name)
-        let attributedString = NSMutableAttributedString(string: string, attributes: messageAttributes)
-        let nameRange = (string as NSString).range(of: name)
-        attributedString.addAttributes(nameAttributes, range: nameRange)
-
-        return attributedString
     }
     
     var controlsHidden = false
@@ -219,7 +159,6 @@ class VoiceChannelOverlay: UIView {
     var speakerButton: IconLabelButton!
     var videoButton: IconLabelButton!
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupVoiceOverlay()
@@ -233,12 +172,74 @@ class VoiceChannelOverlay: UIView {
     deinit {
         cancelHideControlsAfterElapsedTime()
     }
+}
 
-    func updateStatusLabelText() {
+// MARK: - Status labels
+extension VoiceChannelOverlay {
+    fileprivate func updateStatusLabelText() {
         if let statusText = attributedStatus {
             topStatusLabel.attributedText = statusText
             CASStyler.default().styleItem(topStatusLabel)
         }
+    }
+    
+    private var baseAttributes: [String : Any] {
+        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.alignment = .center
+        paragraphStyle.paragraphSpacingBefore = 8
+        return [ NSParagraphStyleAttributeName : paragraphStyle ]
+    }
+    
+    private var nameAttributes: [String : Any] {
+        let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
+        var attributes = baseAttributes
+        attributes[NSFontAttributeName] = font
+        return attributes
+    }
+    
+    private var messageAttributes: [String : Any] {
+        let font = UIFont(magicIdentifier: "style.text.normal.font_spec")!
+        var attributes = baseAttributes
+        attributes[NSFontAttributeName] = font
+        return attributes
+    }
+    
+    private var attributedStatus: NSAttributedString? {
+        let conversationName = callingConversation.displayName
+        switch state {
+        case .incomingCall:
+            if callingConversation.conversationType == .oneOnOne {
+                let statusText = "voice.status.one_to_one.incoming".localized.lowercasedWithCurrentLocale
+                return labelText(withFormat: statusText, name: conversationName)
+            } else {
+                let statusText = "voice.status.group_call.incoming".localized.lowercasedWithCurrentLocale
+                return labelText(withFormat: statusText, name: conversationName)
+            }
+        case .outgoingCall:
+            let statusText = "voice.status.one_to_one.outgoing".localized.lowercasedWithCurrentLocale
+            return labelText(withFormat: statusText, name: conversationName)
+        case .incomingCallDegraded, .outgoingCallDegraded:
+            return labelText(withFormat: "%@\n", name: conversationName)
+        case .joiningCall:
+            let statusText = "voice.status.joining".localized.lowercasedWithCurrentLocale
+            return labelText(withFormat: statusText, name: conversationName)
+        case .connected:
+            guard let duration = callDurationFormatter.string(from: callDuration) else { return nil }
+            let statusText = String(format:"%%@\n%@", duration)
+            return labelText(withFormat: statusText, name: conversationName)
+        case .invalid, .incomingCallInactive:
+            return nil
+        }
+    }
+    
+    private func labelText(withFormat format: String?, name: String) -> NSAttributedString {
+        guard let format = format else { return NSAttributedString(string: "") }
+        let string = String(format: format, name)
+        let attributedString = NSMutableAttributedString(string: string, attributes: messageAttributes)
+        let nameRange = (string as NSString).range(of: name)
+        attributedString.addAttributes(nameAttributes, range: nameRange)
+        
+        return attributedString
     }
 }
 
@@ -343,26 +344,6 @@ extension VoiceChannelOverlay {
 // MARK: - Creating views
 extension VoiceChannelOverlay {
     
-    var baseAttributes: [String : Any] {
-        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        paragraphStyle.alignment = .center
-        paragraphStyle.paragraphSpacingBefore = 8
-        return [ NSParagraphStyleAttributeName : paragraphStyle ]
-    }
-    
-    var nameAttributes: [String : Any] {
-        let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
-        var attributes = baseAttributes
-        attributes[NSFontAttributeName] = font
-        return attributes
-    }
-    
-    var messageAttributes: [String : Any] {
-        let font = UIFont(magicIdentifier: "style.text.normal.font_spec")!
-        var attributes = baseAttributes
-        attributes[NSFontAttributeName] = font
-        return attributes
-    }
 
     func createVideoPreviewIfNeeded() {
         if !Settings.shared().disableAVS && videoPreview == nil {
@@ -597,8 +578,8 @@ extension VoiceChannelOverlay {
             leave.centerX == view.centerX ~ 750
             leave.top == avatarContainer.bottom + 32
             leave.bottom == view.bottomMargin
-            self.leaveButtonPinRightConstraint = leave.trailing == view.trailingMargin
-            self.leaveButtonPinRightConstraint.isActive = false
+            leaveButtonPinRightConstraint = leave.trailing == view.trailingMargin
+            leaveButtonPinRightConstraint.isActive = false
         }
         
         constrain([ignoreButton, muteButton, cancelButton]) { buttons in
@@ -708,8 +689,8 @@ extension VoiceChannelOverlay {
         } else {
             callingUser = self.callingConversation.firstActiveCallingParticipantOtherThanSelf()
         }
-        self.callingUserImage.user = callingUser
-        self.callingTopUserImage.user = callingUser
+        callingUserImage.user = callingUser
+        callingTopUserImage.user = callingUser
     }
     
     func updateVisibleViewsForCurrentState() {
@@ -758,7 +739,30 @@ extension VoiceChannelOverlay {
     }
     
     var allOverlayViews: Set<UIView> {
-        return [self.callingUserImage, self.callingTopUserImage, self.topStatusLabel, self.centerStatusLabel, self.acceptButton, self.acceptDegradedButton, self.acceptVideoButton, self.ignoreButton, self.speakerButton, self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.shadow, self.videoNotAvailableBackground, self.participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+        return [callingUserImage, callingTopUserImage, topStatusLabel, centerStatusLabel, acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, speakerButton, muteButton, leaveButton, videoButton, cameraPreviewView, shadow, videoNotAvailableBackground, participantsCollectionView, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+    }
+    
+    
+    func connectedStateVisibleViews(videoEnabled: Bool) -> Set<UIView> {
+        if videoEnabled {
+            if !remoteIsSendingVideo {
+                return [muteButton, leaveButton, videoButton, cameraPreviewView, centerStatusLabel, videoNotAvailableBackground]
+            } else if incomingVideoActive {
+                if controlsHidden {
+                    return [cameraPreviewView]
+                } else {
+                    return [muteButton, leaveButton, videoButton, cameraPreviewView, shadow]
+                }
+            } else {
+                return [muteButton, leaveButton, videoButton, cameraPreviewView]
+            }
+        } else {
+            if isGroupCall {
+                return [participantsCollectionView, topStatusLabel, speakerButton, muteButton, leaveButton];
+            } else {
+                return [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton];
+            }
+        }
     }
     
     func visibleViewsForState(inAudioCall state: VoiceChannelOverlayState) -> Set<UIView> {
@@ -768,21 +772,17 @@ extension VoiceChannelOverlay {
         case .invalid, .incomingCallInactive:
             visibleViews = []
         case .outgoingCall:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
+            visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton]
         case .outgoingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [callingUserImage, topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .incomingCall:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptButton, self.ignoreButton]
+            visibleViews = [callingUserImage, topStatusLabel, acceptButton, ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [callingUserImage, topStatusLabel, acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
-            visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton]
+            visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton]
         case .connected:
-            if isGroupCall {
-                visibleViews = [self.participantsCollectionView, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
-            } else {
-                visibleViews = [self.callingUserImage, self.topStatusLabel, self.speakerButton, self.muteButton, self.leaveButton];
-            }
+            visibleViews = connectedStateVisibleViews(videoEnabled: false)
         }
         
         if hidesSpeakerButton {
@@ -799,36 +799,20 @@ extension VoiceChannelOverlay {
         case .invalid, .incomingCallInactive:
             visibleViews = []
         case .outgoingCall:
-            visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
+            visibleViews = [shadow, callingTopUserImage, topStatusLabel, muteButton, leaveButton, videoButton]
         case .outgoingCallDegraded:
-            visibleViews = [self.shadow, self.callingUserImage, self.topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [shadow, callingUserImage, topStatusLabel, cancelButton, callButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .incomingCall:
-            visibleViews = [self.shadow, self.callingTopUserImage, self.topStatusLabel, self.acceptVideoButton, self.ignoreButton]
+            visibleViews = [shadow, callingTopUserImage, topStatusLabel, acceptVideoButton, ignoreButton]
         case .incomingCallDegraded:
-            visibleViews = [self.shadow, self.callingUserImage, self.topStatusLabel, self.acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [shadow, callingUserImage, topStatusLabel, acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
         case .joiningCall:
-            visibleViews = [self.callingTopUserImage, self.topStatusLabel, self.muteButton, self.leaveButton, self.videoButton]
+            visibleViews = [callingTopUserImage, topStatusLabel, muteButton, leaveButton, videoButton]
         case .connected:
-            if !remoteIsSendingVideo {
-                visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, self.centerStatusLabel, self.videoNotAvailableBackground]
-            } else if incomingVideoActive {
-                if controlsHidden {
-                    visibleViews = [cameraPreviewView]
-                } else {
-                    visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView, shadow]
-
-                }
-            } else {
-                visibleViews = [self.muteButton, self.leaveButton, self.videoButton, self.cameraPreviewView]
-            }
-            
+            visibleViews = connectedStateVisibleViews(videoEnabled: true)
             if !outgoingVideoActive {
                 visibleViews.remove(cameraPreviewView)
             }
-        }
-        
-        if hidesSpeakerButton || outgoingVideoActive {
-            visibleViews.subtract([speakerButton])
         }
         
         return visibleViews
@@ -928,6 +912,30 @@ extension VoiceChannelOverlay {
             UIView.transition(with: self.cameraPreviewView, duration: 0.8, options: [.transitionFlipFromLeft], animations: {
                 snapshot.removeFromSuperview()
             }, completion: completion)
+        }
+    }
+}
+
+// MARK: - State string representation
+extension VoiceChannelOverlay {
+    static func stringFrom(state: VoiceChannelOverlayState) -> String {
+        switch state {
+        case .invalid:
+            return "OverlayInvalid"
+        case .incomingCall:
+            return "OverlayIncomingCall"
+        case .incomingCallInactive:
+            return "OverlayIncomingCallInactive"
+        case .incomingCallDegraded:
+            return "OverlayIncomingCallDegraded"
+        case .joiningCall:
+            return "OverlayJoiningCall"
+        case .outgoingCall:
+            return "OverlayOutgoingCall"
+        case .outgoingCallDegraded:
+            return "OverlayOutgoingCallDegraded"
+        case .connected:
+            return "OverlayConnected"
         }
     }
 }
