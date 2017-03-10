@@ -340,7 +340,13 @@ private struct InputBarConstants {
 
     // MARK: - InputBarState
 
-    func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
+    public func setInputBarState(_ state: InputBarState, animated: Bool) {
+        let oldState = inputBarState
+        inputBarState = state
+        updateInputBar(withState: state, oldState: oldState, animated: animated)
+    }
+
+    private func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
         updateEditViewState()
         updatePlaceholder()
         rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
