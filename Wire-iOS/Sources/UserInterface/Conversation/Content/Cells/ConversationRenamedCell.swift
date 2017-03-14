@@ -63,7 +63,7 @@ final class ConversationRenamedCell: IconSystemCell {
             systemMessage.systemMessageType == .conversationNameChanged else { return }
 
         labelView.attributedText = attributedTitle(for: message)
-        nameLabel.attributedText = attributedName(with: systemMessage)
+        nameLabel.attributedText = attributedName(for: systemMessage)
     }
 
     private func attributedTitle(for message: ZMConversationMessage) -> NSAttributedString? {
@@ -76,7 +76,7 @@ final class ConversationRenamedCell: IconSystemCell {
         return title.adding(font: labelBoldFont, to: senderString) && labelTextColor
     }
 
-    private func attributedName(with systemMessage: ZMSystemMessageData) -> NSAttributedString? {
+    private func attributedName(for systemMessage: ZMSystemMessageData) -> NSAttributedString? {
         guard let name = systemMessage.text, let font = nameLabelFont, let color = labelTextColor  else { return nil }
         return name && font && color
     }
