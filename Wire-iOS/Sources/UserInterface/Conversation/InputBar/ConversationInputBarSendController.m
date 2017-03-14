@@ -17,6 +17,9 @@
 // 
 
 
+@import WireExtensionComponents;
+
+
 #import "ConversationInputBarSendController.h"
 #import "ZMUserSession+iOS.h"
 #import "ZMUserSession+Additions.h"
@@ -50,7 +53,7 @@
 {
     if (imageData != nil) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation appendMessageWithImageData:imageData version3:Settings.sharedSettings.sendV3Assets];
+            [self.conversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
         } completionHandler:^{
             if (completionHandler){
                 completionHandler();
@@ -96,7 +99,7 @@
     
     [ZMUserSession.sharedSession enqueueChanges:^{
         textMessage = [self.conversation appendMessageWithText:text];
-        [self.conversation appendMessageWithImageData:data version3:Settings.sharedSettings.sendV3Assets];
+        [self.conversation appendMessageWithImageData:data version3:ExtensionSettings.shared.useAssetsV3];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];

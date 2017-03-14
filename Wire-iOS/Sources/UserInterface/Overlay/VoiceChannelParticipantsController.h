@@ -20,7 +20,6 @@
 #import <Foundation/Foundation.h>
 
 #import "zmessaging+iOS.h"
-#import "VoiceChannelOverlay.h"
 
 @interface VoiceChannelParticipantsController : NSObject <UICollectionViewDataSource>
 

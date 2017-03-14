@@ -26,18 +26,6 @@
 
 @end
 
-
-
-@interface NSAttributedString (Wire)
-
-+ (instancetype)attributedStringWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-+ (instancetype)attributedStringWithDefaultAttributes:(NSDictionary *)attributes format:(NSString *)format, ... NS_FORMAT_FUNCTION(2,3);
-
-
-@end
-
-
-
 @interface NSMutableAttributedString (Wire)
 
 - (void)appendString:(NSString *)string attributes:(NSDictionary *)attributes;
