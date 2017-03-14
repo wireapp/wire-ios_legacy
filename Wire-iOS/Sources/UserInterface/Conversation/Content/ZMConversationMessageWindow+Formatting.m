@@ -34,6 +34,7 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     layoutProperties.showSender       = [self shouldShowSenderForMessage:message];
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
+    layoutProperties.showDayBurstTimestamp = [self shouldShowDaySeparatorForMessage:message];
     layoutProperties.topPadding       = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
     layoutProperties.alwaysShowDeliveryState = [self shouldShowAlwaysDeliveryStateForMessage:message];
     
@@ -166,24 +167,6 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     }
     
     return 0;
-}
-
-- (id<ZMConversationMessage>)messagePreviousToMessage:(id<ZMConversationMessage>)message
-{
-    NSUInteger index = [self.messages indexOfObject:message];
-    NSUInteger previousIndex = NSNotFound;
-    if (index < self.messages.count - 1 && index != NSNotFound) {
-        previousIndex = index + 1;
-    }
-    
-    id<ZMConversationMessage>previousMessage = nil;
-    
-    // Find a previous message, and use it for time calculation
-    if (previousIndex != NSNotFound) {
-        previousMessage = [self.messages objectAtIndex:previousIndex];
-    }
-    
-    return previousMessage;
 }
 
 @end

@@ -755,6 +755,7 @@
 		BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF381FDE1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift */; };
 		BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */; };
 		BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */; };
+		BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */; };
 		BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */; };
 		BF5127161CC9119400F23DEA /* ZMSnapshotTestCase+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */; };
 		BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */; };
@@ -2202,6 +2203,7 @@
 		BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTitleView.swift; sourceTree = "<group>"; };
 		BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingMessagesCell.swift; sourceTree = "<group>"; };
 		BF4A15D11D4900930051E8BA /* AutomationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomationHelper.swift; sourceTree = "<group>"; };
+		BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessageWindow+DaySeparator.swift"; sourceTree = "<group>"; };
 		BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutMargins.swift"; sourceTree = "<group>"; };
 		BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+Swift.swift"; sourceTree = "<group>"; };
 		BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiSectionViewController.swift; path = Emoji/EmojiSectionViewController.swift; sourceTree = "<group>"; };
@@ -4434,6 +4436,7 @@
 				BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */,
 				16A95FFC1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.h */,
 				16A95FFD1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m */,
+				BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */,
 				167B3B471BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.h */,
 				167B3B481BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m */,
 				87F18BCE1E02F63700C69D9B /* MessagePresenter.h */,
@@ -6063,6 +6066,7 @@
 				87DCF4EE1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m in Sources */,
 				54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */,
 				8FC854A4199245770008B66B /* ParticipantsViewController.m in Sources */,
+				BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */,
 				871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */,
 				8FC8549B199245770008B66B /* NetworkActivityViewController.m in Sources */,
 				BF1D5D021E55BA3D0063B4B4 /* Analytics+LocalSearch.swift in Sources */,

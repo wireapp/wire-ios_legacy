@@ -812,6 +812,10 @@ MessageToolboxView {
         font: $font-small-light;
         textColor: $color-text-dimmed;
     }
+
+    burstLabelSeparatorView: @{
+        backgroundColor: $color-separator;
+    }
 }
 
 ^IconSystemCell {

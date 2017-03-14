@@ -57,6 +57,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic, readwrite) NSParagraphStyle *burstTimestampParagraphStyle;
 @property (nonatomic) NSTimer *burstTimestampTimer;
 
+@property (nonatomic, readwrite) UIView *burstLabelSeparatorView;
 @property (nonatomic, readwrite) UIView *unreadDotView;
 @property (nonatomic, readwrite) UserImageView *authorImageView;
 @property (nonatomic, readwrite) UIView *authorImageContainer;
@@ -173,14 +174,18 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.authorImageContainer addSubview:self.authorImageView];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.minimumLineHeight = [WAZUIMagic cgFloatForIdentifier:@"content.burst_timestamp.line_height"];
+    paragraphStyle.minimumLineHeight = [WAZUIMagic cgFloatForIdentifier:@"content.burst_timestamp.line_height"]; // TODO
     paragraphStyle.maximumLineHeight = paragraphStyle.minimumLineHeight;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.alignment = NSTextAlignmentNatural;
     self.burstTimestampParagraphStyle = paragraphStyle;
 
     self.burstTimestampLabel = [[UILabel alloc] init];
     self.burstTimestampLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.burstTimestampLabel];
+
+    self.burstLabelSeparatorView = [[UIView alloc] initForAutoLayout];
+    [self.contentView addSubview:self.burstLabelSeparatorView];
+    self.burstLabelSeparatorView.hidden = YES;
     
     self.unreadDotView = [[UIView alloc] init];
     self.unreadDotView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -257,15 +262,29 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 {
     CGFloat authorImageDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
     self.topMarginConstraint = [self.burstTimestampLabel autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    
-    [self.burstTimestampLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    self.burstTimestampHeightConstraint = [self.burstTimestampLabel autoSetDimension:ALDimensionHeight toSize:0];
+
+    [self.burstTimestampLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
+    [self.burstTimestampLabel autoPinEdgeToSuperviewMargin:ALEdgeTrailing];
+
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+        self.burstTimestampHeightConstraint = [self.burstTimestampLabel autoSetDimension:ALDimensionHeight toSize:0];
+    }];
+
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
+        [self.burstTimestampLabel autoSetDimension:ALDimensionHeight toSize:40];
+    }];
+
+    CGFloat hairline = 1.0 / UIScreen.mainScreen.scale;
+    [self.burstLabelSeparatorView autoSetDimension:ALDimensionHeight toSize:hairline];
+    [self.burstLabelSeparatorView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampLabel];
+    [self.burstLabelSeparatorView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.burstLabelSeparatorView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
     self.unreadDotHeightConstraint = [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:0];
     self.unreadDotHeightConstraint.active = NO;
     [self.unreadDotView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.unreadDotView];
+    [self.unreadDotView autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
     [self.unreadDotView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.burstTimestampLabel];
-    [self.unreadDotView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.burstTimestampLabel withOffset:-8];
     
     [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
@@ -339,6 +358,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.authorLabel.hidden                      = ! self.layoutProperties.showSender;
     self.authorImageContainer.hidden             = ! self.layoutProperties.showSender;
     self.burstTimestampHeightConstraint.active   = ! self.layoutProperties.showBurstTimestamp;
+    self.burstLabelSeparatorView.hidden          = ! self.layoutProperties.showBurstTimestamp;
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
