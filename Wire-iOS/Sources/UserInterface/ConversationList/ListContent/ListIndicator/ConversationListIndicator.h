@@ -30,6 +30,5 @@
 @property (nonatomic, assign) ZMConversationListIndicator indicatorType;
 @property (nonatomic, strong) UIColor *foregroundColor;
 
-- (void)ensureAnimationsRunning;
 - (BOOL)isDisplayingAnyIndicators;
 @end

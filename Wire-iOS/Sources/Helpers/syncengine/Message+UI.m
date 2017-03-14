@@ -79,9 +79,16 @@
                         [Message isFileTransferMessage:message] ||
                         [Message isKnockMessage:message] ||
                         [Message isLocationMessage:message] ||
-                        [Message isDeletedMessage:message];
-    
+                        [Message isDeletedMessage:message] ||
+                        [Message isMissedCallMessage:message] ||
+                        [Message isPerformedCallMessage:message];
+
     return allowedType;
+}
+
++ (BOOL)shouldShowDeliveryState:(id<ZMConversationMessage>)message
+{
+    return ![Message isPerformedCallMessage:message] && ![Message isMissedCallMessage:message];
 }
 
 + (NSDateFormatter *)shortVersionDateFormatter

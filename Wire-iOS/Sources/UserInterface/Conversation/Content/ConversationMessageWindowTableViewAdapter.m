@@ -28,7 +28,6 @@
 #import "ImageMessageCell.h"
 #import "NameChangedCell.h"
 #import "PingCell.h"
-#import "MissedCallCell.h"
 #import "ConnectionRequestCell.h"
 
 #import "Wire-Swift.h"
@@ -39,6 +38,7 @@ static NSString *const ConversationTextCellId               = @"ConversationText
 static NSString *const ConversationImageCellId              = @"ConversationImageCell";
 static NSString *const ConversationConnectionRequestCellId  = @"ConversationConnectionRequestCellId";
 static NSString *const ConversationMissedCallCellId         = @"ConversationMissedCallCell";
+static NSString *const ConversationPerformedCallCellId      = @"ConversationPerformedCallCellId";
 static NSString *const ConversationPingCellId               = @"conversationPingCellId";
 static NSString *const ConversationNewDeviceCellId          = @"ConversationNewDeviceCellId";
 static NSString *const ConversationVerifiedCellId           = @"conversationVerifiedCellId";
@@ -291,6 +291,11 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
                 
             case ZMSystemMessageTypeMessageDeletedForEveryone:
                 cellIdentifier = ConversationMessageDeletedCellId;
+                break;
+
+            case ZMSystemMessageTypePerformedCall:
+                cellIdentifier = ConversationPerformedCallCellId;
+                break;
 
             default:
                 break;
@@ -331,6 +336,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     [self.tableView registerClass:[ImageMessageCell class] forCellReuseIdentifier:ConversationImageCellId];
     [self.tableView registerClass:[NameChangedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
     [self.tableView registerClass:[PingCell class] forCellReuseIdentifier:ConversationPingCellId];
+    [self.tableView registerClass:[PerformedCallCell class] forCellReuseIdentifier:ConversationPerformedCallCellId];
     [self.tableView registerClass:[MissedCallCell class] forCellReuseIdentifier:ConversationMissedCallCellId];
     [self.tableView registerClass:[ConnectionRequestCell class] forCellReuseIdentifier:ConversationConnectionRequestCellId];
     [self.tableView registerClass:[ConversationNewDeviceCell class] forCellReuseIdentifier:ConversationNewDeviceCellId];

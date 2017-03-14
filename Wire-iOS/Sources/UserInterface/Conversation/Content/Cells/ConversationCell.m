@@ -293,7 +293,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self.authorImageView autoSetDimension:ALDimensionHeight toSize:authorImageDiameter];
     }];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
         self.toolboxCollapseConstraint = [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     
