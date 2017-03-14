@@ -829,7 +829,7 @@ MessageToolboxView {
 }
 
 ConversationRenamedCell {
-    nameLabelFont: $font-normal-medium;
+    nameLabelFont: $font-normal-semibold;
 }
 
 FileTransferView {
