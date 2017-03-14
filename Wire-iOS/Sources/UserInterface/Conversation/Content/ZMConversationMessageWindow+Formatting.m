@@ -22,6 +22,10 @@
 #import "ConversationCell.h"
 #import "Wire-Swift.h"
 
+
+static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minutes
+
+
 @implementation ZMConversationMessageWindow (Formatting)
 
 - (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(id<ZMConversationMessage>)lastUnreadMessage
@@ -120,12 +124,9 @@
     }
     
     BOOL showTimestamp = NO;
-    
     NSTimeInterval seconds = [message.serverTimestamp timeIntervalSinceDate:previousMessage.serverTimestamp];
     
-    NSTimeInterval referenceSeconds = 300;
-    
-    if (seconds > referenceSeconds) {
+    if (seconds > BurstSeparatorTimeDifference) {
         showTimestamp = YES;
     }
     
