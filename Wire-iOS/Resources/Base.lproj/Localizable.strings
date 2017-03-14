@@ -195,8 +195,7 @@
 "content.system.other_removed_other" = "%@ removed %@";
 "content.system.other_removed_you" = "%@ removed you";
 "content.system.you_removed_other" = "You removed %@";
-"content.system.other_renamed_conv" = "%@ renamed the conversation";
-"content.system.you_renamed_conv" = "You renamed the conversation";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
 "content.system.pending_message_timestamp" = "Sending…";
@@ -217,6 +216,9 @@
 
 "content.system.call.you" = "You";
 "content.system.call.called" = "%@ called";
+
+"content.system.renamed_conv.title" = "%@ renamed the conversation";
+"content.system.renamed_conv.title.you" = "You";
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 

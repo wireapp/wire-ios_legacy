@@ -828,6 +828,10 @@ MessageToolboxView {
     labelTextBlendedColor: $color-text-dimmed;
 }
 
+ConversationRenamedCell {
+    nameLabelFont: $font-normal-medium;
+}
+
 FileTransferView {
     backgroundColor: $color-placeholder-background;
 
