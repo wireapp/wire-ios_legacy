@@ -106,7 +106,7 @@ VoiceChannelOverlay {
         }
     }
     
-    callButton: @{
+    makeDegradedCallButton: @{
         iconButton: @{
             backgroundImageColor[state:normal]: $color-accent-green;
             iconColor[state:normal]: white;
