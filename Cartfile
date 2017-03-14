@@ -5,8 +5,8 @@ github "wireapp/CocoaLumberjack" "3.0.0-wire-swift3.0.2"
 github "wireapp/Cartography" "1.0.1-wire-swift3.0.2"
 github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
 github "wireapp/ZipArchive" "1.6.1-swift3.0.2"
-github "wireapp/wire-ios-share-engine" ~> 20.0
-github "wireapp/wire-ios-sync-engine" ~> 74.0
+github "wireapp/wire-ios-share-engine" ~> 21.0
+github "wireapp/wire-ios-sync-engine" ~> 75.1.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/VIMNetworking" "v6.0.2-wire-swift3.0.2"
