@@ -106,11 +106,7 @@ private struct InputBarConstants {
         return inputBarState.isEditing
     }
     
-    var inputBarState: InputBarState = .writing(ephemeral: false) {
-        didSet(oldValue) {
-            updateInputBar(withState: inputBarState, oldState: oldValue)
-        }
-    }
+    private var inputBarState: InputBarState = .writing(ephemeral: false)
     
     fileprivate var textIsOverflowing = false {
         didSet {
@@ -340,7 +336,13 @@ private struct InputBarConstants {
 
     // MARK: - InputBarState
 
-    func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
+    public func setInputBarState(_ state: InputBarState, animated: Bool) {
+        let oldState = inputBarState
+        inputBarState = state
+        updateInputBar(withState: state, oldState: oldState, animated: animated)
+    }
+
+    private func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
         updateEditViewState()
         updatePlaceholder()
         rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0

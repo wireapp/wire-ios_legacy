@@ -84,6 +84,10 @@ extension ZMSnapshotTestCase {
         verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
+    func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _ in }) {
+        verifyView(inAllDeviceSizes: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line, configurationBlock: configuration)
+    }
+    
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }

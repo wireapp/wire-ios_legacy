@@ -17,6 +17,9 @@
 //
 
 
+private let log = ZMSLog(tag: "link opening")
+
+
 enum TweetOpeningOption: Int, LinkOpeningOption {
 
     case none, tweetbot, twitterrific
@@ -47,15 +50,20 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
 extension URL {
 
     func openAsTweet() -> Bool {
+        log.debug("Trying to open \"\(self)\" as tweet, isTweet: \(isTweet)")
         guard isTweet else { return false }
         let saved = TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
+        log.debug("Saved option to open a tweet: \(saved.displayString)")
+
         switch saved {
         case .none: return false
         case .tweetbot:
             guard let url = tweetbotURL else { return false }
+            log.debug("Trying to open tweetbot app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
         case .twitterrific:
             guard let url = twitterrificURL else { return false }
+            log.debug("Trying to open twitterific app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
         }
     }

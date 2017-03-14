@@ -37,7 +37,8 @@ extension ConversationInputBarViewController {
         editingMessage = message
         updateRightAccessoryView()
 
-        inputBar.inputBarState = .editing(originalText: text)
+        inputBar.setInputBarState(.editing(originalText: text), animated: true)
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(endEditingMessageIfNeeded),
@@ -69,12 +70,7 @@ extension ConversationInputBarViewController {
     @objc(updateWritingStateAnimated:)
     public func updateWritingState(animated: Bool) {
         guard nil == editingMessage else { return }
-        inputBar.updateInputBar(
-            withState: .writing(ephemeral: conversation.destructionEnabled),
-            oldState: inputBar.inputBarState,
-            animated: animated
-        )
-
+        inputBar.setInputBarState(.writing(ephemeral: conversation.destructionEnabled), animated: animated)
         updateRightAccessoryView()
         updateButtonIconsForEphemeral()
     }

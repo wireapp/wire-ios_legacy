@@ -66,7 +66,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
             else {
                 return .none
             }
-            } ?? []
+        } ?? []
 
         if beganLongPressRecognizers.count > 0 {
             interactionDelegate?.textViewDidLongPress(self)
@@ -93,11 +93,13 @@ extension LinkInteractionTextView: UITextViewDelegate {
     
     @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        if interaction == .presentActions {
+        switch interaction {
+        case .invokeDefaultAction:
+            return !(interactionDelegate?.textView(self, open: URL) ?? false)
+        case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
-        }
-        else {
+        default:
             return true
         }
     }

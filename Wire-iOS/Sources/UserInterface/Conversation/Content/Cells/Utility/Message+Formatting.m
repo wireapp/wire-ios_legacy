@@ -168,21 +168,20 @@ static inline NSDataDetector *linkDataDetector(void)
     
     [attributedString endEditing];
     
-    
-    NSAttributedString *markdownStr = nil;
-    if ([[Settings sharedSettings] enableMarkdown]) {
+
+    if (! Settings.sharedSettings.disableMarkdown) {
         if (! WireMarkdownParser) {
             WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
         }
-        
-        markdownStr = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString];
+
+        attributedString = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString].mutableCopy;
     }
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
     }
     
-    return (nil != markdownStr) ? markdownStr: [[NSAttributedString alloc] initWithAttributedString:attributedString];
+    return [[NSAttributedString alloc] initWithAttributedString:attributedString];
 }
 
 + (void)wr_flushCellParagraphStyleCache

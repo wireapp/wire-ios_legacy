@@ -18,6 +18,7 @@
 
 
 @import MobileCoreServices;
+@import WireExtensionComponents;
 @import ZipArchive;
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
@@ -273,7 +274,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                 [ZMUserSession.sharedSession performChanges:^{
 
                     id<ZMConversationMessage> message = [self.conversation appendMessageWithFileMetadata:metadata
-                                                                                                version3:Settings.sharedSettings.sendV3Assets];
+                                                                                                version3:ExtensionSettings.shared.useAssetsV3];
                     
                     if (message.fileMessageData.isVideo) {
                         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionVideoMessage

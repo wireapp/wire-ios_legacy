@@ -312,6 +312,10 @@
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
 
+"voice.alert.call_in_progress.title" = "Call in progress";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "OK";
+
 "voice.alert.microphone_warning.title" = "Wire needs access to the Microphone.";
 "voice.alert.microphone_warning.explanation" = "Enable it in Wire Settings.";
 

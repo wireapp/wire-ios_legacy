@@ -70,9 +70,12 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
     if (! note.accentColorValueChanged) {
         return;
     }
-    
-    [[CASStyler defaultStyler] applyDefaultColorSchemeWithAccentColor:[UIColor accentColor]];
-    [self notifyColorSchemeChange];
+    ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
+    UIColor *newAccentColor = [UIColor accentColor];
+    if (![colorScheme.accentColor isEqual:newAccentColor]) {
+        [[CASStyler defaultStyler] applyDefaultColorSchemeWithAccentColor:newAccentColor];
+        [self notifyColorSchemeChange];
+    }
 }
 
 #pragma mark - SettingsColorSchemeDidChangeNotification
