@@ -818,7 +818,7 @@ MessageToolboxView {
     }
 
     burstNormalFont: $font-small-light;
-    burstBoldFont: $font-small-medium;
+    burstBoldFont: $font-small-semibold;
 }
 
 ^IconSystemCell {
