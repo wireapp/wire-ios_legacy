@@ -21,24 +21,7 @@ import XCTest
 @testable import Wire
 
 
-class CallSystemMessageTests: ZMSnapshotTestCase {
-
-    var testSession: ZMTestSession!
-    var moc: NSManagedObjectContext!
-
-    override func setUp() {
-        super.setUp()
-        snapshotBackgroundColor = .white
-
-        testSession = ZMTestSession(dispatchGroup: ZMSDispatchGroup(dispatchGroup: DispatchGroup(), label: name))
-        testSession.prepare(forTestNamed: name)
-        moc = testSession.uiMOC
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        testSession.tearDown()
-    }
+class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
     // MARK: - Missed Call
 
@@ -67,15 +50,7 @@ class CallSystemMessageTests: ZMSnapshotTestCase {
     // MARK: - Helper
 
     private func cell(for type: ZMSystemMessageType, fromSelf: Bool) -> IconSystemCell {
-        let user = ZMUser.insertNewObject(in: moc)
-        user.remoteIdentifier = UUID()
-        user.name = "Bruno"
-
-        if fromSelf {
-            ZMUser.boxSelfUser(user, inContextUserInfo: moc)
-        }
-
-        let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: moc), from: user)
+        let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: moc), from: fromSelf ? selfUser : otherUser)
         let cell = createCell(missed: type == .missedCall)
         let props = ConversationCellLayoutProperties()
 
@@ -100,6 +75,7 @@ class CallSystemMessageTests: ZMSnapshotTestCase {
     }
 
 }
+
 
 
 private extension UITableViewCell {

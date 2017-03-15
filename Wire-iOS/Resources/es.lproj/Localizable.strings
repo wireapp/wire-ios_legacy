@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "No hay chats activos";
 "contacts_ui.no_contact.message" = "Pulsa en el nombre del contacto para iniciar un chat";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Entrar";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "contactos";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ eliminó a %@";
 "content.system.other_removed_you" = "%@ te eliminó";
 "content.system.you_removed_other" = "Eliminaste a %@";
-"content.system.other_renamed_conv" = "%@ renombró el chat";
-"content.system.you_renamed_conv" = "Renombraste el chat";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ eliminó el nombre del chat";
 "content.system.you_renamed_conv_to_nothing" = "Eliminaste el nombre del chat";
 "content.system.pending_message_timestamp" = "Enviando …";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Tú";
 "content.system.this_device" = "este dispositivo";
+
+"content.system.call.you" = "Tú";
+"content.system.call.called" = "%@ llamó";
+
+"content.system.renamed_conv.title" = "%@ renombró el chat";
+"content.system.renamed_conv.title.you" = "Tú";
 
 "content.system.reactivated_device" = "Has activado %@ de nuevo. Los mensajes enviados durante el intervalo de inactividad no aparecerán aquí.";
 
@@ -293,10 +301,10 @@
 "voice.status.low_connection" = "Mala conexión";
 "voice.network_error.title" = "No hay conexión a Internet";
 "voice.network_error.body" = "Debes estar en línea para llamar. Comprueba tu conexión y vuelve a intentarlo.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Se comenzó a utilizar un nuevo dispositivo.";
 "voice.degradation.new_user_device" = "%@ comenzó a utilizar un dispositivo nuevo.";
-"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
-"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
+"voice.degradation_outgoing.prompt" = "¿Desea realizar la llamada?";
+"voice.degradation_incoming.prompt" = "¿Desea aceptar la llamada?";
 "voice.accept_button.title" = "Aceptar";
 "voice.decline_button.title" = "Rechazar";
 "voice.hang_up_button.title" = "Colgar";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Altavoz";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Llamar";
+
+"voice.alert.call_in_progress.title" = "Llamada en curso";
+"voice.alert.call_in_progress.message" = "Usted puede tener sólo una llamada activa a la vez";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire necesita acceso al micrófono.";
 "voice.alert.microphone_warning.explanation" = "Habilita el acceso en Ajustes.";

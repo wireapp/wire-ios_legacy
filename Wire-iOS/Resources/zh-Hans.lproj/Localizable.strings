@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "没有活跃的对话\n";
 "contacts_ui.no_contact.message" = "点击联系人开始对话";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "加入";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "人";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@移除了%@";
 "content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
-"content.system.other_renamed_conv" = "%@ 重新命名了聊天室";
-"content.system.you_renamed_conv" = "您重新命名了聊天室";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
 "content.system.you_renamed_conv_to_nothing" = "您已删除聊天室名称";
 "content.system.pending_message_timestamp" = "正在发送...";
@@ -212,14 +214,20 @@
 "content.system.you_started" = "你";
 "content.system.this_device" = "此设备";
 
+"content.system.call.you" = "你";
+"content.system.call.called" = "%@ 发送过通话请求";
+
+"content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
+"content.system.renamed_conv.title.you" = "你";
+
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 
 "content.system.new_device" = "一个新设备";
 "content.system.started_using" = "开始使用";
 "content.system.is_verified" = "所有的指纹完成验证";
 
-"content.system.new_users" = "New user joined.";
-"content.system.verify_devices" = "Verify devices";
+"content.system.new_users" = "新用户加入";
+"content.system.verify_devices" = "验证设备";
 
 "content.system.unverified" = "%@ 未经证实 %@ 之一"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "您的设备";
@@ -271,7 +279,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.you.text" = "你已Ping的";
 
 // Inline Player
 "content.player.unable_to_play" = "无法播放";
@@ -293,10 +301,10 @@
 "voice.status.low_connection" = "连接质量不佳";
 "voice.network_error.title" = "没有互联网讯号";
 "voice.network_error.body" = "使用语音通话，您必须连接到互联网。请检查您的网路然后重试。";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "您开始使用新的设备。";
 "voice.degradation.new_user_device" = "%@ 开始使用新的设备。";
-"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
-"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
+"voice.degradation_outgoing.prompt" = "你要拨打电话吗？";
+"voice.degradation_incoming.prompt" = "你要接电话吗？";
 "voice.accept_button.title" = "接听";
 "voice.decline_button.title" = "拒绝";
 "voice.hang_up_button.title" = "结束通话";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "免提";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";
+
+"voice.alert.call_in_progress.title" = "通话中";
+"voice.alert.call_in_progress.message" = "仅限一条通话";
+"voice.alert.call_in_progress.confirm" = "好";
 
 "voice.alert.microphone_warning.title" = "Wire需要使用麦克风的权限。";
 "voice.alert.microphone_warning.explanation" = "在Wire设置中激活。";

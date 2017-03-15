@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Ingen aktive samtaler\n";
 "contacts_ui.no_contact.message" = "Tryk på kontakter for at starte en samtale";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Deltag";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "personer";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ har fjernet %@";
 "content.system.other_removed_you" = "%@ har fjernet dig";
 "content.system.you_removed_other" = "Du har fjernet %@";
-"content.system.other_renamed_conv" = "%@ omdøbte samtalen";
-"content.system.you_renamed_conv" = "Du omdøbte samtalen";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ fjernede samtalens navn";
 "content.system.you_renamed_conv_to_nothing" = "Du fjernede samtalens navn";
 "content.system.pending_message_timestamp" = "Sender…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Dig";
 "content.system.this_device" = "denne enhed";
+
+"content.system.call.you" = "Dig";
+"content.system.call.called" = "%@ har ringet";
+
+"content.system.renamed_conv.title" = "%@ omdøbte samtalen";
+"content.system.renamed_conv.title.you" = "Dig";
 
 "content.system.reactivated_device" = "Du begyndte at bruge %@ igen. Beskeder der sendes, vises i mellemtiden ikke her.";
 
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Dårlig forbindelse";
 "voice.network_error.title" = "Ingen internetforbindelse";
 "voice.network_error.body" = "Du skal være online for at foretage opkald. Tjek din forbindelse og prøv igen.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Du begyndte at bruge en ny enhed.";
 "voice.degradation.new_user_device" = "%@ begyndte at bruge en ny enhed.";
 "voice.degradation_outgoing.prompt" = "Vil du stadig placere opkaldet?";
 "voice.degradation_incoming.prompt" = "Vil du stadig besvare opkaldet?";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Højtaler";
 "voice.cancel_button.title" = "Annuller";
 "voice.call_button.title" = "Ring op";
+
+"voice.alert.call_in_progress.title" = "Opkald i gang";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire kræver adgang til Mikrofonen.";
 "voice.alert.microphone_warning.explanation" = "Aktiver det i Wire Indstillinger.";

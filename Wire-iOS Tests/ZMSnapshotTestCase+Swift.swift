@@ -21,6 +21,7 @@ import Foundation
 import Cartography
 import Classy
 
+
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     public func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -32,7 +33,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.layoutMargins = self.layoutMargins
         
-        let size = self.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
         self.layoutSubviews()
         
         self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)

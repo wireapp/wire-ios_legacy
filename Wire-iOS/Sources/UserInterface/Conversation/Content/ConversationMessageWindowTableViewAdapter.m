@@ -26,7 +26,6 @@
 // Cells
 #import "TextMessageCell.h"
 #import "ImageMessageCell.h"
-#import "NameChangedCell.h"
 #import "PingCell.h"
 #import "ConnectionRequestCell.h"
 
@@ -334,7 +333,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 {
     [self.tableView registerClass:[TextMessageCell class] forCellReuseIdentifier:ConversationTextCellId];
     [self.tableView registerClass:[ImageMessageCell class] forCellReuseIdentifier:ConversationImageCellId];
-    [self.tableView registerClass:[NameChangedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
+    [self.tableView registerClass:[ConversationRenamedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
     [self.tableView registerClass:[PingCell class] forCellReuseIdentifier:ConversationPingCellId];
     [self.tableView registerClass:[PerformedCallCell class] forCellReuseIdentifier:ConversationPerformedCallCellId];
     [self.tableView registerClass:[MissedCallCell class] forCellReuseIdentifier:ConversationMissedCallCellId];
