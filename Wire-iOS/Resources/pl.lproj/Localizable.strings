@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Brak aktywnych rozmów\n";
 "contacts_ui.no_contact.message" = "Dotknij kontakty, aby rozpocząć konwersację";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Dołącz";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "osoby";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ usunął %@";
 "content.system.other_removed_you" = "%@ usunął Ciebie";
 "content.system.you_removed_other" = "Usunąłeś %@";
-"content.system.other_renamed_conv" = "%@ zmienił nazwę konwersacji";
-"content.system.you_renamed_conv" = "Zmieniłeś nazwę konwersacji";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ usunął nazwę konwersacji";
 "content.system.you_renamed_conv_to_nothing" = "Usunąłeś nazwę konwersacji";
 "content.system.pending_message_timestamp" = "Wysyłanie…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Ty";
 "content.system.this_device" = "to urządzenie";
+
+"content.system.call.you" = "Ty";
+"content.system.call.called" = "%@ dzwoni";
+
+"content.system.renamed_conv.title" = "%@ zmienił nazwę konwersacji";
+"content.system.renamed_conv.title.you" = "Ty";
 
 "content.system.reactivated_device" = "Ponownie zacząłeś używać %@. Wiadomości które zostały wysłane wcześniej nie będą pokazane.";
 
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Głośnik";
 "voice.cancel_button.title" = "Anuluj";
 "voice.call_button.title" = "Połączenie";
+
+"voice.alert.call_in_progress.title" = "Połączenie w toku";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire potrzebuje dostępu do mikrofonu.";
 "voice.alert.microphone_warning.explanation" = "Włącz to w ustawieniach";

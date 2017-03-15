@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Nessuna conversazione attiva\n";
 "contacts_ui.no_contact.message" = "Tocca contatti per iniziare una conversazione";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Entra";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "persone";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ rimosso %@";
 "content.system.other_removed_you" = "%@ sei stato rimosso";
 "content.system.you_removed_other" = "Sei stato rimosso %@";
-"content.system.other_renamed_conv" = "%@ ha rinominato la conversazione";
-"content.system.you_renamed_conv" = "Hai rinominato la conversazione";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
 "content.system.pending_message_timestamp" = "Invio in corso…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Tu";
 "content.system.this_device" = "questo dispositivo";
+
+"content.system.call.you" = "Tu";
+"content.system.call.called" = "%@ ha chiamato";
+
+"content.system.renamed_conv.title" = "%@ ha rinominato la conversazione";
+"content.system.renamed_conv.title.you" = "Tu";
 
 "content.system.reactivated_device" = "Hai iniziato a utilizzare %@ nuovamente. I messaggi inviati nel frattempo non verranno visualizzato qui.";
 
@@ -268,10 +276,10 @@
 
 "content.file.too_big" = "Puoi inviare file fino a %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pinged";
+"content.ping.text" = "%1$@ ti ha mandato un trillo";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.you.text" = "Hai fatto un trillo";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSSIBILE RIPRODURRE LA TRACCIA";
@@ -293,10 +301,10 @@
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
 "voice.network_error.body" = "È necessario essere online per chiamare. Controlla la connessione e riprova.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Hai iniziato a usare un nuovo dispositivo.";
 "voice.degradation.new_user_device" = "%@ ha iniziato a usare un nuovo dispositivo.";
-"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
-"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
+"voice.degradation_outgoing.prompt" = "Vuoi effettuare la chiamata?";
+"voice.degradation_incoming.prompt" = "Vuoi accettare la chiamata?";
 "voice.accept_button.title" = "Accetta";
 "voice.decline_button.title" = "Rifiuta";
 "voice.hang_up_button.title" = "Riattacca";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Altoparlante";
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
+
+"voice.alert.call_in_progress.title" = "Chiamata in corso";
+"voice.alert.call_in_progress.message" = "Puoi avere solo una chiamata attiva alla volta";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire ha bisogno di accedere al microfono.";
 "voice.alert.microphone_warning.explanation" = "Abilitalo nelle impostazioni di Wire.";
@@ -591,11 +603,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Apri impostazioni contatti";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app" = "Blocca con codice";
+"self.settings.privacy_security.lock_app.subtitle" = "Blocca Wire dopo 10 secondi in background. Sblocca con Touch ID o inserisci il tuo codice di accesso.";
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Sblocca Wire con Touch ID o Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";

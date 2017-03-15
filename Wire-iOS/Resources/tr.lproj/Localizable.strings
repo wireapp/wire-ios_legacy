@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Hiç aktif konuşma yok\n";
 "contacts_ui.no_contact.message" = "Bir konuşma başlatmak için kişilere tıklayın";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Katıl";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "kişi";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@, %@'u sildi";
 "content.system.other_removed_you" = "%@, seni sildi";
 "content.system.you_removed_other" = "%@'i sildiniz";
-"content.system.other_renamed_conv" = "%@ bu konuşmanın adını değiştirdi";
-"content.system.you_renamed_conv" = "Bu konuşmanın adını değiştirdiniz";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
 "content.system.you_renamed_conv_to_nothing" = "Bu konuşmadının adını kaldırdınız";
 "content.system.pending_message_timestamp" = "Gönderiliyor…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Sen";
 "content.system.this_device" = "bu cihaz";
+
+"content.system.call.you" = "Sen";
+"content.system.call.called" = "%@ aradı";
+
+"content.system.renamed_conv.title" = "%@ bu konuşmanın adını değiştirdi";
+"content.system.renamed_conv.title.you" = "Sen";
 
 "content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
 
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Kötü bağlantı";
 "voice.network_error.title" = "Internet bağlantısı yok";
 "voice.network_error.body" = "Arama yapmak için çevrimiçi olmanız gerekir. Bağlantınızı kontrol edin ve yeniden deneyin.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Yeni bir cihaz kullanmaya başladın.";
 "voice.degradation.new_user_device" = "%@ yeni bir cihaz kullanmaya başladı.";
 "voice.degradation_outgoing.prompt" = "Hala aramayı istiyor musunuz?";
 "voice.degradation_incoming.prompt" = "Hala aramayı kabul etmek istiyor musunuz?";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Hoparlör";
 "voice.cancel_button.title" = "İptal";
 "voice.call_button.title" = "Ara";
+
+"voice.alert.call_in_progress.title" = "Arama sürüyor";
+"voice.alert.call_in_progress.message" = "Tek seferde sadece bir arama yapabilirsiniz";
+"voice.alert.call_in_progress.confirm" = "TAMAM";
 
 "voice.alert.microphone_warning.title" = "Wire'ın mikrofona erişmesi gerek.";
 "voice.alert.microphone_warning.explanation" = "Wire Ayarları'ndan etkinleştirin.";

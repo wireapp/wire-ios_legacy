@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Keine aktiven Unterhaltungen\n";
 "contacts_ui.no_contact.message" = "Tippe auf Kontakte, um eine neue Unterhaltung zu beginnen";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Beitreten";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "Personen";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ entfernte %@";
 "content.system.other_removed_you" = "%@ hat dich entfernt";
 "content.system.you_removed_other" = "Du hast %@ entfernt";
-"content.system.other_renamed_conv" = "%@ hat die Unterhaltung umbenannt";
-"content.system.you_renamed_conv" = "Du hast die Unterhaltung umbenannt";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
 "content.system.pending_message_timestamp" = "Senden…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Du";
 "content.system.this_device" = "dieses Gerät";
+
+"content.system.call.you" = "Du";
+"content.system.call.called" = "%@ hat angerufen";
+
+"content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
+"content.system.renamed_conv.title.you" = "Du";
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Schlechte Verbindung";
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.network_error.body" = "Du brauchst eine Internetverbindung, um anzurufen. Überprüfe die Verbindung und versuche es erneut.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Du hast ein neues Gerät hinzugefügt.";
 "voice.degradation.new_user_device" = "%@ hat ein neues Gerät hinzugefügt.";
 "voice.degradation_outgoing.prompt" = "Möchtest du noch anrufen?";
 "voice.degradation_incoming.prompt" = "Möchtest du den Anruf noch annehmen?";
@@ -303,8 +311,12 @@
 "voice.mute_button.title" = "Stumm";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Lautsprecher";
-"voice.cancel_button.title" = "ABBRECHEN";
+"voice.cancel_button.title" = "Abbrechen";
 "voice.call_button.title" = "Anruf";
+
+"voice.alert.call_in_progress.title" = "Laufendes Gespräch";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "Verstanden";
 
 "voice.alert.microphone_warning.title" = "Wire benötigt Zugriff auf dein Mikrofon.";
 "voice.alert.microphone_warning.explanation" = "Aktiviere es in den Wire-Einstellungen.";
@@ -611,7 +623,7 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht senden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Diese Information hilft uns Probleme zu erkennen.\nWenn beim Anrufen Probleme auftraten, beschreibe mit welchen Schritten das Problem reproduzierbar ist und sende uns gegebenenfalls Bildschirmfotos mit dieser Email.";
 "self.settings.advanced.reset_push_token.title" = "Benachrichtigungs-Token zurücksetzen";
-"self.settings.advanced.reset_push_token.subtitle" = "Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
+"self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
 "self.settings.advanced.reset_push_token_alert.title" = "Der Benachrichtigungs-Token wurde zurückgesetzt";
 "self.settings.advanced.reset_push_token_alert.message" = "Sie sollten in wenigen Sekunden wieder Benachrichtigungen erhalten können.";
 "self.settings.advanced.version_technical_details.title" = "Technische Details der Version";

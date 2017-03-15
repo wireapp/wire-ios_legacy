@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Немає активних розмов\n";
 "contacts_ui.no_contact.message" = "Натисніть 'КОНТАКТИ', щоб почати розмову";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Приєднатись";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "люди";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ видалив(-ла) %@";
 "content.system.other_removed_you" = "%@ видалив(-ла) вас";
 "content.system.you_removed_other" = "Ви видалили %@";
-"content.system.other_renamed_conv" = "%@ перейменував(-ла) розмову";
-"content.system.you_renamed_conv" = "Ви перейменували розмову";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
 "content.system.pending_message_timestamp" = "Надсилання…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Ви";
 "content.system.this_device" = "цей пристрій";
+
+"content.system.call.you" = "Ви";
+"content.system.call.called" = "%@ дзвонив(-ла)";
+
+"content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
+"content.system.renamed_conv.title.you" = "Ви";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -271,7 +279,7 @@
 "content.ping.text" = "%1$@ надіслав(-ла) пінг";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.you.text" = "Ви пінганули";
 
 // Inline Player
 "content.player.unable_to_play" = "НЕМОЖЛИВО ВІДТВОРИТИ ТРЕК";
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
 "voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Ви почали використовувати новий пристрій.";
 "voice.degradation.new_user_device" = "%@ почав(-ла) використовувати новий пристрій.";
 "voice.degradation_outgoing.prompt" = "Ви все ще хочете здійснити дзвінок?";
 "voice.degradation_incoming.prompt" = "Ви все ще хочете прийняти дзвінок?";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Гучномовець";
 "voice.cancel_button.title" = "Скасувати";
 "voice.call_button.title" = "Аудіодзвінок";
+
+"voice.alert.call_in_progress.title" = "Активний дзвінок";
+"voice.alert.call_in_progress.message" = "Ви можете одночасно мати тільки один активний дзвінок";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire необхідний доступ до мікрофона.";
 "voice.alert.microphone_warning.explanation" = "Дозвольте доступ до мікрофона в налаштуваннях Wire.";

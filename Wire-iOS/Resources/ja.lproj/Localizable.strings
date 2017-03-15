@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "アクティブな会話が有りません\n";
 "contacts_ui.no_contact.message" = "連絡先をタップして会話を始めます";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "参加する";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "人";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@は%@を削除しました";
 "content.system.other_removed_you" = "%@はあなたを削除しました";
 "content.system.you_removed_other" = "あなたは%@を削除しました";
-"content.system.other_renamed_conv" = "%@が会話に名前を付けました";
-"content.system.you_renamed_conv" = "あなたは会話に名前を付けました";
+
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
 "content.system.pending_message_timestamp" = "送信中…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "あなた";
 "content.system.this_device" = "このデバイス";
+
+"content.system.call.you" = "あなた";
+"content.system.call.called" = "%@ からの着信";
+
+"content.system.renamed_conv.title" = "%@が会話に名前を付けました";
+"content.system.renamed_conv.title.you" = "あなた";
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "スピーカー";
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
+
+"voice.alert.call_in_progress.title" = "通話中です";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wireはマイクにアクセスする必要が有ります";
 "voice.alert.microphone_warning.explanation" = "Wireの設定で有効にして下さい";
