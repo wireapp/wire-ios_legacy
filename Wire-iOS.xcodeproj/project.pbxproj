@@ -11,7 +11,6 @@
 		160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160287AB1E434C460036FC5B /* MockVoiceChannel.swift */; };
 		160546DA1BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */; };
 		16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */; };
-		16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D011BDA6BF50097F62C /* GroupConversationHeader.m */; };
 		16063D0B1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */; };
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
 		160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -436,7 +435,6 @@
 		8744489D1C22FCE500E7B947 /* LinkAttachmentCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744488D1C22FCE500E7B947 /* LinkAttachmentCache.m */; };
 		8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */; };
 		8744489F1C22FCE500E7B947 /* Message+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448921C22FCE500E7B947 /* Message+Formatting.m */; };
-		874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448981C22FCE500E7B947 /* ParticipantsChangedView.m */; };
 		874448A31C22FCE500E7B947 /* TSMarkdownParser+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744489A1C22FCE500E7B947 /* TSMarkdownParser+Wire.m */; };
 		8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */; };
 		874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA886F1DE30AD0004101B6 /* UserConnectionViewTests.swift */; };
@@ -755,6 +753,9 @@
 		BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */; };
 		BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */; };
 		BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */; };
+		BF4D99CC1E79AAD400A7B08F /* ParticipantsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */; };
+		BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99CA1E79AAD400A7B08F /* ParticipantsCellViewModel.swift */; };
+		BF4D99CE1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99CB1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift */; };
 		BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */; };
 		BF5127161CC9119400F23DEA /* ZMSnapshotTestCase+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */; };
 		BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */; };
@@ -983,8 +984,6 @@
 		160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailInvitationStepViewController.m; sourceTree = "<group>"; };
 		16063CE91BCFCEB70097F62C /* InviteBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteBannerViewController.h; sourceTree = "<group>"; };
 		16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteBannerViewController.m; sourceTree = "<group>"; };
-		16063D001BDA6BF50097F62C /* GroupConversationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupConversationHeader.h; sourceTree = "<group>"; };
-		16063D011BDA6BF50097F62C /* GroupConversationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupConversationHeader.m; sourceTree = "<group>"; };
 		16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileNavigationControllerDelegate.h; sourceTree = "<group>"; };
 		16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCell.swift; sourceTree = "<group>"; };
@@ -1652,8 +1651,6 @@
 		874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentViewControllerFactory.m; sourceTree = "<group>"; };
 		874448911C22FCE500E7B947 /* Message+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+Formatting.h"; sourceTree = "<group>"; };
 		874448921C22FCE500E7B947 /* Message+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+Formatting.m"; sourceTree = "<group>"; };
-		874448971C22FCE500E7B947 /* ParticipantsChangedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsChangedView.h; sourceTree = "<group>"; };
-		874448981C22FCE500E7B947 /* ParticipantsChangedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsChangedView.m; sourceTree = "<group>"; };
 		874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TSMarkdownParser+Wire.h"; sourceTree = "<group>"; };
 		8744489A1C22FCE500E7B947 /* TSMarkdownParser+Wire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TSMarkdownParser+Wire.m"; sourceTree = "<group>"; };
 		8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsClientViewController.swift; sourceTree = "<group>"; };
@@ -2204,6 +2201,9 @@
 		BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingMessagesCell.swift; sourceTree = "<group>"; };
 		BF4A15D11D4900930051E8BA /* AutomationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomationHelper.swift; sourceTree = "<group>"; };
 		BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessageWindow+DaySeparator.swift"; sourceTree = "<group>"; };
+		BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCells.swift; sourceTree = "<group>"; };
+		BF4D99CA1E79AAD400A7B08F /* ParticipantsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCellViewModel.swift; sourceTree = "<group>"; };
+		BF4D99CB1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionViewController.swift; sourceTree = "<group>"; };
 		BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutMargins.swift"; sourceTree = "<group>"; };
 		BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+Swift.swift"; sourceTree = "<group>"; };
 		BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiSectionViewController.swift; path = Emoji/EmojiSectionViewController.swift; sourceTree = "<group>"; };
@@ -2505,15 +2505,6 @@
 				165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */,
 			);
 			name = Invitation;
-			sourceTree = "<group>";
-		};
-		16063CFC1BDA5D520097F62C /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				16063D001BDA6BF50097F62C /* GroupConversationHeader.h */,
-				16063D011BDA6BF50097F62C /* GroupConversationHeader.m */,
-			);
-			path = Headers;
 			sourceTree = "<group>";
 		};
 		160DECD41AB200FA000FB575 /* Camera */ = {
@@ -3595,8 +3586,6 @@
 				874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */,
 				874448911C22FCE500E7B947 /* Message+Formatting.h */,
 				874448921C22FCE500E7B947 /* Message+Formatting.m */,
-				874448971C22FCE500E7B947 /* ParticipantsChangedView.h */,
-				874448981C22FCE500E7B947 /* ParticipantsChangedView.m */,
 				874448991C22FCE500E7B947 /* TSMarkdownParser+Wire.h */,
 				8744489A1C22FCE500E7B947 /* TSMarkdownParser+Wire.m */,
 				87071CBF1CB68BDA0039388A /* ProgressView.swift */,
@@ -4423,7 +4412,6 @@
 		8FC85180199245760008B66B /* Content */ = {
 			isa = PBXGroup;
 			children = (
-				16063CFC1BDA5D520097F62C /* Headers */,
 				8FC85181199245760008B66B /* Cells */,
 				8FC851AB199245760008B66B /* ConversationContentViewControllerDelegate.h */,
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
@@ -4477,6 +4465,7 @@
 				87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */,
 				8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */,
 				872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */,
+				BF4D99C81E79AAD400A7B08F /* ParticipantsCell */,
 				BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */,
 				160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */,
 				BFC914911D1814AF001F068B /* LocationMessageCell.swift */,
@@ -4822,6 +4811,16 @@
 				BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		BF4D99C81E79AAD400A7B08F /* ParticipantsCell */ = {
+			isa = PBXGroup;
+			children = (
+				BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */,
+				BF4D99CA1E79AAD400A7B08F /* ParticipantsCellViewModel.swift */,
+				BF4D99CB1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift */,
+			);
+			path = ParticipantsCell;
 			sourceTree = "<group>";
 		};
 		BF52C15A1CAEBDC00037331F /* ArchivedList */ = {
@@ -5704,6 +5703,7 @@
 				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
 				8F264BA119E808A8005FF4BE /* ProximityMonitorManager.m in Sources */,
 				BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */,
+				BF4D99CE1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift in Sources */,
 				871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */,
 				87302F4E1B15F3B0001F478C /* SearchView.m in Sources */,
 				8FC854A2199245770008B66B /* ParticipantsListCell.m in Sources */,
@@ -5732,7 +5732,6 @@
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */,
 				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
-				874448A21C22FCE500E7B947 /* ParticipantsChangedView.m in Sources */,
 				162CFAA11AE4FA7D0078FB87 /* PhoneSignInViewController.m in Sources */,
 				871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */,
 				875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */,
@@ -5849,6 +5848,7 @@
 				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
 				167AEA101B16031900890435 /* VoiceChannelParticipantCell.m in Sources */,
 				879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */,
+				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				DBDA839B1ADFD9D4000AD57D /* PhoneNumberViewController.m in Sources */,
 				16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
@@ -6016,7 +6016,6 @@
 				BF7ED2DE1DF59974003A4397 /* Analytics+Usernames.swift in Sources */,
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
-				16063D021BDA6BF50097F62C /* GroupConversationHeader.m in Sources */,
 				871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */,
 				87F18BC21E02E4B600C69D9B /* CollectionVideoCell.swift in Sources */,
 				874A02541D1D325C00D0D74A /* AudioEffect.swift in Sources */,
@@ -6108,6 +6107,7 @@
 				87AAE41F1E423C2A00E1D13A /* CASStyler+Fonts.swift in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
 				160DECDD1AB333A3000FB575 /* CameraFocusRing.m in Sources */,
+				BF4D99CC1E79AAD400A7B08F /* ParticipantsCells.swift in Sources */,
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift in Sources */,
 				8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */,

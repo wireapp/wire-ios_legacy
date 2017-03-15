@@ -196,6 +196,13 @@
 "content.system.other_removed_you" = "%@ removed you";
 "content.system.you_removed_other" = "You removed %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ started a conversation with %@";
+"content.system.conversation.added" = "%@ added %@";
+"content.system.conversation.removed" = "%@ removed %@";
+"content.system.conversation.you" = "You";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
 "content.system.pending_message_timestamp" = "Sending…";

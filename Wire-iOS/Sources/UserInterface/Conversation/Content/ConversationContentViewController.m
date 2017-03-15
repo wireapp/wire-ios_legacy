@@ -40,7 +40,6 @@
 // ui
 #import "ZClientViewController.h"
 #import "UIView+MTAnimation.h"
-#import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
 
 // helpers

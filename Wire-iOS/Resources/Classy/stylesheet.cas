@@ -753,37 +753,6 @@ VideoMessageCell {
 
 /* Conversation */
 
-GroupConversationHeader {
-    messageTextAttributes: @{
-        foregroundColor: $color-text-dimmed;
-        paragraphStyle: @{
-            alignment: center;
-            paragraphSpacing: 4;
-        }
-    }
-    
-    titleTextAttributes: @{
-        font: $font-small;
-        paragraphStyle: @{
-            alignment: center;
-            paragraphSpacing: 10;
-        }
-    }
-    
-    descriptionTextAttributes: @{
-        font: $font-small-light;
-    }
-    
-    explanationTextAttributes: @{
-        font: $font-small-light;
-        foregroundColor: $color-accent-current;
-    }
-    
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
-}
-
 MessageToolboxView {
     statusLabel: @{
         font: $font-small-medium;
