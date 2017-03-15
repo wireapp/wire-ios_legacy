@@ -842,6 +842,9 @@ FileTransferView {
     fileTypeIconView: @{
         tintColor: $color-text-foreground;
     }
+    fileEyeView: @{
+        tintColor: $color-background;
+    }
     actionButton: @{
         iconColor: white;
     }
