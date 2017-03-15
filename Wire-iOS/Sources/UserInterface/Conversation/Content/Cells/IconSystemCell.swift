@@ -27,88 +27,79 @@ import Classy
 //        by user A, B, C
 
 open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
-    var leftIconView: UIImageView!
-    var leftIconContainer: UIView!
-    var labelView: TTTAttributedLabel!
-    var lineView: UIView!
+    let leftIconView = UIImageView(frame: .zero)
+    let leftIconContainer = UIView(frame: .zero)
+    let labelView = TTTAttributedLabel(frame: .zero)
+    let lineView = UIView(frame: .zero)
     
     var labelTextColor: UIColor?
     var labelTextBlendedColor: UIColor?
     var labelFont: UIFont?
     var labelBoldFont: UIFont?
-    
-    var initialIconConstraintsCreated: Bool
 
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.initialIconConstraintsCreated = false
-        
-        self.leftIconView = UIImageView(frame: CGRect.zero)
-        self.leftIconView.contentMode = .center
-        self.leftIconView.isAccessibilityElement = true
-        self.leftIconView.accessibilityLabel = "Icon"
-        
-        self.labelView = TTTAttributedLabel(frame: CGRect.zero)
-        self.labelView.extendsLinkTouchArea = true
-        self.labelView.numberOfLines = 0
-        self.labelView.isAccessibilityElement = true
-        self.labelView.accessibilityLabel = "Text"
-        self.labelView.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
-                                        NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
-        
-        self.lineView = UIView(frame: CGRect.zero)
-        self.leftIconContainer = UIView(frame: CGRect.zero)
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.labelView.delegate = self
-        self.contentView.addSubview(self.leftIconContainer)
-        self.leftIconContainer.addSubview(self.leftIconView)
-        self.messageContentView.addSubview(self.labelView)
-        self.contentView.addSubview(self.lineView)
-        
-        var accessibilityElements = self.accessibilityElements ?? []
-        accessibilityElements.append(contentsOf: [self.labelView, self.leftIconView])
-        self.accessibilityElements = accessibilityElements
-        
+
+        setupViews()
         CASStyler.default().styleItem(self)
+        createConstraints()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    open override func updateConstraints() {
-        if !self.initialIconConstraintsCreated {
-            
-            let inset: CGFloat = 16
-            constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { (leftIconContainer: LayoutProxy, leftIconView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy, authorLabel: LayoutProxy) -> () in
-                leftIconContainer.leading == messageContentView.leading
-                leftIconContainer.trailing == authorLabel.leading
-                leftIconContainer.top == messageContentView.top + inset
-                leftIconContainer.bottom <= messageContentView.bottom
-                leftIconContainer.height == leftIconView.height
-                leftIconView.center == leftIconContainer.center
-                leftIconView.height == 16
-                leftIconView.height == leftIconView.width
-                labelView.leading == leftIconContainer.trailing
-                labelView.top == messageContentView.top + inset + 2
-                labelView.trailing <= messageContentView.trailing - 72
-                labelView.bottom <= messageContentView.bottom - inset
-                messageContentView.height >= 32
-            }
-            
-            constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { (lineView: LayoutProxy, contentView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy) -> () in
-                lineView.leading == labelView.trailing + 16
-                lineView.height == 0.5
-                lineView.trailing == contentView.trailing
-                lineView.top == messageContentView.top + inset + 8
-            }
-            
-            self.initialIconConstraintsCreated = true
-        }
-        super.updateConstraints()
+
+    private func setupViews() {
+        self.leftIconView.contentMode = .center
+        self.leftIconView.isAccessibilityElement = true
+        self.leftIconView.accessibilityLabel = "Icon"
+
+        self.labelView.extendsLinkTouchArea = true
+        self.labelView.numberOfLines = 0
+        self.labelView.isAccessibilityElement = true
+        self.labelView.accessibilityLabel = "Text"
+        self.labelView.linkAttributes = [
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
+            NSForegroundColorAttributeName: ZMUser.selfUser().accentColor
+        ]
+
+        self.labelView.delegate = self
+        self.contentView.addSubview(self.leftIconContainer)
+        self.leftIconContainer.addSubview(self.leftIconView)
+        self.messageContentView.addSubview(self.labelView)
+        self.contentView.addSubview(self.lineView)
+
+        var accessibilityElements = self.accessibilityElements ?? []
+        accessibilityElements.append(contentsOf: [self.labelView, self.leftIconView])
+        self.accessibilityElements = accessibilityElements
     }
     
+    private func createConstraints() {
+        let inset: CGFloat = 16
+        constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { (leftIconContainer: LayoutProxy, leftIconView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy, authorLabel: LayoutProxy) -> () in
+            leftIconContainer.leading == messageContentView.leading
+            leftIconContainer.trailing == authorLabel.leading
+            leftIconContainer.top == messageContentView.top + inset
+            leftIconContainer.bottom <= messageContentView.bottom
+            leftIconContainer.height == leftIconView.height
+            leftIconView.center == leftIconContainer.center
+            leftIconView.height == 16
+            leftIconView.height == leftIconView.width
+            labelView.leading == leftIconContainer.trailing
+            labelView.top == messageContentView.top + inset + 3
+            labelView.trailing <= messageContentView.trailing - 72
+            labelView.bottom <= messageContentView.bottom - inset
+            messageContentView.height >= 32
+        }
+
+        constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { (lineView: LayoutProxy, contentView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy) -> () in
+            lineView.leading == labelView.trailing + 16
+            lineView.height == .hairline
+            lineView.trailing == contentView.trailing
+            lineView.top == messageContentView.top + inset + 8
+        }
+    }
+
     open override var canResignFirstResponder: Bool {
         get {
             return false

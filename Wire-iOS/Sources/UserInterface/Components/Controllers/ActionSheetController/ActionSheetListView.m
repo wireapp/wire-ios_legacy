@@ -33,7 +33,8 @@
     if (self) {
         NSArray *buttons = [self buttonsForActions:actions];
         NSMutableArray *views = [NSMutableArray array];
-        
+        CGFloat hairline = 1.0 / UIScreen.mainScreen.scale;
+
         [buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, BOOL *stop) {
             SheetAction *action = actions[idx];
             
@@ -43,7 +44,7 @@
                 separator.cas_styleClass = action.style == SheetActionStyleCancel ? @"separator-strong" : @"separator";
                 
                 [self addSubview:separator];
-                [separator autoSetDimension:ALDimensionHeight toSize:0.5];
+                [separator autoSetDimension:ALDimensionHeight toSize:hairline];
                 [separator autoPinEdgeToSuperviewEdge:ALEdgeLeft];
                 [separator autoPinEdgeToSuperviewEdge:ALEdgeRight];
             }
