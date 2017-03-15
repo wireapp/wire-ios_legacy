@@ -29,6 +29,7 @@ class FontSchemeTests: XCTestCase {
         
         fixedFontNames[FontSpec(.large, .none)]       = "System-Light 24.0"
         fixedFontNames[FontSpec(.large, .medium)]     = "System-Medium 24.0"
+        fixedFontNames[FontSpec(.large, .semibold)]   = "System-Semibold 24.0"
         fixedFontNames[FontSpec(.large, .light)]      = "System-Light 24.0"
         fixedFontNames[FontSpec(.large, .thin)]       = "System-Thin 24.0"
         
@@ -40,10 +41,12 @@ class FontSchemeTests: XCTestCase {
         
         fixedFontNames[FontSpec(.medium, .none)]      = "System-Light 12.0"
         fixedFontNames[FontSpec(.medium, .medium)]    = "System-Medium 12.0"
+        fixedFontNames[FontSpec(.medium, .semibold)]  = "System-Semibold 12.0"
         fixedFontNames[FontSpec(.medium, .regular)]   = "System-Regular 12.0"
         
         fixedFontNames[FontSpec(.small, .none)]       = "System-Light 11.0"
         fixedFontNames[FontSpec(.small, .medium)]     = "System-Medium 11.0"
+        fixedFontNames[FontSpec(.small, .semibold)]   = "System-Semibold 11.0"
         fixedFontNames[FontSpec(.small, .light)]      = "System-Light 11.0"
         
         // WHEN
@@ -64,6 +67,7 @@ class FontSchemeTests: XCTestCase {
         
         fixedFontNames[FontSpec(.large, .none)]      = "System-Light 33.0"
         fixedFontNames[FontSpec(.large, .medium)]    = "System-Medium 33.0"
+        fixedFontNames[FontSpec(.large, .semibold)]  = "System-Semibold 33.0"
         fixedFontNames[FontSpec(.large, .light)]     = "System-Light 33.0"
         fixedFontNames[FontSpec(.large, .thin)]      = "System-Thin 33.0"
         
@@ -75,10 +79,12 @@ class FontSchemeTests: XCTestCase {
 
         fixedFontNames[FontSpec(.medium, .none)]     = "System-Light 17.0"
         fixedFontNames[FontSpec(.medium, .medium)]   = "System-Medium 17.0"
+        fixedFontNames[FontSpec(.medium, .semibold)] = "System-Semibold 17.0"
         fixedFontNames[FontSpec(.medium, .regular)]  = "System-Regular 17.0"
         
         fixedFontNames[FontSpec(.small, .none)]      = "System-Light 15.0"
         fixedFontNames[FontSpec(.small, .medium)]    = "System-Medium 15.0"
+        fixedFontNames[FontSpec(.small, .semibold)]  = "System-Semibold 15.0"
         fixedFontNames[FontSpec(.small, .light)]     = "System-Light 15.0"
         
         // WHEN
@@ -99,6 +105,7 @@ class FontSchemeTests: XCTestCase {
         
         fixedFontNames[FontSpec(.large, .none)]       = "System-Light 20.0"
         fixedFontNames[FontSpec(.large, .medium)]     = "System-Medium 20.0"
+        fixedFontNames[FontSpec(.large, .semibold)]   = "System-Semibold 20.0"
         fixedFontNames[FontSpec(.large, .light)]      = "System-Light 20.0"
         fixedFontNames[FontSpec(.large, .thin)]       = "System-Thin 20.0"
         
@@ -110,10 +117,12 @@ class FontSchemeTests: XCTestCase {
         
         fixedFontNames[FontSpec(.medium, .none)]      = "System-Light 10.0"
         fixedFontNames[FontSpec(.medium, .medium)]    = "System-Medium 10.0"
+        fixedFontNames[FontSpec(.medium, .semibold)]  = "System-Semibold 10.0"
         fixedFontNames[FontSpec(.medium, .regular)]   = "System-Regular 10.0"
         
         fixedFontNames[FontSpec(.small, .none)]       = "System-Light 9.0"
         fixedFontNames[FontSpec(.small, .medium)]     = "System-Medium 9.0"
+        fixedFontNames[FontSpec(.small, .semibold)]   = "System-Semibold 9.0"
         fixedFontNames[FontSpec(.small, .light)]      = "System-Light 9.0"
         
         // WHEN

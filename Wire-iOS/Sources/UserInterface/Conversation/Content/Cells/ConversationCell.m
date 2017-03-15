@@ -356,15 +356,15 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (void)updateConstraintConstants
 {
     ConversationCellLayoutProperties *properties = self.layoutProperties;
+    BOOL showBurstLabelContainer                 =   properties.showBurstTimestamp || properties.showDayBurstTimestamp;
 
     self.unreadDotHeightConstraint.active        = ! properties.showUnreadMarker;
     self.authorImageHeightConstraint.active      = ! properties.showSender;
-    self.authorImageTopMarginConstraint.constant =   properties.showBurstTimestamp ? self.burstTimestampSpacing : 0;
+    self.authorImageTopMarginConstraint.constant =   showBurstLabelContainer ? self.burstTimestampSpacing : 0;
     self.topMarginConstraint.constant            =   properties.topPadding;
     self.authorHeightConstraint.active           = ! properties.showSender;
     self.authorLabel.hidden                      = ! properties.showSender;
     self.authorImageContainer.hidden             = ! properties.showSender;
-    BOOL showBurstLabelContainer                 =   properties.showBurstTimestamp || properties.showDayBurstTimestamp;
     self.burstTimestampHeightConstraint.constant =   showBurstLabelContainer ? BurstContainerExpandedHeight : 0;
     self.burstLabelSeparatorView.hidden          = ! properties.showBurstTimestamp || properties.showDayBurstTimestamp;
 }
@@ -379,7 +379,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         [self updateSenderAndSenderImage:message];
     }
     
-    if (layoutProperties.showBurstTimestamp) {
+    if (layoutProperties.showBurstTimestamp || layoutProperties.showDayBurstTimestamp) {
         [self updateBurstTimestamp];
     }
     
@@ -455,7 +455,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     if (self.layoutProperties.showDayBurstTimestamp) {
         self.burstTimestampLabel.text = [Message.dayFormatter stringFromDate:self.message.serverTimestamp].uppercaseString;
-        self.burstLabelContainer.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorPlaceholderBackground];
+        self.burstLabelContainer.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBurstBackground];
         self.burstTimestampLabel.font = self.burstBoldFont;
     } else {
         self.burstTimestampLabel.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
