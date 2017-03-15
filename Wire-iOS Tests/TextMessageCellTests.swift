@@ -188,9 +188,25 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
+    func testThatItRendersMessageWithBurstTimestamp_Unread() {
+        let props = layoutProperties
+        props.showBurstTimestamp = true
+        props.showUnreadMarker = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
+
     func testThatItRendersMessageWithDayTimestamp() {
         let props = layoutProperties
         props.showDayBurstTimestamp = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersMessageWithDayTimestamp_Unread() {
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        props.showUnreadMarker = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
         verify(view: sut.prepareForSnapshot())
     }

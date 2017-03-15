@@ -259,7 +259,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorLoadingDotInactive: graphiteAlpha16,
                                    ColorSchemeColorGraphite: graphite,
                                    ColorSchemeColorLightGraphite: lightGraphite,
-                                   ColorSchemeColorBurstBackground: [graphiteAlpha4 removeAlphaByBlendingWithColor:white]
+                                   ColorSchemeColorBurstBackground: [graphiteAlpha4 removeAlphaByBlendingWithColor:white98]
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -303,7 +303,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorLoadingDotInactive: whiteAlpha16,
                                   ColorSchemeColorGraphite: graphite,
                                   ColorSchemeColorLightGraphite: lightGraphite,
-                                  ColorSchemeColorBurstBackground: [whiteAlpha8 removeAlphaByBlendingWithColor:black]
+                                  ColorSchemeColorBurstBackground: [whiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite]
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
