@@ -808,14 +808,17 @@ MessageToolboxView {
     authorLabel: @{
         font: $font-medium-medium;
     }
+
     burstTimestampLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
+        textColor: $color-text-foreground;
     }
 
     burstLabelSeparatorView: @{
         backgroundColor: $color-separator;
     }
+
+    burstNormalFont: $font-small-light;
+    burstBoldFont: $font-small-medium;
 }
 
 ^IconSystemCell {

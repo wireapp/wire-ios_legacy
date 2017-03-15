@@ -41,7 +41,7 @@ extension ZMConversationMessageWindow {
     @objc(shouldShowDaySeparatorForMessage:)
     public func shouldShowDaySeparator(for message: ZMConversationMessage) -> Bool {
         guard let previous = messagePrevious(to: message)?.serverTimestamp, let current = message.serverTimestamp else { return false }
-        return Calendar.current.isDate(current, inSameDayAs: previous)
+        return !Calendar.current.isDate(current, inSameDayAs: previous)
     }
 
 }
