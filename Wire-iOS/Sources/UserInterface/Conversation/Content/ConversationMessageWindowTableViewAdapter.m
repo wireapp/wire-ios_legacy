@@ -58,7 +58,6 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
 @property (nonatomic) id messageWindowObserverToken;
-@property (nonatomic) NSMutableDictionary *cellLayoutPropertiesCache;
 @property (nonatomic) BOOL expandingWindow;
 
 @end
@@ -302,6 +301,12 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+
+    // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
+    // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
+    CGRect bounds = cell.bounds;
+    bounds.size.width = self.tableView.bounds.size.width;
+    cell.bounds = bounds;
     
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {

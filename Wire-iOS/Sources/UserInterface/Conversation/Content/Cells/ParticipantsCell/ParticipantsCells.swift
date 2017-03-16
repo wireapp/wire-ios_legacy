@@ -29,13 +29,12 @@ public class ParticipantsCell: IconSystemCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCollectionView()
         createConstraints()
-        labelView.numberOfLines = 0
         CASStyler.default().styleItem(self)
     }
 
     private func setupCollectionView() {
         // Cells should not be selectable (for now)
-        collectionViewController.collectionView?.isUserInteractionEnabled = false
+        collectionViewController.collectionView.isUserInteractionEnabled = false
         messageContentView.addSubview(collectionViewController.view)
 
         collectionViewController.configureCell = { [weak self] (user, cell) in
@@ -67,6 +66,10 @@ public class ParticipantsCell: IconSystemCell {
         let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, textColor: labelTextColor, message: message)
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+
+        // We need a layout pass here in order for the collectionView to pick up the correct size
+        setNeedsLayout()
+        layoutIfNeeded()
         collectionViewController.users = model.sortedUsers()
     }
 

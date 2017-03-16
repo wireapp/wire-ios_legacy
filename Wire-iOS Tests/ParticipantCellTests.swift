@@ -35,6 +35,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
 
+    func testThatItRendersParticipantsCellStartedConversation_ManyUsers() {
+        let sut = cell(for: .newConversation, fromSelf: false, manyUsers: true)
+        verify(view: sut.prepareForSnapshots())
+    }
+
     // MARK: - Added Users
 
     func testThatItRendersParticipantsCellAddedParticipantsSelfUser() {
@@ -44,6 +49,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersParticipantsCellAddedParticipantsOtherUser() {
         let sut = cell(for: .participantsAdded, fromSelf: false)
+        verify(view: sut.prepareForSnapshots())
+    }
+
+    func testThatItRendersParticipantsCellAddedParticipants_ManyUsers() {
+        let sut = cell(for: .participantsAdded, fromSelf: false, manyUsers: true)
         verify(view: sut.prepareForSnapshots())
     }
 
@@ -61,11 +71,13 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false) -> IconSystemCell {
         let message = ZMSystemMessage.insertNewObject(in: moc)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
-        message.users = [createUser(name: "Anna"), createUser(name: "Bruno")]
+
+        let users = ["Anna", "Bruno", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"].map(createUser)
+        message.users = manyUsers ? Set(users) : Set(users[0...1])
 
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
         let props = ConversationCellLayoutProperties()

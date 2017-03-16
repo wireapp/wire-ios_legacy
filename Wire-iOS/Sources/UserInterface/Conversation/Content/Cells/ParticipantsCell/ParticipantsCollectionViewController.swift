@@ -65,17 +65,31 @@ final class ParticipantsUserCell: UICollectionViewCell {
 }
 
 
-final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UICollectionViewController {
+final fileprivate class IntrinsicCollectionView: UICollectionView {
 
-    private var heightConstraint: NSLayoutConstraint?
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !bounds.size.equalTo(intrinsicContentSize) {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        collectionViewLayout.prepare()
+        return collectionViewLayout.collectionViewContentSize
+    }
+
+}
+
+
+final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     typealias SelectAction = (ZMUser, UIView) -> Void
     typealias ConfigureCell = (ZMUser, Cell) -> Void
 
     var users: [ZMUser] = [] {
         didSet {
-            collectionView?.reloadData()
-            updateCollectionViewHeight()
+            collectionView.reloadData()
             view.setNeedsLayout()
             view.layoutIfNeeded()
         }
@@ -84,50 +98,51 @@ final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UI
     var configureCell: ConfigureCell?
     var selectAction: SelectAction?
 
+    var collectionView: UICollectionView {
+        return view as! UICollectionView
+    }
+
+    let layout: UICollectionViewFlowLayout
+
     init() {
-        let layout = UICollectionViewFlowLayout()
+        layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 6
         layout.minimumInteritemSpacing = 6
         layout.itemSize = CGSize(width: 24, height: 24)
-        super.init(collectionViewLayout: layout)
-        Cell.register(in: collectionView!)
-        collectionView?.isScrollEnabled = false
-        view.backgroundColor = .clear
-        collectionView?.backgroundColor = .clear
 
-        constrain(view) { view in
-            heightConstraint = view.height == collectionView?.contentSize.height ?? layout.itemSize.height
-        }
+        super.init(nibName: nil, bundle: nil)
+        self.collectionView.isScrollEnabled = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        Cell.register(in: collectionView)
+
+        view.backgroundColor = .clear
+        collectionView.backgroundColor = .clear
+    }
+
+    override func loadView() {
+        view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateCollectionViewHeight()
-    }
-
-    private func updateCollectionViewHeight() {
-        heightConstraint?.constant = collectionView?.contentSize.height ?? 25
-    }
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return users.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.zm_reuseIdentifier, for: indexPath) as! Cell
         configureCell?(users[indexPath.item], cell)
         return cell
     }
 
-    override func collectionView(_ cView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ cView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         cView.deselectItem(at: indexPath, animated: true)
         selectAction?(users[indexPath.item], collectionView(cView, cellForItemAt: indexPath))
     }
