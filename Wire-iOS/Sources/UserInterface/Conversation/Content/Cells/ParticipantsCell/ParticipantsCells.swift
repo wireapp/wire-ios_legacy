@@ -42,9 +42,9 @@ public class ParticipantsCell: IconSystemCell {
             cell.dimmed = self?.message.systemMessageData?.systemMessageType == .participantsRemoved
         }
 
-        collectionViewController.selectAction = { [weak self] (user, view) in
+        collectionViewController.selectAction = { [weak self] (user, cell) in
             guard let `self` = self else { return }
-            self.delegate.conversationCell?(self, userTapped: user, in: view)
+            self.delegate.conversationCell?(self, userTapped: user, in: cell)
         }
     }
 

@@ -84,7 +84,7 @@ final fileprivate class IntrinsicCollectionView: UICollectionView {
 
 final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    typealias SelectAction = (ZMUser, UIView) -> Void
+    typealias SelectAction = (ZMUser, Cell) -> Void
     typealias ConfigureCell = (ZMUser, Cell) -> Void
 
     var users: [ZMUser] = [] {
@@ -144,7 +144,8 @@ final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UI
 
     func collectionView(_ cView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         cView.deselectItem(at: indexPath, animated: true)
-        selectAction?(users[indexPath.item], collectionView(cView, cellForItemAt: indexPath))
+        let cell = collectionView(cView, cellForItemAt: indexPath) as! Cell
+        selectAction?(users[indexPath.item], cell)
     }
 
 }
