@@ -64,17 +64,10 @@ public class ParticipantsCell: IconSystemCell {
 
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
-        guard let systemMessage = message.systemMessageData else { return }
-
         let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, textColor: labelTextColor, message: message)
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
-        updateParticipants(for: systemMessage)
-    }
-
-    private func updateParticipants(for message: ZMSystemMessageData) {
-        guard let users = message.users else { return }
-        collectionViewController.users = Array(users)
+        collectionViewController.users = model.sortedUsers()
     }
 
 }

@@ -29,6 +29,11 @@ struct ParticipantsCellViewModel {
         }
     }
 
+    func sortedUsers() -> [ZMUser] {
+        guard let systemMessage = message.systemMessageData else { return [] }
+        return systemMessage.users.subtracting([.selfUser()]).sorted { name(for: $0.0) < name(for: $0.1) }
+    }
+
     private func iconType(for message: ZMSystemMessageData) -> ZetaIconType {
         switch message.systemMessageType {
         case .participantsAdded: return .plus
@@ -44,7 +49,7 @@ struct ParticipantsCellViewModel {
             let labelBoldFont = boldFont,
             let labelTextColor = textColor else { return nil }
 
-        let names = systemMessage.users.subtracting([.selfUser()]).map(name).joined(separator: ", ")
+        let names = sortedUsers().map(name).joined(separator: ", ")
         let title = formatKey(for: systemMessage).localized(args: sender, names).uppercased() && labelFont && labelTextColor
         return title.adding(font: labelBoldFont, to: sender)
     }
