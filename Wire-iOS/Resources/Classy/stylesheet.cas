@@ -799,8 +799,8 @@ MessageToolboxView {
         backgroundColor: clear;
     }
     labelTextColor: $color-text-foreground;
-    labelFont: $font-medium-light;
-    labelBoldFont: $font-small-medium;
+    labelFont: $font-medium;
+    labelBoldFont: $font-medium-semibold;
     labelTextBlendedColor: $color-text-dimmed;
 }
 

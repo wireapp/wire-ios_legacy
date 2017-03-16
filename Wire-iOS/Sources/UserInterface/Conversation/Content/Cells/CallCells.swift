@@ -43,7 +43,7 @@ struct CallCellViewModel {
             else { return nil }
 
         let senderString = string(for: sender)
-        let called = key(with: "called").localized(args:  senderString).uppercased() && labelFont
+        let called = key(with: "called").localized(args:  senderString) && labelFont
         var title = called.adding(font: labelBoldFont, to: senderString)
 
         if systemMessageData.childMessages.count > 0 {
@@ -54,7 +54,7 @@ struct CallCellViewModel {
     }
 
     private func string(for user: ZMUser) -> String {
-        return (user.isSelfUser ? key(with: "you").localized : user.displayName).uppercased()
+        return user.isSelfUser ? key(with: "you").localized : user.displayName
     }
 
     private func key(with component: String) -> String {
