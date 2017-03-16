@@ -55,17 +55,17 @@ class MissingMessagesCell: IconSystemCell {
         let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in
             guard users.count > 0 else { return nil }
             let userNames = users.map { $0.displayName }.joined(separator: ", ")
-            let string = localizationKey.localized(args: userNames + " ", users.count).uppercased() + ". "
+            let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
                 && font && color
-            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames.uppercased())
+            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames)
         }
         
-        var title = "content.system.missing_messages.title".localized.uppercased() && font && color
+        var title = "content.system.missing_messages.title".localized && font && color
         
         // We only want to display the subtitle if we have the final added and removed users and either one is not empty
         let addedOrRemovedUsers = !systemMessageData.addedUsers.isEmpty || !systemMessageData.removedUsers.isEmpty
         if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
-            title += "\n\n" + "content.system.missing_messages.subtitle_start".localized.uppercased() + " " && font && color
+            title += "\n\n" + "content.system.missing_messages.subtitle_start".localized + " " && font && color
             title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", systemMessageData.addedUsers)
             title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", systemMessageData.removedUsers)
         }
@@ -75,7 +75,7 @@ class MissingMessagesCell: IconSystemCell {
     
     
     func configureForReactivatedClientOfSelfUser(_ font: UIFont, color: UIColor){
-        let deviceString = NSLocalizedString("content.system.this_device", comment: "").uppercased()
+        let deviceString = NSLocalizedString("content.system.this_device", comment: "")
         var fullString  = NSString(format: NSLocalizedString("content.system.reactivated_device", comment: "") as NSString, deviceString).uppercased && font && color
         
         fullString = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)

@@ -272,10 +272,9 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.burstLabelContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.burstLabelContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
-    [self.burstTimestampLabel autoPinEdgesToSuperviewMargins];
-
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
         self.burstTimestampHeightConstraint = [self.burstLabelContainer autoSetDimension:ALDimensionHeight toSize:0];
+        [self.burstTimestampLabel autoPinEdgesToSuperviewMargins];
     }];
 
     CGFloat hairline = 1.0 / UIScreen.mainScreen.scale;
@@ -300,9 +299,9 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageView.layer.cornerRadius = authorImageDiameter / 2;
     [self.authorImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.authorImageView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.authorImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.authorImageView];
+
+     [self.authorImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.authorImageView];
     [self.authorImageView autoCenterInSuperview];
-    
     self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstLabelContainer];
     [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];

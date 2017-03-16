@@ -72,7 +72,7 @@ final class ConversationRenamedCell: IconSystemCell {
             let labelTextColor = labelTextColor,
             let senderString = sender(for: message) else { return nil }
 
-        let title = key(with: "title").localized(args: senderString).uppercased() && labelFont
+        let title = key(with: "title").localized(args: senderString) && labelFont
         return title.adding(font: labelBoldFont, to: senderString) && labelTextColor
     }
 
@@ -84,11 +84,11 @@ final class ConversationRenamedCell: IconSystemCell {
     private func sender(for message: ZMConversationMessage) -> String? {
         guard let sender = message.sender else { return nil }
         if sender.isSelfUser {
-            return key(with: "title.you").localized.uppercased()
+            return key(with: "title.you").localized
         } else if let conversation = message.conversation {
-            return sender.displayName(in: conversation).uppercased()
+            return sender.displayName(in: conversation)
         } else {
-            return sender.displayName.uppercased()
+            return sender.displayName
         }
     }
 
