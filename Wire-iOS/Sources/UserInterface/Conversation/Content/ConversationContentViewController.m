@@ -40,7 +40,6 @@
 // ui
 #import "ZClientViewController.h"
 #import "UIView+MTAnimation.h"
-#import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
 
 // helpers
@@ -93,7 +92,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
-@property (nonatomic, strong) NSMutableDictionary *cellLayoutPropertiesCache;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) BOOL conversationLoadStopwatchFired;

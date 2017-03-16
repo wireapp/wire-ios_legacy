@@ -122,12 +122,28 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     _seState = seState;
 }
 
+-(BOOL)isRunningTests
+{
+    NSString *testPath = NSProcessInfo.processInfo.environment[@"XCTestConfigurationFilePath"];
+    return testPath != nil;
+}
+
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self startSyncEngine:application launchOptions:launchOptions];
-    [self loadLaunchControllerIfNeeded];
+    if (! self.isRunningTests) {
+        [self startSyncEngine:application launchOptions:launchOptions];
+        [self loadLaunchControllerIfNeeded];
+    } else {
+        [self loadLaunchController];
+        [self createMediaPlaybackManaged];
+
+        // Load magic
+        [MagicConfig sharedConfig];
+        [self setupClassyWithWindows:@[self.window]];
+    }
+
     return YES;
 }
 
@@ -261,8 +277,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     // Load magic
     [MagicConfig sharedConfig];
-    
-    self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
+    [self createMediaPlaybackManaged];
+
     if (![Settings sharedSettings].disableAVS) {
         AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
         [mediaManager configureSounds];
@@ -305,6 +321,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         
         DDLogInfo(@"loadUserInterface END");
     });
+}
+
+ - (void)createMediaPlaybackManaged
+{
+    self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
 }
         
 - (void)loadRootViewController
@@ -416,7 +437,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (ZMUserSession *)zetaUserSession
 {
-    NSAssert(_zetaUserSession != nil, @"Attempt to access user session before it's ready");
+    if (! self.isRunningTests) {
+        NSAssert(_zetaUserSession != nil, @"Attempt to access user session before it's ready");
+    }
     return _zetaUserSession;
 }
 

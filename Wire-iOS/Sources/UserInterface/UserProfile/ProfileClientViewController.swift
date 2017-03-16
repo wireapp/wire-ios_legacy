@@ -285,8 +285,8 @@ class ProfileClientViewController: UIViewController {
         }
 
         constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
-            backButton.left == contentView.left
-            backButton.top == selfView.top + 24
+            backButton.left == contentView.left - 8
+            backButton.top == selfView.top + 26
             backButton.width == 32
             backButton.height == 32
             showMyDeviceButton.centerY == backButton.centerY
