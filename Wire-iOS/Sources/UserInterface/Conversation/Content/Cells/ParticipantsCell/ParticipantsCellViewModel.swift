@@ -44,13 +44,13 @@ struct ParticipantsCellViewModel {
 
     func attributedTitle() -> NSAttributedString? {
         guard let systemMessage = message.systemMessageData,
-            let sender = message.sender.map(name)?.uppercased(),
+            let sender = message.sender.map(name),
             let labelFont = font,
             let labelBoldFont = boldFont,
             let labelTextColor = textColor else { return nil }
 
         let names = sortedUsers().map(name).joined(separator: ", ")
-        let title = formatKey(for: systemMessage).localized(args: sender, names).uppercased() && labelFont && labelTextColor
+        let title = formatKey(for: systemMessage).localized(args: sender, names) && labelFont && labelTextColor
         return title.adding(font: labelBoldFont, to: sender)
     }
 
@@ -64,11 +64,11 @@ struct ParticipantsCellViewModel {
 
     private func name(for user: ZMUser) -> String {
         if user.isSelfUser {
-            return key(with: "you").localized.uppercased()
-        } else if let conversation = message.conversation {
-            return user.displayName(in: conversation).uppercased()
+            return key(with: "you").localized
+        } else if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
+            return user.displayName(in: conversation)
         } else {
-            return user.displayName.uppercased()
+            return user.displayName
         }
     }
 
