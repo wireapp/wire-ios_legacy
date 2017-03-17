@@ -45,7 +45,7 @@ extension DeveloperOptionsController {
         self.edgesForExtendedLayout = UIRectEdge()
         self.view.backgroundColor = .clear
         
-        self.tableCells = [forwardLogCell()] + ZMSLog.allTags.map { logSwitchCell(tag: $0) }
+        self.tableCells = [forwardLogCell()] + ZMSLog.allTags.sorted().map { logSwitchCell(tag: $0) }
         
         let tableView = UITableView()
         tableView.dataSource = self
@@ -76,7 +76,7 @@ extension DeveloperOptionsController {
     
     /// Creates a cell to switch a specific log tag on or off
     func logSwitchCell(tag: String) -> UITableViewCell {
-        return self.createCellWithSwitch(labelText: "Log \(tag)", isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
+        return self.createCellWithSwitch(labelText: tag, isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
             Settings.shared().set(logTag: tag, enabled: isOn)
         }
     }
@@ -86,7 +86,6 @@ extension DeveloperOptionsController {
         return self.createCellWithButton(labelText: "Forward log records") {
             let logs = ZMSLog.recordedContent
             self.sendEmail(logs: logs)
-            
         }
     }
     
@@ -107,7 +106,7 @@ extension DeveloperOptionsController {
         toggle.isOn = isOn
         toggle.addTarget(self, action: #selector(DeveloperOptionsController.switchDidChange(sender:)), for: .valueChanged)
         self.uiSwitchToAction[toggle] = onValueChange
-        return self.createCellWithLabelAndView(labelText: "Log \(labelText)", view: toggle)
+        return self.createCellWithLabelAndView(labelText: labelText, view: toggle)
     }
     
     /// Creates and sets the layout of a cell with a label and a view
