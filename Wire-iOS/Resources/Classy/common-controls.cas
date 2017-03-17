@@ -179,7 +179,7 @@ CheckBoxButton.light {
 
 Button.tab, Button.tab-light, Button.tab-dark, Button.tab-monochrome {
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
     };
     textTransform: upper;
     titleEdgeInsets: 0, 0, 4, 0;
