@@ -23,7 +23,7 @@
 #import "zmessaging+iOS.h"
 #import "CASStyler+Variables.h"
 #import "UIColor+WAZExtensions.h"
-
+#import "Message+Formatting.h"
 
 
 NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"ColorSchemeControllerDidApplyColorSchemeChangeNotification";
@@ -82,6 +82,7 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
 
 - (void)settingsColorSchemeDidChange:(NSNotification *)notification
 {
+    [Message invalidateMarkdownStyle];
     [[CASStyler defaultStyler] applyDefaultColorSchemeWithVariant:(ColorSchemeVariant)[[Settings sharedSettings] colorScheme]];
     [self notifyColorSchemeChange];
 }

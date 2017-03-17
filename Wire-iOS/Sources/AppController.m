@@ -385,6 +385,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification
 {
+    [Message invalidateMarkdownStyle];
     [UIFont wr_flushFontCache];
     [NSAttributedString wr_flushCellParagraphStyleCache];
     [self applyFontScheme];
