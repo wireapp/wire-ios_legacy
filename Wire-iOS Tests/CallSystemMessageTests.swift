@@ -62,6 +62,7 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
     private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false) -> IconSystemCell {
         let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: moc), from: fromSelf ? selfUser : otherUser)
         let cell = createCell(missed: type == .missedCall)
+        cell.layer.speed = 0
         if expanded {
             cell.setSelected(true, animated: false)
         }

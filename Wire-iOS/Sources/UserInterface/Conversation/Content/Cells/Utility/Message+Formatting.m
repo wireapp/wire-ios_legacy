@@ -194,7 +194,7 @@ static inline NSDataDetector *linkDataDetector(void)
 
 @implementation Message (Formatting)
 
-+ (void)invalidateTextColorConfiguration
++ (void)invalidateMarkdownStyle
 {
     WireMarkdownParser = nil;
 }

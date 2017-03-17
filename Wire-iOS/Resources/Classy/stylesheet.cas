@@ -755,13 +755,13 @@ VideoMessageCell {
 
 MessageToolboxView {
     statusLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
         textContainerInset: 0, 0, 0, 0;
     }
     likeTooltipArrow: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
@@ -775,7 +775,7 @@ MessageToolboxView {
     }
 
     authorLabel: @{
-        font: $font-medium-medium;
+        font: $font-medium-semibold;
     }
 
     burstTimestampLabel: @{
