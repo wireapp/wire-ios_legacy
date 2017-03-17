@@ -65,6 +65,10 @@ struct CallCellViewModel {
 
 
 class MissedCallCell: IconSystemCell {
+
+    override var verticalInset: CGFloat {
+        return 6
+    }
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
@@ -100,6 +104,10 @@ class PerformedCallCell: IconSystemCell {
         formatter.allowedUnits = [.day, .hour, .minute, .second]
         formatter.zeroFormattingBehavior = .dropLeading
         return formatter
+    }
+
+    override var verticalInset: CGFloat {
+        return 6
     }
 
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {

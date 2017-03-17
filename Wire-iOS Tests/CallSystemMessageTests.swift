@@ -35,6 +35,11 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         verify(view: missedCell.prepareForSnapshots())
     }
 
+    func testThatItRendersMissedCallFromOtherUser_Expanded() {
+        let missedCell = cell(for: .missedCall, fromSelf: false, expanded: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
+
     // MARK: - Performed Call
 
     func testThatItRendersPerformedCallFromSelfUser() {
@@ -47,11 +52,19 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         verify(view: missedCell.prepareForSnapshots())
     }
 
+    func testThatItRendersPerformedCallFromOtherUser_Expanded() {
+        let missedCell = cell(for: .performedCall, fromSelf: false, expanded: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
+
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false) -> IconSystemCell {
         let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: moc), from: fromSelf ? selfUser : otherUser)
         let cell = createCell(missed: type == .missedCall)
+        if expanded {
+            cell.setSelected(true, animated: false)
+        }
         let props = ConversationCellLayoutProperties()
 
         cell.configure(for: message, layoutProperties: props)

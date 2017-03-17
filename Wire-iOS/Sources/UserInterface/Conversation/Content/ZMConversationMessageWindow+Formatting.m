@@ -107,7 +107,9 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
                 systemMessage.systemMessageType != ZMSystemMessageTypeReactivatedDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeNewConversation &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice &&
-                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone;
+                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone &&
+                systemMessage.systemMessageType != ZMSystemMessageTypeMissedCall &&
+                systemMessage.systemMessageType != ZMSystemMessageTypePerformedCall;
     }
     
     if ([Message isKnockMessage:message]) {
