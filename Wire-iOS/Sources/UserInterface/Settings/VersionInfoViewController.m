@@ -65,23 +65,9 @@
     [self.view addSubview:self.versionInfoLabel];
     
     [self.versionInfoLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(80, 24, 24, 24)];
-    
-    NSDictionary *buildInfo = versionsPlist[@"ZCBuildInfo"];
-    
+        
     NSMutableString *versionString = [NSMutableString stringWithCapacity:1024];
     
-    for (NSString *versionItemKey in buildInfo) {
-        NSDictionary *versionItem = buildInfo[versionItemKey];
-        [versionString appendFormat:@"\n%@:\n", versionItemKey];
-        [self appendVersionDataForItem:versionItem toString:versionString];
-        NSDictionary *subprojects = versionItem[@"subprojects"];
-        for (NSString *subprojectItemKey in subprojects) {
-            NSDictionary *subprojectItem = subprojects[subprojectItemKey];
-            [versionString appendFormat:@"\n%@:\n", subprojectItemKey];
-            [self appendVersionDataForItem:subprojectItem toString:versionString];
-        }
-    }
-
     NSDictionary *carthageInfo = versionsPlist[@"CarthageBuildInfo"];
     for (NSDictionary *dependency in carthageInfo) {
         [versionString appendFormat:@"\n%@ %@", dependency, carthageInfo[dependency]];

@@ -30,43 +30,11 @@ import plistlib
 from subprocess import Popen, PIPE
 
 def update_and_merge_build_info(info, source_root, repositories):
-    build_info_key = "ZCBuildInfo"
-    build_info = Foundation.NSMutableDictionary.dictionary()
-    merge_build_info_from_zetacore(build_info, source_root)
-    update_build_info(build_info, source_root, repositories)
-    info[build_info_key] = build_info
 
     carthage_info_key = "CarthageBuildInfo"
     carthage_info = Foundation.NSMutableDictionary.dictionary()
     merge_build_info_from_carthage(carthage_info, source_root)
     info[carthage_info_key] = carthage_info
-
-def plist_to_dictionary(filename):
-    with open(filename, "rb") as f:
-        content = f.read()
-    args = ["plutil", "-convert", "json", "-o", "-", "--", "-"]
-    p = Popen(args, stdin=PIPE, stdout=PIPE)
-    p.stdin.write(content)
-    out, err = p.communicate()
-    return json.loads(out)
-
-def update_build_info(build_info, source_root, paths):
-    dev_base_dir = os.path.join(source_root, "..", "..")
-    build_time = Foundation.NSDate.date()
-
-    for path in paths:
-        name = os.path.basename(os.path.abspath(path))
-        if os.path.exists(path):
-            repo_info = Foundation.NSMutableDictionary.dictionary()
-            repo_info["sha"] = SHA_for_repo(path)
-            if 'USER' in os.environ:
-                repo_info['user'] = os.environ['USER']
-            if 'BUILD_NUMBER' in os.environ:
-                repo_info['build_number'] = os.environ['BUILD_NUMBER']
-            if 'JOB_NAME' in os.environ:
-                repo_info['job_name'] = os.environ['JOB_NAME']
-            repo_info['time'] = build_time
-            build_info[name] = repo_info
 
 def parse_dependency_version_numbers(source_root):
     dependencies = {}
@@ -81,6 +49,8 @@ def parse_dependency_version_numbers(source_root):
         full_name = stripQuotes(dependency[1])
         version = stripQuotes(dependency[2])
         name = full_name.split("/")[1]
+        if name == "avs-ios-binaries":
+            version = os.environ["APPSTORE_AVS_VERSION"]
         dependencies[name] = version
     return dependencies
 
@@ -88,69 +58,6 @@ def merge_build_info_from_carthage(build_info, source_root):
     dependencies = parse_dependency_version_numbers(source_root)
     for name, version in dependencies.iteritems():
         build_info[name] = version
-
-def merge_build_info_from_zetacore(build_info, source_root):
-
-    for name in ["wire-avs-ios"]:
-        build_info_path = os.path.join(os.environ["SRCROOT"], "Libraries", name, "version.buildinfo")
-        if not os.path.isfile(build_info_path):
-            sys.stderr.write("warning: Unable to read '{0}'\n".format(build_info_path))
-            continue
-        build_info_data = open (build_info_path, "r").read()
-        #build_info_data = Foundation.NSData.dataWithContentsOfFile_(build_info_path)
-        if not build_info_data:
-            sys.stderr.write("warning: Unable to read '{0}'\n".format(build_info_path))
-            continue
-        project_build_info = json.loads(build_info_data)
-        if not project_build_info:
-            sys.stderr.write("warning: Unable to parse '{0}'\n".format(build_info_path))
-            continue
-
-        sys.stderr.write("project_build_info parsed as {0}, ({1})".format(project_build_info, type(project_build_info)));
-
-        project_info = {}
-        build_info[name] = project_info
-
-        for top_key, top_value in project_build_info.iteritems():
-            if top_key == name:
-                info = project_info
-            else:
-                if "subprojects" in project_info:
-                    d = project_info["subprojects"]
-                    if not top_key in d:
-                        d[top_key] = {}
-                else:
-                    project_info["subprojects"] = {}
-                    project_info["subprojects"][top_key] = {}
-                info = project_info["subprojects"][top_key]
-            for key, value in top_value.iteritems():
-                if key == "time_rfc3339":
-                    continue
-                if key == "time":
-                    # Convert to NSDate object:
-                    since_epoch = long(value)
-                    value = Foundation.NSDate.dateWithTimeIntervalSince1970_(since_epoch)
-                if key == "build_number":
-                    value = int(value)
-                info[key] = value
-
-
-def workspace_is_dirty(path):
-    # Check if the working space is dirty. Of course git is super stupid and doesn't give us an easy way to do this...
-    git_status = subprocess.Popen(["/usr/bin/xcrun", "git", "status", "--porcelain"], cwd=path, stdout=subprocess.PIPE)
-    wc = subprocess.Popen(["/usr/bin/wc", "-l"], stdin=git_status.stdout, stdout=subprocess.PIPE)
-    line_count = wc.communicate()[0]
-    git_status.communicate()
-    assert 0 <= git_status.returncode, "git returned {0}".format(git_status.returncode)
-    assert wc.returncode == 0
-    return line_count and (0 < int(line_count))
-
-def SHA_for_repo(path):
-    git_rev_parse = subprocess.Popen(["/usr/bin/xcrun", "git", "rev-parse", "HEAD"], cwd=path, stdout=subprocess.PIPE)
-    sha = git_rev_parse.communicate()[0].strip()
-    if workspace_is_dirty(path):
-        sha += "-dirty"
-    return sha
 
 def write_property_list_to_path(plist, path, plist_format=Foundation.NSPropertyListBinaryFormat_v1_0):
     (data, error) = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
@@ -189,7 +96,7 @@ def update_info_plist(repositories, output_path=None):
 def main():
     parser = argparse.ArgumentParser(description="Add additional build info to the Info.plist")
     parser.add_argument('--output', help="The plist file to write to")
-    parser.add_argument('repositories', metavar='repository', type=str, nargs='*', help="Path to repository to recorded into ZCBuildInfo")
+    parser.add_argument('repositories', metavar='repository', type=str, nargs='*', help="Path to repository to recorded into the build info plist.")
     args = parser.parse_args()
 
     print args
