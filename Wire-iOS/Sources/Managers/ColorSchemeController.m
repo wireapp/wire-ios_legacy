@@ -23,7 +23,7 @@
 #import "zmessaging+iOS.h"
 #import "CASStyler+Variables.h"
 #import "UIColor+WAZExtensions.h"
-
+#import "Message+Formatting.h"
 
 
 NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"ColorSchemeControllerDidApplyColorSchemeChangeNotification";
@@ -70,15 +70,19 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
     if (! note.accentColorValueChanged) {
         return;
     }
-    
-    [[CASStyler defaultStyler] applyDefaultColorSchemeWithAccentColor:[UIColor accentColor]];
-    [self notifyColorSchemeChange];
+    ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
+    UIColor *newAccentColor = [UIColor accentColor];
+    if (![colorScheme.accentColor isEqual:newAccentColor]) {
+        [[CASStyler defaultStyler] applyDefaultColorSchemeWithAccentColor:newAccentColor];
+        [self notifyColorSchemeChange];
+    }
 }
 
 #pragma mark - SettingsColorSchemeDidChangeNotification
 
 - (void)settingsColorSchemeDidChange:(NSNotification *)notification
 {
+    [Message invalidateMarkdownStyle];
     [[CASStyler defaultStyler] applyDefaultColorSchemeWithVariant:(ColorSchemeVariant)[[Settings sharedSettings] colorScheme]];
     [self notifyColorSchemeChange];
 }

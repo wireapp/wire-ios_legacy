@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Geen actieve gesprekken\n";
 "contacts_ui.no_contact.message" = "Druk op contacten om een gesprek te beginnen";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Deelnemen";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "personen";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ verwijderde %@";
 "content.system.other_removed_you" = "%@ verwijderde jou";
 "content.system.you_removed_other" = "Jij verwijderde %@";
-"content.system.other_renamed_conv" = "%@ hernoemde het gesprek";
-"content.system.you_renamed_conv" = "Je hebt de conversatie hernoemd";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ verwijderde de naam van de conversatie";
 "content.system.you_renamed_conv_to_nothing" = "Je verwijderde de naam van de conversatie";
 "content.system.pending_message_timestamp" = "Verzenden…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Jij";
 "content.system.this_device" = "dit apparaat";
+
+"content.system.call.you" = "Jij";
+"content.system.call.called" = "%@ belde";
+
+"content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
+"content.system.renamed_conv.title.you" = "Jij";
 
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
@@ -293,10 +301,10 @@
 "voice.status.low_connection" = "Slechte verbinding";
 "voice.network_error.title" = "Geen verbinding met internet";
 "voice.network_error.body" = "Je moet online zijn om te bellen. Controleer je verbinding en probeer opnieuw.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Je gebruikt een nieuw apparaat.";
 "voice.degradation.new_user_device" = "%@ is een ander apparaat gaan gebruiken.";
-"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
-"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
+"voice.degradation_outgoing.prompt" = "Wil je het gesprek nog steeds negeren?";
+"voice.degradation_incoming.prompt" = "Wil je het gesprek nog steeds accepteren?";
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Luidspreker";
 "voice.cancel_button.title" = "Annuleer";
 "voice.call_button.title" = "Oproep";
+
+"voice.alert.call_in_progress.title" = "Bezig met bellen";
+"voice.alert.call_in_progress.message" = "Je kunt maximaal een gesprek tegelijk voeren";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire heeft toegang nodig tot de microfoon.";
 "voice.alert.microphone_warning.explanation" = "Open instellingen voor Wire om toegang tot de microfoon te geven.";

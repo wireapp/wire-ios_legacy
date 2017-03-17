@@ -34,7 +34,7 @@ class ConversationVerifiedCell: IconSystemCell {
             let labelTextColor = self.labelTextColor,
             systemMessageData.systemMessageType == ZMSystemMessageType.conversationIsSecure {
                 
-                self.labelView.attributedText = (NSLocalizedString("content.system.is_verified", comment: "").uppercased() && [NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor])
+                self.labelView.attributedText = (NSLocalizedString("content.system.is_verified", comment: "") && [NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor])
                 self.labelView.accessibilityLabel = self.labelView.attributedText.string
         }
     }

@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Pole aktiivseid vestlusi\n";
 "contacts_ui.no_contact.message" = "Vestluse alustamiseks toksa kontaktidel";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Liitu";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "inimest";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ eemaldas kasutaja %@";
 "content.system.other_removed_you" = "%@ eemaldas sind";
 "content.system.you_removed_other" = "Sa eemaldasid kasutaja %@";
-"content.system.other_renamed_conv" = "%@ nimetas vestluse ümber";
-"content.system.you_renamed_conv" = "Muutsid vestluse nime ära";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
 "content.system.pending_message_timestamp" = "Saadab…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Sina";
 "content.system.this_device" = "see seade";
+
+"content.system.call.you" = "Sina";
+"content.system.call.called" = "%@ helistas";
+
+"content.system.renamed_conv.title" = "%@ nimetas vestluse ümber";
+"content.system.renamed_conv.title.you" = "Sina";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Kehv ühendus";
 "voice.network_error.title" = "Ühendus puudub";
 "voice.network_error.body" = "Helistamiseks pead online olema. Kontrolli ühendust ja proovi uuesti.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Sa hakkasid uut seadet kasutama.";
 "voice.degradation.new_user_device" = "%@ hakkas uut seadet kasutama.";
 "voice.degradation_outgoing.prompt" = "Kas sa soovid siiski kõne teha?";
 "voice.degradation_incoming.prompt" = "Kas sa soovid siiski kõne vastu võtta?";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Kõlar";
 "voice.cancel_button.title" = "Tühista";
 "voice.call_button.title" = "Kõne";
+
+"voice.alert.call_in_progress.title" = "Kõne käimas";
+"voice.alert.call_in_progress.message" = "Sul saab olla vaid üks aktiivne kõne korraga";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire vajab lisipääsu mikrofonile.";
 "voice.alert.microphone_warning.explanation" = "Lülita see sisse Wire seadetest.";

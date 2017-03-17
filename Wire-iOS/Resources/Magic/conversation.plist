@@ -26,11 +26,11 @@
 			<integer>3</integer>
 		</dict>
 		<key>sender_image_tile_diameter</key>
-		<integer>28</integer>
-		<key>left_margin</key>
-		<integer>64</integer>
-		<key>right_margin</key>
 		<integer>24</integer>
+		<key>left_margin</key>
+		<integer>56</integer>
+		<key>right_margin</key>
+		<integer>16</integer>
 		<key>line_height</key>
 		<integer>22</integer>
 		<key>reaction</key>

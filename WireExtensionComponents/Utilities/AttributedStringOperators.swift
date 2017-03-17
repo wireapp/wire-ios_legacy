@@ -151,6 +151,16 @@ public extension NSAttributedString {
         return NSAttributedString(attributedString: mutableSelf)
     }
 
+    @objc(addingColor:toSubstring:)
+    func adding(color: UIColor, to substring: String) -> NSAttributedString {
+        return addAttributes([NSForegroundColorAttributeName: color], toSubstring: substring)
+    }
+    
+    @objc(addingFont:toSubstring:)
+    func adding(font: UIFont, to substring: String) -> NSAttributedString {
+        return addAttributes([NSFontAttributeName: font], toSubstring: substring)
+    }
+
 }
 
 public extension NSMutableAttributedString {

@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "لا توجد محادثات نشطة\n";
 "contacts_ui.no_contact.message" = "اضغط على جهات الاتصال لبدء محادثة جديدة";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "انضم إلى";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "أشخاص";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "قام %@ بإزالة %@";
 "content.system.other_removed_you" = "قام %@ بإزالتك";
 "content.system.you_removed_other" = "قمت بإزالة %@";
-"content.system.other_renamed_conv" = "قام %@ بإعادة تسمية المُحادثة";
-"content.system.you_renamed_conv" = "قمت بإعادة تسمية المحادثة";
+
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
 "content.system.pending_message_timestamp" = "جاري الإرسال...";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "أنت";
 "content.system.this_device" = "هذا الجهاز";
+
+"content.system.call.you" = "أنت";
+"content.system.call.called" = "اتصل %@";
+
+"content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
+"content.system.renamed_conv.title.you" = "أنت";
 
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 
@@ -293,10 +301,10 @@
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
 "voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "بدأت باستخدام جهاز جديد.";
 "voice.degradation.new_user_device" = "%@ بدأ باستخدام جهاز جديد.";
-"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
-"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
+"voice.degradation_outgoing.prompt" = "هل ما زلت تريد إجراء المكالمة؟";
+"voice.degradation_incoming.prompt" = "هل ما زلت تريد استقبال المكالمة؟";
 "voice.accept_button.title" = "قبول";
 "voice.decline_button.title" = "رفض";
 "voice.hang_up_button.title" = "إنهاء الاتصال";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "مكبّر الصوت";
 "voice.cancel_button.title" = "إلغاء";
 "voice.call_button.title" = "اتصال";
+
+"voice.alert.call_in_progress.title" = "يتم إجراء المكالمة";
+"voice.alert.call_in_progress.message" = "تستطيع إجراء مكالمة واحدة فقط في نفس الوقت";
+"voice.alert.call_in_progress.confirm" = "موافق";
 
 "voice.alert.microphone_warning.title" = "Wire يحتاج للوصول للميكرفون.";
 "voice.alert.microphone_warning.explanation" = "تَفعيلها من إعدادات Wire.";

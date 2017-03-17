@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Não há conversas ativas\n";
 "contacts_ui.no_contact.message" = "Toque em contatos para iniciar uma conversa";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Participe";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "pessoas";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ removeu %@";
 "content.system.other_removed_you" = "%@ removeu você";
 "content.system.you_removed_other" = "Você removeu %@";
-"content.system.other_renamed_conv" = "%@ renomeou a conversa";
-"content.system.you_renamed_conv" = "Você renomeou a conversa";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
 "content.system.pending_message_timestamp" = "Enviando…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Você";
 "content.system.this_device" = "este dispositivo";
+
+"content.system.call.you" = "Você";
+"content.system.call.called" = "%@ ligou";
+
+"content.system.renamed_conv.title" = "%@ renomeou a conversa";
+"content.system.renamed_conv.title.you" = "Você";
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Conexão ruim";
 "voice.network_error.title" = "Sem conexão de internet";
 "voice.network_error.body" = "Você deve estar on-line para ligar. Verifique sua conexão e tente novamente.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Você começou a usar um novo dispositivo.";
 "voice.degradation.new_user_device" = "%@ começou a usar um novo dispositivo.";
 "voice.degradation_outgoing.prompt" = "Você ainda quer fazer a ligação?";
 "voice.degradation_incoming.prompt" = "Você ainda quer aceitar a ligação?";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Alto-falante";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Chamada";
+
+"voice.alert.call_in_progress.title" = "Chamada em andamento";
+"voice.alert.call_in_progress.message" = "Você pode ter apenas uma chamada ativa de cada vez";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire precisa de acesso ao microfone.";
 "voice.alert.microphone_warning.explanation" = "Habilite nas configurações do Wire.";

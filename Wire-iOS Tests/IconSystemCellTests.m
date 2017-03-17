@@ -68,6 +68,12 @@
     return [cell wrapInTableView];
 }
 
+- (void)setUp
+{
+    [super setUp];
+    self.snapshotBackgroundColor = UIColor.whiteColor;
+}
+
 - (void)testCannotDecryptMessage {
     UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
     ZMVerifyView(wrappedCell);

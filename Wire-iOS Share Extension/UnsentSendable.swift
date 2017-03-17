@@ -89,6 +89,7 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
     private let attachment: NSItemProvider
     private var imageData: Data?
+    private let v3 = ExtensionSettings.shared.useAssetsV3
 
     init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
         guard attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) else { return nil }
@@ -116,7 +117,7 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
     func send(completion: @escaping (Sendable?) -> Void) {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
-            completion(self.imageData.flatMap(self.conversation.appendImage))
+            completion(self.imageData.flatMap { self.conversation.appendImage($0, v3: self.v3) })
         }
     }
 
@@ -130,6 +131,8 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
     private let typeURL: Bool
     private let typeData: Bool
+
+    private let v3 = ExtensionSettings.shared.useAssetsV3
 
     init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
         self.typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
@@ -162,7 +165,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     func send(completion: @escaping (Sendable?) -> Void) {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
-            completion(self.metadata.flatMap(self.conversation.appendFile))
+            completion(self.metadata.flatMap { self.conversation.appendFile($0, v3: self.v3) })
         }
     }
 

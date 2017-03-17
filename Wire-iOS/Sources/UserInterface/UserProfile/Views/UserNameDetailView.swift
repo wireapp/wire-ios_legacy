@@ -41,9 +41,9 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
     }
 
     private func addressBookText(for user: ZMBareUser, with addressBookName: String) -> NSAttributedString? {
-        guard !user.isSelfUser else { return nil }
+        guard !user.isSelfUser, let userName = user.name else { return nil }
         let suffix = "conversation.connection_view.in_address_book".localized && lightFont && color
-        if addressBookName.lowercased() == user.name.lowercased() {
+        if addressBookName.lowercased() == userName.lowercased() {
             return suffix
         }
 

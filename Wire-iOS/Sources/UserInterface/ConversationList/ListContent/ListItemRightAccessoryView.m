@@ -38,6 +38,7 @@
 @property (nonatomic, strong) IconButton *mediaButton;
 @property (nonatomic, strong) IconButton *muteVoiceButton;
 @property (nonatomic, strong) UIImageView *silencedIcon;
+@property (nonatomic) Button *joinCallButton;
 
 @end
 
@@ -56,7 +57,6 @@
     [self hideAll];
     
     switch (accessoryType) {
-            
         case ConversationListRightAccessorySilencedIcon:
             [self showSilencedIcon];
             break;
@@ -68,8 +68,12 @@
         case ConversationListRightAccessoryMediaButton:
             [self showMediaButton];
             break;
-            
-        default:
+
+        case ConversationListRightAccessoryJoinCall:
+            [self showJoinCallButton];
+            break;
+
+        case ConversationListRightAccessoryNone:
             break;
     }
 }
@@ -79,6 +83,7 @@
     [self.muteVoiceButton setHidden:YES];
     [self.silencedIcon setHidden:YES];
     [self.mediaButton setHidden:YES];
+    [self.joinCallButton setHidden:YES];
 }
 
 - (void)showMuteButton
@@ -133,6 +138,31 @@
     [self.mediaButton setHidden:NO];
 }
 
+- (void)showJoinCallButton
+{
+    if (!self.joinCallButton) {
+        self.joinCallButton = [Button buttonWithStyle:ButtonStyleFullMonochrome];
+        self.joinCallButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.joinCallButton setTitle:NSLocalizedString(@"conversation_list.right_accessory.join_button.title", nil) forState:UIControlStateNormal];
+        self.joinCallButton.accessibilityLabel = @"joinCallButton";
+        [self addSubview:self.joinCallButton];
+        [self.joinCallButton addTarget:self action:@selector(joinCallButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.joinCallButton autoSetDimension:ALDimensionHeight toSize:28];
+        [self.joinCallButton autoPinEdgesToSuperviewEdges];
+    }
+
+    self.joinCallButton.hidden = NO;
+    [self updateCallButtonCornerRadius];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    if (nil != self.joinCallButton) {
+        [self updateCallButtonCornerRadius];
+    }
+}
+
 - (void)updateButtonStates
 {
     [self updateMediaButtonState];
@@ -160,6 +190,11 @@
     [self updateMediaButtonState];
 }
 
+- (void)joinCallButtonTapped:(Button *)sender
+{
+    [self.delegate accessoryViewWantsToJoinCall:self];
+}
+
 - (void)updateMuteButtonState
 {
     if (nil != self.muteVoiceButton && !self.muteVoiceButton.hidden) {
@@ -179,6 +214,11 @@
 {
     MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
     return mediaPlaybackManager.activeMediaPlayer.state == MediaPlayerStatePlaying ? ZetaIconTypePause : ZetaIconTypePlay;
+}
+
+- (void)updateCallButtonCornerRadius
+{
+    self.joinCallButton.layer.cornerRadius = CGRectGetMidY(self.joinCallButton.bounds);
 }
 
 @end

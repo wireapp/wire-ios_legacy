@@ -79,9 +79,16 @@
                         [Message isFileTransferMessage:message] ||
                         [Message isKnockMessage:message] ||
                         [Message isLocationMessage:message] ||
-                        [Message isDeletedMessage:message];
-    
+                        [Message isDeletedMessage:message] ||
+                        [Message isMissedCallMessage:message] ||
+                        [Message isPerformedCallMessage:message];
+
     return allowedType;
+}
+
++ (BOOL)shouldShowDeliveryState:(id<ZMConversationMessage>)message
+{
+    return ![Message isPerformedCallMessage:message] && ![Message isMissedCallMessage:message];
 }
 
 + (NSDateFormatter *)shortVersionDateFormatter
@@ -108,6 +115,18 @@
     });
     
     return longVersionTimeFormatter;
+}
+
++ (NSDateFormatter *)dayFormatter
+{
+    static NSDateFormatter *dayFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dayFormatter = [[NSDateFormatter alloc] init];
+        dayFormatter.dateFormat = @"d MMMM, EEEE";
+    });
+
+    return dayFormatter;
 }
 
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message

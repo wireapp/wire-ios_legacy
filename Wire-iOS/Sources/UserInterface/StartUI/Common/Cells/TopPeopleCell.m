@@ -154,7 +154,7 @@
     _user = user;
     self.badgeUserImageView.user = user;
     self.displayName = user.displayName;
-    self.accessibilityLabel = user.displayName;
+    self.accessibilityValue = user.displayName;
 }
 
 - (void)setConversation:(ZMConversation *)conversation

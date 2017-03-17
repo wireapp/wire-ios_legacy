@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Нет активных разговоров";
 "contacts_ui.no_contact.message" = "Нажмите на контакты, чтобы начать новый разговор";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Присоединиться";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "знакомых";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ удалил %@";
 "content.system.other_removed_you" = "%@ удалил вас";
 "content.system.you_removed_other" = "Вы удалили %@";
-"content.system.other_renamed_conv" = "%@ переименовал разговор";
-"content.system.you_renamed_conv" = "Вы переименовали разговор";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Вы";
 "content.system.this_device" = "это устройство";
+
+"content.system.call.you" = "Вы";
+"content.system.call.called" = "%@ звонил(-а)";
+
+"content.system.renamed_conv.title" = "%@ переименовал беседу";
+"content.system.renamed_conv.title.you" = "Вы";
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Динамик";
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
+
+"voice.alert.call_in_progress.title" = "Идёт вызов";
+"voice.alert.call_in_progress.message" = "Одновременно вы можете совершать только один звонок";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire необходим доступ к микрофону.";
 "voice.alert.microphone_warning.explanation" = "Включите его в настройках Wire.";

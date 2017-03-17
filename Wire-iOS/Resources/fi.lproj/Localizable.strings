@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Ei aktiivisia keskusteluja\n";
 "contacts_ui.no_contact.message" = "Kosketa yhteystietoja aloittaksesi keskustelun";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Liity";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "käyttäjiä";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ poisti %@ n";
 "content.system.other_removed_you" = "%@ poisti sinut";
 "content.system.you_removed_other" = "Sinä poistit %@ n";
-"content.system.other_renamed_conv" = "%@ nimesi keskustelun uudelleen";
-"content.system.you_renamed_conv" = "Sinä nimesit keskustelun uudelleen";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ poisti keskustelun nimen";
 "content.system.you_renamed_conv_to_nothing" = "Sinä poistit keskustelun nimen";
 "content.system.pending_message_timestamp" = "Lähetetään…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Sinä";
 "content.system.this_device" = "tämä laite";
+
+"content.system.call.you" = "Sinä";
+"content.system.call.called" = "%@ soitti";
+
+"content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
+"content.system.renamed_conv.title.you" = "Sinä";
 
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";
 
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Kaiutin";
 "voice.cancel_button.title" = "Peruuta";
 "voice.call_button.title" = "Puhelu";
+
+"voice.alert.call_in_progress.title" = "Puhelu käynnissä";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire tarvitsee luvan käyttää mikrofonia.";
 "voice.alert.microphone_warning.explanation" = "Salli se Wiren asetuksissa.";

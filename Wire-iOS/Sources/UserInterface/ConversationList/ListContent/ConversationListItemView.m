@@ -37,7 +37,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @interface ConversationListItemView ()
 
 @property (nonatomic, strong, readwrite) ConversationListIndicator *statusIndicator;
-@property (nonatomic, strong) ListItemRightAccessoryView *rightAccessory;
+@property (nonatomic, strong, readwrite) ListItemRightAccessoryView *rightAccessory;
 @property (nonatomic, strong) UILabel *titleField;
 @property (nonatomic, strong) UILabel *subtitleField;
 @property (nonatomic, strong) UIView *lineView;
@@ -128,13 +128,17 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.statusIndicator autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
 
     [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
-    [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0];
+    [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
     self.titleBottomMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:18.0f];
 
-    [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
     [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [self.rightAccessory autoSetDimension:ALDimensionHeight toSize:28.0f];
+    [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
     self.rightAccessoryWidthConstraint = [self.rightAccessory autoSetDimension:ALDimensionWidth toSize:0.0f];
+
+    [self.rightAccessory setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [self.titleField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+
     [self updateRightAccessoryWidth];
 
     if (self.enableSubtitles) {
@@ -214,18 +218,20 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)updateRightAccessoryWidth
 {
-    BOOL muteVoiceAndLandscape = (self.rightAccessoryType == ConversationListRightAccessoryMuteVoiceButton  && IS_IPAD_LANDSCAPE_LAYOUT);
-    
+    BOOL muteVoiceAndLandscape = (self.rightAccessoryType == ConversationListRightAccessoryMuteVoiceButton && IS_IPAD_LANDSCAPE_LAYOUT);
+    self.rightAccessoryWidthConstraint.active = YES;
+
     if (muteVoiceAndLandscape) {
         // If we are showing the mute button and in landscape, don't show the button
         self.rightAccessoryWidthConstraint.constant = 0;
         [self.rightAccessory setHidden:YES];
-    }
-    else if (self.rightAccessoryType == ConversationListRightAccessoryNone) {
+    } else if (self.rightAccessoryType == ConversationListRightAccessoryJoinCall) {
+        self.rightAccessory.hidden = NO;
+        self.rightAccessoryWidthConstraint.active = NO;
+    } else if (self.rightAccessoryType == ConversationListRightAccessoryNone) {
         self.rightAccessoryWidthConstraint.constant = 0;
         [self.rightAccessory setHidden:YES];
-    }
-    else {
+    } else {
         [self.rightAccessory setHidden:NO];
         self.rightAccessoryWidthConstraint.constant = 28.0f;
     }

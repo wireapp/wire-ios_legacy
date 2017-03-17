@@ -46,6 +46,14 @@ extension ZMConversationMessage {
     }
 }
 
+extension ZMSystemMessageData {
+
+    fileprivate func callDurationString() -> String? {
+        guard systemMessageType == .performedCall, duration > 0 else { return nil }
+        return  PerformedCallCell.callDurationFormatter.string(from: duration)
+    }
+}
+
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
@@ -99,6 +107,7 @@ extension ZMConversationMessage {
         statusLabel.isAccessibilityElement = true
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        statusLabel.numberOfLines = 0
         statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
                                       NSForegroundColorAttributeName: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
@@ -114,9 +123,13 @@ extension ZMConversationMessage {
     private func createConstraints() {
         constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
             labelClipView.leading == selfView.leadingMargin
-            labelClipView.centerY == selfView.centerY
             labelClipView.trailing == selfView.trailingMargin
-            
+
+            selfView.height >= 28 ~ LayoutPriority(750)
+
+            labelClipView.top == selfView.top
+            labelClipView.bottom == selfView.bottom
+
             statusLabel.leading == labelClipView.leading
             statusLabel.top == labelClipView.top
             statusLabel.bottom == labelClipView.bottom
@@ -133,11 +146,7 @@ extension ZMConversationMessage {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    open override var intrinsicContentSize : CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 28)
-    }
-    
+
     open func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if !self.isConfigured {
             self.isConfigured = true
@@ -210,6 +219,8 @@ extension ZMConversationMessage {
         } else if let dateTimeString = message.formattedReceivedDate() {
             if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
+            } else if let durationString = message.systemMessageData?.callDurationString() {
+                timestampString = dateTimeString + " · " + durationString
             } else {
                 timestampString = dateTimeString
             }
@@ -293,9 +304,21 @@ extension ZMConversationMessage {
         }
 
         let finalText: String
-        
-        if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
-            if let deliveryStateString = deliveryStateString {
+
+        if let childMessages = message.systemMessageData?.childMessages,
+            !childMessages.isEmpty,
+            let timestamp = timestampString(message) {
+            let childrenTimestamps = childMessages.flatMap {
+                $0 as? ZMConversationMessage
+            }.sorted {
+                $0.0.serverTimestamp < $0.1.serverTimestamp
+            }.flatMap(timestampString)
+
+            finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
+                return "\(text)\n\(current)"
+            }
+        } else if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
+            if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
                 finalText = timestampString + " ・ " + deliveryStateString
             }
             else {

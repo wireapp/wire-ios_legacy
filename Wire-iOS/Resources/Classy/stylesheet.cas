@@ -73,10 +73,12 @@ VoiceChannelOverlay {
     
     degradationTopLabel: @{
         textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
     }
     
     degradationBottomLabel: @{
         textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
     }
 
     topStatusLabel: @{
@@ -96,7 +98,15 @@ VoiceChannelOverlay {
         }
     }
     
-    callButton: @{
+    acceptDegradedButton: @{
+        iconButton: @{
+            backgroundImageColor[state:normal]: $color-accent-green;
+            iconColor[state:normal]: white;
+            borderWidth: 0;
+        }
+    }
+    
+    makeDegradedCallButton: @{
         iconButton: @{
             backgroundImageColor[state:normal]: $color-accent-green;
             iconColor[state:normal]: white;
@@ -743,46 +753,15 @@ VideoMessageCell {
 
 /* Conversation */
 
-GroupConversationHeader {
-    messageTextAttributes: @{
-        foregroundColor: $color-text-dimmed;
-        paragraphStyle: @{
-            alignment: center;
-            paragraphSpacing: 4;
-        }
-    }
-    
-    titleTextAttributes: @{
-        font: $font-small;
-        paragraphStyle: @{
-            alignment: center;
-            paragraphSpacing: 10;
-        }
-    }
-    
-    descriptionTextAttributes: @{
-        font: $font-small-light;
-    }
-    
-    explanationTextAttributes: @{
-        font: $font-small-light;
-        foregroundColor: $color-accent-current;
-    }
-    
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
-}
-
 MessageToolboxView {
     statusLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
         textContainerInset: 0, 0, 0, 0;
     }
     likeTooltipArrow: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
@@ -796,12 +775,19 @@ MessageToolboxView {
     }
 
     authorLabel: @{
-        font: $font-medium-medium;
+        font: $font-medium-semibold;
     }
+
     burstTimestampLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
+        textColor: $color-text-foreground;
     }
+
+    burstLabelSeparatorView: @{
+        backgroundColor: $color-separator;
+    }
+
+    burstNormalFont: $font-small-light;
+    burstBoldFont: $font-small-semibold;
 }
 
 ^IconSystemCell {
@@ -813,9 +799,13 @@ MessageToolboxView {
         backgroundColor: clear;
     }
     labelTextColor: $color-text-foreground;
-    labelFont: $font-small-light;
-    labelBoldFont: $font-small-medium;
+    labelFont: $font-medium;
+    labelBoldFont: $font-medium-semibold;
     labelTextBlendedColor: $color-text-dimmed;
+}
+
+ConversationRenamedCell {
+    nameLabelFont: $font-normal-semibold;
 }
 
 FileTransferView {
@@ -827,6 +817,9 @@ FileTransferView {
     labelBoldFont: $font-small-medium;
     fileTypeIconView: @{
         tintColor: $color-text-foreground;
+    }
+    fileEyeView: @{
+        tintColor: $color-background;
     }
     actionButton: @{
         iconColor: white;
@@ -981,6 +974,15 @@ TypingIndicatorView {
     nameLabel: @{
         font: $font-small-light;
         textColor: $color-text-placeholder;
+    }
+}
+
+PingCell {
+    pingFont: $font-medium;
+    authorFont: $font-medium-semibold;
+
+    pingLabel: @{
+        textColor: $color-text-foreground;
     }
 }
 

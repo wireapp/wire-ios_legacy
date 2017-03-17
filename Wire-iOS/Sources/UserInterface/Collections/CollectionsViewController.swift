@@ -162,6 +162,8 @@ final public class CollectionsViewController: UIViewController {
         self.setupNavigationItem()
         self.flushLayout()
 
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override public func viewWillDisappear(_ animated: Bool) {
@@ -746,5 +748,11 @@ extension CollectionsViewController: MessageActionResponder {
             }
         default: break
         }
+    }
+}
+
+extension CollectionsViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

@@ -22,6 +22,10 @@
 #import "ConversationCell.h"
 #import "Wire-Swift.h"
 
+
+static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minutes
+
+
 @implementation ZMConversationMessageWindow (Formatting)
 
 - (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(id<ZMConversationMessage>)lastUnreadMessage
@@ -30,6 +34,7 @@
     layoutProperties.showSender       = [self shouldShowSenderForMessage:message];
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
+    layoutProperties.showDayBurstTimestamp = [self shouldShowDaySeparatorForMessage:message];
     layoutProperties.topPadding       = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
     layoutProperties.alwaysShowDeliveryState = [self shouldShowAlwaysDeliveryStateForMessage:message];
     
@@ -102,7 +107,9 @@
                 systemMessage.systemMessageType != ZMSystemMessageTypeReactivatedDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeNewConversation &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice &&
-                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone;
+                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone &&
+                systemMessage.systemMessageType != ZMSystemMessageTypeMissedCall &&
+                systemMessage.systemMessageType != ZMSystemMessageTypePerformedCall;
     }
     
     if ([Message isKnockMessage:message]) {
@@ -120,12 +127,9 @@
     }
     
     BOOL showTimestamp = NO;
-    
     NSTimeInterval seconds = [message.serverTimestamp timeIntervalSinceDate:previousMessage.serverTimestamp];
     
-    NSTimeInterval referenceSeconds = 300;
-    
-    if (seconds > referenceSeconds) {
+    if (seconds > BurstSeparatorTimeDifference) {
         showTimestamp = YES;
     }
     
@@ -165,24 +169,6 @@
     }
     
     return 0;
-}
-
-- (id<ZMConversationMessage>)messagePreviousToMessage:(id<ZMConversationMessage>)message
-{
-    NSUInteger index = [self.messages indexOfObject:message];
-    NSUInteger previousIndex = NSNotFound;
-    if (index < self.messages.count - 1 && index != NSNotFound) {
-        previousIndex = index + 1;
-    }
-    
-    id<ZMConversationMessage>previousMessage = nil;
-    
-    // Find a previous message, and use it for time calculation
-    if (previousIndex != NSNotFound) {
-        previousMessage = [self.messages objectAtIndex:previousIndex];
-    }
-    
-    return previousMessage;
 }
 
 @end

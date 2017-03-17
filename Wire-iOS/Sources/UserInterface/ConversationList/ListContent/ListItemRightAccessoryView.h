@@ -20,19 +20,28 @@
 #import <UIKit/UIKit.h>
 
 
-
 typedef NS_ENUM(int16_t, ConversationListRightAccessoryType) {
     ConversationListRightAccessoryNone = 0,
     ConversationListRightAccessorySilencedIcon,
     ConversationListRightAccessoryMuteVoiceButton,
-    ConversationListRightAccessoryMediaButton
+    ConversationListRightAccessoryMediaButton,
+    ConversationListRightAccessoryJoinCall
 };
 
+@class ListItemRightAccessoryView;
+
+
+@protocol ListItemRightAccessoryViewDelegate <NSObject>
+
+- (void)accessoryViewWantsToJoinCall:(ListItemRightAccessoryView *)accessoryView;
+
+@end
 
 
 @interface ListItemRightAccessoryView : UIView
 
 @property (nonatomic, assign) ConversationListRightAccessoryType accessoryType;
+@property (nonatomic, weak) id <ListItemRightAccessoryViewDelegate> delegate;
 
 - (void)updateButtonStates;
 

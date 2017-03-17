@@ -347,9 +347,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController (CommonContactsDelegate)
 
-- (void)didReceiveCommonContactsUsers:(NSOrderedSet *)users forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
+- (void)didReceiveNumberOfTotalMutualConnections:(NSUInteger)numberOfConnections forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
 {
-    ProfileHeaderViewModel *model = [self headerViewModelWithUser:self.bareUser commonConnections:users.count];
+    ProfileHeaderViewModel *model = [self headerViewModelWithUser:self.bareUser commonConnections:numberOfConnections];
     [self.headerView configureWithViewModel:model];
 }
 

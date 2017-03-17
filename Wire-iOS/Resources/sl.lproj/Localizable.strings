@@ -75,6 +75,9 @@
 "contacts_ui.no_contact.title" = "Ni aktivnih pogovorov\n";
 "contacts_ui.no_contact.message" = "Tapnite stike za začetek pogovora";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Pridruži";
+
 // Conversation List Bottom Bar
 "bottom_bar.contacts_button.title" = "osebe";
 
@@ -192,8 +195,7 @@
 "content.system.other_removed_other" = "%@ je odstranil(-a) %@";
 "content.system.other_removed_you" = "%@ te je odstranil(-a)";
 "content.system.you_removed_other" = "Si odstranil(-a) %@";
-"content.system.other_renamed_conv" = "%@ je preimenoval(-a) pogovor";
-"content.system.you_renamed_conv" = "Si preimenoval(-a) pogovor";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ je odstranil(-a) ime pogovora";
 "content.system.you_renamed_conv_to_nothing" = "Si odstranil(-a) ime pogovora";
 "content.system.pending_message_timestamp" = "Pošiljanje…";
@@ -211,6 +213,12 @@
 
 "content.system.you_started" = "Ti";
 "content.system.this_device" = "ta naprava";
+
+"content.system.call.you" = "Ti";
+"content.system.call.called" = "%@ je klical(-a)";
+
+"content.system.renamed_conv.title" = "%@ je preimenoval(-a) pogovor";
+"content.system.renamed_conv.title.you" = "Ti";
 
 "content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj.";
 
@@ -293,7 +301,7 @@
 "voice.status.low_connection" = "Slaba povezava";
 "voice.network_error.title" = "Ni spletne povezave";
 "voice.network_error.body" = "Morate biti na spletu za klicanje. Preverite vašo povezavo in poizkusite ponovno.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Začeli ste z uporabo nove naprave.";
 "voice.degradation.new_user_device" = "%@ je začel(-a) z uporabo nove naprave.";
 "voice.degradation_outgoing.prompt" = "Ali še vedno želite klicati?";
 "voice.degradation_incoming.prompt" = "Ali še vedno želite sprejeti klic?";
@@ -305,6 +313,10 @@
 "voice.speaker_button.title" = "Zvočnik";
 "voice.cancel_button.title" = "Prekliči";
 "voice.call_button.title" = "Klic";
+
+"voice.alert.call_in_progress.title" = "Klic v teku";
+"voice.alert.call_in_progress.message" = "Lahko imate aktiven le en klic";
+"voice.alert.call_in_progress.confirm" = "V redu";
 
 "voice.alert.microphone_warning.title" = "Wire potrebuje dostop do mikrofona.";
 "voice.alert.microphone_warning.explanation" = "Omogoči v nastavitvah Wire.";

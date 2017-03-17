@@ -26,9 +26,7 @@
 // Cells
 #import "TextMessageCell.h"
 #import "ImageMessageCell.h"
-#import "NameChangedCell.h"
 #import "PingCell.h"
-#import "MissedCallCell.h"
 #import "ConnectionRequestCell.h"
 
 #import "Wire-Swift.h"
@@ -39,6 +37,7 @@ static NSString *const ConversationTextCellId               = @"ConversationText
 static NSString *const ConversationImageCellId              = @"ConversationImageCell";
 static NSString *const ConversationConnectionRequestCellId  = @"ConversationConnectionRequestCellId";
 static NSString *const ConversationMissedCallCellId         = @"ConversationMissedCallCell";
+static NSString *const ConversationPerformedCallCellId      = @"ConversationPerformedCallCellId";
 static NSString *const ConversationPingCellId               = @"conversationPingCellId";
 static NSString *const ConversationNewDeviceCellId          = @"ConversationNewDeviceCellId";
 static NSString *const ConversationVerifiedCellId           = @"conversationVerifiedCellId";
@@ -59,7 +58,6 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
 @property (nonatomic) id messageWindowObserverToken;
-@property (nonatomic) NSMutableDictionary *cellLayoutPropertiesCache;
 @property (nonatomic) BOOL expandingWindow;
 
 @end
@@ -286,11 +284,16 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
             case ZMSystemMessageTypeParticipantsAdded:
             case ZMSystemMessageTypeParticipantsRemoved:
             case ZMSystemMessageTypeNewConversation:
-                cellIdentifier = ConversationParticipantsCellId;
+                cellIdentifier = ParticipantsCell.zm_reuseIdentifier;
                 break;
                 
             case ZMSystemMessageTypeMessageDeletedForEveryone:
                 cellIdentifier = ConversationMessageDeletedCellId;
+                break;
+
+            case ZMSystemMessageTypePerformedCall:
+                cellIdentifier = ConversationPerformedCallCellId;
+                break;
 
             default:
                 break;
@@ -298,6 +301,12 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+
+    // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
+    // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
+    CGRect bounds = cell.bounds;
+    bounds.size.width = self.tableView.bounds.size.width;
+    cell.bounds = bounds;
     
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
@@ -329,8 +338,9 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 {
     [self.tableView registerClass:[TextMessageCell class] forCellReuseIdentifier:ConversationTextCellId];
     [self.tableView registerClass:[ImageMessageCell class] forCellReuseIdentifier:ConversationImageCellId];
-    [self.tableView registerClass:[NameChangedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
+    [self.tableView registerClass:[ConversationRenamedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
     [self.tableView registerClass:[PingCell class] forCellReuseIdentifier:ConversationPingCellId];
+    [self.tableView registerClass:[PerformedCallCell class] forCellReuseIdentifier:ConversationPerformedCallCellId];
     [self.tableView registerClass:[MissedCallCell class] forCellReuseIdentifier:ConversationMissedCallCellId];
     [self.tableView registerClass:[ConnectionRequestCell class] forCellReuseIdentifier:ConversationConnectionRequestCellId];
     [self.tableView registerClass:[ConversationNewDeviceCell class] forCellReuseIdentifier:ConversationNewDeviceCellId];
@@ -341,7 +351,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     [self.tableView registerClass:[FileTransferCell class] forCellReuseIdentifier:ConversationFileTransferCellId];
     [self.tableView registerClass:[VideoMessageCell class] forCellReuseIdentifier:ConversationVideoMessageCellId];
     [self.tableView registerClass:[AudioMessageCell class] forCellReuseIdentifier:ConversationAudioMessageCellId];
-    [self.tableView registerClass:[ConversationParticipantsCell class] forCellReuseIdentifier:ConversationParticipantsCellId];
+    [self.tableView registerClass:[ParticipantsCell class] forCellReuseIdentifier:ParticipantsCell.zm_reuseIdentifier];
     [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
     [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
     [self.tableView registerClass:[UnknownMessageCell class] forCellReuseIdentifier:ConversationUnknownMessageCellId];
