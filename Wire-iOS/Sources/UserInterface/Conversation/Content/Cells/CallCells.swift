@@ -79,6 +79,7 @@ class MissedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        lineView.isHidden = true
     }
 
     override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
@@ -114,6 +115,7 @@ class PerformedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        lineView.isHidden = true
     }
 
     override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {

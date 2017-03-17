@@ -286,7 +286,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.text.you" = "You";
 
 // Inline Player
 "content.player.unable_to_play" = "UNABLE TO PLAY TRACK";
