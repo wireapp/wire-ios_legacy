@@ -73,10 +73,13 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
     }
 
     private func systemMessage(missed: Bool, in conversation: ZMConversation, from user: ZMUser) -> ZMSystemMessage {
+        let date = Date(timeIntervalSince1970: 123456879)
         if missed {
-            return conversation.appendMissedCallMessage(fromUser: user, at: Date(timeIntervalSince1970: 123456879))
+            return conversation.appendMissedCallMessage(fromUser: user, at: date)
         } else {
-            return conversation.appendPerformedCallMessage(with: 102, caller: user)
+            let message = conversation.appendPerformedCallMessage(with: 102, caller: user)
+            message.serverTimestamp = date
+            return message
         }
     }
 
