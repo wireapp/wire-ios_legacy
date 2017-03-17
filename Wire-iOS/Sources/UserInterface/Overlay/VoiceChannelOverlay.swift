@@ -407,13 +407,13 @@ extension VoiceChannelOverlay {
         
         contentContainer.addSubview(avatarContainer)
         
-        callingUserImage.suggestedImageSize = .big
+        callingUserImage.size = .big
         callingUserImage.accessibilityIdentifier = "CallingUsersImage"
         avatarContainer.addSubview(callingUserImage)
         
         avatarContainer.addSubview(shieldOverlay)
         
-        callingTopUserImage.suggestedImageSize = .small
+        callingTopUserImage.size = .small
         callingTopUserImage.accessibilityIdentifier = "CallingTopUsersImage"
         contentContainer.addSubview(callingTopUserImage)
         

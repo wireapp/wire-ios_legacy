@@ -19,7 +19,7 @@
 
 #import "UserImageView.h"
 #import <PureLayout/PureLayout.h>
-
+@import zmessaging;
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -139,7 +139,7 @@ static CIContext *ciContext(void)
     return CGSizeMake(imageSize, imageSize);
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
+- (void)setUser:(id<ZMBareUser, AccentColorProvider>)user
 {    
     _user = user;
     
@@ -184,14 +184,18 @@ static CIContext *ciContext(void)
     if (self.size == UserImageViewSizeBig &&
         self.user.imageMediumData == nil) {
         
-        [self.user requestMediumProfileImageInUserSession:self.userSession];
+        if ([self.user respondsToSelector:@selector(requestMediumProfileImageInUserSession:)]) {
+            [(id)self.user requestMediumProfileImageInUserSession:self.userSession];
+        }
         return;
     }
     
     if (self.size != UserImageViewSizeBig &&
         self.user.imageSmallProfileData == nil) {
         
-        [self.user requestSmallProfileImageInUserSession:self.userSession];
+        if ([self.user respondsToSelector:@selector(requestSmallProfileImageInUserSession:)]) {
+            [(id)self.user requestSmallProfileImageInUserSession:self.userSession];
+        }
         return;
     }
     

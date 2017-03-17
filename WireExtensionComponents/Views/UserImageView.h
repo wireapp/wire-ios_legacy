@@ -42,7 +42,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 
 @interface UserImageView : AvatarImageView <ZMUserObserver>
 
-@property (nonatomic, nullable) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> user;
+@property (nonatomic, nullable) id<ZMBareUser, AccentColorProvider> user;
 @property (nonatomic) ZMUserSession *userSession;
 @property (nonatomic) BOOL shouldDesaturate;
 @property (nonatomic) BOOL indicatorEnabled;
