@@ -226,7 +226,6 @@
 		8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A5A11E0D395A00043ACF /* CollectionCellHeader.swift */; };
 		8711A5A41E0D6C8800043ACF /* TwoLineTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A5A31E0D6C8800043ACF /* TwoLineTitleView.swift */; };
 		8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */; };
-		8714A9ED1E69E608006BBAE9 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */; };
 		871608431E4DF7B000461934 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871608411E4DF7A900461934 /* HockeySDK.framework */; };
 		871878BD1C1ACA72001FFCC5 /* NSDate+WRFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */; };

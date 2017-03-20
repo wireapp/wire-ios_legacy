@@ -98,7 +98,7 @@ public class NotificationViewController: UIViewController, UNNotificationContent
 
 }
 
-
+// TODO: Move accent colors handling to shared components
 extension ZMUser {
 
     @objc func accentColor() -> UIColor {
