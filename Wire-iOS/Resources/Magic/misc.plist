@@ -267,7 +267,7 @@
 		<key>user_name_font</key>
 		<dict>
 			<key>font</key>
-			<string>System-Light-Medium</string>
+			<string>System-Light-Semibold</string>
 			<key>size</key>
 			<integer>11</integer>
 		</dict>
