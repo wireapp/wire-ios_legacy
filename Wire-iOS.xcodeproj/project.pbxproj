@@ -2321,8 +2321,6 @@
 		BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NotificationFetchComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationFetchComponents.h; sourceTree = "<group>"; };
 		BFAD53FE1E6972CD0015C677 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BFAD540A1E6972CD0015C677 /* NotificationFetchComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFetchComponentsTests.swift; sourceTree = "<group>"; };
-		BFAD540C1E6972CD0015C677 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFAD54181E6972F40015C677 /* NotificationContentFetchEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationContentFetchEngine.swift; sourceTree = "<group>"; };
 		BFAD541A1E69734F0015C677 /* FetchEngineStrategyFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEngineStrategyFactory.swift; sourceTree = "<group>"; };
 		BFAD541C1E6973DE0015C677 /* Dummies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dummies.swift; sourceTree = "<group>"; };
@@ -4115,7 +4113,6 @@
 				168A16AA1D9597C2005CFA6C /* Wire-iOS Share Extension */,
 				87B7DAA61E696E4E005F5140 /* ImageNotificationExtension */,
 				BFAD53FC1E6972CD0015C677 /* NotificationFetchComponents */,
-				BFAD54091E6972CD0015C677 /* NotificationFetchComponentsTests */,
 				8F42C539199244A700288E4D /* Products */,
 				8286E48D7CC440448CBD8F48 /* Frameworks */,
 				8FC856501992523C0008B66B /* Podfile */,
@@ -4987,15 +4984,6 @@
 				BFAD53FE1E6972CD0015C677 /* Info.plist */,
 			);
 			path = NotificationFetchComponents;
-			sourceTree = "<group>";
-		};
-		BFAD54091E6972CD0015C677 /* NotificationFetchComponentsTests */ = {
-			isa = PBXGroup;
-			children = (
-				BFAD540A1E6972CD0015C677 /* NotificationFetchComponentsTests.swift */,
-				BFAD540C1E6972CD0015C677 /* Info.plist */,
-			);
-			path = NotificationFetchComponentsTests;
 			sourceTree = "<group>";
 		};
 		CE8E4FB61DF17BBE0009F437 /* TextTransform */ = {
