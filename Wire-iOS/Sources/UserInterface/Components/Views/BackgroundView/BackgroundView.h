@@ -19,47 +19,18 @@
 
 #import <UIKit/UIKit.h>
 
-
-
 @interface BackgroundView : UIView
-
-@property (nonatomic, readonly) CGFloat defaultHorizontalParallaxInset;
-@property (nonatomic, readonly) CGFloat defaultVerticalParallaxInset;
-@property (nonatomic, assign) CGPoint parallaxOffset;
-
-@property (nonatomic, strong) UIColor *filterColor;
-
-/// Set whether the filters are enabled (vignette, darkening).  Animates.
-@property (nonatomic, assign) BOOL filterDisabled;
-
-/// Set whether the blur is enabled.  Animates.
-@property (nonatomic, assign) BOOL blurDisabled;
-
-/// Set the percent visibility of the blur overlay.  Doesn't animate.
-@property (nonatomic, assign) CGFloat blurPercent;
-/// Indicates whether the view will wait until a blur is generated before changing images
-@property (nonatomic, readonly) BOOL waitForBlur;
-
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (instancetype)initWithFilterColor:(UIColor *)filterColor NS_DESIGNATED_INITIALIZER;
 
+@property (nonatomic, strong) UIColor *filterColor;
+
 /// Set the main "image" to be a flat color.  Overrides whatever the current image is.
 - (void)setFlatColor:(UIColor *)color;
 
-- (void)setImageData:(NSData *)imageData withCacheKey:(NSString *)cacheKey
+- (void)setImageData:(NSData *)imageData
             animated:(BOOL)animated;
-
-- (void)setImageData:(NSData *)imageData withCacheKey:(NSString *)cacheKey
-            animated:(BOOL)animated waitForBlur:(BOOL)waitForBlur;
-
-- (void)setImageData:(NSData *)imageData withCacheKey:(NSString *)cacheKey
-            animated:(BOOL)animated waitForBlur:(BOOL)waitForBlur
-         forceUpdate:(BOOL)forceUpdate;
-
-- (void)setBlurPercentAnimated:(CGFloat)blurPercent;
-
 @end
 
 

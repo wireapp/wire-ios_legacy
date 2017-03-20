@@ -21,13 +21,11 @@
 
 @protocol ZMBareUser;
 
-
-
 @interface UserBackgroundView : BackgroundView
 
 // Setting this is animated by default
 @property (nonatomic, strong) id<ZMBareUser> user;
 
-- (void)setUser:(id<ZMBareUser>)user animated:(BOOL)animated waitForBlur:(BOOL)waitForBlur;
+- (void)setUser:(id<ZMBareUser>)user animated:(BOOL)animated;
 
 @end

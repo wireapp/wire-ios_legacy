@@ -20,33 +20,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol ZMBareUser;
-@class ZMConversation;
-
 
 @interface BackgroundViewController : UIViewController
 
-@property (nonatomic, weak) ZMConversation *conversation;
-
-@property (nonatomic) BOOL forceFullScreen;
-
-@property (nonatomic, strong) UIColor *overrideFilterColor;
-
-/// Sets the blur percent visibility.  Not animated.
-@property (nonatomic, assign) CGFloat blurPercent;
-
-/// Disables the blur. Animated.
-@property (nonatomic, assign) BOOL blurDisabled;
-
-- (void)setForceFullScreen:(BOOL)forceFullScreen animated:(BOOL)animated;
-/// Sets the blur percent visibility.  Animated.
-- (void)setBlurPercentAnimated:(CGFloat)blurPercent;
-
 - (void)setUser:(id<ZMBareUser>)user animated:(BOOL)animated;
-
-- (void)setOverrideUser:(id<ZMBareUser>)user disableColorFilter:(BOOL)disableColorFilter animated:(BOOL)animated;
-- (void)setOverrideUser:(id<ZMBareUser>)user disableColorFilter:(BOOL)disableColorFilter animated:(BOOL)animated completionBlock:(dispatch_block_t)completionBlock;
-
-/// Unset the override user and re-enable color filter if it was disabled
-- (void)unsetOverrideUserAnimated:(BOOL)animated;
 
 @end

@@ -34,10 +34,10 @@
 
 - (void)setUser:(id<ZMBareUser>)user
 {
-    [self setUser:user animated:YES waitForBlur:YES];
+    [self setUser:user animated:YES];
 }
 
-- (void)setUser:(id<ZMBareUser>)user animated:(BOOL)animated waitForBlur:(BOOL)waitForBlur
+- (void)setUser:(id<ZMBareUser>)user animated:(BOOL)animated
 {
     if (! user) {
         DDLogInfo(@"Setting nil user on background");
@@ -64,14 +64,14 @@
         [self setFlatColor:[ZMUser selfUser].accentColor];
     }
     else {        
-        [self setImageData:user.imageMediumData withCacheKey:user.imageMediumIdentifier animated:animated waitForBlur:waitForBlur];
+        [self setImageData:user.imageMediumData animated:animated];
     }
 }
 
 - (void)userDidChange:(UserChangeInfo *)change
 {
     if (change.imageMediumDataChanged && change.user.imageMediumData != nil) {
-        [self setImageData:change.user.imageMediumData withCacheKey:change.user.imageMediumIdentifier animated:YES waitForBlur:self.waitForBlur forceUpdate:YES];
+        [self setImageData:change.user.imageMediumData animated:YES];
     }
     else if ( (change.imageMediumDataChanged && change.user.imageMediumData == nil ) ||
               (change.accentColorValueChanged && change.user.imageMediumData == nil) ) {

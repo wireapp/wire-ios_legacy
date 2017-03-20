@@ -321,7 +321,6 @@
 		871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */; };
 		871BC2631D34F8F800DF0793 /* BackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1BC1D34F8F800DF0793 /* BackgroundView.m */; };
 		871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */; };
-		871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */; };
 		871BC2661D34F8F800DF0793 /* UserBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */; };
 		871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CB1D34F8F800DF0793 /* GapLayer.m */; };
 		871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */; };
@@ -1459,8 +1458,6 @@
 		871BC1BC1D34F8F800DF0793 /* BackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundView.m; sourceTree = "<group>"; };
 		871BC1BD1D34F8F800DF0793 /* BackgroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundViewController.h; sourceTree = "<group>"; };
 		871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundViewController.m; sourceTree = "<group>"; };
-		871BC1BF1D34F8F800DF0793 /* BackgroundViewImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundViewImageProcessor.h; sourceTree = "<group>"; };
-		871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundViewImageProcessor.m; sourceTree = "<group>"; };
 		871BC1C11D34F8F800DF0793 /* UserBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserBackgroundView.h; sourceTree = "<group>"; };
 		871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserBackgroundView.m; sourceTree = "<group>"; };
 		871BC1CA1D34F8F800DF0793 /* GapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLayer.h; sourceTree = "<group>"; };
@@ -3335,8 +3332,6 @@
 				871BC1BC1D34F8F800DF0793 /* BackgroundView.m */,
 				871BC1BD1D34F8F800DF0793 /* BackgroundViewController.h */,
 				871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */,
-				871BC1BF1D34F8F800DF0793 /* BackgroundViewImageProcessor.h */,
-				871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */,
 				871BC1C11D34F8F800DF0793 /* UserBackgroundView.h */,
 				871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */,
 			);
@@ -5740,7 +5735,6 @@
 				DB888FBB1ADD195F00CE9A88 /* EmailStepViewController.m in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
 				BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */,
-				871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */,
 				871BC24C1D34F8F800DF0793 /* WAZUIMagic.m in Sources */,
 				F95E08B41D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift in Sources */,
 				87DCF48D1D34E9BA00BB420F /* ContactsCell.m in Sources */,
