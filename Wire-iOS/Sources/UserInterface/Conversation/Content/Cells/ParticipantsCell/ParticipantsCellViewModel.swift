@@ -31,7 +31,13 @@ struct ParticipantsCellViewModel {
 
     func sortedUsers() -> [ZMUser] {
         guard let systemMessage = message.systemMessageData else { return [] }
-        return systemMessage.users.subtracting([.selfUser()]).sorted { name(for: $0.0) < name(for: $0.1) }
+        guard let sender = message.sender else { return [] }
+
+        if systemMessage.users == [sender] && systemMessage.systemMessageType == .participantsRemoved {
+            return [sender]
+        } else {
+            return systemMessage.users.subtracting([sender]).sorted { name(for: $0.0) < name(for: $0.1) }
+        }
     }
 
     private func iconType(for message: ZMSystemMessageData) -> ZetaIconType {
@@ -44,14 +50,23 @@ struct ParticipantsCellViewModel {
 
     func attributedTitle() -> NSAttributedString? {
         guard let systemMessage = message.systemMessageData,
-            let sender = message.sender.map(name),
+            let sender = message.sender,
             let labelFont = font,
             let labelBoldFont = boldFont,
             let labelTextColor = textColor else { return nil }
 
+        let senderName = name(for: sender)
+
+        // `XYZ` left
+        if systemMessage.users == [sender] && systemMessage.systemMessageType == .participantsRemoved {
+            let leftCopy = key(with: "left").localized(args: senderName) && labelFont && labelTextColor
+            return leftCopy.adding(font: labelBoldFont, to: senderName)
+        }
+
+        // `XYZ` added / removed / started
         let names = sortedUsers().map(name).joined(separator: ", ")
-        let title = formatKey(for: systemMessage).localized(args: sender, names) && labelFont && labelTextColor
-        return title.adding(font: labelBoldFont, to: sender)
+        let title = formatKey(for: systemMessage).localized(args: senderName, names) && labelFont && labelTextColor
+        return title.adding(font: labelBoldFont, to: senderName)
     }
 
     func formatKey(for message: ZMSystemMessageData) -> String {
