@@ -1710,3 +1710,13 @@ SearchResultCountBadge {
     
     backgroundColor: $color-graphite-light;
 }
+
+// Example code
+
+TestView {
+    backgroundColor: green;
+    testLabel: @{
+        textColor: $color-text-foreground;
+        font: $font-small-semibold;
+    }
+}

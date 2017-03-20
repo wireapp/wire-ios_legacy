@@ -246,6 +246,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     [self.window makeKeyAndVisible];
     
+    //[TestView wr_testShowInstanceWithFullscreen:false];
+    
     if (self.seState == AppSEStateMigration) {
         [launchController showLoadingScreen];
     }
