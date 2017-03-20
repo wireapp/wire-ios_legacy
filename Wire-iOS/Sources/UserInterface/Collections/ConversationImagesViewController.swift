@@ -219,8 +219,10 @@ internal final class ConversationImagesViewController: UIViewController {
         emojiSketchButton.accessibilityLabel = "sketch emoji over image"
         emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
         
+        let buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton]
+        buttons.forEach { $0.hitAreaPadding = .zero }
         
-        self.buttonsBar = InputBarButtonsView(buttons: [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton])
+        self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
         self.view.addSubview(self.buttonsBar)
