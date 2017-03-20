@@ -33,11 +33,14 @@
 
 + (NSDictionary *)systemMessageTypeToClass
 {
-    return @{ @(ZMSystemMessageTypeNewClient): [ConversationNewDeviceCell class],
-              @(ZMSystemMessageTypeIgnoredClient): [ConversationIgnoredDeviceCell class],
-              @(ZMSystemMessageTypeConversationIsSecure): [ConversationVerifiedCell class],
-              @(ZMSystemMessageTypePotentialGap): [MissingMessagesCell class],
-              @(ZMSystemMessageTypeDecryptionFailed): [CannotDecryptCell class]};
+    return @{
+             @(ZMSystemMessageTypeNewClient):            [ConversationNewDeviceCell class],
+             @(ZMSystemMessageTypeIgnoredClient):        [ConversationIgnoredDeviceCell class],
+             @(ZMSystemMessageTypeConversationIsSecure): [ConversationVerifiedCell class],
+             @(ZMSystemMessageTypePotentialGap):         [MissingMessagesCell class],
+             @(ZMSystemMessageTypeDecryptionFailed):     [CannotDecryptCell class],
+             @(ZMSystemMessageTypeReactivatedDevice):    [MissingMessagesCell class]
+             };
 }
 
 + (UITableView *)wrappedCellForMessageType:(ZMSystemMessageType)type users:(NSUInteger)usersCount clients:(NSUInteger)clientsCount config:(void(^)(MockMessage *))config {
@@ -148,6 +151,11 @@
 
 - (void)testDecryptionFailed {
     UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
+    ZMVerifyView(wrappedCell);
+}
+
+- (void)testStartedusingANewDevice {
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeReactivatedDevice users:0 clients:0 config:nil];
     ZMVerifyView(wrappedCell);
 }
 
