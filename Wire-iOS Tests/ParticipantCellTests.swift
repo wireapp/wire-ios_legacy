@@ -21,59 +21,62 @@ import XCTest
 @testable import Wire
 
 
+private let tolerance: Float = 2
+
+
 class ParticipantsCellTests: CoreDataSnapshotTestCase {
 
     // MARK: - Started a Conversation
 
     func testThatItRendersParticipantsCellStartedConversationSelfUser() {
         let sut = cell(for: .newConversation, fromSelf: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellStartedConversationOtherUser() {
         let sut = cell(for: .newConversation, fromSelf: false)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellStartedConversation_ManyUsers() {
         let sut = cell(for: .newConversation, fromSelf: false, manyUsers: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Added Users
 
     func testThatItRendersParticipantsCellAddedParticipantsSelfUser() {
         let sut = cell(for: .participantsAdded, fromSelf: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellAddedParticipantsOtherUser() {
         let sut = cell(for: .participantsAdded, fromSelf: false)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellAddedParticipants_ManyUsers() {
         let sut = cell(for: .participantsAdded, fromSelf: false, manyUsers: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Removed Users
 
     func testThatItRendersParticipantsCellRemovedParticipantsSelfUser() {
         let sut = cell(for: .participantsRemoved, fromSelf: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellRemovedParticipantsOtherUser() {
         let sut = cell(for: .participantsRemoved, fromSelf: false)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Left Users
 
     func testThatItRendersParticipantsCellLeftParticipant() {
         let sut = cell(for: .participantsRemoved, fromSelf: false, left: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Helper
