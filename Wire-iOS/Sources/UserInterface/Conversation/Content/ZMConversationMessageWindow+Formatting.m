@@ -91,7 +91,9 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     }
     
     if (!systemMessage) {
-        return ![self isPreviousSenderSameForMessage:message] || message.updatedAt != nil;
+        return  ![self isPreviousSenderSameForMessage:message]
+              || [Message isKnockMessage:[self messagePreviousToMessage:message]]
+              || message.updatedAt != nil;
     }
     
     return NO;
