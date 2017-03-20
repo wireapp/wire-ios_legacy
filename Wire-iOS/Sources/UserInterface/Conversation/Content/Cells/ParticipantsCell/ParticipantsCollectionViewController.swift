@@ -22,7 +22,7 @@ import Cartography
 
 final class ParticipantsUserCell: UICollectionViewCell {
 
-    private let imageView = UserImageView()
+    private let imageView = UserImageView(magicPrefix: "content.author_image")
     private let dimmedAlpha: CGFloat = 0.5
     private let highlightAlphaDifference: CGFloat = 0.3
 

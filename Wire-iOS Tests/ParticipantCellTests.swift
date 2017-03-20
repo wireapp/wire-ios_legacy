@@ -69,15 +69,27 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
 
+    // MARK: - Left Users
+
+    func testThatItRendersParticipantsCellLeftParticipant() {
+        let sut = cell(for: .participantsRemoved, fromSelf: false, left: true)
+        verify(view: sut.prepareForSnapshots())
+    }
+
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false, left: Bool = false) -> IconSystemCell {
         let message = ZMSystemMessage.insertNewObject(in: moc)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
 
-        let users = ["Anna", "Bruno", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"].map(createUser)
-        message.users = manyUsers ? Set(users) : Set(users[0...1])
+        if !left {
+            let names = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"]
+            let users = names.map(createUser) + [selfUser as ZMUser, otherUser as ZMUser] // We add the sender to ensure it is removed
+            message.users = manyUsers ? Set(users) : Set(users[0...1])
+        } else {
+            message.users = [message.sender!]
+        }
 
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
         let props = ConversationCellLayoutProperties()

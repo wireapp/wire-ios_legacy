@@ -17,6 +17,40 @@
 //
 
 
+private func localizationKey(with pathComponent: String) -> String {
+    return "content.system.conversation.\(pathComponent)"
+}
+
+
+private enum ConversationActionType {
+
+    case none, started, added, removed, left
+
+    var formatKey: String {
+        switch self {
+        case .left: return localizationKey(with: "left")
+        case .added: return localizationKey(with: "added")
+        case .removed: return localizationKey(with: "removed")
+        case .started, .none: return localizationKey(with: "started")
+        }
+    }
+}
+
+
+private extension ZMConversationMessage {
+    var actionType: ConversationActionType {
+        guard let systemMessage = systemMessageData, let sender = sender else { return .none }
+        switch systemMessage.systemMessageType {
+        case .participantsRemoved where systemMessage.users == [sender]: return .left
+        case .participantsRemoved where systemMessage.users != [sender]: return .removed
+        case .participantsAdded: return .added
+        case .newConversation: return .started
+        default: return .none
+        }
+    }
+}
+
+
 struct ParticipantsCellViewModel {
 
     let font, boldFont: UIFont?
@@ -24,71 +58,57 @@ struct ParticipantsCellViewModel {
     let message: ZMConversationMessage
 
     func image() -> UIImage? {
-        return message.systemMessageData.map {
-            UIImage(for: iconType(for: $0), iconSize: .tiny, color: textColor)
-        }
+        return UIImage(for: iconType(for: message), iconSize: .tiny, color: textColor)
     }
 
     func sortedUsers() -> [ZMUser] {
-        guard let systemMessage = message.systemMessageData else { return [] }
         guard let sender = message.sender else { return [] }
 
-        if systemMessage.users == [sender] && systemMessage.systemMessageType == .participantsRemoved {
-            return [sender]
-        } else {
+        switch message.actionType {
+        case .left: return [sender]
+        default:
+            guard let systemMessage = message.systemMessageData else { return [] }
             return systemMessage.users.subtracting([sender]).sorted { name(for: $0.0) < name(for: $0.1) }
         }
     }
 
-    private func iconType(for message: ZMSystemMessageData) -> ZetaIconType {
-        switch message.systemMessageType {
-        case .participantsAdded: return .plus
-        case .participantsRemoved: return .minus
-        default: return .conversation
+    private func iconType(for message: ZMConversationMessage) -> ZetaIconType {
+        switch message.actionType {
+        case .started, .none: return .conversation
+        case .added: return .plus
+        case .removed, .left: return .minus
         }
     }
 
     func attributedTitle() -> NSAttributedString? {
-        guard let systemMessage = message.systemMessageData,
-            let sender = message.sender,
+        guard let sender = message.sender,
             let labelFont = font,
             let labelBoldFont = boldFont,
             let labelTextColor = textColor else { return nil }
 
         let senderName = name(for: sender)
+        let formatKey = message.actionType.formatKey
 
-        // `XYZ` left
-        if systemMessage.users == [sender] && systemMessage.systemMessageType == .participantsRemoved {
-            let leftCopy = key(with: "left").localized(args: senderName) && labelFont && labelTextColor
+        switch message.actionType {
+        case .left:
+            let leftCopy = formatKey.localized(args: senderName) && labelFont && labelTextColor
             return leftCopy.adding(font: labelBoldFont, to: senderName)
-        }
-
-        // `XYZ` added / removed / started
-        let names = sortedUsers().map(name).joined(separator: ", ")
-        let title = formatKey(for: systemMessage).localized(args: senderName, names) && labelFont && labelTextColor
-        return title.adding(font: labelBoldFont, to: senderName)
-    }
-
-    func formatKey(for message: ZMSystemMessageData) -> String {
-        switch message.systemMessageType {
-        case .participantsAdded: return key(with: "added")
-        case .participantsRemoved: return key(with: "removed")
-        default: return key(with: "started")
+        case .removed, .added, .started:
+            let names = sortedUsers().map(name).joined(separator: ", ")
+            let title = formatKey.localized(args: senderName, names) && labelFont && labelTextColor
+            return title.adding(font: labelBoldFont, to: senderName)
+        case .none: return nil
         }
     }
 
     private func name(for user: ZMUser) -> String {
         if user.isSelfUser {
-            return key(with: "you").localized
+            return localizationKey(with: "you").localized
         } else if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
             return user.displayName(in: conversation)
         } else {
             return user.displayName
         }
-    }
-
-    private func key(with pathComponent: String) -> String {
-        return "content.system.conversation.\(pathComponent)"
     }
 
 }
