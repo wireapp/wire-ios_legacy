@@ -91,9 +91,14 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     }
     
     if (!systemMessage) {
-        return  ![self isPreviousSenderSameForMessage:message]
-              || [Message isKnockMessage:[self messagePreviousToMessage:message]]
-              || message.updatedAt != nil;
+        if (![self isPreviousSenderSameForMessage:message] || message.updatedAt != nil) {
+            return YES;
+        }
+
+        id <ZMConversationMessage> previousMessage = [self messagePreviousToMessage:message];
+        if (nil != previousMessage) {
+            return [Message isKnockMessage:previousMessage];
+        }
     }
     
     return NO;
