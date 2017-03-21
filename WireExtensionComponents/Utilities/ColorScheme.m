@@ -58,6 +58,7 @@ NSString * const ColorSchemeColorCallBarBackground = @"call-bar-background";
 NSString * const ColorSchemeColorCallBarSeparator = @"call-bar-separator";
 
 NSString * const ColorSchemeColorAvatarBorder = @"avatar-border";
+NSString * const ColorSchemeColorListAvatarInitials = @"list-avatar-initials";
 
 NSString * const ColorSchemeColorContactSectionBackground = @"contact-section-background";
 
@@ -210,6 +211,7 @@ static NSString* light(NSString *colorString) {
     UIColor *blackAlpha8 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.08)"];
     UIColor *blackAlpha24 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.24)"];
     UIColor *blackAlpha48 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.48)"];
+    UIColor *blackAlpha40 = [UIColor colorWithWhite:0 alpha:0.4];
     UIColor *blackAlpha80 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.80)"];
     UIColor *backgroundGraphite = [UIColor wr_colorFromString:@"rgb(22, 24, 25)"];
     UIColor *graphite = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
@@ -259,7 +261,8 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorLoadingDotInactive: graphiteAlpha16,
                                    ColorSchemeColorGraphite: graphite,
                                    ColorSchemeColorLightGraphite: lightGraphite,
-                                   ColorSchemeColorBurstBackground: [graphiteAlpha4 removeAlphaByBlendingWithColor:white]
+                                   ColorSchemeColorBurstBackground: [graphiteAlpha4 removeAlphaByBlendingWithColor:white],
+                                   ColorSchemeColorListAvatarInitials: blackAlpha40
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -303,7 +306,8 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorLoadingDotInactive: whiteAlpha16,
                                   ColorSchemeColorGraphite: graphite,
                                   ColorSchemeColorLightGraphite: lightGraphite,
-                                  ColorSchemeColorBurstBackground: [whiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite]
+                                  ColorSchemeColorBurstBackground: [whiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite],
+                                  ColorSchemeColorListAvatarInitials: blackAlpha40
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

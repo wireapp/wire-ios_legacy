@@ -23,14 +23,14 @@ import Foundation
 struct CallCellViewModel {
 
     let icon: ZetaIconType
-    let iconColor: ZMAccentColor
+    let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
     let font, boldFont: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
 
-    func image() -> UIImage {
-        return UIImage(for: icon, iconSize: .tiny, color: UIColor(for: iconColor))
+    func image() -> UIImage? {
+        return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
     }
 
     func attributedTitle() -> NSAttributedString? {
@@ -74,7 +74,7 @@ class MissedCallCell: IconSystemCell {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
             icon: .endCall,
-            iconColor: .vividRed,
+            iconColor: labelTextColor,
             systemMessageType: .missedCall,
             font: labelFont,
             boldFont: labelBoldFont,
@@ -115,7 +115,7 @@ class PerformedCallCell: IconSystemCell {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
             icon: .callAudio,
-            iconColor: .strongLimeGreen,
+            iconColor: UIColor(for: .strongLimeGreen),
             systemMessageType: .performedCall,
             font: labelFont,
             boldFont: labelBoldFont,
