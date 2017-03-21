@@ -129,6 +129,12 @@ class VoiceChannelOverlay: UIView {
         }
     }
     
+    var constantBitRate: Bool = false {
+        didSet {
+            updateStatusLabelText()
+        }
+    }
+    
     var controlsHidden = false
 
     var cameraPreviewPosition: CGPoint {
@@ -272,7 +278,11 @@ extension VoiceChannelOverlay {
             return labelText(withFormat: statusText, name: conversationName)
         case .connected:
             guard let duration = callDurationFormatter.string(from: callDuration) else { return nil }
-            let statusText = String(format:"%%@\n%@", duration)
+            var statusText = String(format:"%%@\n%@", duration)
+            if self.constantBitRate {
+                statusText = statusText + "\n" + "voice.status.cbr".localized.uppercasedWithCurrentLocale
+            }
+            
             return labelText(withFormat: statusText, name: conversationName)
         case .invalid, .incomingCallInactive:
             return nil
@@ -285,6 +295,11 @@ extension VoiceChannelOverlay {
         let attributedString = NSMutableAttributedString(string: string, attributes: messageAttributes)
         let nameRange = (string as NSString).range(of: name)
         attributedString.addAttributes(nameAttributes, range: nameRange)
+        let cbrRange = (string as NSString).range(of: "voice.status.cbr".localized.uppercasedWithCurrentLocale)
+        if cbrRange.location != NSNotFound {
+            let font = UIFont(magicIdentifier: "style.text.small.font_spec")!
+            attributedString.addAttributes([NSFontAttributeName: font], range: cbrRange)
+        }
         
         return attributedString
     }
