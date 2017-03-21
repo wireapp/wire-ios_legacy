@@ -18,15 +18,10 @@
 
 
 #import <UIKit/UIKit.h>
-#import "BackgroundViewController.h"
 
-
-@class ZClientViewControllerConversationDelegate;
 @class ZMUserSession;
-@class ConversationViewController;
 @class ConversationListViewController;
 @class ZMConversation;
-@class VoiceChannelV2;
 @class SplitViewController;
 @class UserClient;
 @class ZMUser;
@@ -34,7 +29,6 @@
 
 @interface ZClientViewController : UIViewController
 
-@property (nonatomic, readonly) BackgroundViewController *backgroundViewController;
 @property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
 @property (nonatomic, readonly) UIViewController *conversationRootViewController;
 
@@ -42,7 +36,6 @@
 
 @property (nonatomic, readonly) BOOL isConversationViewVisible;
 
-@property (nonatomic, readonly) ZMUserSession *context;
 @property (nonatomic) BOOL isComingFromRegistration;
 
 @property (nonatomic, readonly) SplitViewController *splitViewController;
