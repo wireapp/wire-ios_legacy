@@ -224,11 +224,12 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)updateSubtitle
 {
-    if (! self.enableSubtitles) {
+    id<ZMConversationMessage> lastMessage = [self.conversation lastTextMessage];
+    
+    if (lastMessage == nil || lastMessage.sender.isSelfUser) {
+        self.itemView.subtitleAttributedText = nil;
         return;
     }
-    
-    id<ZMConversationMessage> lastMessage = [self.conversation lastTextMessage];
     
     NSString *content = [lastMessage.textMessageData.messageText stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
     NSString *subtitle = content;
@@ -236,7 +237,15 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     if (self.conversation.conversationType == ZMConversationTypeGroup) {
         subtitle = [NSString stringWithFormat:@"%@: %@", lastMessage.sender.displayName, content];
     }
-    self.itemView.subtitleText = subtitle ? subtitle : @"";
+    
+    NSMutableAttributedString *subtitleAttributed = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    
+    UIFont *usernameFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
+    
+    [subtitleAttributed setAttributes:@{NSFontAttributeName: usernameFont}
+                          toSubstring:lastMessage.sender.displayName];
+    
+    self.itemView.subtitleAttributedText = subtitleAttributed;
 }
 
 - (BOOL)canOpenDrawer

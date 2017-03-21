@@ -19,7 +19,7 @@
 import UIKit
 
 extension CGFloat {
-    static var hairline: CGFloat {
+    public static var hairline: CGFloat {
         return 1.0 / UIScreen.main.scale
     }
 }

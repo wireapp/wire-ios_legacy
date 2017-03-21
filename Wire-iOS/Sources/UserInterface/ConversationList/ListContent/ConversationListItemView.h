@@ -31,16 +31,13 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, strong) UIColor *selectionColor;
 
 @property (nonatomic, copy) NSString *titleText;
-@property (nonatomic, copy) NSString *subtitleText;
+@property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
 @property (nonatomic, readonly) ConversationListIndicator *statusIndicator;
 @property (nonatomic, strong, readonly) ListItemRightAccessoryView *rightAccessory;
 
 @property (nonatomic, assign) BOOL selected;
-@property (nonatomic, readonly) BOOL enableSubtitles;
 @property (nonatomic, assign) CGFloat visualDrawerOffset;
-
-@property (nonatomic, assign) CGFloat titleBottomMargin;
 
 @property (nonatomic, assign) ConversationListRightAccessoryType rightAccessoryType;
 
