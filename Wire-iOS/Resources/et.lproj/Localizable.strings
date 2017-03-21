@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ eemaldas sind";
 "content.system.you_removed_other" = "Sa eemaldasid kasutaja %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ alustas vestlust kasutajaga %@";
+"content.system.conversation.added" = "%@ lisas kasutaja %@";
+"content.system.conversation.removed" = "%@ eemaldas kasutaja %@";
+"content.system.conversation.left" = "%@ lahkus";
+"content.system.conversation.you" = "Sina";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
 "content.system.pending_message_timestamp" = "Saadab…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pingis";
 
 // Current user pinged
-"content.ping.you.text" = "Sina pingisid";
+"content.ping.text.you" = "Sina";
 
 // Inline Player
 "content.player.unable_to_play" = "EI ÕNNESTU MÄNGIDA";

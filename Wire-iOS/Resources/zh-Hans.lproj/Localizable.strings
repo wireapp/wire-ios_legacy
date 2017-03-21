@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ 和 %@ 开始了聊天";
+"content.system.conversation.added" = "%@加了%@";
+"content.system.conversation.removed" = "%@移除了%@";
+"content.system.conversation.left" = "%@ 离开了";
+"content.system.conversation.you" = "你";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
 "content.system.you_renamed_conv_to_nothing" = "您已删除聊天室名称";
 "content.system.pending_message_timestamp" = "正在发送...";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "你已Ping的";
+"content.ping.text.you" = "你";
 
 // Inline Player
 "content.player.unable_to_play" = "无法播放";

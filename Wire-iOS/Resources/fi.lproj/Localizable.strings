@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ poisti sinut";
 "content.system.you_removed_other" = "Sinä poistit %@ n";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ aloitti keskustelun %@ n kanssa";
+"content.system.conversation.added" = "%@ lisäsi %@ n";
+"content.system.conversation.removed" = "%@ poisti %@ n";
+"content.system.conversation.left" = "%@ poistui";
+"content.system.conversation.you" = "Sinä";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ poisti keskustelun nimen";
 "content.system.you_renamed_conv_to_nothing" = "Sinä poistit keskustelun nimen";
 "content.system.pending_message_timestamp" = "Lähetetään…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.text.you" = "Sinä";
 
 // Inline Player
 "content.player.unable_to_play" = "EI VOI SOITTAA KAPPALETTA";

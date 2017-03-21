@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ удалил вас";
 "content.system.you_removed_other" = "Вы удалили %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ начал беседу с %@";
+"content.system.conversation.added" = "%@ добавил %@";
+"content.system.conversation.removed" = "%@ удалил %@";
+"content.system.conversation.left" = "%@ покинул(а) разговор";
+"content.system.conversation.you" = "Вы";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ отправил(а) пинг";
 
 // Current user pinged
-"content.ping.you.text" = "Вы отправили пинг";
+"content.ping.text.you" = "Вы";
 
 // Inline Player
 "content.player.unable_to_play" = "Невозможно проиграть трек";
