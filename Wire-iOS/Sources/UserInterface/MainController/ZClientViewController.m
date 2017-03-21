@@ -258,11 +258,7 @@
     StopWatch *stopWatch = [StopWatch stopWatch];
     [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
     
-    @weakify(self);
-    [self.splitViewController setLeftViewController:self.backgroundViewController animated:animated completion:^{
-        @strongify(self);
-        [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
-    }];
+    [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
 }
 
 - (BOOL)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus

@@ -100,19 +100,14 @@ final public class BackgroundViewController: UIViewController {
     }
     
     internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
-        switch (imageMediumDataChanged, accentColorValueChanged) {
-        case (true, _):
-            if let data = user.imageMediumData {
-                self.setBackground(imageData: data)
-            }
-            else {
-                self.setBackground(color: user.accentColorValue.color)
-            }
-        case (_, true):
-            if .none == user.imageMediumData {
-                self.setBackground(color: user.accentColorValue.color)
-            }
-        default: break
+        guard imageMediumDataChanged || accentColorValueChanged else {
+            return
+        }
+        
+        if let data = user.imageMediumData, imageMediumDataChanged {
+            self.setBackground(imageData: data)
+        } else if accentColorValueChanged {
+            self.setBackground(color: user.accentColorValue.color)
         }
     }
     
