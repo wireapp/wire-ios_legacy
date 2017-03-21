@@ -237,12 +237,21 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     if (self.conversation.conversationType == ZMConversationTypeGroup) {
         subtitle = [NSString stringWithFormat:@"%@: %@", lastMessage.sender.displayName, content];
     }
+    UIFont *textFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec"];
+    UIColor *dimmedColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:ColorSchemeVariantDark];
     
-    NSMutableAttributedString *subtitleAttributed = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    NSDictionary *textAttributes = @{NSFontAttributeName: textFont,
+                                     NSForegroundColorAttributeName: dimmedColor};
     
-    UIFont *usernameFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
+    NSMutableAttributedString *subtitleAttributed = [[NSMutableAttributedString alloc] initWithString:subtitle
+                                                                                           attributes:textAttributes];
     
-    [subtitleAttributed setAttributes:@{NSFontAttributeName: usernameFont}
+    UIFont *usernameFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    
+    NSDictionary *nameAttributes = @{NSFontAttributeName: usernameFont,
+                                     NSForegroundColorAttributeName: dimmedColor};
+    
+    [subtitleAttributed setAttributes:nameAttributes
                           toSubstring:lastMessage.sender.displayName];
     
     self.itemView.subtitleAttributedText = subtitleAttributed;
