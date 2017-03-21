@@ -62,7 +62,7 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 
                 self.labelView.attributedText = NSAttributedString(attributedString: attributedString)
                 self.labelView.addLinks()
-                self.labelView.accessibilityLabel = self.labelView.attributedText.string
+                self.labelView.accessibilityLabel = self.labelView.attributedText?.string
         }
     }
     

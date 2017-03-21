@@ -63,7 +63,7 @@ class CannotDecryptCell: IconSystemCell {
         
         labelView.attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
         labelView.addLink(to: link, with: NSMakeRange(messageString.length+1, why.length))
-        labelView.accessibilityLabel = labelView.attributedText.string
+        labelView.accessibilityLabel = labelView.attributedText?.string
     }
     
     func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {
