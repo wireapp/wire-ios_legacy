@@ -82,7 +82,7 @@ final class ProfileHeaderView: UIView {
         }
 
         constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { (view: LayoutProxy, dismiss: LayoutProxy, verified: LayoutProxy, title: LayoutProxy) -> () in
-            dismiss.top == view.top + 24
+            dismiss.top == view.top + 26
             dismiss.width == dismiss.height
             dismiss.width == 32
 

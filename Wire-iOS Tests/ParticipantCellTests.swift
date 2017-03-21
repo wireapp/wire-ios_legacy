@@ -21,63 +21,78 @@ import XCTest
 @testable import Wire
 
 
+private let tolerance: Float = 2
+
+
 class ParticipantsCellTests: CoreDataSnapshotTestCase {
 
     // MARK: - Started a Conversation
 
     func testThatItRendersParticipantsCellStartedConversationSelfUser() {
         let sut = cell(for: .newConversation, fromSelf: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellStartedConversationOtherUser() {
         let sut = cell(for: .newConversation, fromSelf: false)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellStartedConversation_ManyUsers() {
         let sut = cell(for: .newConversation, fromSelf: false, manyUsers: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Added Users
 
     func testThatItRendersParticipantsCellAddedParticipantsSelfUser() {
         let sut = cell(for: .participantsAdded, fromSelf: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellAddedParticipantsOtherUser() {
         let sut = cell(for: .participantsAdded, fromSelf: false)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellAddedParticipants_ManyUsers() {
         let sut = cell(for: .participantsAdded, fromSelf: false, manyUsers: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Removed Users
 
     func testThatItRendersParticipantsCellRemovedParticipantsSelfUser() {
         let sut = cell(for: .participantsRemoved, fromSelf: true)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellRemovedParticipantsOtherUser() {
         let sut = cell(for: .participantsRemoved, fromSelf: false)
-        verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+
+    // MARK: - Left Users
+
+    func testThatItRendersParticipantsCellLeftParticipant() {
+        let sut = cell(for: .participantsRemoved, fromSelf: false, left: true)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false, left: Bool = false) -> IconSystemCell {
         let message = ZMSystemMessage.insertNewObject(in: moc)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
 
-        let users = ["Anna", "Bruno", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"].map(createUser)
-        message.users = manyUsers ? Set(users) : Set(users[0...1])
+        if !left {
+            let names = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"]
+            let users = names.map(createUser) + [selfUser as ZMUser, otherUser as ZMUser] // We add the sender to ensure it is removed
+            message.users = manyUsers ? Set(users) : Set(users[0...1])
+        } else {
+            message.users = [message.sender!]
+        }
 
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
         let props = ConversationCellLayoutProperties()

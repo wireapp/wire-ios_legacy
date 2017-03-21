@@ -201,6 +201,7 @@
 "content.system.conversation.started" = "%@ started a conversation with %@";
 "content.system.conversation.added" = "%@ added %@";
 "content.system.conversation.removed" = "%@ removed %@";
+"content.system.conversation.left" = "%@ left";
 "content.system.conversation.you" = "You";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
@@ -286,7 +287,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.text.you" = "You";
 
 // Inline Player
 "content.player.unable_to_play" = "UNABLE TO PLAY TRACK";

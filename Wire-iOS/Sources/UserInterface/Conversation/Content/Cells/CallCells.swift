@@ -65,6 +65,10 @@ struct CallCellViewModel {
 
 
 class MissedCallCell: IconSystemCell {
+
+    override var verticalInset: CGFloat {
+        return 6
+    }
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
@@ -79,6 +83,8 @@ class MissedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        labelView.accessibilityLabel = labelView.attributedText.string
+        lineView.isHidden = true
     }
 
     override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
@@ -101,6 +107,10 @@ class PerformedCallCell: IconSystemCell {
         return formatter
     }
 
+    override var verticalInset: CGFloat {
+        return 6
+    }
+
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
@@ -114,6 +124,8 @@ class PerformedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        labelView.accessibilityLabel = labelView.attributedText.string
+        lineView.isHidden = true
     }
 
     override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {

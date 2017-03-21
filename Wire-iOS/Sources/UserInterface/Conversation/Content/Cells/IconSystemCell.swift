@@ -37,6 +37,10 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     var labelFont: UIFont?
     var labelBoldFont: UIFont?
 
+    var verticalInset: CGFloat {
+        return 16
+    }
+
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -75,20 +79,19 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     }
     
     private func createConstraints() {
-        let inset: CGFloat = 16
         constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { (leftIconContainer: LayoutProxy, leftIconView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy, authorLabel: LayoutProxy) -> () in
             leftIconContainer.leading == messageContentView.leading
             leftIconContainer.trailing == authorLabel.leading
-            leftIconContainer.top == messageContentView.top + inset
+            leftIconContainer.top == messageContentView.top + verticalInset
             leftIconContainer.bottom <= messageContentView.bottom
             leftIconContainer.height == leftIconView.height
             leftIconView.center == leftIconContainer.center
             leftIconView.height == 16
             leftIconView.height == leftIconView.width
             labelView.leading == leftIconContainer.trailing
-            labelView.top == messageContentView.top + inset + 3
+            labelView.top == messageContentView.top + verticalInset + 3
             labelView.trailing <= messageContentView.trailing - 72
-            labelView.bottom <= messageContentView.bottom - inset
+            labelView.bottom <= messageContentView.bottom - verticalInset
             messageContentView.height >= 32
         }
 
@@ -96,7 +99,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
             lineView.leading == labelView.trailing + 16
             lineView.height == .hairline
             lineView.trailing == contentView.trailing
-            lineView.top == messageContentView.top + inset + 8
+            lineView.top == messageContentView.top + verticalInset + 8
         }
     }
 

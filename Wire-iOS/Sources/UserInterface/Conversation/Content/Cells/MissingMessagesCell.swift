@@ -72,11 +72,10 @@ class MissingMessagesCell: IconSystemCell {
         
         self.labelView.attributedText = title
     }
-    
-    
+
     func configureForReactivatedClientOfSelfUser(_ font: UIFont, color: UIColor){
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")
-        var fullString  = NSString(format: NSLocalizedString("content.system.reactivated_device", comment: "") as NSString, deviceString).uppercased && font && color
+        var fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && font && color
         
         fullString = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
         

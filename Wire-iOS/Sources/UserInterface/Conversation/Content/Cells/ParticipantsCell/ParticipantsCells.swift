@@ -66,6 +66,7 @@ public class ParticipantsCell: IconSystemCell {
         let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, textColor: labelTextColor, message: message)
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        labelView.accessibilityLabel = labelView.attributedText.string
 
         // We need a layout pass here in order for the collectionView to pick up the correct size
         setNeedsLayout()

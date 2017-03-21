@@ -91,7 +91,14 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     }
     
     if (!systemMessage) {
-        return ![self isPreviousSenderSameForMessage:message] || message.updatedAt != nil;
+        if (![self isPreviousSenderSameForMessage:message] || message.updatedAt != nil) {
+            return YES;
+        }
+
+        id <ZMConversationMessage> previousMessage = [self messagePreviousToMessage:message];
+        if (nil != previousMessage) {
+            return [Message isKnockMessage:previousMessage];
+        }
     }
     
     return NO;
@@ -107,7 +114,9 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
                 systemMessage.systemMessageType != ZMSystemMessageTypeReactivatedDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeNewConversation &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice &&
-                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone;
+                systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone &&
+                systemMessage.systemMessageType != ZMSystemMessageTypeMissedCall &&
+                systemMessage.systemMessageType != ZMSystemMessageTypePerformedCall;
     }
     
     if ([Message isKnockMessage:message]) {

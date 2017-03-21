@@ -249,8 +249,8 @@ class ProfileClientViewController: UIViewController {
     
     private func createConstraints() {
         constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
-            contentView.left == view.left + 24
-            contentView.right == view.right - 24
+            contentView.left == view.left + 16
+            contentView.right == view.right - 16
             contentView.bottom == view.bottom - 32
             contentView.top >= view.top + 24
             reviewInvitationTextView.top == contentView.top

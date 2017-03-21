@@ -75,11 +75,11 @@
         self.initialConstraintsCreated = YES;
 
         CGFloat offset = self.useWithStatusBar ? 10 : 0;
-        [self.shareButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:16];
+        [self.shareButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:8];
         [self.shareButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
         [self.shareButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:offset];
         
-        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
+        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
         [self.closeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:offset];
         [self.closeButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
         

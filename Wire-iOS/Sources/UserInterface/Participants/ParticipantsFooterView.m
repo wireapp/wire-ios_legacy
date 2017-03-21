@@ -68,8 +68,8 @@
     [self addSubview:self.containerView];
 
     [self.containerView addConstraintForTopMargin:0 relativeToView:self];
-    [self.containerView addConstraintForRightMargin:24 relativeToView:self];
-    [self.containerView addConstraintForLeftMargin:24 relativeToView:self];
+    [self.containerView addConstraintForRightMargin:16 relativeToView:self];
+    [self.containerView addConstraintForLeftMargin:16 relativeToView:self];
     [self addConstraintForAligningBottomToBottomOfView:self.containerView distance:0];
 
 
@@ -85,10 +85,10 @@
 
     [self.containerView addSubview:self.leftButton];
 
-    [self.leftButton autoSetDimension:ALDimensionHeight toSize:32];
+    [self.leftButton autoSetDimension:ALDimensionHeight toSize:24];
     [self.leftButton addConstraintForLeftMargin:0 relativeToView:self.containerView];
-    [self.containerView addConstraintForAligningTopToTopOfView:self.leftButton distance:24];
-    [self.containerView addConstraintForAligningBottomToBottomOfView:self.leftButton distance:- 24];
+    [self.containerView addConstraintForAligningTopToTopOfView:self.leftButton distance:16];
+    [self.containerView addConstraintForAligningBottomToBottomOfView:self.leftButton distance:- 16];
 }
 
 - (void)addRightButton
@@ -101,11 +101,11 @@
     [self.containerView addSubview:self.rightButton];
 
     [self.rightButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.rightButton];
-    [self.rightButton autoSetDimension:ALDimensionWidth toSize:32];
+    [self.rightButton autoSetDimension:ALDimensionWidth toSize:24];
     
     [self.rightButton addConstraintForRightMargin:0 relativeToView:self.containerView];
-    [self.containerView addConstraintForAligningTopToTopOfView:self.rightButton distance:24];
-    [self.containerView addConstraintForAligningBottomToBottomOfView:self.rightButton distance:- 24];
+    [self.containerView addConstraintForAligningTopToTopOfView:self.rightButton distance:16];
+    [self.containerView addConstraintForAligningBottomToBottomOfView:self.rightButton distance:- 16];
 }
 
 - (void)addSeparatorLine

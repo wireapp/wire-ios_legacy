@@ -25,7 +25,7 @@
 #import "UIColor+WR_ColorScheme.h"
 
 #import "UIView+Borders.h"
-
+#import <Classy/Classy.h>
 
 #import <PureLayout/PureLayout.h>
 
@@ -39,6 +39,9 @@ typedef void (^AnimationBlock)(id, NSInteger);
 @property (nonatomic, strong) UIImageView *pingImageView;
 @property (nonatomic, assign) BOOL initialPingCellConstraintsCreated;
 @property (nonatomic, strong) AnimationBlock pingAnimationBlock;
+@property (nonatomic, strong) UIFont *pingFont;
+@property (nonatomic, strong) UIFont *authorFont;
+@property (nonatomic, strong) UILabel *pingLabel;
 
 @property (nonatomic, assign) BOOL isPingAnimationRunning;
 
@@ -53,6 +56,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
+        [CASStyler.defaultStyler styleItem:self];
         [self setupPingCell];
         [self createConstraints];
     }
@@ -62,20 +66,24 @@ typedef void (^AnimationBlock)(id, NSInteger);
 
 - (void)setupPingCell
 {
-    self.pingImageView = [[UIImageView alloc] init];
-    self.pingImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.pingImageView = [[UIImageView alloc] initForAutoLayout];
+    self.pingLabel = [[UILabel alloc] initForAutoLayout];
     
     [self.contentView addSubview:self.pingImageView];
+    [self.contentView addSubview:self.pingLabel];
     
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
-    [accessibilityElements addObjectsFromArray:@[self.authorLabel]];
+    [accessibilityElements addObjectsFromArray:@[self.pingLabel]];
     self.accessibilityElements = accessibilityElements;
 }
 
 - (void)createConstraints
 {
-    [self.pingImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-    [self.pingImageView autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.authorLabel withOffset:8];
+    [self.pingImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorImageView];
+    [self.pingImageView autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageView];
+    [self.pingLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.authorLabel];
+    [self.pingLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.authorLabel];
+    [self.pingLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
     [self.countdownContainerView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.pingImageView];
 }
 
@@ -88,21 +96,16 @@ typedef void (^AnimationBlock)(id, NSInteger);
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
 {
     [super configureForMessage:message layoutProperties:layoutProperties];
-    
-    NSString *pingText = nil;
-    if ([self.message.sender isEqual:[ZMUser selfUserInUserSession:[ZMUserSession sharedSession]]]) {
-        pingText = NSLocalizedString(@"content.ping.you.text", @"");
-    }
-    else {
-        NSString *userName = self.message.sender.displayName;
-        NSString *localizedStringKey = @"content.ping.text";
-        pingText = [NSString stringWithFormat:NSLocalizedString(localizedStringKey, @""), userName, nil];
-    }
-    
-    self.authorLabel.text = pingText;
+
+    NSString *senderText = self.message.sender.isSelfUser ? NSLocalizedString(@"content.ping.text.you", @"") : self.message.sender.displayName;
+    NSString *pingText = [NSString stringWithFormat:NSLocalizedString(@"content.ping.text", @""), senderText, nil];
+    NSAttributedString *text = [[NSAttributedString alloc] initWithString:pingText attributes:@{ NSFontAttributeName: self.pingFont }];
+    self.pingLabel.attributedText = [text addingFont:self.authorFont toSubstring:senderText];
 
     UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmedFlat] : self.message.sender.accentColor;
     self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:pingColor];
+    self.authorImageView.hidden = YES;
+    self.authorLabel.hidden = YES;
 }
 
 - (UIView *)selectionView

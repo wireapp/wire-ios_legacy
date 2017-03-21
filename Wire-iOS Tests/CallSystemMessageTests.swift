@@ -35,6 +35,11 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         verify(view: missedCell.prepareForSnapshots())
     }
 
+    func testThatItRendersMissedCallFromOtherUser_Expanded() {
+        let missedCell = cell(for: .missedCall, fromSelf: false, expanded: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
+
     // MARK: - Performed Call
 
     func testThatItRendersPerformedCallFromSelfUser() {
@@ -47,11 +52,20 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         verify(view: missedCell.prepareForSnapshots())
     }
 
+    func testThatItRendersPerformedCallFromOtherUser_Expanded() {
+        let missedCell = cell(for: .performedCall, fromSelf: false, expanded: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
+
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false) -> IconSystemCell {
         let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: moc), from: fromSelf ? selfUser : otherUser)
         let cell = createCell(missed: type == .missedCall)
+        cell.layer.speed = 0
+        if expanded {
+            cell.setSelected(true, animated: false)
+        }
         let props = ConversationCellLayoutProperties()
 
         cell.configure(for: message, layoutProperties: props)
@@ -59,10 +73,13 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
     }
 
     private func systemMessage(missed: Bool, in conversation: ZMConversation, from user: ZMUser) -> ZMSystemMessage {
+        let date = Date(timeIntervalSince1970: 123456879)
         if missed {
-            return conversation.appendMissedCallMessage(fromUser: user, at: Date(timeIntervalSince1970: 123456879))
+            return conversation.appendMissedCallMessage(fromUser: user, at: date)
         } else {
-            return conversation.appendPerformedCallMessage(with: 102, caller: user)
+            let message = conversation.appendPerformedCallMessage(with: 102, caller: user)
+            message.serverTimestamp = date
+            return message
         }
     }
 
