@@ -77,7 +77,7 @@
         _previousVoiceChannelState = VoiceChannelV2StateInvalid;
         self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(currentCBRChanged:)
+                                                 selector:@selector(voiceChannelEnabledCBR:)
                                                      name:[WireCallCenterV3 cbrNotificationName]
                                                    object:nil];
     }
@@ -538,7 +538,7 @@
 
 #pragma mark - CBR State Observer
 
-- (void)currentCBRChanged:(NSNotification *)notification
+- (void)voiceChannelEnabledCBR:(NSNotification *)notification
 {
     self.overlayView.constantBitRate = YES;
 }
