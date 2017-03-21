@@ -136,7 +136,7 @@ extension ZMMessage: Shareable {
             contentView.edges == cell.edges
         }
 
-        cell.toolboxView.isHidden = true
+        cell.toolboxView.removeFromSuperview()
         cell.likeButton.isHidden = true
         cell.isUserInteractionEnabled = false
         cell.setSelected(false, animated: false)
