@@ -41,7 +41,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 @property (nonatomic) id voiceChannelStateObserverToken;
 
 @property (nonatomic) ZMConversation *currentlyActiveVoiceChannelConversation;
-@property (nonatomic) NSMutableDictionary<NSUUID *, NSNumber *> *previousVoiceChannelState;
+@property (nonatomic) NSMutableDictionary<NSManagedObjectID *, NSNumber *> *previousVoiceChannelState;
 @property (nonatomic) SoundEventRulesWatchDog *watchDog;
 
 @end
@@ -159,8 +159,8 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 - (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     VoiceChannelV2State state = voiceChannelState;
-    VoiceChannelV2State previousState = self.previousVoiceChannelState[conversation.remoteIdentifier].integerValue ?: VoiceChannelV2StateInvalid;
-    self.previousVoiceChannelState[conversation.remoteIdentifier] = @(voiceChannelState);
+    VoiceChannelV2State previousState = self.previousVoiceChannelState[conversation.objectID].integerValue ?: VoiceChannelV2StateInvalid;
+    self.previousVoiceChannelState[conversation.objectID] = @(voiceChannelState);
     
     AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
     
