@@ -51,6 +51,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser = ZMUser.insertNewObject(in: moc)
         otherUser.remoteIdentifier = UUID()
         otherUser.name = "Bruno"
+        otherUser.setValue(ZMAccentColor.brightOrange.rawValue, forKey: "accentColorValue")
     }
 
 }

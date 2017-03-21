@@ -20,44 +20,40 @@
 import Cartography
 
 
-class TwoUserImageView: UIView {
+public class GroupConversationAvatarView: UIView {
 
-    private let leftImageView = UserImageView(magicPrefix: "content.author_image")
-    private let rightImageView = UserImageView(magicPrefix: "content.author_image")
-
+    public let countLabel = UILabel()
 
     init() {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
+        updateCornerRadius()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        updateCornerRadius()
+    }
+
     private func setupViews() {
-        [leftImageView, rightImageView].forEach(addSubview)
-        bringSubview(toFront: rightImageView)
+        addSubview(countLabel)
+        countLabel.textColor = UIColor(white: 0, alpha: 0.4)
     }
 
     private func createConstraints() {
-        constrain(self, leftImageView, rightImageView) { view, leftImageView, rightImageView in
-            leftImageView.leading == view.leading
-            leftImageView.top == view.top
-            rightImageView.trailing == view.trailing
-            rightImageView.bottom == view.bottom
-
-            leftImageView.height == 16
-            leftImageView.width == leftImageView.height
-            rightImageView.height == leftImageView.height
-            rightImageView.width == leftImageView.height
+        constrain(self, countLabel) { view, countLabel in
+            countLabel.centerY == view.centerY
+            countLabel.centerX == view.centerX
         }
      }
 
-    func setUsers(left: ZMUser?, right: ZMUser?) {
-        leftImageView.user = left
-        rightImageView.user = right
+    private func updateCornerRadius() {
+        layer.cornerRadius = 8
     }
 }
 
@@ -65,7 +61,7 @@ class TwoUserImageView: UIView {
 @objc public final class ConversationListAvatarView: UIView {
 
     fileprivate enum AvatarMode {
-        case single(ZMUser?), double(ZMUser?, ZMUser?)
+        case oneOnOne(ZMUser?), group(UInt, UIColor?)
     }
 
     public var conversation: ZMConversation? {
@@ -76,7 +72,7 @@ class TwoUserImageView: UIView {
     }
 
     private let userImageView = UserImageView(magicPrefix: "content.author_image")
-    private let twoUserImageView = TwoUserImageView()
+    private let participantsCountView = GroupConversationAvatarView()
 
     init() {
         super.init(frame: .zero)
@@ -94,29 +90,30 @@ class TwoUserImageView: UIView {
     }
 
     private func setupViews() {
-        [userImageView, twoUserImageView].forEach(addSubview)
-        twoUserImageView.isHidden = true
+        [userImageView, participantsCountView].forEach(addSubview)
+        participantsCountView.isHidden = true
     }
 
     private func createConstraints() {
-        constrain(self, userImageView, twoUserImageView) { view, userImageView, twoUserImageView in
+        constrain(self, userImageView, participantsCountView) { view, userImageView, participantsCountView in
             userImageView.edges == view.edges
             userImageView.size == view.size
-            twoUserImageView.edges == view.edges
+            participantsCountView.edges == view.edges
         }
     }
 
     private func updateViewVisibility() {
         guard let mode = conversation?.avatarMode else { return }
         switch mode {
-        case .single(let user):
+        case .oneOnOne(let user):
             userImageView.isHidden = false
-            twoUserImageView.isHidden = true
+            participantsCountView.isHidden = true
             userImageView.user = user
-        case .double(let left, let right):
-            twoUserImageView.isHidden = false
+        case .group(let count, let color):
+            participantsCountView.isHidden = false
             userImageView.isHidden = true
-            twoUserImageView.setUsers(left: left, right: right)
+            participantsCountView.countLabel.text = String(count)
+            participantsCountView.backgroundColor = color
         }
     }
 
@@ -139,13 +136,9 @@ fileprivate extension ZMConversation {
         case .group:
             let descriptor = NSSortDescriptor(key: "displayName", ascending: false)
             let sorted = otherActiveParticipants.sortedArray(using: [descriptor]).flatMap { $0 as? ZMUser }
-            if sorted.count >= 2 {
-                return .double(sorted[0], sorted[1])
-            } else {
-                return .single(sorted.first)
-            }
-        default:
-            return .single(connection?.to)
+            let color = sorted.first?.accentColor ?? ZMUser.selfUser().accentColor
+            return .group(UInt(otherActiveParticipants.count), color)
+        default: return .oneOnOne(connection?.to)
         }
     }
 
