@@ -66,6 +66,7 @@ NSString * const UserDefaultMapsOpeningRawValue = @"MapsOpeningRawValue";
 NSString * const UserDefaultBrowserOpeningRawValue = @"BrowserOpeningRawValue";
 NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHockeySettingInitially";
 
+NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
 
 @interface Settings ()
 
@@ -81,7 +82,7 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
 
 @interface Settings (MediaManager)
 
-- (void)restoreLastUsedIntensityLevel;
+- (void)restoreLastUsedAVSSettings;
 - (void)storeCurrentIntensityLevelAsLastUsed;
 
 @end
@@ -119,7 +120,8 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
              UserDefaultBrowserOpeningRawValue,
              UserDefaultCallingProtocolStrategy,
              UserDefaultEnableBatchCollections,
-             UserDefaultDidMigrateHockeySettingInitially
+             UserDefaultDidMigrateHockeySettingInitially,
+             UserDefaultCallingConstantBitRate,
              ];
 }
 
@@ -139,7 +141,7 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
     self = [super init];
     if (self) {
         [self migrateHockeyAndOptOutSettingsToSharedDefaults];
-        [self restoreLastUsedIntensityLevel];
+        [self restoreLastUsedAVSSettings];
         [self loadEnabledLogs];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
@@ -513,11 +515,30 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
     [self.defaults setInteger:browserLinkOpeningOptionRawValue forKey:UserDefaultBrowserOpeningRawValue];
 }
 
+- (BOOL)callingConstantBitRate
+{
+    return [self.defaults boolForKey:UserDefaultCallingConstantBitRate];
+}
+
+- (void)setCallingConstantBitRate:(BOOL)callingConstantBitRate
+{
+    [self.defaults setBool:callingConstantBitRate forKey:UserDefaultCallingConstantBitRate];
+    [self updateAVSCallingConstantBitRateValue];
+}
+
+- (void)updateAVSCallingConstantBitRateValue
+{
+    WireCallCenterV3 *callCenter = [WireCallCenterV3 activeInstance];
+    if (nil != callCenter) {
+        callCenter.useAudioConstantBitRate = self.callingConstantBitRate;
+    }
+}
+
 @end
 
 @implementation Settings (MediaManager)
 
-- (void)restoreLastUsedIntensityLevel
+- (void)restoreLastUsedAVSSettings
 {
     NSNumber *savedIntensity = [self.defaults objectForKey:AVSMediaManagerPersistentIntensity];
     AVSIntensityLevel level = (AVSIntensityLevel)[savedIntensity integerValue];
@@ -526,6 +547,8 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
     }
     
     [[AVSProvider shared] mediaManager].intensityLevel = level;
+    
+    [self updateAVSCallingConstantBitRateValue];
 }
 
 - (void)storeCurrentIntensityLevelAsLastUsed

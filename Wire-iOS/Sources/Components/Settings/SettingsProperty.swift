@@ -53,6 +53,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     
     // AVS
     case soundAlerts = "SoundAlerts"
+    case callingConstantBitRate = "constantBitRate"
     
     // Analytics
     case analyticsOptOut = "AnalyticsOptOut"

@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "قام %@ بإزالتك";
 "content.system.you_removed_other" = "قمت بإزالة %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ بدأ مُحادثة مع %@";
+"content.system.conversation.added" = "%@ أضاف %@";
+"content.system.conversation.removed" = "قام %@ بإزالة %@";
+"content.system.conversation.left" = "غادر %@";
+"content.system.conversation.you" = "أنت";
+
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
 "content.system.pending_message_timestamp" = "جاري الإرسال...";
@@ -276,10 +284,10 @@
 
 "content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pinged";
+"content.ping.text" = "%1$@ pings";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.text.you" = "أنت";
 
 // Inline Player
 "content.player.unable_to_play" = "غير قادر على تشغيل المقطع";

@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ har fjernet dig";
 "content.system.you_removed_other" = "Du har fjernet %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ startede en samtale med %@";
+"content.system.conversation.added" = "%@ har tilføjet %@";
+"content.system.conversation.removed" = "%@ har fjernet %@";
+"content.system.conversation.left" = "%@ har forladt";
+"content.system.conversation.you" = "Dig";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ fjernede samtalens navn";
 "content.system.you_renamed_conv_to_nothing" = "Du fjernede samtalens navn";
 "content.system.pending_message_timestamp" = "Sender…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "Du pinged";
+"content.ping.text.you" = "Dig";
 
 // Inline Player
 "content.player.unable_to_play" = "KAN IKKE AFSPILLE NUMMER";
@@ -315,7 +323,7 @@
 "voice.call_button.title" = "Ring op";
 
 "voice.alert.call_in_progress.title" = "Opkald i gang";
-"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.message" = "Kun ét opkald af gangen er muligt";
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire kræver adgang til Mikrofonen.";
