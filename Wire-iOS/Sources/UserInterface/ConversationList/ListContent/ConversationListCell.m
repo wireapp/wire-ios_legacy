@@ -243,16 +243,16 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     NSDictionary *textAttributes = @{NSFontAttributeName: textFont,
                                      NSForegroundColorAttributeName: dimmedColor};
     
-    NSMutableAttributedString *subtitleAttributed = [[NSMutableAttributedString alloc] initWithString:subtitle
-                                                                                           attributes:textAttributes];
+    NSAttributedString *subtitleAttributed = [[NSAttributedString alloc] initWithString:subtitle
+                                                                             attributes:textAttributes];
     
     UIFont *usernameFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
     
     NSDictionary *nameAttributes = @{NSFontAttributeName: usernameFont,
                                      NSForegroundColorAttributeName: dimmedColor};
     
-    [subtitleAttributed setAttributes:nameAttributes
-                          toSubstring:lastMessage.sender.displayName];
+    subtitleAttributed = [subtitleAttributed setAttributes:nameAttributes
+                                               toSubstring:lastMessage.sender.displayName];
     
     self.itemView.subtitleAttributedText = subtitleAttributed;
 }
