@@ -77,6 +77,8 @@ extern NSString * const UserDefaultTwitterOpeningRawValue;
 extern NSString * const UserDefaultMapsOpeningRawValue;
 extern NSString * const UserDefaultBrowserOpeningRawValue;
 
+extern NSString * const UserDefaultCallingConstantBitRate;
+
 /// Model object for locally stored (not in SE or AVS) user app settings
 @interface Settings : NSObject
 
@@ -88,6 +90,7 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 @property (nonatomic) BOOL disableSendButton;
 
 @property (nonatomic) BOOL disableCallKit;
+@property (nonatomic) BOOL callingConstantBitRate;
 @property (nonatomic) CallingProtocolStrategy callingProtocolStrategy;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option
@@ -117,6 +120,8 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 - (void)synchronize;
 
 - (void)reset;
+
+- (void)updateAVSCallingConstantBitRateValue;
 
 @end
 

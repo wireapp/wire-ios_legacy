@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ sei stato rimosso";
 "content.system.you_removed_other" = "Sei stato rimosso %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ ha iniziato una conversazione con %@";
+"content.system.conversation.added" = "%@ ha aggiunto %@";
+"content.system.conversation.removed" = "%@ rimosso %@";
+"content.system.conversation.left" = "%@ ha lasciato la conversazione";
+"content.system.conversation.you" = "Tu";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
 "content.system.pending_message_timestamp" = "Invio in corso…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ ti ha mandato un trillo";
 
 // Current user pinged
-"content.ping.you.text" = "Hai fatto un trillo";
+"content.ping.text.you" = "Tu";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSSIBILE RIPRODURRE LA TRACCIA";

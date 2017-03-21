@@ -549,11 +549,7 @@
 - (void)requestLoopNotification:(NSNotification *)notification;
 {
     NSString *path = notification.userInfo[@"path"];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oh noes!" message:[NSString stringWithFormat:@"A request loop is going on at %@", path] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    
-    [alert addAction:action];
-    [self.conversationRootViewController presentViewController:alert animated:YES completion:nil];
+    [DebugAlert showWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path] sendLogs:YES];
 }
 
 @end

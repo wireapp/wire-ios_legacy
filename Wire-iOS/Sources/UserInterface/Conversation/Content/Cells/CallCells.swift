@@ -83,7 +83,7 @@ class MissedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
-        labelView.accessibilityLabel = labelView.attributedText.string
+        labelView.accessibilityLabel = labelView.attributedText?.string
         lineView.isHidden = true
     }
 
@@ -124,7 +124,7 @@ class PerformedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
-        labelView.accessibilityLabel = labelView.attributedText.string
+        labelView.accessibilityLabel = labelView.attributedText?.string
         lineView.isHidden = true
     }
 

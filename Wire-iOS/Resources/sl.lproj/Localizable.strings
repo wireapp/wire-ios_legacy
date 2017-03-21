@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ te je odstranil(-a)";
 "content.system.you_removed_other" = "Si odstranil(-a) %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ je začel(-a) pogovor s/z %@";
+"content.system.conversation.added" = "%@ je dodal(-a) %@";
+"content.system.conversation.removed" = "%@ je odstranil(-a) %@";
+"content.system.conversation.left" = "%@ je zapustil(-a) pogovor";
+"content.system.conversation.you" = "Ti";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ je odstranil(-a) ime pogovora";
 "content.system.you_renamed_conv_to_nothing" = "Si odstranil(-a) ime pogovora";
 "content.system.pending_message_timestamp" = "Pošiljanje…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ je pingal(-a)";
 
 // Current user pinged
-"content.ping.you.text" = "Ti si pingal(-a)";
+"content.ping.text.you" = "Ti";
 
 // Inline Player
 "content.player.unable_to_play" = "NI MOŽNO PREDVAJATI ZVOČNE SLEDI";

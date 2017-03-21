@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ vous a enlevé";
 "content.system.you_removed_other" = "Vous avez retiré %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ a commencé une conversation avec %@";
+"content.system.conversation.added" = "%@ a ajouté %@";
+"content.system.conversation.removed" = "%@ a retiré %@";
+"content.system.conversation.left" = "%@ est parti";
+"content.system.conversation.you" = "Vous";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ a supprimé le nom de la conversation";
 "content.system.you_renamed_conv_to_nothing" = "Vous avez supprimé le nom de la conversation";
 "content.system.pending_message_timestamp" = "Envoi…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ a fait un signe";
 
 // Current user pinged
-"content.ping.you.text" = "Vous avez fait un signe";
+"content.ping.text.you" = "Vous";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSSIBLE DE JOUER LE MORCEAU";

@@ -45,7 +45,7 @@ extension DeveloperOptionsController {
         self.edgesForExtendedLayout = UIRectEdge()
         self.view.backgroundColor = .clear
         
-        self.tableCells = [forwardLogCell()] + ZMSLog.allTags.map { logSwitchCell(tag: $0) }
+        self.tableCells = [forwardLogCell()] + ZMSLog.allTags.sorted().map { logSwitchCell(tag: $0) }
         
         let tableView = UITableView()
         tableView.dataSource = self
@@ -76,7 +76,7 @@ extension DeveloperOptionsController {
     
     /// Creates a cell to switch a specific log tag on or off
     func logSwitchCell(tag: String) -> UITableViewCell {
-        return self.createCellWithSwitch(labelText: "Log \(tag)", isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
+        return self.createCellWithSwitch(labelText: tag, isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
             Settings.shared().set(logTag: tag, enabled: isOn)
         }
     }
@@ -84,9 +84,7 @@ extension DeveloperOptionsController {
     /// Creates a cell to forward logs
     func forwardLogCell() -> UITableViewCell {
         return self.createCellWithButton(labelText: "Forward log records") {
-            let logs = ZMSLog.recordedContent
-            self.sendEmail(logs: logs)
-            
+            DebugLogSender.sendLogsByEmail()
         }
     }
     
@@ -107,7 +105,7 @@ extension DeveloperOptionsController {
         toggle.isOn = isOn
         toggle.addTarget(self, action: #selector(DeveloperOptionsController.switchDidChange(sender:)), for: .valueChanged)
         self.uiSwitchToAction[toggle] = onValueChange
-        return self.createCellWithLabelAndView(labelText: "Log \(labelText)", view: toggle)
+        return self.createCellWithLabelAndView(labelText: labelText, view: toggle)
     }
     
     /// Creates and sets the layout of a cell with a label and a view
@@ -158,56 +156,5 @@ extension DeveloperOptionsController {
             }
             action()
         }
-    }
-}
-
-// MARK: - Email sending
-extension DeveloperOptionsController : MFMailComposeViewControllerDelegate {
-    
-    func sendEmail(logs: [String]) {
-        
-        if self.mailViewController != nil {
-            return
-        }
-        
-        guard logs.count > 0 else {
-            let alert = UIAlertView(title: "Error", message: "You have no logs to send", delegate: nil, cancelButtonTitle: "Ok")
-            alert.show()
-            return
-        }
-        guard MFMailComposeViewController.canSendMail() else {
-            let alert = UIAlertView(title: "Error", message: "You do not have email set up", delegate: nil, cancelButtonTitle: "Ok")
-            alert.show()
-            return
-        }
-        
-        // Prepare subject & body
-        let user = ZMUser.selfUser()!
-        let userID = user.remoteIdentifier?.transportString() ?? ""
-        let device = UIDevice.current.name
-        let now = Date()
-        let userDescription = "\(user.name ?? "") [user: \(userID)] [device: \(device)]"
-        let message = "Here are the logs from \(userDescription), at \(now)\n"
-            + "It contains \(logs.count) log entries, please find them in the attached file"
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-        let timeStr = formatter.string(from: now)
-        let fileName = "logs_U\(userID)_T\(timeStr).txt"
-        
-        // compose
-        let mailVC = MFMailComposeViewController()
-        mailVC.setToRecipients(["ios@wire.com"])
-        mailVC.setSubject("iOS logs from \(userDescription)")
-        mailVC.setMessageBody(message, isHTML: false)
-        let completeLog = logs.joined(separator: "\n")
-        mailVC.addAttachmentData(completeLog.data(using: .utf8)!, mimeType: "text/plain", fileName: fileName)
-        mailVC.mailComposeDelegate = self
-        self.mailViewController = mailVC
-        self.present(mailVC, animated: true, completion: nil)
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        self.mailViewController = nil
-        controller.dismiss(animated: true)
     }
 }

@@ -118,6 +118,12 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(callKitSection)
         }
         
+        let VBRDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate), inverse: true)
+        let VBRDescription = "self.settings.vbr.description".localized
+        let VBRSection = SettingsSectionDescriptor(cellDescriptors: [VBRDescriptor], header: .none, footer: VBRDescription, visibilityAction: .none)
+        cellDescriptors.append(VBRSection)
+        
+        
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 
         let callSoundProperty = self.settingsPropertyFactory.property(.callSoundName)
