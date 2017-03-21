@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@はあなたを削除しました";
 "content.system.you_removed_other" = "あなたは%@を削除しました";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@と%@は会話を始めました";
+"content.system.conversation.added" = "%@は%@を追加しました";
+"content.system.conversation.removed" = "%@は%@を削除しました";
+"content.system.conversation.left" = "%@が退出しました";
+"content.system.conversation.you" = "あなた";
+
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
 "content.system.pending_message_timestamp" = "送信中…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pingしました";
 
 // Current user pinged
-"content.ping.you.text" = "あなたが ping しました";
+"content.ping.text.you" = "あなた";
 
 // Inline Player
 "content.player.unable_to_play" = "トラックを再生できません";
@@ -301,7 +309,7 @@
 "voice.status.low_connection" = "接続不良";
 "voice.network_error.title" = "インターネット接続がありません";
 "voice.network_error.body" = "オンラインにしてから通話する必要が有ります。接続を確認してもう一度やり直して下さい。";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "新しいデバイスを使い始めました";
 "voice.degradation.new_user_device" = "%@が新しいデバイスを使い始めました。";
 "voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
 "voice.degradation_incoming.prompt" = "Do you still want to accept the call?";

@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ видалив(-ла) вас";
 "content.system.you_removed_other" = "Ви видалили %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ почав(-ла) розмову з %@";
+"content.system.conversation.added" = "%@ додав(-ла) %@";
+"content.system.conversation.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.left" = "%@ вийшов(-ла)";
+"content.system.conversation.you" = "Ви";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
 "content.system.pending_message_timestamp" = "Надсилання…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ надіслав(-ла) пінг";
 
 // Current user pinged
-"content.ping.you.text" = "Ви пінганули";
+"content.ping.text.you" = "Ви";
 
 // Inline Player
 "content.player.unable_to_play" = "НЕМОЖЛИВО ВІДТВОРИТИ ТРЕК";

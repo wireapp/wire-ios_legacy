@@ -560,6 +560,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     if (!AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
         [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
     }
+    [[Settings sharedSettings] updateAVSCallingConstantBitRateValue];
     [self loadAppropriateController];
 }
 

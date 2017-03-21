@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ hat dich entfernt";
 "content.system.you_removed_other" = "Du hast %@ entfernt";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ hat ein Gespräch mit %@ begonnen";
+"content.system.conversation.added" = "%@ hat %@ hinzugefügt";
+"content.system.conversation.removed" = "%@ hat %@ entfernt";
+"content.system.conversation.left" = "%@ hat das Gespräch verlassen";
+"content.system.conversation.you" = "Du";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
 "content.system.pending_message_timestamp" = "Senden…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ hat gepingt";
 
 // Current user pinged
-"content.ping.you.text" = "Du hast gepingt";
+"content.ping.text.you" = "Du";
 
 // Inline Player
 "content.player.unable_to_play" = "MUSIK NICHT ABSPIELBAR";
@@ -315,7 +323,7 @@
 "voice.call_button.title" = "Anruf";
 
 "voice.alert.call_in_progress.title" = "Laufendes Gespräch";
-"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.message" = "Du kannst nur einen aktiven Anruf zu einem Zeitpunkt haben";
 "voice.alert.call_in_progress.confirm" = "Verstanden";
 
 "voice.alert.microphone_warning.title" = "Wire benötigt Zugriff auf dein Mikrofon.";
