@@ -201,6 +201,7 @@
 "content.system.conversation.started" = "%@ started a conversation with %@";
 "content.system.conversation.added" = "%@ added %@";
 "content.system.conversation.removed" = "%@ removed %@";
+"content.system.conversation.left" = "%@ left";
 "content.system.conversation.you" = "You";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";

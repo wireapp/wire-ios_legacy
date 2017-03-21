@@ -47,7 +47,6 @@ static NSString *const ConversationCannotDecryptCellId      = @"conversationCann
 static NSString *const ConversationFileTransferCellId       = @"conversationFileTransferCellId";
 static NSString *const ConversationVideoMessageCellId       = @"conversationVideoMessageCellId";
 static NSString *const ConversationAudioMessageCellId       = @"conversationAudioMessageCellId";
-static NSString *const ConversationParticipantsCellId       = @"conversationParticipantsCellId";
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
 static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
 static NSString *const ConversationUnknownMessageCellId     = @"conversationUnknownMessageCellId";
