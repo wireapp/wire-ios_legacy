@@ -117,6 +117,18 @@
     return longVersionTimeFormatter;
 }
 
++ (NSDateFormatter *)dayFormatter
+{
+    static NSDateFormatter *dayFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dayFormatter = [[NSDateFormatter alloc] init];
+        dayFormatter.dateFormat = @"d MMMM, EEEE";
+    });
+
+    return dayFormatter;
+}
+
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message
 {
     BOOL isChatHeadsDisabled = [[Settings sharedSettings] chatHeadsDisabled];

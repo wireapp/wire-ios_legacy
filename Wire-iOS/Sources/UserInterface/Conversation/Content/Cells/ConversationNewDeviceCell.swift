@@ -77,18 +77,18 @@ class ConversationNewDeviceCell: IconSystemCell {
     func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes){
         let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient()) ?? false
         
-        let senderName = NSLocalizedString("content.system.you_started", comment: "").uppercased() && attributes.senderAttributes
-        let startedUsingString = NSLocalizedString("content.system.started_using", comment: "").uppercased() && attributes.startedUsingAttributes
-        let userClientString = NSLocalizedString("content.system.new_device", comment: "").uppercased() && attributes.linkAttributes
+        let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
+        let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
+        let userClientString = NSLocalizedString("content.system.new_device", comment: "") && attributes.linkAttributes
         
         self.labelView.attributedText = senderName + " " + startedUsingString + " " + userClientString
         self.leftIconView.isHidden = isSelfClient
     }
     
     func configureForNewCurrentDeviceOfSelfUser(_ selfUser: ZMUser, attributes: TextAttributes){
-        let senderName = NSLocalizedString("content.system.you_started", comment: "").uppercased() && attributes.senderAttributes
-        let startedUsingString = NSLocalizedString("content.system.started_using", comment: "").uppercased() && attributes.startedUsingAttributes
-        let userClientString = NSLocalizedString("content.system.this_device", comment: "").uppercased() && attributes.linkAttributes
+        let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
+        let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
+        let userClientString = NSLocalizedString("content.system.this_device", comment: "") && attributes.linkAttributes
         
         self.labelView.attributedText = senderName + " " + startedUsingString + " " + userClientString
         self.leftIconView.isHidden = true
@@ -99,16 +99,16 @@ class ConversationNewDeviceCell: IconSystemCell {
         guard displayNamesOfOthers.count > 0 else { return }
         
         let firstTwoNames = displayNamesOfOthers.prefix(2)
-        let senderNames = firstTwoNames.joined(separator: ", ").uppercased()
+        let senderNames = firstTwoNames.joined(separator: ", ")
         let additionalSenderCount = max(displayNamesOfOthers.count - 1, 1)
     
         // %@ %#@d_number_of_others@ started using %#@d_new_devices@
         let senderNamesString = NSString(format: NSLocalizedString("content.system.people_started_using", comment: "") as NSString,
                                          senderNames,
                                          additionalSenderCount,
-                                         clients.count).uppercased as String
+                                         clients.count) as String
         
-        let userClientString = NSString(format: NSLocalizedString("content.system.new_devices", comment: "") as NSString, clients.count).uppercased as String
+        let userClientString = NSString(format: NSLocalizedString("content.system.new_devices", comment: "") as NSString, clients.count) as String
         
         var attributedSenderNames = NSAttributedString(string: senderNamesString, attributes: attributes.startedUsingAttributes)
         attributedSenderNames = attributedSenderNames.setAttributes(attributes.senderAttributes, toSubstring: senderNames)
@@ -119,8 +119,8 @@ class ConversationNewDeviceCell: IconSystemCell {
     }
     
     func configureForAddedUsers(with attributes: TextAttributes) {
-        let attributedNewUsers = NSAttributedString(string: "content.system.new_users".localized.uppercased(), attributes: attributes.startedUsingAttributes)
-        let attributedLink = NSAttributedString(string: "content.system.verify_devices".localized.uppercased(), attributes: attributes.linkAttributes)
+        let attributedNewUsers = NSAttributedString(string: "content.system.new_users".localized, attributes: attributes.startedUsingAttributes)
+        let attributedLink = NSAttributedString(string: "content.system.verify_devices".localized, attributes: attributes.linkAttributes)
 
         self.labelView.attributedText = attributedNewUsers + " " + attributedLink
         self.leftIconView.isHidden = false

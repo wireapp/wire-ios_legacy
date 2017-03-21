@@ -43,7 +43,7 @@ struct CallCellViewModel {
             else { return nil }
 
         let senderString = string(for: sender)
-        let called = key(with: "called").localized(args:  senderString).uppercased() && labelFont
+        let called = key(with: "called").localized(args:  senderString) && labelFont
         var title = called.adding(font: labelBoldFont, to: senderString)
 
         if systemMessageData.childMessages.count > 0 {
@@ -54,7 +54,7 @@ struct CallCellViewModel {
     }
 
     private func string(for user: ZMUser) -> String {
-        return (user.isSelfUser ? key(with: "you").localized : user.displayName).uppercased()
+        return user.isSelfUser ? key(with: "you").localized : user.displayName
     }
 
     private func key(with component: String) -> String {
@@ -65,6 +65,10 @@ struct CallCellViewModel {
 
 
 class MissedCallCell: IconSystemCell {
+
+    override var verticalInset: CGFloat {
+        return 6
+    }
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
@@ -79,6 +83,8 @@ class MissedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        labelView.accessibilityLabel = labelView.attributedText.string
+        lineView.isHidden = true
     }
 
     override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
@@ -101,6 +107,10 @@ class PerformedCallCell: IconSystemCell {
         return formatter
     }
 
+    override var verticalInset: CGFloat {
+        return 6
+    }
+
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
@@ -114,6 +124,8 @@ class PerformedCallCell: IconSystemCell {
         )
         leftIconView.image = model.image()
         labelView.attributedText = model.attributedTitle()
+        labelView.accessibilityLabel = labelView.attributedText.string
+        lineView.isHidden = true
     }
 
     override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {

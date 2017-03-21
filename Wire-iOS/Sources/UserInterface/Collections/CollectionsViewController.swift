@@ -161,7 +161,9 @@ final public class CollectionsViewController: UIViewController {
         super.viewWillAppear(animated)
         self.setupNavigationItem()
         self.flushLayout()
-
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override public func viewWillDisappear(_ animated: Bool) {
@@ -261,10 +263,8 @@ final public class CollectionsViewController: UIViewController {
         return ColorScheme.default().variant == .dark ? .lightContent : .default
     }
     
-    private func updateNoElementsState() {
-        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
-            self.contentView.noItemsInLibrary = true
-        }
+    fileprivate func updateNoElementsState() {
+        self.contentView.noItemsInLibrary = self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0
     }
     
     private func setupNavigationItem() {
@@ -378,6 +378,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
         }
         
         if self.isViewLoaded {
+            self.updateNoElementsState()
             self.contentView.collectionView.reloadData()
         }
     }
@@ -745,6 +746,17 @@ extension CollectionsViewController: MessageActionResponder {
                 self?.refetchCollection()
             }
         default: break
+        }
+    }
+}
+
+extension CollectionsViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.navigationController?.interactivePopGestureRecognizer == gestureRecognizer {
+            return self.navigationController?.viewControllers.count > 1
+        }
+        else {
+            return true
         }
     }
 }

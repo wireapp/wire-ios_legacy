@@ -42,7 +42,7 @@
     if (self) {
         self.style = style;
         self.cas_styleClass = style == ActionSheetViewStyleLight ? @"light" : @"dark";
-        self.contentInsets = UIEdgeInsetsMake(24, 24, 24, 24);
+        self.contentInsets = UIEdgeInsetsMake(30, 24, 24, 24);
         self.blurEffect = [UIBlurEffect effectWithStyle:style == ActionSheetViewStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight];
         [self createViews];
         [self createInitialConstraints];

@@ -98,7 +98,7 @@
 				<key>font_spec_medium</key>
 				<dict>
 					<key>font</key>
-					<string>System-Light-Medium</string>
+					<string>System-Light-Semibold</string>
 					<key>size</key>
 					<real>20</real>
 					<key>number_style</key>
@@ -134,7 +134,7 @@
 				<key>font_spec_medium</key>
 				<dict>
 					<key>font</key>
-					<string>System-Light-Medium</string>
+					<string>System-Light-Semibold</string>
 					<key>size</key>
 					<integer>16</integer>
 					<key>number_style</key>

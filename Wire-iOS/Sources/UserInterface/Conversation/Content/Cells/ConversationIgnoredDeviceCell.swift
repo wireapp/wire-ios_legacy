@@ -40,17 +40,17 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 
                 guard let user = systemMessageData.users.first else { return }
                 
-                let youString = "content.system.you_started".localized.uppercased()
+                let youString = "content.system.you_started".localized
                 let deviceString : String
                 
                 if user.isSelfUser {
-                    deviceString = "content.system.your_devices".localized.uppercased()
+                    deviceString = "content.system.your_devices".localized
                 } else {
-                    deviceString = String(format: "content.system.other_devices".localized, user.displayName).uppercased()
+                    deviceString = String(format: "content.system.other_devices".localized, user.displayName)
                 }
                 
                 let baseString = "content.system.unverified".localized
-                let endResult = String(format: baseString, youString, deviceString).uppercased()
+                let endResult = String(format: baseString, youString, deviceString)
 
                 let youRange = (endResult as NSString).range(of: youString)
                 let deviceRange = (endResult as NSString).range(of: deviceString)

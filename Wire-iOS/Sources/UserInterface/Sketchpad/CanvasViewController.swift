@@ -39,7 +39,7 @@ import CocoaLumberjackSwift
 
 class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
-    var delegate : CanvasViewControllerDelegate?
+    weak var delegate : CanvasViewControllerDelegate?
     var canvas = Canvas()
     var toolbar : SketchToolbar!
     let drawButton = IconButton()

@@ -58,7 +58,7 @@
           <key>font_spec_medium</key>
           <dict>
             <key>font</key>
-            <string>System-Light-Medium</string>
+            <string>System-Light-Semibold</string>
             <key>size</key>
             <real>28.0</real>
             <key>number_style</key>

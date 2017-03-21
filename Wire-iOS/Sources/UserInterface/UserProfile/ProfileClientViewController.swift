@@ -249,8 +249,8 @@ class ProfileClientViewController: UIViewController {
     
     private func createConstraints() {
         constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
-            contentView.left == view.left + 24
-            contentView.right == view.right - 24
+            contentView.left == view.left + 16
+            contentView.right == view.right - 16
             contentView.bottom == view.bottom - 32
             contentView.top >= view.top + 24
             reviewInvitationTextView.top == contentView.top
@@ -285,8 +285,8 @@ class ProfileClientViewController: UIViewController {
         }
 
         constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
-            backButton.left == contentView.left
-            backButton.top == selfView.top + 24
+            backButton.left == contentView.left - 8
+            backButton.top == selfView.top + 26
             backButton.width == 32
             backButton.height == 32
             showMyDeviceButton.centerY == backButton.centerY
