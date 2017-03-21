@@ -40,7 +40,6 @@ typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
 
 extern NSString * const SettingsColorSchemeChangedNotification;
 
-extern NSString * const UserDefaultExtras;
 extern NSString * const UserDefaultDisableMarkdown;
 extern NSString * const UserDefaultChatHeadsDisabled;
 extern NSString * const UserDefaultLikeTutorialCompleted;
@@ -81,7 +80,6 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 /// Model object for locally stored (not in SE or AVS) user app settings
 @interface Settings : NSObject
 
-@property (nonatomic) BOOL enableExtras;
 @property (nonatomic) BOOL chatHeadsDisabled;
 @property (nonatomic) BOOL contactTipWasDisplayed;
 @property (nonatomic) BOOL likeTutorialCompleted;

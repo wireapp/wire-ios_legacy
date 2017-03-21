@@ -26,7 +26,6 @@
 NSString * const SettingsColorSchemeChangedNotification = @"SettingsColorSchemeChangedNotification";
 
 // NB!!! After adding the key here please make sure to add it to @m +allDefaultsKeys as well
-NSString * const UserDefaultExtras = @"ZDevOptionExtras";
 NSString * const UserDefaultDisableMarkdown = @"UserDefaultDisableMarkdown";
 NSString * const UserDefaultChatHeadsDisabled = @"ZDevOptionChatHeadsDisabled";
 NSString * const UserDefaultLikeTutorialCompleted = @"LikeTutorialCompleted";
@@ -163,17 +162,6 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
         ExtensionSettings.shared.disableCrashAndAnalyticsSharing = self.disableAnalytics;
         [self.defaults setBool:YES forKey:UserDefaultDidMigrateHockeySettingInitially];
     }
-}
-
-- (BOOL)enableExtras
-{
-    return [self.defaults boolForKey:UserDefaultExtras];
-}
-
-- (void)setEnableExtras:(BOOL)enableExtras
-{
-    [self.defaults setBool:enableExtras forKey:UserDefaultExtras];
-    [self.defaults synchronize];
 }
 
 - (BOOL)contactTipWasDisplayed

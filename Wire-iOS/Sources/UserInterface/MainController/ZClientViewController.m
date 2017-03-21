@@ -225,7 +225,6 @@
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     [self.conversationListViewController view];
-    self.conversationListViewController.enableExtras = [Settings sharedSettings].enableExtras;
 }
 
 #pragma mark - Public API
