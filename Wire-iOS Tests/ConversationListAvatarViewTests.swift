@@ -44,7 +44,12 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
         sut.conversation = conversation
+        verify(view: sut.prepareForSnapshots())
+    }
 
+    func testThatItRendersManyUsers() {
+        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
+        sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }
 

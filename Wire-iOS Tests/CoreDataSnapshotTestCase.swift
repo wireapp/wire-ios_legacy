@@ -26,6 +26,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!
+    let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"]
 
     override open func setUp() {
         super.setUp()
@@ -62,6 +63,13 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         connection.conversation = otherUserConversation
 
         moc.saveOrRollback()
+    }
+
+    func createUser(name: String) -> ZMUser {
+        let user = ZMUser.insertNewObject(in: moc)
+        user.name = name
+        user.remoteIdentifier = UUID()
+        return user
     }
 
 }
