@@ -270,7 +270,7 @@ static CIContext *ciContext(void)
                 image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.suggestedImageSize)];
             }
             image = [image desaturatedImageWithContext:ciContext()
-                                            saturation:[WAZUIMagic sharedMagic][@"background.image_target_saturation"]];
+                                            saturation:0];
           
             return image;
             

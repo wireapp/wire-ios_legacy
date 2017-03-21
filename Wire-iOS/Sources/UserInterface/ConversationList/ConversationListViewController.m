@@ -328,7 +328,6 @@
 
     switch (state) {
         case ConversationListStateConversationList: {
-            [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
             [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
         }
             break;
@@ -359,8 +358,7 @@
 {
     viewController.transitioningDelegate = self;
     viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    [ZClientViewController.sharedZClientViewController.backgroundViewController setBlurPercentAnimated:1.0];
-
+    
     [self presentViewController:viewController animated:animated completion:^{
         if (completion) {
             completion();
@@ -742,9 +740,7 @@
                 settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
                     @strongify(keyboardAvoidingWrapperController);
                     [keyboardAvoidingWrapperController dismissViewControllerAnimated:YES completion:nil];
-                    [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:0.0];
                 };
-                [[ZClientViewController sharedZClientViewController].backgroundViewController setBlurPercentAnimated:1.0];
                 
                 keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
                 keyboardAvoidingWrapperController.transitioningDelegate = self;

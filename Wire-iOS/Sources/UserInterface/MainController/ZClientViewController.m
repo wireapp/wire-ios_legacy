@@ -76,7 +76,7 @@
 @property (nonatomic, readwrite) SoundEventListener *soundEventListener;
 
 @property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic, readwrite) BackgroundViewController *backgroundViewController;
+@property (nonatomic) BackgroundViewController *backgroundViewController;
 @property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
@@ -87,8 +87,6 @@
 
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
-
-- (void)setupChildViewControllers;
 
 @end
 
@@ -128,18 +126,7 @@
     
     self.view.backgroundColor = [UIColor blackColor];
 
-    self.backgroundViewController = [[BackgroundViewController alloc] init];
-    self.backgroundViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addChildViewController:self.backgroundViewController];
-    [self.view addSubview:self.backgroundViewController.view];
-    [self.backgroundViewController didMoveToParentViewController:self];
-
-    [self.backgroundViewController.view addConstraintsFittingToView:self.view];
-
-    [self.backgroundViewController setForceFullScreen:NO animated:NO];
-    [self.backgroundViewController setUser:[ZMUser selfUser] animated:YES];
-
-    [self setupChildViewControllers];
+    [self setupConversationListViewController];
     
     self.splitViewController = [[SplitViewController alloc] init];
     self.splitViewController.delegate = self;
@@ -154,9 +141,7 @@
     
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
-    if (self.conversationListViewController != nil) {
-        self.splitViewController.leftViewController = self.conversationListViewController;
-    }
+    [self createBackgroundViewController];
     
     if (self.pendingInitialStateRestore) {
         [self restoreStartupState];
@@ -167,6 +152,20 @@
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
+}
+
+- (void)createBackgroundViewController
+{
+    self.backgroundViewController = [[BackgroundViewController alloc] initWithUser:[ZMUser selfUser]
+                                                                       userSession:[ZMUserSession sharedSession]];
+    
+    [self.backgroundViewController addChildViewController:self.conversationListViewController];
+    [self.backgroundViewController.view addSubview:self.conversationListViewController.view];
+    [self.conversationListViewController didMoveToParentViewController:self.backgroundViewController];
+    self.conversationListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.conversationListViewController.view.frame = self.backgroundViewController.view.bounds;
+    
+    self.splitViewController.leftViewController = self.backgroundViewController;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -221,7 +220,7 @@
 
 #pragma mark - Setup methods
 
-- (void)setupChildViewControllers
+- (void)setupConversationListViewController
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
@@ -259,11 +258,7 @@
     StopWatch *stopWatch = [StopWatch stopWatch];
     [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
     
-    @weakify(self);
-    [self.splitViewController setLeftViewController:self.conversationListViewController animated:animated completion:^{
-        @strongify(self);
-        [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
-    }];
+    [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
 }
 
 - (BOOL)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
@@ -362,8 +357,7 @@
     }
     
     _conversationListViewController = conversationListViewController;
-    
-    self.splitViewController.leftViewController = self.conversationListViewController;
+
 }
 
 - (void)openDetailScreenForUserClient:(UserClient *)client

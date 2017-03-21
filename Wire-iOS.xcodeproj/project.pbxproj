@@ -319,10 +319,6 @@
 		871BC25F1D34F8F800DF0793 /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B21D34F8F800DF0793 /* ColorPickerView.m */; };
 		871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */; };
 		871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */; };
-		871BC2631D34F8F800DF0793 /* BackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1BC1D34F8F800DF0793 /* BackgroundView.m */; };
-		871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */; };
-		871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */; };
-		871BC2661D34F8F800DF0793 /* UserBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */; };
 		871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CB1D34F8F800DF0793 /* GapLayer.m */; };
 		871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */; };
 		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
@@ -491,6 +487,8 @@
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
 		877ABB451E800E8800CBCF2B /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB441E800E8800CBCF2B /* TestView.swift */; };
+		877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */; };
+		877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */; };
 		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
@@ -1455,14 +1453,6 @@
 		871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IdentifiableColor+AccentColors.m"; sourceTree = "<group>"; };
 		871BC1B51D34F8F800DF0793 /* IdentifiableColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentifiableColor.h; sourceTree = "<group>"; };
 		871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentifiableColor.m; sourceTree = "<group>"; };
-		871BC1BB1D34F8F800DF0793 /* BackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundView.h; sourceTree = "<group>"; };
-		871BC1BC1D34F8F800DF0793 /* BackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundView.m; sourceTree = "<group>"; };
-		871BC1BD1D34F8F800DF0793 /* BackgroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundViewController.h; sourceTree = "<group>"; };
-		871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundViewController.m; sourceTree = "<group>"; };
-		871BC1BF1D34F8F800DF0793 /* BackgroundViewImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundViewImageProcessor.h; sourceTree = "<group>"; };
-		871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundViewImageProcessor.m; sourceTree = "<group>"; };
-		871BC1C11D34F8F800DF0793 /* UserBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserBackgroundView.h; sourceTree = "<group>"; };
-		871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserBackgroundView.m; sourceTree = "<group>"; };
 		871BC1CA1D34F8F800DF0793 /* GapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLayer.h; sourceTree = "<group>"; };
 		871BC1CB1D34F8F800DF0793 /* GapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLayer.m; sourceTree = "<group>"; };
 		871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLoadingBar.h; sourceTree = "<group>"; };
@@ -1725,6 +1715,8 @@
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
 		877ABB441E800E8800CBCF2B /* TestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
+		877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewControllerTests.swift; sourceTree = "<group>"; };
 		877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Properties.swift"; sourceTree = "<group>"; };
 		8781C94E1E2687590024F3F6 /* MessageAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageAction.h; sourceTree = "<group>"; };
 		8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSelfPictureViewController.h; sourceTree = "<group>"; };
@@ -3277,7 +3269,6 @@
 			isa = PBXGroup;
 			children = (
 				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
-				871BC1BA1D34F8F800DF0793 /* BackgroundView */,
 				877ABB441E800E8800CBCF2B /* TestView.swift */,
 				871BC1CA1D34F8F800DF0793 /* GapLayer.h */,
 				871BC1CB1D34F8F800DF0793 /* GapLayer.m */,
@@ -3326,21 +3317,6 @@
 				871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */,
 			);
 			path = AccentColorPicker;
-			sourceTree = "<group>";
-		};
-		871BC1BA1D34F8F800DF0793 /* BackgroundView */ = {
-			isa = PBXGroup;
-			children = (
-				871BC1BB1D34F8F800DF0793 /* BackgroundView.h */,
-				871BC1BC1D34F8F800DF0793 /* BackgroundView.m */,
-				871BC1BD1D34F8F800DF0793 /* BackgroundViewController.h */,
-				871BC1BE1D34F8F800DF0793 /* BackgroundViewController.m */,
-				871BC1BF1D34F8F800DF0793 /* BackgroundViewImageProcessor.h */,
-				871BC1C01D34F8F800DF0793 /* BackgroundViewImageProcessor.m */,
-				871BC1C11D34F8F800DF0793 /* UserBackgroundView.h */,
-				871BC1C21D34F8F800DF0793 /* UserBackgroundView.m */,
-			);
-			path = BackgroundView;
 			sourceTree = "<group>";
 		};
 		871BC1DC1D34F8F800DF0793 /* UserImageView */ = {
@@ -4540,6 +4516,7 @@
 				BF52C15A1CAEBDC00037331F /* ArchivedList */,
 				16063CE91BCFCEB70097F62C /* InviteBannerViewController.h */,
 				16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */,
+				877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -4783,6 +4760,7 @@
 				87AAE4201E42441B00E1D13A /* FontSchemeTests.swift */,
 				8742C2ED1E533AA200329FB6 /* NSAttributedStringHighlightTests.swift */,
 				879489E61E5464CF0071B2C1 /* SearchResultLabelTests.swift */,
+				877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -5632,7 +5610,6 @@
 				871BC3681D34F94200DF0793 /* MediaPreviewData+YouTube.m in Sources */,
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
 				87E56ED91E4E10CA0097D489 /* TextSearchResultCell.swift in Sources */,
-				871BC2631D34F8F800DF0793 /* BackgroundView.m in Sources */,
 				871BC0041D34F56300DF0793 /* AnalyticsLocalyticsProvider.m in Sources */,
 				871BC2481D34F8F800DF0793 /* NSString+WAZUIMagic.m in Sources */,
 				871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */,
@@ -5737,10 +5714,10 @@
 				871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */,
 				875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
+				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
 				DB888FBB1ADD195F00CE9A88 /* EmailStepViewController.m in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
 				BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */,
-				871BC2651D34F8F800DF0793 /* BackgroundViewImageProcessor.m in Sources */,
 				871BC24C1D34F8F800DF0793 /* WAZUIMagic.m in Sources */,
 				F95E08B41D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift in Sources */,
 				87DCF48D1D34E9BA00BB420F /* ContactsCell.m in Sources */,
@@ -6154,11 +6131,9 @@
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
-				871BC2641D34F8F800DF0793 /* BackgroundViewController.m in Sources */,
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				871BC0171D34F56300DF0793 /* AnalyticsGroupConversationEvent.m in Sources */,
 				871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */,
-				871BC2661D34F8F800DF0793 /* UserBackgroundView.m in Sources */,
 				871BC2491D34F8F800DF0793 /* UIColor+MagicAccess.m in Sources */,
 				871BC1261D34F7B700DF0793 /* ZiphyClient+Convenience.m in Sources */,
 				F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */,
@@ -6211,6 +6186,7 @@
 				160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
+				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
 				BFAD3A201CD10D6000F0FBED /* MockEditableUser.m in Sources */,
