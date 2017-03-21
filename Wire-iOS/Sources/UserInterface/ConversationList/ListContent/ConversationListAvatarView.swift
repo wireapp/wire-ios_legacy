@@ -42,7 +42,6 @@ public class GroupConversationAvatarView: UIView {
 
     private func setupViews() {
         addSubview(countLabel)
-        countLabel.textColor = UIColor(white: 0, alpha: 0.4)
     }
 
     private func createConstraints() {
@@ -71,8 +70,8 @@ public class GroupConversationAvatarView: UIView {
         }
     }
 
-    private let userImageView = UserImageView(magicPrefix: "content.author_image")
-    private let participantsCountView = GroupConversationAvatarView()
+    public let userImageView = UserImageView()
+    public let participantsCountView = GroupConversationAvatarView()
 
     init() {
         super.init(frame: .zero)
@@ -80,7 +79,7 @@ public class GroupConversationAvatarView: UIView {
         createConstraints()
         updateViewVisibility()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

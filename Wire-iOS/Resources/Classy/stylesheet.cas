@@ -537,6 +537,18 @@ GroupConversationAvatarView {
 
     countLabel: @{
         font: $font-medium-semibold;
+        textColor: $color-list-avatar-initials;
+    }
+
+}
+
+ConversationListAvatarView {
+
+    userImageView: @{
+        initials: @{
+            font: $font-medium-semibold;
+            textColor: $color-list-avatar-initials;
+        }
     }
 
 }

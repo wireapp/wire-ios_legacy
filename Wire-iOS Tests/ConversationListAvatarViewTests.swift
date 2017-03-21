@@ -32,11 +32,8 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
     }
 
     func testThatItRendersSingleUserImage() {
-        let conversation = ZMConversation.insertNewObject(in: moc)
-        let connection = ZMConnection.insertNewObject(in: moc)
-        connection.to = otherUser
-        connection.conversation = conversation
-        sut.conversation = conversation
+        otherUser.accentColorValue = .strongLimeGreen
+        sut.conversation = otherUserConversation
         moc.saveOrRollback()
 
         verify(view: sut.prepareForSnapshots())

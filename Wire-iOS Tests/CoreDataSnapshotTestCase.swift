@@ -25,6 +25,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     var moc: NSManagedObjectContext!
     var selfUser: ZMUser!
     var otherUser: ZMUser!
+    var otherUserConversation: ZMConversation!
 
     override open func setUp() {
         super.setUp()
@@ -51,7 +52,16 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser = ZMUser.insertNewObject(in: moc)
         otherUser.remoteIdentifier = UUID()
         otherUser.name = "Bruno"
-        otherUser.setValue(ZMAccentColor.brightOrange.rawValue, forKey: "accentColorValue")
+        otherUser.accentColorValue = .brightOrange
+
+        otherUserConversation = ZMConversation.insertNewObject(in: moc)
+
+        let connection = ZMConnection.insertNewObject(in: moc)
+        connection.to = otherUser
+        connection.status = .accepted
+        connection.conversation = otherUserConversation
+
+        moc.saveOrRollback()
     }
 
 }
