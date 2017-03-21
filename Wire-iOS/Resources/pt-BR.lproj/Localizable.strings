@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ removeu você";
 "content.system.you_removed_other" = "Você removeu %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ iniciou uma conversa com %@";
+"content.system.conversation.added" = "%@ adicionou %@";
+"content.system.conversation.removed" = "%@ removeu %@";
+"content.system.conversation.left" = "%@ saiu";
+"content.system.conversation.you" = "Você";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
 "content.system.pending_message_timestamp" = "Enviando…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pingou";
 
 // Current user pinged
-"content.ping.you.text" = "Você pingou";
+"content.ping.text.you" = "Você";
 
 // Inline Player
 "content.player.unable_to_play" = "NÃO É POSSÍVEL REPRODUZIR FAIXA";

@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ usunął Ciebie";
 "content.system.you_removed_other" = "Usunąłeś %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ rozpoczął konwersację z %@";
+"content.system.conversation.added" = "%@ dodał %@";
+"content.system.conversation.removed" = "%@ usunął %@";
+"content.system.conversation.left" = "%@ wyszedł";
+"content.system.conversation.you" = "Ty";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ usunął nazwę konwersacji";
 "content.system.you_renamed_conv_to_nothing" = "Usunąłeś nazwę konwersacji";
 "content.system.pending_message_timestamp" = "Wysyłanie…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.text.you" = "Ty";
 
 // Inline Player
 "content.player.unable_to_play" = "NIE MOŻNA ODTWORZYĆ";

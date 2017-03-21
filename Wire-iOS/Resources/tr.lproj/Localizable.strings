@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@, seni sildi";
 "content.system.you_removed_other" = "%@'i sildiniz";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@, %@'la konuşma başlattı";
+"content.system.conversation.added" = "%@, %@'i ekledi";
+"content.system.conversation.removed" = "%@, %@'i sildi";
+"content.system.conversation.left" = "%@ ayrıldı";
+"content.system.conversation.you" = "Sen";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
 "content.system.you_renamed_conv_to_nothing" = "Bu konuşmadının adını kaldırdınız";
 "content.system.pending_message_timestamp" = "Gönderiliyor…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pingledi";
 
 // Current user pinged
-"content.ping.you.text" = "Pingledin";
+"content.ping.text.you" = "Sen";
 
 // Inline Player
 "content.player.unable_to_play" = "PARÇA OYNATILAMIYOR";

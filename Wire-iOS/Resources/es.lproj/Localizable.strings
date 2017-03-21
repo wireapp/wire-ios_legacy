@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ te eliminó";
 "content.system.you_removed_other" = "Eliminaste a %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ inició un chat con %@";
+"content.system.conversation.added" = "%@ añadió a %@";
+"content.system.conversation.removed" = "%@ eliminó a %@";
+"content.system.conversation.left" = "%@ se fue";
+"content.system.conversation.you" = "Tú";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ eliminó el nombre del chat";
 "content.system.you_renamed_conv_to_nothing" = "Eliminaste el nombre del chat";
 "content.system.pending_message_timestamp" = "Enviando …";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ hizo ping";
 
 // Current user pinged
-"content.ping.you.text" = "Has hecho ping";
+"content.ping.text.you" = "Tú";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSIBLE REPRODUCIR EL ARCHIVO";
@@ -603,7 +611,7 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir ajustes de contactos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos permite a Wire encontrar amigos que ya son usuarios de Wire. Toda la información es anónima y no la compartimos con nadie. Permite acceder a Wire en Ajustes > Privacidad > Contactos.";
 
-"self.settings.privacy_security.lock_app" = "Bloquear con código";
+"self.settings.privacy_security.lock_app" = "Touch ID o código de bloqueo";
 "self.settings.privacy_security.lock_app.subtitle" = "Wire se bloquea tras 10 segundos en segundo plano. Se desbloquea con Touch ID o introduciendo el código.";
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 

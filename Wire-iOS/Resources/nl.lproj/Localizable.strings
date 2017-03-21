@@ -196,6 +196,14 @@
 "content.system.other_removed_you" = "%@ verwijderde jou";
 "content.system.you_removed_other" = "Jij verwijderde %@";
 
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ begon een gesprek met %@";
+"content.system.conversation.added" = "%@ heeft %@ toegevoegd";
+"content.system.conversation.removed" = "%@ verwijderde %@";
+"content.system.conversation.left" = "%@ verliet";
+"content.system.conversation.you" = "Jij";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ verwijderde de naam van de conversatie";
 "content.system.you_renamed_conv_to_nothing" = "Je verwijderde de naam van de conversatie";
 "content.system.pending_message_timestamp" = "Verzenden…";
@@ -279,7 +287,7 @@
 "content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "You pinged";
+"content.ping.text.you" = "Jij";
 
 // Inline Player
 "content.player.unable_to_play" = "NIET MOGELIJK OM AF TE SPELEN";
