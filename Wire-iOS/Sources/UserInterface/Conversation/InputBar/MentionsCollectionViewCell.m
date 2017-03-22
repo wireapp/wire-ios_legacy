@@ -23,7 +23,7 @@
 #import "UIFont+MagicAccess.h"
 #import <PureLayout/PureLayout.h>
 #import "UserImageView+Magic.h"
-
+#import "zmessaging+iOS.h"
 
 @interface MentionsLabel : UILabel
 
@@ -67,6 +67,7 @@
 -(void)createUserImageView
 {
     self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.contentView addSubview:self.userImageView];

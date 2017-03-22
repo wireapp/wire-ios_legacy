@@ -184,7 +184,7 @@ static CIContext *ciContext(void)
     if (self.size == UserImageViewSizeBig &&
         self.user.imageMediumData == nil) {
         
-        if ([self.user respondsToSelector:@selector(requestMediumProfileImageInUserSession:)]) {
+        if ([self.user respondsToSelector:@selector(requestMediumProfileImageInUserSession:)] && self.userSession != nil) {
             [(id)self.user requestMediumProfileImageInUserSession:self.userSession];
         }
         return;
@@ -193,7 +193,7 @@ static CIContext *ciContext(void)
     if (self.size != UserImageViewSizeBig &&
         self.user.imageSmallProfileData == nil) {
         
-        if ([self.user respondsToSelector:@selector(requestSmallProfileImageInUserSession:)]) {
+        if ([self.user respondsToSelector:@selector(requestSmallProfileImageInUserSession:)] && self.userSession != nil) {
             [(id)self.user requestSmallProfileImageInUserSession:self.userSession];
         }
         return;

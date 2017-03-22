@@ -54,7 +54,7 @@ public final class UserConnectionView: UIView, Copyable {
     public init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
-        
+        self.userImageView.userSession = ZMUserSession.shared()
         self.setup()
         self.createConstraints()
     }

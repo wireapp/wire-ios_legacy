@@ -34,6 +34,7 @@ final class ParticipantsUserCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.imageView.userSession = ZMUserSession.shared()
         backgroundColor = .clear
         addSubview(imageView)
         constrain(self, imageView) { view, image in

@@ -33,7 +33,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "UIFont+MagicAccess.h"
 
-@interface SearchView () <ZMUserObserver, UserImageViewDelegate>
+@interface SearchView () <ZMUserObserver>
 @property (nonatomic, readwrite) PeopleInputController *peopleInputController;
 @property (nonatomic, readwrite) UIView *lineView;
 

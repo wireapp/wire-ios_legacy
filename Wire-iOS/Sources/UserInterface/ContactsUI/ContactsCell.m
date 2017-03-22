@@ -85,6 +85,7 @@ NS_ASSUME_NONNULL_END
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.userImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"address_book"];
+    self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.size = UserImageViewSizeTiny;
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.userImageView];

@@ -140,6 +140,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.view addSubview:self.userImageViewContainer];
     
     self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"profile.user_image"];
+    self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;

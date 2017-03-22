@@ -19,10 +19,10 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class ZMUser;
 
 @interface ParticipantsListCell : UICollectionViewCell
 
-@property (strong, nonatomic) id representedObject;
+@property (strong, nonatomic) ZMUser* representedObject;
 
 @end

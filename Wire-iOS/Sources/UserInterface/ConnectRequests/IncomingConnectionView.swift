@@ -57,6 +57,7 @@ public final class IncomingConnectionView: UIView {
         self.user = user
         super.init(frame: .zero)
 
+        self.userImageView.userSession = ZMUserSession.shared()
         self.setup()
         self.createConstraints()
     }
