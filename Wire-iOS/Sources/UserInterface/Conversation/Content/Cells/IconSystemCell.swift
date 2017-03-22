@@ -48,6 +48,8 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         return 16
     }
 
+    private let lineMedianYOffset: CGFloat = 2
+
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -110,14 +112,14 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         updateLineBaseLineConstraint()
 
         constrain(lineView, labelView, leftIconContainer) { (lineView: LayoutProxy, labelView: LayoutProxy, icon: LayoutProxy) -> () in
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - 2
+            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
             icon.centerY == lineView.centerY
         }
     }
 
     private func updateLineBaseLineConstraint() {
         guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median - 2
+        lineBaseLineConstraint?.constant = font.median - lineMedianYOffset
     }
 
     open override var canResignFirstResponder: Bool {
