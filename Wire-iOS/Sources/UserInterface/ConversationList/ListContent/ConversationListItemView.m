@@ -146,7 +146,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
     [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
     [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:-35.0];
+    [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:0];
     [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
 }
 
