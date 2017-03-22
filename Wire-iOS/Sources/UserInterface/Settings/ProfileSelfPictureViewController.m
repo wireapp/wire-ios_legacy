@@ -180,7 +180,6 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
     [self.analyticsTracker tagPictureChanged];
 
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        editableSelf.originalProfileImageData = selfImageData;
         [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
         [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
     }];

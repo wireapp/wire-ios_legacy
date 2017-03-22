@@ -295,10 +295,10 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
         [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
         
         if ([self.editabledUser isKindOfClass:[ZMIncompleteRegistrationUser class]]) {
-            self.editabledUser.originalProfileImageData = imageData;
+            [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
         } else {
             [[ZMUserSession sharedSession] enqueueChanges:^{
-                self.editabledUser.originalProfileImageData = imageData;
+                [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
             }];
         }
         
