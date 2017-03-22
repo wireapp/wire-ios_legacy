@@ -64,14 +64,14 @@
         [self setFlatColor:[ZMUser selfUser].accentColor];
     }
     else {        
-        [self setImageData:user.imageMediumData withCacheKey:user.imageMediumIdentifier animated:animated waitForBlur:waitForBlur];
+        [self setImageData:user.imageMediumData withCacheKey:user.mediumProfileImageCacheKey animated:animated waitForBlur:waitForBlur];
     }
 }
 
 - (void)userDidChange:(UserChangeInfo *)change
 {
     if (change.imageMediumDataChanged && change.user.imageMediumData != nil) {
-        [self setImageData:change.user.imageMediumData withCacheKey:change.user.imageMediumIdentifier animated:YES waitForBlur:self.waitForBlur forceUpdate:YES];
+        [self setImageData:change.user.imageMediumData withCacheKey:change.user.mediumProfileImageCacheKey animated:YES waitForBlur:self.waitForBlur forceUpdate:YES];
     }
     else if ( (change.imageMediumDataChanged && change.user.imageMediumData == nil ) ||
               (change.accentColorValueChanged && change.user.imageMediumData == nil) ) {

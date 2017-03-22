@@ -204,11 +204,11 @@ static CIContext *ciContext(void)
     
     if (self.size == UserImageViewSizeBig) {
         imageData = self.user.imageMediumData;
-        imageCacheKey = self.user.imageMediumIdentifier;
+        imageCacheKey = self.user.mediumProfileImageCacheKey;
     }
     else {
         imageData = self.user.imageSmallProfileData;
-        imageCacheKey = self.user.imageSmallProfileIdentifier;
+        imageCacheKey = self.user.smallProfileImageCacheKey;
     }
     BOOL userIsConnected = self.user.isConnected || self.user.isSelfUser;
 
@@ -234,10 +234,10 @@ static CIContext *ciContext(void)
         NSString *updatedCacheKey = nil;
         
         if (self.size == UserImageViewSizeBig) {
-            updatedCacheKey = self.user.imageMediumIdentifier;
+            updatedCacheKey = self.user.mediumProfileImageCacheKey;
         }
         else {
-            updatedCacheKey = self.user.imageSmallProfileIdentifier;
+            updatedCacheKey = self.user.smallProfileImageCacheKey;
         }
         
         if ([cacheKey isEqualToString:updatedCacheKey]) {

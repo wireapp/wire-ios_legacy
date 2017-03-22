@@ -181,6 +181,7 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 
     [[ZMUserSession sharedSession] enqueueChanges:^{
         editableSelf.originalProfileImageData = selfImageData;
+        [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
         [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
     }];
 }
