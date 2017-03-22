@@ -247,6 +247,10 @@ void debugLogUpdate (ConversationListChangeInfo *note);
             if (changedIndexes.requiresReload) {
                 [self reloadConversationListViewModel];
             } else {
+                // We need to capture the state of `newConversationList` to make sure that we are updating the value
+                // of the list to the exact new state.
+                // It is important to keep the data source of the collection view consistent, since
+                // any inconsistency in the delta update would make it throw an exception.
                 dispatch_block_t modelUpdates = ^{ [self updateSection:SectionIndexConversations
                                                              withItems:newConversationList]; };
                 [self.delegate listViewModel:self didUpdateSection:SectionIndexConversations usingBlock:modelUpdates withChangedIndexes:changedIndexes];
