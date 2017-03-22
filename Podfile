@@ -37,9 +37,4 @@ target 'WireExtensionComponents' do
     platform :ios, '8.0'
 end
 
-target 'ImageNotificationExtension' do
-    platform :ios, '8.0'
-    pod 'PureLayout', :git => 'https://github.com/wireapp/PureLayout', :tag => 'v3.0.0'
-
-end
     

@@ -20,20 +20,20 @@
 import ZMCDataModel
 import ZMTransport
 import WireMessageStrategy
+import WireRequestStrategy
 
+class PushMessageHandlerDummy : NSObject, PushMessageHandler {
 
-class PushMessageHandlerDummy : NSObject, ZMPushMessageHandler {
-
-    func processGenericMessage(_ genericMessage: ZMGenericMessage!) {
+    func process(_ genericMessage: ZMGenericMessage) {
         // nop
     }
 
-    func processMessage(_ message: ZMMessage!) {
+    func process(_ message: ZMMessage) {
         // nop
     }
 
-    func didFail(toSentMessage message: ZMMessage!) {
-        // nop
+    public func didFailToSend(_ message: ZMMessage) {
+    // nop
     }
 
 }
