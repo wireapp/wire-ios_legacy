@@ -420,12 +420,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     [self.view layoutIfNeeded];
 }
 
-- (void)setEnableSubtitles:(BOOL)enableSubtitles
-{
-    _enableSubtitles = enableSubtitles;
-    [self.collectionView reloadData];
-}
-
 #pragma mark - Custom
 
 + (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section
@@ -521,9 +515,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    if (section == 0) {
-        return UIEdgeInsetsMake(32, 0, 0, 0);
-    }
     return UIEdgeInsetsZero;
 }
 

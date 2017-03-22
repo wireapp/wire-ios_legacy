@@ -117,6 +117,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Close archive";
 

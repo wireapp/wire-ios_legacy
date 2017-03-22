@@ -26,7 +26,6 @@
 @interface ConversationListCell : SwipeMenuCollectionCell
 
 @property (nonatomic, strong) ZMConversation *conversation;
-@property (nonatomic, assign) BOOL enableSubtitles;
 @property (nonatomic, weak) id <ConversationListCellDelegate> delegate;
 
 - (void)updateAppearance;

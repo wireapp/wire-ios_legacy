@@ -493,6 +493,9 @@
 		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
+		8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4541E817D13007A6867 /* ConversationListTopBar.swift */; };
+		8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */; };
+		8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */; };
 		8785CA5C1C567FCD00FD671C /* IconLabelButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 8785CA5A1C567FCD00FD671C /* IconLabelButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8785CA5B1C567FCD00FD671C /* IconLabelButton.m */; };
 		8786071B1D33E3FF00971A19 /* Geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607021D33E3FF00971A19 /* Geometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -814,7 +817,7 @@
 		BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC61D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift */; };
 		BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */; };
 		BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */; };
-		BFAAB2391DEC6B2800CBC096 /* ConversationList+Handles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */; };
+		BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */; };
 		BFAAB23D1DED8BB900CBC096 /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB23C1DED8BB900CBC096 /* ProfileHeaderViewModel.swift */; };
 		BFAAB23F1DED95B100CBC096 /* ProfileHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB23E1DED95B100CBC096 /* ProfileHeaderViewTests.swift */; };
 		BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */; };
@@ -903,7 +906,6 @@
 		F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */; };
 		F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift */; };
-		F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */; };
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
 		F194CA1B1E7179C2004C5E56 /* VoiceChannelOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */; };
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
@@ -1727,6 +1729,9 @@
 		8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSelfPictureViewController.m; sourceTree = "<group>"; };
 		8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+NewSelfClients.h"; sourceTree = "<group>"; };
 		8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+NewSelfClients.m"; sourceTree = "<group>"; };
+		8784D4541E817D13007A6867 /* ConversationListTopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListTopBar.swift; sourceTree = "<group>"; };
+		8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+TopBar.swift"; sourceTree = "<group>"; };
+		8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
 		8785CA5A1C567FCD00FD671C /* IconLabelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconLabelButton.h; sourceTree = "<group>"; };
 		8785CA5B1C567FCD00FD671C /* IconLabelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconLabelButton.m; sourceTree = "<group>"; };
 		878607021D33E3FF00971A19 /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
@@ -2265,7 +2270,7 @@
 		BFA25DC61D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ConversationInputBarViewController+Emoji.swift"; path = "Emoji/ConversationInputBarViewController+Emoji.swift"; sourceTree = "<group>"; };
 		BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiKeyboardViewController.swift; path = Emoji/EmojiKeyboardViewController.swift; sourceTree = "<group>"; };
 		BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Emojis.swift; path = Emoji/Emojis.swift; sourceTree = "<group>"; };
-		BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationList+Handles.swift"; sourceTree = "<group>"; };
+		BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Handles.swift"; sourceTree = "<group>"; };
 		BFAAB23C1DED8BB900CBC096 /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		BFAAB23E1DED95B100CBC096 /* ProfileHeaderViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewTests.swift; sourceTree = "<group>"; };
 		BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Transitions.swift"; sourceTree = "<group>"; };
@@ -2381,7 +2386,6 @@
 		F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTextViewCell.swift; sourceTree = "<group>"; };
 		F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecriptionHeaderView.swift; sourceTree = "<group>"; };
 		F15E9BFC1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopToPrevious.swift"; sourceTree = "<group>"; };
-		F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
 		F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlayTests.swift; sourceTree = "<group>"; };
 		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
@@ -2780,6 +2784,7 @@
 				CE8E4FC11DF17C240009F437 /* TextTransform.h */,
 				CE8E4FC31DF17CFE0009F437 /* NSString+TextTransform.h */,
 				CE8E4FC41DF17CFE0009F437 /* NSString+TextTransform.m */,
+				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -4248,7 +4253,6 @@
 				871BC0361D34F60700DF0793 /* NSDate+Format.m */,
 				871BC0371D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.h */,
 				871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */,
-				F186A5E31E2FACF5005611C6 /* CGFloat+Hairline.swift */,
 				871BC0391D34F60700DF0793 /* NSLayoutConstraint+Magic.h */,
 				871BC03A1D34F60700DF0793 /* NSLayoutConstraint+Magic.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
@@ -4513,11 +4517,13 @@
 				87302F461B15D4BF001F478C /* SearchView */,
 				875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */,
 				875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */,
-				BFAAB2381DEC6B2800CBC096 /* ConversationList+Handles.swift */,
+				BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */,
 				BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */,
+				8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */,
 				87371C181B7355C400807499 /* ConversationListViewController+StartUI.h */,
 				87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */,
 				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
+				8784D4541E817D13007A6867 /* ConversationListTopBar.swift */,
 				BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */,
 				BF606D741CAC16FF002BAC94 /* ToolTipViewController.swift */,
 				BF808B561DE71F3000718076 /* UserNameTakeOverViewController.swift */,
@@ -5528,6 +5534,7 @@
 				CE8E4FB31DF066EE0009F437 /* AudioProcessing.swift in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
 				1EE9DCC01B5F9A6D00E347DF /* PageControl.m in Sources */,
+				8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */,
 				54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */,
 				1E5E0D031B6B8EDB003B0CAC /* UIColor+Mixing.m in Sources */,
 				876113E71DD1DE89007F5969 /* ShareViewController.swift in Sources */,
@@ -5711,7 +5718,6 @@
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
-				F186A5E41E2FACF5005611C6 /* CGFloat+Hairline.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */,
 				16A7610B1ACC4BF000A999D0 /* RegistrationTextField.m in Sources */,
 				160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */,
@@ -5750,6 +5756,7 @@
 				168DDD041AFA81820056A5EF /* CheckmarkViewController.m in Sources */,
 				BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */,
 				871BC2761D34F8F800DF0793 /* UserImageView.m in Sources */,
+				8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */,
 				87302F4B1B15D6E6001F478C /* SearchViewController.m in Sources */,
 				871BC2311D34F8F800DF0793 /* Guidance.m in Sources */,
 				DBDA83911ADFB3F2000AD57D /* RegistrationPhoneFlowViewController.m in Sources */,
@@ -6062,7 +6069,7 @@
 				871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */,
 				8FC8549B199245770008B66B /* NetworkActivityViewController.m in Sources */,
 				BF1D5D021E55BA3D0063B4B4 /* Analytics+LocalSearch.swift in Sources */,
-				BFAAB2391DEC6B2800CBC096 /* ConversationList+Handles.swift in Sources */,
+				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,
 				875A23111ADEA1A200111C88 /* CountryCodeResultsTableViewController.m in Sources */,
@@ -6149,6 +6156,7 @@
 				871BC1261D34F7B700DF0793 /* ZiphyClient+Convenience.m in Sources */,
 				F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */,
 				8F8914191A9F287E0056AB0C /* UnreadIndicatorLayer.m in Sources */,
+				8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */,
 				871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */,
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,

@@ -29,6 +29,9 @@
 
 #import "UIView+Borders.h"
 #import "zmessaging+iOS.h"
+#import "Wire-Swift.h"
+
+@import Classy;
 
 NSString * const ConversationListItemDidScrollNotification = @"ConversationListItemDidScrollNotification";
 
@@ -42,9 +45,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @property (nonatomic, strong) UILabel *subtitleField;
 @property (nonatomic, strong) UIView *lineView;
 
-@property (nonatomic, assign) BOOL enableSubtitles;
-
-@property (nonatomic, strong) NSLayoutConstraint *titleBottomMarginConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *titleTopMarginConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *titleCenterConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *rightAccessoryWidthConstraint;
 
 @end
@@ -67,16 +69,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     return self;
 }
 
-- (instancetype)initWithSubtitlesEnabled:(BOOL)subtitlesEnabled
-{
-    self = [super init];
-    if (self) {
-        self.enableSubtitles = subtitlesEnabled;
-        [self setupConversationListItemView];
-    }
-    return self;
-}
-
 - (void)setupConversationListItemView
 {
     _selectionColor = [UIColor accentColor];
@@ -92,10 +84,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.rightAccessory = [[ListItemRightAccessoryView alloc] initForAutoLayout];
     [self addSubview:self.rightAccessory];
 
-    if (self.enableSubtitles) {
-        [self createSubtitleField];
-    }
-
+    [self createSubtitleField];
+    
     [self createConstraints];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -104,20 +94,16 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                                object:nil];
 }
 
-// Only called when enableSubtitles is set to YES
 - (void)createSubtitleField
 {
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
 
-    self.titleBottomMarginConstraint.constant = -42;
-
-    self.subtitleField.font = [UIFont fontWithMagicIdentifier:@"list.subtitle.font"];
     self.subtitleField.textColor = [UIColor colorWithMagicIdentifier:@"list.subtitle.color"];
     self.subtitleField.numberOfLines = 2;
     [self addSubview:self.subtitleField];
 
     self.lineView = [[UIView alloc] initForAutoLayout];
-    self.lineView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.07];
+    self.lineView.cas_styleClass = @"separator";
     [self addSubview:self.lineView];
 }
 
@@ -129,8 +115,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
     [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
     [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
-    self.titleBottomMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:18.0f];
-
+    self.titleTopMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:8.0f];
+    self.titleTopMarginConstraint.active = NO;
+    self.titleCenterConstraint = [self.titleField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    
     [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [self.rightAccessory autoSetDimension:ALDimensionHeight toSize:28.0f];
     [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
@@ -141,16 +129,14 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
     [self updateRightAccessoryWidth];
 
-    if (self.enableSubtitles) {
-        [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:2];
-        [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
-        [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.titleField];
+    [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:4];
+    [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
+    [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
 
-        [self.lineView autoSetDimension:ALDimensionHeight toSize:1.0];
-        [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:-35.0];
-        [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
-    }
+    [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
+    [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:-35.0];
+    [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
 }
 
 - (void)setTitleText:(NSString *)titleText
@@ -159,11 +145,17 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.titleField.attributedText = [self formattedTextForTitle:titleText withSelectionState:self.selected];
 }
 
-- (void)setSubtitleText:(NSString *)subtitleText
+- (void)setSubtitleAttributedText:(NSAttributedString *)subtitleAttributedText
 {
-    if (self.enableSubtitles) {
-        _subtitleText = subtitleText;
-        self.subtitleField.text = subtitleText ? subtitleText : @"";
+    _subtitleAttributedText = subtitleAttributedText;
+    self.subtitleField.attributedText = subtitleAttributedText;
+    if (subtitleAttributedText == nil) {
+        self.titleTopMarginConstraint.active = NO;
+        self.titleCenterConstraint.active = YES;
+    }
+    else {
+        self.titleCenterConstraint.active = NO;
+        self.titleTopMarginConstraint.active = YES;
     }
 }
 
@@ -171,16 +163,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     _selectionColor = selectionColor;
     [self updateAppearance];
-}
-
-- (CGFloat)titleBottomMargin
-{
-    return self.titleBottomMarginConstraint.constant;
-}
-
-- (void)setTitleBottomMargin:(CGFloat)titleBottomMargin
-{
-    self.titleBottomMarginConstraint.constant = titleBottomMargin;
 }
 
 - (void)setSelected:(BOOL)selected

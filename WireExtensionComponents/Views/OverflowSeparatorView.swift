@@ -44,7 +44,7 @@ import Classy
     
     override open var intrinsicContentSize: CGSize {
         get {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: 1.0 / UIScreen.main.scale)
+            return CGSize(width: UIViewNoIntrinsicMetric, height: .hairline)
         }
     }
     

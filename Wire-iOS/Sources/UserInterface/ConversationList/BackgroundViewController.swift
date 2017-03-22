@@ -52,9 +52,11 @@ final public class BackgroundViewController: UIViewController {
     }
     
     override open var prefersStatusBarHidden: Bool {
-        get {
-            return true
-        }
+        return false
+    }
+
+    open override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     private func configureViews() {

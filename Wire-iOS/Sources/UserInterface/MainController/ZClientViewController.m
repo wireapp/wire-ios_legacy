@@ -225,7 +225,6 @@
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     [self.conversationListViewController view];
-    self.conversationListViewController.enableExtras = [Settings sharedSettings].enableExtras;
 }
 
 #pragma mark - Public API
@@ -320,7 +319,6 @@
 
 - (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
-    
     ConversationRootViewController *conversationRootController = nil;
     if ([conversation isEqual:self.currentConversation]) {
         conversationRootController = (ConversationRootViewController *)self.conversationRootViewController;

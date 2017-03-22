@@ -22,7 +22,7 @@ import Cartography
 
 
 @objc enum ConversationListButtonType: UInt {
-    case contacts, archive, settings
+    case contacts, archive
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
@@ -35,10 +35,8 @@ import Cartography
     weak var delegate: ConversationListBottomBarControllerDelegate?
     
     let contactsButton = IconButton()
-    let settingsButton = IconButton()
     let archivedButton = IconButton()
     let contactsButtonContainer = UIView()
-    let settingsButtonContainer = UIView()
     let archivedButtonContainer = UIView()
     let separator = UIView()
     let indicator = UIView()
@@ -116,16 +114,12 @@ import Cartography
         archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
         archivedButton.addTarget(self, action: #selector(ConversationListBottomBarController.archivedButtonTapped(_:)), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
-        
-        settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
-        settingsButton.addTarget(self, action: #selector(ConversationListBottomBarController.settingsButtonTapped(_:)), for: .touchUpInside)
-        settingsButton.accessibilityIdentifier = "bottomBarSettingsButton"
 
         contactsButtonContainer.addSubview(contactsButton)
         archivedButtonContainer.addSubview(archivedButton)
         [indicator, separator, archivedButton].forEach { $0.isHidden = true }
-        [settingsButton, indicator].forEach(settingsButtonContainer.addSubview)
-        [settingsButtonContainer, contactsButtonContainer, archivedButtonContainer, separator].forEach(view.addSubview)
+        self.view.addSubview(indicator)
+        [contactsButtonContainer, archivedButtonContainer, separator].forEach(view.addSubview)
         
         accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] color, _ in
             if let `self` = self, let color = color, self.showTooltip {
@@ -155,30 +149,20 @@ import Cartography
         }
         
         constrain(view, archivedButtonContainer, archivedButton) { view, container, archivedButton in
-            container.center == view.center
-            container.top == view.top
-            container.bottom == view.bottom
-            
-            archivedButton.leading == container.leading + 18
-            archivedButton.trailing == container.trailing - 18
-            archivedButton.centerY == container.centerY
-        }
-        
-        constrain(view, settingsButtonContainer, settingsButton) { view, container, settingsButton in
             container.trailing == view.trailing
             container.top == view.top
             container.bottom == view.bottom
             
-            settingsButton.trailing == container.trailing - 24
-            settingsButton.leading == container.leading + 24
-            settingsButton.centerY == container.centerY
+            archivedButton.trailing == container.trailing - 24
+            archivedButton.leading == container.leading + 24
+            archivedButton.centerY == container.centerY
         }
         
-        guard let settingsImageView = settingsButton.imageView else {
-            fatalError("No imageView on settingsbutton despite we just assigned an icon")
+        guard let archivedImageView = archivedButton.imageView else {
+            fatalError("No imageView on archivedButton despite we just assigned an icon")
         }
         
-        constrain(indicator, settingsImageView) { indicator, imageView in
+        constrain(indicator, archivedImageView) { indicator, imageView in
             indicator.top == imageView.top - 3
             indicator.trailing == imageView.trailing + 3
             indicator.width == 8
@@ -203,10 +187,6 @@ import Cartography
     
     func contactsButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .contacts)
-    }
-    
-    func settingsButtonTapped(_ sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .settings)
     }
     
     func archivedButtonTapped(_ sender: IconButton) {

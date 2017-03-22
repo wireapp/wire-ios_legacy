@@ -278,8 +278,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.burstTimestampHeightConstraint = [self.burstLabelContainer autoSetDimension:ALDimensionHeight toSize:0];
     }];
 
-    CGFloat hairline = 1.0 / UIScreen.mainScreen.scale;
-    [self.burstLabelSeparatorView autoSetDimension:ALDimensionHeight toSize:hairline];
+    [self.burstLabelSeparatorView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
     [self.burstLabelSeparatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.burstLabelContainer];
     [self.burstLabelSeparatorView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.burstLabelSeparatorView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];

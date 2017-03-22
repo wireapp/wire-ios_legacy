@@ -20,13 +20,14 @@
 #import "ConversationListViewController.h"
 
 @class SearchViewController;
-
+@class ConversationListTopBar;
 
 @interface ConversationListViewController (Private)
 @property (nonatomic) SearchViewController *searchViewController;
 @property (nonatomic, weak, readonly) id<UserProfile> userProfile;
+@property (nonatomic) ConversationListTopBar *topBar;
 
 - (void)removeUserProfileObserver;
-
+- (void)presentSettings;
 @end
 

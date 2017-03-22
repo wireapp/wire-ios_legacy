@@ -224,11 +224,12 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)updateSubtitle
 {
-    if (! self.enableSubtitles) {
+    id<ZMConversationMessage> lastMessage = [self.conversation lastTextMessage];
+    
+    if (lastMessage == nil || lastMessage.sender.isSelfUser) {
+        self.itemView.subtitleAttributedText = nil;
         return;
     }
-    
-    id<ZMConversationMessage> lastMessage = [self.conversation lastTextMessage];
     
     NSString *content = [lastMessage.textMessageData.messageText stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
     NSString *subtitle = content;
@@ -236,7 +237,24 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     if (self.conversation.conversationType == ZMConversationTypeGroup) {
         subtitle = [NSString stringWithFormat:@"%@: %@", lastMessage.sender.displayName, content];
     }
-    self.itemView.subtitleText = subtitle ? subtitle : @"";
+    UIFont *textFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec"];
+    UIColor *dimmedColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:ColorSchemeVariantDark];
+    
+    NSDictionary *textAttributes = @{NSFontAttributeName: textFont,
+                                     NSForegroundColorAttributeName: dimmedColor};
+    
+    NSAttributedString *subtitleAttributed = [[NSAttributedString alloc] initWithString:subtitle
+                                                                             attributes:textAttributes];
+    
+    UIFont *usernameFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    
+    NSDictionary *nameAttributes = @{NSFontAttributeName: usernameFont,
+                                     NSForegroundColorAttributeName: dimmedColor};
+    
+    subtitleAttributed = [subtitleAttributed setAttributes:nameAttributes
+                                               toSubstring:lastMessage.sender.displayName];
+    
+    self.itemView.subtitleAttributedText = subtitleAttributed;
 }
 
 - (BOOL)canOpenDrawer
