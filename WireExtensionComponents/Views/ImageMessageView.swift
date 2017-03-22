@@ -126,7 +126,7 @@ import FLAnimatedImage
         self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
         
         constrain(self, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
-            userImageViewContainer.left == selfView.left
+            userImageViewContainer.leading == selfView.leading
             userImageViewContainer.width == 48
             userImageViewContainer.height == 24
             userImageViewContainer.top == selfView.top
@@ -136,13 +136,13 @@ import FLAnimatedImage
             userImageView.centerX == userImageViewContainer.centerX
             userImageView.width == userImageViewContainer.height
             
-            userNameLabel.left == userImageViewContainer.right
-            userNameLabel.right <= selfView.right
+            userNameLabel.leading == userImageViewContainer.trailing
+            userNameLabel.trailing <= selfView.trailing
             userNameLabel.centerY == userImageView.centerY
             
             imageView.top == userImageViewContainer.bottom + 12
-            imageView.left == userImageViewContainer.right
-            imageView.right == selfView.right
+            imageView.leading == userImageViewContainer.trailing
+            imageView.trailing == selfView.trailing
             selfView.bottom == imageView.bottom
             imageView.height >= 64
         }
