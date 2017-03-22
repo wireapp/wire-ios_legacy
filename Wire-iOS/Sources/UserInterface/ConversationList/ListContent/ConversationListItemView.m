@@ -29,6 +29,9 @@
 
 #import "UIView+Borders.h"
 #import "zmessaging+iOS.h"
+#import "Wire-Swift.h"
+
+@import Classy;
 
 NSString * const ConversationListItemDidScrollNotification = @"ConversationListItemDidScrollNotification";
 
@@ -100,7 +103,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self addSubview:self.subtitleField];
 
     self.lineView = [[UIView alloc] initForAutoLayout];
-    self.lineView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.07];
+    self.lineView.cas_styleClass = @"separator";
     [self addSubview:self.lineView];
 }
 
@@ -130,7 +133,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
     [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
 
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:1.0];
+    [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
     [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:-35.0];
     [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
