@@ -23,11 +23,12 @@
 #import <PureLayout/PureLayout.h>
 #import <Classy/Classy.h>
 
+
 @interface MockConversationListBottomBarDelegate : NSObject <ConversationListBottomBarControllerDelegate>
 @property (nonatomic) NSUInteger contactsButtonTapCount;
-@property (nonatomic) NSUInteger settingsButtonTapCount;
 @property (nonatomic) NSUInteger archiveButtonTapCount;
 @end
+
 
 @implementation MockConversationListBottomBarDelegate
 
@@ -46,11 +47,6 @@
         case ConversationListButtonTypeContacts:
             self.contactsButtonTapCount++;
             break;
-        case ConversationListButtonTypeSettings:
-            self.settingsButtonTapCount++;
-            break;
-        default:
-            break;
     }
 }
 
@@ -61,6 +57,7 @@
 @property (nonatomic) ConversationListBottomBarController *sut;
 @property (nonatomic) MockConversationListBottomBarDelegate *mockDelegate;
 @end
+
 
 @implementation ConversationListBottomBarTests
 
@@ -155,19 +152,6 @@
     
     // then
     XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 1lu);
-    XCTAssertEqual(self.mockDelegate.settingsButtonTapCount, 0lu);
-    XCTAssertEqual(self.mockDelegate.archiveButtonTapCount, 0lu);
-    
-}
-
-- (void)testThatItCallsTheDelegateWhenTheSettingsButtonIsTapped
-{
-    // when
-    [self.sut.settingsButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
-    // then
-    XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 0lu);
-    XCTAssertEqual(self.mockDelegate.settingsButtonTapCount, 1lu);
     XCTAssertEqual(self.mockDelegate.archiveButtonTapCount, 0lu);
 }
 
@@ -178,9 +162,7 @@
     
     // then
     XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 0lu);
-    XCTAssertEqual(self.mockDelegate.settingsButtonTapCount, 0lu);
     XCTAssertEqual(self.mockDelegate.archiveButtonTapCount, 1lu);
 }
-
 
 @end

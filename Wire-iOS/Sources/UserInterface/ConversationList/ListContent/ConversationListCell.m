@@ -42,7 +42,7 @@
 #import "ZClientViewController.h"
 #import "AccentColorChangeHandler.h"
 #import "AnimatedListMenuView.h"
-
+#import "Wire-Swift.h"
 
 
 static const CGFloat MaxVisualDrawerOffsetRevealDistance = 48;
@@ -197,6 +197,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         _conversation = conversation;
         
         [self updateAppearance];
+        self.itemView.avatarView.conversation = conversation;
     }
 }
 

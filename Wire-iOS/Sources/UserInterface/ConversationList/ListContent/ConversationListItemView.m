@@ -39,8 +39,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 @interface ConversationListItemView ()
 
+@property (nonatomic, strong, readwrite) ConversationListAvatarView *avatarView;
 @property (nonatomic, strong, readwrite) ConversationListIndicator *statusIndicator;
 @property (nonatomic, strong, readwrite) ListItemRightAccessoryView *rightAccessory;
+@property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) UILabel *titleField;
 @property (nonatomic, strong) UILabel *subtitleField;
 @property (nonatomic, strong) UIView *lineView;
@@ -77,9 +79,15 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.titleField.numberOfLines = 1;
     self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
     [self addSubview:self.titleField];
-    
+
+    self.avatarContainer = [[UIView alloc] initForAutoLayout];
+    [self addSubview:self.avatarContainer];
+
+    self.avatarView = [[ConversationListAvatarView alloc] initForAutoLayout];
+    [self.avatarContainer addSubview:self.avatarView];
+
     self.statusIndicator = [[ConversationListIndicator alloc] initForAutoLayout];
-    [self addSubview:self.statusIndicator];
+//    [self addSubview:self.statusIndicator]; // TODO
     
     self.rightAccessory = [[ListItemRightAccessoryView alloc] initForAutoLayout];
     [self addSubview:self.rightAccessory];
@@ -99,7 +107,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
 
     self.subtitleField.textColor = [UIColor colorWithMagicIdentifier:@"list.subtitle.color"];
-    self.subtitleField.numberOfLines = 2;
+    self.subtitleField.numberOfLines = 1;
     [self addSubview:self.subtitleField];
 
     self.lineView = [[UIView alloc] initForAutoLayout];
@@ -110,8 +118,11 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)createConstraints
 {
     CGFloat leftMargin = [WAZUIMagic floatForIdentifier:@"list.left_margin"];
-    [self.statusIndicator autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
-    [self.statusIndicator autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
+    [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
+    [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
+
+    [self.avatarView autoCenterInSuperview];
+    [self.avatarView autoSetDimensionsToSize:CGSizeMake(24, 24)];
 
     [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
     [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
