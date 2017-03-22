@@ -362,7 +362,7 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
-    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(20, 0, 0, 0) excludingEdge:ALEdgeBottom];
+    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(IS_IPAD ? 0 : 20, 0, 0, 0) excludingEdge:ALEdgeBottom];
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.contentContainer];
     [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     
