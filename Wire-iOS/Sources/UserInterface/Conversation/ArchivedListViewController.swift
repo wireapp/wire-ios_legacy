@@ -36,25 +36,16 @@ import Cartography
     let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     let swipeIdentifier = "ArchivedList"
     let viewModel = ArchivedListViewModel()
-    var initialSyncCompleted: Bool = false
     
     weak var delegate: ArchivedListViewControllerDelegate?
     
     required init() {
         super.init(nibName: nil, bundle: nil)
-        ZMUserSession.addInitalSyncCompletionObserver(self)
         viewModel.delegate = self
         createViews()
         createConstraints()
-        if let initialSyncCompleted = ZMUserSession.shared()?.initialSyncOnceCompleted {
-            self.initialSyncCompleted = initialSyncCompleted.boolValue
-        }
     }
     
-    deinit {
-        ZMUserSession.removeInitalSyncCompletionObserver(self)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -127,29 +118,16 @@ extension ArchivedListViewController: UICollectionViewDataSource {
     
 }
 
-// MARK: - ZMInitialSyncCompletionObserver
-
-extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
-    
-    func initialSyncCompleted(_ notification: Notification!) {
-        initialSyncCompleted = true
-        collectionView.reloadData()
-    }
-    
-}
-
 // MARK: - ArchivedListViewModelDelegate
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
     internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
   
-        guard initialSyncCompleted else { return }
         applyChangesClosure()
         collectionView.reloadData()
     }
     
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
-        guard initialSyncCompleted else { return }
         guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
             change.unreadCountChanged || change.connectionStateChanged || change.isSilencedChanged else { return }
         for case let cell as ConversationListCell in collectionView.visibleCells where cell.conversation == change.conversation {

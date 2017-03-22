@@ -88,9 +88,6 @@
 
 @end
 
-@interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
-@end
-
 
 
 @interface ConversationListViewController () <UIGestureRecognizerDelegate>
@@ -148,7 +145,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
 }
 
 - (void)removeUserProfileObserver
@@ -178,7 +174,6 @@
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
 
-    [ZMUserSession addInitalSyncCompletionObserver:self];
     self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
     [self createNoConversationLabel];
