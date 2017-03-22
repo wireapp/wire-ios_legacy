@@ -135,8 +135,7 @@
     self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.splitViewController.view];
     
-    CGFloat topInset = self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad ? 20 : 0;
-    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(topInset, 0, 0, 0)];
+    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     [self.splitViewController didMoveToParentViewController:self];
     
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
@@ -200,7 +199,7 @@
         }
     }
     else {
-        return UIStatusBarStyleLightContent;
+        return UIStatusBarStyleDefault;
     }
 }
 

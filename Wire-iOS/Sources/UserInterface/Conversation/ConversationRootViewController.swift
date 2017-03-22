@@ -73,7 +73,7 @@ import Cartography
             navigationSeparator.right == customNavBar.right
             
             customNavBar.top == view.top
-            customNavBar.height == CGFloat(UIDevice.current.userInterfaceIdiom == .pad ? 44 : 64)
+            customNavBar.height == 64
             customNavBar.left == view.left
             customNavBar.right == view.right
             
