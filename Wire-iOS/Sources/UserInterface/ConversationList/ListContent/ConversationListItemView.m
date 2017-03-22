@@ -87,8 +87,9 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.avatarContainer addSubview:self.avatarView];
 
     self.statusIndicator = [[ConversationListIndicator alloc] initForAutoLayout];
-//    [self addSubview:self.statusIndicator]; // TODO
-    
+    self.statusIndicator.hidden = YES;
+    [self addSubview:self.statusIndicator];
+
     self.rightAccessory = [[ListItemRightAccessoryView alloc] initForAutoLayout];
     [self addSubview:self.rightAccessory];
 
@@ -135,6 +136,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
     self.rightAccessoryWidthConstraint = [self.rightAccessory autoSetDimension:ALDimensionWidth toSize:0.0f];
 
+    [self.statusIndicator autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    [self.statusIndicator autoSetDimension:ALDimensionHeight toSize:28.0f];
+    [self.statusIndicator autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
+    
     [self.rightAccessory setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [self.titleField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 
@@ -217,17 +222,19 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     if (muteVoiceAndLandscape) {
         // If we are showing the mute button and in landscape, don't show the button
         self.rightAccessoryWidthConstraint.constant = 0;
-        [self.rightAccessory setHidden:YES];
+        self.rightAccessory.hidden = YES;
     } else if (self.rightAccessoryType == ConversationListRightAccessoryJoinCall) {
-        self.rightAccessory.hidden = NO;
         self.rightAccessoryWidthConstraint.active = NO;
+        self.rightAccessory.hidden = NO;
     } else if (self.rightAccessoryType == ConversationListRightAccessoryNone) {
         self.rightAccessoryWidthConstraint.constant = 0;
-        [self.rightAccessory setHidden:YES];
+        self.rightAccessory.hidden = YES;
     } else {
-        [self.rightAccessory setHidden:NO];
         self.rightAccessoryWidthConstraint.constant = 28.0f;
+        self.rightAccessory.hidden = NO;
     }
+    
+    self.statusIndicator.hidden = !self.rightAccessory.hidden;
 }
 
 - (void)updateForCurrentOrientation
