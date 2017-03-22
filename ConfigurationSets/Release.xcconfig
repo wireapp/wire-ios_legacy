@@ -29,6 +29,8 @@ CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Distribution: Wire Swiss GmbH (EDF3JC
 DEVELOPMENT_TEAM = EDF3JCE8BC
 PROVISIONING_PROFILE_SPECIFIER_APP = iOS Store Distribution com.wearezeta.zclient.ios
 PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT = iOS Store Share Extension
+PROVISIONING_PROFILE_SPECIFIER_IMGNOTIFICATION_EXT = iOS Store Image Provisioning Profile
+
 
 CODE_SIGN_ENTITLEMENTS_APP = Wire-iOS/Entitlements-Prod.entitlements
 CODE_SIGN_ENTITLEMENTS_SHARE_EXT = Wire-Sharing-Extension-iOS/Wire-Sharing-Extension-iOS.entitlements

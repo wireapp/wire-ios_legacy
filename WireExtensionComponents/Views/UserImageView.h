@@ -16,9 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-@import WireExtensionComponents;
-#import <zmessaging/zmessaging.h>
+@import ZMCDataModel;
+#import "AvatarImageView.h"
+#import "AccentColorProvider.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,32 +32,26 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 };
 
 @class UserImageView;
+@class ZMUserSession;
+
 
 @protocol UserImageViewDelegate <NSObject>
-
 @optional
 - (void)userImageViewTouchUpInside:(UserImageView *)userImageView;
-
 @end
-
-
 
 @interface UserImageView : AvatarImageView <ZMUserObserver>
 
-@property (nonatomic, nullable) id<ZMBareUser, ZMSearchableUser> user;
+@property (nonatomic, nullable) id<ZMBareUser, AccentColorProvider> user;
+@property (nonatomic) ZMUserSession *userSession;
 @property (nonatomic) BOOL shouldDesaturate;
 @property (nonatomic) BOOL indicatorEnabled;
-@property (nonatomic) BOOL borderColorMatchesAccentColor;
 
-@property (nonatomic) UserImageViewSize suggestedImageSize;
+@property (nonatomic) UserImageViewSize size;
 @property (nonatomic, weak, nullable) id<UserImageViewDelegate> delegate;
 
-- (instancetype)initWithMagicPrefix:(NSString *)magicPrefix;
+- (instancetype)initWithSize:(UserImageViewSize)size;
 
-@end
-
-@interface UserImageView (Magic)
-- (void)setupWithMagicPrefix:(NSString *)magicPrefix;
 @end
 
 NS_ASSUME_NONNULL_END

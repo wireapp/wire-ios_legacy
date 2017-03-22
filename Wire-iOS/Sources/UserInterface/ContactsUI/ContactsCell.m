@@ -21,6 +21,7 @@
 #import "BadgeUserImageView.h"
 #import <PureLayout/PureLayout.h>
 #import "zmessaging+iOS.h"
+#import "UserImageView+Magic.h"
 @import WireExtensionComponents;
 
 
@@ -84,7 +85,7 @@ NS_ASSUME_NONNULL_END
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.userImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"address_book"];
-    self.userImageView.suggestedImageSize = UserImageViewSizeTiny;
+    self.userImageView.size = UserImageViewSizeTiny;
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.userImageView];
     

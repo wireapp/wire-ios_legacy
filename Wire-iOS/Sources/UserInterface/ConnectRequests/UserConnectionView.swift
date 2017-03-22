@@ -71,7 +71,7 @@ public final class UserConnectionView: UIView, Copyable {
 
         self.userImageView.accessibilityLabel = "user image"
         self.userImageView.shouldDesaturate = false
-        self.userImageView.suggestedImageSize = .big
+        self.userImageView.size = .big
         self.userImageView.user = self.user
         
         [self.labelContainer, self.userImageView].forEach(self.addSubview)

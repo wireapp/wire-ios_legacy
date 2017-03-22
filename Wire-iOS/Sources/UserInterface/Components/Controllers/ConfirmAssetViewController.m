@@ -23,12 +23,11 @@
 #import <Classy/Classy.h>
 @import AVKit;
 @import AVFoundation;
+@import FLAnimatedImage;
 #import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "FLAnimatedImage.h"
-#import "FLAnimatedImageView.h"
 #import "Constants.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"

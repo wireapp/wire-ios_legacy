@@ -13,3 +13,4 @@ github "wireapp/VIMNetworking" "v6.0.2-wire-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
 github "wireapp/wire-ios-canvas" ~> 2.0.0
 github "wireapp/HockeySDK-iOS" "4.1.3-swift3.0.2"
+github "wireapp/FLAnimatedImage" "1.0.12-wire"

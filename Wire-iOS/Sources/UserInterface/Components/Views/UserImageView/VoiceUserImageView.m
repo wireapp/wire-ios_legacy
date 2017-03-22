@@ -27,6 +27,8 @@
 #import "CALayer+EasyAnimation.h"
 #import "UIColor+WAZExtensions.h"
 
+@import WireExtensionComponents;
+
 @interface VoiceUserImageView ()
 
 @property (nonatomic) VoiceIndicatorLayer *voicePrebakedAnimationLayer;
@@ -136,7 +138,7 @@
     self.userConnectingLayer.circleColor = [(id)self.user accentColor];
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     [super setUser:user];
     

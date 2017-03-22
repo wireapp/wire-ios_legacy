@@ -61,6 +61,7 @@
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
 #import "Country.h"
+#import "UserImageView+Magic.h"
 #import "CameraPreviewView.h"
 #import "VoiceChannelCollectionViewLayout.h"
 

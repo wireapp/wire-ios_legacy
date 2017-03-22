@@ -79,7 +79,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) ProfileViewControllerContext context;
-@property (nonatomic) id<ZMBareUser, ZMSearchableUser> bareUser;
+@property (nonatomic) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> bareUser;
 @property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic) UserImageView *userImageView;
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @implementation ProfileDetailsViewController
 
-- (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     self = [super initWithNibName:nil bundle:nil];
     
@@ -141,7 +141,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     
     self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"profile.user_image"];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.userImageView.suggestedImageSize = UserImageViewSizeBig;
+    self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
     [self.userImageViewContainer addSubview:self.userImageView];
 }

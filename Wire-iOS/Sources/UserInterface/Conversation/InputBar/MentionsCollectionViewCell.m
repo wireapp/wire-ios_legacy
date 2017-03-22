@@ -22,6 +22,7 @@
 #import "UIView+Borders.h"
 #import "UIFont+MagicAccess.h"
 #import <PureLayout/PureLayout.h>
+#import "UserImageView+Magic.h"
 
 
 @interface MentionsLabel : UILabel

@@ -18,8 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
-#import "FLAnimatedImage.h"
-
+@import FLAnimatedImage;
 
 
 @protocol MediaAsset <NSObject>

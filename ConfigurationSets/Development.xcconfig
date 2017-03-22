@@ -28,6 +28,7 @@ CODE_SIGN_IDENTITY = iPhone Developer
 DEVELOPMENT_TEAM = W5KEQBF9B5
 PROVISIONING_PROFILE_SPECIFIER_APP = Wire Alpha Development
 PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT = Wire Alpha Development Share Ext
+PROVISIONING_PROFILE_SPECIFIER_IMGNOTIFICATION_EXT = Wire Alpha Development Image Notification
 
 CODE_SIGN_ENTITLEMENTS_APP = Wire-iOS/Entitlements-Dev.entitlements
 CODE_SIGN_ENTITLEMENTS_SHARE_EXT = Wire-Sharing-Extension-iOS/Wire-Sharing-Extension-iOS.entitlements

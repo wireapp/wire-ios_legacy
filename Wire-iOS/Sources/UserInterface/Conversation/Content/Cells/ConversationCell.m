@@ -31,6 +31,7 @@
 #import "AccentColorChangeHandler.h"
 #import "Analytics+iOS.h"
 #import "UIResponder+FirstResponder.h"
+#import "UserImageView+Magic.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -169,9 +170,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.authorImageView.delegate = self;
-    self.authorImageView.borderColorMatchesAccentColor = NO;
-    self.authorImageView.borderWidth = 0.5f;
-    self.authorImageView.borderColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorAvatarBorder];
+    
     self.authorImageView.layer.shouldRasterize = YES;
     self.authorImageView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     [self.authorImageContainer addSubview:self.authorImageView];

@@ -29,6 +29,7 @@
 
 #import <PureLayout/PureLayout.h>
 
+#import "Wire-Swift.h"
 
 
 typedef void (^AnimationBlock)(id, NSInteger);
