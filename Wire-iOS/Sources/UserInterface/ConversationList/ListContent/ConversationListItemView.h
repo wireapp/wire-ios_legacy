@@ -21,6 +21,7 @@
 #import "ListItemRightAccessoryView.h"
 
 @class ConversationListIndicator;
+@class ConversationListAvatarView;
 
 FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 
@@ -33,6 +34,7 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, copy) NSString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
+@property (nonatomic, strong, readonly) ConversationListAvatarView *avatarView;
 @property (nonatomic, readonly) ConversationListIndicator *statusIndicator;
 @property (nonatomic, strong, readonly) ListItemRightAccessoryView *rightAccessory;
 

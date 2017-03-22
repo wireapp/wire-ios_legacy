@@ -26,7 +26,8 @@ import Cartography
     let separatorView = UIView()
     let titleLabel = UILabel()
     let dismissButton = IconButton()
-    let barHeight: CGFloat = 44
+    private let barHeight: CGFloat = 44
+    private let statusbarHeight: CGFloat = 20
 
     var dismissButtonHandler: (()->())? = .none
     
@@ -62,9 +63,10 @@ import Cartography
             separator.right == view.right
             separator.bottom == view.bottom
             
-            title.center == view.center
+            title.centerX == view.centerX
+            title.centerY == view.centerY + statusbarHeight / 2
             
-            button.centerY == view.centerY
+            button.centerY == title.centerY
             button.right == view.right - 16
             button.left >= title.right + 8
         }
@@ -75,7 +77,7 @@ import Cartography
     }
     
     override var intrinsicContentSize : CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight)
+        return CGSize(width: UIViewNoIntrinsicMetric, height: barHeight + statusbarHeight)
     }
     
 }
