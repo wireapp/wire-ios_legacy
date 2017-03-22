@@ -25,10 +25,16 @@ import WireExtensionComponents
 final public class BackgroundViewController: UIViewController {
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
-    private var blurView: UIVisualEffectView!
+    private var statusBarBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
+    private var statusBarBlurViewHeightConstraint: NSLayoutConstraint!
     private let user: ZMBareUser
     private let userSession: ZMUserSession?
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     public init(user: ZMBareUser, userSession: ZMUserSession?) {
         self.user = user
@@ -36,6 +42,8 @@ final public class BackgroundViewController: UIViewController {
         super.init(nibName: .none, bundle: .none)
         
         self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: self.user)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusBarStyleChanged(_:)), name: UIApplication.wr_statusBarStyleChangeNotification, object: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -60,28 +68,45 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func configureViews() {
-        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        
         self.cropView.clipsToBounds = true
         
-        [imageView, blurView].forEach(self.cropView.addSubview)
+        [imageView, blurView, statusBarBlurView].forEach(self.cropView.addSubview)
         
         self.view.addSubview(self.cropView)
     }
     
     private func createConstraints() {
-        constrain(self.view, self.imageView, self.blurView, self.cropView) { selfView, imageView, blurView, cropView in
+        constrain(self.view, self.imageView, self.blurView, self.statusBarBlurView, self.cropView) { selfView, imageView, blurView, statusBarBlurView, cropView in
             cropView.top == selfView.top
             cropView.bottom == selfView.bottom
-            cropView.left == selfView.left - 100
-            cropView.right == selfView.right + 100
+            cropView.leading == selfView.leading - 100
+            cropView.trailing == selfView.trailing + 100
+
+            self.statusBarBlurViewHeightConstraint = statusBarBlurView.height == 0
+            statusBarBlurView.top == cropView.top
+            statusBarBlurView.leading == cropView.leading
+            statusBarBlurView.trailing == cropView.trailing
             
-            blurView.edges == cropView.edges
+            blurView.top == statusBarBlurView.bottom
+            
+            blurView.leading == cropView.leading
+            blurView.trailing == cropView.trailing
+            blurView.bottom == cropView.bottom
             imageView.edges == cropView.edges
         }
         
+        self.updateStatusBarBlurStyle()
+        
         self.blurView.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
         self.imageView.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+    }
+    
+    private func updateStatusBarBlurStyle() {
+        UIView.performWithoutAnimation {
+            self.statusBarBlurViewHeightConstraint.constant = UIApplication.shared.statusBarStyle == .default ? 20 : 0
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func updateForUser() {
@@ -120,6 +145,10 @@ final public class BackgroundViewController: UIViewController {
     fileprivate func setBackground(color: UIColor) {
         self.imageView.image = .none
         self.imageView.backgroundColor = color
+    }
+    
+    @objc public func statusBarStyleChanged(_ object: AnyObject!) {
+        updateStatusBarBlurStyle()
     }
 }
 
