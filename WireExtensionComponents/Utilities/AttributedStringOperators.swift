@@ -160,7 +160,25 @@ public extension NSAttributedString {
     func adding(font: UIFont, to substring: String) -> NSAttributedString {
         return addAttributes([NSFontAttributeName: font], toSubstring: substring)
     }
+}
 
+extension Sequence where Iterator.Element == NSAttributedString {
+    public func joined(separator: NSAttributedString) -> NSAttributedString {
+        let result = NSMutableAttributedString()
+        
+        var first = true
+        
+        self.forEach { string in
+            if !first {
+                result.append(separator)
+            }
+            result.append(string)
+            
+            first = false
+        }
+        
+        return NSAttributedString(attributedString: result)
+    }
 }
 
 public extension NSMutableAttributedString {

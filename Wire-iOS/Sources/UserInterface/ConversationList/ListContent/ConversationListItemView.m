@@ -165,7 +165,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     _subtitleAttributedText = subtitleAttributedText;
     self.subtitleField.attributedText = subtitleAttributedText;
-    if (subtitleAttributedText == nil) {
+    if (subtitleAttributedText.string.length == 0) {
         self.titleTopMarginConstraint.active = NO;
         self.titleCenterConstraint.active = YES;
     }
