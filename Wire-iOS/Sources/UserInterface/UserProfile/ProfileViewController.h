@@ -18,7 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
-
+@import WireExtensionComponents;
 
 
 @protocol ZMSearchableUser;
@@ -56,11 +56,11 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @interface ProfileViewController : UIViewController
 
-- (id)initWithUser:(id<ZMSearchableUser>)user context:(ProfileViewControllerContext)context;
-- (id)initWithUser:(id<ZMSearchableUser>)user conversation:(ZMConversation *)conversation;
-- (id)initWithUser:(id<ZMSearchableUser>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context;
+- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user context:(ProfileViewControllerContext)context;
+- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation;
+- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context;
 
-@property (nonatomic, readonly) id<ZMSearchableUser> bareUser;
+@property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
 @property (nonatomic, weak) id<ProfileViewControllerDelegate> delegate;
 @property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
 @property (nonatomic, assign) BOOL shouldDrawTopSeparatorLineDuringPresentation;

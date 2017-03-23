@@ -27,7 +27,4 @@
 @property (nonatomic, readonly) UIImageView *imageView;
 @property (nonatomic, readonly) UILabel *initials;
 
-@property (nonatomic) UIColor *borderColor;
-@property (nonatomic) CGFloat borderWidth;
-
 @end

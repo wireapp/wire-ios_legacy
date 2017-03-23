@@ -91,6 +91,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
         SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
+        SettingsPropertyName.callingConstantBitRate     : UserDefaultCallingConstantBitRate,
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
@@ -227,7 +228,7 @@ class SettingsPropertyFactory {
 
         case .disableSendButton:
             return SettingsBlockProperty(
-                propertyName: .disableSendButton,
+                propertyName: propertyName,
                 getAction: { _ in return SettingsPropertyValue(Settings.shared().disableSendButton) },
                 setAction: { _, value in
                     switch value {
@@ -240,7 +241,7 @@ class SettingsPropertyFactory {
             
         case .callingProtocolStrategy:
             return SettingsBlockProperty(
-                propertyName: .callingProtocolStrategy,
+                propertyName: propertyName,
                 getAction: { _ in return SettingsPropertyValue(Settings.shared().callingProtocolStrategy.rawValue) },
                 setAction: { _, value in
                     if case .number(let intValue) = value, let callingProtocolStrategy = CallingProtocolStrategy(rawValue: UInt(intValue)) {
@@ -250,7 +251,7 @@ class SettingsPropertyFactory {
             })
         case .lockApp:
             return SettingsBlockProperty(
-                propertyName: .lockApp,
+                propertyName: propertyName,
                 getAction: { _ in
                     guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
                             data.count != 0 else {
@@ -269,7 +270,7 @@ class SettingsPropertyFactory {
             })
         case .lockAppLastDate:
             return SettingsBlockProperty(
-                propertyName: .lockAppLastDate,
+                propertyName: propertyName,
                 getAction: { _ in
                     guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockAppLastDate.rawValue),
                         data.count != 0 else {
@@ -299,11 +300,21 @@ class SettingsPropertyFactory {
 
         case .sendV3Assets:
             return SettingsBlockProperty(
-                propertyName: .sendV3Assets,
+                propertyName: propertyName,
                 getAction: { _ in return SettingsPropertyValue(ExtensionSettings.shared.useAssetsV3) },
                 setAction: { _, value in
                     if case .number(let v3) = value {
                         ExtensionSettings.shared.useAssetsV3 = v3.boolValue
+                    }
+            })
+        
+        case .callingConstantBitRate:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().callingConstantBitRate) },
+                setAction: { _, value in
+                    if case .number(let enabled) = value {
+                        Settings.shared().callingConstantBitRate = enabled.boolValue
                     }
             })
             

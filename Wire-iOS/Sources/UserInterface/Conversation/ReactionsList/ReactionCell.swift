@@ -55,6 +55,8 @@ import Classy
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.userImageView.userSession = ZMUserSession.shared()
+        
         self.contentView.addSubview(self.userDisplayNameLabel)
         self.contentView.addSubview(self.usernameLabel)
         self.contentView.addSubview(self.userImageView)

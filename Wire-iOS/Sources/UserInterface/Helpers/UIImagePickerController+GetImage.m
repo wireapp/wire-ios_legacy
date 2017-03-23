@@ -23,7 +23,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "NSError+Zeta.h"
-#import "FLAnimatedImage.h"
+@import FLAnimatedImage;
 
 UIImageOrientation ImageOrientationFromAssetOrientation(ALAssetOrientation orientation);
 

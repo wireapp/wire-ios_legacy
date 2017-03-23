@@ -79,6 +79,7 @@
     
     if (self) {
         self.userImage = [[VoiceUserImageView alloc] initWithMagicPrefix:@"voice_overlay.user_image_view"];
+        self.userImage.userSession = [ZMUserSession sharedSession];
         self.userImage.translatesAutoresizingMaskIntoConstraints = NO;
         self.userImage.state = VoiceUserImageViewStateTalking;
         [self.contentView addSubview:self.userImage];

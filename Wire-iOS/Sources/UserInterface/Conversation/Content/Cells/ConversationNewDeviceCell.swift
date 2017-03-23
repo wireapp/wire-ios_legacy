@@ -71,7 +71,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         }
         
         self.labelView.addLinks()
-        self.labelView.accessibilityLabel = self.labelView.attributedText.string
+        self.labelView.accessibilityLabel = self.labelView.attributedText?.string
     }
     
     func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes){

@@ -26,8 +26,8 @@
 #import "ConfirmAssetViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "UIImagePickerController+GetImage.h"
-#import "FLAnimatedImage.h"
-#import "FLAnimatedImageView.h"
+@import FLAnimatedImage;
+
 #import "MediaAsset.h"
 
 #import "Wire-Swift.h"

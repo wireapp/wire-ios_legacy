@@ -29,6 +29,7 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Views
 #import <WireExtensionComponents/AvatarImageView.h>
+#import <WireExtensionComponents/UserImageView.h>
 #import <WireExtensionComponents/PageControl.h>
 #import <WireExtensionComponents/TextView.h>
 #import <WireExtensionComponents/TokenField.h>
@@ -76,3 +77,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/TextTransform.h>
 #import <WireExtensionComponents/NSString+TextTransform.h>
 #import <WireExtensionComponents/AVAsset+VideoConvert.h>
+#import <WireExtensionComponents/AccentColorProvider.h>
+#import <WireExtensionComponents/UIColor+WR_ColorScheme.h>
+

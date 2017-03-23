@@ -106,6 +106,7 @@
     self.messageLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 
     self.userImageView = [[ContrastUserImageView alloc] initWithMagicPrefix:@"notifications"];
+    self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.userInteractionEnabled = NO;
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.userImageView];

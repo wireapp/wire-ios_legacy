@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video turned off";
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "You must be online to call. Check your connection and try again.";
 "voice.degradation.new_self_device" = "You started using a new device.";
 "voice.degradation.new_user_device" = "%@ started using a new device.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Calls";
 "self.settings.callkit.caption" = "Share with iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Call";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";

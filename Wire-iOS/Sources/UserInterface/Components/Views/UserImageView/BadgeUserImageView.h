@@ -21,6 +21,7 @@
 
 #import "UserImageView.h"
 
+@import WireExtensionComponents;
 
 
 @interface BadgeUserImageView : UserImageView

@@ -365,8 +365,6 @@
 		<integer>3</integer>
 		<key>footer_button_size</key>
 		<integer>20</integer>
-		<key>tile_image_diameter</key>
-		<integer>80</integer>
 		<key>name_label_height</key>
 		<integer>12</integer>
 		<key>tile_name_spacing</key>
@@ -380,13 +378,6 @@
 		</array>
 		<key>text_transform</key>
 		<string>UPPER</string>
-		<key>badge_icon_color</key>
-		<array>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>1</integer>
-		</array>
 		<key>separator_line_color</key>
 		<array>
 			<integer>1</integer>
@@ -412,8 +403,6 @@
 		<integer>80</integer>
 		<key>tile_height</key>
 		<integer>116</integer>
-		<key>tile_name_vertical_spacing</key>
-		<integer>8</integer>
 		<key>user_initials_font</key>
 		<dict>
 			<key>font</key>

@@ -27,10 +27,6 @@
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UILabel *initials;
 
-
-@property (nonatomic) NSLayoutConstraint *initialsVerticalAlignmentConstraint;
-@property (nonatomic) BOOL initialConstraintsCreated;
-
 @end
 
 @implementation AvatarImageView
@@ -64,7 +60,17 @@
     [self createContainerView];
     [self createImageView];
     [self createInitials];
-    [self setNeedsUpdateConstraints];
+    
+    [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self.imageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self.initials autoCenterInSuperview];
+    
+    [self updateCornerRadius];
+}
+
+- (void)updateCornerRadius
+{
+    self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
 }
 
 - (void)createContainerView
@@ -89,44 +95,11 @@
     [self.containerView addSubview:self.initials];
 }
 
-- (void)updateConstraints
-{
-    if (! self.initialConstraintsCreated) {
-        [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.imageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.initials autoCenterInSuperview];
-
-        self.initialConstraintsCreated = YES;
-    }
-
-    [super updateConstraints];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
 
-    self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
-}
-
-- (void)setBorderWidth:(CGFloat)borderWidth
-{
-    self.containerView.layer.borderWidth = borderWidth;
-}
-
-- (CGFloat)borderWidth
-{
-    return self.containerView.layer.borderWidth;
-}
-
-- (void)setBorderColor:(UIColor *)borderColor
-{
-    self.containerView.layer.borderColor = borderColor.CGColor;
-}
-
-- (UIColor *)borderColor
-{
-    return [UIColor colorWithCGColor:self.containerView.layer.borderColor];
+    [self updateCornerRadius];
 }
 
 @end

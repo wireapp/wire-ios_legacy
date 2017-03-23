@@ -27,9 +27,7 @@
 // ui
 #import "UIView+Borders.h"
 #import "IconButton.h"
-
-#import "FLAnimatedImage.h"
-#import "FLAnimatedImageView.h"
+@import FLAnimatedImage;
 #import "MediaAsset.h"
 
 #import "AppDelegate.h"

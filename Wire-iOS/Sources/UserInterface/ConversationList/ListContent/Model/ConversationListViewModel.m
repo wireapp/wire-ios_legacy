@@ -74,16 +74,25 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 }
 
 /**
- * This updates a specific section in the model, by copying the contents locally.  Passing in a value of SectionIndexAll
- * updates all sections.  The reason why we need to keep local copies of the lists is that
- * we get separate notifications for each list, which means that an update to one can render the
- * collection view out of sync with the datasource
+ * This updates a specific section in the model, by copying the contents locally. 
+ * Passing in a value of SectionIndexAll updates all sections. The reason why we need to keep
+ * local copies of the lists is that we get separate notifications for each list, 
+ * which means that an update to one can render the collection view out of sync with the datasource.
  */
 - (void)updateSection:(SectionIndex)sectionIndex
 {
+    [self updateSection:sectionIndex withItems:nil];
+}
+
+- (void)updateSection:(SectionIndex)sectionIndex withItems:(NSArray *)items
+{
+    if (sectionIndex == SectionIndexAll && items != nil) {
+        NSAssert(true, @"Update for all sections with proposed items is not allowed.");
+    }
+    
     if (sectionIndex == SectionIndexContactRequests || sectionIndex == SectionIndexAll) {
         if ([SessionObjectCache sharedCache].pendingConnectionRequests.count > 0) {
-            self.inbox = @[self.contactRequestsItem];
+            self.inbox = items ? : @[self.contactRequestsItem];
         }
         else {
             self.inbox = @[];
@@ -92,7 +101,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
     if (sectionIndex == SectionIndexConversations || sectionIndex == SectionIndexAll) {
         // Make a new copy of the conversation list
-        self.conversations = [SessionObjectCache sharedCache].conversationList;
+        self.conversations = items ? : [SessionObjectCache sharedCache].conversationList;
     }
     
     
@@ -220,7 +229,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
             [self reloadConversationListViewModel];
         } else {
             NSArray *oldConversationList = [self.aggregatedItems sectionAtIndex:SectionIndexConversations];
-            NSArray *newConversationList = [SessionObjectCache sharedCache].conversationList.asArray;
+            NSArray *newConversationList = [[SessionObjectCache sharedCache].conversationList.asArray copy];
 
             if ([oldConversationList isEqualToArray:newConversationList]) {
                 return;
@@ -230,12 +239,20 @@ void debugLogUpdate (ConversationListChangeInfo *note);
             ZMOrderedSetState *endState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSetWithArray:newConversationList]];
             ZMOrderedSetState *updatedState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSet]];
             
-            ZMChangedIndexes *changedIndexes = [[ZMChangedIndexes alloc] initWithStartState:startState endState:endState updatedState:updatedState];
+            ZMChangedIndexes *changedIndexes = [[ZMChangedIndexes alloc] initWithStartState:startState
+                                                                                   endState:endState
+                                                                               updatedState:updatedState
+                                                                                   moveType:ZMSetChangeMoveTypeUICollectionView];
             
             if (changedIndexes.requiresReload) {
                 [self reloadConversationListViewModel];
             } else {
-                dispatch_block_t modelUpdates = ^{ [self updateSection:SectionIndexConversations]; };
+                // We need to capture the state of `newConversationList` to make sure that we are updating the value
+                // of the list to the exact new state.
+                // It is important to keep the data source of the collection view consistent, since
+                // any inconsistency in the delta update would make it throw an exception.
+                dispatch_block_t modelUpdates = ^{ [self updateSection:SectionIndexConversations
+                                                             withItems:newConversationList]; };
                 [self.delegate listViewModel:self didUpdateSection:SectionIndexConversations usingBlock:modelUpdates withChangedIndexes:changedIndexes];
             }
         }

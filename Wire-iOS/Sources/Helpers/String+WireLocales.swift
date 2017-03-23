@@ -21,11 +21,11 @@ import Foundation
 
 extension NSString {
     
-    var uppercasedWithCurrentLocale: String? {
+    var uppercasedWithCurrentLocale: String {
         return uppercased(with: NSLocale.current)
     }
     
-    var lowercasedWithCurrentLocale: String? {
+    var lowercasedWithCurrentLocale: String {
         return lowercased(with: NSLocale.current)
     }
     

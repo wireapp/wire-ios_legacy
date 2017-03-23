@@ -106,6 +106,16 @@
     return message;
 }
 
++ (MockMessage *)pendingImageMessage
+{
+    MockImageMessageData *imageData = [[MockImageMessageData alloc] init];
+    
+    MockMessage *message = [self imageMessage];
+    message.imageMessageData = imageData;
+    
+    return message;
+}
+
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType users:(NSUInteger)numUsers clients:(NSUInteger)numClients
 {
     MockMessage *message = [[MockMessage alloc] init];

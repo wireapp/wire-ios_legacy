@@ -25,6 +25,7 @@
 + (MockMessage *)pingMessage;
 + (MockMessage *)linkMessage;
 + (MockMessage *)imageMessage;
++ (MockMessage *)pendingImageMessage;
 + (MockMessage *)imageMessageWithImage:(UIImage *)image;
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType
                                  users:(NSUInteger)users

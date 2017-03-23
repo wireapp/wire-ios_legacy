@@ -134,7 +134,8 @@
     [self.badgeUserImageView removeFromSuperview];
 
     self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.search_results_mode"];
-    self.badgeUserImageView.suggestedImageSize = UserImageViewSizeTiny;
+    self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
+    self.badgeUserImageView.size = UserImageViewSizeTiny;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.badgeIconSize = ZetaIconSizeTiny;
 
@@ -208,7 +209,7 @@
     CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_image_diameter"];
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
-    self.badgeUserImageView.badgeColor = [UIColor colorWithMagicIdentifier:@"people_picker.search_results_mode.context_create_conversation.badge_icon_color"];
+    self.badgeUserImageView.badgeColor = [UIColor whiteColor];
 }
 
 - (void)prepareForReuse
@@ -333,7 +334,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     _user = user;
 
