@@ -176,11 +176,9 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
-    id <ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
     [self.analyticsTracker tagPictureChanged];
 
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        editableSelf.originalProfileImageData = selfImageData;
         [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
         [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
     }];
