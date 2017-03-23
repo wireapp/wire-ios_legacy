@@ -82,6 +82,7 @@
     [self.badgeUserImageView removeFromSuperview];
 
     self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.top_conversations_mode"];
+    self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
     self.badgeUserImageView.size = UserImageViewSizeSmall;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.userInteractionEnabled = NO;
@@ -129,7 +130,7 @@
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
     
-    self.badgeUserImageView.badgeColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.badge_icon_color"];
+    self.badgeUserImageView.badgeColor = [UIColor whiteColor];
 }
 
 - (void)prepareForReuse

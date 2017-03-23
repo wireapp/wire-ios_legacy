@@ -69,6 +69,8 @@ internal class SearchResultCountBadge: UIView {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.userImageView.userSession = ZMUserSession.shared()
+        
         self.accessibilityIdentifier = "search result cell"
         
         self.contentView.addSubview(self.footerView)

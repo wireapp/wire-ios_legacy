@@ -168,6 +168,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.contentView addSubview:self.authorImageContainer];
     
     self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.authorImageView.userSession = [ZMUserSession sharedSession];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.authorImageView.delegate = self;
     

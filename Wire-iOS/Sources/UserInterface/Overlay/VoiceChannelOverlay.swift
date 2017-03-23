@@ -210,6 +210,8 @@ class VoiceChannelOverlay: UIView {
     var leaveButtonPinRightConstraint: NSLayoutConstraint?
     
     init(frame: CGRect, callingConversation: ZMConversation) {
+        self.callingUserImage.userSession = ZMUserSession.shared()
+        self.callingTopUserImage.userSession = ZMUserSession.shared()
         self.callingConversation = callingConversation
         self.participantsCollectionViewLayout = VoiceChannelCollectionViewLayout()
         self.participantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: participantsCollectionViewLayout)

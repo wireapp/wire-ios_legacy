@@ -230,7 +230,10 @@ void debugLogUpdate (ConversationListChangeInfo *note);
             ZMOrderedSetState *endState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSetWithArray:newConversationList]];
             ZMOrderedSetState *updatedState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSet]];
             
-            ZMChangedIndexes *changedIndexes = [[ZMChangedIndexes alloc] initWithStartState:startState endState:endState updatedState:updatedState];
+            ZMChangedIndexes *changedIndexes = [[ZMChangedIndexes alloc] initWithStartState:startState
+                                                                                   endState:endState
+                                                                               updatedState:updatedState
+                                                                                   moveType:ZMSetChangeMoveTypeUICollectionView];
             
             if (changedIndexes.requiresReload) {
                 [self reloadConversationListViewModel];
