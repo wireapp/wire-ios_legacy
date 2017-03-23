@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Видео выключено";
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
+"voice.status.cbr" = "Постоянный битрейт";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
 "voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
 "voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Звонки";
 "self.settings.callkit.caption" = "Поделиться с iOS";
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если Вы используете iCloud, история звонков будет передана Apple. Перезапустите Wire, чтобы изменения вступили в силу.";
+
+"self.settings.vbr.title" = "Кодирование с переменным битрейтом";
+"self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";

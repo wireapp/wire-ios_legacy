@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "تم إيقاف الفيديو";
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
 "voice.degradation.new_self_device" = "بدأت باستخدام جهاز جديد.";
 "voice.degradation.new_user_device" = "%@ بدأ باستخدام جهاز جديد.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "المكالمات";
 "self.settings.callkit.caption" = "مشاركة بواسطة iOS";
 "self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple. أعد تشغيل Wire لتطبيق هذا الإعداد.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
 "self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";

@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video is uitgeschakeld";
 "voice.status.low_connection" = "Slechte verbinding";
 "voice.network_error.title" = "Geen verbinding met internet";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Je moet online zijn om te bellen. Controleer je verbinding en probeer opnieuw.";
 "voice.degradation.new_self_device" = "Je gebruikt een nieuw apparaat.";
 "voice.degradation.new_user_device" = "%@ is een ander apparaat gaan gebruiken.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Oproepen";
 "self.settings.callkit.caption" = "Deel met iOS";
 "self.settings.callkit.description" = "Toon Wire-gesprekken op het toegangsscherm en in de iOS gespreksgeschiedenis. Als iCloud aan staat wordt de oproepgeschiedenis bewaard bij Apple. Herstart Wire om deze instelling toe te passen.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire oproep";
 "self.settings.sound_menu.sounds.wire_message" = "Wire bericht";

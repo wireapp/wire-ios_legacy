@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video kapandı";
 "voice.status.low_connection" = "Kötü bağlantı";
 "voice.network_error.title" = "Internet bağlantısı yok";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Arama yapmak için çevrimiçi olmanız gerekir. Bağlantınızı kontrol edin ve yeniden deneyin.";
 "voice.degradation.new_self_device" = "Yeni bir cihaz kullanmaya başladın.";
 "voice.degradation.new_user_device" = "%@ yeni bir cihaz kullanmaya başladı.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Aramalar";
 "self.settings.callkit.caption" = "iOS ile Paylaş";
 "self.settings.callkit.description" = "Wire aramalarını kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktif ise, arama geçmişi Apple ile paylaşılacaktır. Bu ayarı uygulamak için Wire'ı yeniden başlatın.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Araması";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Mesajı";

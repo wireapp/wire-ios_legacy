@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video slået fra";
 "voice.status.low_connection" = "Dårlig forbindelse";
 "voice.network_error.title" = "Ingen internetforbindelse";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Du skal være online for at foretage opkald. Tjek din forbindelse og prøv igen.";
 "voice.degradation.new_self_device" = "Du begyndte at bruge en ny enhed.";
 "voice.degradation.new_user_device" = "%@ begyndte at bruge en ny enhed.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Opkald";
 "self.settings.callkit.caption" = "Del med iOS";
 "self.settings.callkit.description" = "Vis tråd opfordrer låsen skærmen og i iOS opkald historie. Hvis iCloud er aktiveret, delt Opkaldshistorie med Apple. Genstart Wire for at anvende denne indstilling.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Opkald";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Besked";

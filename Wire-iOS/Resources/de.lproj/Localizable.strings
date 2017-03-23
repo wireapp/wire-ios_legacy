@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video deaktiviert";
 "voice.status.low_connection" = "Schlechte Verbindung";
 "voice.network_error.title" = "Keine Internetverbindung";
+"voice.status.cbr" = "Konstante Bitrate";
 "voice.network_error.body" = "Du brauchst eine Internetverbindung, um anzurufen. Überprüfe die Verbindung und versuche es erneut.";
 "voice.degradation.new_self_device" = "Du hast ein neues Gerät hinzugefügt.";
 "voice.degradation.new_user_device" = "%@ hat ein neues Gerät hinzugefügt.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
 "self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt. Die Aktivierung dieser Einstellung erfordert einen Neustart von Wire.";
+
+"self.settings.vbr.title" = "Variable Bitrate";
+"self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Anruf";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Nachricht";

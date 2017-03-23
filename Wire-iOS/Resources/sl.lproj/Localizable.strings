@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video je izklopljen";
 "voice.status.low_connection" = "Slaba povezava";
 "voice.network_error.title" = "Ni spletne povezave";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Morate biti na spletu za klicanje. Preverite vašo povezavo in poizkusite ponovno.";
 "voice.degradation.new_self_device" = "Začeli ste z uporabo nove naprave.";
 "voice.degradation.new_user_device" = "%@ je začel(-a) z uporabo nove naprave.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Klici";
 "self.settings.callkit.caption" = "Deli z iOS";
 "self.settings.callkit.description" = "Prikaže Wire klice na zaklenjenem zaslonu in v iOS zgodovini klicev. Če je omogočen iCloud, je zgodovina klicev deljena z Apple. Znova zaženite Wire za uporabo te nastavitve.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Klic";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sporočilo";

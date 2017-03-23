@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "视频关闭";
 "voice.status.low_connection" = "连接质量不佳";
 "voice.network_error.title" = "没有互联网讯号";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "使用语音通话，您必须连接到互联网。请检查您的网路然后重试。";
 "voice.degradation.new_self_device" = "您开始使用新的设备。";
 "voice.degradation.new_user_device" = "%@ 开始使用新的设备。";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "通话";
 "self.settings.callkit.caption" = "与iOS分享";
 "self.settings.callkit.description" = "在屏幕锁界面与手机通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将与Apple服务器同步。重新启动Wire来启动该功能。";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 通话";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 信息";
