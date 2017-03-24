@@ -27,5 +27,6 @@
 @property (nonatomic, readonly) UIImageView *imageView;
 @property (nonatomic, readonly) UILabel *initials;
 @property (nonatomic, getter=isCircular) BOOL circular;
+@property (nonatomic) BOOL showInitials;
 
 @end

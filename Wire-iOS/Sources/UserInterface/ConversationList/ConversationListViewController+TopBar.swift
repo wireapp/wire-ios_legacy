@@ -36,7 +36,7 @@ extension ConversationListViewController {
         
         let titleLabel = UILabel()
 
-        titleLabel.font = FontSpec(.medium, .medium).font!
+        titleLabel.font = FontSpec(.medium, .semibold).font
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         titleLabel.text = "list.title".localized.uppercased()
         

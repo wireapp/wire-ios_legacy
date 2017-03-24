@@ -132,7 +132,7 @@ import Cartography
         constrain(view, contactsButton, separator) { view, contactsButton, separator in
             view.height == heightConstant ~ 750
             
-            separator.height == 0.5
+            separator.height == .hairline
             separator.leading == view.leading
             separator.trailing == view.trailing
             separator.top == view.top

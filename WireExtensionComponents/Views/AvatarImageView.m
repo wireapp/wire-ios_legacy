@@ -58,6 +58,7 @@
 - (void)setup
 {
     _circular = YES;
+    _showInitials = YES;
     [self createContainerView];
     [self createImageView];
     [self createInitials];
@@ -103,6 +104,18 @@
     [super layoutSubviews];
 
     [self updateCornerRadius];
+}
+
+- (void)setShowInitials:(BOOL)showInitials
+{
+    _showInitials = showInitials;
+    if (self.showInitials) {
+        [self addSubview:self.initials];
+        [self.initials autoCenterInSuperview];
+    }
+    else {
+        [self.initials removeFromSuperview];
+    }
 }
 
 @end

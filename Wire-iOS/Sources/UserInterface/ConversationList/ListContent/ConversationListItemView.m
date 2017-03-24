@@ -73,8 +73,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)setupConversationListItemView
 {
-    _selectionColor = [UIColor accentColor];
-    
     self.titleField = [[UILabel alloc] initForAutoLayout];
     self.titleField.numberOfLines = 1;
     self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -158,7 +156,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)setTitleText:(NSString *)titleText
 {
     _titleText = titleText;
-    self.titleField.attributedText = [self formattedTextForTitle:titleText withSelectionState:self.selected];
+    self.titleField.text = titleText;
 }
 
 - (void)setSubtitleAttributedText:(NSAttributedString *)subtitleAttributedText
@@ -175,17 +173,12 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     }
 }
 
-- (void)setSelectionColor:(UIColor *)selectionColor
-{
-    _selectionColor = selectionColor;
-    [self updateAppearance];
-}
-
 - (void)setSelected:(BOOL)selected
 {
     if (_selected != selected) {
         _selected = selected;
-        [self updateAppearance];
+        
+        self.backgroundColor = self.selected ? [UIColor colorWithWhite:0 alpha:0.08] : [UIColor clearColor];
     }
 }
 
@@ -249,45 +242,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)updateAppearance
 {
-    self.titleField.attributedText = [self formattedTextForTitle:self.titleText withSelectionState:self.selected];
-    UIColor *textColor = [self colorForSelectionState:self.selected];
-    self.subtitleField.textColor = [textColor colorWithAlphaComponent:0.7];
-    self.statusIndicator.foregroundColor = self.selectionColor;
-}
-
-- (NSAttributedString *)formattedTextForTitle:(NSString *)title withSelectionState:(BOOL)selected
-{
-    if (title == nil) {
-        title = @"";
-    }
-    
-    return [[NSAttributedString alloc] initWithString:title attributes:[self textAttributesWithSelectionState:selected]];
-}
-
-- (NSDictionary *)textAttributesWithSelectionState:(BOOL)selected
-{
-    UIFont *textFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
-    UIColor *textColor = [self colorForSelectionState:selected];
-    
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName: textFont,
-                                 NSForegroundColorAttributeName: textColor,
-                                 };
-    return attributes;
-}
-
-- (UIColor *)colorForSelectionState:(BOOL)selected
-{
-    UIColor *textColor = nil;
-    
-    if (selected) {
-        textColor = self.selectionColor;
-    }
-    else {
-        textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
-    }
-    
-    return textColor;
+    self.titleField.text = self.titleText;
+    self.statusIndicator.foregroundColor = [UIColor accentColor];
 }
 
 #pragma mark - Observer

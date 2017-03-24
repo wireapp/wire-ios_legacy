@@ -40,7 +40,6 @@
 #import "UIView+Borders.h"
 
 #import "ZClientViewController.h"
-#import "AccentColorChangeHandler.h"
 #import "AnimatedListMenuView.h"
 #import "Wire-Swift.h"
 
@@ -62,10 +61,8 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 @property (nonatomic, strong) NSLayoutConstraint *archiveRightMarginConstraint;
 
-@property (nonatomic, strong) AccentColorChangeHandler *accentColorHandler;
 @property (nonatomic) AnimatedListMenuView *animatedListView;
 @property (nonatomic) NSDate *overscrollStartDate;
-
 
 @end
 
@@ -110,10 +107,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [self.animatedListView enable1PixelBlueBorder];
 
     self.itemView.rightAccessory.delegate = self;
-    
-    self.accentColorHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConversationListCell *cell) {
-        cell.itemView.selectionColor = newColor;
-    }];
     
     [self setNeedsUpdateConstraints];
     

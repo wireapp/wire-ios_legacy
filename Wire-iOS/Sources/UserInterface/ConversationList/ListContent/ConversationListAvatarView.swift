@@ -88,7 +88,7 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        if conversation.activeParticipants.count < 2 {
+        if conversation.activeParticipants.count <= 2 || conversation.conversationType != .group {
             self = .one
         }
         else if conversation.activeParticipants.count <= 5 {
@@ -100,20 +100,26 @@ extension Mode {
     }
 }
 
-final public class GroupConversationAvatarView: UIView {
+final public class ConversationListAvatarView: UIView {
 
     public var conversation: ZMConversation? = .none {
         didSet {
-            guard let conversation = self.conversation, conversation.activeParticipants.count > 0 else {
+            guard let conversation = self.conversation else {
                 return
             }
+            
+            let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
+            guard stableRandomParticipants.count > 0 else {
+                return
+            }
+            
             self.mode = Mode(conversation: conversation)
             
-            let stableRandomParticipants = conversation.stableRandomParticipants
             var index: Int = 0
             self.userImages().forEach {
+                $0.userSession = ZMUserSession.shared()
                 $0.size = .tiny
-                $0.initials.removeFromSuperview()
+                $0.showInitials = (self.mode == .one)
                 $0.isCircular = false
                 $0.user = stableRandomParticipants[index]
                 index = index + 1
@@ -199,91 +205,7 @@ final public class GroupConversationAvatarView: UIView {
     }
 
     private func updateCornerRadius() {
-        layer.cornerRadius = 8
+        layer.cornerRadius = self.conversation?.conversationType == .group ? 8 : layer.bounds.width / 2.0
     }
 }
 
-
-@objc public final class ConversationListAvatarView: UIView {
-
-    fileprivate enum AvatarMode {
-        case oneOnOne(ZMUser?), group
-    }
-
-    public var conversation: ZMConversation? {
-        didSet {
-            updateViewVisibility()
-            updateAlpha()
-        }
-    }
-
-    public lazy var userImageView: UserImageView = {
-        return UserImageView()
-    }()
-    public let groupImageView = GroupConversationAvatarView()
-
-    init() {
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
-        updateViewVisibility()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override public var intrinsicContentSize: CGSize {
-        return CGSize(width: 24, height: 24)
-    }
-
-    private func setupViews() {
-        [userImageView, groupImageView].forEach(addSubview)
-        groupImageView.isHidden = true
-    }
-
-    private func createConstraints() {
-        constrain(self, userImageView, groupImageView) { view, userImageView, groupImageView in
-            userImageView.edges == view.edges
-            userImageView.size == view.size
-            groupImageView.edges == view.edges
-        }
-    }
-
-    private func updateViewVisibility() {
-        guard let conversation = conversation else { return }
-        let mode = conversation.avatarMode
-        
-        switch mode {
-        case .oneOnOne(let user):
-            userImageView.isHidden = false
-            groupImageView.isHidden = true
-            userImageView.user = user
-        case .group:
-            groupImageView.isHidden = false
-            userImageView.isHidden = true
-            groupImageView.conversation = conversation
-        }
-    }
-
-    private func updateAlpha() {
-        guard let type = conversation?.conversationType else { return }
-        switch type {
-        case .oneOnOne, .group: alpha = 1
-        case .connection: alpha = 0.5
-        default: return
-        }
-    }
-}
-
-
-fileprivate extension ZMConversation {
-
-    var avatarMode: ConversationListAvatarView.AvatarMode {
-        switch conversationType {
-        case .group:
-            return .group
-        default: return .oneOnOne(connection?.to)
-        }
-    }
-}

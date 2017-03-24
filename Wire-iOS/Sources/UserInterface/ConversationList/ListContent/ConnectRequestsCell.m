@@ -29,7 +29,6 @@
 #import "NSString+WAZUIMagic.h"
 
 #import "zmessaging+iOS.h"
-#import "AccentColorChangeHandler.h"
 #import "Constants.h"
 
 
@@ -38,7 +37,6 @@
 @property (nonatomic, strong) ConversationListItemView *itemView;
 @property (nonatomic, assign) BOOL hasCreatedInitialConstraints;
 @property (nonatomic, assign) NSUInteger currentConnectionRequestsCount;
-@property (nonatomic, strong) AccentColorChangeHandler *accentColorHandler;
 @property (nonatomic) id conversationListObserverToken;
 
 @end
@@ -63,10 +61,6 @@
     [self addSubview:self.itemView];
     [self updateAppearance];
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
-    
-    self.accentColorHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConnectRequestsCell *cell) {
-        cell.itemView.selectionColor = newColor;
-    }];
     
     [self setNeedsUpdateConstraints];
 }
