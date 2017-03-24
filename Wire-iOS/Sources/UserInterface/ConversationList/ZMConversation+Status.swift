@@ -197,8 +197,12 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString {
         if status.isSilenced {
-            let resultString = matchedTypes.filter { status.unreadMessagesByType[$0] > 0 }.map {
-                String(format: (localizationSilencedRootPath + "." + matchedTypesDescriptions[$0]!).localized, status.unreadMessagesByType[$0] ?? 0)
+            let resultString = matchedTypes.filter { status.unreadMessagesByType[$0] > 0 }.flatMap {
+                guard let localizationKey = matchedTypesDescriptions[$0] else {
+                    return .none
+                }
+                
+                return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.unreadMessagesByType[$0] ?? 0)
                 }.joined(separator: ", ")
             
             return resultString && type(of: self).regularStyle()
@@ -206,11 +210,12 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
         else {
             guard let message = status.unreadMessages.last,
                     let sender = message.sender,
-                    let type = StatusMessageType(message: message) else {
+                    let type = StatusMessageType(message: message),
+                    let localizationKey = matchedTypesDescriptions[type] else {
                 return "" && type(of: self).regularStyle()
             }
             
-            let messageDescription = String(format: (localizationRootPath + "." + matchedTypesDescriptions[type]!).localized, message.textMessageData?.messageText ?? "")
+            let messageDescription = String(format: (localizationRootPath + "." + localizationKey).localized, message.textMessageData?.messageText ?? "")
             
             if status.isGroup {
                 return ((sender.displayName(in: conversation) + ": ") && type(of: self).emphasisStyle()) +
