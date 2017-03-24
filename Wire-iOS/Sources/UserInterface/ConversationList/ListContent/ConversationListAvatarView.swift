@@ -144,7 +144,7 @@ final public class ConversationListAvatarView: UIView {
             return [imageViewLeftTop, imageViewRightTop]
             
         case .four:
-            return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightTop]
+            return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
         }
     }
     
