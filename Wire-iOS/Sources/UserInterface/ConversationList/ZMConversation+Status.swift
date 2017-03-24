@@ -324,7 +324,7 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
     
-    return [BlockedMatcher(), CallingMatcher(), TypingMatcher(), newMessageMatcher, silencedMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
+    return [BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
 }()
 
 extension ConversationStatus {
