@@ -112,7 +112,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self addSubview:self.subtitleField];
 
     self.lineView = [[UIView alloc] initForAutoLayout];
-    self.lineView.cas_styleClass = @"separator";
+    self.lineView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.08f];
     [self addSubview:self.lineView];
 }
 

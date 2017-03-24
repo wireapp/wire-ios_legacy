@@ -27,15 +27,11 @@ internal protocol ConversationStatusMatcher {
 
 extension ConversationStatusMatcher {
     static func regularStyle() -> [String: AnyObject] {
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        let regularFontSpec = FontSpec(.small, .light)
-        return [NSFontAttributeName: fontScheme.font(for: regularFontSpec)!]
+        return [NSFontAttributeName: FontSpec(.small, .light).font!]
     }
     
     static func emphasisStyle() -> [String: AnyObject] {
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        let regularFontSpec = FontSpec(.small, .medium)
-        return [NSFontAttributeName: fontScheme.font(for: regularFontSpec)!]
+        return [NSFontAttributeName: FontSpec(.small, .medium).font!]
     }
 }
 

@@ -35,7 +35,8 @@ extension ConversationListViewController {
         self.view.addSubview(self.topBar)
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec")
+
+        titleLabel.font = FontSpec(.medium, .medium).font!
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         titleLabel.text = "list.title".localized.uppercased()
         

@@ -57,6 +57,7 @@
 
 - (void)setup
 {
+    _circular = YES;
     [self createContainerView];
     [self createImageView];
     [self createInitials];
@@ -70,7 +71,9 @@
 
 - (void)updateCornerRadius
 {
-    self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+    if (self.circular) {
+        self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+    }
 }
 
 - (void)createContainerView
