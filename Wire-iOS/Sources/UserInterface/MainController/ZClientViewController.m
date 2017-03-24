@@ -635,7 +635,7 @@
 - (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController
 {
     return splitViewController.rightViewController != nil &&
-           splitViewController.leftViewController == self.conversationListViewController &&
+           splitViewController.leftViewController == self.backgroundViewController &&
            self.conversationListViewController.state == ConversationListStateConversationList &&
            (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
 }
