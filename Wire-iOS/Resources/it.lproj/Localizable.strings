@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video spento";
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
+"voice.status.cbr" = "Bit Rate costante";
 "voice.network_error.body" = "È necessario essere online per chiamare. Controlla la connessione e riprova.";
 "voice.degradation.new_self_device" = "Hai iniziato a usare un nuovo dispositivo.";
 "voice.degradation.new_user_device" = "%@ ha iniziato a usare un nuovo dispositivo.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Chiamate";
 "self.settings.callkit.caption" = "Condividi con iOS";
 "self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
+
+"self.settings.vbr.title" = "Codifica con Bit Rate variabile";
+"self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chiamata Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Messaggio Wire";

@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Video on välja lülitatud";
 "voice.status.low_connection" = "Kehv ühendus";
 "voice.network_error.title" = "Ühendus puudub";
+"voice.status.cbr" = "Ühtlane bitisagedus";
 "voice.network_error.body" = "Helistamiseks pead online olema. Kontrolli ühendust ja proovi uuesti.";
 "voice.degradation.new_self_device" = "Sa hakkasid uut seadet kasutama.";
 "voice.degradation.new_user_device" = "%@ hakkas uut seadet kasutama.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Kõned";
 "self.settings.callkit.caption" = "Jaga iOS-s";
 "self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja seadme kõnede ajaloos. Kui sul on iCloud sisse lülitatud, siis saadetakse kõnede ajalugu Apple'i serveritesse. Seadistuse rakendamiseks tuleb Wire taaskäivitada.";
+
+"self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
+"self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Kõne";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sõnum";
