@@ -21,6 +21,21 @@ import XCTest
 import Cartography
 @testable import Wire
 
+private let accentColors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
+
+extension Array where Element: ZMUser {
+
+    func assignRandomAccentColors() {
+        var index = 0
+        for user in self {
+            user.accentColorValue = accentColors[index % accentColors.count]
+            user.connection = ZMConnection.insertNewSentConnection(to: user)
+            user.connection!.status = .accepted
+            
+            index = index + 1
+        }
+    }
+}
 
 class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
 
@@ -31,7 +46,6 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         sut = ConversationListAvatarView()
     }
     
-    let colors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
 
     func testThatItRendersSingleUserImage() {
         otherUser.accentColorValue = .strongLimeGreen
@@ -47,29 +61,15 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
         
-        var index: Int = 0
-        conversation?.activeParticipants.forEach { user in
-            let user = user as! ZMUser
-            user.accentColorValue = self.colors[index % self.colors.count]
-            user.connection = ZMConnection.insertNewSentConnection(to: user)
-            user.connection!.status = .accepted
-            index = index + 1
-        }
+        (conversation?.activeParticipants.array as! [ZMUser]).assignRandomAccentColors()
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersManyUsers() {
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
-        var index: Int = 0
-        conversation?.activeParticipants.forEach { user in
-            let user = user as! ZMUser
-            user.accentColorValue = self.colors[index % self.colors.count]
-            user.connection = ZMConnection.insertNewSentConnection(to: user)
-            user.connection!.status = .accepted
-
-            index = index + 1
-        }
+        
+        (conversation?.activeParticipants.array as! [ZMUser]).assignRandomAccentColors()
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }
