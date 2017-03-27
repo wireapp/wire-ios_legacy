@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Відео вимкнено";
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
 "voice.degradation.new_self_device" = "Ви почали використовувати новий пристрій.";
 "voice.degradation.new_user_device" = "%@ почав(-ла) використовувати новий пристрій.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії iOS. Якщо сервіс iCloud активовано, то історія ваших дзвінків буде доступна для Apple. Перезапустіть Wire, щоб застосувати зміну цієї опції.";
+
+"self.settings.vbr.title" = "Змінний бітрейт";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";

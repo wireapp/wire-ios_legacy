@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "ビデオ通話がオフになっています";
 "voice.status.low_connection" = "接続不良";
 "voice.network_error.title" = "インターネット接続がありません";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "オンラインにしてから通話する必要が有ります。接続を確認してもう一度やり直して下さい。";
 "voice.degradation.new_self_device" = "新しいデバイスを使い始めました";
 "voice.degradation.new_user_device" = "%@が新しいデバイスを使い始めました。";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "通話";
 "self.settings.callkit.caption" = "iOSで共有する";
 "self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示する。もしiCloudが有効である場合、通話履歴はAppleに共有されます。この設定を適用するためにはWireを再起動してください。";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
 "self.settings.sound_menu.sounds.wire_message" = "Wireメッセージ";

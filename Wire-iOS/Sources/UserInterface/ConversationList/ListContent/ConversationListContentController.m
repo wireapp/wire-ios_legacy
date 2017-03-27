@@ -61,13 +61,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
 
-@property (nonatomic) ProgressSpinner *initialSyncSpinner;
-@property (nonatomic) BOOL initialSyncCompleted;
-
-@end
-
-@interface ConversationListContentController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
-
 @end
 
 @interface ConversationListContentController (ConversationListCellDelegate) <ConversationListCellDelegate>
@@ -83,7 +76,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
 }
 
 - (instancetype)init
@@ -92,8 +84,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
-        [ZMUserSession addInitalSyncCompletionObserver:self];
-        self.initialSyncCompleted = [[[ZMUserSession sharedSession] initialSyncOnceCompleted] boolValue];
         StopWatch *stopWatch = [StopWatch stopWatch];
         StopWatchEvent *loadContactListEvent = [stopWatch stopEvent:@"LoadContactList"];
         if (loadContactListEvent) {
@@ -110,7 +100,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     self.listViewModel = [[ConversationListViewModel alloc] init];
     self.listViewModel.delegate = self;
     [self setupViews];
-    [self createInitialConstraints];
     
     if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
         [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
@@ -150,45 +139,21 @@ static NSString * const CellReuseIdConversation = @"CellId";
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = NO;
     self.clearsSelectionOnViewWillAppear = NO;
-    
-    self.initialSyncSpinner = [[ProgressSpinner alloc] initForAutoLayout];
-    self.initialSyncSpinner.animating = ! self.initialSyncCompleted && [SessionObjectCache sharedCache].conversationList.count == 0;
-    [self.view addSubview:self.initialSyncSpinner];
-}
-
-- (void)createInitialConstraints
-{
-     [self.initialSyncSpinner autoCenterInSuperview];
 }
 
 - (void)listViewModelShouldBeReloaded
 {
-    if (! self.initialSyncCompleted) {
-        return;
-    }
-
     [self reload];
 }
 
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section
 {
-    if (! self.initialSyncCompleted) {
-        return;
-    }
-
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
     [self ensureCurrentSelection];
 }
 
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSection:(NSUInteger)section usingBlock:(dispatch_block_t)updateBlock withChangedIndexes:(ZMChangedIndexes *)changedIndexes
 {
-    if (! self.initialSyncCompleted) {
-        return;
-    }
-
-    // NOTE: we ignore all "update" notifications, since we get too many (it breaks the collection view) and they
-    // are unnecessary since the cells update themselves.
-    
     // If we are about to delete the currently selected conversation, select a different one
     NSArray *selectedItems = [self.collectionView indexPathsForSelectedItems];
     [selectedItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -273,10 +238,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change
 {
-    if (! self.initialSyncCompleted) {
-        return;
-    }
-
     if (change.isArchivedChanged ||
         change.conversationListIndicatorChanged ||
         change.nameChanged ||
@@ -322,15 +283,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
         return YES;
     }
     return NO;
-}
-
-- (void)setInitialSyncCompleted:(BOOL)initialSyncCompleted
-{
-    BOOL shouldReload = _initialSyncCompleted == NO && initialSyncCompleted == YES;
-    _initialSyncCompleted = initialSyncCompleted;
-    if (shouldReload) {
-        [self reload];
-    }
 }
 
 - (BOOL)selectModelItem:(id)itemToSelect
@@ -408,10 +360,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)reload
 {
-    if (! self.initialSyncCompleted) {
-        return;
-    }
-    
     [self.collectionView reloadData];
     [self ensureCurrentSelection];
     
@@ -516,17 +464,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsZero;
-}
-
-@end
-
-@implementation ConversationListContentController (InitialSyncObserver)
-
-- (void)initialSyncCompleted:(NSNotification *)notification
-{
-    self.initialSyncSpinner.animating = NO;
-    [self.listViewModel updateSection:SectionIndexAll];
-    self.initialSyncCompleted = YES;
 }
 
 @end

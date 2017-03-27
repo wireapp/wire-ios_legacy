@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Vidéo désactivée";
 "voice.status.low_connection" = "Mauvaise connexion";
 "voice.network_error.title" = "Pas de connexion Internet";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Vous devez être connecté pour pouvoir appeler. Vérifiez votre connexion et réessayez.";
 "voice.degradation.new_self_device" = "Vous avez commencé à utiliser un nouvel appareil.";
 "voice.degradation.new_user_device" = "%@ a commencé à utiliser un nouvel appareil.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Appels";
 "self.settings.callkit.caption" = "Partager avec iOS";
 "self.settings.callkit.description" = "Afficher les appels Wire sur l'écran de vérouillage et dans l'historique des appels sur iOS. Si iCloud est activé, l'historique des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre soit appliqué.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "Cela fait que les appels audio utilisent moins de données et fonctionnent mieux sur des réseaux plus lents. Désactiver pour utiliser le Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";

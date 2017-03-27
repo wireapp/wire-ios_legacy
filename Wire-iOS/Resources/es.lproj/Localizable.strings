@@ -308,6 +308,7 @@
 "voice.status.video_not_available" = "Vídeo desactivado";
 "voice.status.low_connection" = "Mala conexión";
 "voice.network_error.title" = "No hay conexión a Internet";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Debes estar en línea para llamar. Comprueba tu conexión y vuelve a intentarlo.";
 "voice.degradation.new_self_device" = "Se comenzó a utilizar un nuevo dispositivo.";
 "voice.degradation.new_user_device" = "%@ comenzó a utilizar un dispositivo nuevo.";
@@ -566,6 +567,9 @@
 "self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
 "self.settings.callkit.caption" = "A pantalla completa";
 "self.settings.callkit.description" = "Esta opción muestra las notificaciones de (vídeo)llamadas de Wire como una llamada normal en la pantalla bloqueada y en el historial de llamadas del teléfono. Con iCloud activado, el historial de llamadas se almacena en los servidores de Apple. Necesitas reiniciar Wire tras modificar esta opción.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";
