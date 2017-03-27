@@ -499,16 +499,16 @@ ConversationRootViewController {
     }
 }
 
+NewDevicesDot {
+    backgroundColor: $color-accent-current;
+    layer: @{
+        cornerRadius: 4.0;
+    }
+}
+
 ConversationListBottomBarController {
     view: @{
         backgroundColor: clear;
-    }
-    
-    indicator: @{
-        backgroundColor: $color-accent-current;
-        layer: @{
-            cornerRadius: 4.0;
-        }
     }
     
     contactsButton: @{

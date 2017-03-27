@@ -23,12 +23,25 @@ import Cartography
 extension ConversationListViewController {
     
     public func createTopBar() {
+
         let settingsButton = IconButton()
         
         settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
         settingsButton.addTarget(self, action: #selector(settingsButtonTapped(_:)), for: .touchUpInside)
         settingsButton.accessibilityIdentifier = "bottomBarSettingsButton"
         settingsButton.setIconColor(.white, for: .normal)
+        
+        if let imageView = settingsButton.imageView, let user = ZMUser.selfUser() {
+            let newDevicesDot = NewDevicesDot(user: user)
+            settingsButton.addSubview(newDevicesDot)
+            
+            constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
+                newDevicesDot.top == imageView.top - 3
+                newDevicesDot.trailing == imageView.trailing + 3
+                newDevicesDot.width == 8
+                newDevicesDot.height == 8
+            }
+        }
         
         self.topBar = ConversationListTopBar()
         

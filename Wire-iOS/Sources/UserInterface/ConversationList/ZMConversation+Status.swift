@@ -35,7 +35,7 @@ extension ConversationStatusMatcher {
     }
 }
 
-internal enum StatusMessageType {
+internal enum StatusMessageType: Int {
     case text
     case link
     case image
@@ -372,7 +372,7 @@ extension ZMConversation {
         let unreadMessagesByType = { () -> [StatusMessageType : UInt] in 
             var unreadMessagesByType = [StatusMessageType: UInt]()
             
-            iterateEnum(StatusMessageType.self).forEach { type in
+            StatusMessageType.allValues.forEach { type in
                 let total = self.unreadMessagesTypes.filter {
                         $0 == type
                     }.count

@@ -19,10 +19,13 @@
 
 import Cartography
 
+/// Source of random values.
 public protocol RandomGenerator {
     func rand<ContentType>() -> ContentType
 }
 
+/// Generates the pseudorandom values from the data given.
+/// @param data the source of random values.
 final class RandomGeneratorFromData: RandomGenerator {
     public let source: Data
     private var step: Int = 0
@@ -38,12 +41,13 @@ final class RandomGeneratorFromData: RandomGenerator {
         }
         step = step + 1
         
-        return result// ^ ContentType(Int(step / source.count))
+        return result
     }
 
 }
 
 extension RandomGeneratorFromData {
+    /// Use UUID as plain data to generate random value.
     convenience init(uuid: UUID) {
         self.init(data: (uuid as NSUUID).data()!)
     }
@@ -67,6 +71,8 @@ extension Array {
 }
 
 extension ZMConversation {
+    /// Stable random list of the participants in the conversation. The list would be consistent between platforms
+    /// because the conversation UUID is used as the random indexes source.
     var stableRandomParticipants: [ZMUser] {
         let allUsers = self.activeParticipants.array as! [ZMUser]
         guard let remoteIdentifier = self.remoteIdentifier else {
@@ -81,8 +87,17 @@ extension ZMConversation {
 
 
 fileprivate enum Mode {
+    /// 1-2 participants in conversation:
+    /// / AA \
+    /// \ AA /
     case one
+    /// 3-4 participants in conversation
+    /// / AB \
+    /// \ AB /
     case two
+    /// 5+ participants in conversation
+    /// / AB \
+    /// \ CD /
     case four
 }
 

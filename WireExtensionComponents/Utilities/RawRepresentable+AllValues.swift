@@ -18,12 +18,15 @@
 
 import Foundation
 
-public func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
-    var i = 0
-    return AnyIterator {
-        let next = withUnsafeBytes(of: &i) { $0.load(as: T.self) }
-        if next.hashValue != i { return nil }
-        i += 1
-        return next
+extension RawRepresentable where RawValue == Int {
+    public static var allValues: [Self] {
+        var index = 0
+        var values = [Self]()
+        while let value = Self(rawValue: index) {
+            values.append(value)
+            index += 1
+        }
+        
+        return values
     }
 }
