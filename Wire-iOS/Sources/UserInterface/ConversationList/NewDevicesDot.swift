@@ -35,6 +35,7 @@ final class NewDevicesDot: UIView {
         self.backgroundColor = user.accentColorValue.color
         userObserverToken = UserChangeInfo.add(observer: self, forBareUser: user)
         self.createClientObservers()
+        self.updateIndicator()
     }
     
     required init?(coder aDecoder: NSCoder) {
