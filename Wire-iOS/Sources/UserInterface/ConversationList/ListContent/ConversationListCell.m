@@ -192,7 +192,8 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 {
     MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
     
-    if (mediaPlaybackManager.activeMediaPlayer != nil) {
+    if (mediaPlaybackManager.activeMediaPlayer != nil &&
+        mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation == self.conversation) {
         [self toggleMediaPlayer];
     }
     else {
