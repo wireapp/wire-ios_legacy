@@ -29,7 +29,6 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConversationListAvatarView()
-        self.recordMode = true
     }
     
     let colors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
