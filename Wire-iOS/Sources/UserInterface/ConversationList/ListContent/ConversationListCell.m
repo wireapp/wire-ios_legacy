@@ -93,9 +93,8 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
     
-    [self.itemView.rightAccessory addTarget:self
-                                     action:@selector(onRightAccessorySelected:)
-                           forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onRightAccessorySelected:)];
+    [self.itemView.rightAccessory addGestureRecognizer:tapGestureRecognizer];
     [self.swipeView addSubview:self.itemView];
 
     AnimatedListMenuView *animatedView = [[AnimatedListMenuView alloc] initForAutoLayout];

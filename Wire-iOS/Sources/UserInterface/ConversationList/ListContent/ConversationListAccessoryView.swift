@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final internal class ConversationListAccessoryView: UIButton {
+final internal class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
@@ -32,6 +32,7 @@ final internal class ConversationListAccessoryView: UIButton {
     let typingView = UIImageView()
     let textLabel = UILabel()
     let iconView = UIImageView()
+    var collapseWidthConstraint: NSLayoutConstraint!
     
     init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
@@ -61,7 +62,10 @@ final internal class ConversationListAccessoryView: UIButton {
             badgeView.height == 20
             badgeView.edges == selfView.edges
             typingView.edges == selfView.edges ~ LayoutPriority(750)
+            selfView.width >= 32 ~ LayoutPriority(999)
+            self.collapseWidthConstraint = selfView.width == 0
         }
+        self.collapseWidthConstraint.isActive = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -115,11 +119,14 @@ final internal class ConversationListAccessoryView: UIButton {
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
+        self.collapseWidthConstraint.isActive = false
+        
         switch self.icon {
         case .none:
             self.badgeView.isHidden = true
             self.typingView.isHidden = true
-            
+            self.collapseWidthConstraint.isActive = true
+
             return
         case .activeCall(_):
             self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color

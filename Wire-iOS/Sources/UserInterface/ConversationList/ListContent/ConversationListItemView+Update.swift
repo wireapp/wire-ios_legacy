@@ -32,8 +32,16 @@ extension ConversationListItemView {
         self.avatarView.conversation = conversation
         
         let status = conversation.status
-        
-        self.rightAccessory.icon = status.icon(for: conversation)
+        let statusIcon: ConversationStatusIcon
+        if let player = AppDelegate.shared().mediaPlaybackManager.activeMediaPlayer,
+            let message = player.sourceMessage,
+            message.conversation == conversation {
+            statusIcon = .playingMedia
+        }
+        else {
+            statusIcon = status.icon(for: conversation)
+        }
+        self.rightAccessory.icon = statusIcon
         self.subtitleAttributedText = status.description(for: conversation)
     }
 }

@@ -119,11 +119,13 @@ final public class ConversationListAvatarView: UIView {
     public var conversation: ZMConversation? = .none {
         didSet {
             guard let conversation = self.conversation else {
+                self.subviews.forEach { $0.removeFromSuperview() }
                 return
             }
             
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
             guard stableRandomParticipants.count > 0 else {
+                self.subviews.forEach { $0.removeFromSuperview() }
                 return
             }
             
