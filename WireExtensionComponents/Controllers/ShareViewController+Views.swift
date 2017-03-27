@@ -134,7 +134,7 @@ extension ShareViewController {
             topSeparatorView.left == view.left
             topSeparatorView.right == view.right
             topSeparatorView.top == destinationsTableView.top
-            topSeparatorView.height == 0.5
+            topSeparatorView.height == .hairline
         }
         
         
@@ -151,7 +151,7 @@ extension ShareViewController {
             
             bottomSeparatorLine.left == view.left
             bottomSeparatorLine.right == view.right
-            bottomSeparatorLine.height == 0.5
+            bottomSeparatorLine.height == .hairline
         }
         
         constrain(self.containerView, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
