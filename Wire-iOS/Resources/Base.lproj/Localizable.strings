@@ -121,6 +121,38 @@
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Close archive";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Blocked";
+
+"conversation.silenced.status.message.text" = "%d new text messages";
+"conversation.silenced.status.message.link" = "%d new links";
+"conversation.silenced.status.message.image" = "%d new images";
+"conversation.silenced.status.message.location" = "%d new locations";
+"conversation.silenced.status.message.audio" = "%d new audio messages";
+"conversation.silenced.status.message.video" = "%d new videos";
+"conversation.silenced.status.message.knock" = "%d new pings";
+"conversation.silenced.status.message.missedcall" = "%d missed calls";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Shared a picture";
+"conversation.status.message.location" = "Shared a location";
+"conversation.status.message.audio" = "Shared an audio message";
+"conversation.status.message.video" = "Shared a video";
+"conversation.status.message.file" = "Shared a file";
+"conversation.status.message.knock" = "Pinged";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ added you";
+"conversation.status.added_useres" = "%@ added users";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "You left";
+"conversation.status.removed_useres" = "%@ removed users";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

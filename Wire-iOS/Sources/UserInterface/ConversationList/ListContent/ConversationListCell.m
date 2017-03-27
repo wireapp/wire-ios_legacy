@@ -40,7 +40,6 @@
 #import "UIView+Borders.h"
 
 #import "ZClientViewController.h"
-#import "AccentColorChangeHandler.h"
 #import "AnimatedListMenuView.h"
 #import "Wire-Swift.h"
 
@@ -62,14 +61,13 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 @property (nonatomic, strong) NSLayoutConstraint *archiveRightMarginConstraint;
 
-@property (nonatomic, strong) AccentColorChangeHandler *accentColorHandler;
 @property (nonatomic) AnimatedListMenuView *animatedListView;
 @property (nonatomic) NSDate *overscrollStartDate;
 
-
 @end
 
-
+@interface ConversationListCell (Typing) <ZMTypingChangeObserver>
+@end
 
 @implementation ConversationListCell
 
@@ -78,6 +76,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification removeObserver:self];
     }
+    [ZMConversation removeTypingObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -108,10 +107,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [self.animatedListView enable1PixelBlueBorder];
 
     self.itemView.rightAccessory.delegate = self;
-    
-    self.accentColorHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConversationListCell *cell) {
-        cell.itemView.selectionColor = newColor;
-    }];
     
     [self setNeedsUpdateConstraints];
     
@@ -193,9 +188,9 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 - (void)setConversation:(ZMConversation *)conversation
 {
     if (_conversation != conversation) {
-        
+        [ZMConversation removeTypingObserver:self];
         _conversation = conversation;
-        
+        [_conversation addTypingObserver:self];
         [self updateAppearance];
         self.itemView.avatarView.conversation = conversation;
     }
@@ -225,37 +220,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)updateSubtitle
 {
-    id<ZMConversationMessage> lastMessage = [self.conversation lastTextMessage];
-    
-    if (lastMessage == nil || lastMessage.sender.isSelfUser) {
-        self.itemView.subtitleAttributedText = nil;
-        return;
-    }
-    
-    NSString *content = [lastMessage.textMessageData.messageText stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-    NSString *subtitle = content;
-    
-    if (self.conversation.conversationType == ZMConversationTypeGroup) {
-        subtitle = [NSString stringWithFormat:@"%@: %@", lastMessage.sender.displayName, content];
-    }
-    UIFont *textFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec"];
-    UIColor *dimmedColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:ColorSchemeVariantDark];
-    
-    NSDictionary *textAttributes = @{NSFontAttributeName: textFont,
-                                     NSForegroundColorAttributeName: dimmedColor};
-    
-    NSAttributedString *subtitleAttributed = [[NSAttributedString alloc] initWithString:subtitle
-                                                                             attributes:textAttributes];
-    
-    UIFont *usernameFont = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
-    
-    NSDictionary *nameAttributes = @{NSFontAttributeName: usernameFont,
-                                     NSForegroundColorAttributeName: dimmedColor};
-    
-    subtitleAttributed = [subtitleAttributed setAttributes:nameAttributes
-                                               toSubstring:lastMessage.sender.displayName];
-    
-    self.itemView.subtitleAttributedText = subtitleAttributed;
+    self.itemView.subtitleAttributedText = self.conversation.statusString;
 }
 
 - (BOOL)canOpenDrawer
@@ -347,6 +312,15 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     }
     
     return NO;
+}
+
+@end
+
+@implementation ConversationListCell (Typing)
+
+- (void)typingDidChange:(ZMTypingChangeNotification *)note
+{
+    [self updateSubtitle];
 }
 
 @end

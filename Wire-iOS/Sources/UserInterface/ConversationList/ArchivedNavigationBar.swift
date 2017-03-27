@@ -58,7 +58,7 @@ import Cartography
     
     func createConstraints() {
         constrain(self, separatorView, titleLabel, dismissButton) { view, separator, title, button in
-            separator.height == 0.5
+            separator.height == .hairline
             separator.left == view.left
             separator.right == view.right
             separator.bottom == view.bottom

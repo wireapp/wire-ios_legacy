@@ -259,7 +259,7 @@ class ProfileClientViewController: UIViewController {
             reviewInvitationTextView.bottom == separatorLineView.top - 24
             separatorLineView.left == contentView.left
             separatorLineView.right == contentView.right
-            separatorLineView.height == 0.5
+            separatorLineView.height == .hairline
         }
 
         constrain(contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel) { contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel in

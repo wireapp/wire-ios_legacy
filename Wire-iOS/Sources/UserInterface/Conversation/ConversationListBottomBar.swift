@@ -39,15 +39,10 @@ import Cartography
     let contactsButtonContainer = UIView()
     let archivedButtonContainer = UIView()
     let separator = UIView()
-    let indicator = UIView()
     let contactsButtonTitle = "bottom_bar.contacts_button.title".localized.uppercased()
     let heightConstant: CGFloat = 56
-    let user: ZMUser?
-    
-    var userObserverToken: NSObjectProtocol?
-    var clientsObserverTokens: [NSObjectProtocol] = []
     var accentColorHandler: AccentColorChangeHandler?
-    
+
     var showArchived: Bool = false {
         didSet {
             updateArchivedVisibility()
@@ -59,48 +54,32 @@ import Cartography
         get { return !separator.isHidden }
     }
     
-    var showIndicator: Bool {
-        set { indicator.fadeAndHide(!newValue) }
-        get { return !indicator.isHidden }
-    }
-    
     var showTooltip: Bool = false {
         didSet {
-            if self.showTooltip {
-                self.contactsButton.setIconColor(UIColor.accent(), for: .normal)
-            }
-            else {
-                self.contactsButton.setIconColor(UIColor.clear, for: UIControlState())
-            }
+            self.updateContactsButtonIconColor()
         }
     }
     
-    required init(delegate: ConversationListBottomBarControllerDelegate? = nil, user: ZMUser?) {
-        self.user = user
+    private func updateContactsButtonIconColor() {
+        if self.showTooltip {
+            self.contactsButton.setIconColor(UIColor.accent(), for: .normal)
+        }
+        else {
+            self.contactsButton.setIconColor(UIColor.clear, for: UIControlState())
+        }
+    }
+    
+    required init(delegate: ConversationListBottomBarControllerDelegate? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         createViews()
         createConstraints()
-        updateIndicator()
-        if let user = user {
-            userObserverToken = UserChangeInfo.add(observer: self, forBareUser: user)
-            self.createClientObservers()
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        accentColorHandler = nil
-    }
-    
-    fileprivate func createClientObservers() {
-        if let user = user {
-            clientsObserverTokens = user.clients.map { UserClientChangeInfo.add(observer: self, for: $0) }
-        }
-    }
     
     fileprivate func createViews() {
         contactsButton.setTitle(contactsButtonTitle, for: UIControlState())
@@ -117,13 +96,12 @@ import Cartography
 
         contactsButtonContainer.addSubview(contactsButton)
         archivedButtonContainer.addSubview(archivedButton)
-        [indicator, separator, archivedButton].forEach { $0.isHidden = true }
-        self.view.addSubview(indicator)
+        [separator, archivedButton].forEach { $0.isHidden = true }
         [contactsButtonContainer, archivedButtonContainer, separator].forEach(view.addSubview)
         
-        accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] color, _ in
-            if let `self` = self, let color = color, self.showTooltip {
-                self.contactsButton.setIconColor(color, for: .normal)
+        accentColorHandler = AccentColorChangeHandler.addObserver(self) { [weak self] _, _ in
+            if let `self` = self {
+                self.updateContactsButtonIconColor()
             }
         }
     }
@@ -132,7 +110,7 @@ import Cartography
         constrain(view, contactsButton, separator) { view, contactsButton, separator in
             view.height == heightConstant ~ 750
             
-            separator.height == 0.5
+            separator.height == .hairline
             separator.leading == view.leading
             separator.trailing == view.trailing
             separator.top == view.top
@@ -157,30 +135,11 @@ import Cartography
             archivedButton.leading == container.leading + 24
             archivedButton.centerY == container.centerY
         }
-        
-        guard let archivedImageView = archivedButton.imageView else {
-            fatalError("No imageView on archivedButton despite we just assigned an icon")
-        }
-        
-        constrain(indicator, archivedImageView) { indicator, imageView in
-            indicator.top == imageView.top - 3
-            indicator.trailing == imageView.trailing + 3
-            indicator.width == 8
-            indicator.height == 8
-        }
     }
     
     func updateArchivedVisibility() {
         contactsButton.setTitle(showArchived ? nil : contactsButtonTitle, for: UIControlState())
         archivedButton.isHidden = !showArchived
-    }
-    
-    func updateIndicator() {
-        guard let user = user else {
-            showIndicator = false
-            return
-        }
-        showIndicator = user.clientsRequiringUserAttention?.count > 0
     }
     
     // MARK: - Target Action
@@ -193,27 +152,6 @@ import Cartography
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
     
-}
-
-// MARK: - User Observer
-
-extension ConversationListBottomBarController: ZMUserObserver {
-    func userDidChange(_ note: UserChangeInfo) {
-        guard note.trustLevelChanged || note.clientsChanged else { return }
-        updateIndicator()
-        if note.clientsChanged {
-            createClientObservers()
-        }
-    }
-}
-
-// MARK: - Clients observer
-
-extension ConversationListBottomBarController: UserClientObserver {
-    func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
-        guard changeInfo.needsToNotifyUserChanged else { return }
-        updateIndicator()
-    }
 }
 
 // MARK: - Helper

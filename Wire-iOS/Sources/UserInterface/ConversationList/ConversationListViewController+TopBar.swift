@@ -23,6 +23,7 @@ import Cartography
 extension ConversationListViewController {
     
     public func createTopBar() {
+
         let settingsButton = IconButton()
         
         settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
@@ -30,12 +31,25 @@ extension ConversationListViewController {
         settingsButton.accessibilityIdentifier = "bottomBarSettingsButton"
         settingsButton.setIconColor(.white, for: .normal)
         
+        if let imageView = settingsButton.imageView, let user = ZMUser.selfUser() {
+            let newDevicesDot = NewDevicesDot(user: user)
+            settingsButton.addSubview(newDevicesDot)
+            
+            constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
+                newDevicesDot.top == imageView.top - 3
+                newDevicesDot.trailing == imageView.trailing + 3
+                newDevicesDot.width == 8
+                newDevicesDot.height == 8
+            }
+        }
+        
         self.topBar = ConversationListTopBar()
         
         self.view.addSubview(self.topBar)
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec")
+
+        titleLabel.font = FontSpec(.medium, .semibold).font
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         titleLabel.text = "list.title".localized.uppercased()
         

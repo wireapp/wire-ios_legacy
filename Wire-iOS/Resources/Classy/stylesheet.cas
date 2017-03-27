@@ -499,16 +499,16 @@ ConversationRootViewController {
     }
 }
 
+NewDevicesDot {
+    backgroundColor: $color-accent-current;
+    layer: @{
+        cornerRadius: 4.0;
+    }
+}
+
 ConversationListBottomBarController {
     view: @{
         backgroundColor: clear;
-    }
-    
-    indicator: @{
-        backgroundColor: $color-accent-current;
-        layer: @{
-            cornerRadius: 4.0;
-        }
     }
     
     contactsButton: @{
@@ -533,24 +533,11 @@ ConversationListBottomBarController {
 
 /* ConversationListAvatar */
 
-GroupConversationAvatarView {
-
-    countLabel: @{
+ConversationListAvatarView UserImageView {
+    initials: @{
         font: $font-medium-semibold;
         textColor: $color-list-avatar-initials;
     }
-
-}
-
-ConversationListAvatarView {
-
-    userImageView: @{
-        initials: @{
-            font: $font-medium-semibold;
-            textColor: $color-list-avatar-initials;
-        }
-    }
-
 }
 
 
@@ -756,6 +743,17 @@ ConversationListViewController {
 ConversationListContentController UILabel.empty-list-message {
     font: $font-normal-light;
     textColor: $color-text-foreground-dark;
+}
+
+ConversationListItemView {
+    titleField: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
+    }
+    
+    subtitleField: @{
+        textColor: $color-text-dimmed;
+    }
 }
 
 SearchView {

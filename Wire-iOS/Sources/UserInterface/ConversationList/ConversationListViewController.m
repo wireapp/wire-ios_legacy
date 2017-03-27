@@ -253,7 +253,7 @@
 
 - (void)createBottomBarController
 {
-    self.bottomBarController = [[ConversationListBottomBarController alloc] initWithDelegate:self user:ZMUser.selfUser];
+    self.bottomBarController = [[ConversationListBottomBarController alloc] initWithDelegate:self];
     self.bottomBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.bottomBarController.showArchived = YES;
     [self addChildViewController:self.bottomBarController];

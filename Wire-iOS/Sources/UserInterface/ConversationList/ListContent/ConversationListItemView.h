@@ -29,8 +29,6 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 
 @interface ConversationListItemView : UIView
 
-@property (nonatomic, strong) UIColor *selectionColor;
-
 @property (nonatomic, copy) NSString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 

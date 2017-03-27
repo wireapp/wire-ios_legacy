@@ -33,6 +33,7 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersSingleUserImage() {
         otherUser.accentColorValue = .strongLimeGreen
+        otherUserConversation.conversationType = .oneOnOne
         sut.conversation = otherUserConversation
         moc.saveOrRollback()
 
