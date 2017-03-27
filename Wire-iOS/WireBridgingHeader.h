@@ -42,6 +42,7 @@
 #import "ConversationViewController+Private.h"
 #import "ConversationListCollectionViewLayout.h"
 #import "ConversationListCell.h"
+#import "ConversationListItemView.h"
 #import "GapLoadingBar.h"
 #import "WAZUIMagicIOS.h"
 #import "ResizingTextView.h"

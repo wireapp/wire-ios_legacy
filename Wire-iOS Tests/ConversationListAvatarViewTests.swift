@@ -29,7 +29,10 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConversationListAvatarView()
+        self.recordMode = true
     }
+    
+    let colors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
 
     func testThatItRendersSingleUserImage() {
         otherUser.accentColorValue = .strongLimeGreen
@@ -44,12 +47,30 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         let thirdUser = ZMUser.insertNewObject(in: moc)
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        
+        var index: Int = 0
+        conversation?.activeParticipants.forEach { user in
+            let user = user as! ZMUser
+            user.accentColorValue = self.colors[index % self.colors.count]
+            user.connection = ZMConnection.insertNewSentConnection(to: user)
+            user.connection!.status = .accepted
+            index = index + 1
+        }
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersManyUsers() {
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
+        var index: Int = 0
+        conversation?.activeParticipants.forEach { user in
+            let user = user as! ZMUser
+            user.accentColorValue = self.colors[index % self.colors.count]
+            user.connection = ZMConnection.insertNewSentConnection(to: user)
+            user.connection!.status = .accepted
+
+            index = index + 1
+        }
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }

@@ -32,14 +32,6 @@
 
 @end
 
-
-@interface ConversationListCell (RightAccessory)
-
-- (void)updateRightAccessory;
-
-@end
-
-
 @protocol ConversationListCellDelegate <NSObject>
 
 - (void)conversationListCellOverscrolled:(ConversationListCell *)cell;

@@ -22,7 +22,6 @@
 #import <PureLayout/PureLayout.h>
 
 #import "ConversationListItemView.h"
-#import "ConversationListIndicator.h"
 
 #import "WAZUIMagiciOS.h"
 #import "UIColor+WAZExtensions.h"
@@ -99,7 +98,6 @@
     if (newCount != self.currentConnectionRequestsCount) {
         self.currentConnectionRequestsCount = newCount;
         self.itemView.titleText = [[self class] titleForConnectionRequests:self.currentConnectionRequestsCount];
-        self.itemView.statusIndicator.indicatorType = ZMConversationListIndicatorPending;
     }
 }
 

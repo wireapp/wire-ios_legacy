@@ -488,6 +488,9 @@
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
 		877A325C1E88FFB40017DD9A /* NewDevicesDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */; };
+		877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325D1E8912500017DD9A /* RoundedBadge.swift */; };
+		877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */; };
+		877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */; };
 		877ABB451E800E8800CBCF2B /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB441E800E8800CBCF2B /* TestView.swift */; };
 		877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */; };
 		877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */; };
@@ -687,16 +690,9 @@
 		8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F21A9F287E0056AB0C /* ConversationListCell.m */; };
 		8F8914121A9F287E0056AB0C /* ConversationListContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */; };
 		8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */; };
-		8F8914151A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913FB1A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.m */; };
-		8F8914161A9F287E0056AB0C /* ConversationListIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913FD1A9F287E0056AB0C /* ConversationListIndicator.m */; };
-		8F8914171A9F287E0056AB0C /* MissedCallIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913FF1A9F287E0056AB0C /* MissedCallIndicatorLayer.m */; };
-		8F8914181A9F287E0056AB0C /* PingAnimationLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914011A9F287E0056AB0C /* PingAnimationLayer.m */; };
-		8F8914191A9F287E0056AB0C /* UnreadIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914031A9F287E0056AB0C /* UnreadIndicatorLayer.m */; };
-		8F89141A1A9F287E0056AB0C /* UnsentIndicatorLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914051A9F287E0056AB0C /* UnsentIndicatorLayer.m */; };
 		8F89141B1A9F287E0056AB0C /* ConversationListConnectRequestsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914081A9F287E0056AB0C /* ConversationListConnectRequestsItem.m */; };
 		8F89141C1A9F287E0056AB0C /* ConversationListInteractiveItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */; };
 		8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */; };
-		8F89143C1AA07FBD0056AB0C /* ListItemRightAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89143B1AA07FBD0056AB0C /* ListItemRightAccessoryView.m */; };
 		8F9E3B8A19D04CAC00FD427A /* SoundEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9E3B8919D04CAC00FD427A /* SoundEventListener.m */; };
 		8FC1EFDF19DED50C0092488D /* VoiceChannelV2+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */; };
 		8FC853A5199245770008B66B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85082199245760008B66B /* main.m */; };
@@ -1749,6 +1745,9 @@
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
 		877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDevicesDot.swift; sourceTree = "<group>"; };
+		877A325D1E8912500017DD9A /* RoundedBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedBadge.swift; sourceTree = "<group>"; };
+		877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListAccessoryView.swift; sourceTree = "<group>"; };
+		877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Update.swift"; sourceTree = "<group>"; };
 		877ABB441E800E8800CBCF2B /* TestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2031,26 +2030,12 @@
 		8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListContentController.m; sourceTree = "<group>"; };
 		8F8913F51A9F287E0056AB0C /* ConversationListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListItemView.h; sourceTree = "<group>"; };
 		8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListItemView.m; sourceTree = "<group>"; };
-		8F8913FA1A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionRequestIndicatorLayer.h; sourceTree = "<group>"; };
-		8F8913FB1A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionRequestIndicatorLayer.m; sourceTree = "<group>"; };
-		8F8913FC1A9F287E0056AB0C /* ConversationListIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListIndicator.h; sourceTree = "<group>"; };
-		8F8913FD1A9F287E0056AB0C /* ConversationListIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListIndicator.m; sourceTree = "<group>"; };
-		8F8913FE1A9F287E0056AB0C /* MissedCallIndicatorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissedCallIndicatorLayer.h; sourceTree = "<group>"; };
-		8F8913FF1A9F287E0056AB0C /* MissedCallIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissedCallIndicatorLayer.m; sourceTree = "<group>"; };
-		8F8914001A9F287E0056AB0C /* PingAnimationLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingAnimationLayer.h; sourceTree = "<group>"; };
-		8F8914011A9F287E0056AB0C /* PingAnimationLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingAnimationLayer.m; sourceTree = "<group>"; };
-		8F8914021A9F287E0056AB0C /* UnreadIndicatorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnreadIndicatorLayer.h; sourceTree = "<group>"; };
-		8F8914031A9F287E0056AB0C /* UnreadIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnreadIndicatorLayer.m; sourceTree = "<group>"; };
-		8F8914041A9F287E0056AB0C /* UnsentIndicatorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnsentIndicatorLayer.h; sourceTree = "<group>"; };
-		8F8914051A9F287E0056AB0C /* UnsentIndicatorLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnsentIndicatorLayer.m; sourceTree = "<group>"; };
 		8F8914071A9F287E0056AB0C /* ConversationListConnectRequestsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListConnectRequestsItem.h; sourceTree = "<group>"; };
 		8F8914081A9F287E0056AB0C /* ConversationListConnectRequestsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListConnectRequestsItem.m; sourceTree = "<group>"; };
 		8F8914091A9F287E0056AB0C /* ConversationListInteractiveItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListInteractiveItem.h; sourceTree = "<group>"; };
 		8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListInteractiveItem.m; sourceTree = "<group>"; };
 		8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewModel.h; sourceTree = "<group>"; };
 		8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListViewModel.m; sourceTree = "<group>"; };
-		8F89143A1AA07FBD0056AB0C /* ListItemRightAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItemRightAccessoryView.h; sourceTree = "<group>"; };
-		8F89143B1AA07FBD0056AB0C /* ListItemRightAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItemRightAccessoryView.m; sourceTree = "<group>"; };
 		8F9E3B8819D04CAC00FD427A /* SoundEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEventListener.h; sourceTree = "<group>"; };
 		8F9E3B8919D04CAC00FD427A /* SoundEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventListener.m; sourceTree = "<group>"; };
 		8FA197181AA5EEE500C64826 /* ZClientViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZClientViewController+Internal.h"; sourceTree = "<group>"; };
@@ -3403,6 +3388,7 @@
 				8742C2F21E534ED500329FB6 /* SearchResultLabel.swift */,
 				87B7DAEC1E697CC3005F5140 /* UserImageView+Magic.h */,
 				87B7DAED1E697CC3005F5140 /* UserImageView+Magic.m */,
+				877A325D1E8912500017DD9A /* RoundedBadge.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4147,7 +4133,6 @@
 			isa = PBXGroup;
 			children = (
 				8F8914061A9F287E0056AB0C /* Model */,
-				8F8913F91A9F287E0056AB0C /* ListIndicator */,
 				8F8913EA1A9F287E0056AB0C /* ConnectRequestsCell.h */,
 				8F8913EB1A9F287E0056AB0C /* ConnectRequestsCell.m */,
 				8F8913F11A9F287E0056AB0C /* ConversationListCell.h */,
@@ -4155,8 +4140,8 @@
 				BFF655711E80382600D48337 /* ConversationListAvatarView.swift */,
 				8F8913F51A9F287E0056AB0C /* ConversationListItemView.h */,
 				8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */,
-				8F89143A1AA07FBD0056AB0C /* ListItemRightAccessoryView.h */,
-				8F89143B1AA07FBD0056AB0C /* ListItemRightAccessoryView.m */,
+				877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */,
+				877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */,
 				8F8913F31A9F287E0056AB0C /* ConversationListContentController.h */,
 				8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */,
 				16D4535E1B69131400675246 /* ConversationListCollectionViewLayout.h */,
@@ -4165,25 +4150,6 @@
 				BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */,
 			);
 			path = ListContent;
-			sourceTree = "<group>";
-		};
-		8F8913F91A9F287E0056AB0C /* ListIndicator */ = {
-			isa = PBXGroup;
-			children = (
-				8F8913FC1A9F287E0056AB0C /* ConversationListIndicator.h */,
-				8F8913FD1A9F287E0056AB0C /* ConversationListIndicator.m */,
-				8F8913FA1A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.h */,
-				8F8913FB1A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.m */,
-				8F8913FE1A9F287E0056AB0C /* MissedCallIndicatorLayer.h */,
-				8F8913FF1A9F287E0056AB0C /* MissedCallIndicatorLayer.m */,
-				8F8914001A9F287E0056AB0C /* PingAnimationLayer.h */,
-				8F8914011A9F287E0056AB0C /* PingAnimationLayer.m */,
-				8F8914021A9F287E0056AB0C /* UnreadIndicatorLayer.h */,
-				8F8914031A9F287E0056AB0C /* UnreadIndicatorLayer.m */,
-				8F8914041A9F287E0056AB0C /* UnsentIndicatorLayer.h */,
-				8F8914051A9F287E0056AB0C /* UnsentIndicatorLayer.m */,
-			);
-			path = ListIndicator;
 			sourceTree = "<group>";
 		};
 		8F8914061A9F287E0056AB0C /* Model */ = {
@@ -5869,7 +5835,6 @@
 				87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */,
 				871BC0051D34F56300DF0793 /* AnalyticsTracker.m in Sources */,
 				87DCF4F31D34EA4500BB420F /* StartUIQuickActionsBar.m in Sources */,
-				8F8914181A9F287E0056AB0C /* PingAnimationLayer.m in Sources */,
 				BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */,
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
@@ -6081,7 +6046,6 @@
 				16258EE81AD7CEBF0076B75F /* PhoneVerificationStepViewController.m in Sources */,
 				871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */,
 				BF52C1591CAEBD8D0037331F /* ArchivedNavigationBar.swift in Sources */,
-				8F8914151A9F287E0056AB0C /* ConnectionRequestIndicatorLayer.m in Sources */,
 				87F18BD51E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m in Sources */,
 				F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */,
 				87BEB03C1D3E44BA00DE9575 /* CameraKeyboardViewController.swift in Sources */,
@@ -6106,8 +6070,8 @@
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
 				871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
-				8F89141A1A9F287E0056AB0C /* UnsentIndicatorLayer.m in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
+				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
 				16EBBEFF1BEBBCF40087DA60 /* InvitationStatusController.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
@@ -6149,7 +6113,6 @@
 				871BC0211D34F56300DF0793 /* AnalyticsTracker+SelfUser.m in Sources */,
 				87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */,
 				8710673E1C0DC5570035603B /* SettingsCellDescriptorFactory.swift in Sources */,
-				8F89143C1AA07FBD0056AB0C /* ListItemRightAccessoryView.m in Sources */,
 				87DE06B11D256CF50009411F /* DeviceProximityListener.swift in Sources */,
 				871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */,
 				871BC2201D34F8F800DF0793 /* ActionSheetAlertView.m in Sources */,
@@ -6252,7 +6215,6 @@
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				DB0782221B00E98F00C6B140 /* FormFlowViewController.m in Sources */,
-				8F8914161A9F287E0056AB0C /* ConversationListIndicator.m in Sources */,
 				BF606D751CAC16FF002BAC94 /* ToolTipViewController.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
 				871BC2831D34F8F800DF0793 /* UIAlertView+Zeta.m in Sources */,
@@ -6327,6 +6289,7 @@
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift in Sources */,
 				8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */,
+				877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
 				F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */,
@@ -6355,7 +6318,7 @@
 				160E723E1AEE40B600F86648 /* AddEmailStepViewController.m in Sources */,
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
 				87F18BB81E01550600C69D9B /* AudioMessageView.swift in Sources */,
-				8F8914171A9F287E0056AB0C /* MissedCallIndicatorLayer.m in Sources */,
+				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
 				54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */,
 				87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */,
@@ -6373,7 +6336,6 @@
 				871BC2491D34F8F800DF0793 /* UIColor+MagicAccess.m in Sources */,
 				871BC1261D34F7B700DF0793 /* ZiphyClient+Convenience.m in Sources */,
 				F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */,
-				8F8914191A9F287E0056AB0C /* UnreadIndicatorLayer.m in Sources */,
 				8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */,
 				871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */,
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,

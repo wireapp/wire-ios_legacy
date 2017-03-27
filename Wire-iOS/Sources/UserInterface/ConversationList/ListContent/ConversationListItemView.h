@@ -18,14 +18,11 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ListItemRightAccessoryView.h"
 
-@class ConversationListIndicator;
 @class ConversationListAvatarView;
+@class ConversationListAccessoryView;
 
 FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
-
-
 
 @interface ConversationListItemView : UIView
 
@@ -33,16 +30,11 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
 @property (nonatomic, strong, readonly) ConversationListAvatarView *avatarView;
-@property (nonatomic, readonly) ConversationListIndicator *statusIndicator;
-@property (nonatomic, strong, readonly) ListItemRightAccessoryView *rightAccessory;
+@property (nonatomic, strong, readonly) ConversationListAccessoryView *rightAccessory;
 
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) CGFloat visualDrawerOffset;
 
-@property (nonatomic, assign) ConversationListRightAccessoryType rightAccessoryType;
-
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset notify:(BOOL)notify;
-- (void)updateForCurrentOrientation;
-- (void)updateRightAccessoryAppearance;
 
 @end

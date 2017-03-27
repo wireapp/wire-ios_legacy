@@ -506,6 +506,13 @@ NewDevicesDot {
     }
 }
 
+ConversationListAccessoryView {
+    textLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-small-semibold;
+    }
+}
+
 ConversationListBottomBarController {
     view: @{
         backgroundColor: clear;
@@ -1716,6 +1723,9 @@ TextSearchResultCell {
     contentView: @{
         backgroundColor: $color-background;
     }
+    resultCountView: @{
+        backgroundColor: $color-graphite-light;
+    }
 }
 
 SearchResultLabel {
@@ -1723,13 +1733,11 @@ SearchResultLabel {
     textColor: $color-text-foreground;
 }
 
-SearchResultCountBadge {
+RoundedTextBadge {
     textLabel: @{
         textColor: $color-background;
         font: $font-small-semibold;
     }
-    
-    backgroundColor: $color-graphite-light;
 }
 
 // Example code

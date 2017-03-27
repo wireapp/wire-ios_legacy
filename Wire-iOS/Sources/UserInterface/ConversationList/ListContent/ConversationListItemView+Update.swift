@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-extension RawRepresentable where RawValue == Int {
-    // @warning works only on sequential enums.
-    public static var allValues: [Self] {
-        var index = 0
-        var values = [Self]()
-        while let value = Self(rawValue: index) {
-            values.append(value)
-            index += 1
+extension ConversationListItemView {
+    @objc(updateForConversation:)
+    public func update(for conversation: ZMConversation?) {
+        guard let conversation = conversation else {
+            self.titleText = ""
+            self.subtitleAttributedText = "" && [:]
+            self.rightAccessory.icon = .none
+            return
         }
         
-        return values
+        self.titleText = conversation.displayName
+        self.avatarView.conversation = conversation
+        
+        let status = conversation.status
+        
+        self.rightAccessory.icon = status.icon(for: conversation)
+        self.subtitleAttributedText = status.description(for: conversation)
     }
 }
+
+

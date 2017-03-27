@@ -68,7 +68,7 @@
     self.accentColor = ZMAccentColorBrightYellow;
     self.mockDelegate = [MockConversationListBottomBarDelegate new];
     [UIView performWithoutAnimation:^{
-        self.sut = [[ConversationListBottomBarController alloc] initWithDelegate:self.mockDelegate user:nil];
+        self.sut = [[ConversationListBottomBarController alloc] initWithDelegate:self.mockDelegate];
     }];
     [CASStyler.defaultStyler styleItem:self.sut];
  }
@@ -77,7 +77,6 @@
 {
     // when
     XCTAssertFalse(self.sut.showSeparator);
-    XCTAssertFalse(self.sut.showIndicator);
     
     // then
     ZMVerifyViewInAllIPhoneWidths(self.sut.view);
@@ -93,30 +92,10 @@
     ZMVerifyViewInAllIPhoneWidths(self.sut.view);
 }
 
-- (void)testThatTheIndicatorIsNotHiddenWhen_ShowIndicator_IsSetToYes
-{
-    // when
-    self.sut.showIndicator = YES;
-    
-    // then
-    XCTAssertFalse(self.sut.indicator.hidden);
-    ZMVerifyViewInAllIPhoneWidths(self.sut.view);
-}
-
 - (void)testThatItHidesTheContactsTitleAndShowsArchivedButtonWhen_ShowArchived_IsSetToYes
 {
     // when
     self.sut.showArchived = YES;
-    
-    // then
-    ZMVerifyViewInAllIPhoneWidths(self.sut.view);
-}
-
-- (void)testThatItHidesTheContactsTitleAndShowsArchivedButtonAndShowsTheIndicatorWhen_ShowArchivedAndShowIndicator_AreSetToYes
-{
-    // when
-    self.sut.showArchived = YES;
-    self.sut.showIndicator = YES;
     
     // then
     ZMVerifyViewInAllIPhoneWidths(self.sut.view);
