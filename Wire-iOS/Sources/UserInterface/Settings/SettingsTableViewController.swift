@@ -63,7 +63,7 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
     private func createTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.08)
         tableView.backgroundColor = UIColor.clear
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()

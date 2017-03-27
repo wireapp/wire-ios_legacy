@@ -91,11 +91,11 @@ fileprivate enum Mode {
     /// / AA \
     /// \ AA /
     case one
-    /// 3-4 participants in conversation
+    /// 3-4 participants in conversation:
     /// / AB \
     /// \ AB /
     case two
-    /// 5+ participants in conversation
+    /// 5+ participants in conversation:
     /// / AB \
     /// \ CD /
     case four
@@ -103,13 +103,12 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        if conversation.activeParticipants.count <= 2 || conversation.conversationType != .group {
+        switch (conversation.activeParticipants.count, conversation.conversationType) {
+        case (0...2, _), (_, .oneOnOne):
             self = .one
-        }
-        else if conversation.activeParticipants.count <= 5 {
+        case (3...5, _):
             self = .two
-        }
-        else {
+        default:
             self = .four
         }
     }
@@ -120,11 +119,13 @@ final public class ConversationListAvatarView: UIView {
     public var conversation: ZMConversation? = .none {
         didSet {
             guard let conversation = self.conversation else {
+                self.subviews.forEach { $0.removeFromSuperview() }
                 return
             }
             
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
             guard stableRandomParticipants.count > 0 else {
+                self.subviews.forEach { $0.removeFromSuperview() }
                 return
             }
             

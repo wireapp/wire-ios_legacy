@@ -22,8 +22,6 @@
 #import <PureLayout/PureLayout.h>
 
 #import "ConversationListItemView.h"
-#import "ConversationListIndicator.h"
-#import "ListItemRightAccessoryView.h"
 @import WireExtensionComponents;
 
 #import "Constants.h"
@@ -47,10 +45,6 @@
 static const CGFloat MaxVisualDrawerOffsetRevealDistance = 48;
 static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
 static const NSTimeInterval OverscrollRatio = 2.5;
-
-
-@interface ConversationListCell (RightAccesory) <ListItemRightAccessoryViewDelegate>
-@end
 
 
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
@@ -98,6 +92,9 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.clipsToBounds = YES;
     
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onRightAccessorySelected:)];
+    [self.itemView.rightAccessory addGestureRecognizer:tapGestureRecognizer];
     [self.swipeView addSubview:self.itemView];
 
     AnimatedListMenuView *animatedView = [[AnimatedListMenuView alloc] initForAutoLayout];
@@ -105,8 +102,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [self.menuView addSubview:animatedView];
     self.animatedListView = animatedView;
     [self.animatedListView enable1PixelBlueBorder];
-
-    self.itemView.rightAccessory.delegate = self;
     
     [self setNeedsUpdateConstraints];
     
@@ -134,7 +129,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [super setSelected:selected];
     if (IS_IPAD) {
         self.itemView.selected  = self.selected || self.highlighted;
-        [self updateAccessoryViews];
     }
 }
 
@@ -164,13 +158,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         }];
     }
 
-    if ([self.itemView.statusIndicator isDisplayingAnyIndicators]) {
-        self.archiveRightMarginConstraint.constant = -leftMarginConvList / 2.0f;
-    }
-    else {
-        self.archiveRightMarginConstraint.constant = -leftMarginConvList;
-    }
-
     [super updateConstraints];
 }
 
@@ -191,38 +178,44 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         [ZMConversation removeTypingObserver:self];
         _conversation = conversation;
         [_conversation addTypingObserver:self];
+        
         [self updateAppearance];
-        self.itemView.avatarView.conversation = conversation;
     }
 }
-
+    
 - (void)updateAppearance
 {
-    self.itemView.titleText = self.conversation.displayName;
-    [self updateSubtitle];
-    [self updateAccessoryViews];
+    [self.itemView updateForConversation:self.conversation];
 }
 
-- (void)updateAccessoryViews
+- (void)onRightAccessorySelected:(UIButton *)sender
 {
-    if (self.conversation != nil) {
-        self.itemView.statusIndicator.indicatorType = self.conversation.conversationListIndicator;
-        self.itemView.statusIndicator.unreadCount = self.conversation.estimatedUnreadCount;
+    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+    
+    if (mediaPlaybackManager.activeMediaPlayer != nil &&
+        mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation == self.conversation) {
+        [self toggleMediaPlayer];
     }
     else {
-        self.itemView.statusIndicator.indicatorType = ZMConversationListIndicatorNone;
-        self.itemView.statusIndicator.unreadCount = 0;
+        if (self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall) {
+            [self.conversation.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
+        }
+    }
+}
+    
+- (void)toggleMediaPlayer
+{
+    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+    
+    if (mediaPlaybackManager.activeMediaPlayer.state == MediaPlayerStatePlaying) {
+        [mediaPlaybackManager pause];
+    } else {
+        [mediaPlaybackManager play];
     }
     
-    [self updateRightAccessory];
-    [self setNeedsUpdateConstraints];
+    [self updateAppearance];
 }
-
-- (void)updateSubtitle
-{
-    self.itemView.subtitleAttributedText = self.conversation.statusString;
-}
-
+    
 - (BOOL)canOpenDrawer
 {
     return YES;
@@ -235,7 +228,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     // AUDIO-548 AVMediaManager notifications arrive on a background thread.
     dispatch_async(dispatch_get_main_queue(), ^{
         if (notification.microphoneMuteChanged && (self.conversation.voiceChannel.state > VoiceChannelV2StateNoActiveUsers)) {
-            [self updateAccessoryViews];
+            [self updateAppearance];
         }
     });
 }
@@ -268,59 +261,11 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 @end
 
 
-
-@implementation ConversationListCell (RightAccessory)
-
-
-- (void)accessoryViewWantsToJoinCall:(ListItemRightAccessoryView *)accessoryView
-{
-    if (self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCallInactive) {
-        [self.conversation startAudioCallWithCompletionHandler:nil];
-    } else {
-        DDLogError(@"Cannot join a call in a conversation without ongoing call");
-    }
-}
-
-- (void)updateRightAccessory
-{
-    if ([self shouldShowMediaButton]) {
-        self.itemView.rightAccessoryType = ConversationListRightAccessoryMediaButton;
-    }
-    else if (self.conversation.isSilenced) {
-        self.itemView.rightAccessoryType = ConversationListRightAccessorySilencedIcon;
-    }
-    else if (self.conversation.conversationListIndicator == ZMConversationListIndicatorInactiveCall) {
-        self.itemView.rightAccessoryType = ConversationListRightAccessoryJoinCall;
-    }
-    else {
-        self.itemView.rightAccessoryType = ConversationListRightAccessoryNone;
-    }
-
-    [self.itemView updateRightAccessoryAppearance];
-}
-
-- (BOOL)shouldShowMediaButton
-{
-    if (self.selected && IS_IPAD_LANDSCAPE_LAYOUT) {
-        return NO;
-    }
-    
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    
-    if ([mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation isEqual:self.conversation]) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-@end
-
 @implementation ConversationListCell (Typing)
 
 - (void)typingDidChange:(ZMTypingChangeNotification *)note
 {
-    [self updateSubtitle];
+    [self updateAppearance];
 }
 
 @end

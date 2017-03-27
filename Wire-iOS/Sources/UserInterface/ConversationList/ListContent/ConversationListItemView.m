@@ -21,8 +21,6 @@
 
 #import <PureLayout/PureLayout.h>
 
-#import "ConversationListIndicator.h"
-#import "ListItemRightAccessoryView.h"
 #import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
@@ -40,8 +38,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @interface ConversationListItemView ()
 
 @property (nonatomic, strong, readwrite) ConversationListAvatarView *avatarView;
-@property (nonatomic, strong, readwrite) ConversationListIndicator *statusIndicator;
-@property (nonatomic, strong, readwrite) ListItemRightAccessoryView *rightAccessory;
+@property (nonatomic, strong, readwrite) ConversationListAccessoryView *rightAccessory;
 @property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) UILabel *titleField;
 @property (nonatomic, strong) UILabel *subtitleField;
@@ -49,7 +46,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 @property (nonatomic, strong) NSLayoutConstraint *titleTopMarginConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *titleCenterConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *rightAccessoryWidthConstraint;
 
 @end
 
@@ -84,15 +80,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.avatarView = [[ConversationListAvatarView alloc] initForAutoLayout];
     [self.avatarContainer addSubview:self.avatarView];
 
-    self.statusIndicator = [[ConversationListIndicator alloc] initForAutoLayout];
-    self.statusIndicator.hidden = YES;
-    [self addSubview:self.statusIndicator];
-
-    self.rightAccessory = [[ListItemRightAccessoryView alloc] initForAutoLayout];
+    self.rightAccessory = [[ConversationListAccessoryView alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
     [self addSubview:self.rightAccessory];
 
     [self createSubtitleField];
-    
     [self createConstraints];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -130,18 +121,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.titleCenterConstraint = [self.titleField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     
     [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.rightAccessory autoSetDimension:ALDimensionHeight toSize:28.0f];
-    [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
-    self.rightAccessoryWidthConstraint = [self.rightAccessory autoSetDimension:ALDimensionWidth toSize:0.0f];
-
-    [self.statusIndicator autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.statusIndicator autoSetDimension:ALDimensionHeight toSize:28.0f];
-    [self.statusIndicator autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:18.0];
+    [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16.0];
     
     [self.rightAccessory setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [self.titleField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-
-    [self updateRightAccessoryWidth];
 
     [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:4];
     [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
@@ -163,6 +146,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     _subtitleAttributedText = subtitleAttributedText;
     self.subtitleField.attributedText = subtitleAttributedText;
+    
     if (subtitleAttributedText.string.length == 0) {
         self.titleTopMarginConstraint.active = NO;
         self.titleCenterConstraint.active = YES;
@@ -182,18 +166,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     }
 }
 
-- (void)setRightAccessoryType:(ConversationListRightAccessoryType)rightAccessoryType
-{
-    if (_rightAccessoryType == rightAccessoryType) {
-        return;
-    }
-    
-    _rightAccessoryType = rightAccessoryType;
-    
-    self.rightAccessory.accessoryType = rightAccessoryType;
-    [self updateRightAccessoryWidth];
-}
-
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset notify:(BOOL)notify
 {
     _visualDrawerOffset = visualDrawerOffset;
@@ -207,43 +179,9 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self setVisualDrawerOffset:visualDrawerOffset notify:YES];
 }
 
-- (void)updateRightAccessoryWidth
-{
-    BOOL muteVoiceAndLandscape = (self.rightAccessoryType == ConversationListRightAccessoryMuteVoiceButton && IS_IPAD_LANDSCAPE_LAYOUT);
-    self.rightAccessoryWidthConstraint.active = YES;
-
-    if (muteVoiceAndLandscape) {
-        // If we are showing the mute button and in landscape, don't show the button
-        self.rightAccessoryWidthConstraint.constant = 0;
-        self.rightAccessory.hidden = YES;
-    } else if (self.rightAccessoryType == ConversationListRightAccessoryJoinCall) {
-        self.rightAccessoryWidthConstraint.active = NO;
-        self.rightAccessory.hidden = NO;
-    } else if (self.rightAccessoryType == ConversationListRightAccessoryNone) {
-        self.rightAccessoryWidthConstraint.constant = 0;
-        self.rightAccessory.hidden = YES;
-    } else {
-        self.rightAccessoryWidthConstraint.constant = 28.0f;
-        self.rightAccessory.hidden = NO;
-    }
-    
-    self.statusIndicator.hidden = !self.rightAccessory.hidden;
-}
-
-- (void)updateForCurrentOrientation
-{
-    [self updateRightAccessoryWidth];
-}
-
-- (void)updateRightAccessoryAppearance
-{
-    [self.rightAccessory updateButtonStates];
-}
-
 - (void)updateAppearance
 {
     self.titleField.text = self.titleText;
-    self.statusIndicator.foregroundColor = [UIColor accentColor];
 }
 
 #pragma mark - Observer

@@ -21,6 +21,21 @@ import XCTest
 import Cartography
 @testable import Wire
 
+private let accentColors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
+
+extension Array where Element: ZMUser {
+
+    func assignRandomAccentColors() {
+        var index = 0
+        for user in self {
+            user.accentColorValue = accentColors[index % accentColors.count]
+            user.connection = ZMConnection.insertNewSentConnection(to: user)
+            user.connection!.status = .accepted
+            
+            index = index + 1
+        }
+    }
+}
 
 class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
 
@@ -30,6 +45,7 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         super.setUp()
         sut = ConversationListAvatarView()
     }
+    
 
     func testThatItRendersSingleUserImage() {
         otherUser.accentColorValue = .strongLimeGreen
@@ -44,12 +60,16 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         let thirdUser = ZMUser.insertNewObject(in: moc)
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        
+        (conversation?.activeParticipants.array as! [ZMUser]).assignRandomAccentColors()
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersManyUsers() {
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
+        
+        (conversation?.activeParticipants.array as! [ZMUser]).assignRandomAccentColors()
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }

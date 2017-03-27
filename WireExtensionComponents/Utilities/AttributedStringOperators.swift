@@ -168,7 +168,7 @@ extension Sequence where Iterator.Element == NSAttributedString {
         
         var first = true
         
-        self.forEach { string in
+        for string in self {
             if !first {
                 result.append(separator)
             }

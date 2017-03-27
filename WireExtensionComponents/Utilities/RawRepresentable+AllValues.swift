@@ -19,6 +19,7 @@
 import Foundation
 
 extension RawRepresentable where RawValue == Int {
+    // @warning works only on sequential enums.
     public static var allValues: [Self] {
         var index = 0
         var values = [Self]()
