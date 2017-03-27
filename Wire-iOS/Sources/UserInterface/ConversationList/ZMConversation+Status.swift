@@ -109,19 +109,6 @@ internal struct ConversationStatus {
     let isBlocked: Bool
 }
 
-/*
- Matchers priorities (highest first):
- 
- (Blocked)
- (Calling)
- (Typing)
- (New message / call)
- (Silenced)
- (Unsent message combines with (Group activity), (New message / call), (Silenced))
- (Group activity)
- (Username)
- */
-
 final internal class BlockedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isBlocked
@@ -317,6 +304,18 @@ final internal class UnsernameMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+/*
+ Matchers priorities (highest first):
+ 
+ (Blocked)
+ (Calling)
+ (Typing)
+ (New message / call)
+ (Silenced)
+ (Unsent message combines with (Group activity), (New message / call), (Silenced))
+ (Group activity)
+ (Username)
+ */
 private var allMatchers: [ConversationStatusMatcher] = {
     let silencedMatcher = SilencedMatcher()
     let newMessageMatcher = NewMessagesMatcher()
@@ -325,7 +324,7 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
     
-    return [BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
+    return [BlockedMatcher(), CallingMatcher(), TypingMatcher(), newMessageMatcher, silencedMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
 }()
 
 extension ConversationStatus {
