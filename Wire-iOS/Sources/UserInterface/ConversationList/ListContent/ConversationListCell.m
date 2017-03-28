@@ -49,13 +49,12 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
 
-@property (nonatomic, strong) ConversationListItemView *itemView;
-@property (nonatomic, assign) BOOL hasCreatedInitialConstraints;
-@property (nonatomic, strong) NSLayoutConstraint *titleBottomMarginConstraint;
+@property (nonatomic) ConversationListItemView *itemView;
+@property (nonatomic) BOOL hasCreatedInitialConstraints;
 
-@property (nonatomic, strong) NSLayoutConstraint *archiveRightMarginConstraint;
+@property (nonatomic) NSLayoutConstraint *titleBottomMarginConstraint;
 
-@property (nonatomic) AnimatedListMenuView *animatedListView;
+@property (nonatomic) AnimatedListMenuView *menuDotsView;
 @property (nonatomic) NSDate *overscrollStartDate;
 
 @end
@@ -93,15 +92,13 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
     
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onRightAccessorySelected:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(onRightAccessorySelected:)];
     [self.itemView.rightAccessory addGestureRecognizer:tapGestureRecognizer];
     [self.swipeView addSubview:self.itemView];
 
-    AnimatedListMenuView *animatedView = [[AnimatedListMenuView alloc] initForAutoLayout];
-    
-    [self.menuView addSubview:animatedView];
-    self.animatedListView = animatedView;
-    [self.animatedListView enable1PixelBlueBorder];
+    self.menuDotsView = [[AnimatedListMenuView alloc] initForAutoLayout];
+    [self.menuView addSubview:self.menuDotsView];
     
     [self setNeedsUpdateConstraints];
     
@@ -116,7 +113,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     
     // After X % of reveal we consider animation should be finished
     const CGFloat progress = (visualDrawerOffset / MaxVisualDrawerOffsetRevealDistance);
-    [self.animatedListView setProgress:progress animated:YES];
+    [self.menuDotsView setProgress:progress animated:YES];
     if (progress >= 1 && ! self.overscrollStartDate) {
         self.overscrollStartDate = [NSDate date];
     }
@@ -144,18 +141,15 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)updateConstraints
 {
-    CGFloat leftMarginConvList = [WAZUIMagic floatForIdentifier:@"list.left_margin"];
+    CGFloat leftMarginConvList = 64;
     
     if (! self.hasCreatedInitialConstraints) {
         self.hasCreatedInitialConstraints = YES;
         [self.itemView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
-        [self.animatedListView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            [self.animatedListView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMarginConvList];
-            self.archiveRightMarginConstraint = [self.animatedListView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:leftMarginConvList / 2.0f];
-        }];
+        [self.menuDotsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        
+        [self.menuDotsView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMarginConvList];
     }
 
     [super updateConstraints];
@@ -221,6 +215,22 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     return YES;
 }
 
+- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize
+{
+    self.itemView.titleText = @"Ü";
+    self.itemView.subtitleAttributedText = [[NSAttributedString alloc] initWithString:@"Ä"
+                                                                           attributes:[ZMConversation statusRegularStyle]];
+    
+    CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
+    
+    self.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
+    [self.itemView setNeedsLayout];
+    [self.itemView layoutIfNeeded];
+    CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
+    cellSize.width = collectionViewSize.width;
+    return cellSize;
+}
+
 #pragma mark - AVSMediaManagerClientChangeNotification
 
 - (void)mediaManagerDidChange:(AVSMediaManagerClientChangeNotification *)notification
@@ -237,7 +247,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)drawerScrollingEndedWithOffset:(CGFloat)offset
 {
-    if (self.animatedListView.progress >= 1) {
+    if (self.menuDotsView.progress >= 1) {
         BOOL overscrolled = NO;
         if (offset > (CGRectGetWidth(self.frame) / OverscrollRatio)) {
             overscrolled = YES;

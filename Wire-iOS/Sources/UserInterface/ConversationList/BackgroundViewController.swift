@@ -138,8 +138,13 @@ final public class BackgroundViewController: UIViewController {
         }
     }
     
+    static let ciContext: CIContext = {
+        return CIContext()
+    }()
+    
     fileprivate func setBackground(imageData: Data) {
-        self.imageView.image = UIImage(data: imageData)
+        let image = UIImage(from: imageData, withMaxSize: 100)
+        self.imageView.image = image?.desaturatedImage(with: BackgroundViewController.ciContext, saturation: 3)
     }
     
     fileprivate func setBackground(color: UIColor) {

@@ -39,7 +39,6 @@
 
 #import "ConversationListConnectRequestsItem.h"
 #import "UIView+MTAnimation.h"
-#import "ConversationListCollectionViewLayout.h"
 #import "UIColor+WR_ColorScheme.h"
 
 #import "ConnectRequestsCell.h"
@@ -60,7 +59,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) BOOL focusOnNextSelection;
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
-
+@property (nonatomic) ConversationListCell *layoutCell;
 @end
 
 @interface ConversationListContentController (ConversationListCellDelegate) <ConversationListCellDelegate>
@@ -80,8 +79,10 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (instancetype)init
 {
-    UICollectionViewFlowLayout *flowLayout = [[ConversationListCollectionViewLayout alloc] init];
-    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.minimumLineSpacing = 0;
+    flowLayout.minimumInteritemSpacing = 0;
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         StopWatch *stopWatch = [StopWatch stopWatch];
@@ -96,6 +97,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)loadView
 {
     [super loadView];
+    
+    self.layoutCell = [[ConversationListCell alloc] init];
     
     self.listViewModel = [[ConversationListViewModel alloc] init];
     self.listViewModel.delegate = self;
@@ -396,7 +399,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    [self.collectionView.collectionViewLayout invalidateLayout];
     NSInteger sections = self.listViewModel.sectionCount;
     return sections;
 }
@@ -461,9 +463,11 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 @implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return UIEdgeInsetsZero;
+    return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
 }
 
 @end

@@ -20,16 +20,17 @@
 #import "SwipeMenuCollectionCell.h"
 
 @class ZMConversation;
+@class ConversationListItemView;
 @protocol ConversationListCellDelegate;
 
 
 @interface ConversationListCell : SwipeMenuCollectionCell
 
-@property (nonatomic, strong) ZMConversation *conversation;
+@property (nonatomic) ZMConversation *conversation;
+@property (nonatomic, readonly) ConversationListItemView *itemView;
 @property (nonatomic, weak) id <ConversationListCellDelegate> delegate;
-
 - (void)updateAppearance;
-
+- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize;
 @end
 
 @protocol ConversationListCellDelegate <NSObject>
