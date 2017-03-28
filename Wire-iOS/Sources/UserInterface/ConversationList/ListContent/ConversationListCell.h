@@ -30,7 +30,7 @@
 @property (nonatomic, readonly) ConversationListItemView *itemView;
 @property (nonatomic, weak) id <ConversationListCellDelegate> delegate;
 - (void)updateAppearance;
-
+- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize;
 @end
 
 @protocol ConversationListCellDelegate <NSObject>

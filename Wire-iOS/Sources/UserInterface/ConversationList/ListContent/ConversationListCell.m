@@ -215,6 +215,22 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     return YES;
 }
 
+- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize
+{
+    self.itemView.titleText = @"Ü";
+    self.itemView.subtitleAttributedText = [[NSAttributedString alloc] initWithString:@"Ä"
+                                                                           attributes:[ZMConversation statusRegularStyle]];
+    
+    CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
+    
+    self.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
+    [self.itemView setNeedsLayout];
+    [self.itemView layoutIfNeeded];
+    CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
+    cellSize.width = collectionViewSize.width;
+    return cellSize;
+}
+
 #pragma mark - AVSMediaManagerClientChangeNotification
 
 - (void)mediaManagerDidChange:(AVSMediaManagerClientChangeNotification *)notification

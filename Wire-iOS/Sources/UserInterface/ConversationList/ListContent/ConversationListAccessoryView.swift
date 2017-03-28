@@ -44,7 +44,7 @@ final internal class ConversationListAccessoryView: UIView {
         textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         
-        typingView.contentMode = .scaleAspectFit
+        typingView.contentMode = .center
         typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
         typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
@@ -62,6 +62,7 @@ final internal class ConversationListAccessoryView: UIView {
             badgeView.height == 20
             badgeView.edges == selfView.edges
             typingView.edges == selfView.edges ~ LayoutPriority(750)
+            selfView.width >= 28
             self.collapseWidthConstraint = selfView.width == 0
         }
         self.collapseWidthConstraint.isActive = false
@@ -147,8 +148,8 @@ final internal class ConversationListAccessoryView: UIView {
             constrain(self.badgeView.containedView, view) { parentView, view in
                 view.top == parentView.top
                 view.bottom == parentView.bottom
-                view.leading == parentView.leading + 8
-                view.trailing == parentView.trailing - 8
+                view.leading == parentView.leading + 6
+                view.trailing == parentView.trailing - 6
             }
         }
     }

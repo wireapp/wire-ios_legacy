@@ -463,27 +463,11 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 @implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsZero;
-}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.layoutCell.itemView.titleText = @"Ü";
-    self.layoutCell.itemView.subtitleAttributedText = [[NSAttributedString alloc] initWithString:@"Ä"
-                                                                                      attributes:[ZMConversation statusRegularStyle]];
-    
-    CGSize fittingSize = CGSizeMake(collectionView.bounds.size.width, 0);
-    
-    self.layoutCell.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
-    [self.layoutCell.itemView setNeedsLayout];
-    [self.layoutCell.itemView layoutIfNeeded];
-    CGSize cellSize = [self.layoutCell.itemView systemLayoutSizeFittingSize:fittingSize];
-    cellSize.width = collectionView.bounds.size.width;
-    return cellSize;
+    return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
 }
 
 @end
