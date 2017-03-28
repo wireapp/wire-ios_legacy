@@ -84,7 +84,7 @@ extension DeveloperOptionsController {
     /// Creates a cell to forward logs
     func forwardLogCell() -> UITableViewCell {
         return self.createCellWithButton(labelText: "Forward log records") {
-            DebugLogSender.sendLogsByEmail()
+            DebugLogSender.sendLogsByEmail(message: "Sent from debug menu")
         }
     }
     
