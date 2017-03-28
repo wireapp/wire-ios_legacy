@@ -414,7 +414,7 @@ extension ConversationStatus {
             switch icon {
             case .none:
                 break
-                default:
+            default:
                 return matcher
             }
         }
