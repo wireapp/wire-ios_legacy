@@ -31,7 +31,7 @@ import Cartography
 
 @objc final class ArchivedListViewController: UIViewController {
     
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: ConversationListCollectionViewLayout())
+    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
     let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     let swipeIdentifier = "ArchivedList"

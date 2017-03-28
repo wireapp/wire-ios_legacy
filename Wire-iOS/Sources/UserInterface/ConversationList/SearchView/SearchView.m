@@ -63,7 +63,7 @@
     if (! self.initialConstraintsCreated) {
         CGFloat leftMarginConvList = [WAZUIMagic floatForIdentifier:@"people_picker.search_results_mode.person_tile_left_margin"];
         CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
-        CGFloat minHeight = [[WAZUIMagic sharedMagic][@"list.me_tile_height"] floatValue];
+        CGFloat minHeight = 50;
 
         [self autoSetDimension:ALDimensionHeight toSize:minHeight relation:NSLayoutRelationGreaterThanOrEqual];
 

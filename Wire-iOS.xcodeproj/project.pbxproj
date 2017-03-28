@@ -100,7 +100,6 @@
 		16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */; };
 		16D3FCE11E3753D80052A535 /* Settings+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3FCE01E3753D80052A535 /* Settings+Calling.swift */; };
 		16D3FD041E3BCCF80052A535 /* BlurEffectTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */; };
-		16D453601B69131400675246 /* ConversationListCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D4535F1B69131400675246 /* ConversationListCollectionViewLayout.m */; };
 		16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */; };
 		16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */; };
 		16DDA1441B259CB900E1F1FC /* VoiceChannelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DDA1431B259CB900E1F1FC /* VoiceChannelController.m */; };
@@ -329,9 +328,7 @@
 		871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */; };
 		871BC2731D34F8F800DF0793 /* UpsideDownTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */; };
 		871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */; };
-		871BC2751D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E01D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m */; };
 		871BC2771D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E41D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m */; };
-		871BC2781D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E61D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m */; };
 		871BC2791D34F8F800DF0793 /* VoiceUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1E81D34F8F800DF0793 /* VoiceUserImageView.m */; };
 		871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */; };
 		871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */; };
@@ -480,7 +477,6 @@
 		877316081B970A82007BA779 /* ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315F91B970A82007BA779 /* ipad.plist */; };
 		877316091B970A82007BA779 /* iphone4.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315FA1B970A82007BA779 /* iphone4.plist */; };
 		8773160A1B970A82007BA779 /* iphone6.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315FB1B970A82007BA779 /* iphone6.plist */; };
-		8773160B1B970A82007BA779 /* list.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315FC1B970A82007BA779 /* list.plist */; };
 		8773160C1B970A82007BA779 /* misc.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315FD1B970A82007BA779 /* misc.plist */; };
 		8773160E1B970A82007BA779 /* people_picker.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315FF1B970A82007BA779 /* people_picker.plist */; };
 		8773160F1B970A82007BA779 /* profile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316001B970A82007BA779 /* profile.plist */; };
@@ -529,14 +525,10 @@
 		8795A5A81D34CF7A0024101B /* NSLayoutConstraint+Helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */; };
 		8795A5C31D34D09E0024101B /* AnimatedLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5B61D34D09E0024101B /* AnimatedLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8795A5C41D34D09E0024101B /* KnockAnimationLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5B71D34D09E0024101B /* KnockAnimationLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8795A5C51D34D09E0024101B /* KnockAnimationLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5B81D34D09E0024101B /* KnockAnimationLayer.m */; };
 		8795A5C61D34D09E0024101B /* PulseLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5B91D34D09E0024101B /* PulseLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8795A5C71D34D09E0024101B /* PulseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5BA1D34D09E0024101B /* PulseLayer.m */; };
 		8795A5C81D34D09E0024101B /* UserConnectingLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5BB1D34D09E0024101B /* UserConnectingLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8795A5C91D34D09E0024101B /* UserConnectingLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5BC1D34D09E0024101B /* UserConnectingLayer.m */; };
-		8795A5CA1D34D09E0024101B /* UserListeningLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5BD1D34D09E0024101B /* UserListeningLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8795A5CB1D34D09E0024101B /* UserListeningLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5BE1D34D09E0024101B /* UserListeningLayer.m */; };
 		8795A5CC1D34D09E0024101B /* VoiceGainLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5BF1D34D09E0024101B /* VoiceGainLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8795A5CD1D34D09E0024101B /* VoiceGainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5C01D34D09E0024101B /* VoiceGainLayer.m */; };
 		8795A5CE1D34D09E0024101B /* VoiceIndicatorLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8795A5C11D34D09E0024101B /* VoiceIndicatorLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1146,8 +1138,6 @@
 		16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraBottomToolsViewController.m; sourceTree = "<group>"; };
 		16D3FCE01E3753D80052A535 /* Settings+Calling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Calling.swift"; sourceTree = "<group>"; };
 		16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffectTransition.swift; sourceTree = "<group>"; };
-		16D4535E1B69131400675246 /* ConversationListCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListCollectionViewLayout.h; sourceTree = "<group>"; };
-		16D4535F1B69131400675246 /* ConversationListCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListCollectionViewLayout.m; sourceTree = "<group>"; };
 		16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentTests.m; sourceTree = "<group>"; };
 		16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformProgressView.swift; sourceTree = "<group>"; };
 		16DDA1421B259CB900E1F1FC /* VoiceChannelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceChannelController.h; sourceTree = "<group>"; };
@@ -1504,12 +1494,8 @@
 		871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpsideDownTableView.m; sourceTree = "<group>"; };
 		871BC1DD1D34F8F800DF0793 /* BadgeUserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeUserImageView.h; sourceTree = "<group>"; };
 		871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeUserImageView.m; sourceTree = "<group>"; };
-		871BC1DF1D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KnockAnimationLayer+MagicInit.h"; sourceTree = "<group>"; };
-		871BC1E01D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KnockAnimationLayer+MagicInit.m"; sourceTree = "<group>"; };
 		871BC1E31D34F8F800DF0793 /* VoiceGainLayer+MagicInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VoiceGainLayer+MagicInit.h"; sourceTree = "<group>"; };
 		871BC1E41D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VoiceGainLayer+MagicInit.m"; sourceTree = "<group>"; };
-		871BC1E51D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VoiceIndicatorLayer+MagicInit.h"; sourceTree = "<group>"; };
-		871BC1E61D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VoiceIndicatorLayer+MagicInit.m"; sourceTree = "<group>"; };
 		871BC1E71D34F8F800DF0793 /* VoiceUserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceUserImageView.h; sourceTree = "<group>"; };
 		871BC1E81D34F8F800DF0793 /* VoiceUserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceUserImageView.m; sourceTree = "<group>"; };
 		871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebLinkTextView.h; sourceTree = "<group>"; };
@@ -1735,7 +1721,6 @@
 		877315F91B970A82007BA779 /* ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ipad.plist; sourceTree = "<group>"; };
 		877315FA1B970A82007BA779 /* iphone4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = iphone4.plist; sourceTree = "<group>"; };
 		877315FB1B970A82007BA779 /* iphone6.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = iphone6.plist; sourceTree = "<group>"; };
-		877315FC1B970A82007BA779 /* list.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = list.plist; sourceTree = "<group>"; };
 		877315FD1B970A82007BA779 /* misc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = misc.plist; sourceTree = "<group>"; };
 		877315FF1B970A82007BA779 /* people_picker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = people_picker.plist; sourceTree = "<group>"; };
 		877316001B970A82007BA779 /* profile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = profile.plist; sourceTree = "<group>"; };
@@ -1792,14 +1777,10 @@
 		8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+Helpers.h"; sourceTree = "<group>"; };
 		8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+Helpers.m"; sourceTree = "<group>"; };
 		8795A5B61D34D09E0024101B /* AnimatedLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedLayer.h; sourceTree = "<group>"; };
-		8795A5B71D34D09E0024101B /* KnockAnimationLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnockAnimationLayer.h; sourceTree = "<group>"; };
-		8795A5B81D34D09E0024101B /* KnockAnimationLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnockAnimationLayer.m; sourceTree = "<group>"; };
 		8795A5B91D34D09E0024101B /* PulseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulseLayer.h; sourceTree = "<group>"; };
 		8795A5BA1D34D09E0024101B /* PulseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulseLayer.m; sourceTree = "<group>"; };
 		8795A5BB1D34D09E0024101B /* UserConnectingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserConnectingLayer.h; sourceTree = "<group>"; };
 		8795A5BC1D34D09E0024101B /* UserConnectingLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserConnectingLayer.m; sourceTree = "<group>"; };
-		8795A5BD1D34D09E0024101B /* UserListeningLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListeningLayer.h; sourceTree = "<group>"; };
-		8795A5BE1D34D09E0024101B /* UserListeningLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListeningLayer.m; sourceTree = "<group>"; };
 		8795A5BF1D34D09E0024101B /* VoiceGainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceGainLayer.h; sourceTree = "<group>"; };
 		8795A5C01D34D09E0024101B /* VoiceGainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceGainLayer.m; sourceTree = "<group>"; };
 		8795A5C11D34D09E0024101B /* VoiceIndicatorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceIndicatorLayer.h; sourceTree = "<group>"; };
@@ -3418,12 +3399,8 @@
 			children = (
 				871BC1DD1D34F8F800DF0793 /* BadgeUserImageView.h */,
 				871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */,
-				871BC1DF1D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.h */,
-				871BC1E01D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m */,
 				871BC1E31D34F8F800DF0793 /* VoiceGainLayer+MagicInit.h */,
 				871BC1E41D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m */,
-				871BC1E51D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.h */,
-				871BC1E61D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m */,
 				871BC1E71D34F8F800DF0793 /* VoiceUserImageView.h */,
 				871BC1E81D34F8F800DF0793 /* VoiceUserImageView.m */,
 			);
@@ -3765,14 +3742,10 @@
 			isa = PBXGroup;
 			children = (
 				8795A5B61D34D09E0024101B /* AnimatedLayer.h */,
-				8795A5B71D34D09E0024101B /* KnockAnimationLayer.h */,
-				8795A5B81D34D09E0024101B /* KnockAnimationLayer.m */,
 				8795A5B91D34D09E0024101B /* PulseLayer.h */,
 				8795A5BA1D34D09E0024101B /* PulseLayer.m */,
 				8795A5BB1D34D09E0024101B /* UserConnectingLayer.h */,
 				8795A5BC1D34D09E0024101B /* UserConnectingLayer.m */,
-				8795A5BD1D34D09E0024101B /* UserListeningLayer.h */,
-				8795A5BE1D34D09E0024101B /* UserListeningLayer.m */,
 				8795A5BF1D34D09E0024101B /* VoiceGainLayer.h */,
 				8795A5C01D34D09E0024101B /* VoiceGainLayer.m */,
 				8795A5C11D34D09E0024101B /* VoiceIndicatorLayer.h */,
@@ -4144,8 +4117,6 @@
 				877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */,
 				8F8913F31A9F287E0056AB0C /* ConversationListContentController.h */,
 				8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */,
-				16D4535E1B69131400675246 /* ConversationListCollectionViewLayout.h */,
-				16D4535F1B69131400675246 /* ConversationListCollectionViewLayout.m */,
 				BAEF10F81B8C8849005BFA48 /* AnimatedListMenuView.h */,
 				BAEF10F91B8C8849005BFA48 /* AnimatedListMenuView.m */,
 			);
@@ -4229,7 +4200,6 @@
 				877315F91B970A82007BA779 /* ipad.plist */,
 				877315FA1B970A82007BA779 /* iphone4.plist */,
 				877315FB1B970A82007BA779 /* iphone6.plist */,
-				877315FC1B970A82007BA779 /* list.plist */,
 				877315FD1B970A82007BA779 /* misc.plist */,
 				877315FF1B970A82007BA779 /* people_picker.plist */,
 				877316001B970A82007BA779 /* profile.plist */,
@@ -5055,7 +5025,6 @@
 				16F9EB341BCBB0270021EF39 /* CheckBoxButton.h in Headers */,
 				8795A5C31D34D09E0024101B /* AnimatedLayer.h in Headers */,
 				CE8E4FC21DF17C7C0009F437 /* TextTransform.h in Headers */,
-				8795A5CA1D34D09E0024101B /* UserListeningLayer.h in Headers */,
 				8795A5A81D34CF7A0024101B /* NSLayoutConstraint+Helpers.h in Headers */,
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
 				1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */,
@@ -5091,7 +5060,6 @@
 				87831A9A1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h in Headers */,
 				1EDE4B181BA9993200380349 /* FlexibleNavigationBar.h in Headers */,
 				1EE9DCC31B5F9A6D00E347DF /* Token.h in Headers */,
-				8795A5C41D34D09E0024101B /* KnockAnimationLayer.h in Headers */,
 				1E8C253A1BBC279B00FC373F /* ProgressSpinner.h in Headers */,
 				1EE9DCC51B5F9A6D00E347DF /* TokenField.h in Headers */,
 			);
@@ -5365,7 +5333,6 @@
 			files = (
 				1658D2041D3E742A00249609 /* new_message.caf in Resources */,
 				87AEDB281DBA619D00010451 /* logo@2x.png in Resources */,
-				8773160B1B970A82007BA779 /* list.plist in Resources */,
 				BF732A761D9C14C7003077DB /* emoji_nature.plist in Resources */,
 				16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */,
 				877316121B970A82007BA779 /* tutorial.plist in Resources */,
@@ -5731,7 +5698,6 @@
 				160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */,
 				1EE9DCCA1B5F9A6D00E347DF /* TokenizedTextView.m in Sources */,
 				1E5E0CB31B6B83C6003B0CAC /* IconButton.m in Sources */,
-				8795A5C51D34D09E0024101B /* KnockAnimationLayer.m in Sources */,
 				87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */,
 				1EDE4B191BA9993200380349 /* FlexibleNavigationBar.m in Sources */,
 				8795A5CF1D34D09E0024101B /* VoiceIndicatorLayer.m in Sources */,
@@ -5741,7 +5707,6 @@
 				1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */,
 				8795A5C71D34D09E0024101B /* PulseLayer.m in Sources */,
 				BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */,
-				8795A5CB1D34D09E0024101B /* UserListeningLayer.m in Sources */,
 				87AAE41D1E42399E00E1D13A /* UIFont+DynamicType.swift in Sources */,
 				879D6AFC1E69E20900DC07A1 /* ImageMessageView.swift in Sources */,
 				878607201D33E3FF00971A19 /* LineNumberLogFormatter.m in Sources */,
@@ -5842,7 +5807,6 @@
 				BFD9B9561DEDEE0400E47534 /* ProfileHeaderView.swift in Sources */,
 				871BC3611D34F94200DF0793 /* Settings+ColorScheme.m in Sources */,
 				871BC2801D34F8F800DF0793 /* NSString+Filename.swift in Sources */,
-				16D453601B69131400675246 /* ConversationListCollectionViewLayout.m in Sources */,
 				87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */,
 				8FC8549C199245770008B66B /* NetworkStatusViewController.m in Sources */,
 				BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */,
@@ -6032,7 +5996,6 @@
 				DBDA839B1ADFD9D4000AD57D /* PhoneNumberViewController.m in Sources */,
 				16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
-				871BC2751D34F8F800DF0793 /* KnockAnimationLayer+MagicInit.m in Sources */,
 				8762BE151D8978F70040E4A5 /* ZMAccentColor+Additions.swift in Sources */,
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
 				16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */,
@@ -6299,7 +6262,6 @@
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				165B47ED1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
-				871BC2781D34F8F800DF0793 /* VoiceIndicatorLayer+MagicInit.m in Sources */,
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				164B65BE1CB41A3D00D882D8 /* RegistrationRootViewController.m in Sources */,
 				163B5F011B4D4109009B4629 /* TitleBarViewController.m in Sources */,

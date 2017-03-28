@@ -62,7 +62,6 @@ final internal class ConversationListAccessoryView: UIView {
             badgeView.height == 20
             badgeView.edges == selfView.edges
             typingView.edges == selfView.edges ~ LayoutPriority(750)
-            selfView.width >= 32 ~ LayoutPriority(999)
             self.collapseWidthConstraint = selfView.width == 0
         }
         self.collapseWidthConstraint.isActive = false
@@ -83,7 +82,7 @@ final internal class ConversationListAccessoryView: UIView {
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
             return iconView
         case .activeCall(false):
-            textLabel.text = "conversation_list.right_accessory.join_button.title".localized
+            textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
             return textLabel
         case .missedCall:
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
@@ -137,7 +136,7 @@ final internal class ConversationListAccessoryView: UIView {
         case .typing:
             self.badgeView.isHidden = true
             self.typingView.isHidden = false
-            self.typingView.image = UIImage(for: .pencil, iconSize: .tiny, color: .white)
+            self.typingView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
         default:
             self.typingView.image = .none
         }
@@ -146,7 +145,10 @@ final internal class ConversationListAccessoryView: UIView {
             self.badgeView.containedView.addSubview(view)
             
             constrain(self.badgeView.containedView, view) { parentView, view in
-                view.edges == parentView.edges
+                view.top == parentView.top
+                view.bottom == parentView.bottom
+                view.leading == parentView.leading + 8
+                view.trailing == parentView.trailing - 8
             }
         }
     }

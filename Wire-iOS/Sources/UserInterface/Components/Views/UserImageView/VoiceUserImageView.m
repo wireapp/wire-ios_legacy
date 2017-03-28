@@ -21,7 +21,6 @@
 
 #import <PureLayout/PureLayout.h>
 
-#import "VoiceIndicatorLayer+MagicInit.h"
 #import "VoiceGainLayer+MagicInit.h"
 #import "WAZUIMagic.h"
 #import "CALayer+EasyAnimation.h"

@@ -59,6 +59,16 @@ extension ConversationStatusMatcher {
     }
 }
 
+extension ZMConversation {
+    static func statusRegularStyle() -> [String: AnyObject] {
+        return BlockedMatcher.regularStyle()
+    }
+    
+    static func statusEmphasisStyle() -> [String: AnyObject] {
+        return BlockedMatcher.emphasisStyle()
+    }
+}
+
 internal enum StatusMessageType: Int {
     case text
     case link

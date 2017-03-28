@@ -25,32 +25,5 @@
 		<key>dot_size</key>
 		<integer>10</integer>
 	</dict>
-	<key>tutorial</key>
-	<dict>
-		<key>cursor</key>
-		<dict>
-			<key>label_font</key>
-			<dict>
-				<key>font</key>
-				<string>System-Medium</string>
-				<key>size</key>
-				<real>11</real>
-			</dict>
-			<key>label_color</key>
-			<array>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-			</array>
-			<key>label_icon</key>
-			<dict>
-				<key>font</key>
-				<string>ZetaNeue-Regular</string>
-				<key>size</key>
-				<real>20</real>
-			</dict>
-		</dict>
-	</dict>
 </dict>
 </plist>
