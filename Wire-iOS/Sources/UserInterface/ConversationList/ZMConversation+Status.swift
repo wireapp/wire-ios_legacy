@@ -199,7 +199,7 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString {
-        return "conversation.status.silenced".localized && type(of: self).regularStyle()
+        return "" && type(of: self).regularStyle()
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
@@ -273,7 +273,12 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            return .unreadMessages(count: status.unreadMessages.count)
+            if status.unreadMessages.count == 1 {
+                return .none
+            }
+            else {
+                return .unreadMessages(count: status.unreadMessages.count)
+            }
         }
     }
     
@@ -403,6 +408,20 @@ extension ConversationStatus {
         return [topMatcher] + topMatcher.combinesWith.filter { $0.isMatching(with: self) }
     }
     
+    func appliedMatcherForIcon(for conversation: ZMConversation) -> ConversationStatusMatcher? {
+        for matcher in appliedMatchers {
+            let icon = matcher.icon(with: self, conversation: conversation)
+            switch icon {
+            case .none:
+                break
+                default:
+                return matcher
+            }
+        }
+        
+        return .none
+    }
+    
     internal func description(for conversation: ZMConversation) -> NSAttributedString {
         let allMatchers = self.appliedMatchers
         guard allMatchers.count > 0 else {
@@ -413,12 +432,11 @@ extension ConversationStatus {
     }
     
     internal func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
-        let allMatchers = self.appliedMatchers
-        guard let first = allMatchers.first else {
+        guard let topMatcher = self.appliedMatcherForIcon(for: conversation) else {
             return .none
         }
         
-        return first.icon(with: self, conversation: conversation)
+        return topMatcher.icon(with: self, conversation: conversation)
     }
 }
 
