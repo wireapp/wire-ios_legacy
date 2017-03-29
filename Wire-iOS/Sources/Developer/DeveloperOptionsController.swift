@@ -84,7 +84,15 @@ extension DeveloperOptionsController {
     /// Creates a cell to forward logs
     func forwardLogCell() -> UITableViewCell {
         return self.createCellWithButton(labelText: "Forward log records") {
-            DebugLogSender.sendLogsByEmail()
+            let alert = UIAlertController(title: "Add explanation", message: "Please explain the problem that made you send the logs", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
+                guard let text = alert.textFields?.first?.text else { return }
+                DebugLogSender.sendLogsByEmail(message: text)
+            }))
+            alert.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "Please explain the problem"
+            })
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

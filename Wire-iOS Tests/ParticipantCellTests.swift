@@ -87,8 +87,8 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         message.systemMessageType = type
 
         if !left {
-            let names = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus"]
-            let users = names.map(createUser) + [selfUser as ZMUser, otherUser as ZMUser] // We add the sender to ensure it is removed
+            // We add the sender to ensure it is removed
+            let users = usernames.map(createUser) + [selfUser as ZMUser, otherUser as ZMUser]
             message.users = manyUsers ? Set(users) : Set(users[0...1])
         } else {
             message.users = [message.sender!]
@@ -99,13 +99,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         cell.configure(for: message, layoutProperties: props)
         cell.layer.speed = 0
         return cell
-    }
-
-    private func createUser(name: String) -> ZMUser {
-        let user = ZMUser.insertNewObject(in: moc)
-        user.name = name
-        user.remoteIdentifier = UUID()
-        return user
     }
 
 }

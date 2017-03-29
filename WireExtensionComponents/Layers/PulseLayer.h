@@ -22,7 +22,7 @@
 
 
 
-/// Used by the VoiceIndicatorLayer, KnockAnimationLayer, VoiceGainLayer
+/// Used by the VoiceIndicatorLayer, VoiceGainLayer
 @interface PulseLayer : CALayer
 
 @property (nonatomic, assign) CGFloat toContentScale;

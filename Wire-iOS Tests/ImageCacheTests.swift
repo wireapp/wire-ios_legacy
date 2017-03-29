@@ -91,7 +91,7 @@ class ImageCacheTests: XCTestCase {
         }
         
         // THEN
-        self.waitForExpectations(timeout: 5) {
+        self.waitForExpectations(timeout: 15) {
             XCTAssertNil($0)
         }
         XCTAssertEqual(imagesProcessed, 1)

@@ -83,7 +83,7 @@ class SketchToolbar : UIView {
             separatorLine.top == container.top
             separatorLine.left == container.left
             separatorLine.right == container.right
-            separatorLine.height == 0.5
+            separatorLine.height == .hairline
         }
         
         createCenterButtonConstraints()

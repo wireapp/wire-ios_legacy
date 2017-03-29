@@ -22,6 +22,7 @@
 #import "UIView+MTAnimation.h"
 #import "UIView+Borders.h"
 #import "UIView+RemoveAnimations.h"
+#import "Wire-Swift.h"
 
 
 
@@ -92,7 +93,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 {
     self.canOpenDrawer = YES;
     self.overscrollFraction = 0.6f;
-    self.maxVisualDrawerOffset = CGFLOAT_MAX;
+    self.maxVisualDrawerOffset = 48;
     
     self.swipeView = [[UIView alloc] initForAutoLayout];
     self.swipeView.backgroundColor = [UIColor clearColor];
@@ -140,7 +141,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
         [self.swipeView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         self.swipeViewHorizontalConstraint = [self.swipeView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:0];
         
-        [self.separatorLine autoSetDimension:ALDimensionWidth toSize:1.0f];
+        [self.separatorLine autoSetDimension:ALDimensionWidth toSize:UIScreen.hairline];
         [self.separatorLine autoSetDimension:ALDimensionHeight toSize:25.0f];
         [self.separatorLine autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.swipeView];
         [self.separatorLine autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.menuView];
@@ -259,6 +260,10 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 {
     _userInteractionHorizontalOffset = userInteractionHorizontalOffset;
 
+    if (self.bounds.size.width == 0) {
+        return;
+    }
+   
     if (self.revealDrawerOverscrolled) {
         if (_userInteractionHorizontalOffset + self.initialDrawerOffset < self.bounds.size.width * self.overscrollFraction) { // overscroll cancelled
             self.revealAnimationPerforming = YES;

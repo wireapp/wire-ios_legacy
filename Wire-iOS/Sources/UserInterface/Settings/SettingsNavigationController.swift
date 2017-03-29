@@ -140,6 +140,7 @@ import HockeySDK.BITHockeyManager
             }
         }
         
+        self.navigationBar.tintColor = .white
         self.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true

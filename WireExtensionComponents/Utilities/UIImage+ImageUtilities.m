@@ -39,22 +39,6 @@
     return scaledImage;
 }
 
-+ (UIImage *)desaturatedImageFromData:(NSData *)data
-                          withContext:(CIContext *)context
-                           saturation:(NSNumber *)saturation
-{
-    CIImage *i = [CIImage imageWithData:data];
-    CIFilter *filter = [CIFilter filterWithName:@"CIColorControls"];
-    [filter setValue:i forKey:kCIInputImageKey];
-    [filter setValue:saturation forKey:@"InputSaturation"];
-    CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *processed = [UIImage imageWithCGImage:cgImage scale:1.0f orientation:UIImageOrientationUp];
-    CGImageRelease(cgImage);
-    
-    return processed;
-}
-
 - (UIImage *)desaturatedImageWithContext:(CIContext *)context saturation:(NSNumber *)saturation
 {
     CIImage *i = [CIImage imageWithCGImage:[self CGImage]];
@@ -62,104 +46,6 @@
     [filter setValue:i forKey:kCIInputImageKey];
     [filter setValue:saturation forKey:@"InputSaturation"];
     CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *processed = [UIImage imageWithCGImage:cgImage scale:self.scale orientation:self.imageOrientation];
-    CGImageRelease(cgImage);
-    
-    return processed;
-}
-
-- (UIImage *)blurredAutoEnhancedImageWithContext:(CIContext *)context
-                                      blurRadius:(CGFloat)radius
-{
-    CIImage *outputImage = [CIImage imageWithCGImage:[self CGImage]];
-    
-    NSArray *adjustments = [outputImage autoAdjustmentFiltersWithOptions:@{kCIImageAutoAdjustRedEye : @(NO)}];
-    for (CIFilter *filter in adjustments) {
-        [filter setValue:outputImage forKey:kCIInputImageKey];
-        outputImage = filter.outputImage;
-    }
-    
-    CGRect extent = outputImage.extent;
-    // Clamp
-    CIFilter * clampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
-    [clampFilter setDefaults];
-    [clampFilter setValue:[NSValue valueWithBytes:&CGAffineTransformIdentity
-                                         objCType:@encode(CGAffineTransform)]
-                   forKey:kCIInputTransformKey];
-    
-    [clampFilter setValue:outputImage forKey:kCIInputImageKey];
-    outputImage = [clampFilter outputImage];
-    
-    // Blur
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setValue:@(radius) forKey:kCIInputRadiusKey];
-    [blurFilter setValue:outputImage forKey:kCIInputImageKey];
-    outputImage = blurFilter.outputImage;
-    
-    CIImage *result = [outputImage imageByCroppingToRect:extent];
-    
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *processed = [UIImage imageWithCGImage:cgImage scale:self.scale orientation:self.imageOrientation];
-    CGImageRelease(cgImage);
-    
-    return processed;
-}
-
-- (UIImage *)blurredImageWithContext:(CIContext *)context
-                          blurRadius:(CGFloat)radius
-{
-    CIImage *outputImage = [CIImage imageWithCGImage:[self CGImage]];
-    
-    CGRect extent = outputImage.extent;
-    
-    // Blur
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setValue:@(radius) forKey:kCIInputRadiusKey];
-    [blurFilter setValue:outputImage forKey:kCIInputImageKey];
-    outputImage = blurFilter.outputImage;
-    
-    CIImage *result = [outputImage imageByCroppingToRect:extent];
-    
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *processed = [UIImage imageWithCGImage:cgImage scale:self.scale orientation:self.imageOrientation];
-    CGImageRelease(cgImage);
-    
-    return processed;
-}
-
-- (UIImage *)blurredImageWithContext:(CIContext *)context
-                          blurRadius:(CGFloat)radius
-                          saturation:(CGFloat)saturation
-                          brightness:(CGFloat)brightness
-                            contrast:(CGFloat)contrast
-{
-    CIImage *i = [CIImage imageWithCGImage:[self CGImage]];
-    
-    CGRect extent = i.extent;
-    
-    // Clamp
-    CIFilter *clampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
-    [clampFilter setDefaults];
-    [clampFilter setValue:[NSValue valueWithBytes:&CGAffineTransformIdentity
-                                         objCType:@encode(CGAffineTransform)]
-                   forKey:kCIInputTransformKey];
-    [clampFilter setValue:i forKey:kCIInputImageKey];
-
-    // Saturate
-    CIFilter *saturationFilter = [CIFilter filterWithName:@"CIColorControls"];
-    [saturationFilter setValue:[clampFilter valueForKey:kCIOutputImageKey] forKey:kCIInputImageKey];
-    [saturationFilter setValue:@(saturation) forKey:kCIInputSaturationKey];
-    [saturationFilter setValue:@(brightness) forKey:kCIInputBrightnessKey];
-    [saturationFilter setValue:@(contrast) forKey:kCIInputContrastKey];
-
-    // Blur
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setValue:@(radius) forKey:kCIInputRadiusKey];
-    [blurFilter setValue:[saturationFilter valueForKey:kCIOutputImageKey] forKey:kCIInputImageKey];
-    
-    CIImage *result = [[blurFilter valueForKey:kCIOutputImageKey] imageByCroppingToRect:extent];
-    
     CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
     UIImage *processed = [UIImage imageWithCGImage:cgImage scale:self.scale orientation:self.imageOrientation];
     CGImageRelease(cgImage);
@@ -214,12 +100,35 @@
     return image;
 }
 
+- (UIImage *)blurredImageWithContext:(CIContext *)context
+                          blurRadius:(CGFloat)radius
+{
+    CIImage *outputImage = [CIImage imageWithCGImage:[self CGImage]];
+    
+    CGRect extent = outputImage.extent;
+    
+    // Blur
+    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [blurFilter setValue:@(radius) forKey:kCIInputRadiusKey];
+    [blurFilter setValue:outputImage forKey:kCIInputImageKey];
+    outputImage = blurFilter.outputImage;
+    
+    CIImage *result = [outputImage imageByCroppingToRect:extent];
+    
+    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
+    UIImage *processed = [UIImage imageWithCGImage:cgImage scale:self.scale orientation:self.imageOrientation];
+    CGImageRelease(cgImage);
+    
+    return processed;
+}
+
 + (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color
 {
     const CGFloat middleSize = 10.0f;
     
     CGRect rect = CGRectMake(0.0f, 0.0f, ceilf(inset * 2.0f + middleSize), 1.0f);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 1.0f);
+
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(context, [color CGColor]);
@@ -267,58 +176,6 @@
     CFRelease(scaledImage);
     
     return image;
-}
-
-+ (UIImage *)imageVignetteForRect:(CGRect)rect ontoImage:(UIImage *)image showingImageUnderneath:(BOOL)showingImageUnderneath startColor:(UIColor *)vignetteStartColor endColor:(UIColor *)vignetteEndColor colorLocation:(CGFloat)middleColorLocation radiusMultiplier:(CGFloat)vignetteRadiusMultiplier
-{    
-    // begin
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), NO, image.scale);
-    
-    // draw image
-    CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal);
-    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
-    
-    // flip the drawing context
-    CGContextTranslateCTM(UIGraphicsGetCurrentContext(), 0, image.size.height);
-    CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1.0, - 1.0);
-    
-    // darken mode for the overlays
-    CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeDarken);
-    
-    // draw the flat overlay
-    
-    // radial gradient
-    CGFloat colorLocations[3];
-    colorLocations[0] = 0.0;
-    colorLocations[1] = middleColorLocation;
-    colorLocations[2] = 1.0;
-    
-    CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
-    
-    CGGradientRef gradient = CGGradientCreateWithColors(rgb,
-                                                        (__bridge CFArrayRef) @[
-                                                                                (id) vignetteStartColor.CGColor,
-                                                                                (id) vignetteStartColor.CGColor,
-                                                                                (id) vignetteEndColor.CGColor
-                                                                                ], // colors
-                                                        colorLocations); // color locations array
-    
-    CGPoint faceCenter = CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2);
-    
-    CGContextDrawRadialGradient(UIGraphicsGetCurrentContext(), // context
-                                gradient, // gradient spec
-                                faceCenter, // start center point
-                                0.0f, // start radius
-                                faceCenter, // end center
-                                vignetteRadiusMultiplier * sqrt((pow(rect.size.width / 2, 2)) * 2), // end radius
-                                kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
-    CGGradientRelease(gradient);
-    CGColorSpaceRelease(rgb);
-    
-    // wrap up
-    UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return i;
 }
 
 + (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size

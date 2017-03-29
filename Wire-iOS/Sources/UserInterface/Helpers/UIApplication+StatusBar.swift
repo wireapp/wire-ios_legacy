@@ -21,6 +21,8 @@ import UIKit
 
 public extension UIApplication {
     
+    public static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
+    
     @objc public func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
@@ -34,12 +36,20 @@ public extension UIApplication {
             statusBarStyle = .lightContent
         }
         
+        var changed = false
+        
         if (self.isStatusBarHidden != statusBarHidden) {
             self.setStatusBarHidden(statusBarHidden, with: animated ? .fade : .none)
+            changed = true
         }
         
         if self.statusBarStyle != statusBarStyle {
             self.setStatusBarStyle(statusBarStyle, animated: animated)
+            changed = true
+        }
+        
+        if changed {
+            NotificationCenter.default.post(name: type(of: self).wr_statusBarStyleChangeNotification, object: self)
         }
     }
     

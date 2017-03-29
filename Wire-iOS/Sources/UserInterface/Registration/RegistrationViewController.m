@@ -22,7 +22,6 @@
 #import <PureLayout/PureLayout.h>
 @import WireExtensionComponents;
 
-#import "BackgroundView.h"
 #import "zmessaging+iOS.h"
 #import "RegistrationStepViewController.h"
 #import "RegistrationPhoneFlowViewController.h"

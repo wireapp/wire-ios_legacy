@@ -499,16 +499,23 @@ ConversationRootViewController {
     }
 }
 
+NewDevicesDot {
+    backgroundColor: $color-accent-current;
+    layer: @{
+        cornerRadius: 4.0;
+    }
+}
+
+ConversationListAccessoryView {
+    textLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-small-semibold;
+    }
+}
+
 ConversationListBottomBarController {
     view: @{
         backgroundColor: clear;
-    }
-    
-    indicator: @{
-        backgroundColor: $color-accent-current;
-        layer: @{
-            cornerRadius: 4.0;
-        }
     }
     
     contactsButton: @{
@@ -530,6 +537,16 @@ ConversationListBottomBarController {
         backgroundColor: $color-separator-light;
     }
 }
+
+/* ConversationListAvatar */
+
+ConversationListAvatarView UserImageView {
+    initials: @{
+        font: $font-medium-semibold;
+        textColor: $color-list-avatar-initials;
+    }
+}
+
 
 /* Audio Recording */
 
@@ -733,6 +750,13 @@ ConversationListViewController {
 ConversationListContentController UILabel.empty-list-message {
     font: $font-normal-light;
     textColor: $color-text-foreground-dark;
+}
+
+ConversationListItemView {
+    titleField: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
+    }
 }
 
 SearchView {
@@ -1478,6 +1502,13 @@ SettingsClientViewController {
     }
 }
 
+^SettingsTableCell {
+    cellNameLabel: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 RegistrationTextFieldCell {
     backgroundColor: clear;
     
@@ -1703,6 +1734,9 @@ TextSearchResultCell {
     contentView: @{
         backgroundColor: $color-background;
     }
+    resultCountView: @{
+        backgroundColor: $color-graphite-light;
+    }
 }
 
 SearchResultLabel {
@@ -1710,13 +1744,11 @@ SearchResultLabel {
     textColor: $color-text-foreground;
 }
 
-SearchResultCountBadge {
+RoundedTextBadge {
     textLabel: @{
         textColor: $color-background;
         font: $font-small-semibold;
     }
-    
-    backgroundColor: $color-graphite-light;
 }
 
 // Example code

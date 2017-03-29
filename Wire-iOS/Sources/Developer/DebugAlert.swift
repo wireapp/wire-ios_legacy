@@ -32,7 +32,7 @@ import MessageUI
         if sendLogs {
             let sendLogAction = UIAlertAction(title: "Send logs", style: .cancel, handler: {
                 _ in
-                DebugLogSender.sendLogsByEmail()
+                DebugLogSender.sendLogsByEmail(message: message)
             })
             alert.addAction(sendLogAction)
         }
@@ -49,14 +49,14 @@ import MessageUI
     static private var senderInstance: DebugLogSender? = nil
 
     /// Sends recorded logs by email
-    static func sendLogsByEmail() {
+    static func sendLogsByEmail(message: String) {
         guard let controller = UIApplication.shared.keyWindow?.rootViewController else { return }
         guard self.senderInstance == nil else { return }
         
         let alert = DebugLogSender()
         let logs = ZMSLog.recordedContent
         guard !logs.isEmpty else {
-            DebugAlert.show(message: "There are no logs to send, have you enabled them from the debug menu > log settings?", sendLogs: false)
+            DebugAlert.show(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs", sendLogs: false)
             return
         }
         
@@ -71,8 +71,7 @@ import MessageUI
         let device = UIDevice.current.name
         let now = Date()
         let userDescription = "\(user.name ?? "") [user: \(userID)] [device: \(device)]"
-        let message = "Here are the logs from \(userDescription), at \(now)\n"
-            + "It contains \(logs.count) log entries, please find them in the attached file"
+        let message = "Logs for: \(message)\n\n"
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let timeStr = formatter.string(from: now)

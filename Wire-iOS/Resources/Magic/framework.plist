@@ -143,55 +143,5 @@
 			<integer>1</integer>
 		</array>
 	</array>
-	<key>background</key>
-	<dict>
-		<key>image_layout</key>
-		<dict>
-			<key>top</key>
-			<integer>0</integer>
-			<key>bottom</key>
-			<integer>0</integer>
-			<key>left</key>
-			<integer>0</integer>
-			<key>right</key>
-			<integer>0</integer>
-		</dict>
-		<key>color_overlay_opacity</key>
-		<real>0.08</real>
-		<key>vignette_start_color</key>
-		<array>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-			<real>0.24</real>
-		</array>
-		<key>vignette_end_color</key>
-		<array>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-			<real>0.88</real>
-		</array>
-		<key>vignette_color_position</key>
-		<real>0.16</real>
-		<key>vignette_radius_multiplier</key>
-		<real>1</real>
-		<key>vignette_start_color_without_image</key>
-		<array>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-		</array>
-		<key>vignette_end_color_without_image</key>
-		<array>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-			<real>0.16</real>
-		</array>
-		<key>animation_duration</key>
-		<real>0.35</real>
-	</dict>
 </dict>
 </plist>

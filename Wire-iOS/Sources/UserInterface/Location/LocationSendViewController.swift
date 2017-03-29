@@ -75,7 +75,7 @@ import Classy
             separator.leading == view.leading
             separator.trailing == view.trailing
             separator.top == container.top
-            separator.height == 0.5
+            separator.height == .hairline
         }
         
         sendButton.setContentCompressionResistancePriority(1000, for: .horizontal)

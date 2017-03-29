@@ -31,11 +31,12 @@ import Cartography
 
 @objc final class ArchivedListViewController: UIViewController {
     
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: ConversationListCollectionViewLayout())
+    var collectionView: UICollectionView!
     let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
     let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     let swipeIdentifier = "ArchivedList"
     let viewModel = ArchivedListViewModel()
+    let layoutCell = ConversationListCell()
     
     weak var delegate: ArchivedListViewControllerDelegate?
     
@@ -51,6 +52,11 @@ import Cartography
     }
     
     func createViews() {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
@@ -97,7 +103,7 @@ extension ArchivedListViewController: UICollectionViewDelegate {
 
 // MARK: - CollectionViewDataSource
 
-extension ArchivedListViewController: UICollectionViewDataSource {
+extension ArchivedListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationListCell
@@ -114,6 +120,10 @@ extension ArchivedListViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return layoutCell.size(inCollectionViewSize: collectionView.bounds.size)
     }
     
 }

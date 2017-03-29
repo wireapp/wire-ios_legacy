@@ -39,7 +39,6 @@
 
 #import "ConversationListConnectRequestsItem.h"
 #import "UIView+MTAnimation.h"
-#import "ConversationListCollectionViewLayout.h"
 #import "UIColor+WR_ColorScheme.h"
 
 #import "ConnectRequestsCell.h"
@@ -60,7 +59,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) BOOL focusOnNextSelection;
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
-
+@property (nonatomic) ConversationListCell *layoutCell;
 @end
 
 @interface ConversationListContentController (ConversationListCellDelegate) <ConversationListCellDelegate>
@@ -80,8 +79,10 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (instancetype)init
 {
-    UICollectionViewFlowLayout *flowLayout = [[ConversationListCollectionViewLayout alloc] init];
-    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.minimumLineSpacing = 0;
+    flowLayout.minimumInteritemSpacing = 0;
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         StopWatch *stopWatch = [StopWatch stopWatch];
@@ -96,6 +97,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)loadView
 {
     [super loadView];
+    
+    self.layoutCell = [[ConversationListCell alloc] init];
     
     self.listViewModel = [[ConversationListViewModel alloc] init];
     self.listViewModel.delegate = self;
@@ -112,9 +115,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 {
     [super viewWillAppear:animated];
 
-    // This is here to ensure that the collection view is updated when going back to the list
-    // from another view
-    [self reload];
     [self scrollToCurrentSelectionAnimated:NO];
 
     self.activeMediaPlayerObserver = [KeyValueObserver observeObject:AppDelegate.sharedAppDelegate.mediaPlaybackManager
@@ -368,12 +368,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     [self.view layoutIfNeeded];
 }
 
-- (void)setEnableSubtitles:(BOOL)enableSubtitles
-{
-    _enableSubtitles = enableSubtitles;
-    [self.collectionView reloadData];
-}
-
 #pragma mark - Custom
 
 + (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section
@@ -390,7 +384,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)activeMediaPlayerChanged:(NSDictionary *)change
 {
     for (ConversationListCell *cell in self.collectionView.visibleCells) {
-        [cell updateRightAccessory];
+        [cell updateAppearance];
     }
 }
 
@@ -402,7 +396,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    [self.collectionView.collectionViewLayout invalidateLayout];
     NSInteger sections = self.listViewModel.sectionCount;
     return sections;
 }
@@ -467,12 +460,11 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 @implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (section == 0) {
-        return UIEdgeInsetsMake(32, 0, 0, 0);
-    }
-    return UIEdgeInsetsZero;
+    return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
 }
 
 @end

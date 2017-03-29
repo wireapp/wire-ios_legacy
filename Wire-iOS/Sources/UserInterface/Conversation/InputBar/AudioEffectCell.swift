@@ -66,12 +66,12 @@ public struct AudioEffectCellBorders : OptionSet {
             borderRightView.bottom == contentView.bottom
             borderRightView.top == contentView.top
             borderRightView.right == contentView.right + 0.5
-            borderRightView.width == 0.5
+            borderRightView.width == .hairline
             
             borderBottomView.left == contentView.left
             borderBottomView.bottom == contentView.bottom + 0.5
             borderBottomView.right == contentView.right
-            borderBottomView.height == 0.5
+            borderBottomView.height == .hairline
         }
         
         self.updateForSelectedState()
