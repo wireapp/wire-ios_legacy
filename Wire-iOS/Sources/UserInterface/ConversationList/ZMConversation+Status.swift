@@ -18,6 +18,7 @@
 
 import Foundation
 
+// Describes the icon to be shown for the conversation in the list.
 internal enum ConversationStatusIcon {
     case none
     case pendingConnection
@@ -35,40 +36,22 @@ internal enum ConversationStatusIcon {
     case activeCall(joined: Bool)
 }
 
-internal protocol ConversationStatusMatcher {
-    func isMatching(with status: ConversationStatus) -> Bool
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString?
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon
+// Describes the status of the conversation.
+internal struct ConversationStatus {
+    let isGroup: Bool
     
-    var combinesWith: [ConversationStatusMatcher] { get }
-}
-
-extension ConversationStatusMatcher {
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        return .none
-    }
-}
-
-extension ConversationStatusMatcher {
-    static func regularStyle() -> [String: AnyObject] {
-        return [NSFontAttributeName: FontSpec(.small, .light).font!]
-    }
+    let hasMessages: Bool
+    let hasUnsentMessages: Bool
     
-    static func emphasisStyle() -> [String: AnyObject] {
-        return [NSFontAttributeName: FontSpec(.small, .medium).font!]
-    }
+    let unreadMessages: [ZMConversationMessage]
+    let unreadMessagesByType: [StatusMessageType: UInt]
+    let isTyping: Bool
+    let isSilenced: Bool
+    let isOngoingCall: Bool
+    let isBlocked: Bool
 }
 
-extension ZMConversation {
-    static func statusRegularStyle() -> [String: AnyObject] {
-        return BlockedMatcher.regularStyle()
-    }
-    
-    static func statusEmphasisStyle() -> [String: AnyObject] {
-        return BlockedMatcher.emphasisStyle()
-    }
-}
-
+// Describes the conversation message.
 internal enum StatusMessageType: Int {
     case text
     case link
@@ -81,7 +64,9 @@ internal enum StatusMessageType: Int {
     case addParticipants
     case removeParticipants
     case missedCall
-    
+}
+
+extension StatusMessageType {
     init?(message: ZMConversationMessage) {
         if message.isText, let textMessage = message.textMessageData {
             if let _ = textMessage.linkPreview {
@@ -129,20 +114,46 @@ internal enum StatusMessageType: Int {
     }
 }
 
-internal struct ConversationStatus {
-    let isGroup: Bool
+// Describes object that is able to match and describe the conversation.
+// Provides rich description and status icon.
+internal protocol ConversationStatusMatcher {
+    func isMatching(with status: ConversationStatus) -> Bool
+    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString?
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon
     
-    let hasMessages: Bool
-    let hasUnsentMessages: Bool
-    
-    let unreadMessages: [ZMConversationMessage]
-    let unreadMessagesByType: [StatusMessageType: UInt]
-    let isTyping: Bool
-    let isSilenced: Bool
-    let isOngoingCall: Bool
-    let isBlocked: Bool
+    // An array of matchers that are compatible with the current one. Leads to display the description of all matching 
+    // in one row, like "description1 | description2"
+    var combinesWith: [ConversationStatusMatcher] { get }
 }
 
+extension ConversationStatusMatcher {
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+        return .none
+    }
+}
+
+extension ConversationStatusMatcher {
+    static func regularStyle() -> [String: AnyObject] {
+        return [NSFontAttributeName: FontSpec(.small, .light).font!]
+    }
+    
+    static func emphasisStyle() -> [String: AnyObject] {
+        return [NSFontAttributeName: FontSpec(.small, .medium).font!]
+    }
+}
+
+// Accessors for ObjC
+extension ZMConversation {
+    static func statusRegularStyle() -> [String: AnyObject] {
+        return BlockedMatcher.regularStyle()
+    }
+    
+    static func statusEmphasisStyle() -> [String: AnyObject] {
+        return BlockedMatcher.emphasisStyle()
+    }
+}
+
+// "Blocked"
 final internal class BlockedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isBlocked
@@ -155,6 +166,7 @@ final internal class BlockedMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+// "Active Call"
 final internal class CallingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isOngoingCall
@@ -177,13 +189,22 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+// "A, B, C: typing a message..."
 final internal class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isTyping
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.typing".localized && type(of: self).regularStyle()
+        let statusString: String
+        if status.isGroup, let typingUsers = conversation.typingUsers() {
+            let typingUsersString = typingUsers.flatMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+            statusString = String(format: "conversation.status.typing.group".localized, typingUsersString)
+        }
+        else {
+            statusString = "conversation.status.typing".localized
+        }
+        return statusString && type(of: self).regularStyle()
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
@@ -193,6 +214,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+// "Silenced"
 final internal class SilencedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isSilenced
@@ -209,6 +231,8 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+// In silenced "N (text|image|link|...) message, ..."
+// In not silenced: "[Sender:] <message text>"
 final internal class NewMessagesMatcher: ConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
     let localizationSilencedRootPath = "conversation.silenced.status.message"
@@ -285,6 +309,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+// ! Failed to send
 final internal class FailedSendMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.hasUnsentMessages
@@ -297,6 +322,7 @@ final internal class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+// "[You|User] [added|removed|left] [_|users|you]"
 final internal class GroupActivityMatcher: ConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
 
@@ -358,7 +384,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-
+// Fallback for empty conversations: showing the handle.
 final internal class UnsernameMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.hasMessages

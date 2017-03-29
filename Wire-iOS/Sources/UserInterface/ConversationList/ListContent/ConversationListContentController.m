@@ -115,9 +115,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 {
     [super viewWillAppear:animated];
 
-    // This is here to ensure that the collection view is updated when going back to the list
-    // from another view
-    [self reload];
     [self scrollToCurrentSelectionAnimated:NO];
 
     self.activeMediaPlayerObserver = [KeyValueObserver observeObject:AppDelegate.sharedAppDelegate.mediaPlaybackManager

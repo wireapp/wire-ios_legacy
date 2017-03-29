@@ -123,6 +123,7 @@
 
 "conversation.status.call" = "Ongoing call";
 "conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Blocked";
 
