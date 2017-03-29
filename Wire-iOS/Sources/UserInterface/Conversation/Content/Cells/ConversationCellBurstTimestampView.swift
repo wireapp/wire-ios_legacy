@@ -31,13 +31,13 @@ import Cartography
     private let unreadDotContainer = UIView()
 
     private let inset: CGFloat = 16
+    private let unreadDotHeight: CGFloat = 8
     private var heightConstraints = [NSLayoutConstraint]()
-    private var unreadDotHiddenConstraint: NSLayoutConstraint?
 
     public var isShowingUnreadDot: Bool = true {
         didSet {
-            unreadDotHiddenConstraint?.isActive = !isShowingUnreadDot
             leftSeparator.isHidden = isShowingUnreadDot
+            unreadDot.isHidden = !isShowingUnreadDot
         }
     }
 
@@ -76,7 +76,10 @@ import Cartography
     private func setupViews() {
         [leftSeparator, label, rightSeparator, unreadDotContainer].forEach(addSubview)
         unreadDotContainer.addSubview(unreadDot)
+
         unreadDotContainer.backgroundColor = .clear
+        unreadDot.backgroundColor = .accent()
+        unreadDot.layer.cornerRadius = unreadDotHeight / 2
         clipsToBounds = true
     }
 
@@ -101,17 +104,14 @@ import Cartography
         }
 
         constrain(self, unreadDotContainer, unreadDot, label) { view, unreadDotContainer, unreadDot, label in
-            unreadDot.center == unreadDotContainer.center
-            unreadDotHiddenConstraint = unreadDot.height == 0
-            unreadDotHiddenConstraint?.isActive = false
-            unreadDot.width == unreadDot.height
-
-            unreadDot.height == 8 ~ LayoutPriority(751)
-
             unreadDotContainer.leading == view.leading
             unreadDotContainer.trailing == label.leading
             unreadDotContainer.top == view.top
             unreadDotContainer.bottom == view.bottom
+
+            unreadDot.center == unreadDotContainer.center
+            unreadDot.height == unreadDotHeight
+            unreadDot.width == unreadDotHeight
         }
     }
 
