@@ -55,12 +55,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic, readwrite) UILabel *authorLabel;
 @property (nonatomic, readwrite) NSParagraphStyle *authorParagraphStyle;
 
-@property (nonatomic, readwrite) UILabel *burstTimestampLabel;
 @property (nonatomic) NSTimer *burstTimestampTimer;
 
-@property (nonatomic, readwrite) UIView *burstLabelSeparatorView;
-@property (nonatomic, readwrite) UIView *burstLabelContainer;
-@property (nonatomic, readwrite) UIView *unreadDotView;
+@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
+
 @property (nonatomic, readwrite) UserImageView *authorImageView;
 @property (nonatomic, readwrite) UIView *authorImageContainer;
 @property (nonatomic) UIFont *burstNormalFont;
@@ -69,9 +67,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic) MessageToolboxView *toolboxView;
 
 @property (nonatomic) AccentColorChangeHandler *accentColorChangeHandler;
-
 @property (nonatomic, readwrite) UITapGestureRecognizer *doubleTapGestureRecognizer;
-
 @property (nonatomic, readwrite) ConversationCellLayoutProperties *layoutProperties;
 
 #pragma mark - Constraints
@@ -85,8 +81,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic) NSLayoutConstraint *burstTimestampHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *topMarginConstraint;
 @property (nonatomic) NSLayoutConstraint *messageToolsHeightConstraint;
-
-@property (nonatomic) NSLayoutConstraint *unreadDotHeightConstraint;
 
 @property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
@@ -122,10 +116,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         [self.contentView addGestureRecognizer:self.longPressGestureRecognizer];
 
-        
+        @weakify(self);
         self.accentColorChangeHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConversationCell *cell) {
+            @strongify(self);
             cell.tintColor = newColor;
-            cell.unreadDotView.backgroundColor = newColor;
+            self.burstTimestampView.unreadDot.backgroundColor = newColor;
         }];
         
         self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
@@ -180,22 +175,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     paragraphStyle.minimumLineHeight = [WAZUIMagic cgFloatForIdentifier:@"content.burst_timestamp.line_height"];
     paragraphStyle.maximumLineHeight = paragraphStyle.minimumLineHeight;
 
-    self.burstLabelContainer = [[UIView alloc] initForAutoLayout];
-    [self.contentView addSubview:self.burstLabelContainer];
+    self.burstTimestampView = [[ConversationCellBurstTimestampView alloc] initForAutoLayout];
+    self.burstTimestampView.isSeparatorHidden = YES;
+    [self.contentView addSubview:self.burstTimestampView];
 
-    self.burstTimestampLabel = [[UILabel alloc] initForAutoLayout];
-    self.burstTimestampLabel.textAlignment = NSTextAlignmentNatural;
-    [self.burstLabelContainer addSubview:self.burstTimestampLabel];
-
-    self.burstLabelSeparatorView = [[UIView alloc] initForAutoLayout];
-    [self.burstLabelContainer addSubview:self.burstLabelSeparatorView];
-    self.burstLabelSeparatorView.hidden = YES;
-    
-    self.unreadDotView = [[UIView alloc] init];
-    self.unreadDotView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.unreadDotView.backgroundColor = [UIColor accentColor];
-    self.unreadDotView.layer.cornerRadius = 4;
-    [self.burstLabelContainer addSubview:self.unreadDotView];
     
     self.toolboxView = [[MessageToolboxView alloc] init];
     self.toolboxView.delegate = self;
@@ -219,7 +202,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.contentView.isAccessibilityElement = YES;
     
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
-    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.unreadDotView, self.toolboxView, self.likeButton]];
+    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView, self.likeButton]];
     self.accessibilityElements = accessibilityElements;
 
     [CASStyler.defaultStyler styleItem:self];
@@ -268,27 +251,13 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     CGFloat authorImageDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
 
-    self.topMarginConstraint = [self.burstLabelContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.burstLabelContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.burstLabelContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-
-    [self.burstTimestampLabel autoPinEdgesToSuperviewMargins];
+    self.topMarginConstraint = [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        self.burstTimestampHeightConstraint = [self.burstLabelContainer autoSetDimension:ALDimensionHeight toSize:0];
+        self.burstTimestampHeightConstraint = [self.burstTimestampView autoSetDimension:ALDimensionHeight toSize:0];
     }];
-
-    CGFloat hairline = 1.0 / UIScreen.mainScreen.scale;
-    [self.burstLabelSeparatorView autoSetDimension:ALDimensionHeight toSize:hairline];
-    [self.burstLabelSeparatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.burstLabelContainer];
-    [self.burstLabelSeparatorView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.burstLabelSeparatorView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    
-    self.unreadDotHeightConstraint = [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:0];
-    self.unreadDotHeightConstraint.active = NO;
-    [self.unreadDotView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.unreadDotView];
-    [self.unreadDotView autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
-    [self.unreadDotView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.burstTimestampLabel];
     
     [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
@@ -303,7 +272,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.authorImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.authorImageView];
     [self.authorImageView autoCenterInSuperview];
     
-    self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstLabelContainer];
+    self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampView];
     [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];
     
@@ -312,7 +281,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
-        [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:8];
         [self.authorImageView autoSetDimension:ALDimensionHeight toSize:authorImageDiameter];
     }];
     
@@ -342,7 +310,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     // here until we re-factor the the ConversationCell
     self.messageContentView.layoutMargins = contentLayoutMargins;
     self.toolboxView.layoutMargins = contentLayoutMargins;
-    self.burstLabelContainer.layoutMargins = contentLayoutMargins;
+    self.burstTimestampView.layoutMargins = contentLayoutMargins;
 }
 
 - (void)layoutSubviews
@@ -358,7 +326,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     ConversationCellLayoutProperties *properties = self.layoutProperties;
     BOOL showBurstLabelContainer                 =   properties.showBurstTimestamp || properties.showDayBurstTimestamp;
 
-    self.unreadDotHeightConstraint.active        = ! properties.showUnreadMarker;
+    self.burstTimestampView.isShowingUnreadDot   =   properties.showUnreadMarker;
     self.authorImageHeightConstraint.active      = ! properties.showSender;
     self.authorImageTopMarginConstraint.constant =   showBurstLabelContainer ? self.burstTimestampSpacing : 0;
     self.topMarginConstraint.constant            =   properties.topPadding;
@@ -366,7 +334,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorLabel.hidden                      = ! properties.showSender;
     self.authorImageContainer.hidden             = ! properties.showSender;
     self.burstTimestampHeightConstraint.constant =   showBurstLabelContainer ? BurstContainerExpandedHeight : 0;
-    self.burstLabelSeparatorView.hidden          = ! properties.showBurstTimestamp || properties.showDayBurstTimestamp;
+    self.burstTimestampView.isSeparatorExpanded  =   properties.showDayBurstTimestamp;
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
@@ -454,14 +422,15 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (void)updateBurstTimestamp
 {
     if (self.layoutProperties.showDayBurstTimestamp) {
-        self.burstTimestampLabel.text = [Message.dayFormatter stringFromDate:self.message.serverTimestamp].uppercaseString;
-        self.burstLabelContainer.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBurstBackground];
-        self.burstTimestampLabel.font = self.burstBoldFont;
+        self.burstTimestampView.label.text = [Message.dayFormatter stringFromDate:self.message.serverTimestamp].uppercaseString;
+        self.burstTimestampView.label.font = self.burstBoldFont;
     } else {
-        self.burstTimestampLabel.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
-        self.burstLabelContainer.backgroundColor = UIColor.clearColor;
-        self.burstTimestampLabel.font = self.burstNormalFont;
+        self.burstTimestampView.label.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
+        self.burstTimestampView.label.font = self.burstNormalFont;
     }
+
+    BOOL hidden = !self.layoutProperties.showBurstTimestamp && !self.layoutProperties.showDayBurstTimestamp;
+    self.burstTimestampView.isSeparatorHidden = hidden;
 }
 
 - (void)setCountdownContainerViewHidden:(BOOL)countdownContainerViewHidden
