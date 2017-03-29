@@ -266,7 +266,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
                 return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.unreadMessagesByType[$0] ?? 0)
                 }.joined(separator: ", ")
             
-            return resultString && type(of: self).regularStyle()
+            return resultString.capitalizingFirstLetter() && type(of: self).regularStyle()
         }
         else {
             guard let message = status.unreadMessages.last,

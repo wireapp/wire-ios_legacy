@@ -127,15 +127,6 @@
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Blocked";
 
-"conversation.silenced.status.message.text" = "%d new text messages";
-"conversation.silenced.status.message.link" = "%d new links";
-"conversation.silenced.status.message.image" = "%d new images";
-"conversation.silenced.status.message.location" = "%d new locations";
-"conversation.silenced.status.message.audio" = "%d new audio messages";
-"conversation.silenced.status.message.video" = "%d new videos";
-"conversation.silenced.status.message.knock" = "%d new pings";
-"conversation.silenced.status.message.missedcall" = "%d missed calls";
-
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Shared a link";
 "conversation.status.message.image" = "Shared a picture";
