@@ -62,7 +62,7 @@ NSString * const ColorSchemeColorAvatarBorder = @"avatar-border";
 NSString * const ColorSchemeColorContactSectionBackground = @"contact-section-background";
 
 NSString * const ColorSchemeColorPlaceholderBackground = @"placeholder-background";
-NSString * const ColorSchemeColorBurstBackground = @"burst-background";
+NSString * const ColorSchemeColorPaleSeparator = @"separator-pale";
 
 NSString * const ColorSchemeColorAudioButtonOverlay = @"audio-button-overlay";
 
@@ -259,7 +259,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorLoadingDotInactive: graphiteAlpha16,
                                    ColorSchemeColorGraphite: graphite,
                                    ColorSchemeColorLightGraphite: lightGraphite,
-                                   ColorSchemeColorBurstBackground: [graphiteAlpha4 removeAlphaByBlendingWithColor:white]
+                                   ColorSchemeColorPaleSeparator: lightGraphiteAlpha24
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -303,7 +303,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorLoadingDotInactive: whiteAlpha16,
                                   ColorSchemeColorGraphite: graphite,
                                   ColorSchemeColorLightGraphite: lightGraphite,
-                                  ColorSchemeColorBurstBackground: [whiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite]
+                                  ColorSchemeColorPaleSeparator: lightGraphiteAlpha24
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

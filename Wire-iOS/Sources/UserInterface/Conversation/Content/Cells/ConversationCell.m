@@ -116,11 +116,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         [self.contentView addGestureRecognizer:self.longPressGestureRecognizer];
 
-        @weakify(self);
         self.accentColorChangeHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConversationCell *cell) {
-            @strongify(self);
             cell.tintColor = newColor;
-            self.burstTimestampView.unreadDot.backgroundColor = newColor;
         }];
         
         self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;

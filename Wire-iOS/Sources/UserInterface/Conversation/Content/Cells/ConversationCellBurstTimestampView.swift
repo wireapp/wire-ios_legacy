@@ -33,6 +33,7 @@ import Cartography
     private let inset: CGFloat = 16
     private let unreadDotHeight: CGFloat = 8
     private var heightConstraints = [NSLayoutConstraint]()
+    private var accentColorObserver: AccentColorChangeHandler?
 
     public var isShowingUnreadDot: Bool = true {
         didSet {
@@ -67,6 +68,10 @@ import Cartography
         CASStyler.default().styleItem(self)
         setupViews()
         createConstraints()
+
+        accentColorObserver = AccentColorChangeHandler.addObserver(self) { [weak self] (color, _) in
+            self?.unreadDot.backgroundColor = color
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {

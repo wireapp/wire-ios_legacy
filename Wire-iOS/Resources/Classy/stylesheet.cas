@@ -784,11 +784,11 @@ MessageToolboxView {
         }
 
         leftSeparator: @{
-            backgroundColor: $color-audio-button-overlay;
+            backgroundColor: $color-separator-pale;
         }
 
         rightSeparator: @{
-            backgroundColor: $color-audio-button-overlay;
+            backgroundColor: $color-separator-pale;
         }
     }
 
