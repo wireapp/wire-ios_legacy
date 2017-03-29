@@ -53,6 +53,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser = ZMUser.insertNewObject(in: moc)
         otherUser.remoteIdentifier = UUID()
         otherUser.name = "Bruno"
+        otherUser.setHandle("bruno")
         otherUser.accentColorValue = .brightOrange
 
         otherUserConversation = ZMConversation.insertNewObject(in: moc)

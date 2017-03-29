@@ -72,6 +72,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.titleField = [[UILabel alloc] initForAutoLayout];
     self.titleField.numberOfLines = 1;
     self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.titleField.accessibilityLabel = @"Conversatsion name";
     [self addSubview:self.titleField];
 
     self.avatarContainer = [[UIView alloc] initForAutoLayout];
@@ -85,15 +86,22 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
     [self createSubtitleField];
     
+    self.lineView = [[UIView alloc] initForAutoLayout];
+    self.lineView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.08f];
+    [self addSubview:self.lineView];
+    
     [self.rightAccessory setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     
     [self.titleField setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.titleField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self.titleField setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    [self.titleField setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+
     
     [self.subtitleField setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    [self.subtitleField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self.subtitleField setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    
+    [self.subtitleField setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self createConstraints];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -107,12 +115,9 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
 
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
+    self.subtitleField.accessibilityLabel = @"Conversatsion status";
     self.subtitleField.numberOfLines = 1;
     [self addSubview:self.subtitleField];
-
-    self.lineView = [[UIView alloc] initForAutoLayout];
-    self.lineView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.08f];
-    [self addSubview:self.lineView];
 }
 
 - (void)createConstraints

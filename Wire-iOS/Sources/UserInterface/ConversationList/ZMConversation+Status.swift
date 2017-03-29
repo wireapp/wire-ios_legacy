@@ -98,7 +98,7 @@ extension StatusMessageType {
             if system.systemMessageType == .participantsAdded {
                 self = .addParticipants
             }
-            if system.systemMessageType == .participantsRemoved {
+            else if system.systemMessageType == .participantsRemoved {
                 self = .removeParticipants
             }
             else if system.systemMessageType == .missedCall {
@@ -333,28 +333,33 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
     }
     
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> String? {
-        if messages.count > 0 {
+        if messages.count > 1 {
             return "conversation.status.added_multiple".localized
         }
-        else if let message = messages.last, let systemMessage = message.systemMessageData {
+        else if let message = messages.last,
+                let systemMessage = message.systemMessageData,
+                let sender = message.sender {
             if systemMessage.addedUsers.contains(where: { $0.isSelfUser }) {
-                return "conversation.status.you_was_added".localized
+                return String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation))
             }
             else {
                 let usersList = systemMessage.addedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                return String(format: "conversation.status.added_useres".localized, usersList)
+                let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
+                return String(format: "conversation.status.added_useres".localized, sender!, usersList)
             }
         }
         return .none
     }
     
     private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> String? {
-        if messages.count > 0 {
+        if messages.count > 1 {
             return "conversation.status.removed_multiple".localized
         }
-        else if let message = messages.last, let systemMessage = message.systemMessageData {
-            if systemMessage.addedUsers.contains(where: { $0.isSelfUser }) {
-                if message.sender?.isSelfUser ?? false {
+        else if let message = messages.last,
+                let systemMessage = message.systemMessageData,
+                let sender = message.sender {
+            if systemMessage.removedUsers.contains(where: { $0.isSelfUser }) {
+                if sender.isSelfUser {
                     return "conversation.status.you_left".localized
                 }
                 else {
@@ -362,8 +367,9 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
                 }
             }
             else {
-                let usersList = systemMessage.addedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                return String(format: "conversation.status.removed_useres".localized, usersList)
+                let usersList = systemMessage.removedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+                let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
+                return String(format: "conversation.status.removed_useres".localized, sender!, usersList)
             }
         }
         return .none
@@ -419,7 +425,7 @@ final internal class UnsernameMatcher: ConversationStatusMatcher {
 private var allMatchers: [ConversationStatusMatcher] = {
     let silencedMatcher = SilencedMatcher()
     let newMessageMatcher = NewMessagesMatcher()
-    let groupActivityMatcher = SilencedMatcher()
+    let groupActivityMatcher = GroupActivityMatcher()
     
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
@@ -486,7 +492,18 @@ extension ZMConversation {
         return self.messages.objects(at: unreadIndexSet).flatMap {
                 $0 as? ZMConversationMessage
             }.filter {
-                !($0.sender?.isSelfUser ?? true)
+                if let systemMessageData = $0.systemMessageData {
+                    switch systemMessageData.systemMessageType {
+                    case .participantsRemoved:
+                        fallthrough
+                    case .participantsAdded:
+                        return true
+                    default:
+                        break
+                    }
+                }
+                
+                return !($0.sender?.isSelfUser ?? true)
             }
     }
     

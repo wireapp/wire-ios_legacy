@@ -129,6 +129,7 @@ final public class ConversationListAvatarView: UIView {
                 return
             }
             
+            self.accessibilityLabel = "Avatar for \(self.conversation?.displayName)"
             self.mode = Mode(conversation: conversation)
             
             var index: Int = 0
@@ -171,7 +172,6 @@ final public class ConversationListAvatarView: UIView {
             return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
         }
     }
-    
     
     let clippingView = UIView()
     let imageViewLeftTop = UserImageView()

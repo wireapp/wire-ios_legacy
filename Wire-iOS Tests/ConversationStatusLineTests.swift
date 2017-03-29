@@ -21,162 +21,206 @@ import XCTest
 @testable import Wire
 
 class ConversationStatusLineTests: CoreDataSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        selfUser.accentColorValue = .violet
-        accentColor = .violet
-    }
-
-    func testThatItReturnsStatusForEmptyConversation() {
+    func testStatusForNotActiveConversationWithHandle() {
         // GIVEN
         let sut = self.otherUserConversation!
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertFalse(status.hasMessages)
+        XCTAssertEqual(status.string, "@" + otherUser.handle)
     }
     
-    func testThatItReturnsStatusForEmptyConversation_group() {
+    func testStatusForNotActiveConversationGroup() {
         // GIVEN
         let sut = self.createGroupConversation()
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertFalse(status.hasMessages)
+        XCTAssertEqual(status.string, "")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadOneMessage() {
+    func testStatusFailedToSend() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        let message = sut.appendMessage(withText: "text") as! ZMMessage
+        message.expire()
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "⚠️ Unsent message")
+    }
+    
+    func testStatusBlocked() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withText: "test") as! ZMMessage).sender = self.otherUser
+        self.otherUser.block()
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "Blocked")
+    }
+    
+    func testStatusMissedCall() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
+
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.text]!, 1)
+        XCTAssertEqual(status.string, "Missed call")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadOnePing() {
+    func testStatusForMultipleTextMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendKnock() as! ZMMessage).sender = self.otherUser
+        sut.isSilenced = true
+        for index in 1...5 {
+            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
         sut.lastReadServerTimeStamp = Date.distantPast
+
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.knock]!, 1)
+        XCTAssertEqual(status.string, "5 new text messages")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadOneImage() {
+    func testStatusForMultipleTextMessagesInConversation() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        for index in 1...5 {
+            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
         sut.lastReadServerTimeStamp = Date.distantPast
+
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.image]!, 1)
+        XCTAssertEqual(status.string, "test 5")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadManyMessages() {
+    func testStatusForMultipleVariousMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        sut.isSilenced = true
+        for index in 1...5 {
+            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
+        for _ in 1...5 {
+            (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        }
         sut.lastReadServerTimeStamp = Date.distantPast
+
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text]!, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.image]!, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.knock]!, 1)
+        XCTAssertEqual(status.string, "5 new text messages, 5 new images")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadManyTexts() {
+    func testStatusForSystemMessageILeft() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withText: "test 1") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test 2") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test 3") as! ZMMessage).sender = self.otherUser
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsRemoved
+        otherMessage.sender = self.selfUser
+        otherMessage.users = Set([self.selfUser])
+        otherMessage.removedUsers = Set([self.selfUser])
+        sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
+        
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text]!, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.image], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.knock], .none)
+        XCTAssertEqual(status.string, "You left")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadManyPings() {
+    func testStatusForSystemMessageIWasAdded() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        (sut.appendKnock() as! ZMMessage).sender = self.otherUser
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsAdded
+        otherMessage.sender = self.otherUser
+        otherMessage.users = Set([self.otherUser])
+        otherMessage.addedUsers = Set([self.selfUser])
+        sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
+        
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.image], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.knock]!, 3)
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added you")
     }
     
-    func testThatItReturnsStatusForConversationWithUnreadManyImages() {
+    func testStatusForSystemMessageIAddedSomeone() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsAdded
+        otherMessage.sender = self.selfUser
+        otherMessage.users = Set([self.selfUser])
+        otherMessage.addedUsers = Set([self.otherUser])
+        sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
+        
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.image]!, 3)
+        XCTAssertEqual(status.string, "You added \(self.otherUser.displayName!)")
     }
     
-//    Temporarily disabled, need to figure out a better way to mock typing state.
-//    func testThatItReturnsStatusForConversationWithTyping() {
-//        // GIVEN
-//        let sut = self.createGroupConversation()
-//        sut.remoteIdentifier = UUID()
-//        let change = ZMTypingChangeNotification(conversation: sut, typingUser: Set([self.otherUser]))
-//        self.uiMOC.typingUsers.update(with: change)
-//        // WHEN
-//        let status = sut.status
-//        // THEN
-//        XCTAssertFalse(status.hasMessages)
-//        XCTAssertEqual(status.unreadMessages.count, 0)
-//        XCTAssertTrue(status.isTyping)
-//    }
-    
-    func testThatItReturnsStatusForBlocked() {
+    func testStatusForSystemMessageIRemovedSomeone() {
         // GIVEN
         let sut = self.otherUserConversation!
-        otherUser.connection?.status = .blocked
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsRemoved
+        otherMessage.sender = self.selfUser
+        otherMessage.users = Set([self.selfUser])
+        otherMessage.removedUsers = Set([self.otherUser])
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
         // WHEN
-        let status = sut.status
+        let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertFalse(status.hasMessages)
-        XCTAssertTrue(status.isBlocked)
+        XCTAssertEqual(status.string, "You removed \(self.otherUser.displayName!)")
+    }
+    
+    func testStatusForSystemMessageSomeoneWasAdded() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsAdded
+        otherMessage.sender = self.otherUser
+        otherMessage.users = Set([self.otherUser])
+        otherMessage.addedUsers = Set([self.otherUser])
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added \(self.otherUser.displayName!)")
+    }
+    
+    func testStatusForSystemMessageSomeoneWasRemoved() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsRemoved
+        otherMessage.sender = self.otherUser
+        otherMessage.users = Set([self.otherUser])
+        otherMessage.removedUsers = Set([self.otherUser])
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) removed \(self.otherUser.displayName!)")
     }
 }
