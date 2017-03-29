@@ -25,7 +25,7 @@ private let accentColors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow
 
 extension Array where Element: ZMUser {
 
-    func assignRandomAccentColors() {
+    func assignSomeAccentColors() {
         var index = 0
         for user in self {
             user.accentColorValue = accentColors[index % accentColors.count]
@@ -61,7 +61,7 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
         
-        (conversation?.activeParticipants.array as! [ZMUser]).assignRandomAccentColors()
+        (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }
@@ -69,7 +69,7 @@ class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
     func testThatItRendersManyUsers() {
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
         
-        (conversation?.activeParticipants.array as! [ZMUser]).assignRandomAccentColors()
+        (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
         sut.conversation = conversation
         verify(view: sut.prepareForSnapshots())
     }

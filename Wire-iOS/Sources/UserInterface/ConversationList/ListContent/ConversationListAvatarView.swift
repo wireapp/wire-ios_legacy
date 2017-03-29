@@ -119,13 +119,13 @@ final public class ConversationListAvatarView: UIView {
     public var conversation: ZMConversation? = .none {
         didSet {
             guard let conversation = self.conversation else {
-                self.subviews.forEach { $0.removeFromSuperview() }
+                self.clippingView.subviews.forEach { $0.removeFromSuperview() }
                 return
             }
             
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
             guard stableRandomParticipants.count > 0 else {
-                self.subviews.forEach { $0.removeFromSuperview() }
+                self.clippingView.subviews.forEach { $0.removeFromSuperview() }
                 return
             }
             
@@ -146,8 +146,16 @@ final public class ConversationListAvatarView: UIView {
     
     private var mode: Mode = .two {
         didSet {
-            self.subviews.forEach { $0.removeFromSuperview() }
-            self.userImages().forEach(self.addSubview)
+            self.clippingView.subviews.forEach { $0.removeFromSuperview() }
+            self.userImages().forEach(self.clippingView.addSubview)
+            
+            if mode == .one {
+                layer.borderWidth = 0
+            }
+            else {
+                layer.borderWidth = .hairline
+                layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
+            }
         }
     }
     
@@ -164,6 +172,8 @@ final public class ConversationListAvatarView: UIView {
         }
     }
     
+    
+    let clippingView = UIView()
     let imageViewLeftTop = UserImageView()
     lazy var imageViewRightTop: UserImageView = {
         return UserImageView()
@@ -180,7 +190,10 @@ final public class ConversationListAvatarView: UIView {
     init() {
         super.init(frame: .zero)
         updateCornerRadius()
-        self.layer.masksToBounds = true
+        backgroundColor = UIColor(white: 0, alpha: 0.16)
+        layer.masksToBounds = true
+        clippingView.clipsToBounds = true
+        self.addSubview(clippingView)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -189,18 +202,25 @@ final public class ConversationListAvatarView: UIView {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
+        guard self.bounds != .zero else {
+            return
+        }
         
+        clippingView.frame = self.mode == .one ? self.bounds : self.bounds.insetBy(dx: 2, dy: 2)
+
         let size: CGSize
+        let inset: CGFloat = 2
+        let containerSize = self.clippingView.bounds.size
         
         switch mode {
         case .one:
-            size = CGSize(width: self.bounds.width, height: self.bounds.height)
+            size = CGSize(width: containerSize.width, height: containerSize.height)
             
         case .two:
-            size = CGSize(width: self.bounds.width / 2.0, height: self.bounds.height)
+            size = CGSize(width: (containerSize.width  - inset) / 2.0, height: containerSize.height)
             
         case .four:
-            size = CGSize(width: self.bounds.width / 2.0, height: self.bounds.height / 2.0)
+            size = CGSize(width: (containerSize.width - inset) / 2.0, height: (containerSize.height - inset) / 2.0)
         }
         
         var xPosition: CGFloat = 0
@@ -208,12 +228,12 @@ final public class ConversationListAvatarView: UIView {
         
         self.userImages().forEach {
             $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
-            if xPosition + size.width >= self.bounds.width {
+            if xPosition + size.width >= containerSize.width {
                 xPosition = 0
-                yPosition = yPosition + size.height
+                yPosition = yPosition + size.height + inset
             }
             else {
-                xPosition = xPosition + size.width
+                xPosition = xPosition + size.width + inset
             }
         }
         
@@ -221,7 +241,8 @@ final public class ConversationListAvatarView: UIView {
     }
 
     private func updateCornerRadius() {
-        layer.cornerRadius = self.conversation?.conversationType == .group ? 8 : layer.bounds.width / 2.0
+        layer.cornerRadius = self.conversation?.conversationType == .group ? 6 : layer.bounds.width / 2.0
+        clippingView.layer.cornerRadius = self.conversation?.conversationType == .group ? 4 : clippingView.layer.bounds.width / 2.0
     }
 }
 
