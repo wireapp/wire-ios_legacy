@@ -757,10 +757,6 @@ ConversationListItemView {
         font: $font-normal-light;
         textColor: $color-text-foreground-dark;
     }
-    
-    subtitleField: @{
-        textColor: $color-text-dimmed;
-    }
 }
 
 SearchView {

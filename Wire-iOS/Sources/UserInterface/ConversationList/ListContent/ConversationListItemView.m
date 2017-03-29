@@ -128,7 +128,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
         
         [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
         [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
-        self.titleTopMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:8.0f];
+        self.titleTopMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
         self.titleTopMarginConstraint.active = NO;
         self.titleCenterConstraint = [self.titleField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         
@@ -140,7 +140,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
         }];
         [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
         [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
-        [self.subtitleField autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self withOffset:-8.0];
+        [self.subtitleField autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self withOffset:-12.0];
         
         [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
         [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
