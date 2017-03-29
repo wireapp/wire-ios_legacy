@@ -103,7 +103,8 @@ final public class BackgroundViewController: UIViewController {
     
     private func updateStatusBarBlurStyle() {
         UIView.performWithoutAnimation {
-            self.statusBarBlurViewHeightConstraint.constant = UIApplication.shared.statusBarStyle == .default ? 20 : 0
+            let shouldHideStatusWhite = !UIApplication.shared.isStatusBarHidden || UIApplication.shared.statusBarStyle != .default
+            self.statusBarBlurViewHeightConstraint.constant = shouldHideStatusWhite ? 0 : 20
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
         }
@@ -131,8 +132,10 @@ final public class BackgroundViewController: UIViewController {
             return
         }
         
-        if let data = user.imageMediumData, imageMediumDataChanged {
-            self.setBackground(imageData: data)
+        if let data = user.imageMediumData {
+            if imageMediumDataChanged {
+                self.setBackground(imageData: data)
+            }
         } else if accentColorValueChanged {
             self.setBackground(color: user.accentColorValue.color)
         }
