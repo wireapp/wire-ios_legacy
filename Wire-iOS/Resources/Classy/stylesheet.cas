@@ -1498,6 +1498,13 @@ SettingsClientViewController {
     }
 }
 
+^SettingsTableCell {
+    cellNameLabel: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 RegistrationTextFieldCell {
     backgroundColor: clear;
     

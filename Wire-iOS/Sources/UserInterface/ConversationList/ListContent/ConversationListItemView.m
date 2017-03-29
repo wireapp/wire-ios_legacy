@@ -117,31 +117,36 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)createConstraints
 {
-    CGFloat leftMargin = 64;
-    [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
-    [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
-
-    [self.avatarView autoCenterInSuperview];
-    [self.avatarView autoSetDimensionsToSize:CGSizeMake(24, 24)];
-
-    [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
-    [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
-    self.titleTopMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:4.0f];
-    self.titleTopMarginConstraint.active = NO;
-    self.titleCenterConstraint = [self.titleField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    
-    [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16.0];
-    
-    [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:4];
-    [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
-    [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
-    [self.subtitleField autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self withOffset:-4];
-    
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
-    [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:0];
-    [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
+    [NSLayoutConstraint autoCreateAndInstallConstraints:^{
+        [self autoSetDimension:ALDimensionHeight toSize:56.0 relation:NSLayoutRelationGreaterThanOrEqual];
+        CGFloat leftMargin = 64.0;
+        [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
+        [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
+        
+        [self.avatarView autoCenterInSuperview];
+        [self.avatarView autoSetDimensionsToSize:CGSizeMake(24, 24)];
+        
+        [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
+        [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
+        self.titleTopMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:8.0f];
+        self.titleTopMarginConstraint.active = NO;
+        self.titleCenterConstraint = [self.titleField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        
+        [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16.0];
+        
+        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+            [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:8.0];
+        }];
+        [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
+        [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:0.0 relation:NSLayoutRelationLessThanOrEqual];
+        [self.subtitleField autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self withOffset:-8.0];
+        
+        [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
+        [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:0.0];
+        [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
+    }];
 }
 
 - (void)setTitleText:(NSString *)titleText
