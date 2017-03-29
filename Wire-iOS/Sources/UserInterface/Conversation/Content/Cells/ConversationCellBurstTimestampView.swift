@@ -37,6 +37,7 @@ import Cartography
     public var isShowingUnreadDot: Bool = true {
         didSet {
             unreadDotHiddenConstraint?.isActive = !isShowingUnreadDot
+            leftSeparator.isHidden = isShowingUnreadDot
         }
     }
 
@@ -75,6 +76,7 @@ import Cartography
     private func setupViews() {
         [leftSeparator, label, rightSeparator, unreadDotContainer].forEach(addSubview)
         unreadDotContainer.addSubview(unreadDot)
+        unreadDotContainer.backgroundColor = .clear
         clipsToBounds = true
     }
 
