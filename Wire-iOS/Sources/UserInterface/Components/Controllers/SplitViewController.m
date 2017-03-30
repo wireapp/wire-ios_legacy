@@ -512,12 +512,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         if (leftViewControllerRevealed) {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
         }
-        
+        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
         [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55f animations:^{
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
-            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-
             if (completion != nil) completion();
             
             if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
