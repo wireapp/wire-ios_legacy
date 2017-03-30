@@ -152,10 +152,12 @@ final public class ConversationAvatarView: UIView {
             
             if mode == .one {
                 layer.borderWidth = 0
+                backgroundColor = .clear
             }
             else {
                 layer.borderWidth = .hairline
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
+                backgroundColor = UIColor(white: 0, alpha: 0.16)
             }
         }
     }
@@ -194,7 +196,7 @@ final public class ConversationAvatarView: UIView {
     init() {
         super.init(frame: .zero)
         updateCornerRadius()
-        backgroundColor = UIColor(white: 0, alpha: 0.16)
+        
         layer.masksToBounds = true
         clippingView.clipsToBounds = true
         self.addSubview(clippingView)
