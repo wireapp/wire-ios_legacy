@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class ConversationListAvatarView;
+@class ConversationAvatarView;
 @class ConversationListAccessoryView;
 
 FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
@@ -29,7 +29,7 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, copy) NSString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
-@property (nonatomic, strong, readonly) ConversationListAvatarView *avatarView;
+@property (nonatomic, strong, readonly) ConversationAvatarView *avatarView;
 @property (nonatomic, strong, readonly) ConversationListAccessoryView *rightAccessory;
 
 @property (nonatomic, assign) BOOL selected;

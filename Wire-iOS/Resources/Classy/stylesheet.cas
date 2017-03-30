@@ -540,7 +540,7 @@ ConversationListBottomBarController {
 
 /* ConversationListAvatar */
 
-ConversationListAvatarView UserImageView {
+ConversationAvatarView UserImageView {
     initials: @{
         font: $font-medium-semibold;
         textColor: $color-list-avatar-initials;
