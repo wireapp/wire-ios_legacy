@@ -174,7 +174,7 @@ final public class ConversationAvatarView: UIView {
     }
     
     override public var intrinsicContentSize: CGSize {
-        return CGSize(width: 26, height: 26)
+        return CGSize(width: 32, height: 32)
     }
     
     let clippingView = UIView()
@@ -210,34 +210,43 @@ final public class ConversationAvatarView: UIView {
             return
         }
         
-        clippingView.frame = self.mode == .one ? self.bounds : self.bounds.insetBy(dx: 2, dy: 2)
-
-        let size: CGSize
-        let inset: CGFloat = 2
-        let containerSize = self.clippingView.bounds.size
-        
-        switch mode {
-        case .one:
-            size = CGSize(width: containerSize.width, height: containerSize.height)
+        if mode == .one {
+            clippingView.frame = self.bounds.insetBy(dx: 3, dy: 3)
             
-        case .two:
-            size = CGSize(width: (containerSize.width  - inset) / 2.0, height: containerSize.height)
-            
-        case .four:
-            size = CGSize(width: (containerSize.width - inset) / 2.0, height: (containerSize.height - inset) / 2.0)
-        }
-        
-        var xPosition: CGFloat = 0
-        var yPosition: CGFloat = 0
-        
-        self.userImages().forEach {
-            $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
-            if xPosition + size.width >= containerSize.width {
-                xPosition = 0
-                yPosition = yPosition + size.height + inset
+            self.userImages().forEach {
+                $0.frame = clippingView.bounds
             }
-            else {
-                xPosition = xPosition + size.width + inset
+        }
+        else {
+            clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
+            
+            let size: CGSize
+            let inset: CGFloat = 2
+            let containerSize = self.clippingView.bounds.size
+            
+            switch mode {
+            case .one:
+                fatal("")
+                
+            case .two:
+                size = CGSize(width: (containerSize.width  - inset) / 2.0, height: containerSize.height)
+                
+            case .four:
+                size = CGSize(width: (containerSize.width - inset) / 2.0, height: (containerSize.height - inset) / 2.0)
+            }
+            
+            var xPosition: CGFloat = 0
+            var yPosition: CGFloat = 0
+            
+            self.userImages().forEach {
+                $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
+                if xPosition + size.width >= containerSize.width {
+                    xPosition = 0
+                    yPosition = yPosition + size.height + inset
+                }
+                else {
+                    xPosition = xPosition + size.width + inset
+                }
             }
         }
         
