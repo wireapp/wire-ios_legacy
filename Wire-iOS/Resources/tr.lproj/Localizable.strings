@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARŞİVLE";
 "list.archived_conversations_close" = "Arşivi kapat";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Engellendi";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Bir resim paylaştı";
+"conversation.status.message.location" = "Bir konum paylaştı";
+"conversation.status.message.audio" = "Bir sesli mesaj paylaştı";
+"conversation.status.message.video" = "Bir video paylaştı";
+"conversation.status.message.file" = "Bir dosya paylaştı";
+"conversation.status.message.knock" = "Pingledi";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Sen";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@, seni ekledi";
+"conversation.status.added_useres" = "%@, %@'i ekledi";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Ayrıldın";
+"conversation.status.removed_useres" = "%@, %@'i sildi";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,7 +334,7 @@
 "voice.status.video_not_available" = "Video kapandı";
 "voice.status.low_connection" = "Kötü bağlantı";
 "voice.network_error.title" = "Internet bağlantısı yok";
-"voice.status.cbr" = "Constant Bit Rate";
+"voice.status.cbr" = "Sabit Bit Hızı";
 "voice.network_error.body" = "Arama yapmak için çevrimiçi olmanız gerekir. Bağlantınızı kontrol edin ve yeniden deneyin.";
 "voice.degradation.new_self_device" = "Yeni bir cihaz kullanmaya başladın.";
 "voice.degradation.new_user_device" = "%@ yeni bir cihaz kullanmaya başladı.";
@@ -568,8 +594,8 @@
 "self.settings.callkit.caption" = "iOS ile Paylaş";
 "self.settings.callkit.description" = "Wire aramalarını kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktif ise, arama geçmişi Apple ile paylaşılacaktır. Bu ayarı uygulamak için Wire'ı yeniden başlatın.";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.title" = "Değişken Bit Hızı Kodlaması";
+"self.settings.vbr.description" = "Bu sesli aramaların daha az veri kullanmasını sağlar, ayrıca yavaş internet bağlantılarında daha iyi çalışır. Sabit Bit Hızı Kodlamasını kullanmak isterseniz devre dışı bırakın.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Araması";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Mesajı";

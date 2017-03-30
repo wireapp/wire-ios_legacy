@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARKIV";
 "list.archived_conversations_close" = "Luk arkiv";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Blokeret";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Delte et billede";
+"conversation.status.message.location" = "Delte en placering";
+"conversation.status.message.audio" = "Delte en lyd besked";
+"conversation.status.message.video" = "Delte en video";
+"conversation.status.message.file" = "Delte en fil";
+"conversation.status.message.knock" = "Pingede";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Dig";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ har tilføjet dig";
+"conversation.status.added_useres" = "%@ har tilføjet %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Du forlod";
+"conversation.status.removed_useres" = "%@ har fjernet %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -568,8 +594,8 @@
 "self.settings.callkit.caption" = "Del med iOS";
 "self.settings.callkit.description" = "Vis tråd opfordrer låsen skærmen og i iOS opkald historie. Hvis iCloud er aktiveret, delt Opkaldshistorie med Apple. Genstart Wire for at anvende denne indstilling.";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.title" = "Variable bithastighed";
+"self.settings.vbr.description" = "Dette gør, at lydopkald bruger færre data og fungerer bedre med langsommere netværk. Sluk for at anvende konstant bithastighed.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Opkald";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Besked";
