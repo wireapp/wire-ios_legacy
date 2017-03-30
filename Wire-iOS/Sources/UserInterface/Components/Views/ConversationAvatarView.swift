@@ -206,55 +206,55 @@ final public class ConversationAvatarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    let interAvatarInset: CGFloat = 2
+    var containerSize: CGSize {
+        return self.clippingView.bounds.size
+    }
+    
     override public func layoutSubviews() {
         super.layoutSubviews()
         guard self.bounds != .zero else {
             return
         }
         
-        if mode == .one {
+        switch mode {
+        case .one:
             clippingView.frame = self.bounds.insetBy(dx: 3, dy: 3)
             
             self.userImages().forEach {
                 $0.frame = clippingView.bounds
             }
-        }
-        else {
+        case .two:
             clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
+
+            layoutMultipleAvatars(with: CGSize(width: (containerSize.width  - interAvatarInset) / 2.0, height: containerSize.height))
             
-            let size: CGSize
-            let inset: CGFloat = 2
+        case .four:
+            clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
             let containerSize = self.clippingView.bounds.size
-            
-            switch mode {
-            case .one:
-                fatal("")
-                
-            case .two:
-                size = CGSize(width: (containerSize.width  - inset) / 2.0, height: containerSize.height)
-                
-            case .four:
-                size = CGSize(width: (containerSize.width - inset) / 2.0, height: (containerSize.height - inset) / 2.0)
-            }
-            
-            var xPosition: CGFloat = 0
-            var yPosition: CGFloat = 0
-            
-            self.userImages().forEach {
-                $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
-                if xPosition + size.width >= containerSize.width {
-                    xPosition = 0
-                    yPosition = yPosition + size.height + inset
-                }
-                else {
-                    xPosition = xPosition + size.width + inset
-                }
-            }
+
+            layoutMultipleAvatars(with: CGSize(width: (containerSize.width - interAvatarInset) / 2.0, height: (containerSize.height - interAvatarInset) / 2.0))
         }
         
         updateCornerRadius()
     }
 
+    private func layoutMultipleAvatars(with size: CGSize) {
+        var xPosition: CGFloat = 0
+        var yPosition: CGFloat = 0
+
+        self.userImages().forEach {
+            $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
+            if xPosition + size.width >= containerSize.width {
+                xPosition = 0
+                yPosition = yPosition + size.height + interAvatarInset
+            }
+            else {
+                xPosition = xPosition + size.width + interAvatarInset
+            }
+        }
+    }
+    
     private func updateCornerRadius() {
         layer.cornerRadius = self.conversation?.conversationType == .group ? 6 : layer.bounds.width / 2.0
         clippingView.layer.cornerRadius = self.conversation?.conversationType == .group ? 4 : clippingView.layer.bounds.width / 2.0
