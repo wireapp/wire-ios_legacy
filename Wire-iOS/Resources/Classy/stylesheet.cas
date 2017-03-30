@@ -509,7 +509,7 @@ NewDevicesDot {
 ConversationListAccessoryView {
     textLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-small-semibold;
+        font: $font-medium-semibold;
     }
 }
 

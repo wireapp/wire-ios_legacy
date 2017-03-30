@@ -157,7 +157,7 @@ final public class ConversationAvatarView: UIView {
             else {
                 layer.borderWidth = .hairline
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
-                backgroundColor = UIColor(white: 0, alpha: 0.16)
+                backgroundColor = UIColor(white: 0, alpha: 0.32)
             }
         }
     }
