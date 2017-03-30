@@ -131,7 +131,9 @@ final internal class SpaceSelectorView: LineView {
             dotView.height == dotSize
             
             dotView.centerX == nameLabel.trailing
-            dotView.centerY == nameLabel.top + 1
+            dotView.centerY == nameLabel.centerY - 6
+            
+            selfView.height == 40
         }
         
         self.updateLabel()
