@@ -38,6 +38,8 @@ final internal class ConversationListAccessoryView: UIView {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
         
+        self.isAccessibilityElement = true
+        
         textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
         textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
@@ -78,34 +80,44 @@ final internal class ConversationListAccessoryView: UIView {
         switch self.icon {
         case .pendingConnection:
             iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
+            self.accessibilityValue = "pending connection"
             return iconView
         case .activeCall(true):
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
+            self.accessibilityValue = "active call"
             return iconView
         case .activeCall(false):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
+            self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
+            self.accessibilityValue = "missed call"
             return iconView
         case .playingMedia:
             if let mediaPlayer = self.mediaPlaybackManager.activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.image = UIImage(for: .pause, fontSize: iconSize, color: .white)
+                self.accessibilityValue = "pause media"
             }
             else {
                 iconView.image = UIImage(for: .play, fontSize: iconSize, color: .white)
+                self.accessibilityValue = "play media"
             }
             return iconView
         case .silenced:
             iconView.image = UIImage(for: .bellWithStrikethrough, fontSize: iconSize, color: .white)
+            self.accessibilityValue = "silenced"
             return iconView
         case .typing:
+            self.accessibilityValue = "typing"
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
+            self.accessibilityValue = textLabel.text
             return textLabel
         case .unreadPing:
             iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .white)
+            self.accessibilityValue = "ping"
             return iconView
         default:
             return .none
