@@ -102,11 +102,7 @@ public class ExtensionSettings: NSObject {
 
     public var useAssetsV3: Bool {
         get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.useAssetsV3.rawValue) ?? false
-        }
-
-        set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.useAssetsV3.rawValue)
+            return DeveloperMenuState.developerMenuEnabled()
         }
     }
     
