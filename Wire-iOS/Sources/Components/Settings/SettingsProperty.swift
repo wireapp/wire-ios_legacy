@@ -75,7 +75,6 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case disableHockey = "DisableHockey"
     case disableAnalytics = "DisableAnalytics"
     case disableCallKit = "DisableCallKit"
-    case sendV3Assets = "SendV3Assets"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
 
