@@ -775,6 +775,23 @@ VideoMessageCell {
     }
 }
 
+DotView {
+    backgroundColor: $color-accent-current;
+}
+
+SpaceView {
+    nameLabel: @{
+        font: $font-small-semibold;
+        textColor: $color-text-dimmed-dark;
+    }
+}
+
+SpaceView.selected {
+    nameLabel: @{
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 /* Conversation */
 
 MessageToolboxView {

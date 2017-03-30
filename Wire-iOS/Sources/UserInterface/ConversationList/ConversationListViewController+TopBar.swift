@@ -22,6 +22,7 @@ import Cartography
 
 extension ConversationListViewController {
     
+    
     public func createTopBar() {
 
         let settingsButton = IconButton()
@@ -47,13 +48,20 @@ extension ConversationListViewController {
         
         self.view.addSubview(self.topBar)
         
-        let titleLabel = UILabel()
+        if Space.enableSpaces {
+            let spacesView = SpaceSelectorView(spaces: Space.spaces)
+            self.topBar.middleView = spacesView
+        }
+        else {
+            let titleLabel = UILabel()
+            
+            titleLabel.font = FontSpec(.medium, .semibold).font
+            titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+            titleLabel.text = "list.title".localized.uppercased()
+            
+            self.topBar.middleView = titleLabel
+        }
 
-        titleLabel.font = FontSpec(.medium, .semibold).font
-        titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-        titleLabel.text = "list.title".localized.uppercased()
-        
-        self.topBar.middleView = titleLabel
         self.topBar.rightView = settingsButton
     }
     
