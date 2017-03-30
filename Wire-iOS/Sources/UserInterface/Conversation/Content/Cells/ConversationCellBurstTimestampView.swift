@@ -44,7 +44,7 @@ import Cartography
 
     public var isSeparatorHidden: Bool = false {
         didSet {
-            leftSeparator.isHidden = isSeparatorHidden
+            leftSeparator.isHidden = isSeparatorHidden || isShowingUnreadDot
             rightSeparator.isHidden = isSeparatorHidden
         }
     }
