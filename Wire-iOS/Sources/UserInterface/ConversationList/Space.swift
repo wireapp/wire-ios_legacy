@@ -105,7 +105,9 @@ internal class Space: NSObject {
     
     public static let workSpace: Space = {
         let predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", workString)
-        return Space(name: "Work", predicate: predicate)
+        let workSpace = Space(name: "Work", predicate: predicate)
+        workSpace.selected = true
+        return workSpace
     }()
     
     public static let spaces: [Space] = { [privateSpace, workSpace] }()
