@@ -25,10 +25,13 @@ import Cartography
 
     public let unreadDot = UIView()
     public let label = UILabel()
-    public let leftSeparator = UIView()
-    public let rightSeparator = UIView()
+
+    public var separatorColor: UIColor?
+    public var separatorColorExpanded: UIColor?
 
     private let unreadDotContainer = UIView()
+    private let leftSeparator = UIView()
+    private let rightSeparator = UIView()
 
     private let inset: CGFloat = 16
     private let unreadDotHeight: CGFloat = 8
@@ -52,6 +55,9 @@ import Cartography
     public var isSeparatorExpanded: Bool = false {
         didSet {
             separatorHeight = isSeparatorExpanded ? 4 : .hairline
+            let color = isSeparatorExpanded ? separatorColorExpanded : separatorColor
+            leftSeparator.backgroundColor = color
+            rightSeparator.backgroundColor = color
         }
     }
 

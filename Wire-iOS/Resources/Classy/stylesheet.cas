@@ -823,20 +823,17 @@ MessageToolboxView {
         label: @{
             textColor: $color-text-foreground;
         }
-
-        leftSeparator: @{
-            backgroundColor: $color-separator-pale;
-        }
-
-        rightSeparator: @{
-            backgroundColor: $color-separator-pale;
-        }
     }
 
     burstNormalFont: $font-small-light;
     burstBoldFont: $font-small-semibold;
 }
 
+
+ConversationCellBurstTimestampView {
+    separatorColor: $color-separator;
+    separatorColorExpanded: $color-separator-pale;
+}
 
 
 ^IconSystemCell {
