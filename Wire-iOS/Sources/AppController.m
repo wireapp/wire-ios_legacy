@@ -45,6 +45,7 @@
 #import "AVSLogObserver.h"
 #import "Wire-Swift.h"
 #import "Message+Formatting.h"
+#import "ConversationListCell.h"
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
@@ -390,6 +391,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [Message invalidateMarkdownStyle];
     [UIFont wr_flushFontCache];
     [NSAttributedString wr_flushCellParagraphStyleCache];
+    [ConversationListCell invalidateCachedCellSize];
     [self applyFontScheme];
 }
 

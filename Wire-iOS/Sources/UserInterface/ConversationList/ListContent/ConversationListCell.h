@@ -31,6 +31,7 @@
 @property (nonatomic, weak) id <ConversationListCellDelegate> delegate;
 - (void)updateAppearance;
 - (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize;
++ (void)invalidateCachedCellSize;
 @end
 
 @protocol ConversationListCellDelegate <NSObject>

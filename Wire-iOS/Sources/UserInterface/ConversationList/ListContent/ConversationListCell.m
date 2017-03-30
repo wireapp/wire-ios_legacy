@@ -215,8 +215,13 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     return YES;
 }
 
+static CGSize cachedSize = {0, 0};
+
 - (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize
 {
+    if (!CGSizeEqualToSize(cachedSize, CGSizeZero)) {
+        return cachedSize;
+    }
     self.itemView.titleText = @"Ü";
     self.itemView.subtitleAttributedText = [[NSAttributedString alloc] initWithString:@"Ä"
                                                                            attributes:[ZMConversation statusRegularStyle]];
@@ -228,7 +233,13 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [self.itemView layoutIfNeeded];
     CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
     cellSize.width = collectionViewSize.width;
+    cachedSize = cellSize;
     return cellSize;
+}
+
++ (void)invalidateCachedCellSize
+{
+    cachedSize = CGSizeZero;
 }
 
 #pragma mark - AVSMediaManagerClientChangeNotification
