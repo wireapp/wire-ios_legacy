@@ -256,6 +256,7 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
 
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"
+// Ephemeral: "Ephemeral message"
 final internal class NewMessagesMatcher: ConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
     let localizationSilencedRootPath = "conversation.silenced.status.message"
@@ -346,9 +347,9 @@ final internal class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-// "[You|User] [added|removed|left] [_|users|you]"
+// "[You|User] added [_|users|you]"
 final internal class GroupActivityMatcher: ConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
+    let matchedTypes: [StatusMessageType] = [.addParticipants]
 
     func isMatching(with status: ConversationStatus) -> Bool {
         return matchedTypes.flatMap { status.unreadMessagesByType[$0] }.reduce(0, +) > 0
