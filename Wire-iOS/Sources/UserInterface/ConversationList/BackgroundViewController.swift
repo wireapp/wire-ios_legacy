@@ -25,12 +25,19 @@ import WireExtensionComponents
 final public class BackgroundViewController: UIViewController {
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
+    private let darkenOverlay = UIView()
     private var statusBarBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
     private var statusBarBlurViewHeightConstraint: NSLayoutConstraint!
     private let user: ZMBareUser
     private let userSession: ZMUserSession?
+    
+    public var darkMode: Bool = false {
+        didSet {
+            darkenOverlay.isHidden = !self.darkMode
+        }
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -43,7 +50,15 @@ final public class BackgroundViewController: UIViewController {
         
         self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: self.user)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(statusBarStyleChanged(_:)), name: UIApplication.wr_statusBarStyleChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(statusBarStyleChanged(_:)),
+                                               name: UIApplication.wr_statusBarStyleChangeNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(colorSchemeChanged(_:)),
+                                               name: NSNotification.Name.SettingsColorSchemeChanged,
+                                               object: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -57,6 +72,7 @@ final public class BackgroundViewController: UIViewController {
         self.createConstraints()
         
         self.updateForUser()
+        self.updateForColorScheme()
     }
     
     override open var prefersStatusBarHidden: Bool {
@@ -69,8 +85,9 @@ final public class BackgroundViewController: UIViewController {
     
     private func configureViews() {
         self.cropView.clipsToBounds = true
+        darkenOverlay.backgroundColor = UIColor(white: 0, alpha: 0.16)
         
-        [imageView, blurView, statusBarBlurView].forEach(self.cropView.addSubview)
+        [imageView, blurView, statusBarBlurView, darkenOverlay].forEach(self.cropView.addSubview)
         
         self.view.addSubview(self.cropView)
     }
@@ -93,6 +110,10 @@ final public class BackgroundViewController: UIViewController {
             blurView.trailing == cropView.trailing
             blurView.bottom == cropView.bottom
             imageView.edges == cropView.edges
+        }
+        
+        constrain(self.cropView, self.darkenOverlay) { cropView, darkenOverlay in
+            darkenOverlay.edges == cropView.edges
         }
         
         self.updateStatusBarBlurStyle()
@@ -133,6 +154,10 @@ final public class BackgroundViewController: UIViewController {
         }
     }
     
+    private func updateForColorScheme() {
+        self.darkMode = (ColorScheme.default().variant == .dark)
+    }
+    
     internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
         guard imageMediumDataChanged || accentColorValueChanged else {
             return
@@ -163,6 +188,10 @@ final public class BackgroundViewController: UIViewController {
     
     @objc public func statusBarStyleChanged(_ object: AnyObject!) {
         self.updateStatusBarBlurStyle()
+    }
+    
+    @objc public func colorSchemeChanged(_ object: AnyObject!) {
+        self.updateForColorScheme()
     }
 }
 
