@@ -301,12 +301,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            if status.unreadMessages.count == 1 {
-                return .none
-            }
-            else {
-                return .unreadMessages(count: status.unreadMessages.count)
-            }
+            return .unreadMessages(count: status.unreadMessages.count)
         }
     }
     
