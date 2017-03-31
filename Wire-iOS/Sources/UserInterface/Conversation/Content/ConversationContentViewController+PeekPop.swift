@@ -30,8 +30,8 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         
         if message.isImage {
             let controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
-            if let rect = (tableView.cellForRow(at: cellIndexPath) as? ConversationCell)?.selectionRect, rect != .zero {
-                previewingContext.sourceRect = rect
+            if let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
+                previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell)
             }
             return controller
         }
