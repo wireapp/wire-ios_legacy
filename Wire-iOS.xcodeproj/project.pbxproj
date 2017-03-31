@@ -595,6 +595,7 @@
 		87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E11C734DB60094BFE9 /* MockMessage.swift */; };
 		87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */; };
 		87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */; };
+		87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C539551E8E516400084F94 /* BoundsAwareFlowLayout.swift */; };
 		87C70F141E826A890069563A /* NotificationFetchComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */; };
 		87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */; };
 		87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36B91D74782B007AB4E5 /* LikeButton.swift */; };
@@ -1870,6 +1871,7 @@
 		87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MockMessage+Creation.m"; sourceTree = "<group>"; };
 		87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionInfoViewController.h; sourceTree = "<group>"; };
 		87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionInfoViewController.m; sourceTree = "<group>"; };
+		87C539551E8E516400084F94 /* BoundsAwareFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundsAwareFlowLayout.swift; sourceTree = "<group>"; };
 		87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Dev.entitlements"; path = "Wire-iOS/Entitlements-Dev.entitlements"; sourceTree = "<group>"; };
 		87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Prod.entitlements"; path = "Wire-iOS/Entitlements-Prod.entitlements"; sourceTree = "<group>"; };
 		87CA49EC1C467A710013A2A9 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -3386,6 +3388,7 @@
 				87B7DAED1E697CC3005F5140 /* UserImageView+Magic.m */,
 				877A325D1E8912500017DD9A /* RoundedBadge.swift */,
 				870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */,
+				87C539551E8E516400084F94 /* BoundsAwareFlowLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6258,6 +6261,7 @@
 				8FD5A08619F0490500550525 /* ZMUserSession+Additions.m in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
 				CE8C20301E0C30B400571635 /* Analytics+Collection.swift in Sources */,
+				87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */,
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */,
