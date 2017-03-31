@@ -80,7 +80,7 @@ class MissingMessagesCell: IconSystemCell {
         fullString = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
         
         self.labelView.attributedText = fullString
-        self.labelView.addLinks()
+        (labelView as? TTTAttributedLabel)?.addLinks()
     }
     
     // MARK: - TTTAttributedLabelDelegate

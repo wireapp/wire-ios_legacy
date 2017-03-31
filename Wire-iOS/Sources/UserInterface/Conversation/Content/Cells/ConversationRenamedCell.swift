@@ -63,7 +63,7 @@ final class ConversationRenamedCell: IconSystemCell {
             systemMessage.systemMessageType == .conversationNameChanged else { return }
 
         labelView.attributedText = attributedTitle(for: message)
-        labelView.accessibilityLabel = labelView.attributedText.string
+        labelView.accessibilityLabel = labelView.attributedText?.string
 
         nameLabel.attributedText = attributedName(for: systemMessage)
         nameLabel.accessibilityLabel = nameLabel.attributedText?.string

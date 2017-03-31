@@ -29,7 +29,7 @@ import Classy
 open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     let leftIconView = UIImageView(frame: .zero)
     let leftIconContainer = UIView(frame: .zero)
-    let labelView = TTTAttributedLabel(frame: .zero)
+    let labelView: UILabel
     let lineView = UIView(frame: .zero)
     
     var labelTextColor: UIColor?
@@ -50,9 +50,13 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
 
     private let lineMedianYOffset: CGFloat = 2
 
-    public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    class var userRegularLabel: Bool {
+        return false
+    }
 
+    public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        labelView = type(of: self).userRegularLabel ? UILabel(frame: .zero) : TTTAttributedLabel(frame: .zero)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         CASStyler.default().styleItem(self)
         createConstraints()
@@ -67,16 +71,19 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         self.leftIconView.isAccessibilityElement = true
         self.leftIconView.accessibilityLabel = "Icon"
 
-        self.labelView.extendsLinkTouchArea = true
         self.labelView.numberOfLines = 0
         self.labelView.isAccessibilityElement = true
-        self.labelView.accessibilityLabel = "Text"
-        self.labelView.linkAttributes = [
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
-            NSForegroundColorAttributeName: ZMUser.selfUser().accentColor
-        ]
 
-        self.labelView.delegate = self
+        if let label = labelView as? TTTAttributedLabel {
+            label.extendsLinkTouchArea = true
+
+            label.linkAttributes = [
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
+                NSForegroundColorAttributeName: ZMUser.selfUser().accentColor
+            ]
+
+            label.delegate = self
+        }
         self.contentView.addSubview(self.leftIconContainer)
         self.leftIconContainer.addSubview(self.leftIconView)
         self.messageContentView.addSubview(self.labelView)

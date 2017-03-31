@@ -70,7 +70,7 @@ class ConversationNewDeviceCell: IconSystemCell {
             configureForOtherUsers(users, clients: clients, attributes: textAttributes)
         }
         
-        self.labelView.addLinks()
+        (labelView as? TTTAttributedLabel)?.addLinks()
         self.labelView.accessibilityLabel = self.labelView.attributedText?.string
     }
     

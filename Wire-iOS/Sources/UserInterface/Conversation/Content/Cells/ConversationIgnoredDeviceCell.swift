@@ -61,7 +61,7 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 attributedString.addAttributes([NSFontAttributeName: labelFont, NSLinkAttributeName: type(of: self).deviceListLink], range: deviceRange)
                 
                 self.labelView.attributedText = NSAttributedString(attributedString: attributedString)
-                self.labelView.addLinks()
+                (labelView as? TTTAttributedLabel)?.addLinks()
                 self.labelView.accessibilityLabel = self.labelView.attributedText?.string
         }
     }

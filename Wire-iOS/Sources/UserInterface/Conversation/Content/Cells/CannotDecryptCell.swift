@@ -62,7 +62,7 @@ class CannotDecryptCell: IconSystemCell {
         let fullString = messageString + " " + why + (device ?? NSAttributedString())
         
         labelView.attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
-        labelView.addLink(to: link, with: NSMakeRange(messageString.length+1, why.length))
+        (labelView as? TTTAttributedLabel)?.addLink(to: link, with: NSMakeRange(messageString.length+1, why.length))
         labelView.accessibilityLabel = labelView.attributedText?.string
     }
     
