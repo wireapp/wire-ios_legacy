@@ -189,14 +189,147 @@
         </dict>
         <key>conversation.connection_view.common_connections</key>
         <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>person</string>
-            <key>other</key>
-            <string>people</string>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_connections@ in common</string>
+            <key>d_number_connections</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>person</string>
+                <key>other</key>
+                <string>people</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.text</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new text message</string>
+                <key>other</key>
+                <string>%d new text messages</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.link</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new link</string>
+                <key>other</key>
+                <string>%d new links</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.image</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new image</string>
+                <key>other</key>
+                <string>%d new images</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.location</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new location</string>
+                <key>other</key>
+                <string>%d new locations</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.audio</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new audio message</string>
+                <key>other</key>
+                <string>%d new audio messages</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.video</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new video</string>
+                <key>other</key>
+                <string>%d new videos</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.knock</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>new ping</string>
+                <key>other</key>
+                <string>%d new pings</string>
+            </dict>
+        </dict>
+        <key>conversation.silenced.status.message.missedcall</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>missed call</string>
+                <key>other</key>
+                <string>%d missed calls</string>
+            </dict>
         </dict>
     </dict>
 </plist>

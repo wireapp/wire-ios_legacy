@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "归档";
 "list.archived_conversations_close" = "关闭归档";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "已拉黑";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "分享了一张图片";
+"conversation.status.message.location" = "分享了位置";
+"conversation.status.message.audio" = "分享了语音信息";
+"conversation.status.message.video" = "分享了影片";
+"conversation.status.message.file" = "分享了文件";
+"conversation.status.message.knock" = "打了招呼";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "你";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@加了您";
+"conversation.status.added_useres" = "%@加了%@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "您退出了";
+"conversation.status.removed_useres" = "%@移除了%@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

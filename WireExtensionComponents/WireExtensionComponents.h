@@ -44,6 +44,7 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/TokenTextAttachment.h>
 #import <WireExtensionComponents/TokenizedTextView.h>
+#import <WireExtensionComponents/DeveloperMenuState.h>
 
 // Layers
 #import <WireExtensionComponents/AnimatedLayer.h>

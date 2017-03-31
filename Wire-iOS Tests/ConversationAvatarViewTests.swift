@@ -37,15 +37,14 @@ extension Array where Element: ZMUser {
     }
 }
 
-class ConversationListAvatarViewTests: CoreDataSnapshotTestCase {
+class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
-    var sut: ConversationListAvatarView!
+    var sut: ConversationAvatarView!
 
     override func setUp() {
         super.setUp()
-        sut = ConversationListAvatarView()
+        sut = ConversationAvatarView()
     }
-    
 
     func testThatItRendersSingleUserImage() {
         otherUser.accentColorValue = .strongLimeGreen

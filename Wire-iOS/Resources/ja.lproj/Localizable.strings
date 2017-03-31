@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "アーカイブ";
 "list.archived_conversations_close" = "アーカイブして閉じます";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "ブロック";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "写真が共有されました";
+"conversation.status.message.location" = "場所を共有しました";
+"conversation.status.message.audio" = "音声メッセージが共有されました";
+"conversation.status.message.video" = "ビデオを共有しました";
+"conversation.status.message.file" = "ファイルが共有されました";
+"conversation.status.message.knock" = "Ping されました";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "あなた";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@はあなたを追加しました";
+"conversation.status.added_useres" = "%@は%@を追加しました";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "あなたは退出しました";
+"conversation.status.removed_useres" = "%@は%@を削除しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,12 +334,12 @@
 "voice.status.video_not_available" = "ビデオ通話がオフになっています";
 "voice.status.low_connection" = "接続不良";
 "voice.network_error.title" = "インターネット接続がありません";
-"voice.status.cbr" = "Constant Bit Rate";
+"voice.status.cbr" = "固定ビットレート";
 "voice.network_error.body" = "オンラインにしてから通話する必要が有ります。接続を確認してもう一度やり直して下さい。";
 "voice.degradation.new_self_device" = "新しいデバイスを使い始めました";
 "voice.degradation.new_user_device" = "%@が新しいデバイスを使い始めました。";
-"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
-"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
+"voice.degradation_outgoing.prompt" = "さらに電話をかけますか？";
+"voice.degradation_incoming.prompt" = "さらに電話をうけますか？";
 "voice.accept_button.title" = "承諾";
 "voice.decline_button.title" = "辞退";
 "voice.hang_up_button.title" = "電話を切る";
@@ -324,7 +350,7 @@
 "voice.call_button.title" = "通話";
 
 "voice.alert.call_in_progress.title" = "通話中です";
-"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.message" = "同時にできる通話は一つのみです";
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wireはマイクにアクセスする必要が有ります";
@@ -568,8 +594,8 @@
 "self.settings.callkit.caption" = "iOSで共有する";
 "self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示する。もしiCloudが有効である場合、通話履歴はAppleに共有されます。この設定を適用するためにはWireを再起動してください。";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.title" = "可変ビットレートエンコーディング";
+"self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
 "self.settings.sound_menu.sounds.wire_message" = "Wireメッセージ";

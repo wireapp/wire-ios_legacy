@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Fermer l'archive";
 
+"conversation.status.call" = "Appel en cours";
+"conversation.status.typing" = "Tape un message...";
+"conversation.status.typing.group" = "%@ : Tape un message...";
+"conversation.status.silenced" = "En sourdine";
+"conversation.status.blocked" = "Bloqué";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "A partagé un lien";
+"conversation.status.message.image" = "A partagé une photo";
+"conversation.status.message.location" = "A partagé un emplacement";
+"conversation.status.message.audio" = "A partagé un message audio";
+"conversation.status.message.video" = "A partagé une vidéo";
+"conversation.status.message.file" = "A partagé un fichier";
+"conversation.status.message.knock" = "a fait un signe";
+"conversation.status.message.missedcall" = "Appel manqué";
+
+"conversation.status.unsent" = "⚠️ Message non envoyé";
+"conversation.status.you" = "Vous";
+"conversation.status.added_multiple" = "Utilisateurs ajoutés";
+"conversation.status.you_was_added" = "%@ vous a ajouté";
+"conversation.status.added_useres" = "%@ a ajouté %@";
+"conversation.status.removed_multiple" = "Utilisateurs retirés";
+"conversation.status.you_were_removed" = "Vous avez été retiré";
+"conversation.status.you_left" = "Vous avez quitté la conversation";
+"conversation.status.removed_useres" = "%@ a retiré %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

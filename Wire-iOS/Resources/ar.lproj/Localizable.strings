@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "حفظ في الأرشيف";
 "list.archived_conversations_close" = "إغلاق الأرشيف";
 
+"conversation.status.call" = "المكالمة الجارية";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "محظور";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "شارك صورة";
+"conversation.status.message.location" = "شارك موقع";
+"conversation.status.message.audio" = "شارك رسالة صوتية";
+"conversation.status.message.video" = "شارك فيديو";
+"conversation.status.message.file" = "شارك ملف";
+"conversation.status.message.knock" = "بينغ";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "أنت";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ أضافك";
+"conversation.status.added_useres" = "%@ أضاف %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "أنت غادرت";
+"conversation.status.removed_useres" = "قام %@ بإزالة %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,7 +334,7 @@
 "voice.status.video_not_available" = "تم إيقاف الفيديو";
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
-"voice.status.cbr" = "Constant Bit Rate";
+"voice.status.cbr" = "معدل بت ثابت";
 "voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
 "voice.degradation.new_self_device" = "بدأت باستخدام جهاز جديد.";
 "voice.degradation.new_user_device" = "%@ بدأ باستخدام جهاز جديد.";
@@ -568,8 +594,8 @@
 "self.settings.callkit.caption" = "مشاركة بواسطة iOS";
 "self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple. أعد تشغيل Wire لتطبيق هذا الإعداد.";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.title" = "ترميز بمعدل بت متغير";
+"self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
 
 "self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
 "self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";

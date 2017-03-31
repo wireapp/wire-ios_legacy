@@ -37,7 +37,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 @interface ConversationListItemView ()
 
-@property (nonatomic, strong, readwrite) ConversationListAvatarView *avatarView;
+@property (nonatomic, strong, readwrite) ConversationAvatarView *avatarView;
 @property (nonatomic, strong, readwrite) ConversationListAccessoryView *rightAccessory;
 @property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) UILabel *titleField;
@@ -72,16 +72,16 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.titleField = [[UILabel alloc] initForAutoLayout];
     self.titleField.numberOfLines = 1;
     self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
-    self.titleField.accessibilityLabel = @"Conversatsion name";
     [self addSubview:self.titleField];
 
     self.avatarContainer = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.avatarContainer];
 
-    self.avatarView = [[ConversationListAvatarView alloc] initForAutoLayout];
+    self.avatarView = [[ConversationAvatarView alloc] initForAutoLayout];
     [self.avatarContainer addSubview:self.avatarView];
 
     self.rightAccessory = [[ConversationListAccessoryView alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
+    self.rightAccessory.accessibilityLabel = @"status";
     [self addSubview:self.rightAccessory];
 
     [self createSubtitleField];
@@ -97,7 +97,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.titleField setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.titleField setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 
-    
     [self.subtitleField setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.subtitleField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self.subtitleField setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
@@ -129,7 +128,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
         [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
         
         [self.avatarView autoCenterInSuperview];
-        [self.avatarView autoSetDimensionsToSize:CGSizeMake(26, 26)];
+        [self.avatarView autoSetDimensionsToSize:CGSizeMake(32, 32)];
         
         [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
         [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:-8.0 relation:NSLayoutRelationLessThanOrEqual];
@@ -164,7 +163,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     _subtitleAttributedText = subtitleAttributedText;
     self.subtitleField.attributedText = subtitleAttributedText;
-    
+    self.subtitleField.accessibilityValue = subtitleAttributedText.string;
     if (subtitleAttributedText.string.length == 0) {
         self.titleTopMarginConstraint.active = NO;
         self.titleCenterConstraint.active = YES;

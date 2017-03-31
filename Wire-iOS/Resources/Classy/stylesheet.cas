@@ -509,7 +509,7 @@ NewDevicesDot {
 ConversationListAccessoryView {
     textLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-small-semibold;
+        font: $font-medium-semibold;
     }
 }
 
@@ -540,7 +540,7 @@ ConversationListBottomBarController {
 
 /* ConversationListAvatar */
 
-ConversationListAvatarView UserImageView {
+ConversationAvatarView UserImageView {
     initials: @{
         font: $font-medium-semibold;
         textColor: $color-list-avatar-initials;
@@ -775,6 +775,23 @@ VideoMessageCell {
     }
 }
 
+DotView {
+    backgroundColor: $color-accent-current;
+}
+
+SpaceView {
+    nameLabel: @{
+        font: $font-small-semibold;
+        textColor: $color-text-dimmed-dark;
+    }
+}
+
+SpaceView.selected {
+    nameLabel: @{
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 /* Conversation */
 
 MessageToolboxView {
@@ -806,20 +823,17 @@ MessageToolboxView {
         label: @{
             textColor: $color-text-foreground;
         }
-
-        leftSeparator: @{
-            backgroundColor: $color-separator-pale;
-        }
-
-        rightSeparator: @{
-            backgroundColor: $color-separator-pale;
-        }
     }
 
     burstNormalFont: $font-small-light;
     burstBoldFont: $font-small-semibold;
 }
 
+
+ConversationCellBurstTimestampView {
+    separatorColor: $color-separator;
+    separatorColorExpanded: $color-separator-pale;
+}
 
 
 ^IconSystemCell {

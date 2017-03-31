@@ -30,7 +30,7 @@
 @interface SearchResultCell ()
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
-@property (nonatomic, strong) ConversationListAvatarView *conversationImageView;
+@property (nonatomic, strong) ConversationAvatarView *conversationImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) IconButton *instantConnectButton;
@@ -93,7 +93,7 @@
         self.avatarContainer.opaque = NO;
         [self.swipeView addSubview:self.avatarContainer];
 
-        self.conversationImageView = [[ConversationListAvatarView alloc] initForAutoLayout];
+        self.conversationImageView = [[ConversationAvatarView alloc] initForAutoLayout];
         self.conversationImageView.opaque = NO;
         [self.avatarContainer addSubview:self.conversationImageView];
 

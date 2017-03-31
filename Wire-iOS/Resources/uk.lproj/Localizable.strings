@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "АРХІВ";
 "list.archived_conversations_close" = "Закрити архів";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Заблокований(-на)";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Поділився(-лась) картинкою";
+"conversation.status.message.location" = "Поділився(-лась) розташуванням";
+"conversation.status.message.audio" = "Поділився(-лась) аудіоповідомленням";
+"conversation.status.message.video" = "Поділився(-лась) відео";
+"conversation.status.message.file" = "Поділився(-лась) файлом";
+"conversation.status.message.knock" = "Надіслав(-ла) пінг";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Ви";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ додав(-ла) вас";
+"conversation.status.added_useres" = "%@ додав(-ла) %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Ви вийшли";
+"conversation.status.removed_useres" = "%@ видалив(-ла) %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
