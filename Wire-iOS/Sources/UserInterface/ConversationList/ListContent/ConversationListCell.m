@@ -222,12 +222,9 @@ static CGSize cachedSize = {0, 0};
     if (!CGSizeEqualToSize(cachedSize, CGSizeZero) && cachedSize.width == collectionViewSize.width) {
         return cachedSize;
     }
-    
+        
     NSString *fullHeightString = @"Ü";
-    
-    self.itemView.titleText = fullHeightString;
-    self.itemView.subtitleAttributedText = [[NSAttributedString alloc] initWithString:fullHeightString
-                                                                           attributes:[ZMConversation statusRegularStyle]];
+    [self.itemView configureWith:fullHeightString subtitle:[[NSAttributedString alloc] initWithString:fullHeightString attributes:[ZMConversation statusRegularStyle]]];
     
     CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
     

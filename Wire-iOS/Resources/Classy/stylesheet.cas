@@ -754,7 +754,6 @@ ConversationListContentController UILabel.empty-list-message {
 
 ConversationListItemView {
     titleField: @{
-        font: $font-normal-light;
         textColor: $color-text-foreground-dark;
     }
 }

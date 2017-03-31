@@ -40,12 +40,13 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @property (nonatomic, strong, readwrite) ConversationAvatarView *avatarView;
 @property (nonatomic, strong, readwrite) ConversationListAccessoryView *rightAccessory;
 @property (nonatomic, strong) UIView *avatarContainer;
+@property (nonatomic, strong) UIView *labelsContainer;
 @property (nonatomic, strong) UILabel *titleField;
 @property (nonatomic, strong) UILabel *subtitleField;
 @property (nonatomic, strong) UIView *lineView;
 
-@property (nonatomic, strong) NSLayoutConstraint *titleTopMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *titleCenterConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *titleTwoLineConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *titleOneLineConstraint;
 
 @end
 
@@ -69,10 +70,13 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)setupConversationListItemView
 {
+    self.labelsContainer = [[UIView alloc] initForAutoLayout];
+    [self addSubview:self.labelsContainer];
+    
     self.titleField = [[UILabel alloc] initForAutoLayout];
     self.titleField.numberOfLines = 1;
     self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
-    [self addSubview:self.titleField];
+    [self.labelsContainer addSubview:self.titleField];
 
     self.avatarContainer = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.avatarContainer];
@@ -112,39 +116,38 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)createSubtitleField
 {
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
-
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
     self.subtitleField.accessibilityLabel = @"Conversatsion status";
     self.subtitleField.numberOfLines = 1;
-    [self addSubview:self.subtitleField];
+    [self.labelsContainer addSubview:self.subtitleField];
 }
 
 - (void)createConstraints
 {
     [NSLayoutConstraint autoCreateAndInstallConstraints:^{
+        
         [self autoSetDimension:ALDimensionHeight toSize:56.0 relation:NSLayoutRelationGreaterThanOrEqual];
         CGFloat leftMargin = 64.0;
         [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
         [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
         
         [self.avatarView autoCenterInSuperview];
-        [self.avatarView autoSetDimensionsToSize:CGSizeMake(32, 32)];
         
-        [self.titleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
-        [self.titleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:-8.0 relation:NSLayoutRelationLessThanOrEqual];
-        self.titleTopMarginConstraint = [self.titleField autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
-        self.titleTopMarginConstraint.active = NO;
-        self.titleCenterConstraint = [self.titleField autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.titleField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+        [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:2.0];
+        [self.subtitleField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+        
+        [self.labelsContainer autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:8 relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.labelsContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
+        [self.labelsContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:-8.0];
+        [self.labelsContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8 relation:NSLayoutRelationGreaterThanOrEqual];
+        
+        self.titleTwoLineConstraint = [self.labelsContainer autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        self.titleTwoLineConstraint.active = NO;
+        self.titleOneLineConstraint = [self.titleField autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self];
         
         [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16.0];
-        
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-            [self.subtitleField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleField withOffset:8.0];
-        }];
-        [self.subtitleField autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
-        [self.subtitleField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:-8.0 relation:NSLayoutRelationLessThanOrEqual];
-        [self.subtitleField autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self withOffset:-12.0];
         
         [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
         [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
@@ -165,12 +168,12 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.subtitleField.attributedText = subtitleAttributedText;
     self.subtitleField.accessibilityValue = subtitleAttributedText.string;
     if (subtitleAttributedText.string.length == 0) {
-        self.titleTopMarginConstraint.active = NO;
-        self.titleCenterConstraint.active = YES;
+        self.titleTwoLineConstraint.active = NO;
+        self.titleOneLineConstraint.active = YES;
     }
     else {
-        self.titleCenterConstraint.active = NO;
-        self.titleTopMarginConstraint.active = YES;
+        self.titleOneLineConstraint.active = NO;
+        self.titleTwoLineConstraint.active = YES;
     }
 }
 
