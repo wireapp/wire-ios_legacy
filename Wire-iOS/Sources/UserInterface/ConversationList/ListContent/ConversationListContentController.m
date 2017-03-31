@@ -114,7 +114,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    [self updateVisibleCells];
+    
     [self scrollToCurrentSelectionAnimated:NO];
 
     self.activeMediaPlayerObserver = [KeyValueObserver observeObject:AppDelegate.sharedAppDelegate.mediaPlaybackManager
@@ -246,13 +247,23 @@ static NSString * const CellReuseIdConversation = @"CellId";
         change.connectionStateChanged ||
         change.isSilencedChanged) {
         
-        for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
-            if ([cell isKindOfClass:[ConversationListCell class]]) {
-                ConversationListCell *convListCell = (ConversationListCell *)cell;
-                
-                if ([convListCell.conversation isEqual:change.conversation]) {
-                    [convListCell updateAppearance];
-                }
+        [self updateCellForConversation:change.conversation];
+    }
+}
+
+- (void)updateVisibleCells
+{
+    [self updateCellForConversation:nil];
+}
+
+- (void)updateCellForConversation:(ZMConversation *)conversation
+{
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        if ([cell isKindOfClass:[ConversationListCell class]]) {
+            ConversationListCell *convListCell = (ConversationListCell *)cell;
+            
+            if (conversation == nil || [convListCell.conversation isEqual:conversation]) {
+                [convListCell updateAppearance];
             }
         }
     }
