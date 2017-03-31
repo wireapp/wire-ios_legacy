@@ -219,7 +219,7 @@ final public class ConversationAvatarView: UIView {
         
         switch mode {
         case .one:
-            clippingView.frame = self.bounds.insetBy(dx: 3, dy: 3)
+            clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
             
             self.userImages().forEach {
                 $0.frame = clippingView.bounds
