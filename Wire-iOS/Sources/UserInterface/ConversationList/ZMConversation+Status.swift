@@ -198,15 +198,17 @@ final internal class TypingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        let statusString: String
+        let statusString: NSAttributedString
         if status.isGroup, let typingUsers = conversation.typingUsers() {
             let typingUsersString = typingUsers.flatMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-            statusString = String(format: "conversation.status.typing.group".localized, typingUsersString)
+            let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
+            let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle())
+            statusString = intermediateString.setAttributes(type(of: self).emphasisStyle(), toSubstring: typingUsersString)
         }
         else {
-            statusString = "conversation.status.typing".localized
+            statusString = "conversation.status.typing".localized && type(of: self).regularStyle()
         }
-        return statusString && type(of: self).regularStyle()
+        return statusString
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
