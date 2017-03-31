@@ -102,9 +102,15 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func updateStatusBarBlurStyle() {
+        guard let splitViewController = self.wr_splitViewController else {
+            return
+        }
+        
         UIView.performWithoutAnimation {
-            let shouldHideStatusWhite = !UIApplication.shared.isStatusBarHidden || UIApplication.shared.statusBarStyle != .default
-            self.statusBarBlurViewHeightConstraint.constant = shouldHideStatusWhite ? 0 : 20
+            let shouldShowStatusWhite = splitViewController.layoutSize != .compact &&
+                                        !UIApplication.shared.isStatusBarHidden &&
+                                        UIApplication.shared.statusBarStyle == .default
+            self.statusBarBlurViewHeightConstraint.constant = shouldShowStatusWhite ? 20 : 0
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
         }
@@ -156,7 +162,7 @@ final public class BackgroundViewController: UIViewController {
     }
     
     @objc public func statusBarStyleChanged(_ object: AnyObject!) {
-        updateStatusBarBlurStyle()
+        self.updateStatusBarBlurStyle()
     }
 }
 

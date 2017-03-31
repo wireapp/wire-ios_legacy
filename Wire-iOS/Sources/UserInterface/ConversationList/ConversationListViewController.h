@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 @interface ConversationListViewController : UIViewController
 @property (nonatomic, readonly) ZMConversation *selectedConversation;
 @property (nonatomic) UserNameTakeOverViewController *usernameTakeoverViewController;
-@property (nonatomic, assign) BOOL isComingFromRegistration;
+@property (nonatomic) BOOL isComingFromRegistration;
 @property (nonatomic, readonly) UIView *contentContainer;
 
 @property (nonatomic, readonly) ConversationListState state;

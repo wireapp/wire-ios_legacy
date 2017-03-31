@@ -395,8 +395,8 @@
 
 - (void)openConversationList
 {
-    BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
-    [self.parentViewController.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
+    BOOL leftControllerRevealed = self.wr_splitViewController.leftViewControllerRevealed;
+    [self.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
 }
 
 #pragma mark - Getters, setters
