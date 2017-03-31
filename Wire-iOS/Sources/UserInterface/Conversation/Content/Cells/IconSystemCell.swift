@@ -29,13 +29,22 @@ import Classy
 open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     let leftIconView = UIImageView(frame: .zero)
     let leftIconContainer = UIView(frame: .zero)
-    let labelView: UILabel
     let lineView = UIView(frame: .zero)
+
+    let labelView: UILabel
     
     var labelTextColor: UIColor?
     var labelTextBlendedColor: UIColor?
 
     var lineBaseLineConstraint: NSLayoutConstraint?
+
+    var attributedText: NSAttributedString? {
+        didSet {
+            labelView.attributedText = attributedText
+            labelView.accessibilityLabel = attributedText?.string
+            (labelView as? TTTAttributedLabel)?.addLinks()
+        }
+    }
 
     var labelFont: UIFont? {
         didSet {

@@ -87,7 +87,7 @@ class MissedCallCell: IconSystemCell {
             message: message
         )
         leftIconView.image = model.image()
-        labelView.attributedText = model.attributedTitle()
+        attributedText = model.attributedTitle()
         lineView.isHidden = true
     }
 
@@ -131,7 +131,7 @@ class PerformedCallCell: IconSystemCell {
             message: message
         )
         leftIconView.image = model.image()
-        labelView.attributedText = model.attributedTitle()
+        attributedText = model.attributedTitle()
         lineView.isHidden = true
     }
 

@@ -62,8 +62,7 @@ final class ConversationRenamedCell: IconSystemCell {
         guard let systemMessage = message.systemMessageData,
             systemMessage.systemMessageType == .conversationNameChanged else { return }
 
-        labelView.attributedText = attributedTitle(for: message)
-        labelView.accessibilityLabel = labelView.attributedText?.string
+        attributedText = attributedTitle(for: message)
 
         nameLabel.attributedText = attributedName(for: systemMessage)
         nameLabel.accessibilityLabel = nameLabel.attributedText?.string
