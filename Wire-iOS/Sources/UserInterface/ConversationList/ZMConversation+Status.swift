@@ -568,10 +568,7 @@ extension ZMConversation {
         
         let isOngoingCall: Bool = (self.voiceChannel?.state ?? .noActiveUsers) != .noActiveUsers
         
-        let isGroup = self.conversationType == .group
-        let isSelfAnActiveMember: Bool = !isGroup || self.activeParticipants.contains(ZMUser.selfUser())
-        
-        return ConversationStatus(isGroup: isGroup,
+        return ConversationStatus(isGroup: self.conversationType == .group,
                                   hasMessages: hasMessages,
                                   hasUnsentMessages: self.hasUnreadUnsentMessage,
                                   unreadMessages: unreadMessages,
@@ -580,7 +577,7 @@ extension ZMConversation {
                                   isSilenced: self.isSilenced,
                                   isOngoingCall: isOngoingCall,
                                   isBlocked: isBlocked,
-                                  isSelfAnActiveMember: isSelfAnActiveMember)
+                                  isSelfAnActiveMember: self.isSelfAnActiveMember)
     }
 }
 
