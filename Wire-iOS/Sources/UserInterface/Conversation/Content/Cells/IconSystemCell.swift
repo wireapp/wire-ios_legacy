@@ -106,7 +106,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
             leftIconView.height == 16
             leftIconView.height == leftIconView.width
             labelView.leading == leftIconContainer.trailing
-            labelView.top == messageContentView.top + verticalInset + 2
+            labelView.top == messageContentView.top + verticalInset + lineMedianYOffset
             labelView.trailing <= messageContentView.trailing - 72
             labelView.bottom <= messageContentView.bottom - verticalInset
             messageContentView.height >= 32
