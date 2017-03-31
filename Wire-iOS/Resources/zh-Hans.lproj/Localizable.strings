@@ -141,11 +141,11 @@
 "conversation.status.you" = "你";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@加了您";
-"conversation.status.added_useres" = "%@加了%@";
+"conversation.status.added_users" = "%@加了%@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "您退出了";
-"conversation.status.removed_useres" = "%@移除了%@";
+"conversation.status.removed_users" = "%@移除了%@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

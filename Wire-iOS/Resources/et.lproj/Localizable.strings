@@ -141,11 +141,11 @@
 "conversation.status.you" = "Sina";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ lisas sinu";
-"conversation.status.added_useres" = "%@ lisas kasutaja %@";
+"conversation.status.added_users" = "%@ lisas kasutaja %@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Lahkusid vestlusest";
-"conversation.status.removed_useres" = "%@ eemaldas kasutaja %@";
+"conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

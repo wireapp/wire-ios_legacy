@@ -141,11 +141,11 @@
 "conversation.status.you" = "Você";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ adicionou você";
-"conversation.status.added_useres" = "%@ adicionou %@";
+"conversation.status.added_users" = "%@ adicionou %@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Você saiu";
-"conversation.status.removed_useres" = "%@ removeu %@";
+"conversation.status.removed_users" = "%@ removeu %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

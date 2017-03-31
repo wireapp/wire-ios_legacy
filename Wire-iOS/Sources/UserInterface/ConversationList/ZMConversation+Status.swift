@@ -342,7 +342,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
             else {
                 let usersList = systemMessage.addedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                 let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
-                return String(format: "conversation.status.added_useres".localized, sender!, usersList)
+                return String(format: "conversation.status.added_users".localized, sender!, usersList)
             }
         }
         return .none
@@ -366,7 +366,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
             else {
                 let usersList = systemMessage.removedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                 let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
-                return String(format: "conversation.status.removed_useres".localized, sender!, usersList)
+                return String(format: "conversation.status.removed_users".localized, sender!, usersList)
             }
         }
         return .none
