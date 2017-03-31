@@ -140,6 +140,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = NO;
     self.collectionView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0);
+    self.collectionView.delaysContentTouches = NO;
     self.clearsSelectionOnViewWillAppear = NO;
 }
 
