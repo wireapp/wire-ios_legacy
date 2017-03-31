@@ -136,7 +136,7 @@
 "conversation.status.message.file" = "Shared a file";
 "conversation.status.message.knock" = "Pinged";
 "conversation.status.message.missedcall" = "Missed call";
-"conversation.status.message.ephemeral" = "Ephemeral message";
+"conversation.status.message.ephemeral" = "Timed message";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
