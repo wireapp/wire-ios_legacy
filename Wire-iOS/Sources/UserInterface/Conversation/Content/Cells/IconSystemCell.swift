@@ -48,7 +48,9 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         return 16
     }
 
-    private let lineMedianYOffset: CGFloat = 2
+    private var lineMedianYOffset: CGFloat {
+        return labelView is TTTAttributedLabel ? 2 : 0
+    }
 
     class var userRegularLabel: Bool {
         return false
