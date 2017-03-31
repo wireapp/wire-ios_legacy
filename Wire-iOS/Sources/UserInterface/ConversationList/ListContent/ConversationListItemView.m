@@ -117,7 +117,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
-    self.subtitleField.accessibilityLabel = @"Conversatsion status";
+    self.subtitleField.accessibilityLabel = @"Conversation status";
     self.subtitleField.numberOfLines = 1;
     [self.labelsContainer addSubview:self.subtitleField];
 }
