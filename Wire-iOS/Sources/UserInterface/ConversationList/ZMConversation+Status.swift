@@ -49,6 +49,7 @@ internal struct ConversationStatus {
     let isSilenced: Bool
     let isOngoingCall: Bool
     let isBlocked: Bool
+    let isSelfAnActiveMember: Bool
 }
 
 // Describes the conversation message.
@@ -153,6 +154,24 @@ extension ZMConversation {
     static func statusEmphasisStyle() -> [String: AnyObject] {
         return BlockedMatcher.emphasisStyle()
     }
+}
+
+
+// "You left"
+final internal class SelfUserLeftMatcher: ConversationStatusMatcher {
+    func isMatching(with status: ConversationStatus) -> Bool {
+        return !status.isSelfAnActiveMember
+    }
+    
+    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+        return "conversation.status.you_left".localized && type(of: self).regularStyle()
+    }
+    
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+        return .none
+    }
+    
+    var combinesWith: [ConversationStatusMatcher] = []
 }
 
 // "Blocked"
@@ -278,7 +297,13 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
                 return "" && type(of: self).regularStyle()
             }
             
-            let messageDescription = String(format: (localizationRootPath + "." + localizationKey).localized, message.textMessageData?.messageText ?? "")
+            let messageDescription: String
+            if message.isEphemeral {
+                messageDescription = (localizationRootPath + ".ephemeral").localized
+            }
+            else {
+                messageDescription = String(format: (localizationRootPath + "." + localizationKey).localized, message.textMessageData?.messageText ?? "")
+            }
             
             if status.isGroup {
                 return ((sender.displayName(in: conversation) + ": ") && type(of: self).emphasisStyle()) +
@@ -410,6 +435,7 @@ final internal class UnsernameMatcher: ConversationStatusMatcher {
 /*
  Matchers priorities (highest first):
  
+ (SelfUserLeftMatcher)
  (Blocked)
  (Calling)
  (Typing)
@@ -427,7 +453,7 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
     
-    return [BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
+    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
 }()
 
 extension ConversationStatus {
@@ -541,7 +567,10 @@ extension ZMConversation {
         
         let isOngoingCall: Bool = (self.voiceChannel?.state ?? .noActiveUsers) != .noActiveUsers
         
-        return ConversationStatus(isGroup: self.conversationType == .group,
+        let isGroup = self.conversationType == .group
+        let isSelfAnActiveMember: Bool = !isGroup || self.activeParticipants.contains(ZMUser.selfUser())
+        
+        return ConversationStatus(isGroup: isGroup,
                                   hasMessages: hasMessages,
                                   hasUnsentMessages: self.hasUnreadUnsentMessage,
                                   unreadMessages: unreadMessages,
@@ -549,7 +578,8 @@ extension ZMConversation {
                                   isTyping: self.typingUsers().count > 0,
                                   isSilenced: self.isSilenced,
                                   isOngoingCall: isOngoingCall,
-                                  isBlocked: isBlocked)
+                                  isBlocked: isBlocked,
+                                  isSelfAnActiveMember: isSelfAnActiveMember)
     }
 }
 
