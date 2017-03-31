@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARHIIV";
 "list.archived_conversations_close" = "Sulge arhiiv";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Blokeeritud";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Jagas pilti";
+"conversation.status.message.location" = "Jagas asukohta";
+"conversation.status.message.audio" = "Jagas häälsõnumit";
+"conversation.status.message.video" = "Jagas videot";
+"conversation.status.message.file" = "Jagas faili";
+"conversation.status.message.knock" = "Pingis";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Sina";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ lisas sinu";
+"conversation.status.added_useres" = "%@ lisas kasutaja %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Lahkusid vestlusest";
+"conversation.status.removed_useres" = "%@ eemaldas kasutaja %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Video on välja lülitatud";
 "voice.status.low_connection" = "Kehv ühendus";
 "voice.network_error.title" = "Ühendus puudub";
+"voice.status.cbr" = "Ühtlane bitisagedus";
 "voice.network_error.body" = "Helistamiseks pead online olema. Kontrolli ühendust ja proovi uuesti.";
 "voice.degradation.new_self_device" = "Sa hakkasid uut seadet kasutama.";
 "voice.degradation.new_user_device" = "%@ hakkas uut seadet kasutama.";
@@ -566,6 +593,9 @@
 "self.settings.callkit.title" = "Kõned";
 "self.settings.callkit.caption" = "Jaga iOS-s";
 "self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja seadme kõnede ajaloos. Kui sul on iCloud sisse lülitatud, siis saadetakse kõnede ajalugu Apple'i serveritesse. Seadistuse rakendamiseks tuleb Wire taaskäivitada.";
+
+"self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
+"self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Kõne";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sõnum";

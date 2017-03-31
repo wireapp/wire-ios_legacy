@@ -499,16 +499,23 @@ ConversationRootViewController {
     }
 }
 
+NewDevicesDot {
+    backgroundColor: $color-accent-current;
+    layer: @{
+        cornerRadius: 4.0;
+    }
+}
+
+ConversationListAccessoryView {
+    textLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-medium-semibold;
+    }
+}
+
 ConversationListBottomBarController {
     view: @{
         backgroundColor: clear;
-    }
-    
-    indicator: @{
-        backgroundColor: $color-accent-current;
-        layer: @{
-            cornerRadius: 4.0;
-        }
     }
     
     contactsButton: @{
@@ -530,6 +537,16 @@ ConversationListBottomBarController {
         backgroundColor: $color-separator-light;
     }
 }
+
+/* ConversationListAvatar */
+
+ConversationAvatarView UserImageView {
+    initials: @{
+        font: $font-medium-semibold;
+        textColor: $color-list-avatar-initials;
+    }
+}
+
 
 /* Audio Recording */
 
@@ -735,6 +752,13 @@ ConversationListContentController UILabel.empty-list-message {
     textColor: $color-text-foreground-dark;
 }
 
+ConversationListItemView {
+    titleField: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 SearchView {
     lineView: @{
         backgroundColor: $color-accent-current;
@@ -748,6 +772,23 @@ VideoMessageCell {
 
     @device iphone {
         videoViewHeight: 160
+    }
+}
+
+DotView {
+    backgroundColor: $color-accent-current;
+}
+
+SpaceView {
+    nameLabel: @{
+        font: $font-small-semibold;
+        textColor: $color-text-dimmed-dark;
+    }
+}
+
+SpaceView.selected {
+    nameLabel: @{
+        textColor: $color-text-foreground-dark;
     }
 }
 
@@ -778,17 +819,22 @@ MessageToolboxView {
         font: $font-medium-semibold;
     }
 
-    burstTimestampLabel: @{
-        textColor: $color-text-foreground;
-    }
-
-    burstLabelSeparatorView: @{
-        backgroundColor: $color-separator;
+    burstTimestampView: @{
+        label: @{
+            textColor: $color-text-foreground;
+        }
     }
 
     burstNormalFont: $font-small-light;
     burstBoldFont: $font-small-semibold;
 }
+
+
+ConversationCellBurstTimestampView {
+    separatorColor: $color-separator;
+    separatorColorExpanded: $color-separator-pale;
+}
+
 
 ^IconSystemCell {
     lineView: @{
@@ -1470,6 +1516,13 @@ SettingsClientViewController {
     }
 }
 
+^SettingsTableCell {
+    cellNameLabel: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 RegistrationTextFieldCell {
     backgroundColor: clear;
     
@@ -1695,6 +1748,9 @@ TextSearchResultCell {
     contentView: @{
         backgroundColor: $color-background;
     }
+    resultCountView: @{
+        backgroundColor: $color-graphite-light;
+    }
 }
 
 SearchResultLabel {
@@ -1702,13 +1758,11 @@ SearchResultLabel {
     textColor: $color-text-foreground;
 }
 
-SearchResultCountBadge {
+RoundedTextBadge {
     textLabel: @{
         textColor: $color-background;
         font: $font-small-semibold;
     }
-    
-    backgroundColor: $color-graphite-light;
 }
 
 // Example code

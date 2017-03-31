@@ -209,7 +209,7 @@ import CocoaLumberjackSwift
             bottomToolbar.height == 72
             bottomToolbar.centerX == topContainer.centerX
             
-            topSeparator.height == 0.5
+            topSeparator.height == .hairline
             topSeparator.top == view.top
             topSeparator.left == view.left
             topSeparator.right == view.right

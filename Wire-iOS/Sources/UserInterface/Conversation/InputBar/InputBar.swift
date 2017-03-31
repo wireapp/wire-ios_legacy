@@ -222,7 +222,7 @@ private struct InputBarConstants {
             buttonRowSeparator.top == buttonContainer.top
             buttonRowSeparator.leading == buttonRowSeparator.superview!.leading + 16
             buttonRowSeparator.trailing == buttonRowSeparator.superview!.trailing - 16
-            buttonRowSeparator.height == 0.5
+            buttonRowSeparator.height == .hairline
         }
         
         constrain(editingView, buttonsView, buttonInnerContainer) { editingView, buttonsView, buttonInnerContainer in
@@ -252,7 +252,7 @@ private struct InputBarConstants {
             inputBarSeparator.top == inputBarSeparator.superview!.top
             inputBarSeparator.leading == inputBarSeparator.superview!.leading
             inputBarSeparator.trailing == inputBarSeparator.superview!.trailing
-            inputBarSeparator.height == 0.5
+            inputBarSeparator.height == .hairline
         }
         
         constrain(fakeCursor) { fakeCursor in

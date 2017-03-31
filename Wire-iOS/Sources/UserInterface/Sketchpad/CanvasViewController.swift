@@ -173,7 +173,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
             separatorLine.top == colorPicker.bottom
             separatorLine.left == colorPicker.left
             separatorLine.right == colorPicker.right
-            separatorLine.height == 0.5
+            separatorLine.height == .hairline
             
             canvas.top == container.top
             canvas.left == container.left

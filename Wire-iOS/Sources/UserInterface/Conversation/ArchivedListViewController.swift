@@ -31,35 +31,32 @@ import Cartography
 
 @objc final class ArchivedListViewController: UIViewController {
     
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: ConversationListCollectionViewLayout())
+    var collectionView: UICollectionView!
     let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
     let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     let swipeIdentifier = "ArchivedList"
     let viewModel = ArchivedListViewModel()
-    var initialSyncCompleted: Bool = false
+    let layoutCell = ConversationListCell()
     
     weak var delegate: ArchivedListViewControllerDelegate?
     
     required init() {
         super.init(nibName: nil, bundle: nil)
-        ZMUserSession.addInitalSyncCompletionObserver(self)
         viewModel.delegate = self
         createViews()
         createConstraints()
-        if let initialSyncCompleted = ZMUserSession.shared()?.initialSyncOnceCompleted {
-            self.initialSyncCompleted = initialSyncCompleted.boolValue
-        }
     }
     
-    deinit {
-        ZMUserSession.removeInitalSyncCompletionObserver(self)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func createViews() {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
@@ -106,7 +103,7 @@ extension ArchivedListViewController: UICollectionViewDelegate {
 
 // MARK: - CollectionViewDataSource
 
-extension ArchivedListViewController: UICollectionViewDataSource {
+extension ArchivedListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationListCell
@@ -125,15 +122,8 @@ extension ArchivedListViewController: UICollectionViewDataSource {
         return 1
     }
     
-}
-
-// MARK: - ZMInitialSyncCompletionObserver
-
-extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
-    
-    func initialSyncCompleted(_ notification: Notification!) {
-        initialSyncCompleted = true
-        collectionView.reloadData()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return layoutCell.size(inCollectionViewSize: collectionView.bounds.size)
     }
     
 }
@@ -143,13 +133,11 @@ extension ArchivedListViewController: ZMInitialSyncCompletionObserver {
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
     internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
   
-        guard initialSyncCompleted else { return }
         applyChangesClosure()
         collectionView.reloadData()
     }
     
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
-        guard initialSyncCompleted else { return }
         guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
             change.unreadCountChanged || change.connectionStateChanged || change.isSilencedChanged else { return }
         for case let cell as ConversationListCell in collectionView.visibleCells where cell.conversation == change.conversation {

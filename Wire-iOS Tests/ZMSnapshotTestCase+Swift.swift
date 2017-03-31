@@ -97,6 +97,16 @@ extension ZMSnapshotTestCase {
         verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }
     
+    func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
+        constrain(view) { view in
+            view.width == 320
+            view.height == 480
+        }
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        verifyView(view, extraLayoutPass: false, tolerance: 0, file: file.utf8SignedStart(), line: line, identifier: "")
+    }
+    
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, configurationBlock: nil)
     }

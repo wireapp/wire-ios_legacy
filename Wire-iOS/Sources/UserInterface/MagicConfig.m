@@ -26,7 +26,6 @@
 // Base config files (no overlap)
 static NSString *const MagicConfigFileBaseStyles        = @"style.plist";
 static NSString *const MagicConfigFileFramework         = @"framework.plist";
-static NSString *const MagicConfigFileList              = @"list.plist";
 static NSString *const MagicConfigFileConversation      = @"conversation.plist";
 static NSString *const MagicConfigFilePeoplePicker      = @"people_picker.plist";
 static NSString *const MagicConfigFileProfile           = @"profile.plist";
@@ -109,7 +108,6 @@ static NSString *const MagicConfigFileIPhone4           = @"iphone4.plist";
     self.baseFiles = [NSSet setWithArray:@[MagicConfigFileBaseStyles,
                                            MagicConfigFileConversation,
                                            MagicConfigFileFramework,
-                                           MagicConfigFileList,
                                            MagicConfigFileMisc,
                                            MagicConfigFilePeoplePicker,
                                            MagicConfigFileProfile,

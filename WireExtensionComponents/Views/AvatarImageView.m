@@ -57,6 +57,8 @@
 
 - (void)setup
 {
+    _circular = YES;
+    _showInitials = YES;
     [self createContainerView];
     [self createImageView];
     [self createInitials];
@@ -70,7 +72,9 @@
 
 - (void)updateCornerRadius
 {
-    self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+    if (self.circular) {
+        self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+    }
 }
 
 - (void)createContainerView
@@ -100,6 +104,18 @@
     [super layoutSubviews];
 
     [self updateCornerRadius];
+}
+
+- (void)setShowInitials:(BOOL)showInitials
+{
+    _showInitials = showInitials;
+    if (self.showInitials) {
+        [self addSubview:self.initials];
+        [self.initials autoCenterInSuperview];
+    }
+    else {
+        [self.initials removeFromSuperview];
+    }
 }
 
 @end

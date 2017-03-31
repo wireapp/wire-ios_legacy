@@ -213,6 +213,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         
         [self registerForPreviewingWithDelegate:self sourceView:self.view.superview];
     }
+
+    [self scrollToLastUnreadMessageIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -221,10 +223,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)scrollToLastUnreadMessageIfNeeded
 {
-    [super viewDidLayoutSubviews];
-    
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];

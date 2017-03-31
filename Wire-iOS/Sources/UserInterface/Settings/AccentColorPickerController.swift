@@ -117,7 +117,13 @@ public protocol ColorPickerControllerDelegate {
     
     override open var prefersStatusBarHidden: Bool {
         get {
-            return true
+            return false
+        }
+    }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return .lightContent
         }
     }
     

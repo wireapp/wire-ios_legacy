@@ -23,22 +23,7 @@
 
 - (UIImage *)imageScaledWithFactor:(CGFloat)scaleFactor;
 
-+ (UIImage *)desaturatedImageFromData:(NSData *)data
-                          withContext:(CIContext *)context
-                           saturation:(NSNumber *)saturation;
 - (UIImage *)desaturatedImageWithContext:(CIContext *)context saturation:(NSNumber *)saturation;
-
-- (UIImage *)blurredAutoEnhancedImageWithContext:(CIContext *)context
-                                      blurRadius:(CGFloat)radius;
-
-- (UIImage *)blurredImageWithContext:(CIContext *)context
-                          blurRadius:(CGFloat)radius;
-
-- (UIImage *)blurredImageWithContext:(CIContext *)context
-                          blurRadius:(CGFloat)radius
-                          saturation:(CGFloat)saturation
-                          brightness:(CGFloat)brightness
-                            contrast:(CGFloat)contrast;
 
 - (instancetype)imageWithColor:(UIColor *)color;
 
@@ -46,13 +31,12 @@
 
 + (UIImage *)singlePixelImageWithColor:(UIColor *)color;
 + (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color;
+- (UIImage *)blurredImageWithContext:(CIContext *)context
+                          blurRadius:(CGFloat)radius;
 + (UIImage *)deviceOptimizedImageFromData:(NSData *)imageData;
 + (UIImage *)imageFromData:(NSData *)imageData withMaxSize:(CGFloat)maxSize;
 
 + (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size;
-
-/// Draw a vignette. Use different gradient settings depending on if a photo is being shown underneath the vignette or not
-+ (UIImage *)imageVignetteForRect:(CGRect)rect ontoImage:(UIImage *)image showingImageUnderneath:(BOOL)showingImageUnderneath startColor:(UIColor *)vignetteStartColor endColor:(UIColor *)vignetteEndColor colorLocation:(CGFloat)middleColorLocation radiusMultiplier:(CGFloat)vignetteRadiusMultiplier;
 
 @end
 

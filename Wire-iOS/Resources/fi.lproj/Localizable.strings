@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARKISTOI";
 "list.archived_conversations_close" = "Sulje arkisto";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Estetty";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Jakoi kuvan";
+"conversation.status.message.location" = "Jakoi sijainnin";
+"conversation.status.message.audio" = "Jakoi ääniviestin";
+"conversation.status.message.video" = "Jakoi videon";
+"conversation.status.message.file" = "Jakoi tiedoston";
+"conversation.status.message.knock" = "Pinggasi";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Sinä";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ lisäsi sinut";
+"conversation.status.added_useres" = "%@ lisäsi %@ n";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Sinä poistuit";
+"conversation.status.removed_useres" = "%@ poisti %@ n";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Video pois päältä";
 "voice.status.low_connection" = "Huono yhteys";
 "voice.network_error.title" = "Ei internet-yhteyttä";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Sinun pitää olla online-tilassa soittaaksesi puheluja. Tarkista yhteytesi ja yritä uudelleen.";
 "voice.degradation.new_self_device" = "You started using a new device.";
 "voice.degradation.new_user_device" = "%@ aloitti käyttämään uutta laitetta.";
@@ -566,6 +593,9 @@
 "self.settings.callkit.title" = "Soittaa";
 "self.settings.callkit.caption" = "Jaa iOS: lle";
 "self.settings.callkit.description" = "Näytä Wiren puhelut lukitusnäytössä ja iOS: n puheluhistoriassa. Jos iCloud on käytössä, puheluhistoria jaetaan Applelle. Käynnistä Wire uudelleen ottaaksesi asetuksen käyttöön.";
+
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Puhelu";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Viesti";

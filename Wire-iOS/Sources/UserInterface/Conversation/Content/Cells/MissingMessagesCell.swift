@@ -44,10 +44,6 @@ class MissingMessagesCell: IconSystemCell {
         } else if systemMessageData.systemMessageType == .reactivatedDevice {
             configureForReactivatedClientOfSelfUser(labelFont, color: labelTextColor)
         }
-        
-        if let attributedString = self.labelView.attributedText {
-            self.labelView.accessibilityLabel = attributedString.string
-        }
     }
     
     
@@ -70,17 +66,14 @@ class MissingMessagesCell: IconSystemCell {
             title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", systemMessageData.removedUsers)
         }
         
-        self.labelView.attributedText = title
+        attributedText = title
     }
 
     func configureForReactivatedClientOfSelfUser(_ font: UIFont, color: UIColor){
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")
-        var fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && font && color
+        let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && font && color
         
-        fullString = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
-        
-        self.labelView.attributedText = fullString
-        self.labelView.addLinks()
+        attributedText = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
     }
     
     // MARK: - TTTAttributedLabelDelegate

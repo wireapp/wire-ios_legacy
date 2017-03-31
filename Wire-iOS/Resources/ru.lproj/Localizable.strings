@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Разговоры";
 "list.archived_conversations" = "АРХИВ";
 "list.archived_conversations_close" = "Закрыть архив";
 
+"conversation.status.call" = "Исходящий звонок";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Заблокирован(а)";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Поделился(-лась) картинкой";
+"conversation.status.message.location" = "Поделился(-лась) местоположением";
+"conversation.status.message.audio" = "Поделился(-лась) аудио сообщением";
+"conversation.status.message.video" = "Поделился(-лась) видео";
+"conversation.status.message.file" = "Поделился(-лась) файлом";
+"conversation.status.message.knock" = "Отправил(а) пинг";
+"conversation.status.message.missedcall" = "Пропущенный звонок";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Вы";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ добавил(-а) вас";
+"conversation.status.added_useres" = "%@ добавил %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Вы покинули беседу";
+"conversation.status.removed_useres" = "%@ удалил %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Видео выключено";
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
+"voice.status.cbr" = "Постоянный битрейт";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
 "voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
 "voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
@@ -566,6 +593,9 @@
 "self.settings.callkit.title" = "Звонки";
 "self.settings.callkit.caption" = "Поделиться с iOS";
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если Вы используете iCloud, история звонков будет передана Apple. Перезапустите Wire, чтобы изменения вступили в силу.";
+
+"self.settings.vbr.title" = "Кодирование с переменным битрейтом";
+"self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";

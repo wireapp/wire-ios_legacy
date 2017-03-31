@@ -191,8 +191,6 @@ import Foundation
         developerCellDescriptors.append(diableHockeySetting)
         let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
         developerCellDescriptors.append(diableAnalyticsSetting)
-        let enableAssetV3Setting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.sendV3Assets))
-        developerCellDescriptors.append(enableAssetV3Setting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: sendBrokenMessage)

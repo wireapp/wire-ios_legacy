@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARHIVIRAJ";
 "list.archived_conversations_close" = "Zapri arhiv";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Blokiran";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Je delil(-a) sliko";
+"conversation.status.message.location" = "Je delil(-a) lokacijo";
+"conversation.status.message.audio" = "Je delil(-a) zvočno sporočilo";
+"conversation.status.message.video" = "Je delil(-a) video";
+"conversation.status.message.file" = "Je delil(-a) zbirko";
+"conversation.status.message.knock" = "Je pingal(-a)";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Ti";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ te je dodal(-a)";
+"conversation.status.added_useres" = "%@ je dodal(-a) %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Si zapustil(-a)";
+"conversation.status.removed_useres" = "%@ je odstranil(-a) %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Video je izklopljen";
 "voice.status.low_connection" = "Slaba povezava";
 "voice.network_error.title" = "Ni spletne povezave";
+"voice.status.cbr" = "Stalna bitna hitrost";
 "voice.network_error.body" = "Morate biti na spletu za klicanje. Preverite vašo povezavo in poizkusite ponovno.";
 "voice.degradation.new_self_device" = "Začeli ste z uporabo nove naprave.";
 "voice.degradation.new_user_device" = "%@ je začel(-a) z uporabo nove naprave.";
@@ -566,6 +593,9 @@
 "self.settings.callkit.title" = "Klici";
 "self.settings.callkit.caption" = "Deli z iOS";
 "self.settings.callkit.description" = "Prikaže Wire klice na zaklenjenem zaslonu in v iOS zgodovini klicev. Če je omogočen iCloud, je zgodovina klicev deljena z Apple. Znova zaženite Wire za uporabo te nastavitve.";
+
+"self.settings.vbr.title" = "Spremenljiva bitna hitrost kodiranja";
+"self.settings.vbr.description" = "Omogoča manjšo porabo podatkov v avdio klicih in bolje delovanje na počasnejših omrežjih. Izklopite za uporabo Stalne bitne hitrosti kodiranja.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Klic";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sporočilo";

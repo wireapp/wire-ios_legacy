@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "АРХІВ";
 "list.archived_conversations_close" = "Закрити архів";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Заблокований(-на)";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Поділився(-лась) картинкою";
+"conversation.status.message.location" = "Поділився(-лась) розташуванням";
+"conversation.status.message.audio" = "Поділився(-лась) аудіоповідомленням";
+"conversation.status.message.video" = "Поділився(-лась) відео";
+"conversation.status.message.file" = "Поділився(-лась) файлом";
+"conversation.status.message.knock" = "Надіслав(-ла) пінг";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Ви";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ додав(-ла) вас";
+"conversation.status.added_useres" = "%@ додав(-ла) %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Ви вийшли";
+"conversation.status.removed_useres" = "%@ видалив(-ла) %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Відео вимкнено";
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
 "voice.degradation.new_self_device" = "Ви почали використовувати новий пристрій.";
 "voice.degradation.new_user_device" = "%@ почав(-ла) використовувати новий пристрій.";
@@ -566,6 +593,9 @@
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії iOS. Якщо сервіс iCloud активовано, то історія ваших дзвінків буде доступна для Apple. Перезапустіть Wire, щоб застосувати зміну цієї опції.";
+
+"self.settings.vbr.title" = "Змінний бітрейт";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";

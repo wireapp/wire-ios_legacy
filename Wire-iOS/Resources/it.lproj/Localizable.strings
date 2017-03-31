@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARCHIVIO";
 "list.archived_conversations_close" = "Chiudi archivio";
 
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message...";
+"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Bloccato";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Ha condiviso un'immagine";
+"conversation.status.message.location" = "Ha condiviso una posizione";
+"conversation.status.message.audio" = "Ha condiviso un messaggio vocale";
+"conversation.status.message.video" = "Ha condiviso un video";
+"conversation.status.message.file" = "Ha condiviso un file";
+"conversation.status.message.knock" = "Ha fatto un trillo";
+"conversation.status.message.missedcall" = "Missed call";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Tu";
+"conversation.status.added_multiple" = "Users added";
+"conversation.status.you_was_added" = "%@ ti ha aggiunto";
+"conversation.status.added_useres" = "%@ ha aggiunto %@";
+"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "Hai lasciato la conversazione";
+"conversation.status.removed_useres" = "%@ rimosso %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Video spento";
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
+"voice.status.cbr" = "Bit Rate costante";
 "voice.network_error.body" = "È necessario essere online per chiamare. Controlla la connessione e riprova.";
 "voice.degradation.new_self_device" = "Hai iniziato a usare un nuovo dispositivo.";
 "voice.degradation.new_user_device" = "%@ ha iniziato a usare un nuovo dispositivo.";
@@ -566,6 +593,9 @@
 "self.settings.callkit.title" = "Chiamate";
 "self.settings.callkit.caption" = "Condividi con iOS";
 "self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
+
+"self.settings.vbr.title" = "Codifica con Bit Rate variabile";
+"self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chiamata Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Messaggio Wire";

@@ -117,9 +117,35 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Chats";
 "list.archived_conversations" = "ARCHIVO";
 "list.archived_conversations_close" = "Cerrar archivo";
 
+"conversation.status.call" = "Llamada activa";
+"conversation.status.typing" = "Escribiendo ...";
+"conversation.status.typing.group" = "%@: Escribiendo ...";
+"conversation.status.silenced" = "Silenciado";
+"conversation.status.blocked" = "Bloqueado";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Compartió un enlace";
+"conversation.status.message.image" = "Compartió una foto";
+"conversation.status.message.location" = "Compartió una ubicación";
+"conversation.status.message.audio" = "Compartió un mensaje de audio";
+"conversation.status.message.video" = "Compartió un video";
+"conversation.status.message.file" = "Compartió un archivo";
+"conversation.status.message.knock" = "Hizo ping";
+"conversation.status.message.missedcall" = "Llamada perdida";
+
+"conversation.status.unsent" = "⚠️ Mensaje no enviado";
+"conversation.status.you" = "Tú";
+"conversation.status.added_multiple" = "Usuarios añadidos";
+"conversation.status.you_was_added" = "%@ te añadió";
+"conversation.status.added_useres" = "%@ añadió a %@";
+"conversation.status.removed_multiple" = "Miembros eliminados";
+"conversation.status.you_were_removed" = "Te han eliminado";
+"conversation.status.you_left" = "Te fuiste";
+"conversation.status.removed_useres" = "%@ eliminó a %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -308,6 +334,7 @@
 "voice.status.video_not_available" = "Vídeo desactivado";
 "voice.status.low_connection" = "Mala conexión";
 "voice.network_error.title" = "No hay conexión a Internet";
+"voice.status.cbr" = "Tasa de bits constante";
 "voice.network_error.body" = "Debes estar en línea para llamar. Comprueba tu conexión y vuelve a intentarlo.";
 "voice.degradation.new_self_device" = "Se comenzó a utilizar un nuevo dispositivo.";
 "voice.degradation.new_user_device" = "%@ comenzó a utilizar un dispositivo nuevo.";
@@ -567,6 +594,9 @@
 "self.settings.callkit.caption" = "A pantalla completa";
 "self.settings.callkit.description" = "Esta opción muestra las notificaciones de (vídeo)llamadas de Wire como una llamada normal en la pantalla bloqueada y en el historial de llamadas del teléfono. Con iCloud activado, el historial de llamadas se almacena en los servidores de Apple. Necesitas reiniciar Wire tras modificar esta opción.";
 
+"self.settings.vbr.title" = "Tasa de bits variable";
+"self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
+
 "self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Tono de Wire";
@@ -611,7 +641,7 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Abrir ajustes de contactos";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos permite a Wire encontrar amigos que ya son usuarios de Wire. Toda la información es anónima y no la compartimos con nadie. Permite acceder a Wire en Ajustes > Privacidad > Contactos.";
 
-"self.settings.privacy_security.lock_app" = "Touch ID o código de bloqueo";
+"self.settings.privacy_security.lock_app" = "Bloquear aplicación";
 "self.settings.privacy_security.lock_app.subtitle" = "Wire se bloquea tras 10 segundos en segundo plano. Se desbloquea con Touch ID o introduciendo el código.";
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 

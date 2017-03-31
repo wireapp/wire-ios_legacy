@@ -52,11 +52,6 @@ didSelectInteractiveItem:(ConversationListInteractiveItem *)interactiveItem
 
 @property (nonatomic, weak) id <ConversationListContentDelegate> contentDelegate;
 
-@property (nonatomic, assign) BOOL showingArchived;
-@property (nonatomic, assign) BOOL showingPullToOpenArchive;
-@property (nonatomic, assign) BOOL willShowArchive;
-@property (nonatomic, assign) BOOL enableSubtitles;
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;

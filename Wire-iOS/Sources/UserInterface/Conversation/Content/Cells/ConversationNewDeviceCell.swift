@@ -69,9 +69,6 @@ class ConversationNewDeviceCell: IconSystemCell {
         } else {
             configureForOtherUsers(users, clients: clients, attributes: textAttributes)
         }
-        
-        self.labelView.addLinks()
-        self.labelView.accessibilityLabel = self.labelView.attributedText?.string
     }
     
     func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes){
@@ -81,7 +78,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
         let userClientString = NSLocalizedString("content.system.new_device", comment: "") && attributes.linkAttributes
         
-        self.labelView.attributedText = senderName + " " + startedUsingString + " " + userClientString
+        attributedText = senderName + " " + startedUsingString + " " + userClientString
         self.leftIconView.isHidden = isSelfClient
     }
     
@@ -90,7 +87,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
         let userClientString = NSLocalizedString("content.system.this_device", comment: "") && attributes.linkAttributes
         
-        self.labelView.attributedText = senderName + " " + startedUsingString + " " + userClientString
+        attributedText = senderName + " " + startedUsingString + " " + userClientString
         self.leftIconView.isHidden = true
     }
     
@@ -114,7 +111,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         attributedSenderNames = attributedSenderNames.setAttributes(attributes.senderAttributes, toSubstring: senderNames)
         attributedSenderNames = attributedSenderNames.setAttributes(attributes.linkAttributes, toSubstring: userClientString)
         
-        self.labelView.attributedText = attributedSenderNames
+        attributedText = attributedSenderNames
         self.leftIconView.isHidden = false
     }
     
@@ -122,7 +119,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         let attributedNewUsers = NSAttributedString(string: "content.system.new_users".localized, attributes: attributes.startedUsingAttributes)
         let attributedLink = NSAttributedString(string: "content.system.verify_devices".localized, attributes: attributes.linkAttributes)
 
-        self.labelView.attributedText = attributedNewUsers + " " + attributedLink
+        attributedText = attributedNewUsers + " " + attributedLink
         self.leftIconView.isHidden = false
     }
     

@@ -169,13 +169,13 @@ static inline NSDataDetector *linkDataDetector(void)
     [attributedString endEditing];
     
 
-    if (! Settings.sharedSettings.disableMarkdown) {
-        if (! WireMarkdownParser) {
-            WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
-        }
-
-        attributedString = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString].mutableCopy;
-    }
+//    if (! Settings.sharedSettings.disableMarkdown) {
+//        if (! WireMarkdownParser) {
+//            WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
+//        }
+//
+//        attributedString = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString].mutableCopy;
+//    }
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];

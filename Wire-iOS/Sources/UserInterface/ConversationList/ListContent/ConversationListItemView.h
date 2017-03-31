@@ -18,34 +18,23 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ListItemRightAccessoryView.h"
 
-@class ConversationListIndicator;
+@class ConversationAvatarView;
+@class ConversationListAccessoryView;
 
 FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 
-
-
 @interface ConversationListItemView : UIView
 
-@property (nonatomic, strong) UIColor *selectionColor;
-
 @property (nonatomic, copy) NSString *titleText;
-@property (nonatomic, copy) NSString *subtitleText;
+@property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
-@property (nonatomic, readonly) ConversationListIndicator *statusIndicator;
-@property (nonatomic, strong, readonly) ListItemRightAccessoryView *rightAccessory;
+@property (nonatomic, strong, readonly) ConversationAvatarView *avatarView;
+@property (nonatomic, strong, readonly) ConversationListAccessoryView *rightAccessory;
 
 @property (nonatomic, assign) BOOL selected;
-@property (nonatomic, readonly) BOOL enableSubtitles;
 @property (nonatomic, assign) CGFloat visualDrawerOffset;
 
-@property (nonatomic, assign) CGFloat titleBottomMargin;
-
-@property (nonatomic, assign) ConversationListRightAccessoryType rightAccessoryType;
-
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset notify:(BOOL)notify;
-- (void)updateForCurrentOrientation;
-- (void)updateRightAccessoryAppearance;
 
 @end
