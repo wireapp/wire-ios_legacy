@@ -28,6 +28,14 @@ extension ConversationListItemView {
         self.subtitleAttributedText = subtitle
     }
     
+    internal func configure(with title: String, subtitle: NSAttributedString, badgeCount: Int, users: [ZMUser]) {
+        self.titleText = title
+        self.subtitleAttributedText = subtitle
+        self.rightAccessory.icon = .unreadMessages(count: badgeCount)
+        self.avatarView.conversation = .none
+        self.avatarView.users = users
+    }
+    
     @objc(updateForConversation:)
     internal func update(for conversation: ZMConversation?) {
         guard let conversation = conversation else {

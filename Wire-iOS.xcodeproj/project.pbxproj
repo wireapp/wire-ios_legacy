@@ -691,8 +691,6 @@
 		8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F21A9F287E0056AB0C /* ConversationListCell.m */; };
 		8F8914121A9F287E0056AB0C /* ConversationListContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */; };
 		8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */; };
-		8F89141B1A9F287E0056AB0C /* ConversationListConnectRequestsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8914081A9F287E0056AB0C /* ConversationListConnectRequestsItem.m */; };
-		8F89141C1A9F287E0056AB0C /* ConversationListInteractiveItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */; };
 		8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */; };
 		8F9E3B8A19D04CAC00FD427A /* SoundEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9E3B8919D04CAC00FD427A /* SoundEventListener.m */; };
 		8FC1EFDF19DED50C0092488D /* VoiceChannelV2+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */; };
@@ -2028,10 +2026,6 @@
 		8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListContentController.m; sourceTree = "<group>"; };
 		8F8913F51A9F287E0056AB0C /* ConversationListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListItemView.h; sourceTree = "<group>"; };
 		8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListItemView.m; sourceTree = "<group>"; };
-		8F8914071A9F287E0056AB0C /* ConversationListConnectRequestsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListConnectRequestsItem.h; sourceTree = "<group>"; };
-		8F8914081A9F287E0056AB0C /* ConversationListConnectRequestsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListConnectRequestsItem.m; sourceTree = "<group>"; };
-		8F8914091A9F287E0056AB0C /* ConversationListInteractiveItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListInteractiveItem.h; sourceTree = "<group>"; };
-		8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListInteractiveItem.m; sourceTree = "<group>"; };
 		8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewModel.h; sourceTree = "<group>"; };
 		8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListViewModel.m; sourceTree = "<group>"; };
 		8F9E3B8819D04CAC00FD427A /* SoundEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEventListener.h; sourceTree = "<group>"; };
@@ -4144,10 +4138,6 @@
 		8F8914061A9F287E0056AB0C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8F8914071A9F287E0056AB0C /* ConversationListConnectRequestsItem.h */,
-				8F8914081A9F287E0056AB0C /* ConversationListConnectRequestsItem.m */,
-				8F8914091A9F287E0056AB0C /* ConversationListInteractiveItem.h */,
-				8F89140A1A9F287E0056AB0C /* ConversationListInteractiveItem.m */,
 				8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */,
 				8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */,
 				870C926E1E8D1C7300A10995 /* ConversationListViewModel+Spaces.swift */,
@@ -5776,7 +5766,6 @@
 				168634D91ADD3BCE00EDC7D9 /* TermsOfUseStepViewController.m in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
-				8F89141C1A9F287E0056AB0C /* ConversationListInteractiveItem.m in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
 				877ABB451E800E8800CBCF2B /* TestView.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
@@ -5920,7 +5909,6 @@
 				8798C51A1C3ACDF700678AD7 /* NoHistoryViewController.m in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
 				168635321ADFB20900EDC7D9 /* ShareContactsStepViewController.m in Sources */,
-				8F89141B1A9F287E0056AB0C /* ConversationListConnectRequestsItem.m in Sources */,
 				871BC2261D34F8F800DF0793 /* BrowserViewController.m in Sources */,
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,

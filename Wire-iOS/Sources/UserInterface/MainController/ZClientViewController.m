@@ -267,9 +267,7 @@
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion
 {
     NSArray *conversationsList = [SessionObjectCache sharedCache].conversationList;
-    if (conversationsList.count == 0) {
-        return;
-    } else {
+    if (conversationsList.count != 0) {
         [self selectConversation:conversationsList.firstObject];
     }
     

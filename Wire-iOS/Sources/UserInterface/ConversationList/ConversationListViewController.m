@@ -38,7 +38,6 @@
 #import "zmessaging+iOS.h"
 
 #import "ConversationListContentController.h"
-#import "ConversationListInteractiveItem.h"
 #import "StartUIViewController.h"
 #import "KeyboardAvoidingViewController.h"
 
@@ -99,6 +98,7 @@
 @property (nonatomic) NSObject *userProfileObserverToken;
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id allConversationsObserverToken;
+@property (nonatomic) id connectionRequestsObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
@@ -179,6 +179,7 @@
     [self updateArchiveButtonVisibility];
     
     self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].allConversations];
+    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
 
     [self showPushPermissionDeniedDialogIfNeeded];
 }
@@ -640,7 +641,7 @@
 
 - (void)updateNoConversationVisibility;
 {
-    NSUInteger conversationsCount = [SessionObjectCache sharedCache].conversationList.count;
+    NSUInteger conversationsCount = [SessionObjectCache sharedCache].conversationList.count + [SessionObjectCache sharedCache].pendingConnectionRequests.count;
     BOOL shouldDisplayNoContact = conversationsCount == 0;
     
     if (shouldDisplayNoContact) {
@@ -677,11 +678,6 @@
 - (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
 {
     _selectedConversation = conversation;
-}
-
-- (void)conversationList:(ConversationListViewController *)controller didSelectInteractiveItem:(ConversationListInteractiveItem *)interactiveItem focusOnView:(BOOL)focus
-{
-    
 }
 
 - (void)conversationList:(ConversationListContentController *)controller willSelectIndexPathAfterSelectionDeleted:(NSIndexPath *)conv

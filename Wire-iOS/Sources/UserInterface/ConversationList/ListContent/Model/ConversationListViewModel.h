@@ -41,7 +41,9 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change;
 @end
 
-
+// Placeholder for conversation requests item
+@interface ConversationListConnectRequestsItem : NSObject
+@end
 
 /** 
  * Provides a "view model" for the conversation list.

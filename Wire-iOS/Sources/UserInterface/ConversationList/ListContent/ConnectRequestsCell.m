@@ -29,6 +29,7 @@
 
 #import "zmessaging+iOS.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 
 @interface ConnectRequestsCell () <ZMConversationListObserver>
@@ -93,18 +94,22 @@
 
 - (void)updateAppearance
 {
-    NSUInteger newCount = [SessionObjectCache sharedCache].pendingConnectionRequests.count;
+    NSArray<ZMConversation *> *connectionRequests = [SessionObjectCache sharedCache].pendingConnectionRequests;
+    
+    NSUInteger newCount = connectionRequests.count;
     
     if (newCount != self.currentConnectionRequestsCount) {
+        NSArray<ZMUser *> *connectionUsers = [connectionRequests mapWithBlock:^ZMUser *(ZMConversation *conversation) {
+            return conversation.connection.to;
+        }];
+        
         self.currentConnectionRequestsCount = newCount;
-        self.itemView.titleText = [[self class] titleForConnectionRequests:self.currentConnectionRequestsCount];
+        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"list.connect_request.people_waiting", @""), newCount];
+        [self.itemView configureWith:title
+                            subtitle:[[NSAttributedString alloc] init]
+                          badgeCount:connectionRequests.count
+                               users:connectionUsers];
     }
-}
-
-+ (NSString *)titleForConnectionRequests:(NSUInteger)connectionRequestCount
-{
-    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"list.connect_request.people_waiting", @""), connectionRequestCount];
-    return title;
 }
 
 - (void)conversationListDidChange:(ConversationListChangeInfo *)change
