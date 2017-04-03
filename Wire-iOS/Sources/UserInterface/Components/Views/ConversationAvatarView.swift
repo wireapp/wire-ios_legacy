@@ -99,12 +99,12 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        self.init(usersCount: conversation.activeParticipants.count)
+        self.init(usersCount: conversation.activeParticipants.count - 1)
     }
     
     fileprivate init(usersCount: Int) {
         switch (usersCount) {
-        case 0...2:
+        case 0...1:
             self = .one
         default:
             self = .four
