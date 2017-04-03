@@ -569,7 +569,8 @@ extension ZMConversation {
         
         var unreadMessages = self.unreadMessages
         
-        if let lastMessage = self.messages.lastObject as? ZMConversationMessage,
+        if unreadMessages.count == 0,
+            let lastMessage = self.messages.lastObject as? ZMConversationMessage,
             let systemMessageData = lastMessage.systemMessageData,
             systemMessageData.systemMessageType == .participantsRemoved {
             unreadMessages.append(lastMessage)
