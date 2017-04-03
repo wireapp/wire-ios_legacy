@@ -130,7 +130,7 @@ final public class ConversationAvatarView: UIView {
                 else {
                     $0.user = nil
                     $0.containerView.isOpaque = false
-                    $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.32)
+                    $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.24)
                 }
                 index = index + 1
             }

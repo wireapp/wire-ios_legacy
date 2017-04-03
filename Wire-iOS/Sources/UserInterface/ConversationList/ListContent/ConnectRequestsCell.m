@@ -107,7 +107,6 @@
         NSString *title = [NSString stringWithFormat:NSLocalizedString(@"list.connect_request.people_waiting", @""), newCount];
         [self.itemView configureWith:title
                             subtitle:[[NSAttributedString alloc] init]
-                          badgeCount:connectionRequests.count
                                users:connectionUsers];
     }
 }
