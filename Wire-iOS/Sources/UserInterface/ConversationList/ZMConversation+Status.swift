@@ -291,7 +291,16 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle()
         }
         else {
-            guard let message = status.unreadMessages.last,
+            guard let message = status.unreadMessages.reversed().first(where: {
+                    if let _ = $0.sender,
+                        let type = StatusMessageType(message: $0),
+                        let _ = matchedTypesDescriptions[type] {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                }),
                     let sender = message.sender,
                     let type = StatusMessageType(message: message),
                     let localizationKey = matchedTypesDescriptions[type] else {
@@ -317,7 +326,17 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        guard let last = status.unreadMessages.last, let type = StatusMessageType(message: last) else {
+        guard let message = status.unreadMessages.reversed().first(where: {
+                if let _ = $0.sender,
+                    let type = StatusMessageType(message: $0),
+                     let _ = matchedTypesDescriptions[type] {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }),
+            let type = StatusMessageType(message: message) else {
             return .none
         }
         
