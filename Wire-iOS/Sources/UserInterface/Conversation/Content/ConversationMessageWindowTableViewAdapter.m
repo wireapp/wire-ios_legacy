@@ -110,7 +110,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 - (void)conversationWindowDidChange:(MessageWindowChangeInfo *)change
 {
     BOOL initialContentLoad = self.messageWindow.messages.count == change.insertedIndexes.count && change.deletedIndexes.count == 0;
-    BOOL updateOnlyChange = change.insertedIndexes.count == 0 && change.deletedIndexes.count == 0 && change.movedIndexPairs.count == 0;
+    BOOL updateOnlyChange = change.insertedIndexes.count == 0 && change.deletedIndexes.count == 0 && change.zm_movedIndexPairs.count == 0;
     BOOL expandedWindow = change.insertedIndexes.count > 0 && change.insertedIndexes.lastIndex == self.messageWindow.messages.count - 1;
     
     [self stopAudioPlayerForDeletedMessages:change.deletedObjects];
@@ -132,13 +132,13 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
             [self.tableView insertRowsAtIndexPaths:[change.insertedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
         }
         
-        [change.movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
+        [change.zm_movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
             NSIndexPath *from = [NSIndexPath indexPathForRow:moved.from inSection:0];
             NSIndexPath *to = [NSIndexPath indexPathForRow:moved.to inSection:0];
             [self.tableView moveRowAtIndexPath:from toIndexPath:to];
         }];
         
-        if (change.insertedIndexes.count > 0 || change.deletedIndexes.count > 0 || change.movedIndexPairs.count > 0) {
+        if (change.insertedIndexes.count > 0 || change.deletedIndexes.count > 0 || change.zm_movedIndexPairs.count > 0) {
             // deleted index paths need to be passed in because this method is called before `endUpdates`, when
             // the cells have not yet been removed from the view but the messages they refer to can not be
             // materialized anymore

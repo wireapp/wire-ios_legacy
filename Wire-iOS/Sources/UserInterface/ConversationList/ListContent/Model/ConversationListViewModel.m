@@ -426,17 +426,16 @@ void debugLogUpdate (ConversationListChangeInfo *change)
     if (DEBUG && 0) {
         
         NSUInteger __block movedCount = 0;
-        [change enumerateMovedIndexes:^(NSUInteger from, NSUInteger to) {
+        [change enumerateMovedIndexes:^(NSInteger from, NSInteger to) {
             movedCount++;
         }];
         
-        debugLog(@"update for list %p (update=%p) (conv=%p, archive=%p, pending=%p), (reload=%d, delete=%lu, insert=%lu, move=%lu, upd=%lu)",
+        debugLog(@"update for list %p (update=%p) (conv=%p, archive=%p, pending=%p), (delete=%lu, insert=%lu, move=%lu, upd=%lu)",
                  change.conversationList,
                  change,
                  [SessionObjectCache sharedCache].conversationList,
                  [SessionObjectCache sharedCache].archivedConversations,
                  [SessionObjectCache sharedCache].pendingConnectionRequests,
-                 change.needsReload,
                  (unsigned long)change.deletedIndexes.count,
                  (unsigned long)change.insertedIndexes.count,
                  (unsigned long)movedCount,
