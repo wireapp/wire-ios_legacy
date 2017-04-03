@@ -160,7 +160,7 @@ extension ZMConversation {
 // "You left"
 final internal class SelfUserLeftMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isGroup && !status.isSelfAnActiveMember
+        return !status.hasMessages && status.isGroup && !status.isSelfAnActiveMember
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -347,9 +347,9 @@ final internal class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-// "[You|User] added [_|users|you]"
+// "[You|User] [added|removed|left] [_|users|you]"
 final internal class GroupActivityMatcher: ConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.addParticipants]
+    let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
 
     func isMatching(with status: ConversationStatus) -> Bool {
         return matchedTypes.flatMap { status.unreadMessagesByType[$0] }.reduce(0, +) > 0
@@ -374,14 +374,23 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         return .none
     }
     
+    private static let indicate3rdPartiesRemoval: Bool = false
+    
     private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> String? {
+        
         if messages.count > 1 {
-            return "conversation.status.removed_multiple".localized
+            if type(of: self).indicate3rdPartiesRemoval {
+                return "conversation.status.removed_multiple".localized
+            }
+            else {
+                return .none
+            }
         }
         else if let message = messages.last,
                 let systemMessage = message.systemMessageData,
                 let sender = message.sender {
-            if systemMessage.removedUsers.contains(where: { $0.isSelfUser }) {
+            
+            if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 if sender.isSelfUser {
                     return "conversation.status.you_left".localized
                 }
@@ -390,9 +399,14 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
                 }
             }
             else {
-                let usersList = systemMessage.removedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
-                return String(format: "conversation.status.removed_users".localized, sender!, usersList)
+                if type(of: self).indicate3rdPartiesRemoval {
+                    let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+                    let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
+                    return String(format: "conversation.status.removed_users".localized, sender!, usersList)
+                }
+                else {
+                    return .none
+                }
             }
         }
         return .none
@@ -531,19 +545,24 @@ extension ZMConversation {
             }
     }
     
-    private var unreadMessagesTypes: [StatusMessageType] {
-        return unreadMessages.flatMap { StatusMessageType(message: $0) }
-    }
-    
     internal var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
         
-        let unreadMessages = self.unreadMessages
+        var unreadMessages = self.unreadMessages
+        
+        if let lastMessage = self.messages.lastObject as? ZMConversationMessage,
+            let systemMessageData = lastMessage.systemMessageData,
+            systemMessageData.systemMessageType == .participantsRemoved {
+            unreadMessages.append(lastMessage)
+        }
+        
+        let unreadMessagesTypes = unreadMessages.flatMap { StatusMessageType(message: $0) }
+        
         let unreadMessagesByType = { () -> [StatusMessageType : UInt] in 
             var unreadMessagesByType = [StatusMessageType: UInt]()
             
             StatusMessageType.allValues.forEach { type in
-                let total = self.unreadMessagesTypes.filter {
+                let total = unreadMessagesTypes.filter {
                         $0 == type
                     }.count
                 
@@ -553,7 +572,6 @@ extension ZMConversation {
             }
             return unreadMessagesByType
         }()
-        
         
         let hasMessages: Bool
         
