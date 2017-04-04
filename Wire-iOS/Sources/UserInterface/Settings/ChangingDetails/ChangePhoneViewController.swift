@@ -61,7 +61,7 @@ fileprivate struct PhoneNumber {
     
     init?(fullNumber: String) {
         guard let country = Country.detect(forPhoneNumber: fullNumber) else { return nil }
-        countryCode = country.e164 as UInt
+        countryCode = country.e164.uintValue
         let prefix = country.e164PrefixString
         numberWithoutCode = fullNumber.substring(from: prefix.endIndex)
         self.fullNumber = fullNumber
@@ -275,7 +275,7 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
 extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
         viewController.dismiss(animated: true, completion: nil)
-        state.newNumber = PhoneNumber(countryCode: country.e164 as UInt, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
+        state.newNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
         updateSaveButtonState()
     }
 }

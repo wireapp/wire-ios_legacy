@@ -288,7 +288,7 @@ class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockAppLastDate):
-                        var value: UInt32 = lockAppLastDate as UInt32
+                        var value: UInt32 = lockAppLastDate.uint32Value
                         let data = withUnsafePointer(to: &value) {
                             Data(bytes: UnsafePointer($0), count: MemoryLayout.size(ofValue: lockAppLastDate))
                         }
