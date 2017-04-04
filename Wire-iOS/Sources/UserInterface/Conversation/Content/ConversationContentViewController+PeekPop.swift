@@ -16,8 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import Foundation
 import SafariServices
+
+
+private var lastPreviewURL: URL?
 
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
@@ -30,16 +34,18 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             return .none
         }
 
+        lastPreviewURL = nil
         var controller: UIViewController?
 
-        if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as? URL, url.shouldShowPreview() {
+        if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as? URL {
+            lastPreviewURL = url
             controller = SFSafariViewController(url: url)
         } else if message.isImage {
             controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
         }
 
         if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
-            previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell)
+            previewingContext.sourceRect = cell.convert(cell.selectionRect, to: view)
         }
 
         return controller
@@ -47,6 +53,9 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
 
     @available(iOS 9.0, *)
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        // In case the user has set a 3rd party application to open the URL we do not 
+        // want to commit the view controller but instead open the url.
+        guard lastPreviewURL == nil || lastPreviewURL?.hasThirdPartyPreference() == false else { return url.open() }
         self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
     }    
 }
