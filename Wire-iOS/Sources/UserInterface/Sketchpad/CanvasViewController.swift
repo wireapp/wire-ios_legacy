@@ -359,7 +359,7 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
             }
             picker.dismiss(animated: true, completion: nil)
         }) { (error) in
-            DDLogError("error: \(error)")
+            DDLogError("error: \(String(describing: error))")
         }
     }
     
