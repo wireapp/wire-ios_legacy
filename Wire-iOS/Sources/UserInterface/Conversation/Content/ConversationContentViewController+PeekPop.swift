@@ -45,7 +45,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         }
 
         if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
-            previewingContext.sourceRect = cell.convert(cell.selectionRect, to: view)
+            previewingContext.sourceRect = cell.frame
         }
 
         return controller
