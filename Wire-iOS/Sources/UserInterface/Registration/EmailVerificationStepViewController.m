@@ -26,7 +26,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 @interface EmailVerificationStepViewController () <UITextViewDelegate>

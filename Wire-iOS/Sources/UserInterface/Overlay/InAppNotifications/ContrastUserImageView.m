@@ -19,7 +19,7 @@
 
 #import "ContrastUserImageView.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 
 @implementation ContrastUserImageView

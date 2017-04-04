@@ -20,7 +20,7 @@
 #import "NameChangedCell.h"
 #import "WAZUIMagicIOS.h"
 #import "UIColor+MagicAccess.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
 

@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import zmessaging
+import WireSyncEngine
 import Cartography
 
 @objc open class ReactionsView: UIView {

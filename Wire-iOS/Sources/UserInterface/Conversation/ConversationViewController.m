@@ -35,7 +35,7 @@
 
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "VoiceChannelV2+Additions.h"
 #import "Message+UI.h"
 

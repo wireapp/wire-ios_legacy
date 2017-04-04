@@ -17,7 +17,7 @@
 //
 
 #import "MessagePresenter.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+FileTransfer.h"

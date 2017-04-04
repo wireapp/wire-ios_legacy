@@ -21,7 +21,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "CameraController.h"
 
-@import zmessaging;
+@import WireSyncEngine;
 
 @class ZMLocationData;
 @class ZMConversation;

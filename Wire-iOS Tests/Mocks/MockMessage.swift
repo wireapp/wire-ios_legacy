@@ -18,7 +18,7 @@
 
 
 import Foundation
-import ZMCLinkPreview
+import WireLinkPreview
 
 @objc class MockTextMessageData : NSObject, ZMTextMessageData {
     var messageText: String = ""

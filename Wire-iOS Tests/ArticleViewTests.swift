@@ -18,7 +18,7 @@
 
 
 import XCTest
-import ZMCLinkPreview
+import WireLinkPreview
 @testable import Wire
 
 class ArticleViewTests: ZMSnapshotTestCase {

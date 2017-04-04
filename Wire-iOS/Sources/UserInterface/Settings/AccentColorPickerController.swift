@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import zmessaging
+import WireSyncEngine
 import Cartography
 import Classy
 

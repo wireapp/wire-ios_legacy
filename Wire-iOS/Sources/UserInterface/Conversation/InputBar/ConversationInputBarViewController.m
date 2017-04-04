@@ -40,7 +40,7 @@
 #import "Wire-Swift.h"
 
 #import "ZMUserSession+Additions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMUser+Additions.h"
 #import "avs+iOS.h"
 #import "Constants.h"

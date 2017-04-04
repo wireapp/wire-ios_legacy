@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
-@import ZMCDataModel;
+@import WireDataModel;
 
 #define ZMVerifyViewInAllDeviceSizesWithBlock(view__, configuration__) \
 do { \

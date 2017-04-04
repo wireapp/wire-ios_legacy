@@ -19,7 +19,7 @@
 
 #import "AppDelegate.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+Additions.h"
 #import "Wire-Swift.h"
 

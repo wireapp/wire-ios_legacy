@@ -49,7 +49,7 @@
 #import "Analytics+iOS.h"
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 

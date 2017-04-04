@@ -17,7 +17,7 @@
 //
 
 
-import ZMCDataModel
+import WireDataModel
 
 
 extension Analytics {

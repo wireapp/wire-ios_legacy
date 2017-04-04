@@ -18,7 +18,7 @@
 
 
 #import "ZiphyClient+Convenience.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @implementation ZiphyClient (Convenience)
 

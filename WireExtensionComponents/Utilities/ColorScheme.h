@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@import zmessaging;
+@import WireSyncEngine;
 
 NS_ASSUME_NONNULL_BEGIN
 

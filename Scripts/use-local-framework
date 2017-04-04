@@ -85,8 +85,8 @@ if __name__ == "__main__":
         list_local()
     else:
         if args.framework is None:
-            print "Replacing zmessaging by default"
-            args.framework = "zmessaging"
+            print "Replacing WireSyncEngine by default"
+            args.framework = "WireSyncEngine"
         replace(args.framework)
     
     

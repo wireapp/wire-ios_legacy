@@ -35,7 +35,7 @@
 #import "PermissionDeniedViewController.h"
 #import "AnalyticsTracker.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import "ConversationListContentController.h"
 #import "StartUIViewController.h"

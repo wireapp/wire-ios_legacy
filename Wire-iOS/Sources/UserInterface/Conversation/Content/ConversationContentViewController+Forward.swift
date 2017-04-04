@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import zmessaging
+import WireSyncEngine
 import Cartography
 
 extension ZMConversation: ShareDestination {

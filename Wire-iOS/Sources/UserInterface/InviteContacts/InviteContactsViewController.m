@@ -25,7 +25,7 @@
 #import "ZClientViewController.h"
 #import "TokenField.h"
 #import "ContactsCell.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface InviteContactsViewController () <ContactsViewControllerDelegate, ContactsViewControllerContentDelegate>
 @end

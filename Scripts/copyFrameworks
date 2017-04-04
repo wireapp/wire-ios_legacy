@@ -43,10 +43,10 @@ copy_framework ()
 echo $BUILT_PRODUCTS_DIR
 echo $CODE_SIGN_IDENTITY
 
-S3_ZMESSAGING_ROOT="${BUILT_PRODUCTS_DIR}/zmessaging/zmessaging.xcarchive/Products/Library/Frameworks"
+S3_ZMESSAGING_ROOT="${BUILT_PRODUCTS_DIR}/WireSyncEngine/WireSyncEngine.xcarchive/Products/Library/Frameworks"
 LOCAL_ZMESSAGING_ROOT="${BUILT_PRODUCTS_DIR}"
 
-FRAMEWORK_NAMES=( "zmessaging.framework" "SyncEngineSystem.framework" )
+FRAMEWORK_NAMES=( "WireSyncEngine.framework" "SyncEngineSystem.framework" )
 for name in "${FRAMEWORK_NAMES[@]}"
 do
     LOCAL_FRAMEWORK_PATH="${LOCAL_ZMESSAGING_ROOT}/${name}"

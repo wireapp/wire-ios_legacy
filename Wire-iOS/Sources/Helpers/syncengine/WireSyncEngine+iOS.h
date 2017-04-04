@@ -17,8 +17,8 @@
 // 
 
 
-#import <zmessaging/zmessaging.h>
-#import <ZMCDataModel/ZMCDataModel.h>
+#import <WireSyncEngine/WireSyncEngine.h>
+#import <WireDataModel/WireDataModel.h>
 
 #import "ZMUserSession+iOS.h"
 #import "ZMUserSession+RequestProxy.h"

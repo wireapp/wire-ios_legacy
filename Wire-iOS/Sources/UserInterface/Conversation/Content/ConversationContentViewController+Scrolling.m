@@ -21,7 +21,7 @@
 #import "ConversationContentViewController+Private.h"
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 

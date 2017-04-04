@@ -28,7 +28,7 @@
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "RegistrationTextField.h"
 #import "GuidanceLabel.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Constants.h"
 
 

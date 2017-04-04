@@ -20,7 +20,7 @@
 #import "ColorSchemeController.h"
 #import "ColorScheme.h"
 #import "Settings.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "CASStyler+Variables.h"
 #import "UIColor+WAZExtensions.h"
 #import "Message+Formatting.h"

@@ -17,8 +17,8 @@
 //
 
 import Foundation
-import zmessaging
-import ZMCDataModel
+import WireSyncEngine
+import WireDataModel
 import Cartography
 
 final public class TextSearchViewController: NSObject {

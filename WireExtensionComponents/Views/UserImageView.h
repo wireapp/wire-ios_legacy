@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import ZMCDataModel;
+@import WireDataModel;
 #import "AvatarImageView.h"
 #import "AccentColorProvider.h"
 

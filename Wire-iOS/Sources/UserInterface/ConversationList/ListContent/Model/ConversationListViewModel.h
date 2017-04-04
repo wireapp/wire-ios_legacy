@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 @class ConversationListViewModel;

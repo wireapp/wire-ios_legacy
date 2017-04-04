@@ -21,7 +21,7 @@ import Social
 import WireShareEngine
 import Cartography
 import MobileCoreServices
-import ZMCDataModel
+import WireDataModel
 import WireExtensionComponents
 import Classy
 

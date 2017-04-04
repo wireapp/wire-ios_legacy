@@ -21,7 +21,7 @@
 
 #import "FormStepDelegate.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @class AnalyticsTracker;
 @class ZMEmailCredentials;

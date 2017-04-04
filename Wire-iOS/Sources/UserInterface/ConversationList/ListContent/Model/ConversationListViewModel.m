@@ -20,8 +20,8 @@
 #import "ConversationListViewModel.h"
 #import "AggregateArray.h"
 #import "SessionObjectCache.h"
-#import "zmessaging+iOS.h"
-@import ZMCDataModel;
+#import "WireSyncEngine+iOS.h"
+@import WireDataModel;
 #import "Wire-Swift.h"
 
 void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);

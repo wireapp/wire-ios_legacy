@@ -23,7 +23,7 @@
 
 #import "VoiceChannelOverlayController.h"
 #import "PassthroughTouchesView.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "VoiceChannelV2+Additions.h"
 @import  AudioToolbox;
 #import "Wire-Swift.h"

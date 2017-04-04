@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import Canvas
+import WireCanvas
 import Cartography
 import CocoaLumberjackSwift
 

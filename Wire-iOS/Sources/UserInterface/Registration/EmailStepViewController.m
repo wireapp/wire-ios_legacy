@@ -27,7 +27,7 @@
 #import "WAZUIMagicIOS.h"
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "RegistrationTextField.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "CheckmarkViewController.h"
 
 

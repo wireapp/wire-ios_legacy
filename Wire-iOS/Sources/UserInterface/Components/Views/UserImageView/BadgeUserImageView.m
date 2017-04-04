@@ -24,7 +24,7 @@
 #import "UserImageView.h"
 #import "WAZUIMagicIOS.h"
 #import "ZMUser+Additions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UserImageView+Magic.h"
 

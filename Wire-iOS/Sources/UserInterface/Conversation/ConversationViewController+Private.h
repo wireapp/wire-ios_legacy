@@ -18,7 +18,7 @@
 
 
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

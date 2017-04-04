@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 FOUNDATION_EXPORT NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state);

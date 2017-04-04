@@ -20,7 +20,7 @@
 #import <PureLayout/PureLayout.h>
 
 #import "ConnectionRequestCell.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 

@@ -18,8 +18,8 @@
 
 
 import Foundation
-import ZMCSystem
-import zmessaging
+import WireSystem
+import WireSyncEngine
 
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 

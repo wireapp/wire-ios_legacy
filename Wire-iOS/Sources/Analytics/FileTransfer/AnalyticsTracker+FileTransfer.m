@@ -21,7 +21,7 @@
 #import "DefaultIntegerClusterizer.h"
 #import "Wire-Swift.h"
 
-@import ZMCDataModel;
+@import WireDataModel;
 
 NSString * const AnalyticsFileSizeBytesKey = @"size_bytes";
 NSString * const AnalyticsFileSizeMegabytesKey = @"size_mb";

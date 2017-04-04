@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 
 @class ConversationCellLayoutProperties;
 @class LinkAttachment;

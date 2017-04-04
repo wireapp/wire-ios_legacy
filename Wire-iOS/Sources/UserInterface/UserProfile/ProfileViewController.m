@@ -19,7 +19,7 @@
 
 #import "ProfileViewController.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 
 

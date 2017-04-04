@@ -17,7 +17,7 @@
 //
 
 
-import ZMUtilities
+import WireUtilities
 
 
 private let zmLog = ZMSLog(tag: "share extension")

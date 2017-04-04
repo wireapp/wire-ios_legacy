@@ -26,7 +26,7 @@
 
 #import "Constants.h"
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Settings.h"
 

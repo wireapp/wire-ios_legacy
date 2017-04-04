@@ -20,7 +20,7 @@
 #import "AppController.h"
 #import "AppController+Internal.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+Additions.h"
 #import "MagicConfig.h"
 #import "PassthroughWindow.h"
@@ -237,7 +237,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.window.frame = [[UIScreen mainScreen] bounds];
     self.window.accessibilityIdentifier = @"ZClientMainWindow";
     
-    // Just load the fonts here. Don't load the Magic yet, to avoid to have any problems with zmessaging before we allowed to use it
+    // Just load the fonts here. Don't load the Magic yet, to avoid to have any problems with WireSyncEngine before we allowed to use it
     LaunchImageViewController *launchController = [[LaunchImageViewController alloc] initWithNibName:nil bundle:nil];
 
     self.launchImageViewController = launchController;

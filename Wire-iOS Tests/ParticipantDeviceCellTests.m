@@ -17,7 +17,7 @@
 // 
 
 
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "ZMSnapshotTestCase.h"
 #import <PureLayout/PureLayout.h>
 #import "ParticipantDeviceCell.h"

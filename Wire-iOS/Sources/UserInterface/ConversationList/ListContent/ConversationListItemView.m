@@ -26,7 +26,7 @@
 #import "UIColor+WAZExtensions.h"
 
 #import "UIView+Borders.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 @import Classy;

@@ -18,8 +18,8 @@
 
 
 import Foundation
-import ZMCDataModel
-import ZMTransport
+import WireDataModel
+import WireTransport
 import WireRequestStrategy
 
 

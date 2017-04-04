@@ -22,7 +22,7 @@
 @import WireExtensionComponents;
 #import "ActionSheetController+Conversation.h"
 #import "ZMConversation+Actions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Analytics+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -30,7 +30,7 @@
 #import "Wire-Swift.h"
 #import "ZClientViewController.h"
 
-@import ZMUtilities;
+@import WireUtilities;
 
 @implementation ActionSheetController (Conversation)
 
