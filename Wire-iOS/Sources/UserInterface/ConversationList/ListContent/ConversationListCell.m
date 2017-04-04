@@ -192,7 +192,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     }
     else {
         if (self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall) {
-            [self.conversation.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
+            (void)[self.conversation.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
         }
     }
 }

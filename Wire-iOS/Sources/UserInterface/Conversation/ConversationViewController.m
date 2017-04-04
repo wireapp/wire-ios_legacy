@@ -768,7 +768,7 @@
             [ZMMessage deleteForEveryone:message];
         } else {
             [[Analytics shared] tagEditedMessageConversationType:conversationType timeElapsed:elapsedTime];
-            [ZMMessage edit:message newText:newText];
+            (void)[ZMMessage edit:message newText:newText];
         }
     }];
 }
