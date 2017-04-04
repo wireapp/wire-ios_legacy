@@ -33,6 +33,14 @@ public extension NSURL {
 
 public extension URL {
 
+    func shouldShowPreview() -> Bool {
+        if isTweet &&  TweetOpeningOption.storedPreference() != .none {
+            return false
+        }
+
+        return BrowserOpeningOption.storedPreference() == .safari
+    }
+
     @discardableResult func open() -> Bool {
         let opened = openAsTweet() || openAsLink()
         if opened {
@@ -57,6 +65,7 @@ protocol LinkOpeningOption {
     var isAvailable: Bool { get }
     var displayString: String { get }
     static var availableOptions: [Self] { get }
+    static func storedPreference() -> Self
 
 }
 

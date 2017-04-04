@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import SafariServices
+
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
@@ -27,16 +29,20 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
               let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage else {
             return .none
         }
-        
-        if message.isImage {
-            let controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
-            if let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
-                previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell)
-            }
-            return controller
+
+        var controller: UIViewController?
+
+        if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as? URL, url.shouldShowPreview() {
+            controller = SFSafariViewController(url: url)
+        } else if message.isImage {
+            controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
         }
-        
-        return .none
+
+        if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
+            previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell)
+        }
+
+        return controller
     }
 
     @available(iOS 9.0, *)

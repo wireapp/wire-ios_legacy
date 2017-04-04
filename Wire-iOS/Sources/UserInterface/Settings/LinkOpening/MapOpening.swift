@@ -42,6 +42,10 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
         }
     }
 
+    static func storedPrefenrence() -> MapsOpeningOption {
+        return MapsOpeningOption(rawValue: Settings.shared().mapsLinkOpeningOptionRawValue) ?? .apple
+    }
+
 }
 
 
@@ -49,7 +53,7 @@ extension URL {
 
     public func openAsLocation() -> Bool {
         log.debug("Trying to open \"\(self)\" as location")
-        let saved = MapsOpeningOption(rawValue: Settings.shared().mapsLinkOpeningOptionRawValue) ?? .apple
+        let saved =  storedMapsPrefenrence()
         log.debug("Saved option to open a location: \(saved.displayString)")
 
         switch saved {
@@ -58,6 +62,8 @@ extension URL {
             return UIApplication.shared.openURL(self)
         }
     }
+
+
     
 }
 

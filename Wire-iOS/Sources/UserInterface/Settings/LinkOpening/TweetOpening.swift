@@ -44,6 +44,9 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
         }
     }
 
+    static func storedPreference() -> TweetOpeningOption {
+        return TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
+    }
 }
 
 
@@ -52,7 +55,7 @@ extension URL {
     func openAsTweet() -> Bool {
         log.debug("Trying to open \"\(self)\" as tweet, isTweet: \(isTweet)")
         guard isTweet else { return false }
-        let saved = TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
+        let saved = TweetOpeningOption.storedPreference()
         log.debug("Saved option to open a tweet: \(saved.displayString)")
 
         switch saved {
@@ -87,11 +90,16 @@ fileprivate extension UIApplication {
 }
 
 
-fileprivate extension URL {
+extension URL {
 
     var isTweet: Bool {
         return absoluteString.contains("twitter.com") && absoluteString.contains("status")
     }
+
+}
+
+
+fileprivate extension URL {
 
     var tweetbotURL: URL? {
         guard isTweet else { return nil }

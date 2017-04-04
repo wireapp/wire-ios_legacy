@@ -44,13 +44,17 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
         }
     }
 
+    static func storedPreference() -> BrowserOpeningOption {
+        return BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
+    }
+
 }
 
 extension URL {
 
     func openAsLink() -> Bool {
         log.debug("Trying to open \"\(self)\" in thrid party browser")
-        let saved = BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
+        let saved = BrowserOpeningOption.storedPreference()
         log.debug("Saved option to open a regular link: \(saved.displayString)")
 
         switch saved {
