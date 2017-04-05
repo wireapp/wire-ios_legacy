@@ -293,7 +293,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 {
     if (imageData != nil) {
         [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-        [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:imageData];
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:imageData];
+        }];
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
