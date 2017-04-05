@@ -18,7 +18,7 @@
 
 
 #import "PeopleSelection.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface PeopleSelection ()
 @property (nonatomic, strong) NSMutableSet *selectedUsersBacking;

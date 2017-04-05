@@ -23,7 +23,7 @@
 #import <PureLayout/PureLayout.h>
 #import <Classy/Classy.h>
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "WAZUIMagicIOS.h"
 #import "Message+Formatting.h"
@@ -37,7 +37,7 @@
 
 #import "Analytics+iOS.h"
 
-@import ZMCLinkPreview;
+@import WireLinkPreview;
 
 
 

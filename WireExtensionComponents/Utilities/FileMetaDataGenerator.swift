@@ -20,7 +20,7 @@
 import Foundation
 import MobileCoreServices
 import CocoaLumberjackSwift
-import ZMCDataModel
+import WireDataModel
 import AVFoundation
 
 @objc public final class FileMetaDataGenerator: NSObject {

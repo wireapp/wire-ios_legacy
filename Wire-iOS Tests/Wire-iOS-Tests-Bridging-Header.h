@@ -19,7 +19,7 @@
 
 #import "Settings.h"
 
-@import zmessaging;
+@import WireSyncEngine;
 
 #import "Analytics.h"
 #import "Analytics+iOS.h"

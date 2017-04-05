@@ -223,7 +223,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
 
     private func nameForFile(withUTI UTI: String, name: String?) -> String? {
-        if let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as? String {
+        if let fileExtension = UTTypeCopyPreferredTagWithClass(UTI as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String? {
             return "\(UUID().uuidString).\(fileExtension)"
         }
         return name

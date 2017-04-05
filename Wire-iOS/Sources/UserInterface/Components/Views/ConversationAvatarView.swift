@@ -99,8 +99,12 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        switch (conversation.activeParticipants.count, conversation.conversationType) {
-        case (0...2, _), (_, .oneOnOne):
+        self.init(usersCount: conversation.activeParticipants.count - 1)
+    }
+    
+    fileprivate init(usersCount: Int) {
+        switch (usersCount) {
+        case 0...1:
             self = .one
         default:
             self = .four
@@ -110,6 +114,30 @@ extension Mode {
 
 final public class ConversationAvatarView: UIView {
 
+    public var users: [ZMUser] = [] {
+        didSet {
+            self.mode = Mode(usersCount: users.count)
+
+            var index: Int = 0
+            self.userImages().forEach {
+                $0.userSession = ZMUserSession.shared()
+                $0.size = .tiny
+                $0.showInitials = (self.mode == .one)
+                $0.isCircular = false
+                if index < users.count {
+                    $0.user = users[index]
+                }
+                else {
+                    $0.user = nil
+                    $0.containerView.isOpaque = false
+                    $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.24)
+                }
+                index = index + 1
+            }
+            self.setNeedsLayout()
+        }
+    }
+    
     public var conversation: ZMConversation? = .none {
         didSet {
             guard let conversation = self.conversation else {
@@ -124,25 +152,7 @@ final public class ConversationAvatarView: UIView {
             }
             
             self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
-            self.mode = Mode(conversation: conversation)
-            
-            var index: Int = 0
-            self.userImages().forEach {
-                $0.userSession = ZMUserSession.shared()
-                $0.size = .tiny
-                $0.showInitials = (self.mode == .one)
-                $0.isCircular = false
-                if index < stableRandomParticipants.count {
-                    $0.user = stableRandomParticipants[index]
-                }
-                else {
-                    $0.user = nil
-                    $0.containerView.isOpaque = false
-                    $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.32)
-                }
-                index = index + 1
-            }
-            self.setNeedsLayout()
+            self.users = stableRandomParticipants
         }
     }
     

@@ -18,7 +18,7 @@
 
 
 #import "ContactsViewController.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 
 

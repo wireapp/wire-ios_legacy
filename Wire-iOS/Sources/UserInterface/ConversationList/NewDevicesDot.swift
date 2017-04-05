@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import ZMCDataModel
+import WireDataModel
 
 final class NewDevicesDot: UIView {
     let user: ZMUser

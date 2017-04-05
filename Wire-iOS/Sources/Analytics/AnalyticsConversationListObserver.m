@@ -20,7 +20,7 @@
 #import "AnalyticsConversationListObserver.h"
 
 #import "Analytics.h"
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "ZMUser+Additions.h"
 
 #import "SessionObjectCache.h"

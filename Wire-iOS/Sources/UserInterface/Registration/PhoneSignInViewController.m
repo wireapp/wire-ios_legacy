@@ -27,7 +27,7 @@
 #import "AddEmailPasswordViewController.h"
 #import "RegistrationFormController.h"
 #import "FormStepDelegate.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "UIFont+MagicAccess.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>

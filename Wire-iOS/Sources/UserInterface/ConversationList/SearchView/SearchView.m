@@ -29,7 +29,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WR_ColorScheme.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIFont+MagicAccess.h"
 

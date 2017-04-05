@@ -19,8 +19,8 @@
 
 #import "ProfileDetailsViewController.h"
 
-#import "zmessaging+iOS.h"
-#import <ZMCDataModel/ZMBareUser.h>
+#import "WireSyncEngine+iOS.h"
+#import <WireDataModel/ZMBareUser.h>
 #import "avs+iOS.h"
 #import "Settings.h"
 

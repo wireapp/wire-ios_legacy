@@ -18,7 +18,7 @@
 
 
 #import "MockEditableUser.h"
-#import <ZMUtilities/ZMAccentColor.h>
+#import <WireUtilities/ZMAccentColor.h>
 
 @implementation MockEditableUser
 

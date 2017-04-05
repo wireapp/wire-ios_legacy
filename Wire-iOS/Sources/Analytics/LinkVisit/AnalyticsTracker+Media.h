@@ -19,7 +19,7 @@
 
 #import "AnalyticsTracker.h"
 #import "LinkAttachment.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 

@@ -94,25 +94,41 @@ internal class Space: NSObject {
                                                         observer.spaceDidChangeSelection(space: self)
         })
     }
+    
+    
     public static let workString = "ω"
+    public static let familyString = "Ω"
     
     public static let privateSpace: Space = {
-        let predicate = NSPredicate(format: "NOT (displayName CONTAINS[cd] %@)", workString)
+        let predicate = NSPredicate(format: "NOT (displayName CONTAINS %@) AND NOT (displayName CONTAINS %@)", workString, familyString)
         let privateSpace = Space(name: "Personal", predicate: predicate)
         privateSpace.selected = true
         return privateSpace
     }()
     
     public static let workSpace: Space = {
-        let predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", workString)
+        let predicate = NSPredicate(format: "displayName CONTAINS %@", workString)
         let workSpace = Space(name: "Work", predicate: predicate)
         workSpace.selected = true
         return workSpace
     }()
     
-    public static let spaces: [Space] = { [privateSpace, workSpace] }()
+    public static let familySpace: Space = {
+        let predicate = NSPredicate(format: "displayName CONTAINS %@", familyString)
+        let workSpace = Space(name: "Family", predicate: predicate)
+        workSpace.selected = true
+        return workSpace
+    }()
+    
+    public static let spaces: [Space] = { [privateSpace, workSpace, familySpace] }()
     
     @objc(enableSpaces) public static let enableSpaces: Bool = DeveloperMenuState.developerMenuEnabled()
+}
+
+extension ZMConversation {
+    func isMember(of space: Space) -> Bool {
+        return space.isSpaceConversation(self)
+    }
 }
 
 extension Space: ZMConversationListObserver {

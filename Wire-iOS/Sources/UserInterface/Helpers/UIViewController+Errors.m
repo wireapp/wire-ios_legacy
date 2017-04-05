@@ -18,7 +18,7 @@
 
 
 #import "UIViewController+Errors.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @implementation UIViewController (Errors)
 

@@ -18,7 +18,7 @@
 
 
 import Foundation
-import zmessaging
+import WireSyncEngine
 
 public extension ReactionType {
     var analyticsTypeString : String {

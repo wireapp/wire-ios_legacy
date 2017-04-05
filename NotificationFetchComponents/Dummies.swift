@@ -17,8 +17,8 @@
 //
 
 
-import ZMCDataModel
-import ZMTransport
+import WireDataModel
+import WireTransport
 import WireMessageStrategy
 import WireRequestStrategy
 

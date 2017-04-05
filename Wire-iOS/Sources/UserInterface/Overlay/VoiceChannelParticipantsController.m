@@ -22,7 +22,7 @@
 #import "VoiceChannelParticipantCell.h"
 #import "VoiceUserImageView.h"
 #import "NSIndexSet+IndexPaths.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import <Classy/Classy.h>
 

@@ -17,7 +17,7 @@
 //
 
 
-@import zmessaging;
+@import WireSyncEngine;
 @class MockConversation;
 
 

@@ -29,7 +29,7 @@
 #import "PhoneNumberViewController.h"
 #import "GuidanceLabel.h"
 #import "Country.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "ZMUserSession+Additions.h"
 @import WireExtensionComponents;

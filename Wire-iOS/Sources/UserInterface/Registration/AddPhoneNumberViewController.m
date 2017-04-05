@@ -27,7 +27,7 @@
 #import "PopTransition.h"
 #import "PushTransition.h"
 #import "RegistrationFormController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIColor+MagicAccess.h"
 #import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"

@@ -19,7 +19,7 @@
 
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "TopPeopleLineSection.h"
 #import "UIView+Borders.h"
 #import "WAZUIMagicIOS.h"

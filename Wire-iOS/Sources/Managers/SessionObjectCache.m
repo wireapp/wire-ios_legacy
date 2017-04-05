@@ -18,7 +18,7 @@
 
 
 #import "SessionObjectCache.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "AppDelegate.h"
 
 

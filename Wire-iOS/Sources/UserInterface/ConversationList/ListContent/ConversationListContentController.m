@@ -22,7 +22,7 @@
 #import <PureLayout/PureLayout.h>
 #import <Classy/Classy.h>
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
 #import "ZMUserSession+Additions.h"
 
@@ -37,7 +37,6 @@
 
 #import "ZClientViewController+Internal.h"
 
-#import "ConversationListConnectRequestsItem.h"
 #import "UIView+MTAnimation.h"
 #import "UIColor+WR_ColorScheme.h"
 
@@ -47,6 +46,7 @@
 #import "ConversationContentViewController.h"
 #import "Wire-Swift.h"
 
+static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
 static NSString * const CellReuseIdConversation = @"CellId";
 
 
@@ -132,7 +132,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)setupViews
 {
-    [self.collectionView registerClass:[ConnectRequestsCell class] forCellWithReuseIdentifier:self.listViewModel.contactRequestsItem.reuseIdentifier];
+    [self.collectionView registerClass:[ConnectRequestsCell class] forCellWithReuseIdentifier:CellReuseIdConnectionRequests];
     [self.collectionView registerClass:[ConversationListCell class] forCellWithReuseIdentifier:CellReuseIdConversation];
     
     self.collectionView.backgroundColor = [UIColor clearColor];
@@ -225,8 +225,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
             [self.contentDelegate conversationList:self didSelectConversation:item focusOnView:! self.focusOnNextSelection];
         }
         else if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
-            [[ZClientViewController sharedZClientViewController] loadIncomingContactRequestsAndFocusOnView:self.focusOnNextSelection animated:YES];
-            [self.contentDelegate conversationList:self didSelectInteractiveItem:item focusOnView:! self.focusOnNextSelection];
+            [[ZClientViewController sharedZClientViewController] loadIncomingContactRequestsAndFocusOnView:self.focusOnNextSelection
+                                                                                                  animated:YES];
         }
         else {
             NSAssert(NO, @"Invalid item in conversation list view model!!");
@@ -424,10 +424,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
     id item = [self.listViewModel itemForIndexPath:indexPath];
     UICollectionViewCell *cell = nil;
 
-    if ([item isKindOfClass:[ConversationListInteractiveItem class]]) {
-        ConversationListInteractiveItem *customItem = (ConversationListInteractiveItem *)item;
-        ConnectRequestsCell *labelCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:customItem.reuseIdentifier forIndexPath:indexPath];
-        [customItem featureCell:cell];
+    if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
+        ConnectRequestsCell *labelCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellReuseIdConnectionRequests forIndexPath:indexPath];
         cell = labelCell;
     }
     else if ([item isKindOfClass:[ZMConversation class]]) {

@@ -32,7 +32,7 @@
 #import "UIViewController+Errors.h"
 #import "ZMUserSession+Additions.h"
 #import "RegistrationViewController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Constants.h"
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Registration.h"

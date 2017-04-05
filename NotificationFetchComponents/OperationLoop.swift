@@ -19,7 +19,7 @@
 
 import Foundation
 import CoreData
-import ZMTransport
+import WireTransport
 import WireRequestStrategy
 
 let contextWasMergedNotification = Notification.Name("zm_contextWasSaved")

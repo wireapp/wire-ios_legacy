@@ -20,14 +20,16 @@
 #import "ConversationListViewModel.h"
 #import "AggregateArray.h"
 #import "SessionObjectCache.h"
-#import "zmessaging+iOS.h"
-#import "ConversationListConnectRequestsItem.h"
-@import ZMCDataModel;
+#import "WireSyncEngine+iOS.h"
+@import WireDataModel;
 #import "Wire-Swift.h"
 
 void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
 void debugLogUpdate (ConversationListChangeInfo *note);
 
+
+@implementation ConversationListConnectRequestsItem
+@end
 
 
 @interface ConversationListViewModel () <ZMConversationListObserver>
@@ -206,13 +208,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
         if ([item isEqual:conversation]) {
             result = [NSIndexPath indexPathForItem:itemIndex inSection:sectionIndex];
             *stop = YES;
-        }
-        else if ([item isKindOfClass:[ConversationListInteractiveItem class]]) {
-            ConversationListInteractiveItem *conversationListItem = (ConversationListInteractiveItem *)item;
-            if ([conversationListItem.conversation isEqual:conversation]) {
-                result = [NSIndexPath indexPathForItem:itemIndex inSection:sectionIndex];
-                *stop = YES;
-            }
         }
     }];
     

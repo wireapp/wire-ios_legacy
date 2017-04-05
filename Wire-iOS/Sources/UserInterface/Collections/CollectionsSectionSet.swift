@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import ZMCDataModel
+import WireDataModel
 
 
 /// This option set represents the collection sections.

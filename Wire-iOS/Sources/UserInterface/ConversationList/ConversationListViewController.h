@@ -47,6 +47,8 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
+- (void)reloadContents;
+
 /**
  * Scroll to the current selection
  */

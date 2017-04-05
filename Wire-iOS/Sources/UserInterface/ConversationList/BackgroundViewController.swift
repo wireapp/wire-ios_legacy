@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-import zmessaging
+import WireSyncEngine
 import WireExtensionComponents
 
 final public class BackgroundViewController: UIViewController {

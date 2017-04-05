@@ -22,7 +22,7 @@
 #import <PureLayout/PureLayout.h>
 
 #import "BadgeUserImageView.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import "UserImageView+Magic.h"
 

@@ -33,9 +33,9 @@
 #import "AppController.h"
 
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #else
-#import "zmessaging+OS_X.h"
+#import "WireSyncEngine+OS_X.h"
 #endif
 
 #import "ZMUser+Additions.h"

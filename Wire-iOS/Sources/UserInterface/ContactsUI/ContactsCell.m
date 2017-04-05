@@ -20,7 +20,7 @@
 #import "ContactsCell.h"
 #import "BadgeUserImageView.h"
 #import <PureLayout/PureLayout.h>
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UserImageView+Magic.h"
 @import WireExtensionComponents;
 
