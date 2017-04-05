@@ -16,7 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import Foundation
+
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
@@ -31,7 +33,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         if message.isImage {
             let controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
             if let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
-                previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell)
+                previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell.selectionView)
             }
             return controller
         }
@@ -42,5 +44,6 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
     @available(iOS 9.0, *)
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
-    }    
+    }
+
 }
