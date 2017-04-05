@@ -68,8 +68,8 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
     func createGroupConversation() -> ZMConversation {
         let conversation = ZMConversation.insertNewObject(in: moc)
-        conversation.addParticipant(selfUser)
-        conversation.addParticipant(otherUser)
+        conversation.conversationType = .group
+        conversation.internalAddParticipants(Set([selfUser, otherUser]), isAuthoritative: true)
         return conversation
     }
     

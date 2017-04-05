@@ -27,7 +27,7 @@
 #import "SoundcloudAudioTrack.h"
 
 #import "Wire-Swift.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "LinkAttachmentCache.h"
 #import "LinkAttachment.h"
 #import "SoundcloudService.h"

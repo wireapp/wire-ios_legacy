@@ -20,7 +20,7 @@
 #import "UIColor+WAZExtensions.h"
 
 #import "WAZUIMagiciOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "CASStyler+Variables.h"
 #import "ColorScheme.h"
 @import WireExtensionComponents;

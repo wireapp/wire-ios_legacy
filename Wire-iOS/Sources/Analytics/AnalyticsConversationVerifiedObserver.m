@@ -18,7 +18,7 @@
 
 
 #import "AnalyticsConversationVerifiedObserver.h"
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "Analytics+OTREvents.h"
 
 @interface AnalyticsConversationVerifiedObserver ()

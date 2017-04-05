@@ -275,7 +275,7 @@ private struct InputBarConstants {
             animation.keyTimes = [0, 0.4, 0.7, 0.9]
             animation.duration = 0.64
             animation.autoreverses = true
-            animation.repeatCount = FLT_MAX
+            animation.repeatCount =  .greatestFiniteMagnitude
             fakeCursor.layer.add(animation, forKey: "blinkAnimation")
         }
     }

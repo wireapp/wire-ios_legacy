@@ -19,7 +19,7 @@
 
 #import "UserImageView.h"
 #import <PureLayout/PureLayout.h>
-@import zmessaging;
+@import WireSyncEngine;
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"

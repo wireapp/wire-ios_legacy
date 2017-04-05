@@ -18,7 +18,7 @@
 
 
 #import "AVSLogObserver.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface AVSLogObserver () <ZMAVSLogObserver>
 @property (nonatomic, strong) id<ZMAVSLogObserverToken> token;

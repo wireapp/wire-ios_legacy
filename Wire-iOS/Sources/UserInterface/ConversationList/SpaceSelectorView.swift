@@ -92,7 +92,21 @@ final internal class SpaceSelectorView: LineView {
         guard let spaceView = sender.view as? SpaceView else {
             fatal("Incorrect view")
         }
-        spaceView.space.selected = !spaceView.space.selected
+        
+        let tappedSpace = spaceView.space
+        
+        let allExceptTapped = self.spaces.filter { $0 != tappedSpace }
+        
+        let allSelected = self.spaces.map { $0.selected }.reduce(true) { $0 && $1 }
+        
+        if allSelected {
+            allExceptTapped.forEach {
+                $0.selected = false
+            }
+        }
+        else {
+            tappedSpace.selected = !tappedSpace.selected
+        }
     }
 }
 
@@ -150,7 +164,7 @@ final internal class SpaceSelectorView: LineView {
     }
     
     fileprivate func updateDot() {
-        self.dotView.isHidden = !self.space.hasUnreadMessages()
+        self.dotView.isHidden = space.selected || !self.space.hasUnreadMessages()
     }
 }
 

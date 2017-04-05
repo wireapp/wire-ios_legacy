@@ -18,7 +18,7 @@
 
 
 #import "ContactsDataSource+Testing.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 @implementation ContactsDataSource (Testing)
 

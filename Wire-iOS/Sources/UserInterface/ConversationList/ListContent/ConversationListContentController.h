@@ -23,7 +23,6 @@
 @class ZMConversation;
 @class ConversationListContentController;
 @class AggregateArray;
-@class ConversationListInteractiveItem;
 
 
 
@@ -31,10 +30,6 @@
 
 - (void)conversationList:(ConversationListContentController *)controller
    didSelectConversation:(ZMConversation *)conversation
-             focusOnView:(BOOL)focus;
-
-- (void)conversationList:(ConversationListContentController *)controller
-didSelectInteractiveItem:(ConversationListInteractiveItem *)interactiveItem
              focusOnView:(BOOL)focus;
 
 /// This is called after a delete when there is an item to select

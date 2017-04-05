@@ -18,7 +18,7 @@
 
 
 #import "ShareItemProvider.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 NSString *ActivityToAnalyticsString(NSString *activity) {
     if ([activity isEqualToString:UIActivityTypePostToFacebook]) {

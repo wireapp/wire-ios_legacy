@@ -20,7 +20,7 @@
 #import "Message+Formatting.h"
 
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "LinkAttachment.h"
 #import "NSString+EmoticonSubstitution.h"
 #import "TSMarkdownParser+Wire.m"
@@ -30,7 +30,7 @@
 #import "Wire-Swift.h"
 
 @import WireExtensionComponents;
-@import ZMCLinkPreview;
+@import WireLinkPreview;
 
 static NSMutableParagraphStyle *cellParagraphStyle;
 

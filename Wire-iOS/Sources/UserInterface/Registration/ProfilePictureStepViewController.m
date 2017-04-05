@@ -23,7 +23,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"
 #import "UIViewController+Errors.h"
 #import "ZMUserSession+Additions.h"

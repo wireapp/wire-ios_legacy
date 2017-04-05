@@ -18,8 +18,8 @@
 
 import UIKit
 import Cartography
-import ZMUtilities
-import zmessaging
+import WireUtilities
+import WireSyncEngine
 
 fileprivate struct PhoneNumber {
     enum ValidationResult {

@@ -29,10 +29,10 @@
 #import "Constants.h"
 #import "Wire-Swift.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 @import WireExtensionComponents;
-@import ZMUtilities;
+@import WireUtilities;
 
 
 const NSTimeInterval PhoneVerificationResendInterval = 30.0f;

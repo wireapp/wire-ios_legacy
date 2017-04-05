@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-import ZMCDataModel
+import WireDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
     /// NB: only showInConversation, forward, copy and save actions are forwarded to delegate

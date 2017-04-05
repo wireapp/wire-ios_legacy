@@ -18,7 +18,7 @@
 
 
 #import "Analytics+CallEvents.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "NetworkConditionHelper.h"
 #import "Wire-Swift.h"
 

@@ -21,7 +21,7 @@
 #import <avs/AVSFlowManager.h>
 
 #import "VoiceChannelOverlayController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "VoiceChannelV2+Additions.h"
 #import "Analytics+iOS.h"

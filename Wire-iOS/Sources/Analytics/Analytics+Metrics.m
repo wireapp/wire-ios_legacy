@@ -23,7 +23,7 @@
 #import "avs+iOS.h"
 #import "Wire-Swift.h"
 
-@import zmessaging;
+@import WireSyncEngine;
 
 static id flowManagerDidBecomeAvailableObserver = nil;
 

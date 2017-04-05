@@ -29,7 +29,7 @@
 #import "RegistrationFormController.h"
 #import "NavigationController.h"
 #import "UIResponder+FirstResponder.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Navigation.h"

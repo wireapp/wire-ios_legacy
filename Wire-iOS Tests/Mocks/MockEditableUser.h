@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-@import ZMCDataModel;
+@import WireDataModel;
 
 @interface MockEditableUser : NSObject <ZMEditableUser>
 

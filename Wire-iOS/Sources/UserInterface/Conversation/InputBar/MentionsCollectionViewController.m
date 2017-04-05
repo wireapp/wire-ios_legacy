@@ -18,7 +18,7 @@
 
 
 #import "MentionsCollectionViewController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UserImageView.h"
 #import "WAZUIMagicIOS.h"
 #import "MentionsBubbleView.h"

@@ -18,7 +18,7 @@
 
 
 #import "PingCell.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIView+MTAnimation.h"
 #import "UIColor+WAZExtensions.h"

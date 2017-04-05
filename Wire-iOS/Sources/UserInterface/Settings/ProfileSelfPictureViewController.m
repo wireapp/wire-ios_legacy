@@ -25,7 +25,7 @@
 
 #import <PureLayout/PureLayout.h>
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import "UIImage+ZetaIconsNeue.h"
 #import "BottomOverlayViewController+Private.h"

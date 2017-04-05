@@ -17,24 +17,11 @@
 // 
 
 
-#import "ConversationListConnectRequestsItem.h"
-#import "ZClientViewController.h"
-#import "ZClientViewController+Internal.h"
-#import "ConnectRequestsCell.h"
+#import <WireSyncEngine/WireSyncEngine.h>
+#import <WireDataModel/WireDataModel.h>
 
-
-
-@implementation ConversationListConnectRequestsItem
-
-- (void)action
-{
-    [[ZClientViewController sharedZClientViewController] loadIncomingContactRequestsAndFocusOnView:YES animated:YES];
-}
-
-- (NSString *)reuseIdentifier
-{
-    return @"contactRequestCellId";
-}
-
-@end
-
+#import "ZMUserSession+iOS.h"
+#import "ZMUserSession+RequestProxy.h"
+#import "ZMUser+Additions.h"
+#import "ZMConversation+Additions.h"
+#import "SessionObjectCache.h"

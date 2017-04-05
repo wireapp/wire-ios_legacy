@@ -28,7 +28,7 @@
 #import "Constants.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "UIFont+MagicAccess.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 

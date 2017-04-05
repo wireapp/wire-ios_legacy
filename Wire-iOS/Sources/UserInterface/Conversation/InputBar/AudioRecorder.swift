@@ -258,7 +258,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
     }
     
     public func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-        DDLogError("Cannot finish recording: \(error)")
+        DDLogError("Cannot finish recording: \(String(describing: error))")
     }
 }
 

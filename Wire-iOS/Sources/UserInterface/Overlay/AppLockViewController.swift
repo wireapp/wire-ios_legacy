@@ -166,7 +166,7 @@ import HockeySDK.BITHockeyManager
                     callback(success)
                     
                     if !success {
-                        DDLogError("Local authentication error: \(error?.localizedDescription)")
+                        DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                     }
                     else {
                         self.lastUnlockedDate = Date()
@@ -175,7 +175,7 @@ import HockeySDK.BITHockeyManager
             })
         }
         else {
-            DDLogError("Local authentication error: \(error?.localizedDescription)")
+            DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
             callback(.none)
         }
     }

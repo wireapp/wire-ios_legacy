@@ -22,9 +22,9 @@
 #import <PureLayout.h>
 #import "BadgeUserImageView.h"
 #import "Constants.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIView+Borders.h"
-#import <ZMCDataModel/ZMBareUser.h>
+#import <WireDataModel/ZMBareUser.h>
 #import "UserImageView+Magic.h"
 
 @interface TopPeopleCell ()

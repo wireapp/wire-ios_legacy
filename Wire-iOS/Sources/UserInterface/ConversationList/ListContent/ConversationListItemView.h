@@ -29,6 +29,7 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, copy) NSString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
+@property (nonatomic, strong, readonly) UILabel *titleField;
 @property (nonatomic, strong, readonly) ConversationAvatarView *avatarView;
 @property (nonatomic, strong, readonly) ConversationListAccessoryView *rightAccessory;
 

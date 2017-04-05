@@ -17,7 +17,7 @@
 // 
 
 
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "ZetaIconTypes.h"
 
 

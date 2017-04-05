@@ -19,7 +19,7 @@
 
 
 // Data model
-@import zmessaging;
+@import WireSyncEngine;
 @import avs;
 #import "ZMUserSession+iOS.h"
 #import <CommonCrypto/CommonCrypto.h>

@@ -31,7 +31,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+Orientation.h"
 #import "BarController.h"
 #import "Wire-Swift.h"

@@ -141,11 +141,11 @@
 "conversation.status.you" = "Вы";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ добавил(-а) вас";
-"conversation.status.added_useres" = "%@ добавил %@";
+"conversation.status.added_users" = "%@ добавил %@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Вы покинули беседу";
-"conversation.status.removed_useres" = "%@ удалил %@";
+"conversation.status.removed_users" = "%@ удалил %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

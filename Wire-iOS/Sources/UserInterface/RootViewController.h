@@ -18,7 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @class ZClientViewController;
 @class KeyboardFrameObserver;

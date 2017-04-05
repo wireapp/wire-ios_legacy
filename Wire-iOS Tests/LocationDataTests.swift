@@ -18,7 +18,7 @@
 
 
 @testable import Wire
-import ZMCDataModel
+import WireDataModel
 import XCTest
 import MapKit
 

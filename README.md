@@ -57,6 +57,7 @@ In order to build Wire for iOS locally, it is necessary to install the following
 - Carthage 0.17.2 or newer (https://github.com/Carthage/Carthage)
 - CocoaPods 1.2.0 or newer (https://cocoapods.org/)
 - Ruby 2.2.5
+- wget (https://www.gnu.org/software/wget/)
 
 The setup script will automatically check for you that you satisfy these requirements
 

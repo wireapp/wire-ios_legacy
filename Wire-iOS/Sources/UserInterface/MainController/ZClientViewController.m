@@ -41,7 +41,7 @@
 #import "ColorSchemeController.h"
 #import "ProfileViewController.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "VoiceChannelV2+Additions.h"
 
@@ -267,9 +267,7 @@
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion
 {
     NSArray *conversationsList = [SessionObjectCache sharedCache].conversationList;
-    if (conversationsList.count == 0) {
-        return;
-    } else {
+    if (conversationsList.count != 0) {
         [self selectConversation:conversationsList.firstObject];
     }
     
@@ -541,6 +539,7 @@
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification
 {
     [self reloadCurrentConversation];
+    [self.conversationListViewController reloadContents];
 }
 
 #pragma mark - Network Loop notification

@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AnalyticsProvider.h"
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 
 @class AnalyticsSessionSummaryEvent;
 @class AnalyticsRegistration;

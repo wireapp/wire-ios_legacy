@@ -19,7 +19,7 @@
 
 #import "SoundEventListener.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "ZClientViewController.h"
 #import "ZMUserSession+Additions.h"

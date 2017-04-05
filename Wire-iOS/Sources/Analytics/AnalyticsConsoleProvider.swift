@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import ZMCSystem
+import WireSystem
 
 fileprivate let tag = "<ANALYTICS>:"
 @objc class AnalyticsConsoleProvider : NSObject {

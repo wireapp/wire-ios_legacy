@@ -19,7 +19,7 @@
 
 import Foundation
 import WireShareEngine
-import ZMCDataModel
+import WireDataModel
 
 
 typealias DegradationStrategyChoice = (DegradationStrategy) -> ()

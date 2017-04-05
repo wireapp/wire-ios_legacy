@@ -316,7 +316,7 @@ final class AudioMessageView: UIView, TransferView {
                     Analytics.shared()?.tagPlayedAudioMessage(duration, extensionString: (fileMessageData.filename as NSString).pathExtension)
                 }
                 else {
-                    DDLogWarn("Cannot load track \(track): \(error)")
+                    DDLogWarn("Cannot load track \(track): \(String(describing: error))")
                 }
             }
         } else {

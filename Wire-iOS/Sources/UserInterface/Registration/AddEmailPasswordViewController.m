@@ -30,7 +30,7 @@
 #import "PushTransition.h"
 #import "NavigationController.h"
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "UIView+MTAnimation.h"
 #import "UIImage+ZetaIconsNeue.h"

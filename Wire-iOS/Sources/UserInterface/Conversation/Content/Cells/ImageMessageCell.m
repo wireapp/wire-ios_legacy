@@ -21,7 +21,7 @@
 
 #import "ImageMessageCell+Internal.h"
 #import <PureLayout/PureLayout.h>
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 
 #import "Constants.h"
 #import "WAZUIMagic.h"

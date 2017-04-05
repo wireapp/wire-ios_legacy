@@ -29,7 +29,7 @@
 
 - (id<ZiphyRequestIdentifier>)doRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
 {
-    // Removing the https://host part from the given URL, so zmessaging can prepend it with the Wire giphy proxy host
+    // Removing the https://host part from the given URL, so WireSyncEngine can prepend it with the Wire giphy proxy host
     NSString *fullHost = [NSString stringWithFormat:@"%@://%@", request.URL.scheme, request.URL.host];
     NSString *URLString = [request.URL absoluteString];
     URLString = [URLString stringByReplacingOccurrencesOfString:fullHost withString:@""];

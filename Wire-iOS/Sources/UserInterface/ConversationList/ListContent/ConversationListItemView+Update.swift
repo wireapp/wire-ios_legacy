@@ -19,16 +19,31 @@
 import UIKit
 
 extension ConversationListItemView {
+    @objc public func configureFont() {
+        self.titleField.font = FontSpec(.normal, .light).font!
+    }
+    
+    internal func configure(with title: String, subtitle: NSAttributedString) {
+        self.titleText = title
+        self.subtitleAttributedText = subtitle
+    }
+    
+    internal func configure(with title: String, subtitle: NSAttributedString, users: [ZMUser]) {
+        self.titleText = title
+        self.subtitleAttributedText = subtitle
+        self.rightAccessory.icon = .pendingConnection
+        self.avatarView.conversation = .none
+        self.avatarView.users = users
+    }
+    
     @objc(updateForConversation:)
-    public func update(for conversation: ZMConversation?) {
+    internal func update(for conversation: ZMConversation?) {
         guard let conversation = conversation else {
-            self.titleText = ""
-            self.subtitleAttributedText = "" && [:]
-            self.rightAccessory.icon = .none
+            self.configure(with: "", subtitle: "" && [:])
             return
         }
         
-        self.titleText = conversation.displayName
+        let title = conversation.displayName
         self.avatarView.conversation = conversation
         
         let status = conversation.status
@@ -42,7 +57,8 @@ extension ConversationListItemView {
             statusIcon = status.icon(for: conversation)
         }
         self.rightAccessory.icon = statusIcon
-        self.subtitleAttributedText = status.description(for: conversation)
+
+        self.configure(with: title, subtitle: status.description(for: conversation))
     }
 }
 

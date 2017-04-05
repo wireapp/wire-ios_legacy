@@ -135,9 +135,15 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (SplitViewController *)wr_splitViewController
 {
-    if ([self.parentViewController isKindOfClass:[SplitViewController class]]) {
-        return (SplitViewController *)self.parentViewController;
+    UIViewController *possibleSplit = self;
+    
+    do {
+        if ([possibleSplit isKindOfClass:[SplitViewController class]]) {
+            return (SplitViewController *)possibleSplit;
+        }
+        possibleSplit = possibleSplit.parentViewController;
     }
+    while(possibleSplit != nil);
     
     return nil;
 }
