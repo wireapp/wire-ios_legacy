@@ -87,6 +87,10 @@ extension ZMConversation {
 
 
 fileprivate enum Mode {
+    /// 0 participants in conversation:
+    /// /    \
+    /// \    /
+    case none
     /// 1-2 participants in conversation:
     /// / AA \
     /// \ AA /
@@ -104,7 +108,9 @@ extension Mode {
     
     fileprivate init(usersCount: Int) {
         switch (usersCount) {
-        case 0...1:
+        case 0:
+            self = .none
+        case 1:
             self = .one
         default:
             self = .four
@@ -146,11 +152,7 @@ final public class ConversationAvatarView: UIView {
             }
             
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
-            guard stableRandomParticipants.count > 0 else {
-                self.clippingView.subviews.forEach { $0.removeFromSuperview() }
-                return
-            }
-            
+
             self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
             self.users = stableRandomParticipants
         }
@@ -175,6 +177,9 @@ final public class ConversationAvatarView: UIView {
     
     func userImages() -> [UserImageView] {
         switch mode {
+        case .none:
+            return []
+            
         case .one:
             return [imageViewLeftTop]
             
@@ -228,6 +233,8 @@ final public class ConversationAvatarView: UIView {
         clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
         
         switch mode {
+        case .none:
+            break
         case .one:
             self.userImages().forEach {
                 $0.frame = clippingView.bounds

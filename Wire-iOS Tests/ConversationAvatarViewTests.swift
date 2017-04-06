@@ -46,30 +46,86 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         sut = ConversationAvatarView()
     }
 
-    func testThatItRendersSingleUserImage() {
+    func testThatItRendersNoUserImages() {
+        // GIVEN
+        let thirdUser = ZMUser.insertNewObject(in: moc)
+        thirdUser.name = "Anna"
+        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        conversation?.removeParticipant(selfUser)
+        conversation?.removeParticipant(otherUser)
+        conversation?.removeParticipant(thirdUser)
+        // WHEN
+        sut.conversation = conversation
+        
+        // THEN
+        verify(view: sut.prepareForSnapshots())
+    }
+
+    
+    func testThatItRendersSomeAndThenNoUserImages() {
+        // GIVEN
         otherUser.accentColorValue = .strongLimeGreen
         otherUserConversation.conversationType = .oneOnOne
-        sut.conversation = otherUserConversation
         moc.saveOrRollback()
+        
+        // WHEN
+        sut.conversation = otherUserConversation
+        
+        // AND WHEN
+        _ = sut.prepareForSnapshots()
+        
+        // AND WHEN
+        let thirdUser = ZMUser.insertNewObject(in: moc)
+        thirdUser.name = "Anna"
+        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        conversation?.removeParticipant(selfUser)
+        conversation?.removeParticipant(otherUser)
+        conversation?.removeParticipant(thirdUser)
+        
+        sut.conversation = conversation
+        
+        // THEN
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersSingleUserImage() {
+        // GIVEN
+        otherUser.accentColorValue = .strongLimeGreen
+        otherUserConversation.conversationType = .oneOnOne
+        moc.saveOrRollback()
+        
+        // WHEN
+        sut.conversation = otherUserConversation
 
+        // THEN
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersTwoUserImages() {
+        // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: moc)
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
         
         (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
+        
+        // WHEN
         sut.conversation = conversation
+        
+        // THEN
         verify(view: sut.prepareForSnapshots())
     }
 
     func testThatItRendersManyUsers() {
+        // GIVEN
         let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
         
         (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
+        
+        // WHEN
         sut.conversation = conversation
+        
+        // THEN
         verify(view: sut.prepareForSnapshots())
     }
 
