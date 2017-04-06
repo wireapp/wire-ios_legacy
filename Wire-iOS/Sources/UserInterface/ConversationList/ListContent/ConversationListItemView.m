@@ -68,6 +68,11 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                                  selector:@selector(contentSizeCategoryDidChange:)
                                                      name:UIContentSizeCategoryDidChangeNotification
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(mediaPlayerStateChanged:)
+                                                     name:MediaPlaybackManagerPlayerStateChangedNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -215,6 +220,14 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification
 {
     [self configureFont];
+}
+
+- (void)mediaPlayerStateChanged:(NSNotification *)notification
+{
+    if (self.conversation != nil &&
+        [[[[[AppDelegate sharedAppDelegate] mediaPlaybackManager] activeMediaPlayer] sourceMessage] conversation] == self.conversation) {
+        [self updateForConversation:self.conversation];
+    }
 }
 
 - (void)otherConversationListItemDidScroll:(NSNotification *)notification

@@ -25,7 +25,7 @@
 
 @class AudioTrackPlayer;
 
-
+FOUNDATION_EXPORT NSString *const MediaPlaybackManagerPlayerStateChangedNotification;
 
 /// This object is an interface for AVS to control conversation media playback;
 @interface MediaPlaybackManager : NSObject <AVSMedia, MediaPlayerDelegate>

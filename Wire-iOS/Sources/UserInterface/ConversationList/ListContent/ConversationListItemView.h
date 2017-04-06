@@ -19,12 +19,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class ZMConversation;
 @class ConversationAvatarView;
 @class ConversationListAccessoryView;
 
 FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 
 @interface ConversationListItemView : UIView
+
+// Please use `updateForConversation:` to set conversation.
+@property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic, copy) NSString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;

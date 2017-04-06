@@ -23,7 +23,7 @@
 #import "MediaPlayer.h"
 #import "AudioTrackPlayer.h"
 
-
+NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlaybackManagerPlayerStateChangedNotification";
 
 
 @interface MediaPlaybackManager ()
@@ -144,6 +144,9 @@
         default:
             break;
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:MediaPlaybackManagerPlayerStateChangedNotification
+                                                        object:mediaPlayer];
 }
 
 @end
