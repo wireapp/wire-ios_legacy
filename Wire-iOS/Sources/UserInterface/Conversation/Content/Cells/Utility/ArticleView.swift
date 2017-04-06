@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-import ZMCLinkPreview
+import WireLinkPreview
 import TTTAttributedLabel
 import WireExtensionComponents
 import Classy

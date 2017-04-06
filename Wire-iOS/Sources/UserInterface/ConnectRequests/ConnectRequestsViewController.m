@@ -31,7 +31,7 @@
 #import "Wire-Swift.h"
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 // helpers
 #import <PureLayout/PureLayout.h>

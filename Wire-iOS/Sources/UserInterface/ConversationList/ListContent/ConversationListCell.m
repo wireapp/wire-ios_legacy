@@ -26,7 +26,7 @@
 
 #import "Constants.h"
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Settings.h"
 
@@ -192,7 +192,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     }
     else {
         if (self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall) {
-            [self.conversation.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
+            (void)[self.conversation.voiceChannel joinWithVideo:NO userSession:[ZMUserSession sharedSession]];
         }
     }
 }
@@ -219,12 +219,12 @@ static CGSize cachedSize = {0, 0};
 
 - (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize
 {
-    if (!CGSizeEqualToSize(cachedSize, CGSizeZero)) {
+    if (!CGSizeEqualToSize(cachedSize, CGSizeZero) && cachedSize.width == collectionViewSize.width) {
         return cachedSize;
     }
-    self.itemView.titleText = @"Ü";
-    self.itemView.subtitleAttributedText = [[NSAttributedString alloc] initWithString:@"Ä"
-                                                                           attributes:[ZMConversation statusRegularStyle]];
+        
+    NSString *fullHeightString = @"Ü";
+    [self.itemView configureWith:fullHeightString subtitle:[[NSAttributedString alloc] initWithString:fullHeightString attributes:[ZMConversation statusRegularStyle]]];
     
     CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
     

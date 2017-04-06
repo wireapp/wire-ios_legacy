@@ -141,11 +141,11 @@
 "conversation.status.you" = "Jij";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ heeft jou toegevoegd";
-"conversation.status.added_useres" = "%@ heeft %@ toegevoegd";
+"conversation.status.added_users" = "%@ heeft %@ toegevoegd";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Jij verliet";
-"conversation.status.removed_useres" = "%@ verwijderde %@";
+"conversation.status.removed_users" = "%@ verwijderde %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

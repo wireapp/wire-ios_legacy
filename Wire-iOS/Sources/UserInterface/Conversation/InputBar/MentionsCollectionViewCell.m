@@ -23,7 +23,7 @@
 #import "UIFont+MagicAccess.h"
 #import <PureLayout/PureLayout.h>
 #import "UserImageView+Magic.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface MentionsLabel : UILabel
 

@@ -25,11 +25,10 @@ import CoreGraphics
 
 extension URL {
     public func UTI() -> String {
-        guard let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self.pathExtension as CFString, .none),
-                let UTIString = UTI.takeUnretainedValue() as String? else {
-                    return kUTTypeItem as String
+        guard let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self.pathExtension as CFString, .none) else {
+            return kUTTypeItem as String
         }
-        return UTIString
+        return UTI.takeUnretainedValue() as String
     }
 }
 

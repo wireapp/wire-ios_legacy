@@ -141,11 +141,11 @@
 "conversation.status.you" = "Dig";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ har tilføjet dig";
-"conversation.status.added_useres" = "%@ har tilføjet %@";
+"conversation.status.added_users" = "%@ har tilføjet %@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Du forlod";
-"conversation.status.removed_useres" = "%@ har fjernet %@";
+"conversation.status.removed_users" = "%@ har fjernet %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

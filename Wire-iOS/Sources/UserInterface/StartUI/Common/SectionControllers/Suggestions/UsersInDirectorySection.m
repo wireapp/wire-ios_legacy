@@ -21,7 +21,7 @@
 #import "SearchSectionHeaderView.h"
 #import "Constants.h"
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "SearchResultCell.h"
 #import "Analytics+iOS.h"
 

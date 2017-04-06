@@ -22,7 +22,7 @@
 #import <PureLayout/PureLayout.h>
 @import WireExtensionComponents;
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 @import OnePasswordExtension;
 #import "RegistrationTextField.h"
 

@@ -20,7 +20,7 @@
 import WireShareEngine
 import WireExtensionComponents
 import MobileCoreServices
-import ZMCDataModel
+import WireDataModel
 
 
 class ExtensionActivity {

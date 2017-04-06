@@ -23,7 +23,7 @@
 #import "Wire_iOS_Tests-Swift.h"
 #import "MockMessage+Creation.h"
 #import "WAZUIMagicIOS.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 @interface IconSystemCellTests : ZMSnapshotTestCase
 

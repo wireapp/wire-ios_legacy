@@ -91,11 +91,7 @@ fileprivate enum Mode {
     /// / AA \
     /// \ AA /
     case one
-    /// 3-4 participants in conversation:
-    /// / AB \
-    /// \ AB /
-    case two
-    /// 5+ participants in conversation:
+    /// 2+ participants in conversation:
     /// / AB \
     /// \ CD /
     case four
@@ -103,11 +99,13 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        switch (conversation.activeParticipants.count, conversation.conversationType) {
-        case (0...2, _), (_, .oneOnOne):
+        self.init(usersCount: conversation.activeParticipants.count - 1)
+    }
+    
+    fileprivate init(usersCount: Int) {
+        switch (usersCount) {
+        case 0...1:
             self = .one
-        case (3...5, _):
-            self = .two
         default:
             self = .four
         }
@@ -116,6 +114,30 @@ extension Mode {
 
 final public class ConversationAvatarView: UIView {
 
+    public var users: [ZMUser] = [] {
+        didSet {
+            self.mode = Mode(usersCount: users.count)
+
+            var index: Int = 0
+            self.userImages().forEach {
+                $0.userSession = ZMUserSession.shared()
+                $0.size = .tiny
+                $0.showInitials = (self.mode == .one)
+                $0.isCircular = false
+                if index < users.count {
+                    $0.user = users[index]
+                }
+                else {
+                    $0.user = nil
+                    $0.containerView.isOpaque = false
+                    $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.24)
+                }
+                index = index + 1
+            }
+            self.setNeedsLayout()
+        }
+    }
+    
     public var conversation: ZMConversation? = .none {
         didSet {
             guard let conversation = self.conversation else {
@@ -129,23 +151,12 @@ final public class ConversationAvatarView: UIView {
                 return
             }
             
-            self.accessibilityLabel = "Avatar for \(self.conversation?.displayName)"
-            self.mode = Mode(conversation: conversation)
-            
-            var index: Int = 0
-            self.userImages().forEach {
-                $0.userSession = ZMUserSession.shared()
-                $0.size = .tiny
-                $0.showInitials = (self.mode == .one)
-                $0.isCircular = false
-                $0.user = stableRandomParticipants[index]
-                index = index + 1
-            }
-            self.setNeedsLayout()
+            self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
+            self.users = stableRandomParticipants
         }
     }
     
-    private var mode: Mode = .two {
+    private var mode: Mode = .one {
         didSet {
             self.clippingView.subviews.forEach { $0.removeFromSuperview() }
             self.userImages().forEach(self.clippingView.addSubview)
@@ -157,7 +168,7 @@ final public class ConversationAvatarView: UIView {
             else {
                 layer.borderWidth = .hairline
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
-                backgroundColor = UIColor(white: 0, alpha: 0.32)
+                backgroundColor = UIColor(white: 0, alpha: 0.16)
             }
         }
     }
@@ -166,9 +177,6 @@ final public class ConversationAvatarView: UIView {
         switch mode {
         case .one:
             return [imageViewLeftTop]
-            
-        case .two:
-            return [imageViewLeftTop, imageViewRightTop]
             
         case .four:
             return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
@@ -216,23 +224,15 @@ final public class ConversationAvatarView: UIView {
         guard self.bounds != .zero else {
             return
         }
+
+        clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
         
         switch mode {
         case .one:
-            clippingView.frame = self.bounds.insetBy(dx: 3, dy: 3)
-            
             self.userImages().forEach {
                 $0.frame = clippingView.bounds
             }
-        case .two:
-            clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
-
-            layoutMultipleAvatars(with: CGSize(width: (containerSize.width  - interAvatarInset) / 2.0, height: containerSize.height))
-            
         case .four:
-            clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
-            let containerSize = self.clippingView.bounds.size
-
             layoutMultipleAvatars(with: CGSize(width: (containerSize.width - interAvatarInset) / 2.0, height: (containerSize.height - interAvatarInset) / 2.0))
         }
         

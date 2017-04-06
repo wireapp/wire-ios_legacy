@@ -31,7 +31,7 @@
 #import "AudioTrack.h"
 #import "AudioTrackCell.h"
 #import "AudioPlaylistCell.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "LinkAttachmentCache.h"
 #import "SoundcloudService.h"
 #import "LinkAttachment.h"

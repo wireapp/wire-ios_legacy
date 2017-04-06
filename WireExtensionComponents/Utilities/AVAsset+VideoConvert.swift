@@ -43,7 +43,7 @@ extension AVAsset {
         exportSession.exportAsynchronously { [unowned exportSession] in
             switch exportSession.status {
             case .failed:
-                DDLogError("Cannot transcode \(inPath) to \(outPath): \(exportSession.error)")
+                DDLogError("Cannot transcode \(inPath) to \(outPath): \(String(describing: exportSession.error))")
                 DispatchQueue.main.async {
                     completion?(false)
                 }

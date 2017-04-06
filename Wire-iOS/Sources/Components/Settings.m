@@ -19,7 +19,7 @@
 
 #import "Settings.h"
 #import "Settings+ColorScheme.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Wire-Swift.h"
 

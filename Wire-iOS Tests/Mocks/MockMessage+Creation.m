@@ -22,7 +22,7 @@
 #import "Wire_iOS_Tests-Swift.h"
 #import "MockUserClient.h"
 #import "Wire-Swift.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 @implementation MockMessageFactory
 

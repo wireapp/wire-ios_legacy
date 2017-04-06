@@ -25,8 +25,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@import zmessaging;
-@import ZMCDataModel;
+@import WireSyncEngine;
+@import WireDataModel;
 
 @implementation ConversationContentViewController (GestureRecognizerDelegate)
 

@@ -28,7 +28,7 @@
 #import "Constants.h"
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Navigation.h"

@@ -141,11 +141,11 @@
 "conversation.status.you" = "Ti";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ te je dodal(-a)";
-"conversation.status.added_useres" = "%@ je dodal(-a) %@";
+"conversation.status.added_users" = "%@ je dodal(-a) %@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Si zapustil(-a)";
-"conversation.status.removed_useres" = "%@ je odstranil(-a) %@";
+"conversation.status.removed_users" = "%@ je odstranil(-a) %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

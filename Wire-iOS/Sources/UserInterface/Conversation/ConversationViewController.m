@@ -35,7 +35,7 @@
 
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "VoiceChannelV2+Additions.h"
 #import "Message+UI.h"
 
@@ -395,8 +395,8 @@
 
 - (void)openConversationList
 {
-    BOOL leftControllerRevealed = self.parentViewController.wr_splitViewController.leftViewControllerRevealed;
-    [self.parentViewController.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
+    BOOL leftControllerRevealed = self.wr_splitViewController.leftViewControllerRevealed;
+    [self.wr_splitViewController setLeftViewControllerRevealed:!leftControllerRevealed animated:YES completion:nil];
 }
 
 #pragma mark - Getters, setters
@@ -768,7 +768,7 @@
             [ZMMessage deleteForEveryone:message];
         } else {
             [[Analytics shared] tagEditedMessageConversationType:conversationType timeElapsed:elapsedTime];
-            [ZMMessage edit:message newText:newText];
+            (void)[ZMMessage edit:message newText:newText];
         }
     }];
 }

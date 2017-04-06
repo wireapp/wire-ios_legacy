@@ -18,7 +18,7 @@
 
 import Foundation
 import Cartography
-import zmessaging
+import WireSyncEngine
 import Classy
 
 typealias DismissAction = (_ completion: (()->())?)->()

@@ -28,7 +28,7 @@
 #import "Wire-Swift.h"
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface TransitionDelegate : NSObject <UIViewControllerTransitioningDelegate>
 

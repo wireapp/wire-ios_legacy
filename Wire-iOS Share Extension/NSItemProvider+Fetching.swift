@@ -18,7 +18,7 @@
 
 
 import MobileCoreServices
-import ZMUtilities
+import WireUtilities
 
 
 extension NSItemProvider {

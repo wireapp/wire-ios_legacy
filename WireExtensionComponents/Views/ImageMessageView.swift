@@ -18,7 +18,7 @@
 
 import Foundation
 import Cartography
-import ZMCDataModel
+import WireDataModel
 import FLAnimatedImage
 
 @objc public class ImageMessageView: UIView {

@@ -22,7 +22,7 @@
 #import "ConversationContentViewController.h"
 
 #import "WAZUIMagicIOS.h"
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "MessageAction.h"
 
 NS_ASSUME_NONNULL_BEGIN

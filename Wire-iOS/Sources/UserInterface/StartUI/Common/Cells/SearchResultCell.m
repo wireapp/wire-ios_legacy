@@ -23,8 +23,8 @@
 #import "UIView+MTAnimation.h"
 #import "BadgeUserImageView.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "zmessaging+iOS.h"
-#import <ZMCDataModel/ZMBareUser.h>
+#import "WireSyncEngine+iOS.h"
+#import <WireDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
 @interface SearchResultCell ()

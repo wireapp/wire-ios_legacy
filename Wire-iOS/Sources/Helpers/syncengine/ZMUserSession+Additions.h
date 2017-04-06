@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import <zmessaging/ZMUserSession.h>
+#import <WireSyncEngine/ZMUserSession.h>
 
 
 @interface ZMUserSession (Additions)

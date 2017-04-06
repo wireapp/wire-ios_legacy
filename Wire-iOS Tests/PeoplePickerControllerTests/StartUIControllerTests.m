@@ -19,7 +19,7 @@
 
 @import UIKit;
 @import XCTest;
-@import zmessaging;
+@import WireSyncEngine;
 #import <OCMock/OCMock.h>
 #import "StartUIViewController.h"
 #import "StartUIViewController+Testing.h"

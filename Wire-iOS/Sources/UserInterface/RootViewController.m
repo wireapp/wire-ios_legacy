@@ -20,7 +20,7 @@
 #import "RootViewController.h"
 
 #import "MagicConfig.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 // Other UI
 #import <AddressBookUI/AddressBookUI.h>

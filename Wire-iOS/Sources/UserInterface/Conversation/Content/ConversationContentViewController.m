@@ -28,12 +28,12 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@import zmessaging;
+@import WireSyncEngine;
 @import WireExtensionComponents;
 @import AVKit;
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "VoiceChannelV2+Additions.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 

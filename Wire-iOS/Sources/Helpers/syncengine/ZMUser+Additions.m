@@ -18,7 +18,7 @@
 
 
 #import "ZMUser+Additions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics+iOS.h"
 #import "ColorScheme.h"

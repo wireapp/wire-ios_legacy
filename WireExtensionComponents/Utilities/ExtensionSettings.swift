@@ -62,9 +62,9 @@ public class ExtensionSettings: NSObject {
 
     public static let shared = ExtensionSettings()
 
-    public override class func initialize() {
-        super.initialize()
-        setupDefaultValues()
+    private override init() {
+        super.init()
+        type(of: self).setupDefaultValues()
     }
 
     private static func setupDefaultValues() {

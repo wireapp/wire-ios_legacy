@@ -121,7 +121,7 @@ import Cartography
             container.top == view.top
             container.bottom == view.bottom
             
-            contactsButton.leading == container.leading + 18
+            contactsButton.leading == container.leading + 10
             contactsButton.trailing == container.trailing - 18
             contactsButton.centerY == container.centerY
         }
@@ -131,7 +131,7 @@ import Cartography
             container.top == view.top
             container.bottom == view.bottom
             
-            archivedButton.trailing == container.trailing - 24
+            archivedButton.trailing == container.trailing - 16
             archivedButton.leading == container.leading + 24
             archivedButton.centerY == container.centerY
         }

@@ -26,7 +26,7 @@
 #import "ZMUserSession+iOS.h"
 #import "PassthroughTouchesView.h"
 #import "AccentColorChangeHandler.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "GapLoadingBar.h"
 
 

@@ -18,7 +18,7 @@
 
 
 #import "NSString+Mentions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 static NSRegularExpression *mentionMatcher;

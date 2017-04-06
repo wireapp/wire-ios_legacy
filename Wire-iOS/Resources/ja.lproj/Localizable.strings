@@ -141,11 +141,11 @@
 "conversation.status.you" = "あなた";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
-"conversation.status.added_useres" = "%@は%@を追加しました";
+"conversation.status.added_users" = "%@は%@を追加しました";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "あなたは退出しました";
-"conversation.status.removed_useres" = "%@は%@を削除しました";
+"conversation.status.removed_users" = "%@は%@を削除しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

@@ -23,7 +23,7 @@
 #import "Constants.h"
 #import "TopPeopleCell.h"
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "TopPeopleLineCollectionViewController.h"
 #import <PureLayout/PureLayout.h>
 #import "UIView+Borders.h"

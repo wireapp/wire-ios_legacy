@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-@import zmessaging;
+@import WireSyncEngine;
 
 @interface MockUserClient: NSObject<UserClientType>
 @property (nonatomic) ZMUser *user;

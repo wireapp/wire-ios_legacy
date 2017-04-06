@@ -41,7 +41,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     
     func testStatusFailedToSend() {
         // GIVEN
-        let sut = self.createGroupConversation()
+        let sut = self.otherUserConversation!
         let message = sut.appendMessage(withText: "text") as! ZMMessage
         message.expire()
         // WHEN
@@ -104,6 +104,25 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "test 5")
     }
     
+    func testStatusForMultipleTextMessagesInConversation_LastRename() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        for index in 1...5 {
+            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .conversationNameChanged
+        sut.sortedAppendMessage(otherMessage)
+        
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "test 5")
+    }
+    
     func testStatusForMultipleVariousMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -124,14 +143,8 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     
     func testStatusForSystemMessageILeft() {
         // GIVEN
-        let sut = self.otherUserConversation!
-        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
-        otherMessage.systemMessageType = .participantsRemoved
-        otherMessage.sender = self.selfUser
-        otherMessage.users = Set([self.selfUser])
-        otherMessage.removedUsers = Set([self.selfUser])
-        sut.sortedAppendMessage(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        let sut = self.createGroupConversation()
+        sut.removeParticipant(selfUser)
         
         // WHEN
         let status = sut.status.description(for: sut)
@@ -179,7 +192,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsRemoved
         otherMessage.sender = self.selfUser
-        otherMessage.users = Set([self.selfUser])
+        otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
         sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
@@ -187,7 +200,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "You removed \(self.otherUser.displayName!)")
+        XCTAssertEqual(status.string, "")
     }
     
     func testStatusForSystemMessageSomeoneWasAdded() {
@@ -207,6 +220,23 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added \(self.otherUser.displayName!)")
     }
     
+    func testStatusForSystemMessageIWasRemoved() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsRemoved
+        otherMessage.sender = self.otherUser
+        otherMessage.users = Set([self.selfUser])
+        otherMessage.removedUsers = Set([self.selfUser])
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "You were removed")
+    }
+    
     func testStatusForSystemMessageSomeoneWasRemoved() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -221,6 +251,6 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) removed \(self.otherUser.displayName!)")
+        XCTAssertEqual(status.string, "")
     }
 }

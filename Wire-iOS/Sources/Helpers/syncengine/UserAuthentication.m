@@ -22,10 +22,10 @@
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 
 #import "FileManager.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #else
-    #import "zmessaging+OS_X.h"
+    #import "WireSyncEngine+OS_X.h"
     #import "Constants.h"
 #endif
 

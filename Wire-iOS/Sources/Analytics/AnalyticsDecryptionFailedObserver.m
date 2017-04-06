@@ -18,7 +18,7 @@
 
 
 #import "AnalyticsDecryptionFailedObserver.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 #import "Analytics+OTREvents.h"
 

@@ -141,11 +141,11 @@
 "conversation.status.you" = "Sen";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@, seni ekledi";
-"conversation.status.added_useres" = "%@, %@'i ekledi";
+"conversation.status.added_users" = "%@, %@'i ekledi";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Ayrıldın";
-"conversation.status.removed_useres" = "%@, %@'i sildi";
+"conversation.status.removed_users" = "%@, %@'i sildi";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

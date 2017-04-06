@@ -46,7 +46,7 @@
 #import "UIViewController+Orientation.h"
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "ZMUserSession+Additions.h"
 #import "StartUIViewController.h"

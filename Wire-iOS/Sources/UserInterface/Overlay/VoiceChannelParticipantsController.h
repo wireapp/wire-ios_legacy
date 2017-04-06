@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface VoiceChannelParticipantsController : NSObject <UICollectionViewDataSource>
 

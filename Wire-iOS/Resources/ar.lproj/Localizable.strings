@@ -141,11 +141,11 @@
 "conversation.status.you" = "أنت";
 "conversation.status.added_multiple" = "Users added";
 "conversation.status.you_was_added" = "%@ أضافك";
-"conversation.status.added_useres" = "%@ أضاف %@";
+"conversation.status.added_users" = "%@ أضاف %@";
 "conversation.status.removed_multiple" = "Users removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "أنت غادرت";
-"conversation.status.removed_useres" = "قام %@ بإزالة %@";
+"conversation.status.removed_users" = "قام %@ بإزالة %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation

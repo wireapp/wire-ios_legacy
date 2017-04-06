@@ -18,7 +18,7 @@
 
 
 import UIKit
-import zmessaging
+import WireSyncEngine
 import Cartography
 
 public extension ZMConversationList {

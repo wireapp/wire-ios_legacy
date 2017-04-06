@@ -23,7 +23,7 @@
 #import "AddContactsViewController.h"
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Button.h"
 #import "ContactsCell.h"
 
