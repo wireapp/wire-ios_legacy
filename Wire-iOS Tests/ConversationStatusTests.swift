@@ -49,8 +49,8 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.text]!, 1)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text]!, 1)
     }
     
     func testThatItReturnsStatusForConversationWithUnreadOnePing() {
@@ -62,9 +62,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.knock]!, 1)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text], .none)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.knock]!, 1)
     }
     
     func testThatItReturnsStatusForConversationWithUnreadOneImage() {
@@ -76,9 +76,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.image]!, 1)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text], .none)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.image]!, 1)
     }
     
     func testThatItReturnsStatusForConversationWithUnreadManyMessages() {
@@ -92,10 +92,10 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text]!, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.image]!, 1)
-        XCTAssertEqual(status.unreadMessagesByType[.knock]!, 1)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 3)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text]!, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.image]!, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.knock]!, 1)
     }
     
     func testThatItReturnsStatusForConversationWithUnreadManyTexts() {
@@ -109,10 +109,10 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text]!, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.image], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.knock], .none)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 3)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text]!, 3)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.image], .none)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.knock], .none)
     }
     
     func testThatItReturnsStatusForConversationWithUnreadManyPings() {
@@ -126,10 +126,10 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.image], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.knock]!, 3)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 3)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text], .none)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.image], .none)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.knock]!, 3)
     }
     
     func testThatItReturnsStatusForConversationWithUnreadManyImages() {
@@ -143,9 +143,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let status = sut.status
         // THEN
         XCTAssertTrue(status.hasMessages)
-        XCTAssertEqual(status.unreadMessages.count, 3)
-        XCTAssertEqual(status.unreadMessagesByType[.text], .none)
-        XCTAssertEqual(status.unreadMessagesByType[.image]!, 3)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 3)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.text], .none)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.image]!, 3)
     }
     
     func testThatItReturnsStatusForBlocked() {
