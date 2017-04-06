@@ -11,7 +11,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.8)
   - GTMSessionFetcher/Full (1.1.8):
     - GTMSessionFetcher/Core (= 1.1.8)
-  - Localytics (4.2.0)
+  - Localytics (4.3.0)
   - MTAnimation (1.2.2)
   - NSObject-ObjectMap (2.3.1)
   - PureLayout (3.0.0)
@@ -22,7 +22,7 @@ DEPENDENCIES:
   - ARCollectionViewMasonryLayout (from `https://github.com/wireapp/ARCollectionViewMasonryLayout`, tag `2.3.0`)
   - CocoaSecurity (= 1.2.4)
   - GoogleAPIClient/YouTube (= 1.0.4)
-  - Localytics (= 4.2.0)
+  - Localytics (= 4.3.0)
   - MTAnimation (from `https://github.com/wireapp/MTAnimation`, tag `1.2.2-crash-fix`)
   - NSObject-ObjectMap (from `https://github.com/wireapp/NSObject-ObjectMap`, tag `v2.3.1`)
   - PureLayout (from `https://github.com/wireapp/PureLayout`, tag `v3.0.0`)
@@ -74,13 +74,13 @@ SPEC CHECKSUMS:
   CocoaSecurity: d288a6f87e0f363823d2cb83e753814a6944f71a
   GoogleAPIClient: 4dedb6af613eb7d171814c343f8a82ee5411e13b
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
-  Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
+  Localytics: 45fc45f5600bdb151e839d14db1360c971f0b9de
   MTAnimation: 2dc79fea016ba8af8363394727ab44df9dc99f68
   NSObject-ObjectMap: 3223c0c994a8e3de44ccb74ddf3e63c86821c015
   PureLayout: 270dfee2236f697ab1d5e2771c2e5c248495fa0d
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: ce3d4718e3c56673a28dbabfc1457823d79e1132
+PODFILE CHECKSUM: 4e8ccbc388bab035aa9ee80e0275aeb558bfa5bc
 
 COCOAPODS: 1.2.0
