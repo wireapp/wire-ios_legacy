@@ -64,6 +64,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self = [super init];
     if (self) {
         [self setupConversationListItemView];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(contentSizeCategoryDidChange:)
+                                                     name:UIContentSizeCategoryDidChangeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -207,6 +211,11 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 }
 
 #pragma mark - Observer
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification
+{
+    [self configureFont];
+}
 
 - (void)otherConversationListItemDidScroll:(NSNotification *)notification
 {
