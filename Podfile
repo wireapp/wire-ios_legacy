@@ -3,7 +3,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 def ios_pods
     pod 'GoogleAPIClient/YouTube', '1.0.4', :inhibit_warnings => true
     pod 'CocoaSecurity', '1.2.4', :inhibit_warnings => true
-    pod 'Localytics', '4.2.0', :inhibit_warnings => true
+    pod 'Localytics', '4.3.0', :inhibit_warnings => true
     pod 'NSObject-ObjectMap', :git => 'https://github.com/wireapp/NSObject-ObjectMap', :tag => 'v2.3.1'
     pod 'PureLayout', :git => 'https://github.com/wireapp/PureLayout', :tag => 'v3.0.0'
     pod 'RBBAnimation', :git => 'https://github.com/wireapp/RBBAnimation', :commit => '7dd8d9a3cf610be5f7c1e4459692d555d70704c7'
