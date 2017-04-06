@@ -55,8 +55,11 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         // In case the user has set a 3rd party application to open the URL we do not 
         // want to commit the view controller but instead open the url.
-        guard lastPreviewURL == nil || lastPreviewURL?.hasThirdPartyPreference() == false else { lastPreviewURL?.open(); return  }
-        self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
+        if let url = lastPreviewURL {
+            url.open()
+        } else {
+            self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
+        }
     }
 
 }
