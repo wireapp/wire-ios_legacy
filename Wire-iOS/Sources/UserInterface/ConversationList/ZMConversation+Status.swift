@@ -43,8 +43,8 @@ internal struct ConversationStatus {
     let hasMessages: Bool
     let hasUnsentMessages: Bool
     
-    let unreadMessages: [ZMConversationMessage]
-    let unreadMessagesByType: [StatusMessageType: UInt]
+    let messagesRequiringAttention: [ZMConversationMessage]
+    let messagesRequiringAttentionByType: [StatusMessageType: UInt]
     let isTyping: Bool
     let isSilenced: Bool
     let isOngoingCall: Bool
@@ -275,23 +275,23 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
     ]
     
     func isMatching(with status: ConversationStatus) -> Bool {
-        return matchedTypes.flatMap { status.unreadMessagesByType[$0] }.reduce(0, +) > 0
+        return matchedTypes.flatMap { status.messagesRequiringAttentionByType[$0] }.reduce(0, +) > 0
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         if status.isSilenced {
-            let resultString = matchedTypes.filter { status.unreadMessagesByType[$0] > 0 }.flatMap {
+            let resultString = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.flatMap {
                 guard let localizationKey = matchedTypesDescriptions[$0] else {
                     return .none
                 }
                 
-                return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.unreadMessagesByType[$0] ?? 0)
+                return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.messagesRequiringAttentionByType[$0] ?? 0)
                 }.joined(separator: ", ")
             
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle()
         }
         else {
-            guard let message = status.unreadMessages.reversed().first(where: {
+            guard let message = status.messagesRequiringAttention.reversed().first(where: {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
                         let _ = matchedTypesDescriptions[type] {
@@ -326,7 +326,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        guard let message = status.unreadMessages.reversed().first(where: {
+        guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
                      let _ = matchedTypesDescriptions[type] {
@@ -346,7 +346,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            return .unreadMessages(count: status.unreadMessages.count)
+            return .unreadMessages(count: status.messagesRequiringAttention.flatMap { StatusMessageType(message: $0) }.filter { matchedTypes.index(of: $0) != .none }.count)
         }
     }
     
@@ -371,7 +371,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
 
     func isMatching(with status: ConversationStatus) -> Bool {
-        return matchedTypes.flatMap { status.unreadMessagesByType[$0] }.reduce(0, +) > 0
+        return matchedTypes.flatMap { status.messagesRequiringAttentionByType[$0] }.reduce(0, +) > 0
     }
     
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> String? {
@@ -435,7 +435,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         var allStatusMessagesByType: [StatusMessageType: [ZMConversationMessage]] = [:]
         
         self.matchedTypes.forEach { type in
-            allStatusMessagesByType[type] = status.unreadMessages.filter {
+            allStatusMessagesByType[type] = status.messagesRequiringAttention.filter {
                 StatusMessageType(message: $0) == type
             }
         }
@@ -567,31 +567,19 @@ extension ZMConversation {
     internal var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
         
-        var unreadMessages = self.unreadMessages
+        var messagesRequiringAttention = self.unreadMessages
         
-        if unreadMessages.count == 0,
+        if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
             let systemMessageData = lastMessage.systemMessageData,
             systemMessageData.systemMessageType == .participantsRemoved {
-            unreadMessages.append(lastMessage)
+            messagesRequiringAttention.append(lastMessage)
         }
         
-        let unreadMessagesTypes = unreadMessages.flatMap { StatusMessageType(message: $0) }
+        let messagesRequiringAttentionTypes = messagesRequiringAttention.flatMap { StatusMessageType(message: $0) }
         
-        let unreadMessagesByType = { () -> [StatusMessageType : UInt] in 
-            var unreadMessagesByType = [StatusMessageType: UInt]()
-            
-            StatusMessageType.allValues.forEach { type in
-                let total = unreadMessagesTypes.filter {
-                        $0 == type
-                    }.count
-                
-                if total != 0 {
-                    unreadMessagesByType[type] = UInt(total)
-                }
-            }
-            return unreadMessagesByType
-        }()
+        var iterator = messagesRequiringAttentionTypes.makeIterator()
+        let messagesRequiringAttentionByType = iterator.histogram()
         
         let hasMessages: Bool
         
@@ -609,8 +597,8 @@ extension ZMConversation {
         return ConversationStatus(isGroup: self.conversationType == .group,
                                   hasMessages: hasMessages,
                                   hasUnsentMessages: self.hasUnreadUnsentMessage,
-                                  unreadMessages: unreadMessages,
-                                  unreadMessagesByType: unreadMessagesByType,
+                                  messagesRequiringAttention: messagesRequiringAttention,
+                                  messagesRequiringAttentionByType: messagesRequiringAttentionByType,
                                   isTyping: self.typingUsers().count > 0,
                                   isSilenced: self.isSilenced,
                                   isOngoingCall: isOngoingCall,
