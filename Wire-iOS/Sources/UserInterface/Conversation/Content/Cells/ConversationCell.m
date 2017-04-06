@@ -460,7 +460,12 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (CGRect)selectionRect
 {
-    return self.frame;
+    return self.bounds;
+}
+
+- (UIView *)previewView
+{
+    return self.selectionView;
 }
 
 - (BOOL)canBecomeFirstResponder;

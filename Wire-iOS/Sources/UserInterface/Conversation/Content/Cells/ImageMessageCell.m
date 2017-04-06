@@ -463,8 +463,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
     BOOL needsLayout = [super updateForMessage:change];
-    
-    if (change.imageChanged || change.isObfuscatedChanged) {
+    if (change.imageChanged || change.transferStateChanged || change.isObfuscatedChanged) {
         [self configureForMessage:self.message layoutProperties:self.layoutProperties];
     }
     

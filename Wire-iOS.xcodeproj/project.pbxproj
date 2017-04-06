@@ -477,6 +477,7 @@
 		876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 876AE75F1C159A9C00E3E743 /* NSStringFingerprintTests.m */; };
 		876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876B94811D7D8C870063AE89 /* UIView+SlideInState.swift */; };
 		876BF8121AEFDA7900A3810F /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BF8101AEFDA7900A3810F /* SignInViewController.m */; };
+		876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */; };
 		876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */; };
 		87722C541ADFEDFA00842F18 /* EmailVerificationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87722C531ADFEDFA00842F18 /* EmailVerificationStepViewController.m */; };
 		877316051B970A82007BA779 /* conversation.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315F61B970A82007BA779 /* conversation.plist */; };
@@ -1726,6 +1727,7 @@
 		876B94811D7D8C870063AE89 /* UIView+SlideInState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SlideInState.swift"; sourceTree = "<group>"; };
 		876BF80F1AEFDA7900A3810F /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		876BF8101AEFDA7900A3810F /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IteratorProtocol+Histogram.swift"; sourceTree = "<group>"; };
 		876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
 		87722C521ADFEDFA00842F18 /* EmailVerificationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailVerificationStepViewController.h; sourceTree = "<group>"; };
 		87722C531ADFEDFA00842F18 /* EmailVerificationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailVerificationStepViewController.m; sourceTree = "<group>"; };
@@ -2849,6 +2851,7 @@
 				87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */,
 				87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */,
 				876376891E8413D900B2CCF0 /* RawRepresentable+AllValues.swift */,
+				876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -5729,6 +5732,7 @@
 				878607201D33E3FF00971A19 /* LineNumberLogFormatter.m in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
 				1EE9DCC61B5F9A6D00E347DF /* TokenField.m in Sources */,
+				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */,
 				871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,

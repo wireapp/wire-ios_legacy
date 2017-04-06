@@ -44,8 +44,8 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
         }
 
-        if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.selectionRect != .zero {
-            previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell.selectionView)
+        if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.previewView.bounds != .zero {
+            previewingContext.sourceRect = previewingContext.sourceView.convert(cell.previewView.frame, from: cell.previewView.superview!)
         }
 
         return controller

@@ -63,7 +63,9 @@ final internal class ConversationListAccessoryView: UIView {
         constrain(self, badgeView, typingView) { selfView, badgeView, typingView in
             badgeView.height == 20
             badgeView.edges == selfView.edges
-            typingView.center == selfView.center
+            
+            typingView.leading == selfView.leading ~ LayoutPriority(999)
+            typingView.trailing == selfView.trailing ~ LayoutPriority(999)
             typingView.top == selfView.top
             typingView.bottom == selfView.bottom
             typingView.width >= 28

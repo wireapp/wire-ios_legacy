@@ -498,11 +498,6 @@
     return [self.listContentController selectInboxAndFocusOnView:focus];
 }
 
-- (void)reloadContents
-{
-    [self.listContentController reload];
-}
-
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated
 {
     [self.listContentController scrollToCurrentSelectionAnimated:animated];

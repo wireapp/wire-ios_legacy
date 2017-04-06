@@ -539,7 +539,6 @@
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification
 {
     [self reloadCurrentConversation];
-    [self.conversationListViewController reloadContents];
 }
 
 #pragma mark - Network Loop notification
