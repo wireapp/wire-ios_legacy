@@ -381,11 +381,11 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         else if let message = messages.last,
                 let systemMessage = message.systemMessageData,
                 let sender = message.sender {
-            if systemMessage.addedUsers.contains(where: { $0.isSelfUser }) {
+            if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 return String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation))
             }
             else {
-                let usersList = systemMessage.addedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+                let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                 let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
                 return String(format: "conversation.status.added_users".localized, sender!, usersList)
             }
@@ -572,7 +572,7 @@ extension ZMConversation {
         if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
             let systemMessageData = lastMessage.systemMessageData,
-            systemMessageData.systemMessageType == .participantsRemoved {
+            systemMessageData.systemMessageType == .participantsRemoved || systemMessageData.systemMessageType == .participantsAdded {
             messagesRequiringAttention.append(lastMessage)
         }
         
