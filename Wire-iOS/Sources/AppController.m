@@ -289,6 +289,10 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         mediaManager.microphoneMuted = NO;
         mediaManager.speakerEnabled = NO;
         [mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media": @"external" }];
+
+        // -setUiStartsAudio: Should be set when CalKit is used.
+        // Then AVS will not start the audio before the audio session is active
+        [mediaManager setUiStartsAudio:!Settings.sharedSettings.disableCallKit];
     }
 
     // UIColor accent color still relies on magic, so we need to setup Classy after Magic.
