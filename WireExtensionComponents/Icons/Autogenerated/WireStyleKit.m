@@ -6821,7 +6821,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
-
+    
     //// Resize to Target Frame
     CGContextSaveGState(context);
     CGRect resizedFrame = WireStyleKitResizingBehaviorApply(resizing, CGRectMake(0, 0, 260, 260), targetFrame);
@@ -6857,7 +6857,48 @@ static UIImage* _imageOfShieldnotverified = nil;
     bezierPath.usesEvenOddFillRule = YES;
     [white80 setFill];
     [bezierPath fill];
+    
+    CGContextRestoreGState(context);
 
+}
+
++ (void)drawSpaceWithColor: (UIColor*)color
+{
+    [WireStyleKit drawSpaceWithFrame: CGRectMake(0, 0, 24, 24) resizing: WireStyleKitResizingBehaviorStretch color: color];
+}
+
++ (void)drawSpaceWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color
+{
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //// Resize to Target Frame
+    CGContextSaveGState(context);
+    CGRect resizedFrame = WireStyleKitResizingBehaviorApply(resizing, CGRectMake(0, 0, 24, 24), targetFrame);
+    CGContextTranslateCTM(context, resizedFrame.origin.x, resizedFrame.origin.y);
+    CGContextScaleCTM(context, resizedFrame.size.width / 24, resizedFrame.size.height / 24);
+
+
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(10.26, 0.41)];
+    [bezierPath addCurveToPoint: CGPointMake(13.74, 0.41) controlPoint1: CGPointMake(11.22, -0.14) controlPoint2: CGPointMake(12.79, -0.13)];
+    [bezierPath addLineToPoint: CGPointMake(21.26, 4.71)];
+    [bezierPath addCurveToPoint: CGPointMake(23, 7.7) controlPoint1: CGPointMake(22.22, 5.26) controlPoint2: CGPointMake(23, 6.61)];
+    [bezierPath addLineToPoint: CGPointMake(23, 16.3)];
+    [bezierPath addCurveToPoint: CGPointMake(21.26, 19.29) controlPoint1: CGPointMake(23, 17.4) controlPoint2: CGPointMake(22.21, 18.75)];
+    [bezierPath addLineToPoint: CGPointMake(13.74, 23.59)];
+    [bezierPath addCurveToPoint: CGPointMake(10.26, 23.59) controlPoint1: CGPointMake(12.78, 24.14) controlPoint2: CGPointMake(11.21, 24.13)];
+    [bezierPath addLineToPoint: CGPointMake(2.74, 19.29)];
+    [bezierPath addCurveToPoint: CGPointMake(1, 16.3) controlPoint1: CGPointMake(1.78, 18.74) controlPoint2: CGPointMake(1, 17.39)];
+    [bezierPath addLineToPoint: CGPointMake(1, 7.7)];
+    [bezierPath addCurveToPoint: CGPointMake(2.74, 4.71) controlPoint1: CGPointMake(1, 6.6) controlPoint2: CGPointMake(1.79, 5.25)];
+    [bezierPath addLineToPoint: CGPointMake(10.26, 0.41)];
+    [bezierPath closePath];
+    bezierPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [bezierPath fill];
+    
     CGContextRestoreGState(context);
 
 }
@@ -8087,7 +8128,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldnotverifiedTargets: (NSArray*)shieldnotverifiedTargets
 {
     _shieldnotverifiedTargets = shieldnotverifiedTargets;
-    
+
     for (id target in shieldnotverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldnotverified];
 }
@@ -8101,11 +8142,11 @@ CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, 
 {
     if (CGRectEqualToRect(rect, target) || CGRectEqualToRect(target, CGRectZero))
         return rect;
-    
+
     CGSize scales = CGSizeZero;
     scales.width = ABS(target.size.width / rect.size.width);
     scales.height = ABS(target.size.height / rect.size.height);
-    
+
     switch (behavior)
     {
         case WireStyleKitResizingBehaviorAspectFit:
@@ -8129,7 +8170,7 @@ CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, 
             break;
         }
     }
-    
+
     CGRect result = CGRectStandardize(rect);
     result.size.width *= scales.width;
     result.size.height *= scales.height;
