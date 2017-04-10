@@ -165,8 +165,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
-    self.fullImageView.layer.borderWidth = UIScreen.hairline;
-    self.fullImageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
     self.fullImageView.hidden = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
 
@@ -294,7 +292,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
 
-    self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(0.5, 0.5));
+    const CGFloat scaleFactor = imageMessageData.isAnimatedGIF ? 1 : 0.5;
+    self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
     self.imageSize = CGSizeMake(MAX(48, self.originalImageSize.width), MAX(48, self.originalImageSize.height));
     
     if (self.autoStretchVertically) {
@@ -303,6 +302,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     else {
         self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
+
+    [self updateImageBorder];
 
     self.imageToolbarView.showsSketchButton = !imageMessageData.isAnimatedGIF;
     self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];
@@ -365,6 +366,13 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             self.loadingView.hidden = NO;
         }
     }
+}
+
+- (void)updateImageBorder
+{
+    BOOL showBorder = !self.imageSmallerThanMinimumSize;
+    self.fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0;
+    self.fullImageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
 }
 
 - (void)setImage:(id<MediaAsset>)image
