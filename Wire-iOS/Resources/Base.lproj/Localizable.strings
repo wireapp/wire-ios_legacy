@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "You left";
+"conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ removed %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

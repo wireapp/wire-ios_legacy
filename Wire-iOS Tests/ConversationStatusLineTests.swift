@@ -253,4 +253,20 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "")
     }
+    
+    func testStatusForConversationStarted() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .newConversation
+        otherMessage.sender = self.otherUser
+        otherMessage.users = Set([self.otherUser, self.selfUser])
+        otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
+        sut.sortedAppendMessage(otherMessage)
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) started a conversation")
+    }
 }
