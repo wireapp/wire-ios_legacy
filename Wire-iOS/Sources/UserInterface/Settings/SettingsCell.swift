@@ -293,6 +293,9 @@ protocol SettingsCellType: class {
             textInput.bottom == contentView.bottom + 8
             textInput.trailing == trailingBoundaryView.trailing - 16
         }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
+        self.contentView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func setupAccessibiltyElements() {
@@ -301,6 +304,12 @@ protocol SettingsCellType: class {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [textInput])
         self.accessibilityElements = currentElements
+    }
+    
+    @objc public func onCellSelected(_ sender: AnyObject!) {
+        if !self.textInput.isFirstResponder {
+            self.textInput.becomeFirstResponder()
+        }
     }
     
     // MARK: - UITextFieldDelegate
