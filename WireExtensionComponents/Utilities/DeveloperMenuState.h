@@ -22,4 +22,6 @@
 @interface DeveloperMenuState : NSObject
 + (BOOL)developerMenuEnabled;
 + (BOOL)signOutEnabled;
+/// Performs a setup of all the debugging features, if the menu is enabled
++ (void)setupDebuggingIfEnabled;
 @end

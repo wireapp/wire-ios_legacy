@@ -18,6 +18,7 @@
 
 
 #import "DeveloperMenuState.h"
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 @implementation DeveloperMenuState
 
@@ -35,6 +36,12 @@
 #else
     return NO;
 #endif
+}
+
++ (void)setupDebuggingIfEnabled {
+    if(self.developerMenuEnabled) {
+        [self prepareForDebugging];
+    }
 }
 
 @end
