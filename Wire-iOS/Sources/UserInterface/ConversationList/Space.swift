@@ -29,6 +29,8 @@ import Foundation
 }
 
 internal class Space: NSObject {
+    public static let didChangeNotificationName = Notification.Name(rawValue: "SpaceDidChangeNotificationName")
+    public static let didChangeNotificationNameString = didChangeNotificationName.rawValue
     public let name: String
     public let predicate: NSPredicate
     public var selected: Bool = false {
@@ -94,35 +96,36 @@ internal class Space: NSObject {
                                                         observer.spaceDidChangeSelection(space: self)
         })
     }
+
+    public static func update() {
+        if let factory = SettingsPropertyFactory.shared,
+            let workspaceName = factory.property(.workspaceName).rawValue() as? String,
+            !workspaceName.isEmpty {
+            
+            let privateSpace: Space = {
+                let predicate = NSPredicate(format: "NOT (displayName CONTAINS[cd] %@)", workspaceName)
+                let privateSpace = Space(name: ZMUser.selfUser().displayName, predicate: predicate)
+                privateSpace.selected = true
+                return privateSpace
+            }()
+            
+            let workSpace: Space = {
+                let predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", workspaceName)
+                let workSpace = Space(name: workspaceName, predicate: predicate)
+                workSpace.selected = true
+                return workSpace
+            }()
+            
+            spaces = [privateSpace, workSpace]
+        }
+        else {
+            spaces = []
+        }
+        
+        NotificationCenter.default.post(name: didChangeNotificationName, object: .none)
+    }
     
-    
-    public static let workString = "ω"
-    public static let familyString = "Ω"
-    
-    public static let privateSpace: Space = {
-        let predicate = NSPredicate(format: "NOT (displayName CONTAINS %@) AND NOT (displayName CONTAINS %@)", workString, familyString)
-        let privateSpace = Space(name: "Personal", predicate: predicate)
-        privateSpace.selected = true
-        return privateSpace
-    }()
-    
-    public static let workSpace: Space = {
-        let predicate = NSPredicate(format: "displayName CONTAINS %@", workString)
-        let workSpace = Space(name: "Work", predicate: predicate)
-        workSpace.selected = true
-        return workSpace
-    }()
-    
-    public static let familySpace: Space = {
-        let predicate = NSPredicate(format: "displayName CONTAINS %@", familyString)
-        let workSpace = Space(name: "Family", predicate: predicate)
-        workSpace.selected = true
-        return workSpace
-    }()
-    
-    public static let spaces: [Space] = { [privateSpace, workSpace, familySpace] }()
-    
-    @objc(enableSpaces) public static let enableSpaces: Bool = DeveloperMenuState.developerMenuEnabled()
+    public static var spaces: [Space] = []
 }
 
 extension ZMConversation {

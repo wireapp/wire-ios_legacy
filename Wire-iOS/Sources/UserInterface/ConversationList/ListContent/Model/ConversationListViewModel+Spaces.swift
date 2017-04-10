@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationListViewModel {
-    public func subscribeToSpacesUpdates() {
+    @objc public func subscribeToSpacesUpdates() {
         self.spacesObservers = Space.spaces.map {
             $0.addSelectionObserver(self)
         }

@@ -68,6 +68,10 @@ void debugLogUpdate (ConversationListChangeInfo *note);
                                                    name:UIApplicationWillEnterForegroundNotification
                                                  object:nil];
         [self subscribeToSpacesUpdates];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(subscribeToSpacesUpdates)
+                                                   name:[Space didChangeNotificationNameString]
+                                                 object:nil];
     }
     return self;
 }
@@ -234,7 +238,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 {
     NSArray *newConversationList = @[];
     
-    if ([Space enableSpaces]) {
+    if ([Space spaces].count > 0) {
         NSMutableArray *predicates = [NSMutableArray array];
         for (Space *space in [Space spaces]) {
             if (space.selected) {

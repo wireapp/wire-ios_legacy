@@ -22,9 +22,25 @@ import Cartography
 
 extension ConversationListViewController {
     
+    public func updateSpaces() {
+        
+        if Space.spaces.count > 0 {
+            let spacesView = SpaceSelectorView(spaces: Space.spaces)
+            self.topBar.middleView = spacesView
+        }
+        else {
+            let titleLabel = UILabel()
+            
+            titleLabel.font = FontSpec(.medium, .semibold).font
+            titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+            titleLabel.text = "list.title".localized.uppercased()
+            
+            self.topBar.middleView = titleLabel
+        }
+    }
     
     public func createTopBar() {
-
+        
         let settingsButton = IconButton()
         
         settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
@@ -47,21 +63,7 @@ extension ConversationListViewController {
         self.topBar = ConversationListTopBar()
         
         self.view.addSubview(self.topBar)
-        
-        if Space.enableSpaces {
-            let spacesView = SpaceSelectorView(spaces: Space.spaces)
-            self.topBar.middleView = spacesView
-        }
-        else {
-            let titleLabel = UILabel()
-            
-            titleLabel.font = FontSpec(.medium, .semibold).font
-            titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-            titleLabel.text = "list.title".localized.uppercased()
-            
-            self.topBar.middleView = titleLabel
-        }
-
+        self.updateSpaces()
         self.topBar.rightView = settingsButton
     }
     

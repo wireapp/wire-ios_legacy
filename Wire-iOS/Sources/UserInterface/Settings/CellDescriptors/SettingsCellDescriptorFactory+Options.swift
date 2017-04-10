@@ -168,6 +168,9 @@ extension SettingsCellDescriptorFactory {
             popularDemandDescriptors.insert(darkThemeElement, at: 0)
         }
         
+        let spaceNameDescriptor = SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.workspaceName))
+        popularDemandDescriptors.append(spaceNameDescriptor)
+        
         let byPopularDemandSection = SettingsSectionDescriptor(
             cellDescriptors: popularDemandDescriptors,
             header: "self.settings.popular_demand.title".localized,
