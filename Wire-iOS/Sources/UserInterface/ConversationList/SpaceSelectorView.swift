@@ -197,7 +197,7 @@ final internal class SpaceSelectorView: LineView {
 
             nameLabel.leading == selfView.leading
             nameLabel.trailing == selfView.trailing
-            nameLabel.bottom == selfView.bottom
+            nameLabel.bottom == selfView.bottom - 4
             
             dotView.width == dotView.height
             dotView.height == dotSize

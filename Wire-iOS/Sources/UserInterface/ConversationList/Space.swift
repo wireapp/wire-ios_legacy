@@ -110,7 +110,7 @@ internal class Space: NSObject {
                 var image: UIImage? = .none
                 
                 if let imageData = selfUser?.imageMediumData {
-                    image = UIImage(data: imageData)
+                    image = UIImage(from: imageData, withMaxSize: 100)
                 }
                 
                 let predicate = NSPredicate(format: "NOT (displayName CONTAINS[cd] %@)", workspaceName)
