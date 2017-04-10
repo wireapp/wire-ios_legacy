@@ -165,6 +165,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
+    self.fullImageView.layer.borderWidth = UIScreen.hairline;
+    self.fullImageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
     self.fullImageView.hidden = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
 
