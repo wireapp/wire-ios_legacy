@@ -22,6 +22,7 @@ import WireSystem
 extension DeveloperMenuState {
     
     public static func prepareForDebugging() {
+        guard self.developerMenuEnabled() else { return }
         self.enableLogsForMessageSendingDebugging()
     }
     

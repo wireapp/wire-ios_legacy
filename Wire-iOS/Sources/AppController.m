@@ -495,7 +495,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     // Singletons
     AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
     
-    [DeveloperMenuState setupDebuggingIfEnabled];
+    [DeveloperMenuState prepareForDebugging];
 }
 
 #pragma mark - User Session block queueing

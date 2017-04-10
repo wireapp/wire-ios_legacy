@@ -38,10 +38,4 @@
 #endif
 }
 
-+ (void)setupDebuggingIfEnabled {
-    if(self.developerMenuEnabled) {
-        [self prepareForDebugging];
-    }
-}
-
 @end
