@@ -243,13 +243,15 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             if (! self.imageAspectConstraint) {
                 CGFloat aspectRatio = self.imageSize.height / self.imageSize.width;
                 [NSLayoutConstraint autoSetPriority:ALLayoutPriorityRequired forConstraints:^{
-                    self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imageViewContainer withMultiplier:aspectRatio];
+                    self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight
+                                                                                 toDimension:ALDimensionWidth
+                                                                                      ofView:self.imageViewContainer
+                                                                              withMultiplier:aspectRatio];
                 }];
             }
         }
         else {
             self.messageContentView.layoutMargins = UIEdgeInsetsZero;
-            
             self.imageRightConstraint.active = YES;
         }
         
@@ -301,7 +303,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     else {
         self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
-    
+
+    self.imageToolbarView.showsSketchButton = !imageMessageData.isAnimatedGIF;
     self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];
     self.imageToolbarView.configuration = [self imageToolbarNeedsToBeCompact] ? ImageToolbarConfigurationCompactCell : ImageToolbarConfigurationCell;
     
