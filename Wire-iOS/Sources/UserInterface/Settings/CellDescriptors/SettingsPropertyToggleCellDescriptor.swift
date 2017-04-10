@@ -32,14 +32,16 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
         }
     }
     let identifier: String?
+    let switchAccessibilityLabel: String?
     var visible: Bool = true
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
     
-    init(settingsProperty: SettingsProperty, inverse: Bool = false, identifier: String? = .none) {
+    init(settingsProperty: SettingsProperty, inverse: Bool = false, identifier: String? = .none, switchAccessibilityLabel: String? = .none) {
         self.settingsProperty = settingsProperty
         self.inverse = inverse
         self.identifier = identifier
+        self.switchAccessibilityLabel = switchAccessibilityLabel
     }
     
     func featureCell(_ cell: SettingsCellType) {
@@ -58,6 +60,7 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
             }
             
             toggleCell.switchView.isOn = boolValue
+            toggleCell.switchView.accessibilityLabel = switchAccessibilityLabel
         }
     }
     
