@@ -121,7 +121,7 @@ extension SettingsCellDescriptorFactory {
         let VBRDescriptor = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),
             inverse: true,
-            switchAccessibilityLabel: "VBRSwitch"
+            identifier: "VBRSwitch"
         )
         let VBRDescription = "self.settings.vbr.description".localized
         let VBRSection = SettingsSectionDescriptor(cellDescriptors: [VBRDescriptor], header: .none, footer: VBRDescription, visibilityAction: .none)
