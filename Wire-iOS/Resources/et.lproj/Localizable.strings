@@ -117,33 +117,34 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "Vestlused";
 "list.archived_conversations" = "ARHIIV";
 "list.archived_conversations_close" = "Sulge arhiiv";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "Aktiivne kõne";
+"conversation.status.typing" = "Kirjutab…";
+"conversation.status.typing.group" = "%@: kirjutab…";
+"conversation.status.silenced" = "Vaigistatud";
 "conversation.status.blocked" = "Blokeeritud";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Jagas lingi";
 "conversation.status.message.image" = "Jagas pilti";
 "conversation.status.message.location" = "Jagas asukohta";
 "conversation.status.message.audio" = "Jagas häälsõnumit";
 "conversation.status.message.video" = "Jagas videot";
 "conversation.status.message.file" = "Jagas faili";
 "conversation.status.message.knock" = "Pingis";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "Vastamata kõne";
+"conversation.status.message.ephemeral" = "Kustuv sõnum";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
 "conversation.status.added_users" = "%@ lisas kasutaja %@";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Mitu inimest eemaldatud";
+"conversation.status.you_were_removed" = "Sind eemaldati vestlusest";
 "conversation.status.you_left" = "Lahkusid vestlusest";
 "conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
 

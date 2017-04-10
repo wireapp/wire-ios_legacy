@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Invitar contactos";
 
 "contacts_ui.no_contact.title" = "No hay chats activos";
-"contacts_ui.no_contact.message" = "Pulsa en el nombre del contacto para iniciar un chat";
+"contacts_ui.no_contact.message" = "Pulsa sobre contacto para iniciar un chat";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entrar";
@@ -136,13 +136,14 @@
 "conversation.status.message.file" = "Compartió un archivo";
 "conversation.status.message.knock" = "Hizo ping";
 "conversation.status.message.missedcall" = "Llamada perdida";
+"conversation.status.message.ephemeral" = "Mensaje con caducidad";
 
 "conversation.status.unsent" = "⚠️ Mensaje no enviado";
 "conversation.status.you" = "Tú";
-"conversation.status.added_multiple" = "Usuarios añadidos";
+"conversation.status.added_multiple" = "Contactos añadidos";
 "conversation.status.you_was_added" = "%@ te añadió";
 "conversation.status.added_users" = "%@ añadió a %@";
-"conversation.status.removed_multiple" = "Miembros eliminados";
+"conversation.status.removed_multiple" = "Contactos eliminados";
 "conversation.status.you_were_removed" = "Te han eliminado";
 "conversation.status.you_left" = "Te fuiste";
 "conversation.status.removed_users" = "%@ eliminó a %@";

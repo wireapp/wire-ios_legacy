@@ -73,7 +73,7 @@
 "contacts_ui.title" = "دعوة أُناس";
 
 "contacts_ui.no_contact.title" = "لا توجد محادثات نشطة\n";
-"contacts_ui.no_contact.message" = "اضغط على جهات الاتصال لبدء محادثة جديدة";
+"contacts_ui.no_contact.message" = "انقر على أشخاص لتبدأ محادثة";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "انضم إلى";
@@ -117,33 +117,34 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "المحادثات";
 "list.archived_conversations" = "حفظ في الأرشيف";
 "list.archived_conversations_close" = "إغلاق الأرشيف";
 
 "conversation.status.call" = "المكالمة الجارية";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.typing" = "يكتب رسالة…";
+"conversation.status.typing.group" = "%@: يكتب رسالة…";
+"conversation.status.silenced" = "صامت";
 "conversation.status.blocked" = "محظور";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "شارك رابط";
 "conversation.status.message.image" = "شارك صورة";
 "conversation.status.message.location" = "شارك موقع";
 "conversation.status.message.audio" = "شارك رسالة صوتية";
 "conversation.status.message.video" = "شارك فيديو";
 "conversation.status.message.file" = "شارك ملف";
 "conversation.status.message.knock" = "بينغ";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "مكالمة فائتة";
+"conversation.status.message.ephemeral" = "رسالة مؤقّتة";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ رسالة غير مرسلة";
 "conversation.status.you" = "أنت";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "تم إضافة أشخاص";
 "conversation.status.you_was_added" = "%@ أضافك";
 "conversation.status.added_users" = "%@ أضاف %@";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "أزيل أشخاص";
+"conversation.status.you_were_removed" = "تمت إزالتك";
 "conversation.status.you_left" = "أنت غادرت";
 "conversation.status.removed_users" = "قام %@ بإزالة %@";
 

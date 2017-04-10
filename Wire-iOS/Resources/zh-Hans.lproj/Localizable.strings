@@ -73,7 +73,7 @@
 "contacts_ui.title" = "邀请联系人";
 
 "contacts_ui.no_contact.title" = "没有活跃的对话\n";
-"contacts_ui.no_contact.message" = "点击联系人开始对话";
+"contacts_ui.no_contact.message" = "Tap people to start a conversation";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "加入";
@@ -117,33 +117,34 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "会话";
 "list.archived_conversations" = "归档";
 "list.archived_conversations_close" = "关闭归档";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "正在呼叫";
+"conversation.status.typing" = "输入信息";
+"conversation.status.typing.group" = "%@︰ 输入消息......";
+"conversation.status.silenced" = "静音";
 "conversation.status.blocked" = "已拉黑";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "分享链接";
 "conversation.status.message.image" = "分享了一张图片";
 "conversation.status.message.location" = "分享了位置";
 "conversation.status.message.audio" = "分享了语音信息";
 "conversation.status.message.video" = "分享了影片";
 "conversation.status.message.file" = "分享了文件";
 "conversation.status.message.knock" = "打了招呼";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "未接电话";
+"conversation.status.message.ephemeral" = "阅后即焚";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ 未发信息";
 "conversation.status.you" = "你";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "联系人已添加";
 "conversation.status.you_was_added" = "%@加了您";
 "conversation.status.added_users" = "%@加了%@";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "联系人已删除";
+"conversation.status.you_were_removed" = "你被删除";
 "conversation.status.you_left" = "您退出了";
 "conversation.status.removed_users" = "%@移除了%@";
 
@@ -334,7 +335,7 @@
 "voice.status.video_not_available" = "视频关闭";
 "voice.status.low_connection" = "连接质量不佳";
 "voice.network_error.title" = "没有互联网讯号";
-"voice.status.cbr" = "Constant Bit Rate";
+"voice.status.cbr" = "固定码率";
 "voice.network_error.body" = "使用语音通话，您必须连接到互联网。请检查您的网路然后重试。";
 "voice.degradation.new_self_device" = "您开始使用新的设备。";
 "voice.degradation.new_user_device" = "%@ 开始使用新的设备。";
@@ -594,8 +595,8 @@
 "self.settings.callkit.caption" = "与iOS分享";
 "self.settings.callkit.description" = "在屏幕锁界面与手机通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将与Apple服务器同步。重新启动Wire来启动该功能。";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.title" = "可变码率编码";
+"self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 通话";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 信息";

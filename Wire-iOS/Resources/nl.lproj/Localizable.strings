@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Nodig anderen uit";
 
 "contacts_ui.no_contact.title" = "Geen actieve gesprekken\n";
-"contacts_ui.no_contact.message" = "Druk op contacten om een gesprek te beginnen";
+"contacts_ui.no_contact.message" = "Tap een persoon om een gesprek te beginnen";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Deelnemen";
@@ -117,33 +117,34 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "Gesprekken";
 "list.archived_conversations" = "ARCHIEF";
 "list.archived_conversations_close" = "Archief sluiten";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "Uitgaand gesprek";
+"conversation.status.typing" = "Typt een bericht…";
+"conversation.status.typing.group" = "%@: Typt een bericht…";
+"conversation.status.silenced" = "Gedempt";
 "conversation.status.blocked" = "Geblokkeerd";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Deel een link";
 "conversation.status.message.image" = "Deelde een foto";
 "conversation.status.message.location" = "Deel een locatie";
 "conversation.status.message.audio" = "Deelde een audio bericht";
 "conversation.status.message.video" = "Deelde een video";
 "conversation.status.message.file" = "Deelde een bestand";
 "conversation.status.message.knock" = "Gepinged";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "Gemiste oproep";
+"conversation.status.message.ephemeral" = "Tijdelijk bericht";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ On verstuurt bericht";
 "conversation.status.you" = "Jij";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "Personen toegevoegd";
 "conversation.status.you_was_added" = "%@ heeft jou toegevoegd";
 "conversation.status.added_users" = "%@ heeft %@ toegevoegd";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Personen verwijderd";
+"conversation.status.you_were_removed" = "Je bent verwijderd";
 "conversation.status.you_left" = "Jij verliet";
 "conversation.status.removed_users" = "%@ verwijderde %@";
 

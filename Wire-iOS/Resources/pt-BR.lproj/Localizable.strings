@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Convidar pessoas";
 
 "contacts_ui.no_contact.title" = "Não há conversas ativas\n";
-"contacts_ui.no_contact.message" = "Toque em contatos para iniciar uma conversa";
+"contacts_ui.no_contact.message" = "Toque nas pessoas para iniciar uma conversa";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Participe";
@@ -117,18 +117,18 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "Conversas";
 "list.archived_conversations" = "ARQUIVO";
 "list.archived_conversations_close" = "Fechar arquivo";
 
 "conversation.status.call" = "Chamada em curso";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.typing" = "Digitando uma mensagem…";
+"conversation.status.typing.group" = "%@: está digitando…";
+"conversation.status.silenced" = "Silenciado";
 "conversation.status.blocked" = "Bloqueado";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Compartilhou um link";
 "conversation.status.message.image" = "Compartilhou uma imagem";
 "conversation.status.message.location" = "Compartilhou uma localização";
 "conversation.status.message.audio" = "Compartilhou uma mensagem de áudio";
@@ -136,14 +136,15 @@
 "conversation.status.message.file" = "Compartilhou um arquivo";
 "conversation.status.message.knock" = "Pingou";
 "conversation.status.message.missedcall" = "Chamada não atendida";
+"conversation.status.message.ephemeral" = "Mensagem com tempo";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ Mensagem não enviada";
 "conversation.status.you" = "Você";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "Pessoas adicionadas";
 "conversation.status.you_was_added" = "%@ adicionou você";
 "conversation.status.added_users" = "%@ adicionou %@";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Pessoas removidas";
+"conversation.status.you_were_removed" = "Você foram removido";
 "conversation.status.you_left" = "Você saiu";
 "conversation.status.removed_users" = "%@ removeu %@";
 

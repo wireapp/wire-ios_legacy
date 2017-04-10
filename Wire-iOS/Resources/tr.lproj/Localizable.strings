@@ -73,7 +73,7 @@
 "contacts_ui.title" = "İnsanları davet et";
 
 "contacts_ui.no_contact.title" = "Hiç aktif konuşma yok\n";
-"contacts_ui.no_contact.message" = "Bir konuşma başlatmak için kişilere tıklayın";
+"contacts_ui.no_contact.message" = "Konuşma başlatmak için kişilere tıkla";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Katıl";
@@ -117,33 +117,34 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "Konuşmalar";
 "list.archived_conversations" = "ARŞİVLE";
 "list.archived_conversations_close" = "Arşivi kapat";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "Devam eden arama";
+"conversation.status.typing" = "Bir mesaj yazıyor…";
+"conversation.status.typing.group" = "%@: bir mesaj yazıyor…";
+"conversation.status.silenced" = "Susturuldu";
 "conversation.status.blocked" = "Engellendi";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Bir bağlantı paylaştı";
 "conversation.status.message.image" = "Bir resim paylaştı";
 "conversation.status.message.location" = "Bir konum paylaştı";
 "conversation.status.message.audio" = "Bir sesli mesaj paylaştı";
 "conversation.status.message.video" = "Bir video paylaştı";
 "conversation.status.message.file" = "Bir dosya paylaştı";
 "conversation.status.message.knock" = "Pingledi";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "Cevapsız arama";
+"conversation.status.message.ephemeral" = "Süreli Mesaj";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ Mesaj gönderilemedi";
 "conversation.status.you" = "Sen";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "Kişiler eklendi";
 "conversation.status.you_was_added" = "%@, seni ekledi";
 "conversation.status.added_users" = "%@, %@'i ekledi";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Kişiler çıkarıldı";
+"conversation.status.you_were_removed" = "Çıkarıldınız";
 "conversation.status.you_left" = "Ayrıldın";
 "conversation.status.removed_users" = "%@, %@'i sildi";
 

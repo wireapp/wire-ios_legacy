@@ -147,7 +147,7 @@
         <key>content.system.people_started_using</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@%#@d_number_of_others@ started using %#@d_new_devices@</string>
+            <string>%@%#@d_number_of_others@ hakkasid kasutama %#@d_new_devices@</string>
             <key>d_number_of_others</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -214,7 +214,7 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new text message</string>
+                <string>järgmine sõnum</string>
                 <key>other</key>
                 <string>%d new text messages</string>
             </dict>

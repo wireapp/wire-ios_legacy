@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Freunde einladen";
 
 "contacts_ui.no_contact.title" = "Keine aktiven Unterhaltungen\n";
-"contacts_ui.no_contact.message" = "Tippe auf Kontakte, um eine neue Unterhaltung zu beginnen";
+"contacts_ui.no_contact.message" = "Tap people to start a conversation";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Beitreten";
@@ -117,18 +117,18 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Gruppen";
+"list.title" = "Unterhaltungen";
 "list.archived_conversations" = "Archiv";
 "list.archived_conversations_close" = "Archiv schliessen";
 
 "conversation.status.call" = "Aktiver Anruf";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.typing" = "Typing a message…";
+"conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Blockiert";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Einen Link geteilt";
 "conversation.status.message.image" = "hat ein Bild geteilt";
 "conversation.status.message.location" = "Hat einen Standort geteilt";
 "conversation.status.message.audio" = "Hat eine Audio-Nachricht geteilt";
@@ -136,13 +136,14 @@
 "conversation.status.message.file" = "Hat eine Datei geteilt";
 "conversation.status.message.knock" = "hat gepingt";
 "conversation.status.message.missedcall" = "Verpasster Anruf";
+"conversation.status.message.ephemeral" = "Temporäre Nachricht";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ hat dich hinzugefügt";
 "conversation.status.added_users" = "%@ hat %@ hinzugefügt";
-"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Du hast die Unterhaltung verlassen";
 "conversation.status.removed_users" = "%@ hat %@ entfernt";
@@ -249,7 +250,7 @@
 "content.system.this_device" = "dieses Gerät";
 
 "content.system.call.you" = "Du";
-"content.system.call.called" = "%@ hat angerufen";
+"content.system.call.called" = "%@ hast angerufen";
 
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
 "content.system.renamed_conv.title.you" = "Du";

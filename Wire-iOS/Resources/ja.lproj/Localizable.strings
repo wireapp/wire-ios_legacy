@@ -73,7 +73,7 @@
 "contacts_ui.title" = "友達を招待する";
 
 "contacts_ui.no_contact.title" = "アクティブな会話が有りません\n";
-"contacts_ui.no_contact.message" = "連絡先をタップして会話を始めます";
+"contacts_ui.no_contact.message" = "連絡先をタップして会話を始める";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "参加する";
@@ -117,32 +117,33 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "会話";
 "list.archived_conversations" = "アーカイブ";
 "list.archived_conversations_close" = "アーカイブして閉じます";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "通話中";
+"conversation.status.typing" = "メッセージを入力中";
+"conversation.status.typing.group" = "%@: typing a message…";
+"conversation.status.silenced" = "ミュート";
 "conversation.status.blocked" = "ブロック";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "リンクを共有";
 "conversation.status.message.image" = "写真が共有されました";
 "conversation.status.message.location" = "場所を共有しました";
 "conversation.status.message.audio" = "音声メッセージが共有されました";
 "conversation.status.message.video" = "ビデオを共有しました";
 "conversation.status.message.file" = "ファイルが共有されました";
 "conversation.status.message.knock" = "Ping されました";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "不在着信";
+"conversation.status.message.ephemeral" = "タイマーメッセージ";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
 "conversation.status.added_users" = "%@は%@を追加しました";
-"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "あなたは退出しました";
 "conversation.status.removed_users" = "%@は%@を削除しました";

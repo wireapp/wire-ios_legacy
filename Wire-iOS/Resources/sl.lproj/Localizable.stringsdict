@@ -214,9 +214,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new text message</string>
+                <string>novo sporočilo</string>
                 <key>other</key>
-                <string>%d new text messages</string>
+                <string>%d novih sporočil</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.link</key>
@@ -230,9 +230,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new link</string>
+                <string>nova povezava</string>
                 <key>other</key>
-                <string>%d new links</string>
+                <string>%d novih povezav</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.image</key>
@@ -246,9 +246,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new image</string>
+                <string>nova slika</string>
                 <key>other</key>
-                <string>%d new images</string>
+                <string>%d nove slike</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.location</key>
@@ -262,9 +262,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new location</string>
+                <string>nova lokacija</string>
                 <key>other</key>
-                <string>%d new locations</string>
+                <string>%d nove lokacije</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.audio</key>
@@ -278,9 +278,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new audio message</string>
+                <string>novo zvočno sporočilo</string>
                 <key>other</key>
-                <string>%d new audio messages</string>
+                <string>%d nova zvočna sporočila</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.video</key>
@@ -294,9 +294,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new video</string>
+                <string>nov video</string>
                 <key>other</key>
-                <string>%d new videos</string>
+                <string>%d novih videov</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.knock</key>
@@ -310,9 +310,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new ping</string>
+                <string>nov ping</string>
                 <key>other</key>
-                <string>%d new pings</string>
+                <string>%d novih pingov</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.missedcall</key>
@@ -326,9 +326,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>missed call</string>
+                <string>zgrešen klic</string>
                 <key>other</key>
-                <string>%d missed calls</string>
+                <string>%d zgrešenih klicev</string>
             </dict>
         </dict>
     </dict>
