@@ -42,6 +42,13 @@ class ImageToolbarView: UIView {
             updateButtonConfiguration()
         }
     }
+
+    @objc public var showsSketchButton = true {
+        didSet {
+            guard oldValue != showsSketchButton else { return }
+            updateButtonConfiguration()
+        }
+    }
     
     var isPlacedOnImage : Bool = false {
         didSet {
@@ -77,18 +84,19 @@ class ImageToolbarView: UIView {
     
     func updateButtonConfiguration() {
         buttons.forEach({ $0.removeFromSuperview() })
-        
+        var newButtons = showsSketchButton ? [sketchButton] : []
+
         switch configuration {
         case .cell:
-            buttons = [sketchButton, emojiButton, expandButton]
+            newButtons.append(contentsOf: [emojiButton, expandButton])
         case .compactCell:
-            buttons = [sketchButton, expandButton]
+            newButtons.append(expandButton)
         case .preview:
-            buttons = [sketchButton, emojiButton]
+            newButtons.append(emojiButton)
         }
-        
+
+        buttons = newButtons
         buttons.forEach(buttonContainer.addSubview)
-        
         createButtonConstraints()
     }
     

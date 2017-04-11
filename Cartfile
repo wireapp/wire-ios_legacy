@@ -12,5 +12,5 @@ github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/VIMNetworking" "v6.0.2-wire-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
 github "wireapp/wire-ios-canvas" ~> 3.0.0
-github "wireapp/HockeySDK-iOS" "4.1.3-swift3.0.2"
+github "wireapp/HockeySDK-iOS" "4.1.4-swift3.1"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
