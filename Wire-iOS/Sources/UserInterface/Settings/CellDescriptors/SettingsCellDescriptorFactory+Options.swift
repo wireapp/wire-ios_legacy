@@ -168,21 +168,20 @@ extension SettingsCellDescriptorFactory {
             popularDemandDescriptors.insert(darkThemeElement, at: 0)
         }
         
-        let spaceNameDescriptor = SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.workspaceName))
-        popularDemandDescriptors.append(spaceNameDescriptor)
-        
         let byPopularDemandSection = SettingsSectionDescriptor(
             cellDescriptors: popularDemandDescriptors,
             header: "self.settings.popular_demand.title".localized,
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
-
+        
+        cellDescriptors.append(byPopularDemandSection)
+        
+        let spaceNameDescriptor = SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.workspaceName))
+        cellDescriptors.append(SettingsSectionDescriptor(cellDescriptors: [spaceNameDescriptor]))
+        
         if externalAppsDescriptors.count > 0 {
             cellDescriptors.append(externalAppsSection)
         }
-
-        cellDescriptors.append(byPopularDemandSection)
-
         
         if #available(iOS 9.0, *) {
             let context: LAContext = LAContext()

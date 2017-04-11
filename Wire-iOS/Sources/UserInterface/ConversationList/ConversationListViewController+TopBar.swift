@@ -22,25 +22,40 @@ import Cartography
 
 extension ConversationListViewController {
     
-    public func updateSpaces() {
-        
-        if Space.spaces.count > 0 {
-            let spacesView = SpaceSelectorView(spaces: Space.spaces)
-            self.topBar.middleView = spacesView
+    public var showSpaces: Bool {
+        set {
+            UIView.performWithoutAnimation {
+                if Space.spaces.count > 0 {
+                    self.spacesView?.removeFromSuperview()
+                    self.spacesView = SpaceSelectorView(spaces: Space.spaces)
+                    self.topBar.middleView = self.spacesView
+                    self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
+                    self.spacesImagesCollapsed = false
+                }
+                else {
+                    let titleLabel = UILabel()
+                    
+                    titleLabel.font = FontSpec(.medium, .semibold).font
+                    titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+                    titleLabel.text = "list.title".localized.uppercased()
+                    
+                    self.topBar.middleView = titleLabel
+                    self.spacesImagesCollapsed = true
+                    self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                }
+            }
         }
-        else {
-            let titleLabel = UILabel()
-            
-            titleLabel.font = FontSpec(.medium, .semibold).font
-            titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-            titleLabel.text = "list.title".localized.uppercased()
-            
-            self.topBar.middleView = titleLabel
+        
+        get {
+            return Space.spaces.count > 0
         }
     }
     
+    public func updateSpaces() {
+        self.showSpaces = Space.spaces.count > 0
+    }
+    
     public func createTopBar() {
-        
         let settingsButton = IconButton()
         
         settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())

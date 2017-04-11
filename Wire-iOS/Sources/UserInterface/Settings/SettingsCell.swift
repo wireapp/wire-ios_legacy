@@ -42,6 +42,7 @@ protocol SettingsCellType: class {
     let valueLabel = UILabel()
     let imagePreview = UIImageView()
     let separatorLine = UIView()
+    let topSeparatorLine = UIView()
     var cellNameLabelToIconInset: NSLayoutConstraint!
     
     var titleText: String = "" {
@@ -95,6 +96,12 @@ protocol SettingsCellType: class {
                 self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
                 self.cellNameLabelToIconInset.isActive = true
             }
+        }
+    }
+    
+    var isFirst: Bool = false {
+        didSet {
+            self.topSeparatorLine.isHidden = !isFirst
         }
     }
     
@@ -194,6 +201,16 @@ protocol SettingsCellType: class {
             separatorLine.trailing == selfView.trailing
             separatorLine.bottom == selfView.bottom
             separatorLine.height == .hairline
+        }
+        
+        self.topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        self.addSubview(self.topSeparatorLine)
+        
+        constrain(self, self.topSeparatorLine, self.cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
+            topSeparatorLine.leading == cellNameLabel.leading
+            topSeparatorLine.trailing == selfView.trailing
+            topSeparatorLine.top == selfView.top
+            topSeparatorLine.height == .hairline
         }
     }
     

@@ -294,7 +294,7 @@ extension ZMSystemMessageData {
                 deliveryStateString = "content.system.message_sent_timestamp".localized
             case .failedToSend:
                 deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " +
-                                      "content.system.failedtosend_message_timestamp_resend".localized + " " +
+                                      "content.system.failedtosend_message_timestamp_resend".localized + " · " +
                                       "content.system.failedtosend_message_timestamp_delete".localized
             default:
                 deliveryStateString = .none

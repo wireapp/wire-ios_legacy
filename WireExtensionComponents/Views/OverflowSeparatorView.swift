@@ -49,13 +49,14 @@ import Classy
     }
     
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        if !inverse {
-            self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
-        } else {
+        if inverse {
             let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)
             let offsetY = scrollView.contentOffset.y
             let showSeparator = contentHeight - offsetY > height
             alpha = showSeparator ? 1 : 0
+        }
+        else {
+            self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
         }
     }
 }

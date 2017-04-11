@@ -40,7 +40,7 @@ internal class LineView: UIView {
             return
         }
         
-        let inset: CGFloat = 32
+        let inset: CGFloat = 24
         
         constrain(self, first) { selfView, first in
             first.leading == selfView.leading
@@ -69,14 +69,36 @@ internal class LineView: UIView {
     }
 }
 
-final internal class SpaceSelectorView: LineView {
+final internal class SpaceSelectorView: UIView {
     public let spaces: [Space]
     public let spacesViews: [SpaceView]
+    private let lineView: LineView
+    private var topOffsetConstraint: NSLayoutConstraint!
+    public var imagesCollapsed: Bool = false {
+        didSet {
+            self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
+            
+            self.spacesViews.flatMap { [$0.imageView, $0.dotView] }.forEach { $0.alpha = imagesCollapsed ? 0 : 1 }
+            
+            self.layoutIfNeeded()
+        }
+    }
     
     init(spaces: [Space]) {
         self.spaces = spaces
         self.spacesViews = self.spaces.map { SpaceView(space: $0) }
-        super.init(views: spacesViews)
+        self.lineView = LineView(views: self.spacesViews)
+        super.init(frame: .zero)
+        
+        self.addSubview(lineView)
+        self.clipsToBounds = true
+
+        constrain(self, self.lineView) { selfView, lineView in
+            self.topOffsetConstraint = lineView.centerY == selfView.centerY
+            lineView.leading == selfView.leading
+            lineView.trailing == selfView.trailing
+            lineView.height == selfView.height
+        }
         
         self.spacesViews.forEach {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectSpace(_:)))
@@ -181,23 +203,27 @@ final internal class SpaceSelectorView: LineView {
         imageView.contentMode = .scaleAspectFill
         
         nameLabel.textAlignment = .center
+        nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        nameLabel.lineBreakMode = .byTruncatingTail
         
         let dotSize: CGFloat = 8
         
         dotView.backgroundColor = .accent()
         
         constrain(self, imageView, nameLabel, dotView) { selfView, imageView, nameLabel, dotView in
-            imageView.top == selfView.top
+            imageView.top == selfView.top + 12
             imageView.centerX == selfView.centerX
             selfView.width >= imageView.width
             imageView.width == imageView.height
             imageView.width == 28
             
-            nameLabel.top == imageView.bottom + 2
+            nameLabel.top == imageView.bottom + 4
 
             nameLabel.leading == selfView.leading
             nameLabel.trailing == selfView.trailing
             nameLabel.bottom == selfView.bottom - 4
+            nameLabel.width <= 96
             
             dotView.width == dotView.height
             dotView.height == dotSize

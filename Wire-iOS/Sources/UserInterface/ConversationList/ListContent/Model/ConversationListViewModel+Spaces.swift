@@ -23,6 +23,7 @@ extension ConversationListViewModel {
         self.spacesObservers = Space.spaces.map {
             $0.addSelectionObserver(self)
         }
+        self.updateConversationListAnimated()
     }
 }
 

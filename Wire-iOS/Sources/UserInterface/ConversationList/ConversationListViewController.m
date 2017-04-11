@@ -115,10 +115,11 @@
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
 @property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
 
+@property (nonatomic, nullable) SpaceSelectorView *spacesView;
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
 @property (nonatomic) BOOL initialSyncCompleted;
-
+@property (nonatomic) BOOL spacesImagesCollapsed;
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
@@ -300,6 +301,24 @@
     [self addChildViewController:self.listContentController];
     [self.conversationListContainer addSubview:self.listContentController.view];
     [self.listContentController didMoveToParentViewController:self];
+}
+
+- (void)setSpacesImagesCollapsed:(BOOL)spacesImagesCollapsed
+{
+    if (_spacesImagesCollapsed == spacesImagesCollapsed || ([Space spaces].count == 0 && spacesImagesCollapsed == NO)) {
+        return;
+    }
+    
+    _spacesImagesCollapsed = spacesImagesCollapsed;
+    
+    if ([Space spaces].count == 0) {
+        _spacesImagesCollapsed = YES;
+    }
+        
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+        self.spacesView.imagesCollapsed = _spacesImagesCollapsed;
+        self.topBar.overflowSeparatorView = !_spacesImagesCollapsed;
+    }];
 }
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated
@@ -679,7 +698,8 @@
 - (void)conversationListDidScroll:(ConversationListContentController *)controller
 {
     [self updateBottomBarSeparatorVisibilityWithContentController:controller];
-    [self.topBar.separatorLineView scrollViewDidScrollWithScrollView:controller.collectionView];
+    
+    self.spacesImagesCollapsed = controller.collectionView.contentOffset.y > 0;
 }
 
 - (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
