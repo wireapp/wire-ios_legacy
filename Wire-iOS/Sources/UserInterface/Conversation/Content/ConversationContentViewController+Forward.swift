@@ -38,6 +38,7 @@ func forEachNonEphemeral(in conversations: [ZMConversation], callback: (ZMConver
 func forward(_ message: ZMMessage, to: [AnyObject]) {
     
     let conversations = to as! [ZMConversation]
+    let v3Assets = ExtensionSettings.shared.useAssetsV3
     
     if message.isText {
         ZMUserSession.shared()?.performChanges {
@@ -46,16 +47,16 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     }
     else if message.isImage {
         ZMUserSession.shared()?.performChanges {
-            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
+            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData, version3: v3Assets) }
         }
     }
     else if message.isVideo || message.isAudio || message.isFile {
-            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI(), name: message.fileMessageData!.fileURL.lastPathComponent) { fileMetadata in
-
-                ZMUserSession.shared()?.performChanges {
-                        forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata) }
-                    }
+        let url  = message.fileMessageData!.fileURL!
+        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
+            ZMUserSession.shared()?.performChanges {
+                forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata, version3: v3Assets) }
             }
+        }
     }
     else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)

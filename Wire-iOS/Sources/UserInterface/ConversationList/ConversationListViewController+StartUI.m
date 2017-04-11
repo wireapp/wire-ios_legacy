@@ -185,7 +185,7 @@
                 ZMUser *user = self.startUISelectedUsers.anyObject;
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [user.oneToOneConversation appendMessageWithImageData:imageData];
+                    [user.oneToOneConversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
                 } completionHandler:^{
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:user.oneToOneConversation];
                     
@@ -204,10 +204,9 @@
                     conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                          withParticipants:self.startUISelectedUsers.allObjects];
                 } completionHandler:^{
-                    
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [[ZMUserSession sharedSession] enqueueChanges:^{
-                            [conversation appendMessageWithImageData:imageData];
+                            [conversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
                         } completionHandler:^{
                             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:conversation];
                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
