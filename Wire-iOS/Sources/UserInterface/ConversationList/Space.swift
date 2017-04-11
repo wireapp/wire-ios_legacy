@@ -99,6 +99,18 @@ internal class Space: NSObject {
         })
     }
 
+    @objc(joinSpaceNamed:)
+    static func joinSpace(named spaceName: String) {
+        if let factory = SettingsPropertyFactory.shared {
+            
+            var workspaceNameProperty = factory.property(.workspaceName)
+            
+            try? workspaceNameProperty << spaceName
+            
+            self.update()
+        }
+    }
+    
     public static func update() {
         if let factory = SettingsPropertyFactory.shared,
             let workspaceName = factory.property(.workspaceName).rawValue() as? String,
