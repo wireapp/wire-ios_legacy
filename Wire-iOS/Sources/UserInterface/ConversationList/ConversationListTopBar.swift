@@ -73,10 +73,10 @@ final class ConversationListTopBar: UIView {
         }
     }
     
-    public var overflowSeparatorView: Bool = true {
+    public var splitSeparator: Bool = true {
         didSet {
-            leftViewInsetConstraint.isActive = overflowSeparatorView
-            rightViewInsetConstraint.isActive = overflowSeparatorView
+            leftViewInsetConstraint.isActive = splitSeparator
+            rightViewInsetConstraint.isActive = splitSeparator
             self.layoutIfNeeded()
         }
     }

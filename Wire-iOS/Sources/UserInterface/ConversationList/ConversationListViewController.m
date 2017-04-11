@@ -317,7 +317,7 @@
         
     [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
         self.spacesView.imagesCollapsed = _spacesImagesCollapsed;
-        self.topBar.overflowSeparatorView = !_spacesImagesCollapsed;
+        self.topBar.splitSeparator = !_spacesImagesCollapsed;
     }];
 }
 
