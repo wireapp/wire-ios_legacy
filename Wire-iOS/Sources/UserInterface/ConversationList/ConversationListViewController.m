@@ -700,6 +700,11 @@
     [self updateBottomBarSeparatorVisibilityWithContentController:controller];
     
     self.spacesImagesCollapsed = controller.collectionView.contentOffset.y > 0;
+    
+    if (![self showSpaces]) {
+        [self.topBar.leftSeparatorLineView scrollViewDidScroll:controller.collectionView];
+        [self.topBar.rightSeparatorLineView scrollViewDidScroll:controller.collectionView];
+    }
 }
 
 - (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus

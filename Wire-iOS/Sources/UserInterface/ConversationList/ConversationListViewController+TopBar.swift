@@ -22,13 +22,17 @@ import Cartography
 
 extension ConversationListViewController {
     
-    public var showSpaces: Bool {
+    @objc public var showSpaces: Bool {
         set {
             UIView.performWithoutAnimation {
                 if Space.spaces.count > 0 {
                     self.spacesView?.removeFromSuperview()
                     self.spacesView = SpaceSelectorView(spaces: Space.spaces)
+                    
                     self.topBar.middleView = self.spacesView
+                    self.topBar.leftSeparatorLineView.alpha = 1
+                    self.topBar.rightSeparatorLineView.alpha = 1
+                    
                     self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
                     self.spacesImagesCollapsed = false
                 }
@@ -40,8 +44,9 @@ extension ConversationListViewController {
                     titleLabel.text = "list.title".localized.uppercased()
                     
                     self.topBar.middleView = titleLabel
-                    self.spacesImagesCollapsed = true
+                    
                     self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                    self.spacesImagesCollapsed = true
                 }
             }
         }
