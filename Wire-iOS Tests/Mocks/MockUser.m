@@ -95,6 +95,8 @@
 @synthesize canBeConnected;
 @synthesize connectionRequestMessage;
 @synthesize totalCommonConnections;
+@synthesize smallProfileImageCacheKey;
+@synthesize mediumProfileImageCacheKey;
 
 - (void)connectWithMessageText:(NSString *)text completionHandler:(dispatch_block_t)handler
 {

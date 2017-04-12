@@ -573,7 +573,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         NSData *imageData = UIImagePNGRepresentation(image);
         
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
+            [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionSketch inConversation:self.conversation];
             [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
