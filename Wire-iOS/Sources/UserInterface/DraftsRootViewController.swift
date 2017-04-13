@@ -30,12 +30,14 @@ final class DraftsRootViewController: UISplitViewController {
     private func setupViews() {
         guard let sharedContainer = ZMUserSession.shared()?.sharedContainerURL else { return }
         guard let storage = try? MessageDraftStorage(sharedContainerURL: sharedContainer) else { return }
-        let navigationController = UINavigationController(rootViewController: DraftListViewController(draftStorage: storage))
-        if storage.storedDrafts().isEmpty {
-            let initialComposeViewController = MessageComposeViewController()
-            navigationController.show(initialComposeViewController, sender: nil)
-        }
+        let navigationController = DraftNavigationController(rootViewController: DraftListViewController(draftStorage: storage))
         viewControllers = [navigationController]
+
+        if storage.storedDrafts().isEmpty || !isCollapsed {
+            let initialComposeViewController = MessageComposeViewController()
+            let detail = DraftNavigationController(rootViewController: initialComposeViewController)
+            showDetailViewController(detail, sender: nil)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +51,7 @@ final class DraftsRootViewController: UISplitViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return ColorScheme.default().statusBarStyle
     }
 
 }

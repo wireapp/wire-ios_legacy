@@ -58,20 +58,8 @@ final class DraftListViewController: UIViewController {
 
     private func setupViews() {
         title = "compose.drafts.title".localized.uppercased()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(for: .X, iconSize: .small, color: .black),
-            style: .done,
-            target: self,
-            action: #selector(closeTapped)
-        )
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(for: .plus, iconSize: .small, color: .black),
-            style: .plain,
-            target: self,
-            action: #selector(newDraftTapped)
-        )
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
         DraftMessageCell.register(in: tableView)
     }
 
@@ -80,8 +68,15 @@ final class DraftListViewController: UIViewController {
     }
 
     private dynamic func newDraftTapped(_ sender: Any) {
-        let initialComposeViewController = MessageComposeViewController()
-        let detail = UINavigationController(rootViewController: initialComposeViewController)
+        showDraft(nil)
+    }
+
+    fileprivate func showDraft(_ draft: MessageDraft?) {
+        let composeViewController = MessageComposeViewController()
+        if let draft = draft {
+            composeViewController.draft = draft
+        }
+        let detail = DraftNavigationController(rootViewController: composeViewController)
         navigationController?.splitViewController?.showDetailViewController(detail, sender: nil)
     }
 
@@ -107,9 +102,16 @@ extension DraftListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let composeViewController = MessageComposeViewController()
-        composeViewController.draft = drafts[indexPath.row]
-        present(composeViewController, animated: true, completion: nil)
+        showDraft(drafts[indexPath.row])
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        // TODO: Delete draft
     }
 
 }
