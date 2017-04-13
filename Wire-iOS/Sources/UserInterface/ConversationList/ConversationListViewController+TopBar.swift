@@ -61,16 +61,16 @@ extension ConversationListViewController {
     }
     
     public func createTopBar() {
-        let settingsButton = IconButton()
+        let profileButton = IconButton()
         
-        settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
-        settingsButton.addTarget(self, action: #selector(settingsButtonTapped(_:)), for: .touchUpInside)
-        settingsButton.accessibilityIdentifier = "bottomBarSettingsButton"
-        settingsButton.setIconColor(.white, for: .normal)
+        profileButton.setIcon(.selfProfile, with: .tiny, for: UIControlState())
+        profileButton.addTarget(self, action: #selector(settingsButtonTapped(_:)), for: .touchUpInside)
+        profileButton.accessibilityIdentifier = "bottomBarSettingsButton"
+        profileButton.setIconColor(.white, for: .normal)
         
-        if let imageView = settingsButton.imageView, let user = ZMUser.selfUser() {
+        if let imageView = profileButton.imageView, let user = ZMUser.selfUser() {
             let newDevicesDot = NewDevicesDot(user: user)
-            settingsButton.addSubview(newDevicesDot)
+            profileButton.addSubview(newDevicesDot)
             
             constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
                 newDevicesDot.top == imageView.top - 3
@@ -84,7 +84,7 @@ extension ConversationListViewController {
         
         self.view.addSubview(self.topBar)
         self.updateSpaces()
-        self.topBar.rightView = settingsButton
+        self.topBar.leftView = profileButton
     }
     
     @objc public func settingsButtonTapped(_ sender: AnyObject) {

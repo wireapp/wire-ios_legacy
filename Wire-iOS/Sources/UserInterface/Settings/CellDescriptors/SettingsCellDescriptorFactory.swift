@@ -35,8 +35,16 @@ import Foundation
         self.settingsPropertyFactory = settingsPropertyFactory
     }
     
-    func rootSettingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.devicesGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
+    func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
+        let rootElements = [self.devicesGroup(), self.settingsGroup()]
+        
+        let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
+        
+        return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)
+    }
+    
+    func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
+        var topLevelElements = [self.accountGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements = topLevelElements + [self.developerGroup()]
@@ -44,7 +52,7 @@ import Foundation
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)
 
-        return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain)
+        return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain, previewGenerator: .none, icon: .gear)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {
@@ -55,7 +63,11 @@ import Foundation
             presentationAction: { () -> (UIViewController?) in
                 Analytics.shared()?.tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
-        }, icon: .settingsDevices)
+        },
+            previewGenerator: { _ -> SettingsCellPreview in
+                return SettingsCellPreview.text("\(ZMUser.selfUser().clients.count)")
+        },
+           icon: .settingsDevices)
     }
 
     func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, callSound: Bool, fallbackSoundName: String, defaultSoundTitle : String = "self.settings.sound_menu.sounds.wire_sound".localized) -> SettingsCellDescriptorType {

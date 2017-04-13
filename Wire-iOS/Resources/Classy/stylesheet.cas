@@ -358,6 +358,20 @@ SketchToolbar {
     }
 }
 
+/* Self profile */
+
+ProfileView {
+    nameLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-large-light;
+    }
+    
+    handleLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
+    }
+}
+
 /* Profile */
 
 ProfileViewController {

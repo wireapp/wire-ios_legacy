@@ -138,6 +138,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeLike                            = 0x183,
     ZetaIconTypeLiked                           = 0x184,
     
+    ZetaIconTypeSelfProfile                     = 0x265,
     ZetaIconTypeSettingsAccount                 = 0x187,
     ZetaIconTypeSettingsDevices                 = 0x188,
     ZetaIconTypeSettingsOptions                 = 0x135,
