@@ -101,8 +101,8 @@ final class ConversationListTopBar: UIView {
             rightSeparatorLineView.bottom == selfView.bottom
             
             middleViewContainer.center == selfView.center
-            leftSeparatorLineView.trailing == selfView.trailing ~ LayoutPriority(750)
-            rightSeparatorLineView.leading == selfView.leading ~ LayoutPriority(750)
+            leftSeparatorLineView.trailing == selfView.centerX ~ LayoutPriority(750)
+            rightSeparatorLineView.leading == selfView.centerX ~ LayoutPriority(750)
             self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 16
             self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 16
         }

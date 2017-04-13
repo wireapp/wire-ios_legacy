@@ -36,11 +36,25 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        let rootElements = [self.devicesGroup(), self.settingsGroup()]
+        let rootElements = [self.devicesGroup(), self.settingsGroup(), self.inviteButton()]
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)
+    }
+    
+    func inviteButton() -> SettingsCellDescriptorType {
+        let inviteButtonDescriptor = InviteCellDescriptor(title: "self.settings.invite_friends.title".localized,
+                                                          isDestructive: false,
+                                                          presentationStyle: .modal,
+                                                          presentationAction: { () -> (UIViewController?) in
+                                                              return UIActivityViewController.shareInvite(completion: .none, logicalContext: .settings)
+                                                          },
+                                                          previewGenerator: .none,
+                                                          icon: .megaphone)
+        
+        return inviteButtonDescriptor
+        
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
@@ -63,10 +77,10 @@ import Foundation
             presentationAction: { () -> (UIViewController?) in
                 Analytics.shared()?.tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
-        },
+            },
             previewGenerator: { _ -> SettingsCellPreview in
-                return SettingsCellPreview.text("\(ZMUser.selfUser().clients.count)")
-        },
+                return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)
+            },
            icon: .settingsDevices)
     }
 

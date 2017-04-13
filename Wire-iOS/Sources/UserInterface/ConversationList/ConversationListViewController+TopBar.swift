@@ -33,8 +33,13 @@ extension ConversationListViewController {
                     self.topBar.leftSeparatorLineView.alpha = 1
                     self.topBar.rightSeparatorLineView.alpha = 1
                     
+                    let scrolledOffFromTop = self.listContentController.collectionView?.contentOffset.y > 0
+                    self.spacesImagesCollapsed = scrolledOffFromTop
+                    self.spacesView?.imagesCollapsed = scrolledOffFromTop
                     self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
-                    self.spacesImagesCollapsed = false
+                    if !scrolledOffFromTop {
+                        self.listContentController.collectionView?.contentOffset = CGPoint(x: 0, y: -16)
+                    }
                 }
                 else {
                     let titleLabel = UILabel()

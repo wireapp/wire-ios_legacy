@@ -79,7 +79,6 @@ extension IconButton {
 final internal class SelfProfileViewController: UIViewController {
     private let settingsController: UIViewController
     private let profileView: ProfileView
-    private var inviteButtonView: InviteButtonView!
     @objc var dismissAction: (() -> ())? = .none
 
     
@@ -94,9 +93,6 @@ final internal class SelfProfileViewController: UIViewController {
             settingsTableController.tableView.isScrollEnabled = false
         }
         
-        self.inviteButtonView = InviteButtonView(onTap: { [weak self] in
-            self?.wr_presentInviteActivityViewController(withSourceView: $0, logicalContext: .settings)
-        })
         self.title = "self.profile".localized
         
         let closeButton = IconButton.closeButton()
@@ -111,7 +107,7 @@ final internal class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        [profileView, inviteButtonView].forEach(self.view.addSubview)
+        self.view.addSubview(profileView)
         
         settingsController.willMove(toParentViewController: self)
         view.addSubview(settingsController.view)
@@ -121,7 +117,7 @@ final internal class SelfProfileViewController: UIViewController {
     }
     
     private func createConstraints() {
-        constrain(view, settingsController.view, profileView, inviteButtonView) { view, settingsControllerView, profileView, inviteButtonView in
+        constrain(view, settingsController.view, profileView) { view, settingsControllerView, profileView in
             profileView.top == view.top
             profileView.leading == view.leading
             profileView.trailing == view.trailing
@@ -129,11 +125,7 @@ final internal class SelfProfileViewController: UIViewController {
             settingsControllerView.top == profileView.bottom
             settingsControllerView.leading == view.leading
             settingsControllerView.trailing == view.trailing
-            settingsControllerView.bottom == inviteButtonView.top
-            
-            inviteButtonView.leading == view.leading
-            inviteButtonView.trailing == view.trailing
-            inviteButtonView.bottom == view.bottom
+            settingsControllerView.bottom == view.bottom
         }
     }
     

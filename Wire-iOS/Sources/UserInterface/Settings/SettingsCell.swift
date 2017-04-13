@@ -23,6 +23,7 @@ import Cartography
 enum SettingsCellPreview {
     case none
     case text(String)
+    case badge(Int)
     case image(UIImage)
     case color(UIColor)
 }
@@ -40,6 +41,10 @@ protocol SettingsCellType: class {
     let iconImageView = UIImageView()
     public let cellNameLabel = UILabel()
     let valueLabel = UILabel()
+    let badge = RoundedBadge(view: UILabel())
+    var badgeLabel: UILabel {
+        return badge.containedView as! UILabel
+    }
     let imagePreview = UIImageView()
     let separatorLine = UIView()
     let topSeparatorLine = UIView()
@@ -53,17 +58,29 @@ protocol SettingsCellType: class {
     
     var preview: SettingsCellPreview = .none {
         didSet {
-            
             switch self.preview {
             case .text(let string):
                 self.valueLabel.text = string
+                self.badgeLabel.text = ""
+                self.badge.isHidden = true
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = UIColor.clear
                 self.imagePreview.accessibilityValue = nil
                 self.imagePreview.isAccessibilityElement = false
-
+                
+            case .badge(let value):
+                self.valueLabel.text = ""
+                self.badgeLabel.text = "\(value)"
+                self.badge.isHidden = false
+                self.imagePreview.image = .none
+                self.imagePreview.backgroundColor = UIColor.clear
+                self.imagePreview.accessibilityValue = nil
+                self.imagePreview.isAccessibilityElement = false
+                
             case .image(let image):
                 self.valueLabel.text = ""
+                self.badgeLabel.text = ""
+                self.badge.isHidden = true
                 self.imagePreview.image = image
                 self.imagePreview.backgroundColor = UIColor.clear
                 self.imagePreview.accessibilityValue = "image"
@@ -71,6 +88,8 @@ protocol SettingsCellType: class {
                 
             case .color(let color):
                 self.valueLabel.text = ""
+                self.badgeLabel.text = ""
+                self.badge.isHidden = true
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = color
                 self.imagePreview.accessibilityValue = "color"
@@ -78,6 +97,8 @@ protocol SettingsCellType: class {
                 
             case .none:
                 self.valueLabel.text = ""
+                self.badgeLabel.text = ""
+                self.badge.isHidden = true
                 self.imagePreview.image = .none
                 self.imagePreview.backgroundColor = UIColor.clear
                 self.imagePreview.accessibilityValue = nil
@@ -151,7 +172,6 @@ protocol SettingsCellType: class {
             iconImageView.centerY == contentView.centerY
         }
         
-        self.cellNameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         self.contentView.addSubview(self.cellNameLabel)
         
@@ -166,18 +186,27 @@ protocol SettingsCellType: class {
         
         self.valueLabel.textColor = UIColor.lightGray
         self.valueLabel.font = UIFont.systemFont(ofSize: 17)
-        self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
         self.valueLabel.textAlignment = .right
         
         self.contentView.addSubview(self.valueLabel)
 
+        self.badgeLabel.textColor = UIColor.lightGray
+        self.badgeLabel.font = FontSpec(.small, .medium).font
+        self.badgeLabel.textAlignment = .center
+        
+        self.badge.backgroundColor = UIColor(white: 0, alpha: 0.16)
+        self.badge.isHidden = true
+        self.contentView.addSubview(self.badge)
+        
         let trailingBoundaryView = accessoryView ?? contentView
 
-        constrain(self.contentView, self.cellNameLabel, self.valueLabel, trailingBoundaryView) { contentView, cellNameLabel, valueLabel, trailingBoundaryView in
+        constrain(self.contentView, self.cellNameLabel, self.valueLabel, trailingBoundaryView, self.badge) { contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge in
             valueLabel.top == contentView.top - 8
             valueLabel.bottom == contentView.bottom + 8
             valueLabel.leading >= cellNameLabel.trailing + 8
             valueLabel.trailing == trailingBoundaryView.trailing - 16
+            badge.center == valueLabel.center
+            badge.height == 20
         }
         
         self.imagePreview.clipsToBounds = true
@@ -221,6 +250,10 @@ protocol SettingsCellType: class {
     }
     
     func updateBackgroundColor() {
+        if let _ = cellColor {
+            return
+        }
+        
         if self.isHighlighted && self.selectionStyle != .none {
             self.backgroundColor = UIColor(white: 0, alpha: 0.2)
         }
@@ -298,7 +331,6 @@ protocol SettingsCellType: class {
         self.selectionStyle = .none
         
         self.textInput = TailEditingTextField(frame: CGRect.zero)
-        self.textInput.translatesAutoresizingMaskIntoConstraints = false
         self.textInput.delegate = self
         self.textInput.textAlignment = .right
         self.textInput.textColor = UIColor.lightGray

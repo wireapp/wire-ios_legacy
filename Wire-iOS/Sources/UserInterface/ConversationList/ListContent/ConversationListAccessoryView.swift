@@ -137,6 +137,8 @@ final internal class ConversationListAccessoryView: UIView {
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
+        self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        
         self.collapseWidthConstraint.isActive = false
         
         switch self.icon {
@@ -149,13 +151,14 @@ final internal class ConversationListAccessoryView: UIView {
         case .activeCall(_):
             self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
             
-        case .missedCall:
-            self.badgeView.backgroundColor = ZMAccentColor.vividRed.color
-            
         case .typing:
             self.badgeView.isHidden = true
             self.typingView.isHidden = false
             self.typingView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
+        case .unreadMessages(_):
+            self.badgeView.backgroundColor = UIColor(white: 1, alpha: 1)
+            self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+
         default:
             self.typingView.image = .none
         }
