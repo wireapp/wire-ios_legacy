@@ -22,11 +22,10 @@ import Foundation
 
 final class DraftListViewController: CoreDataTableViewController<MessageDraft, DraftMessageCell> {
 
-    init(draftStorage: MessageDraftStorage) {
-        super.init(fetchedResultsController: draftStorage.resultsController)
+    init(persistence: MessageDraftStorage) {
+        super.init(fetchedResultsController: persistence.resultsController)
         configureCell = { (cell, draft) in
-            cell.textLabel?.text = draft.subject
-            cell.detailTextLabel?.text = draft.message
+            cell.configure(with: draft)
         }
 
         onCellSelection = { (_, draft) in
@@ -34,12 +33,16 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         }
 
         onDelete = { (_, draft) in
-            draftStorage.enqueue { moc in
-                moc.delete(draft)
-            }
+            persistence.enqueue(block: {
+                $0.delete(draft)
+            }, completion: {
+                if self.splitViewController?.isCollapsed == false {
+                    self.showDraft(nil)
+                }
+            })
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,6 +72,6 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         let detail = DraftNavigationController(rootViewController: composeViewController)
         navigationController?.splitViewController?.showDetailViewController(detail, sender: nil)
     }
-
+    
 }
 

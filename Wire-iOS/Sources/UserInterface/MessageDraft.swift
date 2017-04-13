@@ -110,11 +110,11 @@ final class MessageDraftStorage: NSObject {
         return (try? managedObjectContext.count(for: MessageDraft.request)) ?? 0
     }
 
-    func enqueue(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        enqueue(block, completion: nil)
+    func enqueue(block: @escaping (NSManagedObjectContext) -> Void) {
+        enqueue(block: block, completion: nil)
     }
 
-    func enqueue(_ block: @escaping (NSManagedObjectContext) -> Void, completion: (() -> Void)?) {
+    func enqueue(block: @escaping (NSManagedObjectContext) -> Void, completion: (() -> Void)?) {
         managedObjectContext.perform {
             block(self.managedObjectContext)
             try? self.managedObjectContext.save()

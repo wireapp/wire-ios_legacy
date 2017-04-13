@@ -30,4 +30,9 @@ final class DraftMessageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configure(with draft: MessageDraft) {
+        textLabel?.text = draft.subject
+        detailTextLabel?.text = draft.message
+    }
+
 }

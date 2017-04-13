@@ -39,7 +39,7 @@ final class DraftsRootViewController: UISplitViewController {
     }
 
     private func setupViews() {
-        let navigationController = DraftNavigationController(rootViewController: DraftListViewController(draftStorage: persistence))
+        let navigationController = DraftNavigationController(rootViewController: DraftListViewController(persistence: persistence))
         viewControllers = [navigationController]
     }
 
@@ -48,7 +48,9 @@ final class DraftsRootViewController: UISplitViewController {
         if persistence.numberOfStoredDrafts() == 0 || traitCollection.horizontalSizeClass != .compact {
             let initialComposeViewController = MessageComposeViewController(draft: nil)
             let detail = DraftNavigationController(rootViewController: initialComposeViewController)
-            showDetailViewController(detail, sender: nil)
+            UIView.performWithoutAnimation {
+                showDetailViewController(detail, sender: nil)
+            }
         }
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
