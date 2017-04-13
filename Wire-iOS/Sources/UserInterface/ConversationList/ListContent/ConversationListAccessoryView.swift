@@ -97,7 +97,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
+            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .white)
             self.accessibilityValue = "missed call"
             return iconView
         case .playingMedia:
@@ -155,6 +155,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.badgeView.isHidden = true
             self.typingView.isHidden = false
             self.typingView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
+            
         case .unreadMessages(_):
             self.badgeView.backgroundColor = UIColor(white: 1, alpha: 1)
             self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
