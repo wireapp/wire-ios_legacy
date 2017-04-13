@@ -22,26 +22,34 @@ import Foundation
 
 final class DraftsRootViewController: UISplitViewController {
 
+    let persistence: MessageDraftStorage
+
+    init() {
+        persistence = try! MessageDraftStorage(sharedContainerURL: ZMUserSession.shared()!.sharedContainerURL)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
 
     private func setupViews() {
-        guard let sharedContainer = ZMUserSession.shared()?.sharedContainerURL else { return }
-        guard let storage = try? MessageDraftStorage(sharedContainerURL: sharedContainer) else { return }
-        let navigationController = DraftNavigationController(rootViewController: DraftListViewController(draftStorage: storage))
+        let navigationController = DraftNavigationController(rootViewController: DraftListViewController(draftStorage: persistence))
         viewControllers = [navigationController]
-
-        if storage.storedDrafts().isEmpty || !isCollapsed {
-            let initialComposeViewController = MessageComposeViewController()
-            let detail = DraftNavigationController(rootViewController: initialComposeViewController)
-            showDetailViewController(detail, sender: nil)
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if persistence.numberOfStoredDrafts() == 0 || traitCollection.horizontalSizeClass != .compact {
+            let initialComposeViewController = MessageComposeViewController(draft: nil)
+            let detail = DraftNavigationController(rootViewController: initialComposeViewController)
+            showDetailViewController(detail, sender: nil)
+        }
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 

@@ -38,10 +38,15 @@ final class MessageComposeViewController: UIViewController {
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
 
-    var draft: MessageDraft = .init(subject: nil, message: nil, lastModified: nil) {
-        didSet {
-            loadDraft()
-        }
+    private var draft: MessageDraft?
+
+    required init(draft: MessageDraft?) {
+        self.draft = draft
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -85,7 +90,7 @@ final class MessageComposeViewController: UIViewController {
 
     private func setupInputAccessoryView() {
         sendButtonView.onSend = { [unowned self] in
-            self.delegate?.composeViewController(self, wantsToSendDraft: self.draft)
+            self.delegate?.composeViewController(self, wantsToSendDraft: self.draft!)
         }
 
         sendButtonView.onDelete = {
@@ -136,8 +141,8 @@ final class MessageComposeViewController: UIViewController {
 
 
     private func loadDraft() {
-        subjectTextField.text = draft.subject
-        messageTextView.text = draft.message
+        subjectTextField.text = draft?.subject
+        messageTextView.text = draft?.message
     }
 
 }

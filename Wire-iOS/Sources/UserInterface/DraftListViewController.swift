@@ -20,25 +20,24 @@
 import Foundation
 
 
-final class DraftListViewController: UIViewController {
+final class DraftListViewController: CoreDataTableViewController<MessageDraft, DraftMessageCell> {
 
-    private var tableView: UITableView {
-        return view as! UITableView
-    }
+    init(draftStorage: MessageDraftStorage) {
+        super.init(fetchedResultsController: draftStorage.resultsController)
+        configureCell = { (cell, draft) in
+            cell.textLabel?.text = draft.subject
+            cell.detailTextLabel?.text = draft.message
+        }
 
-    let storage: MessageDraftStorageType
-    var drafts = [MessageDraft]()
+        onCellSelection = { (_, draft) in
+            self.showDraft(draft)
+        }
 
-    override func loadView() {
-        let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        view = tableView
-    }
-
-    init(draftStorage: MessageDraftStorageType) {
-        storage = draftStorage
-        super.init(nibName: nil, bundle: nil)
+        onDelete = { (_, draft) in
+            draftStorage.enqueue { moc in
+                moc.delete(draft)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,12 +47,6 @@ final class DraftListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        loadDrafts()
-    }
-
-    private func loadDrafts() {
-        drafts = storage.storedDrafts()
-        tableView.reloadData()
     }
 
     private func setupViews() {
@@ -72,46 +65,9 @@ final class DraftListViewController: UIViewController {
     }
 
     fileprivate func showDraft(_ draft: MessageDraft?) {
-        let composeViewController = MessageComposeViewController()
-        if let draft = draft {
-            composeViewController.draft = draft
-        }
+        let composeViewController = MessageComposeViewController(draft: draft)
         let detail = DraftNavigationController(rootViewController: composeViewController)
         navigationController?.splitViewController?.showDetailViewController(detail, sender: nil)
-    }
-
-}
-
-extension DraftListViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return drafts.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DraftMessageCell.zm_reuseIdentifier, for: indexPath) as! DraftMessageCell
-        let draft = drafts[indexPath.row]
-        cell.textLabel?.text = draft.subject
-        cell.detailTextLabel?.text = draft.message
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        showDraft(drafts[indexPath.row])
-    }
-
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .delete
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        // TODO: Delete draft
     }
 
 }

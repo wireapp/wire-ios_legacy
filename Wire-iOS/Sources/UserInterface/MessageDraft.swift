@@ -17,83 +17,109 @@
 //
 
 
+import CoreData
+
+
 /// Class describing unsent message drafts for later sending or further editing.
-final class MessageDraft: NSObject, NSCoding {
+@objc public class MessageDraft: NSManagedObject {
 
     /// The subject of the message
-    var subject: String?
+    @NSManaged public var subject: String?
     /// The message content
-    var message: String?
+    @NSManaged public var message: String?
     /// A date indicating when the draft was last modified
-    var lastModified = Date()
+    @NSManaged public var lastModifiedDate: NSDate?
 
-    init(subject: String?, message: String?, lastModified: Date? = nil) {
-        self.subject = subject
-        self.message = message
-        if let lastModified = lastModified {
-            self.lastModified = lastModified
-        }
-        super.init()
+    @nonobjc public class var request: NSFetchRequest<MessageDraft> {
+        let request = NSFetchRequest<MessageDraft>(entityName: "MessageDraft")
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageDraft.lastModifiedDate), ascending: false)]
+        return request
     }
 
-    // MARK: NSCoding
-
-    convenience init?(coder aDecoder: NSCoder) {
-        self.init(
-            subject: aDecoder.decodeObject(forKey: #keyPath(MessageDraft.subject)) as? String,
-            message: aDecoder.decodeObject(forKey: #keyPath(MessageDraft.message)) as? String,
-            lastModified: aDecoder.decodeObject(forKey: #keyPath(MessageDraft.lastModified)) as? Date
-        )
-    }
-
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(subject, forKey: #keyPath(MessageDraft.subject))
-        aCoder.encode(message, forKey: #keyPath(MessageDraft.message))
-        aCoder.encode(lastModified, forKey: #keyPath(MessageDraft.lastModified))
+    static func insertNewObject(in moc: NSManagedObjectContext) -> MessageDraft {
+        return NSEntityDescription.insertNewObject(forEntityName: "MessageDraft", into: moc) as! MessageDraft
     }
 
 }
 
 
 func ==(lhs: MessageDraft, rhs: MessageDraft) -> Bool {
-    return lhs.subject == rhs.subject && lhs.message == rhs.message && lhs.lastModified == rhs.lastModified
+    return lhs.subject == rhs.subject && lhs.message == rhs.message && lhs.lastModifiedDate == rhs.lastModifiedDate
 }
 
-protocol MessageDraftStorageType {
-    func storedDrafts() -> [MessageDraft]
-}
 
 /// Class used to store objects of type `MessageDraft` on disk.
 /// Creates a directory to store the serialized objects if not yet present.
-final class MessageDraftStorage: NSObject, MessageDraftStorageType {
+final class MessageDraftStorage: NSObject {
 
-    private let directoryURL: URL
-    private let draftsURL: URL
-    private let filemanager = FileManager.default
-
-    init(sharedContainerURL: URL) throws {
-        directoryURL = sharedContainerURL.appendingPathComponent("MessageDraftStorage")
-        draftsURL =  directoryURL.appendingPathComponent("Drafts")
-        super.init()
-        try createDirectoryIfNeeded(at: directoryURL)
+    enum StorageError: Error {
+        case noModel
     }
 
-    private func createDirectoryIfNeeded(at url: URL) throws {
-        if !filemanager.fileExists(atPath: url.path) {
-            try filemanager.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        moc.persistentStoreCoordinator = self.psc
+        return moc
+    }()
+
+    lazy var resultsController: NSFetchedResultsController<MessageDraft> = {
+        return NSFetchedResultsController(
+            fetchRequest: MessageDraft.request,
+            managedObjectContext: self.managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+    }()
+
+    private let storeURL: URL
+    private let psc: NSPersistentStoreCoordinator
+
+    init(sharedContainerURL: URL) throws {
+        guard let model = NSManagedObjectModel.mergedModel(from: [Bundle(for: MessageDraftStorage.self)]) else { throw StorageError.noModel  }
+        psc = NSPersistentStoreCoordinator(managedObjectModel: model)
+        let directoryURL = sharedContainerURL.appendingPathComponent("MessageDraftStorage")
+        try MessageDraftStorage.createDirectoryIfNeeded(at: directoryURL)
+        storeURL = directoryURL.appendingPathComponent("Drafts")
+
+        _ = try psc.addPersistentStore(
+            ofType: NSSQLiteStoreType,
+            configurationName: nil,
+            at: storeURL,
+            options: MessageDraftStorage.storeOptions
+        )
+
+        super.init()
+    }
+
+    private static func createDirectoryIfNeeded(at url: URL) throws {
+        if !FileManager.default.fileExists(atPath: url.path) {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
         }
         try url.wr_excludeFromBackup()
     }
 
-    func store(_ drafts: [MessageDraft]) throws {
-        let data = NSKeyedArchiver.archivedData(withRootObject: drafts)
-        try data.write(to: draftsURL, options: .atomic)
+    private static var storeOptions: [String: Any] {
+        return [
+            NSSQLitePragmasOption: ["journal_mode": "WAL", "synchronous" : "FULL" ],
+            NSMigratePersistentStoresAutomaticallyOption: true,
+            NSInferMappingModelAutomaticallyOption: true
+        ]
     }
 
-    func storedDrafts() -> [MessageDraft] {
-        guard let data = try? Data(contentsOf: draftsURL) else { return [] }
-        guard let drafts = NSKeyedUnarchiver.unarchiveObject(with: data) as? [MessageDraft] else { return [] }
-        return drafts.sorted { (lhs, rhs) in lhs.lastModified > rhs.lastModified }
+    func numberOfStoredDrafts() -> Int {
+        return (try? managedObjectContext.count(for: MessageDraft.request)) ?? 0
+    }
+
+    func enqueue(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        enqueue(block, completion: nil)
+    }
+
+    func enqueue(_ block: @escaping (NSManagedObjectContext) -> Void, completion: (() -> Void)?) {
+        managedObjectContext.perform {
+            block(self.managedObjectContext)
+            try? self.managedObjectContext.save()
+            completion?()
+        }
     }
 
 }
