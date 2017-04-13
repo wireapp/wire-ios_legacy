@@ -22,7 +22,7 @@ import Cartography
 
 
 @objc enum ConversationListButtonType: UInt {
-    case contacts, archive
+    case contacts, archive, compose
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
@@ -33,7 +33,8 @@ import Cartography
 @objc final class ConversationListBottomBarController: UIViewController {
     
     weak var delegate: ConversationListBottomBarControllerDelegate?
-    
+
+    let plusButton     = IconButton()
     let contactsButton = IconButton()
     let archivedButton = IconButton()
     let contactsButtonContainer = UIView()
@@ -94,6 +95,12 @@ import Cartography
         archivedButton.addTarget(self, action: #selector(ConversationListBottomBarController.archivedButtonTapped(_:)), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
 
+        plusButton.setIcon(.archive, with: .tiny, for: .normal)
+        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        plusButton.accessibilityIdentifier = "bottomBarPlusButton"
+
+        view.addSubview(plusButton)
+
         contactsButtonContainer.addSubview(contactsButton)
         archivedButtonContainer.addSubview(archivedButton)
         [separator, archivedButton].forEach { $0.isHidden = true }
@@ -114,6 +121,12 @@ import Cartography
             separator.leading == view.leading
             separator.trailing == view.trailing
             separator.top == view.top
+        }
+
+        constrain(view, plusButton) { view, plusButton in
+            plusButton.centerX == view.centerX
+            plusButton.top == view.top
+            plusButton.bottom == view.bottom
         }
         
         constrain(view, contactsButtonContainer, contactsButton) { view, container, contactsButton in
@@ -150,6 +163,10 @@ import Cartography
     
     func archivedButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
+    }
+
+    func plusButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .compose)
     }
     
 }

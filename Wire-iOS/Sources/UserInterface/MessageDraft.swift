@@ -59,10 +59,13 @@ func ==(lhs: MessageDraft, rhs: MessageDraft) -> Bool {
     return lhs.subject == rhs.subject && lhs.message == rhs.message && lhs.lastModified == rhs.lastModified
 }
 
+protocol MessageDraftStorageType {
+    func storedDrafts() -> [MessageDraft]
+}
 
 /// Class used to store objects of type `MessageDraft` on disk.
 /// Creates a directory to store the serialized objects if not yet present.
-final class MessageDraftStorage: NSObject {
+final class MessageDraftStorage: NSObject, MessageDraftStorageType {
 
     private let directoryURL: URL
     private let draftsURL: URL
@@ -87,8 +90,8 @@ final class MessageDraftStorage: NSObject {
         try data.write(to: draftsURL, options: .atomic)
     }
 
-    func storedDrafts() throws -> [MessageDraft] {
-        let data = try Data(contentsOf: draftsURL)
+    func storedDrafts() -> [MessageDraft] {
+        guard let data = try? Data(contentsOf: draftsURL) else { return [] }
         guard let drafts = NSKeyedUnarchiver.unarchiveObject(with: data) as? [MessageDraft] else { return [] }
         return drafts.sorted { (lhs, rhs) in lhs.lastModified > rhs.lastModified }
     }

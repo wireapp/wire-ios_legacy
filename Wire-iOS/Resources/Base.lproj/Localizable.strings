@@ -893,3 +893,12 @@
 "collections.search.field.placeholder" = "Search text messages";
 "collections.search.no_items" = "No results";
 
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Drafts";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Write a subject";
+

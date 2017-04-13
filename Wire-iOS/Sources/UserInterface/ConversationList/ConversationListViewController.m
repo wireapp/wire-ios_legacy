@@ -757,9 +757,12 @@
             [self setState:ConversationListStateArchived animated:YES];
             [Analytics.shared tagArchiveOpened];
             break;
-            
-        default:
-            break;
+
+        case ConversationListButtonTypeCompose: {
+            DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
+            [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
+        }
+        break;
     }
 }
 
