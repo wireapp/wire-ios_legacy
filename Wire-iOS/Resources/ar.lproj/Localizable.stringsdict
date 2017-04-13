@@ -147,7 +147,7 @@
         <key>content.system.people_started_using</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@%#@d_number_of_others@ started using %#@d_new_devices@</string>
+            <string>بدأ %@%#@d_number_of_others@ باستخدام %#@d_new_devices@</string>
             <key>d_number_of_others</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -214,9 +214,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new text message</string>
+                <string>رسالة نصية جديدة</string>
                 <key>other</key>
-                <string>%d new text messages</string>
+                <string>%d رسائل نصية جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.link</key>
@@ -230,9 +230,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new link</string>
+                <string>رابط جديد</string>
                 <key>other</key>
-                <string>%d new links</string>
+                <string>%d روابط جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.image</key>
@@ -246,9 +246,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new image</string>
+                <string>صورة جديدة</string>
                 <key>other</key>
-                <string>%d new images</string>
+                <string>%d رسائل جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.location</key>
@@ -262,9 +262,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new location</string>
+                <string>موقع جديد</string>
                 <key>other</key>
-                <string>%d new locations</string>
+                <string>%d مواقع جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.audio</key>
@@ -278,9 +278,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new audio message</string>
+                <string>رسالة صوتية جديدة</string>
                 <key>other</key>
-                <string>%d new audio messages</string>
+                <string>%d رسائل صوتية جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.video</key>
@@ -294,9 +294,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new video</string>
+                <string>فيديو جديد</string>
                 <key>other</key>
-                <string>%d new videos</string>
+                <string>%d فيديوهات جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.knock</key>
@@ -326,9 +326,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>missed call</string>
+                <string>مكالمة فائتة</string>
                 <key>other</key>
-                <string>%d missed calls</string>
+                <string>%d مكالمات فائتة</string>
             </dict>
         </dict>
     </dict>

@@ -53,7 +53,7 @@
 {
     if (imageData != nil) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
+            [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
             if (completionHandler){
                 completionHandler();
@@ -99,7 +99,7 @@
     
     [ZMUserSession.sharedSession enqueueChanges:^{
         textMessage = [self.conversation appendMessageWithText:text];
-        [self.conversation appendMessageWithImageData:data version3:ExtensionSettings.shared.useAssetsV3];
+        [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];

@@ -42,6 +42,7 @@ protocol SettingsCellType: class {
     let valueLabel = UILabel()
     let imagePreview = UIImageView()
     let separatorLine = UIView()
+    let topSeparatorLine = UIView()
     var cellNameLabelToIconInset: NSLayoutConstraint!
     
     var titleText: String = "" {
@@ -95,6 +96,12 @@ protocol SettingsCellType: class {
                 self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
                 self.cellNameLabelToIconInset.isActive = true
             }
+        }
+    }
+    
+    var isFirst: Bool = false {
+        didSet {
+            self.topSeparatorLine.isHidden = !isFirst
         }
     }
     
@@ -195,6 +202,16 @@ protocol SettingsCellType: class {
             separatorLine.bottom == selfView.bottom
             separatorLine.height == .hairline
         }
+        
+        self.topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        self.addSubview(self.topSeparatorLine)
+        
+        constrain(self, self.topSeparatorLine, self.cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
+            topSeparatorLine.leading == cellNameLabel.leading
+            topSeparatorLine.trailing == selfView.trailing
+            topSeparatorLine.top == selfView.top
+            topSeparatorLine.height == .hairline
+        }
     }
     
     func setupAccessibiltyElements() {
@@ -293,6 +310,9 @@ protocol SettingsCellType: class {
             textInput.bottom == contentView.bottom + 8
             textInput.trailing == trailingBoundaryView.trailing - 16
         }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
+        self.contentView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func setupAccessibiltyElements() {
@@ -301,6 +321,12 @@ protocol SettingsCellType: class {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [textInput])
         self.accessibilityElements = currentElements
+    }
+    
+    @objc public func onCellSelected(_ sender: AnyObject!) {
+        if !self.textInput.isFirstResponder {
+            self.textInput.becomeFirstResponder()
+        }
     }
     
     // MARK: - UITextFieldDelegate

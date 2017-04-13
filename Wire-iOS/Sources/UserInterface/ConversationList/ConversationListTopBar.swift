@@ -55,6 +55,8 @@ final class ConversationListTopBar: UIView {
         }
     }
     
+    private let middleViewContainer = UIView()
+    
     public var middleView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
@@ -63,26 +65,46 @@ final class ConversationListTopBar: UIView {
                 return
             }
             
-            self.addSubview(new)
+            self.middleViewContainer.addSubview(new)
             
-            constrain(self, new) { selfView, new in
-                new.center == selfView.center
+            constrain(middleViewContainer, new) { middleViewContainer, new in
+                new.edges == middleViewContainer.edges
             }
         }
     }
     
-    public let separatorLineView = OverflowSeparatorView()
+    public var splitSeparator: Bool = true {
+        didSet {
+            leftSeparatorInsetConstraint.isActive = splitSeparator
+            rightSeparatorInsetConstraint.isActive = splitSeparator
+            self.layoutIfNeeded()
+        }
+    }
+    
+    public let leftSeparatorLineView = OverflowSeparatorView()
+    public let rightSeparatorLineView = OverflowSeparatorView()
+    
+    private var leftSeparatorInsetConstraint: NSLayoutConstraint!
+    private var rightSeparatorInsetConstraint: NSLayoutConstraint!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(self.separatorLineView)
+        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
         
-        constrain(self, self.separatorLineView) { selfView, separatorLineView in
-            separatorLineView.leading == selfView.leading
-            separatorLineView.trailing == selfView.trailing
-            separatorLineView.bottom == selfView.bottom
-            separatorLineView.height == .hairline
+        constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) { selfView, middleViewContainer, leftSeparatorLineView, rightSeparatorLineView in
+            leftSeparatorLineView.leading == selfView.leading
+            leftSeparatorLineView.bottom == selfView.bottom
+            
+            rightSeparatorLineView.trailing == selfView.trailing
+            rightSeparatorLineView.bottom == selfView.bottom
+            
+            middleViewContainer.center == selfView.center
+            leftSeparatorLineView.trailing == selfView.trailing ~ LayoutPriority(750)
+            rightSeparatorLineView.leading == selfView.leading ~ LayoutPriority(750)
+            self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 16
+            self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 16
         }
     }
     

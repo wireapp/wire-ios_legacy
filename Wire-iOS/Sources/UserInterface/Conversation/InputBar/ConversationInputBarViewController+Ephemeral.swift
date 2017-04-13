@@ -82,6 +82,10 @@ extension ConversationInputBarViewController {
     }
 
     public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
+        guard let conversation = self.conversation else {
+            return
+        }
+        
         let title = conversation.destructionTimeout.shortDisplayString
         button.setTitle(title, for: .normal)
     }

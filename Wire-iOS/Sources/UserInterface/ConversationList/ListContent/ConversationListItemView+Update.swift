@@ -38,6 +38,8 @@ extension ConversationListItemView {
     
     @objc(updateForConversation:)
     internal func update(for conversation: ZMConversation?) {
+        self.conversation = conversation
+        
         guard let conversation = conversation else {
             self.configure(with: "", subtitle: "" && [:])
             return

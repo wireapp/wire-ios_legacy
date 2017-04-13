@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Zaproś osoby";
 
 "contacts_ui.no_contact.title" = "Brak aktywnych rozmów\n";
-"contacts_ui.no_contact.message" = "Dotknij kontakty, aby rozpocząć konwersację";
+"contacts_ui.no_contact.message" = "Tap people to start a conversation";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Dołącz";
@@ -122,8 +122,8 @@
 "list.archived_conversations_close" = "Zamknij archiwum";
 
 "conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.typing" = "Typing a message…";
+"conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Zablokowano";
 
@@ -136,13 +136,14 @@
 "conversation.status.message.file" = "Udostępniany plik";
 "conversation.status.message.knock" = "Zaczepiony";
 "conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.ephemeral" = "Wiadomość tymczasowa";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "Ty";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ dodał Ciebie";
 "conversation.status.added_users" = "%@ dodał %@";
-"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Wyszedłeś";
 "conversation.status.removed_users" = "%@ usunął %@";

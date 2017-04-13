@@ -49,6 +49,7 @@ final class VideoMessageView: UIView, TransferView {
         self.previewImageView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground)
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
+        self.playButton.accessibilityIdentifier = "VideoActionButton"
         self.playButton.accessibilityLabel = "VideoActionButton"
         self.playButton.layer.masksToBounds = true
 

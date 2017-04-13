@@ -27,6 +27,9 @@
 FOUNDATION_EXTERN NSString *const WireURLScheme;
 FOUNDATION_EXTERN NSString *const WireURLSchemeInvite;
 
+FOUNDATION_EXTERN NSString *const WireURLPathTeamJoin;
+
+
 #pragma mark - Preference keys
 
 FOUNDATION_EXPORT NSString *const UserPrefKeyProfilePictureTipCompleted;

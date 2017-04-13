@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Invitér personer";
 
 "contacts_ui.no_contact.title" = "Ingen aktive samtaler\n";
-"contacts_ui.no_contact.message" = "Tryk på kontakter for at starte en samtale";
+"contacts_ui.no_contact.message" = "Tap people to start a conversation";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Deltag";
@@ -122,8 +122,8 @@
 "list.archived_conversations_close" = "Luk arkiv";
 
 "conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.typing" = "Typing a message…";
+"conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Blokeret";
 
@@ -136,13 +136,14 @@
 "conversation.status.message.file" = "Delte en fil";
 "conversation.status.message.knock" = "Pingede";
 "conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.ephemeral" = "Tidsbestemt besked";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "Dig";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ har tilføjet dig";
 "conversation.status.added_users" = "%@ har tilføjet %@";
-"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Du forlod";
 "conversation.status.removed_users" = "%@ har fjernet %@";

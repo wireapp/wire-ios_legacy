@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Kutsu ihmisiä";
 
 "contacts_ui.no_contact.title" = "Ei aktiivisia keskusteluja\n";
-"contacts_ui.no_contact.message" = "Kosketa yhteystietoja aloittaksesi keskustelun";
+"contacts_ui.no_contact.message" = "Tap people to start a conversation";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liity";
@@ -122,8 +122,8 @@
 "list.archived_conversations_close" = "Sulje arkisto";
 
 "conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
+"conversation.status.typing" = "Typing a message…";
+"conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Estetty";
 
@@ -136,13 +136,14 @@
 "conversation.status.message.file" = "Jakoi tiedoston";
 "conversation.status.message.knock" = "Pinggasi";
 "conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.ephemeral" = "Ajoitettu viesti";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "Sinä";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
 "conversation.status.added_users" = "%@ lisäsi %@ n";
-"conversation.status.removed_multiple" = "Users removed";
+"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Sinä poistuit";
 "conversation.status.removed_users" = "%@ poisti %@ n";

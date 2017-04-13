@@ -122,13 +122,13 @@
 "list.archived_conversations_close" = "Закрыть архив";
 
 "conversation.status.call" = "Исходящий звонок";
-"conversation.status.typing" = "Typing a message...";
-"conversation.status.typing.group" = "%@: Typing a message...";
-"conversation.status.silenced" = "Muted";
+"conversation.status.typing" = "Набирает сообщение…";
+"conversation.status.typing.group" = "%@: набирает сообщение…";
+"conversation.status.silenced" = "Выкл. уведомления";
 "conversation.status.blocked" = "Заблокирован(а)";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Поделился(-лась) ссылкой";
 "conversation.status.message.image" = "Поделился(-лась) картинкой";
 "conversation.status.message.location" = "Поделился(-лась) местоположением";
 "conversation.status.message.audio" = "Поделился(-лась) аудио сообщением";
@@ -136,14 +136,15 @@
 "conversation.status.message.file" = "Поделился(-лась) файлом";
 "conversation.status.message.knock" = "Отправил(а) пинг";
 "conversation.status.message.missedcall" = "Пропущенный звонок";
+"conversation.status.message.ephemeral" = "Временное сообщение";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
-"conversation.status.added_multiple" = "Users added";
+"conversation.status.added_multiple" = "Добавлены участники";
 "conversation.status.you_was_added" = "%@ добавил(-а) вас";
-"conversation.status.added_users" = "%@ добавил %@";
-"conversation.status.removed_multiple" = "Users removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.added_users" = "%@ добавил(-а) %@";
+"conversation.status.removed_multiple" = "Удалены участники";
+"conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули беседу";
 "conversation.status.removed_users" = "%@ удалил %@";
 

@@ -172,6 +172,8 @@ final public class ConversationAvatarView: UIView {
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
                 backgroundColor = UIColor(white: 0, alpha: 0.16)
             }
+            
+            self.setNeedsLayout()
         }
     }
     
@@ -263,8 +265,8 @@ final public class ConversationAvatarView: UIView {
     }
     
     private func updateCornerRadius() {
-        layer.cornerRadius = self.conversation?.conversationType == .group ? 6 : layer.bounds.width / 2.0
-        clippingView.layer.cornerRadius = self.conversation?.conversationType == .group ? 4 : clippingView.layer.bounds.width / 2.0
+        layer.cornerRadius = self.mode == .one ? layer.bounds.width / 2.0 : 6
+        clippingView.layer.cornerRadius = self.mode == .one ? clippingView.layer.bounds.width / 2.0 : 4
     }
 }
 

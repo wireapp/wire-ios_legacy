@@ -715,4 +715,9 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.delegate conversationCellDidTapResendMessage:self];
 }
 
+- (void)messageToolboxViewDidSelectDelete:(MessageToolboxView *)messageToolboxView
+{
+    [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
+}
+
 @end

@@ -77,7 +77,7 @@ extension ConversationListViewController {
     }
 
     fileprivate func setSuggested(handle: String) {
-        userProfile.requestSettingHandle(handle: handle)
+        userProfile?.requestSettingHandle(handle: handle)
     }
 
 }

@@ -74,7 +74,7 @@ class SettingsPropertyFactory {
     var crashlogManager: CrashlogManager?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
-        SettingsPropertyName.disableMarkdown                   : UserDefaultDisableMarkdown,
+        SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
         SettingsPropertyName.chatHeadsDisabled          : UserDefaultChatHeadsDisabled,
         SettingsPropertyName.preferredFlashMode         : UserDefaultPreferredCameraFlashMode,
         SettingsPropertyName.messageSoundName           : UserDefaultMessageSoundName,
@@ -92,6 +92,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
         SettingsPropertyName.callingConstantBitRate     : UserDefaultCallingConstantBitRate,
+        SettingsPropertyName.workspaceName              : SettingsPropertyName.workspaceName.rawValue
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
@@ -315,5 +316,21 @@ class SettingsPropertyFactory {
         }
         
         fatalError("Cannot create SettingsProperty for \(propertyName)")
+    }
+}
+
+extension SettingsPropertyFactory {
+    static var shared: SettingsPropertyFactory? {
+        guard let session = ZMUserSession.shared() else {
+            return .none
+        }
+        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
+                                                              analytics: Analytics.shared(),
+                                                              mediaManager: AVSProvider.shared.mediaManager,
+                                                              userSession: session,
+                                                              selfUser: ZMUser.selfUser(),
+                                                              crashlogManager: BITHockeyManager.shared())
+        
+        return settingsPropertyFactory
     }
 }

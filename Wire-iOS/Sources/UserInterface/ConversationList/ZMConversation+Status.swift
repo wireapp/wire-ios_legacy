@@ -64,10 +64,18 @@ internal enum StatusMessageType: Int {
     case knock
     case addParticipants
     case removeParticipants
+    case newConversation
     case missedCall
 }
 
 extension StatusMessageType {
+    private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
+        .participantsAdded:   .addParticipants,
+        .participantsRemoved: .removeParticipants,
+        .missedCall:          .missedCall,
+        .newConversation:     .newConversation
+    ]
+    
     init?(message: ZMConversationMessage) {
         if message.isText, let textMessage = message.textMessageData {
             if let _ = textMessage.linkPreview {
@@ -96,14 +104,8 @@ extension StatusMessageType {
             self = .knock
         }
         else if message.isSystem, let system = message.systemMessageData {
-            if system.systemMessageType == .participantsAdded {
-                self = .addParticipants
-            }
-            else if system.systemMessageType == .participantsRemoved {
-                self = .removeParticipants
-            }
-            else if system.systemMessageType == .missedCall {
-                self = .missedCall
+            if let statusMessageType = StatusMessageType.conversationSystemMessageTypeToStatusMessageType[system.systemMessageType] {
+                self = statusMessageType
             }
             else {
                 return nil
@@ -130,6 +132,10 @@ internal protocol ConversationStatusMatcher {
 extension ConversationStatusMatcher {
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
         return .none
+    }
+    
+    func addEmphasis(to string: NSAttributedString, for substring: String) -> NSAttributedString {
+        return string.setAttributes(type(of: self).emphasisStyle(), toSubstring: substring)
     }
 }
 
@@ -222,7 +228,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
             let typingUsersString = typingUsers.flatMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle())
-            statusString = intermediateString.setAttributes(type(of: self).emphasisStyle(), toSubstring: typingUsersString)
+            statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
         }
         else {
             statusString = "conversation.status.typing".localized && type(of: self).regularStyle()
@@ -374,20 +380,24 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         return matchedTypes.flatMap { status.messagesRequiringAttentionByType[$0] }.reduce(0, +) > 0
     }
     
-    private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> String? {
+    private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
         if messages.count > 1 {
-            return "conversation.status.added_multiple".localized
+            return "conversation.status.added_multiple".localized && type(of: self).regularStyle()
         }
         else if let message = messages.last,
                 let systemMessage = message.systemMessageData,
                 let sender = message.sender {
-            if systemMessage.addedUsers.contains(where: { $0.isSelfUser }) {
-                return String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation))
+            if systemMessage.users.contains(where: { $0.isSelfUser }) {
+                let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle()
+                
+                return self.addEmphasis(to: result, for: sender.displayName(in: conversation))
             }
             else {
-                let usersList = systemMessage.addedUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
-                return String(format: "conversation.status.added_users".localized, sender!, usersList)
+                let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+                let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
+                let result = String(format: "conversation.status.added_users".localized, sender, usersList) && type(of: self).regularStyle()
+                
+                return self.addEmphasis(to: result, for: sender)
             }
         }
         return .none
@@ -395,11 +405,11 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
     
     private static let indicate3rdPartiesRemoval: Bool = false
     
-    private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> String? {
+    private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
         
         if messages.count > 1 {
             if type(of: self).indicate3rdPartiesRemoval {
-                return "conversation.status.removed_multiple".localized
+                return "conversation.status.removed_multiple".localized && type(of: self).regularStyle()
             }
             else {
                 return .none
@@ -411,17 +421,18 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
             
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 if sender.isSelfUser {
-                    return "conversation.status.you_left".localized
+                    return "conversation.status.you_left".localized && type(of: self).regularStyle()
                 }
                 else {
-                    return "conversation.status.you_were_removed".localized
+                    return "conversation.status.you_were_removed".localized && type(of: self).regularStyle()
                 }
             }
             else {
                 if type(of: self).indicate3rdPartiesRemoval {
                     let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                    let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)
-                    return String(format: "conversation.status.removed_users".localized, sender!, usersList)
+                    let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
+                    let result = String(format: "conversation.status.removed_users".localized, sender, usersList) && type(of: self).regularStyle()
+                    return self.addEmphasis(to: result, for: sender)
                 }
                 else {
                     return .none
@@ -441,8 +452,30 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         }
         
         let resultString = [addedString(for: allStatusMessagesByType[.addParticipants] ?? [], in: conversation),
-                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].flatMap { $0 }.joined(separator: "; ")
-        return resultString && type(of: self).regularStyle()
+                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].flatMap { $0 }.joined(separator: "; " && type(of: self).regularStyle())
+        return resultString
+    }
+    
+    var combinesWith: [ConversationStatusMatcher] = []
+}
+
+// [Someone] started a conversation
+final internal class StartConversationMatcher: ConversationStatusMatcher {
+    let matchedTypes: [StatusMessageType] = [.newConversation]
+    
+    func isMatching(with status: ConversationStatus) -> Bool {
+        return matchedTypes.flatMap { status.messagesRequiringAttentionByType[$0] }.reduce(0, +) > 0
+    }
+    
+    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+        guard let message = status.messagesRequiringAttention.first(where: { StatusMessageType(message: $0) == .newConversation }),
+              let sender = message.sender,
+              let senderString = sender.displayName(in: conversation) else {
+            return .none
+        }
+        
+        let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
+        return (resultString && type(of: self).regularStyle()).addAttributes(type(of: self).emphasisStyle(), toSubstring: senderString)
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -477,6 +510,7 @@ final internal class UnsernameMatcher: ConversationStatusMatcher {
  (New message / call)
  (Unsent message combines with (Group activity), (New message / call), (Silenced))
  (Group activity)
+ (Started conversation)
  (Username)
  */
 private var allMatchers: [ConversationStatusMatcher] = {
@@ -487,7 +521,7 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
     
-    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, UnsernameMatcher()]
+    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, StartConversationMatcher(), UnsernameMatcher()]
 }()
 
 extension ConversationStatus {
@@ -572,7 +606,7 @@ extension ZMConversation {
         if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
             let systemMessageData = lastMessage.systemMessageData,
-            systemMessageData.systemMessageType == .participantsRemoved {
+            systemMessageData.systemMessageType == .participantsRemoved || systemMessageData.systemMessageType == .participantsAdded || systemMessageData.systemMessageType == .newConversation {
             messagesRequiringAttention.append(lastMessage)
         }
         

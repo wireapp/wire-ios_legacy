@@ -58,10 +58,12 @@ extension ZMSystemMessageData {
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
 }
 
 @objc open class MessageToolboxView: UIView {
     fileprivate static let resendLink = URL(string: "settings://resend-message")!
+    fileprivate static let deleteLink = URL(string: "settings://delete-message")!
 
     private static let ephemeralTimeFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -291,7 +293,9 @@ extension ZMSystemMessageData {
             case .sent:
                 deliveryStateString = "content.system.message_sent_timestamp".localized
             case .failedToSend:
-                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
+                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " +
+                                      "content.system.failedtosend_message_timestamp_resend".localized + " · " +
+                                      "content.system.failedtosend_message_timestamp_delete".localized
             default:
                 deliveryStateString = .none
             }
@@ -334,6 +338,9 @@ extension ZMSystemMessageData {
         if message.deliveryState == .failedToSend {
             let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
             attributedText.addAttributes([NSLinkAttributeName: type(of: self).resendLink], range: linkRange)
+            
+            let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
+            attributedText.addAttributes([NSLinkAttributeName: type(of: self).deleteLink], range: deleteRange)
         }
 
         if showDestructionTimer, let stateString = deliveryStateString {
@@ -415,6 +422,9 @@ extension MessageToolboxView: TTTAttributedLabelDelegate {
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: Foundation.URL!) {
         if URL == type(of: self).resendLink {
             self.delegate?.messageToolboxViewDidSelectResend(self)
+        }
+        else if URL == type(of: self).deleteLink {
+            self.delegate?.messageToolboxViewDidSelectDelete(self)
         }
     }
 }

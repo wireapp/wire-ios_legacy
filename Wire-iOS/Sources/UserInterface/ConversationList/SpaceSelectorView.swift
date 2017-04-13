@@ -40,7 +40,7 @@ internal class LineView: UIView {
             return
         }
         
-        let inset: CGFloat = 32
+        let inset: CGFloat = 24
         
         constrain(self, first) { selfView, first in
             first.leading == selfView.leading
@@ -69,14 +69,36 @@ internal class LineView: UIView {
     }
 }
 
-final internal class SpaceSelectorView: LineView {
+final internal class SpaceSelectorView: UIView {
     public let spaces: [Space]
     public let spacesViews: [SpaceView]
+    private let lineView: LineView
+    private var topOffsetConstraint: NSLayoutConstraint!
+    public var imagesCollapsed: Bool = false {
+        didSet {
+            self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
+            
+            self.spacesViews.flatMap { [$0.imageView, $0.dotView] }.forEach { $0.alpha = imagesCollapsed ? 0 : 1 }
+            
+            self.layoutIfNeeded()
+        }
+    }
     
     init(spaces: [Space]) {
         self.spaces = spaces
         self.spacesViews = self.spaces.map { SpaceView(space: $0) }
-        super.init(views: spacesViews)
+        self.lineView = LineView(views: self.spacesViews)
+        super.init(frame: .zero)
+        
+        self.addSubview(lineView)
+        self.clipsToBounds = true
+
+        constrain(self, self.lineView) { selfView, lineView in
+            self.topOffsetConstraint = lineView.centerY == selfView.centerY
+            lineView.leading == selfView.leading
+            lineView.trailing == selfView.trailing
+            lineView.height == selfView.height
+        }
         
         self.spacesViews.forEach {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectSpace(_:)))
@@ -113,15 +135,59 @@ final internal class SpaceSelectorView: LineView {
 @objc internal class DotView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
+        self.layer.borderColor = UIColor.white.cgColor
+        self.layer.borderWidth = 1
         self.layer.cornerRadius = min(self.bounds.size.width / 2, self.bounds.size.height / 2)
     }
 }
 
 @objc internal class SpaceView: UIView {
+    public final class SpaceImageView: UIImageView {
+        private var lastLayoutBounds: CGRect = .zero
+        private let maskLayer = CALayer()
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            layer.mask = maskLayer
+            maskLayer.contentsScale = UIScreen.main.scale
+            maskLayer.contentsGravity = "center"
+            self.updateClippingLayer()
+        }
+        
+        required public init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        func updateClippingLayer() {
+            guard bounds.size != .zero else {
+                return
+            }
+            
+            UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
+            WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorCenter, color: .black)
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            
+            maskLayer.frame = layer.bounds
+            maskLayer.contents = image.cgImage
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            
+            if !bounds.equalTo(lastLayoutBounds) {
+                updateClippingLayer()
+                lastLayoutBounds = self.bounds
+            }
+        }
+    }
+    
     public let space: Space
     
     public let nameLabel = UILabel()
     public let dotView = DotView()
+    public let imageView = SpaceImageView(frame: .zero)
     
     private var observerUnreadToken: NSObjectProtocol!
     private var observerSelectionToken: NSObjectProtocol!
@@ -132,35 +198,73 @@ final internal class SpaceSelectorView: LineView {
         
         observerSelectionToken = space.addSelectionObserver(self)
         observerUnreadToken = space.addUnreadObserver(self)
-        [nameLabel, dotView].forEach(self.addSubview)
+        [imageView, nameLabel, dotView].forEach(self.addSubview)
         
-        let dotSize: CGFloat = 6
+        imageView.contentMode = .scaleAspectFill
+        
+        nameLabel.textAlignment = .center
+        nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        nameLabel.lineBreakMode = .byTruncatingTail
+        
+        let dotSize: CGFloat = 8
         
         dotView.backgroundColor = .accent()
         
-        constrain(self, nameLabel, dotView) { selfView, nameLabel, dotView in
-            nameLabel.edges == selfView.edges
+        constrain(self, imageView, nameLabel, dotView) { selfView, imageView, nameLabel, dotView in
+            imageView.top == selfView.top + 12
+            imageView.centerX == selfView.centerX
+            selfView.width >= imageView.width
+            imageView.width == imageView.height
+            imageView.width == 28
+            
+            nameLabel.top == imageView.bottom + 4
+
+            nameLabel.leading == selfView.leading
+            nameLabel.trailing == selfView.trailing
+            nameLabel.bottom == selfView.bottom - 4
+            nameLabel.width <= 96
             
             dotView.width == dotView.height
             dotView.height == dotSize
             
-            dotView.centerX == nameLabel.trailing
-            dotView.centerY == nameLabel.centerY - 6
+            dotView.centerX == imageView.trailing - 3
+            dotView.centerY == imageView.centerY - 6
             
-            selfView.height == 40
+            selfView.width <= 96
         }
         
-        self.updateLabel()
-        self.updateDot()
+        self.update()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    fileprivate func update() {
+        self.updateLabel()
+        self.updateImage()
+        self.updateDot()
+    }
+    
     fileprivate func updateLabel() {
-        self.nameLabel.text = self.space.name.uppercased()
+        self.nameLabel.text = self.space.name
         self.cas_styleClass = space.selected ? "selected" : .none
+    }
+    
+    static let ciContext: CIContext = {
+        return CIContext()
+    }()
+    
+    fileprivate func updateImage() {
+        if let image = self.space.image {
+            self.imageView.image = self.space.selected ? image : image.desaturatedImage(with: SpaceView.ciContext, saturation: 0.2)
+            self.imageView.backgroundColor = nil
+        }
+        else {
+            self.imageView.image = nil
+            self.imageView.backgroundColor = self.space.selected ? ZMUser.selfUser().accentColor : ZMUser.selfUser().accentColor.mix(.gray, amount: 0.5)
+        }
     }
     
     fileprivate func updateDot() {
@@ -170,12 +274,10 @@ final internal class SpaceSelectorView: LineView {
 
 extension SpaceView: SpaceUnreadObserver, SpaceSelectionObserver {
     func spaceDidChangeUnread(space: Space) {
-        self.updateLabel()
-        self.updateDot()
+        self.update()
     }
     
     func spaceDidChangeSelection(space: Space) {
-        self.updateLabel()
-        self.updateDot()
+        self.update()
     }
 }

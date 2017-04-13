@@ -147,7 +147,7 @@
         <key>content.system.people_started_using</key>
         <dict>
             <key>NSStringLocalizedFormatKey</key>
-            <string>%@%#@d_number_of_others@ started using %#@d_new_devices@</string>
+            <string>%#@d_number_of_others@ %#@d_new_devices@ を使い始めました</string>
             <key>d_number_of_others</key>
             <dict>
                 <key>NSStringFormatSpecTypeKey</key>
@@ -214,7 +214,7 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new text message</string>
+                <string>新しいテキストメッセージ</string>
                 <key>other</key>
                 <string>%d new text messages</string>
             </dict>
@@ -230,9 +230,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new link</string>
+                <string>新しいリンク</string>
                 <key>other</key>
-                <string>%d new links</string>
+                <string>%d 新しいリンク</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.image</key>
@@ -246,9 +246,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new image</string>
+                <string>新しいイメージ</string>
                 <key>other</key>
-                <string>%d new images</string>
+                <string>%d 新しいメッセージ</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.location</key>
@@ -262,7 +262,7 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new location</string>
+                <string>新しいロケーション</string>
                 <key>other</key>
                 <string>%d new locations</string>
             </dict>
@@ -294,9 +294,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new video</string>
+                <string>新しいビデオ</string>
                 <key>other</key>
-                <string>%d new videos</string>
+                <string>%d 新しいビデオ</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.knock</key>
@@ -310,9 +310,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new ping</string>
+                <string>新しいPing</string>
                 <key>other</key>
-                <string>%d new pings</string>
+                <string>%d 新しいPing</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.missedcall</key>
@@ -326,9 +326,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>missed call</string>
+                <string>不在着信</string>
                 <key>other</key>
-                <string>%d missed calls</string>
+                <string>%d 不在着信</string>
             </dict>
         </dict>
     </dict>

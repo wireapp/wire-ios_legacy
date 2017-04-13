@@ -158,7 +158,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsAdded
         otherMessage.sender = self.otherUser
-        otherMessage.users = Set([self.otherUser])
+        otherMessage.users = Set([self.selfUser])
         otherMessage.addedUsers = Set([self.selfUser])
         sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
@@ -175,7 +175,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsAdded
         otherMessage.sender = self.selfUser
-        otherMessage.users = Set([self.selfUser])
+        otherMessage.users = Set([self.otherUser])
         otherMessage.addedUsers = Set([self.otherUser])
         sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
@@ -252,5 +252,21 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "")
+    }
+    
+    func testStatusForConversationStarted() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .newConversation
+        otherMessage.sender = self.otherUser
+        otherMessage.users = Set([self.otherUser, self.selfUser])
+        otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
+        sut.sortedAppendMessage(otherMessage)
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) started a conversation")
     }
 }

@@ -73,13 +73,13 @@
 "contacts_ui.title" = "Inviter des personnes";
 
 "contacts_ui.no_contact.title" = "Aucune conversation active\n";
-"contacts_ui.no_contact.message" = "Appuyer sur contacts pour démarrer une nouvelle conversation";
+"contacts_ui.no_contact.message" = "Appuyez sur un contact pour démarrer une conversation";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "personnes";
+"bottom_bar.contacts_button.title" = "contacts";
 
 
 // Profile Header View
@@ -122,8 +122,8 @@
 "list.archived_conversations_close" = "Fermer l'archive";
 
 "conversation.status.call" = "Appel en cours";
-"conversation.status.typing" = "Tape un message...";
-"conversation.status.typing.group" = "%@ : Tape un message...";
+"conversation.status.typing" = "Tape un message…";
+"conversation.status.typing.group" = "%@ : tape un message…";
 "conversation.status.silenced" = "En sourdine";
 "conversation.status.blocked" = "Bloqué";
 
@@ -136,13 +136,14 @@
 "conversation.status.message.file" = "A partagé un fichier";
 "conversation.status.message.knock" = "a fait un signe";
 "conversation.status.message.missedcall" = "Appel manqué";
+"conversation.status.message.ephemeral" = "Message éphémère";
 
 "conversation.status.unsent" = "⚠️ Message non envoyé";
 "conversation.status.you" = "Vous";
-"conversation.status.added_multiple" = "Utilisateurs ajoutés";
+"conversation.status.added_multiple" = "Personnes ajoutées";
 "conversation.status.you_was_added" = "%@ vous a ajouté";
 "conversation.status.added_users" = "%@ a ajouté %@";
-"conversation.status.removed_multiple" = "Utilisateurs retirés";
+"conversation.status.removed_multiple" = "Personnes enlevées";
 "conversation.status.you_were_removed" = "Vous avez été retiré";
 "conversation.status.you_left" = "Vous avez quitté la conversation";
 "conversation.status.removed_users" = "%@ a retiré %@";
@@ -183,9 +184,9 @@
 "image.edit_image" = "Modifier l’image";
 
 // Camera access
-"camera_access.denied" = "Wire a besoin d’accéder à la Caméra.";
+"camera_access.denied" = "Wire a besoin d’accéder à l'appareil photo.";
 "camera_access.denied.instruction" = "";
-"camera_access.denied.open_settings" = "Activez-le dans les paramètres de Wire";
+"camera_access.denied.open_settings" = "Autoriser l'accès dans les paramètres de Wire";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Verrouillage AE/AF";
@@ -505,12 +506,12 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Téléphone";
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
-"self.settings.account_section.add_handle.title" = "Ajouter un nom d'utilisateur";
+"self.settings.account_section.add_handle.title" = "Choisir un nom d'utilisateur";
 
 "self.settings.account_details_group.info.footer" = "Des personnes peuvent vous trouver avec ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
 
-"self.settings.account_details.remove_device.title" = "Enlever l'appareil";
+"self.settings.account_details.remove_device.title" = "Supprimer l'appareil";
 "self.settings.account_details.key_fingerprint.title" = "Empreinte";
 "self.settings.account_details.remove_device.message" = "Votre mot de passe est nécessaire pour supprimer l’appareil";
 "self.settings.account_details.remove_device.password" = "Mot de passe";
@@ -524,7 +525,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte unique. Comparez les et vérifiez vos appareils et conversations.";
 "self.settings.device_details.reset_session.subtitle" = "Si les empreintes ne correspondent pas, réinitialisez la session afin de générer de nouvelles clés de chiffrement des deux côtés.";
-"self.settings.device_details.remove_device.subtitle" = "Supprimez ce périphérique si vous avez cessé de l’utiliser. Vous serez déconnecté de cet appareil immédiatement.";
+"self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous ne l'utilisez plus. Vous serez déconnecté de cet appareil immédiatement.";
 "self.settings.device_details.reset_session.success" = "La session a été réinitialisée";
 
 "self.settings.account_details.actions.title" = "Actions";
@@ -538,7 +539,7 @@
 
 "self.settings.account_section.handle.change.title" = "Nom d'utilisateur";
 "self.settings.account_section.handle.change.save" = "Enregistrer";
-"self.settings.account_section.handle.change.footer" = "Au moins 2 caractères. a — z, 0 — 9 et _ seulement.";
+"self.settings.account_section.handle.change.footer" = "Minimum 2 caractères. Parmi a–z, 0–9 et _.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Déjà pris";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Impossible d'enregistrer le nom d'utilisateur";
@@ -592,10 +593,10 @@
 
 "self.settings.callkit.title" = "Appels";
 "self.settings.callkit.caption" = "Partager avec iOS";
-"self.settings.callkit.description" = "Afficher les appels Wire sur l'écran de vérouillage et dans l'historique des appels sur iOS. Si iCloud est activé, l'historique des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre soit appliqué.";
+"self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre s'applique.";
 
 "self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "Cela fait que les appels audio utilisent moins de données et fonctionnent mieux sur des réseaux plus lents. Désactiver pour utiliser le Constant Bitrate Encoding.";
+"self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";
@@ -617,7 +618,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Cartes";
+"open_link.maps.option.apple" = "Plans";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";
@@ -642,8 +643,8 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Cela vous permet de vous connecter avec les autres. Nous rendons anonymes toutes les informations et ne les partageons pas, en aucun cas. Autorisez l'accès via Paramètres > Confidentialité > Contacts.";
 
 "self.settings.privacy_security.lock_app" = "Verrouiller avec un code";
-"self.settings.privacy_security.lock_app.subtitle" = "Verrouiller Wire après 10 secondes en arrière-plan. Déverrouiller avec Touch ID ou entrer un code.";
-"self.settings.privacy_security.lock_app.description" = "Déverrouillage Wire";
+"self.settings.privacy_security.lock_app.subtitle" = "Verrouille Wire après 10 secondes en arrière-plan. Déverrouillage avec Touch ID ou le code.";
+"self.settings.privacy_security.lock_app.description" = "Déverrouiller Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
@@ -765,7 +766,7 @@
 
 "registration.signin.title" = "Se connecter";
 "registration.signin.too_many_devices.title" = "";
-"registration.signin.too_many_devices.subtitle" = "Supprimez un de vos autres périphériques pour commencer à utiliser Wire sur celui-ci.";
+"registration.signin.too_many_devices.subtitle" = "Supprimez un de vos autres appareils pour commencer à utiliser Wire sur celui-ci.";
 "registration.signin.too_many_devices.manage_button.title" = "Gérer les appareils";
 "registration.signin.too_many_devices.sign_out_button.title" = "Se déconnecter";
 "registration.signin.email_button.title" = "Email";
@@ -807,7 +808,7 @@
 // Username takeover screen
 "registration.select_handle.takeover.title" = "Les noms sont ici.";
 "registration.select_handle.takeover.subtitle" = "Réclamer votre nom unique sur Wire.";
-"registration.select_handle.takeover.subtitle_link" = "En savoir plus ";
+"registration.select_handle.takeover.subtitle_link" = "En savoir plus";
 
 "registration.select_handle.takeover.choose_own" = "Choisissez le vôtre";
 "registration.select_handle.takeover.keep_suggested" = "Garder celle-là";

@@ -23,16 +23,6 @@ import HockeySDK.BITHockeyManager
 
 
 extension AVSMediaManager {
-    fileprivate func settingsPropertyFactory() -> SettingsPropertyFactory {
-        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
-                                                              analytics: Analytics.shared(),
-                                                              mediaManager: AVSProvider.shared.mediaManager,
-                                                              userSession: ZMUserSession.shared()!,
-                                                              selfUser: ZMUser.selfUser(),
-                                                              crashlogManager: BITHockeyManager.shared())
-        return settingsPropertyFactory
-    }
-    
     func observeSoundConfigurationChanges() {
         NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.messageSoundName.changeNotificationName), object: .none)
         NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.callSoundName.changeNotificationName), object: .none)
@@ -40,7 +30,7 @@ extension AVSMediaManager {
     }
     
     func configureCustomSounds() {
-        let settingsPropertyFactory = self.settingsPropertyFactory()
+        let settingsPropertyFactory = SettingsPropertyFactory.shared!
         
         let messageSoundProperty = settingsPropertyFactory.property(.messageSoundName)
         self.updateCustomSoundForProperty(messageSoundProperty)

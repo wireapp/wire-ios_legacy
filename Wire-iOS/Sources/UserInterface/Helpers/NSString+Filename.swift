@@ -23,12 +23,19 @@ extension NSString {
     
     fileprivate static let dateFormatter : DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy MM dd hh.mm.ss"
+        formatter.dateFormat = "yyyy-MM-dd-hh.mm.ss"
         return formatter
     }()
-    
+
+    static private let transforms = [kCFStringTransformStripCombiningMarks, kCFStringTransformToLatin, kCFStringTransformToUnicodeName]
+
+    var normalizedFilename: String {
+        let ref = NSMutableString(string: self) as CFMutableString
+        type(of: self).transforms.forEach { CFStringTransform(ref, nil, $0, false) }
+        return (ref as String).replacingOccurrences(of: " ", with: "-")
+    }
+
     static func filenameForSelfUser() -> NSString {
-        let filename = "\(ZMUser.selfUser().name!) \(dateFormatter.string(from: Date()))"
-        return filename.replacingOccurrences(of: " ", with: "-") as NSString
+        return "\(ZMUser.selfUser().name!.normalizedFilename)-\(dateFormatter.string(from: Date()))" as NSString
     }
 }

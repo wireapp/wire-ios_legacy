@@ -118,7 +118,11 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(callKitSection)
         }
         
-        let VBRDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate), inverse: true)
+        let VBRDescriptor = SettingsPropertyToggleCellDescriptor(
+            settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),
+            inverse: true,
+            identifier: "VBRSwitch"
+        )
         let VBRDescription = "self.settings.vbr.description".localized
         let VBRSection = SettingsSectionDescriptor(cellDescriptors: [VBRDescriptor], header: .none, footer: VBRDescription, visibilityAction: .none)
         cellDescriptors.append(VBRSection)
@@ -169,13 +173,17 @@ extension SettingsCellDescriptorFactory {
             header: "self.settings.popular_demand.title".localized,
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
-
+        
+        cellDescriptors.append(byPopularDemandSection)
+        
+        if settingsPropertyFactory.property(.workspaceName).rawValue() != nil {
+            let spaceNameDescriptor = SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.workspaceName))
+            cellDescriptors.append(SettingsSectionDescriptor(cellDescriptors: [spaceNameDescriptor]))
+        }
+        
         if externalAppsDescriptors.count > 0 {
             cellDescriptors.append(externalAppsSection)
         }
-
-        cellDescriptors.append(byPopularDemandSection)
-
         
         if #available(iOS 9.0, *) {
             let context: LAContext = LAContext()
