@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Contactos eliminados";
 "conversation.status.you_were_removed" = "Te han eliminado";
 "conversation.status.you_left" = "Te fuiste";
+"conversation.status.started_conversation" = "%@ inició un chat";
 "conversation.status.removed_users" = "%@ eliminó a %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Entregado";
 "content.system.failedtosend_message_timestamp" = "Fallo al enviar.";
 "content.system.failedtosend_message_timestamp_resend" = "Reenviar";
+"content.system.failedtosend_message_timestamp_delete" = "Eliminar";
 "content.system.like_tooltip" = "Pulsa para dar un 'like'";
 "content.system.deleted_message_prefix_timestamp" = "Eliminado en %@";
 "content.system.edited_message_prefix_timestamp" = "Editado en %@";
@@ -597,6 +599,8 @@
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";

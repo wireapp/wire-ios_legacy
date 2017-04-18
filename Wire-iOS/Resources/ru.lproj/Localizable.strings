@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Удалены участники";
 "conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули беседу";
+"conversation.status.started_conversation" = "%@ начал разговор";
 "conversation.status.removed_users" = "%@ удалил %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Доставлено";
 "content.system.failedtosend_message_timestamp" = "Отправка не удалась.";
 "content.system.failedtosend_message_timestamp_resend" = "Отправить повторно";
+"content.system.failedtosend_message_timestamp_delete" = "Удалить";
 "content.system.like_tooltip" = "Нажмите, чтобы лайкнуть";
 "content.system.deleted_message_prefix_timestamp" = "Удалено %@";
 "content.system.edited_message_prefix_timestamp" = "Отредактировано %@";
@@ -597,6 +599,8 @@
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
 "self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";

@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Freunde einladen";
 
 "contacts_ui.no_contact.title" = "Keine aktiven Unterhaltungen\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.message" = "Tippe auf Personen, um eine Unterhaltung anzufangen";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Beitreten";
@@ -122,9 +122,9 @@
 "list.archived_conversations_close" = "Archiv schliessen";
 
 "conversation.status.call" = "Aktiver Anruf";
-"conversation.status.typing" = "Typing a message…";
-"conversation.status.typing.group" = "%@: typing a message…";
-"conversation.status.silenced" = "Muted";
+"conversation.status.typing" = "Schreibt eine Nachricht…";
+"conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
+"conversation.status.silenced" = "Lautlos";
 "conversation.status.blocked" = "Blockiert";
 
 "conversation.status.message.text" = "%@";
@@ -138,14 +138,15 @@
 "conversation.status.message.missedcall" = "Verpasster Anruf";
 "conversation.status.message.ephemeral" = "Temporäre Nachricht";
 
-"conversation.status.unsent" = "⚠️ nicht gesendete Nachricht";
+"conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
-"conversation.status.added_multiple" = "People added";
+"conversation.status.added_multiple" = "Teilnehmer hinzugefügt";
 "conversation.status.you_was_added" = "%@ hat dich hinzugefügt";
 "conversation.status.added_users" = "%@ hat %@ hinzugefügt";
-"conversation.status.removed_multiple" = "People removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Teilnehmer entfernt";
+"conversation.status.you_were_removed" = "Du wurdest entfernt";
 "conversation.status.you_left" = "Du hast die Unterhaltung verlassen";
+"conversation.status.started_conversation" = "%@ hat eine Unterhaltung begonnen";
 "conversation.status.removed_users" = "%@ hat %@ entfernt";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Zugestellt";
 "content.system.failedtosend_message_timestamp" = "Senden fehlgeschlagen.";
 "content.system.failedtosend_message_timestamp_resend" = "Erneut senden";
+"content.system.failedtosend_message_timestamp_delete" = "Löschen";
 "content.system.like_tooltip" = "Gefällt mir";
 "content.system.deleted_message_prefix_timestamp" = "Gelöscht am %@";
 "content.system.edited_message_prefix_timestamp" = "Bearbeitet am %@";

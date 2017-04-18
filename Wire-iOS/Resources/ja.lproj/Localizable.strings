@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "あなたは退出しました";
+"conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@は%@を削除しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "配信済み";
 "content.system.failedtosend_message_timestamp" = "送信できませんでした";
 "content.system.failedtosend_message_timestamp_resend" = "再送する";
+"content.system.failedtosend_message_timestamp_delete" = "削除";
 "content.system.like_tooltip" = "タップしていいね！";
 "content.system.deleted_message_prefix_timestamp" = "%@を削除";
 "content.system.edited_message_prefix_timestamp" = "%@を編集";
@@ -597,6 +599,8 @@
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
 "self.settings.sound_menu.sounds.wire_message" = "Wireメッセージ";

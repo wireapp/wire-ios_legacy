@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Mitu inimest eemaldatud";
 "conversation.status.you_were_removed" = "Sind eemaldati vestlusest";
 "conversation.status.you_left" = "Lahkusid vestlusest";
+"conversation.status.started_conversation" = "%@ alustas vestlust";
 "conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Kohale toimetatud";
 "content.system.failedtosend_message_timestamp" = "Saatmine ebaõnnestus.";
 "content.system.failedtosend_message_timestamp_resend" = "Saada uuesti";
+"content.system.failedtosend_message_timestamp_delete" = "Kustuta";
 "content.system.like_tooltip" = "Vajuta, kui meeldib";
 "content.system.deleted_message_prefix_timestamp" = "Kustutatud %@";
 "content.system.edited_message_prefix_timestamp" = "Muudetud %@";
@@ -597,6 +599,8 @@
 
 "self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
 "self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Kõne";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sõnum";
