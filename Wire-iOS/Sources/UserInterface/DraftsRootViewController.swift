@@ -72,7 +72,7 @@ extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdap
 
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft draft: MessageDraft) {
         view.window?.endEditing(true)
-        let conversations = SessionObjectCache.shared().allConversations.asArray() as! [ZMConversation] // TODO: Filter (see ZMConversationList.shareableConversations)
+        let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
         let shareViewController: ShareViewController<ZMConversation, MessageDraft> = ShareViewController(shareable: draft, destinations: conversations)
 
         shareViewController.showPreview = false

@@ -149,7 +149,7 @@ extension ZMMessage: Shareable {
 }
 
 extension ZMConversationList {
-    func shareableConversations(excluding: ZMConversation) -> [ZMConversation] {
+    func shareableConversations(excluding: ZMConversation? = nil) -> [ZMConversation] {
         return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&

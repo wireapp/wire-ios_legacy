@@ -46,14 +46,14 @@ import CoreData
         guard subject?.isEmpty == false || message?.isEmpty == false else { return nil }
         var text = ""
 
-        if let subject = subject {
+        if let subject = subject, !subject.isEmpty {
             text += "# " + subject
             if nil != message {
                 text += "\n\n"
             }
         }
 
-        if let message = message {
+        if let message = message, !message.isEmpty {
             text += message
         }
 
