@@ -28,7 +28,13 @@ import Cartography
         super.init(frame: .zero)
         self.imageView.user = user
         self.nameLabel.text = user.displayName
-        self.handleLabel.text = "@" + user.handle
+        
+        if let handle = user.handle, !handle.isEmpty {
+            self.handleLabel.text = "@" + handle
+        }
+        else {
+            self.handleLabel.text = ""
+        }
         
         [imageView, nameLabel, handleLabel].forEach(self.addSubview)
         
