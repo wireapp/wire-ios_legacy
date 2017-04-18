@@ -119,7 +119,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     else if ([currentNetworkType isEqualToString:CTRadioAccessTechnologyLTE]) {
         networkType = @"4G";
     }
-    else if ([NetworkStatus sharedStatus].reachability == ServerReachabilityOK){
+    else if ([NetworkStatus sharedStatus].reachability == ServerReachabilityOK) {
         networkType = @"wifi";
     }
     
