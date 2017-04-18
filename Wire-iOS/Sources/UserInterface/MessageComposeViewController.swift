@@ -102,7 +102,7 @@ final class MessageComposeViewController: UIViewController {
             self?.persistence.enqueue(
                 block: {
                     self?.draft.map($0.delete)
-                    self?.draft = MessageDraft.insertNewObject(in: $0)
+                    self?.draft = nil
             }, completion: {
                     self?.subjectTextField.text = nil
                     self?.messageTextView.text = nil
@@ -132,10 +132,6 @@ final class MessageComposeViewController: UIViewController {
                 completion: { self.updateDraft() }
             )
         }
-    }
-
-    private dynamic func dismissViewController() {
-        dismiss(animated: true, completion: nil)
     }
 
     private func createConstraints() {
