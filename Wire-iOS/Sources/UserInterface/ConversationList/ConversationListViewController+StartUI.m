@@ -185,7 +185,7 @@
                 ZMUser *user = self.startUISelectedUsers.anyObject;
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [user.oneToOneConversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
+                    [user.oneToOneConversation appendMessageWithImageData:imageData];
                 } completionHandler:^{
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:user.oneToOneConversation];
                     
@@ -206,7 +206,7 @@
                 } completionHandler:^{
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [[ZMUserSession sharedSession] enqueueChanges:^{
-                            [conversation appendMessageWithImageData:imageData version3:ExtensionSettings.shared.useAssetsV3];
+                            [conversation appendMessageWithImageData:imageData];
                         } completionHandler:^{
                             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:conversation];
                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

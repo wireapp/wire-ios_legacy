@@ -91,14 +91,9 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
 - (void)probablyReceivedFullConversationList
 {
     NSUInteger groupConvCount = 0;
-    NSUInteger connectionCount = 0;
-    
+
     for (ZMConversation *conversation in [SessionObjectCache sharedCache].allConversations) {
-        
-        if (conversation.conversationType == ZMConversationTypeOneOnOne) {
-            connectionCount++;
-        }
-        else if (conversation.conversationType == ZMConversationTypeGroup) {
+        if (conversation.conversationType == ZMConversationTypeGroup) {
             groupConvCount ++;
         }
     }
@@ -143,8 +138,12 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
         default:
             break;
     }
-
-    [self.analytics sendCustomDimensionsWithNumberOfContacts:connectionCount
+    
+    NSFetchRequest *fetchRequest = [ZMUser fetchRequest];
+    fetchRequest.predicate = [ZMUser predicateForConnectedNonBotUsers];
+    NSUInteger contactsCount = [[ZMUserSession sharedSession].managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    
+    [self.analytics sendCustomDimensionsWithNumberOfContacts:contactsCount
                                           groupConversations:groupConvCount
                                                  accentColor:accentColor
                                                  networkType:networkType
