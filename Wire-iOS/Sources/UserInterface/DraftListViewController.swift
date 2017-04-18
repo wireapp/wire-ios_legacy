@@ -22,7 +22,10 @@ import Foundation
 
 final class DraftListViewController: CoreDataTableViewController<MessageDraft, DraftMessageCell> {
 
+    let persistence: MessageDraftStorage
+
     init(persistence: MessageDraftStorage) {
+        self.persistence = persistence
         super.init(fetchedResultsController: persistence.resultsController)
         configureCell = { (cell, draft) in
             cell.configure(with: draft)
@@ -57,6 +60,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
         DraftMessageCell.register(in: tableView)
+        tableView.rowHeight = 60
     }
 
     private dynamic func closeTapped(_ sender: Any) {
@@ -68,9 +72,10 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
     }
 
     fileprivate func showDraft(_ draft: MessageDraft?) {
-        let composeViewController = MessageComposeViewController(draft: draft)
+        let composeViewController = MessageComposeViewController(draft: draft, persistence: persistence)
+        composeViewController.delegate = splitViewController as? DraftsRootViewController
         let detail = DraftNavigationController(rootViewController: composeViewController)
-        navigationController?.splitViewController?.showDetailViewController(detail, sender: nil)
+        splitViewController?.showDetailViewController(detail, sender: nil)
     }
     
 }

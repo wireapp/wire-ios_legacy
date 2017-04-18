@@ -496,6 +496,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
     
     [DeveloperMenuState prepareForDebugging];
+    [MessageDraftStorage setupSharedStorageAtURL:_zetaUserSession.sharedContainerURL error:nil];
 }
 
 #pragma mark - User Session block queueing

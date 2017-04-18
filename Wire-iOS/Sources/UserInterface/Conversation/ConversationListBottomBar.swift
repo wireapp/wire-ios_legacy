@@ -95,7 +95,7 @@ import Cartography
         archivedButton.addTarget(self, action: #selector(ConversationListBottomBarController.archivedButtonTapped(_:)), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
 
-        plusButton.setIcon(.archive, with: .tiny, for: .normal)
+        plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         plusButton.accessibilityIdentifier = "bottomBarPlusButton"
 

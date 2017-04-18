@@ -18,14 +18,14 @@
 
 
 import Foundation
+import WireExtensionComponents
 
 
 final class DraftsRootViewController: UISplitViewController {
 
-    let persistence: MessageDraftStorage
+    let persistence: MessageDraftStorage = .shared
 
     init() {
-        persistence = try! MessageDraftStorage(sharedContainerURL: ZMUserSession.shared()!.sharedContainerURL)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,7 +46,8 @@ final class DraftsRootViewController: UISplitViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if persistence.numberOfStoredDrafts() == 0 || traitCollection.horizontalSizeClass != .compact {
-            let initialComposeViewController = MessageComposeViewController(draft: nil)
+            let initialComposeViewController = MessageComposeViewController(draft: nil, persistence: persistence)
+            initialComposeViewController.delegate = self
             let detail = DraftNavigationController(rootViewController: initialComposeViewController)
             UIView.performWithoutAnimation {
                 showDetailViewController(detail, sender: nil)
@@ -65,3 +66,40 @@ final class DraftsRootViewController: UISplitViewController {
     }
 
 }
+
+
+extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
+
+    func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft draft: MessageDraft) {
+        view.window?.endEditing(true)
+        let conversations = SessionObjectCache.shared().allConversations.asArray() as! [ZMConversation] // TODO: Filter (see ZMConversationList.shareableConversations)
+        let shareViewController: ShareViewController<ZMConversation, MessageDraft> = ShareViewController(shareable: draft, destinations: conversations)
+
+        shareViewController.showPreview = false
+        shareViewController.modalPresentationStyle = .formSheet
+        shareViewController.presentationController?.delegate = self
+
+        shareViewController.onDismiss = { [weak self] (controller, success) in
+            if success {
+                self?.persistence.enqueue(
+                    block: { $0.delete(draft) },
+                    completion: { self?.presentingViewController?.dismiss(animated: true, completion: nil) }
+                )
+            } else {
+                controller.presentingViewController?.dismiss(animated: true) {
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                }
+            }
+        }
+
+        present(shareViewController, animated: true) {
+            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        }
+    }
+
+    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return traitCollection.horizontalSizeClass == .regular ? .formSheet : .overFullScreen
+    }
+
+}
+

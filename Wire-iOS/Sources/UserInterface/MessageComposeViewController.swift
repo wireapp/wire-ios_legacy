@@ -30,8 +30,8 @@ final class MessageComposeViewController: UIViewController {
     weak var delegate: MessageComposeViewControllerDelegate?
 
     private let topContainer = UIView()
-    private let subjectImageContainer = UIView()
-    private let subjectImageView = UIImageView()
+    private let subjectLabelContainer = UIView()
+    private let subjectLabel = UILabel()
     private let subjectTextField = UITextField()
     private let subjectSeparator = UIView()
     private let messageTextView = UITextView()
@@ -39,9 +39,11 @@ final class MessageComposeViewController: UIViewController {
     private let sendButtonView = DraftSendInputAccessoryView()
 
     private var draft: MessageDraft?
+    private let persistence: MessageDraftStorage
 
-    required init(draft: MessageDraft?) {
+    required init(draft: MessageDraft?, persistence: MessageDraftStorage = .shared) {
         self.draft = draft
+        self.persistence = persistence
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,9 +53,14 @@ final class MessageComposeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDraftThrottled), name: .UITextFieldTextDidChange, object: subjectTextField)
         setupViews()
         createConstraints()
         loadDraft()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func setupViews() {
@@ -61,11 +68,9 @@ final class MessageComposeViewController: UIViewController {
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         navigationItem.leftItemsSupplementBackButton = true
 
-        subjectImageView.image = UIImage(
-            for: .hamburger,
-            iconSize: .tiny,
-            color: color(ColorSchemeColorTextForeground)
-        )
+        subjectLabel.text = "#"
+        subjectLabel.textColor = color(ColorSchemeColorTextForeground)
+        subjectLabel.font = FontSpec(.normal, .semibold).font!
 
         subjectSeparator.backgroundColor = color(ColorSchemeColorSeparator)
         subjectTextField.textColor = color(ColorSchemeColorTextForeground)
@@ -75,15 +80,15 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.textColor = color(ColorSchemeColorTextForeground)
         messageTextView.backgroundColor = .clear
         messageTextView.font = FontSpec(.normal, .none).font!
-        messageTextView.contentInset = UIEdgeInsetsMake(16, 0, 16, 0)
+        messageTextView.contentInset = UIEdgeInsetsMake(24, 0, 24, 0)
         messageTextView.textContainerInset = .zero
         messageTextView.textContainer.lineFragmentPadding = 0
+        messageTextView.delegate = self
 
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
-
-        subjectImageContainer.addSubview(subjectImageView)
+        subjectLabelContainer.addSubview(subjectLabel)
         [topContainer, messageTextView, sendButtonView].forEach(view.addSubview)
-        [subjectImageContainer, subjectTextField, subjectSeparator].forEach(topContainer.addSubview)
+        [subjectLabelContainer, subjectTextField, subjectSeparator].forEach(topContainer.addSubview)
 
         setupInputAccessoryView()
     }
@@ -93,8 +98,39 @@ final class MessageComposeViewController: UIViewController {
             self.delegate?.composeViewController(self, wantsToSendDraft: self.draft!)
         }
 
-        sendButtonView.onDelete = {
-            // TODO
+        sendButtonView.onDelete = { [weak self] in
+            self?.persistence.enqueue(
+                block: {
+                    self?.draft.map($0.delete)
+                    self?.draft = MessageDraft.insertNewObject(in: $0)
+            }, completion: {
+                    self?.subjectTextField.text = nil
+                    self?.messageTextView.text = nil
+            })
+        }
+    }
+
+    fileprivate dynamic func updateDraftThrottled() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateDraft), object: nil)
+        perform(#selector(updateDraft), with: nil, afterDelay: 0.2)
+    }
+
+    private dynamic func updateDraft() {
+        if let draft = draft {
+            persistence.enqueue {
+                if self.subjectTextField.text?.isEmpty == false || self.messageTextView.text?.isEmpty == false {
+                    draft.subject = self.subjectTextField.text
+                    draft.message = self.messageTextView.text
+                    draft.lastModifiedDate = NSDate()
+                } else {
+                    $0.delete(draft)
+                }
+            }
+        } else {
+            persistence.enqueue(
+                block: { self.draft = MessageDraft.insertNewObject(in: $0) },
+                completion: { self.updateDraft() }
+            )
         }
     }
 
@@ -119,7 +155,7 @@ final class MessageComposeViewController: UIViewController {
             sendButtonView.bottom == view.bottom
         }
 
-        constrain(topContainer, subjectImageContainer, subjectTextField, subjectSeparator) { container, imageContainer, textField, separator in
+        constrain(topContainer, subjectLabelContainer, subjectTextField, subjectSeparator) { container, imageContainer, textField, separator in
             separator.bottom == container.bottom
             separator.leading == container.leading
             separator.trailing == container.trailing
@@ -134,15 +170,23 @@ final class MessageComposeViewController: UIViewController {
             textField.centerY == container.centerY
         }
 
-        constrain(subjectImageContainer, subjectImageView) { imageContainer, image in
-            image.center == imageContainer.center
+        constrain(subjectLabelContainer, subjectLabel) { subjectLabelContainer, subjectLabel in
+            subjectLabel.center == subjectLabelContainer.center
         }
     }
-
 
     private func loadDraft() {
         subjectTextField.text = draft?.subject
         messageTextView.text = draft?.message
+    }
+
+}
+
+
+extension MessageComposeViewController: UITextViewDelegate {
+
+    func textViewDidChange(_ textView: UITextView) {
+        updateDraftThrottled()
     }
 
 }

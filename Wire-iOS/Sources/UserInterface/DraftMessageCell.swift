@@ -24,6 +24,10 @@ final class DraftMessageCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        textLabel?.font = FontSpec(.normal, .light).font!
+        textLabel?.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        detailTextLabel?.font = FontSpec(.medium, .regular).font!
+        detailTextLabel?.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +35,9 @@ final class DraftMessageCell: UITableViewCell {
     }
 
     func configure(with draft: MessageDraft) {
-        textLabel?.text = draft.subject
+        if let subject = draft.subject {
+            textLabel?.text = "#" + subject
+        }
         detailTextLabel?.text = draft.message
     }
 

@@ -23,6 +23,8 @@ import CoreData
 /// Class describing unsent message drafts for later sending or further editing.
 @objc public class MessageDraft: NSManagedObject {
 
+    private static let entityName = "MessageDraft"
+
     /// The subject of the message
     @NSManaged public var subject: String?
     /// The message content
@@ -31,13 +33,31 @@ import CoreData
     @NSManaged public var lastModifiedDate: NSDate?
 
     @nonobjc public class var request: NSFetchRequest<MessageDraft> {
-        let request = NSFetchRequest<MessageDraft>(entityName: "MessageDraft")
+        let request = NSFetchRequest<MessageDraft>(entityName: entityName)
         request.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageDraft.lastModifiedDate), ascending: false)]
         return request
     }
 
     static func insertNewObject(in moc: NSManagedObjectContext) -> MessageDraft {
-        return NSEntityDescription.insertNewObject(forEntityName: "MessageDraft", into: moc) as! MessageDraft
+        return NSEntityDescription.insertNewObject(forEntityName: entityName, into: moc) as! MessageDraft
+    }
+
+    fileprivate func shareableText() -> String? {
+        guard subject?.isEmpty == false || message?.isEmpty == false else { return nil }
+        var text = ""
+
+        if let subject = subject {
+            text += "# " + subject
+            if nil != message {
+                text += "\n\n"
+            }
+        }
+
+        if let message = message {
+            text += message
+        }
+
+        return text
     }
 
 }
@@ -48,78 +68,26 @@ func ==(lhs: MessageDraft, rhs: MessageDraft) -> Bool {
 }
 
 
-/// Class used to store objects of type `MessageDraft` on disk.
-/// Creates a directory to store the serialized objects if not yet present.
-final class MessageDraftStorage: NSObject {
+extension MessageDraft: Shareable {
 
-    enum StorageError: Error {
-        case noModel
-    }
+    public typealias I = ZMConversation
 
-    lazy var managedObjectContext: NSManagedObjectContext = {
-        let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        moc.persistentStoreCoordinator = self.psc
-        return moc
-    }()
-
-    lazy var resultsController: NSFetchedResultsController<MessageDraft> = {
-        return NSFetchedResultsController(
-            fetchRequest: MessageDraft.request,
-            managedObjectContext: self.managedObjectContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-    }()
-
-    private let storeURL: URL
-    private let psc: NSPersistentStoreCoordinator
-
-    init(sharedContainerURL: URL) throws {
-        guard let model = NSManagedObjectModel.mergedModel(from: [Bundle(for: MessageDraftStorage.self)]) else { throw StorageError.noModel  }
-        psc = NSPersistentStoreCoordinator(managedObjectModel: model)
-        let directoryURL = sharedContainerURL.appendingPathComponent("MessageDraftStorage")
-        try MessageDraftStorage.createDirectoryIfNeeded(at: directoryURL)
-        storeURL = directoryURL.appendingPathComponent("Drafts")
-
-        _ = try psc.addPersistentStore(
-            ofType: NSSQLiteStoreType,
-            configurationName: nil,
-            at: storeURL,
-            options: MessageDraftStorage.storeOptions
-        )
-
-        super.init()
-    }
-
-    private static func createDirectoryIfNeeded(at url: URL) throws {
-        if !FileManager.default.fileExists(atPath: url.path) {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-        }
-        try url.wr_excludeFromBackup()
-    }
-
-    private static var storeOptions: [String: Any] {
-        return [
-            NSSQLitePragmasOption: ["journal_mode": "WAL", "synchronous" : "FULL" ],
-            NSMigratePersistentStoresAutomaticallyOption: true,
-            NSInferMappingModelAutomaticallyOption: true
-        ]
-    }
-
-    func numberOfStoredDrafts() -> Int {
-        return (try? managedObjectContext.count(for: MessageDraft.request)) ?? 0
-    }
-
-    func enqueue(block: @escaping (NSManagedObjectContext) -> Void) {
-        enqueue(block: block, completion: nil)
-    }
-
-    func enqueue(block: @escaping (NSManagedObjectContext) -> Void, completion: (() -> Void)?) {
-        managedObjectContext.perform {
-            block(self.managedObjectContext)
-            try? self.managedObjectContext.save()
-            completion?()
+    public func share<ZMConversation>(to: [ZMConversation]) {
+        ZMUserSession.shared()?.performChanges {
+            send(draft: self, to: to as [AnyObject])
         }
     }
 
+    public func previewView() -> UIView? {
+        return nil
+    }
+
+}
+
+
+fileprivate func send(draft: MessageDraft, to: [AnyObject]) {
+    let conversations = to as! [ZMConversation]
+    conversations.forEachNonEphemeral {
+        _ = $0.appendMessage(withText: draft.shareableText())
+    }
 }
