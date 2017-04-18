@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "联系人已删除";
 "conversation.status.you_were_removed" = "你被删除";
 "conversation.status.you_left" = "您退出了";
+"conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@移除了%@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "已送达";
 "content.system.failedtosend_message_timestamp" = "发送失败。";
 "content.system.failedtosend_message_timestamp_resend" = "重新发送";
+"content.system.failedtosend_message_timestamp_delete" = "删除";
 "content.system.like_tooltip" = "点击赞我";
 "content.system.deleted_message_prefix_timestamp" = "在 %@ 上删除";
 "content.system.edited_message_prefix_timestamp" = "在 %@ 上进行修改";
@@ -597,6 +599,8 @@
 
 "self.settings.vbr.title" = "可变码率编码";
 "self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 通话";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 信息";

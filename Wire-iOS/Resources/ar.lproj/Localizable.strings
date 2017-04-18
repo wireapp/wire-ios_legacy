@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "أزيل أشخاص";
 "conversation.status.you_were_removed" = "تمت إزالتك";
 "conversation.status.you_left" = "أنت غادرت";
+"conversation.status.started_conversation" = "بدأ %@ محادثة جديدة";
 "conversation.status.removed_users" = "قام %@ بإزالة %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "تم التسليم";
 "content.system.failedtosend_message_timestamp" = "فَشِل الإرسال.";
 "content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
+"content.system.failedtosend_message_timestamp_delete" = "حذف";
 "content.system.like_tooltip" = "انقر للإعجاب";
 "content.system.deleted_message_prefix_timestamp" = "حُذِفت في %@";
 "content.system.edited_message_prefix_timestamp" = "عُدّلت في %@";
@@ -598,9 +600,11 @@
 "self.settings.vbr.title" = "ترميز بمعدل بت متغير";
 "self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
 
+"self.settings.workspace.title" = "Workspace Name";
+
 "self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
 "self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";
-"self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
+"self.settings.sound_menu.sounds.wire_ping" = "رنين Wire";
 
 // By popular demand
 "self.settings.popular_demand.title" = "الأكثر شعبية";
