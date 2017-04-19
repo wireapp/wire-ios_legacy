@@ -524,6 +524,7 @@
 		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
 		8787D1841EA74F5B00254D02 /* ZMUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */; };
+		8787D1861EA79AF200254D02 /* ConversationListTopBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787D1851EA79AF200254D02 /* ConversationListTopBarTests.swift */; };
 		878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */; };
 		878C21A01AE4F45600CB9FC4 /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */; };
 		878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
@@ -1783,6 +1784,7 @@
 		878607181D33E3FF00971A19 /* weakify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weakify.h; sourceTree = "<group>"; };
 		8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPropertyTests.swift; sourceTree = "<group>"; };
 		8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMUser+Additions.swift"; sourceTree = "<group>"; };
+		8787D1851EA79AF200254D02 /* ConversationListTopBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListTopBarTests.swift; sourceTree = "<group>"; };
 		878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchResultFooter.swift; sourceTree = "<group>"; };
 		878C219E1AE4F45600CB9FC4 /* CheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkView.h; sourceTree = "<group>"; };
 		878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
@@ -4853,6 +4855,7 @@
 				8742FB7F1E8BD18900D046BC /* ConversationListAccessoryViewTests.swift */,
 				8742FB811E8BD23D00D046BC /* ConversationStatusLineTests.swift */,
 				870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */,
+				8787D1851EA79AF200254D02 /* ConversationListTopBarTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6388,6 +6391,7 @@
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
+				8787D1861EA79AF200254D02 /* ConversationListTopBarTests.swift in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,

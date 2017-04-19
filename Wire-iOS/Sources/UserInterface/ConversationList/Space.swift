@@ -56,15 +56,17 @@ internal class Space: NSObject {
         
         super.init()
         
-        observerToken = ConversationListChangeInfo.add(observer: self, for: self.conversationList)
+        if let conversationList = self.conversationList {
+            observerToken = ConversationListChangeInfo.add(observer: self, for: conversationList)
+        }
     }
     
-    var conversationList: ZMConversationList {
-        return SessionObjectCache.shared().conversationList
+    var conversationList: ZMConversationList? {
+        return SessionObjectCache.shared()?.conversationList
     }
     
     var spaceConversations: [ZMConversation] {
-        return self.conversationList.filtered(using: self.predicate).flatMap { $0 as? ZMConversation }
+        return self.conversationList?.filtered(using: self.predicate).flatMap { $0 as? ZMConversation } ?? []
     }
     
     func hasUnreadMessages() -> Bool {

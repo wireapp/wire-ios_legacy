@@ -31,8 +31,8 @@ final class ConversationListTopBar: TopBar {
 
     private var state: ImagesState = .visible
    
-    public func update(to newState: ImagesState, animated: Bool = false) {
-        if self.state == newState || Space.spaces.count == 0 {
+    public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
+        if !force && (self.state == newState || Space.spaces.count == 0) {
             return
         }
         
@@ -69,7 +69,8 @@ final class ConversationListTopBar: TopBar {
                 
                 let topOffset: CGFloat = self.contentScrollView?.contentOffset.y ?? 0.0
                 let scrolledOffFromTop: Bool = topOffset > 0.0
-                self.update(to: self.state)
+                let state: ImagesState = scrolledOffFromTop ? .collapsed : .visible
+                self.update(to: state, force: true)
                 
                 self.contentScrollView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
                 if !scrolledOffFromTop {
@@ -92,6 +93,9 @@ final class ConversationListTopBar: TopBar {
                 self.contentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 self.splitSeparator = false
             }
+        }
+        if let contentScrollView = self.contentScrollView {
+            self.scrollViewDidScroll(scrollView: contentScrollView)
         }
     }
 }
