@@ -178,5 +178,36 @@ class MessageDraftTests: XCTestCase {
             XCTFail("Unexpected error thrown: \(error)")
         }
     }
+
+    func testThatItReturnsTheNumberOfStoredDrafts() {
+        do {
+            // given
+            let sut = try MessageDraftStorage(sharedContainerURL: url)
+
+            // when
+            sut.perform { moc in
+                (0..<12).forEach {
+                    let draft = MessageDraft.insertNewObject(in: moc)
+                    draft.subject = "Italy Trip \($0)"
+                    draft.lastModifiedDate = NSDate()
+                }
+            }
+
+            // then
+            let count = sut.numberOfStoredDrafts()
+            XCTAssertEqual(count, 12)
+        } catch {
+            XCTFail("Unexpected error thrown: \(error)")
+        }
+    }
+
+    func testThatItThrowsWhenSharedStorageIsSetUpWithABogusURL() {
+        do {
+            _ = try MessageDraftStorage.setupSharedStorage(at: URL(fileURLWithPath: "/"))
+            XCTFail("The previous statement should throw")
+        } catch {
+            XCTAssertNotNil(error)
+        }
+    }
     
 }
