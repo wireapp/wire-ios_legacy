@@ -782,6 +782,7 @@
 		BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */; };
 		BF3A3DCA1EA642AB005477F8 /* MessageDraftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DC91EA642AB005477F8 /* MessageDraftStorage.swift */; };
 		BF3A3DCC1EA65A6D005477F8 /* ComposeEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DCB1EA65A6D005477F8 /* ComposeEntryViewController.swift */; };
+		BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DCD1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift */; };
 		BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */; };
 		BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */; };
 		BF4D99CC1E79AAD400A7B08F /* ParticipantsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */; };
@@ -2257,6 +2258,7 @@
 		BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTitleView.swift; sourceTree = "<group>"; };
 		BF3A3DC91EA642AB005477F8 /* MessageDraftStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDraftStorage.swift; sourceTree = "<group>"; };
 		BF3A3DCB1EA65A6D005477F8 /* ComposeEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeEntryViewController.swift; sourceTree = "<group>"; };
+		BF3A3DCD1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingKeyboardAvoidingViewController.swift; sourceTree = "<group>"; };
 		BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingMessagesCell.swift; sourceTree = "<group>"; };
 		BF4A15D11D4900930051E8BA /* AutomationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomationHelper.swift; sourceTree = "<group>"; };
 		BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessageWindow+DaySeparator.swift"; sourceTree = "<group>"; };
@@ -4924,6 +4926,7 @@
 				AF36C5A01E9F67E400FADECC /* MessageComposeViewController.swift */,
 				AF58EC7F1E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift */,
 				AF36C5AA1E9F903800FADECC /* DraftNavigationController.swift */,
+				BF3A3DCD1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift */,
 				AF36C59E1E9F67B600FADECC /* DraftListViewController.swift */,
 				AF58EC7D1E9FA01700EB94CD /* UIBarButtonItem+ZetaIcon.swift */,
 				AF36C5A21E9F681000FADECC /* DraftsRootViewController.swift */,
@@ -6302,6 +6305,7 @@
 				87DCF4E41D34EA4500BB420F /* PeopleInputController.m in Sources */,
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
+				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */,
 				871BC2731D34F8F800DF0793 /* UpsideDownTableView.m in Sources */,
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,
