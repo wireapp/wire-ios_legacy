@@ -1,0 +1,12 @@
+# Reference: https://help.github.com/articles/dealing-with-line-endings/
+# Auto detect text files
+* text=auto
+
+# Files that are truly text-based
+*.h text eol=lf
+*.m text eol=lf
+*.swift text eol=lf
+
+# Files that are truly binary
+*.jpg binary
+*.png binary
