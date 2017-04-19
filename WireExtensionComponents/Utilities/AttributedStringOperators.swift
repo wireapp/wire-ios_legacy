@@ -121,6 +121,43 @@ public extension String {
     }
 }
 
+// The point of view is important for the localization grammar. In some languages, for example German, the verb has
+// to adjust depending on the point of view. @c PointOfView containts the meta-information for the localization system
+// in order to understand which localized string should be picked.
+// The localization system is trying to pick the adjusted localized string if possible, for example:
+// --- In localized .strings file:
+// "some.string" = "%@ hat etwas gemacht"; // basic version
+// "some.string-you" = "%@ hast etwas gemacht"; // second person version
+@objc public enum PointOfView: UInt {
+    // The localized string does not adjust.
+    case none
+    // First person: I/We case
+    case firstPerson
+    // Second person: You case
+    case secondPerson
+    // Third person: They/He/She/It case
+    case thirdPerson
+    
+    fileprivate var suffix: String {
+        switch self {
+        case .none:
+            return ""
+        case .firstPerson:
+            return "i"
+        case .secondPerson:
+            return "you"
+        case .thirdPerson:
+            return "they"
+        }
+    }
+}
+
+extension PointOfView: CustomStringConvertible {
+    public var description: String {
+        return "POV: \(self.suffix)"
+    }
+}
+
 public extension String {
     
     // Returns the NSLocalizedString version of self
@@ -130,8 +167,24 @@ public extension String {
    
     // Used to generate localized strings with plural rules from the stringdict
     public func localized(args: CVarArg...) -> String {
+        return self.localized(pov: .none, args: args)
+    }
+    
+    public func localized(pov pointOfView: PointOfView, args: CVarArg...) -> String {
         return withVaList(args) {
-            return NSString(format: self.localized, arguments: $0) as String
+            return NSString(format: self.localized(pov: pointOfView), arguments: $0) as String
+        }
+    }
+    
+    public func localized(pov pointOfView: PointOfView) -> String {
+        let povPath = self + "-" + pointOfView.suffix
+        let povVersion = povPath.localized
+        
+        if povVersion != povPath, !povVersion.isEmpty {
+            return povVersion
+        }
+        else {
+            return self.localized
         }
     }
 }

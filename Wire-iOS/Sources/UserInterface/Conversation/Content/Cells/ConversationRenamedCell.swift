@@ -72,9 +72,10 @@ final class ConversationRenamedCell: IconSystemCell {
         guard let labelFont = labelFont,
             let labelBoldFont = labelBoldFont,
             let labelTextColor = labelTextColor,
-            let senderString = sender(for: message) else { return nil }
+            let sender = message.sender,
+            let senderString = self.sender(for: message) else { return nil }
 
-        let title = key(with: "title").localized(args: senderString) && labelFont
+        let title = key(with: "title").localized(pov: sender.pov, args: senderString) && labelFont
         return title.adding(font: labelBoldFont, to: senderString) && labelTextColor
     }
 

@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-
+import WireExtensionComponents
 
 struct CallCellViewModel {
 
@@ -44,7 +44,8 @@ struct CallCellViewModel {
             else { return nil }
 
         let senderString = string(for: sender)
-        let called = key(with: "called").localized(args:  senderString) && labelFont
+        
+        let called = key(with: "called").localized(pov: sender.pov, args: senderString) && labelFont
         var title = called.adding(font: labelBoldFont, to: senderString)
 
         if systemMessageData.childMessages.count > 0 {
@@ -61,7 +62,6 @@ struct CallCellViewModel {
     private func key(with component: String) -> String {
         return "content.system.call.\(component)"
     }
-
 }
 
 
