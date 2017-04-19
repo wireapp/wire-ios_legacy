@@ -477,15 +477,13 @@
 
 - (void)showTooltipView;
 {
-    self.bottomBarController.showTooltip = YES;
     [self createToolTipController];
     [self updateConstraintWithToolTip];
-    [self.tooltipViewController makeTipPointToView:self.bottomBarController.contactsButton.imageView];
+    [self.tooltipViewController makeTipPointToView:self.bottomBarController.plusButton.imageView];
 }
 
 - (void)removeTooltipView;
 {
-    self.bottomBarController.showTooltip = NO;
     if (self.tooltipViewController.parentViewController) {
         self.bottomBarToolTipConstraint.active = NO;
         self.bottomBarBottomOffset.active = YES;
@@ -743,24 +741,45 @@
 - (void)conversationListBottomBar:(ConversationListBottomBarController *)bar didTapButtonWithType:(enum ConversationListButtonType)buttonType
 {
     switch (buttonType) {
-        case ConversationListButtonTypeContacts: {
-            [Settings.sharedSettings setContactTipWasDisplayed:YES];
-            @weakify(self)
-            [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
-                @strongify(self)
-                [self removeTooltipView];
-            }];
-        }
-            break;
-            
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
             [Analytics.shared tagArchiveOpened];
             break;
 
         case ConversationListButtonTypeCompose: {
-            DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
-            [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
+            ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] initWithReferenceView:bar.plusButton];
+            [self addChildViewController:composeEntry];
+            [self.view addSubview:composeEntry.view];
+            [composeEntry didMoveToParentViewController:self];
+
+            composeEntry.onDismiss = ^(ComposeEntryViewController *sender) {
+                [sender willMoveToParentViewController:nil];
+                [sender.view removeFromSuperview];
+                [sender removeFromParentViewController];
+            };
+
+            composeEntry.onAction = ^(ComposeEntryViewController *sender, ComposeAction action) {
+                [sender willMoveToParentViewController:nil];
+                [sender.view removeFromSuperview];
+                [sender removeFromParentViewController];
+
+                switch (action) {
+                    case ComposeActionContacts: {
+                        [Settings.sharedSettings setContactTipWasDisplayed:YES];
+                        @weakify(self)
+                        [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
+                            @strongify(self)
+                            [self removeTooltipView];
+                        }];
+                    }
+                        break;
+                    case ComposeActionDrafts: {
+                        DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
+                        [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
+                    }
+                        break;
+                }
+            };
         }
         break;
     }

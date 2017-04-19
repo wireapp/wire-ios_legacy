@@ -65,6 +65,14 @@ final class DraftsRootViewController: UISplitViewController {
         return ColorScheme.default().statusBarStyle
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .allButUpsideDown
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
 }
 
 
