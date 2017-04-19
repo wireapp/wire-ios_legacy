@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Sina";
 "content.system.call.called" = "%@ helistas";
+"content.system.call.called-you" = "%@ helistas";
 
 "content.system.renamed_conv.title" = "%@ nimetas vestluse ümber";
+"content.system.renamed_conv.title-you" = "%@ nimetas vestluse ümber";
 "content.system.renamed_conv.title.you" = "Sina";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";

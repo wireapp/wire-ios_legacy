@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Sinä";
 "content.system.call.called" = "%@ soitti";
+"content.system.call.called-you" = "%@ soitti";
 
 "content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
+"content.system.renamed_conv.title-you" = "%@ nimesi keskustelun uudelleen";
 "content.system.renamed_conv.title.you" = "Sinä";
 
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";

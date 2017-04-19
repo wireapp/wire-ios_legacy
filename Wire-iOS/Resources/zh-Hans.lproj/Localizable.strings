@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "你";
 "content.system.call.called" = "%@ 发送过通话请求";
+"content.system.call.called-you" = "%@ 发送过通话请求";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
+"content.system.renamed_conv.title-you" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title.you" = "你";
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";

@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Ty";
 "content.system.call.called" = "%@ dzwoni";
+"content.system.call.called-you" = "%@ dzwoni";
 
 "content.system.renamed_conv.title" = "%@ zmienił nazwę konwersacji";
+"content.system.renamed_conv.title-you" = "%@ zmienił nazwę konwersacji";
 "content.system.renamed_conv.title.you" = "Ty";
 
 "content.system.reactivated_device" = "Ponownie zacząłeś używać %@. Wiadomości które zostały wysłane wcześniej nie będą pokazane.";
