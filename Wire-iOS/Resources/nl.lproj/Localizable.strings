@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Personen verwijderd";
 "conversation.status.you_were_removed" = "Je bent verwijderd";
 "conversation.status.you_left" = "Jij verliet";
+"conversation.status.started_conversation" = "%@ begon een gesprek";
 "conversation.status.removed_users" = "%@ verwijderde %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Afgeleverd";
 "content.system.failedtosend_message_timestamp" = "Verzenden mislukt.";
 "content.system.failedtosend_message_timestamp_resend" = "Opnieuw sturen";
+"content.system.failedtosend_message_timestamp_delete" = "Verwijderen";
 "content.system.like_tooltip" = "Tap om leuk te vinden";
 "content.system.deleted_message_prefix_timestamp" = "Verwijderd op %@";
 "content.system.edited_message_prefix_timestamp" = "Gewijzigd op %@";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Jij";
 "content.system.call.called" = "%@ belde";
+"content.system.call.called-you" = "%@ belde";
 
 "content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
+"content.system.renamed_conv.title-you" = "%@ hernoemde het gesprek";
 "content.system.renamed_conv.title.you" = "Jij";
 
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
@@ -597,6 +601,8 @@
 
 "self.settings.vbr.title" = "Variable Bit Rate codering";
 "self.settings.vbr.description" = "Hierdoor gebruik je minder data tijdens het bellen, en het werkt beter op trage netwerken. Zet dit uit om een constante Bitrate Encoding te gebruiken.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire oproep";
 "self.settings.sound_menu.sounds.wire_message" = "Wire bericht";

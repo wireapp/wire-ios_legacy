@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Invita persone";
 
 "contacts_ui.no_contact.title" = "Nessuna conversazione attiva\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.message" = "Tocca contatti per iniziare una conversazione";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entra";
@@ -117,35 +117,36 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "Conversazioni";
 "list.archived_conversations" = "ARCHIVIO";
 "list.archived_conversations_close" = "Chiudi archivio";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message…";
-"conversation.status.typing.group" = "%@: typing a message…";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "Chiamata in corso";
+"conversation.status.typing" = "Scrivendo un messaggio…";
+"conversation.status.typing.group" = "%@: scrivendo un messaggio…";
+"conversation.status.silenced" = "Silenzioso";
 "conversation.status.blocked" = "Bloccato";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Condividi un link";
 "conversation.status.message.image" = "Ha condiviso un'immagine";
 "conversation.status.message.location" = "Ha condiviso una posizione";
 "conversation.status.message.audio" = "Ha condiviso un messaggio vocale";
 "conversation.status.message.video" = "Ha condiviso un video";
 "conversation.status.message.file" = "Ha condiviso un file";
 "conversation.status.message.knock" = "Ha fatto un trillo";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "Chiamata senza risposta";
 "conversation.status.message.ephemeral" = "Messaggio a tempo";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠️ Messaggio non inviato";
 "conversation.status.you" = "Tu";
-"conversation.status.added_multiple" = "People added";
+"conversation.status.added_multiple" = "Persone aggiunte";
 "conversation.status.you_was_added" = "%@ ti ha aggiunto";
 "conversation.status.added_users" = "%@ ha aggiunto %@";
-"conversation.status.removed_multiple" = "People removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Persone rimosse";
+"conversation.status.you_were_removed" = "Sei stato rimosso";
 "conversation.status.you_left" = "Hai lasciato la conversazione";
+"conversation.status.started_conversation" = "%@ ha iniziato una conversazione";
 "conversation.status.removed_users" = "%@ rimosso %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Consegnato";
 "content.system.failedtosend_message_timestamp" = "Invio non riuscito.";
 "content.system.failedtosend_message_timestamp_resend" = "Inviare di nuovo";
+"content.system.failedtosend_message_timestamp_delete" = "Elimina";
 "content.system.like_tooltip" = "Tocca per mettere mi piace";
 "content.system.deleted_message_prefix_timestamp" = "Cancellato il %@";
 "content.system.edited_message_prefix_timestamp" = "Modificato il %@";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Tu";
 "content.system.call.called" = "%@ ha chiamato";
+"content.system.call.called-you" = "%@ ha chiamato";
 
 "content.system.renamed_conv.title" = "%@ ha rinominato la conversazione";
+"content.system.renamed_conv.title-you" = "%@ ha rinominato la conversazione";
 "content.system.renamed_conv.title.you" = "Tu";
 
 "content.system.reactivated_device" = "Hai iniziato a utilizzare %@ nuovamente. I messaggi inviati nel frattempo non verranno visualizzato qui.";
@@ -597,6 +601,8 @@
 
 "self.settings.vbr.title" = "Codifica con Bit Rate variabile";
 "self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chiamata Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Messaggio Wire";

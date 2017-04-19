@@ -522,6 +522,7 @@
 		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
+		8787D1841EA74F5B00254D02 /* ZMUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */; };
 		878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */; };
 		878C21A01AE4F45600CB9FC4 /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */; };
 		878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
@@ -1780,6 +1781,7 @@
 		878607171D33E3FF00971A19 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 		878607181D33E3FF00971A19 /* weakify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weakify.h; sourceTree = "<group>"; };
 		8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPropertyTests.swift; sourceTree = "<group>"; };
+		8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMUser+Additions.swift"; sourceTree = "<group>"; };
 		878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchResultFooter.swift; sourceTree = "<group>"; };
 		878C219E1AE4F45600CB9FC4 /* CheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkView.h; sourceTree = "<group>"; };
 		878C219F1AE4F45600CB9FC4 /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
@@ -4355,6 +4357,7 @@
 				16D316571BC28ED90050B835 /* ZMConversation+Actions.m */,
 				8762BE141D8978F70040E4A5 /* ZMAccentColor+Additions.swift */,
 				87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */,
+				8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */,
 			);
 			path = syncengine;
 			sourceTree = "<group>";
@@ -5905,6 +5908,7 @@
 				162CFAA11AE4FA7D0078FB87 /* PhoneSignInViewController.m in Sources */,
 				871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */,
 				875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */,
+				8787D1841EA74F5B00254D02 /* ZMUser+Additions.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
 				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
 				DB888FBB1ADD195F00CE9A88 /* EmailStepViewController.m in Sources */,

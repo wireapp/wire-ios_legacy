@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Учасники видалені";
 "conversation.status.you_were_removed" = "Вас видалили";
 "conversation.status.you_left" = "Ви вийшли";
+"conversation.status.started_conversation" = "%@ почав(-ла) розмову";
 "conversation.status.removed_users" = "%@ видалив(-ла) %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Доставлене";
 "content.system.failedtosend_message_timestamp" = "Помилка надсилання.";
 "content.system.failedtosend_message_timestamp_resend" = "Надіслати ще раз";
+"content.system.failedtosend_message_timestamp_delete" = "Видалити";
 "content.system.like_tooltip" = "Торкніться, якщо сподобалося";
 "content.system.deleted_message_prefix_timestamp" = "Видалено %@";
 "content.system.edited_message_prefix_timestamp" = "Відредаговано %@";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Ви";
 "content.system.call.called" = "%@ дзвонив(-ла)";
+"content.system.call.called-you" = "%@ дзвонив(-ла)";
 
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
+"content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title.you" = "Ви";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
@@ -597,6 +601,8 @@
 
 "self.settings.vbr.title" = "Змінний бітрейт";
 "self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
+
+"self.settings.workspace.title" = "Ім'я робочого простору";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";

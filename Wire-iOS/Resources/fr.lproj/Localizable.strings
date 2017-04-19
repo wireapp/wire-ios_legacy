@@ -25,7 +25,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
 "peoplepicker.search_placeholder" = "Rechercher par nom ou par identifiant";
-"peoplepicker.header.top_people" = "Personnes favorites";
+"peoplepicker.header.top_people" = "Contacts favoris";
 "peoplepicker.button.create_conversation" = "Créer un groupe";
 "peoplepicker.button.add_to_conversation" = "Ajouter";
 "peoplepicker.header.conversations" = "Groupes";
@@ -134,7 +134,7 @@
 "conversation.status.message.audio" = "A partagé un message audio";
 "conversation.status.message.video" = "A partagé une vidéo";
 "conversation.status.message.file" = "A partagé un fichier";
-"conversation.status.message.knock" = "a fait un signe";
+"conversation.status.message.knock" = "A fait un signe";
 "conversation.status.message.missedcall" = "Appel manqué";
 "conversation.status.message.ephemeral" = "Message éphémère";
 
@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Personnes enlevées";
 "conversation.status.you_were_removed" = "Vous avez été retiré";
 "conversation.status.you_left" = "Vous avez quitté la conversation";
+"conversation.status.started_conversation" = "%@ a débuté une conversation";
 "conversation.status.removed_users" = "%@ a retiré %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,9 +239,10 @@
 "content.system.message_delivered_timestamp" = "Distribué";
 "content.system.failedtosend_message_timestamp" = "L'envoi a échoué.";
 "content.system.failedtosend_message_timestamp_resend" = "Renvoyer";
+"content.system.failedtosend_message_timestamp_delete" = "Supprimer";
 "content.system.like_tooltip" = "Appuyez pour aimer";
 "content.system.deleted_message_prefix_timestamp" = "Effacé le %@";
-"content.system.edited_message_prefix_timestamp" = "Édité le %@";
+"content.system.edited_message_prefix_timestamp" = "Modifié le %@";
 "content.system.connecting_to" = "Connexion à %@. \nDémarrer une conversation";
 "content.system.connected_to" = "Connecté à %@. \nDémarrer une conversation";
 "content.system.other_wanted_to_talk" = "%@ a appelé";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Vous";
 "content.system.call.called" = "%@ a appelé";
+"content.system.call.called-you" = "%@ a appelé";
 
 "content.system.renamed_conv.title" = "%@ a renommé la conversation";
+"content.system.renamed_conv.title-you" = "%@ a renommé la conversation";
 "content.system.renamed_conv.title.you" = "Vous";
 
 "content.system.reactivated_device" = "Vous avez recommencé à utiliser %@. Les messages envoyés auparavant n’apparaîtront pas ici.";
@@ -324,7 +328,7 @@
 "missive.connection_request.default_message" = "Bonjour %@\nConnectons-nous sur Wire. \n%@";
 
 "connection_request.send_button_title" = "Se connecter";
-"inbox.connection_request.connect_button_title" = "Se connecter";
+"inbox.connection_request.connect_button_title" = "Accepter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
 
 // Voice
@@ -335,7 +339,7 @@
 "voice.status.video_not_available" = "Vidéo désactivée";
 "voice.status.low_connection" = "Mauvaise connexion";
 "voice.network_error.title" = "Pas de connexion Internet";
-"voice.status.cbr" = "Constant Bit Rate";
+"voice.status.cbr" = "Échantillonnage constant (CBR)";
 "voice.network_error.body" = "Vous devez être connecté pour pouvoir appeler. Vérifiez votre connexion et réessayez.";
 "voice.degradation.new_self_device" = "Vous avez commencé à utiliser un nouvel appareil.";
 "voice.degradation.new_user_device" = "%@ a commencé à utiliser un nouvel appareil.";
@@ -424,7 +428,7 @@
 "profile.connection_request_dialog.title" = "Accepter ?";
 "profile.connection_request_dialog.message" = "Cela vous connectera et ouvrira la conversation avec %@.";
 "profile.connection_request_dialog.button_cancel" = "Ignorer";
-"profile.connection_request_dialog.button_connect" = "Se connecter";
+"profile.connection_request_dialog.button_connect" = "Ajouter";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annuler votre demande ?";
@@ -469,7 +473,7 @@
 // Options menu contents
 
 "self.settings" = "Paramètres";
-"self.help_center" = "Assistance";
+"self.help_center" = "Aide";
 "self.help_center.support_website" = "Site de l'assistance Wire";
 "self.help_center.contact_support" = "Contacter le support technique";
 "self.about" = "À propos";
@@ -506,7 +510,7 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Téléphone";
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
-"self.settings.account_section.add_handle.title" = "Choisir un nom d'utilisateur";
+"self.settings.account_section.add_handle.title" = "Choisir un identifiant";
 
 "self.settings.account_details_group.info.footer" = "Des personnes peuvent vous trouver avec ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
@@ -595,8 +599,10 @@
 "self.settings.callkit.caption" = "Partager avec iOS";
 "self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre s'applique.";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.title" = "Échantillonnage variable (VBR)";
 "self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";
@@ -605,7 +611,7 @@
 // By popular demand
 "self.settings.popular_demand.title" = "À la demande générale";
 "self.settings.popular_demand.send_button.title" = "Bouton d'envoi";
-"self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer via la touche entrer.";
+"self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer en appuyant sur la touche entrée.";
 
 // Open in
 "self.settings.external_apps.header" = "Ouvrir avec";
@@ -839,7 +845,7 @@
 "error.call.gsm_ongoing.title" = "Appel cellulaire";
 "error.call.gsm_ongoing" = "S’il vous plaît annuler l’appel cellulaire avant d’appeler sur Wire.";
 "error.call.general.title" = "Erreur d’appel";
-"error.call.general" = "Veuillez essayer d’appeler à nouveau dans quelques minutes.";
+"error.call.general" = "Veuillez renouveler votre appel dans quelques minutes.";
 "error.call.slow_connection.title" = "Connexion lente";
 "error.call.slow_connection" = "Vous pourriez avoir des problèmes pendant l'appel";
 "error.call.slow_connection.call_anyway" = "Appeler quand même";

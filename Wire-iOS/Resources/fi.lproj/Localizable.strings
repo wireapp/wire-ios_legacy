@@ -73,7 +73,7 @@
 "contacts_ui.title" = "Kutsu ihmisiä";
 
 "contacts_ui.no_contact.title" = "Ei aktiivisia keskusteluja\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.message" = "Kosketa yhteystietoja aloittaksesi keskustelun";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liity";
@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "Sinä poistuit";
+"conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ poisti %@ n";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Toimitettu";
 "content.system.failedtosend_message_timestamp" = "Lähettäminen epäonnistui.";
 "content.system.failedtosend_message_timestamp_resend" = "Lähetä uudelleen";
+"content.system.failedtosend_message_timestamp_delete" = "Poista";
 "content.system.like_tooltip" = "Napauta tykkääksesi";
 "content.system.deleted_message_prefix_timestamp" = "Poistettiin %@";
 "content.system.edited_message_prefix_timestamp" = "Muokattiin %@";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Sinä";
 "content.system.call.called" = "%@ soitti";
+"content.system.call.called-you" = "%@ soitit";
 
 "content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
+"content.system.renamed_conv.title-you" = "%@ nimesit keskustelun uudelleen";
 "content.system.renamed_conv.title.you" = "Sinä";
 
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";
@@ -597,6 +601,8 @@
 
 "self.settings.vbr.title" = "Variable Bit Rate Encoding";
 "self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Puhelu";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Viesti";

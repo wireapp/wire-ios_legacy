@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Odstranjenih oseb";
 "conversation.status.you_were_removed" = "Bil(-a) si odstranjen(-a)";
 "conversation.status.you_left" = "Si zapustil(-a)";
+"conversation.status.started_conversation" = "%@ je začel(-a) pogovor";
 "conversation.status.removed_users" = "%@ je odstranil(-a) %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Dostavljeno";
 "content.system.failedtosend_message_timestamp" = "Pošiljanje ni uspelo.";
 "content.system.failedtosend_message_timestamp_resend" = "Ponovno pošlji";
+"content.system.failedtosend_message_timestamp_delete" = "Izbriši";
 "content.system.like_tooltip" = "Tapnite za všečkanje";
 "content.system.deleted_message_prefix_timestamp" = "Izbrisano ob %@";
 "content.system.edited_message_prefix_timestamp" = "Urejeno ob %@";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Ti";
 "content.system.call.called" = "%@ je klical(-a)";
+"content.system.call.called-you" = "%@ je klical(-a)";
 
 "content.system.renamed_conv.title" = "%@ je preimenoval(-a) pogovor";
+"content.system.renamed_conv.title-you" = "%@ je preimenoval(-a) pogovor";
 "content.system.renamed_conv.title.you" = "Ti";
 
 "content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj.";
@@ -597,6 +601,8 @@
 
 "self.settings.vbr.title" = "Spremenljiva bitna hitrost kodiranja";
 "self.settings.vbr.description" = "Omogoča manjšo porabo podatkov v avdio klicih in bolje delovanje na počasnejših omrežjih. Izklopite za uporabo Stalne bitne hitrosti kodiranja.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Klic";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sporočilo";

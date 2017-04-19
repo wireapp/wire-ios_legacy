@@ -40,7 +40,7 @@
 
 @implementation VoiceChannelController
 
-- (void)loadView{
+- (void)loadView {
     self.view = [[PassthroughTouchesView alloc] init];
 }
 
@@ -51,9 +51,21 @@
     self.voiceChannelObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self updateOverlays];
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+- (void)updateOverlays
+{
+    [self updateActiveCallConversation];
+    [self updateVoiceChannelOverlays];
 }
 
 - (BOOL)voiceChannelIsActive
@@ -193,8 +205,7 @@
 - (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     DDLogVoice(@"SE: Voice channel state change to %d (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState));
-    [self updateActiveCallConversation];
-    [self updateVoiceChannelOverlays];
+    [self updateOverlays];
 }
 
 - (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation

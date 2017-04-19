@@ -81,6 +81,9 @@
 @interface ConversationListViewController (PermissionDenied) <PermissionDeniedViewControllerDelegate>
 @end
 
+@interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
+@end
+
 @interface ConversationListViewController (ConversationListObserver) <ZMConversationListObserver>
 
 - (void)updateArchiveButtonVisibility;
@@ -133,6 +136,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [ZMUserSession removeInitalSyncCompletionObserver:self];
     [self removeUserProfileObserver];
 }
 
@@ -163,6 +167,7 @@
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
 
+    [ZMUserSession addInitalSyncCompletionObserver:self];
     self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
     [self createTopBar];
@@ -378,15 +383,15 @@
 
 - (void)createViewConstraints
 {
-    [self.conversationListContainer autoPinEdgesToSuperviewEdges];
+    [self.conversationListContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
-    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(20, 0, 0, 0) excludingEdge:ALEdgeBottom];
-    [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.contentContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
+    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(20, 0, 0, 0)];
     
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
@@ -807,6 +812,7 @@
 }
 
 @end
+
 
 @implementation ConversationListViewController (InitialSyncObserver)
 
