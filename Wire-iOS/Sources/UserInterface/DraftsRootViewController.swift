@@ -70,6 +70,11 @@ final class DraftsRootViewController: UISplitViewController {
 
 extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
+    func composeViewControllerWantsToDismiss(_ controller: MessageComposeViewController) {
+        view.window?.endEditing(true)
+        presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft draft: MessageDraft) {
         view.window?.endEditing(true)
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
@@ -93,7 +98,7 @@ extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdap
         }
 
         present(shareViewController, animated: true) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true, onlyFullScreen: false)
         }
     }
 

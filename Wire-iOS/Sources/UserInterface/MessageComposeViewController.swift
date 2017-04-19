@@ -22,6 +22,7 @@ import Cartography
 
 protocol MessageComposeViewControllerDelegate: class {
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft: MessageDraft)
+    func composeViewControllerWantsToDismiss(_ controller: MessageComposeViewController)
 }
 
 
@@ -59,6 +60,12 @@ final class MessageComposeViewController: UIViewController {
         loadDraft()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateDraft), object: nil)
+        updateDraft() // We do not want to throttle in this case
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -67,6 +74,7 @@ final class MessageComposeViewController: UIViewController {
         title = "compose.drafts.compose.title".localized.uppercased()
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         navigationItem.leftItemsSupplementBackButton = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped))
 
         subjectLabel.text = "#"
         subjectLabel.textColor = color(ColorSchemeColorTextForeground)
@@ -108,6 +116,10 @@ final class MessageComposeViewController: UIViewController {
                     self?.messageTextView.text = nil
             })
         }
+    }
+
+    fileprivate dynamic func dismissTapped() {
+        delegate?.composeViewControllerWantsToDismiss(self)
     }
 
     fileprivate dynamic func updateDraftThrottled() {
