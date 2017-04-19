@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Você";
 "content.system.call.called" = "%@ ligou";
+"content.system.call.called-you" = "%@ ligou";
 
 "content.system.renamed_conv.title" = "%@ renomeou a conversa";
+"content.system.renamed_conv.title-you" = "%@ renomeou a conversa";
 "content.system.renamed_conv.title.you" = "Você";
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";

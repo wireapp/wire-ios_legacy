@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Tú";
 "content.system.call.called" = "%@ llamó";
+"content.system.call.called-you" = "%@ llamó";
 
 "content.system.renamed_conv.title" = "%@ renombró el chat";
+"content.system.renamed_conv.title-you" = "%@ renombró el chat";
 "content.system.renamed_conv.title.you" = "Tú";
 
 "content.system.reactivated_device" = "Has activado %@ de nuevo. Los mensajes enviados durante el intervalo de inactividad no aparecerán aquí.";

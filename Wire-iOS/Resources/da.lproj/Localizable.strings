@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Dig";
 "content.system.call.called" = "%@ har ringet";
+"content.system.call.called-you" = "%@ har ringet";
 
 "content.system.renamed_conv.title" = "%@ omdøbte samtalen";
+"content.system.renamed_conv.title-you" = "%@ omdøbte samtalen";
 "content.system.renamed_conv.title.you" = "Dig";
 
 "content.system.reactivated_device" = "Du begyndte at bruge %@ igen. Beskeder der sendes, vises i mellemtiden ikke her.";

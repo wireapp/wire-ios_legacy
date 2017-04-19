@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "あなた";
 "content.system.call.called" = "%@ からの着信";
+"content.system.call.called-you" = "%@ からの着信";
 
 "content.system.renamed_conv.title" = "%@が会話に名前を付けました";
+"content.system.renamed_conv.title-you" = "%@が会話に名前を付けました";
 "content.system.renamed_conv.title.you" = "あなた";
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";

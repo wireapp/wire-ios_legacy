@@ -134,7 +134,7 @@
 "conversation.status.message.audio" = "A partagé un message audio";
 "conversation.status.message.video" = "A partagé une vidéo";
 "conversation.status.message.file" = "A partagé un fichier";
-"conversation.status.message.knock" = "a fait un signe";
+"conversation.status.message.knock" = "A fait un signe";
 "conversation.status.message.missedcall" = "Appel manqué";
 "conversation.status.message.ephemeral" = "Message éphémère";
 
@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Vous";
 "content.system.call.called" = "%@ a appelé";
+"content.system.call.called-you" = "%@ a appelé";
 
 "content.system.renamed_conv.title" = "%@ a renommé la conversation";
+"content.system.renamed_conv.title-you" = "%@ a renommé la conversation";
 "content.system.renamed_conv.title.you" = "Vous";
 
 "content.system.reactivated_device" = "Vous avez recommencé à utiliser %@. Les messages envoyés auparavant n’apparaîtront pas ici.";

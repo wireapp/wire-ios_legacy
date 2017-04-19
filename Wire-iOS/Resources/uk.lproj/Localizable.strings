@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Ви";
 "content.system.call.called" = "%@ дзвонив(-ла)";
+"content.system.call.called-you" = "%@ дзвонив(-ла)";
 
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
+"content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title.you" = "Ви";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
