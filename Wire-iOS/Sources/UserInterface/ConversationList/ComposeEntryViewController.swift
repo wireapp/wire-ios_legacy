@@ -147,7 +147,7 @@ import Cartography
             let totalDuration = transitionDuration(using: transitionContext)
             let animationGroup = DispatchGroup()
 
-            UIView.animate(withDuration: totalDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: totalDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
                 animationGroup.enter()
                 toViewController.contactsButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -75)
                 toViewController.composeButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -15)
@@ -177,7 +177,7 @@ import Cartography
     private class ComposeViewControllerDismissalTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
         func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-            return 0.2
+            return 0.25
         }
 
         func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
