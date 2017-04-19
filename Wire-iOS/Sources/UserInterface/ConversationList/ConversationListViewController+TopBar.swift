@@ -49,7 +49,7 @@ extension ConversationListViewController {
         
         self.topBar = ConversationListTopBar()
         
-        self.view.addSubview(self.topBar)
+        self.contentContainer.addSubview(self.topBar)
         self.updateSpaces()
         self.topBar.leftView = profileButton
     }
