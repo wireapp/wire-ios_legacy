@@ -18,5 +18,5 @@
 
 "NSContactsUsageDescription" = "Permet à Wire d'accéder à vos contacts pour vous connecter avec vos connaissances. Nous anonymisons les données et ne les partageons avec personne d'autre.";
 "NSMicrophoneUsageDescription" = "Permet à Wire d'accéder à votre microphone afin que vous puissiez téléphoner et envoyer des messages audio.";
-"NSLocationWhenInUseUsageDescription" = "Permet à Wire d'accéder à votre emplacement afin que vous puissiez l'envoyer aux autres.";
+"NSLocationWhenInUseUsageDescription" = "Permet à Wire d'accéder à votre localisation afin que vous puissiez la partager avec vos contacts.";
 "NSCameraUsageDescription" = "Permet à Wire d'accéder à votre appareil photo afin que vous puissiez passer des appels vidéo et envoyer des photos.";

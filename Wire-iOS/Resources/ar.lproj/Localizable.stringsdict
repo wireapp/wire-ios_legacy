@@ -310,9 +310,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new ping</string>
+                <string>رنّة جديدة</string>
                 <key>other</key>
-                <string>%d new pings</string>
+                <string>%d رنّة جديدة</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.missedcall</key>

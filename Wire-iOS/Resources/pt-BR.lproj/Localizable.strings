@@ -146,6 +146,7 @@
 "conversation.status.removed_multiple" = "Pessoas removidas";
 "conversation.status.you_were_removed" = "Você foram removido";
 "conversation.status.you_left" = "Você saiu";
+"conversation.status.started_conversation" = "%@ iniciou uma conversa";
 "conversation.status.removed_users" = "%@ removeu %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -238,6 +239,7 @@
 "content.system.message_delivered_timestamp" = "Entregue";
 "content.system.failedtosend_message_timestamp" = "Envio falhou.";
 "content.system.failedtosend_message_timestamp_resend" = "Reenviar";
+"content.system.failedtosend_message_timestamp_delete" = "Apagar";
 "content.system.like_tooltip" = "Toque para curtir";
 "content.system.deleted_message_prefix_timestamp" = "Excluído em %@";
 "content.system.edited_message_prefix_timestamp" = "Editado em %@";
@@ -251,8 +253,10 @@
 
 "content.system.call.you" = "Você";
 "content.system.call.called" = "%@ ligou";
+"content.system.call.called-you" = "%@ ligou";
 
 "content.system.renamed_conv.title" = "%@ renomeou a conversa";
+"content.system.renamed_conv.title-you" = "%@ renomeou a conversa";
 "content.system.renamed_conv.title.you" = "Você";
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
@@ -597,6 +601,8 @@
 
 "self.settings.vbr.title" = "Codificação com Taxa de Bits Variável";
 "self.settings.vbr.description" = "Isto faz chamadas de áudio usar menos dados e funcionam melhor em redes mais lentas. Desligue para usar a Codificação com Taxa de Bits Constante.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chamada do Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Mensagem do Wire";
