@@ -28,7 +28,18 @@ class MessageDraftTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        try? fileManager.removeItem(at: url.appendingPathComponent("MessageDraftStorage"))
+        removeDraftDatabase()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        removeDraftDatabase()
+    }
+
+    private func removeDraftDatabase() {
+        let databaseURL = url.appendingPathComponent("MessageDraftStorage")
+        try? fileManager.removeItem(at: databaseURL)
+        XCTAssertFalse(fileManager.fileExists(atPath: databaseURL.path))
     }
 
     func testThatItCreatesDraftStorageDirectory() {
@@ -69,6 +80,48 @@ class MessageDraftTests: XCTestCase {
             guard let objects = resultsController.fetchedObjects else { return XCTFail("Failed to fetch drafts") }
             XCTAssertEqual(objects.count, 1)
             XCTAssertEqual(objects.first, draft)
+        } catch {
+            XCTFail("Unexpected error thrown: \(error)")
+        }
+    }
+
+    func testThatItCanDeleteADraft() {
+        do {
+            // given
+            let sut = try MessageDraftStorage(sharedContainerURL: url)
+            let lastModified = NSDate()
+
+            // when
+            var draft: MessageDraft!
+            sut.perform { moc in
+                draft = MessageDraft.insertNewObject(in: moc)
+                draft.message = "This is a draft message"
+                draft.lastModifiedDate = lastModified
+            }
+
+            // then
+            let resultsController = sut.resultsController
+            try resultsController.performFetch()
+
+            do {
+                guard let objects = resultsController.fetchedObjects else { return XCTFail("Failed to fetch drafts") }
+                XCTAssertEqual(objects.count, 1)
+                XCTAssertEqual(objects.first, draft)
+            }
+
+            // when
+            sut.perform {
+                $0.delete(draft)
+                $0.processPendingChanges()
+            }
+
+            // then
+            try resultsController.performFetch()
+
+            do {
+                guard let objects = resultsController.fetchedObjects else { return XCTFail("Failed to fetch drafts") }
+                XCTAssertEqual(objects.count, 0)
+            }
         } catch {
             XCTFail("Unexpected error thrown: \(error)")
         }
