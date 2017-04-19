@@ -29,8 +29,8 @@ import Cartography
 
     fileprivate let plusButton = IconButton()
     fileprivate let plusButtonContainer = UIView()
-    fileprivate let contactsButton = IconButton.iconButtonCircularLight()
-    fileprivate let composeButton = IconButton.iconButtonCircularDark()
+    fileprivate let contactsButton = IconButton()
+    fileprivate let composeButton = IconButton.iconButtonCircularLight()
     fileprivate let dimmView = UIView()
 
     fileprivate let dimmViewColor = UIColor(white: 0, alpha: 0.5)
@@ -56,12 +56,14 @@ import Cartography
     private func setupViews() {
         dimmView.backgroundColor = dimmViewColor
         dimmView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissController)))
-        contactsButton.backgroundColor = UIColor(for: .strongBlue)
+        contactsButton.backgroundColor = .white
+        contactsButton.circular = true
         contactsButton.setIcon(.person, with: .tiny, for: .normal)
+        contactsButton.setIconColor(UIColor(for: .strongBlue), for: .normal)
         contactsButton.addTarget(self, action: #selector(contactsTapped), for: .touchUpInside)
-        composeButton.backgroundColor = .white
+        composeButton.backgroundColor = UIColor(for: .strongBlue)
         composeButton.addTarget(self, action: #selector(draftsTapped), for: .touchUpInside)
-        composeButton.setIcon(.conversation, with: .tiny, for: .normal)
+        composeButton.setIcon(.compose, with: .tiny, for: .normal)
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.setIconColor(.white, for: .normal)
         plusButton.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
@@ -149,9 +151,11 @@ import Cartography
 
             UIView.animate(withDuration: totalDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
                 animationGroup.enter()
-                toViewController.contactsButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -75)
-                toViewController.composeButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -15)
+                // TODO: Use Autolayout and constraints to ensure RTL compatibility
+                toViewController.contactsButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -15)
+                toViewController.composeButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -75)
                 toViewController.plusButton.transform = .rotation(degrees: 45)
+                toViewController.view.layoutIfNeeded()
             }, completion: { _ in
                 animationGroup.leave()
             })
