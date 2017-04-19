@@ -747,21 +747,16 @@
             break;
 
         case ConversationListButtonTypeCompose: {
-            ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] initWithReferenceView:bar.plusButton];
-            [self addChildViewController:composeEntry];
-            [self.view addSubview:composeEntry.view];
-            [composeEntry didMoveToParentViewController:self];
+            ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] init];
+            composeEntry.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            [self presentViewController:composeEntry animated:YES completion:nil];
 
             composeEntry.onDismiss = ^(ComposeEntryViewController *sender) {
-                [sender willMoveToParentViewController:nil];
-                [sender.view removeFromSuperview];
-                [sender removeFromParentViewController];
+                [sender dismissViewControllerAnimated:YES completion:nil];
             };
 
             composeEntry.onAction = ^(ComposeEntryViewController *sender, ComposeAction action) {
-                [sender willMoveToParentViewController:nil];
-                [sender.view removeFromSuperview];
-                [sender removeFromParentViewController];
+                [sender dismissViewControllerAnimated:YES completion:nil];
 
                 switch (action) {
                     case ComposeActionContacts: {
