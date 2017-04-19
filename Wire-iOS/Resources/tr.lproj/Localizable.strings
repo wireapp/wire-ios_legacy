@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Sen";
 "content.system.call.called" = "%@ aradı";
+"content.system.call.called-you" = "%@ aradı";
 
 "content.system.renamed_conv.title" = "%@ bu konuşmanın adını değiştirdi";
+"content.system.renamed_conv.title-you" = "%@ bu konuşmanın adını değiştirdi";
 "content.system.renamed_conv.title.you" = "Sen";
 
 "content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";

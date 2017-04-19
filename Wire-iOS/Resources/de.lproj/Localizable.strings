@@ -252,11 +252,11 @@
 "content.system.this_device" = "dieses Gerät";
 
 "content.system.call.you" = "Du";
-"content.system.call.called" = "%@ hat angerufen";
-"content.system.call.called-you" = "%@ hast angerufen";
+"content.system.call.called" = "%@ hast angerufen";
+"content.system.call.called-you" = "%@ hat angerufen";
 
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
-"content.system.renamed_conv.title-you" = "%@ hast das Gespräch umbenannt";
+"content.system.renamed_conv.title-you" = "%@ hat das Gespräch umbenannt";
 "content.system.renamed_conv.title.you" = "Du";
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";

@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "أنت";
 "content.system.call.called" = "اتصل %@";
+"content.system.call.called-you" = "اتصل %@";
 
 "content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
+"content.system.renamed_conv.title-you" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title.you" = "أنت";
 
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";

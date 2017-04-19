@@ -146,7 +146,7 @@
 "conversation.status.removed_multiple" = "Personen verwijderd";
 "conversation.status.you_were_removed" = "Je bent verwijderd";
 "conversation.status.you_left" = "Jij verliet";
-"conversation.status.started_conversation" = "%@ started a conversation";
+"conversation.status.started_conversation" = "%@ begon een gesprek";
 "conversation.status.removed_users" = "%@ verwijderde %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -253,8 +253,10 @@
 
 "content.system.call.you" = "Jij";
 "content.system.call.called" = "%@ belde";
+"content.system.call.called-you" = "%@ belde";
 
 "content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
+"content.system.renamed_conv.title-you" = "%@ hernoemde het gesprek";
 "content.system.renamed_conv.title.you" = "Jij";
 
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
