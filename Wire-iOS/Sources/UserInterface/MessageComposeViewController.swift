@@ -63,6 +63,7 @@ final class MessageComposeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateDraft), object: nil)
+        // TODO: Check if there are modifications before updating the draft
         updateDraft() // We do not want to throttle in this case
     }
 
@@ -129,7 +130,7 @@ final class MessageComposeViewController: UIViewController {
 
     private dynamic func updateDraft() {
         if let draft = draft {
-            persistence.enqueue {
+            persistence.enqueue(block: {
                 if self.subjectTextField.text?.isEmpty == false || self.messageTextView.text?.isEmpty == false {
                     draft.subject = self.subjectTextField.text
                     draft.message = self.messageTextView.text
@@ -137,13 +138,19 @@ final class MessageComposeViewController: UIViewController {
                 } else {
                     $0.delete(draft)
                 }
-            }
+            }, completion: {
+                self.updateButtonStates()
+            })
         } else {
             persistence.enqueue(
                 block: { self.draft = MessageDraft.insertNewObject(in: $0) },
                 completion: { self.updateDraft() }
             )
         }
+    }
+
+    private func updateButtonStates() {
+        sendButtonView.isEnabled = draft?.canBeSent ?? false
     }
 
     private func createConstraints() {
@@ -186,6 +193,7 @@ final class MessageComposeViewController: UIViewController {
     private func loadDraft() {
         subjectTextField.text = draft?.subject
         messageTextView.text = draft?.message
+        updateButtonStates()
     }
 
 }

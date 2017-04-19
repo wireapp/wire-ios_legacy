@@ -28,6 +28,14 @@ final class DraftSendInputAccessoryView: UIView {
 
     public let sendButton = IconButton.iconButtonDefault()
     private let deleteButton = IconButton.iconButtonDefault()
+
+    public var isEnabled: Bool = false {
+        didSet {
+            sendButton.isEnabled = isEnabled
+            deleteButton.isEnabled = isEnabled
+        }
+    }
+
     private let separator = UIView()
 
     init() {

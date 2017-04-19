@@ -43,7 +43,7 @@ import CoreData
     }
 
     fileprivate func shareableText() -> String? {
-        guard subject?.isEmpty == false || message?.isEmpty == false else { return nil }
+        guard canBeSent else { return nil }
         var text = ""
 
         if let subject = subject, !subject.isEmpty {
@@ -58,6 +58,10 @@ import CoreData
         }
 
         return text
+    }
+
+    var canBeSent: Bool {
+        return subject?.isEmpty == false || message?.isEmpty == false
     }
 
 }
