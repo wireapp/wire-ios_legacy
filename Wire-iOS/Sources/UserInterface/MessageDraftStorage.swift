@@ -59,7 +59,7 @@ final class MessageDraftStorage: NSObject {
     private let storeURL: URL
     private let psc: NSPersistentStoreCoordinator
 
-    private init(sharedContainerURL: URL) throws {
+    init(sharedContainerURL: URL) throws {
         guard let model = NSManagedObjectModel.mergedModel(from: [Bundle(for: MessageDraftStorage.self)]) else { throw StorageError.noModel  }
         psc = NSPersistentStoreCoordinator(managedObjectModel: model)
         let directoryURL = sharedContainerURL.appendingPathComponent("MessageDraftStorage")
@@ -104,6 +104,13 @@ final class MessageDraftStorage: NSObject {
             block(self.managedObjectContext)
             try? self.managedObjectContext.save()
             completion?()
+        }
+    }
+
+    func perform(block: @escaping (NSManagedObjectContext) -> Void) {
+        managedObjectContext.performAndWait { 
+            block(self.managedObjectContext)
+            try? self.managedObjectContext.save()
         }
     }
     

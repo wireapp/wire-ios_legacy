@@ -44,7 +44,7 @@
         case ConversationListButtonTypeArchive:
             self.archiveButtonTapCount++;
             break;
-        case ConversationListButtonTypeContacts:
+        case ConversationListButtonTypeCompose:
             self.contactsButtonTapCount++;
             break;
     }
@@ -115,19 +115,10 @@
     ZMVerifyViewInAllIPhoneWidths(self.sut.view);
 }
 
-- (void)testThatTheSelectionIsOn_showTooltipSetToYes
-{
-    // when
-    self.sut.showTooltip = YES;
-    
-    // then
-    ZMVerifyViewInAllIPhoneWidths(self.sut.view);
-}
-
 - (void)testThatItCallsTheDelegateWhenTheContactsButtonIsTapped
 {
     // when
-    [self.sut.contactsButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [self.sut.plusButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
     // then
     XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 1lu);
