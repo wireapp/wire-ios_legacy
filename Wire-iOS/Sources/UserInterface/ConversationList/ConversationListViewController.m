@@ -81,6 +81,9 @@
 @interface ConversationListViewController (PermissionDenied) <PermissionDeniedViewControllerDelegate>
 @end
 
+@interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
+@end
+
 @interface ConversationListViewController (ConversationListObserver) <ZMConversationListObserver>
 
 - (void)updateArchiveButtonVisibility;
@@ -133,6 +136,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [ZMUserSession removeInitalSyncCompletionObserver:self];
     [self removeUserProfileObserver];
 }
 
@@ -163,6 +167,7 @@
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
 
+    [ZMUserSession addInitalSyncCompletionObserver:self];
     self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
     [self createTopBar];
@@ -807,6 +812,7 @@
 }
 
 @end
+
 
 @implementation ConversationListViewController (InitialSyncObserver)
 
