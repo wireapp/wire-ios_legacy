@@ -59,6 +59,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         title = "compose.drafts.title".localized.uppercased()
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         DraftMessageCell.register(in: tableView)
         tableView.rowHeight = 60
     }

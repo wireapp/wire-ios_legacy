@@ -30,6 +30,9 @@ final class DraftNavigationController: UINavigationController {
         navigationBar.tintColor = textColor
         navigationBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navigationBar.shadowImage = UIImage()
+        let backImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground))
+        navigationBar.backIndicatorImage = backImage
+        navigationBar.backIndicatorTransitionMaskImage = backImage
         navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackgroundNew)
         navigationBar.titleTextAttributes = [
             NSFontAttributeName: FontSpec(.medium, .semibold).font!,
