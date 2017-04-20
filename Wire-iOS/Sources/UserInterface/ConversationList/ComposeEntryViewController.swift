@@ -35,6 +35,15 @@ import Cartography
 
     fileprivate let dimmViewColor = UIColor(white: 0, alpha: 0.5)
 
+    private var expandedConstraints = [NSLayoutConstraint]()
+    private var collapsedConstraints = [NSLayoutConstraint]()
+
+    fileprivate var isExpanded: Bool = false {
+        didSet {
+            setExpanded(isExpanded)
+        }
+    }
+
     var onDismiss: ((ComposeEntryViewController) -> Void)?
     var onAction: ((ComposeEntryViewController, ComposeAction) -> Void)?
 
@@ -47,8 +56,18 @@ import Cartography
         setupViews()
         createConstraints()
         transitioningDelegate = self
+        setExpanded(false)
     }
-    
+
+    func setExpanded(_ expanded: Bool) {
+        expandedConstraints.forEach {
+            $0.isActive = isExpanded
+        }
+        collapsedConstraints.forEach {
+            $0.isActive = !isExpanded
+        }
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -72,8 +91,10 @@ import Cartography
     }
 
     private func createConstraints() {
+        let composeOffset = CGVector(offsetWithRadius: 100, angle: -75)
+        let contactOffset = CGVector(offsetWithRadius: 100, angle: -15)
 
-        constrain(view, plusButtonContainer, contactsButton, composeButton) { view, plusButtonContainer, contactsButton, composeButton in
+        constrain(view, plusButtonContainer, contactsButton, composeButton, plusButton) { view, plusButtonContainer, contactsButton, composeButton, plusButton in
             plusButtonContainer.bottom == view.bottom
             plusButtonContainer.leading == view.leading
             plusButtonContainer.height == 56
@@ -82,6 +103,23 @@ import Cartography
             composeButton.width == 50
             contactsButton.height == 50
             contactsButton.width == 50
+
+            let expandedConstraints: [NSLayoutConstraint] = [
+                composeButton.leading == plusButton.leading + composeOffset.dx,
+                composeButton.centerY == plusButton.centerY + composeOffset.dy,
+                contactsButton.leading == plusButton.leading + contactOffset.dx,
+                contactsButton.centerY == plusButton.centerY + contactOffset.dy
+            ]
+            self.expandedConstraints = expandedConstraints
+
+            let collapsedConstraints: [NSLayoutConstraint] = [
+                composeButton.centerX == plusButton.centerX,
+                composeButton.centerY == plusButton.centerY,
+                contactsButton.centerX == plusButton.centerX,
+                contactsButton.centerY == plusButton.centerY
+            ]
+
+            self.collapsedConstraints = collapsedConstraints
         }
 
         constrain(view, dimmView, plusButton, plusButtonContainer) { view, dimmView, plusButton, plusButtonContainer in
@@ -137,25 +175,22 @@ import Cartography
 
             // Prepare initial state
             toViewController.dimmView.backgroundColor = .clear
-            toViewController.contactsButton.center = toViewController.plusButtonAnchor
-            toViewController.composeButton.center = toViewController.plusButtonAnchor
             toViewController.contactsButton.transform = .scaledRotated
             toViewController.composeButton.transform = .scaledRotated
             toViewController.contactsButton.alpha = 0.2
             toViewController.composeButton.alpha = 0.2
             fromViewController.bottomBarController.plusButton.alpha = 0
 
+
             // Animate transition
             let totalDuration = transitionDuration(using: transitionContext)
             let animationGroup = DispatchGroup()
+            toViewController.isExpanded = true
 
             UIView.animate(withDuration: totalDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
                 animationGroup.enter()
-                // TODO: Use Autolayout and constraints to ensure RTL compatibility
-                toViewController.contactsButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -15)
-                toViewController.composeButton.center = toViewController.plusButtonAnchor.pointOnCircle(radius: 100, angle: -75)
-                toViewController.plusButton.transform = .rotation(degrees: 45)
                 toViewController.view.layoutIfNeeded()
+                toViewController.plusButton.transform = .rotation(degrees: 45)
             }, completion: { _ in
                 animationGroup.leave()
             })
@@ -196,12 +231,12 @@ import Cartography
             }
 
             guard transitionContext.isAnimated else { return transitionContext.completeTransition(true) }
+            fromViewController.isExpanded = false
 
             // Animate transition
             UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseIn, animations: {
                 fromViewController.dimmView.backgroundColor = .clear
-                fromViewController.contactsButton.center = fromViewController.plusButtonAnchor
-                fromViewController.composeButton.center = fromViewController.plusButtonAnchor
+                fromViewController.view.layoutIfNeeded()
                 fromViewController.contactsButton.transform = .scaledRotated
                 fromViewController.composeButton.transform = .scaledRotated
                 fromViewController.contactsButton.alpha = 0.2
@@ -233,6 +268,7 @@ fileprivate extension CGAffineTransform {
 
 }
 
+
 fileprivate extension CGFloat {
 
     var radians: CGFloat {
@@ -242,12 +278,12 @@ fileprivate extension CGFloat {
 }
 
 
-fileprivate extension CGPoint {
+fileprivate extension CGVector {
 
-    func pointOnCircle(radius: CGFloat, angle: CGFloat) -> CGPoint {
-        return CGPoint(
-            x: x + radius * cos(angle.radians),
-            y: y + radius * sin(angle.radians)
+    init(offsetWithRadius radius: CGFloat, angle: CGFloat) {
+        self.init(
+            dx: radius * cos(angle.radians),
+            dy: radius * sin(angle.radians)
         )
     }
 

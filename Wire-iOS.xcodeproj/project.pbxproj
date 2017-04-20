@@ -738,7 +738,7 @@
 		AF58EC801E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58EC7F1E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift */; };
 		AF58EC821E9FBCD800EB94CD /* ColorScheme+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58EC811E9FBCD800EB94CD /* ColorScheme+Helper.swift */; };
 		AF58EC851E9FC35A00EB94CD /* MessageDraft.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AF58EC831E9FC35A00EB94CD /* MessageDraft.xcdatamodeld */; };
-		AF58EC881E9FCDE700EB94CD /* CoreDataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58EC871E9FCDE700EB94CD /* CoreDataTableView.swift */; };
+		AF58EC881E9FCDE700EB94CD /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58EC871E9FCDE700EB94CD /* CoreDataTableViewController.swift */; };
 		AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF65A25B1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift */; };
 		AF917BAD1C6E9B2F00491EA9 /* AppControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF917BAC1C6E9B2F00491EA9 /* AppControllerTests.m */; };
 		AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */; };
@@ -2133,7 +2133,7 @@
 		AF58EC7F1E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftSendInputAccessoryView.swift; sourceTree = "<group>"; };
 		AF58EC811E9FBCD800EB94CD /* ColorScheme+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ColorScheme+Helper.swift"; sourceTree = "<group>"; };
 		AF58EC841E9FC35A00EB94CD /* MessageDraft.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MessageDraft.xcdatamodel; sourceTree = "<group>"; };
-		AF58EC871E9FCDE700EB94CD /* CoreDataTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableView.swift; sourceTree = "<group>"; };
+		AF58EC871E9FCDE700EB94CD /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
 		AF65A25B1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsListViewControllerTests.swift; sourceTree = "<group>"; };
 		AF917BAC1C6E9B2F00491EA9 /* AppControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppControllerTests.m; sourceTree = "<group>"; };
 		AF917BAE1C6E9D3F00491EA9 /* AppController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppController+Internal.h"; sourceTree = "<group>"; };
@@ -4925,7 +4925,7 @@
 		BF27AE4C1E9E4CF600809A2B /* Drafts */ = {
 			isa = PBXGroup;
 			children = (
-				AF58EC871E9FCDE700EB94CD /* CoreDataTableView.swift */,
+				AF58EC871E9FCDE700EB94CD /* CoreDataTableViewController.swift */,
 				AF36C5A01E9F67E400FADECC /* MessageComposeViewController.swift */,
 				AF58EC7F1E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift */,
 				AF36C5AA1E9F903800FADECC /* DraftNavigationController.swift */,
@@ -5960,7 +5960,7 @@
 				8F9E3B8A19D04CAC00FD427A /* SoundEventListener.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				AF36C5A51E9F6C4F00FADECC /* DraftMessageCell.swift in Sources */,
-				AF58EC881E9FCDE700EB94CD /* CoreDataTableView.swift in Sources */,
+				AF58EC881E9FCDE700EB94CD /* CoreDataTableViewController.swift in Sources */,
 				BF3A3DCA1EA642AB005477F8 /* MessageDraftStorage.swift in Sources */,
 				87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
