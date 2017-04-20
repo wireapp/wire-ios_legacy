@@ -63,7 +63,6 @@ final class MessageComposeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateDraft), object: nil)
-        // TODO: Check if there are modifications before updating the draft
         updateDraft() // We do not want to throttle in this case
     }
 
@@ -132,6 +131,7 @@ final class MessageComposeViewController: UIViewController {
         if let draft = draft {
             persistence.enqueue(block: {
                 if self.subjectTextField.text?.isEmpty == false || self.messageTextView.text?.isEmpty == false {
+                    guard draft.subject != self.subjectTextField.text || draft.message != self.messageTextView.text else { return }
                     draft.subject = self.subjectTextField.text
                     draft.message = self.messageTextView.text
                     draft.lastModifiedDate = NSDate()
