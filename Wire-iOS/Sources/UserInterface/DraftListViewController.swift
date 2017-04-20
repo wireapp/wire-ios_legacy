@@ -57,6 +57,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
 
     private func setupViews() {
         title = "compose.drafts.title".localized.uppercased()
+        tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

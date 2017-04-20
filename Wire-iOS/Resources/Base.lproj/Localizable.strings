@@ -150,6 +150,13 @@
 "conversation.status.removed_users" = "%@ removed %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Contact";
+"compose.message.title" = "Message";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
 "conversation.invite_more_people.title" = "Spread the word!";
 "conversation.invite_more_people.description" = "Add people to this conversation";

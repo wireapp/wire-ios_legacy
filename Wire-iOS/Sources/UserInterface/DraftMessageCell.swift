@@ -28,6 +28,7 @@ final class DraftMessageCell: UITableViewCell {
         textLabel?.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         detailTextLabel?.font = FontSpec(.medium, .regular).font!
         detailTextLabel?.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
     }
     
     required init?(coder aDecoder: NSCoder) {
