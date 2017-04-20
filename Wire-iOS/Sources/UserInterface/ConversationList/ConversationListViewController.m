@@ -724,38 +724,51 @@
             [Analytics.shared tagArchiveOpened];
             break;
 
-        case ConversationListButtonTypeCompose: {
-            ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] init];
-            composeEntry.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            [self presentViewController:composeEntry animated:YES completion:nil];
-
-            composeEntry.onDismiss = ^(ComposeEntryViewController *sender) {
-                [sender dismissViewControllerAnimated:YES completion:nil];
-            };
-
-            composeEntry.onAction = ^(ComposeEntryViewController *sender, ComposeAction action) {
-                [sender dismissViewControllerAnimated:YES completion:nil];
-
-                switch (action) {
-                    case ComposeActionContacts: {
-                        [Settings.sharedSettings setContactTipWasDisplayed:YES];
-                        @weakify(self)
-                        [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
-                            @strongify(self)
-                            [self removeTooltipView];
-                        }];
-                    }
-                        break;
-                    case ComposeActionDrafts: {
-                        DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
-                        [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
-                    }
-                        break;
-                }
-            };
-        }
-        break;
+        case ConversationListButtonTypeCompose:
+            if ([DeveloperMenuState developerMenuEnabled]) {
+                [self presentComposeEntryViewController];
+            } else {
+                [self presentPeoplePickerAndRemoveTooltip];
+            }
+            break;
     }
+}
+
+- (void)presentComposeEntryViewController
+{
+    ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] init];
+    composeEntry.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    [self presentViewController:composeEntry animated:YES completion:nil];
+
+    composeEntry.onDismiss = ^(ComposeEntryViewController *sender) {
+        [sender dismissViewControllerAnimated:YES completion:nil];
+    };
+
+    composeEntry.onAction = ^(ComposeEntryViewController *sender, ComposeAction action) {
+        [sender dismissViewControllerAnimated:YES completion:nil];
+
+        switch (action) {
+            case ComposeActionContacts:
+                [self presentPeoplePickerAndRemoveTooltip];
+                break;
+
+            case ComposeActionDrafts: {
+                DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
+                [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
+            }
+                break;
+        }
+    };
+}
+
+- (void)presentPeoplePickerAndRemoveTooltip
+{
+    [Settings.sharedSettings setContactTipWasDisplayed:YES];
+    @weakify(self)
+    [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
+        @strongify(self)
+        [self removeTooltipView];
+    }];
 }
 
 @end
