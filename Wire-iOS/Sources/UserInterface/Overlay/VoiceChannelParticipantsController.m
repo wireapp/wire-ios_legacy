@@ -85,6 +85,9 @@
     if (self.conversation.conversationType != ZMConversationTypeGroup) {
         return;
     }
+    if (self.conversation.voiceChannel.state == VoiceChannelV2StateInvalid){
+        return;
+    }
     
     [self.collectionView performBatchUpdates:^{
         [self.collectionView insertItemsAtIndexPaths:changeInfo.insertedIndexes.indexPaths];

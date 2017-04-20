@@ -29,6 +29,6 @@ github "wireapp/wire-ios-transport" "19.0.0"
 github "wireapp/wire-ios-request-strategy" "33.0.1"
 github "wireapp/wire-ios-message-strategy" "33.0.0"
 github "wireapp/wire-ios-share-engine" "27.0.0"
-github "wireapp/wire-ios-sync-engine" "25344d972defccf430eea925964e092630aefee2"
+github "wireapp/wire-ios-sync-engine" "948c3822adb4de6d853b8748920116303b5f44bb"
 github "wireapp/wire-ios-data-model" "52.3.0"
 
