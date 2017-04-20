@@ -19,7 +19,7 @@
 import UIKit
 import WireDataModel
 
-final class NewDevicesDot: UIView {
+final class NewDevicesDot: DotView {
     let user: ZMUser
     var userObserverToken: NSObjectProtocol?
     var clientsObserverTokens: [NSObjectProtocol] = []

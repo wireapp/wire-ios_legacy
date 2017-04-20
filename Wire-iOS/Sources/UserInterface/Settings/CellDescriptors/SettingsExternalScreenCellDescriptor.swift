@@ -24,6 +24,14 @@ enum PresentationStyle: Int {
     case navigation
 }
 
+class InviteCellDescriptor: SettingsExternalScreenCellDescriptor {
+    override func featureCell(_ cell: SettingsCellType) {
+        super.featureCell(cell)
+        
+        cell.cellColor = .accent()
+    }
+}
+
 class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
@@ -85,7 +93,15 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         
         switch self.presentationStyle {
         case .modal:
+            if controllerToShow.modalPresentationStyle == .popover,
+                let sourceView = self.viewController?.view,
+                let popoverPresentation = controllerToShow.popoverPresentationController {
+                popoverPresentation.sourceView = sourceView
+                popoverPresentation.sourceRect = sourceView.bounds
+            }
+            
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
+            
         case .navigation:
             if let navigationController = self.viewController?.navigationController {
                 navigationController.pushViewController(controllerToShow, animated: true)
