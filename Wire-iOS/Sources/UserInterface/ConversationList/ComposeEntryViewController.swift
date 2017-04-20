@@ -92,6 +92,7 @@ import Cartography
         contactsButton.setIconColor(.accent(), for: .normal)
         contactsButton.addTarget(self, action: #selector(contactsTapped), for: .touchUpInside)
         messageButton.backgroundColor = .accent()
+        messageButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 0)
         messageButton.addTarget(self, action: #selector(draftsTapped), for: .touchUpInside)
         messageButton.setIcon(.compose, with: .tiny, for: .normal)
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
