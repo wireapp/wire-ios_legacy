@@ -200,7 +200,7 @@ import Cartography
 
             actionButtons.forEach {
                 $0.transform = .scaledRotated
-                $0.alpha = 0.2
+                $0.alpha = 0
             }
             actionLabels.forEach {
                 $0.alpha = 0
@@ -290,7 +290,7 @@ import Cartography
                 fromViewController.view.layoutIfNeeded()
                 actionButtons.forEach {
                     $0.transform = .scaledRotated
-                    $0.alpha = 0.2
+                    $0.alpha = 0
                 }
             }, completion: { _ in
                 toViewController.bottomBarController.plusButton.alpha = 1
