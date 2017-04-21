@@ -5,15 +5,15 @@ machine:
     DESTINATION: platform=iOS Simulator,name=iPhone 6,OS=10.3
 
 dependencies:
-  # override:
-    # - ./setup.sh
+  override:
+    - ./setup.sh
   cache_directories:
     - Carthage/Build
 
 build:
   override:
-    - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination '${DESTINATION}' | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
+    - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
 
 test:
   override:
-    - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination '${DESTINATION}' | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty
+    - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty
