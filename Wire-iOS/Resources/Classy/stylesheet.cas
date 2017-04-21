@@ -531,15 +531,12 @@ ConversationListBottomBarController {
         backgroundColor: clear;
     }
     
-    contactsButton: @{
+    plusButton: @{
+        iconColor: $color-text-foreground-dark;
         titleColor[state:normal]: $color-text-foreground-dark;
         titleLabel: @{
             font: $font-small-light;
         }
-    }
-    
-    plusButton: @{
-        iconColor: $color-text-foreground-dark;
     }
     
     archivedButton: @{

@@ -39,7 +39,7 @@ import Cartography
     let plusButtonContainer = UIView()
     let archivedButtonContainer = UIView()
     let separator = UIView()
-    let contactsButtonTitle = "bottom_bar.contacts_button.title".localized.uppercased()
+    let plusButtonTitle = "bottom_bar.plus_button.title".localized.uppercased()
     let heightConstant: CGFloat = 56
 
     var showArchived: Bool = false {
@@ -73,6 +73,8 @@ import Cartography
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         plusButton.accessibilityIdentifier = "bottomBarPlusButton"
+        plusButton.titleImageSpacing = 18
+        plusButton.setTitle(plusButtonTitle, for: .normal)
 
         view.addSubview(plusButton)
 
@@ -97,7 +99,7 @@ import Cartography
             container.top == view.top
             container.bottom == view.bottom
             
-            plusButton.leading == container.leading + 10
+            plusButton.leading == container.leading + 16
             plusButton.trailing == container.trailing - 18
             plusButton.centerY == container.centerY
         }

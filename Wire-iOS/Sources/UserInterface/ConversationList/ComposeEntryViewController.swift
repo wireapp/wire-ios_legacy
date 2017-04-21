@@ -159,7 +159,7 @@ import Cartography
         constrain(view, dimView, plusButton, plusButtonContainer) { view, dimmView, plusButton, plusButtonContainer in
             dimmView.edges == view.edges
             plusButton.centerY == plusButtonContainer.centerY
-            plusButton.leading == plusButtonContainer.leading + 10
+            plusButton.leading == plusButtonContainer.leading + 16
             plusButton.trailing == plusButtonContainer.trailing - 18
         }
 
