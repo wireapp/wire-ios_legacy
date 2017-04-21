@@ -5,7 +5,7 @@ machine:
     DESTINATION: platform=iOS Simulator,name=iPhone 6,OS=10.3
 
 dependencies:
-  override:
+  # override:
     # - ./setup.sh
   cache_directories:
     - Carthage/Build
