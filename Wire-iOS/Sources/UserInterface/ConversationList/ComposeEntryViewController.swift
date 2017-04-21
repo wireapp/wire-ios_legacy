@@ -21,7 +21,7 @@ import Cartography
 
 
 @objc enum ComposeAction: UInt {
-    case contacts = 1, drafts = 2
+    case conversation = 1, message = 2
 }
 
 
@@ -29,23 +29,37 @@ import Cartography
 
     fileprivate let plusButton = IconButton()
     fileprivate let plusButtonContainer = UIView()
-    fileprivate let contactsButton = IconButton()
+    fileprivate let conversationButton = IconButton()
     fileprivate let messageButton = IconButton.iconButtonCircularLight()
     fileprivate let dimView = UIView()
 
-    fileprivate let composeLabel = UILabel()
-    fileprivate let contactsLabel = UILabel()
+    fileprivate let messageLabel = ButtonWithLargerHitArea()
+    fileprivate let conversationLabel = ButtonWithLargerHitArea()
 
-    fileprivate let dimViewColor = UIColor(white: 0, alpha: 0.5)
+    fileprivate let dimViewColor = UIColor(white: 0, alpha: 0.8)
 
-    private var expandedConstraints = [NSLayoutConstraint]()
-    private var collapsedConstraints = [NSLayoutConstraint]()
+    private enum ButtonState {
+        case initial, expanded, final
+    }
 
-    fileprivate var isExpanded: Bool = false {
+    private var messageButtonState: ButtonState = .initial {
         didSet {
-            setExpanded(isExpanded)
+            updateLeftButtonConstraints()
         }
     }
+
+    private var conversationButtonState: ButtonState = .initial {
+        didSet {
+            updateRightButtonConstraints()
+        }
+    }
+
+    private var messageInitialConstraints = [NSLayoutConstraint]()
+    private var conversationInitialConstraints = [NSLayoutConstraint]()
+    private var messageExpandedConstraints = [NSLayoutConstraint]()
+    private var conversationExpandedConstraints = [NSLayoutConstraint]()
+    private var messageFinalConstraints = [NSLayoutConstraint]()
+    private var conversationFinalConstraints = [NSLayoutConstraint]()
 
     var onDismiss: ((ComposeEntryViewController) -> Void)?
     var onAction: ((ComposeEntryViewController, ComposeAction) -> Void)?
@@ -59,16 +73,8 @@ import Cartography
         setupViews()
         createConstraints()
         transitioningDelegate = self
-        setExpanded(false)
-    }
-
-    func setExpanded(_ expanded: Bool) {
-        expandedConstraints.forEach {
-            $0.isActive = isExpanded
-        }
-        collapsedConstraints.forEach {
-            $0.isActive = !isExpanded
-        }
+        updateLeftButtonConstraints()
+        updateRightButtonConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -78,60 +84,76 @@ import Cartography
     private func setupViews() {
         dimView.backgroundColor = dimViewColor
         dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissController)))
-        contactsLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-        composeLabel.textColor = contactsLabel.textColor
-        contactsLabel.font = FontSpec(.normal, .none).font!
-        composeLabel.font = contactsLabel.font
-        contactsLabel.text = "compose.contact.title".localized
-        composeLabel.text = "compose.message.title".localized
-        contactsButton.accessibilityIdentifier = "contactButton"
+        let titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        conversationLabel.setTitleColor(titleColor, for: .normal)
+        messageLabel.setTitleColor(titleColor, for: .normal)
+        conversationLabel.titleLabel?.font = FontSpec(.small, .semibold).font!
+        messageLabel.titleLabel?.font = FontSpec(.small, .semibold).font!
+        messageLabel.addTarget(self, action: #selector(messageTapped), for: .touchUpInside)
+        conversationLabel.addTarget(self, action: #selector(conversationTapped), for: .touchUpInside)
+        conversationLabel.setTitle("compose.contact.title".localized, for: .normal)
+        messageLabel.setTitle("compose.message.title".localized, for: .normal)
+        conversationButton.accessibilityIdentifier = "contactButton"
         messageButton.accessibilityIdentifier = "messageButton"
-        contactsButton.backgroundColor = .white
-        contactsButton.circular = true
-        contactsButton.setIcon(.person, with: .tiny, for: .normal)
-        contactsButton.setIconColor(.accent(), for: .normal)
-        contactsButton.addTarget(self, action: #selector(contactsTapped), for: .touchUpInside)
+        conversationButton.backgroundColor = .white
+        conversationButton.circular = true
+        conversationButton.setIcon(.person, with: .tiny, for: .normal)
+        conversationButton.setIconColor(.accent(), for: .normal)
+        conversationButton.addTarget(self, action: #selector(conversationTapped), for: .touchUpInside)
         messageButton.backgroundColor = .accent()
         messageButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 0)
-        messageButton.addTarget(self, action: #selector(draftsTapped), for: .touchUpInside)
+        messageButton.addTarget(self, action: #selector(messageTapped), for: .touchUpInside)
         messageButton.setIcon(.compose, with: .tiny, for: .normal)
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.setIconColor(.white, for: .normal)
         plusButton.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
         plusButtonContainer.addSubview(plusButton)
-        [dimView, plusButtonContainer, contactsButton, messageButton, composeLabel, contactsLabel].forEach(view.addSubview)
+        [dimView, plusButtonContainer, conversationButton, messageButton, messageLabel, conversationLabel].forEach(view.addSubview)
     }
 
     private func createConstraints() {
         let composeOffset = CGVector(offsetWithRadius: 100, angle: -75)
         let contactOffset = CGVector(offsetWithRadius: 100, angle: -15)
 
-        constrain(view, plusButtonContainer, contactsButton, messageButton, plusButton) { view, plusButtonContainer, contactsButton, messageButton, plusButton in
+        constrain(view, plusButtonContainer, conversationButton, messageButton, plusButton) { view, plusButtonContainer, conversationButton, messageButton, plusButton in
             plusButtonContainer.bottom == view.bottom
             plusButtonContainer.leading == view.leading
             plusButtonContainer.height == 56
 
             messageButton.height == 50
             messageButton.width == 50
-            contactsButton.height == 50
-            contactsButton.width == 50
+            conversationButton.height == 50
+            conversationButton.width == 50
 
-            let expandedConstraints: [NSLayoutConstraint] = [
+            self.messageExpandedConstraints = [
                 messageButton.leading == plusButton.leading + composeOffset.dx,
-                messageButton.centerY == plusButton.centerY + composeOffset.dy,
-                contactsButton.leading == plusButton.leading + contactOffset.dx,
-                contactsButton.centerY == plusButton.centerY + contactOffset.dy
+                messageButton.centerY == plusButton.centerY + composeOffset.dy
             ]
-            self.expandedConstraints = expandedConstraints
 
-            let collapsedConstraints: [NSLayoutConstraint] = [
+            self.conversationExpandedConstraints = [
+                conversationButton.leading == plusButton.leading + contactOffset.dx,
+                conversationButton.centerY == plusButton.centerY + contactOffset.dy
+            ]
+
+            self.messageInitialConstraints = [
                 messageButton.centerX == plusButton.centerX,
-                messageButton.centerY == plusButton.centerY,
-                contactsButton.centerX == plusButton.centerX,
-                contactsButton.centerY == plusButton.centerY
+                messageButton.centerY == plusButton.centerY
             ]
 
-            self.collapsedConstraints = collapsedConstraints
+            self.conversationInitialConstraints = [
+                conversationButton.centerX == plusButton.centerX,
+                conversationButton.centerY == plusButton.centerY
+            ]
+
+            self.messageFinalConstraints = [
+                messageButton.leading == plusButton.leading + composeOffset.dx + 10,
+                messageButton.centerY == view.bottom
+            ]
+
+            self.conversationFinalConstraints = [
+                conversationButton.leading == plusButton.leading + contactOffset.dx + 10,
+                conversationButton.centerY == view.bottom
+            ]
         }
 
         constrain(view, dimView, plusButton, plusButtonContainer) { view, dimmView, plusButton, plusButtonContainer in
@@ -141,24 +163,36 @@ import Cartography
             plusButton.trailing == plusButtonContainer.trailing - 18
         }
 
-        constrain(composeLabel, messageButton, contactsLabel, contactsButton) { composeLabel, messageButton, contactsLabel, contactsButton in
-            composeLabel.leading == messageButton.trailing + 12
-            composeLabel.centerY == messageButton.centerY
-            contactsLabel.leading == contactsButton.trailing + 12
-            contactsLabel.centerY == contactsButton.centerY
+        constrain(messageLabel, messageButton, conversationLabel, conversationButton) { messageLabel, messageButton, contactsLabel, conversationButton in
+            messageLabel.leading == messageButton.trailing + 12
+            messageLabel.centerY == messageButton.centerY
+            contactsLabel.leading == conversationButton.trailing + 12
+            contactsLabel.centerY == conversationButton.centerY
         }
+    }
+
+    private func updateLeftButtonConstraints() {
+        messageFinalConstraints.forEach { $0.isActive = messageButtonState == .final }
+        messageInitialConstraints.forEach { $0.isActive = messageButtonState == .initial }
+        messageExpandedConstraints.forEach { $0.isActive = messageButtonState == .expanded }
+    }
+
+    private func updateRightButtonConstraints() {
+        conversationFinalConstraints.forEach { $0.isActive = conversationButtonState == .final }
+        conversationInitialConstraints.forEach { $0.isActive = conversationButtonState == .initial }
+        conversationExpandedConstraints.forEach { $0.isActive = conversationButtonState == .expanded }
     }
 
     private dynamic func dismissController() {
         onDismiss?(self)
     }
 
-    private dynamic func contactsTapped() {
-        onAction?(self, .contacts)
+    private dynamic func conversationTapped() {
+        onAction?(self, .conversation)
     }
 
-    private dynamic func draftsTapped() {
-        onAction?(self, .drafts)
+    private dynamic func messageTapped() {
+        onAction?(self, .message)
     }
 
     // MARK: - UIViewControllerTransitioningDelegate
@@ -191,8 +225,8 @@ import Cartography
             }
 
             guard transitionContext.isAnimated else { return transitionContext.completeTransition(true) }
-            let actionButtons = [toViewController.contactsButton, toViewController.messageButton]
-            let actionLabels = [toViewController.contactsLabel, toViewController.composeLabel]
+            let actionButtons = [toViewController.conversationButton, toViewController.messageButton]
+            let actionLabels = [toViewController.conversationLabel, toViewController.messageLabel]
 
             // Prepare initial state
             toViewController.dimView.backgroundColor = .clear
@@ -204,37 +238,64 @@ import Cartography
             }
             actionLabels.forEach {
                 $0.alpha = 0
+                $0.transform = CGAffineTransform(translationX: -10, y: 0)
             }
 
             // Animate transition
             let totalDuration = transitionDuration(using: transitionContext)
             let animationGroup = DispatchGroup()
-            toViewController.isExpanded = true
 
             UIView.animate(withDuration: totalDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
                 animationGroup.enter()
-                toViewController.view.layoutIfNeeded()
                 toViewController.plusButton.transform = .rotation(degrees: 45)
             }, completion: { _ in
                 animationGroup.leave()
             })
 
-            UIView.animate(withDuration: totalDuration * 0.5, delay: 0, options: .curveEaseOut, animations: {
+            // Update active constraints
+            toViewController.messageButtonState = .expanded
+
+            let (duration, delay) = totalDuration.split(by: 0.8)
+            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { 
                 animationGroup.enter()
-                toViewController.dimView.backgroundColor = toViewController.dimViewColor
-                actionButtons.forEach {
-                    $0.alpha = 1
-                    $0.transform = .identity
-                }
+                toViewController.view.layoutIfNeeded()
             }, completion: { _ in
                 animationGroup.leave()
             })
 
-            let (duration, delay) = totalDuration.split(by: 0.7)
+            // Update active constraints
+            toViewController.conversationButtonState = .expanded
+
             UIView.animate(withDuration: duration, delay: delay, options: .curveEaseOut, animations: {
+                animationGroup.enter()
+                toViewController.view.layoutIfNeeded()
+            }, completion: { _ in
+                animationGroup.leave()
+            })
+
+            UIView.animate(withDuration: totalDuration.split(by: 0.5).0, delay: 0, options: .curveEaseOut, animations: {
+                animationGroup.enter()
+                toViewController.dimView.backgroundColor = toViewController.dimViewColor
+                toViewController.messageButton.alpha = 1
+                toViewController.messageButton.transform = .identity
+            }, completion: { _ in
+                animationGroup.leave()
+            })
+
+            UIView.animate(withDuration: totalDuration.split(by: 0.5).0, delay: delay, options: .curveEaseOut, animations: {
+                animationGroup.enter()
+                toViewController.conversationButton.alpha = 1
+                toViewController.conversationButton.transform = .identity
+            }, completion: { _ in
+                animationGroup.leave()
+            })
+
+            let (labelDuration, labelDelay) = totalDuration.split(by: 0.8)
+            UIView.animate(withDuration: labelDuration, delay: labelDelay, options: .curveEaseOut, animations: {
                 animationGroup.enter()
                 actionLabels.forEach {
                     $0.alpha = 1
+                    $0.transform = .identity
                 }
             }, completion: { _ in
                 animationGroup.leave()
@@ -267,9 +328,7 @@ import Cartography
             guard transitionContext.isAnimated else { return transitionContext.completeTransition(true) }
 
             // Prepare initial state
-            fromViewController.isExpanded = false
-            let actionButtons = [fromViewController.contactsButton, fromViewController.messageButton]
-            let actionLabels = [fromViewController.contactsLabel, fromViewController.composeLabel]
+            let actionLabels = [fromViewController.conversationLabel, fromViewController.messageLabel]
             let animationGroup = DispatchGroup()
             let totalDuration = transitionDuration(using: transitionContext)
 
@@ -283,17 +342,30 @@ import Cartography
                 animationGroup.leave()
             })
 
+            // Update active constraints
+            fromViewController.messageButtonState = .final
+
             UIView.animate(withDuration: totalDuration, delay: 0, options: .curveEaseIn, animations: {
                 animationGroup.enter()
                 fromViewController.dimView.backgroundColor = .clear
                 fromViewController.plusButton.transform = .identity
                 fromViewController.view.layoutIfNeeded()
-                actionButtons.forEach {
-                    $0.transform = .scaledRotated
-                    $0.alpha = 0
-                }
+                fromViewController.messageButton.transform = .scaledRotated
+                fromViewController.messageButton.alpha = 0
             }, completion: { _ in
                 toViewController.bottomBarController.plusButton.alpha = 1
+                animationGroup.leave()
+            })
+
+            // Update active constraints
+            fromViewController.conversationButtonState = .final
+
+            UIView.animate(withDuration: totalDuration * 0.7, delay: 0.1, options: .curveEaseIn, animations: {
+                animationGroup.enter()
+                fromViewController.view.layoutIfNeeded()
+                fromViewController.conversationButton.transform = .scaledRotated
+                fromViewController.conversationButton.alpha = 0
+            }, completion: { _ in
                 animationGroup.leave()
             })
 

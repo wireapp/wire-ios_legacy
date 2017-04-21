@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 
+
 protocol MessageComposeViewControllerDelegate: class {
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft: MessageDraft)
     func composeViewControllerWantsToDismiss(_ controller: MessageComposeViewController)
@@ -30,14 +31,11 @@ final class MessageComposeViewController: UIViewController {
 
     weak var delegate: MessageComposeViewControllerDelegate?
 
-    private let topContainer = UIView()
-    private let subjectLabelContainer = UIView()
-    private let subjectLabel = UILabel()
     private let subjectTextField = UITextField()
-    private let subjectSeparator = UIView()
     private let messageTextView = UITextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
+    private let dismissItem = UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped))
 
     private var draft: MessageDraft?
     private let persistence: MessageDraftStorage
@@ -46,18 +44,18 @@ final class MessageComposeViewController: UIViewController {
         self.draft = draft
         self.persistence = persistence
         super.init(nibName: nil, bundle: nil)
+        loadDraft()
+        setupViews()
+        createConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDraftThrottled), name: .UITextFieldTextDidChange, object: subjectTextField)
-        setupViews()
-        createConstraints()
-        loadDraft()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        messageTextView.becomeFirstResponder()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,39 +64,48 @@ final class MessageComposeViewController: UIViewController {
         updateDraft() // We do not want to throttle in this case
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    private func setupViews() {
+        view.backgroundColor = color(ColorSchemeColorBackground)
+        [messageTextView, sendButtonView].forEach(view.addSubview)
+        setupInputAccessoryView()
+        setupNavigationItem()
+        setupTextView()
+        updateRightNavigationItem()
     }
 
-    private func setupViews() {
-        title = "compose.drafts.compose.title".localized.uppercased()
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-        navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped))
-
-        subjectLabel.text = "#"
-        subjectLabel.textColor = color(ColorSchemeColorTextForeground)
-        subjectLabel.font = FontSpec(.normal, .semibold).font!
-
-        subjectSeparator.backgroundColor = color(ColorSchemeColorSeparator)
-        subjectTextField.textColor = color(ColorSchemeColorTextForeground)
-        let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
-        subjectTextField.attributedPlaceholder = placeholder && color(ColorSchemeColorSeparator) && FontSpec(.normal, .none).font!
-        view.backgroundColor = color(ColorSchemeColorBackground)
+    private func setupTextView() {
         messageTextView.textColor = color(ColorSchemeColorTextForeground)
         messageTextView.backgroundColor = .clear
         messageTextView.font = FontSpec(.normal, .none).font!
         messageTextView.contentInset = .zero
-        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 0, 24, 20)
+        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 24, 16)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.delegate = self
-
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
-        subjectLabelContainer.addSubview(subjectLabel)
-        [topContainer, messageTextView, sendButtonView].forEach(view.addSubview)
-        [subjectLabelContainer, subjectTextField, subjectSeparator].forEach(topContainer.addSubview)
+    }
 
-        setupInputAccessoryView()
+    private func setupNavigationItem() {
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        navigationItem.leftItemsSupplementBackButton = true
+
+        subjectTextField.delegate = self
+        subjectTextField.textColor = color(ColorSchemeColorTextForeground)
+        subjectTextField.tintColor = .accent()
+        subjectTextField.textAlignment = .center
+        let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
+        subjectTextField.attributedPlaceholder = placeholder && color(ColorSchemeColorSeparator) && FontSpec(.normal, .none).font!
+        subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
+        navigationItem.titleView = subjectTextField
+        subjectTextField.alpha = 0
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        updateRightNavigationItem()
+    }
+
+    private func updateRightNavigationItem() {
+        navigationItem.rightBarButtonItem = traitCollection.horizontalSizeClass == .compact ? dismissItem : nil
     }
 
     private func setupInputAccessoryView() {
@@ -107,14 +114,18 @@ final class MessageComposeViewController: UIViewController {
         }
 
         sendButtonView.onDelete = { [weak self] in
-            self?.persistence.enqueue(
-                block: {
-                    self?.draft.map($0.delete)
-                    self?.draft = nil
-            }, completion: {
+            let controller = UIAlertController.controllerForDraftDeletion {
+                self?.persistence.enqueue(
+                    block: {
+                        self?.draft.map($0.delete)
+                        self?.draft = nil
+                }, completion: {
                     self?.subjectTextField.text = nil
                     self?.messageTextView.text = nil
-            })
+                })
+            }
+
+            self?.present(controller, animated: true, completion: nil)
         }
     }
 
@@ -127,7 +138,7 @@ final class MessageComposeViewController: UIViewController {
         perform(#selector(updateDraft), with: nil, afterDelay: 0.2)
     }
 
-    private dynamic func updateDraft() {
+    fileprivate dynamic func updateDraft() {
         if let draft = draft {
             persistence.enqueue(block: {
                 if self.subjectTextField.text?.isEmpty == false || self.messageTextView.text?.isEmpty == false {
@@ -154,39 +165,15 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, topContainer, messageTextView, subjectTextField, sendButtonView) { view, topContainer, messageTextView, subjectTextField, sendButtonView in
-            topContainer.leading == view.leading
-            topContainer.trailing == view.trailing
-            topContainer.top == view.top
-            topContainer.height == 60
-
-            messageTextView.top == topContainer.bottom
-            messageTextView.leading == subjectTextField.leading
+        constrain(view, messageTextView, sendButtonView) { view, messageTextView, sendButtonView in
+            messageTextView.top == view.top
+            messageTextView.leading == view.leading
             messageTextView.trailing == view.trailing
             messageTextView.bottom == sendButtonView.top
 
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing
             sendButtonView.bottom == view.bottom
-        }
-
-        constrain(topContainer, subjectLabelContainer, subjectTextField, subjectSeparator) { container, imageContainer, textField, separator in
-            separator.bottom == container.bottom
-            separator.leading == container.leading
-            separator.trailing == container.trailing
-            separator.height == .hairline
-
-            imageContainer.leading == container.leading
-            imageContainer.centerY == container.centerY
-            imageContainer.width == 60
-
-            textField.leading == imageContainer.trailing
-            textField.trailing == container.trailing
-            textField.centerY == container.centerY
-        }
-
-        constrain(subjectLabelContainer, subjectLabel) { subjectLabelContainer, subjectLabel in
-            subjectLabel.center == subjectLabelContainer.center
         }
     }
 
@@ -203,6 +190,18 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
+    }
+
+}
+
+extension MessageComposeViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return false
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateDraft() // No throttling in this case
     }
 
 }

@@ -152,7 +152,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
 
-"compose.contact.title" = "Contact";
+"compose.contact.title" = "Conversation";
 "compose.message.title" = "Message";
 
 
@@ -912,3 +912,6 @@
 "compose.drafts.compose.title" = "Write a message";
 "compose.drafts.compose.subject.placeholder" = "Write a subject";
 
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Delete";

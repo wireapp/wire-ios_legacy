@@ -18,17 +18,55 @@
 
 
 import Foundation
+import Cartography
 
 
 final class DraftMessageCell: UITableViewCell {
 
+    static private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.doesRelativeDateFormatting = true
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+    private let titleLabel = UILabel()
+    private let dateLabel = UILabel()
+    private let separator = UIView()
+    private let color = ColorScheme.default().color(withName:)
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        textLabel?.font = FontSpec(.normal, .light).font!
-        textLabel?.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        detailTextLabel?.font = FontSpec(.medium, .regular).font!
-        detailTextLabel?.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
-        backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+        createConstraints()
+    }
+
+    private func setupViews() {
+        titleLabel.font = FontSpec(.normal, .light).font!
+        titleLabel.textColor = color(ColorSchemeColorTextForeground)
+        dateLabel.font = FontSpec(.medium, .regular).font!
+        dateLabel.textColor = color(ColorSchemeColorTextDimmed)
+        backgroundColor = color(ColorSchemeColorBackground)
+        separator.backgroundColor = color(ColorSchemeColorSeparator)
+        [titleLabel, dateLabel, separator].forEach(addSubview)
+    }
+
+    private func createConstraints() {
+        constrain(self, titleLabel, dateLabel, separator) { view, titleLabel, dateLabel, separator in
+            separator.height == .hairline
+            separator.leading == view.leading
+            separator.trailing == view.trailing
+            separator.bottom == view.bottom
+
+            titleLabel.bottom == view.centerY + 2
+            dateLabel.top == titleLabel.bottom + 2
+
+            titleLabel.leading == view.leading + 16
+            dateLabel.leading == titleLabel.leading
+            titleLabel.trailing == view.trailing
+            dateLabel.trailing == view.trailing
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,10 +74,12 @@ final class DraftMessageCell: UITableViewCell {
     }
 
     func configure(with draft: MessageDraft) {
-        if let subject = draft.subject {
-            textLabel?.text = "#" + subject
+        dateLabel.text = draft.lastModifiedDate.flatMap(DraftMessageCell.dateFormatter.string)
+        if let subject = draft.subject, !subject.isEmpty {
+            titleLabel.text = subject
+        } else {
+            titleLabel.text = draft.message
         }
-        detailTextLabel?.text = draft.message
     }
 
 }

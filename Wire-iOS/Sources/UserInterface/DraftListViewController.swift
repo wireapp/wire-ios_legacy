@@ -62,7 +62,8 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         DraftMessageCell.register(in: tableView)
-        tableView.rowHeight = 60
+        tableView.rowHeight = 56
+        tableView.separatorStyle = .none
     }
 
     private dynamic func closeTapped(_ sender: Any) {

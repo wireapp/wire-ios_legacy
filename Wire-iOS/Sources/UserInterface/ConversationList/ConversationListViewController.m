@@ -748,11 +748,11 @@
         [sender dismissViewControllerAnimated:YES completion:nil];
 
         switch (action) {
-            case ComposeActionContacts:
+            case ComposeActionConversation:
                 [self presentPeoplePickerAndRemoveTooltip];
                 break;
 
-            case ComposeActionDrafts: {
+            case ComposeActionMessage: {
                 DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
                 [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
             }
