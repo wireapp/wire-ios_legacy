@@ -53,10 +53,6 @@ final class ConversationListTopBar: TopBar {
     public var showSpaces: Bool = false
     
     public func setShowSpaces(to showSpaces: Bool) {
-        if let _ = self.middleView, self.showSpaces == showSpaces {
-            return
-        }
-        
         self.showSpaces = showSpaces
         UIView.performWithoutAnimation {
             if showSpaces {

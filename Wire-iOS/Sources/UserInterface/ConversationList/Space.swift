@@ -118,35 +118,38 @@ internal class Space: NSObject {
             let workspaceName = factory.property(.workspaceName).rawValue() as? String,
             !workspaceName.isEmpty {
             
-            let privateSpace: Space = {
-                let selfUser = ZMUser.selfUser()
+            if spaces.isEmpty || spaces[1].name != workspaceName {
+
+                let privateSpace: Space = {
+                    let selfUser = ZMUser.selfUser()
+                    
+                    var image: UIImage? = .none
+                    
+                    if let imageData = selfUser?.imageMediumData {
+                        image = UIImage(from: imageData, withMaxSize: 100)
+                    }
+                    
+                    let predicate = NSPredicate(format: "NOT (displayName CONTAINS[cd] %@)", workspaceName)
+                    let privateSpace = Space(name: selfUser?.displayName ?? "", image: image, predicate: predicate)
+                    privateSpace.selected = true
+                    return privateSpace
+                }()
                 
-                var image: UIImage? = .none
-                
-                if let imageData = selfUser?.imageMediumData {
-                    image = UIImage(from: imageData, withMaxSize: 100)
-                }
-                
-                let predicate = NSPredicate(format: "NOT (displayName CONTAINS[cd] %@)", workspaceName)
-                let privateSpace = Space(name: selfUser?.displayName ?? "", image: image, predicate: predicate)
-                privateSpace.selected = true
-                return privateSpace
-            }()
+                let workSpace: Space = {
+                    let predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", workspaceName)
+                    let workSpace = Space(name: workspaceName, image: UIImage(named: "wire-logo-shield"), predicate: predicate)
+                    workSpace.selected = true
+                    return workSpace
+                }()
             
-            let workSpace: Space = {
-                let predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", workspaceName)
-                let workSpace = Space(name: workspaceName, image: UIImage(named: "wire-logo-shield"), predicate: predicate)
-                workSpace.selected = true
-                return workSpace
-            }()
-            
-            spaces = [privateSpace, workSpace]
+                spaces = [privateSpace, workSpace]
+                NotificationCenter.default.post(name: didChangeNotificationName, object: .none)
+            }
         }
         else {
             spaces = []
+            NotificationCenter.default.post(name: didChangeNotificationName, object: .none)
         }
-        
-        NotificationCenter.default.post(name: didChangeNotificationName, object: .none)
     }
     
     public static var spaces: [Space] = []
