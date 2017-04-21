@@ -4,6 +4,11 @@ machine:
   environment:
     DESTINATION: "platform=iOS Simulator,name=iPhone 6,OS=10.3"
 
+checkout:
+  post:
+    # Preheat cocoapods main repo
+    - bash <(curl -s https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh)
+
 dependencies:
   override:
     - ./setup.sh
