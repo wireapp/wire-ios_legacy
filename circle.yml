@@ -3,11 +3,13 @@ machine:
     version: "8.3"
   environment:
     # Used for compatibility with scripts made for Jenkins
-    DESTINATION: "platform=iOS Simulator,name=iPhone 6,OS=10.3" 
+    DESTINATION: platform=iOS Simulator,name=iPhone 6,OS=10.3
 
 dependencies:
   override:
     - ./setup.sh
+  cache_directories:
+    - Carthage/Build
 
 build:
   override:
@@ -16,4 +18,3 @@ build:
 test:
   override:
     - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination '$(DESTINATION)' | xcpretty
-    
