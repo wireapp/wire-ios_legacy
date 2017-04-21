@@ -10,10 +10,7 @@ dependencies:
   cache_directories:
     - Carthage/Build
 
-build:
-  override:
-    - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
-
 test:
   override:
+    - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
     - xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty
