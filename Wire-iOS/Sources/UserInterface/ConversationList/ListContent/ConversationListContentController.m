@@ -397,9 +397,11 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)activeMediaPlayerChanged:(NSDictionary *)change
 {
-    for (ConversationListCell *cell in self.collectionView.visibleCells) {
-        [cell updateAppearance];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (ConversationListCell *cell in self.collectionView.visibleCells) {
+            [cell updateAppearance];
+        }
+    });
 }
 
 @end
