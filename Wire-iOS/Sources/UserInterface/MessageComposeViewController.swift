@@ -149,6 +149,7 @@ final class MessageComposeViewController: UIViewController {
                     draft.lastModifiedDate = NSDate()
                 } else {
                     $0.delete(draft)
+                    self.draft = nil
                 }
             }, completion: {
                 self.updateButtonStates()
