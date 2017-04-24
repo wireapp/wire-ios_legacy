@@ -18,7 +18,8 @@ dependencies:
 
 test:
   override:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
-    - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty
+    - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty -r junit --output $CIRCLE_TEST_REPORTS/junit/
   post:
     - if [ -d "SnapshotResults" ]; then cp -R SnapshotResults $CIRCLE_ARTIFACTS/; fi
