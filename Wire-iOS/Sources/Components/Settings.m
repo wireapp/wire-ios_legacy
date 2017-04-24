@@ -457,7 +457,13 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
 }
 
 - (CallingProtocolStrategy)callingProtocolStrategy
-{    
+{
+    if ([DeveloperMenuState developerMenuEnabled] &&
+        [self.defaults dictionaryRepresentation][UserDefaultCallingProtocolStrategy] == nil)
+    {
+        // In Internal and Developer builds, we want to return V3 unless the version is explicitly set
+        return CallingProtocolStrategyVersion3;
+    }
     return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 
