@@ -157,8 +157,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.typingView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
             
         case .unreadMessages(_):
-            self.badgeView.backgroundColor = UIColor(white: 1, alpha: 1)
-            self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
 
         default:
             self.typingView.image = .none
