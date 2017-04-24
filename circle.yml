@@ -14,8 +14,10 @@ dependencies:
     - ./setup.sh
   cache_directories:
     - Carthage/Build
+    - Libraries
+    - ~/.gem
 
 test:
   override:
     - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
-    - set -o pipefail && IMAGE_DIFF_DIR=$CIRCLE_ARTIFACTS xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty
+    - set -o pipefail && IMAGE_DIFF_DIR="{$CIRCLE_ARTIFACTS}" xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty
