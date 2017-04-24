@@ -106,6 +106,7 @@ import Cartography
         messageButton.setIcon(.compose, with: .tiny, for: .normal)
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.setIconColor(.white, for: .normal)
+        plusButton.accessibilityIdentifier = "bottomBarPlusButton"
         plusButton.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
         plusButtonContainer.addSubview(plusButton)
         [dimView, plusButtonContainer, conversationButton, messageButton, messageLabel, conversationLabel].forEach(view.addSubview)
