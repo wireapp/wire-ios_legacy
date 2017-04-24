@@ -41,10 +41,8 @@ protocol SettingsCellType: class {
     let iconImageView = UIImageView()
     public let cellNameLabel = UILabel()
     let valueLabel = UILabel()
-    let badge = RoundedBadge(view: UILabel())
-    var badgeLabel: UILabel {
-        return badge.containedView as! UILabel
-    }
+    let badge = RoundedBadge(view: UIView())
+    var badgeLabel = UILabel()
     let imagePreview = UIImageView()
     let separatorLine = UIView()
     let topSeparatorLine = UIView()
@@ -193,8 +191,11 @@ protocol SettingsCellType: class {
         self.badgeLabel.textColor = UIColor.lightGray
         self.badgeLabel.font = FontSpec(.small, .medium).font
         self.badgeLabel.textAlignment = .center
+        self.badgeLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
         
-        self.badge.backgroundColor = UIColor(white: 0, alpha: 0.16)
+        self.badge.containedView.addSubview(self.badgeLabel)
+        
+        self.badge.backgroundColor = UIColor(white: 1, alpha: 1)
         self.badge.isHidden = true
         self.contentView.addSubview(self.badge)
         
@@ -207,6 +208,14 @@ protocol SettingsCellType: class {
             valueLabel.trailing == trailingBoundaryView.trailing - 16
             badge.center == valueLabel.center
             badge.height == 20
+            badge.width >= 28
+        }
+        
+        constrain(self.badge, self.badgeLabel) { badge, badgeLabel in
+            badgeLabel.leading == badge.leading + 6
+            badgeLabel.trailing == badge.trailing - 6
+            badgeLabel.top == badge.top
+            badgeLabel.bottom == badge.bottom
         }
         
         self.imagePreview.clipsToBounds = true
