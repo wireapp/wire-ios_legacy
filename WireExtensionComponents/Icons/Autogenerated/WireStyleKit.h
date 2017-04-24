@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 #import <UIKit/UIKit.h>
 
 
@@ -159,6 +160,10 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x261_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x262_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x263_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x264_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x265_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x266_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x267_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -270,6 +275,10 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x261_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x262_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x263_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x264_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x265_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x266_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x267_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

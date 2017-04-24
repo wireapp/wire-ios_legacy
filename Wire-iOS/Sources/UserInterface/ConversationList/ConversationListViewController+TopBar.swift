@@ -22,55 +22,22 @@ import Cartography
 
 extension ConversationListViewController {
     
-    @objc public var showSpaces: Bool {
-        set {
-            UIView.performWithoutAnimation {
-                if Space.spaces.count > 0 {
-                    self.spacesView?.removeFromSuperview()
-                    self.spacesView = SpaceSelectorView(spaces: Space.spaces)
-                    
-                    self.topBar.middleView = self.spacesView
-                    self.topBar.leftSeparatorLineView.alpha = 1
-                    self.topBar.rightSeparatorLineView.alpha = 1
-                    
-                    self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
-                    self.spacesImagesCollapsed = false
-                }
-                else {
-                    let titleLabel = UILabel()
-                    
-                    titleLabel.font = FontSpec(.medium, .semibold).font
-                    titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-                    titleLabel.text = "list.title".localized.uppercased()
-                    
-                    self.topBar.middleView = titleLabel
-                    
-                    self.listContentController.collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                    self.spacesImagesCollapsed = true
-                }
-            }
-        }
-        
-        get {
-            return Space.spaces.count > 0
-        }
-    }
-    
     public func updateSpaces() {
-        self.showSpaces = Space.spaces.count > 0
+        self.topBar.contentScrollView = self.listContentController.collectionView
+        self.topBar.setShowSpaces(to: Space.spaces.count > 0)
     }
     
     public func createTopBar() {
-        let settingsButton = IconButton()
+        let profileButton = IconButton()
         
-        settingsButton.setIcon(.gear, with: .tiny, for: UIControlState())
-        settingsButton.addTarget(self, action: #selector(settingsButtonTapped(_:)), for: .touchUpInside)
-        settingsButton.accessibilityIdentifier = "bottomBarSettingsButton"
-        settingsButton.setIconColor(.white, for: .normal)
+        profileButton.setIcon(.selfProfile, with: .tiny, for: UIControlState())
+        profileButton.addTarget(self, action: #selector(presentSettings), for: .touchUpInside)
+        profileButton.accessibilityIdentifier = "bottomBarSettingsButton"
+        profileButton.setIconColor(.white, for: .normal)
         
-        if let imageView = settingsButton.imageView, let user = ZMUser.selfUser() {
+        if let imageView = profileButton.imageView, let user = ZMUser.selfUser() {
             let newDevicesDot = NewDevicesDot(user: user)
-            settingsButton.addSubview(newDevicesDot)
+            profileButton.addSubview(newDevicesDot)
             
             constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
                 newDevicesDot.top == imageView.top - 3
@@ -84,10 +51,6 @@ extension ConversationListViewController {
         
         self.contentContainer.addSubview(self.topBar)
         self.updateSpaces()
-        self.topBar.rightView = settingsButton
-    }
-    
-    @objc public func settingsButtonTapped(_ sender: AnyObject) {
-        self.presentSettings()
+        self.topBar.leftView = profileButton
     }
 }

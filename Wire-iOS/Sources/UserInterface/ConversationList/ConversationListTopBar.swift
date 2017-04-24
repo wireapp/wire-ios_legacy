@@ -20,7 +20,98 @@ import UIKit
 import Cartography
 import WireExtensionComponents
 
-final class ConversationListTopBar: UIView {
+final class ConversationListTopBar: TopBar {
+    private var spacesView: SpaceSelectorView? = .none
+    public weak var contentScrollView: UIScrollView? = .none
+    
+    public enum ImagesState: Int {
+        case collapsed
+        case visible
+    }
+
+    private var state: ImagesState = .visible
+   
+    public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
+        if !force && (self.state == newState || Space.spaces.count == 0) {
+            return
+        }
+        
+        self.state = newState
+        let change = {
+            self.spacesView?.imagesCollapsed = self.state == .collapsed
+            self.splitSeparator = self.state == .visible
+        }
+        
+        if animated {
+            UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, animations: change)
+        }
+        else {
+            change()
+        }
+    }
+    
+    public var showSpaces: Bool = false
+    
+    public func setShowSpaces(to showSpaces: Bool) {
+        self.showSpaces = showSpaces
+        UIView.performWithoutAnimation {
+            if showSpaces {
+                self.spacesView?.removeFromSuperview()
+                self.spacesView = SpaceSelectorView(spaces: Space.spaces)
+                
+                self.middleView = self.spacesView
+                self.leftSeparatorLineView.alpha = 1
+                self.rightSeparatorLineView.alpha = 1
+                
+                let topOffset: CGFloat = self.contentScrollView?.contentOffset.y ?? 0.0
+                let scrolledOffFromTop: Bool = topOffset > 0.0
+                let state: ImagesState = scrolledOffFromTop ? .collapsed : .visible
+                self.update(to: state, force: true)
+                
+                self.contentScrollView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
+                if !scrolledOffFromTop {
+                    self.contentScrollView?.contentOffset = CGPoint(x: 0, y: -16)
+                }
+            }
+            else {
+                let titleLabel = UILabel()
+                
+                titleLabel.font = FontSpec(.medium, .semibold).font
+                titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground,
+                                                                   variant: .dark)
+                titleLabel.text = "list.title".localized.uppercased()
+                titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+                titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+                titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+                titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+                self.middleView = titleLabel
+                
+                self.contentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                self.splitSeparator = false
+            }
+        }
+        if let contentScrollView = self.contentScrollView {
+            self.scrollViewDidScroll(scrollView: contentScrollView)
+        }
+    }
+}
+
+extension ConversationListTopBar {
+    @objc(scrollViewDidScroll:)
+    public func scrollViewDidScroll(scrollView: UIScrollView!) {
+        
+        let state: ImagesState = scrollView.contentOffset.y > 0 ? .collapsed : .visible
+        
+        self.update(to: state, animated: true)
+        
+        if !self.showSpaces {
+            self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+            self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        }
+    }
+}
+
+open class TopBar: UIView {
     public var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
@@ -68,7 +159,8 @@ final class ConversationListTopBar: UIView {
             self.middleViewContainer.addSubview(new)
             
             constrain(middleViewContainer, new) { middleViewContainer, new in
-                new.edges == middleViewContainer.edges
+                new.center == middleViewContainer.center
+                middleViewContainer.size == new.size
             }
         }
     }
@@ -93,7 +185,9 @@ final class ConversationListTopBar: UIView {
         
         [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
         
-        constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) { selfView, middleViewContainer, leftSeparatorLineView, rightSeparatorLineView in
+        constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {
+            selfView, middleViewContainer, leftSeparatorLineView, rightSeparatorLineView in
+            
             leftSeparatorLineView.leading == selfView.leading
             leftSeparatorLineView.bottom == selfView.bottom
             
@@ -101,18 +195,18 @@ final class ConversationListTopBar: UIView {
             rightSeparatorLineView.bottom == selfView.bottom
             
             middleViewContainer.center == selfView.center
-            leftSeparatorLineView.trailing == selfView.trailing ~ LayoutPriority(750)
-            rightSeparatorLineView.leading == selfView.leading ~ LayoutPriority(750)
+            leftSeparatorLineView.trailing == selfView.centerX ~ LayoutPriority(750)
+            rightSeparatorLineView.leading == selfView.centerX ~ LayoutPriority(750)
             self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 16
             self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 16
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    override open var intrinsicContentSize: CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: 44)
     }
 }

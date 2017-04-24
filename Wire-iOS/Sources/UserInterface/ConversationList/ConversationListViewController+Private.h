@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SearchViewController;
 @class ConversationListTopBar;
+@class ConversationListBottomBarController;
 @class SpaceSelectorView;
 @class ConversationListContentController;
 
@@ -31,8 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic, weak, readonly) id<UserProfile> userProfile;
 @property (nonatomic) ConversationListTopBar *topBar;
-@property (nonatomic, nullable) SpaceSelectorView *spacesView;
-@property (nonatomic) BOOL spacesImagesCollapsed;
+@property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
 
 - (void)removeUserProfileObserver;
 - (void)presentSettings;

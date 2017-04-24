@@ -368,7 +368,11 @@
 - (CGRect)selectionRect
 {
     if (self.message.textMessageData.linkPreview && self.linkAttachmentView) {
-        return self.messageTextView.bounds;
+        if (self.messageTextView.text.length == 0) {
+            return self.linkAttachmentView.bounds;
+        } else {
+            return self.messageTextView.bounds;
+        }
     } else {
         return [self.messageTextView.layoutManager usedRectForTextContainer:self.messageTextView.textContainer];
     }
@@ -376,7 +380,16 @@
 
 - (UIView *)selectionView
 {
-    return self.messageTextView;
+    if (self.message.textMessageData.linkPreview && self.linkAttachmentView && self.messageTextView.text.length == 0) {
+        return self.linkAttachmentView;
+    } else {
+        return self.messageTextView;
+    }
+}
+
+- (UIView *)previewView
+{
+    return self.linkAttachmentView;
 }
 
 - (MenuConfigurationProperties *)menuConfigurationProperties

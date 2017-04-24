@@ -22,12 +22,16 @@ import UIKit
 public extension UIApplication {
     
     public static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
-    
+
     @objc public func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
+        wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
+    }
+
+    @objc public func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         
-        if let topContoller = self.wr_topmostController() {
+        if let topContoller = self.wr_topmostController(onlyFullScreen: onlyFullScreen) {
             statusBarHidden = topContoller.prefersStatusBarHidden
             statusBarStyle = topContoller.preferredStatusBarStyle
         }
@@ -52,6 +56,10 @@ public extension UIApplication {
             NotificationCenter.default.post(name: type(of: self).wr_statusBarStyleChangeNotification, object: self)
         }
     }
+
+    @objc func wr_topMostViewController() -> UIViewController? {
+        return wr_topmostController()
+    }
     
     public func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
         let orderedWindows = self.windows.sorted { win1, win2 in
@@ -63,8 +71,9 @@ public extension UIApplication {
                 return false
             }
             
-            if let notificationWindowRootController = controller as? NotificationWindowRootViewController {
-                controller = notificationWindowRootController.voiceChannelController
+            if let notificationWindowRootController = controller as? NotificationWindowRootViewController,
+                let voiceChannelController = notificationWindowRootController.voiceChannelController {
+                controller = voiceChannelController
             }
             
             return controller.view.isHidden == false && controller.view.alpha != 0

@@ -137,6 +137,8 @@ final internal class ConversationListAccessoryView: UIView {
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
+        self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        
         self.collapseWidthConstraint.isActive = false
         
         switch self.icon {
@@ -153,6 +155,10 @@ final internal class ConversationListAccessoryView: UIView {
             self.badgeView.isHidden = true
             self.typingView.isHidden = false
             self.typingView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
+            
+        case .unreadMessages(_):
+            self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
+
         default:
             self.typingView.image = .none
         }

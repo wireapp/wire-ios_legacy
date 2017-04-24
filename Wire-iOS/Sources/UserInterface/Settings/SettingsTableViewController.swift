@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 
-class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsBaseTableViewController: UIViewController {
 
     var tableView: UITableView
     let topSeparator = OverflowSeparatorView()
@@ -33,8 +33,16 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
         }
     }
 
+    final fileprivate class IntrinsicSizeTableView: UITableView {
+        override var intrinsicContentSize: CGSize {
+            get {
+                return CGSize(width: UIViewNoIntrinsicMetric, height: self.contentSize.height)
+            }
+        }
+    }
+    
     init(style: UITableViewStyle) {
-        tableView = UITableView(frame: .zero, style: style)
+        tableView = IntrinsicSizeTableView(frame: .zero, style: style)
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = UIRectEdge()
     }
@@ -103,7 +111,9 @@ class SettingsBaseTableViewController: UIViewController, UITableViewDelegate, UI
             footer.edges == container.edges
         }
     }
+}
 
+extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 56
     }
@@ -162,7 +172,10 @@ class SettingsTableViewController: SettingsBaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTableView()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)))
+        
+        let closeButton = IconButton.closeButton()
+        closeButton.addTarget(self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
     }
 
     func setupTableView() {

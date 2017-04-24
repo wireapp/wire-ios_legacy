@@ -90,8 +90,6 @@
 
 @end
 
-
-
 @interface ConversationListViewController ()
 
 @property (nonatomic) ZMConversation *selectedConversation;
@@ -118,11 +116,9 @@
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
 @property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
 
-@property (nonatomic, nullable) SpaceSelectorView *spacesView;
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
 @property (nonatomic) BOOL initialSyncCompleted;
-@property (nonatomic) BOOL spacesImagesCollapsed;
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
@@ -308,24 +304,6 @@
     [self.listContentController didMoveToParentViewController:self];
 }
 
-- (void)setSpacesImagesCollapsed:(BOOL)spacesImagesCollapsed
-{
-    if (_spacesImagesCollapsed == spacesImagesCollapsed || ([Space spaces].count == 0 && spacesImagesCollapsed == NO)) {
-        return;
-    }
-    
-    _spacesImagesCollapsed = spacesImagesCollapsed;
-    
-    if ([Space spaces].count == 0) {
-        _spacesImagesCollapsed = YES;
-    }
-        
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
-        self.spacesView.imagesCollapsed = _spacesImagesCollapsed;
-        self.topBar.splitSeparator = !_spacesImagesCollapsed;
-    }];
-}
-
 - (void)setState:(ConversationListState)state animated:(BOOL)animated
 {
     [self setState:state animated:animated completion:nil];
@@ -482,15 +460,13 @@
 
 - (void)showTooltipView;
 {
-    self.bottomBarController.showTooltip = YES;
     [self createToolTipController];
     [self updateConstraintWithToolTip];
-    [self.tooltipViewController makeTipPointToView:self.bottomBarController.contactsButton.imageView];
+    [self.tooltipViewController makeTipPointToView:self.bottomBarController.plusButton.imageView];
 }
 
 - (void)removeTooltipView;
 {
-    self.bottomBarController.showTooltip = NO;
     if (self.tooltipViewController.parentViewController) {
         self.bottomBarToolTipConstraint.active = NO;
         self.bottomBarBottomOffset.active = YES;
@@ -704,12 +680,7 @@
 {
     [self updateBottomBarSeparatorVisibilityWithContentController:controller];
     
-    self.spacesImagesCollapsed = controller.collectionView.contentOffset.y > 0;
-    
-    if (![self showSpaces]) {
-        [self.topBar.leftSeparatorLineView scrollViewDidScroll:controller.collectionView];
-        [self.topBar.rightSeparatorLineView scrollViewDidScroll:controller.collectionView];
-    }
+    [self.topBar scrollViewDidScroll:controller.collectionView];
 }
 
 - (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
@@ -748,24 +719,56 @@
 - (void)conversationListBottomBar:(ConversationListBottomBarController *)bar didTapButtonWithType:(enum ConversationListButtonType)buttonType
 {
     switch (buttonType) {
-        case ConversationListButtonTypeContacts: {
-            [Settings.sharedSettings setContactTipWasDisplayed:YES];
-            @weakify(self)
-            [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
-                @strongify(self)
-                [self removeTooltipView];
-            }];
-        }
-            break;
-            
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
             [Analytics.shared tagArchiveOpened];
             break;
-            
-        default:
+
+        case ConversationListButtonTypeCompose:
+            if ([DeveloperMenuState developerMenuEnabled]) {
+                [self presentComposeEntryViewController];
+            } else {
+                [self presentPeoplePickerAndRemoveTooltip];
+            }
             break;
     }
+}
+
+- (void)presentComposeEntryViewController
+{
+    ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] init];
+    composeEntry.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    [self presentViewController:composeEntry animated:YES completion:nil];
+
+    composeEntry.onDismiss = ^(ComposeEntryViewController *sender) {
+        [sender dismissViewControllerAnimated:YES completion:nil];
+    };
+
+    composeEntry.onAction = ^(ComposeEntryViewController *sender, ComposeAction action) {
+        [sender dismissViewControllerAnimated:YES completion:nil];
+
+        switch (action) {
+            case ComposeActionConversation:
+                [self presentPeoplePickerAndRemoveTooltip];
+                break;
+
+            case ComposeActionMessage: {
+                DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
+                [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
+            }
+                break;
+        }
+    };
+}
+
+- (void)presentPeoplePickerAndRemoveTooltip
+{
+    [Settings.sharedSettings setContactTipWasDisplayed:YES];
+    @weakify(self)
+    [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
+        @strongify(self)
+        [self removeTooltipView];
+    }];
 }
 
 @end

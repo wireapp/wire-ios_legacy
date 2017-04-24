@@ -65,7 +65,8 @@ import Cartography
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
-        
+        collectionView.accessibilityIdentifier = "archived conversation list"
+
         [archivedNavigationBar, collectionView].forEach(view.addSubview)
         archivedNavigationBar.dismissButtonHandler = {
             self.delegate?.archivedListViewControllerWantsToDismiss(self)

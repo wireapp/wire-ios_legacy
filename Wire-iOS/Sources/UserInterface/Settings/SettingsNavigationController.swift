@@ -34,16 +34,11 @@ import HockeySDK.BITHockeyManager
     fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
     static func settingsNavigationController() -> SettingsNavigationController {
-        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
-            analytics: Analytics.shared(),
-            mediaManager: AVSProvider.shared.mediaManager,
-            userSession: ZMUserSession.shared()!,
-            selfUser: ZMUser.selfUser(),
-            crashlogManager: BITHockeyManager.shared())
+        let settingsPropertyFactory = SettingsPropertyFactory.shared!
         
         let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
         
-        let settingsNavigationController = SettingsNavigationController(rootGroup: settingsCellDescriptorFactory.rootSettingsGroup(), settingsPropertyFactory: settingsPropertyFactory)
+        let settingsNavigationController = SettingsNavigationController(rootGroup: settingsCellDescriptorFactory.rootGroup(), settingsPropertyFactory: settingsPropertyFactory)
         return settingsNavigationController
     }
     
@@ -127,19 +122,13 @@ import HockeySDK.BITHockeyManager
         self.view.backgroundColor = UIColor.clear
         self.interactivePopGestureRecognizer?.isEnabled = false
         
-        if let rootViewController = self.rootGroup.generateViewController() {
-            Analytics.shared()?.tagScreen("SETTINGS")
-            self.pushViewController(rootViewController, animated: false)
-            if let settingsTableController = rootViewController as? SettingsTableViewController {
-                settingsTableController.footer = InviteButtonView { [weak self] in
-                    self?.wr_presentInviteActivityViewController(withSourceView: $0, logicalContext: .settings)
-                }
-                settingsTableController.dismissAction = { [unowned self] _ in
-                    self.dismissAction?(self)
-                }
-            }
+        let rootViewController = SelfProfileViewController(rootGroup: rootGroup)
+        Analytics.shared()?.tagScreen("SETTINGS")
+        self.pushViewController(rootViewController, animated: false)
+        rootViewController.dismissAction = { [unowned self] _ in
+            self.dismissAction?(self)
         }
-        
+
         self.navigationBar.tintColor = .white
         self.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationBar.shadowImage = UIImage()

@@ -35,8 +35,30 @@ import Foundation
         self.settingsPropertyFactory = settingsPropertyFactory
     }
     
-    func rootSettingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.devicesGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
+    func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
+        let rootElements = [self.devicesGroup(), self.settingsGroup(), self.inviteButton()]
+        
+        let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
+        
+        return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)
+    }
+    
+    func inviteButton() -> SettingsCellDescriptorType {
+        let inviteButtonDescriptor = InviteCellDescriptor(title: "self.settings.invite_friends.title".localized,
+                                                          isDestructive: false,
+                                                          presentationStyle: .modal,
+                                                          presentationAction: { () -> (UIViewController?) in
+                                                              return UIActivityViewController.shareInvite(completion: .none, logicalContext: .settings)
+                                                          },
+                                                          previewGenerator: .none,
+                                                          icon: .megaphone)
+        
+        return inviteButtonDescriptor
+        
+    }
+    
+    func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
+        var topLevelElements = [self.accountGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements = topLevelElements + [self.developerGroup()]
@@ -44,7 +66,7 @@ import Foundation
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)
 
-        return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain)
+        return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain, previewGenerator: .none, icon: .gear)
     }
     
     func devicesGroup() -> SettingsCellDescriptorType {
@@ -55,7 +77,11 @@ import Foundation
             presentationAction: { () -> (UIViewController?) in
                 Analytics.shared()?.tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
-        }, icon: .settingsDevices)
+            },
+            previewGenerator: { _ -> SettingsCellPreview in
+                return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)
+            },
+           icon: .settingsDevices)
     }
 
     func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, callSound: Bool, fallbackSoundName: String, defaultSoundTitle : String = "self.settings.sound_menu.sounds.wire_sound".localized) -> SettingsCellDescriptorType {

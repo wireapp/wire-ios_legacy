@@ -141,6 +141,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     self.collectionView.allowsMultipleSelection = NO;
     self.collectionView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0);
     self.collectionView.delaysContentTouches = NO;
+    self.collectionView.accessibilityIdentifier = @"conversation list";
     self.clearsSelectionOnViewWillAppear = NO;
 }
 
@@ -396,9 +397,11 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)activeMediaPlayerChanged:(NSDictionary *)change
 {
-    for (ConversationListCell *cell in self.collectionView.visibleCells) {
-        [cell updateAppearance];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (ConversationListCell *cell in self.collectionView.visibleCells) {
+            [cell updateAppearance];
+        }
+    });
 }
 
 @end

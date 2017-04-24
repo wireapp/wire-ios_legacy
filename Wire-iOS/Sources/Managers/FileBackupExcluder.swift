@@ -34,7 +34,10 @@ public extension URL {
 
 final internal class FileBackupExcluder: NSObject {
     typealias FileInDirectory = (NSFileManager.SearchPathDirectory, String)
-    private static let filesToExclude: [FileInDirectory] = [(.libraryDirectory, "Preferences/com.apple.EmojiCache.plist")]
+    private static let filesToExclude: [FileInDirectory] = [
+        (.libraryDirectory, "Preferences/com.apple.EmojiCache.plist"),
+        (.libraryDirectory, ".")
+    ]
     
     deinit {
         NotificationCenter.default.removeObserver(self)

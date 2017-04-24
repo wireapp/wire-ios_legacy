@@ -88,6 +88,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
+@property (nonatomic, readonly) UIView *previewView;
 @property (nonatomic) UIEdgeInsets contentLayoutMargins;
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
