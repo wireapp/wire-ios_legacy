@@ -191,11 +191,11 @@ protocol SettingsCellType: class {
         self.badgeLabel.textColor = UIColor.lightGray
         self.badgeLabel.font = FontSpec(.small, .medium).font
         self.badgeLabel.textAlignment = .center
-        self.badgeLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        self.badgeLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
         self.badge.containedView.addSubview(self.badgeLabel)
         
-        self.badge.backgroundColor = UIColor(white: 1, alpha: 1)
+        self.badge.backgroundColor = UIColor(white: 0, alpha: 0.16)
         self.badge.isHidden = true
         self.contentView.addSubview(self.badge)
         
