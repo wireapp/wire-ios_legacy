@@ -373,29 +373,6 @@ import Cartography
 
 // MARK: Helper
 
-fileprivate extension UIView {
-
-    static func animate(withGroup group: DispatchGroup, duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void) {
-        animate(withDuration: duration, delay: delay, options: options, animations: {
-            group.enter()
-            animations()
-        }, completion: { _ in
-            group.leave()
-        })
-    }
-
-    static func animate(withGroup group: DispatchGroup, duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: @escaping (Bool) -> Void) {
-        animate(withDuration: duration, delay: delay, options: options, animations: {
-            group.enter()
-            animations()
-        }, completion: {
-            completion($0)
-            group.leave()
-        })
-    }
-
-}
-
 
 fileprivate extension CGAffineTransform {
 
