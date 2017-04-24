@@ -215,6 +215,7 @@ final internal class SpaceSelectorView: UIView {
             imageView.top == selfView.top + 12
             imageView.centerX == selfView.centerX
             selfView.width >= imageView.width
+            selfView.right >= dotView.right
             imageView.width == imageView.height
             imageView.width == 28
             
