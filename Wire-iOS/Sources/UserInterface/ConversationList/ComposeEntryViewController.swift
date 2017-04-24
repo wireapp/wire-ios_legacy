@@ -61,6 +61,9 @@ import Cartography
     private var messageFinalConstraints = [NSLayoutConstraint]()
     private var conversationFinalConstraints = [NSLayoutConstraint]()
 
+    private let composeOffset = CGVector(offsetWithRadius: 100, angle: -80)
+    private let contactOffset = CGVector(offsetWithRadius: 100, angle: -15)
+
     var onDismiss: ((ComposeEntryViewController) -> Void)?
     var onAction: ((ComposeEntryViewController, ComposeAction) -> Void)?
 
@@ -113,10 +116,7 @@ import Cartography
     }
 
     private func createConstraints() {
-        let composeOffset = CGVector(offsetWithRadius: 100, angle: -80)
-        let contactOffset = CGVector(offsetWithRadius: 100, angle: -15)
-
-        constrain(view, plusButtonContainer, conversationButton, messageButton, plusButton) { view, plusButtonContainer, conversationButton, messageButton, plusButton in
+        constrain(view, plusButtonContainer, conversationButton, messageButton, plusButton, block: { (view: LayoutProxy, plusButtonContainer: LayoutProxy, conversationButton: LayoutProxy, messageButton: LayoutProxy, plusButton: LayoutProxy) -> Void in
             plusButtonContainer.bottom == view.bottom
             plusButtonContainer.leading == view.leading
             plusButtonContainer.height == 56
@@ -126,51 +126,60 @@ import Cartography
             conversationButton.height == 50
             conversationButton.width == 50
 
-            self.messageExpandedConstraints = [
+            let expandedConstrains: [NSLayoutConstraint] = [
                 messageButton.leading == plusButton.leading + composeOffset.dx,
                 messageButton.centerY == plusButton.centerY + composeOffset.dy
             ]
 
-            self.conversationExpandedConstraints = [
+            let conversationExpandedConstrains: [NSLayoutConstraint] = [
                 conversationButton.leading == plusButton.leading + contactOffset.dx,
                 conversationButton.centerY == plusButton.centerY + contactOffset.dy
             ]
 
-            self.messageInitialConstraints = [
+            let messageInitialConstraints: [NSLayoutConstraint] = [
                 messageButton.centerX == plusButton.centerX,
                 messageButton.centerY == plusButton.centerY
             ]
 
-            self.conversationInitialConstraints = [
+            let conversationInitialConstraints: [NSLayoutConstraint] = [
                 conversationButton.centerX == plusButton.centerX,
                 conversationButton.centerY == plusButton.centerY
             ]
 
-            self.messageFinalConstraints = [
+            let messageFinalConstraints: [NSLayoutConstraint] = [
                 messageButton.leading == plusButton.leading + composeOffset.dx + 10,
                 messageButton.centerY == view.bottom
             ]
 
-            self.conversationFinalConstraints = [
+            let conversationFinalConstraints: [NSLayoutConstraint] = [
                 conversationButton.leading == plusButton.leading + contactOffset.dx + 10,
                 conversationButton.centerY == view.bottom
             ]
-        }
 
-        constrain(view, dimView, plusButton, plusButtonContainer) { view, dimmView, plusButton, plusButtonContainer in
+            do {
+                self.messageExpandedConstraints = expandedConstrains
+                self.conversationExpandedConstraints = conversationExpandedConstrains
+                self.messageInitialConstraints = messageInitialConstraints
+                self.conversationInitialConstraints = conversationInitialConstraints
+                self.messageFinalConstraints = messageFinalConstraints
+                self.conversationFinalConstraints = conversationFinalConstraints
+            }
+        })
+
+        constrain(view, dimView, plusButton, plusButtonContainer, block: { (view: LayoutProxy, dimmView: LayoutProxy, plusButton: LayoutProxy, plusButtonContainer: LayoutProxy) -> Void in
             dimmView.edges == view.edges
             plusButton.centerY == plusButtonContainer.centerY
             plusButton.leading == plusButtonContainer.leading + 16
             plusButton.trailing == plusButtonContainer.trailing - 18
-        }
+        })
 
-        constrain(messageLabel, messageButton, conversationLabel, conversationButton, plusButton) { messageLabel, messageButton, conversationLabel, conversationButton, plusButton in
+        constrain(messageLabel, messageButton, conversationLabel, conversationButton, plusButton, block: { (messageLabel: LayoutProxy, messageButton: LayoutProxy, conversationLabel: LayoutProxy, conversationButton: LayoutProxy, plusButton: LayoutProxy) -> Void in
             messageLabel.leading == plusButton.leading + composeOffset.dx + 67
             messageLabel.centerY == plusButton.centerY + composeOffset.dy
 
             conversationLabel.leading == plusButton.leading + contactOffset.dx + 67
             conversationLabel.centerY == plusButton.centerY + contactOffset.dy
-        }
+        })
     }
 
     private func updateMessageButtonConstraints() {
