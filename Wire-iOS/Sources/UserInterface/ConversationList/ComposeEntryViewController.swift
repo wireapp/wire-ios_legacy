@@ -91,8 +91,8 @@ import Cartography
         messageLabel.titleLabel?.font = FontSpec(.small, .semibold).font!
         messageLabel.addTarget(self, action: #selector(messageTapped), for: .touchUpInside)
         conversationLabel.addTarget(self, action: #selector(conversationTapped), for: .touchUpInside)
-        conversationLabel.setTitle("compose.contact.title".localized, for: .normal)
-        messageLabel.setTitle("compose.message.title".localized, for: .normal)
+        conversationLabel.setTitle("compose.contact.title".localized.uppercased(), for: .normal)
+        messageLabel.setTitle("compose.message.title".localized.uppercased(), for: .normal)
         conversationButton.accessibilityIdentifier = "contactButton"
         messageButton.accessibilityIdentifier = "messageButton"
         conversationButton.backgroundColor = .white

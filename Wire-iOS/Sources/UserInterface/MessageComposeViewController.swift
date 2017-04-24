@@ -32,7 +32,7 @@ final class MessageComposeViewController: UIViewController {
     weak var delegate: MessageComposeViewControllerDelegate?
 
     private let subjectTextField = UITextField()
-    private let messageTextView = UITextView()
+    fileprivate let messageTextView = UITextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
 
@@ -212,7 +212,8 @@ extension MessageComposeViewController: UITextViewDelegate {
 extension MessageComposeViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return false
+        messageTextView.becomeFirstResponder()
+        return true
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
