@@ -910,7 +910,7 @@
 
 "compose.drafts.title" = "Drafts";
 "compose.drafts.compose.title" = "Write a message";
-"compose.drafts.compose.subject.placeholder" = "Write a subject";
+"compose.drafts.compose.subject.placeholder" = "Tap to write a subject";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
