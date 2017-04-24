@@ -35,7 +35,6 @@ final class MessageComposeViewController: UIViewController {
     private let messageTextView = UITextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
-    private let dismissItem = UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped))
 
     private var draft: MessageDraft?
     private let persistence: MessageDraftStorage
@@ -105,7 +104,8 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func updateRightNavigationItem() {
-        navigationItem.rightBarButtonItem = traitCollection.horizontalSizeClass == .compact ? dismissItem : nil
+        let showItem = traitCollection.horizontalSizeClass == .compact
+        navigationItem.rightBarButtonItem = showItem ? UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped)) : nil
     }
 
     private func setupInputAccessoryView() {
