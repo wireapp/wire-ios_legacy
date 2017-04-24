@@ -112,7 +112,7 @@ import Cartography
     }
 
     private func createConstraints() {
-        let composeOffset = CGVector(offsetWithRadius: 100, angle: -75)
+        let composeOffset = CGVector(offsetWithRadius: 100, angle: -80)
         let contactOffset = CGVector(offsetWithRadius: 100, angle: -15)
 
         constrain(view, plusButtonContainer, conversationButton, messageButton, plusButton) { view, plusButtonContainer, conversationButton, messageButton, plusButton in
@@ -255,7 +255,7 @@ import Cartography
             // Update active constraints
             toViewController.messageButtonState = .expanded
 
-            let (duration, delay) = totalDuration.split(by: 0.8)
+            let (duration, delay) = totalDuration.split(by: 0.85)
             UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { 
                 animationGroup.enter()
                 toViewController.view.layoutIfNeeded()
