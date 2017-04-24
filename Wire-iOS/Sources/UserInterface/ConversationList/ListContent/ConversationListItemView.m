@@ -224,10 +224,12 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)mediaPlayerStateChanged:(NSNotification *)notification
 {
-    if (self.conversation != nil &&
-        [[[[[AppDelegate sharedAppDelegate] mediaPlaybackManager] activeMediaPlayer] sourceMessage] conversation] == self.conversation) {
-        [self updateForConversation:self.conversation];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.conversation != nil &&
+            [[[[[AppDelegate sharedAppDelegate] mediaPlaybackManager] activeMediaPlayer] sourceMessage] conversation] == self.conversation) {
+            [self updateForConversation:self.conversation];
+        }
+    });
 }
 
 - (void)otherConversationListItemDidScroll:(NSNotification *)notification

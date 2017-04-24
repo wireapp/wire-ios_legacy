@@ -26,8 +26,9 @@ import Cartography
     
     init(user: ZMUser) {
         super.init(frame: .zero)
+        self.imageView.accessibilityIdentifier = "user image"
         self.imageView.user = user
-        self.nameLabel.text = user.displayName
+        self.nameLabel.text = user.name
         
         if let handle = user.handle, !handle.isEmpty {
             self.handleLabel.text = "@" + handle
@@ -35,6 +36,9 @@ import Cartography
         else {
             self.handleLabel.text = ""
         }
+        
+        nameLabel.accessibilityIdentifier = "user name"
+        handleLabel.accessibilityIdentifier = "user handle"
         
         [imageView, nameLabel, handleLabel].forEach(self.addSubview)
         
@@ -92,13 +96,14 @@ final internal class SelfProfileViewController: UIViewController {
         self.settingsController = rootGroup.generateViewController()!
         
         self.profileView = ProfileView(user: ZMUser.selfUser())
-        
         super.init(nibName: .none, bundle: .none)
         
         if let settingsTableController = self.settingsController as? SettingsTableViewController {
             settingsTableController.tableView.isScrollEnabled = false
         }
         
+        self.profileView.imageView.delegate = self
+
         self.title = "self.profile".localized
         
         let closeButton = IconButton.closeButton()
@@ -140,3 +145,9 @@ final internal class SelfProfileViewController: UIViewController {
     }
 }
 
+extension SelfProfileViewController: UserImageViewDelegate {
+    func userImageViewTouchUp(inside userImageView: UserImageView) {
+        let profileImageController = ProfileSelfPictureViewController()
+        self.present(profileImageController, animated: true, completion: .none)
+    }
+}
