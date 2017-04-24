@@ -73,6 +73,7 @@ import Cartography
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         plusButton.accessibilityIdentifier = "bottomBarPlusButton"
+        plusButton.adjustsTitleWhenHighlighted = true
         plusButton.titleImageSpacing = 18
         plusButton.setTitle(plusButtonTitle, for: .normal)
 

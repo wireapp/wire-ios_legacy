@@ -36,7 +36,7 @@ import Cartography
     fileprivate let messageLabel = ButtonWithLargerHitArea()
     fileprivate let conversationLabel = ButtonWithLargerHitArea()
 
-    fileprivate let dimViewColor = UIColor(white: 0, alpha: 0.8)
+    fileprivate let dimViewColor = UIColor(white: 0, alpha: 0.72)
 
     private enum ButtonState {
         case initial, expanded, final
@@ -44,13 +44,13 @@ import Cartography
 
     private var messageButtonState: ButtonState = .initial {
         didSet {
-            updateLeftButtonConstraints()
+            updateMessageButtonConstraints()
         }
     }
 
     private var conversationButtonState: ButtonState = .initial {
         didSet {
-            updateRightButtonConstraints()
+            updateConversationButtonConstraints()
         }
     }
 
@@ -73,8 +73,8 @@ import Cartography
         setupViews()
         createConstraints()
         transitioningDelegate = self
-        updateLeftButtonConstraints()
-        updateRightButtonConstraints()
+        updateMessageButtonConstraints()
+        updateConversationButtonConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -163,21 +163,22 @@ import Cartography
             plusButton.trailing == plusButtonContainer.trailing - 18
         }
 
-        constrain(messageLabel, messageButton, conversationLabel, conversationButton) { messageLabel, messageButton, contactsLabel, conversationButton in
-            messageLabel.leading == messageButton.trailing + 12
-            messageLabel.centerY == messageButton.centerY
-            contactsLabel.leading == conversationButton.trailing + 12
-            contactsLabel.centerY == conversationButton.centerY
+        constrain(messageLabel, messageButton, conversationLabel, conversationButton, plusButton) { messageLabel, messageButton, conversationLabel, conversationButton, plusButton in
+            messageLabel.leading == plusButton.leading + composeOffset.dx + 67
+            messageLabel.centerY == plusButton.centerY + composeOffset.dy
+
+            conversationLabel.leading == plusButton.leading + contactOffset.dx + 67
+            conversationLabel.centerY == plusButton.centerY + contactOffset.dy
         }
     }
 
-    private func updateLeftButtonConstraints() {
+    private func updateMessageButtonConstraints() {
         messageFinalConstraints.forEach { $0.isActive = messageButtonState == .final }
         messageInitialConstraints.forEach { $0.isActive = messageButtonState == .initial }
         messageExpandedConstraints.forEach { $0.isActive = messageButtonState == .expanded }
     }
 
-    private func updateRightButtonConstraints() {
+    private func updateConversationButtonConstraints() {
         conversationFinalConstraints.forEach { $0.isActive = conversationButtonState == .final }
         conversationInitialConstraints.forEach { $0.isActive = conversationButtonState == .initial }
         conversationExpandedConstraints.forEach { $0.isActive = conversationButtonState == .expanded }
@@ -210,7 +211,7 @@ import Cartography
     private class ComposeViewControllerPresentationTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
         func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-            return 0.4
+            return 0.3
         }
 
         func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -225,82 +226,69 @@ import Cartography
             }
 
             guard transitionContext.isAnimated else { return transitionContext.completeTransition(true) }
-            let actionButtons = [toViewController.conversationButton, toViewController.messageButton]
-            let actionLabels = [toViewController.conversationLabel, toViewController.messageLabel]
+            let movingViews = [toViewController.conversationButton, toViewController.messageButton, toViewController.conversationLabel, toViewController.messageLabel]
 
             // Prepare initial state
             toViewController.dimView.backgroundColor = .clear
             fromViewController.bottomBarController.plusButton.alpha = 0
 
-            actionButtons.forEach {
-                $0.transform = .scaledRotated
+            movingViews.forEach {
                 $0.alpha = 0
             }
-            actionLabels.forEach {
-                $0.alpha = 0
-                $0.transform = CGAffineTransform(translationX: -10, y: 0)
+
+            [toViewController.conversationButton, toViewController.messageButton].forEach {
+                $0.transform = CGAffineTransform(scaleX: 0.33, y: 0.33)
+            }
+
+            [toViewController.messageLabel, toViewController.conversationLabel].forEach {
+                $0.transform = CGAffineTransform(translationX: -67, y: 0)
             }
 
             // Animate transition
             let totalDuration = transitionDuration(using: transitionContext)
+            let (stepDuration, delay) = (0.15, 0.015)
             let animationGroup = DispatchGroup()
 
-            UIView.animate(withDuration: totalDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
-                animationGroup.enter()
-                toViewController.plusButton.transform = .rotation(degrees: 45)
-            }, completion: { _ in
-                animationGroup.leave()
-            })
+            // Background View
+            UIView.animate(withGroup: animationGroup, duration: totalDuration, delay: 0, options: .curveEaseOut) {
+                toViewController.dimView.backgroundColor = toViewController.dimViewColor
+            }
 
-            // Update active constraints
+            // Plus Button
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: 2 * delay, options: .curveEaseOut) {
+                toViewController.plusButton.transform = .rotation(degrees: 45)
+            }
+
+            // Message Label
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: 0, options: .curveEaseOut) {
+                toViewController.messageLabel.transform = .identity
+                toViewController.messageLabel.alpha = 1
+            }
+
+            // Message Button
             toViewController.messageButtonState = .expanded
 
-            let (duration, delay) = totalDuration.split(by: 0.85)
-            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { 
-                animationGroup.enter()
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: delay, options: .curveEaseOut) {
                 toViewController.view.layoutIfNeeded()
-            }, completion: { _ in
-                animationGroup.leave()
-            })
-
-            // Update active constraints
-            toViewController.conversationButtonState = .expanded
-
-            UIView.animate(withDuration: duration, delay: delay, options: .curveEaseOut, animations: {
-                animationGroup.enter()
-                toViewController.view.layoutIfNeeded()
-            }, completion: { _ in
-                animationGroup.leave()
-            })
-
-            UIView.animate(withDuration: totalDuration.split(by: 0.5).0, delay: 0, options: .curveEaseOut, animations: {
-                animationGroup.enter()
-                toViewController.dimView.backgroundColor = toViewController.dimViewColor
                 toViewController.messageButton.alpha = 1
                 toViewController.messageButton.transform = .identity
-            }, completion: { _ in
-                animationGroup.leave()
-            })
+            }
 
-            UIView.animate(withDuration: totalDuration.split(by: 0.5).0, delay: delay, options: .curveEaseOut, animations: {
-                animationGroup.enter()
+            // Conversation Label
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: 2 * delay, options: .curveEaseOut) {
+                toViewController.conversationLabel.transform = .identity
+                toViewController.conversationLabel.alpha = 1
+            }
+
+            // Conversation Button
+            toViewController.conversationButtonState = .expanded
+
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: 3 * delay, options: .curveEaseOut) {
+                toViewController.view.layoutIfNeeded()
                 toViewController.conversationButton.alpha = 1
                 toViewController.conversationButton.transform = .identity
-            }, completion: { _ in
-                animationGroup.leave()
-            })
+            }
 
-            let (labelDuration, labelDelay) = totalDuration.split(by: 0.8)
-            UIView.animate(withDuration: labelDuration, delay: labelDelay, options: .curveEaseOut, animations: {
-                animationGroup.enter()
-                actionLabels.forEach {
-                    $0.alpha = 1
-                    $0.transform = .identity
-                }
-            }, completion: { _ in
-                animationGroup.leave()
-            })
-            
             animationGroup.notify(queue: .main) {
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
@@ -311,7 +299,7 @@ import Cartography
     private class ComposeViewControllerDismissalTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
         func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-            return 0.25
+            return 0.3
         }
 
         func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -328,46 +316,50 @@ import Cartography
             guard transitionContext.isAnimated else { return transitionContext.completeTransition(true) }
 
             // Prepare initial state
-            let actionLabels = [fromViewController.conversationLabel, fromViewController.messageLabel]
             let animationGroup = DispatchGroup()
             let totalDuration = transitionDuration(using: transitionContext)
+            let (stepDuration, delay) = (0.15, 0.015)
+            let labelTransform = CGAffineTransform(translationX: -67, y: 0)
 
             // Animate transition
-            UIView.animate(withDuration: totalDuration.split(by: 0.5).0, delay: 0, options: .curveEaseIn, animations: {
-                animationGroup.enter()
-                actionLabels.forEach {
-                    $0.alpha = 0
-                }
+            UIView.animate(withGroup: animationGroup, duration: totalDuration, delay: 0, options: .curveEaseIn, animations: {
+                fromViewController.dimView.backgroundColor = .clear
+                fromViewController.plusButton.transform = .identity
             }, completion: { _ in
-                animationGroup.leave()
+                // We want the title of the plus buton to fade in after the transition is done.
+                toViewController.bottomBarController.plusButton.titleLabel?.alpha = 0
+                toViewController.bottomBarController.plusButton.alpha = 1
+
+                UIView.animate(withDuration: 0.2) {
+                    toViewController.bottomBarController.plusButton.titleLabel?.alpha = 1
+                }
             })
+
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: 0, options: .curveEaseIn) {
+                fromViewController.messageLabel.transform = labelTransform
+                fromViewController.messageLabel.alpha = 0
+            }
 
             // Update active constraints
             fromViewController.messageButtonState = .final
 
-            UIView.animate(withDuration: totalDuration, delay: 0, options: .curveEaseIn, animations: {
-                animationGroup.enter()
-                fromViewController.dimView.backgroundColor = .clear
-                fromViewController.plusButton.transform = .identity
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: delay, options: .curveEaseIn) {
                 fromViewController.view.layoutIfNeeded()
-                fromViewController.messageButton.transform = .scaledRotated
                 fromViewController.messageButton.alpha = 0
-            }, completion: { _ in
-                toViewController.bottomBarController.plusButton.alpha = 1
-                animationGroup.leave()
-            })
+            }
+
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: delay * 2, options: .curveEaseIn) {
+                fromViewController.conversationLabel.transform = labelTransform
+                fromViewController.conversationLabel.alpha = 0
+            }
 
             // Update active constraints
             fromViewController.conversationButtonState = .final
 
-            UIView.animate(withDuration: totalDuration * 0.7, delay: 0.1, options: .curveEaseIn, animations: {
-                animationGroup.enter()
+            UIView.animate(withGroup: animationGroup, duration: stepDuration, delay: delay * 3, options: .curveEaseIn) {
                 fromViewController.view.layoutIfNeeded()
-                fromViewController.conversationButton.transform = .scaledRotated
                 fromViewController.conversationButton.alpha = 0
-            }, completion: { _ in
-                animationGroup.leave()
-            })
+            }
 
             animationGroup.notify(queue: .main) {
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
@@ -381,12 +373,31 @@ import Cartography
 
 // MARK: Helper
 
+fileprivate extension UIView {
+
+    static func animate(withGroup group: DispatchGroup, duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void) {
+        animate(withDuration: duration, delay: delay, options: options, animations: {
+            group.enter()
+            animations()
+        }, completion: { _ in
+            group.leave()
+        })
+    }
+
+    static func animate(withGroup group: DispatchGroup, duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: @escaping (Bool) -> Void) {
+        animate(withDuration: duration, delay: delay, options: options, animations: {
+            group.enter()
+            animations()
+        }, completion: {
+            completion($0)
+            group.leave()
+        })
+    }
+
+}
+
 
 fileprivate extension CGAffineTransform {
-
-    static var scaledRotated: CGAffineTransform {
-        return rotation(degrees: 30).concatenating(CGAffineTransform(scaleX: 0.7, y: 0.7))
-    }
 
     static func rotation(degrees: CGFloat) -> CGAffineTransform {
         return CGAffineTransform(rotationAngle: degrees.radians)
