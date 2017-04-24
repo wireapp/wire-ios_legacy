@@ -91,8 +91,9 @@ final class MessageComposeViewController: UIViewController {
         subjectTextField.textColor = color(ColorSchemeColorTextForeground)
         subjectTextField.tintColor = .accent()
         subjectTextField.textAlignment = .center
+        subjectTextField.font = FontSpec(.medium, .semibold).font!
         let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
-        subjectTextField.attributedPlaceholder = placeholder && color(ColorSchemeColorSeparator) && FontSpec(.normal, .none).font!
+        subjectTextField.attributedPlaceholder = placeholder && color(ColorSchemeColorSeparator) && FontSpec(.medium, .none).font!
         subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
         navigationItem.titleView = subjectTextField
         subjectTextField.alpha = 0
