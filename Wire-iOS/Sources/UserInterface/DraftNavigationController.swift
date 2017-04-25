@@ -28,12 +28,12 @@ final class DraftNavigationController: UINavigationController {
         navigationBar.isOpaque = true
         let textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         navigationBar.tintColor = textColor
-        navigationBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        navigationBar.shadowImage = UIImage()
-        let backImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground))
-        navigationBar.backIndicatorImage = backImage
-        navigationBar.backIndicatorTransitionMaskImage = backImage
-        navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackgroundNew)
+
+        let image = UIImage.shadowImage(withInset: 0, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))!
+        let scaleImage = UIImage(cgImage: image.cgImage!, scale: UIScreen.main.scale, orientation: .up)
+        navigationBar.shadowImage = scaleImage.stretchableImage(withLeftCapWidth: 20, topCapHeight: 0)
+
+        navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationBar.titleTextAttributes = [
             NSFontAttributeName: FontSpec(.medium, .semibold).font!,
             NSForegroundColorAttributeName: textColor

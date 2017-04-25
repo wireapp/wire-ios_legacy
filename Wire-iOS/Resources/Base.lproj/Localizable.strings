@@ -909,6 +909,8 @@
 // Message composing / drafts
 
 "compose.drafts.title" = "Drafts";
+"compose.drafts.empty.title" = "No stored drafts";
+"compose.drafts.empty.subtitle" = "Tap the + above to compose a new message draft.";
 "compose.drafts.compose.title" = "Write a message";
 "compose.drafts.compose.subject.placeholder" = "Tap to write a subject";
 

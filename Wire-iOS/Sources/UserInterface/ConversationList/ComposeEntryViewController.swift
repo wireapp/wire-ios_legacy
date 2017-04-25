@@ -36,7 +36,7 @@ import Cartography
     fileprivate let messageLabel = ButtonWithLargerHitArea()
     fileprivate let conversationLabel = ButtonWithLargerHitArea()
 
-    fileprivate let dimViewColor = UIColor(white: 0, alpha: 0.72)
+    fileprivate let dimViewColor = UIColor(white: 0, alpha: 0.8)
 
     private enum ButtonState {
         case initial, expanded, final
@@ -90,8 +90,8 @@ import Cartography
         let titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         conversationLabel.setTitleColor(titleColor, for: .normal)
         messageLabel.setTitleColor(titleColor, for: .normal)
-        conversationLabel.titleLabel?.font = FontSpec(.small, .semibold).font!
-        messageLabel.titleLabel?.font = FontSpec(.small, .semibold).font!
+        conversationLabel.titleLabel?.font = FontSpec(.medium, .semibold).font
+        messageLabel.titleLabel?.font = FontSpec(.medium, .semibold).font
         messageLabel.addTarget(self, action: #selector(messageTapped), for: .touchUpInside)
         conversationLabel.addTarget(self, action: #selector(conversationTapped), for: .touchUpInside)
         conversationLabel.setTitle("compose.contact.title".localized.uppercased(), for: .normal)
@@ -147,12 +147,12 @@ import Cartography
             ]
 
             let messageFinalConstraints: [NSLayoutConstraint] = [
-                messageButton.leading == plusButton.leading + composeOffset.dx + 10,
+                messageButton.leading == plusButton.leading + composeOffset.dx,
                 messageButton.centerY == view.bottom
             ]
 
             let conversationFinalConstraints: [NSLayoutConstraint] = [
-                conversationButton.leading == plusButton.leading + contactOffset.dx + 10,
+                conversationButton.leading == plusButton.leading + contactOffset.dx,
                 conversationButton.centerY == view.bottom
             ]
 

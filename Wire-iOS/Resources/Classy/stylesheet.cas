@@ -535,7 +535,7 @@ ConversationListBottomBarController {
         iconColor: $color-text-foreground-dark;
         titleColor[state:normal]: $color-text-foreground-dark;
         titleLabel: @{
-            font: $font-small-semibold;
+            font: $font-medium-semibold;
         }
     }
     

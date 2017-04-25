@@ -18,36 +18,63 @@
 
 
 import Foundation
+import Cartography
 
 
 final class DraftListViewController: CoreDataTableViewController<MessageDraft, DraftMessageCell> {
 
-    let persistence: MessageDraftStorage
+    private let persistence: MessageDraftStorage
+    private let emptyLabel = UILabel()
 
     init(persistence: MessageDraftStorage) {
         self.persistence = persistence
         super.init(fetchedResultsController: persistence.resultsController)
-        configureCell = { (cell, draft) in
-            cell.configure(with: draft)
-        }
-
-        onCellSelection = { (_, draft) in
-            self.showDraft(draft)
-        }
-
-        onDelete = { (_, draft) in
-            persistence.enqueue(block: {
-                $0.delete(draft)
-            }, completion: {
-                if self.splitViewController?.isCollapsed == false {
-                    self.showDraft(nil)
-                }
-            })
-        }
+        setupEmptyLabel()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func configure(cell: DraftMessageCell, with model: MessageDraft) {
+        cell.configure(with: model)
+    }
+
+    override func select(cell: DraftMessageCell, with model: MessageDraft) {
+        showDraft(model)
+    }
+
+    override func emptyStateDidChange(isEmpty: Bool) {
+        tableView.isHidden = isEmpty
+        emptyLabel.isHidden = !isEmpty
+    }
+
+    override func delete(cell: DraftMessageCell, with model: MessageDraft) {
+        persistence.enqueue(block: {
+            $0.delete(model)
+        }, completion: { [weak self] in
+            if self?.splitViewController?.isCollapsed == false {
+                self?.showDraft(nil)
+            }
+        })
+    }
+
+    private func setupEmptyLabel() {
+        let title = "compose.drafts.empty.title".localized && FontSpec(.medium, .semibold).font!
+        let subtitle = "compose.drafts.empty.subtitle".localized && FontSpec(.medium, .none).font!
+        emptyLabel.attributedText = (title + "\n\n" + subtitle) && ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        emptyLabel.textAlignment = .center
+        emptyLabel.numberOfLines = 0
+        view.addSubview(emptyLabel)
+        view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+
+        constrain(view, emptyLabel) { view, emptyLabel in
+            emptyLabel.centerY == view.centerY - 20
+            emptyLabel.centerX == view.centerX
+            emptyLabel.width <= 150
+            emptyLabel.leading >= view.leading + 24
+            emptyLabel.trailing <= view.trailing - 20
+        }
     }
 
     override func viewDidLoad() {

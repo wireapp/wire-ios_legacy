@@ -18,22 +18,24 @@
 
 
 import Foundation
+import Cartography
 
 
-class CoreDataTableViewController<Model: NSFetchRequestResult, Cell: UITableViewCell>: UITableViewController, NSFetchedResultsControllerDelegate {
+class CoreDataTableViewController<Model: NSFetchRequestResult, Cell: UITableViewCell>: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
 
-    typealias TableViewAction = (Cell, Model) -> Void
-
-    var configureCell: TableViewAction?
-    var onCellSelection: TableViewAction?
-    var onDelete: TableViewAction?
+    let tableView = UITableView(frame: .zero, style: .plain)
+    var canDelete = true
 
     let fetchedResultsController: NSFetchedResultsController<Model>
 
     init(fetchedResultsController: NSFetchedResultsController<Model>) {
         self.fetchedResultsController = fetchedResultsController
         super.init(nibName: nil, bundle: nil)
-        self.fetchedResultsController.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        constrain(view, tableView) { view, tableView in tableView.edges == view.edges }
+        fetchedResultsController.delegate = self
         Cell.register(in: tableView)
         try? fetchedResultsController.performFetch()
     }
@@ -42,37 +44,52 @@ class CoreDataTableViewController<Model: NSFetchRequestResult, Cell: UITableView
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func configure(cell: Cell, with model: Model) {
+        preconditionFailure("Subclasses must override this method")
+    }
+
+    func select(cell: Cell, with model: Model) {
+        // no-op
+    }
+
+    func delete(cell: Cell, with model: Model) {
+        // no-op
+    }
+
+    func emptyStateDidChange(isEmpty: Bool) {
+        // no-op
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let numberOfRows = fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        emptyStateDidChange(isEmpty: numberOfRows == 0)
+        return numberOfRows
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.zm_reuseIdentifier, for: indexPath) as! Cell
-        configureCell?(cell, fetchedResultsController.object(at: indexPath))
+        configure(cell: cell, with: fetchedResultsController.object(at: indexPath))
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = tableView.cellForRow(at: indexPath) as! Cell
-        onCellSelection?(cell, fetchedResultsController.object(at: indexPath))
+        select(cell: cell, with: fetchedResultsController.object(at: indexPath))
     }
 
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        if nil != onDelete {
-            return .delete
-        }
-        return .none
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return canDelete ? .delete : .none
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath) as! Cell
-            onDelete?(cell, fetchedResultsController.object(at: indexPath))
+            delete(cell: cell, with: fetchedResultsController.object(at: indexPath))
         }
     }
 
