@@ -169,7 +169,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added you")
     }
     
-    func testStatusForSystemMessageIAddedSomeone() {
+    func testNoStatusForSystemMessageIAddedSomeone() {
         // GIVEN
         let sut = self.otherUserConversation!
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
@@ -183,10 +183,10 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "You added \(self.otherUser.displayName!)")
+        XCTAssertEqual(status.string, "")
     }
     
-    func testStatusForSystemMessageIRemovedSomeone() {
+    func testNoStatusForSystemMessageIRemovedSomeone() {
         // GIVEN
         let sut = self.otherUserConversation!
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
@@ -268,5 +268,21 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "\(self.otherUser.displayName!) started a conversation")
+    }
+    
+    func testNoStatusForSelfConversationStarted() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .newConversation
+        otherMessage.sender = self.selfUser
+        otherMessage.users = Set([self.otherUser, self.selfUser])
+        otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
+        sut.sortedAppendMessage(otherMessage)
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "")
     }
 }

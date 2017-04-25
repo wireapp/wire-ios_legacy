@@ -386,7 +386,8 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         }
         else if let message = messages.last,
                 let systemMessage = message.systemMessageData,
-                let sender = message.sender {
+                let sender = message.sender,
+                !sender.isSelfUser {
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle()
                 
@@ -417,7 +418,8 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         }
         else if let message = messages.last,
                 let systemMessage = message.systemMessageData,
-                let sender = message.sender {
+                let sender = message.sender,
+                !sender.isSelfUser {
             
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 if sender.isSelfUser {
@@ -470,7 +472,9 @@ final internal class StartConversationMatcher: ConversationStatusMatcher {
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         guard let message = status.messagesRequiringAttention.first(where: { StatusMessageType(message: $0) == .newConversation }),
               let sender = message.sender,
-              let senderString = sender.displayName(in: conversation) else {
+              let senderString = sender.displayName(in: conversation),
+              !sender.isSelfUser
+            else {
             return .none
         }
         
