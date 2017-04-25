@@ -37,8 +37,8 @@ import Cartography
             self.handleLabel.text = ""
         }
         
-        nameLabel.accessibilityIdentifier = "user name"
-        handleLabel.accessibilityIdentifier = "user handle"
+        nameLabel.accessibilityIdentifier = "name"
+        handleLabel.accessibilityIdentifier = "username"
         
         [imageView, nameLabel, handleLabel].forEach(self.addSubview)
         
