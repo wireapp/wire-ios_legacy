@@ -174,9 +174,10 @@ final class MessageComposeViewController: UIViewController {
         if let draft = draft {
             persistence.enqueue(block: {
                 if self.hasDraftContent {
-                    guard draft.subject != self.subjectTextField.text || draft.message != self.messageTextView.text else { return }
-                    draft.subject = self.subjectTextField.text
-                    draft.message = self.messageTextView.text
+                    let (subject, message) = (self.subjectTextField.text, self.messageTextView.text)
+                    guard draft.subject != subject || draft.message != message else { return }
+                    draft.subject = subject
+                    draft.message = message
                     draft.lastModifiedDate = NSDate()
                 } else {
                     $0.delete(draft)
@@ -229,9 +230,26 @@ extension MessageComposeViewController: UITextViewDelegate {
         updateDraftThrottled()
     }
 
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if range.location == 0 && text.onlyWhitespace && textView.text?.isEmpty ?? true {
+            return false
+        }
+
+        return true
+    }
+
 }
 
+
 extension MessageComposeViewController: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.location == 0 && string.onlyWhitespace && textField.text?.isEmpty ?? true {
+            return false
+        }
+
+        return true
+    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         messageTextView.becomeFirstResponder()
@@ -240,6 +258,15 @@ extension MessageComposeViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateDraft() // No throttling in this case
+    }
+
+}
+
+
+extension String {
+
+    var onlyWhitespace: Bool {
+        return CharacterSet(charactersIn: self).isSubset(of: .whitespaces)
     }
 
 }
