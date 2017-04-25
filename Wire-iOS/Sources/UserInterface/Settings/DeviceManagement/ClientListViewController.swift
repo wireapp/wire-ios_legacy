@@ -75,13 +75,15 @@ import CocoaLumberjackSwift
         self.title = NSLocalizedString("registration.devices.title", comment:"")
         self.edgesForExtendedLayout = []
 
-        self.initalizeProperties(clientsList ?? [])
+        self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients))
 
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
         self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         
         if clientsList == nil {
-            self.showLoadingView = true
+            if clients.isEmpty {
+                self.showLoadingView = true
+            }
             ZMUserSession.shared()?.fetchAllClients()
         }
     }
