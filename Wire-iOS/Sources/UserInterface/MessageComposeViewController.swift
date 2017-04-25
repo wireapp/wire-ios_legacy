@@ -54,6 +54,8 @@ final class MessageComposeViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.navigationController?.interactivePopGestureRecognizer?.delegate = self
         messageTextView.becomeFirstResponder()
     }
 
@@ -174,7 +176,7 @@ final class MessageComposeViewController: UIViewController {
         if let draft = draft {
             persistence.enqueue(block: {
                 if self.hasDraftContent {
-                    let (subject, message) = (self.subjectTextField.text, self.messageTextView.text)
+                    let (subject, message) = (self.subjectTextField.text?.trimmed, self.messageTextView.text?.trimmed)
                     guard draft.subject != subject || draft.message != message else { return }
                     draft.subject = subject
                     draft.message = message
@@ -231,7 +233,7 @@ extension MessageComposeViewController: UITextViewDelegate {
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if range.location == 0 && text.onlyWhitespace && textView.text?.isEmpty ?? true {
+        if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
             return false
         }
 
@@ -244,7 +246,7 @@ extension MessageComposeViewController: UITextViewDelegate {
 extension MessageComposeViewController: UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.location == 0 && string.onlyWhitespace && textField.text?.isEmpty ?? true {
+        if range.location == 0 && string == " " && textField.text?.isEmpty ?? true {
             return false
         }
 
@@ -263,10 +265,19 @@ extension MessageComposeViewController: UITextFieldDelegate {
 }
 
 
-extension String {
+fileprivate extension String {
 
-    var onlyWhitespace: Bool {
-        return CharacterSet(charactersIn: self).isSubset(of: .whitespaces)
+    var trimmed: String {
+        return trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+}
+
+
+extension MessageComposeViewController: UIGestureRecognizerDelegate {
+
+    @nonobjc public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return navigationController?.navigationController?.interactivePopGestureRecognizer == gestureRecognizer
+            && navigationController?.navigationController?.viewControllers.count > 1
+    }
 }
