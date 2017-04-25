@@ -91,8 +91,8 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
+        messageTextView.accessibilityLabel = "messageTextField"
     }
-
 
     private dynamic func backButtonPressed() {
         navigationController?.navigationController?.popViewController(animated: true)
@@ -100,7 +100,6 @@ final class MessageComposeViewController: UIViewController {
 
     private func setupNavigationItem() {
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
-
         subjectTextField.delegate = self
         subjectTextField.textColor = color(ColorSchemeColorTextForeground)
         subjectTextField.tintColor = .accent()
@@ -109,8 +108,9 @@ final class MessageComposeViewController: UIViewController {
         let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
         subjectTextField.attributedPlaceholder = placeholder && color(ColorSchemeColorSeparator) && FontSpec(.medium, .semibold).font!
         subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
-        navigationItem.titleView = subjectTextField
+        subjectTextField.accessibilityLabel = "subjectTextField"
         subjectTextField.alpha = 0
+        navigationItem.titleView = subjectTextField
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -122,11 +122,13 @@ final class MessageComposeViewController: UIViewController {
     private func updateRightNavigationItem() {
         let showItem = traitCollection.horizontalSizeClass == .compact
         navigationItem.rightBarButtonItem = showItem ? UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped)) : nil
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "closeButton"
     }
 
     private func updateLeftNavigationItem() {
         let showItem = traitCollection.horizontalSizeClass == .compact
         navigationItem.leftBarButtonItem = showItem ? UIBarButtonItem(customView: backButton) : nil
+        navigationItem.leftBarButtonItem?.accessibilityLabel = "backButton"
     }
 
     private func setupInputAccessoryView() {

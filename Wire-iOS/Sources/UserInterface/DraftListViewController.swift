@@ -86,7 +86,9 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         title = "compose.drafts.title".localized.uppercased()
         tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "closeButton"
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
+        navigationItem.leftBarButtonItem?.accessibilityLabel = "newDraftButton"
         DraftMessageCell.register(in: tableView)
         tableView.rowHeight = 56
         tableView.separatorStyle = .none
