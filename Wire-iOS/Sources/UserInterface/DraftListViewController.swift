@@ -60,8 +60,8 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
     }
 
     private func setupEmptyLabel() {
-        let title = "compose.drafts.empty.title".localized && FontSpec(.medium, .semibold).font!
-        let subtitle = "compose.drafts.empty.subtitle".localized && FontSpec(.medium, .none).font!
+        let title = "compose.drafts.empty.title".localized && FontSpec(.normal, .semibold).font!
+        let subtitle = "compose.drafts.empty.subtitle".localized && FontSpec(.normal, .none).font!
         emptyLabel.attributedText = (title + "\n\n" + subtitle) && ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
         emptyLabel.textAlignment = .center
         emptyLabel.numberOfLines = 0
@@ -71,7 +71,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         constrain(view, emptyLabel) { view, emptyLabel in
             emptyLabel.centerY == view.centerY - 20
             emptyLabel.centerX == view.centerX
-            emptyLabel.width <= 150
+            emptyLabel.width <= 200
             emptyLabel.leading >= view.leading + 24
             emptyLabel.trailing <= view.trailing - 20
         }

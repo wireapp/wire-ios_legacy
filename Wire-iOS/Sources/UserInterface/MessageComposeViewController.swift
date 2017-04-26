@@ -158,7 +158,7 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func popToListIfNeeded() {
-        if splitViewController?.isCollapsed == true && persistence.numberOfStoredDrafts() > 0 {
+        if splitViewController?.isCollapsed == true {
            navigationController?.navigationController?.popToRootViewController(animated: true)
         }
     }
