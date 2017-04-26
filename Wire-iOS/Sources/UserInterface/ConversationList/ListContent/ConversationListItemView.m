@@ -137,7 +137,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     [NSLayoutConstraint autoCreateAndInstallConstraints:^{
         
-        [self autoSetDimension:ALDimensionHeight toSize:56.0 relation:NSLayoutRelationGreaterThanOrEqual];
+        [self autoSetDimension:ALDimensionHeight toSize:64.0 relation:NSLayoutRelationGreaterThanOrEqual];
         CGFloat leftMargin = 64.0;
         [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
         [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];
