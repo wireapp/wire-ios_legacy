@@ -22,7 +22,7 @@ import ZipArchive
 class DocumentDelegate : NSObject, UIDocumentInteractionControllerDelegate {
     
     func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
-        return UIApplication.shared.keyWindow!.rootViewController!
+        return UIApplication.shared.wr_topmostController(onlyFullScreen: false)!
     }
     
     func documentInteractionControllerRectForPreview(_ controller: UIDocumentInteractionController) -> CGRect {
