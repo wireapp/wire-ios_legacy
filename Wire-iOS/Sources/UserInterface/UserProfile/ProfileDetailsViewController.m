@@ -407,6 +407,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [self.conversation removeParticipant:[self fullUser]];
+            } completionHandler:^{
+                [self.delegate profileDetailsViewController:self wantsToBeDismissedWithCompletion:nil];
             }];
         }];
     }];
