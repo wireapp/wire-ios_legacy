@@ -46,7 +46,7 @@
 			<key>Title</key>
 			<string>USE_MARKDOWN</string>
 			<key>Key</key>
-			<string>UserDefaultMarkdown</string>
+			<string>UserDefaultDisableMarkdown</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>

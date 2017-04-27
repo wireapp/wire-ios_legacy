@@ -27,6 +27,7 @@
 
 @property (nonatomic) CAShapeLayer *progressLayer;
 @property (nonatomic) BOOL initialConstraintsCreated;
+@property (nonatomic) BOOL useWithStatusBar;
 
 @end
 
@@ -34,23 +35,29 @@
 
 - (instancetype)init
 {
+    return [self initForUseWithStatusBar:NO];
+}
+
+- (instancetype)initForUseWithStatusBar:(BOOL)statusBar
+{
     self = [super init];
-    
     if (self) {
+        self.useWithStatusBar = statusBar;
+
         self.shareButton = [IconButton iconButtonCircular];
         self.shareButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.shareButton setIcon:ZetaIconTypeExport withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
         [self addSubview:self.shareButton];
-        
+
         self.closeButton = [IconButton iconButtonCircular];
         self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
         [self addSubview:self.closeButton];
-        
+
         self.titleLabel = [[UILabel alloc] initForAutoLayout];
         self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [self addSubview:self.titleLabel];
-        
+
         self.progressLayer = [[CAShapeLayer alloc] init];
         self.progressLayer.frame = [self progressLayerFrame];
         self.progressLayer.strokeColor = [UIColor redColor].CGColor;
@@ -58,7 +65,7 @@
         self.progressLayer.lineWidth = 2;
         [self.layer addSublayer:self.progressLayer];
     }
-    
+
     return self;
 }
 
@@ -66,18 +73,19 @@
 {
     if(! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
-        
-        [self.shareButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:16];
-        [self.shareButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+
+        CGFloat offset = self.useWithStatusBar ? 10 : 0;
+        [self.shareButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:8];
         [self.shareButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
+        [self.shareButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:offset];
         
-        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
-        [self.closeButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
+        [self.closeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:offset];
         [self.closeButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
         
         [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.shareButton withOffset:16];
         [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.closeButton withOffset:-16];
-        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.titleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:offset];
     }
     
     [super updateConstraints];

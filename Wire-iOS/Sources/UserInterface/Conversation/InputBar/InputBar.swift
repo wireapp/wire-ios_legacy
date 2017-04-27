@@ -106,11 +106,7 @@ private struct InputBarConstants {
         return inputBarState.isEditing
     }
     
-    var inputBarState: InputBarState = .writing(ephemeral: false) {
-        didSet(oldValue) {
-            updateInputBar(withState: inputBarState, oldState: oldValue)
-        }
-    }
+    private var inputBarState: InputBarState = .writing(ephemeral: false)
     
     fileprivate var textIsOverflowing = false {
         didSet {
@@ -138,6 +134,12 @@ private struct InputBarConstants {
         
     override public func didMoveToWindow() {
         super.didMoveToWindow()
+        // This is a workaround for UITextView truncating long contents.
+        // However, this breaks the text view on iOS 8 ¯\_(ツ)_/¯.
+        if #available(iOS 9, *) {
+            textView.isScrollEnabled = false
+            textView.isScrollEnabled = true
+        }
         startCursorBlinkAnimation()
     }
     
@@ -215,12 +217,12 @@ private struct InputBarConstants {
             textView.trailing <= textView.superview!.trailing - 16
             textView.trailing == rightAccessoryView.leading ~ LayoutPriority(750)
             textView.height >= 56
-            textView.height <= 120 ~ LayoutPriority(750)
+            textView.height <= 120 ~ LayoutPriority(1000)
 
             buttonRowSeparator.top == buttonContainer.top
             buttonRowSeparator.leading == buttonRowSeparator.superview!.leading + 16
             buttonRowSeparator.trailing == buttonRowSeparator.superview!.trailing - 16
-            buttonRowSeparator.height == 0.5
+            buttonRowSeparator.height == .hairline
         }
         
         constrain(editingView, buttonsView, buttonInnerContainer) { editingView, buttonsView, buttonInnerContainer in
@@ -250,7 +252,7 @@ private struct InputBarConstants {
             inputBarSeparator.top == inputBarSeparator.superview!.top
             inputBarSeparator.leading == inputBarSeparator.superview!.leading
             inputBarSeparator.trailing == inputBarSeparator.superview!.trailing
-            inputBarSeparator.height == 0.5
+            inputBarSeparator.height == .hairline
         }
         
         constrain(fakeCursor) { fakeCursor in
@@ -273,7 +275,7 @@ private struct InputBarConstants {
             animation.keyTimes = [0, 0.4, 0.7, 0.9]
             animation.duration = 0.64
             animation.autoreverses = true
-            animation.repeatCount = FLT_MAX
+            animation.repeatCount =  .greatestFiniteMagnitude
             fakeCursor.layer.add(animation, forKey: "blinkAnimation")
         }
     }
@@ -334,7 +336,13 @@ private struct InputBarConstants {
 
     // MARK: - InputBarState
 
-    func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
+    public func setInputBarState(_ state: InputBarState, animated: Bool) {
+        let oldState = inputBarState
+        inputBarState = state
+        updateInputBar(withState: state, oldState: oldState, animated: animated)
+    }
+
+    private func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
         updateEditViewState()
         updatePlaceholder()
         rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0

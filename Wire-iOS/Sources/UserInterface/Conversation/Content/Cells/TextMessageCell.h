@@ -22,5 +22,5 @@
 
 
 @interface TextMessageCell : ConversationCell
-
+@property (nonatomic, readonly) UIView *linkAttachmentView;
 @end

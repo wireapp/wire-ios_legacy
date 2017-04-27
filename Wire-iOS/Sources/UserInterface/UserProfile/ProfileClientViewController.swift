@@ -133,20 +133,19 @@ class ProfileClientViewController: UIViewController {
     }
     
     private func setupContentView() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(contentView)
     }
 
     private func setupBackButton() {
         backButton.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
+        backButton.accessibilityIdentifier = "back"
         backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.isHidden = !self.showBackButton
         self.view.addSubview(backButton)
     }
     
     private func setupShowMyDeviceButton() {
-        showMyDeviceButton.translatesAutoresizingMaskIntoConstraints = false
+        showMyDeviceButton.accessibilityIdentifier = "show my device"
         showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: UIControlState())
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         self.view.addSubview(showMyDeviceButton)
@@ -156,7 +155,6 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         if let user = self.userClient.user,
             let descriptionTextFont = self.descriptionTextFont {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
@@ -170,14 +168,12 @@ class ProfileClientViewController: UIViewController {
     }
     
     private func setupTypeLabel() {
-        typeLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         self.contentView.addSubview(typeLabel)
     }
     
     private func setupIDLabel() {
-        IDLabel.translatesAutoresizingMaskIntoConstraints = false
         IDLabel.numberOfLines = 1
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
@@ -195,13 +191,11 @@ class ProfileClientViewController: UIViewController {
     }
 
     private func setupFullIDLabel() {
-        fullIDLabel.translatesAutoresizingMaskIntoConstraints = false
         fullIDLabel.numberOfLines = 0
         self.contentView.addSubview(fullIDLabel)
     }
     
     private func setupSpinner() {
-        spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
         self.contentView.addSubview(spinner)
     }
@@ -226,6 +220,7 @@ class ProfileClientViewController: UIViewController {
 
     private func setupVerifiedToggle() {
         verifiedToggle.isOn = self.userClient.verified
+        verifiedToggle.accessibilityLabel = "device verified"
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
     }
@@ -239,6 +234,7 @@ class ProfileClientViewController: UIViewController {
     private func setupResetButton() {
         resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
+        resetButton.accessibilityIdentifier = "reset session"
         self.contentView.addSubview(resetButton)
     }
     
@@ -253,8 +249,8 @@ class ProfileClientViewController: UIViewController {
     
     private func createConstraints() {
         constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
-            contentView.left == view.left + 24
-            contentView.right == view.right - 24
+            contentView.left == view.left + 16
+            contentView.right == view.right - 16
             contentView.bottom == view.bottom - 32
             contentView.top >= view.top + 24
             reviewInvitationTextView.top == contentView.top
@@ -263,7 +259,7 @@ class ProfileClientViewController: UIViewController {
             reviewInvitationTextView.bottom == separatorLineView.top - 24
             separatorLineView.left == contentView.left
             separatorLineView.right == contentView.right
-            separatorLineView.height == 0.5
+            separatorLineView.height == .hairline
         }
 
         constrain(contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel) { contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel in
@@ -289,8 +285,8 @@ class ProfileClientViewController: UIViewController {
         }
 
         constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
-            backButton.left == contentView.left
-            backButton.top == selfView.top + 24
+            backButton.left == contentView.left - 8
+            backButton.top == selfView.top + 26
             backButton.width == 32
             backButton.height == 32
             showMyDeviceButton.centerY == backButton.centerY

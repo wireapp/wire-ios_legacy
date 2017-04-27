@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import ZMCSystem
+import WireSystem
 
 /// User default key for the array of enabled logs
 private let enabledLogsKey = "WireEnabledZMLogTags"
@@ -58,7 +58,7 @@ extension Settings {
     /// Sets whether recording is enabled
     private func setLogRecording(enabled: Bool) {
         if enabled && DeveloperMenuState.developerMenuEnabled() { // never record on non-internal
-            ZMSLog.startRecording(size: 20000)
+            ZMSLog.startRecording(size: 100000)
         }
         else {
             ZMSLog.stopRecording()

@@ -16,25 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import Foundation
 import CocoaLumberjackSwift
+import WireExtensionComponents
 
-public extension URL {
-    public func wr_excludeFromBackup() throws {
-        var mutableCopy = self
-        var resourceValues = URLResourceValues()
-        resourceValues.isExcludedFromBackup = true
-        try mutableCopy.setResourceValues(resourceValues)
-    }
-    
-    public static func wr_directory(for searchPathDirectory: NSFileManager.SearchPathDirectory) -> URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(searchPathDirectory, .userDomainMask, true).first!)
-    }
-}
 
 final internal class FileBackupExcluder: NSObject {
-    typealias FileInDirectory = (NSFileManager.SearchPathDirectory, String)
-    private static let filesToExclude: [FileInDirectory] = [(.libraryDirectory, "Preferences/com.apple.EmojiCache.plist")]
+
+    private static let filesToExclude: [FileInDirectory] = [
+        (.libraryDirectory, "Preferences/com.apple.EmojiCache.plist"),
+        (.libraryDirectory, ".")
+    ]
     
     deinit {
         NotificationCenter.default.removeObserver(self)

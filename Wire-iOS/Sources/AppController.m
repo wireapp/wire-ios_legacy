@@ -20,7 +20,7 @@
 #import "AppController.h"
 #import "AppController+Internal.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+Additions.h"
 #import "MagicConfig.h"
 #import "PassthroughWindow.h"
@@ -45,6 +45,7 @@
 #import "AVSLogObserver.h"
 #import "Wire-Swift.h"
 #import "Message+Formatting.h"
+#import "ConversationListCell.h"
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
@@ -122,12 +123,28 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     _seState = seState;
 }
 
+-(BOOL)isRunningTests
+{
+    NSString *testPath = NSProcessInfo.processInfo.environment[@"XCTestConfigurationFilePath"];
+    return testPath != nil;
+}
+
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self startSyncEngine:application launchOptions:launchOptions];
-    [self loadLaunchControllerIfNeeded];
+    if (! self.isRunningTests) {
+        [self startSyncEngine:application launchOptions:launchOptions];
+        [self loadLaunchControllerIfNeeded];
+    } else {
+        [self loadLaunchController];
+        [self createMediaPlaybackManaged];
+
+        // Load magic
+        [MagicConfig sharedConfig];
+        [self setupClassyWithWindows:@[self.window]];
+    }
+
     return YES;
 }
 
@@ -220,7 +237,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.window.frame = [[UIScreen mainScreen] bounds];
     self.window.accessibilityIdentifier = @"ZClientMainWindow";
     
-    // Just load the fonts here. Don't load the Magic yet, to avoid to have any problems with zmessaging before we allowed to use it
+    // Just load the fonts here. Don't load the Magic yet, to avoid to have any problems with WireSyncEngine before we allowed to use it
     LaunchImageViewController *launchController = [[LaunchImageViewController alloc] initWithNibName:nil bundle:nil];
 
     self.launchImageViewController = launchController;
@@ -229,6 +246,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [self.window setFrame:[[UIScreen mainScreen] bounds]];
     
     [self.window makeKeyAndVisible];
+    
+    //[TestView wr_testShowInstanceWithFullscreen:NO];
     
     if (self.seState == AppSEStateMigration) {
         [launchController showLoadingScreen];
@@ -261,8 +280,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     // Load magic
     [MagicConfig sharedConfig];
-    
-    self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
+    [self createMediaPlaybackManaged];
+
     if (![Settings sharedSettings].disableAVS) {
         AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
         [mediaManager configureSounds];
@@ -305,6 +324,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         
         DDLogInfo(@"loadUserInterface END");
     });
+}
+
+ - (void)createMediaPlaybackManaged
+{
+    self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
 }
         
 - (void)loadRootViewController
@@ -364,8 +388,10 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification
 {
+    [Message invalidateMarkdownStyle];
     [UIFont wr_flushFontCache];
     [NSAttributedString wr_flushCellParagraphStyleCache];
+    [ConversationListCell invalidateCachedCellSize];
     [self applyFontScheme];
 }
 
@@ -416,7 +442,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (ZMUserSession *)zetaUserSession
 {
-    NSAssert(_zetaUserSession != nil, @"Attempt to access user session before it's ready");
+    if (! self.isRunningTests) {
+        NSAssert(_zetaUserSession != nil, @"Attempt to access user session before it's ready");
+    }
     return _zetaUserSession;
 }
 
@@ -466,6 +494,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     // Singletons
     AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
+    
+    [DeveloperMenuState prepareForDebugging];
+    [MessageDraftStorage setupSharedStorageAtURL:_zetaUserSession.sharedContainerURL error:nil];
 }
 
 #pragma mark - User Session block queueing
@@ -534,6 +565,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     if (!AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
         [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
     }
+    [[Settings sharedSettings] updateAVSCallingConstantBitRateValue];
     [self loadAppropriateController];
 }
 

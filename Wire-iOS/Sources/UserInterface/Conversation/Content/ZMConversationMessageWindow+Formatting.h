@@ -17,7 +17,7 @@
 // 
 
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 @class ConversationCellLayoutProperties;

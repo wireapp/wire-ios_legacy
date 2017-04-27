@@ -26,7 +26,7 @@
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
 #import "LinkAttachment.h"
-@import ZMCDataModel;
+@import WireDataModel;
 
 
 @implementation LinkAttachmentViewControllerFactory

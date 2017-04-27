@@ -26,7 +26,10 @@ private enum ExtensionSettingsKey: String {
     case disableCrashAndAnalyticsSharing = "disableCrashAndAnalyticsSharing"
 
     static var all: [ExtensionSettingsKey] {
-        return [.disableHockey, .disableCrashAndAnalyticsSharing]
+        return [
+            .disableHockey,
+            .disableCrashAndAnalyticsSharing
+        ]
     }
 
     private var defaultValue: Any? {
@@ -35,7 +38,6 @@ private enum ExtensionSettingsKey: String {
         // into the shared settings (which is only done from the main app).
         case .disableHockey: return true
         case .disableCrashAndAnalyticsSharing: return true
-
         }
     }
 
@@ -57,9 +59,9 @@ public class ExtensionSettings: NSObject {
 
     public static let shared = ExtensionSettings()
 
-    public override class func initialize() {
-        super.initialize()
-        setupDefaultValues()
+    private override init() {
+        super.init()
+        type(of: self).setupDefaultValues()
     }
 
     private static func setupDefaultValues() {

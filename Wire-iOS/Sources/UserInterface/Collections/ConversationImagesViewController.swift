@@ -18,14 +18,45 @@
 
 import Foundation
 import Cartography
-import zmessaging
+import WireSyncEngine
+import Classy
 
 typealias DismissAction = (_ completion: (()->())?)->()
 
+
+extension UIView {
+    func wr_wrapForSnapshotBackground() -> UIView {
+        let innerSnapshot = UIView()
+        innerSnapshot.addSubview(self)
+        let topInset: CGFloat = -64
+        
+        constrain(innerSnapshot, self) { innerSnapshot, selfView in
+            selfView.leading == innerSnapshot.leading
+            selfView.top == innerSnapshot.top + topInset
+            selfView.trailing == innerSnapshot.trailing
+            selfView.bottom == innerSnapshot.bottom + topInset
+        }
+        
+        return innerSnapshot
+    }
+}
+
 internal final class ConversationImagesViewController: UIViewController {
     internal let collection: AssetCollectionWrapper
-    public var swipeToDismiss: Bool = false
-    public var dismissAction: DismissAction? = .none
+    public var swipeToDismiss: Bool = false {
+        didSet {
+            if let currentController = self.currentController {
+                currentController.swipeToDismiss = self.swipeToDismiss
+            }
+        }
+    }
+    public var dismissAction: DismissAction? = .none {
+        didSet {
+            if let currentController = self.currentController {
+                currentController.dismissAction = self.dismissAction
+            }
+        }
+    }
     public var snapshotBackgroundView: UIView? = .none
     fileprivate var imageMessages: [ZMConversationMessage] = []
     internal var currentMessage: ZMConversationMessage {
@@ -33,7 +64,7 @@ internal final class ConversationImagesViewController: UIViewController {
             self.createNavigationTitle()
         }
     }
-    internal var pageViewController: UIPageViewController!
+    internal var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     internal var buttonsBar: InputBarButtonsView!
     internal let overlay = FeedbackOverlayView()
     internal let separator = UIView()
@@ -44,7 +75,7 @@ internal final class ConversationImagesViewController: UIViewController {
     public weak var messageActionDelegate: MessageActionResponder? = .none
     
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
-        assert(Message.isImageMessage(initialMessage))
+        assert(initialMessage.isImage)
         
         self.inverse = inverse
         self.collection = collection
@@ -103,15 +134,13 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     private func createPageController() {
-        self.pageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
+        pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
         
-        self.pageViewController.delegate = self
-        self.pageViewController.dataSource = self
-        self.pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
-        
-        self.addChildViewController(self.pageViewController)
-        self.view.addSubview(self.pageViewController.view)
-        self.pageViewController.didMove(toParentViewController: self)
+        self.addChildViewController(pageViewController)
+        self.view.addSubview(pageViewController.view)
+        pageViewController.didMove(toParentViewController: self)
     }
     
     fileprivate func logicalPreviousIndex(for index: Int) -> Int? {
@@ -180,7 +209,22 @@ internal final class ConversationImagesViewController: UIViewController {
         revealButton.accessibilityLabel = "reveal in conversation"
         revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
         
-        self.buttonsBar = InputBarButtonsView(buttons: [copyButton, likeButton, saveButton, shareButton, deleteButton, revealButton])
+        let sketchButton = IconButton.iconButtonDefault()
+        sketchButton.setIcon(.brush, with: .tiny, for: .normal)
+        sketchButton.accessibilityLabel = "sketch over image"
+        sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
+        
+        let emojiSketchButton = IconButton.iconButtonDefault()
+        emojiSketchButton.setIcon(.emoji, with: .tiny, for: .normal)
+        emojiSketchButton.accessibilityLabel = "sketch emoji over image"
+        emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
+        
+        let buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton]
+        buttons.forEach { $0.hitAreaPadding = .zero }
+        
+        self.buttonsBar = InputBarButtonsView(buttons: buttons)
+        self.buttonsBar.clipsToBounds = true
+        self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
         self.view.addSubview(self.buttonsBar)
     }
 
@@ -194,20 +238,8 @@ internal final class ConversationImagesViewController: UIViewController {
         imageViewController.delegate = self
         imageViewController.swipeToDismiss = self.swipeToDismiss
         imageViewController.showCloseButton = false
-        if let snapshotBackgroundView = self.snapshotBackgroundView {
-            let innerSnapshot = UIView()
-            innerSnapshot.addSubview(snapshotBackgroundView)
-            let topInset: CGFloat = -64
-            
-            constrain(innerSnapshot, snapshotBackgroundView) { innerSnapshot, snapshotBackgroundView in
-                snapshotBackgroundView.leading == innerSnapshot.leading
-                snapshotBackgroundView.top == innerSnapshot.top + topInset
-                snapshotBackgroundView.trailing == innerSnapshot.trailing
-                snapshotBackgroundView.bottom == innerSnapshot.bottom + topInset
-            }
-            imageViewController.snapshotBackgroundView = innerSnapshot
-        }
         imageViewController.dismissAction = self.dismissAction
+        CASStyler.default().styleItem(imageViewController)
         return imageViewController
     }
     
@@ -230,10 +262,10 @@ internal final class ConversationImagesViewController: UIViewController {
         self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.wr_formattedDate())
     }
     
-    var currentController: FullscreenImageViewController {
+    var currentController: FullscreenImageViewController? {
         get {
             guard let imageController = self.pageViewController.viewControllers?.first as? FullscreenImageViewController else {
-                fatal("No first controller")
+                return .none
             }
             
             return imageController
@@ -247,11 +279,11 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     @objc public func saveCurrent(_ sender: UIButton!) {
-        self.currentController.performSaveImageAnimation(from: sender)
+        self.currentController?.performSaveImageAnimation(from: sender)
         self.messageActionDelegate?.wants(toPerform: .save, for: self.currentMessage)
     }
 
-    @objc public func likeCurrent(_ sender: AnyObject!) {
+    @objc public func likeCurrent() {
         ZMUserSession.shared()?.enqueueChanges({
             self.currentMessage.liked = !self.currentMessage.liked
         }, completionHandler: {
@@ -270,6 +302,14 @@ internal final class ConversationImagesViewController: UIViewController {
     @objc public func revealCurrent(_ sender: AnyObject!) {
         self.messageActionDelegate?.wants(toPerform: .showInConversation, for: self.currentMessage)
     }
+    
+    @objc public func sketchCurrent(_ sender: AnyObject!) {
+        self.messageActionDelegate?.wants(toPerform: .sketchDraw, for: self.currentMessage)
+    }
+    
+    @objc public func sketchCurrentEmoji(_ sender: AnyObject!) {
+        self.messageActionDelegate?.wants(toPerform: .sketchEmoji, for: self.currentMessage)
+    }
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
@@ -278,7 +318,16 @@ extension ConversationImagesViewController: MessageActionResponder {
     }
 
     func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
-        self.messageActionDelegate?.wants(toPerform: action, for: message)
+        switch action {
+        case .like: likeCurrent()
+        default: self.messageActionDelegate?.wants(toPerform: action, for: message)
+        }
+    }
+}
+
+extension ConversationImagesViewController: ScreenshotProvider {
+    func backgroundScreenshot(for fullscreenController: FullscreenImageViewController) -> UIView? {
+        return self.snapshotBackgroundView
     }
 }
 
@@ -340,8 +389,11 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if finished && completed {
-            self.currentMessage = self.currentController.message
+        if let currentController = self.currentController,
+            finished,
+            completed {
+            
+            self.currentMessage = currentController.message
             updateLikeButton()
         }
     }

@@ -71,6 +71,16 @@ VoiceChannelOverlay {
         imageEdgeInsets: 0 0 0 8;
     }
     
+    degradationTopLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
+    }
+    
+    degradationBottomLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
+    }
+
     topStatusLabel: @{
         textColor: $color-text-foreground-dark;
     }
@@ -88,6 +98,22 @@ VoiceChannelOverlay {
         }
     }
     
+    acceptDegradedButton: @{
+        iconButton: @{
+            backgroundImageColor[state:normal]: $color-accent-green;
+            iconColor[state:normal]: white;
+            borderWidth: 0;
+        }
+    }
+    
+    makeDegradedCallButton: @{
+        iconButton: @{
+            backgroundImageColor[state:normal]: $color-accent-green;
+            iconColor[state:normal]: white;
+            borderWidth: 0;
+        }
+    }
+
     acceptVideoButton: @{
         iconButton: @{
             backgroundImageColor[state:normal]: $color-accent-green;
@@ -233,14 +259,14 @@ AudioHeaderView {
     }
     
     trackTitleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
 }
 
 AudioPlaylistCell.selected {
     
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
     
     durationLabel: @{
@@ -332,6 +358,20 @@ SketchToolbar {
     }
 }
 
+/* Self profile */
+
+ProfileView {
+    nameLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-large-light;
+    }
+    
+    handleLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
+    }
+}
+
 /* Profile */
 
 ProfileViewController {
@@ -411,7 +451,7 @@ ProfileClientViewController {
     }
     
     typeLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: $color-text-foreground;
     }
     
@@ -448,16 +488,16 @@ ProfileClientViewController {
     
     
     fingerprintSmallFont: $font-small-light;
-    fingerprintSmallBoldFont: $font-small-medium;
+    fingerprintSmallBoldFont: $font-small-semibold;
     
     fingerprintFont: $font-normal;
-    fingerprintBoldFont: $font-normal-medium;
+    fingerprintBoldFont: $font-normal-semibold;
 }
 
 ConversationTitleView {
     titleColor: $color-text-foreground;
     titleColorSelected: $color-text-dimmed;
-    titleFont: $font-medium-medium;
+    titleFont: $font-medium-semibold;
 }
 
 PlaceholderConversationViewController {
@@ -473,27 +513,30 @@ ConversationRootViewController {
     }
 }
 
+NewDevicesDot {
+    backgroundColor: $color-accent-current;
+    layer: @{
+        cornerRadius: 4.0;
+    }
+}
+
+ConversationListAccessoryView {
+    textLabel: @{
+        font: $font-medium-semibold;
+    }
+}
+
 ConversationListBottomBarController {
     view: @{
         backgroundColor: clear;
     }
     
-    indicator: @{
-        backgroundColor: $color-accent-current;
-        layer: @{
-            cornerRadius: 4.0;
-        }
-    }
-    
-    contactsButton: @{
+    plusButton: @{
+        iconColor: $color-text-foreground-dark;
         titleColor[state:normal]: $color-text-foreground-dark;
         titleLabel: @{
-            font: $font-small-light;
+            font: $font-medium-semibold;
         }
-    }
-    
-    settingsButton: @{
-        iconColor: $color-text-foreground-dark;
     }
     
     archivedButton: @{
@@ -504,6 +547,16 @@ ConversationListBottomBarController {
         backgroundColor: $color-separator-light;
     }
 }
+
+/* ConversationListAvatar */
+
+ConversationAvatarView UserImageView {
+    initials: @{
+        font: $font-medium-semibold;
+        textColor: $color-list-avatar-initials;
+    }
+}
+
 
 /* Audio Recording */
 
@@ -561,7 +614,7 @@ AudioRecordViewController WaveFormView {
 ArchivedNavigationBar {
     titleLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-medium-medium;
+        font: $font-medium-semibold;
     }
     
     separatorView: @{
@@ -579,7 +632,7 @@ ToolTipViewController {
     titleColor: $color-accent-current;
     
     titleLabel: @{
-        font: $font-normal-medium;
+        font: $font-normal-semibold;
     }
     
     timeLabel: @{
@@ -602,6 +655,18 @@ ToolTipViewController {
     }
 }
 
+/* MediaPreviewViewController */
+
+MediaPreviewViewController {
+    @device ipad {
+        viewHeight: 240
+    }
+
+    @device iphone {
+        viewHeight: 160
+    }
+}
+
 /* Conversation detail / participants */
 
 ParticipantsHeaderView.editing {
@@ -617,7 +682,7 @@ ParticipantsHeaderView {
     }
     titleView: @{
         textColor: $color-text-foreground;
-        font: $font-normal-medium;
+        font: $font-normal-semibold;
     }
     titleViewBackground: @{
         layer: @{
@@ -697,54 +762,56 @@ ConversationListContentController UILabel.empty-list-message {
     textColor: $color-text-foreground-dark;
 }
 
+ConversationListItemView {
+    titleField: @{
+        textColor: $color-text-foreground-dark;
+    }
+}
+
 SearchView {
     lineView: @{
         backgroundColor: $color-accent-current;
     }
 }
 
-/* Conversation */
+VideoMessageCell {
+    @device ipad {
+        videoViewHeight: 240
+    }
 
-GroupConversationHeader {
-    messageTextAttributes: @{
-        foregroundColor: $color-text-dimmed;
-        paragraphStyle: @{
-            alignment: center;
-            paragraphSpacing: 4;
-        }
-    }
-    
-    titleTextAttributes: @{
-        font: $font-small;
-        paragraphStyle: @{
-            alignment: center;
-            paragraphSpacing: 10;
-        }
-    }
-    
-    descriptionTextAttributes: @{
-        font: $font-small-light;
-    }
-    
-    explanationTextAttributes: @{
-        font: $font-small-light;
-        foregroundColor: $color-accent-current;
-    }
-    
-    separatorView: @{
-        backgroundColor: $color-separator;
+    @device iphone {
+        videoViewHeight: 160
     }
 }
 
+DotView {
+    backgroundColor: $color-accent-current;
+}
+
+SpaceView {
+    nameLabel: @{
+        font: $font-small-semibold;
+        textColor: $color-text-dimmed-dark;
+    }
+}
+
+SpaceView.selected {
+    nameLabel: @{
+        textColor: $color-text-foreground-dark;
+    }
+}
+
+/* Conversation */
+
 MessageToolboxView {
     statusLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
         textContainerInset: 0, 0, 0, 0;
     }
     likeTooltipArrow: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         backgroundColor: clear;
         textColor: $color-text-dimmed;
     }
@@ -758,14 +825,25 @@ MessageToolboxView {
     }
 
     authorLabel: @{
-        font: $font-small-medium;
-        textColor: $color-text-foreground;
+        font: $font-medium-semibold;
     }
-    burstTimestampLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
+
+    burstTimestampView: @{
+        label: @{
+            textColor: $color-text-foreground;
+        }
     }
+
+    burstNormalFont: $font-small-light;
+    burstBoldFont: $font-small-semibold;
 }
+
+
+ConversationCellBurstTimestampView {
+    separatorColor: $color-separator;
+    separatorColorExpanded: $color-separator-pale;
+}
+
 
 ^IconSystemCell {
     lineView: @{
@@ -776,9 +854,13 @@ MessageToolboxView {
         backgroundColor: clear;
     }
     labelTextColor: $color-text-foreground;
-    labelFont: $font-small-light;
-    labelBoldFont: $font-small-medium;
+    labelFont: $font-medium;
+    labelBoldFont: $font-medium-semibold;
     labelTextBlendedColor: $color-text-dimmed;
+}
+
+ConversationRenamedCell {
+    nameLabelFont: $font-normal-semibold;
 }
 
 FileTransferView {
@@ -787,9 +869,12 @@ FileTransferView {
     labelTextColor: $color-text-foreground;
     labelTextBlendedColor: $color-text-dimmed;
     labelFont: $font-small-light;
-    labelBoldFont: $font-small-medium;
+    labelBoldFont: $font-small-semibold;
     fileTypeIconView: @{
         tintColor: $color-text-foreground;
+    }
+    fileEyeView: @{
+        tintColor: $color-background;
     }
     actionButton: @{
         iconColor: white;
@@ -834,7 +919,7 @@ AudioMessageView {
     
     UILabel {
         textColor: $color-text-foreground;
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
 }
 
@@ -860,11 +945,11 @@ UnknownMessageCell {
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
-    titleFont: $font-normal-medium;
+    titleFont: $font-normal-semibold;
     authorTextColor: $color-text-dimmed;
     authorFont: $font-small-light;
     authorHighlightTextColor: $color-text-dimmed;
-    authorHighlightFont: $font-small-medium;
+    authorHighlightFont: $font-small-semibold;
 }
 
 UIView.container-view {
@@ -873,7 +958,7 @@ UIView.container-view {
 
 UILabel.conversationVerifiedLabel {
     textColor: $color-text-foreground;
-    font: $font-small-medium;
+    font: $font-small-semibold;
     textTransform: upper;
 }
 
@@ -886,7 +971,7 @@ InputBar: {
 
     textView: @{
         font: $font-normal-light;
-        placeholderFont: $font-small-medium;
+        placeholderFont: $font-small-semibold;
         textColor: $color-text-foreground;
         backgroundColor: clear;
     }
@@ -921,7 +1006,7 @@ ConversationInputBarViewController {
         borderWidth: 0.0;
         titleColor: $color-accent-current;
         titleLabel: @{
-            font: $font-small-medium;
+            font: $font-small-semibold;
         }
     }
 
@@ -947,6 +1032,15 @@ TypingIndicatorView {
     }
 }
 
+PingCell {
+    pingFont: $font-medium;
+    authorFont: $font-medium-semibold;
+
+    pingLabel: @{
+        textColor: $color-text-foreground;
+    }
+}
+
 /* Image confirmer */
 
 ConfirmAssetViewController {
@@ -959,7 +1053,7 @@ ConfirmAssetViewController {
     }
     
     titleLabel: @{
-        font: $font-medium-medium;
+        font: $font-medium-semibold;
         textColor: $color-text-foreground;
     }
     
@@ -1008,7 +1102,7 @@ ModalTopBar {
     }
     
     titleLabel: @{
-        font: $font-medium-medium;
+        font: $font-medium-semibold;
         textColor: $color-text-foreground;
     }
 }
@@ -1027,7 +1121,7 @@ LocationSendViewController {
         backgroundColor: $color-background;
     }
     
-    buttonFont: $font-medium-medium;
+    buttonFont: $font-medium-semibold;
 }
 
 /* Camera */
@@ -1077,13 +1171,13 @@ UILabel.normal-light {
 
 ActionSheetListView UIButton {
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
 }
 
 ActionSheetAlertView {
     titleLabel: @{
-        font: $font-normal-medium;
+        font: $font-normal-semibold;
     }
     
     messageLabel: @{
@@ -1159,7 +1253,7 @@ ContactsCell {
 ContactsSectionHeaderView {
     titleLabel: @{
         textColor: $color-text-foreground;
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
     contentView: @{
         backgroundColor: $color-background;
@@ -1287,7 +1381,7 @@ InviteContactsViewController ContactsSectionHeaderView {
 TokenField {
     backgroundColor: clear;
     font: $font-normal-light;
-    tokenTitleFont: $font-small-medium;
+    tokenTitleFont: $font-small-semibold;
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
@@ -1321,7 +1415,7 @@ SearchViewController PeopleInputController TokenField {
 
 EphemeralKeyboardViewController {
 
-    pickerFont: $font-normal-medium;
+    pickerFont: $font-normal-semibold;
     pickerColor: $color-text-foreground-dark;
     separatorColor: $color-separator-light;
 
@@ -1331,7 +1425,7 @@ EphemeralKeyboardViewController {
 
     titleLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
 }
 
@@ -1353,12 +1447,12 @@ ProfileDevicesViewController {
 }
 
 ParticipantDeviceCell {
-    boldFingerprintFont: $font-small-medium;
+    boldFingerprintFont: $font-small-semibold;
     fingerprintFont: $font-small;
     
     nameLabel: @{
         textColor: $color-text-foreground;
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
     
     identifierLabel: @{
@@ -1391,11 +1485,11 @@ SettingsClientViewController.conversation {
     
     ^ClientTableViewCell.conversation  {
         nameLabel: @{
-            font: $font-normal-medium;
+            font: $font-normal-semibold;
             textColor: $color-text-foreground;
         }
         labelLabel: @{
-            font: $font-small-medium;
+            font: $font-small-semibold;
             textColor: $color-text-foreground;
         }
         activationLabel: @{
@@ -1406,17 +1500,17 @@ SettingsClientViewController.conversation {
             font: $font-small;
         }
         fingerprintLabelFont: $font-small-light;
-        fingerprintLabelBoldFont: $font-small-medium;
+        fingerprintLabelBoldFont: $font-small-semibold;
         fingerprintTextColor: $color-text-foreground
         
     }
     
     ^FingerprintTableViewCell.conversation  {
         fingerprintLabelFont: $font-normal-light;
-        fingerprintLabelBoldFont: $font-normal-medium;
+        fingerprintLabelBoldFont: $font-normal-semibold;
         
         titleLabel: @{
-            font: $font-small-medium;
+            font: $font-small-semibold;
             textColor: $color-text-foreground;
         }
         fingerprintLabel: @{
@@ -1428,6 +1522,13 @@ SettingsClientViewController.conversation {
 SettingsClientViewController {
     tableView: @{
         separatorColor: rgb(255,255,255,0.1)
+    }
+}
+
+^SettingsTableCell {
+    cellNameLabel: @{
+        font: $font-normal-light;
+        textColor: $color-text-foreground-dark;
     }
 }
 
@@ -1453,7 +1554,7 @@ ChangeHandleTableViewCell {
     backgroundColor: clear;
 
     prefixLabel: @{
-        font: $font-normal-medium;
+        font: $font-normal-semibold;
         textColor: $color-text-dimmed-dark;
     }
 
@@ -1465,10 +1566,10 @@ ChangeHandleTableViewCell {
 
 FingerprintTableViewCell{
     fingerprintLabelFont: $font-normal-light;
-    fingerprintLabelBoldFont: $font-normal-medium;
+    fingerprintLabelBoldFont: $font-normal-semibold;
     
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: white;
     }
     fingerprintLabel: @{
@@ -1479,11 +1580,11 @@ FingerprintTableViewCell{
 
 ClientTableViewCell {
     nameLabel: @{
-        font: $font-normal-medium;
+        font: $font-normal-semibold;
         textColor: white;
     }
     labelLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: white;
     }
     activationLabel: @{
@@ -1494,7 +1595,7 @@ ClientTableViewCell {
         font: $font-small;
     }
     fingerprintLabelFont: $font-small-light;
-    fingerprintLabelBoldFont: $font-small-medium;
+    fingerprintLabelBoldFont: $font-small-semibold;
     fingerprintTextColor: white
 }
 
@@ -1532,7 +1633,7 @@ ReactionCell {
     }
 
     usernameLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: $color-text-dimmed;
     }
 }
@@ -1541,10 +1642,10 @@ ReactionCell {
 
 TokenField.share {
     textView: @{
-        placeholderFont: $font-medium-medium;
+        placeholderFont: $font-medium-semibold;
         placeholderTextContainerInset: 0 0;
     }
-    tokenTitleFont: $font-medium-medium;
+    tokenTitleFont: $font-medium-semibold;
     textColor: white;
     tokenTitleColor: black;
     tokenBackgroundColor: white;
@@ -1562,27 +1663,27 @@ CollectionsView {
 
 NoResultsView {
     label: @{
-        font: $font-medium-medium;
+        font: $font-medium-semibold;
     }
 }
 
 FeedbackOverlayView {
     backgroundColor: $color-background;
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: $color-text-foreground;
     }
 }
 
 CollectionHeaderView {
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: $color-text-foreground;
     }
 
     actionButton: @{
         titleLabel: @{
-            font: $font-small-medium;
+            font: $font-small-semibold;
         }
         titleColor[state:normal]: $color-accent-blue;
     }
@@ -1590,7 +1691,7 @@ CollectionHeaderView {
 
 CollectionCellHeader {
     nameLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
     
     dateLabel: @{
@@ -1601,7 +1702,7 @@ CollectionCellHeader {
 
 TextSearchResultFooter {
     nameLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
     
     dateLabel: @{
@@ -1612,7 +1713,7 @@ TextSearchResultFooter {
 
 TwoLineTitleView {
     titleLabel: @{
-        font: $font-small-medium;
+        font: $font-small-semibold;
         textColor: $color-text-foreground;
     }
     
@@ -1656,6 +1757,9 @@ TextSearchResultCell {
     contentView: @{
         backgroundColor: $color-background;
     }
+    resultCountView: @{
+        backgroundColor: $color-graphite-light;
+    }
 }
 
 SearchResultLabel {
@@ -1663,11 +1767,19 @@ SearchResultLabel {
     textColor: $color-text-foreground;
 }
 
-SearchResultCountBadge {
+RoundedTextBadge {
     textLabel: @{
         textColor: $color-background;
-        font: $font-small-medium;
+        font: $font-small-semibold;
     }
-    
-    backgroundColor: $color-graphite-light;
+}
+
+// Example code
+
+TestView {
+    backgroundColor: green;
+    testLabel: @{
+        textColor: $color-text-foreground;
+        font: $font-small-semibold;
+    }
 }

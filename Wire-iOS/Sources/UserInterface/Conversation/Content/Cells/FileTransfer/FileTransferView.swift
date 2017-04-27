@@ -29,6 +29,8 @@ final public class FileTransferView: UIView, TransferView {
     public let topLabel = UILabel()
     public let bottomLabel = UILabel()
     public let fileTypeIconView = UIImageView()
+    public let fileEyeView = UIImageView()
+
     private let loadingView = ThreeDotsLoadingView()
     public let actionButton = IconButton()
     
@@ -50,6 +52,8 @@ final public class FileTransferView: UIView, TransferView {
         
         self.fileTypeIconView.accessibilityLabel = "FileTransferFileTypeIcon"
         
+        self.fileEyeView.image = UIImage(for: .eye, iconSize: .messageStatus, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        
         self.actionButton.contentMode = .scaleAspectFit
         self.actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.actionButton.accessibilityLabel = "FileTransferActionButton"
@@ -60,7 +64,7 @@ final public class FileTransferView: UIView, TransferView {
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         self.loadingView.isHidden = true
         
-        self.allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView]
+        self.allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
         self.allViews.forEach(self.addSubview)
         
         CASStyler.default().styleItem(self)
@@ -68,7 +72,7 @@ final public class FileTransferView: UIView, TransferView {
         self.createConstraints()
         
         var currentElements = self.accessibilityElements ?? []
-        currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, actionButton])
+        currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton])
         self.accessibilityElements = currentElements
         
         setNeedsLayout()
@@ -99,6 +103,11 @@ final public class FileTransferView: UIView, TransferView {
             fileTypeIconView.width == 32
             fileTypeIconView.height == 32
             fileTypeIconView.center == actionButton.center
+        }
+        
+        constrain(self.fileTypeIconView, self.fileEyeView) { fileTypeIconView, fileEyeView in
+            fileEyeView.centerX == fileTypeIconView.centerX
+            fileEyeView.centerY == fileTypeIconView.centerY + 3
         }
         
         constrain(self.progressView, self.actionButton) { progressView, actionButton in
@@ -148,7 +157,7 @@ final public class FileTransferView: UIView, TransferView {
         }
         else {
             self.fileTypeIconView.contentMode = .center
-            self.fileTypeIconView.image = UIImage(for: .document, iconSize: .tiny, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+            self.fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
         }
         
         self.actionButton.isUserInteractionEnabled = true
@@ -212,7 +221,7 @@ final public class FileTransferView: UIView, TransferView {
             visibleViews.append(progressView)
             self.progressView.setProgress(message.fileMessageData!.progress, animated: !isInitial)
         case .uploaded, .downloaded:
-            visibleViews.append(fileTypeIconView)
+            visibleViews.append(contentsOf: [fileTypeIconView, fileEyeView])
         default:
             break
         }

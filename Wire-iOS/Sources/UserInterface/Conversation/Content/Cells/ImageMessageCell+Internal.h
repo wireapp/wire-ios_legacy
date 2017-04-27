@@ -18,6 +18,7 @@
 
 
 #import "ImageMessageCell.h"
+@import WireExtensionComponents;
 
 @interface ImageMessageCell (Interal)
 

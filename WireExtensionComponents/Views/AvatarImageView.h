@@ -26,8 +26,7 @@
 @property (nonatomic, readonly) UIView *containerView;
 @property (nonatomic, readonly) UIImageView *imageView;
 @property (nonatomic, readonly) UILabel *initials;
-
-@property (nonatomic) UIColor *borderColor;
-@property (nonatomic) CGFloat borderWidth;
+@property (nonatomic, getter=isCircular) BOOL circular;
+@property (nonatomic) BOOL showInitials;
 
 @end

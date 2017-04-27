@@ -17,8 +17,10 @@
 // 
 
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import WireExtensionComponents;
 #import "ProfileViewController.h"
+
 
 @protocol ZMBareUser;
 
@@ -39,7 +41,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithUser:(id<ZMBareUser>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, weak) id<ProfileDetailsViewControllerDelegate> delegate;
 

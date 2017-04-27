@@ -33,7 +33,7 @@ hash carthage 2>/dev/null || die "Can't find Carthage, please install from https
 hash xcodebuild 2>/dev/null || die "Can't find Xcode, please install from the App Store"
 hash gem 2>/dev/null || die "Can't find Ruby (gem), please install from https://www.ruby-lang.org/en/"
 
-version=`carthage version`
+version=`carthage version | tail -n 1`
 CARTHAGE_VERSION=( ${version//./ } )
 version=`xcodebuild -version | head -n 1 | sed "s/Xcode //"`
 XCODE_VERSION=( ${version//./ } )

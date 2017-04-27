@@ -26,6 +26,8 @@
 NSString *const WireURLScheme = @"wire";
 NSString *const WireURLSchemeInvite = @"wire-invite";
 
+NSString *const WireURLPathTeamJoin = @"team/join";
+
 #pragma mark - Preference keys
 
 NSString *const UserPrefKeyProfilePictureTipCompleted = @"ProfilePictureTipCompleted";

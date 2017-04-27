@@ -21,7 +21,7 @@
 #import <PureLayout/PureLayout.h>
 #import "PeopleInputController.h"
 #import "IconButton.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "WAZUIMagicIOS.h"
 
 @interface SearchViewController ()

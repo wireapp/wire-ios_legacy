@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import zmessaging
+import WireSyncEngine
 import Cartography
 
 @objc open class ReactionsView: UIView {
@@ -42,6 +42,7 @@ import Cartography
             
             for user in likersToDisplay {
                 let userImage = UserImageView(magicPrefix: "content.reaction")
+                userImage.userSession = ZMUserSession.shared()
                 userImage.user = user
                 constrain(userImage) { userImage in
                     userImage.width == userImage.height

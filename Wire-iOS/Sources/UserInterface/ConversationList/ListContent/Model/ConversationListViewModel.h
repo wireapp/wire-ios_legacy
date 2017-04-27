@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 @class ConversationListViewModel;
@@ -41,7 +41,9 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change;
 @end
 
-
+// Placeholder for conversation requests item
+@interface ConversationListConnectRequestsItem : NSObject
+@end
 
 /** 
  * Provides a "view model" for the conversation list.
@@ -55,6 +57,8 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 
 @property (nonatomic, weak) id<ConversationListViewModelDelegate> delegate;
 
+@property (nonatomic) NSArray *spacesObservers;
+
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)sectionIndex;
 - (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;
 
@@ -67,6 +71,7 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 - (BOOL)selectItem:(id)itemToSelect;
 
 - (void)updateSection:(SectionIndex)sectionIndex;
+- (void)updateConversationListAnimated;
 @end
 
 

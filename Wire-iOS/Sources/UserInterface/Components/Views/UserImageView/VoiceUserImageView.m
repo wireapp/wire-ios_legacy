@@ -21,11 +21,12 @@
 
 #import <PureLayout/PureLayout.h>
 
-#import "VoiceIndicatorLayer+MagicInit.h"
 #import "VoiceGainLayer+MagicInit.h"
 #import "WAZUIMagic.h"
 #import "CALayer+EasyAnimation.h"
 #import "UIColor+WAZExtensions.h"
+
+@import WireExtensionComponents;
 
 @interface VoiceUserImageView ()
 
@@ -136,7 +137,7 @@
     self.userConnectingLayer.circleColor = [(id)self.user accentColor];
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     [super setUser:user];
     

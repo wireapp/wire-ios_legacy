@@ -19,12 +19,12 @@
 
 #import "ContrastUserImageView.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 
 @implementation ContrastUserImageView
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     [super setUser:user];
     
@@ -41,7 +41,6 @@
 - (void)applyConstrastColorScheme
 {
     self.initials.textColor = [(id)self.user accentColor];
-    self.borderColor = [UIColor whiteColor];
 }
 
 @end

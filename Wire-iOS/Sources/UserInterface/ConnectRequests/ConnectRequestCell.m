@@ -24,7 +24,7 @@
 #import <PureLayout/PureLayout.h>
 
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @implementation ConnectRequestCell
 

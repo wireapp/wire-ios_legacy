@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import Classy
 
 extension MessagePresenter {
     func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder) -> UIViewController {
@@ -38,7 +39,9 @@ extension MessagePresenter {
             imagesController.modalPresentationStyle = .overFullScreen
         }
         imagesController.modalTransitionStyle = .crossDissolve
-        
+
+        CASStyler.default().styleItem(imagesController)
+
         let closeButton = CollectionsView.closeButton()
         closeButton.addTarget(self, action: #selector(MessagePresenter.closeImagesButtonPressed(_:)), for: .touchUpInside)
         

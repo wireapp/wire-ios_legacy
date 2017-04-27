@@ -17,7 +17,7 @@
 // 
 
 
-import ZMCDataModel
+import WireDataModel
 import Cartography
 import MapKit
 import CoreLocation

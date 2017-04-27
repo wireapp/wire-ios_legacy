@@ -19,6 +19,7 @@
 
 #import "ConversationContentViewController+Private.h"
 #import "ConversationContentViewController+Scrolling.h"
+#import "ConversationContentViewController+PinchZoom.h"
 
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
@@ -27,21 +28,18 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@import zmessaging;
+@import WireSyncEngine;
 @import WireExtensionComponents;
 @import AVKit;
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "VoiceChannelV2+Additions.h"
-#import "Message.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 
 // ui
-#import "FullscreenImageViewController.h"
 #import "ZClientViewController.h"
 #import "UIView+MTAnimation.h"
-#import "GroupConversationHeader.h"
 #import "NotificationWindowRootViewController.h"
 
 // helpers
@@ -94,7 +92,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
-@property (nonatomic, strong) NSMutableDictionary *cellLayoutPropertiesCache;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) BOOL conversationLoadStopwatchFired;
@@ -122,7 +119,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
         self.messagePresenter.analyticsTracker = self.analyticsTracker;
-        self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self];
     }
     
     return self;
@@ -134,12 +130,19 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
     }
+    
+    [self.pinchImageView removeFromSuperview];
+    [self.dimView removeFromSuperview];
 }
 
 - (void)loadView
 {
+    [super loadView];
+    
     self.tableView = [[UpsideDownTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    self.view = self.tableView;
+    [self.view addSubview:self.tableView];
+    
+    [self.tableView autoPinEdgesToSuperviewEdges];
 }
 
 - (void)viewDidLoad
@@ -171,6 +174,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [UIView performWithoutAnimation:^{
         self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
     }];
+    
+    UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
+    pinchImageGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:pinchImageGestureRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -206,6 +213,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         
         [self registerForPreviewingWithDelegate:self sourceView:self.view.superview];
     }
+
+    [self scrollToLastUnreadMessageIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -214,10 +223,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)scrollToLastUnreadMessageIfNeeded
 {
-    [super viewDidLayoutSubviews];
-    
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];
@@ -340,7 +347,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
             case MessageActionDelete:
             {
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^{
+                self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
+                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^(BOOL deleted) {
+                    if (self.presentedViewController && deleted) {
+                        [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+                    }
                     cell.beingEdited = NO;
                 }];
             }
@@ -443,8 +454,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
         }
     };
-    
-    if (self.messagePresenter.modalTargetController.presentedViewController != nil) {
+
+    BOOL shouldDismissModal = actionId != MessageActionDelete && actionId != MessageActionCopy;
+
+    if (self.messagePresenter.modalTargetController.presentedViewController != nil && shouldDismissModal) {
         [self.messagePresenter.modalTargetController dismissViewControllerAnimated:YES completion:^{
             action();
         }];
@@ -604,14 +617,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)activeMediaPlayerChanged:(NSDictionary *)change
 {
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
-    
-    if (mediaPlayingMessage && [mediaPlayingMessage.conversation isEqual:self.conversation] && ! [self displaysMessage:mediaPlayingMessage]) {
-        [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:nil];
-    } else {
-        [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:nil];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+        id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
+        
+        if (mediaPlayingMessage && [mediaPlayingMessage.conversation isEqual:self.conversation] && ! [self displaysMessage:mediaPlayingMessage]) {
+            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:nil];
+        } else {
+            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:nil];
+        }
+    });
 }
 
 @end
@@ -721,7 +736,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
+    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    BOOL isFile = [Message isFileTransferMessage:message] &&
+                 ![Message isVideoMessage:message] &&
+                 ![Message isAudioMessage:message];
+
+    if (isFile) {
+        [self wantsToPerformAction:MessageActionPresent
+                        forMessage:message
+                              cell:[tableView cellForRowAtIndexPath:indexPath]];
+    }
     // Make table view to update cells with animation
     [tableView beginUpdates];
     [tableView endUpdates];
@@ -927,7 +952,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
     ConversationCell *cell = [self cellForMessage:message];
-    
     [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 

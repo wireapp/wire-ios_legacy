@@ -17,50 +17,53 @@
 //
 
 import Foundation
-import zmessaging
+import WireSyncEngine
 import Cartography
 
-extension ZMConversation: ShareDestination {
-}
 
-// Should be called inside ZMUserSession.shared().performChanges block
-func forEachNonEphemeral(in conversations: [ZMConversation], callback: (ZMConversation)->()) {
-    conversations.forEach {
-        let timeout = $0.destructionTimeout
-        $0.updateMessageDestructionTimeout(timeout: .none)
-        
-        callback($0)
-        
-        $0.updateMessageDestructionTimeout(timeout: timeout)
+extension ZMConversation: ShareDestination {}
+
+
+extension Array where Element == ZMConversation {
+
+    // Should be called inside ZMUserSession.shared().performChanges block
+    func forEachNonEphemeral(_ block: (ZMConversation) -> Void) {
+        forEach {
+            let timeout = $0.destructionTimeout
+            $0.updateMessageDestructionTimeout(timeout: .none)
+            block($0)
+            $0.updateMessageDestructionTimeout(timeout: timeout)
+        }
     }
 }
+
 
 func forward(_ message: ZMMessage, to: [AnyObject]) {
-    
+
     let conversations = to as! [ZMConversation]
     
-    if Message.isTextMessage(message) {
+    if message.isText {
         ZMUserSession.shared()?.performChanges {
-            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
+            conversations.forEachNonEphemeral { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
         }
     }
-    else if Message.isImageMessage(message) {
+    else if message.isImage {
         ZMUserSession.shared()?.performChanges {
-            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
+            conversations.forEachNonEphemeral { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
         }
     }
-    else if Message.isVideoMessage(message) || Message.isAudioMessage(message) || Message.isFileTransferMessage(message) {
-            FileMetaDataGenerator.metadataForFileAtURL(message.fileMessageData!.fileURL, UTI: message.fileMessageData!.fileURL.UTI(), name: message.fileMessageData!.fileURL.lastPathComponent) { fileMetadata in
-
-                ZMUserSession.shared()?.performChanges {
-                        forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: fileMetadata) }
-                    }
+    else if message.isVideo || message.isAudio || message.isFile {
+        let url  = message.fileMessageData!.fileURL!
+        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
+            ZMUserSession.shared()?.performChanges {
+                conversations.forEachNonEphemeral { _ = $0.appendMessage(with: fileMetadata) }
             }
+        }
     }
-    else if Message.isLocationMessage(message) {
+    else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
         ZMUserSession.shared()?.performChanges {
-            forEachNonEphemeral(in: conversations) { _ = $0.appendMessage(with: locationData) }
+            conversations.forEachNonEphemeral { _ = $0.appendMessage(with: locationData) }
         }
     }
     else {
@@ -76,10 +79,10 @@ extension ZMMessage: Shareable {
     
     public typealias I = ZMConversation
     
-    public func previewView() -> UIView {
+    public func previewView() -> UIView? {
         let cell: ConversationCell
 
-        if Message.isTextMessage(self) {
+        if isText {
             let textMessageCell = TextMessageCell(style: .default, reuseIdentifier: "")
             textMessageCell.smallLinkAttachments = true
             textMessageCell.contentLayoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -92,28 +95,28 @@ extension ZMMessage: Shareable {
             textMessageCell.messageTextView.textContainer.maximumNumberOfLines = 2
             cell = textMessageCell
         }
-        else if Message.isImageMessage(self) {
+        else if isImage {
             let imageMessageCell = ImageMessageCell(style: .default, reuseIdentifier: "")
             imageMessageCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             imageMessageCell.autoStretchVertically = false
             imageMessageCell.defaultLayoutMargins = .zero
             cell = imageMessageCell
         }
-        else if Message.isVideoMessage(self) {
+        else if isVideo {
             cell = VideoMessageCell(style: .default, reuseIdentifier: "")
             cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
-        else if Message.isAudioMessage(self) {
+        else if isAudio {
             cell = AudioMessageCell(style: .default, reuseIdentifier: "")
             cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
-        else if Message.isLocationMessage(self) {
+        else if isLocation {
             let locationCell = LocationMessageCell(style: .default, reuseIdentifier: "")
             locationCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             locationCell.containerHeightConstraint.constant = 120
             cell = locationCell
         }
-        else if Message.isFileTransferMessage(self) {
+        else if isFile {
             cell = FileTransferCell(style: .default, reuseIdentifier: "")
             cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
@@ -136,7 +139,7 @@ extension ZMMessage: Shareable {
             contentView.edges == cell.edges
         }
 
-        cell.toolboxView.isHidden = true
+        cell.toolboxView.removeFromSuperview()
         cell.likeButton.isHidden = true
         cell.isUserInteractionEnabled = false
         cell.setSelected(false, animated: false)
@@ -146,7 +149,7 @@ extension ZMMessage: Shareable {
 }
 
 extension ZMConversationList {
-    func shareableConversations(excluding: ZMConversation) -> [ZMConversation] {
+    func shareableConversations(excluding: ZMConversation? = nil) -> [ZMConversation] {
         return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&
@@ -164,11 +167,8 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         
         let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
-        
-        let displayInPopover: Bool = self.traitCollection.horizontalSizeClass == .regular &&
-                                     self.traitCollection.horizontalSizeClass == .regular
                 
-        if displayInPopover {
+        if traitCollection.horizontalSizeClass == .regular {
             shareViewController.showPreview = false
         }
         
@@ -186,7 +186,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         shareViewController.presentationController?.delegate = self
         
-        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>) -> () in
+        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> () in
             shareController.presentingViewController?.dismiss(animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
@@ -197,10 +197,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
     }
     
     public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        let displayInPopover = self.traitCollection.horizontalSizeClass == .regular &&
-                               self.traitCollection.horizontalSizeClass == .regular
-        
-        return displayInPopover ? .popover : .overFullScreen
+        return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
     }
 }
 

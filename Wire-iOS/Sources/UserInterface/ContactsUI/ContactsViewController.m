@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import zmessaging;
+@import WireSyncEngine;
 
 #import <PureLayout/PureLayout.h>
 #import <Classy/UIViewController+CASAdditions.h>
@@ -35,7 +35,7 @@
 #import "ContactsEmptyResultView.h"
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIViewController+WR_Additions.h"
 

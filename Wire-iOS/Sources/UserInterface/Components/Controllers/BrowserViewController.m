@@ -35,6 +35,7 @@
 @property (nonatomic) BrowserBarView *browserBarView;
 @property (nonatomic) NSObject *estimatedProgressObserver;
 @property (nonatomic) NSObject *titleObserver;
+@property (nonatomic) BOOL useWithStatusBar;
 
 @end
 
@@ -42,10 +43,16 @@
 
 - (instancetype)initWithURL:(NSURL *)URL
 {
+    return [self initWithURL:URL forUseWithStatusBar:NO];
+}
+
+- (instancetype)initWithURL:(NSURL *)URL forUseWithStatusBar:(BOOL)statusBar
+{
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
         _URL = URL;
+        _useWithStatusBar = statusBar;
     }
     
     return self;
@@ -64,7 +71,8 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
     [self.view addSubview:self.webView];
     
-    self.browserBarView = [[BrowserBarView alloc] initForAutoLayout];
+    self.browserBarView = [[BrowserBarView alloc] initForUseWithStatusBar:self.useWithStatusBar];
+    self.browserBarView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.browserBarView];
     
     [self.browserBarView.shareButton addTarget:self action:@selector(openShareDialog:) forControlEvents:UIControlEventTouchUpInside];

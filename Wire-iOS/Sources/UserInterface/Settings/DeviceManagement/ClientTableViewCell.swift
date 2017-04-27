@@ -26,11 +26,11 @@ import Classy
 
 class ClientTableViewCell: UITableViewCell {
     
-    let nameLabel: UILabel
-    let labelLabel: UILabel
-    let activationLabel: UILabel
-    let fingerprintLabel: UILabel
-    let verifiedLabel: UILabel
+    let nameLabel = UILabel(frame: CGRect.zero)
+    let labelLabel = UILabel(frame: CGRect.zero)
+    let activationLabel = UILabel(frame: CGRect.zero)
+    let fingerprintLabel = UILabel(frame: CGRect.zero)
+    let verifiedLabel = UILabel(frame: CGRect.zero)
     
     var showVerified: Bool = false {
         didSet {
@@ -101,26 +101,17 @@ class ClientTableViewCell: UITableViewCell {
     var wr_editable: Bool
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.nameLabel = UILabel(frame: CGRect.zero)
-        self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.labelLabel = UILabel(frame: CGRect.zero)
-        self.labelLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.activationLabel = UILabel(frame: CGRect.zero)
-        self.activationLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.fingerprintLabel = UILabel(frame: CGRect.zero)
-        self.fingerprintLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.verifiedLabel = UILabel(frame: CGRect.zero)
-        self.verifiedLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         self.wr_editable = true
+        
+        nameLabel.accessibilityIdentifier = "device name"
+        labelLabel.accessibilityIdentifier = "device label"
+        activationLabel.accessibilityIdentifier = "device activation date"
+        fingerprintLabel.accessibilityIdentifier = "device fingerprint"
+        verifiedLabel.accessibilityIdentifier = "device verification status"
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubview(self.nameLabel)
-        self.contentView.addSubview(self.labelLabel)
-        self.contentView.addSubview(self.activationLabel)
-        self.contentView.addSubview(self.fingerprintLabel)
-        self.contentView.addSubview(self.verifiedLabel)
+        [self.nameLabel, self.labelLabel, self.activationLabel, self.fingerprintLabel, self.verifiedLabel].forEach(self.contentView.addSubview)
         
         constrain(self.contentView, self.nameLabel, self.labelLabel) { contentView, nameLabel, labelLabel in
             nameLabel.top == contentView.top + 16

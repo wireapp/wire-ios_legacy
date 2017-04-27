@@ -23,7 +23,6 @@
 @class ZMConversation;
 @class ConversationListContentController;
 @class AggregateArray;
-@class ConversationListInteractiveItem;
 
 
 
@@ -31,10 +30,6 @@
 
 - (void)conversationList:(ConversationListContentController *)controller
    didSelectConversation:(ZMConversation *)conversation
-             focusOnView:(BOOL)focus;
-
-- (void)conversationList:(ConversationListContentController *)controller
-didSelectInteractiveItem:(ConversationListInteractiveItem *)interactiveItem
              focusOnView:(BOOL)focus;
 
 /// This is called after a delete when there is an item to select
@@ -51,11 +46,6 @@ didSelectInteractiveItem:(ConversationListInteractiveItem *)interactiveItem
 @interface ConversationListContentController : UICollectionViewController
 
 @property (nonatomic, weak) id <ConversationListContentDelegate> contentDelegate;
-
-@property (nonatomic, assign) BOOL showingArchived;
-@property (nonatomic, assign) BOOL showingPullToOpenArchive;
-@property (nonatomic, assign) BOOL willShowArchive;
-@property (nonatomic, assign) BOOL enableSubtitles;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;

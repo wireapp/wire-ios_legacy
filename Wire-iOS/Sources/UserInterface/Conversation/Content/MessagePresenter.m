@@ -17,12 +17,10 @@
 //
 
 #import "MessagePresenter.h"
-#import "zmessaging+iOS.h"
-#import "Message.h"
+#import "WireSyncEngine+iOS.h"
 #import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+FileTransfer.h"
-#import "FullscreenImageViewController.h"
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
 
@@ -97,7 +95,7 @@
         return;
     }
     
-    [message startSelfDestructionIfNeeded];
+    (void)[message startSelfDestructionIfNeeded];
     
     [self.analyticsTracker tagOpenedFileWithSize:message.fileMessageData.size
                                    fileExtension:[message.fileMessageData.filename pathExtension]];

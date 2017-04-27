@@ -19,13 +19,12 @@
 
 
 // Data model
-@import zmessaging;
+@import WireSyncEngine;
 @import avs;
 #import "ZMUserSession+iOS.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "Message.h"
 #import "Message+Private.h"
 
 // UI
@@ -41,8 +40,8 @@
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
-#import "ConversationListCollectionViewLayout.h"
 #import "ConversationListCell.h"
+#import "ConversationListItemView.h"
 #import "GapLoadingBar.h"
 #import "WAZUIMagicIOS.h"
 #import "ResizingTextView.h"
@@ -62,6 +61,9 @@
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
 #import "Country.h"
+#import "UserImageView+Magic.h"
+#import "CameraPreviewView.h"
+#import "VoiceChannelCollectionViewLayout.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -74,7 +76,6 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationListContentController.h"
 #import "ConversationListViewModel.h"
-#import "ParticipantsChangedView.h"
 #import "NotificationWindowRootViewController.h"
 #import "VoiceChannelController.h"
 #import "SplitViewController.h"
@@ -93,6 +94,7 @@
 #import "PhoneNumberViewController.h"
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
+#import "UIActivityViewController+Invite.h"
 
 // Helper objects
 #import "PushTransition.h"

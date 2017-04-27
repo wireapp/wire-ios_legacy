@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import zmessaging
+import WireSyncEngine
 import Cartography
 import Classy
 
@@ -117,7 +117,13 @@ public protocol ColorPickerControllerDelegate {
     
     override open var prefersStatusBarHidden: Bool {
         get {
-            return true
+            return false
+        }
+    }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return .lightContent
         }
     }
     

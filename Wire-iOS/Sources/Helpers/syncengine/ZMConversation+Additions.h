@@ -17,7 +17,7 @@
 // 
 
 
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 
 @protocol ZMConversationMessage;
 
@@ -40,8 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable ZMUser *)firstActiveParticipantOtherThanSelf;
 - (nullable ZMUser *)firstActiveCallingParticipantOtherThanSelf;
 
-- (ZMConversation *)addParticipants:(NSSet *)participants;
-- (void)removeParticipants:(NSArray *)participants;
+- (ZMConversation *)addParticipantsOrCreateConversation:(NSSet *)participants;
 
 - (BOOL)shouldDisplayIsTyping;
 

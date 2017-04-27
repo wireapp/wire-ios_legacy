@@ -32,31 +32,41 @@ public final class ConversationTitleView: UIView {
         super.init(frame: CGRect.zero)
         self.isAccessibilityElement = true
         self.accessibilityLabel = "Name"
-        
         createViews(conversation)
         CASStyler.default().styleItem(self)
-        configure(conversation, interactive: interactive)
+
+        // The attachments contain images which break the centering of the text inside the button.
+        // If there is an attachment in the text we need to adjust the constraints accordingly.
+        let hasAttachment = configure(conversation, interactive: interactive)
         frame = titleButton.bounds
-        createConstraints()
+        createConstraints(hasAttachment)
     }
     
     private func createViews(_ conversation: ZMConversation) {
         titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
         addSubview(titleButton)
     }
-    
-    private func configure(_ conversation: ZMConversation, interactive: Bool) {
-        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
+
+    /// Configures the title view for the given conversation
+    /// - parameter conversation: The conversation for which the view should be configured
+    /// - parameter interactive: Whether the view should react to user interaction events
+    /// - return: Whether the view contains any `NSTextAttachments`
+    private func configure(_ conversation: ZMConversation, interactive: Bool) -> Bool {
+        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return false }
         let title = conversation.displayName.uppercased() && font
         let tappable = interactive && conversation.relatedConnectionState != .sent
-        
+        var hasAttachment = false
+
         let titleWithColor: (UIColor) -> NSAttributedString = {
             var attributed = title
+
             if tappable {
                 attributed += "  " + NSAttributedString(attachment: .downArrow(color: $0))
+                hasAttachment = true
             }
             if conversation.securityLevel == .secure {
                 attributed = NSAttributedString(attachment: .verifiedShield()) + "  " + attributed
+                hasAttachment = true
             }
             return attributed && $0
         }
@@ -68,6 +78,8 @@ public final class ConversationTitleView: UIView {
         updateAccessibilityValue(conversation)
         setNeedsLayout()
         layoutIfNeeded()
+
+        return hasAttachment
     }
     
     private func updateAccessibilityValue(_ conversation: ZMConversation) {
@@ -75,9 +87,12 @@ public final class ConversationTitleView: UIView {
         self.accessibilityValue = conversation.displayName.uppercased() + verifiedString
     }
     
-    private func createConstraints() {
+    private func createConstraints(_ hasAttachment: Bool) {
         constrain(self, titleButton) { view, button in
-            button.edges == view.edges
+            button.leading == view.leading
+            button.trailing == view.trailing
+            button.top == view.top
+            button.bottom == view.bottom - (hasAttachment ? 4 : 0)
         }
     }
     

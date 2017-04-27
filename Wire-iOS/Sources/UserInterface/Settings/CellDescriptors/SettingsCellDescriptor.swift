@@ -208,8 +208,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.notifications.chat_alerts.toggle".localized
     case .notificationContentVisible:
         return "self.settings.notifications.push_notification.toogle".localized
-    case .markdown:
-        return "Markdown support"
+    case .disableMarkdown:
+        return "Disable Markdown support"
         
     case .skipFirstTimeUseChecks:
         return "Skip first time use checks"
@@ -256,8 +256,6 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.link_options.maps.title".localized
     case .browserOpeningOption:
         return "self.settings.link_options.browser.title".localized
-    case .sendV3Assets:
-        return "Send assets using the v3 endpoint"
     case .callingProtocolStrategy:
         return "Calling protocol"
     case .enableBatchCollections:
@@ -266,6 +264,10 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.privacy_security.lock_app".localized
     case .lockAppLastDate:
         return "Last app lock date"
+    case .callingConstantBitRate:
+        return "self.settings.vbr.title".localized
+    case .workspaceName:
+        return "self.settings.workspace.title".localized
     }
 }
 

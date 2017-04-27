@@ -24,9 +24,9 @@
 #import "UserImageView.h"
 #import "WAZUIMagicIOS.h"
 #import "ZMUser+Additions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-
+#import "UserImageView+Magic.h"
 
 
 @interface BadgeUserImageView () <ZMUserObserver>
@@ -78,7 +78,7 @@
     [super updateConstraints];
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     [super setUser:user];
     

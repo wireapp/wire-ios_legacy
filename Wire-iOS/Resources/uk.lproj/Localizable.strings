@@ -73,10 +73,13 @@
 "contacts_ui.title" = "Запросити людей";
 
 "contacts_ui.no_contact.title" = "Немає активних розмов\n";
-"contacts_ui.no_contact.message" = "Натисніть 'КОНТАКТИ', щоб почати розмову";
+"contacts_ui.no_contact.message" = "Доторкніться до аватарки, щоб почати розмову";
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Приєднатись";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "люди";
+"bottom_bar.plus_button.title" = "Додати";
 
 
 // Profile Header View
@@ -97,11 +100,8 @@
 "peoplepicker.hide_search_result_progress" = "Приховування…";
 
 "send_invitation.subject" = "Додай мене в Wire";
-"send_invitation.text" = "Я в Wire. Шукайте мене як %@ або відвідайте get.wire.com.";
+"send_invitation.text" = "Я в Wire. Шукайте мене як %@ або відвідайте get.wire.com";
 "send_invitation_no_email.text" = "Я уже в Wire. Відвідайте get.wire.com, щоб додати мене.";
-
-"send_personal_invitation.text" = "Я уже в Wire, порозмовляємо там: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -117,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Розмови";
 "list.archived_conversations" = "АРХІВ";
 "list.archived_conversations_close" = "Закрити архів";
+
+"conversation.status.call" = "Активний дзвінок";
+"conversation.status.typing" = "Набирається повідомлення…";
+"conversation.status.typing.group" = "%@: набирає повідомлення…";
+"conversation.status.silenced" = "Режим тиші увімк.";
+"conversation.status.blocked" = "Заблокований(-на)";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Поділився(-лась) посиланням";
+"conversation.status.message.image" = "Поділився(-лась) картинкою";
+"conversation.status.message.location" = "Поділився(-лась) розташуванням";
+"conversation.status.message.audio" = "Поділився(-лась) аудіоповідомленням";
+"conversation.status.message.video" = "Поділився(-лась) відео";
+"conversation.status.message.file" = "Поділився(-лась) файлом";
+"conversation.status.message.knock" = "Надіслав(-ла) пінг";
+"conversation.status.message.missedcall" = "Пропущений дзвінок";
+"conversation.status.message.ephemeral" = "Тимчасове повідомлення";
+
+"conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
+"conversation.status.you" = "Ви";
+"conversation.status.added_multiple" = "Додані нові учасники";
+"conversation.status.you_was_added" = "%@ додав(-ла) вас";
+"conversation.status.added_users" = "%@ додав(-ла) %@";
+"conversation.status.removed_multiple" = "Учасники видалені";
+"conversation.status.you_were_removed" = "Вас видалили";
+"conversation.status.you_left" = "Ви вийшли";
+"conversation.status.started_conversation" = "%@ почав(-ла) розмову";
+"conversation.status.removed_users" = "%@ видалив(-ла) %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Розмова";
+"compose.message.title" = "Повідомлення";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,8 +230,15 @@
 "content.system.other_removed_other" = "%@ видалив(-ла) %@";
 "content.system.other_removed_you" = "%@ видалив(-ла) вас";
 "content.system.you_removed_other" = "Ви видалили %@";
-"content.system.other_renamed_conv" = "%@ перейменував(-ла) розмову";
-"content.system.you_renamed_conv" = "Ви перейменували розмову";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ почав(-ла) розмову з %@";
+"content.system.conversation.added" = "%@ додав(-ла) %@";
+"content.system.conversation.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.left" = "%@ вийшов(-ла)";
+"content.system.conversation.you" = "Ви";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
 "content.system.pending_message_timestamp" = "Надсилання…";
@@ -204,6 +246,7 @@
 "content.system.message_delivered_timestamp" = "Доставлене";
 "content.system.failedtosend_message_timestamp" = "Помилка надсилання.";
 "content.system.failedtosend_message_timestamp_resend" = "Надіслати ще раз";
+"content.system.failedtosend_message_timestamp_delete" = "Видалити";
 "content.system.like_tooltip" = "Торкніться, якщо сподобалося";
 "content.system.deleted_message_prefix_timestamp" = "Видалено %@";
 "content.system.edited_message_prefix_timestamp" = "Відредаговано %@";
@@ -215,17 +258,28 @@
 "content.system.you_started" = "Ви";
 "content.system.this_device" = "цей пристрій";
 
+"content.system.call.you" = "Ви";
+"content.system.call.called" = "%@ дзвонив(-ла)";
+"content.system.call.called-you" = "%@ дзвонив(-ла)";
+
+"content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
+"content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";
+"content.system.renamed_conv.title.you" = "Ви";
+
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
 "content.system.new_device" = "новий пристрій";
 "content.system.started_using" = "почали використовувати";
 "content.system.is_verified" = "Всі ідентифікатори були верифіковані";
 
-"content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule's devices"
-"content.system.your_devices" = "ваші пристрої";
-"content.system.other_devices" = "пристрої, які належать %@";
+"content.system.new_users" = "Приєднався новий учасник.";
+"content.system.verify_devices" = "Верифікувати пристрої";
 
-"content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом періоду часу. Деякі повідомлення можуть не відображатися тут.";
+"content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule’s devices"
+"content.system.your_devices" = "ваші пристрої";
+"content.system.other_devices" = "Пристрої, що належать %@";
+
+"content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом певного часу. Деякі повідомлення можуть не відображатися тут.";
 "content.system.missing_messages.subtitle_start" = "Тим часом";
 
 "content.system.cannot_decrypt" = "Повідомлення від %@ не було отримане.";
@@ -240,8 +294,8 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can't display this message.";
-"content.system.unknown_message.body.link" = "Why is this happening?";
+"content.system.unknown_message.body" = "Ви використовуєте застарілу версію Wire, яка не здатна відобразити це повідомлення.";
+"content.system.unknown_message.body.link" = "Чому так сталося?";
 
 "content.file.uploading" = "Завантаження…";
 "content.file.downloading" = "Скачування…";
@@ -255,21 +309,23 @@
 "content.image.save_image" = "Зберегти";
 
 "content.message.delete" = "Видалити";
+"content.message.save" = "Зберегти";
 
 "content.message.like" = "Подобається";
 "content.message.unlike" = "Не подобається";
 "content.message.forward" = "Поділитись";
 "content.message.go_to_conversation" = "Показати в розмові";
 "content.message.forward.to" = "Пошук…";
+"content.message.open" = "Вiдкрити";
 
 "content.reactions_list.likers" = "Сподобалося";
 
 "content.file.too_big" = "Ви можете надсилати файли до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ ВІДПРАВИВ(-ЛА) ПІНГ";
+"content.ping.text" = "%1$@ надіслав(-ла) пінг";
 
 // Current user pinged
-"content.ping.you.text" = "ВИ ВІДПРАВИЛИ ПІНГ";
+"content.ping.text.you" = "Ви";
 
 // Inline Player
 "content.player.unable_to_play" = "НЕМОЖЛИВО ВІДТВОРИТИ ТРЕК";
@@ -290,13 +346,24 @@
 "voice.status.video_not_available" = "Відео вимкнено";
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
+"voice.status.cbr" = "Стала швидкість передачі даних";
 "voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
+"voice.degradation.new_self_device" = "Ви почали використовувати новий пристрій.";
+"voice.degradation.new_user_device" = "%@ почав(-ла) використовувати новий пристрій.";
+"voice.degradation_outgoing.prompt" = "Ви все ще хочете здійснити дзвінок?";
+"voice.degradation_incoming.prompt" = "Ви все ще хочете прийняти дзвінок?";
 "voice.accept_button.title" = "Прийняти";
 "voice.decline_button.title" = "Скасувати";
 "voice.hang_up_button.title" = "Завершити";
 "voice.mute_button.title" = "Вимкнути звук";
 "voice.video_button.title" = "Відео";
 "voice.speaker_button.title" = "Гучномовець";
+"voice.cancel_button.title" = "Скасувати";
+"voice.call_button.title" = "Аудіодзвінок";
+
+"voice.alert.call_in_progress.title" = "Активний дзвінок";
+"voice.alert.call_in_progress.message" = "Ви можете одночасно мати тільки один активний дзвінок";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire необхідний доступ до мікрофона.";
 "voice.alert.microphone_warning.explanation" = "Дозвольте доступ до мікрофона в налаштуваннях Wire.";
@@ -394,7 +461,7 @@
 "profile.devices.fingerprint_message.link" = "Навіщо верифікувати розмови?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Переконайтеся, що цей ідентифікатор співпадає з ідентифікатором на пристрої контакту %@.";
+"profile.devices.detail.verify_message" = "Переконайтеся, що цей ідентифікатор співпадає з ідентифікатором на пристрої користувача %@.";
 "profile.devices.detail.verify_message.link" = "Як це зробити?";
 "profile.devices.detail.show_my_device.title" = "Показати ідентиф. мого пристрою";
 "device.verified" = "Верифікований";
@@ -413,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Налаштування";
+"self.profile" = "Профіль";
 "self.help_center" = "Служба підтримки";
 "self.help_center.support_website" = "Сайт підтримки Wire";
 "self.help_center.contact_support" = "Зверніться до служби підтримки";
@@ -505,16 +573,16 @@
 
 "self.settings.account_section.phone_number.change.title" = "Номер телефону";
 "self.settings.account_section.phone_number.change.save" = "Зберегти";
-"self.settings.account_section.phone_number.change.remove" = "Remove Phone number";
+"self.settings.account_section.phone_number.change.remove" = "Видалити номер телефону";
 
-"self.settings.account_section.phone_number.change.remove.action" = "Remove Phone Number";
+"self.settings.account_section.phone_number.change.remove.action" = "Видалити номер телефону";
 
 "self.settings.account_section.phone_number.change.verify.save" = "Зберегти";
-"self.settings.account_section.phone_number.change.verify.title" = "Verify";
-"self.settings.account_section.phone_number.change.verify.description" = "Enter the verification code we sent to: %@.";
+"self.settings.account_section.phone_number.change.verify.title" = "Верифікувати";
+"self.settings.account_section.phone_number.change.verify.description" = "Введіть код, який ми вислали на %@.";
 
-"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Enter code";
-"self.settings.account_section.phone_number.change.verify.resend" = "Resend Code";
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Введіть код";
+"self.settings.account_section.phone_number.change.verify.resend" = "Надіслати код повторно";
 "self.settings.account_section.phone_number.change.verify.resend_description" = "Код не показується?\nВи можете надіслати запит на новий кожні 30 секунд.";
 
 "self.settings.account_section.phone_number.change.resend.title" = "Код верифікації було надіслано повторно";
@@ -538,6 +606,11 @@
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії iOS. Якщо сервіс iCloud активовано, то історія ваших дзвінків буде доступна для Apple. Перезапустіть Wire, щоб застосувати зміну цієї опції.";
+
+"self.settings.vbr.title" = "Змінний бітрейт";
+"self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
+
+"self.settings.workspace.title" = "Ім'я робочого простору";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
@@ -583,10 +656,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам установити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
-"self.settings.privacy_security.lock_app" = "Заблокувати з використанням Touch ID та коду допуску";
+"self.settings.privacy_security.lock_app" = "Заблокувати кодом допуску";
+"self.settings.privacy_security.lock_app.subtitle" = "Блокувати Wire після 10 секунд в фоновому режимі. Розблокування можливе за допомгою Touch ID або коду допуску.";
 "self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Будь ласка, розблокуйте Wire за допомогою Touch ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.description" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
@@ -619,7 +693,7 @@
 "self.settings.password_reset_menu.title" = "Скинути пароль";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Запросити друзів";
+"self.settings.invite_friends.title" = "Запросити людей";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +840,7 @@
 "error.user.phone_code_too_many" = "Ми вже надіслали SMS з кодом. Щоб отримати новий код, натисніть \"Надіслати ще раз\" через 10 хвилин.";
 "error.user.registration_unknown_error" = "Щось пішло не так. Будь ласка спробуйте ще раз.";
 "error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
-"error.user.last_identity_cant_be_deleted" = "Для вашого акаунту повинні бути зареєстровані як email-адреса, так і номер телефону, щоб можна було видалити що-небудь";
+"error.user.last_identity_cant_be_deleted" = "Необхідна або email-адреса або номер телефону.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -828,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Шукайте текстові повідомлення";
 "collections.search.no_items" = "Нічого не знайдено";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Напишіть текст повідомлення";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Підтвердити видалення";
+"compose.drafts.compose.delete.confirm.message" = "Ця дія назавжди видалить дану чернетку без можливості відновлення.";
+"compose.drafts.compose.delete.confirm.action.title" = "Видалити";

@@ -131,7 +131,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
-        inputBar.inputBarState = InputBarState.writing(ephemeral: true)
+        inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
         inputBar.updateEphemeralState()
         CASStyler.default().styleItem(inputBar)
         
@@ -143,7 +143,7 @@ class InputBarTests: ZMSnapshotTestCase {
         let sut = InputBar(buttons: buttons())
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
-        sut.updateInputBar(withState: .editing(originalText: "This text is being edited"), animated: false)
+        sut.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
         sut.updateFakeCursorVisibility()
         CASStyler.default().styleItem(sut)
         verifyInAllPhoneWidths(view: sut)
@@ -153,7 +153,7 @@ class InputBarTests: ZMSnapshotTestCase {
         let sut = InputBar(buttons: buttons())
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
-        sut.updateInputBar(withState: .editing(originalText: longText), animated: false)
+        sut.setInputBarState(.editing(originalText: longText), animated: false)
 
         sut.updateFakeCursorVisibility()
         CASStyler.default().styleItem(sut)

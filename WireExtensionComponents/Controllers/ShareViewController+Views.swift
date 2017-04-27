@@ -22,14 +22,11 @@ import Cartography
 
 extension ShareViewController {
     internal func createViews() {
-        let effect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        
-        self.blurView = UIVisualEffectView(effect: effect)
         
         if self.showPreview {
             let shareablePreviewView = self.shareable.previewView()
-            shareablePreviewView.layer.cornerRadius = 4
-            shareablePreviewView.clipsToBounds = true
+            shareablePreviewView?.layer.cornerRadius = 4
+            shareablePreviewView?.clipsToBounds = true
             self.shareablePreviewView = shareablePreviewView
             
             let shareablePreviewWrapper = UIView()
@@ -39,11 +36,10 @@ extension ShareViewController {
             shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
             shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
             
-            shareablePreviewWrapper.addSubview(shareablePreviewView)
+            shareablePreviewWrapper.addSubview(shareablePreviewView!)
             self.shareablePreviewWrapper = shareablePreviewWrapper
         }
-        
-        self.tokenField = TokenField()
+
         self.tokenField.cas_styleClass = "share"
         self.tokenField.textColor = .white
         self.tokenField.layer.cornerRadius = 4
@@ -55,13 +51,9 @@ extension ShareViewController {
         self.tokenField.textView.keyboardAppearance = .dark
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 48, bottom: 6, right: 12)
         self.tokenField.delegate = self
-        
-        self.searchIcon = UIImageView()
+
         self.searchIcon.image = UIImage(for: .search, iconSize: .small, color: .white)
-        
-        self.topSeparatorView = OverflowSeparatorView()
-        
-        self.destinationsTableView = UITableView()
+
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         self.destinationsTableView.separatorStyle = .none
@@ -70,13 +62,11 @@ extension ShareViewController {
         self.destinationsTableView.keyboardDismissMode = .interactive
         self.destinationsTableView.delegate = self
         self.destinationsTableView.dataSource = self
-        
-        self.closeButton = IconButton.iconButtonDefaultLight()
+
         self.closeButton.accessibilityLabel = "close"
         self.closeButton.setIcon(.X, with: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
-        
-        self.sendButton = IconButton.iconButtonDefaultDark()
+
         self.sendButton.accessibilityLabel = "send"
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, with: .tiny, for: .normal)
@@ -86,8 +76,7 @@ extension ShareViewController {
         self.sendButton.setBorderColor(.clear, for: .disabled)
         self.sendButton.circular = true
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
-        
-        self.bottomSeparatorLine = UIView()
+
         self.bottomSeparatorLine.cas_styleClass = "separator"
         
         [self.blurView, self.containerView].forEach(self.view.addSubview)
@@ -134,7 +123,7 @@ extension ShareViewController {
             topSeparatorView.left == view.left
             topSeparatorView.right == view.right
             topSeparatorView.top == destinationsTableView.top
-            topSeparatorView.height == 0.5
+            topSeparatorView.height == .hairline
         }
         
         
@@ -151,7 +140,7 @@ extension ShareViewController {
             
             bottomSeparatorLine.left == view.left
             bottomSeparatorLine.right == view.right
-            bottomSeparatorLine.height == 0.5
+            bottomSeparatorLine.height == .hairline
         }
         
         constrain(self.containerView, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in

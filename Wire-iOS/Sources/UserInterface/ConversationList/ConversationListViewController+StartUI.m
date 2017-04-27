@@ -21,7 +21,7 @@
 #import "Analytics+iOS.h"
 #import "StartUIView.h"
 #import "StartUIViewController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"
 #import "ZClientViewController.h"
 
@@ -204,7 +204,6 @@
                     conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                          withParticipants:self.startUISelectedUsers.allObjects];
                 } completionHandler:^{
-                    
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [[ZMUserSession sharedSession] enqueueChanges:^{
                             [conversation appendMessageWithImageData:imageData];

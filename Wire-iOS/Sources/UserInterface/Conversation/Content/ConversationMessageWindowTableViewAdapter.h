@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @class AnalyticsTracker;
 @protocol ConversationCellDelegate;
@@ -30,7 +30,7 @@
 @property (nonatomic) id<ZMConversationMessage> selectedMessage;
 @property (nonatomic) id<ZMConversationMessage> editingMessage;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
-@property (nonatomic) id<ConversationCellDelegate> conversationCellDelegate;
+@property (nonatomic, weak) id<ConversationCellDelegate> conversationCellDelegate;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;

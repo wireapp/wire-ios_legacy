@@ -19,7 +19,7 @@
 
 #import "AnalyticsVoiceChannelTracker.h"
 #import "Analytics.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "DeveloperMenuState.h"
 
 

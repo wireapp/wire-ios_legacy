@@ -19,55 +19,18 @@
 import Foundation
 import Cartography
 
-internal class SearchResultCountBadge: UIView {
-    public var textLabel = UILabel()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.addSubview(textLabel)
-        
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        textLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        textLabel.textAlignment = .center
-        
-        constrain(self, textLabel) { selfView, textLabel in
-            textLabel.leading == selfView.leading + 4
-            textLabel.trailing == selfView.trailing - 4
-            textLabel.top == selfView.top + 2
-            textLabel.bottom == selfView.bottom - 2
-            
-            selfView.width >= selfView.height
-        }
-        
-        self.layer.masksToBounds = true
-        updateCornerRadius()
-    }
-    
-    func updateCornerRadius() {
-        self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updateCornerRadius()
-    }
-}
-
 @objc internal class TextSearchResultCell: UITableViewCell, Reusable {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
     fileprivate let userImageView = UserImageView(magicPrefix: "content.author_image")
     fileprivate let separatorView = UIView()
-    fileprivate let resultCountView = SearchResultCountBadge()
+    public let resultCountView = RoundedTextBadge()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.userImageView.userSession = ZMUserSession.shared()
         
         self.accessibilityIdentifier = "search result cell"
         

@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-import ZMCDataModel
+import WireDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
     /// NB: only showInConversation, forward, copy and save actions are forwarded to delegate
@@ -161,7 +161,9 @@ final public class CollectionsViewController: UIViewController {
         super.viewWillAppear(animated)
         self.setupNavigationItem()
         self.flushLayout()
-
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override public func viewWillDisappear(_ animated: Bool) {
@@ -261,10 +263,8 @@ final public class CollectionsViewController: UIViewController {
         return ColorScheme.default().variant == .dark ? .lightContent : .default
     }
     
-    private func updateNoElementsState() {
-        if self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0 {
-            self.contentView.noItemsInLibrary = true
-        }
+    fileprivate func updateNoElementsState() {
+        self.contentView.noItemsInLibrary = self.fetchingDone && self.inOverviewMode && self.totalNumberOfElements() == 0
     }
     
     private func setupNavigationItem() {
@@ -317,7 +317,7 @@ final public class CollectionsViewController: UIViewController {
             self.selectedMessage = message
             Analytics.shared()?.tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
             
-            if Message.isImageMessage(message) {
+            if message.isImage {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
             
                 let backButton = CollectionsView.backButton()
@@ -378,6 +378,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
         }
         
         if self.isViewLoaded {
+            self.updateNoElementsState()
             self.contentView.collectionView.reloadData()
         }
     }
@@ -670,7 +671,7 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
                 message.requestImageDownload()
             }
             
-            if Message.isImageMessage(message), let _ = message.imageMessageData?.imageData {
+            if message.isImage, let _ = message.imageMessageData?.imageData {
                 CollectionImageCell.loadImageThumbnail(for: message, completion: .none)
             }
         }
@@ -687,11 +688,12 @@ extension CollectionsViewController: CollectionCellDelegate {
         case .forward, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         case .delete:
-            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: cell) { [weak self] in
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: cell) { [weak self] deleted in
+                guard deleted else { return }
                 self?.refetchCollection()
             }
         default:
-            if Message.isFileTransferMessage(message) {
+            if message.isFile {
                 self.perform(action, for: message, from: cell)
             }
             else if let linkPreview = message.textMessageData?.linkPreview {
@@ -709,7 +711,7 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
               let fileMessageData = message.fileMessageData,
               fileMessageData.transferState == .downloaded,
               self.messagePresenter.waitingForFileDownload,
-              Message.isFileTransferMessage(message) || Message.isVideoMessage(message) || Message.isAudioMessage(message) else {
+              message.isFile || message.isVideo || message.isAudio else {
             return
         }
         
@@ -720,7 +722,7 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
 
 extension CollectionsViewController: MessageActionResponder {
     public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
-        if Message.isImageMessage(message) {
+        if message.isImage {
             switch action {
             case .like, .forward, .copy, .save, .showInConversation:
                 return true
@@ -738,11 +740,23 @@ extension CollectionsViewController: MessageActionResponder {
         case .forward, .copy, .save, .showInConversation:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         case .delete:
-            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] in
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] deleted in
+                guard deleted else { return }
                 _ = self?.navigationController?.popViewController(animated: true)
                 self?.refetchCollection()
             }
         default: break
+        }
+    }
+}
+
+extension CollectionsViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.navigationController?.interactivePopGestureRecognizer == gestureRecognizer {
+            return self.navigationController?.viewControllers.count > 1
+        }
+        else {
+            return true
         }
     }
 }

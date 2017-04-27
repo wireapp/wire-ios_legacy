@@ -75,8 +75,11 @@
 "contacts_ui.no_contact.title" = "Nessuna conversazione attiva\n";
 "contacts_ui.no_contact.message" = "Tocca contatti per iniziare una conversazione";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Entra";
+
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "persone";
+"bottom_bar.plus_button.title" = "Novità";
 
 
 // Profile Header View
@@ -97,11 +100,8 @@
 "peoplepicker.hide_search_result_progress" = "Nascondendo…";
 
 "send_invitation.subject" = "Connettiti con me su Wire";
-"send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com.";
+"send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com";
 "send_invitation_no_email.text" = "Sono su Wire. Visita get.wire.com per connetterti con me.";
-
-"send_personal_invitation.text" = "Sono su Wire, ci sentiamo lì. get.wire.com";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -117,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversazioni";
 "list.archived_conversations" = "ARCHIVIO";
 "list.archived_conversations_close" = "Chiudi archivio";
+
+"conversation.status.call" = "Chiamata in corso";
+"conversation.status.typing" = "Scrivendo un messaggio…";
+"conversation.status.typing.group" = "%@: scrivendo un messaggio…";
+"conversation.status.silenced" = "Silenzioso";
+"conversation.status.blocked" = "Bloccato";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Condividi un link";
+"conversation.status.message.image" = "Ha condiviso un'immagine";
+"conversation.status.message.location" = "Ha condiviso una posizione";
+"conversation.status.message.audio" = "Ha condiviso un messaggio vocale";
+"conversation.status.message.video" = "Ha condiviso un video";
+"conversation.status.message.file" = "Ha condiviso un file";
+"conversation.status.message.knock" = "Ha fatto un trillo";
+"conversation.status.message.missedcall" = "Chiamata senza risposta";
+"conversation.status.message.ephemeral" = "Messaggio a tempo";
+
+"conversation.status.unsent" = "⚠️ Messaggio non inviato";
+"conversation.status.you" = "Tu";
+"conversation.status.added_multiple" = "Persone aggiunte";
+"conversation.status.you_was_added" = "%@ ti ha aggiunto";
+"conversation.status.added_users" = "%@ ha aggiunto %@";
+"conversation.status.removed_multiple" = "Persone rimosse";
+"conversation.status.you_were_removed" = "Sei stato rimosso";
+"conversation.status.you_left" = "Hai lasciato la conversazione";
+"conversation.status.started_conversation" = "%@ ha iniziato una conversazione";
+"conversation.status.removed_users" = "%@ rimosso %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Conversazione";
+"compose.message.title" = "Messaggio";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,8 +230,15 @@
 "content.system.other_removed_other" = "%@ rimosso %@";
 "content.system.other_removed_you" = "%@ sei stato rimosso";
 "content.system.you_removed_other" = "Sei stato rimosso %@";
-"content.system.other_renamed_conv" = "%@ ha rinominato la conversazione";
-"content.system.you_renamed_conv" = "Hai rinominato la conversazione";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ ha iniziato una conversazione con %@";
+"content.system.conversation.added" = "%@ ha aggiunto %@";
+"content.system.conversation.removed" = "%@ rimosso %@";
+"content.system.conversation.left" = "%@ ha lasciato la conversazione";
+"content.system.conversation.you" = "Tu";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
 "content.system.pending_message_timestamp" = "Invio in corso…";
@@ -204,6 +246,7 @@
 "content.system.message_delivered_timestamp" = "Consegnato";
 "content.system.failedtosend_message_timestamp" = "Invio non riuscito.";
 "content.system.failedtosend_message_timestamp_resend" = "Inviare di nuovo";
+"content.system.failedtosend_message_timestamp_delete" = "Elimina";
 "content.system.like_tooltip" = "Tocca per mettere mi piace";
 "content.system.deleted_message_prefix_timestamp" = "Cancellato il %@";
 "content.system.edited_message_prefix_timestamp" = "Modificato il %@";
@@ -215,13 +258,24 @@
 "content.system.you_started" = "Tu";
 "content.system.this_device" = "questo dispositivo";
 
+"content.system.call.you" = "Tu";
+"content.system.call.called" = "%@ ha chiamato";
+"content.system.call.called-you" = "%@ ha chiamato";
+
+"content.system.renamed_conv.title" = "%@ ha rinominato la conversazione";
+"content.system.renamed_conv.title-you" = "%@ ha rinominato la conversazione";
+"content.system.renamed_conv.title.you" = "Tu";
+
 "content.system.reactivated_device" = "Hai iniziato a utilizzare %@ nuovamente. I messaggi inviati nel frattempo non verranno visualizzato qui.";
 
 "content.system.new_device" = "un nuovo dispositivo";
 "content.system.started_using" = "iniziato ad utilizzare";
 "content.system.is_verified" = "Tutte le impronte digitali sono state verificate";
 
-"content.system.unverified" = "%@ hai tolto la verifica di %@"; // example "You unverified one of Jule's devices"
+"content.system.new_users" = "Un nuovo utente é entrato.";
+"content.system.verify_devices" = "Verifica i dispositivi";
+
+"content.system.unverified" = "%@ hai tolto la verifica di %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "i tuoi dispositivi";
 "content.system.other_devices" = "dispositivi di %@";
 
@@ -255,21 +309,23 @@
 "content.image.save_image" = "Salva";
 
 "content.message.delete" = "Elimina";
+"content.message.save" = "Salva";
 
 "content.message.like" = "Mi piace";
 "content.message.unlike" = "Non mi piace più";
 "content.message.forward" = "Condividi";
 "content.message.go_to_conversation" = "Mostra";
 "content.message.forward.to" = "Ricerca…";
+"content.message.open" = "Apri";
 
 "content.reactions_list.likers" = "Piace a";
 
 "content.file.too_big" = "Puoi inviare file fino a %@";
 // Someone pinged
-"content.ping.text" = "%1$@ HA FATTO UN TRILLO";
+"content.ping.text" = "%1$@ ti ha mandato un trillo";
 
 // Current user pinged
-"content.ping.you.text" = "HAI FATTO UN TRILLO";
+"content.ping.text.you" = "Tu";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSSIBILE RIPRODURRE LA TRACCIA";
@@ -290,13 +346,24 @@
 "voice.status.video_not_available" = "Video spento";
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
+"voice.status.cbr" = "Bit Rate costante";
 "voice.network_error.body" = "È necessario essere online per chiamare. Controlla la connessione e riprova.";
+"voice.degradation.new_self_device" = "Hai iniziato a usare un nuovo dispositivo.";
+"voice.degradation.new_user_device" = "%@ ha iniziato a usare un nuovo dispositivo.";
+"voice.degradation_outgoing.prompt" = "Vuoi effettuare la chiamata?";
+"voice.degradation_incoming.prompt" = "Vuoi accettare la chiamata?";
 "voice.accept_button.title" = "Accetta";
 "voice.decline_button.title" = "Rifiuta";
 "voice.hang_up_button.title" = "Riattacca";
 "voice.mute_button.title" = "Silenzia";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Altoparlante";
+"voice.cancel_button.title" = "Annulla";
+"voice.call_button.title" = "Chiama";
+
+"voice.alert.call_in_progress.title" = "Chiamata in corso";
+"voice.alert.call_in_progress.message" = "Puoi avere solo una chiamata attiva alla volta";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire ha bisogno di accedere al microfono.";
 "voice.alert.microphone_warning.explanation" = "Abilitalo nelle impostazioni di Wire.";
@@ -413,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Impostazioni";
+"self.profile" = "Profilo";
 "self.help_center" = "Supporto";
 "self.help_center.support_website" = "Sito assistenza clienti Wire";
 "self.help_center.contact_support" = "Contatta il supporto";
@@ -539,6 +607,11 @@
 "self.settings.callkit.caption" = "Condividi con iOS";
 "self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
 
+"self.settings.vbr.title" = "Codifica con Bit Rate variabile";
+"self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";
+
+"self.settings.workspace.title" = "Workspace Name";
+
 "self.settings.sound_menu.sounds.wire_call" = "Chiamata Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Messaggio Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Trillo Wire";
@@ -583,10 +656,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Apri impostazioni contatti";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
-"self.settings.privacy_security.lock_app" = "Proteggi con Touch ID & Passcode";
+"self.settings.privacy_security.lock_app" = "Blocca con codice";
+"self.settings.privacy_security.lock_app.subtitle" = "Blocca Wire dopo 10 secondi in background. Sblocca con Touch ID o inserisci il tuo codice di accesso.";
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Per favore sblocca Wire con Touch ID o Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Sblocca Wire con Touch ID o Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
@@ -619,7 +693,7 @@
 "self.settings.password_reset_menu.title" = "Reimposta password";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Invita amici";
+"self.settings.invite_friends.title" = "Invita persone";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +840,7 @@
 "error.user.phone_code_too_many" = "Ti abbiamo già inviato un codice via SMS. Tocca Invia di nuovo dopo 10 minuti per ottenerne un altro.";
 "error.user.registration_unknown_error" = "Qualcosa è andato storto. Si prega di riprovare.";
 "error.user.device_deleted_remotely" = "Sei stato disconnesso da un altro dispositivo.";
-"error.user.last_identity_cant_be_deleted" = "È necessario avere sia un indirizzo e-mail che un numero di telefono per essere in grado di rimuovere uno di essi";
+"error.user.last_identity_cant_be_deleted" = "È richiesto un numero di telefono oppure un'indirizzo email.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -828,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Cerca messaggi";
 "collections.search.no_items" = "Nessun risultato trovato";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Elimina";

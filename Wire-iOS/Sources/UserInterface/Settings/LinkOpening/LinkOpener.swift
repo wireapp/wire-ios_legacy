@@ -20,6 +20,9 @@
 import Foundation
 
 
+private let log = ZMSLog(tag: "link opening")
+
+
 public extension NSURL {
 
     @discardableResult @objc func open() -> Bool {
@@ -30,12 +33,21 @@ public extension NSURL {
 
 public extension URL {
 
+    func hasThirdPartyPreference() -> Bool {
+        if isTweet &&  TweetOpeningOption.storedPreference() != .none {
+            return true
+        }
+
+        return BrowserOpeningOption.storedPreference() != .safari
+    }
+
     @discardableResult func open() -> Bool {
         let opened = openAsTweet() || openAsLink()
         if opened {
             return true
         }
         else {
+            log.debug("Did not open \"\(self)\" in a twitter application or third party browser.")
             if UIApplication.shared.canOpenURL(self) {
                 UIApplication.shared.openURL(self)
                 return true
@@ -53,6 +65,7 @@ protocol LinkOpeningOption {
     var isAvailable: Bool { get }
     var displayString: String { get }
     static var availableOptions: [Self] { get }
+    static func storedPreference() -> Self
 
 }
 

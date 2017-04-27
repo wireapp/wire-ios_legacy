@@ -20,7 +20,7 @@
 #import "AnalyticsConversationListObserver.h"
 
 #import "Analytics.h"
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "ZMUser+Additions.h"
 
 #import "SessionObjectCache.h"
@@ -91,14 +91,9 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
 - (void)probablyReceivedFullConversationList
 {
     NSUInteger groupConvCount = 0;
-    NSUInteger connectionCount = 0;
-    
+
     for (ZMConversation *conversation in [SessionObjectCache sharedCache].allConversations) {
-        
-        if (conversation.conversationType == ZMConversationTypeOneOnOne) {
-            connectionCount++;
-        }
-        else if (conversation.conversationType == ZMConversationTypeGroup) {
+        if (conversation.conversationType == ZMConversationTypeGroup) {
             groupConvCount ++;
         }
     }
@@ -124,7 +119,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     else if ([currentNetworkType isEqualToString:CTRadioAccessTechnologyLTE]) {
         networkType = @"4G";
     }
-    else if ([NetworkStatus sharedStatus].reachability == ServerReachabilityOK){
+    else if ([NetworkStatus sharedStatus].reachability == ServerReachabilityOK) {
         networkType = @"wifi";
     }
     
@@ -143,8 +138,12 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
         default:
             break;
     }
-
-    [self.analytics sendCustomDimensionsWithNumberOfContacts:connectionCount
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[ZMUser entityName]];
+    fetchRequest.predicate = [ZMUser predicateForConnectedNonBotUsers];
+    NSUInteger contactsCount = [[ZMUserSession sharedSession].managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    
+    [self.analytics sendCustomDimensionsWithNumberOfContacts:contactsCount
                                           groupConversations:groupConvCount
                                                  accentColor:accentColor
                                                  networkType:networkType

@@ -75,8 +75,11 @@
 "contacts_ui.no_contact.title" = "Нет активных разговоров";
 "contacts_ui.no_contact.message" = "Нажмите на контакты, чтобы начать новый разговор";
 
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Присоединиться";
+
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "знакомых";
+"bottom_bar.plus_button.title" = "Новое";
 
 
 // Profile Header View
@@ -97,11 +100,8 @@
 "peoplepicker.hide_search_result_progress" = "Прячу…";
 
 "send_invitation.subject" = "Добавь меня в Wire";
-"send_invitation.text" = "Я в Wire, ищи %@ или зайди на get.wire.com.";
+"send_invitation.text" = "Я использую Wire. Ищите меня там по имени %@ или посетите сайт get.wire.com";
 "send_invitation_no_email.text" = "Я уже в Wire. Посетите get.wire.com, чтобы добавить меня.";
-
-"send_personal_invitation.text" = "Я в Wire, поговорим там get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -117,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Разговоры";
 "list.archived_conversations" = "АРХИВ";
 "list.archived_conversations_close" = "Закрыть архив";
+
+"conversation.status.call" = "Исходящий звонок";
+"conversation.status.typing" = "Набирает сообщение…";
+"conversation.status.typing.group" = "%@: набирает сообщение…";
+"conversation.status.silenced" = "Выкл. уведомления";
+"conversation.status.blocked" = "Заблокирован(а)";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Поделился(-лась) ссылкой";
+"conversation.status.message.image" = "Поделился(-лась) картинкой";
+"conversation.status.message.location" = "Поделился(-лась) местоположением";
+"conversation.status.message.audio" = "Поделился(-лась) аудио сообщением";
+"conversation.status.message.video" = "Поделился(-лась) видео";
+"conversation.status.message.file" = "Поделился(-лась) файлом";
+"conversation.status.message.knock" = "Отправил(а) пинг";
+"conversation.status.message.missedcall" = "Пропущенный звонок";
+"conversation.status.message.ephemeral" = "Временное сообщение";
+
+"conversation.status.unsent" = "⚠️ Неотправленное сообщение";
+"conversation.status.you" = "Вы";
+"conversation.status.added_multiple" = "Добавлены участники";
+"conversation.status.you_was_added" = "%@ добавил(-а) вас";
+"conversation.status.added_users" = "%@ добавил(-а) %@";
+"conversation.status.removed_multiple" = "Удалены участники";
+"conversation.status.you_were_removed" = "Вы были удалены";
+"conversation.status.you_left" = "Вы покинули беседу";
+"conversation.status.started_conversation" = "%@ начал разговор";
+"conversation.status.removed_users" = "%@ удалил %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Разговор";
+"compose.message.title" = "Сообщение";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,8 +230,15 @@
 "content.system.other_removed_other" = "%@ удалил %@";
 "content.system.other_removed_you" = "%@ удалил вас";
 "content.system.you_removed_other" = "Вы удалили %@";
-"content.system.other_renamed_conv" = "%@ переименовал разговор";
-"content.system.you_renamed_conv" = "Вы переименовали разговор";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ начал беседу с %@";
+"content.system.conversation.added" = "%@ добавил %@";
+"content.system.conversation.removed" = "%@ удалил %@";
+"content.system.conversation.left" = "%@ покинул(а) разговор";
+"content.system.conversation.you" = "Вы";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
@@ -204,6 +246,7 @@
 "content.system.message_delivered_timestamp" = "Доставлено";
 "content.system.failedtosend_message_timestamp" = "Отправка не удалась.";
 "content.system.failedtosend_message_timestamp_resend" = "Отправить повторно";
+"content.system.failedtosend_message_timestamp_delete" = "Удалить";
 "content.system.like_tooltip" = "Нажмите, чтобы лайкнуть";
 "content.system.deleted_message_prefix_timestamp" = "Удалено %@";
 "content.system.edited_message_prefix_timestamp" = "Отредактировано %@";
@@ -215,17 +258,28 @@
 "content.system.you_started" = "Вы";
 "content.system.this_device" = "это устройство";
 
+"content.system.call.you" = "Вы";
+"content.system.call.called" = "%@ звонил(-а)";
+"content.system.call.called-you" = "%@ звонил";
+
+"content.system.renamed_conv.title" = "%@ переименовал беседу";
+"content.system.renamed_conv.title-you" = "%@ переименовал беседу";
+"content.system.renamed_conv.title.you" = "Вы";
+
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
 "content.system.new_device" = "новое устройство";
 "content.system.started_using" = "начал(-а) использовать";
 "content.system.is_verified" = "Все отпечатки верифицированы";
 
-"content.system.unverified" = "%@ деверифицировал(-а) одно из %@"; // example "You unverified one of Jule's devices"
-"content.system.your_devices" = "ваши устройства";
-"content.system.other_devices" = "устройства %@";
+"content.system.new_users" = "Присоединился новый участник.";
+"content.system.verify_devices" = "Верифицируйте устройства";
 
-"content.system.missing_messages.title" = "Вы не использовали это устройство некоторое время. Некоторые сообщения могут не отображаться.";
+"content.system.unverified" = "%@ деверифицировал(-а) одно из %@"; // example "You unverified one of Jule’s devices"
+"content.system.your_devices" = "ваши устройства";
+"content.system.other_devices" = "Устройства, которыми пользуется %@";
+
+"content.system.missing_messages.title" = "Вы не использовали это устройство некоторое время. Некоторые сообщения могут не отображаться здесь.";
 "content.system.missing_messages.subtitle_start" = "Тем временем,";
 
 "content.system.cannot_decrypt" = "Сообщение от %@ не было получено.";
@@ -255,21 +309,23 @@
 "content.image.save_image" = "Сохранить";
 
 "content.message.delete" = "Удалить";
+"content.message.save" = "Сохранить";
 
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
 "content.message.forward" = "Поделиться";
 "content.message.go_to_conversation" = "Показать в разговоре";
 "content.message.forward.to" = "Поиск…";
+"content.message.open" = "Открыть";
 
 "content.reactions_list.likers" = "Понравилось";
 
 "content.file.too_big" = "Вы можете отправлять файлы до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ ОТПРАВИЛ ПИНГ";
+"content.ping.text" = "%1$@ отправил(а) пинг";
 
 // Current user pinged
-"content.ping.you.text" = "ВЫ ОТПРАВИЛИ ПИНГ";
+"content.ping.text.you" = "Вы";
 
 // Inline Player
 "content.player.unable_to_play" = "Невозможно проиграть трек";
@@ -290,13 +346,24 @@
 "voice.status.video_not_available" = "Видео выключено";
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
+"voice.status.cbr" = "Постоянный битрейт";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
+"voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
+"voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
+"voice.degradation_outgoing.prompt" = "Вы действительно хотите позвонить?";
+"voice.degradation_incoming.prompt" = "Вы действительно хотите принять вызов?";
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
 "voice.mute_button.title" = "Выкл.звук";
 "voice.video_button.title" = "Видео";
 "voice.speaker_button.title" = "Динамик";
+"voice.cancel_button.title" = "Отменить";
+"voice.call_button.title" = "Позвонить";
+
+"voice.alert.call_in_progress.title" = "Идёт вызов";
+"voice.alert.call_in_progress.message" = "Одновременно вы можете совершать только один звонок";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire необходим доступ к микрофону.";
 "voice.alert.microphone_warning.explanation" = "Включите его в настройках Wire.";
@@ -394,7 +461,7 @@
 "profile.devices.fingerprint_message.link" = "Зачем верифицировать разговоры?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Убедитесь, что этот отпечаток соответствует отпечатку, показанному на устройстве %@.";
+"profile.devices.detail.verify_message" = "Убедитесь, что этот отпечаток совпадает с отпечатком, показанном на устройстве %@.";
 "profile.devices.detail.verify_message.link" = "Как это сделать?";
 "profile.devices.detail.show_my_device.title" = "Показать отпечаток моего устройства";
 "device.verified" = "Верифицировано";
@@ -413,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Настройки";
+"self.profile" = "Профиль";
 "self.help_center" = "Служба поддержки";
 "self.help_center.support_website" = "Cайт техподдержки Wire";
 "self.help_center.contact_support" = "Связаться с техподдержкой";
@@ -539,6 +607,11 @@
 "self.settings.callkit.caption" = "Поделиться с iOS";
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если Вы используете iCloud, история звонков будет передана Apple. Перезапустите Wire, чтобы изменения вступили в силу.";
 
+"self.settings.vbr.title" = "Кодирование с переменным битрейтом";
+"self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
+
+"self.settings.workspace.title" = "Workspace Name";
+
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
 "self.settings.sound_menu.sounds.wire_ping" = "Пинг Wire";
@@ -583,10 +656,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Открыть настройки контактов";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет вам связаться с другими людьми. Мы анонимизируем всю информацию и не передаем ее третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
-"self.settings.privacy_security.lock_app" = "Заблокировать при помощи Touch ID & пароля";
+"self.settings.privacy_security.lock_app" = "Заблокировать с помощью пароля";
+"self.settings.privacy_security.lock_app.subtitle" = "Заблокировать Wire после 10 секунд нахождения в фоновом режиме. Разблокировать приложение можно с помощью Touch ID или пароля.";
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Пожалуйста разблокируйте Wire с помощью Touch ID или пароля";
+"self.settings.privacy_security.lock_cancelled.description" = "Разблокируйте Wire с помощью Touch ID или пароля";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
@@ -619,7 +693,7 @@
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Пригласить друзей";
+"self.settings.invite_friends.title" = "Пригласить людей";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +840,7 @@
 "error.user.phone_code_too_many" = "Мы уже отправили вам код через SMS. Нажмите \"Отправить повторно\" через 10 минут, чтобы получить новый.";
 "error.user.registration_unknown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз.";
 "error.user.device_deleted_remotely" = "Вы вышли на другом устройстве.";
-"error.user.last_identity_cant_be_deleted" = "Должны быть указаны и email, и номер телефона, чтобы имелась возможность удалить один из них";
+"error.user.last_identity_cant_be_deleted" = "Необходимо оставить либо адрес электронной почты, либо номер телефона.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -828,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Поиск в текстовых сообщениях";
 "collections.search.no_items" = "Ничего не найдено";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Написать сообщение";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Подтвердить удаление";
+"compose.drafts.compose.delete.confirm.message" = "Это действие навсегда удалит этот черновик и не может быть отменено.";
+"compose.drafts.compose.delete.confirm.action.title" = "Удалить";

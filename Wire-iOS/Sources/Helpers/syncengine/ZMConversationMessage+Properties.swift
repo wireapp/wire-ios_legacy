@@ -19,11 +19,9 @@
 import Foundation
 
 extension ZMConversationMessage {
+
     func canBePrefetched() -> Bool {
         return Message.canBePrefetched(self)
     }
-    
-    func isImageMessage() -> Bool {
-        return Message.isImageMessage(self)
-    }
+
 }

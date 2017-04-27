@@ -290,8 +290,8 @@ public extension Analytics {
 
     /// User plays a video message
     @objc public func tagPlayedVideoMessage(_ duration: TimeInterval) {
-        let attributes = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
-                          "duration_actual": type(of: self).stringFromTimeInterval(duration)]
+        let attributes: [String: String] = ["duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
+                                            "duration_actual": type(of: self).stringFromTimeInterval(duration)]
         tagEvent(conversationMediaPlayedVideoMessageEventName, attributes: attributes)
     }
     
@@ -318,7 +318,7 @@ public extension Analytics {
     /// User uploads an audio message
     public func tagSentAudioMessage(in conversation: ZMConversation, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType, type: ConversationMediaRecordingType) {
         let filterName = filter.description.lowercased()
-        var  attributes = [
+        var  attributes: [String: String] = [
             "duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
             "duration_actual": type(of: self).stringFromTimeInterval(duration),
             AudioMessageContext.keyName: context.attributeString,

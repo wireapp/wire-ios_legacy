@@ -24,7 +24,7 @@
 #import "BarController.h"
 #import "TitleBar.h"
 #import "TitleBarViewController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 @interface InvitationStatusController () <ZMInvitationStatusObserver>

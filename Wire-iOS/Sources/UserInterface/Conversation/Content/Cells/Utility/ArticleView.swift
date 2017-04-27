@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-import ZMCLinkPreview
+import WireLinkPreview
 import TTTAttributedLabel
 import WireExtensionComponents
 import Classy
@@ -79,7 +79,7 @@ class ArticleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupViews() {
+    private func setupViews() {
         accessibilityElements = [authorLabel, messageLabel, imageView]
         self.backgroundColor = self.containerColor
         self.layer.cornerRadius = 4
@@ -93,7 +93,6 @@ class ArticleView: UIView {
 
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
-        messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
         messageLabel.delegate = self
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -104,7 +103,7 @@ class ArticleView: UIView {
         updateLabels()
     }
 
-    func updateLabels(obfuscated: Bool = false) {
+    private func updateLabels(obfuscated: Bool = false) {
         messageLabel.linkAttributes = obfuscated ? nil :  [NSForegroundColorAttributeName : UIColor.accent()]
         messageLabel.activeLinkAttributes = obfuscated ? nil : [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
 
@@ -115,7 +114,7 @@ class ArticleView: UIView {
         messageLabel.textColor = obfuscated ? ephemeralColor : titleTextColor
     }
     
-    func setupConstraints(_ imagePlaceholder: Bool) {
+    private func setupConstraints(_ imagePlaceholder: Bool) {
         let imageHeight : CGFloat = imagePlaceholder ? self.imageHeight : 0
         
         constrain(self, messageLabel, authorLabel, imageView, obfuscationView) { (container: LayoutProxy, messageLabel: LayoutProxy, authorLabel: LayoutProxy, imageView: LayoutProxy, obfuscationView: LayoutProxy) -> () in
@@ -143,11 +142,11 @@ class ArticleView: UIView {
         }
     }
     
-    var authorHighlightAttributes : [String: AnyObject] {
+    private var authorHighlightAttributes : [String: AnyObject] {
         return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
     }
     
-    func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
+    private func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
         let urlWithoutScheme = URL.absoluteString.removingURLScheme(URL.scheme!)
         let displayString = urlWithoutScheme.removingPrefixWWW().removingTrailingForwardSlash()
 
@@ -158,7 +157,7 @@ class ArticleView: UIView {
         }
     }
     
-    static var imageCache : ImageCache  = {
+    private static var imageCache : ImageCache  = {
         let cache = ImageCache(name: "ArticleView.imageCache")
         cache.maxConcurrentOperationCount = 4;
         cache.totalCostLimit = UInt(1024 * 1024 * 10); // 10 MB
@@ -190,7 +189,6 @@ class ArticleView: UIView {
                 ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
                 imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
                 imageView.contentMode = .center
-                
             } else {
                 imageView.image = UIImage(data: imageData)
                 imageView.contentMode = .scaleAspectFill
@@ -206,28 +204,31 @@ class ArticleView: UIView {
         }
     }
     
-    func configure(withArticle article: Article, obfuscated: Bool) {
+    private func configure(withArticle article: Article, obfuscated: Bool) {
         if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
         } else {
             authorLabel.text = article.originalURLString
         }
-        
+
+        messageLabel.enabledTextCheckingTypes = 0
         messageLabel.text = article.title
     }
     
-    func configure(withTwitterStatus twitterStatus: TwitterStatus) {
+    private func configure(withTwitterStatus twitterStatus: TwitterStatus) {
         let author = twitterStatus.author ?? "-"
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
+
+        messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
         messageLabel.text = twitterStatus.message
     }
 
-    func viewTapped(_ sender: UITapGestureRecognizer) {
+    dynamic private func viewTapped(_ sender: UITapGestureRecognizer) {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
     
-    func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
+    dynamic private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         delegate?.articleViewDidLongPressView(self)
     }

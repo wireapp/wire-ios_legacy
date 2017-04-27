@@ -69,8 +69,8 @@ final public class IncomingConnectionViewController: UIViewController, ZMCommonC
         view = connectionView
     }
 
-    public func didReceiveCommonContactsUsers(_ users: NSOrderedSet!, for searchToken: ZMCommonContactsSearchToken!) {
-        connectionView.commonConnectionsCount = UInt(users.count)
+    public func didReceiveNumber(ofTotalMutualConnections numberOfConnections: UInt, for searchToken: ZMCommonContactsSearchToken!) {
+        connectionView.commonConnectionsCount = numberOfConnections
     }
 
 }
@@ -105,8 +105,8 @@ final public class UserConnectionViewController: UIViewController, ZMCommonConta
         self.userConnectionView.commonConnectionsCount = self.user.totalCommonConnections
         self.view = self.userConnectionView
     }
-    
-    public func didReceiveCommonContactsUsers(_ users: NSOrderedSet!, for searchToken: ZMCommonContactsSearchToken!) {
-        self.userConnectionView.commonConnectionsCount = UInt(users.count)
+
+    public func didReceiveNumber(ofTotalMutualConnections numberOfConnections: UInt, for searchToken: ZMCommonContactsSearchToken!) {
+        userConnectionView.commonConnectionsCount = numberOfConnections
     }
 }

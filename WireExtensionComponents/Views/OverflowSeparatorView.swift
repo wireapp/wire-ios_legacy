@@ -44,18 +44,20 @@ import Classy
     
     override open var intrinsicContentSize: CGSize {
         get {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: 1.0 / UIScreen.main.scale)
+            return CGSize(width: UIViewNoIntrinsicMetric, height: .hairline)
         }
     }
     
+    @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        if !inverse {
-            self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
-        } else {
+        if inverse {
             let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)
             let offsetY = scrollView.contentOffset.y
             let showSeparator = contentHeight - offsetY > height
             alpha = showSeparator ? 1 : 0
+        }
+        else {
+            self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
         }
     }
 }

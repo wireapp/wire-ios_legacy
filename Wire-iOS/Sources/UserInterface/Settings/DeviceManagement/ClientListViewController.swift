@@ -18,7 +18,7 @@
 
 
 import UIKit
-import zmessaging
+import WireSyncEngine
 import Cartography
 import WireExtensionComponents
 import CocoaLumberjackSwift
@@ -75,13 +75,15 @@ import CocoaLumberjackSwift
         self.title = NSLocalizedString("registration.devices.title", comment:"")
         self.edgesForExtendedLayout = []
 
-        self.initalizeProperties(clientsList ?? [])
+        self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients))
 
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
         self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         
         if clientsList == nil {
-            self.showLoadingView = true
+            if clients.isEmpty {
+                self.showLoadingView = true
+            }
             ZMUserSession.shared()?.fetchAllClients()
         }
     }
@@ -336,9 +338,15 @@ import CocoaLumberjackSwift
                 let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Either<String, NSError>) -> () in
                     switch result {
                     case .left(let passwordString):
-                        let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress, password: passwordString)
-                        self.credentials = newCredentials
-                        self.deleteUserClient(userClient, credentials: newCredentials)
+                        if let email = ZMUser.selfUser()?.emailAddress {
+                            let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
+                            self.credentials = newCredentials
+                            self.deleteUserClient(userClient, credentials: newCredentials)
+                        } else {
+                            if DeveloperMenuState.developerMenuEnabled() {
+                                DebugAlert.show(message: "No email set!")
+                            }
+                        }
                     case .right(let error):
                         DDLogError("Error: \(error)")
                     }

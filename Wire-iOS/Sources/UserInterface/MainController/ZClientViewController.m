@@ -41,7 +41,7 @@
 #import "ColorSchemeController.h"
 #import "ProfileViewController.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "VoiceChannelV2+Additions.h"
 
@@ -76,7 +76,7 @@
 @property (nonatomic, readwrite) SoundEventListener *soundEventListener;
 
 @property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic, readwrite) BackgroundViewController *backgroundViewController;
+@property (nonatomic) BackgroundViewController *backgroundViewController;
 @property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
@@ -87,8 +87,6 @@
 
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
-
-- (void)setupChildViewControllers;
 
 @end
 
@@ -128,18 +126,7 @@
     
     self.view.backgroundColor = [UIColor blackColor];
 
-    self.backgroundViewController = [[BackgroundViewController alloc] init];
-    self.backgroundViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addChildViewController:self.backgroundViewController];
-    [self.view addSubview:self.backgroundViewController.view];
-    [self.backgroundViewController didMoveToParentViewController:self];
-
-    [self.backgroundViewController.view addConstraintsFittingToView:self.view];
-
-    [self.backgroundViewController setForceFullScreen:NO animated:NO];
-    [self.backgroundViewController setUser:[ZMUser selfUser] animated:YES];
-
-    [self setupChildViewControllers];
+    [self setupConversationListViewController];
     
     self.splitViewController = [[SplitViewController alloc] init];
     self.splitViewController.delegate = self;
@@ -148,15 +135,12 @@
     self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.splitViewController.view];
     
-    CGFloat topInset = self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad ? 20 : 0;
-    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(topInset, 0, 0, 0)];
+    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     [self.splitViewController didMoveToParentViewController:self];
     
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
-    if (self.conversationListViewController != nil) {
-        self.splitViewController.leftViewController = self.conversationListViewController;
-    }
+    [self createBackgroundViewController];
     
     if (self.pendingInitialStateRestore) {
         [self restoreStartupState];
@@ -167,6 +151,20 @@
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
+}
+
+- (void)createBackgroundViewController
+{
+    self.backgroundViewController = [[BackgroundViewController alloc] initWithUser:[ZMUser selfUser]
+                                                                       userSession:[ZMUserSession sharedSession]];
+    
+    [self.backgroundViewController addChildViewController:self.conversationListViewController];
+    [self.backgroundViewController.view addSubview:self.conversationListViewController.view];
+    [self.conversationListViewController didMoveToParentViewController:self.backgroundViewController];
+    self.conversationListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.conversationListViewController.view.frame = self.backgroundViewController.view.bounds;
+    
+    self.splitViewController.leftViewController = self.backgroundViewController;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -201,7 +199,7 @@
         }
     }
     else {
-        return UIStatusBarStyleLightContent;
+        return UIStatusBarStyleDefault;
     }
 }
 
@@ -221,12 +219,11 @@
 
 #pragma mark - Setup methods
 
-- (void)setupChildViewControllers
+- (void)setupConversationListViewController
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     [self.conversationListViewController view];
-    self.conversationListViewController.enableExtras = [Settings sharedSettings].enableExtras;
 }
 
 #pragma mark - Public API
@@ -259,11 +256,7 @@
     StopWatch *stopWatch = [StopWatch stopWatch];
     [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
     
-    @weakify(self);
-    [self.splitViewController setLeftViewController:self.conversationListViewController animated:animated completion:^{
-        @strongify(self);
-        [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
-    }];
+    [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
 }
 
 - (BOOL)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
@@ -274,9 +267,7 @@
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion
 {
     NSArray *conversationsList = [SessionObjectCache sharedCache].conversationList;
-    if (conversationsList.count == 0) {
-        return;
-    } else {
+    if (conversationsList.count != 0) {
         [self selectConversation:conversationsList.firstObject];
     }
     
@@ -325,7 +316,6 @@
 
 - (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
-    
     ConversationRootViewController *conversationRootController = nil;
     if ([conversation isEqual:self.currentConversation]) {
         conversationRootController = (ConversationRootViewController *)self.conversationRootViewController;
@@ -362,8 +352,7 @@
     }
     
     _conversationListViewController = conversationListViewController;
-    
-    self.splitViewController.leftViewController = self.conversationListViewController;
+
 }
 
 - (void)openDetailScreenForUserClient:(UserClient *)client
@@ -557,11 +546,7 @@
 - (void)requestLoopNotification:(NSNotification *)notification;
 {
     NSString *path = notification.userInfo[@"path"];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oh noes!" message:[NSString stringWithFormat:@"A request loop is going on at %@", path] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    
-    [alert addAction:action];
-    [self.conversationRootViewController presentViewController:alert animated:YES completion:nil];
+    [DebugAlert showWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path] sendLogs:YES];
 }
 
 @end
@@ -648,7 +633,7 @@
 - (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController
 {
     return splitViewController.rightViewController != nil &&
-           splitViewController.leftViewController == self.conversationListViewController &&
+           splitViewController.leftViewController == self.backgroundViewController &&
            self.conversationListViewController.state == ConversationListStateConversationList &&
            (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
 }

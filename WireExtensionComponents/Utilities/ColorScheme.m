@@ -58,10 +58,12 @@ NSString * const ColorSchemeColorCallBarBackground = @"call-bar-background";
 NSString * const ColorSchemeColorCallBarSeparator = @"call-bar-separator";
 
 NSString * const ColorSchemeColorAvatarBorder = @"avatar-border";
+NSString * const ColorSchemeColorListAvatarInitials = @"list-avatar-initials";
 
 NSString * const ColorSchemeColorContactSectionBackground = @"contact-section-background";
 
 NSString * const ColorSchemeColorPlaceholderBackground = @"placeholder-background";
+NSString * const ColorSchemeColorPaleSeparator = @"separator-pale";
 
 NSString * const ColorSchemeColorAudioButtonOverlay = @"audio-button-overlay";
 
@@ -208,6 +210,7 @@ static NSString* light(NSString *colorString) {
     UIColor *blackAlpha8 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.08)"];
     UIColor *blackAlpha24 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.24)"];
     UIColor *blackAlpha48 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.48)"];
+    UIColor *blackAlpha40 = [UIColor colorWithWhite:0 alpha:0.4];
     UIColor *blackAlpha80 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.80)"];
     UIColor *backgroundGraphite = [UIColor wr_colorFromString:@"rgb(22, 24, 25)"];
     UIColor *graphite = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
@@ -255,7 +258,10 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorLoadingDotActive: graphiteAlpha40,
                                    ColorSchemeColorLoadingDotInactive: graphiteAlpha16,
                                    ColorSchemeColorGraphite: graphite,
-                                   ColorSchemeColorLightGraphite: lightGraphite}];
+                                   ColorSchemeColorLightGraphite: lightGraphite,
+                                   ColorSchemeColorPaleSeparator: lightGraphiteAlpha24,
+                                   ColorSchemeColorListAvatarInitials: blackAlpha40
+                                   }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
         UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantLight];
@@ -297,7 +303,10 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorLoadingDotActive: whiteAlpha40,
                                   ColorSchemeColorLoadingDotInactive: whiteAlpha16,
                                   ColorSchemeColorGraphite: graphite,
-                                  ColorSchemeColorLightGraphite: lightGraphite}];
+                                  ColorSchemeColorLightGraphite: lightGraphite,
+                                  ColorSchemeColorPaleSeparator: lightGraphiteAlpha24,
+                                  ColorSchemeColorListAvatarInitials: blackAlpha40
+                                  }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
         UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantDark];
@@ -342,8 +351,8 @@ static NSString* light(NSString *colorString) {
 + (UIColor *)nameColorForZMAccentColor:(ZMAccentColor)accentColor variant:(ColorSchemeVariant)variant
 {
     // NB: the order of coefficients must match ZMAccentColor enum ordering
-    static const CGFloat accentColorNameColorBlendingCoefficientsDark[] = {0.0f, 0.8f, 0.72f, 0.72f, 0.8f, 0.8f, 0.8f, 0.64f};
-    static const CGFloat accentColorNameColorBlendingCoefficientsLight[] = {0.0f, 0.8f, 0.72f, 0.56f, 0.8f, 0.8f, 0.64f, 0.64f};
+    static const CGFloat accentColorNameColorBlendingCoefficientsDark[] = {0.0f, 0.8f, 0.72f, 1.0f, 0.8f, 0.8f, 0.8f, 0.64f};
+    static const CGFloat accentColorNameColorBlendingCoefficientsLight[] = {0.0f, 0.8f, 0.72f, 1.0f, 0.8f, 0.8f, 0.64f, 1.0f};
  
     assert(accentColor < ZMAccentColorMax);
     

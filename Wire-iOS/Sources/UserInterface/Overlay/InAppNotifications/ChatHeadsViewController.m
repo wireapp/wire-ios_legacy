@@ -19,7 +19,7 @@
 
 #import "ChatHeadsViewController.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import "ChatHeadView.h"
 #import "PassthroughTouchesView.h"

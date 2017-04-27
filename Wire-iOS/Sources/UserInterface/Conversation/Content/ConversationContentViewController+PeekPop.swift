@@ -16,7 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import Foundation
+import SafariServices
+
+
+private var lastPreviewURL: URL?
+
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
@@ -27,17 +33,33 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
               let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage else {
             return .none
         }
-        
-        if message.isImageMessage() {
-            let controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
-            return controller
+
+        lastPreviewURL = nil
+        var controller: UIViewController?
+
+        if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as URL? {
+            lastPreviewURL = url
+            controller = SFSafariViewController(url: url)
+        } else if message.isImage {
+            controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
         }
-        
-        return .none
+
+        if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.previewView.bounds != .zero {
+            previewingContext.sourceRect = previewingContext.sourceView.convert(cell.previewView.frame, from: cell.previewView.superview!)
+        }
+
+        return controller
     }
 
     @available(iOS 9.0, *)
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
-    }    
+        // In case the user has set a 3rd party application to open the URL we do not 
+        // want to commit the view controller but instead open the url.
+        if let url = lastPreviewURL {
+            url.open()
+        } else {
+            self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
+        }
+    }
+
 }

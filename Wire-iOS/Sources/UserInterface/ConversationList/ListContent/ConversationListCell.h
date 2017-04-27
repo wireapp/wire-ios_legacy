@@ -20,26 +20,19 @@
 #import "SwipeMenuCollectionCell.h"
 
 @class ZMConversation;
+@class ConversationListItemView;
 @protocol ConversationListCellDelegate;
 
 
 @interface ConversationListCell : SwipeMenuCollectionCell
 
-@property (nonatomic, strong) ZMConversation *conversation;
-@property (nonatomic, assign) BOOL enableSubtitles;
+@property (nonatomic) ZMConversation *conversation;
+@property (nonatomic, readonly) ConversationListItemView *itemView;
 @property (nonatomic, weak) id <ConversationListCellDelegate> delegate;
-
 - (void)updateAppearance;
-
+- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize;
++ (void)invalidateCachedCellSize;
 @end
-
-
-@interface ConversationListCell (RightAccessory)
-
-- (void)updateRightAccessory;
-
-@end
-
 
 @protocol ConversationListCellDelegate <NSObject>
 

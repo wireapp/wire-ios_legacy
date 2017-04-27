@@ -21,14 +21,13 @@
 
 #import "ImageMessageCell+Internal.h"
 #import <PureLayout/PureLayout.h>
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 
 #import "Constants.h"
 #import "WAZUIMagic.h"
 #import "UIColor+MagicAccess.h"
 #import "UIColor+WAZExtensions.h"
-#import "FLAnimatedImageView.h"
-#import "FLAnimatedImage.h"
+@import FLAnimatedImage;
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
@@ -48,6 +47,7 @@
 @property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) SavableImage *savableImage;
+@property (nonatomic) UITapGestureRecognizer *imageTapRecognizer;
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic, strong) id<MediaAsset> image;
@@ -173,6 +173,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
     self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
+
+    self.imageTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapped:)];
+    [self.imageViewContainer addGestureRecognizer:self.imageTapRecognizer];
+    [self.imageTapRecognizer requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
@@ -231,29 +235,21 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         
         if (self.autoStretchVertically) {
             self.imageRightConstraint.active = NO;
-            
-            CGRect screen = UIScreen.mainScreen.bounds;
-            CGFloat screenRatio = CGRectGetHeight(screen) / CGRectGetWidth(screen);
-            CGFloat imageRatio = self.imageSize.height / self.imageSize.width;
-            CGFloat lowerBound = screenRatio * 0.84, upperBound = screenRatio * 1.2;
-            
-            BOOL imageWidthExceedsBounds = self.imageSize.width > self.bounds.size.width;
-            BOOL similarRatio = lowerBound < imageRatio && imageRatio < upperBound;
-            BOOL displayEdgeToEdge = imageWidthExceedsBounds && !similarRatio;
-            
-            self.messageContentView.layoutMargins = displayEdgeToEdge ? UIEdgeInsetsZero : self.defaultLayoutMargins;
+            self.messageContentView.layoutMargins = self.defaultLayoutMargins;
             self.imageWidthConstraint.constant = self.imageSize.width;
             
             if (! self.imageAspectConstraint) {
                 CGFloat aspectRatio = self.imageSize.height / self.imageSize.width;
                 [NSLayoutConstraint autoSetPriority:ALLayoutPriorityRequired forConstraints:^{
-                    self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imageViewContainer withMultiplier:aspectRatio];
+                    self.imageAspectConstraint = [self.imageViewContainer autoMatchDimension:ALDimensionHeight
+                                                                                 toDimension:ALDimensionWidth
+                                                                                      ofView:self.imageViewContainer
+                                                                              withMultiplier:aspectRatio];
                 }];
             }
         }
         else {
             self.messageContentView.layoutMargins = UIEdgeInsetsZero;
-            
             self.imageRightConstraint.active = YES;
         }
         
@@ -296,7 +292,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
 
-    self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(0.5, 0.5));
+    const CGFloat scaleFactor = imageMessageData.isAnimatedGIF ? 1 : 0.5;
+    self.originalImageSize = CGSizeApplyAffineTransform(imageMessageData.originalSize, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
     self.imageSize = CGSizeMake(MAX(48, self.originalImageSize.width), MAX(48, self.originalImageSize.height));
     
     if (self.autoStretchVertically) {
@@ -305,7 +302,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     else {
         self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
-    
+
+    [self updateImageBorder];
+
+    self.imageToolbarView.showsSketchButton = !imageMessageData.isAnimatedGIF;
     self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];
     self.imageToolbarView.configuration = [self imageToolbarNeedsToBeCompact] ? ImageToolbarConfigurationCompactCell : ImageToolbarConfigurationCell;
     
@@ -366,6 +366,13 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             self.loadingView.hidden = NO;
         }
     }
+}
+
+- (void)updateImageBorder
+{
+    BOOL showBorder = !self.imageSmallerThanMinimumSize;
+    self.fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0;
+    self.fullImageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
 }
 
 - (void)setImage:(id<MediaAsset>)image
@@ -459,14 +466,17 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self.delegate conversationCell:self didSelectAction:MessageActionSketchText];
 }
 
+- (void)imageTapped:(id)sender {
+    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
+}
+
 #pragma mark - Message updates
 
 /// Overriden from the super class cell
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
     BOOL needsLayout = [super updateForMessage:change];
-    
-    if (change.imageChanged || change.isObfuscatedChanged) {
+    if (change.imageChanged || change.transferStateChanged || change.isObfuscatedChanged) {
         [self configureForMessage:self.message layoutProperties:self.layoutProperties];
     }
     
@@ -506,12 +516,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [[Analytics shared] tagMessageCopy];
 
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.fullImageView mediaAsset]];
-}
-
-// @override from ConversationCell
-- (void)didDoubleTapMessage:(id)sender
-{
-    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated

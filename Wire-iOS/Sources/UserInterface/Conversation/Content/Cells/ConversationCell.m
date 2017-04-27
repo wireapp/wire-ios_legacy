@@ -23,7 +23,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "Message.h"
+#import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "UIView+Borders.h"
 #import "Wire-Swift.h"
@@ -31,9 +31,11 @@
 #import "AccentColorChangeHandler.h"
 #import "Analytics+iOS.h"
 #import "UIResponder+FirstResponder.h"
+#import "UserImageView+Magic.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
+static const CGFloat BurstContainerExpandedHeight = 40;
 
 @implementation MenuConfigurationProperties
 
@@ -53,20 +55,19 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic, readwrite) UILabel *authorLabel;
 @property (nonatomic, readwrite) NSParagraphStyle *authorParagraphStyle;
 
-@property (nonatomic, readwrite) UILabel *burstTimestampLabel;
-@property (nonatomic, readwrite) NSParagraphStyle *burstTimestampParagraphStyle;
 @property (nonatomic) NSTimer *burstTimestampTimer;
 
-@property (nonatomic, readwrite) UIView *unreadDotView;
+@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
+
 @property (nonatomic, readwrite) UserImageView *authorImageView;
 @property (nonatomic, readwrite) UIView *authorImageContainer;
+@property (nonatomic) UIFont *burstNormalFont;
+@property (nonatomic) UIFont *burstBoldFont;
 
 @property (nonatomic) MessageToolboxView *toolboxView;
 
 @property (nonatomic) AccentColorChangeHandler *accentColorChangeHandler;
-
-@property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
-
+@property (nonatomic, readwrite) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (nonatomic, readwrite) ConversationCellLayoutProperties *layoutProperties;
 
 #pragma mark - Constraints
@@ -80,8 +81,6 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 @property (nonatomic) NSLayoutConstraint *burstTimestampHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *topMarginConstraint;
 @property (nonatomic) NSLayoutConstraint *messageToolsHeightConstraint;
-
-@property (nonatomic) NSLayoutConstraint *unreadDotHeightConstraint;
 
 @property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
@@ -117,13 +116,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         [self.contentView addGestureRecognizer:self.longPressGestureRecognizer];
 
-        
         self.accentColorChangeHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, ConversationCell *cell) {
             cell.tintColor = newColor;
-            cell.unreadDotView.backgroundColor = newColor;
         }];
         
-        self.contentLayoutMargins = self.layoutDirectionAwareLayoutMargins;
+        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
     }
     
     return self;
@@ -163,11 +160,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.contentView addSubview:self.authorImageContainer];
     
     self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.authorImageView.userSession = [ZMUserSession sharedSession];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.authorImageView.delegate = self;
-    self.authorImageView.borderColorMatchesAccentColor = NO;
-    self.authorImageView.borderWidth = 0.5f;
-    self.authorImageView.borderColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorAvatarBorder];
+    
     self.authorImageView.layer.shouldRasterize = YES;
     self.authorImageView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     [self.authorImageContainer addSubview:self.authorImageView];
@@ -175,18 +171,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.minimumLineHeight = [WAZUIMagic cgFloatForIdentifier:@"content.burst_timestamp.line_height"];
     paragraphStyle.maximumLineHeight = paragraphStyle.minimumLineHeight;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    self.burstTimestampParagraphStyle = paragraphStyle;
 
-    self.burstTimestampLabel = [[UILabel alloc] init];
-    self.burstTimestampLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.burstTimestampLabel];
-    
-    self.unreadDotView = [[UIView alloc] init];
-    self.unreadDotView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.unreadDotView.backgroundColor = [UIColor accentColor];
-    self.unreadDotView.layer.cornerRadius = 4;
-    [self.contentView addSubview:self.unreadDotView];
+    self.burstTimestampView = [[ConversationCellBurstTimestampView alloc] initForAutoLayout];
+    self.burstTimestampView.isSeparatorHidden = YES;
+    [self.contentView addSubview:self.burstTimestampView];
+
     
     self.toolboxView = [[MessageToolboxView alloc] init];
     self.toolboxView.delegate = self;
@@ -210,8 +199,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     self.contentView.isAccessibilityElement = YES;
     
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
-    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.unreadDotView, self.toolboxView, self.likeButton]];
+    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView, self.likeButton]];
     self.accessibilityElements = accessibilityElements;
+
+    [CASStyler.defaultStyler styleItem:self];
 }
 
 - (void)prepareForReuse
@@ -256,16 +247,14 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 - (void)createBaseConstraints
 {
     CGFloat authorImageDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
-    self.topMarginConstraint = [self.burstTimestampLabel autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    
-    [self.burstTimestampLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    self.burstTimestampHeightConstraint = [self.burstTimestampLabel autoSetDimension:ALDimensionHeight toSize:0];
-    
-    self.unreadDotHeightConstraint = [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:0];
-    self.unreadDotHeightConstraint.active = NO;
-    [self.unreadDotView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.unreadDotView];
-    [self.unreadDotView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.burstTimestampLabel];
-    [self.unreadDotView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.burstTimestampLabel withOffset:-8];
+
+    self.topMarginConstraint = [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+        self.burstTimestampHeightConstraint = [self.burstTimestampView autoSetDimension:ALDimensionHeight toSize:0];
+    }];
     
     [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
@@ -280,7 +269,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.authorImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.authorImageView];
     [self.authorImageView autoCenterInSuperview];
     
-    self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampLabel];
+    self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampView];
     [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];
     
@@ -289,11 +278,10 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
-        [self.unreadDotView autoSetDimension:ALDimensionHeight toSize:8];
         [self.authorImageView autoSetDimension:ALDimensionHeight toSize:authorImageDiameter];
     }];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
         self.toolboxCollapseConstraint = [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     
@@ -319,6 +307,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
     // here until we re-factor the the ConversationCell
     self.messageContentView.layoutMargins = contentLayoutMargins;
     self.toolboxView.layoutMargins = contentLayoutMargins;
+    self.burstTimestampView.layoutMargins = contentLayoutMargins;
 }
 
 - (void)layoutSubviews
@@ -331,14 +320,18 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)updateConstraintConstants
 {
-    self.unreadDotHeightConstraint.active        = ! self.layoutProperties.showUnreadMarker;
-    self.authorImageHeightConstraint.active      = ! self.layoutProperties.showSender;
-    self.authorImageTopMarginConstraint.constant =   self.layoutProperties.showBurstTimestamp ? self.burstTimestampSpacing : 0;
-    self.topMarginConstraint.constant            =   self.layoutProperties.topPadding;
-    self.authorHeightConstraint.active           = ! self.layoutProperties.showSender;
-    self.authorLabel.hidden                      = ! self.layoutProperties.showSender;
-    self.authorImageContainer.hidden             = ! self.layoutProperties.showSender;
-    self.burstTimestampHeightConstraint.active   = ! self.layoutProperties.showBurstTimestamp;
+    ConversationCellLayoutProperties *properties = self.layoutProperties;
+    BOOL showBurstLabelContainer                 =   properties.showBurstTimestamp || properties.showDayBurstTimestamp;
+
+    self.burstTimestampView.isShowingUnreadDot   =   properties.showUnreadMarker;
+    self.authorImageHeightConstraint.active      = ! properties.showSender;
+    self.authorImageTopMarginConstraint.constant =   showBurstLabelContainer ? self.burstTimestampSpacing : 0;
+    self.topMarginConstraint.constant            =   properties.topPadding;
+    self.authorHeightConstraint.active           = ! properties.showSender;
+    self.authorLabel.hidden                      = ! properties.showSender;
+    self.authorImageContainer.hidden             = ! properties.showSender;
+    self.burstTimestampHeightConstraint.constant =   showBurstLabelContainer ? BurstContainerExpandedHeight : 0;
+    self.burstTimestampView.isSeparatorExpanded  =   properties.showDayBurstTimestamp;
 }
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
@@ -351,7 +344,7 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
         [self updateSenderAndSenderImage:message];
     }
     
-    if (layoutProperties.showBurstTimestamp) {
+    if (layoutProperties.showBurstTimestamp || layoutProperties.showDayBurstTimestamp) {
         [self updateBurstTimestamp];
     }
     
@@ -417,17 +410,24 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (void)updateSenderAndSenderImage:(id<ZMConversationMessage>)message
 {
-    self.authorLabel.text = [message.sender displayNameInConversation:message.conversation].uppercaseString;
+    self.authorLabel.text = [message.sender displayNameInConversation:message.conversation];
+    self.authorLabel.textColor = [[ColorScheme defaultColorScheme] nameAccentForColor:message.sender.accentColorValue
+                                                                              variant:[ColorScheme defaultColorScheme].variant];
     self.authorImageView.user = message.sender;
 }
 
 - (void)updateBurstTimestamp
 {
-    NSAttributedString *burstTimestampText =
-    [[NSAttributedString alloc] initWithString:[[Message formattedReceivedDateForMessage:self.message] uppercaseString]
-                                    attributes:@{ NSParagraphStyleAttributeName: self.burstTimestampParagraphStyle }];
-    
-    self.burstTimestampLabel.attributedText = burstTimestampText;
+    if (self.layoutProperties.showDayBurstTimestamp) {
+        self.burstTimestampView.label.text = [Message.dayFormatter stringFromDate:self.message.serverTimestamp].uppercaseString;
+        self.burstTimestampView.label.font = self.burstBoldFont;
+    } else {
+        self.burstTimestampView.label.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
+        self.burstTimestampView.label.font = self.burstNormalFont;
+    }
+
+    BOOL hidden = !self.layoutProperties.showBurstTimestamp && !self.layoutProperties.showDayBurstTimestamp;
+    self.burstTimestampView.isSeparatorHidden = hidden;
 }
 
 - (void)setCountdownContainerViewHidden:(BOOL)countdownContainerViewHidden
@@ -460,7 +460,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
 - (CGRect)selectionRect
 {
-    return self.frame;
+    return self.bounds;
+}
+
+- (UIView *)previewView
+{
+    return self.selectionView;
 }
 
 - (BOOL)canBecomeFirstResponder;
@@ -552,7 +557,12 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 
     if ([Message messageCanBeLiked:self.message]) {
         UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
-        [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
+        
+        if (items.count > 0) {
+            [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
+        } else {
+            [items addObject:likeItem];
+        }
     }
 
     if (self.message.canBeDeleted) {
@@ -708,6 +718,11 @@ const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView
 {
     [self.delegate conversationCellDidTapResendMessage:self];
+}
+
+- (void)messageToolboxViewDidSelectDelete:(MessageToolboxView *)messageToolboxView
+{
+    [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
 }
 
 @end

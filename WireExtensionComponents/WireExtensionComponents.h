@@ -29,6 +29,7 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Views
 #import <WireExtensionComponents/AvatarImageView.h>
+#import <WireExtensionComponents/UserImageView.h>
 #import <WireExtensionComponents/PageControl.h>
 #import <WireExtensionComponents/TextView.h>
 #import <WireExtensionComponents/TokenField.h>
@@ -43,13 +44,12 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/TokenTextAttachment.h>
 #import <WireExtensionComponents/TokenizedTextView.h>
+#import <WireExtensionComponents/DeveloperMenuState.h>
 
 // Layers
 #import <WireExtensionComponents/AnimatedLayer.h>
-#import <WireExtensionComponents/KnockAnimationLayer.h>
 #import <WireExtensionComponents/PulseLayer.h>
 #import <WireExtensionComponents/UserConnectingLayer.h>
-#import <WireExtensionComponents/UserListeningLayer.h>
 #import <WireExtensionComponents/VoiceGainLayer.h>
 #import <WireExtensionComponents/VoiceIndicatorLayer.h>
 
@@ -76,3 +76,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/TextTransform.h>
 #import <WireExtensionComponents/NSString+TextTransform.h>
 #import <WireExtensionComponents/AVAsset+VideoConvert.h>
+#import <WireExtensionComponents/AccentColorProvider.h>
+#import <WireExtensionComponents/UIColor+WR_ColorScheme.h>
+

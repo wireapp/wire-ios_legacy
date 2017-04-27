@@ -35,8 +35,10 @@ public extension ConversationCell {
         self.contentView.addSubview(self.likeButton)
     }
     
-    @objc public func configureLikeButtonForMessage(_ message: ZMConversationMessage) {
-        self.likeButton.setSelected(message.liked, animated: false)
+    @objc public func configureLikeButtonForMessage(_ message: ZMConversationMessage?) {
+        let liked = message?.liked ?? false
+        
+        self.likeButton?.setSelected(liked, animated: false)
     }
     
     @objc public func didDoubleTapMessage(_ sender: AnyObject!) {

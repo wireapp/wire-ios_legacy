@@ -65,7 +65,7 @@ class SketchToolbar : UIView {
     }
     
     func createConstraints() {
-        let buttonSpacing : CGFloat = 16
+        let buttonSpacing : CGFloat = 8
         
         constrain(self, leftButton, rightButton, centerButtonContainer, separatorLine) { container, leftButton, rightButton, centerButtonContainer, separatorLine in
             container.height == 56
@@ -83,7 +83,7 @@ class SketchToolbar : UIView {
             separatorLine.top == container.top
             separatorLine.left == container.left
             separatorLine.right == container.right
-            separatorLine.height == 0.5
+            separatorLine.height == .hairline
         }
         
         createCenterButtonConstraints()

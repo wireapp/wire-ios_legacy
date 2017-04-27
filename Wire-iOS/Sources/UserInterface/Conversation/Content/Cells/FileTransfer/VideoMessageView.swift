@@ -43,30 +43,25 @@ final class VideoMessageView: UIView, TransferView {
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.previewImageView.translatesAutoresizingMaskIntoConstraints = false
+
         self.previewImageView.contentMode = .scaleAspectFill
         self.previewImageView.clipsToBounds = true
         self.previewImageView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground)
-        
-        self.playButton.translatesAutoresizingMaskIntoConstraints = false
+
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
+        self.playButton.accessibilityIdentifier = "VideoActionButton"
         self.playButton.accessibilityLabel = "VideoActionButton"
         self.playButton.layer.masksToBounds = true
-        
-        self.progressView.translatesAutoresizingMaskIntoConstraints = false
+
         self.progressView.isUserInteractionEnabled = false
         self.progressView.accessibilityLabel = "VideoProgressView"
         self.progressView.deterministic = true
-        
-        self.bottomGradientView.translatesAutoresizingMaskIntoConstraints = false
+
         self.bottomGradientView.gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
-        
-        self.timeLabel.translatesAutoresizingMaskIntoConstraints = false
+
         self.timeLabel.numberOfLines = 1
         self.timeLabel.accessibilityLabel = "VideoActionTimeLabel"
-        
-        self.loadingView.translatesAutoresizingMaskIntoConstraints = false
+
         self.loadingView.isHidden = true
         
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView]
@@ -105,7 +100,7 @@ final class VideoMessageView: UIView, TransferView {
         
         constrain(bottomGradientView, timeLabel, previewImageView, loadingView) { bottomGradientView, timeLabel, previewImageView, loadingView in
             timeLabel.right == bottomGradientView.right - 16
-            timeLabel.centerY == bottomGradientView.centerY
+            timeLabel.bottom == bottomGradientView.bottom - 16
             loadingView.center == previewImageView.center
         }
     }

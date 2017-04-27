@@ -118,6 +118,16 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(callKitSection)
         }
         
+        let VBRDescriptor = SettingsPropertyToggleCellDescriptor(
+            settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),
+            inverse: true,
+            identifier: "VBRSwitch"
+        )
+        let VBRDescription = "self.settings.vbr.description".localized
+        let VBRSection = SettingsSectionDescriptor(cellDescriptors: [VBRDescriptor], header: .none, footer: VBRDescription, visibilityAction: .none)
+        cellDescriptors.append(VBRSection)
+        
+        
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 
         let callSoundProperty = self.settingsPropertyFactory.property(.callSoundName)
@@ -163,13 +173,17 @@ extension SettingsCellDescriptorFactory {
             header: "self.settings.popular_demand.title".localized,
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
-
+        
+        cellDescriptors.append(byPopularDemandSection)
+        
+        if settingsPropertyFactory.property(.workspaceName).rawValue() != nil {
+            let spaceNameDescriptor = SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.workspaceName))
+            cellDescriptors.append(SettingsSectionDescriptor(cellDescriptors: [spaceNameDescriptor]))
+        }
+        
         if externalAppsDescriptors.count > 0 {
             cellDescriptors.append(externalAppsSection)
         }
-
-        cellDescriptors.append(byPopularDemandSection)
-
         
         if #available(iOS 9.0, *) {
             let context: LAContext = LAContext()
@@ -177,7 +191,7 @@ extension SettingsCellDescriptorFactory {
             
             if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
                 let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp])
+                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: "self.settings.privacy_security.lock_app.subtitle".localized)
                 cellDescriptors.append(section)
             }
         }

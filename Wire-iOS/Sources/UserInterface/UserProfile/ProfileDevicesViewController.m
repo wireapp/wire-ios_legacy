@@ -26,7 +26,7 @@
 #import <PureLayout/PureLayout.h>
 #import "Wire-Swift.h"
 
-@import zmessaging;
+@import WireSyncEngine;
 @import WireMessageStrategy;
 
 @interface ProfileDevicesViewController () <ZMUserObserver, ParticipantDeviceHeaderViewDelegate>

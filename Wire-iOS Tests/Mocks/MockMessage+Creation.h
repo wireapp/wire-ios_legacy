@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import zmessaging;
+@import WireSyncEngine;
 @class MockMessage;
 
 @interface MockMessageFactory: NSObject
@@ -25,6 +25,7 @@
 + (MockMessage *)pingMessage;
 + (MockMessage *)linkMessage;
 + (MockMessage *)imageMessage;
++ (MockMessage *)pendingImageMessage;
 + (MockMessage *)imageMessageWithImage:(UIImage *)image;
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType
                                  users:(NSUInteger)users

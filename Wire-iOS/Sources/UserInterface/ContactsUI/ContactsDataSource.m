@@ -18,7 +18,7 @@
 
 
 #import "ContactsDataSource.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 
 

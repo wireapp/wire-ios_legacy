@@ -20,7 +20,7 @@
 #import <UIKit/UIKit.h>
 
 #import "UserImageView.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import "Analytics+iOS.h"
 #import "MessageAction.h"
@@ -50,6 +50,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @property (nonatomic, assign) BOOL showSender;
 @property (nonatomic, assign) BOOL showBurstTimestamp;
+@property (nonatomic, assign) BOOL showDayBurstTimestamp;
 @property (nonatomic, assign) BOOL alwaysShowDeliveryState;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
@@ -87,6 +88,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
 @property (nonatomic, readonly) CGRect selectionRect;
+@property (nonatomic, readonly) UIView *previewView;
 @property (nonatomic) UIEdgeInsets contentLayoutMargins;
 
 @property (nonatomic) CGFloat burstTimestampSpacing;
@@ -97,6 +99,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, readonly) UITapGestureRecognizer *doubleTapGestureRecognizer;
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.

@@ -50,20 +50,18 @@ class CannotDecryptCell: IconSystemCell {
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
         let linkAttributes = [NSFontAttributeName: labelFont, NSLinkAttributeName: link as AnyObject] as [String : AnyObject]
-        let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged).uppercased()
-        let why = localizedWhyPart(remoteIDChanged).uppercased() && labelFont && labelTextColor && linkAttributes
+        let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
+        let why = localizedWhyPart(remoteIDChanged) && labelFont && labelTextColor && linkAttributes
         let device : NSAttributedString?
         if DeveloperMenuState.developerMenuEnabled() {
-            device = "\n" + localizedDevice(systemMessageData.clients.first as? UserClient).uppercased() && labelFont && labelTextBlendedColor
+            device = "\n" + localizedDevice(systemMessageData.clients.first as? UserClient) && labelFont && labelTextBlendedColor
         } else {
             device = nil
         }
-        let messageString = localizedWhatPart(remoteIDChanged, name: name).uppercased() && labelFont && labelTextColor
+        let messageString = localizedWhatPart(remoteIDChanged, name: name) && labelFont && labelTextColor
         let fullString = messageString + " " + why + (device ?? NSAttributedString())
         
-        labelView.attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
-        labelView.addLink(to: link, with: NSMakeRange(messageString.length+1, why.length))
-        labelView.accessibilityLabel = labelView.attributedText.string
+        attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
     }
     
     func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {

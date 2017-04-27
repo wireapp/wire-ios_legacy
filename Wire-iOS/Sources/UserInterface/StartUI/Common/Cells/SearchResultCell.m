@@ -23,14 +23,14 @@
 #import "UIView+MTAnimation.h"
 #import "BadgeUserImageView.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "zmessaging+iOS.h"
-#import <ZMCDataModel/ZMBareUser.h>
+#import "WireSyncEngine+iOS.h"
+#import <WireDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
 @interface SearchResultCell ()
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
-@property (nonatomic, strong) UIImageView *conversationImageView;
+@property (nonatomic, strong) ConversationAvatarView *conversationImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) IconButton *instantConnectButton;
@@ -93,7 +93,7 @@
         self.avatarContainer.opaque = NO;
         [self.swipeView addSubview:self.avatarContainer];
 
-        self.conversationImageView = [[UIImageView alloc] initForAutoLayout];
+        self.conversationImageView = [[ConversationAvatarView alloc] initForAutoLayout];
         self.conversationImageView.opaque = NO;
         [self.avatarContainer addSubview:self.conversationImageView];
 
@@ -134,7 +134,8 @@
     [self.badgeUserImageView removeFromSuperview];
 
     self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.search_results_mode"];
-    self.badgeUserImageView.suggestedImageSize = UserImageViewSizeTiny;
+    self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
+    self.badgeUserImageView.size = UserImageViewSizeTiny;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.badgeIconSize = ZetaIconSizeTiny;
 
@@ -208,14 +209,14 @@
     CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_image_diameter"];
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
-    self.badgeUserImageView.badgeColor = [UIColor colorWithMagicIdentifier:@"people_picker.search_results_mode.context_create_conversation.badge_icon_color"];
+    self.badgeUserImageView.badgeColor = [UIColor whiteColor];
 }
 
 - (void)prepareForReuse
 {
     [super prepareForReuse];
     [UIView performWithoutAnimation:^{
-        self.conversationImageView.image = nil;
+        self.conversationImageView.conversation = nil;
         self.conversationImageView.hidden = NO;
         self.badgeUserImageView.hidden = NO;
         self.subtitleLabel.text = @"";
@@ -333,7 +334,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser>)user
+- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
 {
     _user = user;
 
@@ -348,10 +349,10 @@
         ZMUser *otherUser = conversation.connectedUser;
         self.user = otherUser;
         self.badgeUserImageView.hidden = NO;
-        self.conversationImageView.image = nil;
+        self.conversationImageView.conversation = nil;
     }
     else {
-        self.conversationImageView.image = [UIImage imageNamed:@"group-icon.png"];
+        self.conversationImageView.conversation = self.conversation;
         self.badgeUserImageView.hidden = YES;
         self.user = nil;
         self.displayName = conversation.displayName;
@@ -390,7 +391,7 @@
 
 - (void)updateSubtitleForCommonConnections:(NSUInteger)connections
 {
-    NSAttributedString *subtitle = [self attributedSubtitleWithConnectionCount:connections user:BareUserToUser(self.user)];
+    NSAttributedString *subtitle = [self attributedSubtitleWithConnectionCount:connections user:self.user];
 
     if (nil == subtitle) {
         self.subtitleLabel.text = @"";
@@ -403,22 +404,24 @@
     }
 }
 
-- (NSAttributedString *)attributedSubtitleWithConnectionCount:(NSUInteger)connections user:(ZMUser *)user
+- (NSAttributedString *)attributedSubtitleWithConnectionCount:(NSUInteger)connections user:(id <ZMBareUser, ZMSearchableUser>)user
 {
     NSMutableAttributedString *subtitle = [[NSMutableAttributedString alloc] init];
 
-    NSAttributedString *handle;
-    if (nil != user.handle && user.handle.length > 0) {
+    NSAttributedString *attributedHandle;
+    NSString *handle = user.handle ?: BareUserToUser(user).handle;
+
+    if (nil != handle && handle.length > 0) {
         NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.class.subtitleColor };
-        NSString *displayHandle = [NSString stringWithFormat:@"@%@", user.handle];
-        handle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
-        [subtitle appendAttributedString:handle];
+        NSString *displayHandle = [NSString stringWithFormat:@"@%@", handle];
+        attributedHandle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
+        [subtitle appendAttributedString:attributedHandle];
     }
 
-    NSString *addresBookName = user.addressBookEntry.cachedName;
+    NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
     NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName];
     if (nil != correlation) {
-        if (nil != handle) {
+        if (nil != attributedHandle) {
             NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
             [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" · " attributes:delimiterAttributes]];
         }

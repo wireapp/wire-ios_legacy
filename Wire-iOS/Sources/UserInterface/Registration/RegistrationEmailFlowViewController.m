@@ -35,7 +35,7 @@
 
 #import "AnalyticsTracker+Registration.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 @interface RegistrationEmailFlowViewController () <FormStepDelegate, EmailVerificationStepViewControllerDelegate, ZMRegistrationObserver, ZMAuthenticationObserver>
 

@@ -54,7 +54,7 @@ public final class UserConnectionView: UIView, Copyable {
     public init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
-        
+        self.userImageView.userSession = ZMUserSession.shared()
         self.setup()
         self.createConstraints()
     }
@@ -71,7 +71,7 @@ public final class UserConnectionView: UIView, Copyable {
 
         self.userImageView.accessibilityLabel = "user image"
         self.userImageView.shouldDesaturate = false
-        self.userImageView.suggestedImageSize = .big
+        self.userImageView.size = .big
         self.userImageView.user = self.user
         
         [self.labelContainer, self.userImageView].forEach(self.addSubview)

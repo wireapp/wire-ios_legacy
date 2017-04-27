@@ -22,50 +22,23 @@
 #import <PureLayout/PureLayout.h>
 
 #import "BadgeUserImageView.h"
-#import "WAZUIMagicIOS.h"
+#import "WireSyncEngine+iOS.h"
 
-#import "zmessaging+iOS.h"
-#import <libkern/OSAtomic.h>
-
-
+#import "UserImageView+Magic.h"
 
 @interface ParticipantsListCell ()
-{
-    UIColor *_borderColor, *_selectedBorderColor;
-}
-
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (nonatomic, strong) UIColor *selectedBorderColor;
-@property (nonatomic, strong) UIColor *badgeColor;
-
-@property (nonatomic) CGFloat tileDiameter;
-@property (nonatomic) CGFloat nameHeight;
-@property (nonatomic) CGFloat nameTopMargin;
-
-@property (weak, nonatomic) IBOutlet BadgeUserImageView *userImageView;
-
-@property (readonly, nonatomic, copy) NSString *magicPrefix;
-
+@property (weak, nonatomic) UILabel *nameLabel;
+@property (weak, nonatomic) BadgeUserImageView *userImageView;
 @end
 
-
-
 @implementation ParticipantsListCell
-
-- (id)init
-{
-    if (self = [super init]) {
-        [self setup];
-    }
-    return self;
-}
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         [self addSubviews];
-        [self setup];
     }
     return self;
 }
@@ -77,88 +50,29 @@
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
 
-    BadgeUserImageView *userImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:self.magicPrefix];
-    self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    BadgeUserImageView *userImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"participants"];
+    userImageView.userSession = [ZMUserSession sharedSession];
+    userImageView.badgeColor = [UIColor whiteColor];
+    userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:userImageView];
     self.userImageView = userImageView;
-
-
-    CGFloat imageViewSize = [WAZUIMagic cgFloatForIdentifier:@"participants.tile_image_diameter"];
-    [self.userImageView autoSetDimensionsToSize:CGSizeMake(imageViewSize, imageViewSize)];
-    [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:[WAZUIMagic cgFloatForIdentifier:@"participants.tile_name_vertical_spacing"]];
+    
+    [self.userImageView autoCenterInSuperview];
+    [self.userImageView autoSetDimensionsToSize:CGSizeMake(80, 80)];
+    [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:8];
     [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
     [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
 }
 
-- (void)setup
-{
-    self.tileDiameter = [WAZUIMagic cgFloatForIdentifier:[self magicPathForKey:@"tile_image_diameter"]];
-    self.nameHeight = [WAZUIMagic cgFloatForIdentifier:[self magicPathForKey:@"name_label_height"]];
-    self.nameTopMargin = [WAZUIMagic cgFloatForIdentifier:[self magicPathForKey:@"tile_name_spacing"]];
-    self.badgeColor = [UIColor colorWithMagicIdentifier:[self magicPathForKey:@"badge_icon_color"]];
-    
-    self.selectedBorderColor = [UIColor colorWithMagicIdentifier:[self magicPathForKey:@"selected_stroke_color"]];
-    self.backgroundColor = [UIColor clearColor];
-
-    self.userImageView.badgeColor = self.badgeColor;
-}
-
-- (void)awakeFromNib;
-{
-    [super awakeFromNib];
-    [self setup];
-}
-
-- (NSString *)magicPathForKey:(NSString *)key;
-{
-    return [NSString stringWithFormat:@"%@.%@", self.magicPrefix, key];
-}
-
-- (NSString *)magicPrefix;
-{
-    return @"participants";
-}
-
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
-{
-    [super applyLayoutAttributes:layoutAttributes];
-
-    // THe goal of this is that items need to fade through alpha=0 on iPad.
-    // the layout attribtues are applied initially when the cell becomes visible.
-    // so when cell is added to the view hierarchy, this gets run, and we set the initial alpha to 0
-    // later alpha is managed by the scrollview delegate in participants.
-    // without this, the initial alpha was always 1, and this looked like the most reasonable place to manage it.
-    UICollectionView *sv = (UICollectionView *) self.superview;
-    if ((layoutAttributes.frame.origin.x - sv.contentOffset.x) < 0) {
-        self.alpha = 0;
-    }
-}
-
 #pragma mark - Getters / setters
 
-- (void)setRepresentedObject:(id)representedObject
+- (void)setRepresentedObject:(ZMUser *)representedObject
 {
     _representedObject = representedObject;
     
-    if ([representedObject isKindOfClass:ZMUser.class]) {
-        ZMUser *user = (ZMUser *)representedObject;
-        self.userImageView.user = representedObject;
-        self.nameLabel.text = [user.displayName uppercaseString];
-    }
-}
-
-- (NSString *)name
-{
-    return self.nameLabel.text;
-}
-
-- (void)setName:(NSString *)name
-{
-    NSString *old = self.nameLabel.text;
-    if ((old == name) || [old isEqualToString:name]) {
-        return;
-    }
-    self.nameLabel.text = name;
+    ZMUser *user = (ZMUser *)representedObject;
+    self.userImageView.user = representedObject;
+    self.nameLabel.text = [user.displayName uppercaseString];
 }
 
 @end

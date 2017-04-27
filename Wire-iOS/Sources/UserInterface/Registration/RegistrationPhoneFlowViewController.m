@@ -28,7 +28,7 @@
 #import "PushTransition.h"
 #import "RegistrationFormController.h"
 #import "NavigationController.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import "UIView+MTAnimation.h"

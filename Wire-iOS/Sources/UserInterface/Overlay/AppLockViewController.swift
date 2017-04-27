@@ -33,23 +33,9 @@ import HockeySDK.BITHockeyManager
             self.view.isHidden = !self.dimContents
         }
     }
-
-    static var settingsPropertyFactory: SettingsPropertyFactory? {
-        guard let session = ZMUserSession.shared() else {
-            return .none
-        }
-        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
-                                                              analytics: Analytics.shared(),
-                                                              mediaManager: AVSProvider.shared.mediaManager,
-                                                              userSession: session,
-                                                              selfUser: ZMUser.selfUser(),
-                                                              crashlogManager: BITHockeyManager.shared())
-        
-        return settingsPropertyFactory
-    }
     
     fileprivate var appLockActive: Bool {
-        guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
+        guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
             return true
         }
         
@@ -60,7 +46,7 @@ import HockeySDK.BITHockeyManager
     
     fileprivate var lastUnlockedDate: Date {
         get {
-            guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
+            guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
                 return Date.distantPast
             }
             
@@ -69,7 +55,7 @@ import HockeySDK.BITHockeyManager
         }
         
         set {
-            guard let settingsPropertyFactory = type(of: self).settingsPropertyFactory else {
+            guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
                 return
             }
             
@@ -166,7 +152,7 @@ import HockeySDK.BITHockeyManager
                     callback(success)
                     
                     if !success {
-                        DDLogError("Local authentication error: \(error?.localizedDescription)")
+                        DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                     }
                     else {
                         self.lastUnlockedDate = Date()
@@ -175,7 +161,7 @@ import HockeySDK.BITHockeyManager
             })
         }
         else {
-            DDLogError("Local authentication error: \(error?.localizedDescription)")
+            DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
             callback(.none)
         }
     }
@@ -184,10 +170,8 @@ import HockeySDK.BITHockeyManager
 extension AppLockViewController: UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         if self.appLockActive {
-            self.dimContents = true
-        }
-        if self.appLockActive {
             self.resignKeyboard()
+            self.dimContents = true
         }
     }
     

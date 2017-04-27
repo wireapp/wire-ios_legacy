@@ -134,7 +134,7 @@ import Foundation
     fileprivate func startSpinningAnimation() {
         let rotate = CABasicAnimation.init(keyPath: "transform.rotation.z")
         rotate.fillMode = kCAFillModeForwards;
-        rotate.toValue = 2 * M_PI
+        rotate.toValue = 2 * CGFloat.pi
         rotate.repeatCount = .infinity
         rotate.duration = 1.0
         rotate.isCumulative = true

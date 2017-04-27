@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import zmessaging
+import WireSyncEngine
 import Cartography
 import Classy
 import TTTAttributedLabel
@@ -46,14 +46,24 @@ extension ZMConversationMessage {
     }
 }
 
+extension ZMSystemMessageData {
+
+    fileprivate func callDurationString() -> String? {
+        guard systemMessageType == .performedCall, duration > 0 else { return nil }
+        return  PerformedCallCell.callDurationFormatter.string(from: duration)
+    }
+}
+
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
 }
 
 @objc open class MessageToolboxView: UIView {
     fileprivate static let resendLink = URL(string: "settings://resend-message")!
+    fileprivate static let deleteLink = URL(string: "settings://delete-message")!
 
     private static let ephemeralTimeFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -99,6 +109,7 @@ extension ZMConversationMessage {
         statusLabel.isAccessibilityElement = true
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        statusLabel.numberOfLines = 0
         statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
                                       NSForegroundColorAttributeName: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
@@ -114,9 +125,13 @@ extension ZMConversationMessage {
     private func createConstraints() {
         constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
             labelClipView.leading == selfView.leadingMargin
-            labelClipView.centerY == selfView.centerY
             labelClipView.trailing == selfView.trailingMargin
-            
+
+            selfView.height >= 28 ~ LayoutPriority(750)
+
+            labelClipView.top == selfView.top
+            labelClipView.bottom == selfView.bottom
+
             statusLabel.leading == labelClipView.leading
             statusLabel.top == labelClipView.top
             statusLabel.bottom == labelClipView.bottom
@@ -133,11 +148,7 @@ extension ZMConversationMessage {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    open override var intrinsicContentSize : CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 28)
-    }
-    
+
     open func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if !self.isConfigured {
             self.isConfigured = true
@@ -210,6 +221,8 @@ extension ZMConversationMessage {
         } else if let dateTimeString = message.formattedReceivedDate() {
             if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
+            } else if let durationString = message.systemMessageData?.callDurationString() {
+                timestampString = dateTimeString + " · " + durationString
             } else {
                 timestampString = dateTimeString
             }
@@ -280,7 +293,9 @@ extension ZMConversationMessage {
             case .sent:
                 deliveryStateString = "content.system.message_sent_timestamp".localized
             case .failedToSend:
-                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " + "content.system.failedtosend_message_timestamp_resend".localized
+                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " +
+                                      "content.system.failedtosend_message_timestamp_resend".localized + " · " +
+                                      "content.system.failedtosend_message_timestamp_delete".localized
             default:
                 deliveryStateString = .none
             }
@@ -293,9 +308,21 @@ extension ZMConversationMessage {
         }
 
         let finalText: String
-        
-        if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
-            if let deliveryStateString = deliveryStateString {
+
+        if let childMessages = message.systemMessageData?.childMessages,
+            !childMessages.isEmpty,
+            let timestamp = timestampString(message) {
+            let childrenTimestamps = childMessages.flatMap {
+                $0 as? ZMConversationMessage
+            }.sorted {
+                $0.0.serverTimestamp < $0.1.serverTimestamp
+            }.flatMap(timestampString)
+
+            finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
+                return "\(text)\n\(current)"
+            }
+        } else if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
+            if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
                 finalText = timestampString + " ・ " + deliveryStateString
             }
             else {
@@ -311,6 +338,9 @@ extension ZMConversationMessage {
         if message.deliveryState == .failedToSend {
             let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
             attributedText.addAttributes([NSLinkAttributeName: type(of: self).resendLink], range: linkRange)
+            
+            let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
+            attributedText.addAttributes([NSLinkAttributeName: type(of: self).deleteLink], range: deleteRange)
         }
 
         if showDestructionTimer, let stateString = deliveryStateString {
@@ -392,6 +422,9 @@ extension MessageToolboxView: TTTAttributedLabelDelegate {
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: Foundation.URL!) {
         if URL == type(of: self).resendLink {
             self.delegate?.messageToolboxViewDidSelectResend(self)
+        }
+        else if URL == type(of: self).deleteLink {
+            self.delegate?.messageToolboxViewDidSelectDelete(self)
         }
     }
 }

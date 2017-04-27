@@ -19,7 +19,7 @@
 
 #import "ZMSnapshotTestCase.h"
 #import <PureLayout/PureLayout.h>
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
 #import "MagicConfig.h"

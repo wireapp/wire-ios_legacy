@@ -73,10 +73,13 @@
 "contacts_ui.title" = "دعوة أُناس";
 
 "contacts_ui.no_contact.title" = "لا توجد محادثات نشطة\n";
-"contacts_ui.no_contact.message" = "اضغط على جهات الاتصال لبدء محادثة جديدة";
+"contacts_ui.no_contact.message" = "انقر على أشخاص لتبدأ محادثة";
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "انضم إلى";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "أشخاص";
+"bottom_bar.plus_button.title" = "جديد";
 
 
 // Profile Header View
@@ -97,11 +100,8 @@
 "peoplepicker.hide_search_result_progress" = "جارٍ الإخفاء…";
 
 "send_invitation.subject" = "تواصل معي على Wire";
-"send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو لِج get.wire.com.";
+"send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو لِج get.wire.com";
 "send_invitation_no_email.text" = "أنا أستخدم Wire. لِج get.wire.com لتتواصل معي.";
-
-"send_personal_invitation.text" = "أنا أستخدم Wire، تحدث معي هُناك: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -117,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "المحادثات";
 "list.archived_conversations" = "حفظ في الأرشيف";
 "list.archived_conversations_close" = "إغلاق الأرشيف";
+
+"conversation.status.call" = "المكالمة الجارية";
+"conversation.status.typing" = "يكتب رسالة…";
+"conversation.status.typing.group" = "%@: يكتب رسالة…";
+"conversation.status.silenced" = "صامت";
+"conversation.status.blocked" = "محظور";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "شارك رابط";
+"conversation.status.message.image" = "شارك صورة";
+"conversation.status.message.location" = "شارك موقع";
+"conversation.status.message.audio" = "شارك رسالة صوتية";
+"conversation.status.message.video" = "شارك فيديو";
+"conversation.status.message.file" = "شارك ملف";
+"conversation.status.message.knock" = "بينغ";
+"conversation.status.message.missedcall" = "مكالمة فائتة";
+"conversation.status.message.ephemeral" = "رسالة مؤقّتة";
+
+"conversation.status.unsent" = "⚠️ رسالة غير مرسلة";
+"conversation.status.you" = "أنت";
+"conversation.status.added_multiple" = "تم إضافة أشخاص";
+"conversation.status.you_was_added" = "%@ أضافك";
+"conversation.status.added_users" = "%@ أضاف %@";
+"conversation.status.removed_multiple" = "أزيل أشخاص";
+"conversation.status.you_were_removed" = "تمت إزالتك";
+"conversation.status.you_left" = "أنت غادرت";
+"conversation.status.started_conversation" = "بدأ %@ محادثة جديدة";
+"conversation.status.removed_users" = "قام %@ بإزالة %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "محادثة";
+"compose.message.title" = "رسالة";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,8 +230,15 @@
 "content.system.other_removed_other" = "قام %@ بإزالة %@";
 "content.system.other_removed_you" = "قام %@ بإزالتك";
 "content.system.you_removed_other" = "قمت بإزالة %@";
-"content.system.other_renamed_conv" = "قام %@ بإعادة تسمية المُحادثة";
-"content.system.you_renamed_conv" = "قمت بإعادة تسمية المحادثة";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ بدأ مُحادثة مع %@";
+"content.system.conversation.added" = "%@ أضاف %@";
+"content.system.conversation.removed" = "قام %@ بإزالة %@";
+"content.system.conversation.left" = "غادر %@";
+"content.system.conversation.you" = "أنت";
+
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
 "content.system.pending_message_timestamp" = "جاري الإرسال...";
@@ -204,6 +246,7 @@
 "content.system.message_delivered_timestamp" = "تم التسليم";
 "content.system.failedtosend_message_timestamp" = "فَشِل الإرسال.";
 "content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
+"content.system.failedtosend_message_timestamp_delete" = "حذف";
 "content.system.like_tooltip" = "انقر للإعجاب";
 "content.system.deleted_message_prefix_timestamp" = "حُذِفت في %@";
 "content.system.edited_message_prefix_timestamp" = "عُدّلت في %@";
@@ -215,13 +258,24 @@
 "content.system.you_started" = "أنت";
 "content.system.this_device" = "هذا الجهاز";
 
+"content.system.call.you" = "أنت";
+"content.system.call.called" = "اتصل %@";
+"content.system.call.called-you" = "اتصل %@";
+
+"content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
+"content.system.renamed_conv.title-you" = "قام %@ بإعادة تسمية المُحادثة";
+"content.system.renamed_conv.title.you" = "أنت";
+
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 
 "content.system.new_device" = "جهاز جديد";
 "content.system.started_using" = "بدأت استخدام";
 "content.system.is_verified" = "تم التّحقق من رمز التشفير";
 
-"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule's devices"
+"content.system.new_users" = "انضمّ مستخدم جديد.";
+"content.system.verify_devices" = "التحقق من الأجهزة";
+
+"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "أجهزتك";
 "content.system.other_devices" = "أجهزة %@";
 
@@ -235,7 +289,7 @@
 
 "content.system.cannot_decrypt.identity" = "تغيّرت هوية جهاز %@. رسالة غير مُستلمة.";
 "content.system.cannot_decrypt.identity.you_part" = "الخاص بك";
-"content.system.cannot_decrypt.identity.otherUser_part" = "الخاص بـ%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "خاص بـ%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "معرفة المزيد";
 "content.system.cannot_decrypt.otherDevice_part" = "(جهاز %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -255,21 +309,23 @@
 "content.image.save_image" = "حفظ";
 
 "content.message.delete" = "حذف";
+"content.message.save" = "حفظ";
 
 "content.message.like" = "اعجاب";
 "content.message.unlike" = "إلغاء إعجابي";
 "content.message.forward" = "شارك";
 "content.message.go_to_conversation" = "إظهار";
 "content.message.forward.to" = "بحث…";
+"content.message.open" = "افتح";
 
 "content.reactions_list.likers" = "إعجاب من  ";
 
 "content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGED";
+"content.ping.text" = "%1$@ pings";
 
 // Current user pinged
-"content.ping.you.text" = "YOU PINGED";
+"content.ping.text.you" = "أنت";
 
 // Inline Player
 "content.player.unable_to_play" = "غير قادر على تشغيل المقطع";
@@ -290,13 +346,24 @@
 "voice.status.video_not_available" = "تم إيقاف الفيديو";
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
+"voice.status.cbr" = "معدل بت ثابت";
 "voice.network_error.body" = "يجب أن تكون متصلا بالإنترنت لتتمكن من إجراء مكالمة. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.";
+"voice.degradation.new_self_device" = "بدأت باستخدام جهاز جديد.";
+"voice.degradation.new_user_device" = "%@ بدأ باستخدام جهاز جديد.";
+"voice.degradation_outgoing.prompt" = "هل ما زلت تريد إجراء المكالمة؟";
+"voice.degradation_incoming.prompt" = "هل ما زلت تريد استقبال المكالمة؟";
 "voice.accept_button.title" = "قبول";
 "voice.decline_button.title" = "رفض";
 "voice.hang_up_button.title" = "إنهاء الاتصال";
 "voice.mute_button.title" = "كتم الصوت";
 "voice.video_button.title" = "فيديو";
 "voice.speaker_button.title" = "مكبّر الصوت";
+"voice.cancel_button.title" = "إلغاء";
+"voice.call_button.title" = "اتصال";
+
+"voice.alert.call_in_progress.title" = "يتم إجراء المكالمة";
+"voice.alert.call_in_progress.message" = "تستطيع إجراء مكالمة واحدة فقط في نفس الوقت";
+"voice.alert.call_in_progress.confirm" = "موافق";
 
 "voice.alert.microphone_warning.title" = "Wire يحتاج للوصول للميكرفون.";
 "voice.alert.microphone_warning.explanation" = "تَفعيلها من إعدادات Wire.";
@@ -413,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "الإعدادات";
+"self.profile" = "الملف الشخصي";
 "self.help_center" = "الدعم";
 "self.help_center.support_website" = "الموقع الإلكتروني للدعم في واير ";
 "self.help_center.contact_support" = "اتصل بالدعم";
@@ -539,9 +607,14 @@
 "self.settings.callkit.caption" = "مشاركة بواسطة iOS";
 "self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple. أعد تشغيل Wire لتطبيق هذا الإعداد.";
 
+"self.settings.vbr.title" = "ترميز بمعدل بت متغير";
+"self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
+
+"self.settings.workspace.title" = "Workspace Name";
+
 "self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
 "self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";
-"self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
+"self.settings.sound_menu.sounds.wire_ping" = "رنين Wire";
 
 // By popular demand
 "self.settings.popular_demand.title" = "الأكثر شعبية";
@@ -583,10 +656,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "فتح إعدادات جهات الإتصال";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
-"self.settings.privacy_security.lock_app" = "غَلق بإستخدام Touch ID وكلمة مرور";
+"self.settings.privacy_security.lock_app" = "قفل برمز المرور";
+"self.settings.privacy_security.lock_app.subtitle" = "قفل Wire بعد ١٠ ثواني في الخلفية.\nفك القفل بإستخدام Touch ID أو أدخل رمز المرور.";
 "self.settings.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "من فضلك ألغ تأمين Wire بإستخدام Touch ID أو كلمة المرور";
+"self.settings.privacy_security.lock_cancelled.description" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
 "self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
@@ -619,7 +693,7 @@
 "self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "دعوة الأصدقاء";
+"self.settings.invite_friends.title" = "دعوة أُناس";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +840,7 @@
 "error.user.phone_code_too_many" = "لقد قمنا بإرسال رمز إليك عبر رسالة قصيرة . انقر فوق إعادة إرسال بعد 10 دقائق للحصول على رمز جديد.";
 "error.user.registration_unknown_error" = "حدث خطأ ما. برجاء إعادة المحاولة.";
 "error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
-"error.user.last_identity_cant_be_deleted" = "تحتاج إلى امتلاك كلٍ من بريد إلكتروني ورقم هاتف لتتمكن من إزالة أحدهما";
+"error.user.last_identity_cant_be_deleted" = "مطلوب إمّا عنوان بريد إلكتروني أو رقم هاتف.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +900,20 @@
 "collections.section.no_items" = "لا توجد عناصر في المختارات";
 "collections.image_viewer.copied.title" = "تم نسخ الصورة";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "بحث في الرسائل النصية";
+"collections.search.no_items" = "لا توجد نتائج";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "الرسائل";
+"compose.drafts.empty.title" = "لا توجد رسائل";
+"compose.drafts.empty.subtitle" = "انقر على + لإنشاء واحدة.";
+"compose.drafts.compose.title" = "كتابة رسالة";
+"compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
+
+"compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";
+"compose.drafts.compose.delete.confirm.message" = "سيتم حذف هذه المسودّة بشكل دائم، ولن يمكن إرجاعها.";
+"compose.drafts.compose.delete.confirm.action.title" = "حذف";

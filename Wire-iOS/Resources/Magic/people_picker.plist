@@ -151,13 +151,6 @@
 					<integer>1</integer>
 					<integer>1</integer>
 				</array>
-				<key>badge_icon_color</key>
-				<array>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-				</array>
 			</dict>
 			<key>context_add_people</key>
 			<dict>
@@ -169,13 +162,6 @@
 					<integer>1</integer>
 				</array>
 				<key>icon_tint_color</key>
-				<array>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-				</array>
-				<key>badge_icon_color</key>
 				<array>
 					<integer>1</integer>
 					<integer>1</integer>
@@ -262,13 +248,6 @@
 					<integer>1</integer>
 					<integer>1</integer>
 				</array>
-				<key>badge_icon_color</key>
-				<array>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-				</array>
 			</dict>
 			<key>context_add_people</key>
 			<dict>
@@ -280,13 +259,6 @@
 					<integer>1</integer>
 				</array>
 				<key>icon_tint_color</key>
-				<array>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-					<integer>1</integer>
-				</array>
-				<key>badge_icon_color</key>
 				<array>
 					<integer>1</integer>
 					<integer>1</integer>

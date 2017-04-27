@@ -21,6 +21,7 @@ import Foundation
 import Cartography
 import Classy
 
+
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     public func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -32,7 +33,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.layoutMargins = self.layoutMargins
         
-        let size = self.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
         self.layoutSubviews()
         
         self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
@@ -84,12 +85,26 @@ extension ZMSnapshotTestCase {
         verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
+    func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _ in }) {
+        verifyView(inAllDeviceSizes: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line, configurationBlock: configuration)
+    }
+    
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }
     
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+    }
+    
+    func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
+        constrain(view) { view in
+            view.width == 320
+            view.height == 480
+        }
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        verifyView(view, extraLayoutPass: false, tolerance: 0, file: file.utf8SignedStart(), line: line, identifier: "")
     }
     
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {

@@ -27,10 +27,6 @@
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UILabel *initials;
 
-
-@property (nonatomic) NSLayoutConstraint *initialsVerticalAlignmentConstraint;
-@property (nonatomic) BOOL initialConstraintsCreated;
-
 @end
 
 @implementation AvatarImageView
@@ -61,10 +57,24 @@
 
 - (void)setup
 {
+    _circular = YES;
+    _showInitials = YES;
     [self createContainerView];
     [self createImageView];
     [self createInitials];
-    [self setNeedsUpdateConstraints];
+    
+    [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self.imageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self.initials autoCenterInSuperview];
+    
+    [self updateCornerRadius];
+}
+
+- (void)updateCornerRadius
+{
+    if (self.circular) {
+        self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+    }
 }
 
 - (void)createContainerView
@@ -89,44 +99,23 @@
     [self.containerView addSubview:self.initials];
 }
 
-- (void)updateConstraints
-{
-    if (! self.initialConstraintsCreated) {
-        [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.imageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.initials autoCenterInSuperview];
-
-        self.initialConstraintsCreated = YES;
-    }
-
-    [super updateConstraints];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
 
-    self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+    [self updateCornerRadius];
 }
 
-- (void)setBorderWidth:(CGFloat)borderWidth
+- (void)setShowInitials:(BOOL)showInitials
 {
-    self.containerView.layer.borderWidth = borderWidth;
-}
-
-- (CGFloat)borderWidth
-{
-    return self.containerView.layer.borderWidth;
-}
-
-- (void)setBorderColor:(UIColor *)borderColor
-{
-    self.containerView.layer.borderColor = borderColor.CGColor;
-}
-
-- (UIColor *)borderColor
-{
-    return [UIColor colorWithCGColor:self.containerView.layer.borderColor];
+    _showInitials = showInitials;
+    if (self.showInitials) {
+        [self addSubview:self.initials];
+        [self.initials autoCenterInSuperview];
+    }
+    else {
+        [self.initials removeFromSuperview];
+    }
 }
 
 @end

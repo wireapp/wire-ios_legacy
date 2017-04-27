@@ -19,7 +19,7 @@
 
 #import "ProfileViewController.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 
 
@@ -85,12 +85,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController
 
-- (id)initWithUser:(id<ZMSearchableUser>)user context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user context:(ProfileViewControllerContext)context
 {
     return [self initWithUser:user conversation:nil context:context];
 }
 
-- (id)initWithUser:(id<ZMSearchableUser>)user conversation:(ZMConversation *)conversation
+- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation
 {
     if (conversation.conversationType == ZMConversationTypeGroup) {
         return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextGroupConversation];
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (id)initWithUser:(id<ZMSearchableUser>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     if (self = [super init]) {
         _bareUser = user;
@@ -347,9 +347,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController (CommonContactsDelegate)
 
-- (void)didReceiveCommonContactsUsers:(NSOrderedSet *)users forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
+- (void)didReceiveNumberOfTotalMutualConnections:(NSUInteger)numberOfConnections forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
 {
-    ProfileHeaderViewModel *model = [self headerViewModelWithUser:self.bareUser commonConnections:users.count];
+    ProfileHeaderViewModel *model = [self headerViewModelWithUser:self.bareUser commonConnections:numberOfConnections];
     [self.headerView configureWithViewModel:model];
 }
 

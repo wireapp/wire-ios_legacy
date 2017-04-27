@@ -40,14 +40,14 @@
 #import "Wire-Swift.h"
 
 #import "ZMUserSession+Additions.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "ZMUser+Additions.h"
 #import "avs+iOS.h"
 #import "Constants.h"
 #import "Settings.h"
 #import "GiphyViewController.h"
 #import "ConversationInputBarSendController.h"
-#import "FLAnimatedImage.h"
+@import FLAnimatedImage;
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Borders.h"
@@ -215,7 +215,7 @@
     [self updateInputBarVisibility];
     [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
-    [self updateWritingState];
+    [self updateWritingStateAnimated:NO];
     [self updateButtonIconsForEphemeral];
 }
 
@@ -330,7 +330,7 @@
     [self.audioRecordViewController.view autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonContainer];
     
     CGRect recordButtonFrame = [self.inputBar convertRect:self.audioButton.bounds fromView:self.audioButton];
-    CGFloat width = CGRectGetMaxX(recordButtonFrame) + 60;
+    CGFloat width = CGRectGetMaxX(recordButtonFrame) + 56;
     [self.audioRecordViewController.view autoSetDimension:ALDimensionWidth toSize:width];
     [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
@@ -376,7 +376,7 @@
 
 - (void)createEmojiButton
 {
-    const CGFloat senderDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
+    const CGFloat senderDiameter = 28;
     
     self.emojiButton = IconButton.iconButtonCircular;
     self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;

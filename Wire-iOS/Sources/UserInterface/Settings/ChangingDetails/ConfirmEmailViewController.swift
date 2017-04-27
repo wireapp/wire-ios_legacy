@@ -19,7 +19,7 @@
 import UIKit
 import Classy
 import Cartography
-import ZMCDataModel
+import WireDataModel
 
 protocol ConfirmEmailDelegate: class {
     func resendVerification(inController controller: ConfirmEmailViewController)
@@ -109,7 +109,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
 }
 
 extension ConfirmEmailViewController: ZMUserObserver {
-    func userDidChange(_ note: ZMCDataModel.UserChangeInfo) {
+    func userDidChange(_ note: WireDataModel.UserChangeInfo) {
         if note.user.isSelfUser {
             // we need to check if the notification really happened because 
             // the email got changed to what we expected

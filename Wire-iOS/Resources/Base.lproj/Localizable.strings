@@ -73,10 +73,13 @@
 "contacts_ui.title" = "Invite people";
 
 "contacts_ui.no_contact.title" = "No active conversations\n";
-"contacts_ui.no_contact.message" = "Tap contacts to start a conversation";
+"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Join";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "people";
+"bottom_bar.plus_button.title" = "New";
 
 
 // Profile Header View
@@ -114,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Close archive";
+
+"conversation.status.call" = "Ongoing call";
+"conversation.status.typing" = "Typing a message…";
+"conversation.status.typing.group" = "%@: typing a message…";
+"conversation.status.silenced" = "Muted";
+"conversation.status.blocked" = "Blocked";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "Shared a picture";
+"conversation.status.message.location" = "Shared a location";
+"conversation.status.message.audio" = "Shared an audio message";
+"conversation.status.message.video" = "Shared a video";
+"conversation.status.message.file" = "Shared a file";
+"conversation.status.message.knock" = "Pinged";
+"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.ephemeral" = "Timed message";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "You";
+"conversation.status.added_multiple" = "People added";
+"conversation.status.you_was_added" = "%@ added you";
+"conversation.status.added_users" = "%@ added %@";
+"conversation.status.removed_multiple" = "People removed";
+"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "You left";
+"conversation.status.started_conversation" = "%@ started a conversation";
+"conversation.status.removed_users" = "%@ removed %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Conversation";
+"compose.message.title" = "Message";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -192,8 +230,15 @@
 "content.system.other_removed_other" = "%@ removed %@";
 "content.system.other_removed_you" = "%@ removed you";
 "content.system.you_removed_other" = "You removed %@";
-"content.system.other_renamed_conv" = "%@ renamed the conversation";
-"content.system.you_renamed_conv" = "You renamed the conversation";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ started a conversation with %@";
+"content.system.conversation.added" = "%@ added %@";
+"content.system.conversation.removed" = "%@ removed %@";
+"content.system.conversation.left" = "%@ left";
+"content.system.conversation.you" = "You";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
 "content.system.pending_message_timestamp" = "Sending…";
@@ -201,6 +246,7 @@
 "content.system.message_delivered_timestamp" = "Delivered";
 "content.system.failedtosend_message_timestamp" = "Sending failed.";
 "content.system.failedtosend_message_timestamp_resend" = "Resend";
+"content.system.failedtosend_message_timestamp_delete" = "Delete";
 "content.system.like_tooltip" = "Tap to like";
 "content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
 "content.system.edited_message_prefix_timestamp" = "Edited on %@";
@@ -212,11 +258,22 @@
 "content.system.you_started" = "You";
 "content.system.this_device" = "this device";
 
+"content.system.call.you" = "You";
+"content.system.call.called" = "%@ called";
+"content.system.call.called-you" = "%@ called";
+
+"content.system.renamed_conv.title" = "%@ renamed the conversation";
+"content.system.renamed_conv.title-you" = "%@ renamed the conversation";
+"content.system.renamed_conv.title.you" = "You";
+
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
 "content.system.new_device" = "a new device";
 "content.system.started_using" = "started using";
 "content.system.is_verified" = "All fingerprints are verified";
+
+"content.system.new_users" = "New user joined.";
+"content.system.verify_devices" = "Verify devices";
 
 "content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "your devices";
@@ -265,10 +322,10 @@
 
 "content.file.too_big" = "You can send files up to %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGED";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "YOU PINGED";
+"content.ping.text.you" = "You";
 
 // Inline Player
 "content.player.unable_to_play" = "UNABLE TO PLAY TRACK";
@@ -289,13 +346,24 @@
 "voice.status.video_not_available" = "Video turned off";
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
+"voice.status.cbr" = "Constant Bit Rate";
 "voice.network_error.body" = "You must be online to call. Check your connection and try again.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ started using a new device.";
+"voice.degradation_outgoing.prompt" = "Do you still want to place the call?";
+"voice.degradation_incoming.prompt" = "Do you still want to accept the call?";
 "voice.accept_button.title" = "Accept";
 "voice.decline_button.title" = "Decline";
 "voice.hang_up_button.title" = "Hang Up";
 "voice.mute_button.title" = "Mute";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Speaker";
+"voice.cancel_button.title" = "Cancel";
+"voice.call_button.title" = "Call";
+
+"voice.alert.call_in_progress.title" = "Call in progress";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire needs access to the Microphone.";
 "voice.alert.microphone_warning.explanation" = "Enable it in Wire Settings.";
@@ -412,6 +480,7 @@
 
 // Options menu contents
 "self.settings" = "Settings";
+"self.profile" = "Profile";
 "self.help_center" = "Support";
 "self.help_center.support_website" = "Wire Support Website";
 "self.help_center.contact_support" = "Contact Support";
@@ -538,6 +607,11 @@
 "self.settings.callkit.caption" = "Share with iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple. Restart Wire to apply this setting.";
 
+"self.settings.vbr.title" = "Variable Bit Rate Encoding";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+
+"self.settings.workspace.title" = "Workspace Name";
+
 "self.settings.sound_menu.sounds.wire_call" = "Wire Call";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
 "self.settings.sound_menu.sounds.wire_ping" = "Wire Ping";
@@ -582,7 +656,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
-"self.settings.privacy_security.lock_app" = "Lock with Touch ID & Passcode";
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.description" = "Unlock Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
@@ -828,3 +903,17 @@
 "collections.search.field.placeholder" = "Search text messages";
 "collections.search.no_items" = "No results";
 
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Delete";

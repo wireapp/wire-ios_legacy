@@ -58,6 +58,7 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
             }
             
             toggleCell.switchView.isOn = boolValue
+            toggleCell.switchView.accessibilityLabel = identifier
         }
     }
     

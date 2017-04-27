@@ -18,14 +18,21 @@
 
 import Foundation
 
+extension String {
+    func capitalizingFirstLetter() -> String {
+        let first = String(characters.prefix(1)).capitalized
+        let other = String(characters.dropFirst())
+        return first + other
+    }
+}
 
 extension NSString {
     
-    var uppercasedWithCurrentLocale: String? {
+    var uppercasedWithCurrentLocale: String {
         return uppercased(with: NSLocale.current)
     }
     
-    var lowercasedWithCurrentLocale: String? {
+    var lowercasedWithCurrentLocale: String {
         return lowercased(with: NSLocale.current)
     }
     

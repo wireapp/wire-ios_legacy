@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import ZMCDataModel
+import WireDataModel
 
 
 private extension ZMConversationMessage {
@@ -40,14 +40,14 @@ private extension ZMConversationMessage {
 }
 
 @objc public protocol SelectableView: NSObjectProtocol {
-    var selectionView: UIView? { get }
+    var selectionView: UIView! { get }
     var selectionRect: CGRect { get }
 }
 
 extension ConversationCell: SelectableView {}
 
 extension CollectionCell: SelectableView {
-    public var selectionView: UIView? {
+    public var selectionView: UIView! {
         return self
     }
 
@@ -71,9 +71,12 @@ extension CollectionCell: SelectableView {
      or to cancel. An optional completion block can be provided to get notified when an action has been selected.
      The delete everywhere option is only shown if this action is allowed for the input message.
      
-     - parameter message:    The message for which the alert controller should be shown
+     - parameter message: The message for which the alert controller should be shown.
+     - parameter source: The source view used for a potential popover presentation of the dialog.
+     - parameter completion: A completion closure which will be invoked with `true` if a deletion occured and `false` otherwise.
      */
-    @objc public func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: SelectableView?, completion: (() -> Void)?) {
+    @objc public func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: SelectableView?, completion: ((Bool) -> Void)?) {
+        guard !message.hasBeenDeleted else { return }
         let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { [weak self] (action, alert) in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
@@ -88,8 +91,10 @@ extension CollectionCell: SelectableView {
                         ZMMessage.deleteForEveryone(message)
                     }
                 }, completionHandler: {
-                    completion?()
+                    completion?(true)
                 })
+            } else {
+                completion?(false)
             }
 
             alert.dismiss(animated: true, completion: nil)

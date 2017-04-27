@@ -19,7 +19,7 @@
 
 #import "ParticipantDeviceCell.h"
 
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "WireExtensionComponents.h"
 #import <PureLayout/PureLayout.h>

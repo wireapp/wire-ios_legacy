@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import Canvas
+import WireCanvas
 import Cartography
 import CocoaLumberjackSwift
 
@@ -39,7 +39,7 @@ import CocoaLumberjackSwift
 
 class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
-    var delegate : CanvasViewControllerDelegate?
+    weak var delegate : CanvasViewControllerDelegate?
     var canvas = Canvas()
     var toolbar : SketchToolbar!
     let drawButton = IconButton()
@@ -173,7 +173,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
             separatorLine.top == colorPicker.bottom
             separatorLine.left == colorPicker.left
             separatorLine.right == colorPicker.right
-            separatorLine.height == 0.5
+            separatorLine.height == .hairline
             
             canvas.top == container.top
             canvas.left == container.left
@@ -359,7 +359,7 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
             }
             picker.dismiss(animated: true, completion: nil)
         }) { (error) in
-            DDLogError("error: \(error)")
+            DDLogError("error: \(String(describing: error))")
         }
     }
     

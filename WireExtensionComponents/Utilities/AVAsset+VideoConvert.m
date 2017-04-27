@@ -19,7 +19,7 @@
 
 #import "AVAsset+VideoConvert.h"
 #import "weakify.h"
-@import ZMCSystem;
+@import WireSystem;
 
 @implementation AVAsset (VideoConvert)
 

@@ -27,9 +27,7 @@
 // ui
 #import "UIView+Borders.h"
 #import "IconButton.h"
-
-#import "FLAnimatedImage.h"
-#import "FLAnimatedImageView.h"
+@import FLAnimatedImage;
 #import "MediaAsset.h"
 
 #import "AppDelegate.h"
@@ -51,7 +49,7 @@
 #import "Analytics+iOS.h"
 
 // model
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 
@@ -102,13 +100,9 @@
 @property (nonatomic) CGFloat lastZoomScale;
 
 @property (nonatomic) BOOL forcePortraitMode;
-@property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 
 @property (nonatomic) id messageObserverToken;
 
-@end
-
-@interface FullscreenImageViewController (PanGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 @end
 
 @implementation FullscreenImageViewController
@@ -128,20 +122,8 @@
     return self;
 }
 
-- (void)loadView
-{
+- (void)loadView {
     self.view = [[FirstReponderView alloc] init];
-
-    [self setupSnapshotBackgroundView];
-    [self setupScrollView];
-    [self setupTopOverlay];
-    if ([[self.message imageMessageData] imageData] == nil) {
-        [self.message requestImageDownload];
-        [self setupSpinner];
-    }
-    else {
-        [self loadImageAndSetupImageView];
-    }
 }
 
 - (void)dismissWithCompletion:(dispatch_block_t)completion
@@ -170,7 +152,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    [self setupScrollView];
+    [self setupTopOverlay];
+    if ([[self.message imageMessageData] imageData] == nil) {
+        [self.message requestImageDownload];
+        [self setupSpinner];
+    }
+    else {
+        [self loadImageAndSetupImageView];
+    }
+    
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
@@ -206,12 +198,17 @@
 
 - (void)setupSnapshotBackgroundView
 {
-    self.snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.snapshotBackgroundView];
-    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
-    self.snapshotBackgroundView.alpha = 0;
+    UIView *snapshotBackgroundView = [self.delegate respondsToSelector:@selector(backgroundScreenshotForController:)] ? [self.delegate backgroundScreenshotForController:self] : nil;
+    self.snapshotBackgroundView = snapshotBackgroundView;
+    if (nil == snapshotBackgroundView) {
+        return;
+    }
+    snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:snapshotBackgroundView];
+    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
+    snapshotBackgroundView.alpha = 0;
 }
 
 - (void)setupScrollView
@@ -312,6 +309,12 @@
     self.topOverlay.hidden = !self.showCloseButton || !shouldShow;
 }
 
+- (void)setSwipeToDismiss:(BOOL)swipeToDismiss
+{
+    _swipeToDismiss = swipeToDismiss;
+    self.panRecognizer.enabled = self.swipeToDismiss;
+}
+
 - (void)setupGestureRecognizers
 {
     self.tapGestureRecognzier = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapBackground:)];
@@ -328,18 +331,18 @@
 
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     [self.view addGestureRecognizer:self.longPressGestureRecognizer];
+    
+    self.panRecognizer = [[UIPanGestureRecognizer alloc] init];
+    self.panRecognizer.maximumNumberOfTouches = 1;
+    self.panRecognizer.delegate = self;
+    self.panRecognizer.enabled = self.swipeToDismiss;
+    [self.panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
+    [self.scrollView addGestureRecognizer:self.panRecognizer];
+    
+    [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:self.panRecognizer];
+    [self.tapGestureRecognzier requireGestureRecognizerToFail:self.panRecognizer];
+    [delayedTouchBeganRecognizer requireGestureRecognizerToFail:self.panRecognizer];
 
-    if (self.swipeToDismiss) {
-        self.panRecognizer = [[UIPanGestureRecognizer alloc] init];
-        self.panRecognizer.maximumNumberOfTouches = 1;
-        self.panRecognizer.delegate = self;
-        [self.panRecognizer addTarget:self action:@selector(dismissingPanGestureRecognizerPanned:)];
-        [self.scrollView addGestureRecognizer:self.panRecognizer];
-        
-        [self.doubleTapGestureRecognizer requireGestureRecognizerToFail:self.panRecognizer];
-        [self.tapGestureRecognzier requireGestureRecognizerToFail:self.panRecognizer];
-        [delayedTouchBeganRecognizer requireGestureRecognizerToFail:self.panRecognizer];
-    }
     [self.tapGestureRecognzier requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
 }
 
@@ -634,22 +637,6 @@
         self.loadingSpinner = nil;
         
         [self loadImageAndSetupImageView];
-    }
-}
-
-@end
-
-@implementation FullscreenImageViewController (PanGestureRecognizerDelegate)
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer == self.panRecognizer) {
-        CGPoint offset = [self.panRecognizer translationInView:self.view];
-
-        return fabs(offset.y) > fabs(offset.x);
-    }
-    else {
-        return YES;
     }
 }
 

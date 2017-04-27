@@ -85,7 +85,7 @@ class RecentlyUsedEmojiPeristenceCoordinator {
             try url.wr_excludeFromBackup()
         }
         catch (let exception) {
-            DDLogError("Error creating \(directoryURL): \(exception)")
+            DDLogError("Error creating \(String(describing: directoryURL)): \(exception)")
         }
     }
 

@@ -18,7 +18,7 @@
 
 
 import Foundation
-import ZMCLinkPreview
+import WireLinkPreview
 
 @objc class MockTextMessageData : NSObject, ZMTextMessageData {
     var messageText: String = ""
@@ -36,6 +36,10 @@ import ZMCLinkPreview
     var removedUsers: Set<ZMUser>! = Set()
     var text: String! = ""
     var needsUpdatingUsers: Bool = false
+
+    var duration: TimeInterval = 0
+    var childMessages = Set<AnyHashable>()
+    var parentMessage: ZMSystemMessageData! = nil
     
     init(systemMessageType: ZMSystemMessageType) {
         self.systemMessageType = systemMessageType

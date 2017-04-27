@@ -17,6 +17,9 @@
 //
 
 
+private let log = ZMSLog(tag: "link opening")
+
+
 enum TweetOpeningOption: Int, LinkOpeningOption {
 
     case none, tweetbot, twitterrific
@@ -41,21 +44,29 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
         }
     }
 
+    static func storedPreference() -> TweetOpeningOption {
+        return TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
+    }
 }
 
 
 extension URL {
 
     func openAsTweet() -> Bool {
+        log.debug("Trying to open \"\(self)\" as tweet, isTweet: \(isTweet)")
         guard isTweet else { return false }
-        let saved = TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
+        let saved = TweetOpeningOption.storedPreference()
+        log.debug("Saved option to open a tweet: \(saved.displayString)")
+
         switch saved {
         case .none: return false
         case .tweetbot:
             guard let url = tweetbotURL else { return false }
+            log.debug("Trying to open tweetbot app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
         case .twitterrific:
             guard let url = twitterrificURL else { return false }
+            log.debug("Trying to open twitterific app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
         }
     }
@@ -79,11 +90,16 @@ fileprivate extension UIApplication {
 }
 
 
-fileprivate extension URL {
+extension URL {
 
     var isTweet: Bool {
         return absoluteString.contains("twitter.com") && absoluteString.contains("status")
     }
+
+}
+
+
+fileprivate extension URL {
 
     var tweetbotURL: URL? {
         guard isTweet else { return nil }

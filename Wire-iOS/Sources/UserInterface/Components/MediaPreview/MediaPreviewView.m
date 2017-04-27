@@ -22,6 +22,7 @@
 #import "MediaPreviewView.h"
 @import WireExtensionComponents;
 #import "UIFont+MagicAccess.h"
+#import "Wire-Swift.h"
 
 
 
@@ -32,6 +33,8 @@
 @property (nonatomic) UIImageView *providerImageView;
 @property (nonatomic) UIImageView *previewImageView;
 @property (nonatomic) UIView *overlayView;
+@property (nonatomic) UIView *contentView;
+@property (nonatomic) UIView *containerView;
 
 @end
 
@@ -54,48 +57,65 @@
 {
     [self setupSubviews];
     [self setupLayout];
+    [self updateCorners];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self updateCorners];
+}
+
+- (void)updateCorners
+{
+    self.containerView.layer.cornerRadius = 4;
 }
 
 - (void)setupSubviews
 {
+    self.contentView = [[UIView alloc] initForAutoLayout];
+    [self addSubview:self.contentView];
+    self.contentView.layoutMargins = UITableViewCell.layoutDirectionAwareLayoutMargins;
+
+    self.containerView = [[UIView alloc] initForAutoLayout];
+    self.containerView.clipsToBounds = YES;
+    [self.contentView addSubview:self.containerView];
+
+
     self.previewImageView = [[UIImageView alloc] initForAutoLayout];
     self.previewImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.previewImageView.clipsToBounds = YES;
-    [self addSubview:self.previewImageView];
+    [self.containerView addSubview:self.previewImageView];
     
     self.overlayView = [[UIView alloc] initForAutoLayout];
     self.overlayView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.48];
-    [self addSubview:self.overlayView];
+    [self.containerView addSubview:self.overlayView];
     
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
-    [self addSubview:self.titleLabel];
+    [self.containerView addSubview:self.titleLabel];
     
     self.playButton = [[IconButton alloc] initForAutoLayout];
     [self.playButton setIcon:ZetaIconTypePlay withSize:ZetaIconSizeLarge forState:UIControlStateNormal];
-    [self addSubview:self.playButton];
+    [self.containerView addSubview:self.playButton];
     
     self.providerImageView = [[UIImageView alloc] initForAutoLayout];
     self.providerImageView.alpha = 0.4f;
-    [self addSubview:self.providerImageView];
+    [self.containerView addSubview:self.providerImageView];
 }
 
 - (void)setupLayout
 {
-    [self.previewImageView autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
-    
-    [self.overlayView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.overlayView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.contentView autoPinEdgesToSuperviewEdges];
+    [self.containerView autoPinEdgesToSuperviewMargins];
 
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.overlayView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:1.0f];
-        [self.overlayView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:1.0f];
-    }];
+    [self.previewImageView autoPinEdgesToSuperviewEdges];
+    [self.overlayView autoPinEdgesToSuperviewEdges];
     
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:12.0f];
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:24.0f];
+    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:12.0f];
 
     [self.providerImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:15.0f];
-    [self.providerImageView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:24.0f];
+    [self.providerImageView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:12.0f];
 
     [self.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self.providerImageView autoPinEdge:ALEdgeLeading

@@ -18,7 +18,7 @@
 
 
 @import Foundation;
-@import zmessaging;
+@import WireSyncEngine;
 #import "MockLoader.h"
 #import "MockUserClient.h"
 
@@ -39,6 +39,7 @@
 @property (nonatomic, readwrite) BOOL isPendingApprovalByOtherUser;
 @property (nonatomic, readwrite) BOOL isPendingApprovalBySelfUser;
 @property (nonatomic, readwrite) BOOL isConnected;
+@property (nonatomic, readwrite) BOOL untrusted;
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic) NSSet <id<UserClientType>> * clients;

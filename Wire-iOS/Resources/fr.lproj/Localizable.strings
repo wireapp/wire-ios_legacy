@@ -25,7 +25,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
 "peoplepicker.search_placeholder" = "Rechercher par nom ou par identifiant";
-"peoplepicker.header.top_people" = "Personnes favorites";
+"peoplepicker.header.top_people" = "Contacts favoris";
 "peoplepicker.button.create_conversation" = "Créer un groupe";
 "peoplepicker.button.add_to_conversation" = "Ajouter";
 "peoplepicker.header.conversations" = "Groupes";
@@ -73,10 +73,13 @@
 "contacts_ui.title" = "Inviter des personnes";
 
 "contacts_ui.no_contact.title" = "Aucune conversation active\n";
-"contacts_ui.no_contact.message" = "Appuyer sur contacts pour démarrer une nouvelle conversation";
+"contacts_ui.no_contact.message" = "Appuyez sur un contact pour démarrer une conversation";
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Rejoindre";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "personnes";
+"bottom_bar.plus_button.title" = "Nouveau";
 
 
 // Profile Header View
@@ -97,11 +100,8 @@
 "peoplepicker.hide_search_result_progress" = "Masquage…";
 
 "send_invitation.subject" = "Connectez-vous avec moi sur Wire";
-"send_invitation.text" = "Je suis sur Wire, recherchez %@ ou visitez get.wire.com.";
+"send_invitation.text" = "Je suis sur Wire, recherchez %@ ou visitez get.wire.com";
 "send_invitation_no_email.text" = "Je suis sur Wire. Visitez get.wire.com pour vous connecter avec moi.";
-
-"send_personal_invitation.text" = "Je suis sur Wire, on se parle là : https://get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -117,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Conversations";
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Fermer l'archive";
+
+"conversation.status.call" = "Appel en cours";
+"conversation.status.typing" = "Tape un message…";
+"conversation.status.typing.group" = "%@ : tape un message…";
+"conversation.status.silenced" = "En sourdine";
+"conversation.status.blocked" = "Bloqué";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "A partagé un lien";
+"conversation.status.message.image" = "A partagé une photo";
+"conversation.status.message.location" = "A partagé un emplacement";
+"conversation.status.message.audio" = "A partagé un message audio";
+"conversation.status.message.video" = "A partagé une vidéo";
+"conversation.status.message.file" = "A partagé un fichier";
+"conversation.status.message.knock" = "A fait un signe";
+"conversation.status.message.missedcall" = "Appel manqué";
+"conversation.status.message.ephemeral" = "Message éphémère";
+
+"conversation.status.unsent" = "⚠️ Message non envoyé";
+"conversation.status.you" = "Vous";
+"conversation.status.added_multiple" = "Personnes ajoutées";
+"conversation.status.you_was_added" = "%@ vous a ajouté";
+"conversation.status.added_users" = "%@ a ajouté %@";
+"conversation.status.removed_multiple" = "Personnes enlevées";
+"conversation.status.you_were_removed" = "Vous avez été retiré";
+"conversation.status.you_left" = "Vous avez quitté la conversation";
+"conversation.status.started_conversation" = "%@ a débuté une conversation";
+"conversation.status.removed_users" = "%@ a retiré %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Conversation";
+"compose.message.title" = "Message";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -157,9 +192,9 @@
 "image.edit_image" = "Modifier l’image";
 
 // Camera access
-"camera_access.denied" = "Wire a besoin d’accéder à la Caméra.";
+"camera_access.denied" = "Wire a besoin d’accéder à l'appareil photo.";
 "camera_access.denied.instruction" = "";
-"camera_access.denied.open_settings" = "Activez-le dans les paramètres de Wire";
+"camera_access.denied.open_settings" = "Autoriser l'accès dans les paramètres de Wire";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Verrouillage AE/AF";
@@ -195,8 +230,15 @@
 "content.system.other_removed_other" = "%@ a retiré %@";
 "content.system.other_removed_you" = "%@ vous a enlevé";
 "content.system.you_removed_other" = "Vous avez retiré %@";
-"content.system.other_renamed_conv" = "%@ a renommé la conversation";
-"content.system.you_renamed_conv" = "Vous avez renommé la conversation";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ a commencé une conversation avec %@";
+"content.system.conversation.added" = "%@ a ajouté %@";
+"content.system.conversation.removed" = "%@ a retiré %@";
+"content.system.conversation.left" = "%@ est parti";
+"content.system.conversation.you" = "Vous";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ a supprimé le nom de la conversation";
 "content.system.you_renamed_conv_to_nothing" = "Vous avez supprimé le nom de la conversation";
 "content.system.pending_message_timestamp" = "Envoi…";
@@ -204,9 +246,10 @@
 "content.system.message_delivered_timestamp" = "Distribué";
 "content.system.failedtosend_message_timestamp" = "L'envoi a échoué.";
 "content.system.failedtosend_message_timestamp_resend" = "Renvoyer";
+"content.system.failedtosend_message_timestamp_delete" = "Supprimer";
 "content.system.like_tooltip" = "Appuyez pour aimer";
 "content.system.deleted_message_prefix_timestamp" = "Effacé le %@";
-"content.system.edited_message_prefix_timestamp" = "Édité le %@";
+"content.system.edited_message_prefix_timestamp" = "Modifié le %@";
 "content.system.connecting_to" = "Connexion à %@. \nDémarrer une conversation";
 "content.system.connected_to" = "Connecté à %@. \nDémarrer une conversation";
 "content.system.other_wanted_to_talk" = "%@ a appelé";
@@ -215,13 +258,24 @@
 "content.system.you_started" = "Vous";
 "content.system.this_device" = "cet appareil";
 
+"content.system.call.you" = "Vous";
+"content.system.call.called" = "%@ a appelé";
+"content.system.call.called-you" = "%@ a appelé";
+
+"content.system.renamed_conv.title" = "%@ a renommé la conversation";
+"content.system.renamed_conv.title-you" = "%@ a renommé la conversation";
+"content.system.renamed_conv.title.you" = "Vous";
+
 "content.system.reactivated_device" = "Vous avez recommencé à utiliser %@. Les messages envoyés auparavant n’apparaîtront pas ici.";
 
 "content.system.new_device" = "un nouvel appareil";
 "content.system.started_using" = "a commencé à utiliser";
 "content.system.is_verified" = "Toutes les empreintes sont vérifiées";
 
-"content.system.unverified" = "%@ n'avez pas vérifié un des %@"; // example "You unverified one of Jule's devices"
+"content.system.new_users" = "Un nouvel utilisateur a rejoint.";
+"content.system.verify_devices" = "Vérifier les périphériques";
+
+"content.system.unverified" = "%@ n'avez pas vérifié un des %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "vos appareils";
 "content.system.other_devices" = "appareils de %@";
 
@@ -236,7 +290,7 @@
 "content.system.cannot_decrypt.identity" = "L'identité de l'appareil %@ a changé. Message non délivré.";
 "content.system.cannot_decrypt.identity.you_part" = "Votre";
 "content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // posessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Pour en savoir plus";
+"content.system.cannot_decrypt.identity.why_part" = "En savoir plus";
 "content.system.cannot_decrypt.otherDevice_part" = "(appareil %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
@@ -255,21 +309,23 @@
 "content.image.save_image" = "Enregistrer";
 
 "content.message.delete" = "Supprimer";
+"content.message.save" = "Enregistrer";
 
 "content.message.like" = "J'aime";
 "content.message.unlike" = "Je n'aime plus";
 "content.message.forward" = "Partager";
 "content.message.go_to_conversation" = "Révéler";
 "content.message.forward.to" = "Rechercher…";
+"content.message.open" = "Ouvrir";
 
 "content.reactions_list.likers" = "Aimé par";
 
 "content.file.too_big" = "Vous pouvez envoyer des fichiers jusqu'à %@";
 // Someone pinged
-"content.ping.text" = "%1$@ VOUS A FAIT UN SIGNE";
+"content.ping.text" = "%1$@ a fait un signe";
 
 // Current user pinged
-"content.ping.you.text" = "Vous avez fait un signe";
+"content.ping.text.you" = "Vous";
 
 // Inline Player
 "content.player.unable_to_play" = "IMPOSSIBLE DE JOUER LE MORCEAU";
@@ -279,7 +335,7 @@
 "missive.connection_request.default_message" = "Bonjour %@\nConnectons-nous sur Wire. \n%@";
 
 "connection_request.send_button_title" = "Se connecter";
-"inbox.connection_request.connect_button_title" = "Se connecter";
+"inbox.connection_request.connect_button_title" = "Accepter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
 
 // Voice
@@ -289,14 +345,25 @@
 "voice.status.joining" = "%@\nConnexion";
 "voice.status.video_not_available" = "Vidéo désactivée";
 "voice.status.low_connection" = "Mauvaise connexion";
-"voice.network_error.title" = "Pas de connexion Internet";
+"voice.network_error.title" = "Pas de connexion internet";
+"voice.status.cbr" = "Échantillonnage constant (CBR)";
 "voice.network_error.body" = "Vous devez être connecté pour pouvoir appeler. Vérifiez votre connexion et réessayez.";
+"voice.degradation.new_self_device" = "Vous avez commencé à utiliser un nouvel appareil.";
+"voice.degradation.new_user_device" = "%@ a commencé à utiliser un nouvel appareil.";
+"voice.degradation_outgoing.prompt" = "Voulez-vous toujours appeler ?";
+"voice.degradation_incoming.prompt" = "Voulez-vous toujours prendre l'appel ?";
 "voice.accept_button.title" = "Accepter";
 "voice.decline_button.title" = "Refuser";
 "voice.hang_up_button.title" = "Raccrocher";
 "voice.mute_button.title" = "Silence";
 "voice.video_button.title" = "Vidéo";
 "voice.speaker_button.title" = "Haut-parleur";
+"voice.cancel_button.title" = "Annuler";
+"voice.call_button.title" = "Appel";
+
+"voice.alert.call_in_progress.title" = "Appel en cours";
+"voice.alert.call_in_progress.message" = "Vous ne pouvez avoir qu’un seul appel actif à la fois";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire a besoin d’accéder au Micro.";
 "voice.alert.microphone_warning.explanation" = "Activez-le dans les paramètres de Wire.";
@@ -368,7 +435,7 @@
 "profile.connection_request_dialog.title" = "Accepter ?";
 "profile.connection_request_dialog.message" = "Cela vous connectera et ouvrira la conversation avec %@.";
 "profile.connection_request_dialog.button_cancel" = "Ignorer";
-"profile.connection_request_dialog.button_connect" = "Se connecter";
+"profile.connection_request_dialog.button_connect" = "Ajouter";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annuler votre demande ?";
@@ -413,7 +480,8 @@
 // Options menu contents
 
 "self.settings" = "Paramètres";
-"self.help_center" = "Assistance";
+"self.profile" = "Profil";
+"self.help_center" = "Aide";
 "self.help_center.support_website" = "Site de l'assistance Wire";
 "self.help_center.contact_support" = "Contacter le support technique";
 "self.about" = "À propos";
@@ -450,12 +518,12 @@
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Téléphone";
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
-"self.settings.account_section.add_handle.title" = "Ajouter un nom d'utilisateur";
+"self.settings.account_section.add_handle.title" = "Choisir un identifiant";
 
 "self.settings.account_details_group.info.footer" = "Des personnes peuvent vous trouver avec ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
 
-"self.settings.account_details.remove_device.title" = "Enlever l'appareil";
+"self.settings.account_details.remove_device.title" = "Supprimer l'appareil";
 "self.settings.account_details.key_fingerprint.title" = "Empreinte";
 "self.settings.account_details.remove_device.message" = "Votre mot de passe est nécessaire pour supprimer l’appareil";
 "self.settings.account_details.remove_device.password" = "Mot de passe";
@@ -469,7 +537,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte unique. Comparez les et vérifiez vos appareils et conversations.";
 "self.settings.device_details.reset_session.subtitle" = "Si les empreintes ne correspondent pas, réinitialisez la session afin de générer de nouvelles clés de chiffrement des deux côtés.";
-"self.settings.device_details.remove_device.subtitle" = "Supprimez ce périphérique si vous avez cessé de l’utiliser. Vous serez déconnecté de cet appareil immédiatement.";
+"self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous ne l'utilisez plus. Vous serez déconnecté de cet appareil immédiatement.";
 "self.settings.device_details.reset_session.success" = "La session a été réinitialisée";
 
 "self.settings.account_details.actions.title" = "Actions";
@@ -483,7 +551,7 @@
 
 "self.settings.account_section.handle.change.title" = "Nom d'utilisateur";
 "self.settings.account_section.handle.change.save" = "Enregistrer";
-"self.settings.account_section.handle.change.footer" = "Au moins 2 caractères. a — z, 0 — 9 et _ seulement.";
+"self.settings.account_section.handle.change.footer" = "Minimum 2 caractères. Parmi a–z, 0–9 et _.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Déjà pris";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Impossible d'enregistrer le nom d'utilisateur";
@@ -537,7 +605,12 @@
 
 "self.settings.callkit.title" = "Appels";
 "self.settings.callkit.caption" = "Partager avec iOS";
-"self.settings.callkit.description" = "Afficher les appels Wire sur l'écran de vérouillage et dans l'historique des appels sur iOS. Si iCloud est activé, l'historique des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre soit appliqué.";
+"self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre s'applique.";
+
+"self.settings.vbr.title" = "Échantillonnage variable (VBR)";
+"self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";
@@ -546,7 +619,7 @@
 // By popular demand
 "self.settings.popular_demand.title" = "À la demande générale";
 "self.settings.popular_demand.send_button.title" = "Bouton d'envoi";
-"self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer via la touche entrer.";
+"self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer en appuyant sur la touche entrée.";
 
 // Open in
 "self.settings.external_apps.header" = "Ouvrir avec";
@@ -559,7 +632,7 @@
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
-"open_link.maps.option.apple" = "Cartes";
+"open_link.maps.option.apple" = "Plans";
 "open_link.maps.option.google" = "Google Maps";
 
 "open_link.browser.option.safari" = "Safari";
@@ -583,8 +656,9 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Ouvrir les paramètres de Contacts";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Cela vous permet de vous connecter avec les autres. Nous rendons anonymes toutes les informations et ne les partageons pas, en aucun cas. Autorisez l'accès via Paramètres > Confidentialité > Contacts.";
 
-"self.settings.privacy_security.lock_app" = "Verrouiller avec Touch ID & code";
-"self.settings.privacy_security.lock_app.description" = "Déverrouillage Wire";
+"self.settings.privacy_security.lock_app" = "Verrouiller avec un code";
+"self.settings.privacy_security.lock_app.subtitle" = "Verrouille Wire après 10 secondes en arrière-plan. Déverrouillage avec Touch ID ou le code.";
+"self.settings.privacy_security.lock_app.description" = "Déverrouiller Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
@@ -619,7 +693,7 @@
 "self.settings.password_reset_menu.title" = "Réinitialiser votre mot de passe";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Invitez vos amis";
+"self.settings.invite_friends.title" = "Inviter des personnes";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -657,7 +731,7 @@
 
 "registration.verify_email.instructions" = "Nous avons envoyé un email à %@.\nCliquez sur le lien afin de vérifier votre adresse.";
 "registration.verify_email.resend.instructions" = "Message non reçu ?";
-"registration.verify_email.resend.button_title" = "Envoyer de nouveau";
+"registration.verify_email.resend.button_title" = "Renvoyer";
 
 "registration.select_picture.subtitle" = "Wire est tellement plus sympa avec une photo.";
 "registration.select_picture.button_title" = "Choisissez votre photo";
@@ -706,7 +780,7 @@
 
 "registration.signin.title" = "Se connecter";
 "registration.signin.too_many_devices.title" = "";
-"registration.signin.too_many_devices.subtitle" = "Supprimez un de vos autres périphériques pour commencer à utiliser Wire sur celui-ci.";
+"registration.signin.too_many_devices.subtitle" = "Supprimez un de vos autres appareils pour commencer à utiliser Wire sur celui-ci.";
 "registration.signin.too_many_devices.manage_button.title" = "Gérer les appareils";
 "registration.signin.too_many_devices.sign_out_button.title" = "Se déconnecter";
 "registration.signin.email_button.title" = "Email";
@@ -748,7 +822,7 @@
 // Username takeover screen
 "registration.select_handle.takeover.title" = "Les noms sont ici.";
 "registration.select_handle.takeover.subtitle" = "Réclamer votre nom unique sur Wire.";
-"registration.select_handle.takeover.subtitle_link" = "En savoir plus ";
+"registration.select_handle.takeover.subtitle_link" = "En savoir plus";
 
 "registration.select_handle.takeover.choose_own" = "Choisissez le vôtre";
 "registration.select_handle.takeover.keep_suggested" = "Garder celle-là";
@@ -766,7 +840,7 @@
 "error.user.phone_code_too_many" = "Nous vous avons déjà envoyé un code par SMS. Appuyez sur renvoyer après 10 minutes pour en obtenir un nouveau.";
 "error.user.registration_unknown_error" = "Quelque chose n'a pas fonctionné. Veuillez essayer de nouveau.";
 "error.user.device_deleted_remotely" = "Vous avez été déconnecté d’un autre appareil.";
-"error.user.last_identity_cant_be_deleted" = "Vous devez avoir une adresse mail et un numéro de téléphone pour pouvoir enlever l’un d'entre eux";
+"error.user.last_identity_cant_be_deleted" = "Une adresse e-mail ou un numéro de téléphone est requis.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -779,7 +853,7 @@
 "error.call.gsm_ongoing.title" = "Appel cellulaire";
 "error.call.gsm_ongoing" = "S’il vous plaît annuler l’appel cellulaire avant d’appeler sur Wire.";
 "error.call.general.title" = "Erreur d’appel";
-"error.call.general" = "Veuillez essayer d’appeler à nouveau dans quelques minutes.";
+"error.call.general" = "Veuillez renouveler votre appel dans quelques minutes.";
 "error.call.slow_connection.title" = "Connexion lente";
 "error.call.slow_connection" = "Vous pourriez avoir des problèmes pendant l'appel";
 "error.call.slow_connection.call_anyway" = "Appeler quand même";
@@ -826,5 +900,20 @@
 "collections.section.no_items" = "Aucun élément dans la bibliothèque";
 "collections.image_viewer.copied.title" = "Image copiée";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "Chercher dans les messages";
+"collections.search.no_items" = "Aucun résultat";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "Aucun message";
+"compose.drafts.empty.subtitle" = "Appuyez sur + pour en rédiger un.";
+"compose.drafts.compose.title" = "Écrivez un message";
+"compose.drafts.compose.subject.placeholder" = "Appuyez pour définir un sujet";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirmer la suppression";
+"compose.drafts.compose.delete.confirm.message" = "Cette action supprimera définitivement le brouillon et ne pourra pas être annulée.";
+"compose.drafts.compose.delete.confirm.action.title" = "Supprimer";

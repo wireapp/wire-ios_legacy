@@ -22,23 +22,29 @@
 #import "ConversationContentViewController.h"
 
 #import "WAZUIMagicIOS.h"
-#import <zmessaging/zmessaging.h>
+#import <WireSyncEngine/WireSyncEngine.h>
 #import "MessageAction.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationCell;
 @class MessagePresenter;
+@class FLAnimatedImageView;
+@class ImageMessageCell;
 
 @interface ConversationContentViewController ()
 
 /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
-@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage>messageWithExpandedTools;
+@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage> messageWithExpandedTools;
 
 @property (nonatomic) ZMConversationMessageWindow *messageWindow;
 @property (nonatomic) MessagePresenter* messagePresenter;
 @property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
 @property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
+@property (nonatomic, nullable, weak) ImageMessageCell *pinchImageCell;
+@property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
+@property (nonatomic, nullable) UIView *dimView;
+@property (nonatomic) CGPoint initialPinchLocation;
 
 - (void)removeHighlightsAndMenu;
 - (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
@@ -57,6 +63,5 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
 
 @end
-
 
 NS_ASSUME_NONNULL_END

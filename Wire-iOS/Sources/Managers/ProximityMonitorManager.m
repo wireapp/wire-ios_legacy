@@ -18,7 +18,7 @@
 
 
 #import "ProximityMonitorManager.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "Constants.h"
 #import "ZClientViewController.h"
 #import "avs+iOS.h"

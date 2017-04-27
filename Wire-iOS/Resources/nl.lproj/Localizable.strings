@@ -73,10 +73,13 @@
 "contacts_ui.title" = "Nodig anderen uit";
 
 "contacts_ui.no_contact.title" = "Geen actieve gesprekken\n";
-"contacts_ui.no_contact.message" = "Druk op contacten om een gesprek te beginnen";
+"contacts_ui.no_contact.message" = "Tap een persoon om een gesprek te beginnen";
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Deelnemen";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "personen";
+"bottom_bar.plus_button.title" = "Nieuw";
 
 
 // Profile Header View
@@ -97,16 +100,13 @@
 "peoplepicker.hide_search_result_progress" = "Verbergen…";
 
 "send_invitation.subject" = "Verbind met mij op Wire";
-"send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com.";
+"send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com";
 "send_invitation_no_email.text" = "Ik gebruik Wire. Ga naar get.wire.com om met mij te verbinden.";
-
-"send_personal_invitation.text" = "Ik ben op Wire, praat met mij daar: get.wire.com.";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "deelde een foto";
-"notifications.pinged" = "pingde";
+"notifications.pinged" = "gepinged";
 "notifications.sent_file" = "deelde een bestand";
 "notifications.sent_location" = "deelde een locatie";
 "notifications.sent_video" = "deelde een video";
@@ -117,8 +117,43 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
+"list.title" = "Gesprekken";
 "list.archived_conversations" = "ARCHIEF";
 "list.archived_conversations_close" = "Archief sluiten";
+
+"conversation.status.call" = "Uitgaand gesprek";
+"conversation.status.typing" = "Typt een bericht…";
+"conversation.status.typing.group" = "%@: Typt een bericht…";
+"conversation.status.silenced" = "Gedempt";
+"conversation.status.blocked" = "Geblokkeerd";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Deel een link";
+"conversation.status.message.image" = "Deelde een foto";
+"conversation.status.message.location" = "Deel een locatie";
+"conversation.status.message.audio" = "Deelde een audio bericht";
+"conversation.status.message.video" = "Deelde een video";
+"conversation.status.message.file" = "Deelde een bestand";
+"conversation.status.message.knock" = "Gepinged";
+"conversation.status.message.missedcall" = "Gemiste oproep";
+"conversation.status.message.ephemeral" = "Tijdelijk bericht";
+
+"conversation.status.unsent" = "⚠️ On verstuurt bericht";
+"conversation.status.you" = "Jij";
+"conversation.status.added_multiple" = "Personen toegevoegd";
+"conversation.status.you_was_added" = "%@ heeft jou toegevoegd";
+"conversation.status.added_users" = "%@ heeft %@ toegevoegd";
+"conversation.status.removed_multiple" = "Personen verwijderd";
+"conversation.status.you_were_removed" = "Je bent verwijderd";
+"conversation.status.you_left" = "Jij verliet";
+"conversation.status.started_conversation" = "%@ begon een gesprek";
+"conversation.status.removed_users" = "%@ verwijderde %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Gesprek";
+"compose.message.title" = "Stuur bericht";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,8 +230,15 @@
 "content.system.other_removed_other" = "%@ verwijderde %@";
 "content.system.other_removed_you" = "%@ verwijderde jou";
 "content.system.you_removed_other" = "Jij verwijderde %@";
-"content.system.other_renamed_conv" = "%@ hernoemde het gesprek";
-"content.system.you_renamed_conv" = "Je hebt de conversatie hernoemd";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.started" = "%@ begon een gesprek met %@";
+"content.system.conversation.added" = "%@ heeft %@ toegevoegd";
+"content.system.conversation.removed" = "%@ verwijderde %@";
+"content.system.conversation.left" = "%@ verliet";
+"content.system.conversation.you" = "Jij";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ verwijderde de naam van de conversatie";
 "content.system.you_renamed_conv_to_nothing" = "Je verwijderde de naam van de conversatie";
 "content.system.pending_message_timestamp" = "Verzenden…";
@@ -204,6 +246,7 @@
 "content.system.message_delivered_timestamp" = "Afgeleverd";
 "content.system.failedtosend_message_timestamp" = "Verzenden mislukt.";
 "content.system.failedtosend_message_timestamp_resend" = "Opnieuw sturen";
+"content.system.failedtosend_message_timestamp_delete" = "Verwijderen";
 "content.system.like_tooltip" = "Tap om leuk te vinden";
 "content.system.deleted_message_prefix_timestamp" = "Verwijderd op %@";
 "content.system.edited_message_prefix_timestamp" = "Gewijzigd op %@";
@@ -215,15 +258,26 @@
 "content.system.you_started" = "Jij";
 "content.system.this_device" = "dit apparaat";
 
+"content.system.call.you" = "Jij";
+"content.system.call.called" = "%@ belde";
+"content.system.call.called-you" = "%@ belde";
+
+"content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
+"content.system.renamed_conv.title-you" = "%@ hernoemde het gesprek";
+"content.system.renamed_conv.title.you" = "Jij";
+
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
 "content.system.new_device" = "een nieuw apparaat";
 "content.system.started_using" = "begon met het gebruik van";
 "content.system.is_verified" = "Alle vingerafdrukken zijn geverifieerd";
 
-"content.system.unverified" = "%@ trok de verificatie van %@ in"; // example "You unverified one of Jule's devices"
+"content.system.new_users" = "Nieuwe gebruiker toegevoegd.";
+"content.system.verify_devices" = "Controleer apparaten";
+
+"content.system.unverified" = "%@ trok de verificatie van %@ in"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "jouw apparaten";
-"content.system.other_devices" = "%@'s apparaten";
+"content.system.other_devices" = "%@’s apparaten";
 
 "content.system.missing_messages.title" = "Je hebt dit apparaat een tijdje niet gebruikt. Sommige berichten worden hier niet getoond.";
 "content.system.missing_messages.subtitle_start" = "Tijdens,";
@@ -235,12 +289,12 @@
 
 "content.system.cannot_decrypt.identity" = "%@'s apparaatidentiteit is veranderd. Het bericht is niet afgeleverd.";
 "content.system.cannot_decrypt.identity.you_part" = "Jouw";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@'s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Leer meer";
 "content.system.cannot_decrypt.otherDevice_part" = "(Apparaat %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "Je gebruik een oudere versie van Wire die dit type bericht niet kan tonen.";
+"content.system.unknown_message.body" = "Je gebruik een oudere versie van Wire die dit type bericht niet kan weergeven.";
 "content.system.unknown_message.body.link" = "Waarom gebeurt dit?";
 
 "content.file.uploading" = "Uploaden…";
@@ -255,21 +309,23 @@
 "content.image.save_image" = "Opslaan";
 
 "content.message.delete" = "Verwijderen";
+"content.message.save" = "Opslaan";
 
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
 "content.message.forward" = "Delen";
 "content.message.go_to_conversation" = "Tonen";
 "content.message.forward.to" = "Zoeken…";
+"content.message.open" = "Openen";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
 
 "content.file.too_big" = "U kunt bestanden versturen tot %@";
 // Someone pinged
-"content.ping.text" = "%1$@ PINGDE";
+"content.ping.text" = "%1$@ pinged";
 
 // Current user pinged
-"content.ping.you.text" = "JIJ PINGDE";
+"content.ping.text.you" = "Jij";
 
 // Inline Player
 "content.player.unable_to_play" = "NIET MOGELIJK OM AF TE SPELEN";
@@ -290,13 +346,24 @@
 "voice.status.video_not_available" = "Video is uitgeschakeld";
 "voice.status.low_connection" = "Slechte verbinding";
 "voice.network_error.title" = "Geen verbinding met internet";
+"voice.status.cbr" = "Constante Bit Rate";
 "voice.network_error.body" = "Je moet online zijn om te bellen. Controleer je verbinding en probeer opnieuw.";
+"voice.degradation.new_self_device" = "Je gebruikt een nieuw apparaat.";
+"voice.degradation.new_user_device" = "%@ is een ander apparaat gaan gebruiken.";
+"voice.degradation_outgoing.prompt" = "Wil je het gesprek nog steeds negeren?";
+"voice.degradation_incoming.prompt" = "Wil je het gesprek nog steeds accepteren?";
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
 "voice.mute_button.title" = "Dempen";
 "voice.video_button.title" = "Video";
 "voice.speaker_button.title" = "Luidspreker";
+"voice.cancel_button.title" = "Annuleer";
+"voice.call_button.title" = "Oproep";
+
+"voice.alert.call_in_progress.title" = "Bezig met bellen";
+"voice.alert.call_in_progress.message" = "Je kunt maximaal een gesprek tegelijk voeren";
+"voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire heeft toegang nodig tot de microfoon.";
 "voice.alert.microphone_warning.explanation" = "Open instellingen voor Wire om toegang tot de microfoon te geven.";
@@ -394,7 +461,7 @@
 "profile.devices.fingerprint_message.link" = "Waarom gesprekken verifiëren?";
 
 // Device detail
-"profile.devices.detail.verify_message" = "Verifieer dat deze digitale vingerafdruk overeenkomt met %@'s zijn apparaat.";
+"profile.devices.detail.verify_message" = "Verifieer dat deze digitale vingerafdruk overeenkomt met %@’s zijn apparaat.";
 "profile.devices.detail.verify_message.link" = "Hoe doe ik dat?";
 "profile.devices.detail.show_my_device.title" = "Toon mijn apparaat vingerafdruk";
 "device.verified" = "Geverifieerd";
@@ -413,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Instellingen";
+"self.profile" = "Profiel";
 "self.help_center" = "Ondersteuning";
 "self.help_center.support_website" = "Wire Support Website";
 "self.help_center.contact_support" = "Contact Support";
@@ -505,7 +573,7 @@
 
 "self.settings.account_section.phone_number.change.title" = "Telefoonnummer";
 "self.settings.account_section.phone_number.change.save" = "Opslaan";
-"self.settings.account_section.phone_number.change.remove" = "Verwijder Telefoon nummer";
+"self.settings.account_section.phone_number.change.remove" = "Verwijder Telefoon Nummer";
 
 "self.settings.account_section.phone_number.change.remove.action" = "Verwijder Telefoon Nummer";
 
@@ -538,6 +606,11 @@
 "self.settings.callkit.title" = "Oproepen";
 "self.settings.callkit.caption" = "Deel met iOS";
 "self.settings.callkit.description" = "Toon Wire-gesprekken op het toegangsscherm en in de iOS gespreksgeschiedenis. Als iCloud aan staat wordt de oproepgeschiedenis bewaard bij Apple. Herstart Wire om deze instelling toe te passen.";
+
+"self.settings.vbr.title" = "Variable Bit Rate codering";
+"self.settings.vbr.description" = "Hierdoor gebruik je minder data tijdens het bellen, en het werkt beter op trage netwerken. Zet dit uit om een constante Bitrate Encoding te gebruiken.";
+
+"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire oproep";
 "self.settings.sound_menu.sounds.wire_message" = "Wire bericht";
@@ -583,7 +656,8 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Open instellingen voor Wire";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dit helpt je te verbinden met anderen. We anonimiseren alle informatie en delen dit nooit met derde partijen. Geef toegang via Instellingen > Privacy > Contacten.";
 
-"self.settings.privacy_security.lock_app" = "Vergrendel met Touch ID & Wachtwoord";
+"self.settings.privacy_security.lock_app" = "Vergrendel Met Wachtwoord";
+"self.settings.privacy_security.lock_app.subtitle" = "Vergrendel Wire na dat hij 10 seconden in de achtergrond is. Ontgrendelen kan met Touch ID of door je wachtwoord in te vullen.";
 "self.settings.privacy_security.lock_app.description" = "Ontgrendel Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Ontgrendel Wire met Touch ID of Wachtwoord";
@@ -604,7 +678,7 @@
 "self.settings.advanced.reset_push_token.title" = "Herstel de Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervindt met push-notificaties, kan Wire je vragen om deze token te herstellen.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push token is gereset";
-"self.settings.advanced.reset_push_token_alert.message" = "Notificaties zullen worden hersteld over een paar seconden.";
+"self.settings.advanced.reset_push_token_alert.message" = "Notificaties zullen over een paar seconden worden hersteld.";
 "self.settings.advanced.version_technical_details.title" = "Technische details van deze versie";
 
 // Technical Report
@@ -619,7 +693,7 @@
 "self.settings.password_reset_menu.title" = "Herstel wachtwoord";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Nodig vrienden uit";
+"self.settings.invite_friends.title" = "Nodig anderen uit";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -766,7 +840,7 @@
 "error.user.phone_code_too_many" = "We hebben je al een code via SMS verstuurd. Klik op Opnieuw sturen na 10 minuten om een nieuwe code te krijgen.";
 "error.user.registration_unknown_error" = "Er ging iets mis. Probeer het nogmaals.";
 "error.user.device_deleted_remotely" = "Je bent uitgelogd door een ander apparaat.";
-"error.user.last_identity_cant_be_deleted" = "Je moet een email adres of een telefoon nummer hebben om er een van te verwijderen";
+"error.user.last_identity_cant_be_deleted" = "Een email adres of een telefoon nummer is verplicht.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -826,5 +900,20 @@
 "collections.section.no_items" = "Geen items in de verzameling";
 "collections.image_viewer.copied.title" = "Afbeelding gekopieerd";
 
-"collections.search.field.placeholder" = "Search text messages";
-"collections.search.no_items" = "No results";
+"collections.search.field.placeholder" = "Zoek berichten";
+"collections.search.no_items" = "Geen resultaten";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Schrijf een bericht";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";
+"compose.drafts.compose.delete.confirm.message" = "Hiermee zullen alle concepten verwijdert worden, dit kan niet ongedaan gemaakt worden.";
+"compose.drafts.compose.delete.confirm.action.title" = "Verwijderen";

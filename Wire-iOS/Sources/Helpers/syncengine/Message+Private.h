@@ -16,14 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "Message.h"
+#import "Message+UI.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Message (Private)
 
++ (NSDateFormatter *)dayFormatter;
 + (NSDateFormatter *)shortVersionDateFormatter;
 + (NSDateFormatter *)longVersionTimeFormatter;
+
 
 @end
 

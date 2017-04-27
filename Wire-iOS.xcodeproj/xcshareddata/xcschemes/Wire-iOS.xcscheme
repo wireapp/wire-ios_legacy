@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Wire-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BFAD54021E6972CD0015C677"
+               BuildableName = "NotificationFetchComponentsTests.xctest"
+               BlueprintName = "NotificationFetchComponentsTests"
+               ReferencedContainer = "container:Wire-iOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
@@ -122,6 +132,11 @@
             key = "DYLD_PRINT_RPATHS"
             value = ""
             isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "IMAGE_DIFF_DIR"
+            value = "$(SOURCE_ROOT)/SnapshotResults"
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"

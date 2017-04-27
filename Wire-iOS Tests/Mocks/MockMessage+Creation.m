@@ -22,7 +22,7 @@
 #import "Wire_iOS_Tests-Swift.h"
 #import "MockUserClient.h"
 #import "Wire-Swift.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 @implementation MockMessageFactory
 
@@ -103,6 +103,16 @@
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
     message.imageMessageData = [[MockImageMessageData alloc] init];
 
+    return message;
+}
+
++ (MockMessage *)pendingImageMessage
+{
+    MockImageMessageData *imageData = [[MockImageMessageData alloc] init];
+    
+    MockMessage *message = [self imageMessage];
+    message.imageMessageData = imageData;
+    
     return message;
 }
 

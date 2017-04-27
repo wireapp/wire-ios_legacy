@@ -19,9 +19,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "zmessaging+iOS.h"
-#import <ziphy/ziphy-Swift.h>
-#import <zmessaging/zmessaging-Swift.h>
+@import ziphy;
+@import WireSyncEngine;
 
 @protocol ProxiedURLRequester <NSObject>
 - (ZMProxyRequest  * _Nonnull)doRequestWithPath:(NSString * __nonnull)path
@@ -32,7 +31,7 @@
 
 
 
-/// Extension for Ziphy and zmessaging proxying of the request to the Wire backend
+/// Extension for Ziphy and WireSyncEngine proxying of the request to the Wire backend
 @interface ZMUserSession (RequestProxy) <ProxiedURLRequester, ZiphyURLRequester>
 
 @end

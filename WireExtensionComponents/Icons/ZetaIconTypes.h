@@ -79,6 +79,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeRedo                            = 0x117,
     ZetaIconTypeLocation                        = 0x149,
     ZetaIconTypeCopy                            = 0x234,
+    ZetaIconTypeCompose                         = 0x266,
     
     ZetaIconTypeLeave                           = 0x205,
     ZetaIconTypeConvMetaAddPerson               = 0x215,
@@ -114,6 +115,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeVideoMulticolor                 = 0x2260,
 
     ZetaIconTypeBackArrow                       = 0x110,
+    ZetaIconTypeBackArrowWithDot                = 0x263,
     ZetaIconTypeForwardArrow                    = 0x111,
     ZetaIconTypeDownArrow                       = 0x113,
     
@@ -137,6 +139,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeLike                            = 0x183,
     ZetaIconTypeLiked                           = 0x184,
     
+    ZetaIconTypeSelfProfile                     = 0x265,
+    ZetaIconTypeMegaphone                       = 0x267,
     ZetaIconTypeSettingsAccount                 = 0x187,
     ZetaIconTypeSettingsDevices                 = 0x188,
     ZetaIconTypeSettingsOptions                 = 0x135,

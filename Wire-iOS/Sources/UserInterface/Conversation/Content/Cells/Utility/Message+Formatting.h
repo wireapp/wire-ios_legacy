@@ -18,8 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import <zmessaging/zmessaging.h>
-#import "Message.h"
+#import <WireSyncEngine/WireSyncEngine.h>
 
 @class ConversationCellLayoutProperties;
 @class LinkAttachment;
@@ -41,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray<LinkAttachment *> *)linkAttachments:(id<ZMTextMessageData>)message;
 
 /// This method needs to be called as soon as the text color configuration got changed: Magic changes cause of rotation for instance
-+ (void)invalidateTextColorConfiguration;
++ (void)invalidateMarkdownStyle;
 
 @end
 

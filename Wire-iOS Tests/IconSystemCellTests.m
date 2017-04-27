@@ -23,7 +23,7 @@
 #import "Wire_iOS_Tests-Swift.h"
 #import "MockMessage+Creation.h"
 #import "WAZUIMagicIOS.h"
-@import zmessaging;
+@import WireSyncEngine;
 
 @interface IconSystemCellTests : ZMSnapshotTestCase
 
@@ -33,11 +33,14 @@
 
 + (NSDictionary *)systemMessageTypeToClass
 {
-    return @{ @(ZMSystemMessageTypeNewClient): [ConversationNewDeviceCell class],
-              @(ZMSystemMessageTypeIgnoredClient): [ConversationIgnoredDeviceCell class],
-              @(ZMSystemMessageTypeConversationIsSecure): [ConversationVerifiedCell class],
-              @(ZMSystemMessageTypePotentialGap): [MissingMessagesCell class],
-              @(ZMSystemMessageTypeDecryptionFailed): [CannotDecryptCell class]};
+    return @{
+             @(ZMSystemMessageTypeNewClient):            [ConversationNewDeviceCell class],
+             @(ZMSystemMessageTypeIgnoredClient):        [ConversationIgnoredDeviceCell class],
+             @(ZMSystemMessageTypeConversationIsSecure): [ConversationVerifiedCell class],
+             @(ZMSystemMessageTypePotentialGap):         [MissingMessagesCell class],
+             @(ZMSystemMessageTypeDecryptionFailed):     [CannotDecryptCell class],
+             @(ZMSystemMessageTypeReactivatedDevice):    [MissingMessagesCell class]
+             };
 }
 
 + (UITableView *)wrappedCellForMessageType:(ZMSystemMessageType)type users:(NSUInteger)usersCount clients:(NSUInteger)clientsCount config:(void(^)(MockMessage *))config {
@@ -66,6 +69,12 @@
     CGSize size = [cell systemLayoutSizeFittingSize:CGSizeMake(320.0, 0.0) withHorizontalFittingPriority: UILayoutPriorityRequired verticalFittingPriority: UILayoutPriorityFittingSizeLevel];
     cell.bounds = CGRectMake(0.0, 0.0, size.width, size.height);
     return [cell wrapInTableView];
+}
+
+- (void)setUp
+{
+    [super setUp];
+    self.snapshotBackgroundColor = UIColor.whiteColor;
 }
 
 - (void)testCannotDecryptMessage {
@@ -142,6 +151,11 @@
 
 - (void)testDecryptionFailed {
     UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeDecryptionFailed users:0 clients:0 config:nil];
+    ZMVerifyView(wrappedCell);
+}
+
+- (void)testStartedusingANewDevice {
+    UITableView *wrappedCell = [self.class wrappedCellForMessageType:ZMSystemMessageTypeReactivatedDevice users:0 clients:0 config:nil];
     ZMVerifyView(wrappedCell);
 }
 

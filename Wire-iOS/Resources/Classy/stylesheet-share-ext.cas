@@ -27,7 +27,7 @@ TokenField, TokenField.regular, TokenField.compact {
     hasAccessoryButton: true;
     backgroundColor: clear;
     font: $font-normal-light;
-    tokenTitleFont: $font-small-medium;
+    tokenTitleFont: $font-small-semibold;
     numberOfLines: 2
 
     tokenTitleColor: white;

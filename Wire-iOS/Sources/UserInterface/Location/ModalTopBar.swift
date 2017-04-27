@@ -66,7 +66,7 @@ import Cartography
             separator.leading == view.leading
             separator.trailing == view.trailing
             separator.bottom == view.bottom
-            separator.height == 0.5
+            separator.height == .hairline
         }
         
         dismissButton.setContentCompressionResistancePriority(1000, for: .horizontal)

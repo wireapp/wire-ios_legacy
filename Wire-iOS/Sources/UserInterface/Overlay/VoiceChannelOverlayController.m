@@ -21,8 +21,7 @@
 #import <avs/AVSFlowManager.h>
 
 #import "VoiceChannelOverlayController.h"
-#import "VoiceChannelOverlay.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "VoiceChannelV2+Additions.h"
 #import "Analytics+iOS.h"
@@ -36,7 +35,7 @@
 #import "Settings.h"
 #import "Wire-Swift.h"
 
-@interface VoiceChannelOverlayController () <VoiceChannelStateObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, ReceivedVideoObserver>
+@interface VoiceChannelOverlayController () <VoiceChannelStateObserver, AVSMediaManagerClientObserver, UIGestureRecognizerDelegate, ReceivedVideoObserver, VoiceChannelOverlayDelegate>
 
 @property (nonatomic) UIVisualEffectView *blurEffectView;
 @property (nonatomic) VoiceChannelOverlay *overlayView;
@@ -56,8 +55,6 @@
 
 @property (nonatomic) BOOL cameraSwitchInProgress;
 @end
-
-
 
 @implementation VoiceChannelOverlayController
 
@@ -79,6 +76,10 @@
         _conversation = conversation;
         _previousVoiceChannelState = VoiceChannelV2StateInvalid;
         self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(voiceChannelEnabledCBR:)
+                                                     name:[WireCallCenterV3 cbrNotificationName]
+                                                   object:nil];
     }
     
     return self;
@@ -86,16 +87,9 @@
 
 - (void)loadView
 {
-    VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initForAutoLayout];
-    [overlayView setAcceptButtonTarget:self         action:@selector(acceptButtonClicked:)];
-    [overlayView setAcceptVideoButtonTarget:self    action:@selector(acceptVideoButtonClicked:)];
-    [overlayView setIgnoreButtonTarget:self         action:@selector(ignoreButtonClicked:)];
-    [overlayView setLeaveButtonTarget:self          action:@selector(leaveButtonClicked:)];
-    [overlayView setMuteButtonTarget:self           action:@selector(muteButtonClicked:)];
-    [overlayView setSpeakerButtonTarget:self        action:@selector(speakerButtonClicked:)];
-    [overlayView setVideoButtonTarget:self          action:@selector(videoButtonClicked:)];
-    [overlayView setSwitchCameraButtonTarget:self   action:@selector(switchCameraButtonClicked:)];
-    [overlayView setCallingConversation:self.conversation];
+    VoiceChannelOverlay *overlayView = [[VoiceChannelOverlay alloc] initWithFrame:CGRectZero callingConversation:self.conversation];
+    overlayView.translatesAutoresizingMaskIntoConstraints = false;
+    overlayView.delegate = self;
     overlayView.hidesSpeakerButton = IS_IPAD;
     self.overlayView = overlayView;
     
@@ -167,21 +161,47 @@
                                                                                     collectionView:self.overlayView.participantsCollectionView];
 }
 
-- (void)acceptButtonClicked:(id)sender
+#pragma mark - VoiceChannelOverlayDelegate
+
+- (void)makeDegradedCallTapped
+{
+    DDLogVoice(@"UI: Make degraded call button tap");
+    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
+    }];
+}
+
+- (void)acceptDegradedButtonTapped
+{
+    DDLogVoice(@"UI: Accept degraded call button tap");
+    
+    BOOL hasAlreadyAcceptedCall = self.conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded;
+    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
+    } completionHandler:^{
+        if (!hasAlreadyAcceptedCall) {
+            [self joinCurrentVoiceChannel];
+        }
+    }];
+}
+
+- (void)acceptButtonTapped
 {
     DDLogVoice(@"UI: Accept button tap");
 
     [self joinCurrentVoiceChannel];
 }
 
-- (void)acceptVideoButtonClicked:(id)sender
+- (void)acceptVideoButtonTapped
 {
     DDLogVoice(@"UI: Accept video button tap");
 
     [self joinCurrentVoiceChannel];
 }
 
-- (void)ignoreButtonClicked:(id)sender
+- (void)ignoreButtonTapped
 {
     DDLogVoice(@"UI: Ignore button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
@@ -190,7 +210,16 @@
     }];
 }
 
-- (void)leaveButtonClicked:(id)sender
+- (void)cancelButtonTapped
+{
+    DDLogVoice(@"UI: Cancel button tap");
+    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [voiceChannel leaveAndKeepDegradedConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
+    }];
+}
+
+- (void)leaveButtonTapped
 {
     DDLogVoice(@"UI: Leave button tap");
     VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
@@ -199,7 +228,7 @@
     }];
 }
 
-- (void)muteButtonClicked:(id)sender
+- (void)muteButtonTapped
 {
     DDLogVoice(@"UI: Mute button tap");
     AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
@@ -207,7 +236,7 @@
     self.overlayView.muted = mediaManager.microphoneMuted;
 }
 
-- (void)speakerButtonClicked:(id)sender
+- (void)speakerButtonTapped
 {
     DDLogVoice(@"UI: Speaker button tap");
     AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
@@ -216,7 +245,7 @@
     self.overlayView.speakerActive = mediaManager.speakerEnabled;
 }
 
-- (void)videoButtonClicked:(id)sender
+- (void)videoButtonTapped
 {
     [[ZMUserSession sharedSession] enqueueChanges:^{ // Calling V2 requires enqueueChanges
         BOOL active = !self.outgoingVideoActive;
@@ -232,7 +261,7 @@
     }];    
 }
 
-- (void)switchCameraButtonClicked:(id)sender;
+- (void)switchCameraButtonTapped
 {
     if (self.cameraSwitchInProgress) {
         return;
@@ -243,7 +272,7 @@
     [self.overlayView animateCameraChangeWithChangeAction:^{
         [self toggleCaptureDevice];
     }
-                                               completion:^() {
+                                               completion:^(BOOL completed) {
                                                    // Intentional delay
                                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                                        self.cameraSwitchInProgress = NO;
@@ -286,14 +315,14 @@
 
 - (VoiceChannelOverlayState)viewStateForVoiceChannelState:(VoiceChannelV2State)voiceChannelState previousVoiceChannelState:(VoiceChannelV2State)previousVoiceChannelState
 {
-    if (voiceChannelState == VoiceChannelV2StateIncomingCall) {
-        return VoiceChannelOverlayStateIncomingCall;
-    }
-    
-    VoiceChannelOverlayState overlayState;
+    VoiceChannelOverlayState overlayState = VoiceChannelOverlayStateInvalid;
     switch (voiceChannelState) {
         case VoiceChannelV2StateIncomingCall:
             overlayState = VoiceChannelOverlayStateIncomingCall;
+            break;
+        case VoiceChannelV2StateIncomingCallDegraded:
+        case VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded:
+            overlayState = VoiceChannelOverlayStateIncomingCallDegraded;
             break;
             
         case VoiceChannelV2StateIncomingCallInactive:
@@ -304,7 +333,9 @@
         case VoiceChannelV2StateOutgoingCallInactive:
             overlayState = VoiceChannelOverlayStateOutgoingCall;
             break;
-            
+        case VoiceChannelV2StateOutgoingCallDegraded:
+            overlayState = VoiceChannelOverlayStateOutgoingCallDegraded;
+            break;
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
             if (previousVoiceChannelState == VoiceChannelV2StateOutgoingCall || previousVoiceChannelState == VoiceChannelV2StateOutgoingCallInactive) {
                 // Hide the media establishment phase for outgoing calls
@@ -319,10 +350,10 @@
             break;
             
         default:
-            overlayState = VoiceChannelOverlayStateInvalid;
+            break;
     }
     
-    DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState), (long)overlayState, StringFromVoiceChannelOverlayState(overlayState));
+    DDLogVoice(@"UI: VoiceChannelState %d (%@) transitioned to overlay state %ld (%@)", voiceChannelState, StringFromVoiceChannelV2State(voiceChannelState), (long)overlayState, [VoiceChannelOverlay stringFromState:overlayState]);
     
     return overlayState;
 }
@@ -503,6 +534,13 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
+}
+
+#pragma mark - CBR State Observer
+
+- (void)voiceChannelEnabledCBR:(NSNotification *)notification
+{
+    self.overlayView.constantBitRate = YES;
 }
 
 @end

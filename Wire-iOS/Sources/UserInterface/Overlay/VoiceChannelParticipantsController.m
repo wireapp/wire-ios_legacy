@@ -22,7 +22,7 @@
 #import "VoiceChannelParticipantCell.h"
 #import "VoiceUserImageView.h"
 #import "NSIndexSet+IndexPaths.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 
 #import <Classy/Classy.h>
 
@@ -80,34 +80,33 @@
 
 #pragma mark - VoiceChannelParticipantStateObserver
 
-- (void)voiceChannelParticipantsDidChange:(SetChangeInfo *)changeInfo
+- (void)voiceChannelParticipantsDidChange:(VoiceChannelParticipantNotification *)changeInfo
 {
     if (self.conversation.conversationType != ZMConversationTypeGroup) {
         return;
     }
-    
-    if (changeInfo.needsReload) {
-        [self.collectionView reloadData];
-    } else {
-        [self.collectionView performBatchUpdates:^{
-            [self.collectionView insertItemsAtIndexPaths:changeInfo.insertedIndexes.indexPaths];
-            [self.collectionView deleteItemsAtIndexPaths:changeInfo.deletedIndexes.indexPaths];
-            
-            [changeInfo.movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
-                NSIndexPath *from = [NSIndexPath indexPathForRow:moved.from inSection:0];
-                NSIndexPath *to = [NSIndexPath indexPathForRow:moved.to inSection:0];
-                [self.collectionView moveItemAtIndexPath:from toIndexPath:to];
-            }];
-        } completion:nil];
-        
-        [changeInfo.updatedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            VoiceChannelParticipantCell *cell = (VoiceChannelParticipantCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:idx inSection:0]];
-            ZMUser *user = [self.conversation.voiceChannel.participants objectAtIndex:idx];
-            VoiceChannelV2ParticipantState *participantState = [self.conversation.voiceChannel stateForParticipant:user];
-            
-            [cell configureForUser:user participantState:participantState];
-        }];
+    if (self.conversation.voiceChannel.state == VoiceChannelV2StateInvalid){
+        return;
     }
+    
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView insertItemsAtIndexPaths:changeInfo.insertedIndexes.indexPaths];
+        [self.collectionView deleteItemsAtIndexPaths:changeInfo.deletedIndexes.indexPaths];
+        
+        [changeInfo.zm_movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
+            NSIndexPath *from = [NSIndexPath indexPathForRow:moved.from inSection:0];
+            NSIndexPath *to = [NSIndexPath indexPathForRow:moved.to inSection:0];
+            [self.collectionView moveItemAtIndexPath:from toIndexPath:to];
+        }];
+    } completion:nil];
+    
+    [changeInfo.updatedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        VoiceChannelParticipantCell *cell = (VoiceChannelParticipantCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:idx inSection:0]];
+        ZMUser *user = [self.conversation.voiceChannel.participants objectAtIndex:idx];
+        VoiceChannelV2ParticipantState *participantState = [self.conversation.voiceChannel stateForParticipant:user];
+        
+        [cell configureForUser:user participantState:participantState];
+    }];
 }
 
 #pragma mark - VoiceGainObserver

@@ -216,6 +216,8 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = UIColor(white: 1, alpha: 0.08)
         footerLabel.numberOfLines = 0
         updateUI()
 

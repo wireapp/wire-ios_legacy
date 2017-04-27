@@ -31,7 +31,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "UIViewController+Orientation.h"
 #import "BarController.h"
 #import "Wire-Swift.h"
@@ -151,13 +151,12 @@
 
 - (BOOL)shouldAutorotate
 {
-    AppDelegate *appDelegate = [AppDelegate sharedAppDelegate];
-    return [appDelegate.window.rootViewController shouldAutorotate];
+    return UIApplication.sharedApplication.wr_topMostViewController.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return UIApplication.sharedApplication.wr_topMostViewController.supportedInterfaceOrientations;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

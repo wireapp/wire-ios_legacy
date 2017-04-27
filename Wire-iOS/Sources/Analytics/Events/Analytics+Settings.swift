@@ -27,7 +27,8 @@ extension Analytics {
     
     internal func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
         guard let value = value.value(),
-              propertyName != SettingsPropertyName.lockAppLastDate else {
+              propertyName != SettingsPropertyName.lockAppLastDate &&
+                propertyName != SettingsPropertyName.analyticsOptOut else {
             return
         }
         let attributes = [settingsChangeEventPropertyName: propertyName,

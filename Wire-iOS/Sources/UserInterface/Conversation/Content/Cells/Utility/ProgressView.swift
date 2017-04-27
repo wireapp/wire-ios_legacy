@@ -80,7 +80,7 @@ import Foundation
     fileprivate func updateProgress(_ animated: Bool) {
         guard self.progress.isNormal &&
                 self.bounds.width != 0 &&
-                    self.bounds.height != 0 else {
+                self.bounds.height != 0 else {
             return
         }
         
@@ -99,7 +99,7 @@ import Foundation
     }
     
     fileprivate func updateForStateAnimated(_ animated: Bool) {
-        if let det = self.deterministic , det {
+        if let det = self.deterministic, det {
             self.progressView.isHidden = false
             self.spinner.isHidden = true
             self.spinner.animating = false

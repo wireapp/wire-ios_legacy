@@ -30,14 +30,20 @@ NSString *StringFromVoiceChannelV2State(VoiceChannelV2State state)
             return @"NoActiveUsers";
         case VoiceChannelV2StateOutgoingCall:
             return @"OutgoingCall";
+        case VoiceChannelV2StateOutgoingCallDegraded:
+            return @"OutgoingCallDegraded";
         case VoiceChannelV2StateOutgoingCallInactive:
             return @"OutgoingCallInactive:";
         case VoiceChannelV2StateIncomingCall:
             return @"IncomingCall:";
+        case VoiceChannelV2StateIncomingCallDegraded:
+            return @"IncomingCallDegraded";
         case VoiceChannelV2StateIncomingCallInactive:
             return @"IncomingCallInactive:";
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
             return @"JoiningActiveChannel";
+        case VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded:
+            return @"JoiningActiveChannelDegraded";
         case VoiceChannelV2StateSelfConnectedToActiveChannel:
             return @"ConnectedToActiveChannel";
         case VoiceChannelV2StateDeviceTransferReady:

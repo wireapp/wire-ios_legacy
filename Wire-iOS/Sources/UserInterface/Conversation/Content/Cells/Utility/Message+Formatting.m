@@ -20,7 +20,7 @@
 #import "Message+Formatting.h"
 
 #import "WAZUIMagicIOS.h"
-#import "zmessaging+iOS.h"
+#import "WireSyncEngine+iOS.h"
 #import "LinkAttachment.h"
 #import "NSString+EmoticonSubstitution.h"
 #import "TSMarkdownParser+Wire.m"
@@ -30,7 +30,7 @@
 #import "Wire-Swift.h"
 
 @import WireExtensionComponents;
-@import ZMCLinkPreview;
+@import WireLinkPreview;
 
 static NSMutableParagraphStyle *cellParagraphStyle;
 
@@ -168,21 +168,20 @@ static inline NSDataDetector *linkDataDetector(void)
     
     [attributedString endEditing];
     
-    
-    NSAttributedString *markdownStr = nil;
-    if ([[Settings sharedSettings] enableMarkdown]) {
-        if (! WireMarkdownParser) {
-            WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
-        }
-        
-        markdownStr = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString];
-    }
+
+//    if (! Settings.sharedSettings.disableMarkdown) {
+//        if (! WireMarkdownParser) {
+//            WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
+//        }
+//
+//        attributedString = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString].mutableCopy;
+//    }
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
     }
     
-    return (nil != markdownStr) ? markdownStr: [[NSAttributedString alloc] initWithAttributedString:attributedString];
+    return [[NSAttributedString alloc] initWithAttributedString:attributedString];
 }
 
 + (void)wr_flushCellParagraphStyleCache
@@ -195,7 +194,7 @@ static inline NSDataDetector *linkDataDetector(void)
 
 @implementation Message (Formatting)
 
-+ (void)invalidateTextColorConfiguration
++ (void)invalidateMarkdownStyle
 {
     WireMarkdownParser = nil;
 }

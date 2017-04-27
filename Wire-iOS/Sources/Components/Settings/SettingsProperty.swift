@@ -22,7 +22,7 @@
 Available settings
 
 - ChatHeadsDisabled:      Disable chat heads in conversation and self profile
-- Markdown:               Enable markdown formatter for messages
+- DisableMarkdown:        Disable markdown formatter for messages
 - SkipFirstTimeUseChecks: Temporarily skip firts time checks
 - PreferredFlashMode:     Flash mode for internal camera UI
 - DarkMode:               Dark mode for conversation
@@ -37,7 +37,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     // User defaults
     case chatHeadsDisabled = "ChatHeadsDisabled"
     case notificationContentVisible = "NotificationContentVisible"
-    case markdown = "Markdown"
+    case disableMarkdown = "Markdown"
     
     case skipFirstTimeUseChecks = "SkipFirstTimeUseChecks"
     
@@ -53,6 +53,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     
     // AVS
     case soundAlerts = "SoundAlerts"
+    case callingConstantBitRate = "constantBitRate"
     
     // Analytics
     case analyticsOptOut = "AnalyticsOptOut"
@@ -74,12 +75,13 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case disableHockey = "DisableHockey"
     case disableAnalytics = "DisableAnalytics"
     case disableCallKit = "DisableCallKit"
-    case sendV3Assets = "SendV3Assets"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
 
     case lockApp = "lockApp"
     case lockAppLastDate = "lockAppLastDate"
+    
+    case workspaceName = "workspaceName"
     
     var changeNotificationName: String {
         return self.description + "ChangeNotification"

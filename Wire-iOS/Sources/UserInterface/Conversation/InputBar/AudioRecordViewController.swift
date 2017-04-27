@@ -182,7 +182,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
         }
         
         constrain(bottomContainerView, buttonOverlay, topSeparator) { (container: LayoutProxy, overlay: LayoutProxy, separator: LayoutProxy) -> () in
-            separator.height == 0.5
+            separator.height == .hairline
             separator.right == overlay.left - 8
             separator.left == container.left + 16
             separator.top == container.top
@@ -213,7 +213,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
             rightSeparator.right == container.right
             rightSeparator.left == overlay.right + 8
             rightSeparator.top == container.top
-            rightSeparator.height == 0.5
+            rightSeparator.height == .hairline
         }
         
         constrain(bottomContainerView, timeLabel, audioPreviewView, cancelButton, buttonOverlay) { (container: LayoutProxy, timeLabel: LayoutProxy, previewView: LayoutProxy, cancelButton: LayoutProxy, overlay: LayoutProxy) -> () in
