@@ -725,7 +725,11 @@
             break;
 
         case ConversationListButtonTypeCompose:
-            [self presentComposeEntryViewController];
+            if ([DeveloperMenuState developerMenuEnabled]) {
+                [self presentComposeEntryViewController];
+            } else {
+                [self presentPeoplePickerAndRemoveTooltip];
+            }
             break;
     }
 }
