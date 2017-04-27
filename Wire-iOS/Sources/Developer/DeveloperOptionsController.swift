@@ -51,6 +51,7 @@ extension DeveloperOptionsController {
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = false
         self.view.addSubview(tableView)
         
         constrain(self.view, tableView) { view, tableView in
@@ -101,6 +102,10 @@ extension DeveloperOptionsController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go!", for: .normal)
+        button.titleLabel?.textAlignment = .right
+        constrain(button, button.titleLabel!) { button, titleLabel in
+            titleLabel.right == button.right
+        }
         button.addTarget(self, action: #selector(DeveloperOptionsController.didPressButton(sender:)), for: .touchDown)
         self.uiButtonToAction[button] = onTouchDown
         return self.createCellWithLabelAndView(labelText: labelText, view: button)

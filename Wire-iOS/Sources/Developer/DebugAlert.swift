@@ -25,7 +25,7 @@ import MessageUI
     /// Presents an alert, if in developer mode, otherwise do nothing
     static func show(message: String, sendLogs: Bool = true) {
         guard DeveloperMenuState.developerMenuEnabled() else { return }
-        guard let controller = UIApplication.shared.keyWindow?.rootViewController else { return }
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: "DEBUG MESSAGE",
                                       message: message,
                                       preferredStyle: .alert)
@@ -50,7 +50,7 @@ import MessageUI
 
     /// Sends recorded logs by email
     static func sendLogsByEmail(message: String) {
-        guard let controller = UIApplication.shared.keyWindow?.rootViewController else { return }
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
         
         let alert = DebugLogSender()
