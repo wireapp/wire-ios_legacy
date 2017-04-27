@@ -55,6 +55,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ExtensionBackupExcluder.exclude()
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
         recreateSharingSession()

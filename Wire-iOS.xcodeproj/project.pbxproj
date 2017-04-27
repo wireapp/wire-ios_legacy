@@ -808,6 +808,8 @@
 		BF606D731CAA9EEE002BAC94 /* ConversationListBottomBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */; };
 		BF606D751CAC16FF002BAC94 /* ToolTipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606D741CAC16FF002BAC94 /* ToolTipViewController.swift */; };
 		BF606D771CAC1C0A002BAC94 /* ToolTipViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */; };
+		BF6EC9061EB1FC3D009D9A69 /* URL+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */; };
+		BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */; };
 		BF732A731D9C14C7003077DB /* emoji_activities.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A6B1D9C14C7003077DB /* emoji_activities.plist */; };
 		BF732A741D9C14C7003077DB /* emoji_flags.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A6C1D9C14C7003077DB /* emoji_flags.plist */; };
 		BF732A751D9C14C7003077DB /* emoji_food.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF732A6D1D9C14C7003077DB /* emoji_food.plist */; };
@@ -2292,6 +2294,8 @@
 		BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListBottomBarTests.m; sourceTree = "<group>"; };
 		BF606D741CAC16FF002BAC94 /* ToolTipViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolTipViewController.swift; path = ../Conversation/ToolTipViewController.swift; sourceTree = "<group>"; };
 		BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolTipViewControllerTests.m; sourceTree = "<group>"; };
+		BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Backup.swift"; sourceTree = "<group>"; };
+		BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionBackupExcluder.swift; sourceTree = "<group>"; };
 		BF732A6B1D9C14C7003077DB /* emoji_activities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_activities.plist; sourceTree = "<group>"; };
 		BF732A6C1D9C14C7003077DB /* emoji_flags.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_flags.plist; sourceTree = "<group>"; };
 		BF732A6D1D9C14C7003077DB /* emoji_food.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji_food.plist; sourceTree = "<group>"; };
@@ -2673,6 +2677,7 @@
 			children = (
 				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
 				168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */,
+				BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */,
 				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
 				BF96A6C31E2F845E0057974A /* UnsentSendable.swift */,
 				543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */,
@@ -2859,6 +2864,7 @@
 				BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */,
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				87F18BC71E02E7BF00C69D9B /* Reusable.swift */,
+				BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */,
 				870534001DD6265100A7F822 /* AttributedStringOperators.swift */,
 				1677FD311BBC19A400491481 /* ColorScheme.h */,
 				1677FD321BBC19A400491481 /* ColorScheme.m */,
@@ -5746,6 +5752,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF96A6CA1E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift in Sources */,
+				BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */,
 				BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */,
 				BF9AEE191E4A0BC00005FBA7 /* PreprocessorHelper.m in Sources */,
 				BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */,
@@ -5797,6 +5804,7 @@
 				CE8E4FC61DF17CFE0009F437 /* NSString+TextTransform.m in Sources */,
 				8795A5C91D34D09E0024101B /* UserConnectingLayer.m in Sources */,
 				1EE9DCC41B5F9A6D00E347DF /* Token.m in Sources */,
+				BF6EC9061EB1FC3D009D9A69 /* URL+Backup.swift in Sources */,
 				1E5E0CFF1B6B8EDB003B0CAC /* FileManager.m in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
 				872C2B7F1DD9C22B0086A574 /* ShareViewController+Views.swift in Sources */,
