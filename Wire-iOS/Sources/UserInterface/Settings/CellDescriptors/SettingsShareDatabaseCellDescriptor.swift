@@ -25,10 +25,6 @@ class DocumentDelegate : NSObject, UIDocumentInteractionControllerDelegate {
         return UIApplication.shared.wr_topmostController(onlyFullScreen: false)!
     }
     
-    func documentInteractionControllerRectForPreview(_ controller: UIDocumentInteractionController) -> CGRect {
-        return CGRect.zero
-    }
-    
 }
 
 
