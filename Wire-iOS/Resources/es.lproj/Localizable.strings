@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Entrar";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contactos";
+"bottom_bar.plus_button.title" = "Nuevo";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Te fuiste";
 "conversation.status.started_conversation" = "%@ inició un chat";
 "conversation.status.removed_users" = "%@ eliminó a %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Conversación";
+"compose.message.title" = "Mensaje";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Ajustes";
+"self.profile" = "Perfil";
 "self.help_center" = "Soporte";
 "self.help_center.support_website" = "Página de soporte de Wire";
 "self.help_center.contact_support" = "Contactar con Soporte";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Buscar mensajes";
 "collections.search.no_items" = "Ningún resultado";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Eliminar";

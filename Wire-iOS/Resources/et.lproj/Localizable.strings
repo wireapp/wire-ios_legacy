@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Liitu";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "inimest";
+"bottom_bar.plus_button.title" = "Uus";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Lahkusid vestlusest";
 "conversation.status.started_conversation" = "%@ alustas vestlust";
 "conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Vestlus";
+"compose.message.title" = "Sõnum";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Seaded";
+"self.profile" = "Profiil";
 "self.help_center" = "Klienditugi";
 "self.help_center.support_website" = "Wire klienditoe sait";
 "self.help_center.contact_support" = "Võta kasutajatoega ühendust";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Tekstiotsing";
 "collections.search.no_items" = "Tulemusi ei leitud.";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Sõnumid";
+"compose.drafts.empty.title" = "Sõnumeid pole";
+"compose.drafts.empty.subtitle" = "Loomiseks vajuta + märki.";
+"compose.drafts.compose.title" = "Kirjuta sõnum";
+"compose.drafts.compose.subject.placeholder" = "Vajuta teema määramiseks";
+
+"compose.drafts.compose.delete.confirm.title" = "Kinnita kustutamine";
+"compose.drafts.compose.delete.confirm.message" = "Antud toiming kustutab visandi ning seda muudatust pole võimalik tagasi võtta.";
+"compose.drafts.compose.delete.confirm.action.title" = "Kustuta";

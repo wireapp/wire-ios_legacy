@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "参加する";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "人";
+"bottom_bar.plus_button.title" = "新機能";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "あなたは退出しました";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@は%@を削除しました";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "会話";
+"compose.message.title" = "メッセージ";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "設定";
+"self.profile" = "プロフィール";
 "self.help_center" = "サポート";
 "self.help_center.support_website" = "Wire サポート ウェブサイト";
 "self.help_center.contact_support" = "サポートへの問い合わせ";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "テキストメッセージの検索";
 "collections.search.no_items" = "見つかりませんでした";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "メッセージを作成";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "削除を確認する";
+"compose.drafts.compose.delete.confirm.message" = "これは下書きを完全に削除します。この操作を元に戻すことはできません。";
+"compose.drafts.compose.delete.confirm.action.title" = "削除";

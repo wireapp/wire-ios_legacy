@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Katıl";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "kişi";
+"bottom_bar.plus_button.title" = "Yeni";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Ayrıldın";
 "conversation.status.started_conversation" = "%@ bir konuşma başlattı";
 "conversation.status.removed_users" = "%@, %@'i sildi";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Konuşma";
+"compose.message.title" = "Mesaj";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Ayarlar";
+"self.profile" = "Profil";
 "self.help_center" = "Destek";
 "self.help_center.support_website" = "Wire Destek İnternet Sitesi";
 "self.help_center.contact_support" = "Destek Hizmetlerine Ulaşın";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Yazılı mesajlarda arayın";
 "collections.search.no_items" = "Sonuç yok";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Bir mesaj yaz";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Silmeyi Onayla";
+"compose.drafts.compose.delete.confirm.message" = "Bu işlem taslağı kalıcı olarak silecektir ve geri alınamaz.";
+"compose.drafts.compose.delete.confirm.action.title" = "Sil";

@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Dołącz";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "osoby";
+"bottom_bar.plus_button.title" = "Nowa";
 
 
 // Profile Header View
@@ -136,7 +136,7 @@
 "conversation.status.message.file" = "Udostępniany plik";
 "conversation.status.message.knock" = "Zaczepiony";
 "conversation.status.message.missedcall" = "Missed call";
-"conversation.status.message.ephemeral" = "Wiadomość tymczasowa";
+"conversation.status.message.ephemeral" = "Wiadomość czasowa";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "Ty";
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Wyszedłeś";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ usunął %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Rozmowa";
+"compose.message.title" = "Wiadomość";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Ustawienia";
+"self.profile" = "Profil";
 "self.help_center" = "Wsparcie";
 "self.help_center.support_website" = "Witryna pomocy technicznej Wire";
 "self.help_center.contact_support" = "Kontakt z pomocą techniczną";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Wyszukiwanie wiadomości";
 "collections.search.no_items" = "Brak wyników";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Usuń";

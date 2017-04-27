@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Deltag";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "personer";
+"bottom_bar.plus_button.title" = "Nyt";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Du forlod";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ har fjernet %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Samtale";
+"compose.message.title" = "Besked";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Indstillinger";
+"self.profile" = "Profil";
 "self.help_center" = "Support";
 "self.help_center.support_website" = "Wire support hjemmeside";
 "self.help_center.contact_support" = "Kontakt support";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Søg i tekstbeskeder";
 "collections.search.no_items" = "Intet resultat";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Slet";

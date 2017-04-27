@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Deelnemen";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "personen";
+"bottom_bar.plus_button.title" = "Nieuw";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Jij verliet";
 "conversation.status.started_conversation" = "%@ begon een gesprek";
 "conversation.status.removed_users" = "%@ verwijderde %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Gesprek";
+"compose.message.title" = "Stuur bericht";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Instellingen";
+"self.profile" = "Profiel";
 "self.help_center" = "Ondersteuning";
 "self.help_center.support_website" = "Wire Support Website";
 "self.help_center.contact_support" = "Contact Support";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Zoek berichten";
 "collections.search.no_items" = "Geen resultaten";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Schrijf een bericht";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";
+"compose.drafts.compose.delete.confirm.message" = "Hiermee zullen alle concepten verwijdert worden, dit kan niet ongedaan gemaakt worden.";
+"compose.drafts.compose.delete.confirm.action.title" = "Verwijderen";

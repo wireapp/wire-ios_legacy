@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Pridruži";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "osebe";
+"bottom_bar.plus_button.title" = "Novo";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Si zapustil(-a)";
 "conversation.status.started_conversation" = "%@ je začel(-a) pogovor";
 "conversation.status.removed_users" = "%@ je odstranil(-a) %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Pogovor";
+"compose.message.title" = "Sporočilo";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Nastavitve";
+"self.profile" = "Profil";
 "self.help_center" = "Podpora";
 "self.help_center.support_website" = "Spletna stran Wire podpore";
 "self.help_center.contact_support" = "Kontaktiraj podporo";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Išči po sporočilih";
 "collections.search.no_items" = "Ni rezultatov";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Napiši sporočilo";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Potrdi brisanje";
+"compose.drafts.compose.delete.confirm.message" = "To dejanje bo za vedno izbrisalo ta osnutek in ga ni mogoče razveljaviti.";
+"compose.drafts.compose.delete.confirm.action.title" = "Izbriši";

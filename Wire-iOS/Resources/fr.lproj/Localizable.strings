@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "contacts";
+"bottom_bar.plus_button.title" = "Nouveau";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Vous avez quitté la conversation";
 "conversation.status.started_conversation" = "%@ a débuté une conversation";
 "conversation.status.removed_users" = "%@ a retiré %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Conversation";
+"compose.message.title" = "Message";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -283,7 +290,7 @@
 "content.system.cannot_decrypt.identity" = "L'identité de l'appareil %@ a changé. Message non délivré.";
 "content.system.cannot_decrypt.identity.you_part" = "Votre";
 "content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // posessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Pour en savoir plus";
+"content.system.cannot_decrypt.identity.why_part" = "En savoir plus";
 "content.system.cannot_decrypt.otherDevice_part" = "(appareil %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
@@ -338,7 +345,7 @@
 "voice.status.joining" = "%@\nConnexion";
 "voice.status.video_not_available" = "Vidéo désactivée";
 "voice.status.low_connection" = "Mauvaise connexion";
-"voice.network_error.title" = "Pas de connexion Internet";
+"voice.network_error.title" = "Pas de connexion internet";
 "voice.status.cbr" = "Échantillonnage constant (CBR)";
 "voice.network_error.body" = "Vous devez être connecté pour pouvoir appeler. Vérifiez votre connexion et réessayez.";
 "voice.degradation.new_self_device" = "Vous avez commencé à utiliser un nouvel appareil.";
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Paramètres";
+"self.profile" = "Profil";
 "self.help_center" = "Aide";
 "self.help_center.support_website" = "Site de l'assistance Wire";
 "self.help_center.contact_support" = "Contacter le support technique";
@@ -723,7 +731,7 @@
 
 "registration.verify_email.instructions" = "Nous avons envoyé un email à %@.\nCliquez sur le lien afin de vérifier votre adresse.";
 "registration.verify_email.resend.instructions" = "Message non reçu ?";
-"registration.verify_email.resend.button_title" = "Envoyer de nouveau";
+"registration.verify_email.resend.button_title" = "Renvoyer";
 
 "registration.select_picture.subtitle" = "Wire est tellement plus sympa avec une photo.";
 "registration.select_picture.button_title" = "Choisissez votre photo";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Chercher dans les messages";
 "collections.search.no_items" = "Aucun résultat";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "Aucun message";
+"compose.drafts.empty.subtitle" = "Appuyez sur + pour en rédiger un.";
+"compose.drafts.compose.title" = "Écrivez un message";
+"compose.drafts.compose.subject.placeholder" = "Appuyez pour définir un sujet";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirmer la suppression";
+"compose.drafts.compose.delete.confirm.message" = "Cette action supprimera définitivement le brouillon et ne pourra pas être annulée.";
+"compose.drafts.compose.delete.confirm.action.title" = "Supprimer";

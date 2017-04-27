@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "Приєднатись";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "люди";
+"bottom_bar.plus_button.title" = "Додати";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "Ви вийшли";
 "conversation.status.started_conversation" = "%@ почав(-ла) розмову";
 "conversation.status.removed_users" = "%@ видалив(-ла) %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Розмова";
+"compose.message.title" = "Повідомлення";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "Налаштування";
+"self.profile" = "Профіль";
 "self.help_center" = "Служба підтримки";
 "self.help_center.support_website" = "Сайт підтримки Wire";
 "self.help_center.contact_support" = "Зверніться до служби підтримки";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "Шукайте текстові повідомлення";
 "collections.search.no_items" = "Нічого не знайдено";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Напишіть текст повідомлення";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Підтвердити видалення";
+"compose.drafts.compose.delete.confirm.message" = "Ця дія назавжди видалить дану чернетку без можливості відновлення.";
+"compose.drafts.compose.delete.confirm.action.title" = "Видалити";

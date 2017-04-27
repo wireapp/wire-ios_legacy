@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "加入";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "人";
+"bottom_bar.plus_button.title" = "新增";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "您退出了";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@移除了%@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "聊天";
+"compose.message.title" = "信息";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "设置";
+"self.profile" = "Profile";
 "self.help_center" = "帮助";
 "self.help_center.support_website" = "Wire帮助网站";
 "self.help_center.contact_support" = "与客服联系";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "搜索文字信息";
 "collections.search.no_items" = "没有找到";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Messages";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "删除";

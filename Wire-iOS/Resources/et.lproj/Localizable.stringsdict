@@ -216,7 +216,7 @@
                 <key>one</key>
                 <string>järgmine sõnum</string>
                 <key>other</key>
-                <string>%d new text messages</string>
+                <string>%d uut sõnumit</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.link</key>
@@ -230,9 +230,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new link</string>
+                <string>uus viide</string>
                 <key>other</key>
-                <string>%d new links</string>
+                <string>%d uut viidet</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.image</key>
@@ -246,9 +246,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new image</string>
+                <string>uus pilt</string>
                 <key>other</key>
-                <string>%d new images</string>
+                <string>%d uut pilti</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.location</key>
@@ -262,9 +262,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new location</string>
+                <string>uus asukoht</string>
                 <key>other</key>
-                <string>%d new locations</string>
+                <string>%d uut asukohta</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.audio</key>
@@ -278,9 +278,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new audio message</string>
+                <string>uus helisõnum</string>
                 <key>other</key>
-                <string>%d new audio messages</string>
+                <string>%d uut helisõnumit</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.video</key>
@@ -294,9 +294,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new video</string>
+                <string>uus video</string>
                 <key>other</key>
-                <string>%d new videos</string>
+                <string>%d uut videot</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.knock</key>
@@ -310,9 +310,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new ping</string>
+                <string>uus ping</string>
                 <key>other</key>
-                <string>%d new pings</string>
+                <string>%d uut pingi</string>
             </dict>
         </dict>
         <key>conversation.silenced.status.message.missedcall</key>
@@ -326,9 +326,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>missed call</string>
+                <string>vastamata kõne</string>
                 <key>other</key>
-                <string>%d missed calls</string>
+                <string>%d vastamata kõnet</string>
             </dict>
         </dict>
     </dict>

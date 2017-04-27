@@ -79,7 +79,7 @@
 "conversation_list.right_accessory.join_button.title" = "انضم إلى";
 
 // Conversation List Bottom Bar
-"bottom_bar.contacts_button.title" = "أشخاص";
+"bottom_bar.plus_button.title" = "جديد";
 
 
 // Profile Header View
@@ -148,6 +148,13 @@
 "conversation.status.you_left" = "أنت غادرت";
 "conversation.status.started_conversation" = "بدأ %@ محادثة جديدة";
 "conversation.status.removed_users" = "قام %@ بإزالة %@";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "محادثة";
+"compose.message.title" = "رسالة";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -473,6 +480,7 @@
 // Options menu contents
 
 "self.settings" = "الإعدادات";
+"self.profile" = "الملف الشخصي";
 "self.help_center" = "الدعم";
 "self.help_center.support_website" = "الموقع الإلكتروني للدعم في واير ";
 "self.help_center.contact_support" = "اتصل بالدعم";
@@ -894,3 +902,18 @@
 
 "collections.search.field.placeholder" = "بحث في الرسائل النصية";
 "collections.search.no_items" = "لا توجد نتائج";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "الرسائل";
+"compose.drafts.empty.title" = "لا توجد رسائل";
+"compose.drafts.empty.subtitle" = "انقر على + لإنشاء واحدة.";
+"compose.drafts.compose.title" = "كتابة رسالة";
+"compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
+
+"compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";
+"compose.drafts.compose.delete.confirm.message" = "سيتم حذف هذه المسودّة بشكل دائم، ولن يمكن إرجاعها.";
+"compose.drafts.compose.delete.confirm.action.title" = "حذف";
