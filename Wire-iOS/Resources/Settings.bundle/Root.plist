@@ -62,7 +62,6 @@
 			<array>
 				<string>production</string>
 				<string>staging</string>
-				<string>edge</string>
 				<string>default</string>
 			</array>
 			<key>Type</key>
