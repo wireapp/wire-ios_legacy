@@ -27,7 +27,7 @@ extension DeveloperMenuState {
     }
     
     private static func enableLogsForMessageSendingDebugging() {
-        ["Network", "Dependencies", "State machine"].forEach {
+        ["Network", "Dependencies", "State machine", "Pingback"].forEach {
             ZMSLog.set(level: .debug, tag: $0)
         }
     }
