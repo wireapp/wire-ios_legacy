@@ -190,7 +190,9 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation == self.conversation) {
         [self toggleMediaPlayer];
     }
-    else if (self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCallInactive) {
+    else if (   self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCallInactive
+             || self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall        )
+    {
         [self.conversation acceptIncomingCall];
     }
 }
