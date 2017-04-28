@@ -407,7 +407,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         if (launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
             [[ZMUserSession sharedSession] didLaunchWithURL:launchOptions[UIApplicationLaunchOptionsURLKey]];
         }
-            
+
+        [self.fileBackupExcluder excludeLibraryFolderInSharedContainer];
+
         @weakify(self)
         [[ZMUserSession sharedSession] startAndCheckClientVersionWithCheckInterval:Settings.sharedSettings.blacklistDownloadInterval blackListedBlock:^{
             @strongify(self)

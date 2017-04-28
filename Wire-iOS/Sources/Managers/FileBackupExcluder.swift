@@ -57,17 +57,36 @@ final internal class FileBackupExcluder: NSObject {
         self.excludeFilesFromBackup()
     }
     
-    internal func excludeFilesFromBackup() {
+    private func excludeFilesFromBackup() {
         do {
             try type(of: self).filesToExclude.forEach { (directory, path) in
                 let url = URL.wr_directory(for: directory).appendingPathComponent(path)
-                if FileManager.default.fileExists(atPath: url.path) {
-                    try url.wr_excludeFromBackup()
-                }
+                try url.excludeFromBackupIfExists()
             }
         }
         catch (let error) {
             DDLogError("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
+
+    @objc public func excludeLibraryFolderInSharedContainer() {
+        do {
+            guard let sharedContainerURL = ZMUserSession.shared()?.sharedContainerURL else { return }
+            let libraryURL = sharedContainerURL.appendingPathComponent("Library")
+            try libraryURL.excludeFromBackupIfExists()
+        } catch {
+            DDLogError("Cannot exclude file from the backup: \(self): \(error)")
+        }
+    }
+}
+
+
+fileprivate extension URL {
+
+    func excludeFromBackupIfExists() throws {
+        if FileManager.default.fileExists(atPath: path) {
+            try wr_excludeFromBackup()
+        }
+    }
+
 }
