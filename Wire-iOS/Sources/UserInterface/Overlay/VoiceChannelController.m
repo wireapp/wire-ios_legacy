@@ -181,10 +181,6 @@
         return incomingCallConversations.lastObject;
     }
     else if (self.activeCallConversation) {
-        VoiceChannelV2State state = self.activeCallConversation.voiceChannel.state;
-        if (self.activeCallConversation.isSilenced && (state == VoiceChannelV2StateIncomingCallDegraded || state == VoiceChannelV2StateIncomingCall)) {
-            return nil;
-        }
         return self.activeCallConversation;
     }
     
