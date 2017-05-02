@@ -65,6 +65,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
 @property (nonatomic) AVSLogObserver *logObserver;
 @property (nonatomic) NSString *groupIdentifier;
+@property (nonatomic) LegacyMessageTracker *messageCountTracker;
 
 @property (nonatomic) NSMutableArray <dispatch_block_t> *blocksToExecute;
 
@@ -158,6 +159,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         if (isLoggedIn) {
             [self uploadAddressBookIfNeeded];
             [self trackShareExtensionEventsIfNeeded];
+            [self.messageCountTracker trackLegacyMessageCount];
         }
     }];
 }
@@ -499,6 +501,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     
     [DeveloperMenuState prepareForDebugging];
     [MessageDraftStorage setupSharedStorageAtURL:_zetaUserSession.sharedContainerURL error:nil];
+    self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:_zetaUserSession.syncManagedObjectContext];
 }
 
 #pragma mark - User Session block queueing
