@@ -70,6 +70,7 @@
 @end
 
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
+- (void)showComposeEntryController;
 @end
 
 @interface ConversationListViewController (StartUI) <StartUIDelegate>
@@ -429,12 +430,8 @@
     ToolTip *toolTip = [[ToolTip alloc] initWithTitle:NSLocalizedString(@"tool_tip.contacts.title", nil)
                                           description:NSLocalizedString(@"tool_tip.contacts.message", nil)
                                               handler:^{
-                                                  [Settings.sharedSettings setContactTipWasDisplayed:YES];
                                                   @strongify(self)
-                                                  [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
-                                                      @strongify(self)
-                                                      [self removeTooltipView];
-                                                  }];
+                                                  [self showComposeEntryController];
                                               }];
     
     self.tooltipViewController = [[ToolTipViewController alloc] initWithToolTip:toolTip];
@@ -449,13 +446,13 @@
 {
     [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
+    self.bottomBarToolTipConstraint = [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+
     self.bottomBarBottomOffset.active = NO;
-    self.bottomBarToolTipConstraint = [self.bottomBarController.view autoPinEdge:ALEdgeBottom
-                                                                          toEdge:ALEdgeTop
-                                                                          ofView:self.tooltipViewController.view
-                                                                      withOffset:self.tooltipViewController.padding];
+    [self.bottomBarController.view autoPinEdge:ALEdgeBottom
+                                        toEdge:ALEdgeTop
+                                        ofView:self.tooltipViewController.view
+                                    withOffset:self.tooltipViewController.padding];
 }
 
 - (void)showTooltipView;
@@ -465,14 +462,36 @@
     [self.tooltipViewController makeTipPointToView:self.bottomBarController.plusButton.imageView];
 }
 
-- (void)removeTooltipView;
+- (void)removeTooltipViewAnimated:(BOOL)animated completion:(dispatch_block_t)completionBlock;
 {
+    dispatch_block_t animations = ^{
+        [self.view layoutIfNeeded];
+    };
+
+    dispatch_block_t completion = ^{
+        [self.tooltipViewController.view removeFromSuperview];
+        [self.tooltipViewController removeFromParentViewController];
+        if (nil != completionBlock) {
+            completionBlock();
+        }
+    };
+
     if (self.tooltipViewController.parentViewController) {
         self.bottomBarToolTipConstraint.active = NO;
         self.bottomBarBottomOffset.active = YES;
-        
-        [self.tooltipViewController.view removeFromSuperview];
-        [self.tooltipViewController removeFromParentViewController];
+
+        if (animated) {
+            [UIView animateWithDuration:0.2 animations:animations completion:^(__unused BOOL finished) {
+                completion();
+            }];
+        } else {
+            animations();
+            completion();
+        }
+    } else {
+        if (nil != completionBlock) {
+            completionBlock();
+        }
     }
 }
 
@@ -725,12 +744,19 @@
             break;
 
         case ConversationListButtonTypeCompose:
-            if ([DeveloperMenuState developerMenuEnabled]) {
-                [self presentComposeEntryViewController];
-            } else {
-                [self presentPeoplePickerAndRemoveTooltip];
-            }
+            [self showComposeEntryController];
             break;
+    }
+}
+
+- (void)showComposeEntryController
+{
+    if ([DeveloperMenuState developerMenuEnabled]) {
+        [self removeTooltipViewAnimated:YES completion:^{
+            [self presentComposeEntryViewController];
+        }];
+    } else {
+        [self presentPeoplePickerAndRemoveTooltip];
     }
 }
 
@@ -767,7 +793,7 @@
     @weakify(self)
     [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
         @strongify(self)
-        [self removeTooltipView];
+        [self removeTooltipViewAnimated:NO completion:nil];
     }];
 }
 
