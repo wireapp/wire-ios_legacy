@@ -162,6 +162,7 @@
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
 }
@@ -172,6 +173,14 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if ([self.conversation shouldDisplayIsTyping]) {
         [ZMConversation removeTypingObserver:self];
+    }
+}
+
+- (void)didEnterBackground:(NSNotification *)notification
+{
+    NOT_USED(notification);
+    if([self.conversation shouldDisplayIsTyping] && self.inputBar.textView.text.length > 0) {
+        [self.conversation setIsTyping:NO];
     }
 }
 
@@ -499,6 +508,9 @@
 {
     self.inputBar.textView.text = @"";
     [self updateRightAccessoryView];
+    if ([self.conversation shouldDisplayIsTyping]) {
+        [self.conversation setIsTyping:NO];
+    }
 }
 
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
