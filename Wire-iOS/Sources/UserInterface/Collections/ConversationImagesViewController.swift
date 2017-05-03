@@ -67,7 +67,7 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     internal var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     internal var buttonsBar: InputBarButtonsView!
-    internal var deleteButton: IconButton!
+    internal let deleteButton = IconButton.iconButtonDefault()
     internal let overlay = FeedbackOverlayView()
     internal let separator = UIView()
     fileprivate let likeButton = IconButton.iconButtonDefault()
@@ -201,7 +201,6 @@ internal final class ConversationImagesViewController: UIViewController {
         shareButton.accessibilityLabel = "share"
         shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
 
-        deleteButton = IconButton.iconButtonDefault()
         deleteButton.setIcon(.trash, with: .tiny, for: .normal)
         deleteButton.accessibilityLabel = "delete"
         deleteButton.addTarget(self, action: #selector(deleteCurrent), for: .touchUpInside)
@@ -221,7 +220,7 @@ internal final class ConversationImagesViewController: UIViewController {
         emojiSketchButton.accessibilityLabel = "sketch emoji over image"
         emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
         
-        let buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton!]
+        let buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton]
         buttons.forEach { $0.hitAreaPadding = .zero }
         
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
