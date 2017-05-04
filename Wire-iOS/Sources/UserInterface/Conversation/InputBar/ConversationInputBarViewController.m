@@ -156,10 +156,8 @@
         self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
-        if ([self.conversation shouldDisplayIsTyping]) {
-            [conversation addTypingObserver:self];
-            self.typingUsers = conversation.typingUsers;
-        }
+        [conversation addTypingObserver:self];
+        self.typingUsers = conversation.typingUsers;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -171,15 +169,13 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    if ([self.conversation shouldDisplayIsTyping]) {
-        [ZMConversation removeTypingObserver:self];
-    }
+    [ZMConversation removeTypingObserver:self];
 }
 
 - (void)didEnterBackground:(NSNotification *)notification
 {
     NOT_USED(notification);
-    if([self.conversation shouldDisplayIsTyping] && self.inputBar.textView.text.length > 0) {
+    if(self.inputBar.textView.text.length > 0) {
         [self.conversation setIsTyping:NO];
     }
 }
@@ -508,9 +504,7 @@
 {
     self.inputBar.textView.text = @"";
     [self updateRightAccessoryView];
-    if ([self.conversation shouldDisplayIsTyping]) {
-        [self.conversation setIsTyping:NO];
-    }
+    [self.conversation setIsTyping:NO];
 }
 
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
@@ -774,13 +768,11 @@
         return;
     }
     
-    if ([self.conversation shouldDisplayIsTyping]) {
-        if (textView.text.length > 0) {
-            [self.conversation setIsTyping:YES];
-        }
-        else {
-            [self.conversation setIsTyping:NO];
-        }
+    if (textView.text.length > 0) {
+        [self.conversation setIsTyping:YES];
+    }
+    else {
+        [self.conversation setIsTyping:NO];
     }
     
     [self updateRightAccessoryView];

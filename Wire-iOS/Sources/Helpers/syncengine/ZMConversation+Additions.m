@@ -215,18 +215,6 @@
     return [self.activeParticipants containsObject:[ZMUser selfUser]];
 }
 
-- (BOOL)shouldDisplayIsTyping
-{
-    if (! IsTypingEnabled) {
-        return NO;
-    }
-
-    if (self.conversationType == ZMConversationTypeGroup) {
-        return IsTypingInGroupConversationsEnabled;
-    }
-
-    return YES;
-}
 
 - (BOOL)isCallingSupported
 {
