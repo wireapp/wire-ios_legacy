@@ -118,7 +118,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     // We want to reload if this is the initial content load or if the message window did expand to the top
     // (e.g. when scrolling to the top), as there are also insertions at the top if messages get deleted we do not
     // trigger a full reload if there are also deleted indices.
-    if (initialContentLoad || (expandedWindow && !change.deletedIndexes.count)) {
+    if (initialContentLoad || (expandedWindow && !change.deletedIndexes.count) || change.needsReload) {
         [self.tableView reloadData];
     }
     else if (! updateOnlyChange) {
