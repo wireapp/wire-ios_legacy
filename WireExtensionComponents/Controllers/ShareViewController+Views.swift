@@ -49,6 +49,8 @@ extension ShareViewController {
         self.tokenField.textView.accessibilityLabel = "textViewSearch"
         self.tokenField.textView.placeholder = "content.message.forward.to".localized.uppercased()
         self.tokenField.textView.keyboardAppearance = .dark
+        self.tokenField.textView.returnKeyType = .done
+        self.tokenField.textView.autocorrectionType = .no
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 48, bottom: 6, right: 12)
         self.tokenField.delegate = self
 

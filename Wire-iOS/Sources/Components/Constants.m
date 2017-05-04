@@ -33,5 +33,3 @@ NSString *const WireURLPathTeamJoin = @"team/join";
 NSString *const UserPrefKeyProfilePictureTipCompleted = @"ProfilePictureTipCompleted";
 NSString *const UserPrefKeyAccentColorTipCompleted = @"AccentColorTipCompleted";
 
-BOOL const IsTypingEnabled = YES;
-BOOL const IsTypingInGroupConversationsEnabled = YES;

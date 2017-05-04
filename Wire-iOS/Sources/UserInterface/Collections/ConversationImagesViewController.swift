@@ -61,11 +61,13 @@ internal final class ConversationImagesViewController: UIViewController {
     fileprivate var imageMessages: [ZMConversationMessage] = []
     internal var currentMessage: ZMConversationMessage {
         didSet {
+            self.updateButtonsForMessage()
             self.createNavigationTitle()
         }
     }
     internal var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     internal var buttonsBar: InputBarButtonsView!
+    internal let deleteButton = IconButton.iconButtonDefault()
     internal let overlay = FeedbackOverlayView()
     internal let separator = UIView()
     fileprivate let likeButton = IconButton.iconButtonDefault()
@@ -199,7 +201,6 @@ internal final class ConversationImagesViewController: UIViewController {
         shareButton.accessibilityLabel = "share"
         shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
 
-        let deleteButton = IconButton.iconButtonDefault()
         deleteButton.setIcon(.trash, with: .tiny, for: .normal)
         deleteButton.accessibilityLabel = "delete"
         deleteButton.addTarget(self, action: #selector(deleteCurrent), for: .touchUpInside)
@@ -226,6 +227,8 @@ internal final class ConversationImagesViewController: UIViewController {
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
         self.view.addSubview(self.buttonsBar)
+        
+        self.updateButtonsForMessage()
     }
 
     fileprivate func updateLikeButton() {
@@ -260,6 +263,10 @@ internal final class ConversationImagesViewController: UIViewController {
             return
         }
         self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.wr_formattedDate())
+    }
+    
+    private func updateButtonsForMessage() {
+        self.deleteButton.isHidden = !currentMessage.canBeDeleted
     }
     
     var currentController: FullscreenImageViewController? {

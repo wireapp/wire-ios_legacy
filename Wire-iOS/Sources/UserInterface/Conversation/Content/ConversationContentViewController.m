@@ -347,6 +347,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
             case MessageActionDelete:
             {
+                assert([message canBeDeleted]);
+                
                 self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
                 [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^(BOOL deleted) {
                     if (self.presentedViewController && deleted) {

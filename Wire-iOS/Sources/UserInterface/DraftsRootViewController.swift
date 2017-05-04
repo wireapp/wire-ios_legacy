@@ -79,10 +79,11 @@ extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdap
         view.window?.endEditing(true)
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
         let shareViewController: ShareViewController<ZMConversation, MessageDraft> = ShareViewController(shareable: draft, destinations: conversations)
+        let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)!
 
         shareViewController.showPreview = false
-        shareViewController.modalPresentationStyle = .formSheet
-        shareViewController.presentationController?.delegate = self
+        keyboardAvoiding.modalPresentationStyle = .formSheet
+        keyboardAvoiding.presentationController?.delegate = self
 
         shareViewController.onDismiss = { [weak self] (controller, success) in
             if success {
@@ -97,7 +98,7 @@ extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdap
             }
         }
 
-        present(shareViewController, animated: true) {
+        present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true, onlyFullScreen: false)
         }
     }

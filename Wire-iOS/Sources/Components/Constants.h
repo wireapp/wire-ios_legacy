@@ -37,9 +37,6 @@ FOUNDATION_EXPORT NSString *const UserPrefKeyAccentColorTipCompleted;
 
 #pragma mark - Unsorted stuff
 
-FOUNDATION_EXPORT BOOL const IsTypingEnabled;
-FOUNDATION_EXPORT BOOL const IsTypingInGroupConversationsEnabled;
-
 #define IS_IPHONE ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
 #define IS_IPHONE_4 (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height == 960.0f)
 #define IS_IPHONE_5 (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height == 1136.0f)

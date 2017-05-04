@@ -167,15 +167,16 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         
         let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
+        let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)!
                 
         if traitCollection.horizontalSizeClass == .regular {
             shareViewController.showPreview = false
         }
         
-        shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
-        shareViewController.modalPresentationStyle = .popover
+        keyboardAvoiding.preferredContentSize = CGSize(width: 320, height: 568)
+        keyboardAvoiding.modalPresentationStyle = .popover
         
-        if let popoverPresentationController = shareViewController.popoverPresentationController {
+        if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             if let cell = fromCell {
                 popoverPresentationController.sourceRect = cell.selectionRect
                 popoverPresentationController.sourceView = cell.selectionView
@@ -184,14 +185,14 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             popoverPresentationController.permittedArrowDirections = [.up, .down]
         }
         
-        shareViewController.presentationController?.delegate = self
+        keyboardAvoiding.presentationController?.delegate = self
         
         shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> () in
             shareController.presentingViewController?.dismiss(animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
-        UIApplication.shared.keyWindow?.rootViewController?.present(shareViewController, animated: true) {
+        UIApplication.shared.keyWindow?.rootViewController?.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }

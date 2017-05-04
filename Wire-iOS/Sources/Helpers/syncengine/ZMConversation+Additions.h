@@ -42,8 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (ZMConversation *)addParticipantsOrCreateConversation:(NSSet *)participants;
 
-- (BOOL)shouldDisplayIsTyping;
-
 /// Calls
 - (BOOL)isCallingSupported;
 
