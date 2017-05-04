@@ -824,6 +824,9 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
+    if (textView.text.length > 0) {
+        [self.conversation setIsTyping:NO];
+    }
     [[ZMUserSession sharedSession] enqueueChanges:^{
         self.conversation.draftMessageText = textView.text;
     }];
