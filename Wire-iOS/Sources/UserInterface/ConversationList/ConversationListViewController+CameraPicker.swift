@@ -85,7 +85,11 @@ extension ConversationListViewController {
 
     @objc public func showCameraPicker() {
         let cameraPicker = CameraPicker(target: self)
-        cameraPicker.didPickResult = { result in
+        cameraPicker.didPickResult = { [weak self] result in
+            guard let `self` = self else {
+                return
+            }
+            
             switch result {
             case .image(let image):
                 self.showShareControllerFor(image: image)
@@ -101,6 +105,8 @@ extension ConversationListViewController {
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
         
         let shareViewController: ShareViewController<ZMConversation, UIImage> = ShareViewController(shareable: image, destinations: conversations)
+        let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
+
         shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
         shareViewController.onDismiss = { [weak self] (shareController: ShareViewController<ZMConversation, UIImage>, _) -> () in
             guard let `self` = self else {
@@ -109,13 +115,15 @@ extension ConversationListViewController {
             self.dismiss(animated: true)
         }
         
-        self.present(shareViewController, animated: true)
+        self.present(keyboardAvoiding, animated: true)
     }
     
     public func showShareControllerFor(videoAtURL: URL) {
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
         
         let shareViewController: ShareViewController<ZMConversation, URL> = ShareViewController(shareable: videoAtURL, destinations: conversations)
+        let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
+
         shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
         shareViewController.onDismiss = { [weak self] (shareController: ShareViewController<ZMConversation, URL>, _) -> () in
             guard let `self` = self else {
@@ -124,6 +132,6 @@ extension ConversationListViewController {
             self.dismiss(animated: true)
         }
         
-        self.present(shareViewController, animated: true)
+        self.present(keyboardAvoiding, animated: true)
     }
 }

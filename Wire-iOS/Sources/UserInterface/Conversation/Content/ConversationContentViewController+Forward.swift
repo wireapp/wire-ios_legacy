@@ -167,7 +167,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
         
         let shareViewController: ShareViewController<ZMConversation, ZMMessage> = ShareViewController(shareable: message as! ZMMessage, destinations: conversations)
-        let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)!
+        let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
                 
         if traitCollection.horizontalSizeClass == .regular {
             shareViewController.showPreview = false

@@ -244,7 +244,7 @@ public extension ConversationViewController {
 
         collectionController?.shouldTrackOnNextOpen = true
 
-        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController).wrapInNavigationController(RotationAwareNavigationController.self)
+        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController(RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 
         ZClientViewController.shared().present(navigationController, animated: true, completion: {

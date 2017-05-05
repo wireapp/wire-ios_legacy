@@ -41,7 +41,7 @@ final class DraftNavigationController: UINavigationController {
     }
 
     override init(rootViewController: UIViewController) {
-        let keyboardAvoiding = RotatingKeyboardAvoidingViewController(viewController: rootViewController)!
+        let keyboardAvoiding = RotatingKeyboardAvoidingViewController(viewController: rootViewController)
         super.init(rootViewController: keyboardAvoiding)
     }
 

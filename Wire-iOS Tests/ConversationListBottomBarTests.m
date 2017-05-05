@@ -27,6 +27,7 @@
 @interface MockConversationListBottomBarDelegate : NSObject <ConversationListBottomBarControllerDelegate>
 @property (nonatomic) NSUInteger contactsButtonTapCount;
 @property (nonatomic) NSUInteger archiveButtonTapCount;
+@property (nonatomic) NSUInteger cameraButtonTapCount;
 @end
 
 
@@ -46,6 +47,9 @@
             break;
         case ConversationListButtonTypeCompose:
             self.contactsButtonTapCount++;
+            break;
+        case ConversationListButtonTypeCamera:
+            self.cameraButtonTapCount++;
             break;
     }
 }
@@ -123,6 +127,7 @@
     // then
     XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 1lu);
     XCTAssertEqual(self.mockDelegate.archiveButtonTapCount, 0lu);
+    XCTAssertEqual(self.mockDelegate.cameraButtonTapCount, 0lu);
 }
 
 - (void)testThatItCallsTheDelegateWhenTheArchivedButtonIsTapped
@@ -133,6 +138,18 @@
     // then
     XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 0lu);
     XCTAssertEqual(self.mockDelegate.archiveButtonTapCount, 1lu);
+    XCTAssertEqual(self.mockDelegate.cameraButtonTapCount, 0lu);
+}
+
+- (void)testThatItCallsTheDelegateWhenTheCameraButtonIsTapped
+{
+    // when
+    [self.sut.cameraButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    // then
+    XCTAssertEqual(self.mockDelegate.contactsButtonTapCount, 0lu);
+    XCTAssertEqual(self.mockDelegate.archiveButtonTapCount, 0lu);
+    XCTAssertEqual(self.mockDelegate.cameraButtonTapCount, 1lu);
 }
 
 @end
