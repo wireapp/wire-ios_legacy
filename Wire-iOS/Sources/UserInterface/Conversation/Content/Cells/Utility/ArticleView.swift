@@ -90,9 +90,11 @@ class ArticleView: UIView {
 
         authorLabel.lineBreakMode = .byTruncatingMiddle
         authorLabel.accessibilityIdentifier = "linkPreviewSource"
+        authorLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
 
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
+        messageLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         messageLabel.delegate = self
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
