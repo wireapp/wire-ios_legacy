@@ -746,6 +746,10 @@
         case ConversationListButtonTypeCompose:
             [self showComposeEntryController];
             break;
+            
+        case ConversationListButtonTypeCamera:
+            [self showCameraPicker];
+            break;
     }
 }
 

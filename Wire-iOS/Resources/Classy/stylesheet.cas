@@ -539,6 +539,10 @@ ConversationListBottomBarController {
         }
     }
     
+    cameraButton: @{
+        iconColor: $color-text-foreground-dark;
+    }
+    
     archivedButton: @{
         iconColor: $color-text-foreground-dark;
     }

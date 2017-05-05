@@ -22,7 +22,7 @@ import Cartography
 
 
 @objc enum ConversationListButtonType: UInt {
-    case archive, compose
+    case archive, compose, camera
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
@@ -36,6 +36,7 @@ import Cartography
 
     let plusButton     = IconButton()
     let archivedButton = IconButton()
+    let cameraButton   = IconButton()
     let plusButtonContainer = UIView()
     let archivedButtonContainer = UIView()
     let separator = UIView()
@@ -77,8 +78,13 @@ import Cartography
         plusButton.titleImageSpacing = 18
         plusButton.setTitle(plusButtonTitle, for: .normal)
 
-        view.addSubview(plusButton)
-
+        cameraButton.setIcon(.cameraLens, with: .tiny, for: .normal)
+        cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+        cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
+        cameraButton.adjustsTitleWhenHighlighted = true
+        
+        view.addSubview(cameraButton)
+        
         plusButtonContainer.addSubview(plusButton)
         archivedButtonContainer.addSubview(archivedButton)
         [separator, archivedButton].forEach { $0.isHidden = true }
@@ -114,6 +120,10 @@ import Cartography
             archivedButton.leading == container.leading + 24
             archivedButton.centerY == container.centerY
         }
+        
+        constrain(view, cameraButton) { view, cameraButton in
+            cameraButton.center == view.center
+        }
     }
     
     func updateArchivedVisibility() {
@@ -130,6 +140,9 @@ import Cartography
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .compose)
     }
     
+    func cameraButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .camera)
+    }
 }
 
 // MARK: - Helper

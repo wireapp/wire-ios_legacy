@@ -618,6 +618,9 @@
 		87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */; };
 		87D5E4421C3E79C600EB8289 /* NSData+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5E4411C3E79C600EB8289 /* NSData+Fingerprint.swift */; };
 		87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
+		87D679E41EBB72E8005BEB4C /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E31EBB72E8005BEB4C /* CameraPicker.swift */; };
+		87D679E61EBC8002005BEB4C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E51EBC8002005BEB4C /* String.swift */; };
+		87D679E81EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */; };
 		87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D7AF661DF5A158001A1CD7 /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */; };
 		87DCF47A1D34E95B00BB420F /* ShareContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */; };
@@ -1922,6 +1925,9 @@
 		87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileClientViewController.swift; sourceTree = "<group>"; };
 		87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClientFingerprintTests.swift; sourceTree = "<group>"; };
 		87D5E4411C3E79C600EB8289 /* NSData+Fingerprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Fingerprint.swift"; sourceTree = "<group>"; };
+		87D679E31EBB72E8005BEB4C /* CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
+		87D679E51EBC8002005BEB4C /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+CameraPicker.swift"; sourceTree = "<group>"; };
 		87D7AF661DF5A158001A1CD7 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundcloudService+Testing.h"; sourceTree = "<group>"; };
 		87DCF4751D34E95B00BB420F /* PermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionDeniedViewController.h; sourceTree = "<group>"; };
@@ -4378,6 +4384,7 @@
 				168A16A31D95964B005CFA6C /* NSString+URL.swift */,
 				BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */,
 				166390D51DC8AC0C00D7BF1C /* String+Image.swift */,
+				87D679E51EBC8002005BEB4C /* String.swift */,
 				87AC77DA1DE48C01009F6D56 /* Copyable.swift */,
 				8711A59F1E0C320100043ACF /* FloatingPoint.swift */,
 				BF8ECC321E5AED6C0015177D /* UIMenuItem+MessageActions.swift */,
@@ -4641,6 +4648,7 @@
 				BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */,
 				BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */,
 				8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */,
+				87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */,
 				87371C181B7355C400807499 /* ConversationListViewController+StartUI.h */,
 				87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */,
 				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
@@ -4657,6 +4665,7 @@
 				877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */,
 				870C926A1E8D08A000A10995 /* SpaceSelectorView.swift */,
 				870C926C1E8D180300A10995 /* Space.swift */,
+				87D679E31EBB72E8005BEB4C /* CameraPicker.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -6003,6 +6012,7 @@
 				874E27CB1E2912860079573D /* ConversationImagesViewController.swift in Sources */,
 				875A23101ADEA1A200111C88 /* CountryCodeBaseTableViewController.m in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
+				87D679E81EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift in Sources */,
 				8745476B1E9E54E600C206E5 /* SelfProfileViewController.swift in Sources */,
 				871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */,
 				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
@@ -6050,6 +6060,7 @@
 				BADA35131B42FEC100396F2C /* NSURL+WireLocale.m in Sources */,
 				DBCBD19219F10A1F000510C1 /* ConnectRequestCell.m in Sources */,
 				CE8E4FBD1DF17BBE0009F437 /* CASStyler+Variables.m in Sources */,
+				87D679E61EBC8002005BEB4C /* String.swift in Sources */,
 				871BC0131D34F56300DF0793 /* Analytics+SearchEvents.m in Sources */,
 				8719FD671C88802C005FBEC0 /* Delay.swift in Sources */,
 				871BC0191D34F56300DF0793 /* AnalyticsSearchResultEvent.m in Sources */,
@@ -6122,6 +6133,7 @@
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
 				BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */,
 				CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */,
+				87D679E41EBB72E8005BEB4C /* CameraPicker.swift in Sources */,
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
 				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
 				167AEA101B16031900890435 /* VoiceChannelParticipantCell.m in Sources */,
