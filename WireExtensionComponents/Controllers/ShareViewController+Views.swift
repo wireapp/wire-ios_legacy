@@ -147,7 +147,7 @@ extension ShareViewController {
         
         constrain(self.containerView, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
             
-            closeButton.left == view.left
+            closeButton.leading == view.leading
             closeButton.centerY == sendButton.centerY
             closeButton.width == 44
             closeButton.height == closeButton.width
@@ -155,7 +155,7 @@ extension ShareViewController {
             sendButton.top == bottomSeparatorLine.bottom + 12
             sendButton.height == 32
             sendButton.width == sendButton.height
-            sendButton.centerX == view.centerX
+            sendButton.trailing == view.trailing - 16
             sendButton.bottom == -12 + view.bottom
         }
     }
