@@ -502,7 +502,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [DeveloperMenuState prepareForDebugging];
     [MessageDraftStorage setupSharedStorageAtURL:_zetaUserSession.sharedContainerURL error:nil];
     self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:_zetaUserSession.syncManagedObjectContext];
-    [self.messageCountTracker trackLegacyMessageCount];
 }
 
 #pragma mark - User Session block queueing
