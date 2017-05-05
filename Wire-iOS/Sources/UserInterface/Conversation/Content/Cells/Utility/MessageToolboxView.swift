@@ -129,7 +129,8 @@ extension ZMSystemMessageData {
             
             labelClipView.leading == selfView.leadingMargin
             labelClipView.trailing == selfView.trailingMargin
-            labelClipView.centerY == selfView.centerY
+            labelClipView.top == selfView.top
+            labelClipView.bottom == selfView.bottom
 
             statusLabel.leading == labelClipView.leading
             statusLabel.top == labelClipView.top

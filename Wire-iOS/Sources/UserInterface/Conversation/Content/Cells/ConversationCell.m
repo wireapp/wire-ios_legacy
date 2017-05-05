@@ -277,11 +277,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
         [self.authorImageView autoSetDimension:ALDimensionHeight toSize:authorImageDiameter];
     }];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
         self.toolboxCollapseConstraint = [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     
