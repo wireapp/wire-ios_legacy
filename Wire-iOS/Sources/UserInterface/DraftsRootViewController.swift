@@ -56,9 +56,9 @@ final class DraftsRootViewController: UISplitViewController {
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: animated)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

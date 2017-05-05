@@ -60,10 +60,14 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
     }
 
     private func setupEmptyLabel() {
-        let title = "compose.drafts.empty.title".localized && FontSpec(.normal, .semibold).font!
-        let subtitle = "compose.drafts.empty.subtitle".localized && FontSpec(.normal, .none).font!
-        emptyLabel.attributedText = (title + "\n\n" + subtitle) && ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
-        emptyLabel.textAlignment = .center
+        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.alignment = .center
+        paragraphStyle.paragraphSpacing = 4
+        let paragraphAttributes = [NSParagraphStyleAttributeName: paragraphStyle]
+        let color = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        let title = "compose.drafts.empty.title".localized.uppercased() && FontSpec(.small, .semibold).font!
+        let subtitle = "compose.drafts.empty.subtitle".localized.uppercased() && FontSpec(.small, .light).font!
+        emptyLabel.attributedText = (title + "\n" + subtitle) && color && paragraphAttributes
         emptyLabel.numberOfLines = 0
         view.addSubview(emptyLabel)
         view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
