@@ -124,13 +124,12 @@ extension ZMSystemMessageData {
     
     private func createConstraints() {
         constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
-            labelClipView.leading == selfView.leadingMargin
-            labelClipView.trailing == selfView.trailingMargin
 
             selfView.height >= 28 ~ LayoutPriority(750)
-
-            labelClipView.top == selfView.top
-            labelClipView.bottom == selfView.bottom
+            
+            labelClipView.leading == selfView.leadingMargin
+            labelClipView.trailing == selfView.trailingMargin
+            labelClipView.centerY == selfView.centerY
 
             statusLabel.leading == labelClipView.leading
             statusLabel.top == labelClipView.top

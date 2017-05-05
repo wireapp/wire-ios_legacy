@@ -281,7 +281,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         [self.authorImageView autoSetDimension:ALDimensionHeight toSize:authorImageDiameter];
     }];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
         self.toolboxCollapseConstraint = [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     
