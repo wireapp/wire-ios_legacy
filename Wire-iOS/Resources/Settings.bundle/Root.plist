@@ -55,7 +55,6 @@
 			<array>
 				<string>Production</string>
 				<string>Staging</string>
-				<string>Edge</string>
 				<string>Default (Depends on build)</string>
 			</array>
 			<key>Values</key>
