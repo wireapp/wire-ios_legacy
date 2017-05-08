@@ -256,11 +256,13 @@
     self.navigationController.showLoadingView = NO;
     
     if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
-        AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
-        addEmailPasswordViewController.formStepDelegate = self;
-        [self.wr_navigationController setBackButtonEnabled:NO];
-        [self.navigationController pushViewController:addEmailPasswordViewController animated:YES];
+        if (![self.navigationController.topViewController isKindOfClass:[AddEmailPasswordViewController class]]) {
+            AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
+            addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
+            addEmailPasswordViewController.formStepDelegate = self;
+            [self.wr_navigationController setBackButtonEnabled:NO];
+            [self.navigationController pushViewController:addEmailPasswordViewController animated:YES];
+        }
     }
     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
         [self.navigationController popToRootViewControllerAnimated:NO];
