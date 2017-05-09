@@ -92,6 +92,10 @@ import Cartography
         view.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         addSubviews()
         [separator, archivedButton].forEach{ $0.isHidden = true }
+
+        if !showComposeButtons {
+            createConstraints()
+        }
     }
 
     private func addSubviews() {
