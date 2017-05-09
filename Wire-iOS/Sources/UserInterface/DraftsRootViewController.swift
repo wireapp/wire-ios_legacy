@@ -78,10 +78,9 @@ extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdap
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft draft: MessageDraft) {
         view.window?.endEditing(true)
         let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
-        let shareViewController: ShareViewController<ZMConversation, MessageDraft> = ShareViewController(shareable: draft, destinations: conversations)
+        let shareViewController = ShareViewController(shareable: draft, destinations: conversations, showPreview: false)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
 
-        shareViewController.showPreview = false
         keyboardAvoiding.modalPresentationStyle = .formSheet
         keyboardAvoiding.presentationController?.delegate = self
 

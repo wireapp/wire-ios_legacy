@@ -75,15 +75,6 @@ final class MessageComposeViewController: UIViewController {
         updateRightNavigationItem()
     }
 
-    private lazy var backButton: IconButton = {
-        let button = IconButton.iconButtonDefault()
-        button.setIcon(.backArrow, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, -26, 0, 0)
-        button.accessibilityIdentifier = "back"
-        return button
-    }()
-
     private func setupTextView() {
         messageTextView.textColor = color(ColorSchemeColorTextForeground)
         messageTextView.backgroundColor = .clear
@@ -101,7 +92,6 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func setupNavigationItem() {
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         subjectTextField.delegate = self
         subjectTextField.textColor = color(ColorSchemeColorTextForeground)
         subjectTextField.tintColor = .accent()
@@ -121,6 +111,8 @@ final class MessageComposeViewController: UIViewController {
         updateRightNavigationItem()
     }
 
+    private let draftsBackButton = IconButton.iconButtonDefault()
+
     private func updateRightNavigationItem() {
         let showItem = traitCollection.horizontalSizeClass == .compact
         navigationItem.rightBarButtonItem = showItem ? UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped)) : nil
@@ -128,9 +120,36 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func updateLeftNavigationItem() {
-        let showItem = traitCollection.horizontalSizeClass == .compact
-        navigationItem.leftBarButtonItem = showItem ? UIBarButtonItem(customView: backButton) : nil
+        guard traitCollection.horizontalSizeClass == .compact else {
+            navigationItem.leftBarButtonItem = nil
+            return
+        }
+
+        draftsBackButton.setIcon(.compose, with: .tiny, for: .normal)
+        draftsBackButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
+        draftsBackButton.titleLabel?.font = FontSpec(.medium, .semibold).font
+        draftsBackButton.setIconColor(color(ColorSchemeColorTextForeground), for: .normal)
+        draftsBackButton.setTitleColor(color(ColorSchemeColorSeparator), for: .normal)
+        draftsBackButton.accessibilityIdentifier = "back"
+
+
+        let count = numberOfOtherDrafts()
+        if count > 0 {
+            draftsBackButton.setTitle(String(count), for: .normal)
+        }
+        draftsBackButton.titleImageSpacing = 2
+        draftsBackButton.imageEdgeInsets = UIEdgeInsetsMake(0, -6, 0, 0)
+        draftsBackButton.sizeToFit()
+        draftsBackButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: draftsBackButton)
         navigationItem.leftBarButtonItem?.accessibilityLabel = "backButton"
+    }
+
+    private func numberOfOtherDrafts() -> Int {
+        let storedDrafts = persistence.numberOfStoredDrafts()
+        guard nil != draft else { return storedDrafts }
+        return storedDrafts - 1
     }
 
     private func setupInputAccessoryView() {

@@ -38,13 +38,14 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         }
     }
     
-    public var showPreview: Bool = true
+    public let showPreview: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
     
-    public init(shareable: S, destinations: [D]) {
+    public init(shareable: S, destinations: [D], showPreview: Bool = true) {
         self.destinations = destinations
         self.filteredDestinations = destinations
         self.shareable = shareable
+        self.showPreview = showPreview
         super.init(nibName: nil, bundle: nil)
         self.transitioningDelegate = self
     }

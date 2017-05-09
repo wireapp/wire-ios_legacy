@@ -4471,6 +4471,30 @@ static UIImage* _imageOfShieldnotverified = nil;
     [megaphonePath fill];
 }
 
++ (void)drawIcon_0x268_32ptWithColor: (UIColor*)color
+{
+
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(16, 64)];
+    [bezierPath addCurveToPoint: CGPointMake(8, 56) controlPoint1: CGPointMake(11.58, 64) controlPoint2: CGPointMake(8, 60.42)];
+    [bezierPath addCurveToPoint: CGPointMake(16, 48) controlPoint1: CGPointMake(8, 51.58) controlPoint2: CGPointMake(11.58, 48)];
+    [bezierPath addCurveToPoint: CGPointMake(24, 56) controlPoint1: CGPointMake(20.42, 48) controlPoint2: CGPointMake(24, 51.58)];
+    [bezierPath addCurveToPoint: CGPointMake(16, 64) controlPoint1: CGPointMake(24, 60.42) controlPoint2: CGPointMake(20.42, 64)];
+    [bezierPath closePath];
+    [bezierPath moveToPoint: CGPointMake(0, 22)];
+    [bezierPath addCurveToPoint: CGPointMake(22.03, 0) controlPoint1: CGPointMake(0, 9.85) controlPoint2: CGPointMake(9.86, 0)];
+    [bezierPath addLineToPoint: CGPointMake(41.97, 0)];
+    [bezierPath addCurveToPoint: CGPointMake(64, 22) controlPoint1: CGPointMake(54.14, 0) controlPoint2: CGPointMake(64, 9.87)];
+    [bezierPath addCurveToPoint: CGPointMake(41.97, 44) controlPoint1: CGPointMake(64, 34.15) controlPoint2: CGPointMake(54.14, 44)];
+    [bezierPath addLineToPoint: CGPointMake(22.03, 44)];
+    [bezierPath addCurveToPoint: CGPointMake(0, 22) controlPoint1: CGPointMake(9.86, 44) controlPoint2: CGPointMake(0, 34.13)];
+    [bezierPath closePath];
+    bezierPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [bezierPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -8150,6 +8174,17 @@ static UIImage* _imageOfShieldnotverified = nil;
     return imageOfIcon_0x267_32pt;
 }
 
++ (UIImage*)imageOfIcon_0x268_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x268_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x268_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x268_32pt;
+}
+
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, 0);
@@ -8293,7 +8328,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldverifiedTargets: (NSArray*)shieldverifiedTargets
 {
     _shieldverifiedTargets = shieldverifiedTargets;
-
+    
     for (id target in shieldverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldverified];
 }

@@ -84,7 +84,7 @@ final class DraftSendInputAccessoryView: UIView {
             separator.height == .hairline
 
             sendButton.trailing == view.trailing - 16
-            deleteButton.leading == view.leading + 16
+            deleteButton.leading == view.leading + 12
 
             [sendButton, deleteButton].forEach {
                 $0.centerY == view.centerY
