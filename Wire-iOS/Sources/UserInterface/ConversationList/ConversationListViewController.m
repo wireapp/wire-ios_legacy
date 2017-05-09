@@ -431,6 +431,7 @@
                                           description:NSLocalizedString(@"tool_tip.contacts.message", nil)
                                               handler:^{
                                                   @strongify(self)
+                                                  Settings.sharedSettings.contactTipWasDisplayed = YES;
                                                   [self showComposeEntryController];
                                               }];
     
