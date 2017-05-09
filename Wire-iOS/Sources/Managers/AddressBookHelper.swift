@@ -96,13 +96,13 @@ extension AddressBookHelper {
         }
     }
     
-    /// Whether the user was asked to perform address book search
-    public var addressBookSearchWasProposed : Bool {
+    /// Whether the user skipped address book search
+    public var addressBookSearchWasPostponed : Bool {
         get {
-            return UserDefaults.standard.bool(forKey: addressBookSearchWasProposedKey)
+            return UserDefaults.standard.bool(forKey: addressBookSearchWasPostponedKey)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: addressBookSearchWasProposedKey)
+            UserDefaults.standard.set(newValue, forKey: addressBookSearchWasPostponedKey)
         }
     }
 }
@@ -132,10 +132,10 @@ extension AddressBookHelper {
     
     /// Starts an address book search, if enough time has passed since last search
     @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:) public func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
-        guard self.isAddressBookAccessGranted && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {
+        guard self.isAddressBookAccessGranted && !self.addressBookSearchWasPostponed && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {
             return
         }
-        self.addressBookSearchWasProposed = false;
+        self.addressBookSearchWasPostponed = false;
         self.addressBookSearchPerformedAtLeastOnce = true;
         
         if TARGET_OS_SIMULATOR == 0 || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
@@ -149,7 +149,7 @@ extension AddressBookHelper {
 
 private let addressBookLastSearchDate = "UserDefaultsKeyAddressBookExportDate"
 private let addressBookSearchPerfomedAtLeastOnceKey = "AddressBookWasUploaded"
-private let addressBookSearchWasProposedKey = "AddressBookUploadWasProposed"
+private let addressBookSearchWasPostponedKey = "AddressBookUploadWasPostponed"
 private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
 
 private let addressBookIsolationQueue = DispatchQueue(label: "Address book helper", attributes: [])

@@ -202,7 +202,7 @@
         [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
     }
 
-    [[AddressBookHelper sharedHelper] addressBookSearchWasProposed];
+    [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
     [self.formStepDelegate didSkipFormStep:self];
 }
 
@@ -211,7 +211,7 @@
 
 - (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController
 {
-    [[AddressBookHelper sharedHelper] addressBookSearchWasProposed];
+    [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
     [self.formStepDelegate didSkipFormStep:self];
 }
 

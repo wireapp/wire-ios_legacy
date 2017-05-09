@@ -95,7 +95,7 @@
     // that's why we need to track the tap manually here.
     if (!self.shareContactsViewController.showingAddressBookAccessDeniedViewController) {
         [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
-        [[AddressBookHelper sharedHelper] addressBookSearchWasProposed];
+        [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
     }
     
     [self.formStepDelegate didSkipFormStep:self];
