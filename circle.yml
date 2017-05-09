@@ -12,6 +12,7 @@ checkout:
 dependencies:
   override:
     - ./setup.sh
+    - curl -O https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Dangerfile
   cache_directories:
     - Carthage/Build
     - ~/.gem
@@ -21,5 +22,6 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
     - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty -r junit --output $CIRCLE_TEST_REPORTS/junit/tests.xml
+    - bundle exec danger
   post:
     - if [ -d "SnapshotResults" ]; then cp -R SnapshotResults $CIRCLE_ARTIFACTS/; fi
