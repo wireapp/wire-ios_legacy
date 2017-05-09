@@ -124,7 +124,7 @@ import Cartography
         didLayout = true
     }
 
-    func createConstraintsWithoutComposeButtons() {
+    private func createConstraintsWithoutComposeButtons() {
         constrain(view, cameraButton, plusButton, archivedButton, composeButton) { view, cameraButton, plusButton, archivedButton, composeButton in
             plusButton.centerY == view.centerY
             archivedButton.centerY == view.centerY
@@ -133,7 +133,7 @@ import Cartography
         }
     }
 
-    func createConstraintsWithComposeButtons() {
+    private func createConstraintsWithComposeButtons() {
         let containerWidth = composeButton.frame.minX - cameraButton.frame.maxX
 
         constrain(view, cameraButton, plusButton, archivedButton, composeButton) { view, cameraButton, plusButton, archivedButton, composeButton in
