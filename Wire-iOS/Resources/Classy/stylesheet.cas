@@ -533,12 +533,12 @@ ConversationListBottomBarController {
     
     plusButton: @{
         iconColor: $color-text-foreground-dark;
-        titleColor[state:normal]: $color-text-foreground-dark;
-        titleLabel: @{
-            font: $font-medium-semibold;
-        }
     }
-    
+
+    composeButton: @{
+        iconColor: $color-text-foreground-dark;
+    }
+
     cameraButton: @{
         iconColor: $color-text-foreground-dark;
     }
@@ -627,35 +627,6 @@ ArchivedNavigationBar {
     
     dismissButton: @{
         iconColor: $color-text-foreground-dark;
-    }
-}
-
-/* ToolTipViewController */
-
-ToolTipViewController {
-    titleColor: $color-accent-current;
-    
-    titleLabel: @{
-        font: $font-normal-semibold;
-    }
-    
-    timeLabel: @{
-        font: $font-small;
-    }
-    
-    descriptionLabel: @{
-        font: $font-normal;
-    }
-    
-    contentView: @{
-        backgroundColor: white;
-        layer: @{
-            cornerRadius: 5.0;   
-        }
-    }
-    
-    view: @{
-        backgroundColor: clear;
     }
 }
 

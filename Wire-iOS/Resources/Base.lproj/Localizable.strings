@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Join";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "New";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";

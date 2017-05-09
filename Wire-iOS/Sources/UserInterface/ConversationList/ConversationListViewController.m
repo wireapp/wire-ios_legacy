@@ -70,7 +70,6 @@
 @end
 
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
-- (void)showComposeEntryController;
 @end
 
 @interface ConversationListViewController (StartUI) <StartUIDelegate>
@@ -105,7 +104,6 @@
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
-@property (nonatomic) ToolTipViewController *tooltipViewController;
 
 @property (nonatomic) ConversationListTopBar *topBar;
 @property (nonatomic) UIView *contentContainer;
@@ -173,9 +171,6 @@
     [self createBottomBarController];
     
     [self createViewConstraints];
-    if (![Settings.sharedSettings contactTipWasDisplayed]) {
-        [self showTooltipView];
-    }
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
     
     [self updateNoConversationVisibility];
@@ -420,79 +415,6 @@
 - (void)hideArchivedConversations
 {
     [self setState:ConversationListStateConversationList animated:YES];
-}
-
-#pragma mark - ToolTipView
-
-- (void)createToolTipController;
-{
-    @weakify(self)
-    ToolTip *toolTip = [[ToolTip alloc] initWithTitle:NSLocalizedString(@"tool_tip.contacts.title", nil)
-                                          description:NSLocalizedString(@"tool_tip.contacts.message", nil)
-                                              handler:^{
-                                                  @strongify(self)
-                                                  [self showComposeEntryController];
-                                              }];
-    
-    self.tooltipViewController = [[ToolTipViewController alloc] initWithToolTip:toolTip];
-    self.tooltipViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.tooltipViewController.toolTip = toolTip;
-    [self.conversationListContainer addSubview:self.tooltipViewController.view];
-    [self addChildViewController:self.tooltipViewController];
-    [self.tooltipViewController didMoveToParentViewController:self];
-}
-
-- (void)updateConstraintWithToolTip;
-{
-    [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.bottomBarToolTipConstraint = [self.tooltipViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
-    self.bottomBarBottomOffset.active = NO;
-    [self.bottomBarController.view autoPinEdge:ALEdgeBottom
-                                        toEdge:ALEdgeTop
-                                        ofView:self.tooltipViewController.view
-                                    withOffset:self.tooltipViewController.padding];
-}
-
-- (void)showTooltipView;
-{
-    [self createToolTipController];
-    [self updateConstraintWithToolTip];
-    [self.tooltipViewController makeTipPointToView:self.bottomBarController.plusButton.imageView];
-}
-
-- (void)removeTooltipViewAnimated:(BOOL)animated completion:(dispatch_block_t)completionBlock;
-{
-    dispatch_block_t animations = ^{
-        [self.view layoutIfNeeded];
-    };
-
-    dispatch_block_t completion = ^{
-        [self.tooltipViewController.view removeFromSuperview];
-        [self.tooltipViewController removeFromParentViewController];
-        if (nil != completionBlock) {
-            completionBlock();
-        }
-    };
-
-    if (self.tooltipViewController.parentViewController) {
-        self.bottomBarToolTipConstraint.active = NO;
-        self.bottomBarBottomOffset.active = YES;
-
-        if (animated) {
-            [UIView animateWithDuration:0.2 animations:animations completion:^(__unused BOOL finished) {
-                completion();
-            }];
-        } else {
-            animations();
-            completion();
-        }
-    } else {
-        if (nil != completionBlock) {
-            completionBlock();
-        }
-    }
 }
 
 #pragma mark - Selection
@@ -743,8 +665,12 @@
             [Analytics.shared tagArchiveOpened];
             break;
 
+        case ConversationListButtonTypePlus:
+            [self presentPeoplePicker];
+            break;
+
         case ConversationListButtonTypeCompose:
-            [self showComposeEntryController];
+            [self presentDraftsViewController];
             break;
             
         case ConversationListButtonTypeCamera:
@@ -753,52 +679,15 @@
     }
 }
 
-- (void)showComposeEntryController
+- (void)presentDraftsViewController
 {
-    if ([DeveloperMenuState developerMenuEnabled]) {
-        [self removeTooltipViewAnimated:YES completion:^{
-            [self presentComposeEntryViewController];
-        }];
-    } else {
-        [self presentPeoplePickerAndRemoveTooltip];
-    }
+    DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
+    [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
 }
 
-- (void)presentComposeEntryViewController
+- (void)presentPeoplePicker
 {
-    ComposeEntryViewController *composeEntry = [[ComposeEntryViewController alloc] init];
-    composeEntry.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    [self presentViewController:composeEntry animated:YES completion:nil];
-
-    composeEntry.onDismiss = ^(ComposeEntryViewController *sender) {
-        [sender dismissViewControllerAnimated:YES completion:nil];
-    };
-
-    composeEntry.onAction = ^(ComposeEntryViewController *sender, ComposeAction action) {
-        [sender dismissViewControllerAnimated:YES completion:nil];
-
-        switch (action) {
-            case ComposeActionConversation:
-                [self presentPeoplePickerAndRemoveTooltip];
-                break;
-
-            case ComposeActionMessage: {
-                DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
-                [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
-            }
-                break;
-        }
-    };
-}
-
-- (void)presentPeoplePickerAndRemoveTooltip
-{
-    [Settings.sharedSettings setContactTipWasDisplayed:YES];
-    @weakify(self)
-    [self setState:ConversationListStatePeoplePicker animated:YES completion:^{
-        @strongify(self)
-        [self removeTooltipViewAnimated:NO completion:nil];
-    }];
+    [self setState:ConversationListStatePeoplePicker animated:YES completion:nil];
 }
 
 @end
@@ -836,11 +725,16 @@
 
 - (void)updateArchiveButtonVisibility
 {
+    BOOL showArchived = [SessionObjectCache.sharedCache archivedConversations].count > 0;
+    if (showArchived == self.bottomBarController.showArchived) {
+        return;
+    }
+
     [UIView transitionWithView:self.bottomBarController.view
                       duration:0.35
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-        self.bottomBarController.showArchived = [SessionObjectCache.sharedCache archivedConversations].count > 0;
+                        self.bottomBarController.showArchived = showArchived;
     } completion:nil];
 }
 

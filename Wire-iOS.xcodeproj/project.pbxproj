@@ -787,7 +787,6 @@
 		BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF381FDE1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift */; };
 		BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */; };
 		BF3A3DCA1EA642AB005477F8 /* MessageDraftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DC91EA642AB005477F8 /* MessageDraftStorage.swift */; };
-		BF3A3DCC1EA65A6D005477F8 /* ComposeEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DCB1EA65A6D005477F8 /* ComposeEntryViewController.swift */; };
 		BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DCD1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift */; };
 		BF3A3DD41EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DD31EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift */; };
 		BF3A3DD61EAE2F7A005477F8 /* UIView+AnimationGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DD51EAE2F7A005477F8 /* UIView+AnimationGroups.swift */; };
@@ -810,7 +809,6 @@
 		BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */; };
 		BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */; };
 		BF606D731CAA9EEE002BAC94 /* ConversationListBottomBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */; };
-		BF606D751CAC16FF002BAC94 /* ToolTipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606D741CAC16FF002BAC94 /* ToolTipViewController.swift */; };
 		BF606D771CAC1C0A002BAC94 /* ToolTipViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */; };
 		BF6EC9061EB1FC3D009D9A69 /* URL+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */; };
 		BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */; };
@@ -2274,7 +2272,6 @@
 		BF381FDE1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracker+AddressBookPermissions.swift"; sourceTree = "<group>"; };
 		BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTitleView.swift; sourceTree = "<group>"; };
 		BF3A3DC91EA642AB005477F8 /* MessageDraftStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDraftStorage.swift; sourceTree = "<group>"; };
-		BF3A3DCB1EA65A6D005477F8 /* ComposeEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeEntryViewController.swift; sourceTree = "<group>"; };
 		BF3A3DCD1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingKeyboardAvoidingViewController.swift; sourceTree = "<group>"; };
 		BF3A3DD31EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+DraftDeletion.swift"; sourceTree = "<group>"; };
 		BF3A3DD51EAE2F7A005477F8 /* UIView+AnimationGroups.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AnimationGroups.swift"; sourceTree = "<group>"; };
@@ -2300,7 +2297,6 @@
 		BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceCell.m; sourceTree = "<group>"; };
 		BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConversationListBottomBar.swift; path = ../Conversation/ConversationListBottomBar.swift; sourceTree = "<group>"; };
 		BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListBottomBarTests.m; sourceTree = "<group>"; };
-		BF606D741CAC16FF002BAC94 /* ToolTipViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolTipViewController.swift; path = ../Conversation/ToolTipViewController.swift; sourceTree = "<group>"; };
 		BF606D761CAC1C0A002BAC94 /* ToolTipViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolTipViewControllerTests.m; sourceTree = "<group>"; };
 		BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Backup.swift"; sourceTree = "<group>"; };
 		BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionBackupExcluder.swift; sourceTree = "<group>"; };
@@ -4654,8 +4650,6 @@
 				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
 				8784D4541E817D13007A6867 /* ConversationListTopBar.swift */,
 				BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */,
-				BF3A3DCB1EA65A6D005477F8 /* ComposeEntryViewController.swift */,
-				BF606D741CAC16FF002BAC94 /* ToolTipViewController.swift */,
 				BF808B561DE71F3000718076 /* UserNameTakeOverViewController.swift */,
 				BF52C15A1CAEBDC00037331F /* ArchivedList */,
 				16063CE91BCFCEB70097F62C /* InviteBannerViewController.h */,
@@ -6219,7 +6213,6 @@
 				BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */,
 				1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */,
 				160546DA1BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m in Sources */,
-				BF3A3DCC1EA65A6D005477F8 /* ComposeEntryViewController.swift in Sources */,
 				16A95FFE1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m in Sources */,
 				871BC0211D34F56300DF0793 /* AnalyticsTracker+SelfUser.m in Sources */,
 				87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */,
@@ -6330,7 +6323,6 @@
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				DB0782221B00E98F00C6B140 /* FormFlowViewController.m in Sources */,
-				BF606D751CAC16FF002BAC94 /* ToolTipViewController.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
 				871BC2831D34F8F800DF0793 /* UIAlertView+Zeta.m in Sources */,
 				8FC85422199245770008B66B /* ZMConversation+Validation.m in Sources */,
