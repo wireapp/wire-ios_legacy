@@ -137,7 +137,7 @@ final class MessageComposeViewController: UIViewController {
             draftsBackButton.setTitle(String(count), for: .normal)
         }
         draftsBackButton.titleImageSpacing = 2
-        draftsBackButton.imageEdgeInsets = UIEdgeInsetsMake(0, -6, 0, 0)
+        draftsBackButton.imageEdgeInsets = UIEdgeInsetsMake(0, -4, 0, 0)
         draftsBackButton.sizeToFit()
         draftsBackButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
 

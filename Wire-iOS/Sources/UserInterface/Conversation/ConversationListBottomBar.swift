@@ -41,6 +41,7 @@ import Cartography
 
     let separator = UIView()
     private let heightConstant: CGFloat = 56
+    private let xInset: CGFloat = 16
 
     private var didLayout = false
 
@@ -89,7 +90,6 @@ import Cartography
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
 
-        view.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         addSubviews()
         [separator, archivedButton].forEach{ $0.isHidden = true }
 
@@ -132,13 +132,13 @@ import Cartography
         constrain(view, cameraButton, plusButton, archivedButton, composeButton) { view, cameraButton, plusButton, archivedButton, composeButton in
             plusButton.centerY == view.centerY
             archivedButton.centerY == view.centerY
-            plusButton.leading == view.leadingMargin
-            archivedButton.trailing == view.trailingMargin
+            plusButton.leading == view.leading + xInset
+            archivedButton.trailing == view.trailing - xInset
         }
     }
 
     private func createConstraintsWithComposeButtons() {
-        let containerWidth = composeButton.frame.minX - cameraButton.frame.maxX
+        let containerWidth = composeButton.frame.midX - cameraButton.frame.midX
 
         constrain(view, cameraButton, plusButton, archivedButton, composeButton) { view, cameraButton, plusButton, archivedButton, composeButton in
             plusButton.centerY == view.centerY
@@ -146,16 +146,13 @@ import Cartography
 
             cameraButton.centerY == view.centerY
             composeButton.centerY == view.centerY
-            cameraButton.leading == view.leadingMargin
-            composeButton.trailing == view.trailingMargin
-
-            plusButton.width == heightConstant
-            archivedButton.width == plusButton.width
+            cameraButton.leading == view.leading + xInset
+            composeButton.trailing == view.trailing - xInset
 
             if showArchived {
-                let spacingX = (containerWidth - (heightConstant * 2)) / 3
-                plusButton.leading == cameraButton.trailing + spacingX
-                archivedButton.leading == plusButton.trailing + spacingX
+                let spacingX = containerWidth / 3
+                plusButton.centerX == cameraButton.centerX + spacingX
+                archivedButton.centerX == plusButton.centerX + spacingX
             } else {
                 plusButton.center == view.center
             }
