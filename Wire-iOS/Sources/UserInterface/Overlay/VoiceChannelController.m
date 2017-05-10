@@ -144,7 +144,9 @@
         
         [self transitionFromViewController:fromController toViewController:toController duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             [self.primaryVoiceChannelOverlay.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        } completion:nil];
+        } completion:^(BOOL finished) {
+            [fromController removeFromParentViewController];
+        }];
     }
 }
 
