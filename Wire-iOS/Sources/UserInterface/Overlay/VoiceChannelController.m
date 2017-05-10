@@ -134,20 +134,19 @@
             fromController.blurEffectView.effect = nil;
             fromController.overlayView.alpha = 0;
         } completion:^(BOOL finished) {
-            // Remove all view controllers also those from interrupting calls
-            for (VoiceChannelOverlayController *controller in self.childViewControllers) {
-                [controller.view removeFromSuperview];
-                [controller removeFromParentViewController];
-            }
+            [fromController.view removeFromSuperview];
+            [fromController removeFromParentViewController];
         }];
     }
     else {
-        [self addChildViewController:toController];
         [fromController willMoveToParentViewController:nil];
-
+        [self addChildViewController:toController];
+        
         [self transitionFromViewController:fromController toViewController:toController duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             [self.primaryVoiceChannelOverlay.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        } completion:nil];
+        } completion:^(BOOL finished) {
+            [fromController removeFromParentViewController];
+        }];
     }
 }
 
@@ -165,13 +164,6 @@
 {
     if (conversation == nil) {
         return nil;
-    }
-    
-    VoiceChannelOverlayController *previousController = [[self.childViewControllers filterWithBlock:^BOOL(VoiceChannelOverlayController* obj){
-                                                              return [obj.conversation isEqual:conversation];
-                                                          }] firstObject];
-    if (nil != previousController) {
-        return previousController;
     }
     
     VoiceChannelOverlayController *controller = [[VoiceChannelOverlayController alloc] initWithConversation:conversation];
