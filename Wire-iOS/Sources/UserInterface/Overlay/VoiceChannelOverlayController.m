@@ -127,10 +127,6 @@
     doubleTapGestureRecognizer.delegate = self;
     doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:doubleTapGestureRecognizer];
-    
-    if (self.conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel) {
-        [self createParticipantsControllerIfNecessary];
-    }
     [self updateVoiceChannelOverlayStateWithVoiceChannelState:self.conversation.voiceChannel.state];
 }
 
