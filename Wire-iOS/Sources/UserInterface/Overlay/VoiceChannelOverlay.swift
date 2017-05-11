@@ -701,6 +701,8 @@ extension VoiceChannelOverlay {
         videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
         
         if isVideoCall {
+            videoView?.isHidden = false
+            videoPreview?.isHidden = false
             videoViewFullscreen = !connected
         } else {
             videoView?.isHidden = true
