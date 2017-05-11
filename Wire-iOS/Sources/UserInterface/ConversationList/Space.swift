@@ -138,7 +138,7 @@ internal class Space: NSObject {
                 let workSpace: Space = {
                     let predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", workspaceName)
                     let workSpace = Space(name: workspaceName, image: UIImage(named: "wire-logo-shield"), predicate: predicate)
-                    workSpace.selected = true
+                    workSpace.selected = false
                     return workSpace
                 }()
             

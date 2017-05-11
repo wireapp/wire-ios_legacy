@@ -117,18 +117,9 @@ final internal class SpaceSelectorView: UIView {
         
         let tappedSpace = spaceView.space
         
-        let allExceptTapped = self.spaces.filter { $0 != tappedSpace }
-        
-        let allSelected = self.spaces.map { $0.selected }.reduce(true) { $0 && $1 }
-        
-        if allSelected {
-            allExceptTapped.forEach {
-                $0.selected = false
-            }
-        }
-        else {
-            tappedSpace.selected = !tappedSpace.selected
-        }
+        self.spaces.filter { $0 != tappedSpace }.forEach { $0.selected = false }
+    
+        tappedSpace.selected = true
     }
 }
 
