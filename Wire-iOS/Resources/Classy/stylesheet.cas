@@ -89,6 +89,11 @@ VoiceChannelOverlay {
         textColor: $color-text-foreground-dark;
         font: $font-small-light;
     }
+    
+    callingProtocolLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-small-light;
+    }
 
     acceptButton: @{
         iconButton: @{

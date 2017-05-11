@@ -203,6 +203,7 @@ class VoiceChannelOverlay: UIView {
     let degradationBottomLabel = UILabel.multiline
     let topStatusLabel = UILabel.multiline
     let centerStatusLabel = UILabel()
+    let callingProtocolLabel = UILabel()
     
     var statusLabelToTopUserImageInset: NSLayoutConstraint?
     var degradationTopConstraint: NSLayoutConstraint?
@@ -460,8 +461,14 @@ extension VoiceChannelOverlay {
         centerStatusLabel.textAlignment = .center
         centerStatusLabel.numberOfLines = 2
         centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
+        
+        if let callingProtocol = callingConversation.voiceChannel?.callingProtocol, callingProtocol == .version2 {
+            callingProtocolLabel.text = "V2";
+        } else {
+            callingProtocolLabel.isHidden = true
+        }
 
-        [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)
+        [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel, callingProtocolLabel].forEach(contentContainer.addSubview)
     }
     
     private func configureParticipantsCollectionViewLayout(layout: VoiceChannelCollectionViewLayout) {
@@ -519,7 +526,7 @@ extension VoiceChannelOverlay {
             degradationBottomLabel.bottom <= callButton.top - 16
         }
         
-        constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel in
+        constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel, callingProtocolLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel, callingProtocolLabel in
             
             topStatusLabel.leading == contentContainer.leadingMargin ~ 750
             topStatusLabel.trailing == contentContainer.trailingMargin
@@ -530,6 +537,9 @@ extension VoiceChannelOverlay {
             centerStatusLabel.leading == contentContainer.leadingMargin
             centerStatusLabel.trailing == contentContainer.trailingMargin
             centerStatusLabel.centerY == contentContainer.centerY
+            
+            callingProtocolLabel.leading == contentContainer.leading + 16
+            callingProtocolLabel.top == contentContainer.top + 16
         }
 
         constrain(contentContainer, avatarContainer, topStatusLabel, callingUserImage, shieldOverlay) { contentContainer, avatarContainer, topStatusLabel, callingUserImage, shieldOverlay in
