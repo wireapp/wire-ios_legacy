@@ -97,7 +97,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .white)
+            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
             self.accessibilityValue = "missed call"
             return iconView
         case .playingMedia:
@@ -122,7 +122,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.accessibilityValue = textLabel.text
             return textLabel
         case .unreadPing:
-            iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .white)
+            iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
             self.accessibilityValue = "ping"
             return iconView
         default:
@@ -158,6 +158,14 @@ final internal class ConversationListAccessoryView: UIView {
             
         case .unreadMessages(_):
             self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
+            self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            
+        case .unreadPing:
+            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+
+        case .missedCall:
+            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
 
         default:
             self.typingView.image = .none
