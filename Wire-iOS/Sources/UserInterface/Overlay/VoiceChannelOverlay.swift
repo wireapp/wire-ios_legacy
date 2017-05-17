@@ -154,14 +154,7 @@ class VoiceChannelOverlay: UIView {
     var videoViewFullscreen: Bool = true {
         didSet {
             createVideoPreviewIfNeeded()
-            guard let videoPreview = videoPreview, let videoView = videoView else { return }
-            if videoViewFullscreen {
-                videoPreview.frame = bounds
-                insertSubview(videoPreview, aboveSubview: videoView)
-            } else {
-                videoPreview.frame = cameraPreviewView.videoFeedContainer.bounds
-                cameraPreviewView.videoFeedContainer.addSubview(videoPreview)
-            }
+            updateVideoPreviewLocation()
         }
     }
     
@@ -217,6 +210,9 @@ class VoiceChannelOverlay: UIView {
         self.participantsCollectionViewLayout = VoiceChannelCollectionViewLayout()
         self.participantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: participantsCollectionViewLayout)
         super.init(frame: frame)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        
         setupVoiceOverlay()
         createConstraints()
     }
@@ -226,7 +222,13 @@ class VoiceChannelOverlay: UIView {
     }
     
     deinit {
+        NotificationCenter.default.removeObserver(self)
         cancelHideControlsAfterElapsedTime()
+    }
+    
+    func applicationDidBecomeActive() {
+        createVideoViewIfNeeded()
+        createVideoPreviewIfNeeded()
     }
 }
 
@@ -383,18 +385,43 @@ extension VoiceChannelOverlay {
 extension VoiceChannelOverlay {
     
     fileprivate func createVideoPreviewIfNeeded() {
-        if !Settings.shared().disableAVS && videoPreview == nil {
-            // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
-            // is removed from hierarchy and immediately being added to the new superview (we need that to reapply constraints)
-            // therefore we use @c autoresizingMask here
-            guard let videoView = videoView else { return }
-            let preview = AVSVideoPreview(frame: bounds)
-            preview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            preview.isUserInteractionEnabled = false
-            preview.backgroundColor = .clear
-            insertSubview(preview, aboveSubview: videoView)
-            videoPreview = preview
+        guard videoPreview == nil, UIApplication.shared.applicationState == .active else { return }
+        
+        // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
+        // is removed from hierarchy and immediately being added to the new superview (we need that to re-apply constraints)
+        // therefore we use @c autoresizingMask here
+        let preview = AVSVideoPreview(frame: bounds)
+        preview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        preview.isUserInteractionEnabled = false
+        preview.backgroundColor = .clear
+        videoPreview = preview
+        
+        updateVideoPreviewLocation()
+    }
+    
+    fileprivate func updateVideoPreviewLocation() {
+        guard let videoPreview = videoPreview, let videoView = videoView else { return }
+        
+        if videoViewFullscreen {
+            videoPreview.frame = bounds
+            insertSubview(videoPreview, aboveSubview: videoView)
+        } else {
+            videoPreview.frame = cameraPreviewView.videoFeedContainer.bounds
+            cameraPreviewView.videoFeedContainer.addSubview(videoPreview)
         }
+    }
+    
+    fileprivate func createVideoViewIfNeeded() {
+        guard videoView == nil, UIApplication.shared.applicationState == .active else { return }
+        
+        let video = AVSVideoView()
+        video.shouldFill = true
+        video.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        video.isUserInteractionEnabled = false
+        video.backgroundColor = UIColor(patternImage: .dot(9))
+        video.frame = self.bounds
+        insertSubview(video, at: 0)
+        self.videoView = video
     }
 
     fileprivate func setupVoiceOverlay() {
@@ -403,14 +430,7 @@ extension VoiceChannelOverlay {
         callDurationFormatter.allowedUnits = [.minute, .second]
         callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
         
-        if !Settings.shared().disableAVS {
-            let video = AVSVideoView()
-            video.shouldFill = true
-            video.isUserInteractionEnabled = false
-            video.backgroundColor = UIColor(patternImage: .dot(9))
-            addSubview(video)
-            self.videoView = video
-        }
+        createVideoViewIfNeeded()
         
         shadow.isUserInteractionEnabled = false
         shadow.backgroundColor = UIColor(white: 0, alpha: 0.4)
