@@ -21,7 +21,7 @@ import Cartography
 import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
-    private var spacesView: SpaceSelectorView? = .none
+    private var spacesView: TeamSelectorView? = .none
     public weak var contentScrollView: UIScrollView? = .none
     
     public enum ImagesState: Int {
@@ -32,7 +32,7 @@ final class ConversationListTopBar: TopBar {
     private var state: ImagesState = .visible
    
     public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && (self.state == newState || Space.spaces.count == 0) {
+        if !force && (self.state == newState || ZMUser.selfUser().teams!.count == 0) {
             return
         }
         
@@ -50,14 +50,14 @@ final class ConversationListTopBar: TopBar {
         }
     }
     
-    public var showSpaces: Bool = false
+    public var showTeams: Bool = false
     
-    public func setShowSpaces(to showSpaces: Bool) {
-        self.showSpaces = showSpaces
+    public func setShowTeams(to showTeams: Bool) {
+        self.showTeams = showTeams
         UIView.performWithoutAnimation {
-            if showSpaces {
+            if showTeams {
                 self.spacesView?.removeFromSuperview()
-                self.spacesView = SpaceSelectorView(spaces: Space.spaces)
+                self.spacesView = TeamSelectorView()
                 
                 self.middleView = self.spacesView
                 self.leftSeparatorLineView.alpha = 1
@@ -104,7 +104,7 @@ extension ConversationListTopBar {
         
         self.update(to: state, animated: true)
         
-        if !self.showSpaces {
+        if !self.showTeams {
             self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
             self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
         }

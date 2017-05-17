@@ -768,14 +768,19 @@ DotView {
     backgroundColor: $color-accent-current;
 }
 
-SpaceView {
+TeamView {
     nameLabel: @{
         font: $font-small-semibold;
         textColor: $color-text-dimmed-dark;
     }
+    
+    initialLabel: @{
+        font: $font-medium;
+        textColor: $color-text-foreground-light;
+    }
 }
 
-SpaceView.selected {
+TeamView.selected {
     nameLabel: @{
         textColor: $color-text-foreground-dark;
     }

@@ -273,8 +273,9 @@ static AppDelegate *sharedAppDelegate = nil;
         else if ([[url absoluteString] rangeOfString:WireURLPathTeamJoin].location != NSNotFound) {
             NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
             if (components.queryItems.count > 0 && [[components.queryItems[0] name] isEqual:@"team_id"]) {
-                NSString *teamId = [components.queryItems[0] value];
-                [Space joinSpaceNamed:teamId];
+                // TODO: SMB: create mock objects?
+//                NSString *teamId = [components.queryItems[0] value];
+//                [Space joinSpaceNamed:teamId];
             }
         }
         

@@ -19,18 +19,18 @@
 import Foundation
 
 extension ConversationListViewModel {
-    @objc public func subscribeToSpacesUpdates() {
-        self.spacesObservers = Space.spaces.map {
-            $0.addSelectionObserver(self)
-        }
-        self.updateConversationListAnimated()
+    @objc public func subscribeToTeamsUpdates() {
+//        self.spacesObservers = Space.spaces.map {
+//            $0.addSelectionObserver(self)
+//        }
+//        self.updateConversationListAnimated()
     }
 }
-
-
-extension ConversationListViewModel: SpaceSelectionObserver {
-    func spaceDidChangeSelection(space: Space) {
-        self.updateConversationListAnimated()
-    }
-}
-
+// TODO: SMB: list observation
+//
+//extension ConversationListViewModel: SpaceSelectionObserver {
+//    func spaceDidChangeSelection(space: Space) {
+//        self.updateConversationListAnimated()
+//    }
+//}
+//

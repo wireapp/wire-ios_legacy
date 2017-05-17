@@ -22,9 +22,9 @@ import Cartography
 
 extension ConversationListViewController {
     
-    public func updateSpaces() {
+    public func updateTeams() {
         self.topBar.contentScrollView = self.listContentController.collectionView
-        self.topBar.setShowSpaces(to: Space.spaces.count > 0)
+        self.topBar.setShowTeams(to: ZMUser.selfUser().teams!.count > 0)
     }
     
     public func createTopBar() {
@@ -50,7 +50,7 @@ extension ConversationListViewController {
         self.topBar = ConversationListTopBar()
         
         self.contentContainer.addSubview(self.topBar)
-        self.updateSpaces()
+        self.updateTeams()
         self.topBar.leftView = profileButton
     }
 }

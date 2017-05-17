@@ -61,7 +61,7 @@
 {
     if (user.isConnected) {
         [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
+            [[ZClientViewController sharedZClientViewController] selectConversation:[user.user oneToOneConversationInTeam:nil]
                                                                         focusOnView:YES
                                                                            animated:YES];
         }];
@@ -71,7 +71,9 @@
         }];
     } else if (user.user.isPendingApprovalByOtherUser && ! user.user.isIgnored) {
         [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation focusOnView:YES animated:YES];
+            [[ZClientViewController sharedZClientViewController] selectConversation:[user.user oneToOneConversationInTeam:nil]
+                                                                        focusOnView:YES
+                                                                           animated:YES];
         }];
         
     } else if (user.user != nil && ! user.user.isIgnored && ! user.user.isPendingApprovalByOtherUser) {

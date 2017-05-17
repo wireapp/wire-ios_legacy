@@ -179,19 +179,18 @@
     self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].allConversations];
     self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
 
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(updateSpaces)
-                                               name:[Space didChangeNotificationNameString]
-                                             object:nil];
-    
+    // TODO: SMB: subscrive
+//    [NSNotificationCenter.defaultCenter addObserver:self
+//                                           selector:@selector(updateTeams)
+//                                               name:[Space didChangeNotificationNameString]
+//                                             object:nil];
+//    
     [self showPushPermissionDeniedDialogIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [Space update];
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [self.selectedConversation savePendingLastRead];

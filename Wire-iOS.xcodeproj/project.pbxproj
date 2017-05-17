@@ -216,9 +216,8 @@
 		870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A8C6A1CF719C400874B16 /* RecordingDotView.swift */; };
 		870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */; };
 		870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */; };
-		870C926B1E8D08A000A10995 /* SpaceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C926A1E8D08A000A10995 /* SpaceSelectorView.swift */; };
-		870C926D1E8D180300A10995 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C926C1E8D180300A10995 /* Space.swift */; };
-		870C926F1E8D1C7300A10995 /* ConversationListViewModel+Spaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C926E1E8D1C7300A10995 /* ConversationListViewModel+Spaces.swift */; };
+		870C926B1E8D08A000A10995 /* TeamSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C926A1E8D08A000A10995 /* TeamSelectorView.swift */; };
+		870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C926E1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift */; };
 		870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */; };
 		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */; };
 		870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */; };
@@ -481,6 +480,9 @@
 		876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876B94811D7D8C870063AE89 /* UIView+SlideInState.swift */; };
 		876BF8121AEFDA7900A3810F /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 876BF8101AEFDA7900A3810F /* SignInViewController.m */; };
 		876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */; };
+		876E0C871EC5EB87007EF34E /* WireDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876E0C861EC5EB87007EF34E /* WireDataModel.framework */; };
+		876E0C891EC5ED29007EF34E /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876E0C881EC5ED29007EF34E /* TeamView.swift */; };
+		876E0C8B1EC5ED69007EF34E /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */; };
 		876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */; };
 		87722C541ADFEDFA00842F18 /* EmailVerificationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87722C531ADFEDFA00842F18 /* EmailVerificationStepViewController.m */; };
 		877316051B970A82007BA779 /* conversation.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877315F61B970A82007BA779 /* conversation.plist */; };
@@ -618,7 +620,6 @@
 		87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */; };
 		87D5E4421C3E79C600EB8289 /* NSData+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5E4411C3E79C600EB8289 /* NSData+Fingerprint.swift */; };
 		87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86E11A1C245BF9001D9430 /* UserClient+Fingerprint.swift */; };
-		87D679E41EBB72E8005BEB4C /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E31EBB72E8005BEB4C /* CameraPicker.swift */; };
 		87D679E61EBC8002005BEB4C /* String+Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E51EBC8002005BEB4C /* String+Compatibility.swift */; };
 		87D679E81EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */; };
 		87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D7AF661DF5A158001A1CD7 /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -1306,9 +1307,8 @@
 		870A8C6A1CF719C400874B16 /* RecordingDotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingDotView.swift; sourceTree = "<group>"; };
 		870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomGeneratorFromDataTests.swift; sourceTree = "<group>"; };
 		870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarView.swift; sourceTree = "<group>"; };
-		870C926A1E8D08A000A10995 /* SpaceSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceSelectorView.swift; sourceTree = "<group>"; };
-		870C926C1E8D180300A10995 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
-		870C926E1E8D1C7300A10995 /* ConversationListViewModel+Spaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewModel+Spaces.swift"; sourceTree = "<group>"; };
+		870C926A1E8D08A000A10995 /* TeamSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectorView.swift; sourceTree = "<group>"; };
+		870C926E1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewModel+Teams.swift"; sourceTree = "<group>"; };
 		870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextResponderTextView.m; sourceTree = "<group>"; };
 		870C97C41D670CA700F6FD7D /* NextResponderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NextResponderTextView.h; sourceTree = "<group>"; };
 		870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVSLogObserver.h; sourceTree = "<group>"; };
@@ -1756,6 +1756,9 @@
 		876BF80F1AEFDA7900A3810F /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		876BF8101AEFDA7900A3810F /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IteratorProtocol+Histogram.swift"; sourceTree = "<group>"; };
+		876E0C861EC5EB87007EF34E /* WireDataModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireDataModel.framework; path = "../wire-ios-data-model/build/Debug-iphoneos/WireDataModel.framework"; sourceTree = "<group>"; };
+		876E0C881EC5ED29007EF34E /* TeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
+		876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
 		87722C521ADFEDFA00842F18 /* EmailVerificationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailVerificationStepViewController.h; sourceTree = "<group>"; };
 		87722C531ADFEDFA00842F18 /* EmailVerificationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailVerificationStepViewController.m; sourceTree = "<group>"; };
@@ -1922,7 +1925,6 @@
 		87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileClientViewController.swift; sourceTree = "<group>"; };
 		87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClientFingerprintTests.swift; sourceTree = "<group>"; };
 		87D5E4411C3E79C600EB8289 /* NSData+Fingerprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Fingerprint.swift"; sourceTree = "<group>"; };
-		87D679E31EBB72E8005BEB4C /* CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		87D679E51EBC8002005BEB4C /* String+Compatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Compatibility.swift"; sourceTree = "<group>"; };
 		87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+CameraPicker.swift"; sourceTree = "<group>"; };
 		87D7AF661DF5A158001A1CD7 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
@@ -2520,6 +2522,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				876E0C871EC5EB87007EF34E /* WireDataModel.framework in Frameworks */,
 				AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */,
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */,
@@ -3007,6 +3010,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				876E0C861EC5EB87007EF34E /* WireDataModel.framework */,
 				AF36C5A61E9F6F2000FADECC /* WireCanvas.framework */,
 				8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */,
 				BFAD54231E698CD20015C677 /* WireDataModel.framework */,
@@ -3249,6 +3253,7 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */,
 				871BC1281D34F8F800DF0793 /* Controllers */,
 				871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */,
 				871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */,
@@ -4207,7 +4212,7 @@
 			children = (
 				8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */,
 				8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */,
-				870C926E1E8D1C7300A10995 /* ConversationListViewModel+Spaces.swift */,
+				870C926E1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4655,9 +4660,8 @@
 				877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */,
 				879325091E83BB5C00190067 /* ZMConversation+Status.swift */,
 				877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */,
-				870C926A1E8D08A000A10995 /* SpaceSelectorView.swift */,
-				870C926C1E8D180300A10995 /* Space.swift */,
-				87D679E31EBB72E8005BEB4C /* CameraPicker.swift */,
+				870C926A1E8D08A000A10995 /* TeamSelectorView.swift */,
+				876E0C881EC5ED29007EF34E /* TeamView.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -5724,7 +5728,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PINCache.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireLinkPreview.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Ono.framework",
@@ -5962,7 +5966,7 @@
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
-				870C926B1E8D08A000A10995 /* SpaceSelectorView.swift in Sources */,
+				870C926B1E8D08A000A10995 /* TeamSelectorView.swift in Sources */,
 				871BC2701D34F8F800DF0793 /* StackView.m in Sources */,
 				871BC25F1D34F8F800DF0793 /* ColorPickerView.m in Sources */,
 				871BBFFD1D34F56300DF0793 /* Analytics+iOS.m in Sources */,
@@ -5976,7 +5980,7 @@
 				871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */,
 				87302F4E1B15F3B0001F478C /* SearchView.m in Sources */,
 				8FC854A2199245770008B66B /* ParticipantsListCell.m in Sources */,
-				870C926F1E8D1C7300A10995 /* ConversationListViewModel+Spaces.swift in Sources */,
+				870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */,
 				BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */,
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
 				167AEA151B1603EC00890435 /* VoiceChannelParticipantsController.m in Sources */,
@@ -6031,7 +6035,6 @@
 				8F8914121A9F287E0056AB0C /* ConversationListContentController.m in Sources */,
 				87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */,
 				1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */,
-				870C926D1E8D180300A10995 /* Space.swift in Sources */,
 				871BC3551D34F94200DF0793 /* AudioPlaylistCell.m in Sources */,
 				875F89171D6F35EC00D8748E /* ReactionsListViewController.swift in Sources */,
 				871BC2251D34F8F800DF0793 /* BrowserBarView.m in Sources */,
@@ -6124,13 +6127,13 @@
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
 				BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */,
 				CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */,
-				87D679E41EBB72E8005BEB4C /* CameraPicker.swift in Sources */,
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
 				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
 				167AEA101B16031900890435 /* VoiceChannelParticipantCell.m in Sources */,
 				879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				DBDA839B1ADFD9D4000AD57D /* PhoneNumberViewController.m in Sources */,
+				876E0C891EC5ED29007EF34E /* TeamView.swift in Sources */,
 				16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
 				8762BE151D8978F70040E4A5 /* ZMAccentColor+Additions.swift in Sources */,
@@ -6424,6 +6427,7 @@
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
 				160E723E1AEE40B600F86648 /* AddEmailStepViewController.m in Sources */,
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
+				876E0C8B1EC5ED69007EF34E /* CameraPicker.swift in Sources */,
 				87F18BB81E01550600C69D9B /* AudioMessageView.swift in Sources */,
 				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
@@ -6991,6 +6995,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)-data-model/build/Debug-iphoneos",
 				);
 				GCC_PREFIX_HEADER = "Wire-iOS/Wire-iOS-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -7023,6 +7028,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)-data-model/build/Debug-iphoneos",
 				);
 				GCC_PREFIX_HEADER = "Wire-iOS/Wire-iOS-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;

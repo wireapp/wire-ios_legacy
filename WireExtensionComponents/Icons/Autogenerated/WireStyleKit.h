@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 #import <UIKit/UIKit.h>
 
 
@@ -180,6 +179,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawDegradationWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing;
 + (void)drawSpaceWithColor: (UIColor*)color;
 + (void)drawSpaceWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
++ (void)drawSpaceFocusWithColor: (UIColor*)color;
++ (void)drawSpaceFocusWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor;
 + (void)drawTabWithColor: (UIColor*)color;
 
