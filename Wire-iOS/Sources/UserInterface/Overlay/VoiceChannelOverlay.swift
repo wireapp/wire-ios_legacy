@@ -385,7 +385,7 @@ extension VoiceChannelOverlay {
 extension VoiceChannelOverlay {
     
     fileprivate func createVideoPreviewIfNeeded() {
-        guard videoPreview == nil, UIApplication.shared.applicationState == .active else { return }
+        guard videoPreview == nil, UIApplication.shared.applicationState == .active, isVideoCall else { return }
         
         // Preview view is moving from one subview to another. We cannot use constraints because renderer break if the view
         // is removed from hierarchy and immediately being added to the new superview (we need that to re-apply constraints)
@@ -394,7 +394,7 @@ extension VoiceChannelOverlay {
         preview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         preview.isUserInteractionEnabled = false
         preview.backgroundColor = .clear
-        preview.isHidden = !isVideoCall
+        preview.isHidden = false
         videoPreview = preview
         
         updateVideoPreviewLocation()
@@ -508,7 +508,7 @@ extension VoiceChannelOverlay {
     
     fileprivate func createConstraints(){
         
-        let videoViews: [UIView?] = [videoView, shadow, videoNotAvailableBackground]
+        let videoViews: [UIView?] = [shadow, videoNotAvailableBackground]
         
         constrain(videoViews.flatMap{ $0 }) { views in
             let superview = (views.first?.superview)!
