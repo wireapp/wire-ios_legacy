@@ -342,9 +342,9 @@
                 <key>NSStringFormatValueTypeKey</key>
                 <string>d</string>
                 <key>one</key>
-                <string>new file</string>
+                <string>Neue Datei</string>
                 <key>other</key>
-                <string>%d new files</string>
+                <string>%d neue Dateien</string>
             </dict>
         </dict>
     </dict>
