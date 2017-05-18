@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Participe";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Novo";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "nos Contatos";
@@ -480,7 +477,7 @@
 // Options menu contents
 
 "self.settings" = "Ajustes";
-"self.profile" = "Perfil	";
+"self.profile" = "Perfil";
 "self.help_center" = "Suporte";
 "self.help_center.support_website" = "Site de suporte do Wire";
 "self.help_center.contact_support" = "Entre em contato com o suporte";
@@ -908,12 +905,12 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.title" = "Mensagens";
+"compose.drafts.empty.title" = "Sem mensagens";
+"compose.drafts.empty.subtitle" = "Toque em + para compor um";
 "compose.drafts.compose.title" = "Escreva uma mensagem";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "Toque para definir um assunto";
 
-"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.title" = "Confirmar Exclusão";
+"compose.drafts.compose.delete.confirm.message" = "Esta ação irá excluir definitivamente esse rascunho e não pode ser desfeita.";
 "compose.drafts.compose.delete.confirm.action.title" = "Apagar";

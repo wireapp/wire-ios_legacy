@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Присоединиться";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Новое";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -908,11 +905,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.title" = "Сообщения";
+"compose.drafts.empty.title" = "Сообщений нет";
+"compose.drafts.empty.subtitle" = "Нажмите + чтобы создать";
 "compose.drafts.compose.title" = "Написать сообщение";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "Нажмите, чтобы выбрать тему";
 
 "compose.drafts.compose.delete.confirm.title" = "Подтвердить удаление";
 "compose.drafts.compose.delete.confirm.message" = "Это действие навсегда удалит этот черновик и не может быть отменено.";

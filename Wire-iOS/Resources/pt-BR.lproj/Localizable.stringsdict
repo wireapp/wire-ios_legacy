@@ -331,5 +331,21 @@
                 <string>%d chamadas perdidas</string>
             </dict>
         </dict>
+        <key>conversation.silenced.status.message.file</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>novo arquivo</string>
+                <key>other</key>
+                <string>%d novos arquivos</string>
+            </dict>
+        </dict>
     </dict>
 </plist>

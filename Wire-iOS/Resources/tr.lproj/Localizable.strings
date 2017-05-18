@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Katıl";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Yeni";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "Kişilerde";
@@ -908,11 +905,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.title" = "Mesajlar";
+"compose.drafts.empty.title" = "Mesaj yok";
+"compose.drafts.empty.subtitle" = "Bir tane yazmak için + 'ya dokunun";
 "compose.drafts.compose.title" = "Bir mesaj yaz";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "Bir konu belirlemek için dokunun";
 
 "compose.drafts.compose.delete.confirm.title" = "Silmeyi Onayla";
 "compose.drafts.compose.delete.confirm.message" = "Bu işlem taslağı kalıcı olarak silecektir ve geri alınamaz.";

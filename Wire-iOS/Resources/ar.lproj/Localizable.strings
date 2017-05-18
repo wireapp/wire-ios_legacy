@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "انضم إلى";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "جديد";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
@@ -910,7 +907,7 @@
 
 "compose.drafts.title" = "الرسائل";
 "compose.drafts.empty.title" = "لا توجد رسائل";
-"compose.drafts.empty.subtitle" = "انقر على + لإنشاء واحدة.";
+"compose.drafts.empty.subtitle" = "انقر + لإنشاء واحدة";
 "compose.drafts.compose.title" = "كتابة رسالة";
 "compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
 

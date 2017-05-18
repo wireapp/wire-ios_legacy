@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "参加する";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "新機能";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";
@@ -910,7 +907,7 @@
 
 "compose.drafts.title" = "Messages";
 "compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.empty.subtitle" = "Tap + to compose one";
 "compose.drafts.compose.title" = "メッセージを作成";
 "compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
 

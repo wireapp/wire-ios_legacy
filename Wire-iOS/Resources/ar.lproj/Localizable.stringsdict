@@ -331,5 +331,21 @@
                 <string>%d مكالمات فائتة</string>
             </dict>
         </dict>
+        <key>conversation.silenced.status.message.file</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>ملف جديد</string>
+                <key>other</key>
+                <string>%d ملفات جديدة</string>
+            </dict>
+        </dict>
     </dict>
 </plist>
