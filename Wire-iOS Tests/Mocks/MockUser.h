@@ -48,6 +48,7 @@
 @property (nonatomic) ZMAddressBookContact *contact;
 @property (nonatomic) AddressBookEntry *addressBookEntry;
 @property (nonatomic) NSUUID *remoteIdentifier;
+@property (nonatomic) NSSet *teams;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;

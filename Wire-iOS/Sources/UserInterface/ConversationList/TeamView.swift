@@ -20,6 +20,45 @@ import UIKit
 import Cartography
 import Classy
 
+
+open class LayerHostView<LayerType: CALayer>: UIView {
+    var hostedLayer: LayerType {
+        return self.layer as! LayerType
+    }
+    override open class var layerClass : AnyClass {
+        return LayerType.self
+    }
+}
+
+
+final class ShapeView: LayerHostView<CAShapeLayer> {
+    public var pathGenerator: ((CGSize) -> (UIBezierPath))? {
+        didSet {
+            self.updatePath()
+        }
+    }
+
+    private var lastBounds: CGRect = .zero
+    
+    private func updatePath() {
+        guard let generator = self.pathGenerator else {
+            return
+        }
+        
+        self.hostedLayer.path = generator(bounds.size).cgPath
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if lastBounds != self.bounds {
+           lastBounds = self.bounds
+            
+            self.updatePath()
+        }
+    }
+}
+
 extension TeamType {
     func hasUnreadMessages() -> Bool {
         for conversation in self.conversations {
@@ -47,19 +86,52 @@ public protocol TeamViewType {
     func update()
 }
 
+
 public class BaseTeamView: UIView, TeamViewType {
     
     fileprivate let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
-    fileprivate let nameLabel = UILabel()
+    internal let nameLabel = UILabel()
     fileprivate let dotView = DotView()
     fileprivate let nameDotView = DotView()
+    fileprivate let selectionView = ShapeView()
     
-    public var collapsed: Bool = false
+    public var selected: Bool = false {
+        didSet {
+            updateSelectionView()
+        }
+    }
+    
+    public var collapsed: Bool = false {
+        didSet {
+            updateDot()
+            updateSelectionView()
+        }
+    }
+    
+    func updateSelectionView() {
+        selectionView.isHidden = !selected || collapsed
+    }
+    
+    func updateDot() {
+        // TODO: SMB: unread messages not in team? self.team.hasUnreadMessages()
+        let hasUnreadMessages = true
+        
+        nameDotView.isHidden = selected || !hasUnreadMessages || !collapsed
+        dotView.isHidden = selected || !hasUnreadMessages || collapsed
+    }
+    
     public var onTap: ((TeamType?) -> ())? = .none
     
     init() {
         super.init(frame: .zero)
+        
+        clipsToBounds = false
+        
+        selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
+        selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
+        selectionView.hostedLayer.lineWidth = 1.5
+        selectionView.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         
         nameLabel.textAlignment = .center
         nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
@@ -67,18 +139,40 @@ public class BaseTeamView: UIView, TeamViewType {
         nameLabel.lineBreakMode = .byTruncatingTail
         
         dotView.backgroundColor = .accent()
-        
         nameDotView.backgroundColor = .accent()
         
-        [imageViewContainer, outlineView, nameLabel, dotView, nameDotView].forEach(self.addSubview)
+        [imageViewContainer, outlineView, nameLabel, nameDotView, selectionView, dotView].forEach(self.addSubview)
         
-        let dotSize: CGFloat = 8
+        let nameDotSize: CGFloat = 7
+
+        constrain(nameLabel, nameDotView) { nameLabel, nameDotView in
+            nameDotView.centerY == nameLabel.centerY
+            nameDotView.trailing == nameLabel.leading - 12
+            
+            nameDotView.width == nameDotView.height
+            nameDotView.height == nameDotSize
+        }
         
-        constrain(self, imageViewContainer, nameLabel, dotView) { selfView, imageViewContainer, nameLabel, dotView in
+        constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
+            selectionView.edgesWithinMargins == imageViewContainer.edges
+        }
+
+        let dotSize: CGFloat = 9
+
+        constrain(imageViewContainer, dotView) { imageViewContainer, dotView in
+            dotView.centerX == imageViewContainer.trailing - 3
+            dotView.centerY == imageViewContainer.centerY - 6
+            
+            dotView.width == dotView.height
+            dotView.height == dotSize
+        }
+        
+        constrain(self, imageViewContainer, nameLabel, dotView, nameDotView) { selfView, imageViewContainer, nameLabel, dotView, nameDotView in
             imageViewContainer.top == selfView.top + 12
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
-            selfView.right >= dotView.right
+            selfView.trailing >= dotView.trailing
+            selfView.leading <= nameDotView.leading
             imageViewContainer.width == imageViewContainer.height
             imageViewContainer.width == 28
             
@@ -88,14 +182,8 @@ public class BaseTeamView: UIView, TeamViewType {
             nameLabel.trailing == selfView.trailing
             nameLabel.bottom == selfView.bottom - 4
             nameLabel.width <= 96
-            
-            dotView.width == dotView.height
-            dotView.height == dotSize
-            
-            dotView.centerX == imageViewContainer.trailing - 3
-            dotView.centerY == imageViewContainer.centerY - 6
-            
-            selfView.width <= 96
+        
+            selfView.width <= 128
         }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
@@ -118,7 +206,6 @@ public class BaseTeamView: UIView, TeamViewType {
 public final class PersonalTeamView: BaseTeamView {
     private let userImageView = UserImageView(size: .normal)
     
-
     private var selfUserObserver: NSObjectProtocol!
     
     public override var collapsed: Bool {
@@ -131,9 +218,20 @@ public final class PersonalTeamView: BaseTeamView {
     override init() {
         super.init()
         userImageView.user = ZMUser.selfUser()
+        
+        selectionView.pathGenerator = {
+            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
+        }
+        
         selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         
+        self.imageViewContainer.addSubview(userImageView)
+        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
+            userImageView.edges == imageViewContainer.edgesWithinMargins
+        }
         
+        update()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -154,13 +252,8 @@ extension PersonalTeamView: ZMUserObserver {
 public final class TeamImageView: UIImageView {
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
-    private let initialLabel = UILabel()
+    internal let initialLabel = UILabel()
     public let team: TeamType
-    public var selected: Bool = false {
-        didSet {
-            
-        }
-    }
     
     init(team: TeamType) {
         self.team = team
@@ -179,8 +272,6 @@ public final class TeamImageView: UIImageView {
         maskLayer.contentsGravity = "center"
         self.updateClippingLayer()
         self.updateImage()
-        
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -214,16 +305,12 @@ public final class TeamImageView: UIImageView {
     fileprivate func updateImage() {
         if let _ = self.team.teamPictureAssetKey {
             // TODO: SMB: load image
-//            self.image = self.team.isSelected ? image : image.desaturatedImage(with: TeamView.ciContext, saturation: 0.2)
             self.initialLabel.text = ""
             self.backgroundColor = .clear
         }
         else if let name = self.team.name {
             self.image = nil
             self.initialLabel.text = name.substring(to: name.index(after: name.startIndex))
-            
-            let teamImageColor = team.isActive ? ColorScheme().color(withName: ColorSchemeColorTextBackground,  variant: .light) : ColorScheme().color(withName: ColorSchemeColorTextDimmed, variant: .dark)
-            self.backgroundColor = teamImageColor
         }
     }
 }
@@ -233,7 +320,7 @@ public final class TeamImageView: UIImageView {
     public let team: TeamType
     public override var collapsed: Bool {
         didSet {
-            
+            self.imageView.isHidden = collapsed
         }
     }
     
@@ -250,6 +337,16 @@ public final class TeamImageView: UIImageView {
         
         imageView.contentMode = .scaleAspectFill
         
+        imageViewContainer.addSubview(imageView)
+        
+        self.selectionView.pathGenerator = { _ in
+            return WireStyleKit.pathForTeamSelection()
+        }
+        
+        constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
+            imageView.edges == imageViewContainer.edges
+        }
+        
         self.update()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
@@ -262,7 +359,7 @@ public final class TeamImageView: UIImageView {
     
     public override func update() {
         self.updateLabel()
-        self.imageView.selected = self.team.isActive
+        self.selected = self.team.isActive
         self.imageView.updateImage()
         self.updateDot()
     }
@@ -275,10 +372,6 @@ public final class TeamImageView: UIImageView {
     static let ciContext: CIContext = {
         return CIContext()
     }()
-    
-    fileprivate func updateDot() {
-        self.dotView.isHidden = team.isActive || !self.team.hasUnreadMessages()
-    }
     
     @objc override public func didTap(_ sender: UITapGestureRecognizer!) {
         self.onTap?(self.team)

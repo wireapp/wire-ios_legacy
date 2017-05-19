@@ -768,22 +768,19 @@ DotView {
     backgroundColor: $color-accent-current;
 }
 
-TeamView {
+^BaseTeamView {
     nameLabel: @{
         font: $font-small-semibold;
-        textColor: $color-text-dimmed-dark;
-    }
-    
-    initialLabel: @{
-        font: $font-medium;
-        textColor: $color-text-foreground-light;
+        textColor: $color-text-foreground-dark;
     }
 }
 
-TeamView.selected {
-    nameLabel: @{
-        textColor: $color-text-foreground-dark;
+TeamImageView {
+    initialLabel: @{
+        font: $font-small-semibold;
+        textColor: $color-text-foreground-light;
     }
+    backgroundColor: $color-background-light;
 }
 
 /* Conversation */

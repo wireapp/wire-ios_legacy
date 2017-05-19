@@ -21,7 +21,7 @@ import Cartography
 import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
-    private var spacesView: TeamSelectorView? = .none
+    private var teamsView: TeamSelectorView? = .none
     public weak var contentScrollView: UIScrollView? = .none
     
     public enum ImagesState: Int {
@@ -32,13 +32,13 @@ final class ConversationListTopBar: TopBar {
     private var state: ImagesState = .visible
    
     public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && (self.state == newState || ZMUser.selfUser().teams!.count == 0) {
+        if !force && (self.state == newState || self.teams.isEmpty) {
             return
         }
         
         self.state = newState
         let change = {
-            self.spacesView?.imagesCollapsed = self.state == .collapsed
+            self.teamsView?.imagesCollapsed = self.state == .collapsed
             self.splitSeparator = self.state == .visible
         }
         
@@ -50,16 +50,22 @@ final class ConversationListTopBar: TopBar {
         }
     }
     
-    public var showTeams: Bool = false
+    internal var teams: [TeamType] = [] {
+        didSet {
+            self.setShowTeams(to: !teams.isEmpty)
+        }
+    }
     
-    public func setShowTeams(to showTeams: Bool) {
+    fileprivate var showTeams: Bool = false
+    
+    private func setShowTeams(to showTeams: Bool) { // TODO: SMB: Observe teams in order to show / hide teamsView
         self.showTeams = showTeams
         UIView.performWithoutAnimation {
             if showTeams {
-                self.spacesView?.removeFromSuperview()
-                self.spacesView = TeamSelectorView()
-                
-                self.middleView = self.spacesView
+                self.teamsView?.removeFromSuperview()
+                self.teamsView = TeamSelectorView()
+                self.teamsView?.update(with: teams) // TODO: SMB: remove in favor of CoreData observation, also make private
+                self.middleView = self.teamsView
                 self.leftSeparatorLineView.alpha = 1
                 self.rightSeparatorLineView.alpha = 1
                 

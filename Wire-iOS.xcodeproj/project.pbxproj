@@ -578,6 +578,7 @@
 		87AEDB271DBA619D00010451 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB241DBA619D00010451 /* logo.png */; };
 		87AEDB281DBA619D00010451 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB251DBA619D00010451 /* logo@2x.png */; };
 		87AEDB291DBA619D00010451 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AEDB261DBA619D00010451 /* logo@3x.png */; };
+		87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AEF9341ECF38B0008CB9D9 /* WireStyleKit+Additions.m */; };
 		87B7DAA31E696E4E005F5140 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B7DAA21E696E4E005F5140 /* UserNotifications.framework */; };
 		87B7DAA51E696E4E005F5140 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B7DAA41E696E4E005F5140 /* UserNotificationsUI.framework */; };
 		87B7DAA81E696E4E005F5140 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B7DAA71E696E4E005F5140 /* NotificationViewController.swift */; };
@@ -1872,6 +1873,8 @@
 		87AEDB241DBA619D00010451 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		87AEDB251DBA619D00010451 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		87AEDB261DBA619D00010451 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		87AEF9331ECF38B0008CB9D9 /* WireStyleKit+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireStyleKit+Additions.h"; sourceTree = "<group>"; };
+		87AEF9341ECF38B0008CB9D9 /* WireStyleKit+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WireStyleKit+Additions.m"; sourceTree = "<group>"; };
 		87B7DAA11E696E4E005F5140 /* ImageNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B7DAA21E696E4E005F5140 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		87B7DAA41E696E4E005F5140 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -4662,6 +4665,8 @@
 				877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */,
 				870C926A1E8D08A000A10995 /* TeamSelectorView.swift */,
 				876E0C881EC5ED29007EF34E /* TeamView.swift */,
+				87AEF9331ECF38B0008CB9D9 /* WireStyleKit+Additions.h */,
+				87AEF9341ECF38B0008CB9D9 /* WireStyleKit+Additions.m */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -5864,6 +5869,7 @@
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
+				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				CE8E4FBF1DF17BBE0009F437 /* UILabel+TextTransform.m in Sources */,

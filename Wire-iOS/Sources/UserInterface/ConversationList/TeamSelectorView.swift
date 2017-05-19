@@ -70,10 +70,48 @@ internal class LineView: UIView {
 }
 
 final internal class TeamSelectorView: UIView {
-    public var teams: [TeamType]
-    public let teamsViews: [BaseTeamView]
-    private let lineView: LineView
+    internal var teams: [TeamType] = [] {
+        didSet {
+            self.teamsViews = [personalTeamView] + self.teams.map { TeamView(team: $0) }
+            
+            self.teamsViews.forEach { $0.onTap = { [weak self] selectedTeam in
+                guard let `self` = self else {
+                    return
+                }
+                if let selectedTeam = selectedTeam {
+                    self.teams.filter { $0.remoteIdentifier != selectedTeam.remoteIdentifier }.forEach { $0.isActive = false }
+                }
+                else {
+                    self.teams.forEach { $0.isActive = false }
+                }
+                
+                selectedTeam?.isActive = true
+                }
+            }
+            
+            self.lineView = LineView(views: self.teamsViews)
+            
+            self.teamsViews.forEach { $0.collapsed = imagesCollapsed }
+        }
+    }
+    private var teamsViews: [BaseTeamView] = []
+    private var lineView: LineView? {
+        didSet {
+            self.lineView?.removeFromSuperview()
+            if let newLineView = self.lineView {
+                self.addSubview(newLineView)
+                
+                constrain(self, newLineView) { selfView, lineView in
+                    self.topOffsetConstraint = lineView.centerY == selfView.centerY
+                    lineView.leading == selfView.leading
+                    lineView.trailing == selfView.trailing
+                    lineView.height == selfView.height
+                }
+            }
+        }
+    }
     private var topOffsetConstraint: NSLayoutConstraint!
+    private let personalTeamView = PersonalTeamView()
     public var imagesCollapsed: Bool = false {
         didSet {
             self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
@@ -85,39 +123,25 @@ final internal class TeamSelectorView: UIView {
     }
     
     init() {
-        self.teams = Array(ZMUser.selfUser().teams!)
-        
-        let personalTeamView = PersonalTeamView()
-        
-        self.teamsViews = [personalTeamView] + self.teams.map { TeamView(team: $0) }
-        self.lineView = LineView(views: self.teamsViews)
         super.init(frame: .zero)
-        
-        self.addSubview(lineView)
+        self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
         self.clipsToBounds = true
-
-        constrain(self, self.lineView) { selfView, lineView in
-            self.topOffsetConstraint = lineView.centerY == selfView.centerY
-            lineView.leading == selfView.leading
-            lineView.trailing == selfView.trailing
-            lineView.height == selfView.height
-        }
-        
-        self.teamsViews.forEach { $0.onTap = { selectedTeam in
-                if let selectedTeam = selectedTeam {
-                    self.teams.filter { $0.remoteIdentifier != selectedTeam.remoteIdentifier }.forEach { $0.isActive = false }
-                }
-                else {
-                    self.teams.forEach { $0.isActive = false }
-                }
-            
-                selectedTeam?.isActive = true
-            }
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // TODO: SMB: observe all teams && add team did change observer for self team
+    func update(with teams: [TeamType]) {
+        let selfTeamActive: Bool
+        if let _ = teams.first(where: { $0.isActive }) {
+            selfTeamActive = false
+        }
+        else {
+            selfTeamActive = true
+        }
+        self.personalTeamView.selected = selfTeamActive
+        self.teams = teams
+    }
 }

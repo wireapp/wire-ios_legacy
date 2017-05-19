@@ -19,13 +19,45 @@
 
 import UIKit
 import Cartography
+// TODO: SMB: remove fake teams
+class MockTeam: TeamType {
+    public var conversations: Set<ZMConversation> = Set()
+    public var name: String? = ""
+    public var teamPictureAssetKey: String? = .none
+    public var isActive: Bool = true
+    public var remoteIdentifier: UUID? = .none
+}
+
+
+func createTeams(createFamily: Bool = false) -> [TeamType] {
+    let workspaceName = "W"
+    
+    var teams: [TeamType] = []
+    
+    let workTeam: TeamType = {
+        let workTeam = MockTeam()
+        workTeam.name = workspaceName
+        workTeam.isActive = false
+        return workTeam
+    }()
+    
+    teams.append(workTeam)
+    
+    if createFamily {
+        let familyTeam: TeamType = {
+            let familyTeam = MockTeam()
+            familyTeam.name = "Family"
+            familyTeam.isActive = true
+            return familyTeam
+        }()
+        
+        teams.append(familyTeam)
+    }
+    
+    return teams
+}
 
 extension ConversationListViewController {
-    
-    public func updateTeams() {
-        self.topBar.contentScrollView = self.listContentController.collectionView
-        self.topBar.setShowTeams(to: ZMUser.selfUser().teams!.count > 0)
-    }
     
     public func createTopBar() {
         let profileButton = IconButton()
@@ -49,8 +81,12 @@ extension ConversationListViewController {
         
         self.topBar = ConversationListTopBar()
         
+        // TODO: SMB: remove fake teams
+        
+        self.topBar.teams = createTeams()
+        
         self.contentContainer.addSubview(self.topBar)
-        self.updateTeams()
+        self.topBar.contentScrollView = self.listContentController.collectionView
         self.topBar.leftView = profileButton
     }
 }

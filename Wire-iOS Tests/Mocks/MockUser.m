@@ -170,9 +170,15 @@
 {
     return @[];
 }
+
 - (void)refreshData
 {
     // no-op
+}
+
+- (NSSet *)teams
+{
+    return [NSSet set];
 }
     
 - (BOOL)isPendingApproval {

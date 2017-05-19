@@ -138,6 +138,7 @@
 #import "UIImagePickerController+GetImage.h"
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
+#import "WireStyleKit+Additions.h"
 
 // Camera
 #import "CameraController.h"
