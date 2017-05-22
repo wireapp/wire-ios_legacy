@@ -771,7 +771,6 @@ DotView {
 ^BaseTeamView {
     nameLabel: @{
         font: $font-small-semibold;
-        textColor: $color-text-foreground-dark;
     }
 }
 

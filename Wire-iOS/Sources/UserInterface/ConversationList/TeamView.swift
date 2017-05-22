@@ -98,28 +98,26 @@ public class BaseTeamView: UIView, TeamViewType {
     
     public var selected: Bool = false {
         didSet {
-            updateDot()
-            updateSelectionView()
+            updateAppearance()
         }
     }
     
     public var collapsed: Bool = false {
         didSet {
-            updateDot()
-            updateSelectionView()
+            updateAppearance()
         }
     }
     
-    func updateSelectionView() {
+    func updateAppearance() {
         selectionView.isHidden = !selected || collapsed
-    }
-    
-    func updateDot() {
+        
         // TODO: SMB: unread messages not in team? self.team.hasUnreadMessages()
         let hasUnreadMessages = true
         
         nameDotView.isHidden = selected || !hasUnreadMessages || !collapsed
         dotView.isHidden = selected || !hasUnreadMessages || collapsed
+        
+        nameLabel.textColor = (collapsed && selected) ? UIColor.accent() : ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
     }
     
     public var onTap: ((TeamType?) -> ())? = .none
@@ -358,15 +356,14 @@ public final class TeamImageView: UIImageView {
     }
     
     public override func update() {
+        super.update()
         self.updateLabel()
         self.selected = self.team.isActive
         self.imageView.updateImage()
-        self.updateDot()
     }
     
     fileprivate func updateLabel() {
         self.nameLabel.text = self.team.name
-        self.cas_styleClass = team.isActive ? "selected" : .none
     }
     
     static let ciContext: CIContext = {
