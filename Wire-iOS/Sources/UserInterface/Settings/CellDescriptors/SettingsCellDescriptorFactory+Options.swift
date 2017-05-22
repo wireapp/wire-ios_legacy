@@ -176,11 +176,6 @@ extension SettingsCellDescriptorFactory {
         
         cellDescriptors.append(byPopularDemandSection)
         
-        if settingsPropertyFactory.property(.workspaceName).rawValue() != nil {
-            let spaceNameDescriptor = SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.workspaceName))
-            cellDescriptors.append(SettingsSectionDescriptor(cellDescriptors: [spaceNameDescriptor]))
-        }
-        
         if externalAppsDescriptors.count > 0 {
             cellDescriptors.append(externalAppsSection)
         }

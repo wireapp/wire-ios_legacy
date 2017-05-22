@@ -80,9 +80,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
 
     case lockApp = "lockApp"
     case lockAppLastDate = "lockAppLastDate"
-    
-    case workspaceName = "workspaceName"
-    
+        
     var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }

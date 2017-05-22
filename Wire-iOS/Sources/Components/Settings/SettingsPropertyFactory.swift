@@ -92,7 +92,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
         SettingsPropertyName.callingConstantBitRate     : UserDefaultCallingConstantBitRate,
-        SettingsPropertyName.workspaceName              : SettingsPropertyName.workspaceName.rawValue
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
