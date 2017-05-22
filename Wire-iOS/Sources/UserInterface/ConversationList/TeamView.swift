@@ -98,6 +98,7 @@ public class BaseTeamView: UIView, TeamViewType {
     
     public var selected: Bool = false {
         didSet {
+            updateDot()
             updateSelectionView()
         }
     }
@@ -303,7 +304,7 @@ public final class TeamImageView: UIImageView {
     }
     
     fileprivate func updateImage() {
-        if let _ = self.team.teamPictureAssetKey {
+        if let _ = self.team.pictureAssetKey {
             // TODO: SMB: load image
             self.initialLabel.text = ""
             self.backgroundColor = .clear

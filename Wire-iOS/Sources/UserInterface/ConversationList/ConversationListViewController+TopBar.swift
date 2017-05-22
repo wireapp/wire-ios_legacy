@@ -21,6 +21,8 @@ import UIKit
 import Cartography
 // TODO: SMB: remove fake teams
 class MockTeam: TeamType {
+    public var pictureAssetId: String?
+    public var pictureAssetKey: String?
     public var conversations: Set<ZMConversation> = Set()
     public var name: String? = ""
     public var teamPictureAssetKey: String? = .none
