@@ -205,14 +205,13 @@ public class BaseTeamView: UIView, TeamViewType {
 }
 
 public final class PersonalTeamView: BaseTeamView {
-    private let userImageView = UserImageView(size: .normal)
+    internal let userImageView = UserImageView(size: .normal)
     
     private var selfUserObserver: NSObjectProtocol!
     
     public override var collapsed: Bool {
         didSet {
             self.userImageView.isHidden = collapsed
-            self.dotView.isHidden = collapsed
         }
     }
     

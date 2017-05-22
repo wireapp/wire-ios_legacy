@@ -783,6 +783,15 @@ TeamImageView {
     backgroundColor: $color-background-light;
 }
 
+PersonalTeamView {
+    userImageView: @{
+        initials: @{
+            font: $font-small-semibold;
+            textColor: $color-list-avatar-initials;
+        }
+    }
+}
+
 /* Conversation */
 
 MessageToolboxView {
