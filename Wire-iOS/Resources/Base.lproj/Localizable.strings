@@ -373,6 +373,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Add people";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
