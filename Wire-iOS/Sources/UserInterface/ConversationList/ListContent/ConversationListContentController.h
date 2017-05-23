@@ -22,7 +22,6 @@
 
 @class ZMConversation;
 @class ConversationListContentController;
-@class ConversationListViewModel;
 
 
 @protocol ConversationListContentDelegate <NSObject>
@@ -59,7 +58,5 @@
 - (void)reload;
 
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated;
-
-@property (nonatomic, readonly) ConversationListViewModel *listViewModel;
 
 @end
