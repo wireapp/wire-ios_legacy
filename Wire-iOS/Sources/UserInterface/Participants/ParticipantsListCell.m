@@ -18,17 +18,16 @@
 
 
 #import "ParticipantsListCell.h"
-
 #import <PureLayout/PureLayout.h>
-
 #import "BadgeUserImageView.h"
 #import "WireSyncEngine+iOS.h"
-
 #import "UserImageView+Magic.h"
+#import "Wire-Swift.h"
 
 @interface ParticipantsListCell ()
-@property (weak, nonatomic) UILabel *nameLabel;
-@property (weak, nonatomic) BadgeUserImageView *userImageView;
+@property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) BadgeUserImageView *userImageView;
+@property (nonatomic) RoundedTextBadge *guestLabel;
 @end
 
 @implementation ParticipantsListCell
@@ -45,10 +44,9 @@
 
 - (void)addSubviews
 {
-    UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.textAlignment = NSTextAlignmentCenter;
-    [self.contentView addSubview:nameLabel];
-    self.nameLabel = nameLabel;
+    self.nameLabel = [[UILabel alloc] initForAutoLayout];
+    self.nameLabel.textAlignment = NSTextAlignmentCenter;
+    [self.contentView addSubview:self.nameLabel];
 
     BadgeUserImageView *userImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"participants"];
     userImageView.userSession = [ZMUserSession sharedSession];
@@ -57,22 +55,27 @@
     [self.contentView addSubview:userImageView];
     self.userImageView = userImageView;
     
+    self.guestLabel = [[RoundedTextBadge alloc] initForAutoLayout];
+    self.guestLabel.textLabel.text = NSLocalizedString(@"participants.avatar.guest.title", @"");
+    self.guestLabel.hidden = YES;
+    [self.contentView addSubview:self.guestLabel];
+    
     [self.userImageView autoCenterInSuperview];
     [self.userImageView autoSetDimensionsToSize:CGSizeMake(80, 80)];
     [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:8];
     [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
     [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+    
+    [self.guestLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.userImageView withOffset:1];
+    [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
 }
 
 #pragma mark - Getters / setters
-
-- (void)setRepresentedObject:(ZMUser *)representedObject
+- (void)updateForUser:(ZMUser *)user inConversation:(ZMConversation *)conversation
 {
-    _representedObject = representedObject;
-    
-    ZMUser *user = (ZMUser *)representedObject;
-    self.userImageView.user = representedObject;
+    self.userImageView.user = user;
     self.nameLabel.text = [user.displayName uppercaseString];
+    self.guestLabel.hidden = ![user isGuestIn:conversation];
 }
 
 @end

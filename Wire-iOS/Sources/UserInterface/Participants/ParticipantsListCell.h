@@ -20,9 +20,10 @@
 #import <UIKit/UIKit.h>
 
 @class ZMUser;
+@class ZMConversation;
 
 @interface ParticipantsListCell : UICollectionViewCell
 
-@property (strong, nonatomic) ZMUser* representedObject;
+- (void)updateForUser:(ZMUser *)user inConversation:(ZMConversation *)conversation;
 
 @end

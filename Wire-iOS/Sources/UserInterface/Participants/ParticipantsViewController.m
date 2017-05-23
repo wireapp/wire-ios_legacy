@@ -241,7 +241,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.footerView addConstraintForBottomMargin:0 relativeToView:self.view];
     [self.footerView addConstraintsForRightMargin:0 leftMargin:0 relativeToView:self.view];
     
-    if ([self.conversation.activeParticipants containsObject:[ZMUser selfUser]]) {
+    if ([[ZMUser selfUser] canAddUserToConversation:self.conversation]) {
         [self.footerView setIconTypeForLeftButton:ZetaIconTypeConvMetaAddPerson];
         [self.footerView setTitleForLeftButton:NSLocalizedString(@"participants.add_people_button_title", @"")];
     } else {
@@ -357,7 +357,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)configureCell:(ParticipantsListCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     ZMUser *user = self.participants[indexPath.row];
-    cell.representedObject = user;
+    [cell updateForUser:user inConversation:self.conversation];
 }
 
 #pragma mark - ZMConversationObserver

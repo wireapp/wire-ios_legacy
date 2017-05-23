@@ -308,7 +308,12 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         return ProfileUserActionNone;
     }
     else if (self.context == ProfileViewControllerContextGroupConversation) {
-        return ProfileUserActionRemovePeople;
+        if ([[ZMUser selfUser] canRemoveUserFromConversation:self.conversation]) {
+            return ProfileUserActionRemovePeople;
+        }
+        else {
+            return ProfileUserActionNone;
+        }
     }
     else if (user.isConnected) {
         if (self.context == ProfileViewControllerContextCommonConnection) {

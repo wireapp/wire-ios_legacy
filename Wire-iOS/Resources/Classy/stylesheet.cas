@@ -704,6 +704,13 @@ ParticipantsListCell {
         textColor: $color-text-foreground;
         font: $font-small-light;
     }
+    guestLabel @{
+        backgroundColor: $color-background-light;
+        textLabel @{
+            textColor: $color-text-foreground-light;
+            font: $font-small-light;
+        }
+    }
 }
 
 /* Fullscreen image view */
@@ -1757,7 +1764,7 @@ SearchResultLabel {
     textColor: $color-text-foreground;
 }
 
-RoundedTextBadge {
+TextSearchResultCell RoundedTextBadge {
     textLabel: @{
         textColor: $color-background;
         font: $font-small-semibold;
