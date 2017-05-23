@@ -29,14 +29,12 @@ import Foundation
     weak var delegate: ArchivedListViewModelDelegate?
     var archivedConversationListObserverToken: NSObjectProtocol?
     var archivedConversations = [ZMConversation]()
-    let sessionCache = SessionObjectCache.shared()
     
     override init() {
         super.init()
-        if let list = sessionCache?.archivedConversations {
-            archivedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: list)
-            archivedConversations = list.asArray() as! [ZMConversation]
-        }
+        let list = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam)
+        archivedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: list)
+        archivedConversations = list.asArray() as! [ZMConversation]
     }
     
     var count: Int {
@@ -52,9 +50,9 @@ import Foundation
 
 extension ArchivedListViewModel: ZMConversationListObserver {
     func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
-        guard changeInfo.conversationList == sessionCache?.archivedConversations else { return }
+        guard changeInfo.conversationList == ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam) else { return }
         delegate?.archivedListViewModel(self, didUpdateArchivedConversationsWithChange: changeInfo) { [weak self] in
-            self?.archivedConversations = self?.sessionCache?.archivedConversations.asArray() as! [ZMConversation]
+            self?.archivedConversations = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam).asArray() as! [ZMConversation]
         }
     }
     

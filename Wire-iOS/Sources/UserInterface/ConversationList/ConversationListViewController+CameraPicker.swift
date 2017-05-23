@@ -102,9 +102,9 @@ extension ConversationListViewController {
     }
     
     public func showShareControllerFor(image: UIImage) {
-        let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
+        let conversations = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam)
         
-        let shareViewController: ShareViewController<ZMConversation, UIImage> = ShareViewController(shareable: image, destinations: conversations)
+        let shareViewController: ShareViewController<ZMConversation, UIImage> = ShareViewController(shareable: image, destinations: conversations as! [ZMConversation])
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
 
         shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
@@ -119,9 +119,9 @@ extension ConversationListViewController {
     }
     
     public func showShareControllerFor(videoAtURL: URL) {
-        let conversations = SessionObjectCache.shared().allConversations.shareableConversations()
+        let conversations = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam)
         
-        let shareViewController: ShareViewController<ZMConversation, URL> = ShareViewController(shareable: videoAtURL, destinations: conversations)
+        let shareViewController: ShareViewController<ZMConversation, URL> = ShareViewController(shareable: videoAtURL, destinations: conversations as! [ZMConversation])
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
 
         shareViewController.preferredContentSize = CGSize(width: 320, height: 568)

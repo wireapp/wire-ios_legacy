@@ -176,8 +176,8 @@
     [self updateNoConversationVisibility];
     [self updateArchiveButtonVisibility];
     
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].allConversations];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
+    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
+    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
 
     // TODO: SMB: subscrive
 //    [NSNotificationCenter.defaultCenter addObserver:self
@@ -588,7 +588,9 @@
 
 - (void)updateNoConversationVisibility;
 {
-    NSUInteger conversationsCount = [SessionObjectCache sharedCache].conversationList.count + [SessionObjectCache sharedCache].pendingConnectionRequests.count;
+    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]].count +
+                                    [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]].count;
+    
     BOOL shouldDisplayNoContact = conversationsCount == 0;
     
     if (shouldDisplayNoContact) {
@@ -724,7 +726,8 @@
 
 - (void)updateArchiveButtonVisibility
 {
-    BOOL showArchived = [SessionObjectCache.sharedCache archivedConversations].count > 0;
+    BOOL showArchived = [ZMConversationList archivedConversationsInUserSession:[ZMUserSession sharedSession]
+                                                                          team:[[ZMUser selfUser] activeTeam]].count > 0;
     if (showArchived == self.bottomBarController.showArchived) {
         return;
     }

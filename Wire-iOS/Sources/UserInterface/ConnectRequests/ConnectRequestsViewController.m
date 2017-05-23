@@ -18,7 +18,6 @@
 
 
 #import "ConnectRequestsViewController.h"
-#import "SessionObjectCache.h"
 
 // ui
 #import "TextView.h"
@@ -75,11 +74,11 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    ZMConversationList *pendingConnectionsList = [[SessionObjectCache sharedCache] pendingConnectionRequests];
+    ZMConversationList *pendingConnectionsList = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil];
     self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self forList:pendingConnectionsList];
     
     self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
-    self.connectionRequests = [SessionObjectCache sharedCache].pendingConnectionRequests;
+    self.connectionRequests = pendingConnectionsList;
     
     [self reload];
     

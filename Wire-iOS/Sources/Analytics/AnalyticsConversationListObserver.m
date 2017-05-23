@@ -23,8 +23,6 @@
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "ZMUser+Additions.h"
 
-#import "SessionObjectCache.h"
-
 #import "avs+iOS.h"
 #import "Wire-Swift.h"
 
@@ -76,14 +74,18 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     if (self.observing) {
         self.observationStartDate = [NSDate date];
 
-        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].allConversations];
+        
+        
+        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:nil]];
 
         [self performSelector:@selector(probablyReceivedFullConversationList)
                    withObject:nil
                    afterDelay:PermantentConversationListObserverObservationFinalTime];
     } else {
         if (self.conversationListObserverToken != nil) {
-            [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:[SessionObjectCache sharedCache].allConversations];
+            [ConversationListChangeInfo removeObserver:self.conversationListObserverToken
+                                               forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:nil]];
         }
     }
 }
@@ -92,7 +94,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
 {
     NSUInteger groupConvCount = 0;
 
-    for (ZMConversation *conversation in [SessionObjectCache sharedCache].allConversations) {
+    for (ZMConversation *conversation in [ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:nil]) {
         if (conversation.conversationType == ZMConversationTypeGroup) {
             groupConvCount ++;
         }

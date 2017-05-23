@@ -42,7 +42,6 @@
 #import "AppDelegate+Logging.h"
 
 #import "ZClientViewController.h"
-#import "SessionObjectCache.h"
 
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Registration.h"
@@ -290,11 +289,6 @@ static AppDelegate *sharedAppDelegate = nil;
 - (ZMUserSession *)zetaUserSession
 {
     return self.appController.zetaUserSession;
-}
-
-- (SessionObjectCache *)sessionObjectCache
-{
-    return self.appController.sessionObjectCache;
 }
 
 - (NotificationWindowRootViewController *)notificationWindowController

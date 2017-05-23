@@ -53,11 +53,12 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 @property (nonatomic, readonly) NSUInteger sectionCount;
 @property (nonatomic, readonly) ConversationListConnectRequestsItem *contactRequestsItem;
 
+@property (nonatomic, readonly) NSArray *inbox;
+@property (nonatomic, readonly) NSArray *conversations;
+
 @property (nonatomic, readonly) id selectedItem;
 
 @property (nonatomic, weak) id<ConversationListViewModelDelegate> delegate;
-
-@property (nonatomic) NSArray *spacesObservers;
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)sectionIndex;
 - (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;

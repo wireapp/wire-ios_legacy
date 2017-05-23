@@ -26,7 +26,6 @@
 @class NotificationWindowRootViewController;
 @class FirstTimeUsageAgent;
 @class ZMConversation;
-@class SessionObjectCache;
 @class MediaPlaybackManager;
 
 
@@ -37,7 +36,6 @@
 
 // Singletons
 @property (readonly, nonatomic) ZMUserSession *zetaUserSession;
-@property (readonly, nonatomic) SessionObjectCache *sessionObjectCache;
 
 @property (readonly, nonatomic) NotificationWindowRootViewController *notificationWindowController;
 @property (readonly, nonatomic) UIWindow *notificationsWindow;

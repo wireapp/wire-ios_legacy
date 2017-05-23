@@ -60,7 +60,8 @@
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
     [self addSubview:self.itemView];
     [self updateAppearance];
-    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self forList:[SessionObjectCache sharedCache].pendingConnectionRequests];
+    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                         forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil]];
     
     [self setNeedsUpdateConstraints];
 }
@@ -94,7 +95,7 @@
 
 - (void)updateAppearance
 {
-    NSArray<ZMConversation *> *connectionRequests = [SessionObjectCache sharedCache].pendingConnectionRequests;
+    NSArray<ZMConversation *> *connectionRequests = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil];
     
     NSUInteger newCount = connectionRequests.count;
     

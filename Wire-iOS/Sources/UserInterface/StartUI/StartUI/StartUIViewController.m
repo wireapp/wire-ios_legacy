@@ -215,7 +215,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)showKeyboardIfNeeded
 {
-    NSUInteger conversationCount = [SessionObjectCache sharedCache].conversationList.count;
+    NSUInteger conversationCount = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]].count;
     if (conversationCount > StartUIInitiallyShowsKeyboardConversationThreshold) {
         [self.peopleInputController.tokenField becomeFirstResponder];
     }
