@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "加入";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "新增";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
@@ -480,7 +477,7 @@
 // Options menu contents
 
 "self.settings" = "设置";
-"self.profile" = "Profile";
+"self.profile" = "用户信息";
 "self.help_center" = "帮助";
 "self.help_center.support_website" = "Wire帮助网站";
 "self.help_center.contact_support" = "与客服联系";
@@ -910,7 +907,7 @@
 
 "compose.drafts.title" = "Messages";
 "compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.empty.subtitle" = "Tap + to compose one";
 "compose.drafts.compose.title" = "Write a message";
 "compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
 

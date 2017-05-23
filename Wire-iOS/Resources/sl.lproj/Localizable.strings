@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Pridruži";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Novo";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "v stikih";
@@ -908,11 +905,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.title" = "Sporočila";
+"compose.drafts.empty.title" = "Ni sporočil";
+"compose.drafts.empty.subtitle" = "Tapnite + za sestavo";
 "compose.drafts.compose.title" = "Napiši sporočilo";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "Tapnite, če želite določiti zadevo";
 
 "compose.drafts.compose.delete.confirm.title" = "Potrdi brisanje";
 "compose.drafts.compose.delete.confirm.message" = "To dejanje bo za vedno izbrisalo ta osnutek in ga ni mogoče razveljaviti.";

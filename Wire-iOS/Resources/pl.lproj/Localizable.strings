@@ -73,13 +73,10 @@
 "contacts_ui.title" = "Zaproś osoby";
 
 "contacts_ui.no_contact.title" = "Brak aktywnych rozmów\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.message" = "Dotknij kontakt, aby rozpocząć konwersację";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Dołącz";
-
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Nowa";
 
 
 // Profile Header View
@@ -117,36 +114,36 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // List (labels) - Needs to be revised with updated guidance
-"list.title" = "Conversations";
+"list.title" = "Konwersacje";
 "list.archived_conversations" = "ARCHIWUM";
 "list.archived_conversations_close" = "Zamknij archiwum";
 
-"conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message…";
-"conversation.status.typing.group" = "%@: typing a message…";
-"conversation.status.silenced" = "Muted";
+"conversation.status.call" = "Bieżące połączenie";
+"conversation.status.typing" = "Pisanie wiadomości…";
+"conversation.status.typing.group" = "%@: pisze wiadomość…";
+"conversation.status.silenced" = "Wyciszony";
 "conversation.status.blocked" = "Zablokowano";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.link" = "Udostępniono link";
 "conversation.status.message.image" = "Udostępnił obrazek";
 "conversation.status.message.location" = "Udostępniana lokalizacja";
 "conversation.status.message.audio" = "Udostępnij wiadomość audio";
 "conversation.status.message.video" = "Udostępniane wideo";
 "conversation.status.message.file" = "Udostępniany plik";
 "conversation.status.message.knock" = "Zaczepiony";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "Nieodebrane połączenie";
 "conversation.status.message.ephemeral" = "Wiadomość czasowa";
 
-"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.unsent" = "⚠ Wiadomość niewysłana";
 "conversation.status.you" = "Ty";
-"conversation.status.added_multiple" = "People added";
+"conversation.status.added_multiple" = "Osoby zostały dodane";
 "conversation.status.you_was_added" = "%@ dodał Ciebie";
 "conversation.status.added_users" = "%@ dodał %@";
-"conversation.status.removed_multiple" = "People removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "Osoby zostały usunięte";
+"conversation.status.you_were_removed" = "Zostałeś usunięty";
 "conversation.status.you_left" = "Wyszedłeś";
-"conversation.status.started_conversation" = "%@ started a conversation";
+"conversation.status.started_conversation" = "%@ rozpoczął konwersacje";
 "conversation.status.removed_users" = "%@ usunął %@";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -272,8 +269,8 @@
 "content.system.started_using" = "rozpocznij korzystając z";
 "content.system.is_verified" = "Wszystkie odciski palców są zweryfikowane";
 
-"content.system.new_users" = "New user joined.";
-"content.system.verify_devices" = "Verify devices";
+"content.system.new_users" = "Nowy użytkownik właśnie dołączył.";
+"content.system.verify_devices" = "Zweryfikuj urządzenie";
 
 "content.system.unverified" = "%@ nie zweryfikował jednego z %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "twoje urządzenia";
@@ -289,7 +286,7 @@
 
 "content.system.cannot_decrypt.identity" = "Urządzenie %@ zostało zmienione. Wiadomość nie została dostarczona.";
 "content.system.cannot_decrypt.identity.you_part" = "Ty";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Dowiedz się więcej";
 "content.system.cannot_decrypt.otherDevice_part" = "(urządzenie %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -322,7 +319,7 @@
 
 "content.file.too_big" = "Możesz wysyłać pliki do %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pinged";
+"content.ping.text" = "%1$@ ping";
 
 // Current user pinged
 "content.ping.text.you" = "Ty";
@@ -346,9 +343,9 @@
 "voice.status.video_not_available" = "Wideo zostało wyłączone";
 "voice.status.low_connection" = "Błąd połączenia";
 "voice.network_error.title" = "Brak połączenia z Internetem";
-"voice.status.cbr" = "Constant Bit Rate";
+"voice.status.cbr" = "Stała szybkość transmisji";
 "voice.network_error.body" = "Musisz być online, aby połączyć. Sprawdź połączenie i spróbuj ponownie.";
-"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_self_device" = "Rozpocząłeś korzystanie z nowego urządzenia.";
 "voice.degradation.new_user_device" = "%@ rozpoczął korzystanie z nowego urządzenia.";
 "voice.degradation_outgoing.prompt" = "Czy nadal chcesz nawiązać połączenie?";
 "voice.degradation_incoming.prompt" = "Czy nadal chcesz odebrać połączenie?";
@@ -362,7 +359,7 @@
 "voice.call_button.title" = "Połączenie";
 
 "voice.alert.call_in_progress.title" = "Połączenie w toku";
-"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.message" = "Można mieć tylko jedno aktywne połączenie";
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire potrzebuje dostępu do mikrofonu.";
@@ -607,8 +604,8 @@
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
 "self.settings.callkit.description" = "Pokaż połączenia Wire na ekranie blokady i w historii połączeń iOS. Jeśli iCloud jest aktywny, historia połączeń zostanie udostępnione dla Apple. Uruchom ponownie Wire aby zastosować ustawienia.";
 
-"self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.title" = "Kodowanie w zmiennej przepływności (VBR)";
+"self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania w stałej przepływności (CBR).";
 
 "self.settings.workspace.title" = "Workspace Name";
 
@@ -656,11 +653,11 @@
 "self.settings.privacy_contacts_menu.settings_button.title" = "Otwórz ustawienia kontaktów";
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Pozwala połączyć się z innymi. Wszystkie informacje są anonimowe i nie przekazujemy ich nikomu. Zezwól na dostęp za pośrednictwem Ustawienia > Prywatność > Kontakty.";
 
-"self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app" = "Zablokuj urządzenie kodem";
+"self.settings.privacy_security.lock_app.subtitle" = "Zablokuj Wire po 10 sekundach. Odblokowanie za pomocą Touch ID lub kodem.";
 "self.settings.privacy_security.lock_app.description" = "Odblokuj Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description" = "Odblokuj Wire za pomocą Touch ID lub kodem";
 "self.settings.privacy_security.lock_cancelled.action" = "Odblokuj";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Urządzenia";
@@ -840,7 +837,7 @@
 "error.user.phone_code_too_many" = "Wysłaliśmy już kod SMS. Wyślij ponownie po 10 minutach, aby uzyskać nowy kod.";
 "error.user.registration_unknown_error" = "Coś poszło nie tak. Spróbuj ponownie.";
 "error.user.device_deleted_remotely" = "Zostałeś wylogowany na tym urządzeniu!";
-"error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
+"error.user.last_identity_cant_be_deleted" = "Adres e-mail lub numer telefonu jest wymagany.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -908,12 +905,12 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
-"compose.drafts.compose.title" = "Write a message";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.title" = "Wiadomości";
+"compose.drafts.empty.title" = "Brak wiadomości";
+"compose.drafts.empty.subtitle" = "Naciśnij +, aby utworzyć";
+"compose.drafts.compose.title" = "Napisz wiadomość";
+"compose.drafts.compose.subject.placeholder" = "Naciśnij, aby ustawić temat";
 
-"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.title" = "Potwierdź usunięcie";
+"compose.drafts.compose.delete.confirm.message" = "To spowoduje nieodwracalne usunięcie szkicu. Operacji nie będzie można cofnąć.";
 "compose.drafts.compose.delete.confirm.action.title" = "Usuń";

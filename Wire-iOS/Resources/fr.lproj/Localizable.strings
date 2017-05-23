@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Nouveau";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "dans les contacts";
@@ -122,7 +119,7 @@
 "list.archived_conversations_close" = "Fermer l'archive";
 
 "conversation.status.call" = "Appel en cours";
-"conversation.status.typing" = "Tape un message…";
+"conversation.status.typing" = "Écris un message…";
 "conversation.status.typing.group" = "%@ : tape un message…";
 "conversation.status.silenced" = "En sourdine";
 "conversation.status.blocked" = "Bloqué";
@@ -910,9 +907,9 @@
 
 "compose.drafts.title" = "Messages";
 "compose.drafts.empty.title" = "Aucun message";
-"compose.drafts.empty.subtitle" = "Appuyez sur + pour en rédiger un.";
+"compose.drafts.empty.subtitle" = "Appuyez sur + pour en rédiger un";
 "compose.drafts.compose.title" = "Écrivez un message";
-"compose.drafts.compose.subject.placeholder" = "Appuyez pour définir un sujet";
+"compose.drafts.compose.subject.placeholder" = "Appuyez pour définir le sujet";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirmer la suppression";
 "compose.drafts.compose.delete.confirm.message" = "Cette action supprimera définitivement le brouillon et ne pourra pas être annulée.";

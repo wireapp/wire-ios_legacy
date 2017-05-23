@@ -331,5 +331,21 @@
                 <string>%d пропущенных звонков</string>
             </dict>
         </dict>
+        <key>conversation.silenced.status.message.file</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@d_number_of_new@</string>
+            <key>d_number_of_new</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>новый файл</string>
+                <key>other</key>
+                <string>%d новых файлов</string>
+            </dict>
+        </dict>
     </dict>
 </plist>

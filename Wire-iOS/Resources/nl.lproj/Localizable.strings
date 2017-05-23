@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Deelnemen";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Nieuw";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacten";
@@ -908,11 +905,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.title" = "Berichten";
+"compose.drafts.empty.title" = "Geen berichten";
+"compose.drafts.empty.subtitle" = "Tap + to compose one";
 "compose.drafts.compose.title" = "Schrijf een bericht";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "Tap om een onderwerp toe te voegen";
 
 "compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";
 "compose.drafts.compose.delete.confirm.message" = "Hiermee zullen alle concepten verwijdert worden, dit kan niet ongedaan gemaakt worden.";

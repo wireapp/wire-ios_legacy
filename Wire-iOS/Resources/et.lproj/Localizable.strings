@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liitu";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Uus";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
@@ -910,7 +907,7 @@
 
 "compose.drafts.title" = "Sõnumid";
 "compose.drafts.empty.title" = "Sõnumeid pole";
-"compose.drafts.empty.subtitle" = "Loomiseks vajuta + märki.";
+"compose.drafts.empty.subtitle" = "Loomiseks vajuta + märki";
 "compose.drafts.compose.title" = "Kirjuta sõnum";
 "compose.drafts.compose.subject.placeholder" = "Vajuta teema määramiseks";
 

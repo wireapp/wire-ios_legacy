@@ -78,9 +78,6 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Приєднатись";
 
-// Conversation List Bottom Bar
-"bottom_bar.plus_button.title" = "Додати";
-
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";
@@ -908,11 +905,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one.";
+"compose.drafts.title" = "Повідомлення";
+"compose.drafts.empty.title" = "Повідомлень немає";
+"compose.drafts.empty.subtitle" = "Доторкніться до +, щоб створити нове";
 "compose.drafts.compose.title" = "Напишіть текст повідомлення";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "Торкніться, щоб написати тему";
 
 "compose.drafts.compose.delete.confirm.title" = "Підтвердити видалення";
 "compose.drafts.compose.delete.confirm.message" = "Ця дія назавжди видалить дану чернетку без можливості відновлення.";

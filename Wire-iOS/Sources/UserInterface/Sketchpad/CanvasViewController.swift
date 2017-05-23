@@ -136,7 +136,6 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func configureColorPicker() {
-        
         colorPickerController.sketchColors = [.black,
                                               .white,
                                               UIColor(for: .strongBlue),
@@ -146,14 +145,14 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
                                               UIColor(for: .brightOrange),
                                               UIColor(for: .softPink),
                                               UIColor(for: .violet),
-                                              UIColor.cas_color(withHex: "#96bed6"),
-                                              UIColor.cas_color(withHex: "#a3eba3"),
-                                              UIColor.cas_color(withHex: "#fee7a3"),
-                                              UIColor.cas_color(withHex: "#fda5a5"),
-                                              UIColor.cas_color(withHex: "#ffd4a3"),
-                                              UIColor.cas_color(withHex: "#fec4e7"),
-                                              UIColor.cas_color(withHex: "#dba3fe"),
-                                              UIColor.cas_color(withHex: "#a3a3a3")]
+                                              UIColor(red: 0.688, green: 0.342, blue: 0.002, alpha: 1),
+                                              UIColor(red: 0.381, green: 0.192, blue: 0.006, alpha: 1),
+                                              UIColor(red: 0.894, green: 0.735, blue: 0.274, alpha: 1),
+                                              UIColor(red: 0.905, green: 0.317, blue: 0.466, alpha: 1),
+                                              UIColor(red: 0.58,  green: 0.088, blue: 0.318, alpha: 1),
+                                              UIColor(red: 0.431, green: 0.65,  blue: 0.749, alpha: 1),
+                                              UIColor(red: 0.6,   green: 0.588, blue: 0.278, alpha: 1),
+                                              UIColor(red: 0.44,  green: 0.44,  blue: 0.44,  alpha: 1)]
         
         colorPickerController.view.addSubview(separatorLine)
         colorPickerController.delegate = self
