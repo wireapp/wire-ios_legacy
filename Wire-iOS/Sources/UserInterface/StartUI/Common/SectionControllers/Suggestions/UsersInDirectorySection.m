@@ -28,19 +28,16 @@
 NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePickerUsersInDirectoryCellReuseIdentifier";
 
 
-@interface UsersInDirectorySection () <ZMSearchResultObserver, ZMUserObserver>
+@interface UsersInDirectorySection () <ZMUserObserver>
+
 @property (nonatomic, strong) NSDictionary *searchResultUsersInDirectoryMap;
 @property (nonatomic) id userObserverToken;
+
 @end
 
 @implementation UsersInDirectorySection
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
-
-- (void)dealloc
-{
-    [self.searchDirectory removeSearchResultObserver:self];
-}
 
 - (BOOL)hasSearchResults
 {
@@ -52,13 +49,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
     _collectionView = collectionView;
     [self.collectionView registerClass:[SearchResultCell class] forCellWithReuseIdentifier:PeoplePickerUsersInDirectoryCellReuseIdentifier];
     [self.collectionView registerClass:[SearchSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:PeoplePickerHeaderReuseIdentifier];
-}
-
-- (void)setSearchDirectory:(ZMSearchDirectory *)searchDirectory
-{
-    [self.searchDirectory removeSearchResultObserver:self];
-    _searchDirectory = searchDirectory;
-    [self.searchDirectory addSearchResultObserver:self];
 }
 
 - (void)setSuggestions:(NSArray *)suggestions

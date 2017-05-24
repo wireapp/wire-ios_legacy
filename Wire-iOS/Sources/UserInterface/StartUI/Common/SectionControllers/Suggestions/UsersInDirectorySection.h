@@ -33,6 +33,5 @@ typedef NS_ENUM(NSUInteger, PeoplePickerSuggestionsState) {
 
 @interface UsersInDirectorySection : NSObject <CollectionViewSectionController>
 @property (nonatomic) PeoplePickerSuggestionsState suggestionsState;
-@property (nonatomic, strong) ZMSearchDirectory *searchDirectory;
 @property (nonatomic, copy) NSArray *suggestions;
 @end

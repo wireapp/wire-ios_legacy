@@ -26,17 +26,12 @@
 
 NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGroupConversationsReuseIdentifier";
 
-@interface GroupConversationsSection () <ZMSearchResultObserver>
+@interface GroupConversationsSection ()
 @end
 
 @implementation GroupConversationsSection
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
-
-- (void)dealloc
-{
-    [self.searchDirectory removeSearchResultObserver:self];
-}
 
 - (BOOL)hasSearchResults
 {
@@ -60,13 +55,6 @@ NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGr
     [self.collectionView registerClass:[SearchSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:PeoplePickerHeaderReuseIdentifier];
 }
 
-- (void)setSearchDirectory:(ZMSearchDirectory *)searchDirectory
-{
-    [self.searchDirectory removeSearchResultObserver:self];
-    _searchDirectory = searchDirectory;
-    [self.searchDirectory addSearchResultObserver:self];
-}
-
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
@@ -80,7 +68,7 @@ NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGr
                                                                              withReuseIdentifier:PeoplePickerHeaderReuseIdentifier
                                                                                     forIndexPath:indexPath];
     
-    headerView.title = NSLocalizedString(@"peoplepicker.header.conversations", @"");
+    headerView.title = self.title;
     
     // in case of search, the headers are with zero frame, and their content should not be displayed
     // if not clipping, then part of the label is still displayed, so we clip it
@@ -146,14 +134,6 @@ NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGr
     CGFloat righInset = [WAZUIMagic floatForIdentifier:@"people_picker.search_results_mode.right_padding"];
     
     return UIEdgeInsetsMake(topInset, leftInset, 0, righInset);
-}
-
-#pragma mark - ZMSearchResultsObserver
-
-- (void)didReceiveSearchResult:(ZMSearchResult *)result forToken:(ZMSearchToken)searchToken
-{
-    self.groupConversations = result.groupConversations;
-    [self.collectionView reloadData];
 }
 
 @end

@@ -35,6 +35,7 @@ public class SearchResultsController : NSObject {
     
     let sectionAggregator : CollectionViewSectionAggregator
     let contactsSection : UsersInContactsSection
+    let teamMemberSection : UsersInContactsSection
     let directorySection : UsersInDirectorySection
     let conversationsSection : GroupConversationsSection
     let topPeopleSection : TopPeopleLineSection
@@ -66,8 +67,13 @@ public class SearchResultsController : NSObject {
         sectionAggregator.collectionView = collectionView
         contactsSection = UsersInContactsSection()
         contactsSection.userSelection = userSelection
+        contactsSection.title = "peoplepicker.header.contacts".localized
+        teamMemberSection = UsersInContactsSection()
+        teamMemberSection.userSelection = userSelection
+        teamMemberSection.title = "peoplepicker.header.team_members".localized
         directorySection = UsersInDirectorySection()
         conversationsSection = GroupConversationsSection()
+        conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized : "peoplepicker.header.conversations".localized
         topPeopleSection = TopPeopleLineSection()
         topPeopleSection.userSelection = userSelection
         topPeopleSection.topConversationDirectory = ZMUserSession.shared()?.topConversationsDirectory
@@ -75,6 +81,7 @@ public class SearchResultsController : NSObject {
         super.init()
         
         contactsSection.delegate = self
+        teamMemberSection.delegate = self
         directorySection.delegate = self
         topPeopleSection.delegate = self
         
@@ -85,7 +92,7 @@ public class SearchResultsController : NSObject {
     public func search(withQuery query: String, local: Bool = false) {
         pendingSearchTask?.cancel()
         
-        let searchOptions : SearchOptions = local ? [.contacts] : [.conversations, .contacts, .teamMembers, .directory]
+        let searchOptions : SearchOptions = local ? [.contacts, .teamMembers] : [.conversations, .contacts, .teamMembers, .directory]
         let request = SearchRequest(query: query, searchOptions:searchOptions, team: team)
         let task = searchDirectory.perform(request)
         
@@ -115,21 +122,35 @@ public class SearchResultsController : NSObject {
     }
     
     func updateVisibleSections() {
-        switch mode {
-        case .search:
-            sectionAggregator.sectionControllers = [contactsSection, conversationsSection, directorySection]
+        var sections : [CollectionViewSectionController]
+        
+        switch (mode, team != nil) {
+        case (.search, false):
+            sections = [contactsSection, conversationsSection, directorySection]
             break
-        case .selection:
-            sectionAggregator.sectionControllers = [contactsSection]
+        case (.search, true):
+            sections = [teamMemberSection, conversationsSection, contactsSection, directorySection]
             break
-        case .list:
-            sectionAggregator.sectionControllers = [topPeopleSection, contactsSection]
+        case (.selection, false):
+            sections = [contactsSection]
+            break
+        case (.selection, true):
+            sections = [teamMemberSection, contactsSection]
+            break
+        case (.list, false):
+            sections = [topPeopleSection, contactsSection]
+            break
+        case (.list, true):
+            sections = [teamMemberSection]
             break
         }
+        
+        sectionAggregator.sectionControllers = sections
     }
 
     func updateSections(withSearchResult searchResult: SearchResult) {
         contactsSection.contacts = searchResult.contacts
+        teamMemberSection.contacts = searchResult.teamMembers.flatMap({ $0.user })
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         

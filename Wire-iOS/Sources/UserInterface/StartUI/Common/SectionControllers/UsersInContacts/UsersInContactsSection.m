@@ -82,7 +82,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
                                                                              withReuseIdentifier:PeoplePickerHeaderReuseIdentifier
                                                                                     forIndexPath:indexPath];
     
-    headerView.title = NSLocalizedString(@"peoplepicker.header.contacts", @"");
+    headerView.title = self.title;
     
     // in case of search, the headers are with zero frame, and their content should not be displayed
     // if not clipping, then part of the label is still displayed, so we clip it

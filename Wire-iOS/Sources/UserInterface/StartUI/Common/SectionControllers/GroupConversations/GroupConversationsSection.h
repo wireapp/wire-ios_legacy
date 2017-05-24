@@ -20,11 +20,13 @@
 #import <Foundation/Foundation.h>
 #import "CollectionViewSectionController.h"
 
-FOUNDATION_EXPORT NSString *const PeoplePickerGroupConversationsReuseIdentifier;
+FOUNDATION_EXPORT NSString * _Nonnull const PeoplePickerGroupConversationsReuseIdentifier;
 
-@class ZMSearchDirectory;
+@class ZMConversation;
 
 @interface GroupConversationsSection : NSObject <CollectionViewSectionController>
-@property (nonatomic, weak) ZMSearchDirectory *searchDirectory;
-@property (nonatomic) NSArray *groupConversations;
+
+@property (nonatomic, nonnull) NSArray<ZMConversation *> *groupConversations;
+@property (nonatomic, nullable) NSString *title;
+
 @end

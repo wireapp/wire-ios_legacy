@@ -28,5 +28,6 @@ FOUNDATION_EXPORT NSString * _Nonnull const PeoplePickerUsersInContactsReuseIden
 
 @property (nonatomic, nonnull) NSArray<ZMUser *> * contacts;
 @property (nonatomic, nullable) UserSelection *userSelection;
+@property (nonatomic, nullable) NSString *title;
 
 @end
