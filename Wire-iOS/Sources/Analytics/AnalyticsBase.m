@@ -28,7 +28,6 @@
 
 #import "AnalyticsOptEvent.h"
 
-#import "SessionObjectCache.h"
 #import "ZMUser+Additions.h"
 #import "AppController.h"
 

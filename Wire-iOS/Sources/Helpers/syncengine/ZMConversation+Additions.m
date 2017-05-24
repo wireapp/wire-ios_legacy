@@ -61,7 +61,7 @@
     else if (self.conversationType == ZMConversationTypeOneOnOne &&
                (participants.count > 1 || (participants.count == 1 && ! [self.connectedUser isEqual:participants.anyObject]))) {
 
-        Team *activeTeam = [[ZMUser selfUser] activeTeams].count > 0 ? [[[[ZMUser selfUser] activeTeams] allObjects] firstObject] : nil;
+        Team *activeTeam = [[ZMUser selfUser] activeTeam];
 
         NSMutableArray *listOfPeople = [participants.allObjects mutableCopy];
         [listOfPeople addObject:self.connectedUser];

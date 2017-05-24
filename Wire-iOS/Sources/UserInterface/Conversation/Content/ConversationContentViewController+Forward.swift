@@ -164,7 +164,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             window.endEditing(true)
         }
         
-        let conversations = SessionObjectCache.shared().allConversations.shareableConversations(excluding: message.conversation!)
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!, team: message.conversation?.team).shareableConversations(excluding: message.conversation!)
 
         let shareViewController = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message as! ZMMessage,

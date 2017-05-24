@@ -22,8 +22,6 @@
 
 @class ZMConversation;
 @class ConversationListContentController;
-@class AggregateArray;
-
 
 
 @protocol ConversationListContentDelegate <NSObject>

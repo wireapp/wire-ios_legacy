@@ -35,7 +35,6 @@ typedef NS_ENUM(NSUInteger, AppSEState) {
 };
 
 @class ZMUserSession;
-@class SessionObjectCache;
 @class NotificationWindowRootViewController;
 @class MediaPlaybackManager;
 
@@ -46,7 +45,6 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 @property (nonatomic, readonly) AppSEState seState;
 
 @property (nonatomic, readonly) ZMUserSession *zetaUserSession;
-@property (nonatomic, readonly) SessionObjectCache *sessionObjectCache;
 
 @property (nonatomic, readonly) NotificationWindowRootViewController *notificationWindowController;
 @property (nonatomic, readonly) UIWindow *notificationsWindow;

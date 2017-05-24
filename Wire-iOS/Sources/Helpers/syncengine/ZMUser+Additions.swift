@@ -26,6 +26,12 @@ extension ZMUser {
 }
 
 extension ZMUser {
+    var activeTeam: Team? {
+        return self.activeTeams?.first
+    }
+}
+
+extension ZMUser {
     @objc(canAddUserToConversation:)
     func canAddUser(to conversation: ZMConversation) -> Bool {
         guard conversation.activeParticipants.contains(self) else {

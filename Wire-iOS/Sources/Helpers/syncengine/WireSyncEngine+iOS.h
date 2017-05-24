@@ -24,4 +24,3 @@
 #import "ZMUserSession+RequestProxy.h"
 #import "ZMUser+Additions.h"
 #import "ZMConversation+Additions.h"
-#import "SessionObjectCache.h"

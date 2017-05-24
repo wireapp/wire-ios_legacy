@@ -61,7 +61,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @property (nonatomic, weak) LaunchImageViewController *launchImageViewController;
 @property (nonatomic) UIWindow *notificationsWindow;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) SessionObjectCache *sessionObjectCache;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
 @property (nonatomic) AVSLogObserver *logObserver;
 @property (nonatomic) NSString *groupIdentifier;
@@ -484,9 +483,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
                                                          analytics:Analytics.shared
                                                         appVersion:appVersion
                                                 appGroupIdentifier:groupIdentifier];
-
-    // Cache conversation lists etc.
-    self.sessionObjectCache = [[SessionObjectCache alloc] initWithUserSession:[ZMUserSession sharedSession]];
 
     self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:_zetaUserSession.sharedContainerURL];
         

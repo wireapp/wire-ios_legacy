@@ -57,8 +57,6 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 
 @property (nonatomic, weak) id<ConversationListViewModelDelegate> delegate;
 
-@property (nonatomic) NSArray *spacesObservers;
-
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)sectionIndex;
 - (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;
 

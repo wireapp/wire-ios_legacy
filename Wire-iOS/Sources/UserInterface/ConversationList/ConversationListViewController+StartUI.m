@@ -47,7 +47,7 @@
     BOOL call = NO;
     BOOL videoCall = NO;
     
-    Team *activeTeam = [[ZMUser selfUser] activeTeams].count > 0 ? [[[[ZMUser selfUser] activeTeams] allObjects] firstObject] : nil;
+    Team *activeTeam = [[ZMUser selfUser] activeTeam];
     
     switch (action) {
         case StartUIActionCreateOrOpenConversation:
@@ -182,8 +182,7 @@
 
 - (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
 {
-    
-    Team *activeTeam = [[ZMUser selfUser] activeTeams].count > 0 ? [[[[ZMUser selfUser] activeTeams] allObjects] firstObject] : nil;
+    Team *activeTeam = [[ZMUser selfUser] activeTeam];
 
     [self dismissViewControllerAnimated:YES completion:^() {
         [self dismissPeoplePickerWithCompletionBlock:^{
