@@ -34,7 +34,6 @@
 #import "Button.h"
 #import "IconButton.h"
 
-#import "SearchTokenStore.h"
 #import "ShareItemProvider.h"
 #import "ActionSheetController.h"
 #import "PeoplePickerEmptyResultsView.h"
