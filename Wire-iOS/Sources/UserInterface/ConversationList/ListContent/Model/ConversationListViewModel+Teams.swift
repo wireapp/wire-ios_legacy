@@ -22,18 +22,13 @@ import WireDataModel
 extension ConversationListViewModel {
     @objc public func subscribeToTeamsUpdates() {
         self.selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
-        createTeamsObservers()
-    }
-    
-    func createTeamsObservers() {
-        self.teamsObservers = ZMUser.selfUser().teams.map { TeamChangeInfo.add(observer: self, for: $0) }
+        self.teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
     }
 }
 
 extension ConversationListViewModel: ZMUserObserver {
     public func userDidChange(_ note: UserChangeInfo) {
         if note.teamsChanged {
-            createTeamsObservers()
             updateConversationListAnimated()
         }
     }

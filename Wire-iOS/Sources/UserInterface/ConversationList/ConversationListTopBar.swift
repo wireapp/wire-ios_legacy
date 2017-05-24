@@ -109,6 +109,10 @@ final class ConversationListTopBar: TopBar {
 
 extension ConversationListTopBar: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.teamsChanged else {
+            return
+        }
+        
         if ZMUser.selfUser().teams.count > 0 {
             if !showTeams {
                 self.setShowTeams(to: true)

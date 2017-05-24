@@ -82,13 +82,8 @@ final internal class TeamSelectorView: UIView {
                 }
                 
                 ZMUserSession.shared()?.performChanges {
-                    if let selectedTeam = selectedTeam {
-                        self.teams.filter { $0.remoteIdentifier != selectedTeam.remoteIdentifier }.forEach { $0.isActive = false }
-                    }
-                    else {
-                        self.teams.forEach { $0.isActive = false }
-                    }
-                    
+                    self.teams.filter { $0.remoteIdentifier != selectedTeam?.remoteIdentifier }.forEach { $0.isActive = false }
+
                     selectedTeam?.isActive = true
                 }
                 }
@@ -155,6 +150,9 @@ final internal class TeamSelectorView: UIView {
 
 extension TeamSelectorView: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.teamsChanged else {
+            return
+        }
         self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
     }
 }
