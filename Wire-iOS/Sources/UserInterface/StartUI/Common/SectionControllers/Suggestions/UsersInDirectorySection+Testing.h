@@ -18,7 +18,7 @@
 
 
 @interface UsersInDirectorySection () <ZMUserObserver>
-- (BOOL)shouldLoadMoreSuggestions;
-- (void)loadMoreSuggestions;
+
 - (void)createSearchResultUsersInDirectoryMap;
+
 @end

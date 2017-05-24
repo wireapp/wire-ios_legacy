@@ -23,10 +23,12 @@
 #import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "SearchResultCell.h"
+#import "Wire-Swift.h"
 
 NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsersInContactsReuseIdentifier";
 
-@interface UsersInContactsSection () <ZMSearchResultObserver>
+@interface UsersInContactsSection () <UserSelectionObserver>
+
 @end
 
 @implementation UsersInContactsSection
@@ -35,7 +37,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (void)dealloc
 {
-    [self.searchDirectory removeSearchResultObserver:self];
+    [self.userSelection removeWithObserver:self];
 }
 
 - (BOOL)hasSearchResults
@@ -60,11 +62,11 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     [self.collectionView registerClass:[SearchSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:PeoplePickerHeaderReuseIdentifier];
 }
 
-- (void)setSearchDirectory:(ZMSearchDirectory *)searchDirectory
+- (void)setUserSelection:(UserSelection *)userSelection
 {
-    [self.searchDirectory removeSearchResultObserver:self];
-    _searchDirectory = searchDirectory;
-    [self.searchDirectory addSearchResultObserver:self];
+    _userSelection = userSelection;
+    
+    [self.userSelection addWithObserver:self];
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
@@ -80,7 +82,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
                                                                              withReuseIdentifier:PeoplePickerHeaderReuseIdentifier
                                                                                     forIndexPath:indexPath];
     
-    headerView.title = NSLocalizedString(@"peoplepicker.header.contacts", @"");
+    headerView.title = self.title;
     
     // in case of search, the headers are with zero frame, and their content should not be displayed
     // if not clipping, then part of the label is still displayed, so we clip it
@@ -94,7 +96,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
                                                                                   forIndexPath:indexPath];
     
     // Resolve the model object based on the current UI state
-    id modelObject = self.contacts[indexPath.item];
+    ZMUser *modelObject = self.contacts[indexPath.item];
     
     SearchResultCell *particularCell = (SearchResultCell *)genericCell;
     @weakify(self, modelObject);
@@ -105,17 +107,22 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
         }
     };
     
+    BOOL selected = [self.userSelection.users containsObject:modelObject];
     particularCell.user = modelObject;
+    particularCell.selected = selected;
     
-    if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:featureCell:forItem:inCollectionView:atIndexPath:)]) {
-        [self.delegate collectionViewSectionController:self featureCell:genericCell forItem:modelObject inCollectionView:collectionView atIndexPath:indexPath];
+    if (selected) {
+        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
+    
     return genericCell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id modelObject = self.contacts[indexPath.item];
+    ZMUser *modelObject = self.contacts[indexPath.item];
+    
+    [self.userSelection add:modelObject];
     
     if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:didSelectItem:atIndexPath:)]) {
         [self.delegate collectionViewSectionController:self didSelectItem:modelObject atIndexPath:indexPath];
@@ -124,7 +131,9 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id modelObject = self.contacts[indexPath.item];
+    ZMUser *modelObject = self.contacts[indexPath.item];
+    
+    [self.userSelection remove:modelObject];
     
     if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:didDeselectItem:atIndexPath:)]) {
         [self.delegate collectionViewSectionController:self didDeselectItem:modelObject atIndexPath:indexPath];
@@ -151,11 +160,20 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     return UIEdgeInsetsMake(topInset, leftInset, 0, righInset);
 }
 
-#pragma mark - ZMSearchResultsObserver
+#pragma mark - UserSelectionObserver
 
-- (void)didReceiveSearchResult:(ZMSearchResult *)result forToken:(ZMSearchToken)searchToken
+- (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
 {
-    self.contacts = result.usersInContacts;
+    [self.collectionView reloadData];
+}
+
+- (void)userSelection:(UserSelection *)userSelection didRemoveUser:(ZMUser *)user
+{
+    [self.collectionView reloadData];
+}
+
+- (void)userSelection:(UserSelection *)userSelection wasReplacedBy:(NSArray<ZMUser *> *)users
+{
     [self.collectionView reloadData];
 }
 

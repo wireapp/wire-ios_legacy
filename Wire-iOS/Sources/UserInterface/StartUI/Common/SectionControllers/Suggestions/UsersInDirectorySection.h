@@ -31,15 +31,7 @@ typedef NS_ENUM(NSUInteger, PeoplePickerSuggestionsState) {
 
 @class ZMSearchResult, ZMSearchDirectory, UsersInDirectorySection;
 
-@protocol UsersInDirectorySectionDelegate <CollectionViewSectionDelegate>
-- (void)usersInDirectoryWantsToLoadMoreSuggestions:(UsersInDirectorySection *)suggestions;
-- (BOOL)usersInDirectoryIsSearchActive:(UsersInDirectorySection *)suggestions;
-@end
-
 @interface UsersInDirectorySection : NSObject <CollectionViewSectionController>
 @property (nonatomic) PeoplePickerSuggestionsState suggestionsState;
-@property (nonatomic, weak) id<UsersInDirectorySectionDelegate> delegate;
-
-@property (nonatomic, strong) ZMSearchDirectory *searchDirectory;
 @property (nonatomic, copy) NSArray *suggestions;
 @end

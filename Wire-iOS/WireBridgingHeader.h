@@ -96,6 +96,11 @@
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
+#import "UsersInContactsSection.h"
+#import "UsersInDirectorySection.h"
+#import "GroupConversationsSection.h"
+#import "TopPeopleLineSection.h"
+#import "CollectionViewSectionAggregator.h"
 
 // Helper objects
 #import "PushTransition.h"

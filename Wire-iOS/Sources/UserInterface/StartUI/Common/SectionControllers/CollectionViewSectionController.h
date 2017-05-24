@@ -22,11 +22,6 @@
 @protocol CollectionViewSectionController;
 
 @protocol CollectionViewSectionDelegate <NSObject>
-- (void)collectionViewSectionController:(id<CollectionViewSectionController>)controller
-                            featureCell:(UICollectionViewCell *)cell
-                                forItem:(id)item
-                       inCollectionView:(UICollectionView *)collectionView
-                            atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)collectionViewSectionController:(id<CollectionViewSectionController>)controller
                           didSelectItem:(id)item

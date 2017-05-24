@@ -20,19 +20,25 @@
 #import "PeopleInputController.h"
 @import WireExtensionComponents;
 #import <PureLayout/PureLayout.h>
+#import "Wire-Swift.h"
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 
 
 
-@interface PeopleInputController () <TokenFieldDelegate>
+@interface PeopleInputController () <TokenFieldDelegate, UserSelectionObserver>
 @property (nonatomic, strong, readwrite) TokenField *tokenField;
 @end
 
 
 
 @implementation PeopleInputController
+
+- (void)dealloc
+{
+    [self.userSelection removeWithObserver:self];
+}
 
 #pragma mark - UIViewController overrides
 
@@ -102,6 +108,13 @@
 
 #pragma mark - Public Interface
 
+- (void)setUserSelection:(UserSelection *)userSelection
+{
+    _userSelection = userSelection;
+    
+    [self.userSelection addWithObserver:self];
+}
+
 - (void)addTokenForUser:(ZMUser *)user
 {
     [self.tokenField addTokenForTitle:user.displayName representedObject:user];
@@ -128,14 +141,34 @@
     return self.tokenField.userDidConfirmInput;
 }
 
+#pragma mark - UserSelectionDelegate
+
+- (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
+{
+    [self addTokenForUser:user];
+}
+
+- (void)userSelection:(UserSelection *)userSelection didRemoveUser:(ZMUser *)user
+{
+    [self removeTokenForUser:user];
+}
+
+- (void)userSelection:(UserSelection *)userSelection wasReplacedBy:(NSArray<ZMUser *> *)users
+{
+    // nop
+}
+
 #pragma mark - TokenFieldDelegate
 
 - (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
 {
-    if ([self.selectionDelegate respondsToSelector:@selector(peopleInputController:changedPresentedDirectoryResultsTo:)]) {
-        NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
-        [self.selectionDelegate peopleInputController:self changedPresentedDirectoryResultsTo:[NSSet setWithArray:users]];
-    }
+    NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
+    [self.userSelection replace:users];
+    
+//    if ([self.selectionDelegate respondsToSelector:@selector(peopleInputController:changedPresentedDirectoryResultsTo:)]) {
+//        NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
+//        [self.selectionDelegate peopleInputController:self changedPresentedDirectoryResultsTo:[NSSet setWithArray:users]];
+//    }
 }
 
 - (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
