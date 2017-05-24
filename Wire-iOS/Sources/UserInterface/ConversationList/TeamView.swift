@@ -225,7 +225,9 @@ public final class PersonalTeamView: BaseTeamView {
         
         selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
-        conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: nil))
+        if let userSession = ZMUserSession.shared() {
+        conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
+        }
         
         self.imageViewContainer.addSubview(userImageView)
         self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
@@ -374,7 +376,9 @@ public final class TeamImageView: UIImageView {
         
         if let team = self.team as? Team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
-            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: team))
+            if let userSession = ZMUserSession.shared() {
+                conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: team))
+            }
         }
 
         self.update()
