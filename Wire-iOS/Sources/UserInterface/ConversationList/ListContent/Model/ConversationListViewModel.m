@@ -64,11 +64,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
                                                    name:UIApplicationWillEnterForegroundNotification
                                                  object:nil];
         [self subscribeToTeamsUpdates];
-        // TODO: SMB: setup teams observation
-//        [NSNotificationCenter.defaultCenter addObserver:self
-//                                               selector:@selector(subscribeToTeamsUpdates)
-//                                                   name:[Space didChangeNotificationNameString]
-//                                                 object:nil];
     }
     return self;
 }
@@ -245,30 +240,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (NSArray *)newConversationList
 {
-    NSArray *newConversationList = @[];
-  
-    // TODO: SMB: filter conversation list according to the spa
-//    if ([Space spaces].count > 0) {
-//        NSMutableArray *predicates = [NSMutableArray array];
-//        for (Space *space in [Space spaces]) {
-//            if (space.selected) {
-//                [predicates addObject:space.predicate];
-//            }
-//        }
-//        if (predicates.count == 0) {
-//            newConversationList = @[];
-//        }
-//        else {
-//            NSPredicate *compoundOR = [[NSCompoundPredicate alloc] initWithType:NSOrPredicateType subpredicates:predicates];
-//            newConversationList = [[[SessionObjectCache sharedCache].conversationList.asArray copy] filteredArrayUsingPredicate:compoundOR];
-//        }
-//        
-//    }
-//    else {
-        newConversationList = [[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]] copy];
-//    }
-    
-    return newConversationList;
+    return [[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]] copy];
 }
 
 - (void)updateConversationListAnimated

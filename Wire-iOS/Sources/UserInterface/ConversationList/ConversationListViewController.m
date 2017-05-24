@@ -179,12 +179,6 @@
     self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
     self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
 
-    // TODO: SMB: subscrive
-//    [NSNotificationCenter.defaultCenter addObserver:self
-//                                           selector:@selector(updateTeams)
-//                                               name:[Space didChangeNotificationNameString]
-//                                             object:nil];
-//    
     [self showPushPermissionDeniedDialogIfNeeded];
 }
 

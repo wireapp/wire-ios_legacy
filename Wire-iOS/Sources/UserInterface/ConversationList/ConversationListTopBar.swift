@@ -24,6 +24,8 @@ final class ConversationListTopBar: TopBar {
     private var teamsView: TeamSelectorView? = .none
     public weak var contentScrollView: UIScrollView? = .none
     
+    private var selfUserObserverToken: NSObjectProtocol!
+    
     public enum ImagesState: Int {
         case collapsed
         case visible
@@ -31,8 +33,18 @@ final class ConversationListTopBar: TopBar {
 
     private var state: ImagesState = .visible
    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        self.setShowTeams(to: ZMUser.selfUser().teams.count > 0)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && (self.state == newState || self.teams.isEmpty) {
+        if !force && (self.state == newState || ZMUser.selfUser().teams.isEmpty) {
             return
         }
         
@@ -50,21 +62,14 @@ final class ConversationListTopBar: TopBar {
         }
     }
     
-    internal var teams: [TeamType] = [] {
-        didSet {
-            self.setShowTeams(to: !teams.isEmpty)
-        }
-    }
-    
     fileprivate var showTeams: Bool = false
     
-    private func setShowTeams(to showTeams: Bool) { // TODO: SMB: Observe teams in order to show / hide teamsView
+    fileprivate func setShowTeams(to showTeams: Bool) {
         self.showTeams = showTeams
         UIView.performWithoutAnimation {
             if showTeams {
                 self.teamsView?.removeFromSuperview()
                 self.teamsView = TeamSelectorView()
-                self.teamsView?.update(with: teams) // TODO: SMB: remove in favor of CoreData observation, also make private
                 self.middleView = self.teamsView
                 self.leftSeparatorLineView.alpha = 1
                 self.rightSeparatorLineView.alpha = 1
@@ -98,6 +103,21 @@ final class ConversationListTopBar: TopBar {
         }
         if let contentScrollView = self.contentScrollView {
             self.scrollViewDidScroll(scrollView: contentScrollView)
+        }
+    }
+}
+
+extension ConversationListTopBar: ZMUserObserver {
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        if ZMUser.selfUser().teams.count > 0 {
+            if !showTeams {
+                self.setShowTeams(to: true)
+            }
+        }
+        else {
+            if showTeams {
+                self.setShowTeams(to: false)
+            }
         }
     }
 }

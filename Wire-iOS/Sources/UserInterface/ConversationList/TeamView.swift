@@ -302,7 +302,7 @@ public final class TeamImageView: UIImageView {
     
     fileprivate func updateImage() {
         if let _ = self.team.pictureAssetKey {
-            // TODO: SMB: load image
+            // At some point the teams would have an image.
             self.initialLabel.text = ""
             self.backgroundColor = .clear
         }
@@ -324,11 +324,11 @@ public final class TeamImageView: UIImageView {
     
     private let imageView: TeamImageView
     
-    private var observerUnreadToken: NSObjectProtocol!
-    private var observerSelectionToken: NSObjectProtocol!
-    
+    private var teamObserver: NSObjectProtocol!
+
     init(team: TeamType) {
         self.team = team
+        
         self.imageView = TeamImageView(team: team)
         
         super.init()
@@ -345,6 +345,9 @@ public final class TeamImageView: UIImageView {
             imageView.edges == imageViewContainer.edges
         }
         
+        if let team = self.team as? Team {
+            self.teamObserver = TeamChangeInfo.add(observer: self, for: team)
+        }
         self.update()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
@@ -372,5 +375,11 @@ public final class TeamImageView: UIImageView {
     
     @objc override public func didTap(_ sender: UITapGestureRecognizer!) {
         self.onTap?(self.team)
+    }
+}
+
+extension TeamView: TeamObserver {
+    func teamDidChange(_ changeInfo: TeamChangeInfo) {
+        self.update()
     }
 }
