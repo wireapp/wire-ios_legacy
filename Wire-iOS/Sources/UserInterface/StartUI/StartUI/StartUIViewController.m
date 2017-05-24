@@ -22,7 +22,6 @@
 @import WireExtensionComponents;
 
 #import "StartUIViewController.h"
-#import "StartUIViewController+Testing.h"
 #import "StartUIView.h"
 #import "ProfilePresenter.h"
 #import "ShareContactsViewController.h"
@@ -79,18 +78,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.userSelection removeWithObserver:self];
 }
 
-- (instancetype)initWithSearchDirectoryClass:(Class)searchDirectoryClass
+- (instancetype)init
 {
     self = [super init];
     if (self) {
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:@"people_picker"];
     }
-    return self;
-}
-
-- (instancetype)init
-{
-    self = [self initWithSearchDirectoryClass:[ZMSearchDirectory class]];
     return self;
 }
 
@@ -125,7 +118,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.userSelection = [[UserSelection alloc] init];
     [self.userSelection addWithObserver:self];
     
-    self.searchResultsController = [[SearchResultsController alloc] initWithCollectionView:self.startUIView.collectionView userSelection:self.userSelection team:nil];
+    self.searchResultsController = [[SearchResultsController alloc] initWithCollectionView:self.startUIView.collectionView userSelection:self.userSelection team:[[ZMUser selfUser] activeTeam]];
     self.searchResultsController.mode = SearchResultsControllerModeList;
     self.searchResultsController.delegate = self;
     [self.searchResultsController searchContactList];

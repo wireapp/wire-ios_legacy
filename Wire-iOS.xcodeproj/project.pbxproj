@@ -125,7 +125,6 @@
 		1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		1E18C2C11AFBC0AB0043F3CF /* emo-test-02.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */; };
 		1E2267E81B382EB2003980E3 /* ziphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE6F98D1B1DE51C00B7DD32 /* ziphy.framework */; };
-		1E2267F31B383557003980E3 /* StartUIControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E2267EC1B382F4D003980E3 /* StartUIControllerTests.m */; };
 		1E2267F81B38489F003980E3 /* people-02.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2267F61B384619003980E3 /* people-02.json */; };
 		1E2268041B395722003980E3 /* people-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268031B395722003980E3 /* people-01.json */; };
 		1E2268061B3957A7003980E3 /* conversations-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268051B3957A7003980E3 /* conversations-01.json */; };
@@ -1207,7 +1206,6 @@
 		1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationTests.m; sourceTree = "<group>"; };
 		1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-01.json"; sourceTree = "<group>"; };
 		1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-02.json"; sourceTree = "<group>"; };
-		1E2267EC1B382F4D003980E3 /* StartUIControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StartUIControllerTests.m; path = PeoplePickerControllerTests/StartUIControllerTests.m; sourceTree = "<group>"; };
 		1E2267F61B384619003980E3 /* people-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-02.json"; path = "PeoplePickerControllerTests/people-02.json"; sourceTree = "<group>"; };
 		1E2268031B395722003980E3 /* people-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-01.json"; path = "PeoplePickerControllerTests/people-01.json"; sourceTree = "<group>"; };
 		1E2268051B3957A7003980E3 /* conversations-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "conversations-01.json"; path = "PeoplePickerControllerTests/conversations-01.json"; sourceTree = "<group>"; };
@@ -2002,7 +2000,6 @@
 		87DCF4D81D34EA4500BB420F /* StartUIQuickActionsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUIQuickActionsBar.m; sourceTree = "<group>"; };
 		87DCF4D91D34EA4500BB420F /* StartUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartUIView.h; sourceTree = "<group>"; };
 		87DCF4DA1D34EA4500BB420F /* StartUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUIView.m; sourceTree = "<group>"; };
-		87DCF4DB1D34EA4500BB420F /* StartUIViewController+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StartUIViewController+Testing.h"; sourceTree = "<group>"; };
 		87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartUIViewController.h; sourceTree = "<group>"; };
 		87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUIViewController.m; sourceTree = "<group>"; };
 		87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationInputBarViewController+Private.h"; sourceTree = "<group>"; };
@@ -2806,7 +2803,6 @@
 		1E2267EB1B382F1F003980E3 /* PeoplePickerTests */ = {
 			isa = PBXGroup;
 			children = (
-				1E2267EC1B382F4D003980E3 /* StartUIControllerTests.m */,
 				1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */,
 				DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */,
 				1E2268031B395722003980E3 /* people-01.json */,
@@ -4102,7 +4098,6 @@
 				87DCF4D81D34EA4500BB420F /* StartUIQuickActionsBar.m */,
 				87DCF4D91D34EA4500BB420F /* StartUIView.h */,
 				87DCF4DA1D34EA4500BB420F /* StartUIView.m */,
-				87DCF4DB1D34EA4500BB420F /* StartUIViewController+Testing.h */,
 				87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */,
 				87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */,
 				164C29AA1ED33A5F0026562A /* SearchResultsController.swift */,
@@ -6511,7 +6506,6 @@
 				CE3FBF1E1CE22B4900ED087A /* DeleteMessageTests.m in Sources */,
 				1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */,
 				87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */,
-				1E2267F31B383557003980E3 /* StartUIControllerTests.m in Sources */,
 				1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */,
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
 				874B5DB21CEDF7B80010474C /* AudioMessageCellTests.swift in Sources */,
