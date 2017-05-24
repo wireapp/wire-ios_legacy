@@ -17,20 +17,27 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ConversationListViewModel {
     @objc public func subscribeToTeamsUpdates() {
-//        self.spacesObservers = Space.spaces.map {
-//            $0.addSelectionObserver(self)
-//        }
-//        self.updateConversationListAnimated()
+        self.selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        self.teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
     }
 }
-// TODO: SMB: list observation
-//
-//extension ConversationListViewModel: SpaceSelectionObserver {
-//    func spaceDidChangeSelection(space: Space) {
-//        self.updateConversationListAnimated()
-//    }
-//}
-//
+
+extension ConversationListViewModel: ZMUserObserver {
+    public func userDidChange(_ note: UserChangeInfo) {
+        if note.teamsChanged {
+            updateConversationListAnimated()
+        }
+    }
+}
+
+extension ConversationListViewModel: TeamObserver {
+    public func teamDidChange(_ changeInfo: TeamChangeInfo) {
+        if changeInfo.isActiveChanged {
+            self.updateConversationListAnimated()
+        }
+    }
+}

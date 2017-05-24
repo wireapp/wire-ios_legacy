@@ -27,7 +27,7 @@ extension ZMUser {
 
 extension ZMUser {
     var activeTeam: Team? {
-        return self.activeTeams?.first
+        return self.activeTeams.first
     }
 }
 

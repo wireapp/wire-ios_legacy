@@ -76,6 +76,7 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationListContentController.h"
 #import "ConversationListViewModel.h"
+#import "ConversationListViewModel+Private.h"
 #import "NotificationWindowRootViewController.h"
 #import "VoiceChannelController.h"
 #import "SplitViewController.h"
