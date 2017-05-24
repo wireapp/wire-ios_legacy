@@ -905,12 +905,12 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one";
-"compose.drafts.compose.title" = "Write a message";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.title" = "Messaggi";
+"compose.drafts.empty.title" = "Nessun messaggio";
+"compose.drafts.empty.subtitle" = "Tocca + per comporne uno";
+"compose.drafts.compose.title" = "Scrivi un messaggio";
+"compose.drafts.compose.subject.placeholder" = "Tocca per impostare un argomento";
 
-"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.title" = "Conferma l'eliminazione";
+"compose.drafts.compose.delete.confirm.message" = "Questa azione eliminerà permanentemente la bozza e non potrà essere annullata.";
 "compose.drafts.compose.delete.confirm.action.title" = "Elimina";

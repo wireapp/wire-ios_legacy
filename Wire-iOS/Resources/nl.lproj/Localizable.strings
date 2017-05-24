@@ -907,7 +907,7 @@
 
 "compose.drafts.title" = "Berichten";
 "compose.drafts.empty.title" = "Geen berichten";
-"compose.drafts.empty.subtitle" = "Tap + to compose one";
+"compose.drafts.empty.subtitle" = "Tap + om er een optestellen";
 "compose.drafts.compose.title" = "Schrijf een bericht";
 "compose.drafts.compose.subject.placeholder" = "Tap om een onderwerp toe te voegen";
 
