@@ -71,7 +71,8 @@ internal class LineView: UIView {
 
 final internal class TeamSelectorView: UIView {
     private var selfUserObserverToken: NSObjectProtocol!
-    
+    private var applicationDidBecomeActiveToken: NSObjectProtocol!
+
     fileprivate var teams: [TeamType] = [] {
         didSet {
             self.teamsViews = [personalTeamView] + self.teams.map { TeamView(team: $0) }
@@ -127,6 +128,12 @@ final internal class TeamSelectorView: UIView {
         self.clipsToBounds = true
         
         selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
+            guard let `self` = self else {
+                return
+            }
+            self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
+        })
         self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
     }
     
@@ -134,7 +141,7 @@ final internal class TeamSelectorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with teams: [TeamType]) {
+    fileprivate func update(with teams: [TeamType]) {
         let selfTeamActive: Bool
         if let _ = teams.first(where: { $0.isActive }) {
             selfTeamActive = false

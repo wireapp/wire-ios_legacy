@@ -25,6 +25,7 @@ final class ConversationListTopBar: TopBar {
     public weak var contentScrollView: UIScrollView? = .none
     
     private var selfUserObserverToken: NSObjectProtocol!
+    private var applicationDidBecomeActiveToken: NSObjectProtocol!
     
     public enum ImagesState: Int {
         case collapsed
@@ -36,6 +37,12 @@ final class ConversationListTopBar: TopBar {
     override init(frame: CGRect) {
         super.init(frame: frame)
         selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
+            guard let `self` = self else {
+                return
+            }
+            self.updateShowTeamsIfNeeded()
+        })
         self.setShowTeams(to: ZMUser.selfUser().teams.count > 0)
     }
     
@@ -63,6 +70,19 @@ final class ConversationListTopBar: TopBar {
     }
     
     fileprivate var showTeams: Bool = false
+    
+    fileprivate func updateShowTeamsIfNeeded() {
+        if ZMUser.selfUser().teams.count > 0 {
+            if !showTeams {
+                self.setShowTeams(to: true)
+            }
+        }
+        else {
+            if showTeams {
+                self.setShowTeams(to: false)
+            }
+        }
+    }
     
     fileprivate func setShowTeams(to showTeams: Bool) {
         self.showTeams = showTeams
@@ -112,17 +132,7 @@ extension ConversationListTopBar: ZMUserObserver {
         guard changeInfo.teamsChanged else {
             return
         }
-        
-        if ZMUser.selfUser().teams.count > 0 {
-            if !showTeams {
-                self.setShowTeams(to: true)
-            }
-        }
-        else {
-            if showTeams {
-                self.setShowTeams(to: false)
-            }
-        }
+        updateShowTeamsIfNeeded()
     }
 }
 

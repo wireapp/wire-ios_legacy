@@ -90,6 +90,9 @@
 
 @end
 
+@interface ConversationListViewController (TeamsObserver) <TeamObserver>
+@end
+
 @interface ConversationListViewController ()
 
 @property (nonatomic) ZMConversation *selectedConversation;
@@ -100,6 +103,7 @@
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id allConversationsObserverToken;
 @property (nonatomic) id connectionRequestsObserverToken;
+@property (nonatomic) id teamsObserver;
 
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
@@ -178,7 +182,8 @@
     
     self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
     self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
-
+    self.teamsObserver = [TeamChangeInfo addTeamObserver:self forTeam:nil];
+    
     [self showPushPermissionDeniedDialogIfNeeded];
 }
 
@@ -746,3 +751,15 @@
 }
 
 @end
+
+@implementation ConversationListViewController (TeamsObserver)
+
+- (void)teamDidChange:(TeamChangeInfo *)changeInfo
+{
+    if (changeInfo.isActiveChanged) {
+        [self updateNoConversationVisibility];
+    }
+}
+
+@end
+
