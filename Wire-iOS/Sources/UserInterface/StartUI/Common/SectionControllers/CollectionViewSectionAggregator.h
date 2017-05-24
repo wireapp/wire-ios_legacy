@@ -22,8 +22,11 @@
 #import "CollectionViewSectionController.h"
 
 @interface CollectionViewSectionAggregator : NSObject <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-@property (nonatomic, strong)   NSArray *sectionControllers; // of id<CollectionViewSectionController>
-@property (nonatomic, readonly) NSArray *visibleSectionControllers; // of id<CollectionViewSectionController>
-@property (nonatomic, weak)     UICollectionView *collectionView;
+
+@property (nonatomic, nullable)   NSArray<id<CollectionViewSectionController>> *sectionControllers;
+@property (nonatomic, readonly, nonnull) NSArray<id<CollectionViewSectionController>> *visibleSectionControllers;
+@property (nonatomic, weak, nullable) UICollectionView *collectionView;
+
 - (void)reloadData;
+
 @end

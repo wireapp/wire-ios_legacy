@@ -107,9 +107,6 @@ NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGr
     
     particularCell.conversation = modelObject;
     
-    if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:featureCell:forItem:inCollectionView:atIndexPath:)]) {
-        [self.delegate collectionViewSectionController:self featureCell:genericCell forItem:modelObject inCollectionView:collectionView atIndexPath:indexPath];
-    }
     return genericCell;
 }
 

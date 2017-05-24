@@ -32,16 +32,16 @@ typedef NS_ENUM(NSInteger, StartUIMode){
 };
 
 
-@interface StartUIViewController () <CollectionViewSectionDelegate>
+@interface StartUIViewController ()
 
-@property (nonatomic) CollectionViewSectionAggregator *sectionAggregator;
+//@property (nonatomic) CollectionViewSectionAggregator *sectionAggregator;
+//
+//@property (nonatomic) TopPeopleLineSection *topPeopleLineSection;
+//@property (nonatomic) UsersInDirectorySection *usersInDirectorySection;
+//
+//@property (nonatomic) UsersInContactsSection *usersInContactsSection;
+//@property (nonatomic) GroupConversationsSection *groupConversationsSection;
 
-@property (nonatomic) TopPeopleLineSection *topPeopleLineSection;
-@property (nonatomic) UsersInDirectorySection *usersInDirectorySection;
-
-@property (nonatomic) UsersInContactsSection *usersInContactsSection;
-@property (nonatomic) GroupConversationsSection *groupConversationsSection;
-
-@property (nonatomic) StartUIMode mode;
+//@property (nonatomic) StartUIMode mode;
 
 @end

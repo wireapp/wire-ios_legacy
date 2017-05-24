@@ -27,22 +27,27 @@
 #import "TopPeopleLineCollectionViewController.h"
 #import <PureLayout/PureLayout.h>
 #import "UIView+Borders.h"
+#import "Wire-Swift.h"
 
 NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionViewCellReuseIdentifier";
 
-@interface TopPeopleLineSection () <TopConversationsDirectoryObserver>
+@interface TopPeopleLineSection () <TopConversationsDirectoryObserver, UserSelectionObserver>
+
 @property (nonatomic) UICollectionView *innerCollectionView;
 @property (nonatomic) TopPeopleLineCollectionViewController *innerCollectionViewController;
 @property (nonatomic) TopConversationsDirectoryObserverToken *observerToken;
+
 @end
 
 @implementation TopPeopleLineSection
+
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
 
 - (void)dealloc
 {
     [self removeTopConversationObserverIfNeeded];
+    [self.userSelection removeWithObserver:self];
 }
 
 - (instancetype)init
@@ -91,6 +96,15 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 - (BOOL)hasSearchResults
 {
     return NO;
+}
+
+- (void)setUserSelection:(UserSelection *)userSelection
+{
+    _userSelection = userSelection;
+    
+    self.innerCollectionViewController.userSelection = userSelection;
+    
+    [self.userSelection addWithObserver:self];
 }
 
 - (void)setCollectionView:(UICollectionView *)collectionView
@@ -213,20 +227,21 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
     [self updateTopPeople];
 }
 
-#pragma mark - PeopleSelectionDelegate
+#pragma mark - UserSelectionObserver
 
-- (void)peopleSelection:(PeopleSelection *)selection didDeselectUsers:(NSSet *)users
+- (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
 {
-    [[self.innerCollectionView visibleCells] enumerateObjectsUsingBlock:^(UICollectionViewCell* cell, NSUInteger idx, BOOL *stop) {
-        
-        id user = [(TopPeopleCell *)cell user];
-        
-        if (user != nil && [users containsObject:user]) {
-            cell.selected = NO;
-            [self.innerCollectionView deselectItemAtIndexPath:[self.innerCollectionView indexPathForCell:cell] 
-                                                     animated:NO];
-        }
-    }];
+    [self.innerCollectionView reloadData];
+}
+
+- (void)userSelection:(UserSelection *)userSelection didRemoveUser:(ZMUser *)user
+{
+    [self.innerCollectionView reloadData];
+}
+
+- (void)userSelection:(UserSelection *)userSelection wasReplacedBy:(NSArray<ZMUser *> *)users
+{
+    [self.innerCollectionView reloadData];
 }
 
 @end

@@ -23,9 +23,9 @@
 #import "TopPeopleLineSection.h"
 #import "UIView+Borders.h"
 #import "WAZUIMagicIOS.h"
+#import "Wire-Swift.h"
 
 NSString *const CellReuseIdentifier = @"CellReuseIdentifier";
-
 
 @implementation TopPeopleLineCollectionViewController
 
@@ -40,7 +40,7 @@ NSString *const CellReuseIdentifier = @"CellReuseIdentifier";
                                                                                   forIndexPath:indexPath];
     
     // Resolve the model object based on the current UI state
-    id modelObject = self.topPeople[indexPath.item % self.topPeople.count];
+    ZMConversation *modelObject = self.topPeople[indexPath.item % self.topPeople.count];
     
     TopPeopleCell *particularCell = (TopPeopleCell *)genericCell;
     @weakify(self, modelObject);
@@ -51,18 +51,22 @@ NSString *const CellReuseIdentifier = @"CellReuseIdentifier";
         }
     };
     
+    BOOL selected = [self.userSelection.users containsObject:modelObject.connectedUser];
     particularCell.conversation = modelObject;
+    particularCell.selected = selected;
     
-    if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:featureCell:forItem:inCollectionView:atIndexPath:)]) {
-        [self.delegate collectionViewSectionController:self.sectionController featureCell:genericCell forItem:modelObject inCollectionView:collectionView atIndexPath:indexPath];
+    if (selected) {
+        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
-
+    
     return genericCell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id modelObject = self.topPeople[indexPath.item % self.topPeople.count];
+    ZMConversation *modelObject = self.topPeople[indexPath.item % self.topPeople.count];
+    
+    [self.userSelection add:modelObject.connectedUser];
     
     if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:didSelectItem:atIndexPath:)]) {
         [self.delegate collectionViewSectionController:self.sectionController didSelectItem:modelObject atIndexPath:indexPath];
@@ -71,7 +75,9 @@ NSString *const CellReuseIdentifier = @"CellReuseIdentifier";
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id modelObject = self.topPeople[indexPath.item % self.topPeople.count];
+    ZMConversation *modelObject = self.topPeople[indexPath.item % self.topPeople.count];
+    
+    [self.userSelection remove:modelObject.connectedUser];
     
     if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:didDeselectItem:atIndexPath:)]) {
         [self.delegate collectionViewSectionController:self.sectionController didDeselectItem:modelObject atIndexPath:indexPath];

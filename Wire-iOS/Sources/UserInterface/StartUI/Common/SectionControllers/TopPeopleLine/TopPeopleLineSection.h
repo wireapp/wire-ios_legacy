@@ -19,13 +19,13 @@
 
 #import <Foundation/Foundation.h>
 #import "CollectionViewSectionController.h"
-#import "PeopleSelection.h"
 
-@class TopConversationsDirectory;
+@class TopConversationsDirectory, UserSelection, ZMConversation;
 
 FOUNDATION_EXPORT NSString *const StartUICollectionViewCellReuseIdentifier;
 
-@interface TopPeopleLineSection : NSObject <CollectionViewSectionController, PeopleSelectionDelegate>
+@interface TopPeopleLineSection : NSObject <CollectionViewSectionController>
 @property (nonatomic, strong) TopConversationsDirectory *topConversationDirectory;
-@property (nonatomic) NSArray *topPeople;
+@property (nonatomic) NSArray<ZMConversation *> *topPeople;
+@property (nonatomic) UserSelection *userSelection;
 @end

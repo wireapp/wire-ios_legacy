@@ -20,15 +20,8 @@
 @import UIKit;
 
 
-@class ZMUser, PeopleInputController, TokenField;
+@class ZMUser, PeopleInputController, TokenField, UserSelection;
 
-
-
-@protocol PeopleInputControllerSelectionDelegate <NSObject>
-
-- (void)peopleInputController:(PeopleInputController *)controller changedPresentedDirectoryResultsTo:(NSSet *)directoryResults;
-
-@end
 
 @protocol PeopleInputControllerTextDelegate <NSObject>
 
@@ -38,14 +31,12 @@
 
 @end
 
-
-
 @interface PeopleInputController : UIViewController
 
 @property (strong, nonatomic, readonly) TokenField *tokenField;
 
 @property (weak, nonatomic) id <PeopleInputControllerTextDelegate> delegate;
-@property (weak, nonatomic) id <PeopleInputControllerSelectionDelegate> selectionDelegate;
+@property (nonatomic) UserSelection *userSelection;
 @property (nonatomic) BOOL retainSelectedState;
 @property (nonatomic, readonly) BOOL userDidConfirmInput;
 

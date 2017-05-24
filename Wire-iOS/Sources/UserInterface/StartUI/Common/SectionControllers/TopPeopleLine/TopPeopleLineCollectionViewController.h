@@ -22,10 +22,11 @@
 
 FOUNDATION_EXPORT NSString *const CellReuseIdentifier;
 
-@class TopPeopleLineSection;
+@class TopPeopleLineSection, UserSelection, ZMConversation;
 
 @interface TopPeopleLineCollectionViewController : NSObject <UICollectionViewDelegate, UICollectionViewDataSource>
-@property (nonatomic) NSArray *topPeople;
+@property (nonatomic) NSArray<ZMConversation *> *topPeople;
+@property (nonatomic) UserSelection *userSelection;
 @property (nonatomic, weak) TopPeopleLineSection *sectionController;
 @property (nonatomic, weak) id<CollectionViewSectionDelegate> delegate;
 @end

@@ -61,24 +61,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
     [self.searchDirectory addSearchResultObserver:self];
 }
 
-- (BOOL)shouldLoadMoreSuggestions
-{
-    if (self.suggestionsState == PeoplePickerSuggestionsStateInitial ||
-        self.suggestionsState == PeoplePickerSuggestionsStateLoading) {
-        return NO;
-    }
-    
-    if ([self.delegate usersInDirectoryIsSearchActive:self]) {
-        return NO;
-    }
-    
-    if (self.suggestions.count > 10) {
-        return NO;
-    }
-    
-    return YES;
-}
-
 - (void)setSuggestions:(NSArray *)suggestions
 {
     _suggestions = suggestions;
@@ -87,13 +69,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
         // We only need to subscribe once for all searchUsers
         self.userObserverToken = [UserChangeInfo addSearchUserObserver:self forSearchUser:nil];
     }
-}
-
-- (void)loadMoreSuggestions
-{
-    self.suggestionsState = PeoplePickerSuggestionsStateLoading;
-
-    [self.delegate usersInDirectoryWantsToLoadMoreSuggestions:self];
 }
 
 - (BOOL)isHidden
@@ -219,16 +194,14 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
             [self animateSingleDeleteOnPeopleYouMayKnowFrom:self.suggestions to:updatedUsers inSection:indexPath.section];
         });
     };
-    
-    if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:featureCell:forItem:inCollectionView:atIndexPath:)]) {
-        [self.delegate collectionViewSectionController:self featureCell:genericCell forItem:modelObject inCollectionView:collectionView atIndexPath:indexPath];
-    }
-    
+        
     return genericCell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    
     id modelObject = self.suggestions[indexPath.item];
     
     if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:didSelectItem:atIndexPath:)]) {
@@ -329,21 +302,14 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
         // Cannot find the removed item
         return;
     }
-
-    void (^completion)(BOOL) = ^(BOOL finished) {
-        if ([self shouldLoadMoreSuggestions]) {
-            [self loadMoreSuggestions];
-        }
-    };
     
-
     [self.collectionView performBatchUpdates:^{
         self.suggestions = to;
 
         [self createSearchResultUsersInDirectoryMap];
         
         [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:removedElementIndex inSection:section]]];
-    } completion:completion];
+    } completion:nil];
 }
 
 @end
