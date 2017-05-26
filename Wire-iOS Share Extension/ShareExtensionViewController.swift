@@ -30,7 +30,29 @@ private let progressDisplayDelay: TimeInterval = 0.5
 
 class ShareExtensionViewController: SLComposeServiceViewController {
     
-    var conversationItem : SLComposeSheetConfigurationItem?
+    lazy var conversationItem : SLComposeSheetConfigurationItem = {
+        let item = SLComposeSheetConfigurationItem()!
+        
+        item.title = "share_extension.conversation_selection.title".localized
+        item.value = "share_extension.conversation_selection.empty.value".localized
+        item.tapHandler = { [weak self] in
+            self?.presentChooseConversation()
+        }
+        return item
+    }()
+    
+    lazy var teamItem : SLComposeSheetConfigurationItem? = {
+        guard let allTeams = self.sharingSession?.allTeams, !allTeams.isEmpty else { return nil }
+
+        let item = SLComposeSheetConfigurationItem()!
+        
+        item.title = "share_extension.team_selection.title".localized
+        item.value = "share_extension.team_selection.empty.value".localized
+        item.tapHandler = { [weak self] in
+            self?.presentChooseTeam()
+        }
+        return item
+    }()
 
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
@@ -198,16 +220,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     override func configurationItems() -> [Any]! {
-        let conversationItem = SLComposeSheetConfigurationItem()!
-        self.conversationItem = conversationItem
-        
-        conversationItem.title = "share_extension.conversation_selection.title".localized
-        conversationItem.value = "share_extension.conversation_selection.empty.value".localized
-        conversationItem.tapHandler = { [weak self] in
-             self?.presentChooseConversation()
-        }
-        
-        return [conversationItem]
+        return [conversationItem, teamItem].flatMap {$0}
     }
     
     private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
@@ -234,23 +247,47 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         pushConfigurationViewController(notSignedInViewController)
     }
     
+    func updateState(team: Team?) {
+        guard sharingSession?.currentTeam != team else { return }
+        teamItem?.value = team?.name ?? "share_extension.team_selection.empty.value".localized
+        sharingSession?.currentTeam = team
+        updateState(conversation: nil)
+    }
+    
+    func updateState(conversation: Conversation?) {
+        conversationItem.value = conversation?.name ?? "share_extension.conversation_selection.empty.value".localized
+        postContent?.target = conversation
+        extensionActivity?.conversation = conversation
+    }
+    
     private func presentChooseConversation() {
         guard let sharingSession = sharingSession else { return }
 
         let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
         let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
         
-        conversationSelectionViewController.selectionHandler = { [weak self] conversation in            
-            self?.conversationItem?.value = conversation.name
-            self?.postContent?.target = conversation
-            self?.extensionActivity?.conversation = conversation
+        conversationSelectionViewController.selectionHandler = { [weak self] conversation in
+            self?.updateState(conversation: conversation)
             self?.popConfigurationViewController()
             self?.validateContent()
         }
         
         pushConfigurationViewController(conversationSelectionViewController)
     }
+    
+    private func presentChooseTeam() {
+        guard let sharingSession = sharingSession else { return }
 
+        let teamSelectionViewController = TeamSelectionViewController(teams: sharingSession.allTeams)
+        
+        teamSelectionViewController.selectionHandler = { [weak self] team in
+            self?.updateState(team: team)
+            self?.popConfigurationViewController()
+            self?.validateContent()
+        }
+        
+        pushConfigurationViewController(teamSelectionViewController)
+    }
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
         let title = titleForMissingClients(users: change.users)
