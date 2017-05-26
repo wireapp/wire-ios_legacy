@@ -164,11 +164,6 @@
 {
     NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
     [self.userSelection replace:users];
-    
-//    if ([self.selectionDelegate respondsToSelector:@selector(peopleInputController:changedPresentedDirectoryResultsTo:)]) {
-//        NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
-//        [self.selectionDelegate peopleInputController:self changedPresentedDirectoryResultsTo:[NSSet setWithArray:users]];
-//    }
 }
 
 - (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
