@@ -280,6 +280,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 - (void)reloadConversationListViewModel
 {
     [self updateSection:SectionIndexAll];
+    [self setupObserversForActiveTeam];
     debugLog(@"RELOAD conversation list");
     [self.delegate listViewModelShouldBeReloaded];
 }
