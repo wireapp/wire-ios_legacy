@@ -331,18 +331,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     });
 }
 
-#pragma mark - UsersInDirectorySectionDelegate
-
-- (void)usersInDirectoryWantsToLoadMoreSuggestions:(UsersInDirectorySection *)suggestions
-{
-    
-}
-
-- (BOOL)usersInDirectoryIsSearchActive:(UsersInDirectorySection *)section
-{
-    return NO;
-}
-
 #pragma mark - UserSelectionObserver
 
 - (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
@@ -362,8 +350,27 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 #pragma mark - SearchResultsControllerDelegate
 
-- (void)searchResultsController:(SearchResultsController *)searchResultsController didTapOnUser:(id<ZMSearchableUser>)user indexPath:(NSIndexPath *)indexPath
+- (void)searchResultsController:(SearchResultsController *)searchResultsController didTapOnUser:(id<ZMSearchableUser>)user indexPath:(NSIndexPath *)indexPath section:(enum SearchResultsControllerSection)section
 {
+    if ([user conformsToProtocol:@protocol(AnalyticsConnectionStateProvider)]) {
+        [Analytics.shared tagSelectedSearchResultWithConnectionStateProvider:(id<AnalyticsConnectionStateProvider>)user
+                                                                     context:SearchContextStartUI];
+    }
+    
+    switch (section) {
+        case SearchResultsControllerSectionTopPeople:
+            [[Analytics shared] tagSelectedTopContact];
+            break;
+        case SearchResultsControllerSectionContacts:
+            [[Analytics shared] tagSelectedSearchResultUserWithIndex:indexPath.row];
+            break;
+        case SearchResultsControllerSectionDirectory:
+            [[Analytics shared] tagSelectedSuggestedUserWithIndex:indexPath.row];
+            break;
+        default:
+            break;
+    }
+    
     if (!user.isConnected) {
         [self presentProfileViewControllerForUser:user atIndexPath:indexPath];
     }
