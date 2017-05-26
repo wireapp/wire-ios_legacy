@@ -392,6 +392,15 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 }
 
+- (void)searchResultsController:(SearchResultsController *)searchResultsController didReceiveEmptyResult:(BOOL)empty mode:(enum SearchResultsControllerMode)mode
+{
+    if (empty && mode == SearchResultsControllerModeList) {
+        [self.startUIView showEmptySearchResultsViewForSuggestedUsersShowingShareContacts:self.shouldShowShareContacts];
+    } else {
+        [self.startUIView hideEmptyResutsView];
+    }
+}
+
 #pragma mark - PeopleInputControllerDelegate
 
 - (void)peopleInputController:(PeopleInputController *)controller changedFilterTextTo:(NSString *)text

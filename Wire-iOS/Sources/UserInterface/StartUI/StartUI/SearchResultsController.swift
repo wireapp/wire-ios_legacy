@@ -1,14 +1,31 @@
 //
-//  SearchResultsController.swift
-//  Wire-iOS
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
 //
-//  Created by Jacob on 22.05.17.
-//  Copyright © 2017 Zeta Project Germany GmbH. All rights reserved.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
 import Foundation
 import WireSyncEngine
 
+extension SearchResult {
+    
+    var isEmpty : Bool {
+        return contacts.count == 0 && teamMembers.count == 0 && conversations.count == 0 && directory.count == 0
+    }
+    
+}
 
 @objc
 public protocol SearchResultsControllerDelegate {
@@ -16,6 +33,7 @@ public protocol SearchResultsControllerDelegate {
     func searchResultsController(_ searchResultsController: SearchResultsController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
     func searchResultsController(_ searchResultsController: SearchResultsController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
     func searchResultsController(_ searchResultsController: SearchResultsController, didTapOnConversation conversation: ZMConversation)
+    func searchResultsController(_ searchResultsController: SearchResultsController, didReceiveEmptyResult empty: Bool, mode: SearchResultsControllerMode)
     
 }
 
@@ -96,8 +114,14 @@ public class SearchResultsController : NSObject {
         let request = SearchRequest(query: query, searchOptions:searchOptions, team: team)
         let task = searchDirectory.perform(request)
         
-        task.onResult { [weak self] (result) in
-            self?.updateSections(withSearchResult: result)
+        task.onResult { [weak self] (result, isCompleted) in
+            guard let `self` = self else { return }
+            
+            self.updateSections(withSearchResult: result)
+            
+            if isCompleted {
+                self.delegate?.searchResultsController(self, didReceiveEmptyResult: result.isEmpty, mode: .search)
+            }
         }
         
         task.start()
@@ -112,8 +136,14 @@ public class SearchResultsController : NSObject {
         let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: team)
         let task = searchDirectory.perform(request)
         
-        task.onResult { [weak self] (result) in
-            self?.updateSections(withSearchResult: result)
+        task.onResult { [weak self] (result, isCompleted) in
+            guard let `self` = self else { return }
+            
+            self.updateSections(withSearchResult: result)
+            
+            if isCompleted {
+                self.delegate?.searchResultsController(self, didReceiveEmptyResult: result.isEmpty, mode: .list)
+            }
         }
         
         task.start()
