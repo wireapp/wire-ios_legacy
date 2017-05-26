@@ -75,7 +75,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)dealloc
 {
-    [self.userSelection removeWithObserver:self];
+    [self.userSelection removeObserver:self];
 }
 
 - (instancetype)init
@@ -116,7 +116,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [super viewDidLoad];
     
     self.userSelection = [[UserSelection alloc] init];
-    [self.userSelection addWithObserver:self];
+    [self.userSelection addObserver:self];
     
     self.searchResultsController = [[SearchResultsController alloc] initWithCollectionView:self.startUIView.collectionView userSelection:self.userSelection team:[[ZMUser selfUser] activeTeam]];
     self.searchResultsController.mode = SearchResultsControllerModeList;

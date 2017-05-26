@@ -37,7 +37,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (void)dealloc
 {
-    [self.userSelection removeWithObserver:self];
+    [self.userSelection removeObserver:self];
 }
 
 - (BOOL)hasSearchResults
@@ -66,7 +66,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 {
     _userSelection = userSelection;
     
-    [self.userSelection addWithObserver:self];
+    [self.userSelection addObserver:self];
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource

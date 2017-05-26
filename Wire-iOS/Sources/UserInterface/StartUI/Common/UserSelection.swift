@@ -49,12 +49,14 @@ public class UserSelection : NSObject {
         observers.forEach({ $0.unbox?.userSelection(self, didRemoveUser: user) })
     }
     
+    @objc(addObserver:)
     public func add(observer: UserSelectionObserver) {
         guard !observers.contains(where: { $0.unbox === observer}) else { return }
         
         observers.append(UnownedObject(observer))
     }
     
+    @objc(removeObserver:)
     public func remove(observer: UserSelectionObserver) {
         guard let index = observers.index(where: { $0.unbox === observer}) else { return }
         

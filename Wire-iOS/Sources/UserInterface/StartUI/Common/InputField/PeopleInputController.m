@@ -37,7 +37,7 @@
 
 - (void)dealloc
 {
-    [self.userSelection removeWithObserver:self];
+    [self.userSelection removeObserver:self];
 }
 
 #pragma mark - UIViewController overrides
@@ -112,7 +112,7 @@
 {
     _userSelection = userSelection;
     
-    [self.userSelection addWithObserver:self];
+    [self.userSelection addObserver:self];
 }
 
 - (void)addTokenForUser:(ZMUser *)user
