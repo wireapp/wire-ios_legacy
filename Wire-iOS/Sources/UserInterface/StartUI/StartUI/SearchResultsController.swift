@@ -30,7 +30,7 @@ extension SearchResult {
 @objc
 public protocol SearchResultsControllerDelegate {
     
-    func searchResultsController(_ searchResultsController: SearchResultsController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
+    func searchResultsController(_ searchResultsController: SearchResultsController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsControllerSection)
     func searchResultsController(_ searchResultsController: SearchResultsController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
     func searchResultsController(_ searchResultsController: SearchResultsController, didTapOnConversation conversation: ZMConversation)
     func searchResultsController(_ searchResultsController: SearchResultsController, didReceiveEmptyResult empty: Bool, mode: SearchResultsControllerMode)
@@ -42,6 +42,16 @@ public enum SearchResultsControllerMode : Int {
     case search
     case selection
     case list
+}
+
+@objc
+public enum SearchResultsControllerSection : Int {
+    case unknown
+    case topPeople
+    case contacts
+    case teamMembers
+    case conversations
+    case directory
 }
 
 @objc
@@ -181,6 +191,22 @@ public class SearchResultsController : NSObject {
         collectionView.reloadData()
     }
     
+    func sectionFor(controller: CollectionViewSectionController) -> SearchResultsControllerSection {
+        if controller === topPeopleSection {
+            return .topPeople
+        } else if controller === contactsSection {
+            return .contacts
+        } else if controller === teamMemberSection {
+            return .teamMembers
+        } else if  controller === conversationsSection {
+            return .conversations
+        } else if controller === directorySection {
+            return .directory
+        } else {
+            return .unknown
+        }
+    }
+    
 }
 
 extension SearchResultsController : CollectionViewSectionDelegate {
@@ -192,10 +218,10 @@ extension SearchResultsController : CollectionViewSectionDelegate {
     
     public func collectionViewSectionController(_ controller: CollectionViewSectionController!, didSelectItem item: Any!, at indexPath: IndexPath!) {
         if let user = item as? ZMUser {
-            delegate?.searchResultsController(self, didTapOnUser: user, indexPath: indexPath)
+            delegate?.searchResultsController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: controller))
         }
         else if let searchUser = item as? ZMSearchUser {
-            delegate?.searchResultsController(self, didTapOnUser: searchUser, indexPath: indexPath)
+            delegate?.searchResultsController(self, didTapOnUser: searchUser, indexPath: indexPath, section: sectionFor(controller: controller))
         }
         else if let conversation = item as? ZMConversation {
             delegate?.searchResultsController(self, didTapOnConversation: conversation)

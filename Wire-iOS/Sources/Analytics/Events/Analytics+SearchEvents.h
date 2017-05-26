@@ -35,7 +35,7 @@ typedef enum BlockingType {
 - (void)tagSearchAbortedWithSource:(AnalyticsEventSource)source;
 - (void)tagSelectedTopContact;
 - (void)tagSelectedSuggestedUserWithIndex:(NSUInteger)index;
-- (void)tagSelectedSearchResultUserWithIndex:(NSUInteger)index isEmailSearch:(BOOL)isEmailSearch;
+- (void)tagSelectedSearchResultUserWithIndex:(NSUInteger)index;
 
 - (void)tagBlockingAction:(BlockingType)type;
 - (void)tagUnblocking;

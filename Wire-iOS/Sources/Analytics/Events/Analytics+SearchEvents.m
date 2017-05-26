@@ -45,12 +45,9 @@ NSString *BlockingTypeToString(BlockingType type);
     [self tagEvent:@"selectedSuggestedUser" attributes:@{@"position" : @(index)}];
 }
 
-- (void)tagSelectedSearchResultUserWithIndex:(NSUInteger)index isEmailSearch:(BOOL)isEmail
+- (void)tagSelectedSearchResultUserWithIndex:(NSUInteger)index
 {
-    [self tagEvent:@"selectedSearchResultUser" attributes:@{
-                                                            @"position" : @(index),
-                                                            @"isEmailSearch" : @(isEmail)
-                                                            }];
+    [self tagEvent:@"selectedSearchResultUser" attributes:@{@"position" : @(index)}];
 }
 
 - (void)tagBlockingAction:(BlockingType)type
