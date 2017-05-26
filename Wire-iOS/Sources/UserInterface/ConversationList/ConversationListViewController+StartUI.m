@@ -57,11 +57,14 @@
                 
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
-                    conversation = [user oneToOneConversationInTeam:activeTeam];
-                    [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
-                    [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                                focusOnView:YES
-                                                                                   animated:YES];
+                    [[ZMUserSession sharedSession] enqueueChanges:^{
+                        conversation = [user oneToOneConversationInTeam:activeTeam];
+                    } completionHandler:^{
+                        [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
+                        [[ZClientViewController sharedZClientViewController] selectConversation:conversation
+                                                                                    focusOnView:YES
+                                                                                       animated:YES];
+                    }];
                 }
                 else {
                     
