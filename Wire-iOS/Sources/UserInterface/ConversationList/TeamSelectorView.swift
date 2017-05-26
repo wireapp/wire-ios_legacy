@@ -98,7 +98,7 @@ final internal class TeamSelectorView: UIView {
     private var teamsViews: [BaseTeamView] = []
     private var lineView: LineView? {
         didSet {
-            self.lineView?.removeFromSuperview()
+            oldValue?.removeFromSuperview()
             if let newLineView = self.lineView {
                 self.addSubview(newLineView)
                 
