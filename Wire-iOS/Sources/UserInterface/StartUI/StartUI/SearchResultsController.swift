@@ -96,7 +96,7 @@ public class SearchResultsController : NSObject {
         let request = SearchRequest(query: query, searchOptions:searchOptions, team: team)
         let task = searchDirectory.perform(request)
         
-        task.onResult { [weak self] (result) in
+        task.onResult { [weak self] (result, _) in
             self?.updateSections(withSearchResult: result)
         }
         
@@ -112,7 +112,7 @@ public class SearchResultsController : NSObject {
         let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: team)
         let task = searchDirectory.perform(request)
         
-        task.onResult { [weak self] (result) in
+        task.onResult { [weak self] (result, _) in
             self?.updateSections(withSearchResult: result)
         }
         
