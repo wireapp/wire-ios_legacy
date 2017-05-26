@@ -117,6 +117,12 @@ public class SearchResultsController : NSObject {
     }
     
     @objc
+    public func cancelPreviousSearch() {
+        pendingSearchTask?.cancel()
+        pendingSearchTask = nil
+    }
+    
+    @objc
     public func search(withQuery query: String, local: Bool = false) {
         pendingSearchTask?.cancel()
         

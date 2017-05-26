@@ -412,6 +412,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)peopleInputController:(PeopleInputController *)controller changedFilterTextTo:(NSString *)text
 {
+    [self.searchResultsController cancelPreviousSearch];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performSearch) object:nil];
     [self performSelector:@selector(performSearch) withObject:nil afterDelay:0.3f];
 }
