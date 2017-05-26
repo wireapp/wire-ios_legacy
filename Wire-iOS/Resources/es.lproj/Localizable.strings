@@ -73,14 +73,14 @@
 "contacts_ui.title" = "Invitar contactos";
 
 "contacts_ui.no_contact.title" = "No hay chats activos";
-"contacts_ui.no_contact.message" = "Pulsa sobre contacto para iniciar un chat";
+"contacts_ui.no_contact.message" = "Toca sobre un contacto para iniciar un chat";
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entrar";
 
 
 // Profile Header View
-"conversation.connection_view.in_address_book" = "En contactos";
+"conversation.connection_view.in_address_book" = "en contactos";
 
 
 // Archived List
@@ -149,7 +149,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
 
-"compose.contact.title" = "Conversación";
+"compose.contact.title" = "Chat";
 "compose.message.title" = "Mensaje";
 
 
@@ -347,7 +347,7 @@
 "voice.network_error.body" = "Debes estar en línea para llamar. Comprueba tu conexión y vuelve a intentarlo.";
 "voice.degradation.new_self_device" = "Se comenzó a utilizar un nuevo dispositivo.";
 "voice.degradation.new_user_device" = "%@ comenzó a utilizar un dispositivo nuevo.";
-"voice.degradation_outgoing.prompt" = "¿Desea realizar la llamada?";
+"voice.degradation_outgoing.prompt" = "¿Deseas realizar la llamada?";
 "voice.degradation_incoming.prompt" = "¿Desea aceptar la llamada?";
 "voice.accept_button.title" = "Aceptar";
 "voice.decline_button.title" = "Rechazar";
@@ -905,12 +905,12 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one";
-"compose.drafts.compose.title" = "Write a message";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.title" = "Mensajes";
+"compose.drafts.empty.title" = "Sin mensajes";
+"compose.drafts.empty.subtitle" = "Toca + para escribir";
+"compose.drafts.compose.title" = "Escribe un mensaje";
+"compose.drafts.compose.subject.placeholder" = "Toca para seleccionar un tema";
 
-"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.title" = "Confirmar borrado";
+"compose.drafts.compose.delete.confirm.message" = "Esta acción elimina permanentemente el borrador y no se puede deshacer.";
 "compose.drafts.compose.delete.confirm.action.title" = "Eliminar";
