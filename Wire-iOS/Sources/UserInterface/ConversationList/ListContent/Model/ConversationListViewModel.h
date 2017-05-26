@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 
 - (void)updateSection:(SectionIndex)sectionIndex;
 - (void)updateConversationListAnimated;
+- (void)reloadConversationListViewModel;
 @end
 
 

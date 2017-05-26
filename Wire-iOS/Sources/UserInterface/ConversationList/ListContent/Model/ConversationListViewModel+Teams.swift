@@ -37,7 +37,7 @@ extension ConversationListViewModel: ZMUserObserver {
 extension ConversationListViewModel: TeamObserver {
     public func teamDidChange(_ changeInfo: TeamChangeInfo) {
         if changeInfo.isActiveChanged {
-            self.updateConversationListAnimated()
+            reload()
         }
     }
 }
