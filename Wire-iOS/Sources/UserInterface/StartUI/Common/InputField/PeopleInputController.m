@@ -37,7 +37,7 @@
 
 - (void)dealloc
 {
-    [self.userSelection removeWithObserver:self];
+    [self.userSelection removeObserver:self];
 }
 
 #pragma mark - UIViewController overrides
@@ -112,7 +112,7 @@
 {
     _userSelection = userSelection;
     
-    [self.userSelection addWithObserver:self];
+    [self.userSelection addObserver:self];
 }
 
 - (void)addTokenForUser:(ZMUser *)user
@@ -164,11 +164,6 @@
 {
     NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
     [self.userSelection replace:users];
-    
-//    if ([self.selectionDelegate respondsToSelector:@selector(peopleInputController:changedPresentedDirectoryResultsTo:)]) {
-//        NSArray *users = [tokens valueForKeyPath:@"@distinctUnionOfObjects.representedObject"];
-//        [self.selectionDelegate peopleInputController:self changedPresentedDirectoryResultsTo:[NSSet setWithArray:users]];
-//    }
 }
 
 - (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text

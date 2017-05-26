@@ -47,7 +47,7 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 - (void)dealloc
 {
     [self removeTopConversationObserverIfNeeded];
-    [self.userSelection removeWithObserver:self];
+    [self.userSelection removeObserver:self];
 }
 
 - (instancetype)init
@@ -104,7 +104,7 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
     
     self.innerCollectionViewController.userSelection = userSelection;
     
-    [self.userSelection addWithObserver:self];
+    [self.userSelection addObserver:self];
 }
 
 - (void)setCollectionView:(UICollectionView *)collectionView
