@@ -76,7 +76,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 - (void)setupObserversForActiveTeam
 {
     self.pendingConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil]];
+                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:ZMUser.selfUser.activeTeam]];
     
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
                                                                          forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
@@ -103,8 +103,8 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     }
     
     if (sectionIndex == SectionIndexContactRequests || sectionIndex == SectionIndexAll) {
-        if ([ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil].count > 0) {
-            self.inbox = items ? : @[self.contactRequestsItem];
+        if ([ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:ZMUser.selfUser.activeTeam].count > 0) {
+            self.inbox = items ?: @[self.contactRequestsItem];
         }
         else {
             self.inbox = @[];
@@ -279,7 +279,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)reloadConversationListViewModel
 {
-    [self updateSection:SectionIndexConversations];
+    [self updateSection:SectionIndexAll];
     debugLog(@"RELOAD conversation list");
     [self.delegate listViewModelShouldBeReloaded];
 }
