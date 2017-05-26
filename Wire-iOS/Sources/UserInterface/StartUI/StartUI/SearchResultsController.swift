@@ -157,22 +157,16 @@ public class SearchResultsController : NSObject {
         switch (mode, team != nil) {
         case (.search, false):
             sections = [contactsSection, conversationsSection, directorySection]
-            break
         case (.search, true):
             sections = [teamMemberSection, conversationsSection, contactsSection, directorySection]
-            break
         case (.selection, false):
             sections = [contactsSection]
-            break
         case (.selection, true):
             sections = [teamMemberSection, contactsSection]
-            break
         case (.list, false):
             sections = [topPeopleSection, contactsSection]
-            break
         case (.list, true):
             sections = [teamMemberSection]
-            break
         }
         
         sectionAggregator.sectionControllers = sections
