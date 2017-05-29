@@ -83,10 +83,11 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Join";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team. Tap to toggle.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
+
 
 
 // Archived List
