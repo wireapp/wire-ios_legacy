@@ -180,11 +180,17 @@
     [self updateNoConversationVisibility];
     [self updateArchiveButtonVisibility];
     
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
+    [self updateObserverTokensForActiveTeam];
     self.teamsObserver = [TeamChangeInfo addTeamObserver:self forTeam:nil];
     
     [self showPushPermissionDeniedDialogIfNeeded];
+}
+
+- (void)updateObserverTokensForActiveTeam
+{
+    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
+    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -778,6 +784,7 @@
     if (changeInfo.isActiveChanged) {
         [self updateNoConversationVisibility];
         [self updateArchiveButtonVisibility];
+        [self updateObserverTokensForActiveTeam];
     }
 }
 
