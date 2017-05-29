@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "UsersInContactsSection.h"
 #import "SearchSectionHeaderView.h"
 #import "Constants.h"
@@ -108,6 +107,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     };
     
     BOOL selected = [self.userSelection.users containsObject:modelObject];
+    particularCell.team = self.team;
     particularCell.user = modelObject;
     particularCell.selected = selected;
     

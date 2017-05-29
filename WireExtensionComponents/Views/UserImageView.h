@@ -31,9 +31,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
     UserImageViewSizeLast = UserImageViewSizeBig
 };
 
-@class UserImageView;
-@class ZMUserSession;
-
+@class UserImageView, ZMUserSession, Team;
 
 @protocol UserImageViewDelegate <NSObject>
 @optional
@@ -42,6 +40,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 
 @interface UserImageView : AvatarImageView <ZMUserObserver>
 
+@property (nonatomic, nullable) Team *team;
 @property (nonatomic, nullable) id<ZMBareUser, AccentColorProvider> user;
 @property (nonatomic, nullable) ZMUserSession *userSession;
 @property (nonatomic) BOOL shouldDesaturate;

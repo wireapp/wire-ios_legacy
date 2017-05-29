@@ -22,12 +22,13 @@
 
 FOUNDATION_EXPORT NSString * _Nonnull const PeoplePickerUsersInContactsReuseIdentifier;
 
-@class ZMUser, UserSelection;
+@class ZMUser, UserSelection, Team;
 
 @interface UsersInContactsSection : NSObject <CollectionViewSectionController>
 
 @property (nonatomic, nonnull) NSArray<ZMUser *> * contacts;
 @property (nonatomic, nullable) UserSelection *userSelection;
 @property (nonatomic, nullable) NSString *title;
+@property (nonatomic, nullable) Team *team;
 
 @end

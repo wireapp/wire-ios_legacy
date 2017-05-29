@@ -101,6 +101,7 @@ public class SearchResultsController : NSObject {
         teamMemberSection = UsersInContactsSection()
         teamMemberSection.userSelection = userSelection
         teamMemberSection.title = "peoplepicker.header.team_members".localized(args: teamName)
+        teamMemberSection.team = team
         directorySection = UsersInDirectorySection()
         conversationsSection = GroupConversationsSection()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName) : "peoplepicker.header.conversations".localized

@@ -142,15 +142,14 @@ final public class BackgroundViewController: UIViewController {
             return
         }
         
-        if user.imageMediumData == nil {
+        if let imageData = user.imageMediumData {
+            self.setBackground(imageData: imageData)
+        } else {
             if let searchUser = user as? ZMSearchUser, let userSession = self.userSession {
                 searchUser.requestMediumProfileImage(in: userSession)
             }
             
             self.setBackground(color: user.accentColorValue.color)
-        }
-        else {
-            self.setBackground(imageData: user.imageMediumData)
         }
     }
     

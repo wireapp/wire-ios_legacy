@@ -74,6 +74,7 @@
 #pragma mark - Getters / setters
 - (void)updateForUser:(ZMUser *)user inConversation:(ZMConversation *)conversation
 {
+    self.userImageView.team = ZMUser.selfUser.activeTeam;
     self.userImageView.user = user;
     self.nameLabel.text = [user.displayName uppercaseString];
     self.guestLabel.hidden = ![user isGuestIn:conversation];

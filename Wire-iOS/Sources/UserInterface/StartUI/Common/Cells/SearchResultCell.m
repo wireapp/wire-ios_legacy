@@ -245,8 +245,8 @@
     }
     else if (BareUserToUser(self.user) != nil) {
         ZMUser *fullUser = BareUserToUser(self.user);
-
-        canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval;
+        
+        canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval && ! [fullUser isMemberOf:self.team];
     }
     else {
         canBeConnected = self.user.canBeConnected;
@@ -254,6 +254,7 @@
 
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
+    self.badgeUserImageView.team = self.team;
     self.badgeUserImageView.user = self.user;
 }
 

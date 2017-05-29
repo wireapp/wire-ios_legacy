@@ -22,14 +22,17 @@
 
 @protocol ZMBareUser;
 @protocol ZMSearchableUser;
-@class ZMConversation;
+@class ZMConversation, Team;
 
 @interface SearchResultCell : SwipeMenuCollectionCell
-@property (nonatomic, strong) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> user;
-@property (nonatomic, strong) ZMConversation *conversation;
-@property (nonatomic, copy)   NSString *displayName;
-@property (nonatomic, copy)   void (^doubleTapAction)(SearchResultCell *);
-@property (nonatomic, copy)   void (^instantConnectAction)(SearchResultCell *);
+
+@property (nonatomic, nullable) Team *team;
+@property (nonatomic, nullable) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> user;
+@property (nonatomic, nullable) ZMConversation *conversation;
+@property (nonatomic, copy, nullable)   NSString *displayName;
+@property (nonatomic, copy, nullable)   void (^doubleTapAction)(SearchResultCell * _Nonnull);
+@property (nonatomic, copy, nullable)   void (^instantConnectAction)(SearchResultCell * _Nonnull);
 
 - (void)playAddUserAnimation;
+
 @end

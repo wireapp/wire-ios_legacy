@@ -163,6 +163,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageView.userSession = [ZMUserSession sharedSession];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.authorImageView.delegate = self;
+    self.authorImageView.team = ZMUser.selfUser.activeTeam;
     
     self.authorImageView.layer.shouldRasterize = YES;
     self.authorImageView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
