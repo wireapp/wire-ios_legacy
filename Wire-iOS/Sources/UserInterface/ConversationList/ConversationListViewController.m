@@ -169,11 +169,11 @@
     [ZMUserSession addInitalSyncCompletionObserver:self];
     self.initialSyncCompleted = ZMUserSession.sharedSession.initialSyncOnceCompleted.boolValue;
 
-    [self createTopBar];
     [self createNoConversationLabel];
     [self createListContentController];
     [self createBottomBarController];
-    
+    [self createTopBar];
+
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
     

@@ -22,7 +22,11 @@ import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
     private var teamsView: TeamSelectorView? = .none
-    public weak var contentScrollView: UIScrollView? = .none
+    public weak var contentScrollView: UIScrollView? = .none {
+        didSet {
+            self.setShowTeams(to: self.showTeams)
+        }
+    }
     
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
