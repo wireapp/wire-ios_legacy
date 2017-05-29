@@ -160,8 +160,8 @@ final public class ConversationAvatarView: UIView {
     
     private var mode: Mode = .one {
         didSet {
-            self.clippingView.subviews.forEach { $0.removeFromSuperview() }
-            self.userImages().forEach(self.clippingView.addSubview)
+            self.clippingView.subviews.forEach { $0.isHidden = true }
+            self.userImages().forEach { $0.isHidden = false }
             
             if mode == .one {
                 layer.borderWidth = 0
@@ -210,8 +210,9 @@ final public class ConversationAvatarView: UIView {
     
     init() {
         super.init(frame: .zero)
+        [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom].forEach(self.clippingView.addSubview)
         updateCornerRadius()
-        
+        autoresizesSubviews = false
         layer.masksToBounds = true
         clippingView.clipsToBounds = true
         self.addSubview(clippingView)

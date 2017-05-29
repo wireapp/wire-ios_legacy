@@ -139,15 +139,19 @@ extension ConversationStatusMatcher {
     }
 }
 
+fileprivate let defaultRegularStyle = [NSFontAttributeName: FontSpec(.medium, .none).font!,
+                                       NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+
+fileprivate let defaultEmphasisStyle = [NSFontAttributeName: FontSpec(.medium, .medium).font!,
+                                        NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+
 extension ConversationStatusMatcher {
     static func regularStyle() -> [String: AnyObject] {
-        return [NSFontAttributeName: FontSpec(.medium, .none).font!,
-                NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+        return defaultRegularStyle
     }
     
     static func emphasisStyle() -> [String: AnyObject] {
-        return [NSFontAttributeName: FontSpec(.medium, .medium).font!,
-                NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+        return defaultEmphasisStyle
     }
 }
 
