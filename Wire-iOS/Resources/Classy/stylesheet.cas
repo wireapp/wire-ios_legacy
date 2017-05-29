@@ -755,12 +755,6 @@ ConversationListItemView {
     }
 }
 
-SearchView {
-    lineView: @{
-        backgroundColor: $color-accent-current;
-    }
-}
-
 VideoMessageCell {
     @device ipad {
         videoViewHeight: 240
@@ -1396,6 +1390,15 @@ TokenField {
         placeholderTextTransform: upper;
         lineFragmentPadding: 0;
     }
+}
+
+SearchViewController {
+    
+    searchTitleLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-small-semibold;
+    }
+    
 }
 
 SearchViewController PeopleInputController TokenField {

@@ -29,10 +29,11 @@
 "peoplepicker.button.create_conversation" = "Create group";
 "peoplepicker.button.add_to_conversation" = "Add";
 "peoplepicker.header.conversations" = "Groups";
-"peoplepicker.header.team_conversations" = "Team conversations";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invite";
-"peoplepicker.header.contacts" = "Connections";
-"peoplepicker.header.team_members" = "Team Members";
+"peoplepicker.header.contacts" = "Contacts";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Connect";
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";

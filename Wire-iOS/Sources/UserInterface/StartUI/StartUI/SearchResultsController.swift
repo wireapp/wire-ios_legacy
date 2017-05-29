@@ -91,17 +91,19 @@ public class SearchResultsController : NSObject {
         self.team = team
         self.mode = .list
         
+        let teamName = team?.name ?? ""
+        
         sectionAggregator = CollectionViewSectionAggregator()
         sectionAggregator.collectionView = collectionView
         contactsSection = UsersInContactsSection()
         contactsSection.userSelection = userSelection
-        contactsSection.title = "peoplepicker.header.contacts".localized
+        contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
         teamMemberSection = UsersInContactsSection()
         teamMemberSection.userSelection = userSelection
-        teamMemberSection.title = "peoplepicker.header.team_members".localized
+        teamMemberSection.title = "peoplepicker.header.team_members".localized(args: teamName)
         directorySection = UsersInDirectorySection()
         conversationsSection = GroupConversationsSection()
-        conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized : "peoplepicker.header.conversations".localized
+        conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName) : "peoplepicker.header.conversations".localized
         topPeopleSection = TopPeopleLineSection()
         topPeopleSection.userSelection = userSelection
         topPeopleSection.topConversationDirectory = ZMUserSession.shared()?.topConversationsDirectory
