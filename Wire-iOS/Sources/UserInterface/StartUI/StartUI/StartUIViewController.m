@@ -91,7 +91,10 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 {
     [super loadView];
     
-    self.searchViewController = [SearchViewController new];
+    Team *team = [[ZMUser selfUser] activeTeam];
+    
+    self.searchViewController = [[SearchViewController alloc] init];
+    self.searchViewController.title = team != nil ? team.name : ZMUser.selfUser.displayName;
     self.searchViewController.delegate = self;
     [self addChildViewController:self.searchViewController];
     [self.view addSubview:self.searchViewController.view];

@@ -18,9 +18,8 @@
 
 
 #import <UIKit/UIKit.h>
-#import "SearchView.h"
 
-@class SearchViewController;
+@class SearchViewController, PeopleInputController;
 
 @protocol SearchViewControllerDelegate <NSObject>
 @optional
@@ -30,7 +29,6 @@
 @interface SearchViewController : UIViewController
 
 @property (nonatomic, readonly) PeopleInputController *peopleInputController;
-@property (nonatomic, readonly) SearchView *searchView;
 @property (nonatomic, weak) id<SearchViewControllerDelegate> delegate;
 
 @end

@@ -23,11 +23,15 @@
 #import "IconButton.h"
 #import "WireSyncEngine+iOS.h"
 #import "WAZUIMagicIOS.h"
+#import "UIColor+WAZExtensions.h"
 
-@interface SearchViewController ()
+@interface SearchViewController () <ZMUserObserver>
 @property (nonatomic, readwrite) PeopleInputController *peopleInputController;
-@property (nonatomic, readwrite) SearchView *searchView;
+@property (nonatomic, readwrite) UILabel *searchTitleLabel;
 @property (nonatomic, readwrite) IconButton *cancelButton;
+@property (nonatomic, readwrite) UIView *lineView;
+@property (nonatomic) id userObserverToken;
+
 @end
 
 @implementation SearchViewController
@@ -36,46 +40,73 @@
 {
     [super viewDidLoad];
     
+    self.lineView = [[UIView alloc] initForAutoLayout];
+    self.lineView.backgroundColor = [UIColor accentColor];
+    [self.view addSubview:self.lineView];
+    
     self.peopleInputController = [[PeopleInputController alloc] init];
     [self addChildViewController:self.peopleInputController];
     self.peopleInputController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.peopleInputController.view];
     [self.peopleInputController didMoveToParentViewController:self];
 
+    self.searchTitleLabel = [[UILabel alloc] init];
+    self.searchTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.searchTitleLabel.text = self.title.localizedUppercaseString;
+    self.searchTitleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.searchTitleLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    [self.view addSubview:self.searchTitleLabel];
+    
     self.cancelButton = [[IconButton alloc] initForAutoLayout];
     self.cancelButton.borderWidth = 0;
     self.cancelButton.accessibilityIdentifier = @"PeoplePickerClearButton";
     [self.cancelButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
     [self.cancelButton setIconColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.view addSubview:self.cancelButton];
-    
-
-    SearchView *searchView = [[SearchView alloc] initWithPeopleInputController:self.peopleInputController];
-    searchView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.cancelButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-    self.searchView = searchView;
-
-    [self.view insertSubview:searchView belowSubview:self.peopleInputController.view];
+    [self.view addSubview:self.cancelButton];
 
     [self createViewConstraints];
+    
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
 }
 
 - (void)createViewConstraints
 {
+    [self.searchTitleLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(24, 24, 0, 24) excludingEdge:ALEdgeBottom];
+    
+    CGFloat leftMargin = [WAZUIMagic floatForIdentifier:@"people_picker.search_results_mode.person_tile_left_margin"];
     CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
-    [self.searchView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    
+    [self.peopleInputController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchTitleLabel];
+    [self.peopleInputController.view autoSetDimension:ALDimensionHeight toSize:40 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.peopleInputController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftMargin];
+    [self.peopleInputController.view autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:rightMargin];
     
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin - 10];
     [self.cancelButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.peopleInputController.view];
     [self.cancelButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.cancelButton];
     [self.cancelButton autoSetDimension:ALDimensionWidth toSize:30];
+    
+    [self.lineView autoSetDimension:ALDimensionHeight toSize:0.5f];
+    [self.lineView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.peopleInputController.view];
+    [self.lineView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.peopleInputController.view];
+    [self.lineView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.peopleInputController.view];
+    [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 }
 
 - (void)onCloseButtonPressed:(id)sender;
 {
     if ([self.delegate respondsToSelector:@selector(searchViewControllerWantsToDismissController:)]) {
         [self.delegate searchViewControllerWantsToDismissController:self];
+    }
+}
+
+#pragma mark - ZMUserObserver
+
+- (void)userDidChange:(UserChangeInfo *)note
+{
+    if ([note.user isSelfUser] && note.accentColorValueChanged) {
+        self.lineView.backgroundColor = [UIColor accentColor];
     }
 }
 
