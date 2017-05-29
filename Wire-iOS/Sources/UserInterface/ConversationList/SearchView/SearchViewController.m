@@ -27,7 +27,6 @@
 
 @interface SearchViewController () <ZMUserObserver>
 @property (nonatomic, readwrite) PeopleInputController *peopleInputController;
-@property (nonatomic, readwrite) NSString *searchTitle;
 @property (nonatomic, readwrite) UILabel *searchTitleLabel;
 @property (nonatomic, readwrite) IconButton *cancelButton;
 @property (nonatomic, readwrite) UIView *lineView;
@@ -36,17 +35,6 @@
 @end
 
 @implementation SearchViewController
-
-- (instancetype)initWithTitle:(NSString *)title
-{
-    self = [super initWithNibName:nil bundle:nil];
-    
-    if (self != nil) {
-        _searchTitle = title;
-    }
-    
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -64,7 +52,7 @@
 
     self.searchTitleLabel = [[UILabel alloc] init];
     self.searchTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.searchTitleLabel.text = self.searchTitle.localizedUppercaseString;
+    self.searchTitleLabel.text = self.title.localizedUppercaseString;
     self.searchTitleLabel.textAlignment = NSTextAlignmentCenter;
     [self.searchTitleLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.view addSubview:self.searchTitleLabel];

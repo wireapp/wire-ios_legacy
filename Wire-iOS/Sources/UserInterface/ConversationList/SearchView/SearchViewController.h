@@ -28,11 +28,6 @@
 
 @interface SearchViewController : UIViewController
 
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithTitle:(NSString *)title NS_DESIGNATED_INITIALIZER;
-
 @property (nonatomic, readonly) PeopleInputController *peopleInputController;
 @property (nonatomic, weak) id<SearchViewControllerDelegate> delegate;
 
