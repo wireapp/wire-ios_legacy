@@ -225,34 +225,43 @@
 
 - (void)createNoConversationLabel;
 {
+    self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
+    self.noConversationLabel.attributedText = [self attributedTextForNoConversationLabel:self.hasArchivedConversations];
+    self.noConversationLabel.numberOfLines = 0;
+    [self.contentContainer addSubview:self.noConversationLabel];
+}
+
+- (NSAttributedString *)attributedTextForNoConversationLabel:(BOOL)hasArchivedConversations
+{
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.paragraphSpacing = 10;
     paragraphStyle.alignment = NSTextAlignmentCenter;
-    
+
     NSDictionary *titleAttributes = @{
                                       NSForegroundColorAttributeName : [UIColor whiteColor],
                                       NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"],
                                       NSParagraphStyleAttributeName : paragraphStyle
                                       };
-    
+
     paragraphStyle.paragraphSpacing = 4;
     NSDictionary *textAttributes = @{
                                      NSForegroundColorAttributeName : [UIColor whiteColor],
                                      NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"],
                                      NSParagraphStyleAttributeName : paragraphStyle
                                      };
-   
-    NSString *titleString = NSLocalizedString(@"contacts_ui.no_contact.title", nil);
-    NSString *messageString = NSLocalizedString(@"contacts_ui.no_contact.message", nil);
+
+    NSString *titleLocalizationKey = hasArchivedConversations ? @"contacts_ui.no_contact.archived.title": @"contacts_ui.no_contact.title";
+    NSString *titleString = NSLocalizedString(titleLocalizationKey, nil);
+
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[titleString uppercaseString]
                                                                                          attributes:titleAttributes];
-    [attributedString appendString:[messageString uppercaseString]
-                        attributes:textAttributes];
-    
-    self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
-    self.noConversationLabel.attributedText = [[NSAttributedString alloc] initWithAttributedString:attributedString];
-    self.noConversationLabel.numberOfLines = 0;
-    [self.contentContainer addSubview:self.noConversationLabel];
+    if (!hasArchivedConversations) {
+        NSString *messageString = NSLocalizedString(@"contacts_ui.no_contact.message", nil);
+        [attributedString appendString:[messageString uppercaseString]
+                            attributes:textAttributes];
+    }
+
+    return attributedString;
 }
 
 - (void)createBottomBarController
@@ -570,6 +579,7 @@
 - (void)showNoContactLabel;
 {
     if (self.state == ConversationListStateConversationList) {
+        self.noConversationLabel.attributedText = [self attributedTextForNoConversationLabel:self.hasArchivedConversations];
         [UIView animateWithDuration:0.20
                          animations:^{
                              self.noConversationLabel.alpha = 1.0f;
@@ -587,16 +597,26 @@
 
 - (void)updateNoConversationVisibility;
 {
-    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]].count +
-                                    [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]].count;
-    
-    BOOL shouldDisplayNoContact = conversationsCount == 0;
-    
-    if (shouldDisplayNoContact) {
+    if (!self.hasConversations) {
         [self showNoContactLabel];
     } else {
         [self hideNoContactLabel];
     }
+}
+
+- (BOOL)hasConversations
+{
+    ZMUserSession *session = ZMUserSession.sharedSession;
+    Team *team = ZMUser.selfUser.activeTeam;
+    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session team:team].count +
+                                    [ZMConversationList pendingConnectionConversationsInUserSession:session team:team].count;
+    return conversationsCount > 0;
+
+}
+
+- (BOOL)hasArchivedConversations
+{
+    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession team:ZMUser.selfUser.activeTeam].count > 0;
 }
 
 @end
@@ -725,8 +745,7 @@
 
 - (void)updateArchiveButtonVisibility
 {
-    BOOL showArchived = [ZMConversationList archivedConversationsInUserSession:[ZMUserSession sharedSession]
-                                                                          team:[[ZMUser selfUser] activeTeam]].count > 0;
+    BOOL showArchived = self.hasArchivedConversations;
     if (showArchived == self.bottomBarController.showArchived) {
         return;
     }
@@ -758,6 +777,7 @@
 {
     if (changeInfo.isActiveChanged) {
         [self updateNoConversationVisibility];
+        [self updateArchiveButtonVisibility];
     }
 }
 
