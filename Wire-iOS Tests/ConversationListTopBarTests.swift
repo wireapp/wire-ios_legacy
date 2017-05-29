@@ -116,7 +116,7 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
     
-    func testThatItRendersSpacesBarThreeSpaces() {
+    func disabled_testThatItRendersSpacesBarThreeSpaces() {
         // GIVEN & WHEN
         createTeams(createFamily: true)
         self.sut = ConversationListTopBar()
