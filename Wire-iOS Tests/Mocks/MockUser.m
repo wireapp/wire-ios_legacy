@@ -187,6 +187,16 @@ static id<ZMBareUser> mockSelfUser = nil;
 {
     return [NSSet set];
 }
+
+ - (Team *)activeTeam
+{
+    return nil;
+}
+
+- (BOOL)isMemberOf:(Team *)team
+{
+    return NO;
+}
     
 - (BOOL)isPendingApproval {
     return false;
