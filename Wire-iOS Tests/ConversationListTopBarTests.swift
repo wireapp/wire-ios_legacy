@@ -80,7 +80,6 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        self.recordMode = true
         MockUser.setMockSelf(self.selfUser)
         self.snapshotBackgroundColor = UIColor(white: 0, alpha: 0.8)
     }
