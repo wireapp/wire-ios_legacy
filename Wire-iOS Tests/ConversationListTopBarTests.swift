@@ -80,6 +80,7 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        self.recordMode = true
         MockUser.setMockSelf(self.selfUser)
         self.snapshotBackgroundColor = UIColor(white: 0, alpha: 0.8)
     }
@@ -162,51 +163,54 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
     
-//    func testThatItRendersSpacesBarAfterDefaultBar() {
-//        // GIVEN & WHEN
-//        
-//        removeTeams()
-//        
-//        // WHEN
-//        _ = sut.snapshotView()
-//        
-//        // AND WHEN
-//        createTeams()
-//        sut.update(to: ConversationListTopBar.ImagesState.visible)
-//        
-//        // THEN
-//        self.verify(view: sut.snapshotView())
-//    }
-//    
-//    func testThatItRendersSpacesBarAfterDefaultBar_ScrolledAway() {
-//        // GIVEN & WHEN
-//        scrollView.contentOffset = CGPoint(x: 0, y: 100)
-//        removeTeams()
-//        
-//        // WHEN
-//        _ = sut.snapshotView()
-//        
-//        // AND WHEN
-//        createTeams()
-//        
-//        // THEN
-//        self.verify(view: sut.snapshotView())
-//    }
-//    
-//    func testThatItRendersDefaultBarAfterSpacesBar() {
-//        // GIVEN & WHEN
-//        createTeams()
-//        sut.update(to: ConversationListTopBar.ImagesState.visible)
-//        
-//        // WHEN
-//        _ = sut.snapshotView()
-//        
-//        // AND WHEN
-//        removeTeams()
-//        
-//        // THEN
-//        self.verify(view: sut.snapshotView())
-//    }
+    func testThatItRendersSpacesBarAfterDefaultBar() {
+        // GIVEN & WHEN
+        
+        self.sut = ConversationListTopBar()
+        
+        // WHEN
+        _ = sut.snapshotView()
+        
+        // AND WHEN
+        createTeams()
+        sut.update(to: ConversationListTopBar.ImagesState.visible, force: true)
+        self.sut.updateShowTeamsIfNeeded()
+
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+    
+    func testThatItRendersSpacesBarAfterDefaultBar_ScrolledAway() {
+        // GIVEN & WHEN
+        self.sut = ConversationListTopBar()
+        scrollView.contentOffset = CGPoint(x: 0, y: 100)
+        
+        // WHEN
+        _ = sut.snapshotView()
+        
+        // AND WHEN
+        createTeams()
+        self.sut.updateShowTeamsIfNeeded()
+        
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+    
+    func testThatItRendersDefaultBarAfterSpacesBar() {
+        // GIVEN & WHEN
+        createTeams()
+        self.sut = ConversationListTopBar()
+
+        // WHEN
+        _ = sut.snapshotView()
+        
+        // AND WHEN
+        removeTeams()
+        self.sut.updateShowTeamsIfNeeded()
+
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
 }
 
 fileprivate extension UIView {

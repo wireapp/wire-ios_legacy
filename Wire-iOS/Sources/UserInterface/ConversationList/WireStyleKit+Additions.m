@@ -38,7 +38,7 @@
     [bezierPath addCurveToPoint: CGPointMake(17.98, 0.88) controlPoint1: CGPointMake(13.06, -0.29) controlPoint2: CGPointMake(15.94, -0.29)];
     [bezierPath closePath];
     
-    [bezierPath applyTransform:CGAffineTransformMakeTranslation(0.5, -.75)];
+    [bezierPath applyTransform:CGAffineTransformMakeTranslation(0.5, -.5)];
     
     return bezierPath;
 }

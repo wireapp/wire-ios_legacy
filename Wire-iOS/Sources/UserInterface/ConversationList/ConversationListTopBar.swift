@@ -71,7 +71,7 @@ final class ConversationListTopBar: TopBar {
     
     fileprivate var showTeams: Bool = false
     
-    fileprivate func updateShowTeamsIfNeeded() {
+    internal func updateShowTeamsIfNeeded() {
         if ZMUser.selfUser().teams.count > 0 {
             if !showTeams {
                 self.setShowTeams(to: true)
