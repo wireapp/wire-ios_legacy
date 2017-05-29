@@ -75,15 +75,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)setupObserversForActiveTeam
 {
-    if (self.pendingConversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.pendingConversationListObserverToken forList:nil];
-    }
-    if (self.conversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:nil];
-    }
-    if (self.clearedConversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.clearedConversationListObserverToken forList:nil];
-    }
     self.pendingConversationListObserverToken = [ConversationListChangeInfo addObserver:self
                                                                                 forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:ZMUser.selfUser.activeTeam]];
     

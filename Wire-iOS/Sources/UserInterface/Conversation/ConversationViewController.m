@@ -161,10 +161,6 @@
 
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
-    
-    if (self.conversationListObserverToken != nil) {
-        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:nil];
-    }
 }
 
 - (void)viewDidLoad
