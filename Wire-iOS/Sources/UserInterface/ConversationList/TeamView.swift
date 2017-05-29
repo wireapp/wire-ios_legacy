@@ -217,6 +217,11 @@ public final class PersonalTeamView: BaseTeamView {
     
     override init() {
         super.init()
+        
+        self.isAccessibilityElement = true
+        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.shouldGroupAccessibilityChildren = true
+        
         userImageView.user = ZMUser.selfUser()
         
         selectionView.pathGenerator = {
@@ -226,7 +231,7 @@ public final class PersonalTeamView: BaseTeamView {
         selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
         if let userSession = ZMUserSession.shared() {
-        conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
+            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
         }
         
         self.imageViewContainer.addSubview(userImageView)
@@ -245,6 +250,8 @@ public final class PersonalTeamView: BaseTeamView {
     public override func update() {
         self.nameLabel.text = ZMUser.selfUser().displayName
         self.selected = ZMUser.selfUser().teams.first(where: { $0.isActive }) == nil
+        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName)
+        self.accessibilityIdentifier = "self team"
     }
 }
 
@@ -362,6 +369,10 @@ public final class TeamImageView: UIImageView {
         
         super.init()
         
+        self.isAccessibilityElement = true
+        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.shouldGroupAccessibilityChildren = true
+        
         imageView.contentMode = .scaleAspectFill
         
         imageViewContainer.addSubview(imageView)
@@ -400,6 +411,8 @@ public final class TeamImageView: UIImageView {
     
     fileprivate func updateLabel() {
         self.nameLabel.text = self.team.name
+        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "")
+        self.accessibilityIdentifier = "\(self.team.name ?? "") team"
     }
     
     static let ciContext: CIContext = {

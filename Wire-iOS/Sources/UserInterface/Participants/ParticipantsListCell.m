@@ -58,6 +58,7 @@
     self.guestLabel = [[RoundedTextBadge alloc] initForAutoLayout];
     self.guestLabel.textLabel.text = NSLocalizedString(@"participants.avatar.guest.title", @"");
     self.guestLabel.hidden = YES;
+    self.guestLabel.accessibilityIdentifier = @"guest label";
     [self.contentView addSubview:self.guestLabel];
     
     [self.userImageView autoCenterInSuperview];
