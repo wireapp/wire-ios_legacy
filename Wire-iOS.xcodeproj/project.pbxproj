@@ -65,7 +65,6 @@
 		168634D91ADD3BCE00EDC7D9 /* TermsOfUseStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168634D81ADD3BCE00EDC7D9 /* TermsOfUseStepViewController.m */; };
 		168634DF1ADD671100EDC7D9 /* NameStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168634DE1ADD671100EDC7D9 /* NameStepViewController.m */; };
 		168634E51ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168634E41ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m */; };
-		168635321ADFB20900EDC7D9 /* ShareContactsStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168635311ADFB20900EDC7D9 /* ShareContactsStepViewController.m */; };
 		168635421AE018B300EDC7D9 /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 168635411AE018B300EDC7D9 /* RegistrationFormController.m */; };
 		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
@@ -1116,8 +1115,6 @@
 		168634DE1ADD671100EDC7D9 /* NameStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NameStepViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		168634E31ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureStepViewController.h; sourceTree = "<group>"; };
 		168634E41ADD7C5A00EDC7D9 /* ProfilePictureStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ProfilePictureStepViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		168635301ADFB20900EDC7D9 /* ShareContactsStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareContactsStepViewController.h; sourceTree = "<group>"; };
-		168635311ADFB20900EDC7D9 /* ShareContactsStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ShareContactsStepViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		168635401AE018B300EDC7D9 /* RegistrationFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFormController.h; sourceTree = "<group>"; };
 		168635411AE018B300EDC7D9 /* RegistrationFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFormController.m; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
@@ -2597,8 +2594,6 @@
 				DB888FBA1ADD195F00CE9A88 /* EmailStepViewController.m */,
 				87722C521ADFEDFA00842F18 /* EmailVerificationStepViewController.h */,
 				87722C531ADFEDFA00842F18 /* EmailVerificationStepViewController.m */,
-				168635301ADFB20900EDC7D9 /* ShareContactsStepViewController.h */,
-				168635311ADFB20900EDC7D9 /* ShareContactsStepViewController.m */,
 				8798C5181C3ACDF700678AD7 /* NoHistoryViewController.h */,
 				8798C5191C3ACDF700678AD7 /* NoHistoryViewController.m */,
 			);
@@ -6023,7 +6018,6 @@
 				8FC853A5199245770008B66B /* main.m in Sources */,
 				8798C51A1C3ACDF700678AD7 /* NoHistoryViewController.m in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
-				168635321ADFB20900EDC7D9 /* ShareContactsStepViewController.m in Sources */,
 				871BC2261D34F8F800DF0793 /* BrowserViewController.m in Sources */,
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,

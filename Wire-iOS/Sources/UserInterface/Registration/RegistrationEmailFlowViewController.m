@@ -31,7 +31,6 @@
 #import "ZMUserSession+Additions.h"
 #import "NavigationController.h"
 #import "AppDelegate.h"
-#import "ShareContactsStepViewController.h"
 
 #import "AnalyticsTracker+Registration.h"
 
@@ -130,16 +129,6 @@
     [self.navigationController pushViewController:pictureStepViewController animated:YES];
 }
 
-- (void)presentShareContactsViewController
-{
-    ShareContactsStepViewController *shareContactsStepViewController = [[ShareContactsStepViewController alloc] init];
-    shareContactsStepViewController.formStepDelegate = self;
-    shareContactsStepViewController.analyticsTracker = self.analyticsTracker;
-    
-    self.wr_navigationController.backButtonEnabled = NO;
-    [self.navigationController pushViewController:shareContactsStepViewController animated:YES];
-}
-
 #pragma mark - FormStepDelegate
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
@@ -181,18 +170,13 @@
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
         [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
-        [self presentShareContactsViewController];
-    }
-    else if ([viewController isKindOfClass:[ShareContactsStepViewController class]]) {
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
 
 - (void)didSkipFormStep:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[ShareContactsStepViewController class]]) {
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
+    [self.formStepDelegate didCompleteFormStep:self];
 }
 
 #pragma mark - EmailVerificationStepViewControllerDelegate

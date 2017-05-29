@@ -95,7 +95,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts;
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
-        [self presentShareContactsStepViewController];
+        [self presentShareContactsViewController];
     }
     
     [ZMInvitationStatusChangedNotification addInvitationStatusObserver:self];

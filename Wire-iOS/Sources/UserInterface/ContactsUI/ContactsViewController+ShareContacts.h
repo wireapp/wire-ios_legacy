@@ -22,6 +22,6 @@
 
 @interface ContactsViewController (ShareContacts) <FormStepDelegate>
 
-- (void)presentShareContactsStepViewController;
+- (void)presentShareContactsViewController;
 
 @end

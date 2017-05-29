@@ -39,7 +39,6 @@
 #import "NameStepViewController.h"
 #import "ProfilePictureStepViewController.h"
 #import "AppDelegate.h"
-#import "ShareContactsStepViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AnalyticsTracker+Registration.h"
 
@@ -159,16 +158,6 @@
     });
 }
 
-- (void)presentShareContactsViewController
-{
-    ShareContactsStepViewController *shareContactsStepViewController = [[ShareContactsStepViewController alloc] init];
-    shareContactsStepViewController.formStepDelegate = self;
-    shareContactsStepViewController.analyticsTracker = self.analyticsTracker;
-    
-    self.wr_navigationController.backButtonEnabled = NO;
-    [self.navigationController pushViewController:shareContactsStepViewController animated:YES];
-}
-
 #pragma mark - FormStepProtocol
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
@@ -215,16 +204,14 @@
             self.navigationController.showLoadingView = YES;
         }
     }
-    else if ([viewController isKindOfClass:[ShareContactsStepViewController class]]) {
+    else {
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
 
 - (void)didSkipFormStep:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[ShareContactsStepViewController class]]) {
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
+    [self.formStepDelegate didCompleteFormStep:self];
 }
 
 #pragma mark - PhoneVerificationStepViewControllerDelegate
@@ -241,11 +228,7 @@
     self.showLoadingView = NO;
     [self.analyticsTracker tagRegistrationSucceded];
     
-    if ([[ZMUserSession sharedSession] registeredOnThisDevice]) {
-        [self presentShareContactsViewController];
-    } else {
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
+    [self.formStepDelegate didCompleteFormStep:self];
 }
 
 - (void)authenticationDidFail:(NSError *)error
