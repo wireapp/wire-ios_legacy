@@ -66,6 +66,13 @@
     [self setNeedsUpdateConstraints];
 }
 
+- (void)dealloc
+{
+    if (self.conversationListObserverToken != nil) {
+        [ConversationListChangeInfo removeObserver:self.conversationListObserverToken forList:nil];
+    }
+}
+
 - (void)updateConstraints
 {
     if (! self.hasCreatedInitialConstraints) {
