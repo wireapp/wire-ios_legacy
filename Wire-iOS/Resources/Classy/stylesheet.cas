@@ -785,9 +785,12 @@ TeamImageView {
 
 PersonalTeamView {
     userImageView: @{
+        containerView: @{
+            backgroundColor: $color-background-light;
+        }
         initials: @{
             font: $font-small-semibold;
-            textColor: $color-list-avatar-initials;
+            textColor: $color-text-foreground-light;
         }
     }
 }
