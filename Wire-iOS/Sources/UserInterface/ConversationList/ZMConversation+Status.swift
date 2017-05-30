@@ -150,10 +150,7 @@ final class ContentSizeCategoryUpdater {
         self.observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIContentSizeCategoryDidChange,
                                                                object: nil,
                                                                queue: nil) { [weak self] _ in
-                                                                guard let `self` = self else {
-                                                                    return
-                                                                }
-                                                                self.callback()
+                                                                self?.callback()
         }
     }
 }
