@@ -75,8 +75,8 @@
 "contacts_ui.notification.invitation_failed" = "Failed to send invitation";
 "contacts_ui.title" = "Invite people";
 
-"contacts_ui.no_contact.title" = "No active conversations\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
 
 "contacts_ui.no_contact.archived.title" = "Everything archived";
 
