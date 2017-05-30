@@ -188,7 +188,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)updateActionBar
 {
     if (self.userSelection.users.count == 0) {
-        if (self.peopleInputController.plainTextContent.length != 0) {
+        if (self.peopleInputController.plainTextContent.length != 0 ||
+            [[ZMUser selfUser] activeTeam] != nil) {
             self.startUIView.quickActionsBar.hidden = YES;
         } else {
             self.startUIView.quickActionsBar.hidden = NO;
