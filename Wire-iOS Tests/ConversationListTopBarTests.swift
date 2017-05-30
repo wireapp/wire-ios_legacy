@@ -116,7 +116,7 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
     
-    func disabled_testThatItRendersSpacesBarThreeSpaces() {
+    func testThatItRendersSpacesBarThreeSpaces() {
         // GIVEN & WHEN
         createTeams(createFamily: true)
         self.sut = ConversationListTopBar()
@@ -127,7 +127,7 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
     
-    func disabled_testThatItRendersSpacesBarThreeSpacesScrolledAway() {
+    func testThatItRendersSpacesBarThreeSpacesScrolledAway() {
         // GIVEN & WHEN
         createTeams(createFamily: true)
         self.sut = ConversationListTopBar()

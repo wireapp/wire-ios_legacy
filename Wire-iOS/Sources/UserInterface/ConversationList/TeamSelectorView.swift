@@ -132,16 +132,28 @@ final internal class TeamSelectorView: UIView {
             guard let `self` = self else {
                 return
             }
-            self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
+            self.update(with: ZMUser.selfUser()?.teams ?? Set())
         })
-        self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
+        self.update(with: ZMUser.selfUser()?.teams ?? Set())
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    fileprivate func update(with teams: Set<Team>) {
+        let sortedTeams = teams.sorted { (teamA, teamB) -> Bool in
+            let nameA = teamA.name ?? ""
+            let nameB = teamB.name ?? ""
+            
+            return nameA.compare(nameB) == .orderedAscending
+        }
+        
+        update(with: sortedTeams)
+    }
+    
     fileprivate func update(with teams: [TeamType]) {
+        
         let selfTeamActive: Bool
         if let _ = teams.first(where: { $0.isActive }) {
             selfTeamActive = false
@@ -160,6 +172,6 @@ extension TeamSelectorView: ZMUserObserver {
         guard changeInfo.teamsChanged else {
             return
         }
-        self.update(with: Array(ZMUser.selfUser()?.teams ?? Set()))
+        self.update(with: ZMUser.selfUser()?.teams ?? Set())
     }
 }
