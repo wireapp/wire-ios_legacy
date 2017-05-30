@@ -159,9 +159,9 @@ final class ContentSizeCategoryUpdater {
 }
 
 final class ConversationStatusStyle {
-    private(set) var defaultEmphasisStyle: [String: AnyObject] = [:]
-    private(set) var defaultRegularStyle: [String: AnyObject] = [:]
-    fileprivate var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
+    private(set) var regularStyle: [String: AnyObject] = [:]
+    private(set) var emphasisStyle: [String: AnyObject] = [:]
+    private var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
     
     init() {
         contentSizeStyleUpdater = ContentSizeCategoryUpdater { [weak self] in
@@ -169,10 +169,10 @@ final class ConversationStatusStyle {
                 return
             }
             
-            self.defaultRegularStyle = [NSFontAttributeName: FontSpec(.medium, .none).font!,
-                                        NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
-            self.defaultEmphasisStyle = [NSFontAttributeName: FontSpec(.medium, .medium).font!,
-                                         NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+            self.regularStyle = [NSFontAttributeName: FontSpec(.medium, .none).font!,
+                                 NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+            self.emphasisStyle = [NSFontAttributeName: FontSpec(.medium, .medium).font!,
+                                  NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
         }
     }
 }
@@ -181,22 +181,22 @@ fileprivate let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
     static var regularStyle: [String: AnyObject] {
-        return statusStyle.defaultRegularStyle
+        return statusStyle.regularStyle
     }
     
     static var emphasisStyle: [String: AnyObject] {
-        return statusStyle.defaultEmphasisStyle
+        return statusStyle.emphasisStyle
     }
 }
 
 // Accessors for ObjC
 extension ZMConversation {
     static func statusRegularStyle() -> [String: AnyObject] {
-        return statusStyle.defaultRegularStyle
+        return statusStyle.regularStyle
     }
     
     static func statusEmphasisStyle() -> [String: AnyObject] {
-        return statusStyle.defaultEmphasisStyle
+        return statusStyle.emphasisStyle
     }
 }
 
