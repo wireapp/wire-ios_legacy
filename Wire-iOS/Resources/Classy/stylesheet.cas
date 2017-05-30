@@ -765,10 +765,6 @@ VideoMessageCell {
     }
 }
 
-DotView {
-    backgroundColor: $color-accent-current;
-}
-
 ^BaseTeamView {
     nameLabel: @{
         font: $font-small-semibold;

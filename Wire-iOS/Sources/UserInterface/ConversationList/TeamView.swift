@@ -31,7 +31,7 @@ open class LayerHostView<LayerType: CALayer>: UIView {
 }
 
 
-final class ShapeView: LayerHostView<CAShapeLayer> {
+class ShapeView: LayerHostView<CAShapeLayer> {
     public var pathGenerator: ((CGSize) -> (UIBezierPath))? {
         didSet {
             self.updatePath()
@@ -65,12 +65,46 @@ extension TeamType {
     }
 }
 
-@objc internal class DotView: UIView {
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layer.borderColor = UIColor.white.cgColor
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = min(self.bounds.size.width / 2, self.bounds.size.height / 2)
+class DotView: UIView {
+    fileprivate let circleView = ShapeView()
+    fileprivate let centerView = ShapeView()
+    private var userObserver: NSObjectProtocol!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        circleView.pathGenerator = {
+            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
+        }
+        circleView.hostedLayer.lineWidth = 0
+        circleView.hostedLayer.fillColor = UIColor.white.cgColor
+        
+        centerView.pathGenerator = {
+            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0).insetBy(dx: 1, dy: 1))
+        }
+        centerView.hostedLayer.fillColor = UIColor.accent().cgColor
+        
+        addSubview(circleView)
+        addSubview(centerView)
+        constrain(self, circleView, centerView) { selfView, backingView, centerView in
+            backingView.edges == selfView.edges
+            centerView.edges == selfView.edges
+        }
+        
+        userObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension DotView: ZMUserObserver {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.accentColorValueChanged && changeInfo.user.isSelfUser else {
+            return
+        }
+        
+        centerView.hostedLayer.fillColor = UIColor.accent().cgColor
     }
 }
 
@@ -90,6 +124,8 @@ public class BaseTeamView: UIView, TeamViewType {
     fileprivate let nameDotView = DotView()
     fileprivate let selectionView = ShapeView()
     
+    private var selfUserObserver: NSObjectProtocol!
+
     public var selected: Bool = false {
         didSet {
             updateAppearance()
@@ -112,7 +148,10 @@ public class BaseTeamView: UIView, TeamViewType {
         dotView.isHidden = selected || !hasUnreadMessages || collapsed
         
         nameLabel.textColor = (collapsed && selected) ? UIColor.accent() : ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        
+        selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
     }
+    
     public var onTap: ((TeamType?) -> ())? = .none
     
     public var accessibilityState: String {
@@ -122,7 +161,9 @@ public class BaseTeamView: UIView, TeamViewType {
     
     init() {
         super.init(frame: .zero)
-            
+        
+        selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
         selectionView.hostedLayer.lineWidth = 1.5
@@ -132,9 +173,6 @@ public class BaseTeamView: UIView, TeamViewType {
         nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         nameLabel.lineBreakMode = .byTruncatingTail
-        
-        dotView.backgroundColor = .accent()
-        nameDotView.backgroundColor = .accent()
         
         [imageViewContainer, outlineView, nameLabel, nameDotView, selectionView, dotView].forEach(self.addSubview)
         
@@ -207,10 +245,17 @@ extension BaseTeamView: ZMConversationListObserver {
     }
 }
 
+extension BaseTeamView: ZMUserObserver {
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        if changeInfo.accentColorValueChanged {
+            updateAppearance()
+        }
+    }
+}
+
 public final class PersonalTeamView: BaseTeamView {
     internal let userImageView = UserImageView(size: .normal)
     
-    private var selfUserObserver: NSObjectProtocol!
     private var teamsObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
     private var connectionRequestObserver: NSObjectProtocol!
@@ -242,7 +287,6 @@ public final class PersonalTeamView: BaseTeamView {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
         }
         
-        selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
         if let userSession = ZMUserSession.shared() {
             conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
@@ -263,6 +307,7 @@ public final class PersonalTeamView: BaseTeamView {
     }
     
     public override func update() {
+        super.update()
         self.nameLabel.text = ZMUser.selfUser().displayName
         self.selected = ZMUser.selfUser().teams.first(where: { $0.isActive }) == nil
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName) + " " + accessibilityState
@@ -273,15 +318,16 @@ public final class PersonalTeamView: BaseTeamView {
 extension PersonalTeamView: TeamObserver {
     public func teamDidChange(_ changeInfo: TeamChangeInfo) {
         if changeInfo.isActiveChanged {
-            self.update()
+            update()
         }
     }
 }
 
-extension PersonalTeamView: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
+extension PersonalTeamView {
+    override public func userDidChange(_ changeInfo: UserChangeInfo) {
+        super.userDidChange(changeInfo)
         if changeInfo.nameChanged {
-            self.update()
+            update()
         }
     }
 }

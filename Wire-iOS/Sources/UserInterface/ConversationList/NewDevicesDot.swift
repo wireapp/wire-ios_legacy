@@ -53,8 +53,9 @@ final class NewDevicesDot: DotView {
 
 // MARK: - User Observer
 
-extension NewDevicesDot: ZMUserObserver {
-    func userDidChange(_ note: UserChangeInfo) {
+extension NewDevicesDot {
+    override func userDidChange(_ note: UserChangeInfo) {
+        super.userDidChange(note)
         guard note.trustLevelChanged || note.clientsChanged || note.accentColorValueChanged else { return }
         
         if note.accentColorValueChanged {
