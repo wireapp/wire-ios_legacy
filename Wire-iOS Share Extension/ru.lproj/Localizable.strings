@@ -20,7 +20,9 @@
 
 
 
-
+"share_extension.team_selection.title" = "Team:";
+"share_extension.team_selection.empty.value" = "Отключены";
+"share_extension.team_selection.personal.team.name" = "Отключены";
 "share_extension.conversation_selection.title" = "Разговор:";
 "share_extension.send_button.title" = "Отправить";
 "share_extension.conversation_selection.empty.value" = "Выбрать";

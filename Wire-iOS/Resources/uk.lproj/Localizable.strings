@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Створити групу";
 "peoplepicker.button.add_to_conversation" = "Додати";
 "peoplepicker.header.conversations" = "Групи";
+"peoplepicker.header.team_conversations" = "Групи %@";
 "peoplepicker.header.send_invitation" = "Запросити";
 "peoplepicker.header.contacts" = "Контакти";
+"peoplepicker.header.contacts_personal" = "Персональні контакти";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Додати до контактів";
 "peoplepicker.title.create_conversation" = "Створити групу";
 "peoplepicker.title.add_to_conversation" = "Додати учасників";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Не вдалося надіслати запрошення";
 "contacts_ui.title" = "Запросити людей";
 
-"contacts_ui.no_contact.title" = "Немає активних розмов\n";
-"contacts_ui.no_contact.message" = "Доторкніться до аватарки, щоб почати розмову";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Усі розмови заархівовано";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Приєднатись";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Додати учасників";
+"participants.avatar.guest.title" = "Гість";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Змінний бітрейт";
 "self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
-
-"self.settings.workspace.title" = "Ім'я робочого простору";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";

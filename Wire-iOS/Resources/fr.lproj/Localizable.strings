@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Créer un groupe";
 "peoplepicker.button.add_to_conversation" = "Ajouter";
 "peoplepicker.header.conversations" = "Groupes";
+"peoplepicker.header.team_conversations" = "Groupes %@";
 "peoplepicker.header.send_invitation" = "Inviter";
-"peoplepicker.header.contacts" = "Connexions";
+"peoplepicker.header.contacts" = "Contacts";
+"peoplepicker.header.contacts_personal" = "Contacts personnels";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Se connecter";
 "peoplepicker.title.create_conversation" = "Créer un groupe";
 "peoplepicker.title.add_to_conversation" = "Ajouter des personnes";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Impossible d’envoyer l’invitation";
 "contacts_ui.title" = "Inviter des personnes";
 
-"contacts_ui.no_contact.title" = "Aucune conversation active\n";
-"contacts_ui.no_contact.message" = "Appuyez sur un contact pour démarrer une conversation";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Tout a été archivé";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "dans les contacts";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Ajouter une personne";
+"participants.avatar.guest.title" = "Invité";
 
 // Meta Menu
 "meta.menu.rename" = "Renommer";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
 "self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";

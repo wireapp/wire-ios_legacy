@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Crear grupo";
 "peoplepicker.button.add_to_conversation" = "Añadir";
 "peoplepicker.header.conversations" = "Grupos";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invitar";
 "peoplepicker.header.contacts" = "Contactos";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Conectar";
 "peoplepicker.title.create_conversation" = "Crear grupo";
 "peoplepicker.title.add_to_conversation" = "Añadir contactos";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "No se pudo enviar la invitación";
 "contacts_ui.title" = "Invitar contactos";
 
-"contacts_ui.no_contact.title" = "No hay chats activos";
-"contacts_ui.no_contact.message" = "Toca sobre un contacto para iniciar un chat";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Todo archivado";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entrar";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "en contactos";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Añadir contactos";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Renombrar";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";

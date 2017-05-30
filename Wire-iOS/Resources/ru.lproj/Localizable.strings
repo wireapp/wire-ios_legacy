@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Создать группу";
 "peoplepicker.button.add_to_conversation" = "Добавить";
 "peoplepicker.header.conversations" = "Группы";
+"peoplepicker.header.team_conversations" = "%@ групп";
 "peoplepicker.header.send_invitation" = "Пригласить";
 "peoplepicker.header.contacts" = "Контакты";
+"peoplepicker.header.contacts_personal" = "Личные контакты";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Добавить в контакты";
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Не удалось отправить приглашение";
 "contacts_ui.title" = "Пригласить людей";
 
-"contacts_ui.no_contact.title" = "Нет активных разговоров";
-"contacts_ui.no_contact.message" = "Нажмите на контакты, чтобы начать новый разговор";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Все разговоры отправлены в архив";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Присоединиться";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Добавить людей";
+"participants.avatar.guest.title" = "Гость";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
 "self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";

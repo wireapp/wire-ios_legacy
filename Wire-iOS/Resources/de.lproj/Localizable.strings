@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
 "peoplepicker.button.add_to_conversation" = "Hinzufügen";
 "peoplepicker.header.conversations" = "Gruppen";
+"peoplepicker.header.team_conversations" = "%@ Gruppen";
 "peoplepicker.header.send_invitation" = "Einladen";
 "peoplepicker.header.contacts" = "Kontakte";
+"peoplepicker.header.contacts_personal" = "Persönliche Kontakte";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Vorschläge";
 "peoplepicker.title.create_conversation" = "Gruppe erstellen";
 "peoplepicker.title.add_to_conversation" = "Kontakte hinzufügen";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Einladung senden fehlgeschlagen";
 "contacts_ui.title" = "Freunde einladen";
 
-"contacts_ui.no_contact.title" = "Keine aktiven Unterhaltungen\n";
-"contacts_ui.no_contact.message" = "Tippe auf Personen, um eine Unterhaltung anzufangen";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Alle Unterhaltungen archiviert";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Beitreten";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ Team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Zum Aktivieren tippen.";
+"conversation_list.header.self_team.accessibility_value.active" = "Aktiv.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Kontakte";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Kontakte hinzufügen";
+"participants.avatar.guest.title" = "Gast";
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Variable Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Anruf";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Nachricht";

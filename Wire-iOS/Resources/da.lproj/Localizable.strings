@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Opret gruppe";
 "peoplepicker.button.add_to_conversation" = "Tilføj";
 "peoplepicker.header.conversations" = "Grupper";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invitér";
-"peoplepicker.header.contacts" = "Forbindelser";
+"peoplepicker.header.contacts" = "Kontakter";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Forbind";
 "peoplepicker.title.create_conversation" = "Opret gruppe";
 "peoplepicker.title.add_to_conversation" = "Tilføj personer";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Kunne ikke sende invitation";
 "contacts_ui.title" = "Invitér personer";
 
-"contacts_ui.no_contact.title" = "Ingen aktive samtaler\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Alt arkiveret";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Deltag";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "i Kontaktpersoner";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Tilføj personer";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Omdøb";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Variable bithastighed";
 "self.settings.vbr.description" = "Dette gør, at lydopkald bruger færre data og fungerer bedre med langsommere netværk. Sluk for at anvende konstant bithastighed.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Opkald";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Besked";

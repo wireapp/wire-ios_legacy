@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "创建群聊";
 "peoplepicker.button.add_to_conversation" = "新增";
 "peoplepicker.header.conversations" = "群组";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "邀请";
-"peoplepicker.header.contacts" = "联络人";
+"peoplepicker.header.contacts" = "联系人";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "新增好友";
 "peoplepicker.title.create_conversation" = "创建群聊\n";
 "peoplepicker.title.add_to_conversation" = "新增好友";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "无法发送邀请";
 "contacts_ui.title" = "邀请联系人";
 
-"contacts_ui.no_contact.title" = "没有活跃的对话\n";
-"contacts_ui.no_contact.message" = "Tap people to start a conversation";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "所以内容均已存档";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "加入";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "新增好友";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "可变码率编码";
 "self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 通话";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 信息";

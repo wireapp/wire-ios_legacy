@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Crea gruppo";
 "peoplepicker.button.add_to_conversation" = "Aggiungi";
 "peoplepicker.header.conversations" = "Gruppi";
+"peoplepicker.header.team_conversations" = "%@ Gruppi";
 "peoplepicker.header.send_invitation" = "Invita";
-"peoplepicker.header.contacts" = "Connessioni";
+"peoplepicker.header.contacts" = "Contatti";
+"peoplepicker.header.contacts_personal" = "Contatti personali";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Connetti";
 "peoplepicker.title.create_conversation" = "Crea gruppo";
 "peoplepicker.title.add_to_conversation" = "Aggiungi persone";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Invio dell'invito fallito";
 "contacts_ui.title" = "Invita persone";
 
-"contacts_ui.no_contact.title" = "Nessuna conversazione attiva\n";
-"contacts_ui.no_contact.message" = "Tocca contatti per iniziare una conversazione";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Tutto archiviato";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entra";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tocca per attivare.";
+"conversation_list.header.self_team.accessibility_value.active" = "Attiva ora.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contatti";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Aggiungi persone";
+"participants.avatar.guest.title" = "Ospite";
 
 // Meta Menu
 "meta.menu.rename" = "Rinomina";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Codifica con Bit Rate variabile";
 "self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chiamata Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Messaggio Wire";

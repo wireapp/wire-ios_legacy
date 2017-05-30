@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Loo grupivestlus";
 "peoplepicker.button.add_to_conversation" = "Lisa";
 "peoplepicker.header.conversations" = "Grupid";
+"peoplepicker.header.team_conversations" = "%@ grupid";
 "peoplepicker.header.send_invitation" = "Kutsu";
 "peoplepicker.header.contacts" = "Kontaktid";
+"peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Lisa kontakt";
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Kutse saatmine ebaõnnestus";
 "contacts_ui.title" = "Kutsu inimesi";
 
-"contacts_ui.no_contact.title" = "Pole aktiivseid vestlusi\n";
-"contacts_ui.no_contact.message" = "Vestluse alustamiseks toksa kontaktidel";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Kõik on arhiveeritud";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liitu";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Lisa inimesi";
+"participants.avatar.guest.title" = "Külaline";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
 "self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Kõne";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sõnum";

@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "グループを作成";
 "peoplepicker.button.add_to_conversation" = "追加";
 "peoplepicker.header.conversations" = "グループ";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "招待";
-"peoplepicker.header.contacts" = "接続";
+"peoplepicker.header.contacts" = "連絡先";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "接続";
 "peoplepicker.title.create_conversation" = "グループを作成します";
 "peoplepicker.title.add_to_conversation" = "人を追加します";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "招待状を送信できませんでした";
 "contacts_ui.title" = "友達を招待する";
 
-"contacts_ui.no_contact.title" = "アクティブな会話が有りません\n";
-"contacts_ui.no_contact.message" = "連絡先をタップして会話を始める";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "全てアーカイブ済み";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "参加する";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "人を追加します";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
 "self.settings.sound_menu.sounds.wire_message" = "Wireメッセージ";

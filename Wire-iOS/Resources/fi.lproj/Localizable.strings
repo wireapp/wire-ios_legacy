@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Luo ryhmä";
 "peoplepicker.button.add_to_conversation" = "Lisää";
 "peoplepicker.header.conversations" = "Ryhmät";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Kutsu";
-"peoplepicker.header.contacts" = "Yhteydet";
+"peoplepicker.header.contacts" = "Yhteystiedot";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Yhdistä";
 "peoplepicker.title.create_conversation" = "Luo ryhmä";
 "peoplepicker.title.add_to_conversation" = "Lisää ihmisiä";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Kutsun lähettäminen epäonnistui";
 "contacts_ui.title" = "Kutsu ihmisiä";
 
-"contacts_ui.no_contact.title" = "Ei aktiivisia keskusteluja\n";
-"contacts_ui.no_contact.message" = "Kosketa yhteystietoja aloittaksesi keskustelun";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Kaikki arkistoitu";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liity";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "yhteystiedoissa";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Lisää ihmisiä";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeä uudelleen";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Variable Bit Rate Encoding";
 "self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Puhelu";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Viesti";

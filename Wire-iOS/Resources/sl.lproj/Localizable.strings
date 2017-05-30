@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Ustvari skupino";
 "peoplepicker.button.add_to_conversation" = "Dodaj";
 "peoplepicker.header.conversations" = "Skupine";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Povabi";
-"peoplepicker.header.contacts" = "Povezave";
+"peoplepicker.header.contacts" = "Stiki";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Poveži";
 "peoplepicker.title.create_conversation" = "Ustvari skupino";
 "peoplepicker.title.add_to_conversation" = "Dodaj osebe";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Pošiljanje povabila ni uspelo";
 "contacts_ui.title" = "Povabite osebe";
 
-"contacts_ui.no_contact.title" = "Ni aktivnih pogovorov\n";
-"contacts_ui.no_contact.message" = "Tapnite osebe za začetek pogovora";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Vse je arhivirano";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Pridruži";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "v stikih";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Dodaj osebe";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Preimenuj";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Spremenljiva bitna hitrost kodiranja";
 "self.settings.vbr.description" = "Omogoča manjšo porabo podatkov v avdio klicih in bolje delovanje na počasnejših omrežjih. Izklopite za uporabo Stalne bitne hitrosti kodiranja.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Klic";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Sporočilo";

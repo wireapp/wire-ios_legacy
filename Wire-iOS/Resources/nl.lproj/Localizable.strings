@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Groep creëren";
 "peoplepicker.button.add_to_conversation" = "Toevoegen";
 "peoplepicker.header.conversations" = "Groepen";
+"peoplepicker.header.team_conversations" = "%@ Groepen";
 "peoplepicker.header.send_invitation" = "Uitnodigen";
 "peoplepicker.header.contacts" = "Contacten";
+"peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Contacten toevoegen";
 "peoplepicker.title.create_conversation" = "Maak groep";
 "peoplepicker.title.add_to_conversation" = "Contacten toevoegen";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Het versturen van de uitnodiging is mislukt";
 "contacts_ui.title" = "Nodig anderen uit";
 
-"contacts_ui.no_contact.title" = "Geen actieve gesprekken\n";
-"contacts_ui.no_contact.message" = "Tap een persoon om een gesprek te beginnen";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Alles gearchiveerd";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Deelnemen";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap om te activeren.";
+"conversation_list.header.self_team.accessibility_value.active" = "Nu activeren.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacten";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Contacten toevoegen";
+"participants.avatar.guest.title" = "Gast";
 
 // Meta Menu
 "meta.menu.rename" = "Wijzig naam";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Variable Bit Rate codering";
 "self.settings.vbr.description" = "Hierdoor gebruik je minder data tijdens het bellen, en het werkt beter op trage netwerken. Zet dit uit om een constante Bitrate Encoding te gebruiken.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire oproep";
 "self.settings.sound_menu.sounds.wire_message" = "Wire bericht";

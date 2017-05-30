@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Załóż grupę";
 "peoplepicker.button.add_to_conversation" = "Dodaj";
 "peoplepicker.header.conversations" = "Grupy";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Zaproś";
-"peoplepicker.header.contacts" = "Połączenia";
+"peoplepicker.header.contacts" = "Kontakty";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Połącz";
 "peoplepicker.title.create_conversation" = "Załóż grupę";
 "peoplepicker.title.add_to_conversation" = "Dodaj osoby";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Nie można wysłać zaproszenia";
 "contacts_ui.title" = "Zaproś osoby";
 
-"contacts_ui.no_contact.title" = "Brak aktywnych rozmów\n";
-"contacts_ui.no_contact.message" = "Dotknij kontakt, aby rozpocząć konwersację";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Wszystko zarchiwizowane";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Dołącz";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "w kontaktach";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Dodaj osoby";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Zmień nazwę";
@@ -604,10 +614,8 @@
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
 "self.settings.callkit.description" = "Pokaż połączenia Wire na ekranie blokady i w historii połączeń iOS. Jeśli iCloud jest aktywny, historia połączeń zostanie udostępnione dla Apple. Uruchom ponownie Wire aby zastosować ustawienia.";
 
-"self.settings.vbr.title" = "Kodowanie w zmiennej przepływności (VBR)";
-"self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania w stałej przepływności (CBR).";
-
-"self.settings.workspace.title" = "Workspace Name";
+"self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
+"self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania o stałej przepływności (CBR).";
 
 "self.settings.sound_menu.sounds.wire_call" = "Połączenie Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Wiadomość Wire";

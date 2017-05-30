@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.button.add_to_conversation" = "إضافة";
 "peoplepicker.header.conversations" = "المجموعات";
+"peoplepicker.header.team_conversations" = "%@ مجموعات";
 "peoplepicker.header.send_invitation" = "قم بدعوة";
 "peoplepicker.header.contacts" = "جهات الاتصال";
+"peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "تواصل";
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "فَشل إرسال الدعوة";
 "contacts_ui.title" = "دعوة أُناس";
 
-"contacts_ui.no_contact.title" = "لا توجد محادثات نشطة\n";
-"contacts_ui.no_contact.message" = "انقر على أشخاص لتبدأ محادثة";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "أُرشف كل شيء";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "انضم إلى";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "إضافة أشخاص";
+"participants.avatar.guest.title" = "ضيف";
 
 // Meta Menu
 "meta.menu.rename" = "إعادة التّسمية";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "ترميز بمعدل بت متغير";
 "self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
 "self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";

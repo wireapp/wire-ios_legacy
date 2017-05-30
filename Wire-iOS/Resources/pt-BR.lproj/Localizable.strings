@@ -29,8 +29,11 @@
 "peoplepicker.button.create_conversation" = "Criar grupo";
 "peoplepicker.button.add_to_conversation" = "Adicionar";
 "peoplepicker.header.conversations" = "Grupos";
+"peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Convidar";
-"peoplepicker.header.contacts" = "Conexões";
+"peoplepicker.header.contacts" = "Contatos";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Conectar";
 "peoplepicker.title.create_conversation" = "Criar grupo";
 "peoplepicker.title.add_to_conversation" = "Adicionar pessoas";
@@ -72,15 +75,21 @@
 "contacts_ui.notification.invitation_failed" = "Falha ao enviar o convite";
 "contacts_ui.title" = "Convidar pessoas";
 
-"contacts_ui.no_contact.title" = "Não há conversas ativas\n";
-"contacts_ui.no_contact.message" = "Toque nas pessoas para iniciar uma conversa";
+"contacts_ui.no_contact.title" = "No conversations yet\n";
+"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+
+"contacts_ui.no_contact.archived.title" = "Tudo foi arquivado";
+
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Participe";
-
+"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "nos Contatos";
+
 
 
 // Archived List
@@ -373,6 +382,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Adicionar pessoas";
+"participants.avatar.guest.title" = "Guest";
 
 // Meta Menu
 "meta.menu.rename" = "Renomear";
@@ -606,8 +616,6 @@
 
 "self.settings.vbr.title" = "Codificação com Taxa de Bits Variável";
 "self.settings.vbr.description" = "Isto faz chamadas de áudio usar menos dados e funcionam melhor em redes mais lentas. Desligue para usar a Codificação com Taxa de Bits Constante.";
-
-"self.settings.workspace.title" = "Workspace Name";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chamada do Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Mensagem do Wire";
