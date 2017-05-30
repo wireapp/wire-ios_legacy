@@ -34,7 +34,6 @@
 @property (nonatomic, strong) PeoplePickerEmptyResultsView *emptyResultView;
 
 @property (nonatomic) CGFloat keyboardHeight;
-@property (nonatomic) NSLayoutConstraint *emptyResultsViewBottomOffset;
 @property (nonatomic) NSLayoutConstraint *actionsBarBottomOffset;
 
 @property (nonatomic) CGRect currentLayoutBounds;
@@ -190,7 +189,7 @@
         [self.emptyResultView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
         
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-            self.emptyResultsViewBottomOffset = [self.emptyResultView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:self.keyboardHeight];
+            [self.emptyResultView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.collectionView withOffset:self.keyboardHeight];
         }];
     }
     
@@ -308,7 +307,6 @@
                                      // NOTE: we don't attach a input accessory view in the start UI but we do
                                      // in the conversation input bar so we must subtracts its height here.
                                      self.keyboardHeight = keyboardFrameInView.size.height - inputAccessoryViewHeight;
-                                     self.emptyResultsViewBottomOffset.constant = -self.keyboardHeight;
                                      self.actionsBarBottomOffset.constant = -self.keyboardHeight;
                                      [self updateConstraints];
                                      [self layoutIfNeeded];

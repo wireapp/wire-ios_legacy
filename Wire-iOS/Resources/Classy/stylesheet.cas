@@ -1222,7 +1222,7 @@ ActionSheetContainerView.dark {
 
 PeoplePickerEmptyResultsView UITextView {
     font: $font-normal-thin;
-    textColor: $color-text-foreground;
+    textColor: $color-text-foreground-dark;
     editable: NO;
     selectable: NO;
 }
