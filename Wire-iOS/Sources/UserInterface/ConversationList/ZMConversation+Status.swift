@@ -135,34 +135,68 @@ extension ConversationStatusMatcher {
     }
     
     func addEmphasis(to string: NSAttributedString, for substring: String) -> NSAttributedString {
-        return string.setAttributes(type(of: self).emphasisStyle(), toSubstring: substring)
+        return string.setAttributes(type(of: self).emphasisStyle, toSubstring: substring)
     }
 }
 
-fileprivate let defaultRegularStyle = [NSFontAttributeName: FontSpec(.medium, .none).font!,
-                                       NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
 
-fileprivate let defaultEmphasisStyle = [NSFontAttributeName: FontSpec(.medium, .medium).font!,
+final class ContentSizeCategoryUpdater {
+    private let callback: () -> ()
+    private var observer: NSObjectProtocol!
+    
+    init(callback: @escaping () -> ()) {
+        self.callback = callback
+        callback()
+        self.observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIContentSizeCategoryDidChange,
+                                                               object: nil,
+                                                               queue: nil) { [weak self] _ in
+                                                                guard let `self` = self else {
+                                                                    return
+                                                                }
+                                                                self.callback()
+        }
+    }
+}
+
+final class ConversationStatusStyle {
+    private(set) var defaultEmphasisStyle: [String: AnyObject] = [:]
+    private(set) var defaultRegularStyle: [String: AnyObject] = [:]
+    fileprivate var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
+    
+    init() {
+        contentSizeStyleUpdater = ContentSizeCategoryUpdater { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.defaultRegularStyle = [NSFontAttributeName: FontSpec(.medium, .none).font!,
                                         NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+            self.defaultEmphasisStyle = [NSFontAttributeName: FontSpec(.medium, .medium).font!,
+                                         NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+        }
+    }
+}
+
+fileprivate let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
-    static func regularStyle() -> [String: AnyObject] {
-        return defaultRegularStyle
+    static var regularStyle: [String: AnyObject] {
+        return statusStyle.defaultRegularStyle
     }
     
-    static func emphasisStyle() -> [String: AnyObject] {
-        return defaultEmphasisStyle
+    static var emphasisStyle: [String: AnyObject] {
+        return statusStyle.defaultEmphasisStyle
     }
 }
 
 // Accessors for ObjC
 extension ZMConversation {
     static func statusRegularStyle() -> [String: AnyObject] {
-        return BlockedMatcher.regularStyle()
+        return statusStyle.defaultRegularStyle
     }
     
     static func statusEmphasisStyle() -> [String: AnyObject] {
-        return BlockedMatcher.emphasisStyle()
+        return statusStyle.defaultEmphasisStyle
     }
 }
 
@@ -174,7 +208,7 @@ final internal class SelfUserLeftMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.you_left".localized && type(of: self).regularStyle()
+        return "conversation.status.you_left".localized && type(of: self).regularStyle
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
@@ -191,7 +225,7 @@ final internal class BlockedMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.blocked".localized && type(of: self).regularStyle()
+        return "conversation.status.blocked".localized && type(of: self).regularStyle
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -204,7 +238,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.call".localized && type(of: self).regularStyle()
+        return "conversation.status.call".localized && type(of: self).regularStyle
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
@@ -231,11 +265,11 @@ final internal class TypingMatcher: ConversationStatusMatcher {
         if status.isGroup, let typingUsers = conversation.typingUsers() {
             let typingUsersString = typingUsers.flatMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
-            let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle())
+            let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
         }
         else {
-            statusString = "conversation.status.typing".localized && type(of: self).regularStyle()
+            statusString = "conversation.status.typing".localized && type(of: self).regularStyle
         }
         return statusString
     }
@@ -298,7 +332,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
                 return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.messagesRequiringAttentionByType[$0] ?? 0)
                 }.joined(separator: ", ")
             
-            return resultString.capitalizingFirstLetter() && type(of: self).regularStyle()
+            return resultString.capitalizingFirstLetter() && type(of: self).regularStyle
         }
         else {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
@@ -314,7 +348,7 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
                     let sender = message.sender,
                     let type = StatusMessageType(message: message),
                     let localizationKey = matchedTypesDescriptions[type] else {
-                return "" && type(of: self).regularStyle()
+                return "" && type(of: self).regularStyle
             }
             
             let messageDescription: String
@@ -326,11 +360,11 @@ final internal class NewMessagesMatcher: ConversationStatusMatcher {
             }
             
             if status.isGroup {
-                return ((sender.displayName(in: conversation) + ": ") && type(of: self).emphasisStyle()) +
-                        (messageDescription && type(of: self).regularStyle())
+                return ((sender.displayName(in: conversation) + ": ") && type(of: self).emphasisStyle) +
+                        (messageDescription && type(of: self).regularStyle)
             }
             else {
-                return messageDescription && type(of: self).regularStyle()
+                return messageDescription && type(of: self).regularStyle
             }
         }
     }
@@ -370,7 +404,7 @@ final internal class FailedSendMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.unsent".localized && type(of: self).regularStyle()
+        return "conversation.status.unsent".localized && type(of: self).regularStyle
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -386,21 +420,21 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
     
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
         if messages.count > 1 {
-            return "conversation.status.added_multiple".localized && type(of: self).regularStyle()
+            return "conversation.status.added_multiple".localized && type(of: self).regularStyle
         }
         else if let message = messages.last,
                 let systemMessage = message.systemMessageData,
                 let sender = message.sender,
                 !sender.isSelfUser {
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
-                let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle()
+                let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle
                 
                 return self.addEmphasis(to: result, for: sender.displayName(in: conversation))
             }
             else {
                 let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                 let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
-                let result = String(format: "conversation.status.added_users".localized, sender, usersList) && type(of: self).regularStyle()
+                let result = String(format: "conversation.status.added_users".localized, sender, usersList) && type(of: self).regularStyle
                 
                 return self.addEmphasis(to: result, for: sender)
             }
@@ -414,7 +448,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         
         if messages.count > 1 {
             if type(of: self).indicate3rdPartiesRemoval {
-                return "conversation.status.removed_multiple".localized && type(of: self).regularStyle()
+                return "conversation.status.removed_multiple".localized && type(of: self).regularStyle
             }
             else {
                 return .none
@@ -427,17 +461,17 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
             
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 if sender.isSelfUser {
-                    return "conversation.status.you_left".localized && type(of: self).regularStyle()
+                    return "conversation.status.you_left".localized && type(of: self).regularStyle
                 }
                 else {
-                    return "conversation.status.you_were_removed".localized && type(of: self).regularStyle()
+                    return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
                 }
             }
             else {
                 if type(of: self).indicate3rdPartiesRemoval {
                     let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                     let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
-                    let result = String(format: "conversation.status.removed_users".localized, sender, usersList) && type(of: self).regularStyle()
+                    let result = String(format: "conversation.status.removed_users".localized, sender, usersList) && type(of: self).regularStyle
                     return self.addEmphasis(to: result, for: sender)
                 }
                 else {
@@ -458,7 +492,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         }
         
         let resultString = [addedString(for: allStatusMessagesByType[.addParticipants] ?? [], in: conversation),
-                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].flatMap { $0 }.joined(separator: "; " && type(of: self).regularStyle())
+                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].flatMap { $0 }.joined(separator: "; " && type(of: self).regularStyle)
         return resultString
     }
     
@@ -483,7 +517,7 @@ final internal class StartConversationMatcher: ConversationStatusMatcher {
         }
         
         let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
-        return (resultString && type(of: self).regularStyle()).addAttributes(type(of: self).emphasisStyle(), toSubstring: senderString)
+        return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -501,7 +535,7 @@ final internal class UnsernameMatcher: ConversationStatusMatcher {
             return .none
         }
         
-        return "@" + handle && type(of: self).regularStyle()
+        return "@" + handle && type(of: self).regularStyle
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -561,7 +595,7 @@ extension ConversationStatus {
             return "" && [:]
         }
         let allStrings = allMatchers.flatMap { $0.description(with: self, conversation: conversation) }
-        return allStrings.joined(separator: " | " && CallingMatcher.regularStyle())
+        return allStrings.joined(separator: " | " && CallingMatcher.regularStyle)
     }
     
     internal func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
