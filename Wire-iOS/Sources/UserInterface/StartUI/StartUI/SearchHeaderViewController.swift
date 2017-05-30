@@ -40,7 +40,7 @@ public class SearchHeaderViewController : UIViewController {
     let colorSchemeVariant : ColorSchemeVariant
     
     @objc
-    public var delegate : SearchHeaderViewControllerDelegate? = nil
+    public weak var delegate : SearchHeaderViewControllerDelegate? = nil
     
     public var query : String {
         return tokenField.filterText
@@ -63,7 +63,6 @@ public class SearchHeaderViewController : UIViewController {
     public override func viewDidLoad() {
         searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldTextPlaceHolder, variant: colorSchemeVariant))
         
-        titleLabel.text = title
         titleLabel.text = title?.uppercased()
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
@@ -131,7 +130,7 @@ public class SearchHeaderViewController : UIViewController {
 extension SearchHeaderViewController : UserSelectionObserver {
     
     public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser]) {
-        
+        // this is triggered by the TokenField itself so we should ignore it here
     }
     
     public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
@@ -139,9 +138,8 @@ extension SearchHeaderViewController : UserSelectionObserver {
     }
     
     public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
-        if let token = tokenField.token(forRepresentedObject: user) {
-            tokenField.removeToken(token)
-        }
+        guard let token = tokenField.token(forRepresentedObject: user) else { return }
+        tokenField.removeToken(token)
     }
     
 }

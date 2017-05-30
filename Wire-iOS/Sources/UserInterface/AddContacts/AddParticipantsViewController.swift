@@ -38,7 +38,7 @@ public class AddParticipantsViewController : UIViewController {
     fileprivate let bottomContainer = UIView()
     fileprivate let confirmButton : IconButton
     
-    public var delegate : AddParticipantsViewControllerDelegate? = nil
+    public weak var delegate : AddParticipantsViewControllerDelegate? = nil
     
     fileprivate let conversation : ZMConversation
     

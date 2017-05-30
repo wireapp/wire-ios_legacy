@@ -404,7 +404,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)searchHeaderViewControllerDidCancelAction:(SearchHeaderViewController *)searchHeaderViewController
 {
-    [self.searchHeaderViewController resignFirstResponder]; // FIXME jacob
+    [self.searchHeaderViewController.tokenField resignFirstResponder];
     [self.delegate startUIDidCancel:self];
 }
 
