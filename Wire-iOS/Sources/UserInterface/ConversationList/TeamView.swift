@@ -212,8 +212,11 @@ public final class PersonalTeamView: BaseTeamView {
     }
     
     public override var hasUnreadMessages: Bool {
-        return ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: nil).first(where: { ($0 as! ZMConversation).estimatedUnreadCount != 0 }) != nil ||
-                ZMConversationList.pendingConnectionConversations(inUserSession: ZMUserSession.shared()!, team: nil).count > 0
+        guard let userSession = ZMUserSession.shared() else {
+            return false
+        }
+        return ZMConversationList.conversations(inUserSession: userSession, team: nil).first(where: { ($0 as! ZMConversation).estimatedUnreadCount != 0 }) != nil ||
+                ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil).count > 0
     }
     
     override init() {
