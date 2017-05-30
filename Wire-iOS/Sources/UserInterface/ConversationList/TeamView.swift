@@ -118,6 +118,10 @@ public class BaseTeamView: UIView, TeamViewType {
     
     public var onTap: ((TeamType?) -> ())? = .none
     
+    public var accessibilityState: String {
+        return ("conversation_list.header.self_team.accessibility_value." + (self.selected ? "active" : "inactive")).localized
+    }
+    
     init() {
         super.init(frame: .zero)
         
@@ -250,7 +254,7 @@ public final class PersonalTeamView: BaseTeamView {
     public override func update() {
         self.nameLabel.text = ZMUser.selfUser().displayName
         self.selected = ZMUser.selfUser().teams.first(where: { $0.isActive }) == nil
-        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName)
+        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName) + " " + accessibilityState
         self.accessibilityIdentifier = "self team"
     }
 }
@@ -407,12 +411,12 @@ public final class TeamImageView: UIImageView {
         self.updateLabel()
         self.selected = self.team.isActive
         self.imageView.updateImage()
+        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "") + " " + accessibilityState
+        self.accessibilityIdentifier = "\(self.team.name ?? "") team"
     }
     
     fileprivate func updateLabel() {
         self.nameLabel.text = self.team.name
-        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "")
-        self.accessibilityIdentifier = "\(self.team.name ?? "") team"
     }
     
     static let ciContext: CIContext = {
