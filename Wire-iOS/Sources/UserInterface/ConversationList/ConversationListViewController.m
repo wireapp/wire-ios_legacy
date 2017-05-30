@@ -449,14 +449,45 @@
     @weakify(self);
     [self dismissPeoplePickerWithCompletionBlock:^{
         @strongify(self);
-        [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
+        
+        dispatch_block_t actionBlock = ^{
+            [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
+        };
+        
+        if (self.selectedConversation.team != nil && [[ZMUser selfUser] activeTeam] == nil) {
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                self.selectedConversation.team.isActive = YES;
+            }
+                                        completionHandler:actionBlock];
+        }
+        else if (self.selectedConversation.team == nil && [[ZMUser selfUser] activeTeam] != nil) {
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                [[ZMUser selfUser] activeTeam].isActive = NO;
+            }
+                                        completionHandler:actionBlock];
+        }
+        else {
+            actionBlock();
+        }
     }];
 }
 
-- (BOOL)selectInboxAndFocusOnView:(BOOL)focus
+- (void)selectInboxAndFocusOnView:(BOOL)focus
 {
-    [self setState:ConversationListStateConversationList animated:NO];
-    return [self.listContentController selectInboxAndFocusOnView:focus];
+    dispatch_block_t actionBlock = ^{
+        [self setState:ConversationListStateConversationList animated:NO];
+        [self.listContentController selectInboxAndFocusOnView:focus];
+    };
+    
+    if ([[ZMUser selfUser] activeTeam] != nil) {
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [[ZMUser selfUser] activeTeam].isActive = NO;
+        }
+                                    completionHandler:actionBlock];
+    }
+    else {
+        actionBlock();
+    }
 }
 
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated

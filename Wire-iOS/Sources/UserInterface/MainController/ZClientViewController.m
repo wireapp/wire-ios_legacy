@@ -259,9 +259,9 @@
     [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
 }
 
-- (BOOL)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
+- (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
 {
-    return [self.conversationListViewController selectInboxAndFocusOnView:focus];
+    [self.conversationListViewController selectInboxAndFocusOnView:focus];
 }
 
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion

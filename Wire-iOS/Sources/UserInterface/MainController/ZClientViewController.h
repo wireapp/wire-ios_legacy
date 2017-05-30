@@ -71,7 +71,7 @@
 /**
  * Select the connection inbox and optionally move focus to it.
  */
-- (BOOL)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus;
+- (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus;
 
 /**
  * Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
