@@ -63,6 +63,12 @@ extern NSString * const ColorSchemeColorNameAccentPrefix;
 extern NSString * const ColorSchemeColorGraphite;
 extern NSString * const ColorSchemeColorLightGraphite;
 
+extern NSString * const ColorSchemeColorSectionBackground;
+extern NSString * const ColorSchemeColorSectionText;
+
+extern NSString * const ColorSchemeColorTokenFieldBackground;
+extern NSString * const ColorSchemeColorTokenFieldTextPlaceHolder;
+
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
     ColorSchemeVariantDark

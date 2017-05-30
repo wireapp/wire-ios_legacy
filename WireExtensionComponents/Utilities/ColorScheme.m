@@ -75,6 +75,12 @@ NSString * const ColorSchemeColorNameAccentPrefix = @"name-accent";
 NSString * const ColorSchemeColorGraphite = @"graphite";
 NSString * const ColorSchemeColorLightGraphite = @"graphite-light";
 
+NSString * const ColorSchemeColorSectionBackground = @"section-background";
+NSString * const ColorSchemeColorSectionText = @"section-text";
+
+NSString * const ColorSchemeColorTokenFieldBackground = @"token-field-background";
+NSString * const ColorSchemeColorTokenFieldTextPlaceHolder = @"token-field-text-placeholder";
+
 /// Generates the key name for the accent color that can be used to display the username.
 static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
 
@@ -205,6 +211,7 @@ static NSString* light(NSString *colorString) {
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
+    UIColor *whiteAlpha60 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.60)"];
     UIColor *whiteAlpha80 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.80)"];
     UIColor *black = [UIColor blackColor];
     UIColor *blackAlpha8 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.08)"];
@@ -260,7 +267,11 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorGraphite: graphite,
                                    ColorSchemeColorLightGraphite: lightGraphite,
                                    ColorSchemeColorPaleSeparator: lightGraphiteAlpha24,
-                                   ColorSchemeColorListAvatarInitials: blackAlpha40
+                                   ColorSchemeColorListAvatarInitials: blackAlpha40,
+                                   ColorSchemeColorSectionBackground: UIColor.clearColor,
+                                   ColorSchemeColorSectionText: blackAlpha40,
+                                   ColorSchemeColorTokenFieldBackground: blackAlpha8,
+                                   ColorSchemeColorTokenFieldTextPlaceHolder: graphiteAlpha40
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -305,7 +316,11 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorGraphite: graphite,
                                   ColorSchemeColorLightGraphite: lightGraphite,
                                   ColorSchemeColorPaleSeparator: lightGraphiteAlpha24,
-                                  ColorSchemeColorListAvatarInitials: blackAlpha40
+                                  ColorSchemeColorListAvatarInitials: blackAlpha40,
+                                  ColorSchemeColorSectionBackground: UIColor.clearColor,
+                                  ColorSchemeColorSectionText: whiteAlpha40,
+                                  ColorSchemeColorTokenFieldBackground: whiteAlpha16,
+                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha60
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

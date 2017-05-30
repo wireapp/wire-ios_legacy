@@ -38,7 +38,6 @@
 
 #import "TextView.h"
 #import "Button.h"
-#import "AddContactsViewController.h"
 #import "ContactsDataSource.h"
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker.h"
@@ -344,7 +343,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     switch (action) {
         case ProfileUserActionAddPeople:
-            [self presentAddContactsViewController];
+            [self presentAddParticipantsViewController];
             break;
             
         case ProfileUserActionPresentMenu:
@@ -385,20 +384,19 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self presentViewController:actionSheetController animated:YES completion:nil];
 }
 
-- (void)presentAddContactsViewController
+- (void)presentAddParticipantsViewController
 {
-    AddContactsViewController *addContactsViewController = [[AddContactsViewController alloc] initWithConversation:self.conversation];
-    addContactsViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:NSStringFromInviteContext(InviteContextConversation)];
-    addContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    addContactsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
     
-    [self presentViewController:addContactsViewController animated:YES completion:^{
+    addParticipantsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:addParticipantsViewController animated:YES completion:^{
         [Analytics.shared tagScreenInviteContactList];
         [Analytics.shared tagOpenedPeoplePickerGroupAction];
-        [addContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
     
-    [self.delegate profileDetailsViewController:self didPresentAddContactsViewController:addContactsViewController];
+    [self.delegate profileDetailsViewController:self didPresentAddParticipantsViewController:addParticipantsViewController];
 }
 
 - (void)presentRemoveFromConversationDialogue

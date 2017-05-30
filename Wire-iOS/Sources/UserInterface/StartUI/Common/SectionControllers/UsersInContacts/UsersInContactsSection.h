@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CollectionViewSectionController.h"
+#import "UIColor+WR_ColorScheme.h"
 
 FOUNDATION_EXPORT NSString * _Nonnull const PeoplePickerUsersInContactsReuseIdentifier;
 
@@ -30,5 +31,6 @@ FOUNDATION_EXPORT NSString * _Nonnull const PeoplePickerUsersInContactsReuseIden
 @property (nonatomic, nullable) UserSelection *userSelection;
 @property (nonatomic, nullable) NSString *title;
 @property (nonatomic, nullable) Team *team;
+@property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 
 @end

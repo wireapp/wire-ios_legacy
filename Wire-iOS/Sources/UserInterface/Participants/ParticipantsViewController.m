@@ -31,7 +31,6 @@
 #import "ParticipantsHeaderView.h"
 #import "ParticipantsFooterView.h"
 
-#import "AddContactsViewController.h"
 #import "ContactsDataSource.h"
 
 #import "ZMConversation+Validation.h"
@@ -64,7 +63,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 
 
-@interface ParticipantsViewController (AddContacts) <ContactsViewControllerDelegate>
+@interface ParticipantsViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 
 @end
 
@@ -503,7 +502,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         return;
     }
     
-    [self presentAddContactsViewController];
+    [self presentAddParticipantsViewController];
 }
 
 - (void)presentMenuSheetController
@@ -524,19 +523,15 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self presentViewController:actionSheetController animated:YES completion:nil];
 }
 
-- (void)presentAddContactsViewController
-{
-    AddContactsViewController *addContactsViewController = [[AddContactsViewController alloc] initWithConversation:self.conversation];
+- (void)presentAddParticipantsViewController
+{    
+    AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
+    addParticipantsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    addParticipantsViewController.delegate = self;
     
-    self.definesPresentationContext = YES;
-    addContactsViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:NSStringFromInviteContext(InviteContextConversation)];
-    addContactsViewController.delegate = self;
-    addContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    addContactsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    [self presentViewController:addContactsViewController animated:YES completion:^() {
+    [self presentViewController:addParticipantsViewController animated:YES completion:^{
         [[Analytics shared] tagScreenInviteContactList];
-        [addContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
 }
 
@@ -572,20 +567,18 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 
 
-@implementation ParticipantsViewController (AddContacts)
+@implementation ParticipantsViewController (AddParticipants)
 
-- (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
+- (void)addParticipantsViewControllerDidCancel:(AddParticipantsViewController *)addParticipantsViewController
 {
-    [controller dismissViewControllerAnimated:YES completion:nil];
+    [addParticipantsViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)contactsViewControllerDidConfirmSelection:(ContactsViewController *)controller
+- (void)addParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController didSelectUsers:(NSSet<ZMUser *> *)users
 {
-    NSOrderedSet *selectedUsers = [controller.dataSource.selection valueForKey:@"user"];
-    
-    [controller dismissViewControllerAnimated:YES completion:^{
+    [addParticipantsViewController dismissViewControllerAnimated:YES completion:^{
         if ([self.delegate respondsToSelector:@selector(participantsViewController:wantsToAddUsers:toConversation:)]) {
-            [self.delegate participantsViewController:self wantsToAddUsers:selectedUsers.set toConversation:self.conversation];
+            [self.delegate participantsViewController:self wantsToAddUsers:users toConversation:self.conversation];
         }
     }];
 }

@@ -19,8 +19,8 @@
 
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "ParticipantsViewController.h"
-#import "AddContactsViewController.h"
 #import "ProfileViewController.h"
+#import "Wire-Swift.h"
 
 @implementation ConversationViewController (ParticipantsPopover)
 
@@ -49,7 +49,7 @@
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
 {
-    if ([controller.presentedViewController isKindOfClass:AddContactsViewController.class]) {
+    if ([controller.presentedViewController isKindOfClass:AddParticipantsViewController.class]) {
         return UIModalPresentationOverFullScreen;
     }
     return UIModalPresentationFullScreen;

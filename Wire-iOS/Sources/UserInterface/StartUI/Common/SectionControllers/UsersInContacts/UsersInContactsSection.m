@@ -81,6 +81,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
                                                                              withReuseIdentifier:PeoplePickerHeaderReuseIdentifier
                                                                                     forIndexPath:indexPath];
     
+    headerView.colorSchemeVariant = self.colorSchemeVariant;
     headerView.title = self.title;
     
     // in case of search, the headers are with zero frame, and their content should not be displayed
@@ -107,6 +108,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     };
     
     BOOL selected = [self.userSelection.users containsObject:modelObject];
+    particularCell.colorSchemeVariant = self.colorSchemeVariant;
     particularCell.team = self.team;
     particularCell.user = modelObject;
     particularCell.selected = selected;

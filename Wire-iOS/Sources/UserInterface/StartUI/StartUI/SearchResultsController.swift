@@ -70,6 +70,9 @@ public class SearchResultsController : NSObject {
     
     var team: Team?
     var pendingSearchTask : SearchTask? = nil
+    var isAddingParticipants : Bool
+    
+    public var filterConversation : ZMConversation? = nil
     
     public weak var delegate : SearchResultsControllerDelegate? = nil
     
@@ -84,10 +87,11 @@ public class SearchResultsController : NSObject {
     }
     
     @objc
-    public init(collectionView: UICollectionView, userSelection: UserSelection, team: Team?) {
+    public init(collectionView: UICollectionView, userSelection: UserSelection, team: Team?, variant: ColorSchemeVariant, isAddingParticipants : Bool = false) {
         self.collectionView = collectionView
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
+        self.isAddingParticipants = isAddingParticipants
         self.team = team
         self.mode = .list
         
@@ -98,10 +102,12 @@ public class SearchResultsController : NSObject {
         contactsSection = UsersInContactsSection()
         contactsSection.userSelection = userSelection
         contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
+        contactsSection.colorSchemeVariant = variant
         teamMemberSection = UsersInContactsSection()
         teamMemberSection.userSelection = userSelection
         teamMemberSection.title = "peoplepicker.header.team_members".localized(args: teamName)
         teamMemberSection.team = team
+        teamMemberSection.colorSchemeVariant = variant
         directorySection = UsersInDirectorySection()
         conversationsSection = GroupConversationsSection()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName) : "peoplepicker.header.conversations".localized
@@ -174,27 +180,53 @@ public class SearchResultsController : NSObject {
     func updateVisibleSections() {
         var sections : [CollectionViewSectionController]
         
-        switch (mode, team != nil) {
-        case (.search, false):
-            sections = [contactsSection, conversationsSection, directorySection]
-        case (.search, true):
-            sections = [teamMemberSection, conversationsSection, contactsSection, directorySection]
-        case (.selection, false):
-            sections = [contactsSection]
-        case (.selection, true):
-            sections = [teamMemberSection, contactsSection]
-        case (.list, false):
-            sections = [topPeopleSection, contactsSection]
-        case (.list, true):
-            sections = [teamMemberSection]
+        if isAddingParticipants {
+            switch (mode, team != nil) {
+            case (.search, false):
+                sections = [contactsSection]
+            case (.search, true):
+                sections = [teamMemberSection, contactsSection]
+            case (.selection, false):
+                sections = [contactsSection]
+            case (.selection, true):
+                sections = [teamMemberSection, contactsSection]
+            case (.list, false):
+                sections = [contactsSection]
+            case (.list, true):
+                sections = [teamMemberSection]
+            }
+        } else {
+            switch (mode, team != nil) {
+            case (.search, false):
+                sections = [contactsSection, conversationsSection, directorySection]
+            case (.search, true):
+                sections = [teamMemberSection, conversationsSection, contactsSection, directorySection]
+            case (.selection, false):
+                sections = [contactsSection]
+            case (.selection, true):
+                sections = [teamMemberSection, contactsSection]
+            case (.list, false):
+                sections = [topPeopleSection, contactsSection]
+            case (.list, true):
+                sections = [teamMemberSection]
+            }
         }
         
         sectionAggregator.sectionControllers = sections
     }
 
     func updateSections(withSearchResult searchResult: SearchResult) {
-        contactsSection.contacts = searchResult.contacts
-        teamMemberSection.contacts = searchResult.teamMembers.flatMap({ $0.user })
+        
+        var contacts = searchResult.contacts
+        var teamContacts = searchResult.teamMembers.flatMap({ $0.user })
+        
+        if let filteredParticpants = filterConversation?.activeParticipants {
+            contacts = contacts.filter({ !filteredParticpants.contains($0) })
+            teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
+        }
+        
+        contactsSection.contacts = contacts
+        teamMemberSection.contacts = teamContacts
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         

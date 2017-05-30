@@ -42,6 +42,7 @@ NSString *const PeoplePickerHeaderReuseIdentifier = @"PeoplePickerHeaderReuseIde
     self = [super initWithFrame:frame];
     if (self) {
         [self setupPeoplePickerHeader];
+        [self setColorSchemeVariant:ColorSchemeVariantDark];
     }
 
     return self;
@@ -52,13 +53,11 @@ NSString *const PeoplePickerHeaderReuseIdentifier = @"PeoplePickerHeaderReuseIde
     self.titleField = [[UILabel alloc] initWithFrame:CGRectZero];
 
     self.titleField.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
-    self.titleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
     self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
     self.titleField.textAlignment = NSTextAlignmentLeft;
     self.titleField.numberOfLines = 0;
     self.titleField.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 
-    self.backgroundColor = [UIColor colorWithMagicIdentifier:@"people_picker.section_header.background_color"];
     [self addSubview:self.titleField];
     [self setupConstraints];
 }
@@ -74,6 +73,14 @@ NSString *const PeoplePickerHeaderReuseIdentifier = @"PeoplePickerHeaderReuseIde
 {
     _title = [title copy];
     self.titleField.text = [_title uppercasedWithCurrentLocale];
+}
+
+- (void)setColorSchemeVariant:(ColorSchemeVariant)colorSchemeVariant
+{
+    _colorSchemeVariant = colorSchemeVariant;
+    
+    self.titleField.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSectionText variant:self.colorSchemeVariant];
+    self.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSectionBackground variant:self.colorSchemeVariant];
 }
 
 @end

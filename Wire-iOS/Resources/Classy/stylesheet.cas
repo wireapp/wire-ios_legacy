@@ -1266,43 +1266,20 @@ ContactsSectionHeaderView {
     }
 }
 
-AddContactsViewController {
-    tableView: @{
-        backgroundColor: clear;
-        separatorStyle: mone;
-        sectionIndexBackgroundColor: clear;
-        sectionIndexColor: $color-accent-current;
+AddParticipantsViewController SearchHeaderViewController {
+    titleLabel: @{
+        font: $font-small-semibold;
     }
-    cancelButton: @{
+    closeButton: @{
         iconColor[state:normal]: $color-icon-normal;
         iconColor[state:highlighted]: $color-icon-highlighted;
     }
-    separatorView: @{
-        backgroundColor: $color-accent-current;
-    }
-    bottomContainerSeparatorView: @{
-        backgroundColor: $color-separator;
-    }
-    noContactsLabel: @{
-        font: $font-normal-light;
-        textColor: $color-text-foreground;
-    }
-    bottomContainerView: @{
-        backgroundColor: $color-background;
-    }
 }
 
-AddContactsViewController TokenField {
-    tokenBackgroundColor: $color-accent-current;
-    tokenTitleColor: white;
-    tokenBorderColor: $color-accent-current;
-    tokenSelectedTitleColor: $color-accent-current-darken;
-    tokenSelectedBackgroundColor: white;
-    tokenSelectedBorderColor: $color-accent-current;
-    
-    textView: @{
-        textContainerInsets: 22, 24, 22, 68;
-        placeholderTextColor: $color-text-placeholder;
+
+AddParticipantsViewController {
+    view: @{
+        backgroundColor: $color-background;
     }
 }
 
@@ -1331,12 +1308,6 @@ InviteContactsViewController {
     }
     bottomContainerView: @{
         backgroundColor: $color-background-dark;
-    }
-}
-
-AddContactsViewController ContactsEmptyResultView  {
-    messageLabel: @{
-        textColor: $color-text-foreground;
     }
 }
 
@@ -1369,7 +1340,6 @@ InviteContactsViewController ContactsSectionHeaderView {
 }
 
 TokenField {
-    backgroundColor: clear;
     font: $font-normal-light;
     tokenTitleFont: $font-small-semibold;
     numberOfLines: 3;
@@ -1381,27 +1351,26 @@ TokenField {
     textView: @{
         tintColor: $color-accent-current;
         autocorrectionType: no;
-        keyboardAppearance: dark;
         returnKeyType: go;
         placeholderFont: $font-small-light;
         placeholderTextContainerInset: 13 10;
-        placeholderTextColor: rgb(255, 255, 255, 0.4);
         placeholderTextTransform: upper;
         lineFragmentPadding: 0;
     }
 }
 
-SearchViewController {
-    
-    searchTitleLabel: @{
-        textColor: $color-text-foreground-dark;
+StartUIViewController SearchHeaderViewController {
+    titleLabel: @{
         font: $font-small-semibold;
     }
-    
 }
 
-SearchViewController PeopleInputController TokenField {
-    textColor: white; 
+TokenField.search {
+    textView: @{
+        placeholderFont: $font-medium-semibold;
+        placeholderTextContainerInset: 0 0;
+    }
+    tokenTitleFont: $font-medium-semibold;
     tokenTitleColor: black;
     tokenBackgroundColor: white;
     tokenBorderColor: white;
@@ -1643,7 +1612,10 @@ TokenField.share {
     textView: @{
         placeholderFont: $font-medium-semibold;
         placeholderTextContainerInset: 0 0;
+        placeholderTextColor: rgb(255, 255, 255, 0.6);
+        keyboardAppearance: dark;
     }
+    backgroundColor: clear;
     tokenTitleFont: $font-medium-semibold;
     textColor: white;
     tokenTitleColor: black;

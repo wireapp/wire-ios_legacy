@@ -33,7 +33,6 @@
 #import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
 
-#import "AddContactsViewController.h"
 #import "ContactsDataSource.h"
 #import "ProfileNavigationControllerDelegate.h"
 #import "ProfileDevicesViewController.h"
@@ -46,7 +45,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 };
 
 
-@interface ProfileViewController (AddContacts) <ContactsViewControllerDelegate>
+@interface ProfileViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 @end
 
 
@@ -252,20 +251,18 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 
 
-@implementation ProfileViewController (AddContacts)
+@implementation ProfileViewController (AddParticipants)
 
-- (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
+- (void)addParticipantsViewControllerDidCancel:(AddParticipantsViewController *)addParticipantsViewController
 {
-    [controller dismissViewControllerAnimated:YES completion:nil];
+    [addParticipantsViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)contactsViewControllerDidConfirmSelection:(ContactsViewController *)controller
+- (void)addParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController didSelectUsers:(NSSet<ZMUser *> *)users
 {
-    NSOrderedSet *selectedUsers = [controller.dataSource.selection valueForKey:@"user"];
-    
-    [controller dismissViewControllerAnimated:YES completion:^{
+    [addParticipantsViewController dismissViewControllerAnimated:YES completion:^{
         if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToAddUsers:toConversation:)]) {
-            [self.delegate profileViewController:self wantsToAddUsers:selectedUsers.set toConversation:self.conversation];
+            [self.delegate profileViewController:self wantsToAddUsers:users toConversation:self.conversation];
         }
     }];
 }
@@ -304,9 +301,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentAddContactsViewController:(AddContactsViewController *)addContactsViewController
+- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentAddParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController
 {
-    addContactsViewController.delegate = self;
+    addParticipantsViewController.delegate = self;
 }
 
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion

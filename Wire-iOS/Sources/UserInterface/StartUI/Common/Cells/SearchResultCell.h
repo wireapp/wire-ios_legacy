@@ -26,6 +26,7 @@
 
 @interface SearchResultCell : SwipeMenuCollectionCell
 
+@property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 @property (nonatomic, nullable) Team *team;
 @property (nonatomic, nullable) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> user;
 @property (nonatomic, nullable) ZMConversation *conversation;

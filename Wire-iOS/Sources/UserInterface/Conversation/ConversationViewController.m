@@ -62,7 +62,6 @@
 #import "ChatHeadsViewController.h"
 #import "MediaPlaybackManager.h"
 #import "BarController.h"
-#import "AddContactsViewController.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
@@ -105,7 +104,7 @@
 @interface ConversationViewController (ChatHeadsViewControllerDelegate) <ChatHeadsViewControllerDelegate>
 @end
 
-@interface ConversationViewController (AddContacts) <ContactsViewControllerDelegate>
+@interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 @end
 
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
@@ -599,20 +598,18 @@
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button
 {
-    AddContactsViewController *addContactsViewController = [[AddContactsViewController alloc] initWithConversation:self.conversation];
-    addContactsViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:NSStringFromInviteContext(InviteContextConversation)];
-    addContactsViewController.delegate = self;
-    addContactsViewController.modalPresentationStyle = UIModalPresentationPopover;
-    addContactsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
+    addParticipantsViewController.delegate = self;
+    addParticipantsViewController.modalPresentationStyle = UIModalPresentationPopover;
+    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
-    UIPopoverPresentationController *popoverPresentationController = addContactsViewController.popoverPresentationController;
+    UIPopoverPresentationController *popoverPresentationController = addParticipantsViewController.popoverPresentationController;
     popoverPresentationController.sourceView = button;
     popoverPresentationController.sourceRect = button.bounds;
-    popoverPresentationController.delegate = addContactsViewController;
+    popoverPresentationController.delegate = addParticipantsViewController;
 
-    [self presentViewController:addContactsViewController animated:YES completion:^() {
+    [self presentViewController:addParticipantsViewController animated:YES completion:^() {
         [[Analytics shared] tagScreenInviteContactList];
-        [addContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
 }
 
@@ -894,19 +891,17 @@
 @end
 
 
-@implementation ConversationViewController (AddContacts)
+@implementation ConversationViewController (AddParticipants)
 
-- (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
+- (void)addParticipantsViewControllerDidCancel:(AddParticipantsViewController *)addParticipantsViewController
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)contactsViewControllerDidConfirmSelection:(ContactsViewController *)controller
+- (void)addParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController didSelectUsers:(NSSet<ZMUser *> *)users
 {
-    NSOrderedSet *selectedUsers = [controller.dataSource.selection valueForKey:@"user"];
-
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [self addParticipants:selectedUsers.set];
+    [addParticipantsViewController dismissViewControllerAnimated:YES completion:^{
+        [self addParticipants:users];
     }];
 }
 

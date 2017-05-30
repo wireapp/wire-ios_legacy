@@ -20,11 +20,14 @@
 
 #import <UIKit/UIKit.h>
 
+@import WireExtensionComponents;
+
 FOUNDATION_EXPORT NSString *const PeoplePickerHeaderReuseIdentifier;
 
 @interface SearchSectionHeaderView : UICollectionReusableView
 
 
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 
 @end

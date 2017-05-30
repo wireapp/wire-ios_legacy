@@ -52,9 +52,9 @@
 
 @implementation SearchResultCell
 
-+ (UIColor *)subtitleColor
+- (UIColor *)subtitleColor
 {
-    return [UIColor colorWithWhite:1.0f alpha:0.4f];
+    return [UIColor wr_colorFromColorScheme:ColorSchemeColorSectionText variant:self.colorSchemeVariant];
 }
 
 + (UIFont *)lightFont
@@ -72,7 +72,7 @@
     static dispatch_once_t onceToken;
     static AddressBookCorrelationFormatter *formatter = nil;
     dispatch_once(&onceToken, ^{
-        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont boldFont:self.boldFont color:self.subtitleColor];
+        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont boldFont:self.boldFont color:UIColor.whiteColor];
     });
 
     return formatter;
@@ -82,6 +82,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.colorSchemeVariant = ColorSchemeVariantDark;
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
         self.gesturesView = [[UIView alloc] initForAutoLayout];
@@ -204,7 +205,7 @@
 - (void)updateForContext
 {
     self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.search_results_mode.name_label_font"];
-    self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:@"people_picker.search_results_mode.context_create_conversation.name_label_font_color"];
+    self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:self.colorSchemeVariant];
 
     CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_image_diameter"];
     self.avatarViewSizeConstraint.constant = squareImageWidth;
@@ -413,17 +414,17 @@
     NSString *handle = user.handle ?: BareUserToUser(user).handle;
 
     if (nil != handle && handle.length > 0) {
-        NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.class.subtitleColor };
+        NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.subtitleColor };
         NSString *displayHandle = [NSString stringWithFormat:@"@%@", handle];
         attributedHandle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
         [subtitle appendAttributedString:attributedHandle];
     }
 
     NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
-    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName];
+    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName color:self.subtitleColor];
     if (nil != correlation) {
         if (nil != attributedHandle) {
-            NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.class.subtitleColor };
+            NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.subtitleColor };
             [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" · " attributes:delimiterAttributes]];
         }
         [subtitle appendAttributedString:correlation];

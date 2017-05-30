@@ -52,10 +52,14 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
     }
 
     func correlationText(for user: ZMBareUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
+        return correlationText(for: user, with: count, addressBookName: addressBookName, color: color)
+    }
+    
+    func correlationText(for user: ZMBareUser, with count: Int, addressBookName: String?, color: UIColor) -> NSAttributedString? {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
-
+        
         guard count > 0 && !user.isConnected else { return nil }
         let prefix = String(format: "%ld", count) && boldFont && color
         return prefix + " " + ("conversation.connection_view.common_connections".localized(args: count) && lightFont && color)
