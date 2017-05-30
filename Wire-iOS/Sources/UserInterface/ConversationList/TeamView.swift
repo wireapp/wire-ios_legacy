@@ -81,12 +81,6 @@ public protocol TeamViewType {
     func update()
 }
 
-extension TeamViewType {
-    public var hasUnreadMessages: Bool {
-        return false
-    }
-}
-
 public class BaseTeamView: UIView, TeamViewType {
     
     fileprivate let imageViewContainer = UIView()
@@ -108,6 +102,10 @@ public class BaseTeamView: UIView, TeamViewType {
         }
     }
     
+    public var hasUnreadMessages: Bool {
+        return false
+    }
+    
     func updateAppearance() {
         selectionView.isHidden = !selected || collapsed
         nameDotView.isHidden = selected || !hasUnreadMessages || !collapsed
@@ -115,18 +113,16 @@ public class BaseTeamView: UIView, TeamViewType {
         
         nameLabel.textColor = (collapsed && selected) ? UIColor.accent() : ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
     }
-    
     public var onTap: ((TeamType?) -> ())? = .none
     
     public var accessibilityState: String {
-        return ("conversation_list.header.self_team.accessibility_value." + (self.selected ? "active" : "inactive")).localized
+        return ("conversation_list.header.self_team.accessibility_value." + (self.selected ? "active" : "inactive")).localized +
+                (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
     }
     
     init() {
         super.init(frame: .zero)
-        
-        clipsToBounds = false
-        
+            
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
         selectionView.hostedLayer.lineWidth = 1.5
@@ -146,7 +142,7 @@ public class BaseTeamView: UIView, TeamViewType {
 
         constrain(nameLabel, nameDotView) { nameLabel, nameDotView in
             nameDotView.centerY == nameLabel.centerY
-            nameDotView.trailing == nameLabel.leading - 12
+            nameDotView.trailing == nameLabel.leading - 2
             
             nameDotView.width == nameDotView.height
             nameDotView.height == nameDotSize
@@ -171,14 +167,13 @@ public class BaseTeamView: UIView, TeamViewType {
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
-            selfView.leading <= nameDotView.leading
             imageViewContainer.width == imageViewContainer.height
             imageViewContainer.width == 28
             
             nameLabel.top == imageViewContainer.bottom + 4
             
-            nameLabel.leading == selfView.leading
-            nameLabel.trailing == selfView.trailing
+            nameLabel.leading == selfView.leading + 9
+            nameLabel.trailing == selfView.trailing - 9
             nameLabel.bottom == selfView.bottom - 4
             nameLabel.width <= 96
         
@@ -208,6 +203,7 @@ public final class PersonalTeamView: BaseTeamView {
     private var selfUserObserver: NSObjectProtocol!
     private var teamsObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
+    private var connectionRequestObserver: NSObjectProtocol!
     
     public override var collapsed: Bool {
         didSet {
@@ -215,8 +211,9 @@ public final class PersonalTeamView: BaseTeamView {
         }
     }
     
-    public var hasUnreadMessages: Bool {
-        return ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: nil).first(where: { ($0 as! ZMConversation).estimatedUnreadCount != 0 }) != nil
+    public override var hasUnreadMessages: Bool {
+        return ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: nil).first(where: { ($0 as! ZMConversation).estimatedUnreadCount != 0 }) != nil ||
+                ZMConversationList.pendingConnectionConversations(inUserSession: ZMUserSession.shared()!, team: nil).count > 0
     }
     
     override init() {
@@ -236,6 +233,7 @@ public final class PersonalTeamView: BaseTeamView {
         teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
         if let userSession = ZMUserSession.shared() {
             conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
+            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil))
         }
         
         self.imageViewContainer.addSubview(userImageView)
@@ -357,7 +355,7 @@ public final class TeamImageView: UIImageView {
         }
     }
     
-    public var hasUnreadMessages: Bool {
+    public override var hasUnreadMessages: Bool {
         return team.hasUnreadMessages()
     }
     

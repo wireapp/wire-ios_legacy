@@ -40,7 +40,7 @@ internal class LineView: UIView {
             return
         }
         
-        let inset: CGFloat = 24
+        let inset: CGFloat = 6
         
         constrain(self, first) { selfView, first in
             first.leading == selfView.leading
@@ -91,7 +91,6 @@ final internal class TeamSelectorView: UIView {
             }
             
             self.lineView = LineView(views: self.teamsViews)
-            
             self.teamsViews.forEach { $0.collapsed = imagesCollapsed }
         }
     }
@@ -125,7 +124,6 @@ final internal class TeamSelectorView: UIView {
     
     init() {
         super.init(frame: .zero)
-        self.clipsToBounds = true
         
         selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
