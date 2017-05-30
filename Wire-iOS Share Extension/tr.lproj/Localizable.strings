@@ -20,7 +20,7 @@
 
 
 
-"share_extension.team_selection.title" = "Team:";
+"share_extension.team_selection.title" = "Takım:";
 "share_extension.team_selection.empty.value" = "Hiçbiri";
 "share_extension.team_selection.personal.team.name" = "Hiçbiri";
 "share_extension.conversation_selection.title" = "Konuşma:";

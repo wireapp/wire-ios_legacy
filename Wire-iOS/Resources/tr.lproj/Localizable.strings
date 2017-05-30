@@ -84,8 +84,9 @@
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Katıl";
 "conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Etkinleştirilmek için dokun.";
+"conversation_list.header.self_team.accessibility_value.active" = "Şu an aktif.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Yeni mesaj var.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "Kişilerde";
@@ -382,7 +383,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Kişi ekle";
-"participants.avatar.guest.title" = "Guest";
+"participants.avatar.guest.title" = "Misafir";
 
 // Meta Menu
 "meta.menu.rename" = "Yeniden adlandır";

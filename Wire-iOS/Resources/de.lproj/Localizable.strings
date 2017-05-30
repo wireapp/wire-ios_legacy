@@ -75,8 +75,8 @@
 "contacts_ui.notification.invitation_failed" = "Einladung senden fehlgeschlagen";
 "contacts_ui.title" = "Freunde einladen";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Noch keine Unterhaltungen\n";
+"contacts_ui.no_contact.message" = "Beginne eine Unterhaltung, erstelle eine Gruppe oder lade weitere Freunde ein.";
 
 "contacts_ui.no_contact.archived.title" = "Alle Unterhaltungen archiviert";
 
@@ -86,6 +86,7 @@
 "conversation_list.header.self_team.accessibility_value" = "%@ Team.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Zum Aktivieren tippen.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktiv.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Kontakte";

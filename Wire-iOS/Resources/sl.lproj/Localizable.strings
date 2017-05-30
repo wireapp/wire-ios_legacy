@@ -86,6 +86,7 @@
 "conversation_list.header.self_team.accessibility_value" = "%@ team.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
 "conversation_list.header.self_team.accessibility_value.active" = "Active now.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "v stikih";
