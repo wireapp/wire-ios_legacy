@@ -144,6 +144,10 @@ final class ContentSizeCategoryUpdater {
     private let callback: () -> ()
     private var observer: NSObjectProtocol!
     
+    deinit {
+        NotificationCenter.default.removeObserver(observer)
+    }
+    
     init(callback: @escaping () -> ()) {
         self.callback = callback
         callback()
