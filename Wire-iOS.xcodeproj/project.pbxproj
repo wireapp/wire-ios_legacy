@@ -6722,7 +6722,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Wire-iOS Share Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)";
@@ -6751,7 +6750,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Wire-iOS Share Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)";
@@ -6786,7 +6784,6 @@
 				);
 				INFOPLIST_FILE = WireExtensionComponents/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -6818,7 +6815,6 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = WireExtensionComponents/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -6917,7 +6913,7 @@
 					"$(inherited)",
 					"$(HEADER_SEARCH_PATHS_common)",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6961,7 +6957,7 @@
 					"$(inherited)",
 					"$(HEADER_SEARCH_PATHS_common)",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -6987,7 +6983,6 @@
 				GCC_PREFIX_HEADER = "Wire-iOS/Wire-iOS-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Wire-iOS/Wire-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -7019,7 +7014,6 @@
 				GCC_PREFIX_HEADER = "Wire-iOS/Wire-iOS-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Wire-iOS/Wire-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -7072,7 +7066,6 @@
 					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
 				);
 				INFOPLIST_FILE = "Wire-iOS Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient.$(PRODUCT_NAME:rfc1034identifier)";
@@ -7122,7 +7115,6 @@
 					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
 				);
 				INFOPLIST_FILE = "Wire-iOS Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient.$(PRODUCT_NAME:rfc1034identifier)";
@@ -7152,7 +7144,6 @@
 				);
 				INFOPLIST_FILE = NotificationFetchComponents/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponents;
@@ -7187,7 +7178,6 @@
 				);
 				INFOPLIST_FILE = NotificationFetchComponents/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
