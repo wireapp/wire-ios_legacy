@@ -30,37 +30,3 @@ extension ZMUser {
         return self.activeTeams.first
     }
 }
-
-extension ZMUser {
-    @objc(canAddUserToConversation:)
-    func canAddUser(to conversation: ZMConversation) -> Bool {
-        guard conversation.activeParticipants.contains(self) else {
-            return false
-        }
-        
-        if let conversationTeam = conversation.team {
-            guard let permissions = self.permissions(in: conversationTeam) else {
-                return false
-            }
-            
-            return permissions.contains(Permissions.addConversationMember)
-        }
-        else {
-            return true
-        }
-    }
-    
-    @objc(canRemoveUserFromConversation:)
-    func canRemoveUser(from conversation: ZMConversation) -> Bool {
-        if let conversationTeam = conversation.team {
-            guard let permissions = self.permissions(in: conversationTeam) else {
-                return false
-            }
-            
-            return permissions.contains(Permissions.removeConversationMember)
-        }
-        else {
-            return true
-        }
-    }
-}
