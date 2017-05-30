@@ -287,9 +287,9 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)applicationWillEnterForeground:(NSNotification *)note
 {
+    [ZMConversationList refetchAllListsInUserSession:ZMUserSession.sharedSession];
     [self reloadConversationListViewModel];
 }
-
 
 - (void)conversationInsideList:(ZMConversationList *)list didChange:(ConversationChangeInfo *)changeInfo;
 {
