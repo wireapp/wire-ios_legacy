@@ -137,8 +137,10 @@ extension ConversationListViewController: UserProfileUpdateObserver {
 extension ConversationListViewController: ZMUserObserver {
 
     public func userDidChange(_ note: UserChangeInfo) {
-        guard nil != ZMUser.selfUser().handle && note.handleChanged else { return }
-        removeUsernameTakeover()
+        if ZMUser.selfUser().handle != nil && note.handleChanged {
+            removeUsernameTakeover()
+        } else if note.teamsChanged {
+            updateNoConversationVisibility()
+        }
     }
-
 }

@@ -57,4 +57,6 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 - (void)presentPeoplePickerAnimated:(BOOL)animated;
 - (void)dismissPeoplePickerWithCompletionBlock:(dispatch_block_t)block;
 
+- (void)updateNoConversationVisibility;
+
 @end
