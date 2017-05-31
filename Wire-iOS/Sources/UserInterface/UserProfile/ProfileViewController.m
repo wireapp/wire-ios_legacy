@@ -157,7 +157,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [viewControllers addObject:profileDetailsViewController];
     }
     
-    if (self.fullUser.isConnected) {
+    if (self.fullUser.isConnected || self.fullUser.isMemberOfActiveTeam) {
         ProfileDevicesViewController *profileDevicesViewController = [[ProfileDevicesViewController alloc] initWithUser:self.fullUser];
         profileDevicesViewController.title = NSLocalizedString(@"profile.devices.title", nil);
         profileDevicesViewController.delegate = self;
