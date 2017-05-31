@@ -126,12 +126,18 @@
                     [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                                 focusOnView:YES
                                                                                    animated:YES];
-                    if (videoCall) {
-                        [conversation startVideoCallWithCompletionHandler:nil];
-                    }
-                    else {
-                        [conversation startAudioCallWithCompletionHandler:nil];
-                    }
+                    @weakify(self);
+                    self.startCallToken =
+                    [conversation onCreatedRemotely:^{
+                        @strongify(self);
+                        if (videoCall) {
+                            [conversation startVideoCallWithCompletionHandler:nil];
+                        }
+                        else {
+                            [conversation startAudioCallWithCompletionHandler:nil];
+                        }
+                        self.startCallToken = nil;
+                    }];
                 }];
             }
             else if (users.count > 1) {
@@ -148,7 +154,13 @@
                                                                                 focusOnView:YES
                                                                                    animated:YES];
                     
-                    [conversation startAudioCallWithCompletionHandler:nil];
+                    @weakify(self);
+                    self.startCallToken =
+                    [conversation onCreatedRemotely:^{
+                        @strongify(self);
+                        [conversation startAudioCallWithCompletionHandler:nil];
+                        self.startCallToken = nil;
+                    }];
                     
                     AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextStartUI
                                                                                                              participantCount:conversation.activeParticipants.count]; // Include self
