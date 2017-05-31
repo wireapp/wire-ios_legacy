@@ -117,16 +117,22 @@
     if (call) {
         [self dismissPeoplePickerWithCompletionBlock:^{
             if (users.count == 1) {
+                __block ZMConversation *conversation = nil;
                 ZMUser *user = users.anyObject;
-                [[ZClientViewController sharedZClientViewController] selectConversation:[user oneToOneConversationInTeam:activeTeam]
-                                                                            focusOnView:YES
-                                                                               animated:YES];
-                if (videoCall) {
-                    [[user oneToOneConversationInTeam:activeTeam] startVideoCallWithCompletionHandler:nil];
-                }
-                else {
-                    [[user oneToOneConversationInTeam:activeTeam] startAudioCallWithCompletionHandler:nil];
-                }
+
+                [[ZMUserSession sharedSession] enqueueChanges:^{
+                    conversation = [user oneToOneConversationInTeam:activeTeam];
+                } completionHandler:^{
+                    [[ZClientViewController sharedZClientViewController] selectConversation:conversation
+                                                                                focusOnView:YES
+                                                                                   animated:YES];
+                    if (videoCall) {
+                        [conversation startVideoCallWithCompletionHandler:nil];
+                    }
+                    else {
+                        [conversation startAudioCallWithCompletionHandler:nil];
+                    }
+                }];
             }
             else if (users.count > 1) {
                 
