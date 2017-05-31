@@ -127,10 +127,10 @@
     self.conversationButton.hidden = (mode == StartUIQuickActionBarModeInvite);
     self.cameraButton.hidden = (mode == StartUIQuickActionBarModeInvite);
     self.callButton.hidden = (mode == StartUIQuickActionBarModeInvite);
-    self.videoCallButton.hidden = (mode != StartUIQuickActionBarModeOpenConversation);
+    self.videoCallButton.hidden = (mode != StartUIQuickActionBarModeOpenConversation) ;
 
     NSString *conversationButtonTitle = @"";
-    if (mode == StartUIQuickActionBarModeOpenConversation) {
+    if (mode == StartUIQuickActionBarModeOpenConversation || mode == StartUIQuickActionBarModeOpenGroupConversation) {
         conversationButtonTitle = NSLocalizedString(@"peoplepicker.quick-action.open-conversation", @"");
     } else if (mode == StartUIQuickActionBarModeCreateConversation) {
         conversationButtonTitle = NSLocalizedString(@"peoplepicker.quick-action.create-conversation", @"");

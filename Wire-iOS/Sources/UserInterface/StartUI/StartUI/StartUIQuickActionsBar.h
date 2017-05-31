@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, StartUIQuickActionBarMode)
     StartUIQuickActionBarModeInvite,
     StartUIQuickActionBarModeCreateConversation,
     StartUIQuickActionBarModeOpenConversation,
+    StartUIQuickActionBarModeOpenGroupConversation
 };
 
 

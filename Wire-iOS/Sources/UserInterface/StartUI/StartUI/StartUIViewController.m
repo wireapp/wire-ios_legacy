@@ -192,7 +192,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if (self.userSelection.users.count == 1) {
         self.startUIView.quickActionsBar.hidden = NO;
-        self.startUIView.quickActionsBar.mode = StartUIQuickActionBarModeOpenConversation;
+        if ([[ZMUser selfUser] activeTeam] != nil) { // When in a team we always open group conversations
+            self.startUIView.quickActionsBar.mode = StartUIQuickActionBarModeOpenGroupConversation;
+        } else {
+            self.startUIView.quickActionsBar.mode = StartUIQuickActionBarModeOpenConversation;
+        }
     }
     else {
         self.startUIView.quickActionsBar.hidden = NO;
