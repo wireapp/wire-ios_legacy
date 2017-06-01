@@ -27,7 +27,7 @@ static __weak id currentFirstResponder;
 
 @implementation UIResponder (FirstResponder)
 
-+ (id)wr_currentFirstResponder
++ (UIResponder *)wr_currentFirstResponder
 {
     currentFirstResponder = nil;
     [[UIApplication sharedApplication] sendAction:@selector(findFirstResponder:) to:nil from:nil forEvent:nil];

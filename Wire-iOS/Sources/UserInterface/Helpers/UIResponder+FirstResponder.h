@@ -23,6 +23,6 @@
 
 @interface UIResponder (FirstResponder)
 
-+ (id)wr_currentFirstResponder;
++ (UIResponder * _Nullable )wr_currentFirstResponder;
 
 @end

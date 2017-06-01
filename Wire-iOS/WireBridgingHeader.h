@@ -145,6 +145,7 @@
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
 #import "WireStyleKit+Additions.h"
+#import "UIResponder+FirstResponder.h"
 
 // Camera
 #import "CameraController.h"

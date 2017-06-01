@@ -19,7 +19,6 @@
 
 #import "ConversationListViewController+StartUI.h"
 #import "Analytics+iOS.h"
-#import "StartUIView.h"
 #import "StartUIViewController.h"
 #import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"

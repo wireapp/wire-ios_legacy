@@ -50,6 +50,7 @@
         self.foregroundColor = color;
         
         [self setupSubviews];
+        [self setupConstraints];
         
         [self setTitle:title];
         [self setIcon:icon];
