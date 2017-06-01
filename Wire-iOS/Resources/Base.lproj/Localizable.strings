@@ -221,6 +221,10 @@
 "input.ephemeral.title" = "Set a time for the message to disappear";
 
 // System messages
+"content.system.you_nominative" = "you";
+"content.system.you_dative" = "you";
+"content.system.you_accusative" = "you";
+
 "content.system.continued_conversation" = "Start a conversation with %@";
 
 "content.system.other_started_conversation" = "%@ started a conversation with %@";
@@ -240,11 +244,15 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ started a conversation with %@";
-"content.system.conversation.added" = "%@ added %@";
-"content.system.conversation.removed" = "%@ removed %@";
-"content.system.conversation.left" = "%@ left";
-"content.system.conversation.you" = "You";
+"content.system.conversation.other.started" = "%@ started a conversation with %@";
+"content.system.conversation.other.added" = "%@ added %@";
+"content.system.conversation.other.removed" = "%@ removed %@";
+"content.system.conversation.other.left" = "%@ left";
+
+"content.system.conversation.you.started" = "%@ started a conversation with %@";
+"content.system.conversation.you.added" = "%@ added %@";
+"content.system.conversation.you.removed" = "%@ removed %@";
+"content.system.conversation.you.left" = "%@ left";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";

@@ -17,8 +17,9 @@
 //
 
 
-private func localizationKey(with pathComponent: String) -> String {
-    return "content.system.conversation.\(pathComponent)"
+private func localizationKey(with pathComponent: String, senderIsSelfUser: Bool) -> String {
+    let senderPath = senderIsSelfUser ? "you" : "other"
+    return "content.system.conversation.\(senderPath).\(pathComponent)"
 }
 
 
@@ -26,12 +27,12 @@ private enum ConversationActionType {
 
     case none, started, added, removed, left
 
-    var formatKey: String {
+    func formatKey(senderIsSelfUser: Bool) -> String {
         switch self {
-        case .left: return localizationKey(with: "left")
-        case .added: return localizationKey(with: "added")
-        case .removed: return localizationKey(with: "removed")
-        case .started, .none: return localizationKey(with: "started")
+        case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
+        case .added: return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
+        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
+        case .started, .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         }
     }
 }
@@ -86,16 +87,25 @@ struct ParticipantsCellViewModel {
             let labelBoldFont = boldFont,
             let labelTextColor = textColor else { return nil }
 
-        let senderName = name(for: sender)
+        let senderName = sender.isSelfUser ? "content.system.you_nominative".localized.capitalized : name(for: sender)
         let formatKey = message.actionType.formatKey
 
         switch message.actionType {
         case .left:
-            let leftCopy = formatKey.localized(args: senderName) && labelFont && labelTextColor
-            return leftCopy.adding(font: labelBoldFont, to: senderName)
+            let title = formatKey(sender.isSelfUser).localized(args: senderName) && labelFont && labelTextColor
+            return title.adding(font: labelBoldFont, to: senderName)
         case .removed, .added, .started:
-            let names = sortedUsers().map(name).joined(separator: ", ")
-            let title = formatKey.localized(args: senderName, names) && labelFont && labelTextColor
+            let names = sortedUsers().map{
+                if $0.isSelfUser {
+                    if message.actionType == .started {
+                        return "content.system.you_dative".localized
+                    }
+                    return "content.system.you_accusative".localized
+                }
+                return name(for: $0)
+            }.joined(separator: ", ")
+            
+            let title = formatKey(sender.isSelfUser).localized(args: senderName, names) && labelFont && labelTextColor
             return title.adding(font: labelBoldFont, to: senderName)
         case .none: return nil
         }
@@ -103,8 +113,9 @@ struct ParticipantsCellViewModel {
 
     private func name(for user: ZMUser) -> String {
         if user.isSelfUser {
-            return localizationKey(with: "you").localized
-        } else if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
+            return "content.system.you_nominative".localized
+        }
+        if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
             return user.displayName(in: conversation)
         } else {
             return user.displayName
