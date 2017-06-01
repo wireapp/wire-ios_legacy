@@ -142,6 +142,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
+    self.userImageView.team = ZMUser.selfUser.activeTeam;
     self.userImageView.user = self.bareUser;
     [self.userImageViewContainer addSubview:self.userImageView];
 }
@@ -528,7 +529,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     ZMConversation __block *conversation = nil;
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        conversation = [ZMConversation existingOneOnOneConversationWithUser:self.fullUser inUserSession:[ZMUserSession sharedSession]];
+        conversation = [self.fullUser oneToOneConversationInTeam:ZMUser.selfUser.activeTeam];
     } completionHandler:^{
         [self.delegate profileDetailsViewController:self didSelectConversation:conversation];
     }];
