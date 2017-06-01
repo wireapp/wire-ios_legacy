@@ -106,7 +106,6 @@
 		16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */; };
 		16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */; };
 		16DDA1441B259CB900E1F1FC /* VoiceChannelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DDA1431B259CB900E1F1FC /* VoiceChannelController.m */; };
-		16DF2F6F1BE7BA34005CF8DE /* AddContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DF2F6E1BE7BA34005CF8DE /* AddContactsViewController.m */; };
 		16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */; };
 		16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311C81A5FEAE200FF2C9E /* TextMessageCell.m */; };
 		16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311D71A6024F400FF2C9E /* ImageMessageCell.m */; };
@@ -406,7 +405,6 @@
 		872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */; };
 		872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */; };
 		872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */; };
-		87302F4B1B15D6E6001F478C /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87302F4A1B15D6E6001F478C /* SearchViewController.m */; };
 		873151111D75D0C000284C1F /* ReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873151101D75D0C000284C1F /* ReactionCell.swift */; };
 		8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */; };
 		8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873337891DF5B43A006AE609 /* SwiftDependencies.swift */; };
@@ -643,10 +641,6 @@
 		87DCF4DE1D34EA4500BB420F /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A41D34EA4500BB420F /* SearchResultCell.m */; };
 		87DCF4DF1D34EA4500BB420F /* SearchSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A61D34EA4500BB420F /* SearchSectionHeaderView.m */; };
 		87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */; };
-		87DCF4E11D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4AB1D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m */; };
-		87DCF4E21D34EA4500BB420F /* PeoplePickerEmptyResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4AD1D34EA4500BB420F /* PeoplePickerEmptyResultsView.m */; };
-		87DCF4E31D34EA4500BB420F /* PeoplePickerEmptyResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DCF4AE1D34EA4500BB420F /* PeoplePickerEmptyResultsView.xib */; };
-		87DCF4E41D34EA4500BB420F /* PeopleInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B11D34EA4500BB420F /* PeopleInputController.m */; };
 		87DCF4E51D34EA4500BB420F /* ActionSheetController+Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B41D34EA4500BB420F /* ActionSheetController+Invite.m */; };
 		87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */; };
 		87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B81D34EA4500BB420F /* UIActivityViewController+Invite.m */; };
@@ -1178,8 +1172,6 @@
 		16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformProgressView.swift; sourceTree = "<group>"; };
 		16DDA1421B259CB900E1F1FC /* VoiceChannelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceChannelController.h; sourceTree = "<group>"; };
 		16DDA1431B259CB900E1F1FC /* VoiceChannelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelController.m; sourceTree = "<group>"; };
-		16DF2F6D1BE7BA34005CF8DE /* AddContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactsViewController.h; sourceTree = "<group>"; };
-		16DF2F6E1BE7BA34005CF8DE /* AddContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactsViewController.m; sourceTree = "<group>"; };
 		16E311C11A5FEA2B00FF2C9E /* ConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationCell.h; sourceTree = "<group>"; };
 		16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		16E311C71A5FEAE200FF2C9E /* TextMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMessageCell.h; sourceTree = "<group>"; };
@@ -1657,8 +1649,6 @@
 		872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSendConnectionRequestFooterView.m; sourceTree = "<group>"; };
 		872CB8AF19E58816006752B4 /* ProfileUnblockFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileUnblockFooterView.h; sourceTree = "<group>"; };
 		872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileUnblockFooterView.m; sourceTree = "<group>"; };
-		87302F491B15D6E6001F478C /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		87302F4A1B15D6E6001F478C /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		873151101D75D0C000284C1F /* ReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionCell.swift; sourceTree = "<group>"; };
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873337891DF5B43A006AE609 /* SwiftDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDependencies.swift; sourceTree = "<group>"; };
@@ -1964,13 +1954,6 @@
 		87DCF4A61D34EA4500BB420F /* SearchSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSectionHeaderView.m; sourceTree = "<group>"; };
 		87DCF4A71D34EA4500BB420F /* TopPeopleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPeopleCell.h; sourceTree = "<group>"; };
 		87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPeopleCell.m; sourceTree = "<group>"; };
-		87DCF4AA1D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeoplePickerEmptyResultsActionView.h; sourceTree = "<group>"; };
-		87DCF4AB1D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeoplePickerEmptyResultsActionView.m; sourceTree = "<group>"; };
-		87DCF4AC1D34EA4500BB420F /* PeoplePickerEmptyResultsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeoplePickerEmptyResultsView.h; sourceTree = "<group>"; };
-		87DCF4AD1D34EA4500BB420F /* PeoplePickerEmptyResultsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeoplePickerEmptyResultsView.m; sourceTree = "<group>"; };
-		87DCF4AE1D34EA4500BB420F /* PeoplePickerEmptyResultsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeoplePickerEmptyResultsView.xib; sourceTree = "<group>"; };
-		87DCF4B01D34EA4500BB420F /* PeopleInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleInputController.h; sourceTree = "<group>"; };
-		87DCF4B11D34EA4500BB420F /* PeopleInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleInputController.m; sourceTree = "<group>"; };
 		87DCF4B31D34EA4500BB420F /* ActionSheetController+Invite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ActionSheetController+Invite.h"; sourceTree = "<group>"; };
 		87DCF4B41D34EA4500BB420F /* ActionSheetController+Invite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ActionSheetController+Invite.m"; sourceTree = "<group>"; };
 		87DCF4B51D34EA4500BB420F /* ShareItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareItemProvider.h; sourceTree = "<group>"; };
@@ -2773,8 +2756,6 @@
 		16DF2F6C1BE7B9EB005CF8DE /* AddContacts */ = {
 			isa = PBXGroup;
 			children = (
-				16DF2F6D1BE7BA34005CF8DE /* AddContactsViewController.h */,
-				16DF2F6E1BE7BA34005CF8DE /* AddContactsViewController.m */,
 				16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */,
 			);
 			path = AddContacts;
@@ -3665,15 +3646,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		87302F461B15D4BF001F478C /* SearchView */ = {
-			isa = PBXGroup;
-			children = (
-				87302F491B15D6E6001F478C /* SearchViewController.h */,
-				87302F4A1B15D6E6001F478C /* SearchViewController.m */,
-			);
-			path = SearchView;
-			sourceTree = "<group>";
-		};
 		873C5FE21C10426A00D5132A /* DeviceManagement */ = {
 			isa = PBXGroup;
 			children = (
@@ -3978,8 +3950,6 @@
 			isa = PBXGroup;
 			children = (
 				87DCF4A21D34EA4500BB420F /* Cells */,
-				87DCF4A91D34EA4500BB420F /* EmptyView */,
-				87DCF4AF1D34EA4500BB420F /* InputField */,
 				87DCF4B21D34EA4500BB420F /* InviteActionSheet */,
 				87DCF4BB1D34EA4500BB420F /* ProfilePresenter.h */,
 				164C29AC1ED446660026562A /* UserSelection.swift */,
@@ -4002,27 +3972,6 @@
 				87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		87DCF4A91D34EA4500BB420F /* EmptyView */ = {
-			isa = PBXGroup;
-			children = (
-				87DCF4AA1D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.h */,
-				87DCF4AB1D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m */,
-				87DCF4AC1D34EA4500BB420F /* PeoplePickerEmptyResultsView.h */,
-				87DCF4AD1D34EA4500BB420F /* PeoplePickerEmptyResultsView.m */,
-				87DCF4AE1D34EA4500BB420F /* PeoplePickerEmptyResultsView.xib */,
-			);
-			path = EmptyView;
-			sourceTree = "<group>";
-		};
-		87DCF4AF1D34EA4500BB420F /* InputField */ = {
-			isa = PBXGroup;
-			children = (
-				87DCF4B01D34EA4500BB420F /* PeopleInputController.h */,
-				87DCF4B11D34EA4500BB420F /* PeopleInputController.m */,
-			);
-			path = InputField;
 			sourceTree = "<group>";
 		};
 		87DCF4B21D34EA4500BB420F /* InviteActionSheet */ = {
@@ -4633,7 +4582,6 @@
 			isa = PBXGroup;
 			children = (
 				8F8913E91A9F287E0056AB0C /* ListContent */,
-				87302F461B15D4BF001F478C /* SearchView */,
 				875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */,
 				875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */,
 				BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */,
@@ -5477,7 +5425,6 @@
 				BF732A771D9C14C7003077DB /* emoji_objects.plist in Resources */,
 				87D482AF1B8C7DBC004ED174 /* soundcloud@3x.png in Resources */,
 				BF732A791D9C14C7003077DB /* emoji_symbols.plist in Resources */,
-				87DCF4E31D34EA4500BB420F /* PeoplePickerEmptyResultsView.xib in Resources */,
 				1EBA8C681B70C15D0089CC44 /* common-controls.cas in Resources */,
 				8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */,
 				877316091B970A82007BA779 /* iphone4.plist in Resources */,
@@ -5868,7 +5815,6 @@
 				874448A31C22FCE500E7B947 /* TSMarkdownParser+Wire.m in Sources */,
 				878D7C8E1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m in Sources */,
 				8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */,
-				16DF2F6F1BE7BA34005CF8DE /* AddContactsViewController.m in Sources */,
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
 				168634D91ADD3BCE00EDC7D9 /* TermsOfUseStepViewController.m in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
@@ -6038,7 +5984,6 @@
 				168DDD041AFA81820056A5EF /* CheckmarkViewController.m in Sources */,
 				BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */,
 				8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */,
-				87302F4B1B15D6E6001F478C /* SearchViewController.m in Sources */,
 				871BC2311D34F8F800DF0793 /* Guidance.m in Sources */,
 				DBDA83911ADFB3F2000AD57D /* RegistrationPhoneFlowViewController.m in Sources */,
 				DB29BD411AE1094E00DCEF6D /* EmailSignInViewController.m in Sources */,
@@ -6304,7 +6249,6 @@
 				874A02541D1D325C00D0D74A /* AudioEffect.swift in Sources */,
 				8710673C1C0DC5570035603B /* SettingsButtonCellDescriptor.swift in Sources */,
 				8FC854CC199245770008B66B /* ProfileViewController.m in Sources */,
-				87DCF4E21D34EA4500BB420F /* PeoplePickerEmptyResultsView.m in Sources */,
 				87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */,
 				878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */,
 				874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */,
@@ -6339,7 +6283,6 @@
 				166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */,
 				87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */,
 				875A23131ADEA1A200111C88 /* CountryCodeTableViewController.m in Sources */,
-				87DCF4E41D34EA4500BB420F /* PeopleInputController.m in Sources */,
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
@@ -6457,7 +6400,6 @@
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
 				871BC00B1D34F56300DF0793 /* Analytics+CallEvents.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
-				87DCF4E11D34EA4500BB420F /* PeoplePickerEmptyResultsActionView.m in Sources */,
 				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
 				871BC0011D34F56300DF0793 /* AnalyticsConversationVerifiedObserver.m in Sources */,
 			);

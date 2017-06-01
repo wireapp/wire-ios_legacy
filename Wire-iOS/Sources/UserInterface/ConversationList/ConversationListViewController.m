@@ -28,8 +28,6 @@
 
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
-#import "SearchViewController.h"
-#import "PeopleInputController.h"
 
 #import "Constants.h"
 #import "PermissionDeniedViewController.h"
