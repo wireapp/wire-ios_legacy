@@ -221,10 +221,6 @@
 "input.ephemeral.title" = "Wähle eine Zeit, nach welcher die Nachricht verschwindet";
 
 // System messages
-"content.system.you_nominative" = "du";
-"content.system.you_dative" = "dir";
-"content.system.you_accusative" = "dich";
-
 "content.system.continued_conversation" = "Beginne eine Unterhaltung mit %@";
 
 "content.system.other_started_conversation" = "%@ hat eine Unterhaltung mit %@ begonnen";
@@ -244,15 +240,11 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.other.started" = "%@ hat ein Gespräch mit %@ begonnen";
-"content.system.conversation.other.added" = "%@ hat %@ hinzugefügt";
-"content.system.conversation.other.removed" = "%@ hat %@ entfernt";
-"content.system.conversation.other.left" = "%@ hat das Gespräch verlassen";
-
-"content.system.conversation.you.started" = "%@ hast ein Gespräch mit %@ begonnen";
-"content.system.conversation.you.added" = "%@ hast %@ hinzugefügt";
-"content.system.conversation.you.removed" = "%@ hast %@ entfernt";
-"content.system.conversation.you.left" = "%@ hast das Gespräch verlassen";
+"content.system.conversation.started" = "%@ hat ein Gespräch mit %@ begonnen";
+"content.system.conversation.added" = "%@ hat %@ hinzugefügt";
+"content.system.conversation.removed" = "%@ hat %@ entfernt";
+"content.system.conversation.left" = "%@ hat das Gespräch verlassen";
+"content.system.conversation.you" = "Du";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
