@@ -61,7 +61,8 @@ class ShapeView: LayerHostView<CAShapeLayer> {
 
 extension TeamType {
     func hasUnreadMessages() -> Bool {
-        return conversations.first(where: { $0.estimatedUnreadCount != 0 }) != nil
+        let unread = ZMConversation.predicateForConversationConsideredUnread()!
+        return conversations.first(where: { unread.evaluate(with: $0) }) != nil
     }
 }
 
@@ -270,7 +271,8 @@ public final class PersonalTeamView: BaseTeamView {
         guard let userSession = ZMUserSession.shared() else {
             return false
         }
-        return ZMConversationList.conversations(inUserSession: userSession, team: nil).first(where: { ($0 as! ZMConversation).estimatedUnreadCount != 0 }) != nil ||
+        let unread = ZMConversation.predicateForConversationConsideredUnread()!
+        return ZMConversationList.conversations(inUserSession: userSession, team: nil).first(where: { unread.evaluate(with: $0) }) != nil ||
                 ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil).count > 0
     }
     
