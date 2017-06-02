@@ -1216,13 +1216,6 @@ ActionSheetContainerView.dark {
 
 /* Contacts */
 
-PeoplePickerEmptyResultsView UITextView {
-    font: $font-normal-thin;
-    textColor: $color-text-foreground-dark;
-    editable: NO;
-    selectable: NO;
-}
-
 ContactsCell {
     contentView: @{
         backgroundColor: clear;
@@ -1238,8 +1231,6 @@ ContactsCell {
     }
 }
 
-
-
 ContactsSectionHeaderView {
     titleLabel: @{
         textColor: $color-text-foreground;
@@ -1253,18 +1244,7 @@ ContactsSectionHeaderView {
     }
 }
 
-/* Add Contacts */
-
-^ContactsViewController {
-    titleLabel: @{
-        textAlignment: center;
-        font: $font-small-light;
-        textTransform: upper;
-    }
-    bottomContainerView: @{
-        backgroundColor: $color-background;
-    }
-}
+/* Add Participants */
 
 AddParticipantsViewController SearchHeaderViewController {
     titleLabel: @{
@@ -1284,6 +1264,17 @@ AddParticipantsViewController {
 }
 
 /* Invite Contacts */
+
+^ContactsViewController {
+    titleLabel: @{
+        textAlignment: center;
+        font: $font-small-light;
+        textTransform: upper;
+    }
+    bottomContainerView: @{
+        backgroundColor: $color-background;
+    }
+}
 
 InviteContactsViewController {
     tableView: @{
@@ -1315,10 +1306,6 @@ InviteContactsViewController ContactsEmptyResultView  {
     messageLabel: @{
         textColor: $color-text-foreground-dark;
     }
-}
-
-InviteContactsViewController PeoplePickerEmptyResultsView UITextView {
-    textColor: $color-text-foreground-dark;
 }
 
 InviteContactsViewController ContactsCell {
