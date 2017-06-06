@@ -50,9 +50,14 @@ NS_ASSUME_NONNULL_END
 
 - (instancetype)init
 {
+    return [self initWithSearchDirectory:[[SearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]]];
+}
+
+- (instancetype)initWithSearchDirectory:(SearchDirectory *)searchDirectory
+{
     self = [super init];
     if (self) {
-        self.searchDirectory = [[SearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]];
+        self.searchDirectory = searchDirectory;
         self.sections = @[];
         self.mutableSelection = [NSMutableOrderedSet orderedSet];
     }

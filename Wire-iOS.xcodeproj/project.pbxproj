@@ -121,7 +121,6 @@
 		16F9EB351BCBB0270021EF39 /* CheckBoxButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F9EB331BCBB0270021EF39 /* CheckBoxButton.m */; };
 		1E05C2431B6F7E0600616A66 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E05C2411B6F7E0600616A66 /* Button.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E05C2441B6F7E0600616A66 /* Button.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E05C2421B6F7E0600616A66 /* Button.m */; };
-		1E12C04C1BFA6342001A8A26 /* ContactsDataSource+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E12C04B1BFA6342001A8A26 /* ContactsDataSource+Testing.m */; };
 		1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */; };
 		1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */; };
 		1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
@@ -1196,8 +1195,6 @@
 		1E05C2411B6F7E0600616A66 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		1E05C2421B6F7E0600616A66 /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
 		1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Private.h"; sourceTree = "<group>"; };
-		1E12C04A1BFA6342001A8A26 /* ContactsDataSource+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ContactsDataSource+Testing.h"; path = "TestCategories/ContactsDataSource+Testing.h"; sourceTree = "<group>"; };
-		1E12C04B1BFA6342001A8A26 /* ContactsDataSource+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ContactsDataSource+Testing.m"; path = "TestCategories/ContactsDataSource+Testing.m"; sourceTree = "<group>"; };
 		1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmoticonSubstitutionConfiguration+Tests.h"; sourceTree = "<group>"; };
 		1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationTests.m; sourceTree = "<group>"; };
 		1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-01.json"; sourceTree = "<group>"; };
@@ -2766,8 +2763,6 @@
 		1E12C04D1BFA6346001A8A26 /* TestCategories */ = {
 			isa = PBXGroup;
 			children = (
-				1E12C04A1BFA6342001A8A26 /* ContactsDataSource+Testing.h */,
-				1E12C04B1BFA6342001A8A26 /* ContactsDataSource+Testing.m */,
 			);
 			name = TestCategories;
 			sourceTree = "<group>";
@@ -6479,7 +6474,6 @@
 				BF8EE55A1D636F4600B0D6D7 /* TextMessageCellTests.swift in Sources */,
 				BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */,
 				BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */,
-				1E12C04C1BFA6342001A8A26 /* ContactsDataSource+Testing.m in Sources */,
 				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,

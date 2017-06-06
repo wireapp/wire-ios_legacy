@@ -56,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, assign) BOOL shouldShowSectionIndex;
 @property (nonatomic, weak, nullable) id<ContactsDataSourceDelegate> delegate;
 
+- (instancetype)init;
+- (instancetype)initWithSearchDirectory:(SearchDirectory * _Nullable)searchDirectory NS_DESIGNATED_INITIALIZER;
+
 - (NSArray *)sectionAtIndex:(NSUInteger)index;
 - (ZMSearchUser *)userAtIndexPath:(NSIndexPath *)indexPath;
 

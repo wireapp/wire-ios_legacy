@@ -21,7 +21,6 @@
 @import XCTest;
 #import "ContactsDataSource.h"
 #import "ContactsDataSource+Private.h"
-#import "ContactsDataSource+Testing.h"
 #import "MockLoader.h"
 #import "MockUser.h"
 #import "MockConversation.h"
@@ -38,8 +37,7 @@
 
     [NSThread sleepForTimeInterval:0.5];
     
-    self.dataSource = [[ContactsDataSource alloc] initForTesting];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.dataSource = [[ContactsDataSource alloc] initWithSearchDirectory:nil];
 }
 
 - (void)tearDown
