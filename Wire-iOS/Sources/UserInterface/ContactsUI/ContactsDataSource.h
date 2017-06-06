@@ -25,6 +25,7 @@
 @class ZMSearchUser;
 @class ZMAddressBookContact;
 @class ContactsDataSource;
+@class SearchDirectory;
 
 extern const NSUInteger MinimumNumberOfContactsToDisplaySections;
 
@@ -47,15 +48,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ContactsDataSource : NSObject<UITableViewDataSource>
 
-@property (nonatomic, copy) ZMSearchRequest* searchRequest;
-@property (nonatomic, copy) NSString *searchQuery;
+@property (nonatomic, readonly) SearchDirectory *searchDirectory;
+@property (nonatomic, nullable) NSArray *ungroupedSearchResults;
+@property (nonatomic, copy, nonnull) NSString *searchQuery;
 @property (nonatomic) NSOrderedSet *selection;
 
 @property (nonatomic, readonly, assign) BOOL shouldShowSectionIndex;
 @property (nonatomic, weak, nullable) id<ContactsDataSourceDelegate> delegate;
-
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithSearchRequest:(ZMSearchRequest *)searchRequest NS_DESIGNATED_INITIALIZER;
 
 - (NSArray *)sectionAtIndex:(NSUInteger)index;
 - (ZMSearchUser *)userAtIndexPath:(NSIndexPath *)indexPath;

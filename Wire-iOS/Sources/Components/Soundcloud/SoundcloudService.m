@@ -37,7 +37,7 @@
     static SoundcloudService *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithUserSession:nil];
+        sharedInstance = [[SoundcloudService alloc] initWithUserSession:nil];
     });
     
     return sharedInstance;

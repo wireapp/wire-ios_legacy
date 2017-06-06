@@ -20,6 +20,7 @@
 #import "ContactsViewController+ShareContacts.h"
 #import "ShareContactsViewController.h"
 #import "ContactsDataSource.h"
+#import "Wire-Swift.h"
 
 
 
@@ -55,7 +56,7 @@
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
     // Reload data source
-    [self.dataSource setSearchRequest:self.dataSource.searchRequest];
+    [self.dataSource searchWithQuery:@""];
     
     [self dismissChildViewController:viewController];
 }

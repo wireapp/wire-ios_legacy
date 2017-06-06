@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, PeoplePickerSuggestionsState) {
     PeoplePickerSuggestionsStateNotAvailable,
 };
 
-@class ZMSearchResult, ZMSearchDirectory, UsersInDirectorySection;
+@class UsersInDirectorySection;
 
 @interface UsersInDirectorySection : NSObject <CollectionViewSectionController>
 @property (nonatomic) PeoplePickerSuggestionsState suggestionsState;

@@ -43,12 +43,6 @@ public final class IncomingConnectionView: UIView {
         }
     }
 
-    public var commonConnectionsCount: UInt = 0 {
-        didSet {
-            self.setupLabelText()
-        }
-    }
-
     public typealias UserAction = (ZMUser) -> Void
     public var onAccept: UserAction?
     public var onIgnore: UserAction?
@@ -95,7 +89,7 @@ public final class IncomingConnectionView: UIView {
                 user: user,
                 fallbackName: "",
                 addressBookName: BareUserToUser(user)?.addressBookEntry?.cachedName,
-                commonConnections: Int(commonConnectionsCount)
+                commonConnections: 0
             )
         )
     }

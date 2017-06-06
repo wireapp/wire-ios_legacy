@@ -228,15 +228,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
     return UIEdgeInsetsMake(topInset, leftInset, 0, righInset);
 }
 
-#pragma mark - ZMSearchResultsObserver
-
-- (void)didReceiveSearchResult:(ZMSearchResult *)result forToken:(ZMSearchToken)searchToken
-{
-    self.suggestions = result.usersInDirectory;
-    self.suggestionsState = PeoplePickerSuggestionsStateLoaded;
-    [self.collectionView reloadData];
-}
-
 #pragma mark - Single item animation
 
 /**

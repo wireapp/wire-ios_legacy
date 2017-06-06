@@ -60,9 +60,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
 @end
 
-@interface ProfileViewController (CommonContactsDelegate) <ZMCommonContactsSearchDelegate>
-@end
-
 @interface ProfileViewController (TabBarControllerDelegate) <TabBarControllerDelegate>
 @end
 
@@ -74,7 +71,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @property (nonatomic, readonly) ZMConversation *conversation;
 
 @property (nonatomic) id observerToken;
-@property (nonatomic) id <ZMCommonContactsSearchToken> commonContactsSearchToken;
 @property (nonatomic) ProfileHeaderView *headerView;
 @property (nonatomic) TabBarController *tabsController;
 
@@ -106,9 +102,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         _conversation = conversation;
         _context = context;
         _navigationControllerDelegate = [[ProfileNavigationControllerDelegate alloc] init];
-        if (user.totalCommonConnections == 0 && !user.isConnected) {
-            _commonContactsSearchToken = [user searchCommonContactsInUserSession:ZMUserSession.sharedSession withDelegate:self];
-        }
     }
     return self;
 }
@@ -337,17 +330,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [[Analytics shared] tagOtherDeviceList];
     }
     [self updateShowVerifiedShield];
-}
-
-@end
-
-
-@implementation ProfileViewController (CommonContactsDelegate)
-
-- (void)didReceiveNumberOfTotalMutualConnections:(NSUInteger)numberOfConnections forSearchToken:(id<ZMCommonContactsSearchToken>)searchToken
-{
-    ProfileHeaderViewModel *model = [self headerViewModelWithUser:self.bareUser commonConnections:numberOfConnections];
-    [self.headerView configureWithViewModel:model];
 }
 
 @end
