@@ -63,15 +63,13 @@ final class MockUserCopyable: MockUser, Copyable {
 
 final class UserConnectionViewTests: ZMSnapshotTestCase {
     
-    func sutForUser(_ user: ZMUser = MockUserCopyable.mockUsers().first!, commonConnectionsCount: UInt = 0) -> UserConnectionView {
+    func sutForUser(_ user: ZMUser = MockUserCopyable.mockUsers().first!) -> UserConnectionView {
         let mockUser = getMockUser(user: user)
         mockUser.isPendingApprovalByOtherUser = true
         mockUser.isPendingApprovalBySelfUser = false
         mockUser.isConnected = false
         
         let connectionView = UserConnectionView(user: user)
-        connectionView.commonConnectionsCount = commonConnectionsCount
-        
         connectionView.layoutForTest()
         CASStyler.default().styleItem(connectionView)
         
@@ -95,32 +93,19 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
         return (copy, copyMockUser)
     }
     
-    func testVerifyCombinations() {
-        verifyCombinations(of: sutForUser())
+    func testWithUserName() {
+        let sut = sutForUser()
+        sut.layoutForTest()
+        verify(view: sut)
+        
     }
 
-    func testVerifyCombinationsWithoutUserName() {
+    func testWithoutUserName() {
         // The last mock user does not have a handle
         let user = MockUserCopyable.mockUsers().last!
-        verifyCombinations(of: sutForUser(user))
+        let sut = sutForUser(user)
+        sut.layoutForTest()
+        verify(view: sut)
     }
-
-    func verifyCombinations(of sut: UserConnectionView, line: UInt = #line) {
-        let commonConnectionsMutation = { (view: UserConnectionView, value: Bool) -> UserConnectionView in
-            let (newView, _) = self.copy(view: view)
-            newView.commonConnectionsCount = value ? 0 : 10
-            return newView
-        }
-
-        let commonConnectionsMutator = Mutator(applicator: commonConnectionsMutation, combinations: [true, false])
-        let combinator = CombinationTest(mutable: sut, mutators: [commonConnectionsMutator])
-
-        XCTAssertEqual(combinator.testAll {
-            let identifier = "\($0.combinationChain)"
-            print("Testing combination " + identifier)
-            $0.result.layoutForTest()
-            self.verify(view: $0.result, identifier: identifier, file: #file, line: line)
-            return .none
-            }.count, 0, line: line)
-    }
+    
 }

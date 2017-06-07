@@ -51,18 +51,12 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         return contactName + " " + suffix
     }
 
-    func correlationText(for user: ZMBareUser, with count: Int, addressBookName: String?) -> NSAttributedString? {
-        return correlationText(for: user, with: count, addressBookName: addressBookName, color: color)
-    }
-    
-    func correlationText(for user: ZMBareUser, with count: Int, addressBookName: String?, color: UIColor) -> NSAttributedString? {
+    func correlationText(for user: ZMBareUser, addressBookName: String?) -> NSAttributedString? {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
         
-        guard count > 0 && !user.isConnected else { return nil }
-        let prefix = String(format: "%ld", count) && boldFont && color
-        return prefix + " " + ("conversation.connection_view.common_connections".localized(args: count) && lightFont && color)
+        return nil
     }
     
 }
@@ -103,10 +97,10 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: dimmedColor)
     }()
 
-    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int) {
+    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?) {
         title = UserNameDetailViewModel.attributedTitle(for: user, fallback: fallback)
         handleText = UserNameDetailViewModel.attributedSubtitle(for: user)
-        correlationText = UserNameDetailViewModel.attributedCorrelationText(for: user, with: commonConnections, addressBookName: addressBookName)
+        correlationText = UserNameDetailViewModel.attributedCorrelationText(for: user, addressBookName: addressBookName)
     }
 
     static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
@@ -118,9 +112,9 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
         return ("@" + handle) && smallBoldFont && dimmedColor
     }
 
-    static func attributedCorrelationText(for user: ZMBareUser?, with connections: Int, addressBookName: String?) -> NSAttributedString? {
+    static func attributedCorrelationText(for user: ZMBareUser?, addressBookName: String?) -> NSAttributedString? {
         guard let user = user else { return nil }
-        return formatter.correlationText(for: user, with: connections, addressBookName: addressBookName)
+        return formatter.correlationText(for: user, addressBookName: addressBookName)
     }
 }
 

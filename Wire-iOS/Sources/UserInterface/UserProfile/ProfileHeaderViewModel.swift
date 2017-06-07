@@ -25,13 +25,12 @@ import UIKit
     let userDetailViewModel: UserNameDetailViewModel
     let style: ProfileHeaderStyle
 
-    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?, commonConnections: Int, style: ProfileHeaderStyle) {
+    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?, style: ProfileHeaderStyle) {
         self.style = style
         self.userDetailViewModel = UserNameDetailViewModel(
             user: user,
             fallbackName: fallback,
-            addressBookName: addressBookName,
-            commonConnections: commonConnections
+            addressBookName: addressBookName
         )
     }
 

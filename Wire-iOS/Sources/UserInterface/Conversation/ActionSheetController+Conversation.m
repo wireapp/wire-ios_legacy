@@ -59,8 +59,7 @@
 
     UserNameDetailViewModel *model = [[UserNameDetailViewModel alloc] initWithUser:user
                                                                       fallbackName:@""
-                                                                   addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-                                                                 commonConnections:user.totalCommonConnections];
+                                                                   addressBookName:BareUserToUser(user).addressBookEntry.cachedName];
 
     UserNameDetailView *detailView = [[UserNameDetailView alloc] init];
     [detailView configureWith:model];

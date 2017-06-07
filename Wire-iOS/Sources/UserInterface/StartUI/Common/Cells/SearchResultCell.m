@@ -237,7 +237,7 @@
 {
     self.displayName = self.user.name;
     
-    [self updateSubtitleForCommonConnections:self.user.totalCommonConnections];
+    [self updateSubtitle];
     
     BOOL canBeConnected = YES;
 
@@ -391,9 +391,9 @@
     return NO;
 }
 
-- (void)updateSubtitleForCommonConnections:(NSUInteger)connections
+- (void)updateSubtitle
 {
-    NSAttributedString *subtitle = [self attributedSubtitleWithConnectionCount:connections user:self.user];
+    NSAttributedString *subtitle = [self attributedSubtitleWithUser:self.user];
 
     if (nil == subtitle) {
         self.subtitleLabel.text = @"";
@@ -406,7 +406,7 @@
     }
 }
 
-- (NSAttributedString *)attributedSubtitleWithConnectionCount:(NSUInteger)connections user:(id <ZMBareUser, ZMSearchableUser>)user
+- (NSAttributedString *)attributedSubtitleWithUser:(id <ZMBareUser, ZMSearchableUser>)user
 {
     NSMutableAttributedString *subtitle = [[NSMutableAttributedString alloc] init];
 
@@ -421,7 +421,7 @@
     }
 
     NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
-    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user with:connections addressBookName:addresBookName color:self.subtitleColor];
+    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user addressBookName:addresBookName];
     if (nil != correlation) {
         if (nil != attributedHandle) {
             NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.subtitleColor };

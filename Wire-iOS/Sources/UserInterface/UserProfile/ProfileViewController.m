@@ -178,7 +178,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     id<ZMBareUser> user = self.bareUser;
 
-    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user commonConnections:user.totalCommonConnections];
+    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user];
     ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -187,7 +187,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.headerView = headerView;
 }
 
-- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user commonConnections:(NSInteger)commonConnections
+- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user
 {
     ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
     if (IS_IPAD) {
@@ -201,7 +201,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     return [[ProfileHeaderViewModel alloc] initWithUser:user
                                            fallbackName:user.displayName
                                         addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-                                      commonConnections:commonConnections
                                                   style:headerStyle];
 }
 
