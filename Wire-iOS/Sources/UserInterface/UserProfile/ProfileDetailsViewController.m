@@ -84,6 +84,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UserImageView *userImageView;
 @property (nonatomic) UIView *userImageViewContainer;
 @property (nonatomic) UIView *footerView;
+@property (nonatomic) UILabel *teamsGuestLabel;
 
 @end
 
@@ -112,6 +113,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)setupViews
 {
     [self createUserImageView];
+    [self createTeamsGuestLabel];
     [self createFooter];
 }
 
@@ -123,9 +125,16 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     
-    [self.userImageView autoCenterInSuperview];
+    [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
+    [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
+    [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+    
+    [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
+        [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    }];
 
     [self.footerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageViewContainer];
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
@@ -145,6 +154,15 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.team = ZMUser.selfUser.activeTeam;
     self.userImageView.user = self.bareUser;
     [self.userImageViewContainer addSubview:self.userImageView];
+}
+
+- (void)createTeamsGuestLabel
+{
+    self.teamsGuestLabel = [[UILabel alloc] initForAutoLayout];
+    self.teamsGuestLabel.numberOfLines = 0;
+    self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
+    [self.userImageViewContainer addSubview:self.teamsGuestLabel];
+    self.teamsGuestLabel.text = [self teamGuestsTextFor:self.bareUser];
 }
 
 #pragma mark - Footer

@@ -1388,6 +1388,13 @@ PickerView {
     backgroundColor: clear;
 }
 
+
+ProfileDetailsViewController {
+    teamsGuestLabel: @{
+        textColor: $color-text-foreground;
+        font: $font-normal-light;
+    }
+}
 /* Profile Devices */
 
 ProfileDevicesViewController {

@@ -101,6 +101,7 @@
 #import "GroupConversationsSection.h"
 #import "TopPeopleLineSection.h"
 #import "CollectionViewSectionAggregator.h"
+#import "ProfileDetailsViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
