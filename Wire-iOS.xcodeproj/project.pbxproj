@@ -39,8 +39,9 @@
 		163B5F011B4D4109009B4629 /* TitleBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5F001B4D4109009B4629 /* TitleBarViewController.m */; };
 		163BB60D1BEA976C00606381 /* BarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB60B1BEA976C00606381 /* BarController.m */; };
 		163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB6131BEAA52A00606381 /* InviteContactsViewController.m */; };
+		163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */; };
 		164B65BE1CB41A3D00D882D8 /* RegistrationRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 164B65BD1CB41A3D00D882D8 /* RegistrationRootViewController.m */; };
-		164C29AB1ED33A5F0026562A /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsController.swift */; };
+		164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */; };
 		164C29AD1ED446660026562A /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AC1ED446660026562A /* UserSelection.swift */; };
 		1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651F9B61D352B7B00A9FAE8 /* ArticleView.swift */; };
 		1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */; };
@@ -120,7 +121,6 @@
 		16F9EB351BCBB0270021EF39 /* CheckBoxButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F9EB331BCBB0270021EF39 /* CheckBoxButton.m */; };
 		1E05C2431B6F7E0600616A66 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E05C2411B6F7E0600616A66 /* Button.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E05C2441B6F7E0600616A66 /* Button.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E05C2421B6F7E0600616A66 /* Button.m */; };
-		1E12C04C1BFA6342001A8A26 /* ContactsDataSource+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E12C04B1BFA6342001A8A26 /* ContactsDataSource+Testing.m */; };
 		1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */; };
 		1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */; };
 		1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
@@ -1081,9 +1081,10 @@
 		163BB60C1BEA976C00606381 /* BarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarController.h; sourceTree = "<group>"; };
 		163BB6121BEAA52A00606381 /* InviteContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteContactsViewController.h; sourceTree = "<group>"; };
 		163BB6131BEAA52A00606381 /* InviteContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteContactsViewController.m; sourceTree = "<group>"; };
+		163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactsDataSource+Searching.swift"; sourceTree = "<group>"; };
 		164B65BC1CB41A3D00D882D8 /* RegistrationRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationRootViewController.h; sourceTree = "<group>"; };
 		164B65BD1CB41A3D00D882D8 /* RegistrationRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationRootViewController.m; sourceTree = "<group>"; };
-		164C29AA1ED33A5F0026562A /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		164C29AC1ED446660026562A /* UserSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSelection.swift; sourceTree = "<group>"; };
 		1651F9B61D352B7B00A9FAE8 /* ArticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
 		1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewTests.swift; sourceTree = "<group>"; };
@@ -1195,8 +1196,6 @@
 		1E05C2411B6F7E0600616A66 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		1E05C2421B6F7E0600616A66 /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
 		1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Private.h"; sourceTree = "<group>"; };
-		1E12C04A1BFA6342001A8A26 /* ContactsDataSource+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ContactsDataSource+Testing.h"; path = "TestCategories/ContactsDataSource+Testing.h"; sourceTree = "<group>"; };
-		1E12C04B1BFA6342001A8A26 /* ContactsDataSource+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ContactsDataSource+Testing.m"; path = "TestCategories/ContactsDataSource+Testing.m"; sourceTree = "<group>"; };
 		1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmoticonSubstitutionConfiguration+Tests.h"; sourceTree = "<group>"; };
 		1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationTests.m; sourceTree = "<group>"; };
 		1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-01.json"; sourceTree = "<group>"; };
@@ -2766,8 +2765,6 @@
 		1E12C04D1BFA6346001A8A26 /* TestCategories */ = {
 			isa = PBXGroup;
 			children = (
-				1E12C04A1BFA6342001A8A26 /* ContactsDataSource+Testing.h */,
-				1E12C04B1BFA6342001A8A26 /* ContactsDataSource+Testing.m */,
 			);
 			name = TestCategories;
 			sourceTree = "<group>";
@@ -3911,6 +3908,7 @@
 				87DCF47E1D34E9BA00BB420F /* ContactsDataSource+Private.h */,
 				87DCF47F1D34E9BA00BB420F /* ContactsDataSource.h */,
 				87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */,
+				163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */,
 				87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.h */,
 				87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */,
 				87DCF4831D34E9BA00BB420F /* ContactsSectionHeaderView.h */,
@@ -4053,7 +4051,7 @@
 				87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */,
 				16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */,
 				16325E641EE03CC4000E72EB /* SearchResultsView.swift */,
-				164C29AA1ED33A5F0026562A /* SearchResultsController.swift */,
+				164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */,
 			);
 			path = StartUI;
 			sourceTree = "<group>";
@@ -5848,6 +5846,7 @@
 				87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */,
 				871BC3681D34F94200DF0793 /* MediaPreviewData+YouTube.m in Sources */,
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
+				163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */,
 				87E56ED91E4E10CA0097D489 /* TextSearchResultCell.swift in Sources */,
 				871BC0041D34F56300DF0793 /* AnalyticsLocalyticsProvider.m in Sources */,
 				871BC2481D34F8F800DF0793 /* NSString+WAZUIMagic.m in Sources */,
@@ -6379,7 +6378,7 @@
 				871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */,
 				BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */,
 				87F18BB01E01533F00C69D9B /* CollectionFileCell.swift in Sources */,
-				164C29AB1ED33A5F0026562A /* SearchResultsController.swift in Sources */,
+				164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */,
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
@@ -6479,7 +6478,6 @@
 				BF8EE55A1D636F4600B0D6D7 /* TextMessageCellTests.swift in Sources */,
 				BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */,
 				BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */,
-				1E12C04C1BFA6342001A8A26 /* ContactsDataSource+Testing.m in Sources */,
 				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,

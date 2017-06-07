@@ -45,12 +45,7 @@ public final class UserConnectionView: UIView, Copyable {
             self.userImageView.user = self.user
         }
     }
-    public var commonConnectionsCount: UInt = 0 {
-        didSet {
-            self.updateLabels()
-        }
-    }
-
+    
     public init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
@@ -111,7 +106,6 @@ public final class UserConnectionView: UIView, Copyable {
     private var correlationLabelText: NSAttributedString? {
         return type(of: self).correlationFormatter.correlationText(
             for: user,
-            with: Int(commonConnectionsCount),
             addressBookName: BareUserToUser(user).addressBookEntry?.cachedName
         )
     }

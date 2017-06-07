@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,21 +17,23 @@
 //
 
 
-import UIKit
+import Foundation
 
-
-@objc final class ProfileHeaderViewModel: NSObject {
-
-    let userDetailViewModel: UserNameDetailViewModel
-    let style: ProfileHeaderStyle
-
-    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?, style: ProfileHeaderStyle) {
-        self.style = style
-        self.userDetailViewModel = UserNameDetailViewModel(
-            user: user,
-            fallbackName: fallback,
-            addressBookName: addressBookName
-        )
+extension ContactsDataSource {
+    
+    @objc
+    public func search(withQuery query: String) {
+        let request = SearchRequest(query: query, searchOptions: [.contacts, .addressBook])
+        let task = self.searchDirectory.perform(request)
+        
+        task.onResult { [weak self] (searchResult, _) in
+            guard let `self` = self else { return }
+            self.ungroupedSearchResults = searchResult.addressBook
+            self.delegate?.dataSource?(self, didReceiveSearchResult: searchResult.addressBook)
+        }
+        
+        task.start()
     }
-
+    
+    
 }

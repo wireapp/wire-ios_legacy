@@ -23,10 +23,9 @@ import Foundation
     case ignore, accept
 }
 
-final public class IncomingConnectionViewController: UIViewController, ZMCommonContactsSearchDelegate {
+final public class IncomingConnectionViewController: UIViewController {
 
     fileprivate var connectionView: IncomingConnectionView!
-    fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
 
     public let userSession: ZMUserSession
     public let user: ZMUser
@@ -39,8 +38,6 @@ final public class IncomingConnectionViewController: UIViewController, ZMCommonC
 
         guard !self.user.isConnected else { return }
         user.refreshData()
-        guard self.user.totalCommonConnections == 0 else { return }
-        self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -49,7 +46,6 @@ final public class IncomingConnectionViewController: UIViewController, ZMCommonC
 
     override public func loadView() {
         self.connectionView = IncomingConnectionView(user: user)
-        self.connectionView.commonConnectionsCount = user.totalCommonConnections
         self.connectionView.onAccept = { [weak self] user in
             guard let `self` = self else { return }
             self.userSession.performChanges {
@@ -68,18 +64,12 @@ final public class IncomingConnectionViewController: UIViewController, ZMCommonC
 
         view = connectionView
     }
-
-    public func didReceiveNumber(ofTotalMutualConnections numberOfConnections: UInt, for searchToken: ZMCommonContactsSearchToken!) {
-        connectionView.commonConnectionsCount = numberOfConnections
-    }
-
+    
 }
 
-
-final public class UserConnectionViewController: UIViewController, ZMCommonContactsSearchDelegate {
+final public class UserConnectionViewController: UIViewController {
 
     fileprivate var userConnectionView: UserConnectionView!
-    fileprivate var recentSearchToken: ZMCommonContactsSearchToken!
 
     public let userSession: ZMUserSession
     public let user: ZMUser
@@ -92,8 +82,6 @@ final public class UserConnectionViewController: UIViewController, ZMCommonConta
         
         guard !self.user.isConnected else { return }
         user.refreshData()
-        guard self.user.totalCommonConnections == 0 else { return }
-        self.recentSearchToken = self.user.searchCommonContacts(in: self.userSession, with: self)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -102,11 +90,6 @@ final public class UserConnectionViewController: UIViewController, ZMCommonConta
     
     override public func loadView() {
         self.userConnectionView = UserConnectionView(user: self.user)
-        self.userConnectionView.commonConnectionsCount = self.user.totalCommonConnections
         self.view = self.userConnectionView
-    }
-
-    public func didReceiveNumber(ofTotalMutualConnections numberOfConnections: UInt, for searchToken: ZMCommonContactsSearchToken!) {
-        userConnectionView.commonConnectionsCount = numberOfConnections
     }
 }

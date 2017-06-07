@@ -36,16 +36,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
-    if (self) {
-        ZMSearchRequest *searchRequest = [ZMSearchRequest new];
-        searchRequest.includeAddressBookContacts = YES;
-        searchRequest.includeContacts = YES;
-        
+    if (self) {        
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.delegate = self;
         self.contentDelegate = self;
-        self.dataSource = [[ContactsDataSource alloc] initWithSearchRequest:searchRequest];
-        
+        self.dataSource = [[ContactsDataSource alloc] init];
+        self.dataSource.searchQuery = @"";
+                
         self.title = NSLocalizedString(@"contacts_ui.title", @"");
     }
     

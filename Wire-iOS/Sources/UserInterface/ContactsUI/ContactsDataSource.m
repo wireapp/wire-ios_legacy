@@ -20,6 +20,8 @@
 #import "ContactsDataSource.h"
 #import "WireSyncEngine+iOS.h"
 
+#import "Wire-Swift.h"
+
 
 
 // Minimum number of non-empty sections to display contacts grouped;
@@ -27,15 +29,13 @@ const NSUInteger MinimumNumberOfContactsToDisplaySections = 15;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ContactsDataSource () <ZMSearchResultObserver>
+@interface ContactsDataSource ()
 
 // Search
-@property (nonatomic) ZMSearchDirectory *searchDirectory;
-@property (nonatomic) ZMSearchToken currentSearchToken;
+@property (nonatomic) SearchDirectory *searchDirectory;
 
 // Group
 @property (nonatomic, readonly) UILocalizedIndexedCollation *indexedCollation;
-@property (nonatomic, nullable) NSArray *ungroupedSearchResults;
 @property (nonatomic) NSArray *sections;    // Array of arrays: each subarray is section content;
 @property (nonatomic) NSMutableOrderedSet *mutableSelection;
 
@@ -48,13 +48,16 @@ NS_ASSUME_NONNULL_END
 
 @implementation ContactsDataSource
 
-- (instancetype)initWithSearchRequest:(ZMSearchRequest *)searchRequest
+- (instancetype)init
+{
+    return [self initWithSearchDirectory:[[SearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]]];
+}
+
+- (instancetype)initWithSearchDirectory:(SearchDirectory *)searchDirectory
 {
     self = [super init];
     if (self) {
-        self.searchDirectory = [[ZMSearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]];
-        [self.searchDirectory addSearchResultObserver:self];
-        self.searchRequest = searchRequest;
+        self.searchDirectory = searchDirectory;
         self.sections = @[];
         self.mutableSelection = [NSMutableOrderedSet orderedSet];
     }
@@ -63,48 +66,20 @@ NS_ASSUME_NONNULL_END
 
 - (void)dealloc
 {
-    [self.searchDirectory removeSearchResultObserver:self];
     [self.searchDirectory tearDown];
 }
 
 #pragma mark - Searching
 
-- (void)setSearchRequest:(ZMSearchRequest * __nonnull)searchRequest
+- (void)setSearchQuery:(NSString *)searchQuery
 {
-    _searchRequest = [searchRequest copy];
-    if (_searchRequest.query == nil) {
-        _searchRequest.query = @"";
+    if ([searchQuery isEqualToString:_searchQuery] ) {
+        return;
     }
-    self.currentSearchToken = [self.searchDirectory performRequest:self.searchRequest];
-}
-
-- (NSString *)searchQuery
-{
-    return [self.searchRequest.query copy];
-}
-
-- (void)setSearchQuery:(NSString * __nonnull)searchQuery
-{
-    if (! [self.searchRequest.query isEqualToString:searchQuery]) {
-        ZMSearchRequest *newRequest = [self.searchRequest copy];
-        newRequest.query = searchQuery;
-        self.searchRequest = newRequest;
-    }
-}
-
-#pragma mark - ZMSearchResultObserver
-
-- (void)didReceiveSearchResult:(ZMSearchResult *)result forToken:(ZMSearchToken)searchToken
-{
-    if ([searchToken isEqual:self.currentSearchToken]) {
-        NSMutableArray *matches = [result.usersInContacts mutableCopy];
-        [matches addObjectsFromArray:result.usersInDirectory];
-        self.ungroupedSearchResults = matches;
-        
-        if ([self.delegate respondsToSelector:@selector(dataSource:didReceiveSearchResult:)]) {
-            [self.delegate dataSource:self didReceiveSearchResult:self.ungroupedSearchResults];
-        }
-    }
+    
+    _searchQuery = searchQuery;
+    
+    [self searchWithQuery:searchQuery];
 }
 
 #pragma mark - Grouping
