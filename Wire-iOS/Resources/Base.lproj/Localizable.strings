@@ -253,6 +253,7 @@
 "content.system.conversation.you.added" = "%@ added %@";
 "content.system.conversation.you.removed" = "%@ removed %@";
 "content.system.conversation.you.left" = "%@ left";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";

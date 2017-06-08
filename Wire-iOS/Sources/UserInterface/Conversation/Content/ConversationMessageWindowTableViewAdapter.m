@@ -283,6 +283,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
             case ZMSystemMessageTypeParticipantsAdded:
             case ZMSystemMessageTypeParticipantsRemoved:
             case ZMSystemMessageTypeNewConversation:
+            case ZMSystemMessageTypeTeamMemberLeave:
                 cellIdentifier = ParticipantsCell.zm_reuseIdentifier;
                 break;
                 

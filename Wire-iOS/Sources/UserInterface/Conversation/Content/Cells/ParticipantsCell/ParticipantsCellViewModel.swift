@@ -25,7 +25,7 @@ private func localizationKey(with pathComponent: String, senderIsSelfUser: Bool)
 
 private enum ConversationActionType {
 
-    case none, started, added, removed, left
+    case none, started, added, removed, left, teamMemberLeave
 
     func formatKey(senderIsSelfUser: Bool) -> String {
         switch self {
@@ -33,6 +33,7 @@ private enum ConversationActionType {
         case .added: return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
         case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started, .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
+        case .teamMemberLeave: return "content.system.conversation.team.member-leave"
         }
     }
 }
@@ -46,6 +47,7 @@ private extension ZMConversationMessage {
         case .participantsRemoved where systemMessage.users != [sender]: return .removed
         case .participantsAdded: return .added
         case .newConversation: return .started
+        case .teamMemberLeave: return .teamMemberLeave
         default: return .none
         }
     }
@@ -77,7 +79,7 @@ struct ParticipantsCellViewModel {
         switch message.actionType {
         case .started, .none: return .conversation
         case .added: return .plus
-        case .removed, .left: return .minus
+        case .removed, .left, .teamMemberLeave: return .minus
         }
     }
 
@@ -91,7 +93,7 @@ struct ParticipantsCellViewModel {
         let formatKey = message.actionType.formatKey
 
         switch message.actionType {
-        case .left:
+        case .left, .teamMemberLeave:
             let title = formatKey(sender.isSelfUser).localized(args: senderName) && labelFont && labelTextColor
             return title.adding(font: labelBoldFont, to: senderName)
         case .removed, .added, .started:
