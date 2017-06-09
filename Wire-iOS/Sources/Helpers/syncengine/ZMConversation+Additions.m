@@ -67,7 +67,7 @@
         [listOfPeople addObject:self.connectedUser];
         ZMConversation *conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                              withParticipants:listOfPeople
-                                        inTeam:activeTeam];
+                                                                                       inTeam:activeTeam];
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextConversation
                                                                                                  participantCount:conversation.activeParticipants.count];
         [[Analytics shared] tagEventObject:event];

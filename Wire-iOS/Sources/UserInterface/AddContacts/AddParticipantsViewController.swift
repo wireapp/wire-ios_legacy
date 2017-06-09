@@ -94,11 +94,15 @@ public class AddParticipantsViewController : UIViewController {
         
         confirmButton.addTarget(self, action: #selector(searchHeaderViewControllerDidConfirmAction(_:)), for: .touchUpInside)
         
-        searchResultsViewController.filterConversation = conversation
+        searchResultsViewController.filterConversation = conversation.conversationType == .group ? conversation : nil
         searchResultsViewController.mode = .list
         searchResultsViewController.searchContactList()
         
         userSelection.add(observer: self)
+        
+        if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
+            userSelection.add(connectedUser)
+        }
     }
 
     override public func viewDidLoad() {
@@ -114,6 +118,7 @@ public class AddParticipantsViewController : UIViewController {
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
         
         createConstraints()
+        updateConfirmButtonVisibility()
     }
     
     func createConstraints() {
