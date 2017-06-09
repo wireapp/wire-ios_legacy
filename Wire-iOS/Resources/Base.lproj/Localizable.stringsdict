@@ -35,7 +35,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>lu</string>
 			<key>zero</key>
-			<string>No people</string>
+			<string>Everyone left</string>
 			<key>one</key>
 			<string>One person</string>
 			<key>few</key>
