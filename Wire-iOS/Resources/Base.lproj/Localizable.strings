@@ -682,6 +682,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
 "self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
+"self.settings.privacy_analytics_option" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
 
 "self.settings.privacy.clear_history.title" = "Clear History";
