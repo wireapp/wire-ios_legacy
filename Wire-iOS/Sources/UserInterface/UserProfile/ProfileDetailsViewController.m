@@ -299,7 +299,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     if (user.isSelfUser) {
         return ProfileUserActionNone;
     }
-    else if (user.isConnected && self.context == ProfileViewControllerContextOneToOneConversation) {
+    else if ((user.isConnected || user.isMemberOfActiveTeam) && self.context == ProfileViewControllerContextOneToOneConversation) {
         return ProfileUserActionAddPeople;
     }
     else if (user.isMemberOfActiveTeam) {
