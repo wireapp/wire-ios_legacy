@@ -181,7 +181,7 @@ public class BaseTeamView: UIView, TeamViewType {
 
         constrain(nameLabel, nameDotView) { nameLabel, nameDotView in
             nameDotView.centerY == nameLabel.centerY
-            nameDotView.trailing == nameLabel.leading - 2
+            nameDotView.trailing == nameLabel.leading - 6
             
             nameDotView.width == nameDotView.height
             nameDotView.height == nameDotSize
@@ -350,7 +350,8 @@ public final class TeamImageView: UIImageView {
         self.accessibilityElements = [initialLabel]
         
         constrain(self, initialLabel) { selfView, initialLabel in
-            initialLabel.center == selfView.center
+            initialLabel.centerY == selfView.centerY + CGFloat(0.5) // Font rendering issue fix
+            initialLabel.centerX == selfView.centerX
         }
         
         maskLayer.contentsScale = UIScreen.main.scale
