@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Open";
 "peoplepicker.quick-action.create-conversation" = "Create group";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Search by name";
 "contacts_ui.invite_others" = "Invite others";

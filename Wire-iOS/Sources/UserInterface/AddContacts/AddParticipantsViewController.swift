@@ -77,10 +77,6 @@ public class AddParticipantsViewController : UIViewController {
         confirmButton.contentHorizontalAlignment = .left
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         
-        emptyResultLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
-        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        emptyResultLabel.font = FontSpec(.normal, .none).font!
-        
         if conversation.conversationType == .oneOnOne {
             confirmButton.setTitle("peoplepicker.button.create_conversation".localized, for: .normal)
         } else {
@@ -91,6 +87,10 @@ public class AddParticipantsViewController : UIViewController {
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().activeTeam, variant: ColorScheme.default().variant, isAddingParticipants: true)
         
         super.init(nibName: nil, bundle: nil)
+        
+        emptyResultLabel.text = everyoneHasBeenAddedText
+        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        emptyResultLabel.font = FontSpec(.normal, .none).font!
         
         confirmButton.addTarget(self, action: #selector(searchHeaderViewControllerDidConfirmAction(_:)), for: .touchUpInside)
         
@@ -144,6 +144,14 @@ public class AddParticipantsViewController : UIViewController {
             searchResultsViewController.searchResultsView?.accessoryView = confirmButton
         }
     }
+    
+    var emptySearchResultText : String {
+        return "peoplepicker.no_matching_results_after_address_book_upload_title".localized
+    }
+    
+    var everyoneHasBeenAddedText : String {
+        return "add_participants.all_contacts_added".localized
+    }
 }
 
 extension AddParticipantsViewController : UserSelectionObserver {
@@ -174,9 +182,11 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
         if query.isEmpty {
+            emptyResultLabel.text = everyoneHasBeenAddedText
             searchResultsViewController.mode = .list
             searchResultsViewController.searchContactList()
         } else {
+            emptyResultLabel.text = emptySearchResultText
             searchResultsViewController.mode = .search
             searchResultsViewController.search(withQuery: query, local: true)
         }
