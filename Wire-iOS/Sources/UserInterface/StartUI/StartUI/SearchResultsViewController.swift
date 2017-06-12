@@ -186,7 +186,7 @@ public class SearchResultsViewController : UIViewController {
             case (.list, false):
                 sections = [contactsSection]
             case (.list, true):
-                sections = [teamMemberSection, contactsSection]
+                sections = [teamMemberSection]
             }
         } else {
             switch (mode, team != nil) {
