@@ -111,11 +111,11 @@ public class SearchHeaderViewController : UIViewController {
         }
         
         constrain(view, titleLabel, closeButton, tokenField) { view, titleLabel, closeButton, tokenField in
-            titleLabel.top == view.top + 28
+            titleLabel.top == view.top + 34
             titleLabel.leading == tokenField.leading
             titleLabel.trailing == tokenField.trailing
             
-            tokenField.top == titleLabel.bottom + 16
+            tokenField.top == view.top + 64
             tokenField.leading == view.leading + 8
             tokenField.trailing == view.trailing - 8
             tokenField.height >= 32
