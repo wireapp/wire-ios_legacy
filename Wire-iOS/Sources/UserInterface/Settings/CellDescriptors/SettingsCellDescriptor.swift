@@ -228,7 +228,7 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         
         // Analytics
     case .analyticsOptOut:
-        return "self.settings.privacy_analytics_section.title".localized
+        return "self.settings.privacy_analytics_option".localized
         
     case .disableUI:
         return "Disable UI (Restart needed)"
