@@ -79,7 +79,7 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no
-        tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 44, bottom: 6, right: 12)
+        tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 32, bottom: 6, right: 32)
         tokenField.delegate = self
         
         closeButton.accessibilityLabel = "close"
