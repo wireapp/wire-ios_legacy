@@ -1354,7 +1354,7 @@ StartUIViewController SearchHeaderViewController {
 
 TokenField.search {
     textView: @{
-        placeholderFont: $font-medium-semibold;
+        placeholderFont: $font-small-semibold;
         placeholderTextContainerInset: 0 0;
     }
     tokenTitleFont: $font-medium-semibold;
