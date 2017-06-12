@@ -320,7 +320,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorSectionBackground: UIColor.clearColor,
                                   ColorSchemeColorSectionText: whiteAlpha40,
                                   ColorSchemeColorTokenFieldBackground: whiteAlpha16,
-                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha60
+                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
