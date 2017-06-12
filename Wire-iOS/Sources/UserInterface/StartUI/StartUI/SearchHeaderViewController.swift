@@ -110,7 +110,7 @@ public class SearchHeaderViewController : UIViewController {
             closeButton.height == closeButton.width
             
             searchIcon.centerY == tokenField.centerY
-            searchIcon.leading == tokenField.leading + 5.5 // the search icon glyph has whitespaces
+            searchIcon.leading == tokenField.leading + 8
         }
         
     }
