@@ -27,12 +27,12 @@
 "peoplepicker.search_placeholder" = "Iskanje po imenu ali uporabniškem imenu";
 "peoplepicker.header.top_people" = "Top osebe";
 "peoplepicker.button.create_conversation" = "Ustvari skupino";
-"peoplepicker.button.add_to_conversation" = "Dodaj";
+"peoplepicker.button.add_to_conversation" = "Dodaj osebe v skupino";
 "peoplepicker.header.conversations" = "Skupine";
-"peoplepicker.header.team_conversations" = "%@ Groups";
+"peoplepicker.header.team_conversations" = "%@ Skupine";
 "peoplepicker.header.send_invitation" = "Povabi";
 "peoplepicker.header.contacts" = "Stiki";
-"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.contacts_personal" = "Osebni stiki";
 "peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Poveži";
 "peoplepicker.title.create_conversation" = "Ustvari skupino";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Odpri";
 "peoplepicker.quick-action.create-conversation" = "Ustvari skupino";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Iskanje po imenu";
 "contacts_ui.invite_others" = "Povabi druge";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "Pošiljanje povabila ni uspelo";
 "contacts_ui.title" = "Povabite osebe";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Še ni pogovorov\n";
+"contacts_ui.no_contact.message" = "Začni pogovor, ustvari skupino ali povabi osebe za prijavo.";
 
 "contacts_ui.no_contact.archived.title" = "Vse je arhivirano";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Pridruži";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "%@ ekipa.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tapnite, če želite aktivirati.";
+"conversation_list.header.self_team.accessibility_value.active" = "Aktiven.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ima nova sporočila.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "v stikih";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Nastavite čas za izginitev sporočil";
 
 // System messages
+"content.system.you_nominative" = "ti";
+"content.system.you_dative" = "ti";
+"content.system.you_accusative" = "ti";
+
 "content.system.continued_conversation" = "Začni pogovor s/z %@";
 
 "content.system.other_started_conversation" = "%@ je začel(-a) pogovor s/z %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ je začel(-a) pogovor s/z %@";
-"content.system.conversation.added" = "%@ je dodal(-a) %@";
-"content.system.conversation.removed" = "%@ je odstranil(-a) %@";
-"content.system.conversation.left" = "%@ je zapustil(-a) pogovor";
-"content.system.conversation.you" = "Ti";
+"content.system.conversation.other.started" = "%@ je začel(-a) pogovor s/z %@";
+"content.system.conversation.other.added" = "%@ je dodal(-a) %@";
+"content.system.conversation.other.removed" = "%@ je odstranil(-a) %@";
+"content.system.conversation.other.left" = "%@ je zapustil(-a) pogovor";
+
+"content.system.conversation.you.started" = "%@ je začel(-a) pogovor s/z %@";
+"content.system.conversation.you.added" = "%@ je dodal(-a) %@";
+"content.system.conversation.you.removed" = "%@ je odstranil(-a) %@";
+"content.system.conversation.you.left" = "%@ je zapustil(-a) pogovor";
+"content.system.conversation.team.member-leave" = "%@ je bil(-a) odstranjen(-a) iz ekipe.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ je odstranil(-a) ime pogovora";
 "content.system.you_renamed_conv_to_nothing" = "Si odstranil(-a) ime pogovora";
@@ -383,7 +394,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Dodaj osebe";
-"participants.avatar.guest.title" = "Guest";
+"participants.avatar.guest.title" = "Gost";
 
 // Meta Menu
 "meta.menu.rename" = "Preimenuj";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Podrobnosti";
+"profile.details.guest_in_team" = "Gost v %@";
 
 // Device list
 "profile.devices.title" = "Naprave";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Naprave";
 
 "self.settings.privacy_analytics_section.title" = "Podatki o uporabi in poročila o prisilnih ustavitvah";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Izboljšajte Wire s pošiljanjem anonimnih informacij.\n";
 
 "self.settings.privacy.clear_history.title" = "Počisti zgodovino";

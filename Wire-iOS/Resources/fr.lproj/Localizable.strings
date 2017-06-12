@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Rechercher par nom ou par identifiant";
 "peoplepicker.header.top_people" = "Contacts favoris";
 "peoplepicker.button.create_conversation" = "Créer un groupe";
-"peoplepicker.button.add_to_conversation" = "Ajouter";
+"peoplepicker.button.add_to_conversation" = "Ajouter des personnes au groupe";
 "peoplepicker.header.conversations" = "Groupes";
 "peoplepicker.header.team_conversations" = "Groupes %@";
 "peoplepicker.header.send_invitation" = "Inviter";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Ouvrir";
 "peoplepicker.quick-action.create-conversation" = "Créer un groupe";
 
+"add_participants.all_contacts_added" = "Tout le monde est là.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cherchez par nom";
 "contacts_ui.invite_others" = "Invitez d’autres personnes";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "Impossible d’envoyer l’invitation";
 "contacts_ui.title" = "Inviter des personnes";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Aucune conversation";
+"contacts_ui.no_contact.message" = "Démarrez une conversation, créez un group ou invitez des personnes à vous rejoindre.";
 
 "contacts_ui.no_contact.archived.title" = "Tout a été archivé";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "Équipe %@.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Appuyez pour activer.";
+"conversation_list.header.self_team.accessibility_value.active" = "Actif.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Nouveaux messages.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "dans les contacts";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Paramétrer une durée pour le message temporaire";
 
 // System messages
+"content.system.you_nominative" = "vous";
+"content.system.you_dative" = "vous";
+"content.system.you_accusative" = "vous";
+
 "content.system.continued_conversation" = "Démarrer une conversation avec %@";
 
 "content.system.other_started_conversation" = "%@ a commencé une conversation avec %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ a commencé une conversation avec %@";
-"content.system.conversation.added" = "%@ a ajouté %@";
-"content.system.conversation.removed" = "%@ a retiré %@";
-"content.system.conversation.left" = "%@ est parti";
-"content.system.conversation.you" = "Vous";
+"content.system.conversation.other.started" = "%@ a commencé une conversation avec %@";
+"content.system.conversation.other.added" = "%@ a ajouté %@";
+"content.system.conversation.other.removed" = "%@ a retiré %@";
+"content.system.conversation.other.left" = "%@ est parti";
+
+"content.system.conversation.you.started" = "%@ a commencé une conversation avec %@";
+"content.system.conversation.you.added" = "%@ a ajouté %@";
+"content.system.conversation.you.removed" = "%@ a retiré %@";
+"content.system.conversation.you.left" = "%@ est parti";
+"content.system.conversation.team.member-leave" = "%@ a été retiré de l'équipe.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ a supprimé le nom de la conversation";
 "content.system.you_renamed_conv_to_nothing" = "Vous avez supprimé le nom de la conversation";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Détails";
+"profile.details.guest_in_team" = "Invité dans %@";
 
 // Device list
 "profile.devices.title" = "Appareils";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Appareils";
 
 "self.settings.privacy_analytics_section.title" = "Rapports d’utilisation et de plantage";
+"self.settings.privacy_analytics.title" = "Partager des données anonymes";
 "self.settings.privacy_analytics_menu.description.title" = "Améliorez Wire en envoyant des informations anonymes.\n";
 
 "self.settings.privacy.clear_history.title" = "Effacer l'historique";

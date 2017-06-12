@@ -27,12 +27,12 @@
 "peoplepicker.search_placeholder" = "İsim veya kullanıcı adına göre ara";
 "peoplepicker.header.top_people" = "Sık Görüşülenler";
 "peoplepicker.button.create_conversation" = "Grup Oluştur";
-"peoplepicker.button.add_to_conversation" = "Ekle";
+"peoplepicker.button.add_to_conversation" = "Gruba İnsanları Ekleyin";
 "peoplepicker.header.conversations" = "Gruplar";
-"peoplepicker.header.team_conversations" = "%@ Groups";
+"peoplepicker.header.team_conversations" = "%@ Grup";
 "peoplepicker.header.send_invitation" = "Davet et";
 "peoplepicker.header.contacts" = "Kişiler";
-"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
 "peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Bağlan";
 "peoplepicker.title.create_conversation" = "Grup oluştur";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Aç";
 "peoplepicker.quick-action.create-conversation" = "Grup oluştur";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "İsme göre ara";
 "contacts_ui.invite_others" = "Başkalarını davet et";
@@ -75,15 +77,15 @@
 "contacts_ui.notification.invitation_failed" = "Davet gönderilirken hata oluştu";
 "contacts_ui.title" = "İnsanları davet et";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Hiç konuşma yok\n";
+"contacts_ui.no_contact.message" = "Bir konuşma başlatın, bir grup oluşturun veya katılmak için insanları davet edin.";
 
 "contacts_ui.no_contact.archived.title" = "Her şey arşivlendi";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Katıl";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value" = "%@ takım.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Etkinleştirilmek için dokun.";
 "conversation_list.header.self_team.accessibility_value.active" = "Şu an aktif.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Yeni mesaj var.";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Mesajın kaybolması için bir süre ayarlayın";
 
 // System messages
+"content.system.you_nominative" = "sen";
+"content.system.you_dative" = "sen";
+"content.system.you_accusative" = "sen";
+
 "content.system.continued_conversation" = "%@ ile bir konuşma başlat";
 
 "content.system.other_started_conversation" = "%@, %@'la konuşma başlattı";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@, %@'la konuşma başlattı";
-"content.system.conversation.added" = "%@, %@'i ekledi";
-"content.system.conversation.removed" = "%@, %@'i sildi";
-"content.system.conversation.left" = "%@ ayrıldı";
-"content.system.conversation.you" = "Sen";
+"content.system.conversation.other.started" = "%@, %@'la konuşma başlattı";
+"content.system.conversation.other.added" = "%@, %@'i ekledi";
+"content.system.conversation.other.removed" = "%@, %@'i sildi";
+"content.system.conversation.other.left" = "%@ ayrıldı";
+
+"content.system.conversation.you.started" = "%@, %@'la konuşma başlattı";
+"content.system.conversation.you.added" = "%@, %@'i ekledi";
+"content.system.conversation.you.removed" = "%@, %@'i sildi";
+"content.system.conversation.you.left" = "%@ ayrıldı";
+"content.system.conversation.team.member-leave" = "%@ takımdan çıkarıldı.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
 "content.system.you_renamed_conv_to_nothing" = "Bu konuşmadının adını kaldırdınız";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Ayrıntılar";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Cihazlar";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Cihazlar";
 
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Anonim bilgiler göndererek Wire'ın daha iyi olmasını sağlayabilirsiniz.\n";
 
 "self.settings.privacy.clear_history.title" = "Geçmişi Temizle";

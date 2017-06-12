@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Buscar por nombre o usuario";
 "peoplepicker.header.top_people" = "Contactos favoritos";
 "peoplepicker.button.create_conversation" = "Crear grupo";
-"peoplepicker.button.add_to_conversation" = "Añadir";
+"peoplepicker.button.add_to_conversation" = "Add People to Group";
 "peoplepicker.header.conversations" = "Grupos";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invitar";
@@ -62,6 +62,8 @@
 "peoplepicker.invite_more_people" = "Invitar a más contactos";
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Crear grupo";
+
+"add_participants.all_contacts_added" = "Everyone's here.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Buscar por nombre";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Fija el tiempo de caducidad del mensaje";
 
 // System messages
+"content.system.you_nominative" = "tú";
+"content.system.you_dative" = "tú";
+"content.system.you_accusative" = "tú";
+
 "content.system.continued_conversation" = "Inicia un chat con %@";
 
 "content.system.other_started_conversation" = "%@ inició un chat con %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ inició un chat con %@";
-"content.system.conversation.added" = "%@ añadió a %@";
-"content.system.conversation.removed" = "%@ eliminó a %@";
-"content.system.conversation.left" = "%@ se fue";
-"content.system.conversation.you" = "Tú";
+"content.system.conversation.other.started" = "%@ inició un chat con %@";
+"content.system.conversation.other.added" = "%@ añadió a %@";
+"content.system.conversation.other.removed" = "%@ eliminó a %@";
+"content.system.conversation.other.left" = "%@ se fue";
+
+"content.system.conversation.you.started" = "%@ inició un chat con %@";
+"content.system.conversation.you.added" = "%@ añadió a %@";
+"content.system.conversation.you.removed" = "%@ eliminó a %@";
+"content.system.conversation.you.left" = "%@ se fue";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eliminó el nombre del chat";
 "content.system.you_renamed_conv_to_nothing" = "Eliminaste el nombre del chat";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Detalles";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Dispositivos";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
 "self.settings.privacy_analytics_section.title" = "Informes de uso y fallos";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Ayuda a mejorar Wire enviando información anónima.";
 
 "self.settings.privacy.clear_history.title" = "Eliminar historial";

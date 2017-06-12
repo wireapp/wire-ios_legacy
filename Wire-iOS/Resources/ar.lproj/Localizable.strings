@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "ابحث باستخدام الاسم أو المعرّف";
 "peoplepicker.header.top_people" = "الأشخاص المفضلين";
 "peoplepicker.button.create_conversation" = "إنشاء مجموعة";
-"peoplepicker.button.add_to_conversation" = "إضافة";
+"peoplepicker.button.add_to_conversation" = "إضافة أشخاص للمجموعة";
 "peoplepicker.header.conversations" = "المجموعات";
 "peoplepicker.header.team_conversations" = "%@ مجموعات";
 "peoplepicker.header.send_invitation" = "قم بدعوة";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "البحث بحسب الاسم";
 "contacts_ui.invite_others" = "ادعُ آخرين";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "فَشل إرسال الدعوة";
 "contacts_ui.title" = "دعوة أُناس";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "لا محادثات بعد";
+"contacts_ui.no_contact.message" = "ابدأ محادثة، أنشىء مجموعة أو ادعُ أشخاصًا للإِنْضِمام.";
 
 "contacts_ui.no_contact.archived.title" = "أُرشف كل شيء";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "انضم إلى";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "فريق %@.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "انقر للتفعيل.";
+"conversation_list.header.self_team.accessibility_value.active" = "تفعيل الآن.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "لديه رسائل جديدة.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "اضبط وقت إختفاء الرسالة";
 
 // System messages
+"content.system.you_nominative" = "أنت";
+"content.system.you_dative" = "أنت";
+"content.system.you_accusative" = "أنت";
+
 "content.system.continued_conversation" = "بدأ مُحادثة مع %@";
 
 "content.system.other_started_conversation" = "%@ بدأ مُحادثة مع %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ بدأ مُحادثة مع %@";
-"content.system.conversation.added" = "%@ أضاف %@";
-"content.system.conversation.removed" = "قام %@ بإزالة %@";
-"content.system.conversation.left" = "غادر %@";
-"content.system.conversation.you" = "أنت";
+"content.system.conversation.other.started" = "%@ بدأ مُحادثة مع %@";
+"content.system.conversation.other.added" = "%@ أضاف %@";
+"content.system.conversation.other.removed" = "قام %@ بإزالة %@";
+"content.system.conversation.other.left" = "غادر %@";
+
+"content.system.conversation.you.started" = "%@ بدأ مُحادثة مع %@";
+"content.system.conversation.you.added" = "%@ أضاف %@";
+"content.system.conversation.you.removed" = "قام %@ بإزالة %@";
+"content.system.conversation.you.left" = "غادر %@";
+"content.system.conversation.team.member-leave" = "حُذِف %@ من الفريق.";
 
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "التفاصيل";
+"profile.details.guest_in_team" = "ضيف في %@";
 
 // Device list
 "profile.devices.title" = "الأجهزة";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
 
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "اجعل Wire أفضل عبر إرسال معلومات مُموّهة.\n";
 
 "self.settings.privacy.clear_history.title" = "مسح التاريخ";

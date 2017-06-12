@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Поиск по имени или имени пользователя";
 "peoplepicker.header.top_people" = "Топ-контакты";
 "peoplepicker.button.create_conversation" = "Создать группу";
-"peoplepicker.button.add_to_conversation" = "Добавить";
+"peoplepicker.button.add_to_conversation" = "Добавить пользователей в группу";
 "peoplepicker.header.conversations" = "Группы";
 "peoplepicker.header.team_conversations" = "%@ групп";
 "peoplepicker.header.send_invitation" = "Пригласить";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
 
+"add_participants.all_contacts_added" = "Все пользователи добавлены.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Поиск по имени";
 "contacts_ui.invite_others" = "Пригласить еще";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "Не удалось отправить приглашение";
 "contacts_ui.title" = "Пригласить людей";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Разговоров пока нет\n";
+"contacts_ui.no_contact.message" = "Начните разговор, создайте группу или пригласите людей присоединиться.";
 
 "contacts_ui.no_contact.archived.title" = "Все разговоры отправлены в архив";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Присоединиться";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "Команда %@.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Нажмите, чтобы активировать.";
+"conversation_list.header.self_team.accessibility_value.active" = "Теперь активна.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Установить время, когда сообщение исчезнет";
 
 // System messages
+"content.system.you_nominative" = "вы";
+"content.system.you_dative" = "вы";
+"content.system.you_accusative" = "вас";
+
 "content.system.continued_conversation" = "Начать разговор с %@";
 
 "content.system.other_started_conversation" = "%@ начал разговор с %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ начал беседу с %@";
-"content.system.conversation.added" = "%@ добавил %@";
-"content.system.conversation.removed" = "%@ удалил %@";
-"content.system.conversation.left" = "%@ покинул(а) разговор";
-"content.system.conversation.you" = "Вы";
+"content.system.conversation.other.started" = "%@ начал беседу с %@";
+"content.system.conversation.other.added" = "%@ добавил %@";
+"content.system.conversation.other.removed" = "%@ удалил %@";
+"content.system.conversation.other.left" = "%@ покинул(а) разговор";
+
+"content.system.conversation.you.started" = "%@ начал беседу с %@";
+"content.system.conversation.you.added" = "%@ добавил %@";
+"content.system.conversation.you.removed" = "%@ удалил %@";
+"content.system.conversation.you.left" = "%@ покинул(а) разговор";
+"content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Подробнее";
+"profile.details.guest_in_team" = "Гость в %@";
 
 // Device list
 "profile.devices.title" = "Устройства";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
 "self.settings.privacy_analytics_section.title" = "Отчеты о сбоях и использовании";
+"self.settings.privacy_analytics.title" = "Отправлять анонимные данные";
 "self.settings.privacy_analytics_menu.description.title" = "Сделайте Wire лучше, отправляя анонимную информацию.\n";
 
 "self.settings.privacy.clear_history.title" = "Очистить историю";

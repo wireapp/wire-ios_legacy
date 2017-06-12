@@ -1,351 +1,335 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>self.new_device_alert.title_prefix.devices</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@device_count@</string>
-            <key>device_count</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string>пристрій</string>
-                <key>few</key>
-                <string>%lu пристрої</string>
-                <key>many</key>
-                <string>%lu пристроїв</string>
-                <key>other</key>
-                <string>%lu пристроїв</string>
-            </dict>
-        </dict>
-        <key>participants.people.count</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@lu_number_of_people@</string>
-            <key>lu_number_of_people</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string>Немає учасників</string>
-                <key>one</key>
-                <string>Один учасник</string>
-                <key>few</key>
-                <string>%lu учасника</string>
-                <key>many</key>
-                <string>%lu учасників</string>
-                <key>other</key>
-                <string>%lu учасників</string>
-            </dict>
-        </dict>
-        <key>content.system.missing_messages.subtitle_added</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ було додано</string>
-            <key>lu_number_of_users</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string> </string>
-                <key>other</key>
-                <string>додано</string>
-            </dict>
-        </dict>
-        <key>content.system.missing_messages.subtitle_removed</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ було видалено</string>
-            <key>lu_number_of_users</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string> </string>
-                <key>other</key>
-                <string> </string>
-            </dict>
-        </dict>
-        <key>list.connect_request.people_waiting</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_people@ очікує</string>
-            <key>d_number_of_people</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string>Одна людина</string>
-                <key>few</key>
-                <string>%d людей</string>
-                <key>many</key>
-                <string>%d людей</string>
-                <key>other</key>
-                <string>%d людей</string>
-            </dict>
-        </dict>
-        <key>content.system.participants_n_others</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@and_number_of_others@</string>
-            <key>and_number_of_others</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>zero</key>
-                <string/>
-                <key>one</key>
-                <string>та ще один(-а)</string>
-                <key>few</key>
-                <string>та ще %d інші</string>
-                <key>many</key>
-                <string>та ще %d інших</string>
-                <key>other</key>
-                <string>та ще %d інших</string>
-            </dict>
-        </dict>
-        <key>peoplepicker.suggested.knows_more</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>Знайомий(-а) з %@ та %#@d_number_of_others@</string>
-            <key>d_number_of_others</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>few</key>
-                <string>%d іншими</string>
-                <key>many</key>
-                <string>%d іншими</string>
-                <key>other</key>
-                <string>%d іншими</string>
-            </dict>
-        </dict>
-        <key>content.system.people_started_using</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@%#@d_number_of_others@ почав(-ли) використовувати %#@d_new_devices@</string>
-            <key>d_number_of_others</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string></string>
-                <key>other</key>
-                <string> та ще %d інших</string>
-            </dict>
-            <key>d_new_devices</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>новий пристрій</string>
-                <key>other</key>
-                <string>нові пристрої</string>
-            </dict>
-        </dict>
-        <key>content.system.new_devices</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_new_devices@</string>
-            <key>d_new_devices</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>новий пристрій</string>
-                <key>other</key>
-                <string>нові пристрої</string>
-            </dict>
-        </dict>
-        <key>conversation.connection_view.common_connections</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>Обидвоє знайомі з %#@d_number_connections@</string>
-            <key>d_number_connections</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>людиною</string>
-                <key>other</key>
-                <string>люди</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.text</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>нове текстове повідомлення</string>
-                <key>other</key>
-                <string>%d нових текстових повідомлень</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.link</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>новий лінк</string>
-                <key>other</key>
-                <string>%d нових лінків</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.image</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>нова картинка</string>
-                <key>other</key>
-                <string>%d нових картинок</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.location</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>нове розташування</string>
-                <key>other</key>
-                <string>%d нових розташувань</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.audio</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>нове аудіоповідомлення</string>
-                <key>other</key>
-                <string>%d нових аудіоповідомлень</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.video</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>нове відео</string>
-                <key>other</key>
-                <string>%d нових відео</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.knock</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>новий пінг</string>
-                <key>other</key>
-                <string>%d нових пінгів</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.missedcall</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>пропущений дзвінок</string>
-                <key>other</key>
-                <string>%d пропущених дзвінків</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.file</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>новий файл</string>
-                <key>other</key>
-                <string>%d нових файлів</string>
-            </dict>
-        </dict>
-    </dict>
+<dict>
+	<key>self.new_device_alert.title_prefix.devices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@device_count@</string>
+		<key>device_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>пристрій</string>
+			<key>few</key>
+			<string>%lu пристрої</string>
+			<key>many</key>
+			<string>%lu пристроїв</string>
+			<key>other</key>
+			<string>%lu пристроїв</string>
+		</dict>
+	</dict>
+	<key>participants.people.count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@lu_number_of_people@</string>
+		<key>lu_number_of_people</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>Всі вийшли</string>
+			<key>one</key>
+			<string>Один учасник</string>
+			<key>few</key>
+			<string>%lu учасника</string>
+			<key>many</key>
+			<string>%lu учасників</string>
+			<key>other</key>
+			<string>%lu учасників</string>
+		</dict>
+	</dict>
+	<key>content.system.missing_messages.subtitle_added</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@lu_number_of_users@ було додано</string>
+		<key>lu_number_of_users</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string> </string>
+			<key>other</key>
+			<string>додано</string>
+		</dict>
+	</dict>
+	<key>content.system.missing_messages.subtitle_removed</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@lu_number_of_users@ було видалено</string>
+		<key>lu_number_of_users</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string> </string>
+			<key>other</key>
+			<string> </string>
+		</dict>
+	</dict>
+	<key>list.connect_request.people_waiting</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_people@ очікує</string>
+		<key>d_number_of_people</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>Одна людина</string>
+			<key>few</key>
+			<string>%d людей</string>
+			<key>many</key>
+			<string>%d людей</string>
+			<key>other</key>
+			<string>%d людей</string>
+		</dict>
+	</dict>
+	<key>content.system.participants_n_others</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@and_number_of_others@</string>
+		<key>and_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>та ще один(-а)</string>
+			<key>few</key>
+			<string>та ще %d інші</string>
+			<key>many</key>
+			<string>та ще %d інших</string>
+			<key>other</key>
+			<string>та ще %d інших</string>
+		</dict>
+	</dict>
+	<key>peoplepicker.suggested.knows_more</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Знайомий(-а) з %@ та %#@d_number_of_others@</string>
+		<key>d_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d іншими</string>
+			<key>many</key>
+			<string>%d іншими</string>
+			<key>other</key>
+			<string>%d іншими</string>
+		</dict>
+	</dict>
+	<key>content.system.people_started_using</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@%#@d_number_of_others@ почав(-ли) використовувати %#@d_new_devices@</string>
+		<key>d_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string> та ще %d інших</string>
+		</dict>
+		<key>d_new_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>новий пристрій</string>
+			<key>other</key>
+			<string>нові пристрої</string>
+		</dict>
+	</dict>
+	<key>content.system.new_devices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_new_devices@</string>
+		<key>d_new_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>новий пристрій</string>
+			<key>other</key>
+			<string>нові пристрої</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.text</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>нове текстове повідомлення</string>
+			<key>other</key>
+			<string>%d нових текстових повідомлень</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.link</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>новий лінк</string>
+			<key>other</key>
+			<string>%d нових лінків</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.image</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>нова картинка</string>
+			<key>other</key>
+			<string>%d нових картинок</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.location</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>нове розташування</string>
+			<key>other</key>
+			<string>%d нових розташувань</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.audio</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>нове аудіоповідомлення</string>
+			<key>other</key>
+			<string>%d нових аудіоповідомлень</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.video</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>нове відео</string>
+			<key>other</key>
+			<string>%d нових відео</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.knock</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>новий пінг</string>
+			<key>other</key>
+			<string>%d нових пінгів</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.missedcall</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>пропущений дзвінок</string>
+			<key>other</key>
+			<string>%d пропущених дзвінків</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.file</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>новий файл</string>
+			<key>other</key>
+			<string>%d нових файлів</string>
+		</dict>
+	</dict>
+</dict>
 </plist>

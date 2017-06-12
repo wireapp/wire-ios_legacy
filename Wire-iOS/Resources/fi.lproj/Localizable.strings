@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Etsi nimellä tai käyttäjänimellä";
 "peoplepicker.header.top_people" = "Eniten käytetyt kontaktit";
 "peoplepicker.button.create_conversation" = "Luo ryhmä";
-"peoplepicker.button.add_to_conversation" = "Lisää";
+"peoplepicker.button.add_to_conversation" = "Add People to Group";
 "peoplepicker.header.conversations" = "Ryhmät";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Kutsu";
@@ -62,6 +62,8 @@
 "peoplepicker.invite_more_people" = "Kutsu lisää ihmisiä";
 "peoplepicker.quick-action.open-conversation" = "Avaa";
 "peoplepicker.quick-action.create-conversation" = "Luo ryhmä";
+
+"add_participants.all_contacts_added" = "Everyone's here.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Hae nimellä";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Aseta aika jonka jälkeen viesti katoaa";
 
 // System messages
+"content.system.you_nominative" = "sinä";
+"content.system.you_dative" = "sinä";
+"content.system.you_accusative" = "sinä";
+
 "content.system.continued_conversation" = "Aloita keskustelu %@ n kanssa";
 
 "content.system.other_started_conversation" = "%@ aloitti keskustelun %@ n kanssa";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ aloitti keskustelun %@ n kanssa";
-"content.system.conversation.added" = "%@ lisäsi %@ n";
-"content.system.conversation.removed" = "%@ poisti %@ n";
-"content.system.conversation.left" = "%@ poistui";
-"content.system.conversation.you" = "Sinä";
+"content.system.conversation.other.started" = "%@ aloitti keskustelun %@ n kanssa";
+"content.system.conversation.other.added" = "%@ lisäsi %@ n";
+"content.system.conversation.other.removed" = "%@ poisti %@ n";
+"content.system.conversation.other.left" = "%@ poistui";
+
+"content.system.conversation.you.started" = "%@ aloitti keskustelun %@ n kanssa";
+"content.system.conversation.you.added" = "%@ lisäsi %@ n";
+"content.system.conversation.you.removed" = "%@ poisti %@ n";
+"content.system.conversation.you.left" = "%@ poistui";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ poisti keskustelun nimen";
 "content.system.you_renamed_conv_to_nothing" = "Sinä poistit keskustelun nimen";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Lisätietoja";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Laitteet";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Laitteet";
 
 "self.settings.privacy_analytics_section.title" = "Käyttö- ja vikaraportit";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Tee Wirestä parempi lähettämällä anonyymiä tietoa.\n";
 
 "self.settings.privacy.clear_history.title" = "Tyhjennä historia";

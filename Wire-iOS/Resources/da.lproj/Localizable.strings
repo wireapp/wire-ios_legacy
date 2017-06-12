@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Søg på navn eller brugernavn";
 "peoplepicker.header.top_people" = "Top personer";
 "peoplepicker.button.create_conversation" = "Opret gruppe";
-"peoplepicker.button.add_to_conversation" = "Tilføj";
+"peoplepicker.button.add_to_conversation" = "Add People to Group";
 "peoplepicker.header.conversations" = "Grupper";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invitér";
@@ -62,6 +62,8 @@
 "peoplepicker.invite_more_people" = "Invitér flere personer";
 "peoplepicker.quick-action.open-conversation" = "Åbn";
 "peoplepicker.quick-action.create-conversation" = "Opret gruppe";
+
+"add_participants.all_contacts_added" = "Everyone's here.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Søg ved navn";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Sæt en timer for midlertidige beskeder";
 
 // System messages
+"content.system.you_nominative" = "dig";
+"content.system.you_dative" = "dig";
+"content.system.you_accusative" = "dig";
+
 "content.system.continued_conversation" = "Start en samtale med %@";
 
 "content.system.other_started_conversation" = "%@ startede en samtale med %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ startede en samtale med %@";
-"content.system.conversation.added" = "%@ har tilføjet %@";
-"content.system.conversation.removed" = "%@ har fjernet %@";
-"content.system.conversation.left" = "%@ har forladt";
-"content.system.conversation.you" = "Dig";
+"content.system.conversation.other.started" = "%@ startede en samtale med %@";
+"content.system.conversation.other.added" = "%@ har tilføjet %@";
+"content.system.conversation.other.removed" = "%@ har fjernet %@";
+"content.system.conversation.other.left" = "%@ har forladt";
+
+"content.system.conversation.you.started" = "%@ startede en samtale med %@";
+"content.system.conversation.you.added" = "%@ har tilføjet %@";
+"content.system.conversation.you.removed" = "%@ har fjernet %@";
+"content.system.conversation.you.left" = "%@ har forladt";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ fjernede samtalens navn";
 "content.system.you_renamed_conv_to_nothing" = "Du fjernede samtalens navn";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Detaljer";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Enheder";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Enheder";
 
 "self.settings.privacy_analytics_section.title" = "Forbrug og crash rapporter";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Gør Wire bedre ved at sende anonyme informationer.\n";
 
 "self.settings.privacy.clear_history.title" = "Ryd historik";

@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Пошук за іменем або ніком";
 "peoplepicker.header.top_people" = "Топ-контакти";
 "peoplepicker.button.create_conversation" = "Створити групу";
-"peoplepicker.button.add_to_conversation" = "Додати";
+"peoplepicker.button.add_to_conversation" = "Додати учасників до групи";
 "peoplepicker.header.conversations" = "Групи";
 "peoplepicker.header.team_conversations" = "Групи %@";
 "peoplepicker.header.send_invitation" = "Запросити";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Вiдкрити";
 "peoplepicker.quick-action.create-conversation" = "Створити групу";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Пошук за іменем";
 "contacts_ui.invite_others" = "Запросити інших користувачів";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "Не вдалося надіслати запрошення";
 "contacts_ui.title" = "Запросити людей";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Поки що розмови відсутні";
+"contacts_ui.no_contact.message" = "Розпочніть розмову, створіть групу або запросіть людей.";
 
 "contacts_ui.no_contact.archived.title" = "Усі розмови заархівовано";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Приєднатись";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "Команда %@.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Торкніться, щоб активувати.";
+"conversation_list.header.self_team.accessibility_value.active" = "Наразі активна.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Є нові повідомлення.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Встановіть період, після якого повідомлення зникне";
 
 // System messages
+"content.system.you_nominative" = "ви";
+"content.system.you_dative" = "вам";
+"content.system.you_accusative" = "вас";
+
 "content.system.continued_conversation" = "Почати розмову з %@";
 
 "content.system.other_started_conversation" = "%@ почав(-ла) розмову з %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ почав(-ла) розмову з %@";
-"content.system.conversation.added" = "%@ додав(-ла) %@";
-"content.system.conversation.removed" = "%@ видалив(-ла) %@";
-"content.system.conversation.left" = "%@ вийшов(-ла)";
-"content.system.conversation.you" = "Ви";
+"content.system.conversation.other.started" = "%@ почав(-ла) розмову з %@";
+"content.system.conversation.other.added" = "%@ додав(-ла) %@";
+"content.system.conversation.other.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.other.left" = "%@ вийшов(-ла)";
+
+"content.system.conversation.you.started" = "%@ почав(-ла) розмову з %@";
+"content.system.conversation.you.added" = "%@ додав(-ла) %@";
+"content.system.conversation.you.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.you.left" = "%@ вийшов(-ла)";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Подробиці";
+"profile.details.guest_in_team" = "Гість в %@";
 
 // Device list
 "profile.devices.title" = "Пристрої";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
 
 "self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Зробіть Wire кращим, відправляючи анонімну інформацію.\n";
 
 "self.settings.privacy.clear_history.title" = "Очистити Історію";

@@ -27,12 +27,12 @@
 "peoplepicker.search_placeholder" = "名前またはユーザーネームで検索する";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "グループを作成";
-"peoplepicker.button.add_to_conversation" = "追加";
+"peoplepicker.button.add_to_conversation" = "グループに友人を追加する";
 "peoplepicker.header.conversations" = "グループ";
-"peoplepicker.header.team_conversations" = "%@ Groups";
+"peoplepicker.header.team_conversations" = "%@ グループ";
 "peoplepicker.header.send_invitation" = "招待";
 "peoplepicker.header.contacts" = "連絡先";
-"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.contacts_personal" = "個人の連絡先";
 "peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "接続";
 "peoplepicker.title.create_conversation" = "グループを作成します";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "開く";
 "peoplepicker.quick-action.create-conversation" = "グループを作成します";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "名前で検索します";
 "contacts_ui.invite_others" = "他の人を招待します";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "招待状を送信できませんでした";
 "contacts_ui.title" = "友達を招待する";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "まだ会話が存在しません。\n";
+"contacts_ui.no_contact.message" = "会話を始める、グループを作るまたは友人を招待する";
 
 "contacts_ui.no_contact.archived.title" = "全てアーカイブ済み";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "参加する";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "%@ チーム";
+"conversation_list.header.self_team.accessibility_value.inactive" = "タップしてアクティブにする";
+"conversation_list.header.self_team.accessibility_value.active" = "有効";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "新しいメッセージ";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";
@@ -130,7 +132,7 @@
 
 "conversation.status.call" = "通話中";
 "conversation.status.typing" = "メッセージを入力中";
-"conversation.status.typing.group" = "%@: typing a message…";
+"conversation.status.typing.group" = "%@: メッセージの入力中";
 "conversation.status.silenced" = "ミュート";
 "conversation.status.blocked" = "ブロック";
 
@@ -147,13 +149,13 @@
 
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
-"conversation.status.added_multiple" = "People added";
+"conversation.status.added_multiple" = "追加された人";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
 "conversation.status.added_users" = "%@は%@を追加しました";
-"conversation.status.removed_multiple" = "People removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.removed_multiple" = "削除された人";
+"conversation.status.you_were_removed" = "あなたは削除されました";
 "conversation.status.you_left" = "あなたは退出しました";
-"conversation.status.started_conversation" = "%@ started a conversation";
+"conversation.status.started_conversation" = "%@ 会話を始めました";
 "conversation.status.removed_users" = "%@は%@を削除しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "メッセージが消えるまでの時間を設定する";
 
 // System messages
+"content.system.you_nominative" = "あなた";
+"content.system.you_dative" = "あなた";
+"content.system.you_accusative" = "あなた";
+
 "content.system.continued_conversation" = "%@と会話を始めます";
 
 "content.system.other_started_conversation" = "%@と%@は会話を始めました";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@と%@は会話を始めました";
-"content.system.conversation.added" = "%@は%@を追加しました";
-"content.system.conversation.removed" = "%@は%@を削除しました";
-"content.system.conversation.left" = "%@が退出しました";
-"content.system.conversation.you" = "あなた";
+"content.system.conversation.other.started" = "%@と%@は会話を始めました";
+"content.system.conversation.other.added" = "%@は%@を追加しました";
+"content.system.conversation.other.removed" = "%@は%@を削除しました";
+"content.system.conversation.other.left" = "%@が退出しました";
+
+"content.system.conversation.you.started" = "%@と%@は会話を始めました";
+"content.system.conversation.you.added" = "%@は%@を追加しました";
+"content.system.conversation.you.removed" = "%@は%@を削除しました";
+"content.system.conversation.you.left" = "%@が退出しました";
+"content.system.conversation.team.member-leave" = "%@ がチームから削除されました";
 
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
@@ -383,7 +394,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "人を追加します";
-"participants.avatar.guest.title" = "Guest";
+"participants.avatar.guest.title" = "ゲスト";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "詳細";
+"profile.details.guest_in_team" = "%@ のゲスト";
 
 // Device list
 "profile.devices.title" = "デバイス";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";
 
 "self.settings.privacy_analytics_section.title" = "使用状況データと障害報告";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "匿名の情報を送信することによって Wire の改良に協力します。\n";
 
 "self.settings.privacy.clear_history.title" = "履歴をクリア";
@@ -914,11 +927,11 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
-"compose.drafts.empty.subtitle" = "Tap + to compose one";
+"compose.drafts.title" = "メッセージ";
+"compose.drafts.empty.title" = "メッセージがありません";
+"compose.drafts.empty.subtitle" = "+をタップして１つ作成する";
 "compose.drafts.compose.title" = "メッセージを作成";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.subject.placeholder" = "タップして件名をセット";
 
 "compose.drafts.compose.delete.confirm.title" = "削除を確認する";
 "compose.drafts.compose.delete.confirm.message" = "これは下書きを完全に削除します。この操作を元に戻すことはできません。";

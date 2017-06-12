@@ -27,12 +27,12 @@
 "peoplepicker.search_placeholder" = "通过您的名字或用户名搜索";
 "peoplepicker.header.top_people" = "常联系的人";
 "peoplepicker.button.create_conversation" = "创建群聊";
-"peoplepicker.button.add_to_conversation" = "新增";
+"peoplepicker.button.add_to_conversation" = "向群组中添加联系人";
 "peoplepicker.header.conversations" = "群组";
-"peoplepicker.header.team_conversations" = "%@ Groups";
+"peoplepicker.header.team_conversations" = "%@ 组";
 "peoplepicker.header.send_invitation" = "邀请";
 "peoplepicker.header.contacts" = "联系人";
-"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "新增好友";
 "peoplepicker.title.create_conversation" = "创建群聊\n";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "开启";
 "peoplepicker.quick-action.create-conversation" = "创建群聊";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名称搜索";
 "contacts_ui.invite_others" = "邀请其他人";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "无法发送邀请";
 "contacts_ui.title" = "邀请联系人";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "暂无对话\n";
+"contacts_ui.no_contact.message" = "开始聊天或者邀请好友加入。";
 
 "contacts_ui.no_contact.archived.title" = "所以内容均已存档";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "加入";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "%@ 团队。";
+"conversation_list.header.self_team.accessibility_value.inactive" = "点击激活";
+"conversation_list.header.self_team.accessibility_value.active" = "立即激活";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新消息。";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "设置阅后即焚的显示时间";
 
 // System messages
+"content.system.you_nominative" = "你";
+"content.system.you_dative" = "你";
+"content.system.you_accusative" = "你";
+
 "content.system.continued_conversation" = "开始和 %@ 聊天";
 
 "content.system.other_started_conversation" = "%@ 和 %@ 开始了聊天";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ 和 %@ 开始了聊天";
-"content.system.conversation.added" = "%@加了%@";
-"content.system.conversation.removed" = "%@移除了%@";
-"content.system.conversation.left" = "%@ 离开了";
-"content.system.conversation.you" = "你";
+"content.system.conversation.other.started" = "%@ 和 %@ 开始了聊天";
+"content.system.conversation.other.added" = "%@加了%@";
+"content.system.conversation.other.removed" = "%@移除了%@";
+"content.system.conversation.other.left" = "%@ 离开了";
+
+"content.system.conversation.you.started" = "%@ 和 %@ 开始了聊天";
+"content.system.conversation.you.added" = "%@加了%@";
+"content.system.conversation.you.removed" = "%@移除了%@";
+"content.system.conversation.you.left" = "%@ 离开了";
+"content.system.conversation.team.member-leave" = "%@ 是从团队中移除。";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
 "content.system.you_renamed_conv_to_nothing" = "您已删除聊天室名称";
@@ -383,7 +394,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "新增好友";
-"participants.avatar.guest.title" = "Guest";
+"participants.avatar.guest.title" = "游客";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "详细信息";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "設備";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "設備";
 
 "self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "通过发送匿名反馈让Wire变得更好。";
 
 "self.settings.privacy.clear_history.title" = "清除历史记录";
@@ -914,12 +927,12 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message composing / drafts
 
-"compose.drafts.title" = "Messages";
-"compose.drafts.empty.title" = "No messages";
+"compose.drafts.title" = "短消息";
+"compose.drafts.empty.title" = "无消息";
 "compose.drafts.empty.subtitle" = "Tap + to compose one";
-"compose.drafts.compose.title" = "Write a message";
-"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+"compose.drafts.compose.title" = "写短信";
+"compose.drafts.compose.subject.placeholder" = "点击设置主题";
 
-"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.title" = "确认删除";
+"compose.drafts.compose.delete.confirm.message" = "此操作将永久删除，且该操作不可恢复。";
 "compose.drafts.compose.delete.confirm.action.title" = "删除";

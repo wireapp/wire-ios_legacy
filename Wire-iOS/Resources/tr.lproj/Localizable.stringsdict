@@ -1,351 +1,335 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>self.new_device_alert.title_prefix.devices</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@device_count@</string>
-            <key>device_count</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string>bir cihaz</string>
-                <key>few</key>
-                <string>%lu cihaz</string>
-                <key>many</key>
-                <string>%lu cihaz</string>
-                <key>other</key>
-                <string>%lu cihaz</string>
-            </dict>
-        </dict>
-        <key>participants.people.count</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@lu_number_of_people@</string>
-            <key>lu_number_of_people</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string>Hiç kimse</string>
-                <key>one</key>
-                <string>Bir kişi</string>
-                <key>few</key>
-                <string>%lu kişi</string>
-                <key>many</key>
-                <string>%lu kişi</string>
-                <key>other</key>
-                <string>%lu kişi</string>
-            </dict>
-        </dict>
-        <key>content.system.missing_messages.subtitle_added</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ kişi eklendi</string>
-            <key>lu_number_of_users</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string> </string>
-                <key>other</key>
-                <string> </string>
-            </dict>
-        </dict>
-        <key>content.system.missing_messages.subtitle_removed</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@lu_number_of_users@ kişi silindi</string>
-            <key>lu_number_of_users</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>lu</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string> </string>
-                <key>other</key>
-                <string> </string>
-            </dict>
-        </dict>
-        <key>list.connect_request.people_waiting</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_people@ bekliyor</string>
-            <key>d_number_of_people</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>zero</key>
-                <string></string>
-                <key>one</key>
-                <string>Bir kişi</string>
-                <key>few</key>
-                <string>%d kişi</string>
-                <key>many</key>
-                <string>%d kişi</string>
-                <key>other</key>
-                <string>%d kişi</string>
-            </dict>
-        </dict>
-        <key>content.system.participants_n_others</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ %#@and_number_of_others@</string>
-            <key>and_number_of_others</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>zero</key>
-                <string/>
-                <key>one</key>
-                <string>ve bir kişi daha</string>
-                <key>few</key>
-                <string>ve %d kişiyi</string>
-                <key>many</key>
-                <string>ve %d kişi daha</string>
-                <key>other</key>
-                <string>ve %d kişi daha</string>
-            </dict>
-        </dict>
-        <key>peoplepicker.suggested.knows_more</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%@ ve %#@d_number_of_others@ daha tanıyor</string>
-            <key>d_number_of_others</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>few</key>
-                <string>%d diğerleri</string>
-                <key>many</key>
-                <string>%d diğerleri</string>
-                <key>other</key>
-                <string>%d diğerleri</string>
-            </dict>
-        </dict>
-        <key>content.system.people_started_using</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_others@, %#@d_new_devices@ kullanmaya başladı</string>
-            <key>d_number_of_others</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string></string>
-                <key>other</key>
-                <string> ve %d kişi daha</string>
-            </dict>
-            <key>d_new_devices</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni bir cihaz</string>
-                <key>other</key>
-                <string>yeni cihazlar</string>
-            </dict>
-        </dict>
-        <key>content.system.new_devices</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_new_devices@</string>
-            <key>d_new_devices</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni bir cihaz</string>
-                <key>other</key>
-                <string>yeni cihazlar</string>
-            </dict>
-        </dict>
-        <key>conversation.connection_view.common_connections</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_connections@ ortak</string>
-            <key>d_number_connections</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>kişi</string>
-                <key>other</key>
-                <string>kişi</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.text</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni metin mesajı</string>
-                <key>other</key>
-                <string>%d yeni metin mesajı</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.link</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni bağlantı</string>
-                <key>other</key>
-                <string>%d yeni bağlantı</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.image</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni fotoğraf</string>
-                <key>other</key>
-                <string>%d yeni fotoğraf</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.location</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni konum</string>
-                <key>other</key>
-                <string>%d yeni konum</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.audio</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni sesli mesaj</string>
-                <key>other</key>
-                <string>%d yeni sesli mesaj</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.video</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni video</string>
-                <key>other</key>
-                <string>%d yeni video</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.knock</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni ping</string>
-                <key>other</key>
-                <string>%d yeni ping</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.missedcall</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>cevapsız arama</string>
-                <key>other</key>
-                <string>%d cevapsız arama</string>
-            </dict>
-        </dict>
-        <key>conversation.silenced.status.message.file</key>
-        <dict>
-            <key>NSStringLocalizedFormatKey</key>
-            <string>%#@d_number_of_new@</string>
-            <key>d_number_of_new</key>
-            <dict>
-                <key>NSStringFormatSpecTypeKey</key>
-                <string>NSStringPluralRuleType</string>
-                <key>NSStringFormatValueTypeKey</key>
-                <string>d</string>
-                <key>one</key>
-                <string>yeni dosya</string>
-                <key>other</key>
-                <string>%d yeni dosya</string>
-            </dict>
-        </dict>
-    </dict>
+<dict>
+	<key>self.new_device_alert.title_prefix.devices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@device_count@</string>
+		<key>device_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>bir cihaz</string>
+			<key>few</key>
+			<string>%lu cihaz</string>
+			<key>many</key>
+			<string>%lu cihaz</string>
+			<key>other</key>
+			<string>%lu cihaz</string>
+		</dict>
+	</dict>
+	<key>participants.people.count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@lu_number_of_people@</string>
+		<key>lu_number_of_people</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>Herkes ayrıldı</string>
+			<key>one</key>
+			<string>Bir kişi</string>
+			<key>few</key>
+			<string>%lu kişi</string>
+			<key>many</key>
+			<string>%lu kişi</string>
+			<key>other</key>
+			<string>%lu kişi</string>
+		</dict>
+	</dict>
+	<key>content.system.missing_messages.subtitle_added</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@lu_number_of_users@ kişi eklendi</string>
+		<key>lu_number_of_users</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string> </string>
+			<key>other</key>
+			<string> </string>
+		</dict>
+	</dict>
+	<key>content.system.missing_messages.subtitle_removed</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@lu_number_of_users@ kişi silindi</string>
+		<key>lu_number_of_users</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string> </string>
+			<key>other</key>
+			<string> </string>
+		</dict>
+	</dict>
+	<key>list.connect_request.people_waiting</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_people@ bekliyor</string>
+		<key>d_number_of_people</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>Bir kişi</string>
+			<key>few</key>
+			<string>%d kişi</string>
+			<key>many</key>
+			<string>%d kişi</string>
+			<key>other</key>
+			<string>%d kişi</string>
+		</dict>
+	</dict>
+	<key>content.system.participants_n_others</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@and_number_of_others@</string>
+		<key>and_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>ve bir kişi daha</string>
+			<key>few</key>
+			<string>ve %d kişiyi</string>
+			<key>many</key>
+			<string>ve %d kişi daha</string>
+			<key>other</key>
+			<string>ve %d kişi daha</string>
+		</dict>
+	</dict>
+	<key>peoplepicker.suggested.knows_more</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ ve %#@d_number_of_others@ daha tanıyor</string>
+		<key>d_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d diğerleri</string>
+			<key>many</key>
+			<string>%d diğerleri</string>
+			<key>other</key>
+			<string>%d diğerleri</string>
+		</dict>
+	</dict>
+	<key>content.system.people_started_using</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_others@, %#@d_new_devices@ kullanmaya başladı</string>
+		<key>d_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string> ve %d kişi daha</string>
+		</dict>
+		<key>d_new_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni bir cihaz</string>
+			<key>other</key>
+			<string>yeni cihazlar</string>
+		</dict>
+	</dict>
+	<key>content.system.new_devices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_new_devices@</string>
+		<key>d_new_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni bir cihaz</string>
+			<key>other</key>
+			<string>yeni cihazlar</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.text</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni metin mesajı</string>
+			<key>other</key>
+			<string>%d yeni metin mesajı</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.link</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni bağlantı</string>
+			<key>other</key>
+			<string>%d yeni bağlantı</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.image</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni fotoğraf</string>
+			<key>other</key>
+			<string>%d yeni fotoğraf</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.location</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni konum</string>
+			<key>other</key>
+			<string>%d yeni konum</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.audio</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni sesli mesaj</string>
+			<key>other</key>
+			<string>%d yeni sesli mesaj</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.video</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni video</string>
+			<key>other</key>
+			<string>%d yeni video</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.knock</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni ping</string>
+			<key>other</key>
+			<string>%d yeni ping</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.missedcall</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>cevapsız arama</string>
+			<key>other</key>
+			<string>%d cevapsız arama</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.file</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>yeni dosya</string>
+			<key>other</key>
+			<string>%d yeni dosya</string>
+		</dict>
+	</dict>
+</dict>
 </plist>

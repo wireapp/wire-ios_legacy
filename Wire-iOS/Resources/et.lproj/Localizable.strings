@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Otsi nime või kasutajanime järgi";
 "peoplepicker.header.top_people" = "Aktiivsed vestlused";
 "peoplepicker.button.create_conversation" = "Loo grupivestlus";
-"peoplepicker.button.add_to_conversation" = "Lisa";
+"peoplepicker.button.add_to_conversation" = "Lisa inimesi gruppi";
 "peoplepicker.header.conversations" = "Grupid";
 "peoplepicker.header.team_conversations" = "%@ grupid";
 "peoplepicker.header.send_invitation" = "Kutsu";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Otsi nime järgi";
 "contacts_ui.invite_others" = "Kutsu teisi";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "Kutse saatmine ebaõnnestus";
 "contacts_ui.title" = "Kutsu inimesi";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Pole veel vestlusi\n";
+"contacts_ui.no_contact.message" = "Alusta vestlust, loo grupp või kutsu inimesi liituma.";
 
 "contacts_ui.no_contact.archived.title" = "Kõik on arhiveeritud";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liitu";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "%@ meeskond.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Vajuta aktiveerimiseks.";
+"conversation_list.header.self_team.accessibility_value.active" = "Praegu aktiivne.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "On uusi sõnumeid.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Määra kustuvate sõnumite taimeri pikkus";
 
 // System messages
+"content.system.you_nominative" = "sina";
+"content.system.you_dative" = "sina";
+"content.system.you_accusative" = "sina";
+
 "content.system.continued_conversation" = "Alusta vestlust kasutajaga %@";
 
 "content.system.other_started_conversation" = "%@ alustas vestlust kasutajaga %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ alustas vestlust kasutajaga %@";
-"content.system.conversation.added" = "%@ lisas kasutaja %@";
-"content.system.conversation.removed" = "%@ eemaldas kasutaja %@";
-"content.system.conversation.left" = "%@ lahkus";
-"content.system.conversation.you" = "Sina";
+"content.system.conversation.other.started" = "%@ alustas vestlust kasutajaga %@";
+"content.system.conversation.other.added" = "%@ lisas kasutaja %@";
+"content.system.conversation.other.removed" = "%@ eemaldas kasutaja %@";
+"content.system.conversation.other.left" = "%@ lahkus";
+
+"content.system.conversation.you.started" = "%@ alustas vestlust kasutajaga %@";
+"content.system.conversation.you.added" = "%@ lisas kasutaja %@";
+"content.system.conversation.you.removed" = "%@ eemaldas kasutaja %@";
+"content.system.conversation.you.left" = "%@ lahkus";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Üksikasjad";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Seadmed";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Seadmed";
 
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Aitad Wire paremaks muuta, kui saadad anonüümset informatsiooni.\n";
 
 "self.settings.privacy.clear_history.title" = "Kustuta Ajalugu";

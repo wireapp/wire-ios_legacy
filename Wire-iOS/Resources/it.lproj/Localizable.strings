@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Ricerca per nome o username";
 "peoplepicker.header.top_people" = "Più contattati";
 "peoplepicker.button.create_conversation" = "Crea gruppo";
-"peoplepicker.button.add_to_conversation" = "Aggiungi";
+"peoplepicker.button.add_to_conversation" = "Aggiungi persone al gruppo";
 "peoplepicker.header.conversations" = "Gruppi";
 "peoplepicker.header.team_conversations" = "%@ Gruppi";
 "peoplepicker.header.send_invitation" = "Invita";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Apri";
 "peoplepicker.quick-action.create-conversation" = "Crea gruppo";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cerca per nome";
 "contacts_ui.invite_others" = "Invita altri";
@@ -75,8 +77,8 @@
 "contacts_ui.notification.invitation_failed" = "Invio dell'invito fallito";
 "contacts_ui.title" = "Invita persone";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Nessuna conversazione\n";
+"contacts_ui.no_contact.message" = "Inizia una conversazione, crea un gruppo o invita delle persone a partecipare.";
 
 "contacts_ui.no_contact.archived.title" = "Tutto archiviato";
 
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Imposta il timer per i messaggi temporanei";
 
 // System messages
+"content.system.you_nominative" = "tu";
+"content.system.you_dative" = "tu";
+"content.system.you_accusative" = "tu";
+
 "content.system.continued_conversation" = "Inizia una conversazione con %@";
 
 "content.system.other_started_conversation" = "%@ ha iniziato una conversazione con %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ ha iniziato una conversazione con %@";
-"content.system.conversation.added" = "%@ ha aggiunto %@";
-"content.system.conversation.removed" = "%@ rimosso %@";
-"content.system.conversation.left" = "%@ ha lasciato la conversazione";
-"content.system.conversation.you" = "Tu";
+"content.system.conversation.other.started" = "%@ ha iniziato una conversazione con %@";
+"content.system.conversation.other.added" = "%@ ha aggiunto %@";
+"content.system.conversation.other.removed" = "%@ rimosso %@";
+"content.system.conversation.other.left" = "%@ ha lasciato la conversazione";
+
+"content.system.conversation.you.started" = "%@ ha iniziato una conversazione con %@";
+"content.system.conversation.you.added" = "%@ ha aggiunto %@";
+"content.system.conversation.you.removed" = "%@ rimosso %@";
+"content.system.conversation.you.left" = "%@ ha lasciato la conversazione";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Dettagli";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Dispositivi";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
 
 "self.settings.privacy_analytics_section.title" = "Segnalazioni di crash e dati di utilizzo";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Migliora Wire con l'invio di informazioni anonime.\n";
 
 "self.settings.privacy.clear_history.title" = "Cancella cronologia";

@@ -27,12 +27,12 @@
 "peoplepicker.search_placeholder" = "Procurar por nome ou nome de usuário";
 "peoplepicker.header.top_people" = "Contatos frequentes";
 "peoplepicker.button.create_conversation" = "Criar grupo";
-"peoplepicker.button.add_to_conversation" = "Adicionar";
+"peoplepicker.button.add_to_conversation" = "Adicionar pessoas ao grupo";
 "peoplepicker.header.conversations" = "Grupos";
-"peoplepicker.header.team_conversations" = "%@ Groups";
+"peoplepicker.header.team_conversations" = "Grupos de %@";
 "peoplepicker.header.send_invitation" = "Convidar";
 "peoplepicker.header.contacts" = "Contatos";
-"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.contacts_personal" = "Contatos pessoais";
 "peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Conectar";
 "peoplepicker.title.create_conversation" = "Criar grupo";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Criar grupo";
 
+"add_participants.all_contacts_added" = "Everyone's here.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Pesquisar por nome";
 "contacts_ui.invite_others" = "Convidar outras pessoas";
@@ -75,18 +77,18 @@
 "contacts_ui.notification.invitation_failed" = "Falha ao enviar o convite";
 "contacts_ui.title" = "Convidar pessoas";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.title" = "Não há conversas ainda\n";
+"contacts_ui.no_contact.message" = "Inicie uma conversa, crie um grupo ou convide pessoas para participar.";
 
 "contacts_ui.no_contact.archived.title" = "Tudo foi arquivado";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Participe";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
-"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
-"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value" = "Equipe de %@.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Toque para ativar.";
+"conversation_list.header.self_team.accessibility_value.active" = "Ative agora.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tem novas mensagens.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "nos Contatos";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Defina um tempo para a mensagem desaparecer";
 
 // System messages
+"content.system.you_nominative" = "você";
+"content.system.you_dative" = "você";
+"content.system.you_accusative" = "você";
+
 "content.system.continued_conversation" = "Iniciar uma conversa com %@";
 
 "content.system.other_started_conversation" = "%@ iniciou uma conversa com %@";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ iniciou uma conversa com %@";
-"content.system.conversation.added" = "%@ adicionou %@";
-"content.system.conversation.removed" = "%@ removeu %@";
-"content.system.conversation.left" = "%@ saiu";
-"content.system.conversation.you" = "Você";
+"content.system.conversation.other.started" = "%@ iniciou uma conversa com %@";
+"content.system.conversation.other.added" = "%@ adicionou %@";
+"content.system.conversation.other.removed" = "%@ removeu %@";
+"content.system.conversation.other.left" = "%@ saiu";
+
+"content.system.conversation.you.started" = "%@ iniciou uma conversa com %@";
+"content.system.conversation.you.added" = "%@ adicionou %@";
+"content.system.conversation.you.removed" = "%@ removeu %@";
+"content.system.conversation.you.left" = "%@ saiu";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
@@ -383,7 +394,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Adicionar pessoas";
-"participants.avatar.guest.title" = "Guest";
+"participants.avatar.guest.title" = "Convidado";
 
 // Meta Menu
 "meta.menu.rename" = "Renomear";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Detalhes";
+"profile.details.guest_in_team" = "Guest in %@";
 
 // Device list
 "profile.devices.title" = "Dispositivos";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
 "self.settings.privacy_analytics_section.title" = "Relatórios de Uso e Erro";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Faça o Wire melhorar mandando informações de uso anônimas.\n";
 
 "self.settings.privacy.clear_history.title" = "Limpar Histórico";

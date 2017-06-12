@@ -27,7 +27,7 @@
 "peoplepicker.search_placeholder" = "Nach Name oder Benutzername suchen";
 "peoplepicker.header.top_people" = "Top Kontakte";
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
-"peoplepicker.button.add_to_conversation" = "Hinzufügen";
+"peoplepicker.button.add_to_conversation" = "Personen zur Gruppe hinzufügen";
 "peoplepicker.header.conversations" = "Gruppen";
 "peoplepicker.header.team_conversations" = "%@ Gruppen";
 "peoplepicker.header.send_invitation" = "Einladen";
@@ -63,6 +63,8 @@
 "peoplepicker.quick-action.open-conversation" = "Öffnen";
 "peoplepicker.quick-action.create-conversation" = "Gruppe erstellen";
 
+"add_participants.all_contacts_added" = "Alle sind hier.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Nach Namen suchen";
 "contacts_ui.invite_others" = "Andere einladen";
@@ -86,7 +88,7 @@
 "conversation_list.header.self_team.accessibility_value" = "%@ Team.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Zum Aktivieren tippen.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktiv.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Kontakte";
@@ -221,6 +223,10 @@
 "input.ephemeral.title" = "Wähle eine Zeit, nach welcher die Nachricht verschwindet";
 
 // System messages
+"content.system.you_nominative" = "du";
+"content.system.you_dative" = "dir";
+"content.system.you_accusative" = "dich";
+
 "content.system.continued_conversation" = "Beginne eine Unterhaltung mit %@";
 
 "content.system.other_started_conversation" = "%@ hat eine Unterhaltung mit %@ begonnen";
@@ -240,11 +246,16 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.started" = "%@ hat ein Gespräch mit %@ begonnen";
-"content.system.conversation.added" = "%@ hat %@ hinzugefügt";
-"content.system.conversation.removed" = "%@ hat %@ entfernt";
-"content.system.conversation.left" = "%@ hat das Gespräch verlassen";
-"content.system.conversation.you" = "Du";
+"content.system.conversation.other.started" = "%@ hat ein Gespräch mit %@ begonnen";
+"content.system.conversation.other.added" = "%@ hat %@ hinzugefügt";
+"content.system.conversation.other.removed" = "%@ hat %@ entfernt";
+"content.system.conversation.other.left" = "%@ hat das Gespräch verlassen";
+
+"content.system.conversation.you.started" = "%@ hast ein Gespräch mit %@ begonnen";
+"content.system.conversation.you.added" = "%@ hast %@ hinzugefügt";
+"content.system.conversation.you.removed" = "%@ hast %@ entfernt";
+"content.system.conversation.you.left" = "%@ hast das Gespräch verlassen";
+"content.system.conversation.team.member-leave" = "%@ wurde aus dem Team entfernt.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
@@ -461,6 +472,7 @@
 
 // User Details
 "profile.details.title" = "Details";
+"profile.details.guest_in_team" = "Ist Gast in %@";
 
 // Device list
 "profile.devices.title" = "Geräte";
@@ -672,6 +684,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
 
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
+"self.settings.privacy_analytics.title" = "Daten anonym senden";
 "self.settings.privacy_analytics_menu.description.title" = "Durch das Senden anonymisierter Informationen hilfst du uns, Wire zu verbessern.";
 
 "self.settings.privacy.clear_history.title" = "Verlauf löschen";
@@ -747,7 +760,7 @@
 "registration.cancel_action.title" = "Abbrechen";
 
 "registration.no_history.hero" = "Du benutzt Wire zum ersten Mal auf diesem Gerät.";
-"registration.no_history.subtitle" = "Aus Datenschutzgründen wird dein bisheriger Gesprächsverlauf nicht angezeigt.";
+"registration.no_history.subtitle" = "Aus Datenschutzgründen wird deine bisherige Unterhaltung nicht angezeigt.";
 "registration.no_history.got_it" = "OK";
 
 "registration.no_history.logged_out.hero" = "Du hast Wire auf diesem Gerät bereits früher genutzt.";
