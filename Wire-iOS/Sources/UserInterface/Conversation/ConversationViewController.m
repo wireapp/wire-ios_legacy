@@ -135,6 +135,7 @@
 @property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
 
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
+@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
 @property (nonatomic) id voiceChannelStateObserverToken;
@@ -208,6 +209,7 @@
     self.isAppearing = NO;
 
     [self createConstraints];
+    [self updateInputBarVisibility];
 }
 
 - (void)createInputBarController
@@ -312,6 +314,10 @@
     [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.inputBarBottomMargin = [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    
+    self.inputBarZeroHeight = [[NSLayoutConstraint autoCreateConstraintsWithoutInstalling:^{
+        [self.inputBarController.view autoSetDimension:ALDimensionHeight toSize:0];
+    }] firstObject];
 
     [self.chatHeadsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.conversationBarController.view];
     [self.chatHeadsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
@@ -458,6 +464,12 @@
     } else {
         self.navigationItem.leftBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
     }
+}
+
+- (void)updateInputBarVisibility
+{
+    self.inputBarZeroHeight.active = self.conversation.isReadOnly;
+    [self.view setNeedsLayout];
 }
 
 - (UIViewController *)participantsController
@@ -921,6 +933,7 @@
         [self updateLeftNavigationBarItems];
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
+        [self updateInputBarVisibility];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
