@@ -129,13 +129,11 @@ public class SearchHeaderViewController : UIViewController {
         
     }
     
-    @objc
-    fileprivate func onCloseButtonPressed() {
+    fileprivate dynamic func onCloseButtonPressed() {
         delegate?.searchHeaderViewControllerDidCancelAction(self)
     }
     
-    @objc
-    fileprivate func onClearButtonPressed() {
+    fileprivate dynamic func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()
