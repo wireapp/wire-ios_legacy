@@ -19,7 +19,7 @@
 
 #import "CheckmarkViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "Constants.h"
 #import "CheckmarkView.h"

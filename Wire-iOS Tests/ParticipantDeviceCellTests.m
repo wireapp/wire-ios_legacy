@@ -19,7 +19,7 @@
 
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "ZMSnapshotTestCase.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "ParticipantDeviceCell.h"
 #import "Wire_iOS_Tests-Swift.h"
 

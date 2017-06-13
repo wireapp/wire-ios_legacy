@@ -22,7 +22,7 @@
 #import "TextView.h"
 #import "Logging.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>

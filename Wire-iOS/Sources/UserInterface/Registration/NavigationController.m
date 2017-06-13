@@ -19,7 +19,7 @@
 
 #import "NavigationController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 @import WireExtensionComponents;
 
 

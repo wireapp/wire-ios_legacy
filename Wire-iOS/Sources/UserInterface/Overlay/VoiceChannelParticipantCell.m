@@ -19,7 +19,7 @@
 
 #import "VoiceChannelParticipantCell.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "VoiceUserImageView.h"
 #import "WAZUIMagicIOS.h"

@@ -20,7 +20,7 @@
 @import MobileCoreServices;
 
 #import "ImageMessageCell+Internal.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <WireSyncEngine/WireSyncEngine.h>
 
 #import "Constants.h"

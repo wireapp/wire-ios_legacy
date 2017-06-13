@@ -18,7 +18,7 @@
 
 #import "UIView+Borders.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "NotificationWindowRootViewController.h"
 #import "NetworkStatusViewController.h"

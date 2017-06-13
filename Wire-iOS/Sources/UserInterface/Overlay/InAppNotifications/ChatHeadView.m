@@ -26,7 +26,7 @@
 #import "WireSyncEngine+iOS.h"
 
 // helpers
-#import <PureLayout.h>
+@import PureLayout;
 #import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 

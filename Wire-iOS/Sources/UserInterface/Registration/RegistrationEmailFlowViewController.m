@@ -19,7 +19,7 @@
 
 #import "RegistrationEmailFlowViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "EmailStepViewController.h"
 #import "EmailVerificationStepViewController.h"

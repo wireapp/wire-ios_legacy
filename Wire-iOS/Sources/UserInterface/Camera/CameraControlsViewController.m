@@ -19,7 +19,7 @@
 
 #import "CameraControlsViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <AVFoundation/AVFoundation.h>
 
 #import "CameraController.h"

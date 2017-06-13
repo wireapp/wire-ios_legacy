@@ -19,7 +19,7 @@
 
 #import "TopPeopleCell.h"
 #import "WAZUIMagiciOS.h"
-#import <PureLayout.h>
+@import PureLayout;
 #import "BadgeUserImageView.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"

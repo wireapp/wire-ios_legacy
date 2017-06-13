@@ -19,7 +19,7 @@
 
 #import "CameraConfirmationView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "Button.h"
 #import "UIColor+WAZExtensions.h"

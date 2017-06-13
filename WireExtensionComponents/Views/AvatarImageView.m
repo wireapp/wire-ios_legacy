@@ -19,7 +19,7 @@
 
 #import "AvatarImageView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 @interface AvatarImageView ()
 

@@ -23,7 +23,7 @@
 @import MobileCoreServices;
 @import AssetsLibrary;
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "WireSyncEngine+iOS.h"
 

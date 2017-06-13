@@ -33,7 +33,7 @@
 #import "WireSyncEngine+iOS.h"
 
 // helpers
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 @class ZMConversation;

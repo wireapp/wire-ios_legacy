@@ -19,7 +19,7 @@
 
 #import "BadgeUserImageView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "UserImageView.h"
 #import "WAZUIMagicIOS.h"

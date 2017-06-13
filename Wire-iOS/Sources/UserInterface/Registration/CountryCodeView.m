@@ -19,7 +19,7 @@
 
 #import "CountryCodeView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "WAZUIMagicIOS.h"
 

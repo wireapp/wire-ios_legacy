@@ -19,7 +19,7 @@
 #import "IconLabelButton.h"
 #import "UILabel+TextTransform.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 @interface IconLabelButton ()
 @property (nonatomic) UIControlState priorState;

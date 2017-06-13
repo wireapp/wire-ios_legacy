@@ -18,7 +18,7 @@
 
 
 #import "UserImageView.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 @import WireSyncEngine;
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"

@@ -20,7 +20,7 @@
 #import "TextMessageCell.h"
 #import "TextMessageCell+Internal.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <Classy/Classy.h>
 
 #import "WireSyncEngine+iOS.h"

@@ -19,7 +19,7 @@
 
 #import "CameraBottomToolsViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "Constants.h"

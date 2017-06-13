@@ -18,7 +18,7 @@
 
 
 #import <Classy/Classy.h>
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "AudioPlaylistCell.h"
 

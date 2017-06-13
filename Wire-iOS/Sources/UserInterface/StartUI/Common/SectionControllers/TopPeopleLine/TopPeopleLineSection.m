@@ -25,7 +25,7 @@
 #import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "TopPeopleLineCollectionViewController.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "UIView+Borders.h"
 #import "Wire-Swift.h"
 

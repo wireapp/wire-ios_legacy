@@ -21,7 +21,7 @@
 #import "UserImageView.h"
 #import "UIView+Borders.h"
 #import "UIFont+MagicAccess.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "UserImageView+Magic.h"
 #import "WireSyncEngine+iOS.h"
 

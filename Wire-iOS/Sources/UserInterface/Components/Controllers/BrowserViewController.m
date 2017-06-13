@@ -19,7 +19,7 @@
 
 @import WebKit;
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <Classy/Classy.h>
 
 #import "BrowserViewController.h"

@@ -19,7 +19,7 @@
 
 #import "LaunchImageViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "Constants.h"
 @import WireExtensionComponents;
 #import "UIViewController+Orientation.h"

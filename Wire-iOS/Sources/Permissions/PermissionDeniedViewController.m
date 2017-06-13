@@ -19,7 +19,7 @@
 
 #import "PermissionDeniedViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"

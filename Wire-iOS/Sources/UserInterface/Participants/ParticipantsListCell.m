@@ -18,7 +18,7 @@
 
 
 #import "ParticipantsListCell.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "BadgeUserImageView.h"
 #import "WireSyncEngine+iOS.h"
 #import "UserImageView+Magic.h"

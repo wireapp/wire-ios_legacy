@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "ConnectionRequestCell.h"
 #import "WireSyncEngine+iOS.h"

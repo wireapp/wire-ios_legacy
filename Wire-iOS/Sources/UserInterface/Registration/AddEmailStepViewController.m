@@ -19,7 +19,7 @@
 
 #import "AddEmailStepViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 @import WireExtensionComponents;
 
 #import "EmailFormViewController.h"

@@ -19,7 +19,7 @@
 
 #import "AnimatedListMenuView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 

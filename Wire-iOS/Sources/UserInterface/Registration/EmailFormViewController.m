@@ -19,7 +19,7 @@
 
 #import "EmailFormViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 @import WireExtensionComponents;
 
 #import "RegistrationTextField.h"

@@ -19,7 +19,7 @@
 
 #import "SearchResultCell.h"
 #import "WAZUIMagiciOS.h"
-#import <PureLayout.h>
+@import PureLayout;
 #import "UIView+MTAnimation.h"
 #import "BadgeUserImageView.h"
 #import "UIImage+ZetaIconsNeue.h"

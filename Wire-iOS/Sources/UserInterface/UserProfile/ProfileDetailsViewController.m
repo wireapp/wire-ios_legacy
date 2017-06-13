@@ -26,7 +26,7 @@
 
 
 @import WireExtensionComponents;
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "IconButton.h"
 #import "WAZUIMagicIOS.h"

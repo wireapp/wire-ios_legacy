@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "ActionSheetAlertView.h"
 #import "IconButton.h"

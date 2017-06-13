@@ -19,7 +19,7 @@
 
 #import "ConversationListContentController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <Classy/Classy.h>
 
 #import "WireSyncEngine+iOS.h"

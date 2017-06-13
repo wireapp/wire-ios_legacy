@@ -18,7 +18,7 @@
 
 
 #import "ParticipantsDeviceHeaderView.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "WebLinkTextView.h"
 #import "WAZUIMagicIOS.h"
 #import "NSURL+WireURLs.h"

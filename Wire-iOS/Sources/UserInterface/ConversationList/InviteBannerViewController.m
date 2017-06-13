@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "InviteBannerViewController.h"
 #import "Button.h"

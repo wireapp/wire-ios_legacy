@@ -19,7 +19,7 @@
 
 #import "ConnectRequestsCell.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "ConversationListItemView.h"
 

@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "MediaPreviewView.h"
 @import WireExtensionComponents;

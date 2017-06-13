@@ -44,7 +44,7 @@
 
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "Analytics+iOS.h"
 

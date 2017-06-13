@@ -20,7 +20,7 @@
 #import "ZMSnapshotTestCase.h"
 #import "Wire_iOS_Tests-Swift.h"
 #import "Wire-Swift.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <Classy/Classy.h>
 
 @interface ArchivedNavigationBarTests : ZMSnapshotTestCase

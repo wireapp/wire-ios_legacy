@@ -19,7 +19,7 @@
 
 #import "NetworkStatusViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 // ui
 #import "PassthroughTouchesView.h"

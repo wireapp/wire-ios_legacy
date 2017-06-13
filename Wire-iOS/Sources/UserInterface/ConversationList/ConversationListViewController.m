@@ -20,7 +20,7 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+StartUI.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 @import WireExtensionComponents;
 
 #import "Settings.h"

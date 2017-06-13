@@ -19,7 +19,7 @@
 
 #import "VersionInfoViewController.h"
 #import "IconButton.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 @interface VersionInfoViewController ()
 @property (nonatomic, strong) IconButton *closeButton;

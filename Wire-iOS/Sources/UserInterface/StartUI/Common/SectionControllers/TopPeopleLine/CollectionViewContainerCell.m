@@ -19,7 +19,7 @@
 
 #import "CollectionViewContainerCell.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 NSString *const CollectionViewContainerCellReuseIdentifier = @"CollectionViewContainerCellReuseIdentifier";
 

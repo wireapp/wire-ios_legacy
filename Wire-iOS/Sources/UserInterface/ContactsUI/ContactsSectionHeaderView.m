@@ -18,7 +18,7 @@
 
 
 #import "ContactsSectionHeaderView.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 

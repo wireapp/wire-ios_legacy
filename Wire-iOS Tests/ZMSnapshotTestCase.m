@@ -18,7 +18,7 @@
 
 
 #import "ZMSnapshotTestCase.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"

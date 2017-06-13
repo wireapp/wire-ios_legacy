@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 #import "MediaPreviewViewController.h"

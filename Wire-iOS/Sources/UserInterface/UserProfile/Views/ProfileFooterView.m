@@ -21,7 +21,7 @@
 
 #import "WAZUIMagicIOS.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "IconButton.h"
 #import "NSLayoutConstraint+Helpers.h"
 

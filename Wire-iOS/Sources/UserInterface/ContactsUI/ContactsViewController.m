@@ -18,7 +18,7 @@
 
 @import WireSyncEngine;
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <Classy/UIViewController+CASAdditions.h>
 @import WireExtensionComponents;
 

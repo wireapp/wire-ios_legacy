@@ -19,7 +19,7 @@
 
 #import "VoiceUserImageView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "VoiceGainLayer+MagicInit.h"
 #import "WAZUIMagic.h"

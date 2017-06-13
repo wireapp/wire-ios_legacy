@@ -24,7 +24,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WR_ColorScheme.h"
 #import <Classy/Classy.h>
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "ColorScheme.h"

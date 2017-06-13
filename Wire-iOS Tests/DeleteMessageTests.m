@@ -27,7 +27,7 @@
 #import "Wire-Swift.h"
 #import "MockMessage+Creation.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 // Allow us to programatically set gesture recognizer state
 #import <UIKit/UIGestureRecognizerSubclass.h>

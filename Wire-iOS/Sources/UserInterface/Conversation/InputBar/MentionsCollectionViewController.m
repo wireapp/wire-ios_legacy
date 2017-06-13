@@ -28,7 +28,7 @@
 #import "MentionsCollectionView.h"
 #import "Wire-Swift.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 

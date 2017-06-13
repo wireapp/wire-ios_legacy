@@ -19,7 +19,7 @@
 
 
 #import "SearchSectionHeaderView.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "WAZUIMagic.h"
 #import "UIFont+MagicAccess.h"
 #import "UIColor+MagicAccess.h"

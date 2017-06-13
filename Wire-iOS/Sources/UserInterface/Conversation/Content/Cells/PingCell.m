@@ -27,7 +27,7 @@
 #import "UIView+Borders.h"
 #import <Classy/Classy.h>
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "Wire-Swift.h"
 

@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "TitleBarViewController.h"
 #import "TitleBar.h"

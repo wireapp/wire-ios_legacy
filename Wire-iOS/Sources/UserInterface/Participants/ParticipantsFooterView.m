@@ -21,7 +21,7 @@
 #import "IconButton.h"
 
 #import "WAZUIMagicIOS.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "Wire-Swift.h"
 @import WireExtensionComponents;
 

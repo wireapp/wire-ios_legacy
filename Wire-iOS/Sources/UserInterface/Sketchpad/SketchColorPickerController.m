@@ -21,7 +21,7 @@
 
 #import "SketchColorCollectionViewCell.h"
 #import "UIColor+WR_ColorScheme.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 /// Used only as fallback in case no brush width is set

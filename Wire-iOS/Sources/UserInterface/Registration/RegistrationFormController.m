@@ -19,7 +19,7 @@
 
 #import "RegistrationFormController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "Constants.h"
 

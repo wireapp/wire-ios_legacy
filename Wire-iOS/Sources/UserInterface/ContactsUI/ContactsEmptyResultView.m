@@ -18,7 +18,7 @@
 
 
 #import "ContactsEmptyResultView.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "Button.h"
 
 @interface ContactsEmptyResultView ()

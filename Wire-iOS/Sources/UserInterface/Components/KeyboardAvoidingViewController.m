@@ -19,7 +19,7 @@
 
 #import "KeyboardAvoidingViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "UIView+Zeta.h"
 #import "Constants.h"

@@ -21,7 +21,7 @@
 #import "ConversationViewController+Private.h"
 
 #import <Classy/Classy.h>
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "Settings.h"
 

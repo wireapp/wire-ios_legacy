@@ -19,7 +19,7 @@
 
 #import "SketchColorCollectionViewCell.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "ColorKnobView.h"
 
 

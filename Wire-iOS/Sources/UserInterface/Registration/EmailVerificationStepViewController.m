@@ -19,7 +19,7 @@
 
 #import "EmailVerificationStepViewController.h"
 
-#import <PureLayout.h>
+@import PureLayout;
 
 #import "NavigationController.h"
 #import "CheckmarkViewController.h"

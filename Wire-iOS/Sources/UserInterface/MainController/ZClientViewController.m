@@ -19,7 +19,7 @@
 
 
 @import QuartzCore;
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "ZClientViewController+Internal.h"
 

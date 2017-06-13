@@ -21,7 +21,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIView+MTAnimation.h"
 
-#import <PureLayout.h>
+@import PureLayout;
 
 @interface CheckmarkView ()
 @property (nonatomic) UIView *circleView;

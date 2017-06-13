@@ -19,7 +19,7 @@
 
 #import "CameraAccessDeniedView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 #import "UIColor+WAZExtensions.h"

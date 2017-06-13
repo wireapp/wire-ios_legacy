@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <avs/AVSFlowManager.h>
 
 #import "VoiceChannelOverlayController.h"

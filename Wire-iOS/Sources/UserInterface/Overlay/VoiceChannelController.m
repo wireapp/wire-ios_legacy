@@ -19,7 +19,7 @@
 
 #import "VoiceChannelController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "VoiceChannelOverlayController.h"
 #import "PassthroughTouchesView.h"

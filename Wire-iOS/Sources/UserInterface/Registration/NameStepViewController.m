@@ -19,7 +19,7 @@
 
 #import "NameStepViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "RegistrationTextField.h"
 #import "WAZUIMagicIOS.h"

@@ -23,7 +23,7 @@
 #import "ParticipantDeviceCell.h"
 
 #import "Analytics+iOS.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "Wire-Swift.h"
 
 @import WireSyncEngine;

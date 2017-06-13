@@ -20,7 +20,7 @@
 #import "PhoneNumberViewController.h"
 #import "Analytics+iOS.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "RegistrationTextField.h"
 #import "CountryCodeTableViewController.h"

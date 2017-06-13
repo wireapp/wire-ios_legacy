@@ -17,7 +17,7 @@
 // 
 
 
-#import <PureLayout.h>
+@import PureLayout;
 @import MobileCoreServices;
 @import AVFoundation;
 

@@ -21,7 +21,7 @@
 @import WireExtensionComponents;
 #import "AudioErrorView.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 

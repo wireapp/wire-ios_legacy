@@ -28,7 +28,7 @@
 #import "WAZUIMagic.h"
 #import "UIView+WAZUIMagicExtensions.h"
 #import "Constants.h"
-#import <PureLayout.h>
+@import PureLayout;
 #import "UIView+MTAnimation.h"
 
 

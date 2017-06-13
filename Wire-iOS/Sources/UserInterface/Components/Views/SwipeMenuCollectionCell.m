@@ -18,7 +18,7 @@
 
 
 #import "SwipeMenuCollectionCell.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "UIView+MTAnimation.h"
 #import "UIView+Borders.h"
 #import "UIView+RemoveAnimations.h"

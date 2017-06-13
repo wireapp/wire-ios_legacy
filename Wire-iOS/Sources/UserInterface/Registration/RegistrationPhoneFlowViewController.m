@@ -19,7 +19,7 @@
 
 #import "RegistrationPhoneFlowViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 #import "NavigationController.h"
 #import "PhoneNumberStepViewController.h"

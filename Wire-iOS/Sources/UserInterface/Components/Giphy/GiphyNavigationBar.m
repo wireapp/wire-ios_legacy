@@ -21,7 +21,7 @@
 #import "IconButton.h"
 #import "UIView+Borders.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 
 

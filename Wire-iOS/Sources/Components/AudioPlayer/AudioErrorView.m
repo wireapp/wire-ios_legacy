@@ -20,7 +20,7 @@
 #import "AudioErrorView.h"
 #import <WireExtensionComponents/UIImage+ZetaIconsNeue.h>
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 @interface AudioErrorView ()
 @property (nonatomic) UIImageView *errorIconView;

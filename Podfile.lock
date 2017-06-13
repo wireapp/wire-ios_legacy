@@ -12,7 +12,6 @@ PODS:
     - GTMSessionFetcher/Core (= 1.1.8)
   - Localytics (4.3.0)
   - MTAnimation (1.2.2)
-  - PureLayout (3.0.0)
   - RBBAnimation (0.4.0)
   - SCSiriWaveformView (1.0.3)
 
@@ -21,7 +20,6 @@ DEPENDENCIES:
   - GoogleAPIClient/YouTube (= 1.0.4)
   - Localytics (= 4.3.0)
   - MTAnimation (from `https://github.com/wireapp/MTAnimation`, tag `1.2.2-crash-fix`)
-  - PureLayout (from `https://github.com/wireapp/PureLayout`, tag `v3.0.0`)
   - RBBAnimation (from `https://github.com/wireapp/RBBAnimation`, commit `7dd8d9a3cf610be5f7c1e4459692d555d70704c7`)
   - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
 
@@ -32,9 +30,6 @@ EXTERNAL SOURCES:
   MTAnimation:
     :git: https://github.com/wireapp/MTAnimation
     :tag: 1.2.2-crash-fix
-  PureLayout:
-    :git: https://github.com/wireapp/PureLayout
-    :tag: v3.0.0
   RBBAnimation:
     :commit: 7dd8d9a3cf610be5f7c1e4459692d555d70704c7
     :git: https://github.com/wireapp/RBBAnimation
@@ -49,9 +44,6 @@ CHECKOUT OPTIONS:
   MTAnimation:
     :git: https://github.com/wireapp/MTAnimation
     :tag: 1.2.2-crash-fix
-  PureLayout:
-    :git: https://github.com/wireapp/PureLayout
-    :tag: v3.0.0
   RBBAnimation:
     :commit: 7dd8d9a3cf610be5f7c1e4459692d555d70704c7
     :git: https://github.com/wireapp/RBBAnimation
@@ -65,10 +57,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
   Localytics: 45fc45f5600bdb151e839d14db1360c971f0b9de
   MTAnimation: 2dc79fea016ba8af8363394727ab44df9dc99f68
-  PureLayout: 270dfee2236f697ab1d5e2771c2e5c248495fa0d
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: e5e0bd3a99c15ca3b5d34dabe5bce4e28236e308
+PODFILE CHECKSUM: 635304be06eca03999f2ecf7da5a56db48a69f1f
 
 COCOAPODS: 1.2.1

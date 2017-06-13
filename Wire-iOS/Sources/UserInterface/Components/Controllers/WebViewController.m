@@ -26,7 +26,7 @@
 #import "Constants.h"
 #import "UIViewController+Orientation.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "NSLayoutConstraint+Helpers.h"
 
 

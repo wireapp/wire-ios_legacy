@@ -19,7 +19,7 @@
 
 #import "ConfirmAssetViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import <Classy/Classy.h>
 @import AVKit;
 @import AVFoundation;

@@ -20,7 +20,7 @@
 @import WireExtensionComponents;
 #import "PhoneInvitationStepViewController.h"
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 @import WireExtensionComponents;
 
 #import "RegistrationTextField.h"

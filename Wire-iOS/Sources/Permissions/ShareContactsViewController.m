@@ -26,7 +26,7 @@
 #import "Wire-Swift.h"
 
 
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 
 @interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
 

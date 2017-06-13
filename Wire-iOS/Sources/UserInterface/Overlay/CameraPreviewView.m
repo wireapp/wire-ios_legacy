@@ -18,7 +18,7 @@
 
 
 #import "CameraPreviewView.h"
-#import <PureLayout/PureLayout.h>
+@import PureLayout;
 #import "UIImage+ZetaIconsNeue.h"
 #import "IconButton.h"
 
