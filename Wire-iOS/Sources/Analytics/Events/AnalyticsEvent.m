@@ -20,8 +20,6 @@
 #import "AnalyticsEvent.h"
 #import "DefaultIntegerClusterizer.h"
 #import "objc/runtime.h"
-#import <NSObject+ObjectMap.h>
-
 
 static dispatch_queue_t currentMetaAccessQ = NULL;
 static NSMapTable *currentMeta = nil;

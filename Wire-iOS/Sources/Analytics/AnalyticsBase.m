@@ -40,8 +40,6 @@
 #import "ZMUser+Additions.h"
 #import "DefaultIntegerClusterizer.h"
 
-#import <NSObject+ObjectMap.h>
-#import <CocoaSecurity/CocoaSecurity.h>
 #import <avs/AVSFlowManager.h>
 
 #import "Wire-Swift.h"
