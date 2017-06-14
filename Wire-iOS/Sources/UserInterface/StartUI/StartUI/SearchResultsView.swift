@@ -28,6 +28,7 @@ class SearchResultsView : UIView {
     let accessoryContainer = UIView()
     var lastLayoutBounds : CGRect = CGRect.zero
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
+    var isIgnoringKeyboard : Bool = false
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -121,6 +122,10 @@ class SearchResultsView : UIView {
     }
     
     func keyboardFrameDidChange(notification: Notification) {
+        guard !isIgnoringKeyboard else {
+            return
+        }
+        
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
