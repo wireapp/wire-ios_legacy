@@ -28,7 +28,7 @@ class SearchResultsView : UIView {
     let accessoryContainer = UIView()
     var lastLayoutBounds : CGRect = CGRect.zero
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
-    var isIgnoringKeyboard : Bool = false
+    var isContainedInPopover : Bool = false
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -122,7 +122,7 @@ class SearchResultsView : UIView {
     }
     
     func keyboardFrameDidChange(notification: Notification) {
-        guard !isIgnoringKeyboard else {
+        guard !isContainedInPopover else {
             return
         }
         

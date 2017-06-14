@@ -161,7 +161,7 @@ public class SearchResultsViewController : UIViewController {
     
     public override func loadView() {
         searchResultsView  = SearchResultsView()
-        searchResultsView?.isIgnoringKeyboard = isContainedInPopover()
+        searchResultsView?.isContainedInPopover = isContainedInPopover()
         view = searchResultsView
     }
     
