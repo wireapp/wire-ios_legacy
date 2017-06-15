@@ -87,7 +87,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 {
     [super viewDidLoad];
     
-    Team *team = [[ZMUser selfUser] activeTeam];
+    Team *team = ZMUser.selfUser.team;
     
     self.userSelection = [[UserSelection alloc] init];
     [self.userSelection addObserver:self];
@@ -106,7 +106,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection team:[[ZMUser selfUser] activeTeam] variant:ColorSchemeVariantDark isAddingParticipants:NO];
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection team:team variant:ColorSchemeVariantDark isAddingParticipants:NO];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
     self.searchResultsViewController.delegate = self;
     [self addChildViewController:self.searchResultsViewController];
@@ -156,7 +156,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.addressBookUploadLogicHandled = YES;
     
     // We should not even try to access address book when in a team
-    if([ZMUser selfUser].activeTeam != nil) {
+    if (ZMUser.selfUser.hasTeam) {
         return;
     }
     
@@ -189,7 +189,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 {
     if (self.userSelection.users.count == 0) {
         if (self.searchHeaderViewController.query.length != 0 ||
-            [[ZMUser selfUser] activeTeam] != nil) {
+            ZMUser.selfUser.hasTeam) {
             self.searchResultsViewController.searchResultsView.accessoryView = nil;
         } else {
             self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
@@ -198,7 +198,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if (self.userSelection.users.count == 1) {
         self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-        if ([[ZMUser selfUser] activeTeam] != nil) { // When in a team we always open group conversations
+        if (ZMUser.selfUser.hasTeam) { // When in a team we always open group conversations
             self.quickActionsBar.mode = StartUIQuickActionBarModeOpenGroupConversation;
         } else {
             self.quickActionsBar.mode = StartUIQuickActionBarModeOpenConversation;

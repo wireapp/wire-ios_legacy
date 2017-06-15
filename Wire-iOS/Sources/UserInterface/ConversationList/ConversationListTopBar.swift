@@ -47,7 +47,7 @@ final class ConversationListTopBar: TopBar {
             }
             self.updateShowTeamsIfNeeded()
         })
-        self.setShowTeams(to: ZMUser.selfUser().teams.count > 0)
+        self.setShowTeams(to: nil != ZMUser.selfUser().team)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -55,7 +55,7 @@ final class ConversationListTopBar: TopBar {
     }
     
     public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && (self.state == newState || ZMUser.selfUser().teams.isEmpty) {
+        if !force && (self.state == newState || ZMUser.selfUser().hasTeam) {
             return
         }
         
@@ -76,7 +76,7 @@ final class ConversationListTopBar: TopBar {
     fileprivate var showTeams: Bool = false
     
     internal func updateShowTeamsIfNeeded() {
-        if ZMUser.selfUser().teams.count > 0 {
+        if ZMUser.selfUser().hasTeam {
             if !showTeams {
                 self.setShowTeams(to: true)
             }

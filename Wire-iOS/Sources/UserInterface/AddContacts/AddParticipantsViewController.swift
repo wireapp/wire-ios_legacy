@@ -84,7 +84,8 @@ public class AddParticipantsViewController : UIViewController {
         }
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().activeTeam, variant: ColorScheme.default().variant, isAddingParticipants: true)
+        // TODO: Update `SearchResultsViewController` to not require any Team parameter
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: nil, variant: ColorScheme.default().variant, isAddingParticipants: true)
         
         super.init(nibName: nil, bundle: nil)
         

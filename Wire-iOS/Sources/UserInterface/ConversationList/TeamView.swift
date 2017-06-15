@@ -256,8 +256,7 @@ extension BaseTeamView: ZMUserObserver {
 
 public final class PersonalTeamView: BaseTeamView {
     internal let userImageView = UserImageView(size: .normal)
-    
-    private var teamsObserver: NSObjectProtocol!
+
     private var conversationListObserver: NSObjectProtocol!
     private var connectionRequestObserver: NSObjectProtocol!
     
@@ -288,8 +287,7 @@ public final class PersonalTeamView: BaseTeamView {
         selectionView.pathGenerator = {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
         }
-        
-        teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
+
         if let userSession = ZMUserSession.shared() {
             conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
             connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession))
@@ -311,17 +309,9 @@ public final class PersonalTeamView: BaseTeamView {
     public override func update() {
         super.update()
         self.nameLabel.text = ZMUser.selfUser().displayName
-        self.selected = ZMUser.selfUser().teams.first(where: { $0.isActive }) == nil
+        self.selected = true // FIXME: ZMUser.selfUser().team
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName) + " " + accessibilityState
         self.accessibilityIdentifier = "self team"
-    }
-}
-
-extension PersonalTeamView: TeamObserver {
-    public func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        if changeInfo.isActiveChanged {
-            update()
-        }
     }
 }
 
@@ -459,7 +449,6 @@ public final class TeamImageView: UIImageView {
     public override func update() {
         super.update()
         self.updateLabel()
-        self.selected = self.team.isActive
         self.imageView.updateImage()
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "") + " " + accessibilityState
         self.accessibilityIdentifier = "\(self.team.name ?? "") team"

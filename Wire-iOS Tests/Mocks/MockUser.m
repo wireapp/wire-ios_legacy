@@ -192,11 +192,6 @@ static id<ZMBareUser> mockSelfUser = nil;
 {
     return nil;
 }
-
-- (BOOL)isMemberOf:(Team *)team
-{
-    return NO;
-}
     
 - (BOOL)isPendingApproval {
     return false;
