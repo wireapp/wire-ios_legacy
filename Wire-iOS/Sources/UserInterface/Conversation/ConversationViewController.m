@@ -168,7 +168,7 @@
     [super viewDidLoad];
     
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:self.conversation.team]];
+                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardFrameWillChange:)

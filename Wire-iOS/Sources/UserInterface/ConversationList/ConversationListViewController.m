@@ -186,8 +186,8 @@
 
 - (void)updateObserverTokensForActiveTeam
 {
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
+    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
+    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]];
 
 }
 
@@ -642,16 +642,14 @@
 - (BOOL)hasConversations
 {
     ZMUserSession *session = ZMUserSession.sharedSession;
-    Team *team = ZMUser.selfUser.activeTeam;
-    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session team:team].count +
-                                    [ZMConversationList pendingConnectionConversationsInUserSession:session team:team].count;
+    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
+                                    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
     return conversationsCount > 0;
-
 }
 
 - (BOOL)hasArchivedConversations
 {
-    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession team:ZMUser.selfUser.activeTeam].count > 0;
+    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
 }
 
 @end

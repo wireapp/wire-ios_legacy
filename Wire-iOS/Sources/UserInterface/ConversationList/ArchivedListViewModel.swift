@@ -32,7 +32,7 @@ import Foundation
     
     override init() {
         super.init()
-        let list = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam)
+        let list = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!)
         archivedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: list)
         archivedConversations = list.asArray() as! [ZMConversation]
     }
@@ -50,9 +50,9 @@ import Foundation
 
 extension ArchivedListViewModel: ZMConversationListObserver {
     func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
-        guard changeInfo.conversationList == ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam) else { return }
+        guard changeInfo.conversationList == ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!) else { return }
         delegate?.archivedListViewModel(self, didUpdateArchivedConversationsWithChange: changeInfo) { [weak self] in
-            self?.archivedConversations = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam).asArray() as! [ZMConversation]
+            self?.archivedConversations = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!).asArray() as! [ZMConversation]
         }
     }
     

@@ -191,7 +191,7 @@ import Foundation
         let sendBrokenMessage = { (type: SettingsCellDescriptorType) -> Void in
             guard
                 let userSession = ZMUserSession.shared(),
-                let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession, team: ZMUser.selfUser().activeTeam).firstObject as? ZMConversation
+                let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
             else {
                 return
             }

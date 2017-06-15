@@ -266,7 +266,7 @@
 
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion
 {
-    NSArray *conversationsList = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]];
+    NSArray *conversationsList = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]];
     if (conversationsList.count != 0) {
         [self selectConversation:conversationsList.firstObject];
     }
@@ -620,7 +620,7 @@
 {
     // check for conversations and pick the first one.. this can be tricky if there are pending updates and
     // we haven't synced yet, but for now we just pick the current first item
-    NSArray *list = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]];
+    NSArray *list = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]];
     
     if (list.count > 0) {
         // select the first conversation and don't focus on it

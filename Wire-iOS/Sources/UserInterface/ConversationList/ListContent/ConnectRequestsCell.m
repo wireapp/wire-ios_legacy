@@ -61,7 +61,7 @@
     [self addSubview:self.itemView];
     [self updateAppearance];
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil]];
+                                                                         forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]];
     
     [self setNeedsUpdateConstraints];
 }
@@ -95,7 +95,7 @@
 
 - (void)updateAppearance
 {
-    NSArray<ZMConversation *> *connectionRequests = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil];
+    NSArray<ZMConversation *> *connectionRequests = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]];
     
     NSUInteger newCount = connectionRequests.count;
     

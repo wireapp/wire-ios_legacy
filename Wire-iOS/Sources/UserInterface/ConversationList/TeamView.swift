@@ -272,8 +272,8 @@ public final class PersonalTeamView: BaseTeamView {
             return false
         }
         let unread = ZMConversation.predicateForConversationConsideredUnread()!
-        return ZMConversationList.conversations(inUserSession: userSession, team: nil).first(where: { unread.evaluate(with: $0) }) != nil ||
-                ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil).count > 0
+        return ZMConversationList.conversations(inUserSession: userSession).first(where: { unread.evaluate(with: $0) }) != nil ||
+                ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0
     }
     
     override init() {
@@ -291,8 +291,8 @@ public final class PersonalTeamView: BaseTeamView {
         
         teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
         if let userSession = ZMUserSession.shared() {
-            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
-            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil))
+            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
+            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession))
         }
         
         self.imageViewContainer.addSubview(userImageView)
@@ -442,7 +442,7 @@ public final class TeamImageView: UIImageView {
         if let team = self.team as? Team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
             if let userSession = ZMUserSession.shared() {
-                conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: team))
+                conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
             }
         }
 
