@@ -161,7 +161,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.teamsGuestLabel.numberOfLines = 0;
     self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
     [self.userImageViewContainer addSubview:self.teamsGuestLabel];
-    // self.teamsGuestLabel.text = [self teamGuestsTextFor:self.bareUser]; TODO: Fix this
+    self.teamsGuestLabel.text = NSLocalizedString(@"profile.details.guest", nil);
 }
 
 #pragma mark - Footer

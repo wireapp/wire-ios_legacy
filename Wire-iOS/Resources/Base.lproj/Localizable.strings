@@ -472,7 +472,7 @@
 
 // User Details
 "profile.details.title" = "Details";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Guest";
 
 // Device list
 "profile.devices.title" = "Devices";
