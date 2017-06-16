@@ -28,7 +28,6 @@ github "wireapp/wire-ios-protos" "11.0.0"
 github "wireapp/wire-ios-request-strategy" "40.0.0"
 github "wireapp/wire-ios-share-engine" "e0a2f5e28c98ec6b146be513d2c6ebf9ad81aeba"
 github "wireapp/wire-ios-sync-engine" "e0a2f5e28c98ec6b146be513d2c6ebf9ad81aeba"
->>>>>>> Stashed changes
 github "wireapp/wire-ios-system" "17.0.1"
 github "wireapp/wire-ios-transport" "22.0.3"
 github "wireapp/wire-ios-utilities" "16.0.1"
