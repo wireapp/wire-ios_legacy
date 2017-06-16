@@ -40,19 +40,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
         return item
     }()
-    
-    lazy var teamItem : SLComposeSheetConfigurationItem? = {
-        guard let allTeams = self.sharingSession?.allTeams, !allTeams.isEmpty else { return nil }
-
-        let item = SLComposeSheetConfigurationItem()!
-        
-        item.title = "share_extension.team_selection.title".localized
-        item.value = "share_extension.team_selection.empty.value".localized
-        item.tapHandler = { [weak self] in
-            self?.presentChooseTeam()
-        }
-        return item
-    }()
 
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
@@ -220,7 +207,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     override func configurationItems() -> [Any]! {
-        return [conversationItem, teamItem].flatMap {$0}
+        return [conversationItem]
     }
     
     private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
@@ -247,13 +234,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         pushConfigurationViewController(notSignedInViewController)
     }
     
-    func updateState(team: Team?) {
-        guard sharingSession?.currentTeam != team else { return }
-        teamItem?.value = team?.name ?? "share_extension.team_selection.empty.value".localized
-        sharingSession?.currentTeam = team
-        updateState(conversation: nil)
-    }
-    
     func updateState(conversation: Conversation?) {
         conversationItem.value = conversation?.name ?? "share_extension.conversation_selection.empty.value".localized
         postContent?.target = conversation
@@ -273,20 +253,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
         
         pushConfigurationViewController(conversationSelectionViewController)
-    }
-    
-    private func presentChooseTeam() {
-        guard let sharingSession = sharingSession else { return }
-
-        let teamSelectionViewController = TeamSelectionViewController(teams: sharingSession.allTeams)
-        
-        teamSelectionViewController.selectionHandler = { [weak self] team in
-            self?.updateState(team: team)
-            self?.popConfigurationViewController()
-            self?.validateContent()
-        }
-        
-        pushConfigurationViewController(teamSelectionViewController)
     }
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
