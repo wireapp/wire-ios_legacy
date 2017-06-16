@@ -45,6 +45,49 @@ public enum SearchResultsViewControllerSection : Int {
     case directory
 }
 
+
+
+extension UIViewController {
+    class ControllerHierarchyIterator: IteratorProtocol {
+        private var current: UIViewController
+        
+        init(controller: UIViewController) {
+            current = controller
+        }
+        
+        func next() -> UIViewController? {
+            var candidate: UIViewController? = .none
+            if let controller = current.navigationController {
+                candidate = controller
+            }
+            else if let controller = current.presentingViewController {
+                candidate = controller
+            }
+            else if let controller = current.parent {
+                candidate = controller
+            }
+            if let candidate = candidate {
+                current = candidate
+            }
+            return candidate
+        }
+    }
+    
+    func isContainedInPopover() -> Bool {
+        var hierarchy = ControllerHierarchyIterator(controller: self)
+        
+        return hierarchy.any {
+            if let arrowDirection = $0.popoverPresentationController?.arrowDirection,
+                arrowDirection != .unknown {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+    }
+}
+
 public class SearchResultsViewController : UIViewController {
     
     var searchResultsView : SearchResultsView?
@@ -118,6 +161,7 @@ public class SearchResultsViewController : UIViewController {
     
     public override func loadView() {
         searchResultsView  = SearchResultsView()
+        searchResultsView?.isContainedInPopover = isContainedInPopover()
         view = searchResultsView
     }
     
