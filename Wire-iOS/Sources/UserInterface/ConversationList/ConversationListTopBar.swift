@@ -55,7 +55,7 @@ final class ConversationListTopBar: TopBar {
     }
     
     public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && (self.state == newState || ZMUser.selfUser().hasTeam) {
+        if !force && (self.state == newState || !ZMUser.selfUser().hasTeam) {
             return
         }
         

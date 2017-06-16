@@ -951,7 +951,6 @@
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
-		F1D0445F1ED8675200EAC1DA /* TeamSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D0445E1ED8675200EAC1DA /* TeamSelectionViewController.swift */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -5710,7 +5709,6 @@
 				165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */,
 				543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */,
 				BF96A6CC1E2FD3BA0057974A /* NSItemProvider+Fetching.swift in Sources */,
-				F1D0445F1ED8675200EAC1DA /* TeamSelectionViewController.swift in Sources */,
 				BF9AEE161E4A0BA20005FBA7 /* CrashReporter.swift in Sources */,
 				168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */,
 				543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */,

@@ -31,51 +31,28 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         return scrollView
     }()
     
-    func removeTeams() {
-        self.selfUser.mutableSetValue(forKey: "memberships").removeAllObjects()
+    func removeTeam() {
+        selfUser.setNilValueForKey(#keyPath(ZMUser.membership))
         moc.saveOrRollback()
     }
     
-    @discardableResult func createTeams(createFamily: Bool = false) -> [TeamType] {
-        let workspaceName = "W"
-        
-        var teams: [Team] = []
-        
-        let workTeam: Team = {
+    @discardableResult func createTeam() -> TeamType {
+        let team: Team = {
             let workTeam = Team.insertNewObject(in: moc)
-            workTeam.name = workspaceName
-            workTeam.isActive = false
+            workTeam.name = "W"
             return workTeam
         }()
-        
-        teams.append(workTeam)
-        
-        if createFamily {
-            let familyTeam: Team = {
-                let familyTeam = Team.insertNewObject(in: moc)
-                familyTeam.name = "Family"
-                familyTeam.isActive = false
-                return familyTeam
-            }()
-            
-            teams.append(familyTeam)
-        }
-        
-        self.selfUser.mutableSetValue(forKey: "memberships").addObjects(from: teams.map {
-            
+
+        let member: Member = {
             let membership = Member.insertNewObject(in: moc)
-            membership.team = $0
+            membership.team = team
             membership.user = self.selfUser
             return membership
-        })
-        moc.saveOrRollback()
-        return teams
-    }
+        }()
 
-    override func tearDown() {
-        super.tearDown()
-        sut = nil
-        MockUser.setMockSelf(nil)
+        selfUser.setValue(member, forKey: #keyPath(ZMUser.membership))
+        moc.saveOrRollback()
+        return team
     }
     
     override func setUp() {
@@ -83,10 +60,16 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         MockUser.setMockSelf(self.selfUser)
         self.snapshotBackgroundColor = UIColor(white: 0, alpha: 0.8)
     }
+
+    override func tearDown() {
+        sut = nil
+        MockUser.setMockSelf(nil)
+        super.tearDown()
+    }
     
     func testThatItRendersDefaultBar() {
         // GIVEN & WHEN
-        removeTeams()
+        removeTeam()
         self.sut = ConversationListTopBar()
         sut.contentScrollView = scrollView
         
@@ -96,7 +79,7 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersSpacesBar() {
         // GIVEN & WHEN
-        createTeams()
+        createTeam()
         self.sut = ConversationListTopBar()
         sut.contentScrollView = scrollView
         sut.update(to: ConversationListTopBar.ImagesState.visible)
@@ -105,91 +88,12 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
     
-    func testThatItRendersSpacesBarScrolledAway() {
+    func testThatItRendersSpacesBarWithTeamScrolledAway() {
         // GIVEN & WHEN
-        createTeams()
+        createTeam()
         self.sut = ConversationListTopBar()
         sut.contentScrollView = scrollView
         sut.update(to: ConversationListTopBar.ImagesState.collapsed)
-        
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-    func testThatItRendersSpacesBarThreeSpaces() {
-        // GIVEN & WHEN
-        createTeams(createFamily: true)
-        self.sut = ConversationListTopBar()
-        sut.contentScrollView = scrollView
-        sut.update(to: ConversationListTopBar.ImagesState.visible)
-        
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-    func testThatItRendersSpacesBarThreeSpacesScrolledAway() {
-        // GIVEN & WHEN
-        createTeams(createFamily: true)
-        self.sut = ConversationListTopBar()
-        sut.contentScrollView = scrollView
-        sut.update(to: ConversationListTopBar.ImagesState.collapsed)
-        
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-    func testThatItRendersSpacesBarSecondOneSelected() {
-        // GIVEN & WHEN
-        let teams = createTeams()
-        teams.first!.isActive = true
-        self.sut = ConversationListTopBar()
-        sut.contentScrollView = scrollView
-        sut.update(to: ConversationListTopBar.ImagesState.visible)
-        
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-    func testThatItRendersSpacesBarOneSelectedScrolledAway() {
-        // GIVEN & WHEN
-        let teams = createTeams()
-        teams.first!.isActive = true
-        self.sut = ConversationListTopBar()
-        sut.contentScrollView = scrollView
-        sut.update(to: ConversationListTopBar.ImagesState.collapsed)
-        
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-    func testThatItRendersSpacesBarAfterDefaultBar() {
-        // GIVEN & WHEN
-        
-        self.sut = ConversationListTopBar()
-        
-        // WHEN
-        _ = sut.snapshotView()
-        
-        // AND WHEN
-        createTeams()
-        sut.update(to: ConversationListTopBar.ImagesState.visible, force: true)
-        self.sut.updateShowTeamsIfNeeded()
-
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-    func testThatItRendersSpacesBarAfterDefaultBar_ScrolledAway() {
-        // GIVEN & WHEN
-        self.sut = ConversationListTopBar()
-        scrollView.contentOffset = CGPoint(x: 0, y: 100)
-        
-        // WHEN
-        _ = sut.snapshotView()
-        
-        // AND WHEN
-        createTeams()
-        self.sut.updateShowTeamsIfNeeded()
         
         // THEN
         self.verify(view: sut.snapshotView())
@@ -197,14 +101,14 @@ class ConversationListTopBarTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersDefaultBarAfterSpacesBar() {
         // GIVEN & WHEN
-        createTeams()
+        createTeam()
         self.sut = ConversationListTopBar()
 
         // WHEN
         _ = sut.snapshotView()
         
         // AND WHEN
-        removeTeams()
+        removeTeam()
         self.sut.updateShowTeamsIfNeeded()
 
         // THEN
