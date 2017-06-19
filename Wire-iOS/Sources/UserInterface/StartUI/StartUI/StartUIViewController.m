@@ -155,11 +155,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     
     self.addressBookUploadLogicHandled = YES;
     
-    // We should not even try to access address book when in a team
-    if([ZMUser selfUser].activeTeam != nil) {
-        return;
-    }
-    
     if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
         // Re-check if we need to start AB search
         [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];

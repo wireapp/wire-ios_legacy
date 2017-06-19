@@ -127,7 +127,7 @@
         
         ZMUser *user = (ZMUser *) participant;
         
-        ZMConversation *conversation = [user oneToOneConversationInTeam:ZMUser.selfUser.activeTeam];
+        ZMConversation *conversation = [ZMConversation existingOneOnOneConversationWithUser:user inUserSession:[ZMUserSession sharedSession]];
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [conversation appendKnock];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];

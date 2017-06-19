@@ -29,9 +29,4 @@ extension ZMUser {
     var activeTeam: Team? {
         return self.activeTeams.first
     }
-    
-    var isMemberOfActiveTeam : Bool {
-        guard let team = ZMUser.selfUser().activeTeam else { return false }
-        return isMember(of: team)
-    }
 }
