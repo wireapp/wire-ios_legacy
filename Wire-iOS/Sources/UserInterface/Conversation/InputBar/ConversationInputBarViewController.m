@@ -310,7 +310,7 @@
     self.inputBar.textView.delegate = self;
     
     [self.view addSubview:self.inputBar];
-    [self.inputBar autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeBottom];
+    [self.inputBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
         [self.inputBar autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     }];
