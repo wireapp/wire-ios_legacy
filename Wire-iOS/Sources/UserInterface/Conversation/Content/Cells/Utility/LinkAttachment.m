@@ -51,9 +51,6 @@
     else if ([self.class regularExpression:self.class.soundcloudSetMatcher matchesString:URLString]) {
         linkAttachmentType = LinkAttachmentTypeSoundcloudSet;
     }
-    else if ([self.class regularExpression:self.class.vimeoMatcher matchesString:URLString]) {
-        linkAttachmentType = LinkAttachmentTypeVimeoVideo;
-    }
 
     return linkAttachmentType;
 }
@@ -118,17 +115,6 @@
                                                                    options:NSRegularExpressionCaseInsensitive error:nil];
     });
     return youtubeMatcher;
-}
-
-+ (NSRegularExpression *)vimeoMatcher
-{
-    static NSRegularExpression *vimeoMatcher = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        vimeoMatcher = [NSRegularExpression regularExpressionWithPattern:@"^(http://|https://)?(www\\.|m\\.)?(vimeo\\.com)(/.*)?/[0-9]+$"
-                                                                 options:NSRegularExpressionCaseInsensitive error:nil];
-    });
-    return vimeoMatcher;
 }
 
 @end

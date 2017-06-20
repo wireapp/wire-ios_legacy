@@ -23,8 +23,7 @@ typedef NS_ENUM(NSUInteger, LinkAttachmentType) {
     LinkAttachmentTypeNone = 0,
     LinkAttachmentTypeSoundcloudTrack,
     LinkAttachmentTypeSoundcloudSet,
-    LinkAttachmentTypeYoutubeVideo,
-    LinkAttachmentTypeVimeoVideo
+    LinkAttachmentTypeYoutubeVideo
 };
 
 

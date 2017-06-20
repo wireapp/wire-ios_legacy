@@ -31,7 +31,6 @@
 #import "LinkAttachmentCache.h"
 #import "YoutubeService.h"
 #import <Classy/Classy.h>
-#import "VimeoService.h"
 
 
 
@@ -117,9 +116,6 @@
         
         if (self.linkAttachment.type == LinkAttachmentTypeYoutubeVideo) {
             [[YoutubeService sharedInstance] mediaPreviewDataForYoutubeVideoURL:self.linkAttachment.URL completion:mediaPreviewResponseHandler];
-        }
-        else if (self.linkAttachment.type == LinkAttachmentTypeVimeoVideo) {
-            [[VimeoService sharedInstance] mediaPreviewDataForVimeoVideoURL:self.linkAttachment.URL completion:mediaPreviewResponseHandler];
         }
     }
 }

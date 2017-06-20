@@ -385,8 +385,6 @@
 		871BC3621D34F94200DF0793 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC33D1D34F94200DF0793 /* Settings.m */; };
 		871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */; };
 		871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3421D34F94200DF0793 /* SoundcloudService.m */; };
-		871BC3651D34F94200DF0793 /* MediaPreviewData+Vimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3451D34F94200DF0793 /* MediaPreviewData+Vimeo.m */; };
-		871BC3661D34F94200DF0793 /* VimeoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3471D34F94200DF0793 /* VimeoService.m */; };
 		871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3491D34F94200DF0793 /* WRFunctions.m */; };
 		871BC3681D34F94200DF0793 /* MediaPreviewData+YouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC34C1D34F94200DF0793 /* MediaPreviewData+YouTube.m */; };
 		871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC34E1D34F94200DF0793 /* MediaPreviewViewController.m */; };
@@ -681,7 +679,6 @@
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */; };
 		87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */; };
-		87FEE0D01D76D65700265A9C /* VIMNetworkingFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */; };
 		8F0DEDD51A693F58003F0ACC /* PingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0DEDD41A693F58003F0ACC /* PingCell.m */; };
 		8F264BA119E808A8005FF4BE /* ProximityMonitorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F264BA019E808A8005FF4BE /* ProximityMonitorManager.m */; };
 		8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3C945419D1CC5600288AFE /* VoiceChannelOverlayController.m */; };
@@ -1619,10 +1616,6 @@
 		871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudAudioTrack.m; sourceTree = "<group>"; };
 		871BC3411D34F94200DF0793 /* SoundcloudService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundcloudService.h; sourceTree = "<group>"; };
 		871BC3421D34F94200DF0793 /* SoundcloudService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudService.m; sourceTree = "<group>"; };
-		871BC3441D34F94200DF0793 /* MediaPreviewData+Vimeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MediaPreviewData+Vimeo.h"; sourceTree = "<group>"; };
-		871BC3451D34F94200DF0793 /* MediaPreviewData+Vimeo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MediaPreviewData+Vimeo.m"; sourceTree = "<group>"; };
-		871BC3461D34F94200DF0793 /* VimeoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VimeoService.h; sourceTree = "<group>"; };
-		871BC3471D34F94200DF0793 /* VimeoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VimeoService.m; sourceTree = "<group>"; };
 		871BC3481D34F94200DF0793 /* WRFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRFunctions.h; sourceTree = "<group>"; };
 		871BC3491D34F94200DF0793 /* WRFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRFunctions.m; sourceTree = "<group>"; };
 		871BC34B1D34F94200DF0793 /* MediaPreviewData+YouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MediaPreviewData+YouTube.h"; sourceTree = "<group>"; };
@@ -2525,7 +2518,6 @@
 				87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */,
 				DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
-				87FEE0D01D76D65700265A9C /* VIMNetworkingFramework.framework in Frameworks */,
 				BAA432301B39BB8E00F1CD2A /* MarkdownParser.framework in Frameworks */,
 				1E7222A41B8335EA004180EC /* CocoaLumberjack.framework in Frameworks */,
 				876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */,
@@ -3550,7 +3542,6 @@
 				549D55AB1DBE03990035EB66 /* Settings+Logging.swift */,
 				16D3FCE01E3753D80052A535 /* Settings+Calling.swift */,
 				871BC33E1D34F94200DF0793 /* Soundcloud */,
-				871BC3431D34F94200DF0793 /* Vimeo */,
 				871BC3481D34F94200DF0793 /* WRFunctions.h */,
 				871BC3491D34F94200DF0793 /* WRFunctions.m */,
 				871BC34A1D34F94200DF0793 /* Youtube */,
@@ -3602,17 +3593,6 @@
 				871BC3421D34F94200DF0793 /* SoundcloudService.m */,
 			);
 			path = Soundcloud;
-			sourceTree = "<group>";
-		};
-		871BC3431D34F94200DF0793 /* Vimeo */ = {
-			isa = PBXGroup;
-			children = (
-				871BC3441D34F94200DF0793 /* MediaPreviewData+Vimeo.h */,
-				871BC3451D34F94200DF0793 /* MediaPreviewData+Vimeo.m */,
-				871BC3461D34F94200DF0793 /* VimeoService.h */,
-				871BC3471D34F94200DF0793 /* VimeoService.m */,
-			);
-			path = Vimeo;
 			sourceTree = "<group>";
 		};
 		871BC34A1D34F94200DF0793 /* Youtube */ = {
@@ -5680,7 +5660,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Ono.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/OnePasswordExtension.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FormatterKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/VIMNetworkingFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
@@ -6065,7 +6044,6 @@
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
 				F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
-				871BC3651D34F94200DF0793 /* MediaPreviewData+Vimeo.m in Sources */,
 				16D3631C1AAB63DB00471F5F /* CameraViewController.m in Sources */,
 				871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */,
 				8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */,
@@ -6237,7 +6215,6 @@
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				16A761341AD55ED800A999D0 /* RegistrationViewController.m in Sources */,
 				87DCF4EC1D34EA4500BB420F /* UsersInDirectorySection.m in Sources */,
-				871BC3661D34F94200DF0793 /* VimeoService.m in Sources */,
 				871BC2221D34F8F800DF0793 /* ActionSheetController.m in Sources */,
 				87DCF4F01D34EA4500BB420F /* UsersInContactsSection.m in Sources */,
 				871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */,

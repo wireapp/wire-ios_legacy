@@ -18,7 +18,6 @@
 
 
 #import "NetworkConditionHelper.h"
-@import VIMNetworkingFramework;
 @import CoreTelephony;
 
 
@@ -55,13 +54,13 @@ QualityTypeFromNSString(NSString *qualityString);
 
 - (NetworkQualityType)qualityType;
 {
-    if (![VIMReachability sharedInstance].isNetworkReachable) {
+//    if (![VIMReachability sharedInstance].isNetworkReachable) {
         return NetworkQualityTypeUnkown;
-    }
-    if ([VIMReachability sharedInstance].isOnWiFi) {
-        return NetworkQualityTypeWifi;
-    }
-    return QualityTypeFromNSString(self.networkInfo.currentRadioAccessTechnology);
+//    }
+//    if ([VIMReachability sharedInstance].isOnWiFi) {
+//        return NetworkQualityTypeWifi;
+//    }
+//    return QualityTypeFromNSString(self.networkInfo.currentRadioAccessTechnology);
 }
 
 

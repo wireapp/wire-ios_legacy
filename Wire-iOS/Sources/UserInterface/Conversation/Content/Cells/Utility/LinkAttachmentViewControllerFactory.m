@@ -64,7 +64,7 @@
         
         viewController = audioPlaylistViewController;
     }
-    else if (linkAttachment.type == LinkAttachmentTypeYoutubeVideo || linkAttachment.type == LinkAttachmentTypeVimeoVideo) {
+    else if (linkAttachment.type == LinkAttachmentTypeYoutubeVideo) {
         MediaPreviewViewController *mediaPreviewViewController = [[MediaPreviewViewController alloc] init];
         mediaPreviewViewController.linkAttachment = linkAttachment;
         viewController = mediaPreviewViewController;

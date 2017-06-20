@@ -22,7 +22,6 @@
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
 @import WireExtensionComponents;
-@import VIMNetworkingFramework;
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;
@@ -311,9 +310,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
             self.audioTrack.failedToLoad = YES;
             [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
             
-            if ([VIMReachability sharedInstance].isNetworkReachable) {
+//            if ([VIMReachability sharedInstance].isNetworkReachable) {
                 [self skipToNextTrack];
-            }
+//            }
         }
     }
     
