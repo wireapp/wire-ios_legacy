@@ -109,26 +109,6 @@
                 break;
         }
     } 
-    else if ([error.domain isEqualToString:ZMConversationErrorDomain]) {
-        switch (error.code) {
-            case ZMConversationTooManyMembersInConversation:
-                title = NSLocalizedString(@"error.group_call.too_many_members_in_conversation.title", @"");
-                message = [NSString stringWithFormat:NSLocalizedString(@"error.group_call.too_many_members_in_conversation", @""), [error.userInfo[ZMConversationErrorMaxMembersForGroupCallKey] unsignedIntegerValue]];
-                break;
-            case ZMConversationTooManyParticipantsInTheCall:
-                title = NSLocalizedString(@"error.group_call.too_many_participants_in_the_call.title", @"");
-                message = [NSString stringWithFormat:NSLocalizedString(@"error.group_call.too_many_participants_in_the_call", @""), [error.userInfo[ZMConversationErrorMaxCallParticipantsKey] unsignedIntegerValue]];
-                break;
-            case ZMConversationOngoingGSMCall:
-                title = NSLocalizedString(@"error.call.gsm_ongoing.title", @"");
-                message = NSLocalizedString(@"error.call.gsm_ongoing", @"");
-                break;
-            default:
-                title = NSLocalizedString(@"error.call.general.title", @"");
-                message = NSLocalizedString(@"error.call.general", @"");
-                break;
-        }
-    }
     else {
         message = error.localizedDescription;
     }

@@ -91,7 +91,6 @@ extern NSString * const UserDefaultCallingConstantBitRate;
 
 @property (nonatomic) BOOL disableCallKit;
 @property (nonatomic) BOOL callingConstantBitRate;
-@property (nonatomic) CallingProtocolStrategy callingProtocolStrategy;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option
 

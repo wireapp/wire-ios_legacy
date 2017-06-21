@@ -169,7 +169,7 @@
 - (void)makeDegradedCallTapped
 {
     DDLogVoice(@"UI: Make degraded call button tap");
-    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    id<VoiceChannel> voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
     }];
@@ -180,7 +180,7 @@
     DDLogVoice(@"UI: Accept degraded call button tap");
     
     BOOL hasAlreadyAcceptedCall = self.conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded;
-    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    id<VoiceChannel> voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel continueByDecreasingConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
     } completionHandler:^{
@@ -207,7 +207,7 @@
 - (void)ignoreButtonTapped
 {
     DDLogVoice(@"UI: Ignore button tap");
-    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    id<VoiceChannel> voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel ignoreWithUserSession:[ZMUserSession sharedSession]];
     }];
@@ -216,7 +216,7 @@
 - (void)cancelButtonTapped
 {
     DDLogVoice(@"UI: Cancel button tap");
-    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    id<VoiceChannel> voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel leaveAndKeepDegradedConversationSecurityWithUserSession:[ZMUserSession sharedSession]];
     }];
@@ -225,7 +225,7 @@
 - (void)leaveButtonTapped
 {
     DDLogVoice(@"UI: Leave button tap");
-    VoiceChannelRouter *voiceChannel = self.conversation.voiceChannel;
+    id<VoiceChannel> voiceChannel = self.conversation.voiceChannel;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [voiceChannel leaveWithUserSession:[ZMUserSession sharedSession]];
     }];

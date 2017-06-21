@@ -45,7 +45,7 @@
     
     if (self) {
         self.analytics = analytics;
-        self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
+        self.voiceChannelStateObserverToken = [VoiceChannelV3 addStateObserver:self userSession:[ZMUserSession sharedSession]];
     }
     
     return self;

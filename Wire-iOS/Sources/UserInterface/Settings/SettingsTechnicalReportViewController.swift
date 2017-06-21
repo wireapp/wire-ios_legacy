@@ -23,15 +23,9 @@ import Cartography
 typealias TechnicalReport = [String: String]
 
 class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-
-    private enum TechnicalReportSection: Int {
-        case Reports = 0
-        case Options = 1
-    }
     
     static private let technicalReportTitle = "TechnicalReportTitleKey"
     static private let technicalReportData = "TechnicalReportDataKey"
-    private let technicalReportReuseIdentifier = "TechnicalReportCellReuseIdentifier"
     
     private let includedVoiceLogCell: UITableViewCell
     private let sendReportCell: UITableViewCell
@@ -67,27 +61,10 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         tableView.backgroundColor = UIColor.clear
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
-        tableView.register(TechInfoCell.self, forCellReuseIdentifier: technicalReportReuseIdentifier)
     }
     
-    lazy private var lastCallSessionReports: [TechnicalReport] = {
-        let voiceChannelDebugString = VoiceChannelV2.voiceChannelDebugInformation().string.trimmingCharacters(in: .whitespaces)
-        let reportStrings = voiceChannelDebugString.components(separatedBy: .newlines)
-        
-        return reportStrings.reduce([TechnicalReport](), { (reports, report) -> [TechnicalReport] in
-            var mutableReports = reports
-            if let separatorRange = report.range(of:":") {
-                let title = report.substring(to: separatorRange.lowerBound)
-                let data = report.substring(from: report.index(separatorRange.lowerBound, offsetBy: 1))
-                mutableReports.append([SettingsTechnicalReportViewController.technicalReportTitle: title, SettingsTechnicalReportViewController.technicalReportData: data])
-            }
-            
-            return mutableReports
-        })
-    }()
-    
     func sendReport() {
-        let report = VoiceChannelV2.voiceChannelDebugInformation()
+        let report = "Calling report"
         
         guard MFMailComposeViewController.canSendMail() else {
             let activityViewController = UIActivityViewController(activityItems: [report as Any], applicationActivities: nil)
@@ -108,19 +85,18 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
             mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: "voice.log")
         }
         
-        mailComposeViewController.setMessageBody(report.string, isHTML: false)
+        mailComposeViewController.setMessageBody(report, isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
     
     // MARK TableView Delegates
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == TechnicalReportSection.Reports.rawValue else { return 2 }
-        return lastCallSessionReports.count
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -128,73 +104,40 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case TechnicalReportSection.Options.rawValue:
-            return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
-        default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: technicalReportReuseIdentifier, for: indexPath)
-            let technicalReport = lastCallSessionReports[indexPath.row]
-            cell.detailTextLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportData]
-            cell.textLabel?.text = technicalReport[SettingsTechnicalReportViewController.technicalReportTitle]
-            return cell
-        }
+        return indexPath.row == 0 ? includedVoiceLogCell : sendReportCell
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard let section = TechnicalReportSection(rawValue: section) else {
-            fatal("Unknown section")
-        }
-        
-        switch (section) {
-        case .Options:
         return 20
-            
-        default:
-            break
-        }
-        
-        return 0
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let section = TechnicalReportSection(rawValue: section) else {
-            fatal("Unknown section")
+        let label = UILabel()
+        label.text = "self.settings.technical_report.privacy_warning".localized
+        label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        label.backgroundColor = .clear
+        label.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        
+        let container = UIView()
+        container.addSubview(label)
+        container.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
+        
+        constrain(label, container) { label, container in
+            label.edges == container.edgesWithinMargins
         }
         
-        switch (section) {
-        case .Options:
-            let label = UILabel()
-            label.text = "self.settings.technical_report.privacy_warning".localized
-            label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
-            label.backgroundColor = .clear
-            label.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
-            
-            let container = UIView()
-            container.addSubview(label)
-            container.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
-            
-            constrain(label, container) { label, container in
-                label.edges == container.edgesWithinMargins
-            }
-            
-            return container
-        default:
-            break
-        }
-        return nil
+        return container
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == TechnicalReportSection.Options.rawValue
+        return true
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case TechnicalReportSection.Options.rawValue where indexPath.row == 0:
+        if indexPath.row == 0 {
             includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .none ? .checkmark : .none
-        case TechnicalReportSection.Options.rawValue where indexPath.row == 1:
+        } else {
             sendReport()
-        default: break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -203,20 +146,5 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     // MARK: Mail Delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-}
-
-private class TechInfoCell: UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.backgroundView = UIView()
-        self.selectedBackgroundView = UIView()
-        self.textLabel?.textColor = UIColor.white
-        self.detailTextLabel?.textColor = UIColor(white: 1, alpha: 0.4)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

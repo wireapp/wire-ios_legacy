@@ -238,17 +238,6 @@ class SettingsPropertyFactory {
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
-            
-        case .callingProtocolStrategy:
-            return SettingsBlockProperty(
-                propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().callingProtocolStrategy.rawValue) },
-                setAction: { _, value in
-                    if case .number(let intValue) = value, let callingProtocolStrategy = CallingProtocolStrategy(rawValue: UInt(intValue)) {
-                        Settings.shared().callingProtocolStrategy = callingProtocolStrategy
-                        ZMUserSession.callingProtocolStrategy = callingProtocolStrategy
-                    }
-            })
         case .lockApp:
             return SettingsBlockProperty(
                 propertyName: propertyName,
