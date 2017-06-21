@@ -179,6 +179,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)uploadAddressBookIfNeeded
 {
+    // We should not even try to access address book when in a team
+    if (ZMUser.selfUser.hasTeam) {
+        return;
+    }
+
     BOOL addressBookDidBecomeGranted = [AddressBookHelper.sharedHelper accessStatusDidChangeToGranted];
     [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:!addressBookDidBecomeGranted];
     [AddressBookHelper.sharedHelper persistCurrentAccessStatus];
