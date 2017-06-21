@@ -43,7 +43,6 @@
 
 #import "WAZUIMagicIOS.h"
 #import "Analytics+iOS.h"
-#import "UIView+MTAnimation.h"
 #import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
 

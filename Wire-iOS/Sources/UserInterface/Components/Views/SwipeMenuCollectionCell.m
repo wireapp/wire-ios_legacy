@@ -19,7 +19,6 @@
 
 #import "SwipeMenuCollectionCell.h"
 @import PureLayout;
-#import "UIView+MTAnimation.h"
 #import "UIView+Borders.h"
 #import "UIView+RemoveAnimations.h"
 #import "Wire-Swift.h"
@@ -268,43 +267,38 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
         if (_userInteractionHorizontalOffset + self.initialDrawerOffset < self.bounds.size.width * self.overscrollFraction) { // overscroll cancelled
             self.revealAnimationPerforming = YES;
             CGPoint animStartInteractionPosition = [self.revealDrawerGestureRecognizer locationInView:self];
-
-            [UIView mt_animateWithViews:[self mt_allSubviews]
-                               duration:0.35f
-                         timingFunction:kMTEaseOutExpo
-                             animations:^{
-                                 self.scrollingFraction = _userInteractionHorizontalOffset / self.bounds.size.width;
-
-                                 [self layoutIfNeeded];
-                             }
-                             completion:^{
-                                 // reset gesture state
-                                 CGPoint animEndInteractionPosition = [self.revealDrawerGestureRecognizer locationInView:self];
-
-                                 // we need to adjust the drag point to avoid the jump after the animation was ended
-                                 // between the animation's final state and user new finger position
-                                 CGFloat offsetInteractionBeforeAfterAnimation = animEndInteractionPosition.x - animStartInteractionPosition.x;
-                                 self.initialDragPoint = CGPointMake(offsetInteractionBeforeAfterAnimation + self.initialDragPoint.x, self.initialDragPoint.y);
-                                 self.revealAnimationPerforming = NO;
-
-                                 CGPoint newOffset = CGPointMake(animEndInteractionPosition.x - self.initialDragPoint.x, animEndInteractionPosition.y - self.initialDragPoint.y);
-
-                                 self.scrollingFraction = newOffset.x / self.bounds.size.width;
-                                 [self layoutIfNeeded];
-                             }];
+            
+            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+                self.scrollingFraction = _userInteractionHorizontalOffset / self.bounds.size.width;
+                [self layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                // reset gesture state
+                CGPoint animEndInteractionPosition = [self.revealDrawerGestureRecognizer locationInView:self];
+                
+                // we need to adjust the drag point to avoid the jump after the animation was ended
+                // between the animation's final state and user new finger position
+                CGFloat offsetInteractionBeforeAfterAnimation = animEndInteractionPosition.x - animStartInteractionPosition.x;
+                self.initialDragPoint = CGPointMake(offsetInteractionBeforeAfterAnimation + self.initialDragPoint.x, self.initialDragPoint.y);
+                self.revealAnimationPerforming = NO;
+                
+                CGPoint newOffset = CGPointMake(animEndInteractionPosition.x - self.initialDragPoint.x, animEndInteractionPosition.y - self.initialDragPoint.y);
+                
+                self.scrollingFraction = newOffset.x / self.bounds.size.width;
+                [self layoutIfNeeded];
+            }];
+            
             self.revealDrawerOverscrolled = NO;
         }
     }
     else {
         if (_userInteractionHorizontalOffset + self.initialDrawerOffset > self.bounds.size.width * self.overscrollFraction) { // overscrolled
-            [UIView mt_animateWithViews:[self mt_allSubviews]
-                               duration:0.35f
-                         timingFunction:kMTEaseOutExpo
-                             animations:^{
-                                 self.scrollingFraction = 1.0f;
-                                 self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width;
-                                 [self layoutIfNeeded];
-                             }];
+            
+            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+                self.scrollingFraction = 1.0f;
+                self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width;
+                [self layoutIfNeeded];
+            }];
+            
             self.revealDrawerOverscrolled = YES;
         }
         else {
@@ -375,14 +369,9 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     };
 
     if (animated) {
-        [UIView mt_animateWithViews:@[self.swipeView, self.menuView]
-                           duration:0.35f
-                     timingFunction:MTTimingFunctionEaseOutExpo
-                         animations:^{
-                             action();
-                         }
-                         completion:^{
-                         }];
+        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+            action();
+        }];
     }
     else {
         action();

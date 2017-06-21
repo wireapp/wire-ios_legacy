@@ -53,7 +53,6 @@
 #import "AnalyticsTracker.h"
 #import "Settings.h"
 #import "StopWatch.h"
-#import "UIView+MTAnimation.h"
 
 #import "Wire-Swift.h"
 
@@ -453,22 +452,18 @@
             [self.splitViewController.leftViewController.view addSubview:screenshotView];
             [screenshotView addConstraintsForSize:self.view.bounds.size];
             
-            [UIView mt_animateWithViews:@[screenshotView]
-                               duration:0.35f
-                                  delay:0.0f
-                         timingFunction:MTTimingFunctionEaseOutQuad
-                             animations:^{
-                                 screenshotView.alpha = 0.0f;
-                             }
-                             completion:^{
-                                 [screenshotView removeFromSuperview];
-                                 for (UIView *v in fadedViews) {
-                                     v.hidden = NO;
-                                 }
-                                 if (completion) {
-                                     completion();
-                                 }
-                             }];
+            
+            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuad duration:0.35f animations:^{
+                screenshotView.alpha = 0.0f;
+            } completion:^(BOOL finished) {
+                [screenshotView removeFromSuperview];
+                for (UIView *v in fadedViews) {
+                    v.hidden = NO;
+                }
+                if (completion) {
+                    completion();
+                }
+            }];
         }];
     }
     else {

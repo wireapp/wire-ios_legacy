@@ -20,7 +20,6 @@
 #import "PingCell.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "UIView+MTAnimation.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
 
@@ -204,16 +203,15 @@ typedef void (^AnimationBlock)(id, NSInteger);
             
             self.isPingAnimationRunning = YES;
             
-            [UIView mt_animateWithViews:@[self.pingImageView] duration:0.7 delay:0 timingFunction:MTTimingFunctionEaseOutExpo animations:^{
+            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.7f animations:^{
                 self.pingImageView.transform = CGAffineTransformMakeScale(1.8, 1.8);
-            } completion:^{
+            } completion:^(BOOL finished) {
                 self.pingImageView.transform = CGAffineTransformIdentity;
             }];
             
-            [UIView mt_animateWithViews:@[self.pingImageView] duration:0.7 delay:0.0 timingFunction:MTTimingFunctionEaseOutQuart animations:^{
+            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.7f animations:^{
                 self.pingImageView.alpha = 0;
-            } completion:^{
-                
+            } completion:^(BOOL finished) {
                 if (reps > 0) {
                     otherBlock(self.pingAnimationBlock, reps-1);
                 }
@@ -226,10 +224,9 @@ typedef void (^AnimationBlock)(id, NSInteger);
                         
                         self.isPingAnimationRunning = YES;
                         
-                        [UIView mt_animateWithViews:@[self.pingImageView] duration:0.55 delay:0 timingFunction:MTTimingFunctionEaseOutQuart animations:^{
+                        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.55f animations:^{
                             self.pingImageView.alpha = 1;
-                            
-                        } completion:^{
+                        } completion:^(BOOL finished) {
                             [self stopPingAnimation];
                         }];
                     });

@@ -20,10 +20,10 @@
 #import "SearchResultCell.h"
 #import "WAZUIMagiciOS.h"
 @import PureLayout;
-#import "UIView+MTAnimation.h"
 #import "BadgeUserImageView.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "WireSyncEngine+iOS.h"
+#import "UIView+WR_ExtendedBlockAnimations.h"
 #import <WireDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
@@ -274,13 +274,10 @@
     [self.avatarOverlay autoSetDimensionsToSize:self.badgeUserImageView.bounds.size];
     [self layoutIfNeeded];
 
-    [UIView mt_animateWithViews:@[self.avatarOverlay]
-                       duration:0.15f
-                 timingFunction:MTTimingFunctionEaseOutQuart
-                     animations:^{
-                         self.avatarOverlay.alpha = 0.5f;
-                     }];
-
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.15f animations:^{
+        self.avatarOverlay.alpha = 0.5f;
+    }];
+    
     self.successCheckmark = [[UIImageView alloc] initForAutoLayout];
     self.successCheckmark.image = [UIImage imageForIcon:ZetaIconTypeClock iconSize:ZetaIconSizeSmall color:[UIColor whiteColor]];
     [self.swipeView addSubview:self.successCheckmark];
@@ -291,29 +288,15 @@
     [self.successCheckmark autoAlignAxis:ALAxisVertical toSameAxisOfView:self.badgeUserImageView];
     [self.successCheckmark autoSetDimensionsToSize:self.successCheckmark.image.size];
     [self layoutIfNeeded];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.successCheckmark != nil) {            
-            self.successCheckmark.mt_animationExaggeration = 4;
-            [UIView mt_animateWithViews:@[self.successCheckmark]
-                               duration:0.35f
-                         timingFunction:MTTimingFunctionEaseOutBack
-                             animations:^{
-                                 self.successCheckmark.transform = CGAffineTransformIdentity;
-                                 self.successCheckmark.alpha = 1.0f;
-                             }];
-        }
-    });
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView mt_animateWithViews:@[self.contentView]
-                           duration:0.55f
-                     timingFunction:MTTimingFunctionEaseOutQuart
-                         animations:^{
-                             self.contentView.alpha = 0.0f;
-                         }];
-    });
-
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutBounce duration:0.35f delay:0.1f animations:^{
+        self.successCheckmark.transform = CGAffineTransformIdentity;
+        self.successCheckmark.alpha = 1.0f;
+    } completion:nil];
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.55f delay:0.45f animations:^{
+        self.contentView.alpha = 0.0f;
+    } completion:nil];
 }
 
 #pragma mark - Callbacks

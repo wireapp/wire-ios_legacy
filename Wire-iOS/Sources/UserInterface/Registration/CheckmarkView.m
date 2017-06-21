@@ -19,7 +19,7 @@
 
 #import "CheckmarkView.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "UIView+MTAnimation.h"
+#import "UIView+WR_ExtendedBlockAnimations.h"
 
 @import PureLayout;
 
@@ -60,27 +60,23 @@
 - (void)revealWithAnimations:(void (^)())animations completion:(void (^)())completion
 {
     self.transform = CGAffineTransformMakeScale(1.8f, 1.8f);
-    self.mt_animationExaggeration = 4;
     self.hidden = NO;
     self.alpha = 0.0f;
-    [UIView mt_animateWithViews:@[self]
-                       duration:0.35f
-                 timingFunction:MTTimingFunctionEaseOutBack
-                     animations:^{
-                         if (animations != nil) {
-                             animations();
-                         }
-                         
-                         self.alpha = 1.0f;
-                         self.transform = CGAffineTransformIdentity;
-                     }
-                     completion:^{
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                             if (completion != nil) {
-                                 completion();
-                             }
-                         });
-                     }];
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutBounce duration:0.35f animations:^{
+        if (animations != nil) {
+            animations();
+        }
+        
+        self.alpha = 1.0f;
+        self.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (completion != nil) {
+                completion();
+            }
+        });
+    }];
 }
 
 @end

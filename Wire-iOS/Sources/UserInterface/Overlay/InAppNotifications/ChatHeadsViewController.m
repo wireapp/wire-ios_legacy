@@ -29,7 +29,7 @@
 #import "UIView+WAZUIMagicExtensions.h"
 #import "Constants.h"
 @import PureLayout;
-#import "UIView+MTAnimation.h"
+#import "UIView+WR_ExtendedBlockAnimations.h"
 
 
 typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
@@ -96,7 +96,7 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
 {
     if (self.chatHeadState != ChatHeadPresentationStateHidden) {
         if ([self.chatHeadView.message.sender isEqual:message.sender] && [self.chatHeadView.message.conversation isEqual:message.conversation]) {
-            [self hideChatHeadFromCurrentStateWithTiming:MTTimingFunctionEaseInExpo duration:0.1f];
+            [self hideChatHeadFromCurrentStateWithTiming:RBBEasingFunctionEaseInExpo duration:0.1f];
             [self performSelector:@selector(tryToDisplayNotificationForMessage:) withObject:message afterDelay:0.1];
         }
         // skip, notification is already visible
@@ -139,56 +139,41 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
 - (void)revealChatHeadFromCurrentState
 {
     [self.view layoutIfNeeded];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView mt_animateWithViews:[self.chatHeadView mt_allSubviews]
-                           duration:0.55f
-                     timingFunction:MTTimingFunctionEaseOutExpo
-                         animations:^{
-                             self.chatHeadView.imageToTextInset = 0;
-                             [self.chatHeadView layoutIfNeeded];
-                         }
-                         completion:^{
-                             self.chatHeadState = ChatHeadPresentationStateVisible;
-                         }];
-
-    });
-
-    [UIView mt_animateWithViews:@[self.chatHeadView]
-                       duration:0.35f
-                 timingFunction:MTTimingFunctionEaseOutExpo
-                     animations:^{
-                         self.chatHeadViewRightMarginConstraint.constant = 0;
-                         self.chatHeadViewLeftMarginConstraint.constant = 0;
-
-                         [self.chatHeadView layoutIfNeeded];
-                     }];
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55f delay:0.05f animations:^{
+        self.chatHeadView.imageToTextInset = 0;
+        [self.chatHeadView layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.chatHeadState = ChatHeadPresentationStateVisible;
+    }];
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+        self.chatHeadViewRightMarginConstraint.constant = 0;
+        self.chatHeadViewLeftMarginConstraint.constant = 0;
+        [self.chatHeadView layoutIfNeeded];
+    }];
 }
 
 - (void)hideChatHeadFromCurrentState
 {
-    [self hideChatHeadFromCurrentStateWithTiming:MTTimingFunctionEaseInExpo
+    [self hideChatHeadFromCurrentStateWithTiming:RBBEasingFunctionEaseInExpo
                                         duration:0.35f];
 }
 
-- (void)hideChatHeadFromCurrentStateWithTiming:(MTTimingFunction)timing
+- (void)hideChatHeadFromCurrentStateWithTiming:(RBBEasingFunction)timing
                                       duration:(NSTimeInterval)duration
 {
     self.chatHeadViewRightMarginConstraint.constant = -[WAZUIMagic cgFloatForIdentifier:@"notifications.animation_inset_container"];
     self.chatHeadViewLeftMarginConstraint.constant = -[WAZUIMagic cgFloatForIdentifier:@"notifications.animation_inset_container"];
     self.chatHeadState = ChatHeadPresentationStateHiding;
-
-    [UIView mt_animateWithViews:@[self.chatHeadView]
-                       duration:duration
-                 timingFunction:timing
-                     animations:^{
-                         self.chatHeadView.alpha = 0.0f;
-                         [self.view layoutIfNeeded];
-                     }
-                     completion:^{
-                         [self.chatHeadView removeFromSuperview];
-                         self.chatHeadState = ChatHeadPresentationStateHidden;
-                     }];
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:duration animations:^{
+        self.chatHeadView.alpha = 0.0f;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [self.chatHeadView removeFromSuperview];
+        self.chatHeadState = ChatHeadPresentationStateHidden;
+    }];
 }
 
 - (void)hideChatHeadView
@@ -255,17 +240,13 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
                 if (time > 0.2f) {
                     time = 0.2f;
                 }
-
-                [UIView mt_animateWithViews:@[self.chatHeadView]
-                                   duration:time
-                             timingFunction:MTTimingFunctionEaseInQuad
-                                 animations:^{
-                                     [self.view layoutIfNeeded];
-                                 }
-                                 completion:^{
-                                     [self.chatHeadView removeFromSuperview];
-                                     self.chatHeadState = ChatHeadPresentationStateHidden;
-                                 }];
+                
+                [UIView wr_animateWithEasing:RBBEasingFunctionEaseInQuad duration:time animations:^{
+                    [self.view layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    [self.chatHeadView removeFromSuperview];
+                    self.chatHeadState = ChatHeadPresentationStateHidden;
+                }];
             }
             else {
                 [self revealChatHeadFromCurrentState];

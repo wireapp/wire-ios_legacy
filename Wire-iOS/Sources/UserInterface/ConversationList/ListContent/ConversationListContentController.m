@@ -37,7 +37,6 @@
 
 #import "ZClientViewController+Internal.h"
 
-#import "UIView+MTAnimation.h"
 #import "UIColor+WR_ColorScheme.h"
 
 #import "ConnectRequestsCell.h"
