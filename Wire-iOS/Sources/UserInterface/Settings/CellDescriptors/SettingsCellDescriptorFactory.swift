@@ -207,8 +207,6 @@ import Foundation
         
         developerCellDescriptors.append(devController)
         
-        let callingProtocolSetting = callingProtocolStrategyGroup(for: self.settingsPropertyFactory.property(.callingProtocolStrategy))
-        developerCellDescriptors.append(callingProtocolSetting)
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
         developerCellDescriptors.append(diableAVSSetting)
         let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
@@ -225,26 +223,6 @@ import Foundation
         developerCellDescriptors.append(shareDatabase)
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
-    }
-    
-    func callingProtocolStrategyGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = CallingProtocolStrategy.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
-            
-            return SettingsPropertySelectValueCellDescriptor(
-                settingsProperty: property,
-                value: SettingsPropertyValue(option.rawValue),
-                title: option.displayString
-            )
-        }
-        
-        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
-            guard case .number(let intValue) = property.value(),  let option = CallingProtocolStrategy(rawValue: UInt(intValue)) else {
-                return .text(CallingProtocolStrategy.negotiate.displayString)
-            }
-            return .text(option.displayString)
-        }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
     }
     
     func helpSection() -> SettingsCellDescriptorType {

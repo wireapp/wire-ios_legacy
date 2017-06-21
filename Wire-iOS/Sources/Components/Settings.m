@@ -451,22 +451,6 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     [self.defaults synchronize];
 }
 
-- (void)setCallingProtocolStrategy:(CallingProtocolStrategy)callingProtocolStrategy
-{
-    [self.defaults setInteger:callingProtocolStrategy forKey:UserDefaultCallingProtocolStrategy];
-}
-
-- (CallingProtocolStrategy)callingProtocolStrategy
-{
-    if ([DeveloperMenuState developerMenuEnabled] &&
-        [self.defaults dictionaryRepresentation][UserDefaultCallingProtocolStrategy] == nil)
-    {
-        // In Internal and Developer builds, we want to return V3 unless the version is explicitly set
-        return CallingProtocolStrategyVersion3;
-    }
-    return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
-}
-
 - (BOOL)enableBatchCollections
 {
     return [self.defaults boolForKey:UserDefaultEnableBatchCollections];

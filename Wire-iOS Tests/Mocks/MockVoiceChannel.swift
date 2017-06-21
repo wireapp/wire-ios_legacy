@@ -79,6 +79,19 @@ class MockVoiceChannel : NSObject, VoiceChannel {
         
     }
     
+    // MARK - Call Actions Internal
+    
+    func join(video: Bool) -> Bool {
+        return true
+    }
+    
+    func leave() {
+        
+    }
+    
+    func ignore() {
+        
+    }
     
     // MARK - Observers
     
