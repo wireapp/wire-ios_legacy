@@ -77,7 +77,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
         
         
         self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:nil]];
+                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
 
         [self performSelector:@selector(probablyReceivedFullConversationList)
                    withObject:nil
@@ -85,7 +85,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     } else {
         if (self.conversationListObserverToken != nil) {
             [ConversationListChangeInfo removeObserver:self.conversationListObserverToken
-                                               forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:nil]];
+                                               forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
         }
     }
 }
@@ -94,7 +94,7 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
 {
     NSUInteger groupConvCount = 0;
 
-    for (ZMConversation *conversation in [ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:nil]) {
+    for (ZMConversation *conversation in [ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]) {
         if (conversation.conversationType == ZMConversationTypeGroup) {
             groupConvCount ++;
         }

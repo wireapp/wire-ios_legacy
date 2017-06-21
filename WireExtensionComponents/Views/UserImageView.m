@@ -211,7 +211,7 @@ static CIContext *ciContext(void)
         imageCacheKey = self.user.smallProfileImageCacheKey;
     }
     
-    BOOL userIsConnected = self.user.isConnected || self.user.isSelfUser || [self.user isMemberOf:self.team];
+    BOOL userIsConnected = self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember;
 
     if (imageData == nil || imageCacheKey == nil) {
         return;
@@ -280,7 +280,7 @@ static CIContext *ciContext(void)
     if (userImage) {
         self.containerView.backgroundColor = UIColor.clearColor;
     }
-    else if (self.user.isConnected || self.user.isSelfUser || [self.user isMemberOf:self.team]) {
+    else if (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember) {
         self.containerView.backgroundColor = [self.user accentColor];
     }
     else {

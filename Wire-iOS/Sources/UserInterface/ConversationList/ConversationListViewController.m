@@ -88,8 +88,6 @@
 
 @end
 
-@interface ConversationListViewController (TeamsObserver) <TeamObserver>
-@end
 
 @interface ConversationListViewController ()
 
@@ -101,7 +99,6 @@
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id allConversationsObserverToken;
 @property (nonatomic) id connectionRequestsObserverToken;
-@property (nonatomic) id teamsObserver;
 
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
@@ -179,15 +176,13 @@
     [self updateArchiveButtonVisibility];
     
     [self updateObserverTokensForActiveTeam];
-    self.teamsObserver = [TeamChangeInfo addTeamObserver:self forTeam:nil];
-    
     [self showPushPermissionDeniedDialogIfNeeded];
 }
 
 - (void)updateObserverTokensForActiveTeam
 {
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]]];
+    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
+    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]];
 
 }
 
@@ -447,45 +442,14 @@
     @weakify(self);
     [self dismissPeoplePickerWithCompletionBlock:^{
         @strongify(self);
-        
-        dispatch_block_t actionBlock = ^{
-            [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
-        };
-        
-        if (self.selectedConversation.team != nil && [[ZMUser selfUser] activeTeam] == nil) {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                self.selectedConversation.team.isActive = YES;
-            }
-                                        completionHandler:actionBlock];
-        }
-        else if (self.selectedConversation.team == nil && [[ZMUser selfUser] activeTeam] != nil) {
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [[ZMUser selfUser] activeTeam].isActive = NO;
-            }
-                                        completionHandler:actionBlock];
-        }
-        else {
-            actionBlock();
-        }
+        [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
     }];
 }
 
 - (void)selectInboxAndFocusOnView:(BOOL)focus
 {
-    dispatch_block_t actionBlock = ^{
-        [self setState:ConversationListStateConversationList animated:NO];
-        [self.listContentController selectInboxAndFocusOnView:focus];
-    };
-    
-    if ([[ZMUser selfUser] activeTeam] != nil) {
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [[ZMUser selfUser] activeTeam].isActive = NO;
-        }
-                                    completionHandler:actionBlock];
-    }
-    else {
-        actionBlock();
-    }
+    [self setState:ConversationListStateConversationList animated:NO];
+    [self.listContentController selectInboxAndFocusOnView:focus];
 }
 
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated
@@ -642,16 +606,14 @@
 - (BOOL)hasConversations
 {
     ZMUserSession *session = ZMUserSession.sharedSession;
-    Team *team = ZMUser.selfUser.activeTeam;
-    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session team:team].count +
-                                    [ZMConversationList pendingConnectionConversationsInUserSession:session team:team].count;
+    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
+                                    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
     return conversationsCount > 0;
-
 }
 
 - (BOOL)hasArchivedConversations
 {
-    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession team:ZMUser.selfUser.activeTeam].count > 0;
+    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
 }
 
 @end
@@ -805,17 +767,3 @@
 }
 
 @end
-
-@implementation ConversationListViewController (TeamsObserver)
-
-- (void)teamDidChange:(TeamChangeInfo *)changeInfo
-{
-    if (changeInfo.isActiveChanged) {
-        [self updateNoConversationVisibility];
-        [self updateArchiveButtonVisibility];
-        [self updateObserverTokensForActiveTeam];
-    }
-}
-
-@end
-

@@ -74,7 +74,7 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    ZMConversationList *pendingConnectionsList = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession] team:nil];
+    ZMConversationList *pendingConnectionsList = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]];
     self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self forList:pendingConnectionsList];
     
     self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];

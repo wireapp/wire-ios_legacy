@@ -61,13 +61,13 @@
     else if (self.conversationType == ZMConversationTypeOneOnOne &&
                (participants.count > 1 || (participants.count == 1 && ! [self.connectedUser isEqual:participants.anyObject]))) {
 
-        Team *activeTeam = [[ZMUser selfUser] activeTeam];
+        Team *team = ZMUser.selfUser.team;
 
         NSMutableArray *listOfPeople = [participants.allObjects mutableCopy];
         [listOfPeople addObject:self.connectedUser];
         ZMConversation *conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                              withParticipants:listOfPeople
-                                                                                       inTeam:activeTeam];
+                                                                                       inTeam:team];
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextConversation
                                                                                                  participantCount:conversation.activeParticipants.count];
         [[Analytics shared] tagEventObject:event];

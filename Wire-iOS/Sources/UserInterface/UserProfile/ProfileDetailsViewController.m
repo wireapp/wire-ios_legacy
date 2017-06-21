@@ -151,7 +151,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
-    self.userImageView.team = ZMUser.selfUser.activeTeam;
     self.userImageView.user = self.bareUser;
     [self.userImageViewContainer addSubview:self.userImageView];
 }
@@ -162,7 +161,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.teamsGuestLabel.numberOfLines = 0;
     self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
     [self.userImageViewContainer addSubview:self.teamsGuestLabel];
-    self.teamsGuestLabel.text = [self teamGuestsTextFor:self.bareUser];
+    self.teamsGuestLabel.text = NSLocalizedString(@"profile.details.guest", nil);
 }
 
 #pragma mark - Footer
@@ -178,14 +177,14 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     BOOL validContext = (self.context == ProfileViewControllerContextSearch ||
                          self.context == ProfileViewControllerContextCommonConnection);
     
-    if (!user.isMemberOfActiveTeam && validContext && user.isPendingApprovalBySelfUser) {
+    if (!user.isTeamMember && validContext && user.isPendingApprovalBySelfUser) {
         ProfileIncomingConnectionRequestFooterView *incomingConnectionRequestFooterView = [[ProfileIncomingConnectionRequestFooterView alloc] init];
         incomingConnectionRequestFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         [incomingConnectionRequestFooterView.acceptButton addTarget:self action:@selector(acceptConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         [incomingConnectionRequestFooterView.ignoreButton addTarget:self action:@selector(ignoreConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         footerView = incomingConnectionRequestFooterView;
     }
-    else if (!user.isMemberOfActiveTeam && user.isBlocked) {
+    else if (!user.isTeamMember && user.isBlocked) {
         ProfileUnblockFooterView *unblockFooterView = [[ProfileUnblockFooterView alloc] init];
         unblockFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         [unblockFooterView.unblockButton addTarget:self action:@selector(unblockUser) forControlEvents:UIControlEventTouchUpInside];
@@ -299,10 +298,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     if (user.isSelfUser) {
         return ProfileUserActionNone;
     }
-    else if ((user.isConnected || user.isMemberOfActiveTeam) && self.context == ProfileViewControllerContextOneToOneConversation) {
+    else if ((user.isConnected || user.isTeamMember) && self.context == ProfileViewControllerContextOneToOneConversation) {
         return ProfileUserActionAddPeople;
     }
-    else if (user.isMemberOfActiveTeam) {
+    else if (user.isTeamMember) {
         return ProfileUserActionOpenConversation;
     }
     else if (user.isBlocked) {
@@ -547,7 +546,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     ZMConversation __block *conversation = nil;
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        conversation = [self.fullUser oneToOneConversationInTeam:ZMUser.selfUser.activeTeam];
+        conversation = [self.fullUser oneToOneConversationInTeam:ZMUser.selfUser.team];
     } completionHandler:^{
         [self.delegate profileDetailsViewController:self didSelectConversation:conversation];
     }];
@@ -580,7 +579,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     ZMUser *fullUser = [self fullUser];
     
     if (fullUser != nil) {
-        if (fullUser.isMemberOfActiveTeam) {
+        if (fullUser.isTeamMember) {
             return ProfileViewContentModeNone;
         }
         if (fullUser.isPendingApproval) {

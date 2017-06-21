@@ -943,7 +943,6 @@
 		F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */; };
 		F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift */; };
-		F17B9ED01EE7ED0C00772737 /* ProfileDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17B9ECF1EE7ED0C00772737 /* ProfileDetailsViewController.swift */; };
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
 		F194CA1B1E7179C2004C5E56 /* VoiceChannelOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */; };
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
@@ -951,7 +950,6 @@
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
-		F1D0445F1ED8675200EAC1DA /* TeamSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D0445E1ED8675200EAC1DA /* TeamSelectionViewController.swift */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -2452,7 +2450,6 @@
 		F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTextViewCell.swift; sourceTree = "<group>"; };
 		F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecriptionHeaderView.swift; sourceTree = "<group>"; };
 		F15E9BFC1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopToPrevious.swift"; sourceTree = "<group>"; };
-		F17B9ECF1EE7ED0C00772737 /* ProfileDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDetailsViewController.swift; sourceTree = "<group>"; };
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
 		F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlayTests.swift; sourceTree = "<group>"; };
 		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
@@ -4720,7 +4717,6 @@
 				BFAAB23C1DED8BB900CBC096 /* ProfileHeaderViewModel.swift */,
 				1613C76C1C3D2E7400B1FB8A /* ProfileDetailsViewController.h */,
 				1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */,
-				F17B9ECF1EE7ED0C00772737 /* ProfileDetailsViewController.swift */,
 				BF999B5E1C0C984C008D5414 /* ProfileDevicesViewController.h */,
 				BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */,
 				87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */,
@@ -5710,7 +5706,6 @@
 				165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */,
 				543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */,
 				BF96A6CC1E2FD3BA0057974A /* NSItemProvider+Fetching.swift in Sources */,
-				F1D0445F1ED8675200EAC1DA /* TeamSelectionViewController.swift in Sources */,
 				BF9AEE161E4A0BA20005FBA7 /* CrashReporter.swift in Sources */,
 				168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */,
 				543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */,
@@ -6359,7 +6354,6 @@
 				AF58EC851E9FC35A00EB94CD /* MessageDraft.xcdatamodeld in Sources */,
 				871BC2791D34F8F800DF0793 /* VoiceUserImageView.m in Sources */,
 				871BC0161D34F56300DF0793 /* AnalyticsEvent.m in Sources */,
-				F17B9ED01EE7ED0C00772737 /* ProfileDetailsViewController.swift in Sources */,
 				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				DBD990531B399B58000ACF94 /* NSString+Mentions.m in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,

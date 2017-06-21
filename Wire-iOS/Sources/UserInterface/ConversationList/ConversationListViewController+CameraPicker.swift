@@ -102,7 +102,7 @@ extension ConversationListViewController {
     }
     
     public func showShareControllerFor(image: UIImage) {
-        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam) as! [ZMConversation]
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!) as! [ZMConversation]
         
         let shareViewController: ShareViewController<ZMConversation, UIImage> = ShareViewController(shareable: image, destinations: conversations)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
@@ -119,7 +119,7 @@ extension ConversationListViewController {
     }
     
     public func showShareControllerFor(videoAtURL: URL) {
-        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam) as! [ZMConversation]
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!) as! [ZMConversation]
         
         let shareViewController: ShareViewController<ZMConversation, URL> = ShareViewController(shareable: videoAtURL, destinations: conversations)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
