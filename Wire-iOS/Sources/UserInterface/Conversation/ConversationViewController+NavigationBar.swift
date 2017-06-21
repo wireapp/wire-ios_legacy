@@ -150,11 +150,11 @@ public extension ConversationViewController {
             if let connection = conversation.connection,
                 connection.status != .pending && connection.status != .sent {
                 return true
+            } else {
+                return nil != conversation.teamRemoteIdentifier
             }
         default: return false
         }
-        
-        return false
     }
     
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
