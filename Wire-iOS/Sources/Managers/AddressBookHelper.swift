@@ -132,6 +132,8 @@ extension AddressBookHelper {
     
     /// Starts an address book search, if enough time has passed since last search
     @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:) public func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
+        assert(!ZMUser.selfUser().hasTeam, "Trying to upload contacts for account with team is a forbidden operation")
+
         guard self.isAddressBookAccessGranted && !self.addressBookSearchWasPostponed && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {
             return
         }
@@ -139,7 +141,7 @@ extension AddressBookHelper {
         self.addressBookSearchPerformedAtLeastOnce = true;
         
         if TARGET_OS_SIMULATOR == 0 || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
-            ZMUserSession.shared()?.uploadAddressBook()
+            ZMUserSession.shared()?.uploadAddressBookIfAllowed()
         }
         UserDefaults.standard.set(Date(), forKey: addressBookLastSearchDate)
     }
