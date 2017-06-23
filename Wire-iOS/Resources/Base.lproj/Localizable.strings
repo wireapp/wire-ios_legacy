@@ -474,6 +474,11 @@
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";
 
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "User handle";
+"profile_view.accessibility.name" = "User name";
+"profile_view.accessibility.team_name" = "Team name";
+
 // Device list
 "profile.devices.title" = "Devices";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";

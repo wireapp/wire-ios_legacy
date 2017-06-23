@@ -375,6 +375,11 @@ ProfileView {
         textColor: $color-text-foreground-dark;
         font: $font-normal-light;
     }
+    
+    teamNameLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
+    }
 }
 
 /* Profile */

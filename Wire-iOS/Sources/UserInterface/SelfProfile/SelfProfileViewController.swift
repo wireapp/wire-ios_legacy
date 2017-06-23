@@ -23,37 +23,58 @@ import Cartography
     public let imageView = UserImageView(size: .big)
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
+    public let teamNameLabel = UILabel()
     
     init(user: ZMUser) {
         super.init(frame: .zero)
-        self.imageView.accessibilityIdentifier = "user image"
-        self.imageView.user = user
-        self.nameLabel.text = user.name
+        imageView.accessibilityIdentifier = "user image"
+        imageView.user = user
         
-        if let handle = user.handle, !handle.isEmpty {
-            self.handleLabel.text = "@" + handle
-        }
-        else {
-            self.handleLabel.text = ""
-        }
-        
+        teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
+        teamNameLabel.accessibilityIdentifier = "team name"
+        nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
         nameLabel.accessibilityIdentifier = "name"
+        handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         
-        [imageView, nameLabel, handleLabel].forEach(self.addSubview)
+        nameLabel.text = user.name
+        nameLabel.accessibilityValue = nameLabel.text
+        
+        if let teamName = user.team?.name {
+            teamNameLabel.text = String(format: "profile_view.team_name.in".localized, teamName)
+            teamNameLabel.accessibilityValue = teamNameLabel.text
+        }
+        else {
+            teamNameLabel.isHidden = true
+        }
+        
+        if let handle = user.handle, !handle.isEmpty {
+            handleLabel.text = "@" + handle
+            handleLabel.accessibilityValue = handleLabel.text
+        }
+        else {
+            handleLabel.isHidden = true
+        }
+        
+        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
         
         self.createConstraints()
     }
     
     private func createConstraints() {
-        constrain(self, imageView, nameLabel, handleLabel) { selfView, imageView, nameLabel, handleLabel in
+        constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { selfView, imageView, nameLabel, handleLabel, teamNameLabel in
             
             nameLabel.top >= selfView.top
             nameLabel.centerX == selfView.centerX
             nameLabel.leading >= selfView.leading
             nameLabel.trailing <= selfView.trailing
             
-            imageView.top == nameLabel.bottom + 24
+            handleLabel.top == nameLabel.bottom + 12
+            handleLabel.centerX == selfView.centerX
+            handleLabel.leading >= selfView.leading
+            handleLabel.trailing <= selfView.trailing
+            
+            imageView.top == handleLabel.bottom + 12
             
             imageView.width == imageView.height
             imageView.width <= 200
@@ -61,12 +82,12 @@ import Cartography
             imageView.leading >= selfView.leading
             imageView.trailing <= selfView.trailing
             
-            imageView.bottom == handleLabel.top - 24
+            imageView.bottom == teamNameLabel.top - 24
             
-            handleLabel.bottom <= selfView.bottom
-            handleLabel.centerX == selfView.centerX
-            handleLabel.leading >= selfView.leading
-            handleLabel.trailing <= selfView.trailing
+            teamNameLabel.bottom <= selfView.bottom
+            teamNameLabel.centerX == selfView.centerX
+            teamNameLabel.leading >= selfView.leading
+            teamNameLabel.trailing <= selfView.trailing
         }
     }
     
