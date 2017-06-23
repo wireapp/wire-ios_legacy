@@ -69,9 +69,8 @@ final internal class FileBackupExcluder: NSObject {
         }
     }
 
-    @objc public func excludeLibraryFolderInSharedContainer() {
+    @objc public func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
         do {
-            guard let sharedContainerURL = ZMUserSession.shared()?.sharedContainerURL else { return }
             let libraryURL = sharedContainerURL.appendingPathComponent("Library")
             try libraryURL.excludeFromBackupIfExists()
         } catch {

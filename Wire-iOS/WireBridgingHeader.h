@@ -103,6 +103,7 @@
 #import "CollectionViewSectionAggregator.h"
 #import "ProfileDetailsViewController.h"
 #import "ContactsDataSource.h"
+#import "LaunchImageViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

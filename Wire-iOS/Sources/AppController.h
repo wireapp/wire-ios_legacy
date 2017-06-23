@@ -37,20 +37,27 @@ typedef NS_ENUM(NSUInteger, AppSEState) {
 @class ZMUserSession;
 @class NotificationWindowRootViewController;
 @class MediaPlaybackManager;
+@class LaunchImageViewController;
+@class AccountManager;
+@class FileBackupExcluder;
 
 FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 
 @interface AppController : NSObject <UIApplicationDelegate>
-@property (nonatomic, readonly) AppUIState uiState;
-@property (nonatomic, readonly) AppSEState seState;
+@property (nonatomic) AppUIState uiState;
+@property (nonatomic) AppSEState seState;
 
 @property (nonatomic, readonly) ZMUserSession *zetaUserSession;
 
 @property (nonatomic, readonly) NotificationWindowRootViewController *notificationWindowController;
 @property (nonatomic, readonly) UIWindow *notificationsWindow;
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
+@property (nonatomic) AccountManager *accountManager;
+@property (nonatomic, readonly, weak) LaunchImageViewController *launchImageViewController;
+@property (nonatomic, readonly) FileBackupExcluder *fileBackupExcluder;
 
 - (void)performAfterUserSessionIsInitialized:(dispatch_block_t)block;
 - (void)uploadAddressBookIfNeeded;
+- (void)setupUserSession:(ZMUserSession *)userSession;
 
 @end
