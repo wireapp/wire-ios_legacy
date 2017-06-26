@@ -36,6 +36,7 @@
 #import "Constants.h"
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Registration.h"
+#import "Wire-Swift.h"
 
 
 typedef NS_ENUM(NSUInteger, InvitationFlow) {
@@ -64,7 +65,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
 
 - (void)removeObservers
 {
-    [[ZMUserSession sharedSession] removeRegistrationObserverForToken:self.registrationToken];
+    [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
     [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authenticationToken];
     
     self.registrationToken = nil;
@@ -79,7 +80,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
         self.unregisteredUser = unregisteredUser;
         NSString *context = (self.invitationFlow == InvitationFlowEmail) ? AnalyticsContextRegistrationPersonalInviteEmail : AnalyticsContextRegistrationPersonalInvitePhone;
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:context];
-        self.registrationToken = [[ZMUserSession sharedSession] addRegistrationObserver:self];
+        self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
         self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
         
         if (self.invitationFlow == InvitationFlowEmail) {
@@ -209,7 +210,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
         [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
         
         if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
-            [[ZMUserSession sharedSession] registerSelfUser:self.unregisteredUser.completeRegistrationUser];
+            [[UnauthenticatedSession sharedSession] registerUser:self.unregisteredUser.completeRegistrationUser];
         }
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {

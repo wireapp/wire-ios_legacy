@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, AppSEState) {
 @class LaunchImageViewController;
 @class AccountManager;
 @class FileBackupExcluder;
+@class UnauthenticatedSession;
 
 FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 
@@ -48,6 +49,7 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 @property (nonatomic) AppSEState seState;
 
 @property (nonatomic, readonly) ZMUserSession *zetaUserSession;
+@property (nonatomic) UnauthenticatedSession *unautenticatedUserSession;
 
 @property (nonatomic, readonly) NotificationWindowRootViewController *notificationWindowController;
 @property (nonatomic, readonly) UIWindow *notificationsWindow;

@@ -51,7 +51,7 @@
 #import "AnalyticsTracker+Registration.h"
 
 
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMRegistrationObserver, ZMInitialSyncCompletionObserver>
+@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
 
 @property (nonatomic) BOOL registeredInThisSession;
 

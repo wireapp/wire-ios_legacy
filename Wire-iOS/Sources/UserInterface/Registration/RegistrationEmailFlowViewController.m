@@ -35,6 +35,7 @@
 #import "AnalyticsTracker+Registration.h"
 
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 @interface RegistrationEmailFlowViewController () <FormStepDelegate, EmailVerificationStepViewControllerDelegate, ZMRegistrationObserver, ZMAuthenticationObserver>
 
@@ -57,7 +58,7 @@
 - (void)removeObservers
 {
     [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authenticationToken];
-    [[ZMUserSession sharedSession] removeRegistrationObserverForToken:self.registrationToken];
+    [[UnauthenticatedSession sharedSession]  removeRegistrationObserver:self.registrationToken];
     
     self.authenticationToken = nil;
     self.registrationToken = nil;
@@ -85,7 +86,7 @@
     
     if (parent && self.authenticationToken == nil && self.registrationToken == nil) {
         self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
-        self.registrationToken = [[ZMUserSession sharedSession] addRegistrationObserver:self];
+        self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
     } else {
         [self removeObservers];
     }
@@ -157,7 +158,7 @@
 
         if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
             ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-            [[ZMUserSession sharedSession] registerSelfUser:completeUser];
+            [[UnauthenticatedSession sharedSession] registerUser:completeUser];
 
             EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
             emailVerificationStepViewController.formStepDelegate = self;
@@ -183,7 +184,7 @@
 
 - (void)emailVerificationStepDidRequestVerificationEmail
 {
-    [[ZMUserSession sharedSession] resendRegistrationVerificationEmail];
+    [[UnauthenticatedSession sharedSession] resendRegistrationVerificationEmail];
     [self.analyticsTracker tagResentEmailVerification];
 }
 

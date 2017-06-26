@@ -40,6 +40,7 @@
 #import "AppDelegate.h"
 #import "AddEmailPasswordViewController.h"
 #import "AnalyticsTracker+Registration.h"
+#import "Wire-Swift.h"
 
 @import WireExtensionComponents;
 
@@ -62,7 +63,7 @@
 - (void)removeObservers
 {
     [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authToken];
-    [[ZMUserSession sharedSession] removeRegistrationObserverForToken:self.registrationToken];
+    [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
     
     self.authToken = nil;
     self.registrationToken = nil;
@@ -90,7 +91,7 @@
     
     if (parent && self.authToken == nil && self.registrationToken == nil) {
         self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
-        self.registrationToken = [[ZMUserSession sharedSession] addRegistrationObserver:self];
+        self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
     } else {
         [self removeObservers];
     }
@@ -165,7 +166,7 @@
         self.navigationController.showLoadingView = YES;
         [self.analyticsTracker tagEnteredPhone];
         
-        [[ZMUserSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
+        [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
         
     }
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
@@ -178,7 +179,7 @@
 
         [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
 
-        [[ZMUserSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
+        [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
@@ -198,7 +199,7 @@
         
         if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
             ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-            [[ZMUserSession sharedSession] registerSelfUser:completeUser];
+            [[UnauthenticatedSession sharedSession] registerUser:completeUser];
             
             self.navigationController.showLoadingView = YES;
         }
@@ -217,7 +218,7 @@
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [[ZMUserSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
+    [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
 }
 
 #pragma mark - ZMAuthenticationObserver

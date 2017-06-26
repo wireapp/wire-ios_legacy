@@ -40,11 +40,10 @@ extension AppController {
     
 }
 
-
 extension AppController : AccountStateDelegate {
     
     public func unauthenticatedSessionCreated(session: UnauthenticatedSession) {
-        
+        unautenticatedUserSession = session
     }
     
     public func userSessionCreated(session: ZMUserSession) {

@@ -36,6 +36,7 @@
 		162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */; };
 		16325E651EE03CC4000E72EB /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16325E641EE03CC4000E72EB /* SearchResultsView.swift */; };
 		163495831EFD0F8F004E80DB /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495821EFD0F8F004E80DB /* AppController.swift */; };
+		163495871F010F91004E80DB /* UnauthenticatedSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495861F010F91004E80DB /* UnauthenticatedSession.swift */; };
 		163B5EF21B4C209C009B4629 /* MediaBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5EF11B4C209C009B4629 /* MediaBarViewController.m */; };
 		163B5F011B4D4109009B4629 /* TitleBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5F001B4D4109009B4629 /* TitleBarViewController.m */; };
 		163BB60D1BEA976C00606381 /* BarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB60B1BEA976C00606381 /* BarController.m */; };
@@ -1073,6 +1074,7 @@
 		162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioProcessingTests.swift; sourceTree = "<group>"; };
 		16325E641EE03CC4000E72EB /* SearchResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		163495821EFD0F8F004E80DB /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		163495861F010F91004E80DB /* UnauthenticatedSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSession.swift; sourceTree = "<group>"; };
 		163B5EF01B4C209C009B4629 /* MediaBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaBarViewController.h; sourceTree = "<group>"; };
 		163B5EF11B4C209C009B4629 /* MediaBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaBarViewController.m; sourceTree = "<group>"; };
 		163B5EFF1B4D4109009B4629 /* TitleBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleBarViewController.h; sourceTree = "<group>"; };
@@ -4351,6 +4353,7 @@
 				8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */,
 				8FC85132199245760008B66B /* ZMUserSession+iOS.h */,
 				8FC85133199245760008B66B /* ZMUserSession+iOS.m */,
+				163495861F010F91004E80DB /* UnauthenticatedSession.swift */,
 				8FC85138199245760008B66B /* ZMConversation+Validation.h */,
 				8FC85139199245760008B66B /* ZMConversation+Validation.m */,
 				8FC85142199245760008B66B /* ZetaKeyValueValidation.h */,
@@ -6399,6 +6402,7 @@
 				16E4E81A1BF215CB002D7409 /* InvitationFlowViewController.m in Sources */,
 				163BB60D1BEA976C00606381 /* BarController.m in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
+				163495871F010F91004E80DB /* UnauthenticatedSession.swift in Sources */,
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
 				871BC00B1D34F56300DF0793 /* Analytics+CallEvents.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
