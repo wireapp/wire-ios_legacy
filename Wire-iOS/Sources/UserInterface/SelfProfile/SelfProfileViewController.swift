@@ -41,7 +41,7 @@ import Cartography
         nameLabel.accessibilityValue = nameLabel.text
         
         if let teamName = user.team?.name {
-            teamNameLabel.text = String(format: "profile_view.team_name.in".localized, teamName)
+            teamNameLabel.text = "profile_view.team_name.in".localized(args: teamName)
             teamNameLabel.accessibilityValue = teamNameLabel.text
         }
         else {
