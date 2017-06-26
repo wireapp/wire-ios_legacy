@@ -789,6 +789,7 @@
     }
 
     if ([text isEqualToString:@"\n"]) {
+        [self.inputBar.textView autocorrectLastWord];
         [self sendOrEditText:textView.text];
         return NO;
     }
@@ -821,7 +822,7 @@
     if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldEndEditing:)]) {
         return [self.delegate conversationInputBarViewControllerShouldEndEditing:self];
     }
-    
+
     return YES;
 }
 
@@ -1004,6 +1005,7 @@
 
 - (void)sendButtonPressed:(id)sender
 {
+    [self.inputBar.textView autocorrectLastWord];
     [self sendOrEditText:self.inputBar.textView.text];
 }
 
