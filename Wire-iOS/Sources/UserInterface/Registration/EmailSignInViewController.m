@@ -232,7 +232,7 @@
     
     [self.analyticsTracker tagRequestedEmailLogin];
     
-    [[ZMUserSession sharedSession] loginWithCredentials:credentials notify:YES];
+    [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
 }
 
 - (IBAction)resetPassword:(id)sender

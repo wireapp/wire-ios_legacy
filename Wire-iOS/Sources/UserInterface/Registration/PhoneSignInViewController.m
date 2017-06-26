@@ -34,8 +34,7 @@
 #import "CheckmarkViewController.h"
 #import "StopWatch.h"
 #import "AnalyticsTracker+Registration.h"
-
-
+#import "Wire-Swift.h"
 
 
 @interface PhoneSignInViewController () <FormStepDelegate, ZMAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
@@ -142,7 +141,7 @@
         StopWatch *stopWatch = [StopWatch stopWatch];
         [stopWatch restartEvent:@"Login"];
         
-        [[ZMUserSession sharedSession] loginWithCredentials:credentials notify:YES];
+        [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
     }
 }
 

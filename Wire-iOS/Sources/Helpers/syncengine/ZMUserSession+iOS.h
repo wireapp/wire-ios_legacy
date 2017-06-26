@@ -25,6 +25,4 @@ extern NSString * __nonnull const UserSessionDidRequestAuthenticationNotificatio
 
 + (instancetype __nullable)sharedSession;
 
-- (void)loginWithCredentials:(ZMCredentials * __nonnull)loginCredentials notify:(BOOL)notify;
-
 @end
