@@ -709,12 +709,13 @@ ParticipantsListCell {
         textColor: $color-text-foreground;
         font: $font-small-light;
     }
-    guestLabel @{
-        backgroundColor: $color-background-light;
-        textLabel @{
-            textColor: $color-text-foreground-light;
-            font: $font-small-light;
-        }
+}
+
+GuestLabel {
+    backgroundColor: $color-background-light;
+    textLabel @{
+        font: $font-small-light;
+        textColor: $color-text-foreground-light;
     }
 }
 

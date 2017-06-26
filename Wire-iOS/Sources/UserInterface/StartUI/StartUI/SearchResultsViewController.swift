@@ -96,7 +96,7 @@ public class SearchResultsViewController : UIViewController {
     
     let sectionAggregator : CollectionViewSectionAggregator
     let contactsSection : UsersInContactsSection
-    let teamMemberSection : UsersInContactsSection
+    let teamMemberAndContactsSection : UsersInContactsSection
     let directorySection : UsersInDirectorySection
     let conversationsSection : GroupConversationsSection
     let topPeopleSection : TopPeopleLineSection
@@ -134,11 +134,11 @@ public class SearchResultsViewController : UIViewController {
         contactsSection.userSelection = userSelection
         contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
         contactsSection.colorSchemeVariant = variant
-        teamMemberSection = UsersInContactsSection()
-        teamMemberSection.userSelection = userSelection
-        teamMemberSection.title = "peoplepicker.header.team_members".localized(args: teamName)
-        teamMemberSection.team = team
-        teamMemberSection.colorSchemeVariant = variant
+        teamMemberAndContactsSection = UsersInContactsSection()
+        teamMemberAndContactsSection.userSelection = userSelection
+        teamMemberAndContactsSection.title = "peoplepicker.header.team_members".localized(args: teamName)
+        teamMemberAndContactsSection.team = team
+        teamMemberAndContactsSection.colorSchemeVariant = variant
         directorySection = UsersInDirectorySection()
         conversationsSection = GroupConversationsSection()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName) : "peoplepicker.header.conversations".localized
@@ -149,7 +149,7 @@ public class SearchResultsViewController : UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         contactsSection.delegate = self
-        teamMemberSection.delegate = self
+        teamMemberAndContactsSection.delegate = self
         directorySection.delegate = self
         topPeopleSection.delegate = self
         conversationsSection.delegate = self
@@ -222,30 +222,30 @@ public class SearchResultsViewController : UIViewController {
             case (.search, false):
                 sections = [contactsSection]
             case (.search, true):
-                sections = [teamMemberSection, contactsSection]
+                sections = [teamMemberAndContactsSection]
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
-                sections = [teamMemberSection, contactsSection]
+                sections = [teamMemberAndContactsSection]
             case (.list, false):
                 sections = [contactsSection]
             case (.list, true):
-                sections = [teamMemberSection]
+                sections = [teamMemberAndContactsSection]
             }
         } else {
             switch (mode, team != nil) {
             case (.search, false):
                 sections = [contactsSection, conversationsSection, directorySection]
             case (.search, true):
-                sections = [teamMemberSection, conversationsSection, contactsSection, directorySection]
+                sections = [teamMemberAndContactsSection, conversationsSection, directorySection]
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
-                sections = [teamMemberSection, contactsSection]
+                sections = [teamMemberAndContactsSection]
             case (.list, false):
                 sections = [topPeopleSection, contactsSection]
             case (.list, true):
-                sections = [teamMemberSection]
+                sections = [teamMemberAndContactsSection]
             }
         }
         
@@ -263,7 +263,7 @@ public class SearchResultsViewController : UIViewController {
         }
         
         contactsSection.contacts = contacts
-        teamMemberSection.contacts = teamContacts
+        teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted { $0.name.compare($1.name) == .orderedAscending }
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         
@@ -275,7 +275,7 @@ public class SearchResultsViewController : UIViewController {
             return .topPeople
         } else if controller === contactsSection {
             return .contacts
-        } else if controller === teamMemberSection {
+        } else if controller === teamMemberAndContactsSection {
             return .teamMembers
         } else if  controller === conversationsSection {
             return .conversations

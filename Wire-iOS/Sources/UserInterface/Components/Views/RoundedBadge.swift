@@ -34,6 +34,18 @@ public class RoundedTextBadge: RoundedBadge {
     }
 }
 
+public class GuestLabel: RoundedTextBadge {
+    override init() {
+        super.init()
+        textLabel.text = "participants.avatar.guest.title".localized
+        accessibilityIdentifier = "guest label"
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 public class RoundedBadge: UIView {
     public let containedView: UIView
     init(view: UIView) {
