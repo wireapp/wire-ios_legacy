@@ -31,7 +31,6 @@
 #import "Country.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
-#import "ZMUserSession+Additions.h"
 #import "AppDelegate.h"
 #import "Wire-Swift.h"
 @import WireExtensionComponents;

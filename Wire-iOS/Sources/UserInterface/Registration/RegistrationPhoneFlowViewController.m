@@ -189,7 +189,7 @@
     else if ([viewController isKindOfClass:[NameStepViewController class]]) {
         [self.analyticsTracker tagEnteredName];
         [self presentPictureStepController];
-        [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
