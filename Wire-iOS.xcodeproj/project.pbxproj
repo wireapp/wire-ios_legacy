@@ -37,6 +37,7 @@
 		16325E651EE03CC4000E72EB /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16325E641EE03CC4000E72EB /* SearchResultsView.swift */; };
 		163495831EFD0F8F004E80DB /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495821EFD0F8F004E80DB /* AppController.swift */; };
 		163495871F010F91004E80DB /* UnauthenticatedSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495861F010F91004E80DB /* UnauthenticatedSession.swift */; };
+		163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495881F015389004E80DB /* AppDelegate+Network.swift */; };
 		163B5EF21B4C209C009B4629 /* MediaBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5EF11B4C209C009B4629 /* MediaBarViewController.m */; };
 		163B5F011B4D4109009B4629 /* TitleBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5F001B4D4109009B4629 /* TitleBarViewController.m */; };
 		163BB60D1BEA976C00606381 /* BarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB60B1BEA976C00606381 /* BarController.m */; };
@@ -1075,6 +1076,7 @@
 		16325E641EE03CC4000E72EB /* SearchResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		163495821EFD0F8F004E80DB /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		163495861F010F91004E80DB /* UnauthenticatedSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSession.swift; sourceTree = "<group>"; };
+		163495881F015389004E80DB /* AppDelegate+Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Network.swift"; sourceTree = "<group>"; };
 		163B5EF01B4C209C009B4629 /* MediaBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaBarViewController.h; sourceTree = "<group>"; };
 		163B5EF11B4C209C009B4629 /* MediaBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaBarViewController.m; sourceTree = "<group>"; };
 		163B5EFF1B4D4109009B4629 /* TitleBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleBarViewController.h; sourceTree = "<group>"; };
@@ -4253,6 +4255,7 @@
 				8FC850F5199245760008B66B /* AppDelegate.h */,
 				8FC850F6199245760008B66B /* AppDelegate.m */,
 				54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */,
+				163495881F015389004E80DB /* AppDelegate+Network.swift */,
 				8FC85293199245760008B66B /* RootViewController.h */,
 				8FC85294199245760008B66B /* RootViewController.m */,
 				8F42B5DC1993A31A00E13CBD /* Logging.h */,
@@ -4360,8 +4363,8 @@
 				8FC85143199245760008B66B /* ZetaKeyValueValidation.m */,
 				8FC1EFDD19DED50C0092488D /* VoiceChannelV2+Additions.h */,
 				8FC1EFDE19DED50C0092488D /* VoiceChannelV2+Additions.m */,
-				8FD5A08419F0490500550525 /* ZMUserSession+Additions.h */,
 				BF10B58C1E6452B800E7036E /* ZMMessage+Likes.swift */,
+				8FD5A08419F0490500550525 /* ZMUserSession+Additions.h */,
 				8FD5A08519F0490500550525 /* ZMUserSession+Additions.m */,
 				BAED82B71B307AEE004D027F /* ZMUserSession+RequestProxy.h */,
 				BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */,
@@ -5846,6 +5849,7 @@
 				8795322E1A8A141000EB495B /* ContrastUserImageView.m in Sources */,
 				8FC8541F199245770008B66B /* ZMUserSession+iOS.m in Sources */,
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
+				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,
 				87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */,
 				871BC3681D34F94200DF0793 /* MediaPreviewData+YouTube.m in Sources */,
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,

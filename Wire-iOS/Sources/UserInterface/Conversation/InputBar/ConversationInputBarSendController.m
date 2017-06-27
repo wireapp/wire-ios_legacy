@@ -66,7 +66,7 @@
 
 - (void)sendTextMessage:(NSString *)text
 {
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
     
     __block id<ZMConversationMessage> textMessage = nil;
     [[ZMUserSession sharedSession] enqueueChanges:^{
@@ -94,7 +94,7 @@
 
 - (void)sendTextMessage:(NSString *)text withImageData:(NSData *)data
 {
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
     __block id <ZMConversationMessage> textMessage = nil;
     
     [ZMUserSession.sharedSession enqueueChanges:^{

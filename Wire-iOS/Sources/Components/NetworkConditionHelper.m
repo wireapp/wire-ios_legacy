@@ -18,8 +18,9 @@
 
 
 #import "NetworkConditionHelper.h"
-@import VIMNetworkingFramework;
+#import "AppDelegate.h"
 @import CoreTelephony;
+@import WireSyncEngine;
 
 
 NetworkQualityType
@@ -55,10 +56,12 @@ QualityTypeFromNSString(NSString *qualityString);
 
 - (NetworkQualityType)qualityType;
 {
-    if (![VIMReachability sharedInstance].isNetworkReachable) {
+    id<ServerConnection> serverConnection = AppDelegate.sharedAppDelegate.accountManager.serverConnection;
+    
+    if (serverConnection.isOffline) {
         return NetworkQualityTypeUnkown;
     }
-    if ([VIMReachability sharedInstance].isOnWiFi) {
+    if (!serverConnection.isMobileConnection) {
         return NetworkQualityTypeWifi;
     }
     return QualityTypeFromNSString(self.networkInfo.currentRadioAccessTechnology);

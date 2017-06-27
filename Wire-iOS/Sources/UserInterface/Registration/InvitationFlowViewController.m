@@ -205,11 +205,8 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
         
         [self.analyticsTracker tagRegistrationConfirmedPersonalInvite];
     }
-    else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]])
-    {
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-        
-        if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
+    else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
+        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
             [[UnauthenticatedSession sharedSession] registerUser:self.unregisteredUser.completeRegistrationUser];
         }
     }

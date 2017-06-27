@@ -177,7 +177,7 @@
         
         self.navigationController.showLoadingView = YES;
 
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+        [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
 
         [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
@@ -195,9 +195,7 @@
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
         [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
         
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-        
-        if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
+        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
             ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
             [[UnauthenticatedSession sharedSession] registerUser:completeUser];
             

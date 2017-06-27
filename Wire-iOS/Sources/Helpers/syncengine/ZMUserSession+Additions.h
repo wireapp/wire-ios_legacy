@@ -23,7 +23,6 @@
 
 @interface ZMUserSession (Additions)
 
-- (BOOL)checkNetworkAndFlashIndicatorIfNecessary;
-- (BOOL)checkNetworkAndFlashIndicatorIfNecessaryAndShowAlert:(BOOL)showAlert;
 @property (nullable, nonatomic, strong) NSNumber *initialSyncOnceCompleted;
+
 @end

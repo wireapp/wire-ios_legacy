@@ -16,32 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "ZMUserSession+Additions.h"
-#import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
-#import "NetworkStatusViewController.h"
 #import "ObjcAssociatedObjectHelpers.h"
 
-
-
 @implementation ZMUserSession (Additions)
-
-/// @return YES if network is offline
-- (BOOL)checkNetworkAndFlashIndicatorIfNecessary
-{
-    return [self checkNetworkAndFlashIndicatorIfNecessaryAndShowAlert:NO];
-}
-
-/// @return YES if network is offline
-- (BOOL)checkNetworkAndFlashIndicatorIfNecessaryAndShowAlert:(BOOL)showAlert
-{
-    if (self.networkState == ZMNetworkStateOffline) {
-        [[AppDelegate sharedAppDelegate].notificationWindowController.networkStatusViewController flashNetworkStatusIfNecessaryAndShowAlert:showAlert];
-        return YES;
-    }
-    return NO;
-}
 
 SYNTHESIZE_ASC_OBJ(initialSyncOnceCompleted, setInitialSyncOnceCompleted);
 

@@ -32,6 +32,8 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "ZMUserSession+Additions.h"
+#import "AppDelegate.h"
+#import "Wire-Swift.h"
 @import WireExtensionComponents;
 
 @interface PhoneNumberStepViewController ()
@@ -163,8 +165,7 @@
     }
     self.unregisteredUser.phoneNumber = self.phoneNumber;
 
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-    if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
+    if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }

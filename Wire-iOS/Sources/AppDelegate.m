@@ -301,6 +301,11 @@ static AppDelegate *sharedAppDelegate = nil;
     return self.appController.notificationWindowController;
 }
 
+- (AccountManager *)accountManager
+{
+    return self.appController.accountManager;
+}
+
 - (UIWindow *)window
 {
     return self.appController.window;

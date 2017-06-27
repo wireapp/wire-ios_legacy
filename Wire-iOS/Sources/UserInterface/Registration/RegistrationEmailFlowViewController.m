@@ -154,9 +154,7 @@
         
         self.hasUserAcceptedTOS = YES;
 
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-
-        if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
+        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
             ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
             [[UnauthenticatedSession sharedSession] registerUser:completeUser];
 

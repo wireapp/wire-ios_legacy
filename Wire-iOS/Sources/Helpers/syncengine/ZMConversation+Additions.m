@@ -375,7 +375,7 @@
 
 - (BOOL)warnAboutNoInternetConnection
 {
-    if ([[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary]) {
+    if ([AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
         UIAlertController *noInternetConnectionAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.network_error.title", "<missing title>")
                                                                                            message:NSLocalizedString(@"voice.network_error.body", "<voice failed because of network>")
                                                                                  cancelButtonTitle:NSLocalizedString(@"general.ok", "ok string")];

@@ -104,6 +104,7 @@
 #import "ProfileDetailsViewController.h"
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"
+#import "NetworkStatusViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
