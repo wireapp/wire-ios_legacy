@@ -49,6 +49,7 @@ extension AppController : AccountStateDelegate {
     
     public func userSessionCreated(session: ZMUserSession) {
         setupUserSession(session)
+        notificationWindowController.userSessionCreated()
     }
         
 }

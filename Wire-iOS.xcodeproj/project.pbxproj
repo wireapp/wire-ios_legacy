@@ -115,7 +115,6 @@
 		16E4E81A1BF215CB002D7409 /* InvitationFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E4E8191BF215CB002D7409 /* InvitationFlowViewController.m */; };
 		16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */; };
 		16EB9B3A1CE1DBB400883FCF /* VideoMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EB9B391CE1DBB400883FCF /* VideoMessageCellTests.swift */; };
-		16EBBEFF1BEBBCF40087DA60 /* InvitationStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16EBBEFE1BEBBCF40087DA60 /* InvitationStatusController.m */; };
 		16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */; };
 		16F6BB101EDDA0BA009EA803 /* AddParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */; };
 		16F9EB2B1BC52EE40021EF39 /* ActionSheetController+Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F9EB2A1BC52EE40021EF39 /* ActionSheetController+Conversation.m */; };
@@ -1189,8 +1188,6 @@
 		16E6C0FE1A837C0300AA2F32 /* NSIndexSet+IndexPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+IndexPaths.h"; sourceTree = "<group>"; };
 		16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+IndexPaths.m"; sourceTree = "<group>"; };
 		16EB9B391CE1DBB400883FCF /* VideoMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMessageCellTests.swift; sourceTree = "<group>"; };
-		16EBBEFD1BEBBCF40087DA60 /* InvitationStatusController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationStatusController.h; sourceTree = "<group>"; };
-		16EBBEFE1BEBBCF40087DA60 /* InvitationStatusController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationStatusController.m; sourceTree = "<group>"; };
 		16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHeaderViewController.swift; sourceTree = "<group>"; };
 		16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewController.swift; sourceTree = "<group>"; };
 		16F9EB291BC52EE40021EF39 /* ActionSheetController+Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ActionSheetController+Conversation.h"; sourceTree = "<group>"; };
@@ -4651,8 +4648,6 @@
 				167AEA0F1B16031900890435 /* VoiceChannelParticipantCell.m */,
 				167AEA131B1603EC00890435 /* VoiceChannelParticipantsController.h */,
 				167AEA141B1603EC00890435 /* VoiceChannelParticipantsController.m */,
-				16EBBEFD1BEBBCF40087DA60 /* InvitationStatusController.h */,
-				16EBBEFE1BEBBCF40087DA60 /* InvitationStatusController.m */,
 				8736F1C11E4DCEB8001CBA62 /* AppLockViewController.swift */,
 				8736F1831E4B67F0001CBA62 /* AppLockView.swift */,
 			);
@@ -6128,7 +6123,6 @@
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
-				16EBBEFF1BEBBCF40087DA60 /* InvitationStatusController.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
