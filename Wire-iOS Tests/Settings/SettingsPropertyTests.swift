@@ -20,12 +20,7 @@
 import XCTest
 @testable import Wire
 
-@objc class MockZMEditableUser: NSObject, ZMEditableUser, ValidatorType {
-    var name: String! = ""
-    var accentColorValue: ZMAccentColor = .undefined
-    var emailAddress: String! = ""
-    var phoneNumber: String! = ""
-    
+@objc class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
     var originalProfileImageData: Data!
     
     func deleteProfileImage() {

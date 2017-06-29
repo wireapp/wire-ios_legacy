@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Invite";
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Connect";
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";
@@ -473,6 +473,11 @@
 // User Details
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Username";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "Devices";

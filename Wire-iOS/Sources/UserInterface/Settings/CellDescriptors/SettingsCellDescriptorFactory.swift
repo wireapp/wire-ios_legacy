@@ -36,7 +36,11 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        let rootElements = [self.devicesGroup(), self.settingsGroup(), self.inviteButton()]
+        var rootElements = [self.devicesGroup(), self.settingsGroup()]
+        
+        if !self.settingsPropertyFactory.selfUser.isTeamMember {
+            rootElements.append(self.inviteButton())
+        }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         

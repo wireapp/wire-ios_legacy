@@ -48,6 +48,8 @@
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 
+@property (nonatomic, strong) GuestLabel *guestLabel;
+
 @end
 
 @implementation SearchResultCell
@@ -64,7 +66,7 @@
 
 + (UIFont *)boldFont
 {
- return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
 }
 
 + (AddressBookCorrelationFormatter *)correlationFormatter
@@ -196,8 +198,16 @@
         }];
     }
 
-    self.subtitleRightMarginConstraint.constant = self.instantConnectButton.hidden ? -rightMargin : - self.instantConnectButton.bounds.size.width;
-    self.nameRightMarginConstraint.constant = self.instantConnectButton.hidden ? -rightMargin : - self.instantConnectButton.bounds.size.width;
+    CGFloat rightMarginForName = rightMargin;
+    if (!self.instantConnectButton.hidden) {
+        rightMarginForName = self.instantConnectButton.bounds.size.width;
+    }
+    else if (!self.guestLabel.hidden) {
+        rightMarginForName = self.guestLabel.bounds.size.width + rightMargin;
+    }
+    
+    self.subtitleRightMarginConstraint.constant = -rightMarginForName;
+    self.nameRightMarginConstraint.constant = -rightMarginForName;
 
     [super updateConstraints];
 }
@@ -238,6 +248,7 @@
     self.displayName = self.user.name;
     
     [self updateSubtitle];
+    [self updateGuestLabel];
     
     BOOL canBeConnected = YES;
 
@@ -384,6 +395,24 @@
         self.nameLabelVerticalConstraint.active = NO;
         self.nameLabelTopConstraint.active = YES;
         self.subtitleLabel.attributedText = subtitle;
+    }
+}
+
+- (void)updateGuestLabel
+{
+    CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
+
+    if (nil != self.team && !self.user.isTeamMember) {
+        if (nil == self.guestLabel) {
+            self.guestLabel = [[GuestLabel alloc] init];
+            [self.swipeView addSubview:self.guestLabel];
+            [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+            [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+        }
+        self.guestLabel.hidden = NO;
+    }
+    else {
+        self.guestLabel.hidden = YES;
     }
 }
 

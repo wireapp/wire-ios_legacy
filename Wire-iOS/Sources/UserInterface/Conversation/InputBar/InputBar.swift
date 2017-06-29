@@ -75,7 +75,7 @@ private struct InputBarConstants {
     private let inputBarVerticalInset : CGFloat = 34
 
 
-    public let textView: NextResponderTextView = NextResponderTextView()
+    public let textView = NextResponderTextView()
     public let leftAccessoryView  = UIView()
     public let rightAccessoryView = UIView()
     

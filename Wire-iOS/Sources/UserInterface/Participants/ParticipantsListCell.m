@@ -27,7 +27,7 @@
 @interface ParticipantsListCell ()
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) BadgeUserImageView *userImageView;
-@property (nonatomic) RoundedTextBadge *guestLabel;
+@property (nonatomic) GuestLabel *guestLabel;
 @end
 
 @implementation ParticipantsListCell
@@ -55,10 +55,8 @@
     [self.contentView addSubview:userImageView];
     self.userImageView = userImageView;
     
-    self.guestLabel = [[RoundedTextBadge alloc] initForAutoLayout];
-    self.guestLabel.textLabel.text = NSLocalizedString(@"participants.avatar.guest.title", @"");
+    self.guestLabel = [[GuestLabel alloc] initForAutoLayout];
     self.guestLabel.hidden = YES;
-    self.guestLabel.accessibilityIdentifier = @"guest label";
     [self.contentView addSubview:self.guestLabel];
     
     [self.userImageView autoCenterInSuperview];
