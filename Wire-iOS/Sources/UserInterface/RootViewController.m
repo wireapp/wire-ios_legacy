@@ -103,8 +103,6 @@
 {
     [super viewDidLoad];
     
-    // observe future accent color changes
-    
     if (self.isLoggedIn) {
         [self presentFrameworkFromRegistration:NO];
     } else {
