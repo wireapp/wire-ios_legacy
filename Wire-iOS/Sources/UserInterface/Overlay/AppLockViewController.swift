@@ -36,7 +36,7 @@ import HockeySDK.BITHockeyManager
     
     fileprivate var appLockActive: Bool {
         guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
-            return true
+            return false
         }
         
         let lockApp = settingsPropertyFactory.property(.lockApp)
