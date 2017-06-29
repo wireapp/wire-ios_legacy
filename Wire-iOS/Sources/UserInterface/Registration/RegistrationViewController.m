@@ -112,7 +112,8 @@
 {
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
     registrationRootViewController.formStepDelegate = self;
-    registrationRootViewController.forceLogin = [ZMUser selfUser].emailAddress.length > 0 || [ZMUser selfUser].phoneNumber.length > 0 || self.signInErrorCode == ZMUserSessionNeedsPasswordToRegisterClient;
+    ZMUser *currentUser = [AccountManager shared].currentUser;
+    registrationRootViewController.forceLogin = currentUser.emailAddress.length > 0 || currentUser.phoneNumber.length > 0 || self.signInErrorCode == ZMUserSessionNeedsPasswordToRegisterClient;
     self.registrationRootViewController = registrationRootViewController;
     
     UIViewController *rootViewController = registrationRootViewController;

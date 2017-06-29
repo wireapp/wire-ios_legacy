@@ -98,9 +98,9 @@
     [self setupEmailSignInViewController];
     [self setupPhoneFlowViewController];
     
-    BOOL hasAddedPhoneNumber = [ZMUser selfUser].phoneNumber.length > 0;
-    BOOL hasAddedEmailAddress = [ZMUser selfUser].emailAddress.length > 0;
-    
+    BOOL hasAddedPhoneNumber = [AccountManager shared].currentUser.phoneNumber.length > 0;
+    BOOL hasAddedEmailAddress = [AccountManager shared].currentUser.emailAddress.length > 0;
+
     if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
         [self presentSignInViewController:self.emailSignInViewControllerContainer];
     } else {

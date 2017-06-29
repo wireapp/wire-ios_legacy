@@ -23,6 +23,8 @@
 #import "WireSyncEngine+iOS.h"
 #import "CASStyler+Variables.h"
 #import "ColorScheme.h"
+#import "Wire-Swift.h"
+
 @import WireExtensionComponents;
 
 static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
@@ -44,7 +46,7 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 	}
 	
 	// priority 2: color from self user
-	ZMUser *selfUser = [ZMUser selfUser];
+    ZMUser *selfUser = [AccountManager shared].currentUser;
 	ZMAccentColor selfAccentColor = selfUser.accentColorValue;
 	if (selfUser && (selfAccentColor != ZMAccentColorUndefined)) {
 		return selfAccentColor;
