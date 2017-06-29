@@ -62,7 +62,7 @@
 
 - (void)removeObservers
 {
-    [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authToken];
+    [ZMUserSessionAuthenticationNotification removeObserver:self.authToken];
     [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
     
     self.authToken = nil;
@@ -90,7 +90,7 @@
     [super didMoveToParentViewController:parent];
     
     if (parent && self.authToken == nil && self.registrationToken == nil) {
-        self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+        self.authToken = [ZMUserSessionAuthenticationNotification addObserverWithObserver:self];
         self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
     } else {
         [self removeObservers];
