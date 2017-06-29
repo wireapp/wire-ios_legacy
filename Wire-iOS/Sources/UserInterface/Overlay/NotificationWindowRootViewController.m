@@ -102,7 +102,7 @@
     self.networkActivityViewController.view.hidden = hideNetworkActivityView;
 }
 
-- (void)userSessionCreated
+- (void)transitionToLoggedInSession
 {
     self.networkActivityViewController = [[NetworkActivityViewController alloc] init];
     self.networkActivityViewController.view.translatesAutoresizingMaskIntoConstraints = NO;

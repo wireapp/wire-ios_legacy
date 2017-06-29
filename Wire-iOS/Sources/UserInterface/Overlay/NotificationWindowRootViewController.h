@@ -36,6 +36,6 @@
 
 @property (nonatomic) BOOL hideNetworkActivityView;
 
-- (void)userSessionCreated;
+- (void)transitionToLoggedInSession;
 
 @end

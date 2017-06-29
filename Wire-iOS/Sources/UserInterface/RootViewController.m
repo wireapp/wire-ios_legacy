@@ -167,6 +167,7 @@
     [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
     self.zClientViewController = [[ZClientViewController alloc] init];
     self.zClientViewController.isComingFromRegistration = fromRegistration;
+    [[AppDelegate sharedAppDelegate].notificationWindowController transitionToLoggedInSession];
     [self switchToViewController:self.zClientViewController animated:YES];
 }
 
