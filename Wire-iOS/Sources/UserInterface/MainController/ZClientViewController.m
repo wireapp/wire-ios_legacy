@@ -70,7 +70,7 @@
 @end
 
 
-@interface ZClientViewController ()
+@interface ZClientViewController () <ZMUserObserver>
 
 @property (nonatomic, readwrite) SoundEventListener *soundEventListener;
 
@@ -86,6 +86,7 @@
 
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
+@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -150,6 +151,8 @@
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
+    
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
 }
 
 - (void)createBackgroundViewController
@@ -223,6 +226,17 @@
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     [self.conversationListViewController view];
+}
+
+#pragma mark - ZMUserObserver
+
+- (void)userDidChange:(UserChangeInfo *)change
+{
+    if (change.accentColorValueChanged) {
+        if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(setTintColor:)]) {
+            [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
+        }
+    }
 }
 
 #pragma mark - Public API

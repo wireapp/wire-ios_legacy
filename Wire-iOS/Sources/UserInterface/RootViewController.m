@@ -51,7 +51,7 @@
 
 
 
-@interface RootViewController ()  <ZMUserObserver>
+@interface RootViewController ()
 
 @property (nonatomic, strong, readwrite) KeyboardFrameObserver *keyboardFrameObserver;
 
@@ -64,7 +64,6 @@
 @property (nonatomic, assign) UIInterfaceOrientation lastVisibleInterfaceOrientation;
 
 @property (nonatomic) id<ZMAuthenticationObserverToken> authToken;
-@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -105,7 +104,6 @@
     [super viewDidLoad];
     
     // observe future accent color changes
-    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
     
     if (self.isLoggedIn) {
         [self presentFrameworkFromRegistration:NO];
@@ -206,16 +204,6 @@
     }
 }
 
-#pragma mark - ZMUserObserver
-
-- (void)userDidChange:(UserChangeInfo *)change
-{
-    if (change.accentColorValueChanged) {
-        if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(setTintColor:)]) {
-            [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
-        }
-    }
-}
 
 @end
 
