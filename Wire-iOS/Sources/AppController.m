@@ -525,6 +525,19 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
 }
 
+- (void)loadUnauthenticatedUIWithError:(NSError *)error
+{
+    self.seState = AppSEStateNotAuthenticated;
+    
+    self.signInErrorCode = error.code;
+    
+    if(error != nil && error.code == ZMUserSessionClientDeletedRemotely) {
+        [self.window.rootViewController showAlertForError:error];
+    }
+    
+    [self loadAppropriateController];
+}
+
 @end
 
 
@@ -569,15 +582,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    self.seState = AppSEStateNotAuthenticated;
-    
-    self.signInErrorCode = error.code;
-    
-    if(error.code == ZMUserSessionClientDeletedRemotely) {
-        [self.window.rootViewController showAlertForError:error];
-    }
-    
-    [self loadAppropriateController];
+    [self loadUnauthenticatedUIWithError:error];
     DDLogInfo(@"Authentication failed: %@", error);
 }
 

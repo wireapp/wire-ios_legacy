@@ -61,5 +61,6 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 - (void)performAfterUserSessionIsInitialized:(dispatch_block_t)block;
 - (void)uploadAddressBookIfNeeded;
 - (void)setupUserSession:(ZMUserSession *)userSession;
+- (void)loadUnauthenticatedUIWithError:(NSError *)error;
 
 @end

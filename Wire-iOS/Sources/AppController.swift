@@ -44,6 +44,7 @@ extension AppController : AccountStateDelegate {
     
     public func unauthenticatedSessionCreated(session: UnauthenticatedSession) {
         unautenticatedUserSession = session
+        loadUnauthenticatedUIWithError(nil)
     }
     
     public func userSessionCreated(session: ZMUserSession) {
