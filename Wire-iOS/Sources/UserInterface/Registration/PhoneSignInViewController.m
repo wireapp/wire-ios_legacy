@@ -130,7 +130,7 @@
         
         PhoneNumberStepViewController *phoneNumberStepViewController = (PhoneNumberStepViewController *)viewController;
         self.phoneNumber = phoneNumberStepViewController.phoneNumber;
-        [[ZMUserSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumber];
+        [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumber];
     }
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
         self.navigationController.showLoadingView = YES;
@@ -150,7 +150,7 @@
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [[ZMUserSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumberStepViewController.phoneNumber];
+    [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumberStepViewController.phoneNumber];
 }
 
 #pragma mark - ZMAuthenticationObserver
